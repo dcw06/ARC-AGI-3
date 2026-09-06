@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "status": "active",
+  "precedence": [
+    "current_competition_rules_for_compliance",
+    "live_kaggle_backend_for_lifecycle_and_score",
+    "official_scorer_then_exact_mounted_client_for_compatibility",
+    "competition_constraints_registry",
+    "frozen_registries",
+    "plan_defaults",
+    "implementation_comments"
+  ],
+  "conflict_policy": "fail_closed_record_resolve_and_fixture_test"
+}

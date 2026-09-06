@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "status": "active",
+  "retained_output_root": "/kaggle/working",
+  "retained_allowlist": ["submission.parquet"],
+  "scratch_root": "/tmp/arc3-agent",
+  "notebook_visible_policy": "bounded_non_game_specific_lifecycle_codes_only",
+  "prohibited": [
+    "hidden_frames", "grids", "animations", "trajectories", "prompts",
+    "model_responses", "hypotheses", "reasoning_transcripts", "recordings",
+    "per_game_hidden_diagnostics", "core_dumps"
+  ],
+  "cleanup_guarantee": "normal_and_tested_handled_failure_only"
+}

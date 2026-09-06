@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "status": "active_reduced_exposure",
+  "inventory_source": "IDs-only API response on 2026-09-06; earlier repository list command could expose titles",
+  "partition_algorithm": "sha256(seed:full_game_id), exposed games forced to development",
+  "partition_seed": "arc-agi-3-plan8-public-partition-v1",
+  "manifest_sha256": "e3f5c27ee51f2958d0373753fa8b6055775c3c09af7a13360bf1b255492daa7d",
+  "development": [
+    "ar25-0c556536", "cd82-fb555c5d", "ft09-0d8bbf25", "g50t-5849a774", "ka59-38d34dbb",
+    "lf52-271a04aa", "ls20-9607627b", "s5i5-18d95033", "sc25-635fd71a", "sk48-d8078629",
+    "sp80-589a99af", "su15-1944f8ab", "tr87-cd924810", "vc33-5430563c", "wa30-ee6fef47"
+  ],
+  "h1": ["bp35-0a0ad940", "dc22-fdcac232", "r11l-495a7899", "tn36-ef4dde99", "tu93-0768757b"],
+  "h2": ["cn04-2fe56bfb", "lp85-305b61c3", "m0r0-492f87ba", "re86-8af5384d", "sb26-7fbdac44"],
+  "h1_classification": "reduced_exposure_guardrail_only",
+  "h2_classification": "reduced_exposure_guardrail_only",
+  "consumption_events": []
+}

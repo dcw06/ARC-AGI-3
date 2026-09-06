@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "plan": "8.4",
+  "status": "local_phase0_passed_pending_external_and_mounted_validation",
+  "checked_at": "2026-09-06T12:30:00+08:00",
+  "local_checks": {
+    "registries_and_schemas": "passed",
+    "secret_and_output_ignore_audit": "passed",
+    "immutable_action_and_journal_tests": "passed",
+    "ambiguous_dispatch_quarantine": "passed",
+    "one_open_one_make_one_close_synthetic": "passed",
+    "synthetic_110_client_load": "passed",
+    "three_run_deterministic_trace_sha256": "1dfe912b5f012fab00e2d289a196e563fc608f1e83f154d064e14858e8f00171",
+    "local_ls20_adapter_smoke": "passed_3_actions",
+    "offline_multifile_notebook_validation": "passed"
+  },
+  "blocking_checks": [
+    "mounted Kaggle client hashes and gateway transport-equivalence smoke",
+    "mounted scorer initial RESET, later RESET, and visible-no-op fixtures",
+    "Kaggle retained-output and generated submission end-to-end smoke",
+    "Kaggle account rules, identity, team, kernel ID, and allowance confirmation"
+  ],
+  "authority_until_passed": "Plan 7"
+}

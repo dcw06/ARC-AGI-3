@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "action_journal_schema_v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["transaction_id", "sequence", "kind", "status", "prepared_fields", "fields"],
+  "properties": {
+    "transaction_id": {"type": "string"},
+    "sequence": {"type": "integer", "minimum": 1},
+    "kind": {"const": "action"},
+    "status": {"enum": ["prepared", "failed_pre_dispatch", "dispatched", "acknowledged", "outcome_unknown"]},
+    "prepared_fields": {"type": "object"},
+    "fields": {"type": "object"}
+  }
+}

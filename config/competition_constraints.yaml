@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-09-06T00:00:00+08:00",
+  "status": "active",
+  "constraints": {
+    "submission_mechanism": {"value": "kaggle_notebook", "kind": "hard_rule", "source": "https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3/overview"},
+    "runtime_seconds": {"value": 32400, "kind": "hard_rule", "source": "https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3/overview"},
+    "internet": {"value": false, "kind": "hard_rule", "source": "https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3/overview"},
+    "external_inputs": {"value": "freely_and_publicly_available_with_license_review", "kind": "hard_rule", "source": "https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3/overview"},
+    "evaluation_games": {"value": 110, "kind": "platform_observation", "source": "project Plan 8; revalidate on mounted backend"},
+    "leaderboard_split": {"value": [55, 55], "kind": "platform_observation", "source": "project Plan 8; revalidate on mounted backend"},
+    "competition_mode": {"value": true, "kind": "platform_behavior", "source": "mounted arc-agi contract"},
+    "scorecards": {"value": 1, "kind": "internal_safety_target", "source": "Plan 8"},
+    "makes_per_environment": {"value": 1, "kind": "internal_safety_target", "source": "Plan 8"},
+    "in_flight_score_access": {"value": false, "kind": "platform_behavior", "source": "Plan 8"},
+    "reasoning_field_bytes_exclusive_max": {"value": 16384, "production_margin": 16000, "kind": "mounted_client_observation", "source": "arcengine 0.9.3"},
+    "submission_allowance_per_day": {"value": 1, "kind": "platform_observation", "source": "https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3/discussion/705405"},
+    "final_selection_count": {"value": 2, "kind": "platform_observation", "source": "Kaggle competition metadata; revalidate"},
+    "submission_filename": {"value": "submission.parquet", "kind": "platform_behavior", "source": "Kaggle competition gateway"},
+    "submission_size_mb": {"value": 20480, "kind": "platform_observation", "source": "Kaggle metadata; revalidate"},
+    "maximum_team_size": {"value": 8, "kind": "hard_rule", "source": "Kaggle rules; revalidate"},
+    "identity_verification_required": {"value": true, "kind": "hard_rule", "source": "Kaggle rules; revalidate"},
+    "accelerator": {"value": "nvidiaRtx6000", "machine": "g4-standard-48", "kind": "platform_behavior", "source": "https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3/overview"},
+    "milestone_2_deadline": {"value": "2026-09-30T23:59:00Z", "kind": "hard_rule", "source": "Kaggle overview"},
+    "entry_deadline_conservative": {"value": "2026-10-26T11:59:00Z", "conflict": "overview states 23:59 UTC", "kind": "conservative_internal_target", "source": "live metadata observation in Plan 8"},
+    "team_merger_deadline": {"value": "2026-10-26T23:59:00Z", "kind": "hard_rule", "source": "Kaggle overview; revalidate"},
+    "final_deadline": {"value": "2026-11-02T23:59:00Z", "kind": "hard_rule", "source": "Kaggle overview"},
+    "competition_data_license": {"value": "Apache-2.0", "kind": "hard_rule", "source": "Kaggle rules; revalidate"},
+    "private_sharing_outside_team": {"value": false, "kind": "hard_rule", "source": "Kaggle rules; revalidate"}
+  },
+  "manual_checks": {
+    "rules_accepted": false,
+    "identity_verified": false,
+    "team_membership_confirmed": false,
+    "kaggle_kernel_id_configured": false,
+    "submission_allowance_revalidated": false
+  }
+}

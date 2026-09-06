@@ -1,0 +1,29 @@
+"""Read-only validation of the generated notebook and output contract."""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def main() -> int:
+    notebook = json.loads((ROOT / "notebooks" / "submission.ipynb").read_text())
+    metadata = json.loads((ROOT / "notebooks" / "kernel-metadata.json").read_text())
+    assert notebook["metadata"]["kaggle"]["isInternetEnabled"] is False
+    assert metadata["enable_internet"] is False
+    assert notebook["metadata"]["kaggle"]["accelerator"] == "nvidiaRtx6000"
+    source = "\n".join(str(cell.get("source", "")) for cell in notebook["cells"])
+    assert "/kaggle/working/ARC-AGI-3-Agents" not in source
+    assert "RECORDINGS_DIR=/kaggle/working" not in source
+    assert "agent.production_main" in source
+    # The adapter is base64 bundled, so inspect its authoritative source too.
+    adapter_source = (ROOT / "agent" / "framework_adapter.py").read_text()
+    assert "allow_redirects=False" in adapter_source
+    print("submission notebook: valid")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

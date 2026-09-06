@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sealed_output_schema_v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["run_id", "validity", "aggregate"],
+  "properties": {
+    "run_id": {"type": "string"},
+    "validity": {"enum": ["valid", "invalid", "cleanup_unverified"]},
+    "aggregate": {"type": "object", "additionalProperties": {"type": ["integer", "number", "boolean", "null"]}}
+  }
+}

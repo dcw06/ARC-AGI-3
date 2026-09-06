@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "status": "active_local_unmounted",
+  "strategy": "direct_request_local_transport",
+  "arc_agi_distribution": "0.9.9",
+  "arcengine_distribution": "0.9.3",
+  "vendor_revision": "4743e7d0aaae0ded0d98a89a7e282e63564cd58b",
+  "observed_hashes": {
+    "vendor_agent_py": "49f1a349cd5e2123fceb266aec4a3a758d18ef5520e0212e808f695905d9e073",
+    "vendor_swarm_py": "d9dc48f710f1b90a6552db0921293c7e89c8a925ed00a3faefa07ae19998ad39",
+    "arc_agi_base_py": "42973618f223096d6269422352980e85bdf6b2b51dcb42e7390f96164b0f994f",
+    "arc_agi_remote_wrapper_py": "f1ea41c656117408351ca260b6159e7c6acf7200c45d5d05cfaa1ce0a3cf1206"
+  },
+  "only_environment_call_boundary": "agent.framework_adapter",
+  "reasoning_encoding_mode": "json_object_encoded_as_json_string",
+  "redirects": "disabled",
+  "automatic_retries": 0,
+  "startup_topology": "direct_remote_bootstrap_serial_then_stream_play; local Arcade.make serialized",
+  "unknown_revision_policy": "fail_closed",
+  "mounted_gateway_equivalence": "pending_kaggle_smoke"
+}

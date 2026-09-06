@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prediction_schema_v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["predicate_type", "required", "expected"],
+  "properties": {
+    "predicate_type": {"enum": ["state", "level", "legal_actions", "cell", "region", "motion"]},
+    "required": {"type": "boolean"},
+    "expected": {},
+    "evidence_reference": {"type": ["string", "null"]}
+  }
+}

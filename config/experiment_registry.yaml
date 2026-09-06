@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "status": "active",
+  "current_phase": "phase_0",
+  "treatments": {
+    "E0": {"status": "implementation", "description": "transaction-safe deterministic fallback"},
+    "M0": {"status": "inactive_unclosed"},
+    "E0W-S-PUB": {"status": "inactive_unclosed"},
+    "E0W-C-PUB": {"status": "inactive_unclosed"},
+    "E1": {"status": "inactive_unclosed"},
+    "E2-E9": {"status": "inactive_failure_driven"}
+  },
+  "budgets": {
+    "target_accelerator_hours_before_milestone": 18,
+    "scored_submissions_before_milestone": 7,
+    "contingency_submissions": 1,
+    "rollback_submissions": 1,
+    "optional_scope_drop_order": ["IX3", "E9", "E8", "E7", "IX2", "IX1", "E4", "E3", "E2"]
+  },
+  "dates": {
+    "phase_0_rebaseline": "2026-09-09",
+    "h1_latest": "2026-09-23",
+    "h2_latest": "2026-09-26",
+    "candidate_freeze": "2026-09-26",
+    "rollback_ready": "2026-09-27",
+    "release_complete": "2026-09-30"
+  }
+}
