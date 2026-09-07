@@ -1,15 +1,26 @@
 {
   "schema_version": 1,
-  "status": "active_local_unmounted",
+  "status": "active_local_and_kaggle_validated",
   "strategy": "direct_request_local_transport",
   "arc_agi_distribution": "0.9.9",
+  "kaggle_mounted_arc_agi_distribution": "0.9.8",
   "arcengine_distribution": "0.9.3",
   "vendor_revision": "4743e7d0aaae0ded0d98a89a7e282e63564cd58b",
   "observed_hashes": {
     "vendor_agent_py": "49f1a349cd5e2123fceb266aec4a3a758d18ef5520e0212e808f695905d9e073",
     "vendor_swarm_py": "d9dc48f710f1b90a6552db0921293c7e89c8a925ed00a3faefa07ae19998ad39",
     "arc_agi_base_py": "42973618f223096d6269422352980e85bdf6b2b51dcb42e7390f96164b0f994f",
-    "arc_agi_remote_wrapper_py": "f1ea41c656117408351ca260b6159e7c6acf7200c45d5d05cfaa1ce0a3cf1206"
+    "arc_agi_remote_wrapper_py": "f1ea41c656117408351ca260b6159e7c6acf7200c45d5d05cfaa1ce0a3cf1206",
+    "arc_agi_api_py": "07a82fa2b00cf2214c573a9027a628af67c9fdbd9c31b66e6250a9aa12c30ec5",
+    "arc_agi_scorecard_py": "1cc830e48008bec60b8a98ae14d3e9312e8408f102a9878bad42744aa9e489b7",
+    "arcengine_enums_py": "94ebef48f6fe950a18679a1b991c366e8e28c32ab58c9335f385e19bea21950e"
+  },
+  "kaggle_mounted_hashes_2026_09_07": {
+    "arc_agi_base_py": "42973618f223096d6269422352980e85bdf6b2b51dcb42e7390f96164b0f994f",
+    "arc_agi_remote_wrapper_py": "ebe8fd0a5ab2d5f65600f072fb22cf1de21c347a55b8c5ef569d6d7305c520e5",
+    "arc_agi_api_py": "07a82fa2b00cf2214c573a9027a628af67c9fdbd9c31b66e6250a9aa12c30ec5",
+    "arc_agi_scorecard_py": "1cc830e48008bec60b8a98ae14d3e9312e8408f102a9878bad42744aa9e489b7",
+    "arcengine_enums_py": "94ebef48f6fe950a18679a1b991c366e8e28c32ab58c9335f385e19bea21950e"
   },
   "only_environment_call_boundary": "agent.framework_adapter",
   "reasoning_encoding_mode": "json_object_encoded_as_json_string",
@@ -17,5 +28,7 @@
   "automatic_retries": 0,
   "startup_topology": "direct_remote_bootstrap_serial_then_stream_play; local Arcade.make serialized",
   "unknown_revision_policy": "fail_closed",
-  "mounted_gateway_equivalence": "pending_kaggle_smoke"
+  "local_competition_mode_rest_gateway_equivalence": "passed",
+  "mounted_0_9_8_vs_local_0_9_9_difference": "remote_wrapper error-response logging only; transport and lifecycle code equivalent",
+  "mounted_gateway_equivalence": "passed_submission_56076246"
 }

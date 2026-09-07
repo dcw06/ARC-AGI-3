@@ -18,6 +18,12 @@ def main() -> int:
     assert "/kaggle/working/ARC-AGI-3-Agents" not in source
     assert "RECORDINGS_DIR=/kaggle/working" not in source
     assert "agent.production_main" in source
+    assert "agent/runtime_audit.py" in source
+    assert "sys.path.insert(0, '/tmp/arc3-agent/source')" in source
+    assert "arc-agi==0.9.8" in source
+    assert "requests==2.33.1" in source
+    assert "numpy==2.4.4" in source
+    assert "pydantic==2.13.2" in source
     # The adapter is base64 bundled, so inspect its authoritative source too.
     adapter_source = (ROOT / "agent" / "framework_adapter.py").read_text()
     assert "allow_redirects=False" in adapter_source

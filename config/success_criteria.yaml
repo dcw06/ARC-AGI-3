@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "phase0_only",
+  "status": "phase0_passed",
   "E0": {
     "invalid_actions": 0,
     "uncaught_agent_exceptions": 0,
@@ -10,5 +10,9 @@
     "synthetic_clients": 110,
     "retained_files_after_handled_exit": ["submission.parquet"]
   },
-  "competition_performance": {"status": "inactive_unclosed_before_E1_tuning"}
+  "competition_performance": {
+    "status": "E0_baseline_only_not_a_competitiveness_claim",
+    "submission_ref": 56076246,
+    "public_score_official_rhae_percent": 0.08
+  }
 }

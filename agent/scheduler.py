@@ -23,8 +23,11 @@ class ScheduledRequest:
 class FairInferenceQueue:
     """Minimal bounded FIFO service with stale/cancel rejection."""
 
-    def __init__(self, maxsize: int = 110) -> None:
+    def __init__(self, maxsize: int = 110, max_age_seconds: float = 300.0) -> None:
+        if max_age_seconds <= 0:
+            raise ValueError("max_age_seconds must be positive")
         self._queue: queue.PriorityQueue[ScheduledRequest] = queue.PriorityQueue(maxsize=maxsize)
+        self.max_age_seconds = max_age_seconds
         self._sequence = 0
         self._lock = threading.Lock()
         self._latest_generation: dict[str, int] = {}
@@ -57,7 +60,7 @@ class FairInferenceQueue:
         self.max_observed_age = max(self.max_observed_age, age)
         latest = self._latest_generation.get(request.client_id, request.generation)
         try:
-            if request.canceled.is_set() or request.generation != latest:
+            if request.canceled.is_set() or request.generation != latest or age > self.max_age_seconds:
                 return request, None
             return request, request.callback()
         finally:

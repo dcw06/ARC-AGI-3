@@ -35,7 +35,7 @@ def bundled_sources() -> dict[str, str]:
         "agent/__init__.py", "agent/action.py", "agent/action_journal.py",
         "agent/competition_loop.py", "agent/controller.py",
         "agent/framework_adapter.py", "agent/production_main.py",
-        "agent/output_policy.py", "agent/scheduler.py", "agent/state.py", "agent/watchdog.py",
+        "agent/output_policy.py", "agent/runtime_audit.py", "agent/scheduler.py", "agent/state.py", "agent/watchdog.py",
     }
     files: dict[str, str] = {}
     for relative in sorted(required):
@@ -59,7 +59,8 @@ def build() -> dict:
         "os.environ['PIP_CACHE_DIR'] = '/tmp/arc3-agent/pip-cache'\n"
         "!pip install --quiet --disable-pip-version-check --no-index --find-links "
         "/kaggle/input/competitions/arc-prize-2026-arc-agi-3/arc_agi_3_wheels "
-        "arc-agi==0.9.9 arcengine==0.9.3 python-dotenv\n"
+        "arc-agi==0.9.8 arcengine==0.9.3 requests==2.33.1 "
+        "numpy==2.4.4 pydantic==2.13.2 python-dotenv==1.2.2\n"
     )
 
     bundle_cell = code_cell(
@@ -79,6 +80,7 @@ def build() -> dict:
         dedent(
             """\
             import os, subprocess, sys, time
+            sys.path.insert(0, '/tmp/arc3-agent/source')
             import requests
             from agent.output_policy import enforce_retained_allowlist
 

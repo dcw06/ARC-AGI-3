@@ -2221,6 +2221,9 @@ result, not an accepted marginal improvement.
       controller.py
       competition_loop.py
       framework_adapter.py
+      runtime_audit.py
+      output_policy.py
+      production_main.py
       model_policy.py
       context.py
       representation.py
@@ -2232,6 +2235,7 @@ result, not an accepted marginal improvement.
 
     evaluation/
       metrics.py
+      counters.py
       statistics.py
       sealed_eval.py
       reports.py
@@ -2251,6 +2255,7 @@ result, not an accepted marginal improvement.
       representation_manifest.yaml
       holdout_ledger.yaml
       success_criteria.yaml
+      scorer_fixture.json
       prediction_schema.json
       action_journal_schema.json
       lifecycle_journal_schema.json
@@ -2259,6 +2264,9 @@ result, not an accepted marginal improvement.
     scripts/
       play_local.py
       play_competition_like.py
+      check_kaggle_config.py
+      validate_local_gateway.py
+      validate_phase0.py
       profile_models.py
       run_experiment.py
       compare_treatments.py
@@ -2289,8 +2297,9 @@ Ownership rules:
 | evidence.py | Retention, availability, and retrieval | Unbounded history |
 | prediction.py | Predicate validation, action-relevant dependency checks, registered queue support gates, and deterministic hypothesis-status evaluation | Model authority or qualitative status promotion |
 | controller.py | Modes, legal action, budgets, fallback | Provider-specific prompts |
-| competition_loop.py | Per-client lifecycle and the only environment-call boundary | Model interpretation |
-| framework_adapter.py | Pinned upstream adaptation, lock-compatible startup topology, opaque runtime identity, and compatibility checks | Policy decisions or game-ID-conditioned behavior |
+| competition_loop.py | Per-client lifecycle and all-game orchestration | Raw environment calls or model interpretation |
+| framework_adapter.py | Pinned upstream adaptation, the only environment-call boundary, lock-compatible startup topology, opaque runtime identity, and compatibility checks | Policy decisions or game-ID-conditioned behavior |
+| runtime_audit.py | Fail-closed mounted distribution, source, signature, and wire-contract checks | Policy choice or environment calls |
 | model_policy.py | Evidence selection and proposals | Environment calls |
 | context.py | Per-game context construction, compaction, cache identity, and resumption | Cross-game mutable state |
 | representation.py | Versioned model-visible image/grid/animation encodings | Semantic claims |

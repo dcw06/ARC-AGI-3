@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "status": "active_local_fixture_mounted_source_and_live_submission_validated",
+  "local_arc_agi_version": "0.9.9",
+  "kaggle_mounted_arc_agi_version": "0.9.8",
+  "arcengine_version": "0.9.3",
+  "source_hashes": {
+    "arc_agi_api_py": "07a82fa2b00cf2214c573a9027a628af67c9fdbd9c31b66e6250a9aa12c30ec5",
+    "arc_agi_scorecard_py": "1cc830e48008bec60b8a98ae14d3e9312e8408f102a9878bad42744aa9e489b7",
+    "arcengine_enums_py": "94ebef48f6fe950a18679a1b991c366e8e28c32ab58c9335f385e19bea21950e"
+  },
+  "score_units": {
+    "normalized": "NormalizedRHAE_fraction",
+    "official": "OfficialRHAEPercent"
+  },
+  "counter_semantics": {
+    "initial_play_reset": {"actions_delta": 0, "resets_delta": 0},
+    "later_level_reset": {"actions_delta": 1, "resets_delta": 1},
+    "visible_noop_action_1_to_7": {"actions_delta": 1, "resets_delta": 0},
+    "ambiguous_action": {"official_delta": null, "local_conservative_spent_delta": 1}
+  },
+  "mounted_scorecard_source_hash_matches_local_fixture": true,
+  "live_gateway_confirmation": "passed_submission_56076246"
+}

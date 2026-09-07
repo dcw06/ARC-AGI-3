@@ -1,24 +1,61 @@
 {
   "schema_version": 1,
   "plan": "8.4",
-  "status": "local_phase0_passed_pending_external_and_mounted_validation",
-  "checked_at": "2026-09-06T12:30:00+08:00",
+  "status": "active",
+  "checked_at": "2026-09-07T22:48:28+08:00",
   "local_checks": {
     "registries_and_schemas": "passed",
     "secret_and_output_ignore_audit": "passed",
     "immutable_action_and_journal_tests": "passed",
     "ambiguous_dispatch_quarantine": "passed",
+    "exact_requests_wire_serialization_and_16k_reasoning_boundary": "passed",
+    "policy_exception_containment_and_client_session_cleanup": "passed",
     "one_open_one_make_one_close_synthetic": "passed",
-    "synthetic_110_client_load": "passed",
+    "synthetic_110_client_load_and_hung_worker_finalization": "passed",
     "three_run_deterministic_trace_sha256": "1dfe912b5f012fab00e2d289a196e563fc608f1e83f154d064e14858e8f00171",
-    "local_ls20_adapter_smoke": "passed_3_actions",
+    "three_real_ls20_development_runs": "passed_12_actions_each_no_invalid_action_or_uncaught_exception",
+    "pinned_local_competition_mode_rest_gateway": "passed",
+    "installed_scorer_reset_and_noop_counter_fixture": "passed",
+    "typed_normalized_and_official_score_units": "passed",
+    "exact_runtime_source_hash_audit": "passed",
+    "phase0_test_suite": "passed_36_tests",
     "offline_multifile_notebook_validation": "passed"
   },
-  "blocking_checks": [
-    "mounted Kaggle client hashes and gateway transport-equivalence smoke",
-    "mounted scorer initial RESET, later RESET, and visible-no-op fixtures",
-    "Kaggle retained-output and generated submission end-to-end smoke",
-    "Kaggle account rules, identity, team, kernel ID, and allowance confirmation"
-  ],
-  "authority_until_passed": "Plan 7"
+  "owner_confirmations": {
+    "rules_accepted": true,
+    "identity_verified": true,
+    "team": "dai_chongwei06",
+    "kaggle_canonical_owner": "daichongwei06",
+    "submission_allowance_per_day": 2,
+    "kaggle_api_competition_access": "passed",
+    "kernel_id": "daichongwei06/arc-prize-2026-arc-agi-3-starter",
+    "project_license": "Apache-2.0"
+  },
+  "kaggle_notebook_smoke": {
+    "version_1": {
+      "status": "failed_safely_before_agent_start",
+      "reason": "mounted arc-agi is 0.9.8 while the initial notebook requested 0.9.9"
+    },
+    "version_2": {
+      "status": "complete",
+      "runtime_profile": "kaggle_2026_09_07",
+      "retained_outputs": ["submission.parquet"],
+      "retained_submission_bytes": 890
+    },
+    "scored_submission_spent": true
+  },
+  "competition_rerun": {
+    "submission_ref": 56076246,
+    "submitted_at": "2026-09-07T11:52:44.467000Z",
+    "status": "complete",
+    "public_score_official_rhae_percent": 0.08,
+    "expected_environment_inventory": 110,
+    "runtime_source_audit": "passed_by_fail_closed_success",
+    "gateway_and_scorecard_finalization": "acknowledged_by_fail_closed_success",
+    "mounted_scorer_semantics": "passed_by_exact_source_hash_plus_local_executable_fixture_and_accepted_live_score",
+    "submission_output_contract": "accepted",
+    "evidence_note": "Kaggle CLI exposes the completed submission record but not competition-rerun stdout; nonzero audit or finalization status makes the notebook fail before submission acceptance"
+  },
+  "blocking_checks": [],
+  "authority": "Plan 8"
 }

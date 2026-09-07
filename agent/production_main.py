@@ -3,19 +3,21 @@
 from __future__ import annotations
 
 import os
-from importlib.metadata import version
 
 from .competition_loop import CompetitionOrchestrator
 from .framework_adapter import RemoteFrameworkAdapter
+from .runtime_audit import validate_mounted_runtime
 from .watchdog import DeadlineWatchdog
 
 
 def main() -> int:
     print("ARC3_RUN_START", flush=True)
     try:
-        if version("arc-agi") != "0.9.9" or version("arcengine") != "0.9.3":
-            print("ARC3_RUNTIME_INCOMPATIBLE", flush=True)
+        audit = validate_mounted_runtime("kaggle_2026_09_07")
+        if not audit.passed:
+            print(f"ARC3_RUNTIME_AUDIT status=failed checks={len(audit.failures)}", flush=True)
             return 3
+        print(f"ARC3_RUNTIME_AUDIT status=passed checks={len(audit.checks)}", flush=True)
         adapter = RemoteFrameworkAdapter(
             base_url=os.getenv("ARC_BASE_URL", "http://gateway:8001"),
             api_key=os.getenv("ARC_API_KEY", "test-key-123"),

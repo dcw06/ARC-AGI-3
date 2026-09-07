@@ -28,15 +28,10 @@ COMP_SLUG       := arc-prize-2026-arc-agi-3
 GAME            ?=
 STEPS           ?= 200
 
-.PHONY: help setup play-local play-competition-like pull-sample notebook submit status verify-local validate-phase0 test clean _check-kaggle
+.PHONY: help setup play-local play-competition-like pull-sample notebook submit status verify-local validate-gateway validate-phase0 test clean _check-kaggle
 
 _check-kaggle:
-	@if [ ! -s .kaggle/access_token ]; then \
-	    echo "ERROR: .kaggle/access_token is missing or empty."; \
-	    echo "       Generate a token at https://www.kaggle.com/settings (API → Create New Token)"; \
-	    echo "       and save it as a one-line file at: $(PWD)/.kaggle/access_token"; \
-	    exit 1; \
-	fi
+	@$(VENV_PY) scripts/check_kaggle_config.py
 
 help:
 	@awk 'BEGIN{FS=":.*##"} /^[a-zA-Z_-]+:.*##/ {printf "  %-15s %s\n",$$1,$$2}' $(MAKEFILE_LIST)
@@ -48,6 +43,7 @@ setup: ## One-time install: managed Python 3.12, venv, dependencies, framework
 	$(UV_ENV) $(UV) venv --python 3.12 --managed-python $(VENV)
 	$(UV_ENV) $(UV) pip install --python $(VENV_PY) \
 		"arc-agi==$(ARC_AGI_VERSION)" "arcengine==$(ARCENGINE_VERSION)" \
+		"requests==2.34.2" "numpy==2.5.2" "pydantic==2.13.5" \
 		"kaggle==2.2.4" "python-dotenv==1.2.3" "pandas==3.0.5" "pyarrow==25.0.1"
 	@if [ ! -d "$(FRAMEWORK_DIR)/.git" ]; then \
 	    mkdir -p vendor && git clone $(FRAMEWORK_REPO) $(FRAMEWORK_DIR); \
@@ -71,6 +67,9 @@ play-competition-like: ## Run the Plan 8 adapter locally (GAME=ls20 optional)
 
 test: ## Run project unit and integration tests
 	$(PYTHON_ENV) $(VENV_PY) -m unittest discover -s tests -v
+
+validate-gateway: ## Exercise production transport against pinned local REST gateway
+	$(PYTHON_ENV) $(VENV_PY) scripts/validate_local_gateway.py
 
 validate-phase0: test ## Validate Plan 8 Phase 0 configuration and activation gates
 	$(PYTHON_ENV) $(VENV_PY) scripts/validate_phase0.py

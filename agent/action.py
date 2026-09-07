@@ -9,6 +9,7 @@ from types import MappingProxyType
 from typing import Any, Iterable, Mapping
 
 from arcengine import GameAction
+from requests.models import complexjson
 
 MAX_DISPLAY_COORDINATE = 63
 
@@ -89,6 +90,18 @@ class SerializedAction:
     payload_sha256: str
 
 
+def wire_json_bytes(payload: Mapping[str, Any]) -> bytes:
+    """Match ``requests``' JSON request-body serialization exactly."""
+    return complexjson.dumps(dict(payload), allow_nan=False).encode("utf-8")
+
+
+def encode_wire_reasoning(reasoning: Mapping[str, Any]) -> tuple[str, bytes]:
+    """Return the upstream wire string and bytes checked by arcengine."""
+    logical = json.dumps(dict(reasoning))
+    parsed_value_bytes = json.dumps(logical, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+    return logical, parsed_value_bytes
+
+
 def normalize_legal_actions(actions: Iterable[int | GameAction]) -> frozenset[int]:
     normalized: set[int] = set()
     for action in actions:
@@ -107,10 +120,13 @@ def serialize_action(
     game_id: str,
     guid: str,
     legal_actions: Iterable[int | GameAction],
+    allow_level_reset: bool = False,
     reasoning_limit_bytes: int = 16_000,
     request_limit_bytes: int = 65_536,
 ) -> SerializedAction:
     legal = normalize_legal_actions(legal_actions)
+    if allow_level_reset:
+        legal = legal | {GameAction.RESET.value}
     if decision.action_id not in legal:
         raise ActionValidationError(
             f"action {decision.action_id} is not currently legal: {sorted(legal)}"
@@ -129,12 +145,11 @@ def serialize_action(
     if decision.wire_reasoning:
         # Match arc-agi 0.9.9: the logical object is compact JSON encoded into
         # the server-parsed reasoning string field.
-        logical = json.dumps(dict(decision.wire_reasoning), sort_keys=True, separators=(",", ":"))
-        parsed_value_bytes = json.dumps(logical, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+        logical, parsed_value_bytes = encode_wire_reasoning(decision.wire_reasoning)
         if len(parsed_value_bytes) >= reasoning_limit_bytes:
             raise ActionValidationError("server-parsed reasoning exceeds byte limit")
         payload["reasoning"] = logical
-    payload_bytes = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    payload_bytes = wire_json_bytes(payload)
     if len(payload_bytes) > request_limit_bytes:
         raise ActionValidationError("request body exceeds internal byte limit")
     return SerializedAction(

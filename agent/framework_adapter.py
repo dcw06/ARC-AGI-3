@@ -8,11 +8,12 @@ from dataclasses import dataclass, field
 from typing import Any, Protocol
 
 import requests
+from arcengine import GameState
 from requests.adapters import HTTPAdapter
 from requests.cookies import RequestsCookieJar
 from urllib3.util.retry import Retry
 
-from .action import ActionDecision, ActionValidationError, serialize_action
+from .action import ActionDecision, ActionValidationError, serialize_action, wire_json_bytes
 from .action_journal import LiveTransactionJournal, TransactionKind
 from .state import Observation
 
@@ -53,6 +54,7 @@ class RemoteClient:
     bootstrap_requests: int = 1
     action_requests: int = 0
     quarantined: bool = False
+    closed: bool = False
 
 
 @dataclass(slots=True)
@@ -64,6 +66,7 @@ class LocalClient:
     bootstrap_requests: int = 1
     action_requests: int = 0
     quarantined: bool = False
+    closed: bool = False
 
 
 class RemoteFrameworkAdapter:
@@ -122,12 +125,19 @@ class RemoteFrameworkAdapter:
             payload_sha256=encoded[1],
         )
         try:
-            response = self._post_once(self._master_session, "/api/scorecard/open", payload, entry.transaction_id)
+            response = self._post_once(
+                self._master_session,
+                "/api/scorecard/open",
+                payload,
+                entry.transaction_id,
+                payload_bytes=encoded[0],
+            )
             card_id = str(response.json()["card_id"])
             if not card_id:
                 raise ValueError("empty card id")
         except Exception as exc:
             self.lifecycle_journal.mark_outcome_unknown(entry.transaction_id, type(exc).__name__)
+            self._master_session.close()
             raise OutcomeUnknown("scorecard open outcome is unknown") from exc
         self.lifecycle_journal.mark_acknowledged(entry.transaction_id, card_id=card_id)
         self.scorecard_id = card_id
@@ -150,12 +160,20 @@ class RemoteFrameworkAdapter:
         )
         session = self._session_factory()
         try:
-            response = self._post_once(session, "/api/cmd/RESET", payload, entry.transaction_id, journal=journal)
+            response = self._post_once(
+                session,
+                "/api/cmd/RESET",
+                payload,
+                entry.transaction_id,
+                journal=journal,
+                payload_bytes=encoded[0],
+            )
             observation = Observation.from_value(response.json())
             if observation.game_id and observation.game_id != game_id:
                 raise ValueError("bootstrap returned a different game id")
         except Exception as exc:
             journal.mark_outcome_unknown(entry.transaction_id, type(exc).__name__)
+            session.close()
             raise OutcomeUnknown(f"bootstrap outcome unknown for {game_id}") from exc
         journal.mark_acknowledged(
             entry.transaction_id,
@@ -174,6 +192,7 @@ class RemoteFrameworkAdapter:
                 game_id=client.game_id,
                 guid=client.observation.guid,
                 legal_actions=client.observation.available_actions,
+                allow_level_reset=client.observation.state is GameState.GAME_OVER,
             )
         except Exception as exc:
             raise PreDispatchFailure(str(exc)) from exc
@@ -192,6 +211,7 @@ class RemoteFrameworkAdapter:
                 dict(serialized.payload),
                 entry.transaction_id,
                 journal=client.journal,
+                payload_bytes=serialized.payload_bytes,
             )
             observation = Observation.from_value(response.json())
             if observation.guid != client.observation.guid:
@@ -223,15 +243,29 @@ class RemoteFrameworkAdapter:
             payload_sha256=encoded[1],
         )
         try:
-            response = self._post_once(self._master_session, "/api/scorecard/close", payload, entry.transaction_id)
+            response = self._post_once(
+                self._master_session,
+                "/api/scorecard/close",
+                payload,
+                entry.transaction_id,
+                payload_bytes=encoded[0],
+            )
             result = response.json()
             if not isinstance(result, dict):
                 raise ValueError("close response is not an object")
         except Exception as exc:
             self.lifecycle_journal.mark_finalization_unknown(entry.transaction_id, type(exc).__name__)
+            self._master_session.close()
             raise FinalizationUnknown("scorecard close outcome is unknown") from exc
         self.lifecycle_journal.mark_acknowledged(entry.transaction_id)
+        self._master_session.close()
         return result
+
+    @staticmethod
+    def finalize_client(client: RemoteClient) -> None:
+        if not client.closed:
+            client.closed = True
+            client.session.close()
 
     def _post_once(
         self,
@@ -241,14 +275,16 @@ class RemoteFrameworkAdapter:
         transaction_id: str,
         *,
         journal: LiveTransactionJournal | None = None,
+        payload_bytes: bytes | None = None,
     ) -> requests.Response:
         target_journal = journal or self.lifecycle_journal
         target_journal.mark_dispatched(transaction_id)
         with self._cookie_lock:
             session.cookies.update(self._master_cookie_jar)
+        body = payload_bytes if payload_bytes is not None else wire_json_bytes(payload)
         response = session.post(
             f"{self.base_url}{path}",
-            json=payload,
+            data=body,
             headers={**self.headers, "Content-Type": "application/json"},
             timeout=self.timeout_seconds,
             allow_redirects=False,
@@ -264,7 +300,7 @@ class RemoteFrameworkAdapter:
     def _encode(payload: dict[str, Any]) -> tuple[bytes, str]:
         import hashlib
 
-        raw = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        raw = wire_json_bytes(payload)
         return raw, hashlib.sha256(raw).hexdigest()
 
 
@@ -316,6 +352,7 @@ class LocalFrameworkAdapter:
                 game_id=client.game_id,
                 guid=client.observation.guid,
                 legal_actions=client.observation.available_actions,
+                allow_level_reset=client.observation.state is GameState.GAME_OVER,
             )
         except ActionValidationError as exc:
             raise PreDispatchFailure(str(exc)) from exc
@@ -363,3 +400,7 @@ class LocalFrameworkAdapter:
         if hasattr(result, "model_dump"):
             return result.model_dump()
         return {"result": result}
+
+    @staticmethod
+    def finalize_client(client: LocalClient) -> None:
+        client.closed = True

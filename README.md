@@ -3,6 +3,10 @@
 This repository implements the transaction-safe Phase 0 foundation described
 by `docs/ARC-AGI-3_Project_Plan_8.md`.
 
+Phase 0 is complete. The local, account, packaging, mounted-runtime, and scored
+Kaggle rerun gates pass, and Plan 8 is active. The E0 public score of 0.08 is a
+pipeline-validation baseline, not a competitiveness claim.
+
 This is a starter kit for the [ARC Prize 2026 — ARC-AGI-3](https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3)
 competition. Production uses a multi-file agent package and a dedicated
 lifecycle adapter; `agent/my_agent.py` is compatibility-only.
@@ -55,7 +59,7 @@ make status
 # 8.  When status shows "complete", open the notebook on kaggle.com,
 #     find your kernel, click "Submit to Competition" in the top
 #     right, and pick `submission.parquet` from the Output File
-#     dropdown. Treat it as the current one-per-day scored allowance and
+#     dropdown. Treat it as the current signed-in two-per-day allowance and
 #     revalidate that allowance in your account before use.
 ```
 
@@ -82,7 +86,7 @@ class MyAgent(Agent):
         ...
 ```
 
-The starter version picks random actions — a baseline that proves your whole
+The starter version picks deterministic legal fallback actions — a baseline that proves your whole
 pipeline works end-to-end. Replace the body of `choose_action` with your
 strategy. Everything else (Kaggle plumbing, submission file format, game
 orchestration) is handled for you.
@@ -122,7 +126,7 @@ twice.
 `make status` reports `complete`, open the kernel on kaggle.com and click
 **"Submit to Competition"** to enter Phase B and get a leaderboard score.
 
-> **The current observed allowance is one scored submission per day**, so it pays to be
+> **The current signed-in allowance is two scored submissions per day**, so it pays to be
 > confident before you submit: get `make play-local` passing, then submit.
 
 > **Heads up:** Before your first `make submit`, open
@@ -185,9 +189,9 @@ Three reasons:
 1. **Iteration speed.** Editing in your normal IDE, then `make play-local`,
    gives you a real-game-engine feedback loop in seconds. The Kaggle editor's
    loop is *minutes* per change.
-2. **No environment surprises.** The local `arc-agi` PyPI package hosts the
-   same game engine the Kaggle gateway runs. If it works locally, it works on
-   Kaggle.
+2. **Early environment-parity checks.** The pinned local toolkit exercises the
+   same documented contract and production transport, while the mounted runtime
+   audit still fails closed if Kaggle differs.
 3. **Your code stays in git.** Notebooks are awful for diffs and code review.
    Here your real work lives in [`agent/my_agent.py`](agent/my_agent.py); the
    notebook is just an auto-generated deployment artifact.
