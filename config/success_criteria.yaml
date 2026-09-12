@@ -24,17 +24,21 @@
     "model_viability": "three_target_RTX_profiles_passed_primary_q3vl30_fallback_q3vl8"
   },
   "phase_1": {
-    "status": "deliverable_6_complete_counterbalanced_whole_run_pending",
+    "status": "passed_provisional_primary",
     "published_controls": "frozen_unavailable_fail_closed",
     "same_model_normalization": "not_justified_without_eligible_faithful_harness",
     "e1_implementation": "four_cells_complete",
     "version_5_evidence": "descriptive_shared_resource_single_block",
+    "counterbalanced_whole_run_evidence": "reports/e1_results/e1-whole-run-four-cell-v1.json",
+    "counterbalanced_whole_run_sha256": "7ca485b51f38955ca73b148e3396426f09ea6ade911c170a2dc203f6ef5bb245",
+    "comparison_unit": "paired_complete_workload_run_block",
+    "factorial_effect_status": "Provisional_zero_nonzero_blocks",
     "operational_primary": "E1S-R",
     "operational_label": "Provisional primary",
     "acceptance_claim": false,
     "operational_fallback": "E0_deterministic_legal_fallback",
     "hierarchical_report": "reports/phase1_hierarchical_decision.md",
     "offline_bundle": "complete_for_public_Kaggle_runtime_use_not_redistribution",
-    "remaining_exit_gate": "counterbalanced_whole_run_execution"
+    "remaining_exit_gates": []
   }
 }

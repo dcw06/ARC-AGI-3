@@ -6,7 +6,8 @@
     "cell_id": "E1S-R",
     "operational_label": "Provisional primary",
     "acceptance_claim": false,
-    "selection_basis": "frozen_tie_break_after_all_four_version_5_cells_scored_zero",
+    "selection_basis": "frozen_tie_break_after_all_four_cells_scored_zero_in_both_counterbalanced_whole_run_blocks",
+    "whole_run_confirmed_at": "2026-09-12T09:44:16.853643+00:00",
     "feature_registry": "config/e1_feature_manifests.yaml",
     "model_binding": {
       "candidate_id": "M0-Q3VL-30B-A3B-FP8",
@@ -54,7 +55,9 @@
       "selection": "reports/e1_results/e1-causal-four-cell-v5.json",
       "selection_sha256": "f186192705e061734bf7bb93dd64f2afbe2f5538eaf828a04a123fca9515eb9d",
       "resource_profile": "reports/e1_profiles/q3vl30-mixed-v3.json",
-      "resource_profile_sha256": "e83f750635fc862bba8138229c97bcd8c5dd7ae56e4a99dc31a48ce9acf157a7"
+      "resource_profile_sha256": "e83f750635fc862bba8138229c97bcd8c5dd7ae56e4a99dc31a48ce9acf157a7",
+      "whole_run": "reports/e1_results/e1-whole-run-four-cell-v1.json",
+      "whole_run_sha256": "7ca485b51f38955ca73b148e3396426f09ea6ade911c170a2dc203f6ef5bb245"
     }
   },
   "fallback": {
@@ -65,6 +68,8 @@
   },
   "supersession": {
     "whole_run_protocol": "config/e1_whole_run_protocol.yaml",
+    "whole_run_result": "config/phase1_decision.yaml",
+    "status": "evaluated_no_primary_change_all_cells_tied_zero",
     "policy": "prospective_new_record_only_no_relabeling_of_existing_runs"
   }
 }

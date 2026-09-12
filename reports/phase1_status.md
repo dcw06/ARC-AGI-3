@@ -8,10 +8,11 @@ freeze/availability decision passed. A post-run dependence audit correctly
 classifies version 5 as descriptive shared-resource evidence, not causal
 factorial inference. Both frozen published bundles closed as
 production-ineligible rather than remaining ambiguously pending. Phase 1 exit
-remains blocked only on the counterbalanced whole-run execution. The unavailable
-published-control reproduction and same-model-normalization dispositions are
-now closed fail-safe. Deliverable 6 is closed with E1S-R as the runnable
-`Provisional primary` and E0 fallback. No scored submission was spent.
+is complete: the counterbalanced whole-run execution and all downloaded log
+hashes validated. The unavailable published-control reproduction and same-model
+normalization dispositions are closed fail-safe. E1S-R remains the runnable
+`Provisional primary` with E0 fallback because all block-level results tied at
+zero. No scored submission was spent.
 
 The first complete mixed-prompt target run (private Kaggle kernel version 2)
 retained valid evidence but failed closed: E1S-F produced 0/8 strict responses
@@ -56,9 +57,9 @@ RAM `14612037632` bytes. The frozen evidence is
 - Replaced the provisional M0-shape projection with the measured mixed-prompt
   target-RTX profile. Each cell uses its frozen request ceiling, and both E1C
   full-workload cells admit all `70400` requests with headroom.
-- The complete local suite has 101 passing tests. `make validate-phase1` validates
-  the implementation and parameter closure while reporting the external exit
-  blocks.
+- The complete local suite has 102 passing tests. `make validate-phase1` validates
+  the implementation, parameter closure, canonical whole-run evidence, and
+  final exit gate.
 - Added the private, unscored `notebooks/e1-q3vl30` RTX profile bundle. It runs
   an E1S-R canary first, profiles all four frozen mixed request shapes from one
   model load, checks strict protocol output and cancellation recovery, samples
@@ -113,8 +114,16 @@ RAM `14612037632` bytes. The frozen evidence is
   and uncertainty unit, and every treatment starts a fresh model process,
   queue, Arcade/session set, and policy state. The regenerated private notebook
   at `notebooks/e1-four-cell/profile.ipynb` is projected at 23,330.02 seconds,
-  leaving 4,209.98 seconds inside the 27,540-second envelope. This unscored run
-  remains pending.
+  leaving 4,209.98 seconds inside the 27,540-second envelope.
+- The corrective whole-run completed both reverse-order blocks and eight fresh
+  treatment runtimes in 23,344.80 seconds. Every scorecard finalization was
+  acknowledged; inference requests equaled completions, with zero transport
+  failures, queue failures, or parser repairs. Every cell mean and all three
+  factorial contrasts were 0.0, so there were zero nonzero blocks and no
+  estimable effect. The frozen sparse rule retains E1S-R as `Provisional
+  primary`. Canonical evidence is
+  `reports/e1_results/e1-whole-run-four-cell-v1.json`, SHA-256
+  `7ca485b51f38955ca73b148e3396426f09ea6ade911c170a2dc203f6ef5bb245`.
 
 ## Frozen control and runner decision
 
@@ -154,10 +163,10 @@ The machine-readable decisions and all prompt, harness, model, runtime, and
 metadata hashes are in `config/control_registry.yaml`; the evidence narrative
 is in `reports/phase1_control_freeze.md`.
 
-## Required to pass the Phase 1 exit gate
+## Phase 1 exit gate
 
-1. Run the frozen two-block counterbalanced whole-run notebook and validate its
-   block-level evidence. Per-game values remain diagnostic.
+Passed. Per-game values remain diagnostic; the paired complete-workload run
+block is the validated randomization and uncertainty unit.
 
 The dated inventory and license/availability decisions are complete. Faithful
 published reproduction is closed as unavailable because there is no eligible
@@ -166,9 +175,9 @@ Deliverable 6 is complete: the hierarchical report, model and
 runtime table, runtime-use offline bundle, and runnable E1S-R `Provisional
 primary` with E0 fallback are frozen in
 `reports/phase1_hierarchical_decision.md` and
-`config/operational_primary.yaml`. E1 version 5 is a complete descriptive
-record; block-valid causal inference remains pending. This is an intentional
-fail-closed state, not a claim that all of Phase 1 is complete.
+`config/operational_primary.yaml`. E1 version 5 remains a descriptive record;
+the counterbalanced block-valid experiment is complete, but its all-zero sparse
+evidence supports only a provisional primary and no factorial acceptance claim.
 
 ## Primary sources
 

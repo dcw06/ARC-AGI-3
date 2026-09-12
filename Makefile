@@ -80,7 +80,7 @@ validate-phase0f: test ## Validate Phase 0F foundation and report remaining M0 w
 validate-m0-exit: validate-phase0f ## Require all target profiles and the provisional M0 selection
 	$(PYTHON_ENV) $(VENV_PY) scripts/validate_m0_exit.py
 
-validate-phase1: test ## Validate Phase 1 implementation/parameters and external exit blocks
+validate-phase1: test ## Validate Phase 1 implementation, evidence, decision, and exit gate
 	$(PYTHON_ENV) $(VENV_PY) scripts/validate_phase1.py
 
 list-games: ## Show all available games

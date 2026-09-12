@@ -2,11 +2,11 @@
 
 Date: 2026-09-12
 
-Status: deliverable 6 complete with operational label `Provisional primary`.
-This is an operational selection, not an acceptance, superiority, or
-generalization claim. The counterbalanced whole-run experiment remains a
-separate Phase 1 exit-gate dependency and may supersede this decision only
-prospectively.
+Status: Phase 1 complete with operational label `Provisional primary`. This is
+an operational selection, not an acceptance, superiority, or generalization
+claim. The counterbalanced whole-run experiment passed its frozen execution and
+validation gates, but zero nonzero blocks leave every factorial effect
+provisional.
 
 ## Hierarchical decision
 
@@ -23,7 +23,11 @@ prospectively.
 4. Every version-5 cell scored 0.0. The registered tie-break selects E1S-R, the
    least complex one-request R cell, with operational label
    `Provisional primary`. No factorial effect is accepted.
-5. The production notebook now mounts the exact model and vLLM wheelhouse,
+5. The counterbalanced whole-run completed both reverse-order blocks with fresh
+   treatment runtimes in 23,344.80 seconds. Every cell mean and factorial
+   contrast was 0.0; with zero nonzero blocks, the frozen rule keeps all effects
+   and E1S-R provisional.
+6. The production notebook now mounts the exact model and vLLM wheelhouse,
    starts the local model server, requires a real completion canary before any
    competition call, routes every proposal through the bounded queue, enforces
    the 27,540-second full-lifecycle runtime envelope with a 600-second
@@ -42,7 +46,7 @@ prospectively.
 
 The four-cell comparison mode is `shared_resource_whole_run`: game clients in
 one treatment share the inference service and scheduler. Version-5 per-game
-contrasts and cross-validation are diagnostic. The frozen corrective design
+contrasts and cross-validation are diagnostic. The completed corrective design
 uses paired complete-workload blocks as both randomization and uncertainty unit.
 
 ## Completed model/runtime table
@@ -93,7 +97,9 @@ license closure.
   `f186192705e061734bf7bb93dd64f2afbe2f5538eaf828a04a123fca9515eb9d`.
 - Mixed-prompt resource evidence SHA-256:
   `e83f750635fc862bba8138229c97bcd8c5dd7ae56e4a99dc31a48ce9acf157a7`.
+- Counterbalanced whole-run evidence SHA-256:
+  `7ca485b51f38955ca73b148e3396426f09ea6ade911c170a2dc203f6ef5bb245`.
 
-The corrected two-block whole-run result, when available, is allowed to create
-a new prospective operational record. It cannot retroactively convert this
-provisional decision into an accepted causal result.
+The completed two-block result confirms the existing primary without changing
+its label: E1S-R remains `Provisional primary`. It does not retroactively convert
+version 5 or the final selection into an accepted causal result.

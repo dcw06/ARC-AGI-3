@@ -16,6 +16,7 @@ from agent.e1_policy import binding_from_registry
 from agent.feature_manifest import load_e1_feature_manifests
 from agent.safe_operations import SAFE_OPERATIONS
 from evaluation.e1_experiment import validate_experiment_record
+from evaluation.e1_whole_run import validate_whole_run_record
 
 
 SNAPSHOT_PATTERN = re.compile(r"^kaggle_snapshot_sha256:[0-9a-f]{64}$")
@@ -46,6 +47,7 @@ def main() -> int:
     dependencies = load("dependency_manifest.lock")
     operational = load("operational_primary.yaml")
     success = load("success_criteria.yaml")
+    decision = load("phase1_decision.yaml")
 
     candidates = controls.get("candidates", [])
     public_candidates = [item for item in candidates if item.get("source_url") != "local"]
@@ -250,7 +252,7 @@ def main() -> int:
     selection = protocol.get("selection", {})
     check(
         statistics.get("status")
-        == "E1_four_cell_descriptive_complete_whole_run_inference_pending"
+        == "E1_complete_whole_run_all_effects_provisional"
         and selection.get("minimum_nonzero_game_pairs") == 5
         and selection.get("sparse_or_tied_status") == "Provisional primary"
         and "selection_procedure" in selection.get("selection_procedure_estimand", "")
@@ -361,7 +363,7 @@ def main() -> int:
         and execution.get("operational_primary_binding")
         == "config/operational_primary.yaml"
         and experiments.get("treatments", {}).get("E1", {}).get("status")
-        == "four_cell_descriptive_complete_counterbalanced_whole_run_inference_pending",
+        == "complete_counterbalanced_whole_run_valid_all_effects_provisional",
         "version-5 evidence is valid as a descriptive shared-resource run",
         failures,
     )
@@ -403,13 +405,14 @@ def main() -> int:
         and selection_sha256 == primary_evidence.get("selection_sha256")
         and resource_sha256 == primary_evidence.get("resource_profile_sha256")
         and experiments.get("treatments", {}).get("E1S-R", {}).get("status")
-        == "operational_provisional_primary_by_frozen_tie_break"
+        == "operational_provisional_primary_confirmed_by_whole_run_tie"
         and experiments.get("current_phase")
-        == "phase_1_operational_primary_selected_whole_run_e1_pending"
+        == "phase_1_complete_provisional_primary"
+        and success.get("phase_1", {}).get("status")
+        == "passed_provisional_primary"
         and success.get("phase_1", {}).get("operational_primary") == "E1S-R"
         and success.get("phase_1", {}).get("acceptance_claim") is False
-        and success.get("phase_1", {}).get("remaining_exit_gate")
-        == "counterbalanced_whole_run_execution"
+        and success.get("phase_1", {}).get("remaining_exit_gates") == []
         and offline.get("status")
         == "complete_for_public_Kaggle_runtime_use_not_approved_for_redistribution"
         and offline.get("wheelhouse", {}).get("sha256s_manifest_sha256")
@@ -428,7 +431,7 @@ def main() -> int:
         and "Provisional primary" in hierarchical_text
         and "acceptance" in hierarchical_text
         and "def _completion_canary" in production_policy_text
-        and "This is the only incomplete Phase 1 item." in completion_audit_text,
+        and "There are no remaining Phase 1 exit gates." in completion_audit_text,
         "hierarchical report, runtime table, offline bundle, and operational provisional primary are complete",
         failures,
     )
@@ -441,6 +444,26 @@ def main() -> int:
         whole = {}
     whole_execution = whole.get("execution", {})
     whole_analysis = whole.get("analysis", {})
+    decision_comparison = decision.get("comparison", {})
+    decision_result = decision.get("result", {})
+    canonical_path = ROOT / decision_comparison.get("canonical_evidence", "missing")
+    try:
+        canonical_bytes = canonical_path.read_bytes()
+        canonical_record = json.loads(canonical_bytes)
+        validate_whole_run_record(canonical_record, whole)
+        canonical_valid = True
+    except (OSError, ValueError, json.JSONDecodeError):
+        canonical_bytes = b""
+        canonical_record = {}
+        canonical_valid = False
+    canonical_sha256 = hashlib.sha256(canonical_bytes).hexdigest()
+    canonical_analysis = canonical_record.get("analysis", {})
+    canonical_contrasts = canonical_analysis.get("factorial_contrasts", {})
+    recorded_log_hashes = {
+        f"{block['block_id']}-{cell_id}": cell["fresh_runtime"]["server_log_sha256"]
+        for block in canonical_record.get("blocks", [])
+        for cell_id, cell in block.get("cells", {}).items()
+    }
     observation_claim = execution.get("observation_bundle_claim", {})
     context_decision = execution.get("context_mode_decision", {})
     check(
@@ -467,8 +490,43 @@ def main() -> int:
         == "R_plus_registered_E0F_features_derived_from_bounded_intermediate_frame_sequences"
         and observation_claim.get("raw_intermediate_frames_model_visible") is False
         and context_decision.get("cached_mode") == "inactive"
-        and context_decision.get("programmatic_mode") == "inactive",
-        "shared-resource mode is truthful and a counterbalanced whole-run closure is frozen",
+        and context_decision.get("programmatic_mode") == "inactive"
+        and decision.get("status") == "phase_1_complete_provisional_primary"
+        and decision_comparison.get("mode") == "shared_resource_whole_run"
+        and decision_comparison.get("randomization_unit")
+        == "paired_complete_workload_run_block"
+        and decision_comparison.get("uncertainty_unit")
+        == "paired_complete_workload_run_block"
+        and decision_comparison.get("paired_blocks") == 2
+        and decision_comparison.get("evidence_sha256") == canonical_sha256
+        and statistics.get("shared_resource_closure_sha256") == canonical_sha256
+        and success.get("phase_1", {}).get("counterbalanced_whole_run_sha256")
+        == canonical_sha256
+        and canonical_sha256
+        == primary.get("evidence", {}).get("whole_run_sha256")
+        and canonical_valid
+        and canonical_record.get("runtime", {}).get("elapsed_seconds", 1e99) < 27540
+        and canonical_analysis.get("unit")
+        == "paired_complete_workload_run_block"
+        and canonical_analysis.get("fixed_candidate_by_frozen_tie_break") == "E1S-R"
+        and canonical_analysis.get("fixed_candidate_status") == "Provisional primary"
+        and set(canonical_contrasts) == {
+            "representation_F_minus_R",
+            "safe_operations_C_minus_S",
+            "interaction_difference_in_differences",
+        }
+        and all(
+            item.get("mean_effect") == 0.0
+            and item.get("nonzero_blocks") == 0
+            and item.get("two_sided_p_value") is None
+            and item.get("status") == "Provisional"
+            for item in canonical_contrasts.values()
+        )
+        and recorded_log_hashes == decision_comparison.get("server_log_sha256")
+        and decision_result.get("fixed_candidate") == "E1S-R"
+        and decision_result.get("fixed_candidate_acceptance_claim") is False
+        and decision.get("operational", {}).get("remaining_phase_1_exit_gates") == [],
+        "shared-resource whole-run evidence passes and preserves provisional inference",
         failures,
     )
 
@@ -476,10 +534,7 @@ def main() -> int:
         print(f"PHASE1_IMPLEMENTATION_FAILED count={len(failures)}")
         return 1
     print("PHASE1_IMPLEMENTATION_PASSED")
-    print(
-        "PHASE1_EXIT_BLOCKED "
-        "pending_counterbalanced_whole_run_execution"
-    )
+    print("PHASE1_EXIT_PASSED provisional_primary=E1S-R acceptance_claim=false")
     return 0
 
 

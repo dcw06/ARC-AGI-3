@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "status": "phase_1_complete_provisional_primary",
+  "completed_at": "2026-09-12T09:44:16.853643+00:00",
+  "comparison": {
+    "experiment_id": "E1-whole-run-four-cell-v1",
+    "mode": "shared_resource_whole_run",
+    "randomization_unit": "paired_complete_workload_run_block",
+    "uncertainty_unit": "paired_complete_workload_run_block",
+    "paired_blocks": 2,
+    "frozen_protocol": "config/e1_whole_run_protocol.yaml",
+    "canonical_evidence": "reports/e1_results/e1-whole-run-four-cell-v1.json",
+    "evidence_sha256": "7ca485b51f38955ca73b148e3396426f09ea6ade911c170a2dc203f6ef5bb245",
+    "kernel_log_sha256": "11e0a6150e97bb150047ed0e4109334369348a86dde4b0fd73d33c271b6667ae",
+    "target_gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "elapsed_seconds": 23344.801921443,
+    "hard_seconds": 27540,
+    "all_treatment_finalizations_acknowledged": true,
+    "all_inference_requests_completed": true,
+    "inference_transport_failures": 0,
+    "inference_queue_failures": 0,
+    "parser_repairs": 0,
+    "server_log_sha256": {
+      "B1-E1S-R": "729c1d087228ccd8b9de7f2f1f2c5c68a4ee744816d1d3688fee27bb1ebe52ce",
+      "B1-E1S-F": "d68c59a164f660b30035337c1f0dfd98b5dab602253d4d736528daffe95279e9",
+      "B1-E1C-F": "319f7a37f28e9e0f66138d091adc4a5321be7c58c32095eccb2d43c2f75ae51e",
+      "B1-E1C-R": "e0d3608eae5701db104cc4c9c8905e905cc8d57eb8550975c4458bc9afce132b",
+      "B2-E1C-R": "eb4c0b2f40fa81398d98948cd419b8688c41bbee05e20efa9339e9d1c2d03b61",
+      "B2-E1C-F": "ed70bb51fda380e1a5465cb25220e8fa763837b70d1b7f56a0a3f59ddec8554b",
+      "B2-E1S-F": "0217e90ed10d5096e64ac3c7c2dfc88cb658a929d63c903d24c233323fc411d9",
+      "B2-E1S-R": "c7736db537b712ea94aa7677246eeae2b35276efabde2239e74c92353416571b"
+    }
+  },
+  "result": {
+    "cell_means": {
+      "E1S-R": 0.0,
+      "E1S-F": 0.0,
+      "E1C-R": 0.0,
+      "E1C-F": 0.0
+    },
+    "all_factorial_contrasts": 0.0,
+    "nonzero_blocks_per_contrast": 0,
+    "inferential_status": "Provisional",
+    "factorial_effect_acceptance_claim": false,
+    "selection_procedure_claim": "diagnostic_only",
+    "fixed_candidate": "E1S-R",
+    "fixed_candidate_mean": 0.0,
+    "fixed_candidate_status": "Provisional primary",
+    "fixed_candidate_acceptance_claim": false,
+    "selection_reason": "all_cells_tied_at_zero_frozen_tie_break_selects_lowest_complexity_one_request_R_cell"
+  },
+  "operational": {
+    "primary": "E1S-R",
+    "binding": "config/operational_primary.yaml",
+    "fallback": "E0_deterministic_legal_fallback",
+    "remaining_phase_1_exit_gates": []
+  }
+}

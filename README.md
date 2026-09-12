@@ -6,11 +6,12 @@ program described by `docs/ARC-AGI-3_Project_Plan_8.md`.
 Phase 0 and the Phase 0F/M0 evidence-and-model-viability milestone are complete.
 Plan 8 is active. Phase 1 implementation, experiment parameters, target-RTX
 profiling, and the September 10 control availability/license decisions are
-complete. Version 5 is valid descriptive four-cell evidence, and E1S-R is now
-the runnable `Provisional primary` with E0 fallback. The updated shared-resource
-audit still requires the frozen counterbalanced whole-run follow-up, while
-ineligible published reproductions remain explicitly unavailable. The E0 public
-score of 0.08 is a pipeline-validation baseline, not a competitiveness claim.
+complete. The counterbalanced shared-resource whole-run experiment passed its
+frozen validation gate; all cells and contrasts tied at zero, so E1S-R remains
+the runnable `Provisional primary` with E0 fallback and no acceptance or
+superiority claim. Ineligible published reproductions remain explicitly
+unavailable. The E0 public score of 0.08 is a pipeline-validation baseline, not
+a competitiveness claim.
 
 This is a starter kit for the [ARC Prize 2026 — ARC-AGI-3](https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3)
 competition. Production uses a multi-file agent package and a dedicated
@@ -181,7 +182,7 @@ already the default in this kit.
 | `make validate-phase0` | Validate locally provable Phase 0 gates |
 | `make validate-phase0f` | Validate the evidence, representation, and M0 foundation |
 | `make validate-m0-exit` | Validate all target profiles and the provisional model selection |
-| `make validate-phase1` | Validate Phase 1 implementation/parameter closure and report external exit blocks |
+| `make validate-phase1` | Validate Phase 1 implementation, evidence, decision, and exit gate |
 | `make e1-q3vl30-notebook` | Build the unscored four-cell mixed E1 RTX profile |
 | `make e1-q3vl30-push` | Upload that private profile on RTX PRO 6000; does not submit a score |
 | `make e1-q3vl30-status` | Check the private E1 profiling run |

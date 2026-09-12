@@ -421,6 +421,22 @@ class OperationalPrimaryTests(unittest.TestCase):
         self.assertIn("vllm==0.19.0", combined)
         self.assertIn("agent.production_main", combined)
 
+    def test_phase1_decision_closes_on_valid_whole_run_without_acceptance(self) -> None:
+        decision = json.loads((ROOT / "config/phase1_decision.yaml").read_text())
+        protocol = json.loads((ROOT / "config/e1_whole_run_protocol.yaml").read_text())
+        evidence_path = ROOT / decision["comparison"]["canonical_evidence"]
+        evidence_bytes = evidence_path.read_bytes()
+        record = json.loads(evidence_bytes)
+        validate_whole_run_record(record, protocol)
+        self.assertEqual(
+            hashlib.sha256(evidence_bytes).hexdigest(),
+            decision["comparison"]["evidence_sha256"],
+        )
+        self.assertEqual(decision["result"]["fixed_candidate"], "E1S-R")
+        self.assertEqual(decision["result"]["fixed_candidate_status"], "Provisional primary")
+        self.assertFalse(decision["result"]["factorial_effect_acceptance_claim"])
+        self.assertEqual(decision["operational"]["remaining_phase_1_exit_gates"], [])
+
 
 class Phase1StatisticsTests(unittest.TestCase):
     @staticmethod
