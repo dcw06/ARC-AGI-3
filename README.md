@@ -1,11 +1,16 @@
 # ARC Prize 2026 — Plan 8 implementation
 
-This repository implements the transaction-safe Phase 0 foundation described
-by `docs/ARC-AGI-3_Project_Plan_8.md`.
+This repository implements the transaction-safe ARC-AGI-3 agent and experiment
+program described by `docs/ARC-AGI-3_Project_Plan_8.md`.
 
-Phase 0 is complete. The local, account, packaging, mounted-runtime, and scored
-Kaggle rerun gates pass, and Plan 8 is active. The E0 public score of 0.08 is a
-pipeline-validation baseline, not a competitiveness claim.
+Phase 0 and the Phase 0F/M0 evidence-and-model-viability milestone are complete.
+Plan 8 is active. Phase 1 implementation, experiment parameters, target-RTX
+profiling, and the September 10 control availability/license decisions are
+complete. Version 5 is valid descriptive four-cell evidence, and E1S-R is now
+the runnable `Provisional primary` with E0 fallback. The updated shared-resource
+audit still requires the frozen counterbalanced whole-run follow-up, while
+ineligible published reproductions remain explicitly unavailable. The E0 public
+score of 0.08 is a pipeline-validation baseline, not a competitiveness claim.
 
 This is a starter kit for the [ARC Prize 2026 — ARC-AGI-3](https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3)
 competition. Production uses a multi-file agent package and a dedicated
@@ -86,10 +91,11 @@ class MyAgent(Agent):
         ...
 ```
 
-The starter version picks deterministic legal fallback actions — a baseline that proves your whole
-pipeline works end-to-end. Replace the body of `choose_action` with your
-strategy. Everything else (Kaggle plumbing, submission file format, game
-orchestration) is handled for you.
+The production agent still picks deterministic legal fallback actions — a
+baseline that proves the pipeline works end-to-end. Model-driven policies are
+added through the production policy interface in `agent/competition_loop.py`;
+the compatibility `choose_action` method above is not the production extension
+point. Kaggle plumbing, submission format, and orchestration remain separate.
 
 ---
 
@@ -173,6 +179,17 @@ already the default in this kit.
 | `make play-competition-like GAME=ls20` | Run through the Plan 8 adapter |
 | `make test` | Run transaction, adapter, loop, and scheduler tests |
 | `make validate-phase0` | Validate locally provable Phase 0 gates |
+| `make validate-phase0f` | Validate the evidence, representation, and M0 foundation |
+| `make validate-m0-exit` | Validate all target profiles and the provisional model selection |
+| `make validate-phase1` | Validate Phase 1 implementation/parameter closure and report external exit blocks |
+| `make e1-q3vl30-notebook` | Build the unscored four-cell mixed E1 RTX profile |
+| `make e1-q3vl30-push` | Upload that private profile on RTX PRO 6000; does not submit a score |
+| `make e1-q3vl30-status` | Check the private E1 profiling run |
+| `make e1-q3vl30-output` | Download its completed profile evidence into the ignored run directory |
+| `make e1-four-cell-notebook` | Build the counterbalanced whole-run E1 notebook |
+| `make e1-four-cell-push` | Run the private two-block whole-run experiment on RTX PRO 6000; does not submit a score |
+| `make e1-four-cell-status` | Check the private whole-run experiment |
+| `make e1-four-cell-output` | Download its result and per-treatment server logs |
 | `make list-games` | Print every game id available |
 | `make pull-sample` | Download the official sample agent for reference |
 | `make notebook` | Build the Kaggle notebook from your agent (no push) |
@@ -193,8 +210,8 @@ Three reasons:
    same documented contract and production transport, while the mounted runtime
    audit still fails closed if Kaggle differs.
 3. **Your code stays in git.** Notebooks are awful for diffs and code review.
-   Here your real work lives in [`agent/my_agent.py`](agent/my_agent.py); the
-   notebook is just an auto-generated deployment artifact.
+   The production implementation lives under [`agent/`](agent/); the notebook
+   is an auto-generated deployment artifact.
 
 ---
 
@@ -203,14 +220,23 @@ Three reasons:
 ```
 .
 ├── agent/
-│   └── my_agent.py             ★ The file you edit
+│   ├── production_main.py      Kaggle production entry point
+│   ├── competition_loop.py     Bounded game and all-game orchestration
+│   ├── e1_policy.py            Stateless E1S/E1C policy and local model transport
+│   ├── safe_operations.py      Spawn-isolated bounded E1C operations
+│   ├── evidence.py             T0-T3 evidence retention
+│   └── representation.py       Raw R and engineered F bundles
+├── config/                     Versioned contracts and experiment registries
+├── evaluation/                 Scoring, M0 profiles, and Phase 1 selection estimands
 ├── scripts/
-│   ├── play_local.py           Runs your agent against real games
+│   ├── play_competition_like.py Runs the production lifecycle locally
 │   ├── build_notebook.py       Packages your agent into a Kaggle notebook
-│   └── slim_framework.py       Trims framework deps so install is light
+│   └── validate_m0_exit.py     Enforces the Phase 0F/M0 exit gate
 ├── notebooks/
-│   ├── kernel-metadata.json    Edit once: your Kaggle username
-│   └── submission.ipynb        Auto-generated, never edit by hand
+│   ├── kernel-metadata.json    Production Kaggle metadata
+│   └── m0-*/                   Frozen target-RTX profiling notebooks
+├── reports/                    Phase status and immutable profile records
+├── tests/                      Phase 0, Phase 0F/M0, and Phase 1 tests
 ├── vendor/                     Cloned framework (gitignored)
 ├── .venv/                      Python 3.12 venv (gitignored)
 ├── .kaggle/                    Your project-local Kaggle token (gitignored)
@@ -240,8 +266,8 @@ first run. Check your internet, then try again — once downloaded, games are
 cached in `environment_files/` and you're fully offline.
 
 **My local score is 0.0**
-That is expected for the Phase 0 deterministic fallback. Model and policy
-screening begins in M0/Phase 1.
+That is expected while production still uses the deterministic fallback. M0
+established model viability; model-policy behavior is evaluated in Phase 1.
 
 ---
 

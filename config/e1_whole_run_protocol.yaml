@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "status": "frozen_pending_execution",
+  "frozen_at": "2026-09-12T12:00:00+08:00",
+  "experiment_id": "E1-whole-run-four-cell-v1",
+  "purpose": "correct shared-resource uncertainty unit for the E1 four-cell design",
+  "supersedes_for_inference": "E1-causal-four-cell-v1 kernel version 5 game-level contrast analysis",
+  "preserves_as_diagnostic": "reports/e1_results/e1-causal-four-cell-v5.json",
+  "source_protocol_sha256": "c7cfb038f20e1debc33e7a7663668f35335d944c168d5075f4ede143f09d93e6",
+  "feature_registry_sha256": "e9a11f10c141ec9cdd2929b3af5e4169c274cfeaf63e009116b1266fc6528dd6",
+  "artifact_tree_sha256": "052ab27f06c28261e143b8c1638382d107b034692bc0cd1792ec4e02ddab8627",
+  "game_seed_pairs_sha256": "2a2dd692c09c6b146579d66f6b8c698b5d54386be54b38c7ed8229e6774f1510",
+  "model_binding": {
+    "candidate_id": "M0-Q3VL-30B-A3B-FP8",
+    "model_id": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+    "revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+    "engine": "vllm==0.19.0",
+    "reasoning_setting": "instruct_non_thinking"
+  },
+  "execution": {
+    "mode": "shared_resource_whole_run",
+    "complete_workload": "all_15_frozen_development_game_seed_pairs",
+    "treatment_unit": "one_complete_workload_run",
+    "randomization_unit": "paired_complete_workload_run_block",
+    "uncertainty_unit": "paired_complete_workload_run_block",
+    "paired_run_blocks": 2,
+    "order_seed": 1618033,
+    "order_generation": "python_random_v3_shuffle_canonical_then_exact_reverse",
+    "blocks": [
+      {
+        "block_id": "B1",
+        "order": ["E1S-R", "E1S-F", "E1C-F", "E1C-R"]
+      },
+      {
+        "block_id": "B2",
+        "order": ["E1C-R", "E1C-F", "E1S-F", "E1S-R"]
+      }
+    ],
+    "resource_isolation": "fresh_vllm_process_queue_arcade_sessions_and_policy_state_for_every_complete_workload_run",
+    "model_state": "cold_load_each_treatment_run_no_prefix_cache_or_process_state_crosses_treatments",
+    "game_order": "frozen_protocol_order",
+    "arrival_policy": "competition_orchestrator_eight_workers",
+    "scheduler": "minimum_fair_v1_capacity_110_workers_8_max_age_300_seconds",
+    "hard_seconds": 27540,
+    "finalization_reserve_seconds": 600,
+    "rerun_rule": "no_selective_rerun_any_invalid_treatment_invalidates_its_entire_paired_block"
+  },
+  "analysis": {
+    "score_unit": "official_RHAE_percent",
+    "primary_estimand": "mean_over_paired_blocks_of_complete_workload_factorial_contrast",
+    "representation_contrast": "0.5_x_((E1S-F_minus_E1S-R)+(E1C-F_minus_E1C-R))",
+    "safe_operations_contrast": "0.5_x_((E1C-R_minus_E1S-R)+(E1C-F_minus_E1S-F))",
+    "interaction": "(E1C-F_minus_E1C-R)-(E1S-F_minus_E1S-R)",
+    "inference": "exact_two_sided_sign_flip_over_nonzero_paired_complete_workload_blocks",
+    "minimum_nonzero_blocks": 4,
+    "two_block_result_status": "Provisional",
+    "per_game_results": "diagnostic_only_never_resampled_as_independent_units",
+    "selection": "version_5_cross_validation_remains_separate_selection_procedure_diagnostic"
+  },
+  "projection": {
+    "basis": "version_5_measured_cell_elapsed_plus_seven_additional_cold_loads",
+    "version_5_cell_elapsed_seconds": 11185.123596884001,
+    "version_5_cold_load_seconds": 137.11000305999994,
+    "projected_total_seconds": 23330.017215188003,
+    "operational_target_seconds": 27540,
+    "projected_headroom_seconds": 4209.982784811997,
+    "status": "fits_before_execution_subject_to_hard_deadline"
+  }
+}

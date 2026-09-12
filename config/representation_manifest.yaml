@@ -1,6 +1,43 @@
 {
   "schema_version": 1,
-  "status": "phase0_raw_only",
-  "raw_observation": {"dtype": "uint8", "layout": "ordered_layers", "hash": "sha256", "game_id_model_visible": false},
-  "engineered_observation": {"status": "inactive_unclosed_until_phase0F"}
+  "status": "phase0f_R_and_E0F_fixture_active",
+  "representation_version": "arc3-representation-v1",
+  "raw_observation": {
+    "arm": "R",
+    "dtype": "uint8",
+    "layout": "latest_temporal_frame_C_order",
+    "game_id_model_visible": false,
+    "intermediate_frames_model_visible": false,
+    "engineered_features_model_visible": false,
+    "bounded_history": "T1_recent_actions_and_final_frames"
+  },
+  "engineered_observation": {
+    "arm": "F",
+    "feature_version": "E0F-v1",
+    "toggleable": true,
+    "includes_raw_arm": true,
+    "features": [
+      "stable_hashes",
+      "inter_frame_change_counts_and_union_bbox",
+      "inter_action_compact_delta",
+      "frame_and_distinct_frame_counts",
+      "transient_cells",
+      "palette_additions_and_removals",
+      "connected_same_color_regions",
+      "unambiguous_appearances_and_disappearances",
+      "unambiguous_translations",
+      "bounded_ACTION6_candidates"
+    ]
+  },
+  "coordinates": {
+    "scene": "row_column_zero_based",
+    "display": "x_y_each_0_through_63",
+    "dispatch_reliability_allowed": ["exact", "tested"],
+    "dispatch_reliability_blocked": ["tentative", "unavailable"]
+  },
+  "fixtures": {
+    "intermediate_only_cue_hidden_from_R": true,
+    "deterministic_digest": true,
+    "coordinate_endpoints": true
+  }
 }

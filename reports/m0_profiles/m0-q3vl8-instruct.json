@@ -1,0 +1,59 @@
+{
+  "artifact": {
+    "file_count": 70,
+    "symlinks_rejected": true,
+    "tree_sha256": "67242ee8a868b0369fc39acd3bc0e1c66d1432d6a7b3b2a3c1ef0a76bb0801f1"
+  },
+  "candidate_id": "M0-Q3VL-8B-FP8",
+  "engine": "vllm==0.19.0",
+  "hardware": {
+    "accelerator": "nvidiaRtxPro6000_expected",
+    "launch_spec_sha256": "7db7f9ed689b8856ac2367be77d2e79eb948c58619ee547f7bf36f6bc2c81b2b",
+    "machine": "g4-standard-48_expected",
+    "measured_at": "2026-09-08T16:06:46.912672+00:00",
+    "observed_gpu": "NVIDIA RTX PRO 6000 Blackwell Server Edition, 97887, 580.159.04",
+    "observed_packages": {
+      "torch": "2.10.0+cu128",
+      "transformers": "4.57.6",
+      "vllm": "0.19.0"
+    }
+  },
+  "measurements": {
+    "cancellation_seconds": 0.02713251999989552,
+    "cold_load_seconds": 191.142758104,
+    "concurrent_trials": [
+      {"completion_tokens": 59, "decode_tokens_per_second": 114.48364980794948, "elapsed_seconds": 0.546149583000215, "first_token_seconds": 0.03079214900003535, "token_count_source": "server_usage"},
+      {"completion_tokens": 59, "decode_tokens_per_second": 115.79161672777057, "elapsed_seconds": 0.5326566030000777, "first_token_seconds": 0.023120579000078578, "token_count_source": "server_usage"},
+      {"completion_tokens": 59, "decode_tokens_per_second": 115.65772428719994, "elapsed_seconds": 0.5320802329999879, "first_token_seconds": 0.021954339000103573, "token_count_source": "server_usage"},
+      {"completion_tokens": 59, "decode_tokens_per_second": 114.72837491373222, "elapsed_seconds": 0.542702183000074, "first_token_seconds": 0.028444048999972438, "token_count_source": "server_usage"},
+      {"completion_tokens": 59, "decode_tokens_per_second": 114.92843998212649, "elapsed_seconds": 0.5438058430002002, "first_token_seconds": 0.030442919000051916, "token_count_source": "server_usage"},
+      {"completion_tokens": 59, "decode_tokens_per_second": 114.5235007891751, "elapsed_seconds": 0.5437084829998184, "first_token_seconds": 0.028530378999903405, "token_count_source": "server_usage"},
+      {"completion_tokens": 59, "decode_tokens_per_second": 115.25579772118205, "elapsed_seconds": 0.541472702999954, "first_token_seconds": 0.029567868999947677, "token_count_source": "server_usage"},
+      {"completion_tokens": 59, "decode_tokens_per_second": 114.50175075505503, "elapsed_seconds": 0.5430005330001677, "first_token_seconds": 0.027724569000156407, "token_count_source": "server_usage"}
+    ],
+    "concurrent_wall_seconds": 0.5477595030001794,
+    "decode_tokens_per_second": 861.6920334832519,
+    "first_token_seconds": 23.189173069999924,
+    "offline_artifact_bytes": 21200194392,
+    "peak_ram_bytes": 9391464448,
+    "peak_vram_bytes": 41360031744,
+    "sequential_trials": [
+      {"completion_tokens": 59, "decode_tokens_per_second": 113.62895017899508, "elapsed_seconds": 23.70840694399999, "first_token_seconds": 23.189173069999924, "token_count_source": "server_usage"},
+      {"completion_tokens": 59, "decode_tokens_per_second": 113.46254565979787, "elapsed_seconds": 0.5389604840001994, "first_token_seconds": 0.018965100000059465, "token_count_source": "server_usage"},
+      {"completion_tokens": 59, "decode_tokens_per_second": 113.5568860641445, "elapsed_seconds": 0.5383328440000241, "first_token_seconds": 0.018769459999930405, "token_count_source": "server_usage"}
+    ]
+  },
+  "model_id": "Qwen/Qwen3-VL-8B-Instruct-FP8",
+  "model_revision": "9cdc6310a8cb770ce18efaf4e9935334512aee45",
+  "projection": {
+    "measured_concurrency": 8,
+    "projected_execution_seconds": 942.0984347292956,
+    "request_count": 8800,
+    "request_latency_p95_seconds": 0.546149583000215,
+    "safety_factor": 1.25
+  },
+  "prompt_sha256": "292307326672eac68114c93a576f339bca457a340745158ff928fae9b17d42c7",
+  "reasoning_setting": "instruct_non_thinking",
+  "schema_version": 1,
+  "status": "measured_unselected"
+}

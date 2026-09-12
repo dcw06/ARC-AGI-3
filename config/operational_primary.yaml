@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "status": "active_provisional_primary",
+  "selected_at": "2026-09-12T14:00:00+08:00",
+  "primary": {
+    "cell_id": "E1S-R",
+    "operational_label": "Provisional primary",
+    "acceptance_claim": false,
+    "selection_basis": "frozen_tie_break_after_all_four_version_5_cells_scored_zero",
+    "feature_registry": "config/e1_feature_manifests.yaml",
+    "model_binding": {
+      "candidate_id": "M0-Q3VL-30B-A3B-FP8",
+      "model_id": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+      "revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+      "engine": "vllm==0.19.0",
+      "reasoning_setting": "instruct_non_thinking"
+    },
+    "model_artifact": {
+      "kaggle_source": "qwen-lm/qwen-3-vl/Transformers/30b-a3b-instruct-fp8/1",
+      "mounted_path": "/kaggle/input/models/qwen-lm/qwen-3-vl/transformers/30b-a3b-instruct-fp8/1",
+      "tree_sha256": "052ab27f06c28261e143b8c1638382d107b034692bc0cd1792ec4e02ddab8627",
+      "required_files": [
+        "config.json",
+        "model.safetensors.index.json",
+        "tokenizer.json",
+        "tokenizer_config.json",
+        "chat_template.json"
+      ],
+      "shard_glob": "model-*.safetensors",
+      "shard_count": 4
+    },
+    "launch_spec": "config/m0_launch_spec_q3vl30.json",
+    "server": {
+      "base_url": "http://127.0.0.1:8000/v1",
+      "readiness_timeout_seconds": 900,
+      "completion_canary_timeout_seconds": 300,
+      "request_timeout_seconds": 300,
+      "scratch_log": "/tmp/arc3-agent/model-server.log"
+    },
+    "runtime": {
+      "hard_seconds": 27540,
+      "finalization_reserve_seconds": 600,
+      "deadline_basis": "full_lifecycle_including_model_load"
+    },
+    "inference": {
+      "queue_policy": "minimum_fair_v1",
+      "capacity": 110,
+      "worker_count": 8,
+      "max_age_seconds": 300,
+      "max_new_tokens": 128,
+      "request_seed": 0
+    },
+    "evidence": {
+      "selection": "reports/e1_results/e1-causal-four-cell-v5.json",
+      "selection_sha256": "f186192705e061734bf7bb93dd64f2afbe2f5538eaf828a04a123fca9515eb9d",
+      "resource_profile": "reports/e1_profiles/q3vl30-mixed-v3.json",
+      "resource_profile_sha256": "e83f750635fc862bba8138229c97bcd8c5dd7ae56e4a99dc31a48ce9acf157a7"
+    }
+  },
+  "fallback": {
+    "policy": "E0_deterministic_legal_fallback",
+    "activation": "model_startup_or_per_proposal_failure",
+    "legal_play_preserved": true,
+    "model_failure_retry": false
+  },
+  "supersession": {
+    "whole_run_protocol": "config/e1_whole_run_protocol.yaml",
+    "policy": "prospective_new_record_only_no_relabeling_of_existing_runs"
+  }
+}

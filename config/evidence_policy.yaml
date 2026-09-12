@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "status": "phase0f_foundation_active",
+  "packing": {
+    "dtype": "uint8",
+    "layout": "contiguous_C_order",
+    "grid_hash": "sha256:arc3-grid-v1",
+    "sequence_hash": "sha256:arc3-frame-sequence-v1",
+    "compression": "none_v1"
+  },
+  "tiers": {
+    "T0": "latest_final_frame_state_levels_legal_actions_observation_hash",
+    "T1": "bounded_action_final_frame_compact_delta_retention_status",
+    "T2": "bounded_transition_summary",
+    "T3": "optional_exact_ordered_action_response_frame_sequence"
+  },
+  "ram": {
+    "recent_transition_capacity": 16,
+    "t3_byte_capacity_per_game": 4194304,
+    "upstream_nested_grid_accumulation": false
+  },
+  "availability_values": [
+    "exact",
+    "summarized",
+    "omitted_capacity",
+    "evicted_pressure",
+    "unavailable_storage",
+    "corrupt"
+  ],
+  "failure_policy": {
+    "storage_failure_preserves_T0": true,
+    "storage_failure_preserves_legal_play": true,
+    "silent_loss_allowed": false
+  },
+  "persistent_store": {
+    "implementation": "content_addressed_atomic_blob_store",
+    "production_activation": "pending_bounded_disk_profile"
+  }
+}

@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import threading
 from dataclasses import dataclass, field
-from typing import Any, Protocol
+from typing import Any, Mapping, Protocol
 
 import requests
 from arcengine import GameState
@@ -307,12 +307,24 @@ class RemoteFrameworkAdapter:
 class LocalFrameworkAdapter:
     """Instrumented local emulation; never labeled as Kaggle authority."""
 
-    def __init__(self, arcade: Any) -> None:
+    def __init__(self, arcade: Any, *, seed_by_game: Mapping[str, int] | None = None) -> None:
         self.arcade = arcade
+        self.seed_by_game = dict(seed_by_game or {})
+        if any(
+            not isinstance(game_id, str)
+            or not game_id
+            or isinstance(seed, bool)
+            or not isinstance(seed, int)
+            for game_id, seed in self.seed_by_game.items()
+        ):
+            raise ValueError("local game seeds must map non-empty IDs to integers")
         self.lifecycle_journal = LiveTransactionJournal("local-lifecycle", capacity=128)
         self.scorecard_id: str | None = None
         self._made_games: set[str] = set()
         self._closed = False
+
+    def list_game_ids(self) -> tuple[str, ...]:
+        return tuple(str(item.game_id) for item in self.arcade.get_environments())
 
     def open_scorecard(self, tags: list[str] | None = None) -> str:
         entry = self.lifecycle_journal.prepare(TransactionKind.SCORECARD_OPEN)
@@ -333,7 +345,13 @@ class LocalFrameworkAdapter:
         entry = journal.prepare(TransactionKind.BOOTSTRAP_RESET, requested_game_id=game_id, scorecard_id=self.scorecard_id)
         journal.mark_dispatched(entry.transaction_id)
         try:
-            environment = self.arcade.make(game_id, scorecard_id=self.scorecard_id, save_recording=False)
+            make_kwargs: dict[str, Any] = {
+                "scorecard_id": self.scorecard_id,
+                "save_recording": False,
+            }
+            if game_id in self.seed_by_game:
+                make_kwargs["seed"] = self.seed_by_game[game_id]
+            environment = self.arcade.make(game_id, **make_kwargs)
             if environment is None or environment.observation_space is None:
                 raise ValueError("make returned no initial observation")
             observation = Observation.from_value(environment.observation_space)

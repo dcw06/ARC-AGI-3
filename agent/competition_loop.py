@@ -5,7 +5,7 @@ from __future__ import annotations
 import time
 from concurrent.futures import FIRST_COMPLETED, Future, ThreadPoolExecutor, wait
 from dataclasses import dataclass
-from typing import Any, Protocol
+from typing import Any, Callable, Protocol
 
 from arcengine import GameState
 
@@ -28,6 +28,18 @@ class GameResult:
     acknowledged_actions: int
     ambiguous_actions: int
     terminal_reason: str
+    controller_iterations: int = 0
+    policy_failures: int = 0
+    inference_requests: int = 0
+    inference_completions: int = 0
+    inference_transport_failures: int = 0
+    inference_queue_failures: int = 0
+    inference_prompt_tokens: int = 0
+    inference_completion_tokens: int = 0
+    inference_elapsed_seconds: float = 0.0
+    workspace_invocations: int = 0
+    workspace_elapsed_seconds: float = 0.0
+    parser_repairs: int = 0
 
 
 class CompetitionAgentLoop:
@@ -46,10 +58,11 @@ class CompetitionAgentLoop:
             raise ValueError("max_actions must be positive")
         self.adapter = adapter
         self.client = client
-        self.policy = policy or DeterministicFallback()
+        self.fallback = DeterministicFallback()
+        self.policy = policy or self.fallback
         self.max_actions = max_actions
         self.watchdog = watchdog or DeadlineWatchdog(32_400, 600)
-        self.state = GameRuntimeState(client.observation)
+        self.state = GameRuntimeState(client.observation, action_budget_limit=max_actions)
         self.state.counters.lifecycle_attempted = 1
         self.state.counters.lifecycle_acknowledged = 1
         self.state.counters.bootstrap_starts = 1
@@ -68,27 +81,36 @@ class CompetitionAgentLoop:
                 try:
                     decision = self.policy.propose(self.state)
                 except Exception:
+                    self.state.counters.policy_failures += 1
                     try:
-                        decision = DeterministicFallback().propose(self.state)
+                        decision = self.fallback.propose(self.state)
                     except Exception:
                         reason = "policy_failure_no_legal_fallback"
                         break
                 try:
+                    self.state.mark_pending_action(decision.decision_id)
                     observation = self.adapter.dispatch(self.client, decision)
                 except PreDispatchFailure:
+                    self.state.clear_pending_action()
                     reason = "pre_dispatch_failure"
                     break
                 except OutcomeUnknown:
                     self.state.quarantined = True
                     self.state.counters.actions_ambiguous += 1
                     self.state.counters.conservative_spent_actions += 1
+                    self.state.mark_pending_action(decision.decision_id)
                     reason = "outcome_unknown_quarantine"
                     break
                 self.state.counters.actions_acknowledged += 1
                 self.state.counters.conservative_spent_actions += 1
                 if decision.action_id == 0:
                     self.state.counters.later_resets_acknowledged += 1
-                self.state.replace_observation(observation)
+                self.state.replace_observation(
+                    observation,
+                    action_id=decision.action_id,
+                    action_data=decision.action_data,
+                    transition_id=decision.decision_id,
+                )
         finally:
             finalize = getattr(self.adapter, "finalize_client", None)
             if finalize is not None:
@@ -102,6 +124,18 @@ class CompetitionAgentLoop:
             acknowledged_actions=self.state.counters.actions_acknowledged,
             ambiguous_actions=self.state.counters.actions_ambiguous,
             terminal_reason=reason,
+            controller_iterations=self.state.counters.controller_iterations,
+            policy_failures=self.state.counters.policy_failures,
+            inference_requests=self.state.counters.inference_requests,
+            inference_completions=self.state.counters.inference_completions,
+            inference_transport_failures=self.state.counters.inference_transport_failures,
+            inference_queue_failures=self.state.counters.inference_queue_failures,
+            inference_prompt_tokens=self.state.counters.inference_prompt_tokens,
+            inference_completion_tokens=self.state.counters.inference_completion_tokens,
+            inference_elapsed_seconds=self.state.counters.inference_elapsed_seconds,
+            workspace_invocations=self.state.counters.workspace_invocations,
+            workspace_elapsed_seconds=self.state.counters.workspace_elapsed_seconds,
+            parser_repairs=self.state.counters.parser_repairs,
         )
         return result
 
@@ -125,6 +159,8 @@ class CompetitionOrchestrator:
         max_actions: int = 80,
         watchdog: DeadlineWatchdog | None = None,
         hung_worker_grace_seconds: float = 15.0,
+        policy_factory: Callable[[Any], Policy] | None = None,
+        run_tag: str = "plan8-e0",
     ) -> None:
         if len(set(game_ids)) != len(game_ids):
             raise ValueError("game inventory contains duplicates")
@@ -134,12 +170,14 @@ class CompetitionOrchestrator:
         self.max_actions = max_actions
         self.watchdog = watchdog or DeadlineWatchdog(32_400, 600)
         self.hung_worker_grace_seconds = max(0.0, hung_worker_grace_seconds)
+        self.policy_factory = policy_factory
+        self.run_tag = run_tag
 
     def run(self) -> CompetitionRunResult:
         self.watchdog.start_supervisor()
         results: dict[str, GameResult] = {}
         try:
-            self.adapter.open_scorecard(tags=["plan8-e0"])
+            self.adapter.open_scorecard(tags=[self.run_tag])
         except OutcomeUnknown:
             self.watchdog.stop_supervisor()
             return CompetitionRunResult(
@@ -163,6 +201,7 @@ class CompetitionOrchestrator:
                 loop = CompetitionAgentLoop(
                     self.adapter,
                     client,
+                    policy=self.policy_factory(client) if self.policy_factory is not None else None,
                     max_actions=self.max_actions,
                     watchdog=self.watchdog,
                 )

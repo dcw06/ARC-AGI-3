@@ -1,8 +1,12 @@
 {
   "schema_version": 1,
-  "status": "inactive_unclosed_until_E1M",
+  "status": "E1_visible_compaction_activated_after_observed_context_failure_E1M_inactive",
   "cross_game_mutable_state": false,
   "game_id_model_visible": false,
-  "max_context_tokens": null,
-  "compaction_policy": null
+  "max_context_tokens": 65536,
+  "compaction_policy": "visible_recent_transitions_v1_lifetime_count_and_rolling_sha256",
+  "E1_context_mode": "stateless_reconstruction_visible_compaction_v1",
+  "E1_recent_transition_limit": 1,
+  "visible_compaction_activation": "only_after_demonstrated_context_continuity_bottleneck",
+  "cached_and_programmatic_modes": "optional_inactive"
 }

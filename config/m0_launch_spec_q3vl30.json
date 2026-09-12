@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "candidate_id": "M0-Q3VL-30B-A3B-FP8",
+  "model_id": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+  "model_revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+  "engine": "vllm==0.19.0",
+  "reasoning_setting": "instruct_non_thinking",
+  "base_url": "http://127.0.0.1:8000/v1",
+  "status": "target_validation_pending",
+  "required_packages": {
+    "torch": "2.10.0+cu128",
+    "transformers": "4.57.6",
+    "vllm": "0.19.0"
+  },
+  "argv": [
+    "{python}",
+    "-m",
+    "vllm.entrypoints.openai.api_server",
+    "--model",
+    "{model_path}",
+    "--served-model-name",
+    "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "8000",
+    "--tensor-parallel-size",
+    "1",
+    "--generation-config",
+    "vllm",
+    "--enable-prefix-caching",
+    "--gpu-memory-utilization",
+    "0.75",
+    "--max-model-len",
+    "65536"
+  ],
+  "env": {
+    "HF_HUB_OFFLINE": "1",
+    "TRANSFORMERS_OFFLINE": "1",
+    "VLLM_NO_USAGE_STATS": "1",
+    "USE_TF": "0",
+    "TRANSFORMERS_NO_TF": "1"
+  }
+}

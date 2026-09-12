@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "status": "complete_fail_closed",
+  "queried_at": "2026-09-11T15:54:00Z",
+  "provenance_cutoff": "2026-09-10T23:59:00Z",
+  "inventory_query": {
+    "provider": "Kaggle_API",
+    "competition": "arc-prize-2026-arc-agi-3",
+    "page_size": 200,
+    "sort_by": "scoreDescending",
+    "selected_pre_cutoff_snapshot": "wuliao0/duck-qwen3-8-anim-base",
+    "selected_snapshot_sha256": "72d6f35147b5d1c422a2959cc378727df6b688c4f478c2aa9ad3580b4a247122",
+    "observed_current_last_run": "2026-09-11T01:53:57.820000Z",
+    "current_post_cutoff_revision_excluded": true
+  },
+  "dataset_metadata": {
+    "duck_source": {
+      "ref": "keithtyser/duck-qwen38-nvfp4-mtp-vllm-smoke-v1",
+      "raw_response_sha256": "319ffc88bf84d3955ffe539db56e8fa9ba979ef9fb9edf335b2fa9db6c600149",
+      "dataset_id": 11841702,
+      "license": "unknown",
+      "public_download_succeeded": true
+    },
+    "duck_runtime": {
+      "ref": "keithtyser/qwen38-flash-next-vllm-nvfp4-runtime-v1",
+      "raw_response_sha256": "f55fa307cda108631fb3c100dcee542577a87074fb7a2e42adb7523b3abf27f2",
+      "dataset_id": 11841407,
+      "license": "unknown",
+      "metadata_query_succeeded": true
+    },
+    "reki_wheelhouse": {
+      "ref": "ruichardliu/vllm-0230-offline",
+      "raw_response_sha256": "b43599a33be150cc2a26f32167d14f944877dd2a8622919a2829b22b1764e764",
+      "dataset_id": 10959744,
+      "license": "unknown",
+      "file_inventory_query_succeeded": true,
+      "contains": "vllm==0.23.0_and_transitive_wheels"
+    },
+    "forge_wheelhouse": {
+      "ref": "mbmmurad/vllm-0-23-0-tf5-wheelhouse",
+      "metadata_query_status": "HTTP_403_Forbidden",
+      "public_access_established": false
+    }
+  },
+  "duck_source_identity": {
+    "raw_sha256": "473e695998342160478e9066d8a0d45536942ef37c75ddb803f36d3e0abb397c",
+    "source_manifest_sha256": "330ddcbde7ae0663012050ab0fcf34bc035d5e698a169af6876fb9e5606b3408",
+    "model_manifest_sha256": "a09bdad3fe3240c73332c0f99f4388a547205cb488c127f9b9059c9267dd9a5b",
+    "runtime_manifest_sha256": "e9453f8d0e9c5eb2e14712e0f8563aaa96752ddc1705f245cac327537502baad",
+    "declared_internal_dataset_license": "MIT",
+    "authoritative_current_Kaggle_dataset_license": "unknown",
+    "license_metadata_conflict": true
+  },
+  "external_primary_sources": {
+    "duck_notebook": "https://www.kaggle.com/code/wuliao0/duck-qwen3-8-anim-base",
+    "duck_model_revision": "https://huggingface.co/RadixArk/Qwen3.8-Flash-Next-NVFP4/tree/7b719225242aacd3dbd3f9407468c2ee9a9d2594",
+    "reki_notebook": "https://www.kaggle.com/code/ruichardliu/milestone1-2nd-solution",
+    "reki_model_revision": "https://huggingface.co/google/gemma-4-31B-it/tree/4797d2888d4e7a1450a92a7d426967eeca6f3d7e",
+    "forge_notebook": "https://www.kaggle.com/code/mbmmurad/arc-agi-3-lb-0-86-3rd-place-candidate-milestone"
+  },
+  "decision": {
+    "duck_faithful_runner": "unavailable_python_isolation_and_license",
+    "reki_captured_runner": "unavailable_unknown_wheelhouse_license",
+    "forge_captured_runner": "unavailable_dependency_not_publicly_accessible",
+    "eligible_structured_fallback": "e1s-r-project-structured-fallback",
+    "adapted_workspace_substitute": "e1c-f-safe-operations-duck-substitute"
+  }
+}

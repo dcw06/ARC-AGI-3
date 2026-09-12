@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "verified_at": "2026-09-06T13:00:00+08:00",
-  "verifier": "Codex local and official-web revalidation",
+  "verified_at": "2026-09-08T00:00:00+08:00",
+  "verifier": "Codex local, authenticated Kaggle API, and official-web revalidation",
   "status": "active_with_manual_checks",
   "constraints": {
     "submission_mechanism": {"value": "kaggle_notebook", "kind": "hard_rule", "source": "https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3/overview", "verified_at": "2026-09-06", "verifier": "official overview", "revalidate_at": "every_submission"},
@@ -25,7 +25,7 @@
     "submission_size_mb": {"value": 20480, "kind": "platform_observation", "source": "Kaggle metadata", "verified_at": "2026-09-04", "verifier": "project audit", "revalidate_at": "artifact_packaging"},
     "maximum_team_size": {"value": 8, "kind": "hard_rule_pending_signed_in_confirmation", "source": "Kaggle rules", "verified_at": "2026-09-04", "verifier": "Plan 8 rule audit", "revalidate_at": "account_rule_acceptance"},
     "identity_verification_required": {"value": true, "kind": "hard_rule_pending_signed_in_confirmation", "source": "Kaggle rules", "verified_at": "2026-09-04", "verifier": "Plan 8 rule audit", "revalidate_at": "account_rule_acceptance"},
-    "accelerator": {"value": "nvidiaRtx6000", "machine": "g4-standard-48", "kind": "platform_behavior", "source": "https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3/overview", "verified_at": "2026-09-06", "verifier": "official overview", "revalidate_at": "target_profile_or_submission"},
+    "accelerator": {"value": "nvidiaRtx6000", "machine": "g4-standard-48", "kind": "platform_behavior", "source": "https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3/overview", "verified_at": "2026-09-08", "verifier": "official overview", "revalidate_at": "target_profile_or_submission"},
     "milestone_2_deadline": {"value": "2026-09-30T23:59:00Z", "kind": "hard_rule", "source": "Kaggle overview", "verified_at": "2026-09-06", "verifier": "official overview", "revalidate_at": "release"},
     "entry_deadline_conservative": {"value": "2026-10-26T11:59:00Z", "conflict": "overview says 23:59 UTC; live metadata observed earlier said 11:59 UTC", "kind": "conservative_internal_target", "source": "Kaggle overview plus Plan 8 live metadata observation", "verified_at": "2026-09-06", "verifier": "official overview and project audit", "revalidate_at": "account_rule_acceptance"},
     "team_merger_deadline": {"value": "2026-10-26T23:59:00Z", "kind": "hard_rule", "source": "Kaggle overview", "verified_at": "2026-09-06", "verifier": "official overview", "revalidate_at": "team_change"},

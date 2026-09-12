@@ -1,0 +1,234 @@
+{
+  "schema_version": 1,
+  "status": "four_cell_execution_complete_shared_resource_inference_pending",
+  "frozen_at": "2026-09-09T14:00:00+08:00",
+  "design": {
+    "factorial_cells": ["E1S-R", "E1S-F", "E1C-R", "E1C-F"],
+    "factorial_claim_allowed": true,
+    "factorial_claim_condition": "all_four_cells_use_exact_frozen_binding_queue_game_seed_pairs_and_charged_work",
+    "factorial_estimands": {
+      "unit": "official_RHAE_percent_per_game",
+      "representation_main_effect": "mean_game_0.5_x_((E1S-F_minus_E1S-R)+(E1C-F_minus_E1C-R))",
+      "safe_operations_main_effect": "mean_game_0.5_x_((E1C-R_minus_E1S-R)+(E1C-F_minus_E1S-F))",
+      "interaction": "mean_game_((E1C-F_minus_E1C-R)-(E1S-F_minus_E1S-R))",
+      "inference": "exact_two_sided_paired_sign_flip_on_nonzero_game_contrasts",
+      "minimum_nonzero_game_pairs": 5,
+      "multiplicity": "descriptive_unadjusted_three_frozen_contrasts_no_binary_acceptance_claim"
+    },
+    "external_control_comparison": "non_causal_bundle_tournament_unless_exact_same_model_normalization_is_run",
+    "temperature": 0,
+    "max_new_tokens_per_request": 128,
+    "model_request_ceiling_per_proposal": 8,
+    "E1S_actual_request_ceiling_per_proposal": 1,
+    "E1C_actual_request_ceiling_per_proposal": 8,
+    "parser_repairs": 0,
+    "all_model_requests_workspace_invocations_cpu_and_elapsed_time_charged": true,
+    "seed_scope": "frozen_per_game_environment_and_model_request_seed",
+    "context_mode": "stateless_reconstruction_visible_compaction_v1",
+    "recent_transition_limit": 1,
+    "history_loss_reporting": "lifetime_count_and_rolling_sha256_v1",
+    "max_model_context_tokens": 65536,
+    "artifact_tree_sha256": "052ab27f06c28261e143b8c1638382d107b034692bc0cd1792ec4e02ddab8627"
+  },
+  "model_binding": {
+    "candidate_id": "M0-Q3VL-30B-A3B-FP8",
+    "model_id": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+    "revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+    "engine": "vllm==0.19.0",
+    "reasoning_setting": "instruct_non_thinking"
+  },
+  "development_game_seed_pairs": [
+    {"game_id": "ar25-0c556536", "seed": 104729, "fold": 1},
+    {"game_id": "cd82-fb555c5d", "seed": 104759, "fold": 2},
+    {"game_id": "ft09-0d8bbf25", "seed": 104761, "fold": 3},
+    {"game_id": "g50t-5849a774", "seed": 104773, "fold": 4},
+    {"game_id": "ka59-38d34dbb", "seed": 104779, "fold": 5},
+    {"game_id": "lf52-271a04aa", "seed": 104789, "fold": 1},
+    {"game_id": "ls20-9607627b", "seed": 104801, "fold": 2},
+    {"game_id": "s5i5-18d95033", "seed": 104803, "fold": 3},
+    {"game_id": "sc25-635fd71a", "seed": 104827, "fold": 4},
+    {"game_id": "sk48-d8078629", "seed": 104831, "fold": 5},
+    {"game_id": "sp80-589a99af", "seed": 104849, "fold": 1},
+    {"game_id": "su15-1944f8ab", "seed": 104851, "fold": 2},
+    {"game_id": "tr87-cd924810", "seed": 104869, "fold": 3},
+    {"game_id": "vc33-5430563c", "seed": 104879, "fold": 4},
+    {"game_id": "wa30-ee6fef47", "seed": 104891, "fold": 5}
+  ],
+  "selection": {
+    "folds": 5,
+    "training_games_per_fold": 12,
+    "held_out_games_per_fold": 3,
+    "selection_procedure_estimand": "selection_procedure_mean_official_RHAE_of_training_selected_cell_on_cross_fitted_held_out_games",
+    "final_fixed_candidate_estimand": "descriptive_mean_official_RHAE_of_full_development_set_after_selection",
+    "tie_break_order": ["E1S-R", "E1S-F", "E1C-R", "E1C-F"],
+    "inferential_test": "exact_one_sided_paired_sign_permutation_on_game_differences",
+    "alpha": 0.10,
+    "minimum_nonzero_game_pairs": 5,
+    "sparse_or_tied_status": "Provisional primary",
+    "missing_crash_timeout_score": 0
+  },
+  "resource_projection": {
+    "game_clients": 110,
+    "actions_per_game": 80,
+    "maximum_model_requests": 70400,
+    "measured_concurrency": 8,
+    "headroom_factor": 1.25,
+    "operational_target_seconds": 27540,
+    "minimum_C_admit_across_E1C_full_workload_cells": 78697,
+    "maximum_projected_total_seconds_across_cells": 24788.633420991297,
+    "actual_profile": {
+      "evidence": "reports/e1_profiles/q3vl30-mixed-v3.json",
+      "evidence_sha256": "e83f750635fc862bba8138229c97bcd8c5dd7ae56e4a99dc31a48ce9acf157a7",
+      "measured_at": "2026-09-09T14:34:29.408251+00:00",
+      "cold_load_seconds": 236.178418991,
+      "cancellation_seconds": 0.1874319739999919,
+      "peak_vram_bytes": 77538000896,
+      "peak_ram_bytes": 14612037632,
+      "all_cells_protocol_valid": true,
+      "all_cells_pass_request_admission": true,
+      "all_cells_pass_operational_target": true,
+      "by_cell": {
+        "E1S-R": {"request_count": 8800, "request_latency_p95_seconds": 0.4552968670000155, "C_admit": 278323, "projected_total_seconds": 7702.211611116021},
+        "E1S-F": {"request_count": 8800, "request_latency_p95_seconds": 1.8613816829999905, "C_admit": 68078, "projected_total_seconds": 9635.578233115986},
+        "E1C-R": {"request_count": 70400, "request_latency_p95_seconds": 1.2519681720000335, "C_admit": 101216, "projected_total_seconds": 20847.82831099137},
+        "E1C-F": {"request_count": 70400, "request_latency_p95_seconds": 1.610223182000027, "C_admit": 78697, "projected_total_seconds": 24788.633420991297}
+      }
+    },
+    "M0_provisional_projection": {
+      "request_latency_guard_seconds": 0.39223281699992185,
+      "C_nominal_requests_in_busy_window": 403841,
+      "C_admit_requests_in_busy_window": 323073,
+      "projected_model_busy_seconds_at_maximum_requests": 4314.56098699914,
+      "projected_total_seconds_with_cold_load_environment_finalization_and_reserves": 11377.72753217514
+    },
+    "status": "actual_mixed_prompt_target_RTX_profile_pass"
+  },
+  "amendments": [
+    {
+      "date": "2026-09-09",
+      "trigger": "target_RTX_resource_profile_version_2_before_any_game_cell_run",
+      "evidence": "reports/runs/e1-q3vl30/e1-q3vl30-mixed-profile.json",
+      "changes": [
+        "prompt_revision_E1.prompt.v2_requires_action_only_final_JSON_under_64_tokens",
+        "workspace_invocations_reduced_from_8_to_7",
+        "E1C_model_request_ceiling_reduced_from_9_to_8",
+        "resource_acceptance_computed_per_cell"
+      ],
+      "comparability": "no_E1_game_result_exists_all_future_cells_restart_on_amended_contract"
+    },
+    {
+      "date": "2026-09-10",
+      "trigger": "causal_runner_version_2_all_inference_attempts_HTTP_404_before_any_model_completion",
+      "evidence": "reports/runs/e1-four-cell/v2/e1-causal-four-cell-v1.json",
+      "evidence_sha256": "a3275e8f6024247cbebd8967ff1b64288f820840f26e8db1a4f8bdc26db9d3ea",
+      "changes": [
+        "normalize_OpenAI_base_URL_to_exactly_one_v1_prefix",
+        "require_inference_completions_equal_inference_requests",
+        "completion_endpoint_canary_before_first_scorecard"
+      ],
+      "comparability": "version_2_has_zero_model_completions_and_is_invalid_no_causal_result_all_cells_restart"
+    },
+    {
+      "date": "2026-09-11",
+      "trigger": "causal_runner_version_3_context_growth_caused_incomplete_inference_transport",
+      "evidence": "reports/runs/e1-four-cell/v3/e1-causal-four-cell-v1.json",
+      "evidence_sha256": "f6df1212c492d84efba845681a2a99041cba65334325b3e6f43c6d968feb1b7c",
+      "observations": {
+        "status": "failed_closed",
+        "model_context_tokens": 65536,
+        "all_cells_completed_environment_loops": true,
+        "cell_inference_completions_over_requests": {
+          "E1S-R": "87/1061",
+          "E1S-F": "46/1061",
+          "E1C-R": "129/1097",
+          "E1C-F": "48/1058"
+        },
+        "failure_pattern": "each_game_completed_only_its_first_few_growing_context_requests_then_transport_failed"
+      },
+      "changes": [
+        "activate_common_visible_recent_transition_compaction_after_demonstrated_context_bottleneck",
+        "reduce_common_recent_transition_limit_from_8_to_1",
+        "expose_lifetime_total_retained_omitted_counts_and_stable_rolling_history_hash_to_every_cell",
+        "advance_feature_manifest_for_visible_compaction"
+      ],
+      "comparability": "version_3_is_invalid_no_causal_result_all_four_cells_restart_under_one_amended_common_context_contract"
+    },
+    {
+      "date": "2026-09-11",
+      "trigger": "kernel_version_4_started_before_bounded_evidence_eviction_metadata_review_completed",
+      "changes": [
+        "replace_retained_ring_transition_count_with_lifetime_transition_count",
+        "replace_retained_subset_digest_with_rolling_full_history_digest",
+        "advance_feature_manifest_to_E1.v3_and_prompt_revision_to_E1.prompt.v4"
+      ],
+      "comparability": "kernel_version_4_is_predeclared_superseded_and_must_not_be_accepted_all_cells_restart_under_corrected_contract"
+    }
+  ],
+  "execution_status": {
+    "four_cell_runs": {
+      "status": "complete_valid_as_descriptive_single_block_not_causal_inference",
+      "kaggle_kernel_version": 5,
+      "completed_at": "2026-09-11T06:14:52.087595+00:00",
+      "evidence": "reports/e1_results/e1-causal-four-cell-v5.json",
+      "evidence_sha256": "f186192705e061734bf7bb93dd64f2afbe2f5538eaf828a04a123fca9515eb9d",
+      "kernel_log_sha256": "e1cda188b0a675cfde7b1d24439098e7fbcf66a0d74bc01f55da8bcf700ac3da",
+      "server_log_sha256": "d98a174119cd1c4fb10097a0bb428925a7ea408700a6edcb3c9dc7db41fac078",
+      "score_unit": "official_RHAE_percent",
+      "cell_means": {
+        "E1S-R": 0.0,
+        "E1S-F": 0.0,
+        "E1C-R": 0.0,
+        "E1C-F": 0.0
+      },
+      "factorial_contrasts": {
+        "representation_F_minus_R": {"mean_effect": 0.0, "nonzero_pairs": 0, "status": "Provisional"},
+        "safe_operations_C_minus_S": {"mean_effect": 0.0, "nonzero_pairs": 0, "status": "Provisional"},
+        "interaction_difference_in_differences": {"mean_effect": 0.0, "nonzero_pairs": 0, "status": "Provisional"}
+      },
+      "selection_procedure_mean": 0.0,
+      "fixed_E1_candidate": "E1S-R",
+      "fixed_E1_candidate_status": "Provisional primary",
+      "status_reason": "all_cells_tied_at_zero_and_all_three_contrasts_have_zero_nonzero_game_pairs"
+    },
+    "comparison_mode_audit": {
+      "observed_mode": "shared_resource_whole_run",
+      "reason": "eight game clients shared one minimum_fair_v1 inference queue within each treatment workload",
+      "version_5_complete_workload_runs_per_cell": 1,
+      "version_5_paired_run_blocks": 1,
+      "version_5_treatment_order": ["E1S-R", "E1S-F", "E1C-R", "E1C-F"],
+      "version_5_order_counterbalanced": false,
+      "required_randomization_unit": "paired_complete_workload_run_block",
+      "required_uncertainty_unit": "paired_complete_workload_run_block",
+      "version_5_analysis_unit": "game",
+      "causal_factorial_claim_from_version_5": false,
+      "valid_version_5_use": "descriptive_cell_results_resource_reliability_and_selection_procedure_diagnostic",
+      "closure_protocol": "config/e1_whole_run_protocol.yaml",
+      "closure_status": "frozen_two_counterbalanced_blocks_pending_execution"
+    },
+    "observation_bundle_claim": {
+      "R": "latest_final_frame_only_no_raw_or_derived_intermediate_frame_evidence",
+      "F": "R_plus_registered_E0F_features_derived_from_bounded_intermediate_frame_sequences",
+      "raw_intermediate_frames_model_visible": false
+    },
+    "context_mode_decision": {
+      "initial_mode": "stateless_reconstruction_with_eight_visible_recent_transitions",
+      "activation_evidence": "version_3_incomplete_transport_after_growing_context",
+      "activated_mode": "stateless_reconstruction_visible_compaction_v1_one_transition_with_lifetime_count_and_rolling_sha256",
+      "cached_mode": "inactive",
+      "programmatic_mode": "inactive"
+    },
+    "published_control_reproductions": "unavailable_not_run_fail_closed",
+    "same_model_normalized_controls": "not_justified_without_eligible_faithful_harness",
+    "control_freeze": "complete_published_runners_closed_unavailable_safe_substitutes_selected",
+    "frozen_published_workspace_control": "duck-qwen3.8-flash-next-nvfp4-anim",
+    "frozen_published_structured_reference": "reki-milestone1",
+    "eligible_structured_fallback": "e1s-r-project-structured-fallback",
+    "adapted_workspace_substitute": "e1c-f-safe-operations-duck-substitute",
+    "actual_E1_mixed_prompt_target_RTX_profile": "version_3_pass_all_safety_resource_and_protocol_gates_evidence_frozen",
+    "operational_primary": "E1S-R",
+    "operational_primary_status": "Provisional primary",
+    "operational_primary_binding": "config/operational_primary.yaml",
+    "operational_primary_reason": "all_cells_tied_at_zero_frozen_tie_break_selects_lowest_complexity_one_request_R_cell",
+    "operational_fallback": "E0_deterministic_legal_fallback"
+  }
+}

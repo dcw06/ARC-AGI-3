@@ -19,5 +19,35 @@
     "numpy": {"version": "2.4.4", "wheel_sha256": "81f4a14bee47aec54f883e0cad2d73986640c1590eb9bfaaba7ad17394481e6e"},
     "pydantic": {"version": "2.13.2", "wheel_sha256": "a525087f4c03d7e7456a3de89b64cd693d2229933bb1068b9af6befd5563694e"},
     "python-dotenv": {"version": "1.2.2", "wheel_sha256": "1d8214789a24de455a8b8bd8ae6fe3c6b69a5e3d64aa8a8e5d68e694bbcb285a"}
+  },
+  "phase1_production_offline_bundle": {
+    "status": "complete_for_public_Kaggle_runtime_use_not_approved_for_redistribution",
+    "accelerator": "NvidiaRtxPro6000",
+    "internet": false,
+    "wheelhouse": {
+      "kaggle_source": "driessmit1/arc3-vllm-h100-wheelhouse-v3/1",
+      "sha256s_manifest_sha256": "44029b360a9c0073e4b0add10703fc3386dc06bf1314f5913a0dad9564144cbb",
+      "index_manifest_sha256": "bc016164d15664c52911fcd11f4e26e72a483e248f3cc9b59ae02b3fce09cc6a",
+      "manifest_file_count": 179,
+      "mounted_verified_file_count": 178,
+      "critical_packages": {
+        "vllm": "0.19.0",
+        "torch": "2.10.0+cu128",
+        "transformers": "4.57.6"
+      },
+      "install_policy": "no_index_all_mounted_files_verified_before_install"
+    },
+    "model": {
+      "kaggle_source": "qwen-lm/qwen-3-vl/Transformers/30b-a3b-instruct-fp8/1",
+      "revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+      "tree_sha256": "052ab27f06c28261e143b8c1638382d107b034692bc0cd1792ec4e02ddab8627",
+      "license": "Apache-2.0",
+      "mounted_artifact_bytes": 64526033084
+    },
+    "competition_packages": "kaggle_mounted_profile_2026_09_07",
+    "notebook": "notebooks/submission.ipynb",
+    "metadata": "notebooks/kernel-metadata.json",
+    "retained_output_allowlist": ["submission.parquet"],
+    "release_redistribution": "blocked_pending_exact_transitive_dependency_license_closure"
   }
 }

@@ -1,13 +1,19 @@
 {
   "schema_version": 1,
   "status": "active",
-  "current_phase": "phase_0",
+  "current_phase": "phase_1_operational_primary_selected_whole_run_e1_pending",
   "treatments": {
-    "E0": {"status": "implementation", "description": "transaction-safe deterministic fallback"},
-    "M0": {"status": "inactive_unclosed"},
-    "E0W-S-PUB": {"status": "inactive_unclosed"},
-    "E0W-C-PUB": {"status": "inactive_unclosed"},
-    "E1": {"status": "inactive_unclosed"},
+    "E0": {"status": "frozen_control", "description": "transaction-safe deterministic fallback"},
+    "E0F": {"status": "fixture_active_not_yet_an_experiment", "description": "toggleable animation-enriched representation"},
+    "M0": {"status": "provisional_primary_q3vl30_fallback_q3vl8_selected"},
+    "E0W-S-PUB": {"status": "reki_snapshot_frozen_runner_unavailable_unknown_wheelhouse_license"},
+    "E0W-C-PUB": {"status": "duck_snapshot_frozen_faithful_runner_unavailable_python_isolation_and_license"},
+    "E0W-C-ADAPTED": {"status": "E1C-F_safe_operation_substitute_implemented_not_a_faithful_reproduction"},
+    "E1": {"status": "four_cell_descriptive_complete_counterbalanced_whole_run_inference_pending"},
+    "E1S-R": {"status": "operational_provisional_primary_by_frozen_tie_break"},
+    "E1S-F": {"status": "complete_tied_zero"},
+    "E1C-R": {"status": "complete_tied_zero"},
+    "E1C-F": {"status": "complete_tied_zero"},
     "E2-E9": {"status": "inactive_failure_driven"}
   },
   "budgets": {

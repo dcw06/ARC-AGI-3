@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "arc3_m0_profile_v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "candidate_id",
+    "model_id",
+    "model_revision",
+    "engine",
+    "reasoning_setting",
+    "prompt_sha256",
+    "hardware",
+    "measurements",
+    "artifact",
+    "projection",
+    "status"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "candidate_id": {"type": "string", "minLength": 1},
+    "model_id": {"type": "string", "minLength": 1},
+    "model_revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "engine": {"type": "string", "minLength": 1},
+    "reasoning_setting": {"type": "string", "minLength": 1},
+    "prompt_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "hardware": {
+      "type": "object",
+      "required": ["machine", "accelerator", "observed_gpu"],
+      "properties": {
+        "machine": {"type": "string"},
+        "accelerator": {"type": "string"},
+        "observed_gpu": {"type": "string"}
+      }
+    },
+    "measurements": {
+      "type": "object",
+      "required": [
+        "cold_load_seconds",
+        "first_token_seconds",
+        "decode_tokens_per_second",
+        "cancellation_seconds",
+        "peak_vram_bytes",
+        "peak_ram_bytes",
+        "offline_artifact_bytes"
+      ],
+      "properties": {
+        "cold_load_seconds": {"type": "number", "minimum": 0},
+        "first_token_seconds": {"type": "number", "minimum": 0},
+        "decode_tokens_per_second": {"type": "number", "exclusiveMinimum": 0},
+        "cancellation_seconds": {"type": "number", "minimum": 0},
+        "peak_vram_bytes": {"type": "integer", "minimum": 0},
+        "peak_ram_bytes": {"type": "integer", "minimum": 0},
+        "offline_artifact_bytes": {"type": "integer", "minimum": 1}
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "required": ["tree_sha256", "file_count", "symlinks_rejected"],
+      "properties": {
+        "tree_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "file_count": {"type": "integer", "minimum": 1},
+        "symlinks_rejected": {"const": true}
+      }
+    },
+    "projection": {
+      "type": ["object", "null"]
+    },
+    "status": {"enum": ["measured_unselected", "rejected", "eligible_for_selection"]}
+  }
+}

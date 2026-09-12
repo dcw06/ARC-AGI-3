@@ -28,7 +28,7 @@ COMP_SLUG       := arc-prize-2026-arc-agi-3
 GAME            ?=
 STEPS           ?= 200
 
-.PHONY: help setup play-local play-competition-like pull-sample notebook submit status verify-local validate-gateway validate-phase0 test clean _check-kaggle
+.PHONY: help setup play-local play-competition-like pull-sample notebook m0-notebook m0-notebooks m0-q3vl30-notebook m0-q3vl8-notebook m0-q3vl30-push m0-q3vl8-push e1-q3vl30-notebook e1-q3vl30-push e1-q3vl30-status e1-q3vl30-output e1-four-cell-notebook e1-four-cell-push e1-four-cell-status e1-four-cell-output validate-e1-four-cell submit status verify-local validate-gateway validate-phase0 validate-phase0f validate-m0-exit validate-phase1 test clean _check-kaggle
 
 _check-kaggle:
 	@$(VENV_PY) scripts/check_kaggle_config.py
@@ -74,6 +74,15 @@ validate-gateway: ## Exercise production transport against pinned local REST gat
 validate-phase0: test ## Validate Plan 8 Phase 0 configuration and activation gates
 	$(PYTHON_ENV) $(VENV_PY) scripts/validate_phase0.py
 
+validate-phase0f: test ## Validate Phase 0F foundation and report remaining M0 work
+	$(PYTHON_ENV) $(VENV_PY) scripts/validate_phase0f.py
+
+validate-m0-exit: validate-phase0f ## Require all target profiles and the provisional M0 selection
+	$(PYTHON_ENV) $(VENV_PY) scripts/validate_m0_exit.py
+
+validate-phase1: test ## Validate Phase 1 implementation/parameters and external exit blocks
+	$(PYTHON_ENV) $(VENV_PY) scripts/validate_phase1.py
+
 list-games: ## Show all available games
 	$(PYTHON_ENV) $(VENV_PY) scripts/play_local.py --list
 
@@ -86,11 +95,57 @@ pull-sample: _check-kaggle ## Download the official Stochastic Goose sample note
 notebook: ## Splice agent/my_agent.py into notebooks/submission.ipynb
 	$(PYTHON_ENV) $(VENV_PY) scripts/build_notebook.py
 
+m0-notebook: ## Build the first target-RTX M0 profiling notebook locally
+	$(PYTHON_ENV) $(VENV_PY) scripts/build_m0_profile_notebook.py --candidate q38
+
+m0-q3vl30-notebook: ## Build the sparse 30B-A3B target-RTX M0 profile
+	$(PYTHON_ENV) $(VENV_PY) scripts/build_m0_profile_notebook.py --candidate q3vl30
+
+m0-q3vl8-notebook: ## Build the 8B target-RTX M0 fallback profile
+	$(PYTHON_ENV) $(VENV_PY) scripts/build_m0_profile_notebook.py --candidate q3vl8
+
+m0-notebooks: m0-notebook m0-q3vl30-notebook m0-q3vl8-notebook ## Build all frozen M0 profiles
+
+m0-q3vl30-push: m0-q3vl30-notebook _check-kaggle ## Run the 30B M0 profile on the target RTX
+	$(KAGGLE) kernels push -p notebooks/m0-q3vl30 --accelerator NvidiaRtxPro6000
+
+m0-q3vl8-push: m0-q3vl8-notebook _check-kaggle ## Run the 8B M0 profile on the target RTX
+	$(KAGGLE) kernels push -p notebooks/m0-q3vl8 --accelerator NvidiaRtxPro6000
+
+e1-q3vl30-notebook: ## Build the unscored mixed E1 profile for the selected 30B model
+	$(PYTHON_ENV) $(VENV_PY) scripts/build_e1_profile_notebook.py
+
+e1-q3vl30-push: e1-q3vl30-notebook _check-kaggle ## Run the mixed E1 profile on target RTX (not scored)
+	$(KAGGLE) kernels push -p notebooks/e1-q3vl30 --accelerator NvidiaRtxPro6000
+
+e1-q3vl30-status: _check-kaggle ## Check the private mixed E1 profile run
+	$(KAGGLE) kernels status daichongwei06/arc3-e1-q3vl30-mixed-profile
+
+e1-q3vl30-output: _check-kaggle ## Download the completed mixed E1 profile evidence
+	mkdir -p reports/runs/e1-q3vl30
+	$(KAGGLE) kernels output daichongwei06/arc3-e1-q3vl30-mixed-profile -p reports/runs/e1-q3vl30
+
+e1-four-cell-notebook: ## Build the private counterbalanced whole-run E1 notebook
+	$(PYTHON_ENV) $(VENV_PY) scripts/build_e1_four_cell_notebook.py
+
+e1-four-cell-push: e1-four-cell-notebook _check-kaggle ## Run the whole-run four-cell experiment on target RTX (not scored)
+	$(KAGGLE) kernels push -p notebooks/e1-four-cell --accelerator NvidiaRtxPro6000
+
+e1-four-cell-status: _check-kaggle ## Check the private whole-run E1 run
+	$(KAGGLE) kernels status daichongwei06/arc3-e1-causal-four-cell
+
+e1-four-cell-output: _check-kaggle ## Download the whole-run E1 evidence
+	mkdir -p reports/runs/e1-four-cell
+	$(KAGGLE) kernels output daichongwei06/arc3-e1-causal-four-cell -p reports/runs/e1-four-cell
+
+validate-e1-four-cell: ## Validate the downloaded counterbalanced whole-run E1 result
+	$(PYTHON_ENV) $(VENV_PY) scripts/validate_e1_whole_run.py
+
 submit: notebook _check-kaggle ## Build notebook and push to Kaggle (one-line submission)
 	@grep -q REPLACE_WITH_YOUR_USERNAME notebooks/kernel-metadata.json && { \
 	    echo "ERROR: edit notebooks/kernel-metadata.json and replace REPLACE_WITH_YOUR_USERNAME"; \
 	    exit 1; } || true
-	$(KAGGLE) kernels push -p notebooks/
+	$(KAGGLE) kernels push -p notebooks/ --accelerator NvidiaRtxPro6000
 	@echo ""
 	@echo "Pushed. Track it with:  make status"
 
@@ -100,4 +155,4 @@ status: _check-kaggle ## Show the status of your most recent Kaggle kernel run
 
 clean: ## Remove generated artefacts (venv, downloaded games, vendored repos)
 	rm -rf $(VENV) .cache .uv-cache .uv-python vendor environment_files recordings notebooks/submission.ipynb \
-	       reference logs.log __pycache__ .pytest_cache
+	       notebooks/m0-*/profile.ipynb reference logs.log __pycache__ .pytest_cache

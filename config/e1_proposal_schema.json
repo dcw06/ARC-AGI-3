@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "e1_proposal_schema_v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["action"],
+  "properties": {
+    "intent": {"type": "string", "maxLength": 1024},
+    "rationale": {"type": "string", "maxLength": 4096},
+    "action": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["action_id", "action_data"],
+          "properties": {
+            "action_id": {"enum": [1, 2, 3, 4, 5, 7]},
+            "action_data": {"type": "object", "maxProperties": 0}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["action_id", "action_data"],
+          "properties": {
+            "action_id": {"const": 6},
+            "action_data": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["x", "y"],
+              "properties": {
+                "x": {"type": "integer", "minimum": 0, "maximum": 63},
+                "y": {"type": "integer", "minimum": 0, "maximum": 63}
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

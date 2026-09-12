@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "candidate_id": "M0-Q38-27B-FP8",
+  "model_id": "Qwen/Qwen3.8-27B-FP8",
+  "model_revision": "017b9c7af6b5689d5dd426a76e0bc077eb5ca20a",
+  "engine": "vllm==0.19.0",
+  "reasoning_setting": "low",
+  "base_url": "http://127.0.0.1:8000/v1",
+  "status": "target_validation_pending",
+  "required_packages": {
+    "torch": "2.10.0+cu128",
+    "transformers": "4.57.6",
+    "vllm": "0.19.0"
+  },
+  "argv": [
+    "{python}",
+    "-m",
+    "vllm.entrypoints.openai.api_server",
+    "--model",
+    "{model_path}",
+    "--served-model-name",
+    "Qwen/Qwen3.8-27B-FP8",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "8000",
+    "--tensor-parallel-size",
+    "1",
+    "--generation-config",
+    "vllm",
+    "--enable-prefix-caching",
+    "--reasoning-parser",
+    "qwen3",
+    "--max-model-len",
+    "65536"
+  ],
+  "env": {
+    "HF_HUB_OFFLINE": "1",
+    "TRANSFORMERS_OFFLINE": "1",
+    "VLLM_NO_USAGE_STATS": "1",
+    "USE_TF": "0",
+    "TRANSFORMERS_NO_TF": "1"
+  }
+}

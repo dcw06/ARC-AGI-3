@@ -26,6 +26,33 @@ REQUIRED = {
     "scorer_fixture.json",
 }
 
+REQUIRED_CONSTRAINTS = {
+    "submission_mechanism",
+    "runtime_seconds",
+    "internet",
+    "external_inputs",
+    "evaluation_games",
+    "leaderboard_split",
+    "scorecards",
+    "makes_per_environment",
+    "in_flight_score_access",
+    "reset_behavior",
+    "reasoning_field_bytes_inclusive_max",
+    "submission_allowance_per_day",
+    "final_selection_count",
+    "submission_filename",
+    "submission_size_mb",
+    "maximum_team_size",
+    "identity_verification_required",
+    "milestone_2_deadline",
+    "entry_deadline_conservative",
+    "team_merger_deadline",
+    "final_deadline",
+    "competition_data_license",
+    "private_sharing_outside_team",
+    "winner_license",
+}
+
 
 def check(condition: bool, label: str, failures: list[str]) -> None:
     print(f"{'PASS' if condition else 'FAIL'} {label}")
@@ -45,7 +72,10 @@ def main() -> int:
     for name in sorted(REQUIRED - missing):
         try:
             value = json.loads((CONFIG / name).read_text())
-            valid = value.get("schema_version") == 1
+            valid = (
+                isinstance(value.get("schema_version"), int)
+                and value.get("schema_version", 0) >= 1
+            )
         except Exception:
             valid = False
         check(valid, f"registry parses: {name}", failures)
@@ -84,8 +114,47 @@ def main() -> int:
     constraints = json.loads((CONFIG / "competition_constraints.yaml").read_text())
     required_constraint_fields = {"value", "kind", "source", "verified_at", "verifier", "revalidate_at"}
     check(
-        all(required_constraint_fields.issubset(entry) for entry in constraints["constraints"].values()),
-        "constraint entries carry source and revalidation metadata",
+        REQUIRED_CONSTRAINTS.issubset(constraints.get("constraints", {}))
+        and all(
+            required_constraint_fields.issubset(entry)
+            for entry in constraints.get("constraints", {}).values()
+        )
+        and all(constraints.get("manual_checks", {}).values()),
+        "required constraints and manual checks are complete and revalidatable",
+        failures,
+    )
+
+    partitions = [holdout.get("development", []), holdout.get("h1", []), holdout.get("h2", [])]
+    flattened = [game_id for partition in partitions for game_id in partition]
+    check(
+        holdout.get("status") == "active_reduced_exposure"
+        and [len(partition) for partition in partitions] == [15, 5, 5]
+        and len(flattened) == len(set(flattened))
+        and holdout.get("h1_classification") == "reduced_exposure_guardrail_only"
+        and holdout.get("h2_classification") == "reduced_exposure_guardrail_only"
+        and isinstance(holdout.get("consumption_events"), list),
+        "exposure audit and disjoint 15/5/5 reduced-exposure ledger are frozen",
+        failures,
+    )
+
+    output_policy = json.loads((CONFIG / "output_policy.yaml").read_text())
+    check(
+        output_policy.get("retained_output_root") == "/kaggle/working"
+        and output_policy.get("retained_allowlist") == ["submission.parquet"]
+        and output_policy.get("scratch_root") == "/tmp/arc3-agent",
+        "retained output and non-retained scratch roots are exact",
+        failures,
+    )
+
+    adapter_manifest = json.loads((CONFIG / "framework_adapter_manifest.yaml").read_text())
+    check(
+        adapter_manifest.get("only_environment_call_boundary") == "agent.framework_adapter"
+        and adapter_manifest.get("automatic_retries") == 0
+        and adapter_manifest.get("redirects") == "disabled"
+        and adapter_manifest.get("unknown_revision_policy") == "fail_closed"
+        and adapter_manifest.get("startup_topology")
+        == "direct_remote_bootstrap_serial_then_stream_play; local Arcade.make serialized",
+        "adapter authority, retry policy, revision gate, and startup topology are frozen",
         failures,
     )
 
@@ -116,6 +185,11 @@ def main() -> int:
         activation.get("status") == "active"
         and activation.get("authority") == "Plan 8"
         and not activation.get("blocking_checks")
+        and activation.get("competition_rerun", {}).get("status") == "complete"
+        and activation.get("competition_rerun", {}).get("expected_environment_inventory") == 110
+        and activation.get("competition_rerun", {}).get("submission_output_contract") == "accepted"
+        and activation.get("kaggle_notebook_smoke", {}).get("version_2", {}).get("retained_outputs")
+        == ["submission.parquet"]
     ):
         print("PLAN8_ACTIVATED")
     else:

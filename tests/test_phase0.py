@@ -6,6 +6,7 @@ import time
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
+from unittest.mock import patch
 
 import requests
 import numpy as np
@@ -16,12 +17,13 @@ from agent.action import ActionDecision, ActionValidationError, DisplayPoint, en
 from agent.action_journal import LiveTransactionJournal, JournalTransitionError, TransactionKind, TransactionStatus
 from agent.competition_loop import CompetitionAgentLoop, CompetitionOrchestrator
 from agent.controller import DeterministicFallback
-from agent.framework_adapter import OutcomeUnknown, RemoteFrameworkAdapter
+from agent.framework_adapter import LocalFrameworkAdapter, OutcomeUnknown, RemoteFrameworkAdapter
 from agent.output_policy import OutputPolicyError, enforce_retained_allowlist
 from agent.scheduler import FairInferenceQueue
 from agent.state import Observation
 from agent.watchdog import DeadlineWatchdog
 from agent.runtime_audit import validate_mounted_runtime
+from agent.runtime_audit import RuntimeAudit
 from evaluation.counters import AuthoritativeCounters, LocalActionBounds, reconcile
 from evaluation.metrics import normalized_game_rhae, normalized_level_rhae, normalized_total_rhae
 
@@ -253,12 +255,27 @@ class AdapterTests(unittest.TestCase):
         )
         second_adapter.open_scorecard()
         second = second_adapter.bootstrap("zz99-version")
-        self.adapter.dispatch(first, ActionDecision.click(DisplayPoint(1, 2)))
-        second_adapter.dispatch(second, ActionDecision.click(DisplayPoint(9, 10)))
+        self.adapter.dispatch(
+            first,
+            ActionDecision.click(
+                DisplayPoint(1, 2), wire_reasoning={"client": "first"}
+            ),
+        )
+        second_adapter.dispatch(
+            second,
+            ActionDecision.click(
+                DisplayPoint(9, 10), wire_reasoning={"client": "second"}
+            ),
+        )
         first_payload = [json.loads(call[2]["data"]) for call in first.session.calls if "/cmd/ACTION6" in call[1]][0]
         second_payload = [json.loads(call[2]["data"]) for call in second.session.calls if "/cmd/ACTION6" in call[1]][0]
         self.assertEqual((first_payload["x"], first_payload["y"]), (1, 2))
         self.assertEqual((second_payload["x"], second_payload["y"]), (9, 10))
+        self.assertEqual(json.loads(first_payload["reasoning"]), {"client": "first"})
+        self.assertEqual(json.loads(second_payload["reasoning"]), {"client": "second"})
+
+    def test_inventory_returns_ids_without_semantic_metadata(self) -> None:
+        self.assertEqual(self.adapter.list_game_ids(), ("zz99-version",))
 
     def test_bootstrap_journal_has_no_fabricated_prestate(self) -> None:
         self.adapter.open_scorecard()
@@ -312,12 +329,33 @@ class AdapterTests(unittest.TestCase):
         self.assertEqual(len(closes), 1)
 
 
+class LocalAdapterTests(unittest.TestCase):
+    def test_frozen_local_seed_reaches_the_only_make_boundary(self) -> None:
+        class FakeArcade:
+            def __init__(self) -> None:
+                self.make_kwargs = None
+
+            def open_scorecard(self, tags=None):
+                return "local-card"
+
+            def make(self, game_id, **kwargs):
+                self.make_kwargs = {"game_id": game_id, **kwargs}
+                return SimpleNamespace(observation_space=frame())
+
+        arcade = FakeArcade()
+        adapter = LocalFrameworkAdapter(arcade, seed_by_game={"zz99-version": 104729})
+        adapter.open_scorecard()
+        adapter.bootstrap("zz99-version")
+        self.assertEqual(arcade.make_kwargs["seed"], 104729)
+        self.assertFalse(arcade.make_kwargs["save_recording"])
+
+
 class FakeLoopAdapter:
     def dispatch(self, client, _decision):
         client.calls += 1
         client.observation = Observation(
             game_id=client.observation.game_id,
-            layers=client.observation.layers,
+            frames=client.observation.frames,
             state=GameState.NOT_FINISHED,
             levels_completed=0,
             win_levels=2,
@@ -358,6 +396,7 @@ class LoopTests(unittest.TestCase):
             FakeLoopAdapter(), client, policy=ExplodingPolicy(), max_actions=1
         ).run()
         self.assertEqual(result.acknowledged_actions, 1)
+        self.assertEqual(result.policy_failures, 1)
         self.assertEqual(result.terminal_reason, "action_cap")
 
     def test_remote_loop_closes_client_session(self) -> None:
@@ -382,7 +421,7 @@ class LoopTests(unittest.TestCase):
         for suffix in range(3):
             obs = Observation(
                 game_id="opaque",
-                layers=Observation.from_value(frame()).layers,
+                frames=Observation.from_value(frame()).frames,
                 state=GameState.NOT_FINISHED,
                 levels_completed=0,
                 win_levels=2,
@@ -445,7 +484,7 @@ class SyntheticAdapter:
         self.bootstrap_count[game_id] = self.bootstrap_count.get(game_id, 0) + 1
         obs = Observation(
             game_id=game_id,
-            layers=Observation.from_value(frame()).layers,
+            frames=Observation.from_value(frame()).frames,
             state=GameState.NOT_FINISHED,
             levels_completed=0,
             win_levels=1,
@@ -458,7 +497,7 @@ class SyntheticAdapter:
         client.calls += 1
         client.observation = Observation(
             game_id=client.game_id,
-            layers=client.observation.layers,
+            frames=client.observation.frames,
             state=GameState.WIN,
             levels_completed=1,
             win_levels=1,
@@ -584,7 +623,8 @@ class ConfigurationTests(unittest.TestCase):
         for path in root.iterdir():
             if path.suffix in {".yaml", ".json", ".lock"}:
                 value = json.loads(path.read_text())
-                self.assertEqual(value["schema_version"], 1, path.name)
+                self.assertIsInstance(value["schema_version"], int, path.name)
+                self.assertGreaterEqual(value["schema_version"], 1, path.name)
 
     def test_constraint_entries_are_individually_revalidatable(self) -> None:
         root = Path(__file__).resolve().parents[1] / "config"
@@ -596,6 +636,20 @@ class ConfigurationTests(unittest.TestCase):
     def test_exact_local_runtime_profile_is_known(self) -> None:
         result = validate_mounted_runtime("local_2026_09_06")
         self.assertTrue(result.passed, result.failures)
+
+    def test_unknown_runtime_fails_before_adapter_construction(self) -> None:
+        from agent import production_main
+
+        failed = RuntimeAudit(
+            profile="unknown-mounted-runtime",
+            passed=False,
+            checks=(),
+            failures=("distribution:arc-agi",),
+        )
+        with patch.object(production_main, "validate_mounted_runtime", return_value=failed):
+            with patch.object(production_main, "RemoteFrameworkAdapter") as adapter:
+                self.assertEqual(production_main.main(), 3)
+                adapter.assert_not_called()
 
 
 if __name__ == "__main__":

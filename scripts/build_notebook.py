@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import base64
 import json
+import sys
 from pathlib import Path
 from textwrap import dedent
 
@@ -13,10 +14,15 @@ _ACCELERATORS = {
     "cpu": {"name": "none", "gpu": False},
     "t4": {"name": "nvidiaTeslaT4", "gpu": True},
     "p100": {"name": "nvidiaTeslaP100", "gpu": True},
-    "rtx6000": {"name": "nvidiaRtx6000", "gpu": True},
+    "rtx6000": {"name": "nvidiaRtxPro6000", "gpu": True},
 }
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.build_m0_profile_notebook import _install_cell as vllm_install_cell
+
 AGENT_DIR = ROOT / "agent"
 NOTEBOOK_PATH = ROOT / "notebooks" / "submission.ipynb"
 METADATA_PATH = ROOT / "notebooks" / "kernel-metadata.json"
@@ -32,10 +38,13 @@ def markdown_cell(source: str) -> dict:
 
 def bundled_sources() -> dict[str, str]:
     required = {
-        "agent/__init__.py", "agent/action.py", "agent/action_journal.py",
+        "agent/__init__.py", "agent/action.py", "agent/action_journal.py", "agent/evidence.py",
         "agent/competition_loop.py", "agent/controller.py",
+        "agent/config.py", "agent/e1_policy.py", "agent/feature_manifest.py", "agent/safe_operations.py",
         "agent/framework_adapter.py", "agent/production_main.py",
-        "agent/output_policy.py", "agent/runtime_audit.py", "agent/scheduler.py", "agent/state.py", "agent/watchdog.py",
+        "agent/production_policy.py",
+        "agent/output_policy.py", "agent/representation.py", "agent/runtime_audit.py", "agent/scheduler.py", "agent/state.py", "agent/watchdog.py",
+        "config/e1_feature_manifests.yaml", "config/m0_launch_spec_q3vl30.json", "config/operational_primary.yaml",
     }
     files: dict[str, str] = {}
     for relative in sorted(required):
@@ -148,7 +157,7 @@ def build() -> dict:
         "nbformat": 4,
         "cells": [
             markdown_cell("# ARC Prize 2026 — ARC-AGI-3 Plan 8 submission\n\nGenerated; edit repository sources, not this notebook."),
-            install_cell, bundle_cell, run_cell, dummy_cell,
+            vllm_install_cell(), install_cell, bundle_cell, run_cell, dummy_cell,
         ],
     }
 

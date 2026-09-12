@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "phase0_kaggle_submission_validated_target_profiling_pending_M0",
+  "status": "phase0f_m0_exit_gate_passed",
   "hard_runtime_seconds": 32400,
   "operational_target_seconds": 27540,
   "startup_target_seconds": 900,
@@ -9,5 +9,86 @@
   "finalization_reserve_seconds": 600,
   "operating_reserve_seconds": 2940,
   "minimum_scheduler_queue_capacity": 110,
-  "target_hardware_profile": "pending_M0"
+  "maximum_queue_age_seconds": 300,
+  "target_hardware_profile": "Kaggle_NvidiaRtxPro6000_observed_all_M0_candidates_complete",
+  "M0": {
+    "status": "provisional_primary_and_fallback_selected",
+    "hardware": "Kaggle_g4-standard-48_NvidiaRtxPro6000_observed_2026-09-08",
+    "measurements": [
+      "cold_load_seconds",
+      "first_token_seconds",
+      "decode_tokens_per_second",
+      "cancellation_seconds",
+      "peak_vram_bytes",
+      "peak_ram_bytes",
+      "offline_artifact_bytes"
+    ],
+    "projected_game_clients": 110,
+    "maximum_actions_per_game": 80,
+    "model_calls_per_action_ceiling": 1,
+    "projected_request_ceiling": 8800,
+    "projection_derivation": "110_games_x_80_actions_x_1_model_call_per_action",
+    "projection_safety_factor": 1.25,
+    "request_contract": {
+      "max_new_tokens": 128,
+      "measured_concurrency": 8,
+      "latency_guard": "observed_p95_order_statistic_sample_maximum_at_n8",
+      "scope": "M0_viability_projection_E1_and_phase4_revalidate_actual_mixed_prompts"
+    },
+    "projected_execution_ceiling_seconds": 27540,
+    "candidate_results": [
+      {
+        "candidate_id": "M0-Q38-27B-FP8",
+        "reasoning_setting": "low",
+        "profile_record": "reports/m0_profiles/m0-q38-low.json",
+        "kaggle_kernel": "daichongwei06/arc3-m0-qwen3-8-rtx-profile/7",
+        "cold_load_seconds": 332.25105318,
+        "first_token_p95_seconds": 22.122646329000077,
+        "decode_tokens_per_second": 300.58494240748684,
+        "cancellation_seconds": 0.30948865900006695,
+        "peak_vram_bytes": 93220503552,
+        "peak_ram_bytes": 10773053440,
+        "offline_artifact_bytes": 30890069847,
+        "measured_projection_request_count": 110,
+        "bounded_projection_request_count": 8800,
+        "bounded_projected_execution_seconds": 5014.056122054965,
+        "resource_envelope_status": "pass",
+        "selection_status": "measured_not_selected"
+      },
+      {
+        "candidate_id": "M0-Q3VL-30B-A3B-FP8",
+        "reasoning_setting": "instruct_non_thinking",
+        "profile_record": "reports/m0_profiles/m0-q3vl30-instruct.json",
+        "kaggle_kernel": "daichongwei06/arc3-m0-q3vl30-rtx-profile/1",
+        "cold_load_seconds": 223.166545176,
+        "first_token_p95_seconds": 23.401947301000064,
+        "decode_tokens_per_second": 933.7339755767794,
+        "cancellation_seconds": 0.026876066999875547,
+        "peak_vram_bytes": 77538000896,
+        "peak_ram_bytes": 14551330816,
+        "offline_artifact_bytes": 64526033084,
+        "bounded_projection_request_count": 8800,
+        "bounded_projected_execution_seconds": 762.4866685508925,
+        "resource_envelope_status": "pass",
+        "selection_status": "provisional_primary"
+      },
+      {
+        "candidate_id": "M0-Q3VL-8B-FP8",
+        "reasoning_setting": "instruct_non_thinking",
+        "profile_record": "reports/m0_profiles/m0-q3vl8-instruct.json",
+        "kaggle_kernel": "daichongwei06/arc3-m0-q3vl8-rtx-profile/1",
+        "cold_load_seconds": 191.142758104,
+        "first_token_p95_seconds": 23.189173069999924,
+        "decode_tokens_per_second": 861.6920334832519,
+        "cancellation_seconds": 0.02713251999989552,
+        "peak_vram_bytes": 41360031744,
+        "peak_ram_bytes": 9391464448,
+        "offline_artifact_bytes": 21200194392,
+        "bounded_projection_request_count": 8800,
+        "bounded_projected_execution_seconds": 942.0984347292956,
+        "resource_envelope_status": "pass",
+        "selection_status": "provisional_fallback"
+      }
+    ]
+  }
 }

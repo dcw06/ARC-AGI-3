@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "status": "implementation_complete_execution_blocked_pending_cutoff_controls_and_target_runs",
+  "manifest_revision": "E1.v3",
+  "model_binding": {
+    "candidate_id": "M0-Q3VL-30B-A3B-FP8",
+    "model_id": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+    "revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+    "engine": "vllm==0.19.0",
+    "reasoning_setting": "instruct_non_thinking"
+  },
+  "shared": {
+    "proposal_action_count": 1,
+    "context_mode": "stateless_reconstruction_visible_compaction_v1",
+    "recent_transition_limit": 1,
+    "history_loss_reporting": "lifetime_count_and_rolling_sha256_v1",
+    "intent_max_bytes": 1024,
+    "rationale_max_bytes": 4096,
+    "durable_memory": false,
+    "historical_retrieval": false,
+    "typed_hypotheses": false,
+    "prediction_checked_queue": false,
+    "executable_python": false,
+    "executable_transition_model": false,
+    "search": false,
+    "specialist": false,
+    "scheduler": "minimum_fair_v1",
+    "prompt_revision": "E1.prompt.v4_lifetime_visible_compaction",
+    "workspace_invocation_limit": 7
+  },
+  "cells": {
+    "E1S-R": {
+      "observation_bundle": "R",
+      "harness": "structured_single_action",
+      "workspace": "none",
+      "status": "implemented_parameter_frozen"
+    },
+    "E1S-F": {
+      "observation_bundle": "F",
+      "harness": "structured_single_action",
+      "workspace": "none",
+      "status": "implemented_parameter_frozen"
+    },
+    "E1C-R": {
+      "observation_bundle": "R",
+      "harness": "safe_operation_single_action",
+      "workspace": "safe_operations_v1",
+      "status": "implemented_parameter_frozen"
+    },
+    "E1C-F": {
+      "observation_bundle": "F",
+      "harness": "safe_operation_single_action",
+      "workspace": "safe_operations_v1",
+      "status": "implemented_parameter_frozen"
+    }
+  },
+  "activation_requires": [
+    "provisional_M0_primary",
+    "exact_model_engine_reasoning_binding",
+    "matched_resource_ceiling",
+    "frozen_game_seed_pairs",
+    "parameter_closure"
+  ]
+}

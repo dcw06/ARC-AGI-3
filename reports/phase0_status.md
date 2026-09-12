@@ -74,3 +74,9 @@ External activation evidence:
 
 There are no remaining Phase 0 activation blockers. Later model-performance,
 target-hardware profiling, and treatment gates begin in Phase 0F/M0 and Phase 1.
+
+Revalidated on 2026-09-09 after Phase 0F/M0 completion: 63 repository tests,
+the pinned local competition-mode REST gateway, generated multi-file notebook,
+output policy, activation record, constraint register, exposure ledger, and
+adapter/startup topology checks pass. See
+`reports/phase0_phase0f_completion_audit.md` for the requirement-level matrix.

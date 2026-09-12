@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "status": "isolated_worker_implemented_and_adversarially_tested",
+  "language_id": "safe_operations_v1",
+  "turing_complete": false,
+  "operations": [
+    "array_shape",
+    "cell_value",
+    "palette",
+    "changed_cells",
+    "change_bounding_box",
+    "connected_components",
+    "region_summary",
+    "translation_candidates"
+  ],
+  "limits": {
+    "invocations_per_proposal": 7,
+    "cpu_seconds_per_invocation": 2,
+    "wall_seconds_per_invocation": 3,
+    "wall_seconds_per_proposal": 14,
+    "additional_worker_address_space_bytes": 268435456,
+    "output_bytes_per_proposal": 8192,
+    "created_files": 0,
+    "persistent_state": false,
+    "network": false,
+    "arbitrary_filesystem": false,
+    "package_install": false,
+    "environment_calls": false
+  },
+  "input_authority": "selected_R_or_F_bundle_only",
+  "output_schema": "e1_proposal_schema_v1"
+}
