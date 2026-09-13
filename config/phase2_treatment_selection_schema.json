@@ -1,0 +1,174 @@
+{
+  "schema_version": 1,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phase2_treatment_selection_v1",
+  "title": "Phase 2 treatment selection or justified no-selection record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "record_type", "selection_id", "status", "evaluated_at",
+    "contract", "evidence_review", "frozen_parent", "prospective_plan",
+    "candidates", "decision"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "record_type": {"const": "phase2_treatment_selection"},
+    "selection_id": {"type": "string", "pattern": "^P2S-[0-9]{4}-[0-9]{2}-[0-9]{2}-v[0-9]+$"},
+    "status": {"enum": ["complete_no_justified_treatment", "complete_one_treatment_selected"]},
+    "evaluated_at": {"type": "string", "format": "date-time"},
+    "contract": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256", "thresholds_frozen_before_diagnostic_review"],
+      "properties": {
+        "path": {"const": "config/phase2_contract.yaml"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "thresholds_frozen_before_diagnostic_review": {"const": true}
+      }
+    },
+    "evidence_review": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "phase1_factorial_result", "phase1_factorial_sha256", "phase1_whole_run_result",
+        "phase1_whole_run_sha256", "aggregate_observation", "diagnostic_capture_contract",
+        "historical_transition_replay_status", "admissible_failure_records", "reproduced_failure_count"
+      ],
+      "properties": {
+        "phase1_factorial_result": {"type": "string"},
+        "phase1_factorial_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "phase1_whole_run_result": {"type": "string"},
+        "phase1_whole_run_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "aggregate_observation": {"type": "string"},
+        "diagnostic_capture_contract": {"const": "config/phase2_diagnostic_capture.yaml"},
+        "historical_transition_replay_status": {"type": "string"},
+        "admissible_failure_records": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "reproduced_failure_count": {"type": "integer", "minimum": 0}
+      }
+    },
+    "frozen_parent": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "applies_to_all_candidates", "policy_id", "frozen", "operational_config",
+        "operational_config_sha256", "feature_manifest", "feature_manifest_sha256",
+        "model_binding", "observation_bundle", "context_mode", "scheduler", "proposal_action_count"
+      ],
+      "properties": {
+        "applies_to_all_candidates": {"const": true},
+        "policy_id": {"const": "E1S-R"},
+        "frozen": {"const": true},
+        "operational_config": {"const": "config/operational_primary.yaml"},
+        "operational_config_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "feature_manifest": {"const": "config/e1_feature_manifests.yaml"},
+        "feature_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "model_binding": {
+          "type": "object", "additionalProperties": false,
+          "required": ["candidate_id", "model_id", "revision", "engine", "reasoning_setting"],
+          "properties": {
+            "candidate_id": {"type": "string"}, "model_id": {"type": "string"},
+            "revision": {"type": "string"}, "engine": {"type": "string"},
+            "reasoning_setting": {"type": "string"}
+          }
+        },
+        "observation_bundle": {"type": "string"},
+        "context_mode": {"type": "string"},
+        "scheduler": {"type": "string"},
+        "proposal_action_count": {"const": 1}
+      }
+    },
+    "prospective_plan": {
+      "type": "object", "additionalProperties": false,
+      "required": ["applies_conditionally_to_each_admitted_candidate", "success_metric", "compute_allocation_if_admitted", "stop_rules"],
+      "properties": {
+        "applies_conditionally_to_each_admitted_candidate": {"const": true},
+        "success_metric": {"$ref": "#/$defs/success_metric"},
+        "compute_allocation_if_admitted": {"$ref": "#/$defs/compute"},
+        "stop_rules": {"$ref": "#/$defs/stops"}
+      }
+    },
+    "candidates": {
+      "type": "object", "additionalProperties": false,
+      "required": ["E2a", "E2b", "E2c", "E2d", "E3", "E4"],
+      "properties": {
+        "E2a": {"$ref": "#/$defs/candidate"}, "E2b": {"$ref": "#/$defs/candidate"},
+        "E2c": {"$ref": "#/$defs/candidate"}, "E2d": {"$ref": "#/$defs/candidate"},
+        "E3": {"$ref": "#/$defs/candidate"}, "E4": {"$ref": "#/$defs/candidate"}
+      }
+    },
+    "decision": {
+      "type": "object", "additionalProperties": false,
+      "required": ["selected_treatment", "conclusion", "reason", "activated_treatments", "allocated_accelerator_hours", "next_action"],
+      "properties": {
+        "selected_treatment": {"type": ["string", "null"], "enum": [null, "E2a", "E2b", "E2c", "E2d", "E3", "E4"]},
+        "conclusion": {"enum": ["phase2_has_no_justified_treatment", "one_treatment_selected"]},
+        "reason": {"type": "string", "minLength": 1},
+        "activated_treatments": {"type": "array", "maxItems": 1, "uniqueItems": true, "items": {"enum": ["E2a", "E2b", "E2c", "E2d", "E3", "E4"]}},
+        "allocated_accelerator_hours": {"type": "number", "minimum": 0, "maximum": 4.0},
+        "next_action": {"type": "string", "minLength": 1}
+      }
+    }
+  },
+  "$defs": {
+    "candidate": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "taxonomy_id", "concrete_reproduced_failure", "reproduction_status", "evidence_gap",
+        "parent_manifest_ref", "one_feature_delta", "prospective_success_metric_ref",
+        "compute_allocation_ref", "stop_rules_ref", "disposition"
+      ],
+      "properties": {
+        "taxonomy_id": {"type": "string"},
+        "concrete_reproduced_failure": {"type": ["string", "null"]},
+        "reproduction_status": {"enum": ["not_reproduced", "admitted"]},
+        "evidence_gap": {"type": "string", "minLength": 1},
+        "parent_manifest_ref": {"const": "frozen_parent"},
+        "one_feature_delta": {"type": "string", "minLength": 1},
+        "prospective_success_metric_ref": {"const": "prospective_plan.success_metric"},
+        "compute_allocation_ref": {"const": "prospective_plan.compute_allocation_if_admitted"},
+        "stop_rules_ref": {"const": "prospective_plan.stop_rules"},
+        "disposition": {"enum": ["not_admitted", "selected"]}
+      }
+    },
+    "success_metric": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "metric_id", "primary_outcome", "minimum_delta_percent", "failure_specific_reliability",
+        "overall_score_noninferiority_margin_percent", "both_blocks_nonnegative_required",
+        "catastrophic_tail_floor_percent", "resource_and_safety_pass_required", "sample_rule"
+      ],
+      "properties": {
+        "metric_id": {"const": "paired_complete_workload_official_RHAE_v1"},
+        "primary_outcome": {"type": "string"},
+        "minimum_delta_percent": {"type": "number"},
+        "failure_specific_reliability": {"type": "string"},
+        "overall_score_noninferiority_margin_percent": {"type": "number"},
+        "both_blocks_nonnegative_required": {"type": "boolean"},
+        "catastrophic_tail_floor_percent": {"type": "number"},
+        "resource_and_safety_pass_required": {"type": "boolean"},
+        "sample_rule": {"type": "string"}
+      }
+    },
+    "compute": {
+      "type": "object", "additionalProperties": false,
+      "required": ["target_accelerator", "maximum_accelerator_hours", "complete_workload_runs", "maximum_game_plays", "maximum_actions_per_game", "maximum_model_requests", "scored_submissions", "current_allocation_hours"],
+      "properties": {
+        "target_accelerator": {"const": "NvidiaRtxPro6000"},
+        "maximum_accelerator_hours": {"type": "number", "maximum": 4.0},
+        "complete_workload_runs": {"const": 4},
+        "maximum_game_plays": {"const": 60},
+        "maximum_actions_per_game": {"const": 80},
+        "maximum_model_requests": {"const": 4800},
+        "scored_submissions": {"const": 0},
+        "current_allocation_hours": {"const": 0.0}
+      }
+    },
+    "stops": {
+      "type": "object", "additionalProperties": false,
+      "required": ["futility", "regression", "immediate", "maximum_treatment_accelerator_hours", "no_early_positive_stop"],
+      "properties": {
+        "futility": {"type": "string"}, "regression": {"type": "string"},
+        "immediate": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "maximum_treatment_accelerator_hours": {"const": 4.0},
+        "no_early_positive_stop": {"const": true}
+      }
+    }
+  }
+}

@@ -1,0 +1,267 @@
+{
+  "schema_version": 1,
+  "contract_id": "phase2.failure-driven.v1",
+  "status": "frozen_no_treatment_admitted",
+  "frozen_at": "2026-09-12T22:30:00+08:00",
+  "purpose": "admit only failure-driven E2a-E4 treatments against the exact Phase 1 operational parent",
+  "treatment_cap": {
+    "maximum_activated_treatments": 2,
+    "evaluation_order": "strictly_sequential",
+    "simultaneous_activated_treatments": 0,
+    "activated_treatments": [],
+    "activation_order": [],
+    "selection_rule": "first_admitted_by_frozen_taxonomy_priority_then_failure_id_lexicographic",
+    "taxonomy_priority": [
+      "inter_action_event_loss",
+      "animation_summary_aliasing",
+      "selective_rich_animation_need",
+      "correspondence_identity_failure",
+      "cross_level_memory_recurrence",
+      "out_of_window_exact_evidence_need"
+    ]
+  },
+  "registered_treatments": {
+    "E2a": {
+      "status": "inactive_pending_reproduced_failure_admission",
+      "taxonomy_id": "inter_action_event_loss",
+      "enabled_feature": "advanced_inter_action_evidence"
+    },
+    "E2b": {
+      "status": "inactive_pending_reproduced_failure_admission",
+      "taxonomy_id": "animation_summary_aliasing",
+      "enabled_feature": "advanced_animation_summary"
+    },
+    "E2c": {
+      "status": "inactive_pending_reproduced_failure_admission",
+      "taxonomy_id": "selective_rich_animation_need",
+      "enabled_feature": "selective_rich_animation"
+    },
+    "E2d": {
+      "status": "inactive_pending_reproduced_failure_admission",
+      "taxonomy_id": "correspondence_identity_failure",
+      "enabled_feature": "advanced_correspondence_identity_tracking"
+    },
+    "E3": {
+      "status": "inactive_pending_reproduced_failure_admission",
+      "taxonomy_id": "cross_level_memory_recurrence",
+      "enabled_feature": "durable_scratch_rejected_hypothesis_memory"
+    },
+    "E4": {
+      "status": "inactive_pending_reproduced_failure_admission",
+      "taxonomy_id": "out_of_window_exact_evidence_need",
+      "enabled_feature": "exact_historical_retrieval_retrodiction"
+    }
+  },
+  "diagnostic_taxonomy": {
+    "inter_action_event_loss": {
+      "admissible_treatments": ["E2a"],
+      "definition": "a bounded intermediate event required for the next decision is absent from the parent-visible final-frame evidence",
+      "required_evidence": "exact_or_summarized_T2_T3_transition_evidence_with_parent_visibility_manifest"
+    },
+    "animation_summary_aliasing": {
+      "admissible_treatments": ["E2b"],
+      "definition": "the frozen E0F summary maps decision-relevant distinct animations to the same visible summary",
+      "required_evidence": "two_distinct_bounded_frame_sequences_same_E0F_summary_different_action_relevant_event"
+    },
+    "selective_rich_animation_need": {
+      "admissible_treatments": ["E2c"],
+      "definition": "a registered rich-animation trigger fires and summary-only evidence cannot distinguish the next legal probe or action",
+      "required_evidence": "trigger_record_summary_insufficiency_and_bounded_rich_evidence_reference"
+    },
+    "correspondence_identity_failure": {
+      "admissible_treatments": ["E2d"],
+      "definition": "unstable object identity or correspondence causes a reproduced wrong or fallback decision after simpler region and animation evidence is insufficient",
+      "required_evidence": "competing_correspondence_records_and_simpler_evidence_insufficiency"
+    },
+    "cross_level_memory_recurrence": {
+      "admissible_treatments": ["E3"],
+      "definition": "a previously supported mechanic must be rediscovered after the parent bounded context omits it, causing repeated cost or failure",
+      "required_evidence": "prior_supported_transition_current_omission_manifest_and_repeated_rediscovery_cost"
+    },
+    "out_of_window_exact_evidence_need": {
+      "admissible_treatments": ["E4"],
+      "definition": "the next decision requires an exact retained historical observation outside the parent-visible window and summary evidence is insufficient",
+      "required_evidence": "eligible_exact_blob_reference_parent_omission_manifest_and_action_relevance"
+    },
+    "model_protocol_invalidity": {
+      "admissible_treatments": [],
+      "definition": "malformed, unsupported, illegal, or otherwise rejected model proposal",
+      "required_evidence": "proposal_validation_record"
+    },
+    "resource_or_queue_failure": {
+      "admissible_treatments": [],
+      "definition": "deadline, memory, queue, cancellation, or capacity failure",
+      "required_evidence": "runtime_or_queue_record"
+    },
+    "environment_or_transport_failure": {
+      "admissible_treatments": [],
+      "definition": "environment, scorecard, session, or transport failure",
+      "required_evidence": "journaled_transport_phase_record"
+    },
+    "unsupported_other": {
+      "admissible_treatments": [],
+      "definition": "failure not causally attributable to one registered Phase 2 capability",
+      "required_evidence": "bounded_diagnostic_record"
+    }
+  },
+  "admission_gate": {
+    "status": "frozen_before_failure_review",
+    "minimum_reproductions": 2,
+    "minimum_distinct_parent_run_ids": 2,
+    "same_game_and_seed_required": true,
+    "same_failure_signature_required": true,
+    "parent_only_reproduction_required": true,
+    "policy_visible_evidence_only": true,
+    "evaluator_or_holdout_evidence_allowed": false,
+    "causal_attribution_to_exactly_one_registered_missing_capability": true,
+    "alternative_causes_that_must_be_excluded": [
+      "model_protocol_invalidity",
+      "resource_or_queue_failure",
+      "environment_or_transport_failure"
+    ],
+    "required_consequence": [
+      "no_progress_within_frozen_action_window",
+      "deterministic_fallback_after_policy_failure",
+      "wrong_action_reversed_by_reproduction",
+      "repeated_rediscovery_cost",
+      "avoidable_resource_cost"
+    ],
+    "admission_decision": "all_rules_conjunctive",
+    "no_matching_failure_behavior": "remain_inactive"
+  },
+  "development_game_seed_pairs_sha256": "2a2dd692c09c6b146579d66f6b8c698b5d54386be54b38c7ed8229e6774f1510",
+  "development_game_seed_pairs": [
+    {"game_id": "ar25-0c556536", "seed": 104729, "fold": 1},
+    {"game_id": "cd82-fb555c5d", "seed": 104759, "fold": 2},
+    {"game_id": "ft09-0d8bbf25", "seed": 104761, "fold": 3},
+    {"game_id": "g50t-5849a774", "seed": 104773, "fold": 4},
+    {"game_id": "ka59-38d34dbb", "seed": 104779, "fold": 5},
+    {"game_id": "lf52-271a04aa", "seed": 104789, "fold": 1},
+    {"game_id": "ls20-9607627b", "seed": 104801, "fold": 2},
+    {"game_id": "s5i5-18d95033", "seed": 104803, "fold": 3},
+    {"game_id": "sc25-635fd71a", "seed": 104827, "fold": 4},
+    {"game_id": "sk48-d8078629", "seed": 104831, "fold": 5},
+    {"game_id": "sp80-589a99af", "seed": 104849, "fold": 1},
+    {"game_id": "su15-1944f8ab", "seed": 104851, "fold": 2},
+    {"game_id": "tr87-cd924810", "seed": 104869, "fold": 3},
+    {"game_id": "vc33-5430563c", "seed": 104879, "fold": 4},
+    {"game_id": "wa30-ee6fef47", "seed": 104891, "fold": 5}
+  ],
+  "parent_policy": {
+    "status": "frozen",
+    "cell_id": "E1S-R",
+    "operational_label": "Provisional primary",
+    "acceptance_claim": false,
+    "model_binding": {
+      "candidate_id": "M0-Q3VL-30B-A3B-FP8",
+      "model_id": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+      "revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+      "engine": "vllm==0.19.0",
+      "reasoning_setting": "instruct_non_thinking"
+    },
+    "operational_config": "config/operational_primary.yaml",
+    "operational_config_sha256": "489765d436df7e0ae7c80b9494c3c1ab4b7153b46f8dc5951724b59561ebb709",
+    "feature_manifest": "config/e1_feature_manifests.yaml",
+    "feature_manifest_sha256": "65312c43d8499d86fb1a7262efc2ec483b4a4424cd180c14d7abd1a477d89eae",
+    "phase1_decision": "config/phase1_decision.yaml",
+    "phase1_decision_sha256": "a2e34e3f97b84daad5197643e5ea06e6aa90c48c1d5eb8df28d0d218a9027854",
+    "observation_bundle": "R_latest_final_frame_no_intermediate_features",
+    "context_mode": "stateless_reconstruction_visible_compaction_v1",
+    "proposal_action_count": 1,
+    "scheduler": "minimum_fair_v1_capacity_110_workers_8_max_age_300_seconds"
+  },
+  "comparison": {
+    "execution_mode": "shared_resource_whole_run",
+    "complete_workload": "all_15_frozen_development_game_seed_pairs",
+    "treatment_unit": "one_complete_workload_run",
+    "randomization_unit": "paired_complete_workload_run_block",
+    "uncertainty_unit": "paired_complete_workload_run_block",
+    "paired_run_blocks": 2,
+    "block_orders": ["parent_then_treatment", "treatment_then_parent"],
+    "fresh_runtime_per_arm": true,
+    "per_game_results": "diagnostic_only_never_independent_resamples",
+    "primary_outcome": "paired_complete_workload_mean_official_RHAE_percent_difference",
+    "crash_timeout_missing_score": 0
+  },
+  "compute_allowance": {
+    "target_accelerator": "NvidiaRtxPro6000",
+    "maximum_activated_treatments": 2,
+    "maximum_family_accelerator_hours": 8.0,
+    "maximum_accelerator_hours_per_treatment": 4.0,
+    "maximum_complete_workload_runs": 8,
+    "complete_workload_runs_per_treatment": 4,
+    "maximum_game_plays": 120,
+    "maximum_actions_per_game": 80,
+    "maximum_model_requests_per_complete_workload": 1200,
+    "maximum_family_model_requests": 9600,
+    "maximum_valid_target_notebook_runs": 2,
+    "failed_infrastructure_run_allowance": 1,
+    "accelerator_hour_accounting": "all_valid_and_failed_runs_from_kernel_start_to_exit",
+    "maximum_scored_submissions": 0,
+    "family_deadline": "2026-09-20T23:59:59+08:00"
+  },
+  "decision_rules": {
+    "status": "prospectively_frozen",
+    "primary_delta_min_official_RHAE_percent": 0.10,
+    "catastrophic_tail_regression_percent": -0.10,
+    "reliability_noninferiority_margin_percent": -0.02,
+    "familywise_alpha": 0.10,
+    "multiplicity": "sequential_gatekeeping_in_activation_order",
+    "positive_rule": "both_blocks_nonnegative_mean_effect_overall_mean_at_least_delta_min_no_catastrophic_tail_resource_pass",
+    "reliability_rule": "reproduced_parent_failure_absent_in_both_treatment_arms_overall_score_within_noninferiority_margin_resource_pass",
+    "negative_rule": "overall_mean_at_or_below_catastrophic_tail_or_any_safety_resource_gate_failure",
+    "inconclusive_rule": "neither_positive_nor_negative_or_insufficient_block_resolution",
+    "operational_label_when_positive_but_underpowered": "Provisional treatment",
+    "retrospective_threshold_changes": "forbidden_new_contract_revision_and_fresh_experiment_required"
+  },
+  "stop_rules": {
+    "sample_rule": "fixed_two_paired_complete_workload_blocks_no_early_positive_stop",
+    "stop_family_after_activated_treatments": 2,
+    "stop_family_at_accelerator_hours": 8.0,
+    "stop_family_at_deadline": "2026-09-20T23:59:59+08:00",
+    "stop_treatment_at_accelerator_hours": 4.0,
+    "stop_immediately_on": [
+      "unregistered_treatment",
+      "parent_hash_drift",
+      "feature_manifest_leakage",
+      "evaluator_or_holdout_evidence_access",
+      "unknown_runtime_or_model_revision",
+      "ambiguous_environment_outcome",
+      "queue_or_finalization_safety_breach"
+    ],
+    "candidate_caused_failure": "score_missing_work_as_zero_and_reject_if_safety_or_resource_gate_breached",
+    "infrastructure_invalid_run": "one_family_wide_rerun_only_when_no_usable_policy_or_semantic_result_was_emitted",
+    "after_each_treatment": "freeze_result_and_release_all_runtime_state_before_considering_next_admission",
+    "no_admitted_failure": "stop_phase_without_treatment_activation"
+  },
+  "feature_boundary": {
+    "exactly_one_registered_feature_delta": true,
+    "parent_fields_that_must_not_change": [
+      "model_binding",
+      "scheduler",
+      "context_mode",
+      "proposal_action_count",
+      "game_seed_pairs",
+      "action_reset_retry_limits",
+      "global_runtime_and_finalization_limits"
+    ],
+    "features_that_must_remain_disabled": [
+      "typed_competing_hypotheses",
+      "prediction_checked_action_queue",
+      "multi_action_execution",
+      "executable_python",
+      "executable_transition_model",
+      "search",
+      "specialist",
+      "advanced_scheduler",
+      "cross_game_mutable_memory"
+    ],
+    "unregistered_fields": "reject_not_ignore"
+  },
+  "schemas": {
+    "failure_record": "config/phase2_failure_record_schema.json",
+    "failure_record_sha256": "c5a564276d9219e588a7e0de19a2447f68ebb54067958a9b88954e343d1f6227",
+    "treatment_manifest": "config/phase2_treatment_manifest_schema.json",
+    "treatment_manifest_sha256": "a3fcfd9e9020276b4cc6b76488127986fa0c681775d0c073f9355369532b7d3d"
+  }
+}

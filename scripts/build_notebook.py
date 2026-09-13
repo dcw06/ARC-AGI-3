@@ -39,7 +39,7 @@ def markdown_cell(source: str) -> dict:
 def bundled_sources() -> dict[str, str]:
     required = {
         "agent/__init__.py", "agent/action.py", "agent/action_journal.py", "agent/evidence.py",
-        "agent/competition_loop.py", "agent/controller.py",
+        "agent/competition_loop.py", "agent/controller.py", "agent/diagnostics.py",
         "agent/config.py", "agent/e1_policy.py", "agent/feature_manifest.py", "agent/safe_operations.py",
         "agent/framework_adapter.py", "agent/production_main.py",
         "agent/production_policy.py",

@@ -31,6 +31,7 @@ def bundled_sources() -> dict[str, str]:
         "agent/competition_loop.py",
         "agent/config.py",
         "agent/controller.py",
+        "agent/diagnostics.py",
         "agent/e1_policy.py",
         "agent/evidence.py",
         "agent/feature_manifest.py",

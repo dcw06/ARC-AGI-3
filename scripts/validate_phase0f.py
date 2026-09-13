@@ -21,6 +21,16 @@ def load(name: str) -> dict:
     return json.loads((ROOT / "config" / name).read_text())
 
 
+def m0_completion_registered(experiments: dict, models: dict) -> bool:
+    """Completion is durable; advancing the calendar must not invalidate M0."""
+    return (
+        experiments.get("treatments", {}).get("M0", {}).get("status")
+        == "provisional_primary_q3vl30_fallback_q3vl8_selected"
+        and models.get("status") == "M0_provisional_selection_complete"
+        and models.get("candidate_set_frozen") is True
+    )
+
+
 def main() -> int:
     failures: list[str] = []
     evidence = load("evidence_policy.yaml")
@@ -121,9 +131,7 @@ def main() -> int:
         failures,
     )
     check(
-        experiments.get("current_phase")
-        in {"phase_0f_m0_complete", "phase_1_implementation_complete_execution_pending"}
-        and models.get("status") == "M0_provisional_selection_complete",
+        m0_completion_registered(experiments, models),
         "M0 completion and candidate freeze are registered",
         failures,
     )

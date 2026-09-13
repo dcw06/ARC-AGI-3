@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
+import json
 import logging
 import os
 import sys
@@ -12,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from agent.competition_loop import CompetitionOrchestrator
+from agent.diagnostics import TransitionDiagnosticRecorder
 from agent.framework_adapter import LocalFrameworkAdapter, RemoteFrameworkAdapter
 from agent.watchdog import DeadlineWatchdog
 
@@ -30,13 +33,23 @@ def main() -> int:
     parser.add_argument("--game", help="Comma-separated opaque game IDs")
     parser.add_argument("--max-actions", type=int, default=80)
     parser.add_argument("--max-workers", type=int, default=4)
+    parser.add_argument(
+        "--diagnostics-dir",
+        type=Path,
+        help="Write local, content-addressed transition bundles to this directory",
+    )
     args = parser.parse_args()
 
     if args.backend == "local":
         from arc_agi import Arcade, OperationMode
 
         arcade = Arcade(operation_mode=OperationMode.NORMAL, logger=quiet_logger())
-        adapter = LocalFrameworkAdapter(arcade)
+        phase2 = json.loads((ROOT / "config/phase2_contract.yaml").read_text())
+        frozen_seeds = {
+            item["game_id"]: item["seed"]
+            for item in phase2["development_game_seed_pairs"]
+        }
+        adapter = LocalFrameworkAdapter(arcade, seed_by_game=frozen_seeds)
         available = tuple(item.game_id for item in arcade.get_environments())
     else:
         adapter = RemoteFrameworkAdapter(
@@ -54,13 +67,34 @@ def main() -> int:
     if not game_ids:
         raise SystemExit("no matching games")
 
+    recorders: list[TransitionDiagnosticRecorder] = []
+
+    def diagnostic_factory(client: object) -> TransitionDiagnosticRecorder:
+        game_id = str(getattr(client, "game_id"))
+        recorder = TransitionDiagnosticRecorder(
+            game_id=game_id,
+            treatment_id="E0-fallback",
+            seed=frozen_seeds.get(game_id) if args.backend == "local" else None,
+            run_id="phase2-local-diagnostic",
+            capacity=max(args.max_actions, 1),
+        )
+        recorders.append(recorder)
+        return recorder
+
     result = CompetitionOrchestrator(
         adapter,
         game_ids,
         max_workers=args.max_workers,
         max_actions=args.max_actions,
         watchdog=DeadlineWatchdog(32_400, 600),
+        diagnostic_factory=diagnostic_factory if args.diagnostics_dir is not None else None,
     ).run()
+    if args.diagnostics_dir is not None:
+        args.diagnostics_dir.mkdir(parents=True, exist_ok=True)
+        for recorder in recorders:
+            opaque_name = hashlib.sha256(recorder.game_id.encode()).hexdigest()[:20]
+            recorder.write(args.diagnostics_dir / f"{opaque_name}.json")
+        print(f"diagnostics={args.diagnostics_dir} bundles={len(recorders)}")
     print(f"backend={args.backend} clients={len(result.results)} finalization={result.finalization_status}")
     for item in result.results:
         print(

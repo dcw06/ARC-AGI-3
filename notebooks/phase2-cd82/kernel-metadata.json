@@ -1,0 +1,16 @@
+{
+  "id":"daichongwei06/arc3-phase2-cd82-diagnostics",
+  "title":"ARC3 Phase2 CD82 Diagnostics",
+  "code_file":"profile.ipynb",
+  "language":"python",
+  "kernel_type":"notebook",
+  "is_private":true,
+  "enable_gpu":true,
+  "machine_shape":"NvidiaRtxPro6000",
+  "enable_tpu":false,
+  "enable_internet":false,
+  "dataset_sources":["driessmit1/arc3-vllm-h100-wheelhouse-v3"],
+  "kernel_sources":[],
+  "competition_sources":["arc-prize-2026-arc-agi-3"],
+  "model_sources":["qwen-lm/qwen-3-vl/Transformers/30b-a3b-instruct-fp8/1"]
+}

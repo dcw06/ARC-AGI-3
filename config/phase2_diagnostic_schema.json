@@ -1,0 +1,179 @@
+{
+  "schema_version": 1,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phase2_diagnostic_bundle_v1",
+  "title": "Phase 2 local diagnostic and replay bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "record_type", "run_id", "game_id", "treatment_id",
+    "seed", "policy_visibility", "progress_rule", "records", "retained_frames",
+    "capture_errors", "bundle_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "record_type": {"const": "phase2_diagnostic_bundle"},
+    "run_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "game_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "treatment_id": {"type": "string", "minLength": 1, "maxLength": 32},
+    "seed": {"type": ["integer", "null"], "minimum": 0},
+    "policy_visibility": {"const": "diagnostics_not_in_policy_observation"},
+    "progress_rule": {"const": "grid_change_or_level_increment_or_win_v1"},
+    "records": {
+      "type": "array", "maxItems": 256,
+      "items": {"$ref": "#/$defs/transition_record"}
+    },
+    "retained_frames": {
+      "type": "object",
+      "propertyNames": {"pattern": "^[0-9a-f]{64}$"},
+      "additionalProperties": {"$ref": "#/$defs/frame"}
+    },
+    "capture_errors": {
+      "type": "array", "maxItems": 256,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["phase", "error_type"],
+        "properties": {
+          "phase": {"type": "string", "minLength": 1, "maxLength": 128},
+          "error_type": {"type": "string", "minLength": 1, "maxLength": 128}
+        }
+      }
+    },
+    "bundle_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "$defs": {
+    "frame": {
+      "type": "object", "additionalProperties": false,
+      "required": ["shape", "dtype", "order", "payload_base64"],
+      "properties": {
+        "shape": {
+          "type": "array", "minItems": 2, "maxItems": 2,
+          "items": {"type": "integer", "minimum": 1}
+        },
+        "dtype": {"const": "uint8"},
+        "order": {"const": "C"},
+        "payload_base64": {"type": "string"}
+      }
+    },
+    "observation_ref": {
+      "type": "object", "additionalProperties": false,
+      "required": ["observation_sha256", "frame_content_sha256", "state", "levels_completed", "win_levels", "legal_actions"],
+      "properties": {
+        "observation_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "frame_content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "state": {"type": "string"},
+        "levels_completed": {"type": "integer", "minimum": 0},
+        "win_levels": {"type": "integer", "minimum": 0},
+        "legal_actions": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 0, "maximum": 7}}
+      }
+    },
+    "model_proposal": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "content", "content_sha256", "content_bytes", "content_availability"],
+      "properties": {
+        "kind": {"const": "model"},
+        "content": {"type": "string", "maxLength": 16384},
+        "content_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "content_bytes": {"type": "integer", "minimum": 0},
+        "content_availability": {"enum": ["exact", "truncated_capacity"]}
+      }
+    },
+    "decision": {
+      "type": "object", "additionalProperties": false,
+      "required": ["decision_id", "source", "action_id", "action_data", "action_data_sha256", "local_rationale_reference"],
+      "properties": {
+        "decision_id": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "minLength": 1},
+        "action_id": {"type": "integer", "minimum": 0, "maximum": 7},
+        "action_data": {"type": "object"},
+        "action_data_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "local_rationale_reference": {"type": ["string", "null"]}
+      }
+    },
+    "workspace_operation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["operation", "arguments_sha256", "succeeded", "result_sha256", "error_category"],
+      "properties": {
+        "operation": {"type": "string", "minLength": 1},
+        "arguments_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "succeeded": {"type": "boolean"},
+        "result_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "error_category": {"type": ["string", "null"]}
+      }
+    },
+    "transition_ref": {
+      "type": "object", "additionalProperties": false,
+      "required": ["transition_id", "sequence_sha256", "frame_count", "distinct_frame_count", "changed_cells", "no_change", "bounding_box", "palette_added", "palette_removed"],
+      "properties": {
+        "transition_id": {"type": "string", "minLength": 1},
+        "sequence_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "frame_count": {"type": "integer", "minimum": 1},
+        "distinct_frame_count": {"type": "integer", "minimum": 1},
+        "changed_cells": {"type": "integer", "minimum": -1},
+        "no_change": {"type": "boolean"},
+        "bounding_box": {
+          "type": ["array", "null"], "minItems": 4, "maxItems": 4,
+          "items": {"type": "integer", "minimum": 0}
+        },
+        "palette_added": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 0, "maximum": 255}},
+        "palette_removed": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 0, "maximum": 255}}
+      }
+    },
+    "transition_record": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "game_id", "treatment_id", "iteration", "proposal_or_fallback",
+        "proposal_rejection_category", "rejection_detail", "repeated_action_count",
+        "repeated_state_count", "workspace", "pre", "dispatch_status", "action_legal",
+        "outcome_unknown_phase", "post", "transition", "evidence_availability",
+        "measurable_progress", "failure_signature_sha256"
+      ],
+      "properties": {
+        "game_id": {"type": "string", "minLength": 1},
+        "treatment_id": {"type": "string", "minLength": 1},
+        "iteration": {"type": "integer", "minimum": 1},
+        "proposal_or_fallback": {
+          "type": "object", "additionalProperties": false,
+          "required": ["model_proposals", "executed_decision"],
+          "properties": {
+            "model_proposals": {"type": "array", "maxItems": 8, "items": {"$ref": "#/$defs/model_proposal"}},
+            "executed_decision": {"$ref": "#/$defs/decision"}
+          }
+        },
+        "proposal_rejection_category": {
+          "enum": ["none", "malformed_json", "invalid_proposal_shape", "disabled_feature", "illegal_action", "invalid_action_data", "unknown_workspace_operation", "workspace_failure", "workspace_exhausted", "inference_queue_failure", "inference_transport_failure", "invalid_completion", "policy_exception", "fallback_only", "pre_dispatch_failure", "outcome_unknown"]
+        },
+        "rejection_detail": {"type": ["string", "null"], "maxLength": 256},
+        "repeated_action_count": {"type": "integer", "minimum": 0},
+        "repeated_state_count": {"type": "integer", "minimum": 0},
+        "workspace": {
+          "type": "object", "additionalProperties": false,
+          "required": ["operations", "invocations", "exhausted"],
+          "properties": {
+            "operations": {"type": "array", "maxItems": 8, "items": {"$ref": "#/$defs/workspace_operation"}},
+            "invocations": {"type": "integer", "minimum": 0, "maximum": 8},
+            "exhausted": {"type": "boolean"}
+          }
+        },
+        "pre": {"$ref": "#/$defs/observation_ref"},
+        "dispatch_status": {"enum": ["acknowledged", "pre_dispatch_failed", "outcome_unknown"]},
+        "action_legal": {"type": "boolean"},
+        "outcome_unknown_phase": {"enum": ["none", "pre_transport", "action_dispatch_post_entry"]},
+        "post": {"oneOf": [{"$ref": "#/$defs/observation_ref"}, {"type": "null"}]},
+        "transition": {"oneOf": [{"$ref": "#/$defs/transition_ref"}, {"type": "null"}]},
+        "evidence_availability": {
+          "type": "object", "additionalProperties": false,
+          "required": ["T0", "T1", "T2", "T3"],
+          "properties": {
+            "T0": {"enum": ["exact", "summarized", "omitted_capacity", "evicted_pressure", "unavailable_storage", "corrupt", "not_observed"]},
+            "T1": {"enum": ["exact", "summarized", "omitted_capacity", "evicted_pressure", "unavailable_storage", "corrupt", "not_observed"]},
+            "T2": {"enum": ["exact", "summarized", "omitted_capacity", "evicted_pressure", "unavailable_storage", "corrupt", "not_observed"]},
+            "T3": {"enum": ["exact", "summarized", "omitted_capacity", "evicted_pressure", "unavailable_storage", "corrupt", "not_observed"]}
+          }
+        },
+        "measurable_progress": {"type": "boolean"},
+        "failure_signature_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  }
+}

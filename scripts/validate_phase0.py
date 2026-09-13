@@ -24,6 +24,10 @@ REQUIRED = {
     "prediction_schema.json", "action_journal_schema.json", "lifecycle_journal_schema.json",
     "sealed_output_schema.json", "activation_record.json",
     "scorer_fixture.json",
+    "phase2_contract.yaml", "phase2_failure_record_schema.json",
+    "phase2_treatment_manifest_schema.json", "phase2_diagnostic_capture.yaml",
+    "phase2_diagnostic_schema.json", "phase2_treatment_selection.yaml",
+    "phase2_treatment_selection_schema.json", "phase2_conditional_implementation.yaml",
 }
 
 REQUIRED_CONSTRAINTS = {
@@ -162,6 +166,13 @@ def main() -> int:
 
     runtime_audit = validate_mounted_runtime("local_2026_09_06")
     check(runtime_audit.passed, "exact local runtime/source profile matches", failures)
+
+    equivalence = subprocess.run(
+        [sys.executable, "-m", "unittest", "tests.test_phase0_transport_equivalence", "-q"],
+        cwd=ROOT, check=False,
+    )
+    check(equivalence.returncode == 0,
+          "pinned mounted-client differential and transport fault fixtures", failures)
 
     gateway = subprocess.run(
         [sys.executable, str(ROOT / "scripts" / "validate_local_gateway.py")],

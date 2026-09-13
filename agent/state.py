@@ -123,6 +123,9 @@ class GameRuntimeState:
     action_budget_limit: int | None = None
     counters: LifecycleCounters = field(default_factory=LifecycleCounters)
     evidence: EvidenceStore = field(default_factory=EvidenceStore)
+    # Write-only observational side channel. Representation builders do not
+    # read it, so diagnostic capture cannot enter the model's policy context.
+    diagnostics: Any | None = None
     quarantined: bool = False
     terminal_reason: str | None = None
 

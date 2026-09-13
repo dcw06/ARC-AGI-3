@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "record_type": "phase2_conditional_implementation",
+  "status": "closed_not_applicable_no_selected_treatment",
+  "selection_record": "config/phase2_treatment_selection.yaml",
+  "selection_record_sha256": "e730a1a6c7336dc10d3cff71eeb4f22d6031c599c968f997d44ea7ec2d2a66f9",
+  "selected_treatment": null,
+  "chunk_2_3_evidence_treatment": {
+    "status": "not_implemented_no_selected_E2_treatment",
+    "implemented_variant": null,
+    "phase2_feature_manifests": [],
+    "deterministic_enrichers": [],
+    "rich_evidence_triggers": [],
+    "new_resource_limits": [],
+    "new_derived_features": [],
+    "representation_fixtures": [],
+    "reason": "implementing_any_E2a_E2d_variant_would_bundle_an_unselected_treatment"
+  },
+  "chunk_2_4_memory_retrieval": {
+    "status": "not_implemented_no_reproduced_E3_or_E4_failure",
+    "E3": {
+      "justified": false,
+      "implemented": false,
+      "stores": [],
+      "cross_game_mutable_memory": false
+    },
+    "E4": {
+      "justified": false,
+      "implemented": false,
+      "query_schemas": [],
+      "retrodiction_schemas": [],
+      "depends_on_E3": false
+    },
+    "reason": "conditional_memory_or_retrieval_code_requires_its_own_admitted_reproduced_failure"
+  },
+  "protected_E1_parent": {
+    "feature_registry": "config/e1_feature_manifests.yaml",
+    "feature_registry_sha256": "65312c43d8499d86fb1a7262efc2ec483b4a4424cd180c14d7abd1a477d89eae",
+    "feature_validator": "agent/feature_manifest.py",
+    "feature_validator_sha256": "ce99c04c7ed70b7eea383615172071984c57afe31efc21262eb49cee0256b26d",
+    "representation": "agent/representation.py",
+    "representation_sha256": "f676bf5f27e5ab13498bf44c3b638d3b231f3e1ee974ef6a8fe92e8853a63ae6",
+    "policy": "agent/e1_policy.py",
+    "policy_sha256": "f11b793608469fb75a4a8a5493908867340445a87babda210f31cc2b3f77932d",
+    "forbidden_treatment_features": [
+      "advanced_inter_action_evidence",
+      "advanced_animation_summary",
+      "selective_rich_animation",
+      "advanced_correspondence_identity_tracking",
+      "durable_scratch_rejected_hypothesis_memory",
+      "exact_historical_retrieval_retrodiction"
+    ],
+    "e1_exact_historical_retrieval_calls": 0,
+    "e1_cross_game_mutable_stores": 0
+  },
+  "activation_guard": {
+    "E2a_E4_status": "inactive_pending_reproduced_failure_admission",
+    "treatment_modules_allowed": false,
+    "new_feature_manifest_allowed": false,
+    "override_requires": [
+      "new_prospective_selection_record",
+      "admitted_reproduced_failure_record",
+      "exactly_one_selected_treatment",
+      "frozen_treatment_manifest"
+    ]
+  },
+  "exit": {
+    "chunk_2_3": "not_applicable",
+    "chunk_2_4": "not_applicable",
+    "legal_play_preserved": true,
+    "T0_preserved": true,
+    "unsupported_memory_verified_items": 0
+  }
+}

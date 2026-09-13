@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phase3-offline-predictions-v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "status", "hypotheses", "predictions"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "status": {"const": "inactive_fixture_only"},
+    "hypotheses": {"type": "array", "maxItems": 4, "items": {"$ref": "#/$defs/hypothesis"}},
+    "predictions": {"type": "array", "maxItems": 64, "items": {"$ref": "#/$defs/prediction"}}
+  },
+  "$defs": {
+    "id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "ids": {"type": "array", "uniqueItems": true, "maxItems": 64, "items": {"$ref": "#/$defs/id"}},
+    "prediction": {
+      "type": "object", "additionalProperties": false,
+      "required": ["prediction_id", "transition_id", "committed_sequence", "scope", "dependency", "kind", "expected", "evidence_id", "required"],
+      "properties": {
+        "prediction_id": {"$ref": "#/$defs/id"},
+        "transition_id": {"$ref": "#/$defs/id"},
+        "committed_sequence": {"type": "integer", "minimum": 0},
+        "scope": {"$ref": "#/$defs/id"},
+        "dependency": {"$ref": "#/$defs/id"},
+        "kind": {"enum": ["bound_cell_value", "bound_entity_x", "bound_entity_y", "scoped_grid_relation"]},
+        "expected": {"type": "integer"},
+        "evidence_id": {"$ref": "#/$defs/id"},
+        "required": {"type": "boolean"}
+      }
+    },
+    "hypothesis": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "claim", "scope", "dependencies", "supporting_evidence", "contradicting_evidence", "prediction_ids", "action_recommendation", "stop_recommendation", "probe", "reversibility", "risk", "expiry_sequence", "exception_count", "status", "revision"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "claim": {"type": "string", "minLength": 1, "maxLength": 512},
+        "scope": {"$ref": "#/$defs/id"},
+        "dependencies": {"$ref": "#/$defs/ids"},
+        "supporting_evidence": {"$ref": "#/$defs/ids"},
+        "contradicting_evidence": {"$ref": "#/$defs/ids"},
+        "prediction_ids": {"$ref": "#/$defs/ids"},
+        "action_recommendation": {"type": "string", "maxLength": 256},
+        "stop_recommendation": {"type": "string", "maxLength": 256},
+        "probe": {"type": ["string", "null"], "maxLength": 256},
+        "reversibility": {"enum": ["reversible", "irreversible", "unknown"]},
+        "risk": {"enum": ["low", "high", "unknown"]},
+        "expiry_sequence": {"type": "integer", "minimum": 0},
+        "exception_count": {"type": "integer", "minimum": 0, "maximum": 64},
+        "status": {"enum": ["tentative", "supported", "verified_for_plan", "contradicted", "retired"]},
+        "revision": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

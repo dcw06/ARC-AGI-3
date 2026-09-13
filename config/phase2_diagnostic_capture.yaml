@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "contract_id": "phase2.diagnostic-capture.v1",
+  "status": "capture_and_replay_implemented_historical_exit_pending",
+  "scope": "local_development_only",
+  "record_schema": "config/phase2_diagnostic_schema.json",
+  "record_capacity_per_game": 256,
+  "maximum_retained_proposal_bytes": 16384,
+  "capture_fields": [
+    "proposal_or_fallback",
+    "proposal_rejection_category",
+    "repeated_action_count",
+    "repeated_state_count",
+    "changed_cells",
+    "no_change",
+    "action_legal",
+    "workspace_operations",
+    "workspace_exhausted",
+    "evidence_availability",
+    "outcome_unknown_phase",
+    "measurable_progress",
+    "compact_frame_and_transition_references"
+  ],
+  "repeated_action_definition": "number_of_immediately_preceding_identical_action_and_data_decisions",
+  "repeated_state_definition": "number_of_prior_acknowledged_transitions_with_the_same_post_observation_hash",
+  "measurable_progress_rule": "grid_change_or_level_increment_or_win_v1",
+  "proposal_rejection_categories": [
+    "none",
+    "malformed_json",
+    "invalid_proposal_shape",
+    "disabled_feature",
+    "illegal_action",
+    "invalid_action_data",
+    "unknown_workspace_operation",
+    "workspace_failure",
+    "workspace_exhausted",
+    "inference_queue_failure",
+    "inference_transport_failure",
+    "invalid_completion",
+    "policy_exception",
+    "fallback_only",
+    "pre_dispatch_failure",
+    "outcome_unknown"
+  ],
+  "outcome_unknown_phases": ["none", "pre_transport", "action_dispatch_post_entry"],
+  "policy_isolation": {
+    "diagnostic_values_in_observation_bundle": false,
+    "diagnostic_values_in_model_messages": false,
+    "game_identity_in_model_messages": false,
+    "recorder_failures_change_action_or_dispatch": false,
+    "report_destination": "local_human_or_evaluator_only"
+  },
+  "replay": {
+    "content_addressed_uint8_frames": true,
+    "bundle_hash_required": true,
+    "transition_signature_required": true,
+    "recomputed_fields": ["changed_cells", "no_change", "measurable_progress"],
+    "grouping_keys": ["game_id", "treatment_id", "category"]
+  },
+  "exit_gate": {
+    "infrastructure_fixture": "deterministic_E1S-R_malformed_proposal_fallback_no_change",
+    "infrastructure_fixture_status": "implemented",
+    "historical_phase1_transition_reproduced": false,
+    "historical_blocker": "downloaded_Phase1_results_contain_aggregate_failure_counts_but_no_retained_transition_frames_or_model_proposals",
+    "activation_effect": "none_E2-E4_remain_inactive"
+  }
+}

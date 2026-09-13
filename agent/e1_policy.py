@@ -140,6 +140,21 @@ def _workspace_arrays(bundle: RawObservationBundle | FeatureObservationBundle) -
     return arrays
 
 
+def _diagnostic(state: GameRuntimeState, method: str, *args: Any, **kwargs: Any) -> None:
+    """Emit to the local observer without changing proposal semantics."""
+
+    observer = state.diagnostics
+    if observer is None:
+        return
+    try:
+        getattr(observer, method)(*args, **kwargs)
+    except Exception as exc:
+        try:
+            observer.capture_error(f"policy.{method}", exc)
+        except Exception:
+            pass
+
+
 class E1Policy:
     """One exact E1 factorial cell with no mutable cross-turn model context."""
 
@@ -225,6 +240,7 @@ class E1Policy:
             state.counters.inference_prompt_tokens += result.prompt_tokens or 0
             state.counters.inference_completion_tokens += result.completion_tokens or 0
             state.counters.inference_elapsed_seconds += result.elapsed_seconds or 0.0
+            _diagnostic(state, "note_model_proposal", result.content)
             response = _strict_object(result.content)
             if set(response) == {"operation", "arguments"}:
                 if workspace is None:
@@ -238,6 +254,30 @@ class E1Policy:
                 workspace_started = time.monotonic()
                 try:
                     value = workspace.invoke(operation, arguments)
+                except Exception as exc:
+                    category = (
+                        "workspace_exhausted"
+                        if "exhausted" in str(exc).lower()
+                        else "workspace_failure"
+                    )
+                    _diagnostic(
+                        state,
+                        "note_workspace_operation",
+                        operation,
+                        arguments,
+                        succeeded=False,
+                        error_category=category,
+                    )
+                    raise
+                else:
+                    _diagnostic(
+                        state,
+                        "note_workspace_operation",
+                        operation,
+                        arguments,
+                        succeeded=True,
+                        result=value,
+                    )
                 finally:
                     state.counters.workspace_elapsed_seconds += time.monotonic() - workspace_started
                 messages.extend(

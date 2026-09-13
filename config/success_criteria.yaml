@@ -40,5 +40,42 @@
     "hierarchical_report": "reports/phase1_hierarchical_decision.md",
     "offline_bundle": "complete_for_public_Kaggle_runtime_use_not_redistribution",
     "remaining_exit_gates": []
+  },
+  "phase_2_contract": {
+    "status": "frozen_no_treatment_admitted",
+    "maximum_activated_treatments": 2,
+    "evaluation_order": "strictly_sequential",
+    "parent_policy": "E1S-R",
+    "registered_treatments": ["E2a", "E2b", "E2c", "E2d", "E3", "E4"],
+    "activated_treatments": [],
+    "exit_gate": "validator_pass"
+  },
+  "phase_2_diagnostics": {
+    "status": "capture_and_replay_implemented_historical_exit_pending",
+    "per_transition_fields": "complete",
+    "closed_bundle_schema": "config/phase2_diagnostic_schema.json",
+    "local_replay_and_grouping": "implemented",
+    "policy_behavior_parity_fixture": "passing",
+    "deterministic_E1S-R_failure_fixture": "passing",
+    "historical_phase1_transition_reproduced": false,
+    "remaining_exit_gate": "run_the_instrumented_E1S-R_parent_on_a_frozen_development_game_and_replay_its_retained_bundle"
+  },
+  "phase_2_treatment_selection": {
+    "status": "complete_no_justified_treatment",
+    "reviewed_candidates": ["E2a", "E2b", "E2c", "E2d", "E3", "E4"],
+    "admissible_reproduced_failures": 0,
+    "selected_treatment": null,
+    "activated_treatments": [],
+    "allocated_accelerator_hours": 0.0,
+    "exit_gate": "explicit_no_justified_treatment"
+  },
+  "phase_2_conditional_implementation": {
+    "status": "closed_not_applicable_no_selected_treatment",
+    "implemented_E2_variants": [],
+    "implemented_E3_memory_stores": [],
+    "implemented_E4_retrieval_schemas": [],
+    "E1_access_to_registered_phase2_features": 0,
+    "unsupported_memory_verified_items": 0,
+    "exit_gate": "not_applicable_no_admitted_failure"
   }
 }

@@ -57,7 +57,7 @@ RAM `14612037632` bytes. The frozen evidence is
 - Replaced the provisional M0-shape projection with the measured mixed-prompt
   target-RTX profile. Each cell uses its frozen request ceiling, and both E1C
   full-workload cells admit all `70400` requests with headroom.
-- The complete local suite has 102 passing tests. `make validate-phase1` validates
+- The complete local suite has 135 passing tests. `make validate-phase1` validates
   the implementation, parameter closure, canonical whole-run evidence, and
   final exit gate.
 - Added the private, unscored `notebooks/e1-q3vl30` RTX profile bundle. It runs

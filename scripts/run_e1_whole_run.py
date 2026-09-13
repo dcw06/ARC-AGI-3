@@ -37,6 +37,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--environments-dir", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--server-log-dir", type=Path, required=True)
+    parser.add_argument("--diagnostics-dir", type=Path)
     parser.add_argument("--base-url", default="http://127.0.0.1:8000/v1")
     parser.add_argument("--expected-artifact-sha256", required=True)
     parser.add_argument("--expected-gpu-substring", default="RTX PRO 6000")
@@ -114,6 +115,10 @@ def _run_fresh(
                 environments_dir=args.environments_dir,
                 remaining_seconds=deadline - time.monotonic(),
                 finalization_reserve_seconds=reserve,
+                diagnostics_dir=(args.diagnostics_dir / block_id / cell_id)
+                if args.diagnostics_dir is not None
+                else None,
+                diagnostic_run_id=block_id,
             )
             cell["fresh_runtime"] = {
                 "block_id": block_id,

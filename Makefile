@@ -28,7 +28,7 @@ COMP_SLUG       := arc-prize-2026-arc-agi-3
 GAME            ?=
 STEPS           ?= 200
 
-.PHONY: help setup play-local play-competition-like pull-sample notebook m0-notebook m0-notebooks m0-q3vl30-notebook m0-q3vl8-notebook m0-q3vl30-push m0-q3vl8-push e1-q3vl30-notebook e1-q3vl30-push e1-q3vl30-status e1-q3vl30-output e1-four-cell-notebook e1-four-cell-push e1-four-cell-status e1-four-cell-output validate-e1-four-cell submit status verify-local validate-gateway validate-phase0 validate-phase0f validate-m0-exit validate-phase1 test clean _check-kaggle
+.PHONY: help setup play-local play-competition-like phase2-diagnostic-replay pull-sample notebook m0-notebook m0-notebooks m0-q3vl30-notebook m0-q3vl8-notebook m0-q3vl30-push m0-q3vl8-push e1-q3vl30-notebook e1-q3vl30-push e1-q3vl30-status e1-q3vl30-output e1-four-cell-notebook e1-four-cell-push e1-four-cell-status e1-four-cell-output validate-e1-four-cell submit status verify-local validate-gateway validate-phase0 validate-phase0f validate-m0-exit validate-phase1 validate-phase2-contract validate-phase2-selection validate-phase2-conditional test clean _check-kaggle
 
 _check-kaggle:
 	@$(VENV_PY) scripts/check_kaggle_config.py
@@ -65,6 +65,9 @@ verify-local: ## Quick smoke test: 50 steps on ls20 + vc33 only
 play-competition-like: ## Run the Plan 8 adapter locally (GAME=ls20 optional)
 	$(PYTHON_ENV) $(VENV_PY) scripts/play_competition_like.py --backend local $(if $(GAME),--game $(GAME)) --max-actions $(STEPS)
 
+phase2-diagnostic-replay: ## Replay diagnostics at DIAGNOSTICS=reports/phase2-diagnostics
+	$(PYTHON_ENV) $(VENV_PY) scripts/replay_phase2_diagnostics.py $(or $(DIAGNOSTICS),reports/phase2-diagnostics) --require-failure
+
 test: ## Run project unit and integration tests
 	$(PYTHON_ENV) $(VENV_PY) -m unittest discover -s tests -v
 
@@ -82,6 +85,40 @@ validate-m0-exit: validate-phase0f ## Require all target profiles and the provis
 
 validate-phase1: test ## Validate Phase 1 implementation, evidence, decision, and exit gate
 	$(PYTHON_ENV) $(VENV_PY) scripts/validate_phase1.py
+
+validate-phase2-contract: test ## Validate frozen Phase 2 admission contract without activating treatment
+	$(PYTHON_ENV) $(VENV_PY) scripts/validate_phase2_contract.py
+
+validate-phase2-selection: validate-phase2-contract ## Validate evidence review and treatment/no-treatment decision
+	$(PYTHON_ENV) $(VENV_PY) scripts/validate_phase2_selection.py
+
+validate-phase2-conditional: validate-phase2-selection ## Prove no unselected E2/E3/E4 implementation leaked into E1
+	$(PYTHON_ENV) $(VENV_PY) scripts/validate_phase2_conditional.py
+
+.PHONY: phase2-cd82-notebook phase2-cd82-push phase2-cd82-status phase2-cd82-output
+phase2-cd82-notebook: ## Build the private two-run parent diagnostic notebook
+	$(PYTHON_ENV) $(VENV_PY) scripts/build_phase2_diagnostic_notebook.py
+
+phase2-cd82-push: phase2-cd82-notebook _check-kaggle ## Run two cd82 parent diagnostics; no scored submission
+	$(KAGGLE) kernels push -p notebooks/phase2-cd82 --accelerator NvidiaRtxPro6000
+
+phase2-cd82-status: _check-kaggle ## Check the two-run diagnostic notebook
+	$(KAGGLE) kernels status daichongwei06/arc3-phase2-cd82-diagnostics
+
+phase2-cd82-output: _check-kaggle ## Download parent diagnostic evidence
+	mkdir -p reports/runs/phase2-cd82
+	$(KAGGLE) kernels output daichongwei06/arc3-phase2-cd82-diagnostics -p reports/runs/phase2-cd82
+
+.PHONY: validate-phase2-reproduction
+.PHONY: phase2-budget phase2-cd82-v2-notebook
+phase2-budget: ## Show cumulative Phase 2 charges, reservations and unresolved inventory
+	$(PYTHON_ENV) $(VENV_PY) scripts/phase2_budget.py status
+
+phase2-cd82-v2-notebook: ## Build inactive V2 full-sequence capture; never uploads or starts compute
+	$(PYTHON_ENV) $(VENV_PY) scripts/build_phase2_diagnostic_notebook_v2.py
+
+validate-phase2-reproduction: ## Validate downloaded two-run evidence against the pre-launch source lock
+	$(PYTHON_ENV) $(VENV_PY) scripts/validate_phase2_reproduction.py reports/runs/phase2-cd82/phase2-cd82
 
 list-games: ## Show all available games
 	$(PYTHON_ENV) $(VENV_PY) scripts/play_local.py --list

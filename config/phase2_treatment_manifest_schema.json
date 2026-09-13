@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phase2_treatment_manifest_v1",
+  "title": "Phase 2 admitted treatment manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_type",
+    "manifest_id",
+    "treatment_id",
+    "status",
+    "contract_sha256",
+    "failure_record",
+    "parent",
+    "feature_delta",
+    "comparison",
+    "compute_allocation",
+    "decision_rules",
+    "activation"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "record_type": {"const": "phase2_treatment_manifest"},
+    "manifest_id": {"type": "string", "pattern": "^P2T-(E2a|E2b|E2c|E2d|E3|E4)-v[0-9]+$"},
+    "treatment_id": {"enum": ["E2a", "E2b", "E2c", "E2d", "E3", "E4"]},
+    "status": {"enum": ["admitted_frozen", "running", "complete", "rejected", "inconclusive"]},
+    "contract_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "failure_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["failure_id", "record_sha256", "admission_decision"],
+      "properties": {
+        "failure_id": {"type": "string", "pattern": "^P2F-[0-9]{4}-[a-z0-9-]+$"},
+        "record_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "admission_decision": {"const": "passed"}
+      }
+    },
+    "parent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy_id", "frozen", "operational_config_sha256", "feature_manifest_sha256"],
+      "properties": {
+        "policy_id": {"const": "E1S-R"},
+        "frozen": {"const": true},
+        "operational_config_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "feature_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "feature_delta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled_feature", "enabled", "changed_parent_fields", "disabled_features"],
+      "properties": {
+        "enabled_feature": {
+          "enum": [
+            "advanced_inter_action_evidence",
+            "advanced_animation_summary",
+            "selective_rich_animation",
+            "advanced_correspondence_identity_tracking",
+            "durable_scratch_rejected_hypothesis_memory",
+            "exact_historical_retrieval_retrodiction"
+          ]
+        },
+        "enabled": {"const": true},
+        "changed_parent_fields": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string"}
+        },
+        "disabled_features": {
+          "type": "array",
+          "minItems": 9,
+          "maxItems": 9,
+          "uniqueItems": true,
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "execution_mode",
+        "game_seed_pairs_sha256",
+        "parent_arm",
+        "treatment_arm",
+        "paired_run_blocks",
+        "block_orders",
+        "randomization_unit",
+        "uncertainty_unit",
+        "per_game_results"
+      ],
+      "properties": {
+        "execution_mode": {"const": "shared_resource_whole_run"},
+        "game_seed_pairs_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "parent_arm": {"const": "E1S-R"},
+        "treatment_arm": {"enum": ["E2a", "E2b", "E2c", "E2d", "E3", "E4"]},
+        "paired_run_blocks": {"const": 2},
+        "block_orders": {
+          "type": "array",
+          "prefixItems": [
+            {"const": "parent_then_treatment"},
+            {"const": "treatment_then_parent"}
+          ],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "randomization_unit": {"const": "paired_complete_workload_run_block"},
+        "uncertainty_unit": {"const": "paired_complete_workload_run_block"},
+        "per_game_results": {"const": "diagnostic_only_never_independent_resamples"}
+      }
+    },
+    "compute_allocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_accelerator",
+        "maximum_accelerator_hours",
+        "complete_workload_runs",
+        "maximum_game_plays",
+        "maximum_actions_per_game",
+        "maximum_model_requests",
+        "scored_submissions"
+      ],
+      "properties": {
+        "target_accelerator": {"const": "NvidiaRtxPro6000"},
+        "maximum_accelerator_hours": {"type": "number", "exclusiveMinimum": 0, "maximum": 4.0},
+        "complete_workload_runs": {"const": 4},
+        "maximum_game_plays": {"const": 60},
+        "maximum_actions_per_game": {"const": 80},
+        "maximum_model_requests": {"const": 4800},
+        "scored_submissions": {"const": 0}
+      }
+    },
+    "decision_rules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "frozen_before_implementation",
+        "contract_sha256",
+        "primary_delta_min_official_RHAE_percent",
+        "catastrophic_tail_regression_percent",
+        "reliability_noninferiority_margin_percent",
+        "familywise_alpha",
+        "sample_rule"
+      ],
+      "properties": {
+        "frozen_before_implementation": {"const": true},
+        "contract_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "primary_delta_min_official_RHAE_percent": {"const": 0.10},
+        "catastrophic_tail_regression_percent": {"const": -0.10},
+        "reliability_noninferiority_margin_percent": {"const": -0.02},
+        "familywise_alpha": {"const": 0.10},
+        "sample_rule": {"const": "fixed_two_paired_complete_workload_blocks_no_early_positive_stop"}
+      }
+    },
+    "activation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sequence_position", "sequential_predecessor_finalized", "activated_at"],
+      "properties": {
+        "sequence_position": {"type": "integer", "minimum": 1, "maximum": 2},
+        "sequential_predecessor_finalized": {"type": "boolean"},
+        "activated_at": {"type": "string", "format": "date-time"}
+      }
+    }
+  }
+}

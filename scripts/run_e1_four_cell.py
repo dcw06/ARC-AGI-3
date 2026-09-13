@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import logging
 import os
@@ -20,6 +21,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from agent.competition_loop import CompetitionOrchestrator
+from agent.diagnostics import TransitionDiagnosticRecorder
 from agent.e1_policy import E1Policy, OpenAICompatibleCompletionClient, binding_from_registry
 from agent.feature_manifest import load_e1_feature_manifests
 from agent.framework_adapter import LocalFrameworkAdapter
@@ -47,6 +49,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--environments-dir", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--server-log", type=Path)
+    parser.add_argument("--diagnostics-dir", type=Path)
     parser.add_argument("--base-url", default="http://127.0.0.1:8000/v1")
     parser.add_argument("--expected-artifact-sha256", required=True)
     parser.add_argument("--expected-gpu-substring", default="RTX PRO 6000")
@@ -90,6 +93,8 @@ def _run_cell(
     environments_dir: Path,
     remaining_seconds: float,
     finalization_reserve_seconds: float,
+    diagnostics_dir: Path | None = None,
+    diagnostic_run_id: str | None = None,
 ) -> dict[str, Any]:
     from arc_agi import Arcade, OperationMode
 
@@ -111,6 +116,7 @@ def _run_cell(
         raise RuntimeError(f"frozen development games unavailable: {missing}")
 
     completion_clients: list[OpenAICompatibleCompletionClient] = []
+    diagnostic_recorders: list[TransitionDiagnosticRecorder] = []
     started = time.monotonic()
     with QueuedInferenceExecutor(
         maxsize=110,
@@ -124,14 +130,23 @@ def _run_cell(
             )
             completion_clients.append(completion)
             return E1Policy(
-                manifest=manifests[cell_id],
-                binding=binding,
-                client=completion,
+                manifest=manifests[cell_id], binding=binding, client=completion,
                 inference=inference,
                 max_new_tokens=protocol["design"]["max_new_tokens_per_request"],
                 seed=seeds[client.game_id],
                 request_timeout_seconds=request_timeout_seconds,
             )
+
+        def diagnostic_factory(client: Any) -> TransitionDiagnosticRecorder:
+            recorder = TransitionDiagnosticRecorder(
+                game_id=client.game_id,
+                treatment_id=cell_id,
+                seed=seeds[client.game_id],
+                run_id=diagnostic_run_id or f"phase2-diagnostic-{cell_id}",
+                capacity=80,
+            )
+            diagnostic_recorders.append(recorder)
+            return recorder
 
         reserve = min(finalization_reserve_seconds, max(0.5, remaining_seconds / 2))
         result = CompetitionOrchestrator(
@@ -141,6 +156,7 @@ def _run_cell(
             max_actions=80,
             watchdog=DeadlineWatchdog(remaining_seconds, reserve),
             policy_factory=policy_factory,
+            diagnostic_factory=diagnostic_factory if diagnostics_dir is not None else None,
             run_tag=f"plan8-{cell_id.lower()}",
         ).run()
         queue_record = {
@@ -153,8 +169,17 @@ def _run_cell(
         }
     for completion in completion_clients:
         completion.session.close()
+    if diagnostics_dir is not None:
+        diagnostics_dir.mkdir(parents=True, exist_ok=True)
+        for recorder in diagnostic_recorders:
+            opaque_game = hashlib.sha256(recorder.game_id.encode()).hexdigest()[:20]
+            recorder.write(diagnostics_dir / f"{cell_id}-{opaque_game}.json")
 
     scores = exact_score_map(result.scorecard, game_ids)
+    if diagnostics_dir is not None:
+        reported_ids = {item.get("id") for item in (result.scorecard or {}).get("environments", [])}
+        if reported_ids != set(game_ids) or result.finalization_status != "acknowledged":
+            raise RuntimeError("diagnostic run requires acknowledged, explicit per-game scores")
     by_game = []
     for game_result in result.results:
         item = asdict(game_result)
@@ -311,6 +336,7 @@ def main() -> int:
                     environments_dir=args.environments_dir,
                     remaining_seconds=remaining,
                     finalization_reserve_seconds=args.finalization_reserve_seconds,
+                    diagnostics_dir=args.diagnostics_dir,
                 )
                 _write_atomic(args.output, output)
 

@@ -11,6 +11,7 @@ from arcengine import GameState
 
 from .action import ActionDecision
 from .controller import DeterministicFallback
+from .diagnostics import TransitionDiagnosticRecorder, classify_proposal_rejection
 from .framework_adapter import FinalizationUnknown, OutcomeUnknown, PreDispatchFailure
 from .state import GameRuntimeState
 from .watchdog import DeadlineWatchdog
@@ -53,6 +54,7 @@ class CompetitionAgentLoop:
         policy: Policy | None = None,
         max_actions: int = 80,
         watchdog: DeadlineWatchdog | None = None,
+        diagnostics: TransitionDiagnosticRecorder | None = None,
     ) -> None:
         if max_actions < 1:
             raise ValueError("max_actions must be positive")
@@ -62,7 +64,12 @@ class CompetitionAgentLoop:
         self.policy = policy or self.fallback
         self.max_actions = max_actions
         self.watchdog = watchdog or DeadlineWatchdog(32_400, 600)
-        self.state = GameRuntimeState(client.observation, action_budget_limit=max_actions)
+        self.diagnostics = diagnostics
+        self.state = GameRuntimeState(
+            client.observation,
+            action_budget_limit=max_actions,
+            diagnostics=diagnostics,
+        )
         self.state.counters.lifecycle_attempted = 1
         self.state.counters.lifecycle_acknowledged = 1
         self.state.counters.bootstrap_starts = 1
@@ -78,20 +85,37 @@ class CompetitionAgentLoop:
                     reason = "win"
                     break
                 self.state.counters.controller_iterations += 1
+                before = self.state.observation
+                self._diagnostic(
+                    "begin_transition",
+                    before,
+                    iteration=self.state.counters.controller_iterations,
+                )
                 try:
                     decision = self.policy.propose(self.state)
-                except Exception:
+                except Exception as exc:
                     self.state.counters.policy_failures += 1
+                    self._diagnostic(
+                        "note_rejection",
+                        classify_proposal_rejection(exc),
+                        str(exc),
+                    )
                     try:
                         decision = self.fallback.propose(self.state)
                     except Exception:
                         reason = "policy_failure_no_legal_fallback"
                         break
+                self._diagnostic("note_decision", decision)
                 try:
                     self.state.mark_pending_action(decision.decision_id)
                     observation = self.adapter.dispatch(self.client, decision)
                 except PreDispatchFailure:
                     self.state.clear_pending_action()
+                    self._diagnostic(
+                        "finish_unresolved",
+                        phase="pre_transport",
+                        category="pre_dispatch_failure",
+                    )
                     reason = "pre_dispatch_failure"
                     break
                 except OutcomeUnknown:
@@ -99,6 +123,11 @@ class CompetitionAgentLoop:
                     self.state.counters.actions_ambiguous += 1
                     self.state.counters.conservative_spent_actions += 1
                     self.state.mark_pending_action(decision.decision_id)
+                    self._diagnostic(
+                        "finish_unresolved",
+                        phase="action_dispatch_post_entry",
+                        category="outcome_unknown",
+                    )
                     reason = "outcome_unknown_quarantine"
                     break
                 self.state.counters.actions_acknowledged += 1
@@ -111,6 +140,13 @@ class CompetitionAgentLoop:
                     action_data=decision.action_data,
                     transition_id=decision.decision_id,
                 )
+                if self.state.evidence.transitions:
+                    self._diagnostic(
+                        "finish_acknowledged",
+                        before,
+                        observation,
+                        self.state.evidence.transitions[-1],
+                    )
         finally:
             finalize = getattr(self.adapter, "finalize_client", None)
             if finalize is not None:
@@ -139,6 +175,19 @@ class CompetitionAgentLoop:
         )
         return result
 
+    def _diagnostic(self, method: str, *args: Any, **kwargs: Any) -> None:
+        """Observe without allowing diagnostic failures to alter legal play."""
+
+        if self.diagnostics is None:
+            return
+        try:
+            getattr(self.diagnostics, method)(*args, **kwargs)
+        except Exception as exc:
+            try:
+                self.diagnostics.capture_error(method, exc)
+            except Exception:
+                pass
+
 
 @dataclass(frozen=True, slots=True)
 class CompetitionRunResult:
@@ -160,6 +209,7 @@ class CompetitionOrchestrator:
         watchdog: DeadlineWatchdog | None = None,
         hung_worker_grace_seconds: float = 15.0,
         policy_factory: Callable[[Any], Policy] | None = None,
+        diagnostic_factory: Callable[[Any], TransitionDiagnosticRecorder] | None = None,
         run_tag: str = "plan8-e0",
     ) -> None:
         if len(set(game_ids)) != len(game_ids):
@@ -171,6 +221,7 @@ class CompetitionOrchestrator:
         self.watchdog = watchdog or DeadlineWatchdog(32_400, 600)
         self.hung_worker_grace_seconds = max(0.0, hung_worker_grace_seconds)
         self.policy_factory = policy_factory
+        self.diagnostic_factory = diagnostic_factory
         self.run_tag = run_tag
 
     def run(self) -> CompetitionRunResult:
@@ -204,6 +255,9 @@ class CompetitionOrchestrator:
                     policy=self.policy_factory(client) if self.policy_factory is not None else None,
                     max_actions=self.max_actions,
                     watchdog=self.watchdog,
+                    diagnostics=self.diagnostic_factory(client)
+                    if self.diagnostic_factory is not None
+                    else None,
                 )
                 futures[executor.submit(loop.run)] = game_id
             pending = set(futures)

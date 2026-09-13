@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "status": "active",
-  "current_phase": "phase_1_complete_provisional_primary",
+  "current_phase": "phase_2_contract_frozen_no_treatment_admitted",
   "treatments": {
     "E0": {"status": "frozen_control", "description": "transaction-safe deterministic fallback"},
     "E0F": {"status": "fixture_active_not_yet_an_experiment", "description": "toggleable animation-enriched representation"},
@@ -14,13 +14,78 @@
     "E1S-F": {"status": "complete_whole_run_tied_zero"},
     "E1C-R": {"status": "complete_whole_run_tied_zero"},
     "E1C-F": {"status": "complete_whole_run_tied_zero"},
-    "E2-E9": {"status": "inactive_failure_driven"}
+    "E2a": {"status": "inactive_pending_reproduced_failure_admission", "parent": "E1S-R"},
+    "E2b": {"status": "inactive_pending_reproduced_failure_admission", "parent": "E1S-R"},
+    "E2c": {"status": "inactive_pending_reproduced_failure_admission", "parent": "E1S-R"},
+    "E2d": {"status": "inactive_pending_reproduced_failure_admission", "parent": "E1S-R"},
+    "E3": {"status": "inactive_pending_reproduced_failure_admission", "parent": "E1S-R"},
+    "E4": {"status": "inactive_pending_reproduced_failure_admission", "parent": "E1S-R"},
+    "E5-E9": {"status": "inactive_failure_driven"}
+  },
+  "phase_2_activation": {
+    "status": "contract_frozen_no_treatment_admitted",
+    "contract": "config/phase2_contract.yaml",
+    "contract_sha256": "ac93fec5404824cc58744f3d1da72a1bc2c4706d96ad3eb1ecd634a37b43b430",
+    "registered_treatments": ["E2a", "E2b", "E2c", "E2d", "E3", "E4"],
+    "maximum_activated_treatments": 2,
+    "currently_activated_treatments": 0,
+    "activated_treatments": [],
+    "evaluation_order": "strictly_sequential",
+    "concurrent_treatment_evaluations": 0,
+    "activation_requires": "admitted_reproduced_failure_record_and_frozen_treatment_manifest"
+  },
+  "phase_2_selection": {
+    "status": "complete_no_justified_treatment",
+    "record": "config/phase2_treatment_selection.yaml",
+    "record_sha256": "e730a1a6c7336dc10d3cff71eeb4f22d6031c599c968f997d44ea7ec2d2a66f9",
+    "schema": "config/phase2_treatment_selection_schema.json",
+    "schema_sha256": "b96dd149ab39e80bec74ef5acd1247dd56affba2368163f4ecdf5220e3636d2b",
+    "selected_treatment": null,
+    "activated_treatments": [],
+    "allocated_accelerator_hours": 0.0
+  },
+  "phase_2_parent_diagnostics": {
+    "status": "user_reported_launched_results_pending",
+    "protocol": "phase2.cd82.parent-diagnostic.v1",
+    "execution_lock": "notebooks/phase2-cd82/execution-lock.json",
+    "game_id": "cd82-fb555c5d",
+    "environment_seed": 104759,
+    "model_request_seed": 104759,
+    "fresh_runs": 2,
+    "maximum_actions_per_run": 80,
+    "maximum_diagnostic_accelerator_hours": 2,
+    "accounting": "debit_actual_notebook_and_failed_execution_time_from_existing_8_hour_family_budget",
+    "reserved_remaining_family_hours": 6,
+    "scored_submissions": 0,
+    "attribution_default": "unsupported_other",
+    "real_evidence_available": false,
+    "phase2_complete": false
+  },
+  "phase_2_live_status": {
+    "status": "open_pending_retained_runs_and_review",
+    "phase2_complete": false,
+    "admitted_treatments": 0,
+    "historical_selection_is_phase_closure": false,
+    "compute_ledger": "config/phase2_compute_ledger.json",
+    "admission_artifact_index": "config/phase2_admission_index.json",
+    "capture_v1": "running_as_user_reported_final_frames_only",
+    "capture_v2": "implemented_not_launched_no_compute_allocated"
+  },
+  "phase_2_conditional_implementation": {
+    "status": "closed_not_applicable_no_selected_treatment",
+    "record": "config/phase2_conditional_implementation.yaml",
+    "record_sha256": "7b58a5aa1e16ae4a1bc182f5668c6f884ed637fb7d71a11665018d8abea10e32",
+    "implemented_E2_variants": [],
+    "implemented_memory_treatments": [],
+    "implemented_retrieval_treatments": []
   },
   "budgets": {
     "target_accelerator_hours_before_milestone": 18,
     "scored_submissions_before_milestone": 7,
     "contingency_submissions": 1,
     "rollback_submissions": 1,
+    "phase_2_target_accelerator_hours": 8.0,
+    "phase_2_scored_submissions": 0,
     "optional_scope_drop_order": ["IX3", "E9", "E8", "E7", "IX2", "IX1", "E4", "E3", "E2"]
   },
   "dates": {

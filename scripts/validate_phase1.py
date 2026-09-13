@@ -407,7 +407,10 @@ def main() -> int:
         and experiments.get("treatments", {}).get("E1S-R", {}).get("status")
         == "operational_provisional_primary_confirmed_by_whole_run_tie"
         and experiments.get("current_phase")
-        == "phase_1_complete_provisional_primary"
+        in {
+            "phase_1_complete_provisional_primary",
+            "phase_2_contract_frozen_no_treatment_admitted",
+        }
         and success.get("phase_1", {}).get("status")
         == "passed_provisional_primary"
         and success.get("phase_1", {}).get("operational_primary") == "E1S-R"

@@ -10,8 +10,19 @@ complete. The counterbalanced shared-resource whole-run experiment passed its
 frozen validation gate; all cells and contrasts tied at zero, so E1S-R remains
 the runnable `Provisional primary` with E0 fallback and no acceptance or
 superiority claim. Ineligible published reproductions remain explicitly
-unavailable. The E0 public score of 0.08 is a pipeline-validation baseline, not
-a competitiveness claim.
+unavailable. The Phase 2 contract is frozen with a cap of two strictly
+sequential failure-admitted treatments; E2a–E4 remain inactive. The E0 public
+score of 0.08 is a pipeline-validation baseline, not a competitiveness claim.
+Phase 2 diagnostic capture and deterministic local replay are implemented;
+the dedicated two-run cd82 execution path and cross-run validator now pass local
+tests. Its private Kaggle launch awaits explicit approval. Phase 2 remains open;
+the historical replay gate remains pending because the completed Phase 1 logs
+contain aggregate failures but no retained transition frames or proposals. The
+frozen admission rule therefore yields an explicit **no justified Phase 2
+treatment** decision: no treatment is selected, activated, or allocated GPU
+time. Consequently, the conditional E2/E3/E4 implementation chunks are closed
+as not applicable; no unselected enricher, memory store, or retrieval surface
+has been added.
 
 This is a starter kit for the [ARC Prize 2026 — ARC-AGI-3](https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3)
 competition. Production uses a multi-file agent package and a dedicated
@@ -183,6 +194,10 @@ already the default in this kit.
 | `make validate-phase0f` | Validate the evidence, representation, and M0 foundation |
 | `make validate-m0-exit` | Validate all target profiles and the provisional model selection |
 | `make validate-phase1` | Validate Phase 1 implementation, evidence, decision, and exit gate |
+| `make validate-phase2-contract` | Validate the frozen Phase 2 admission contract; activates no treatment |
+| `make validate-phase2-selection` | Validate all six candidate dispositions and the explicit no-treatment exit |
+| `make validate-phase2-conditional` | Prove no unselected E2, E3, or E4 treatment leaked into E1 |
+| `make phase2-diagnostic-replay DIAGNOSTICS=path` | Verify retained frames and group failures by game, treatment, and category |
 | `make e1-q3vl30-notebook` | Build the unscored four-cell mixed E1 RTX profile |
 | `make e1-q3vl30-push` | Upload that private profile on RTX PRO 6000; does not submit a score |
 | `make e1-q3vl30-status` | Check the private E1 profiling run |
@@ -223,21 +238,23 @@ Three reasons:
 ├── agent/
 │   ├── production_main.py      Kaggle production entry point
 │   ├── competition_loop.py     Bounded game and all-game orchestration
+│   ├── diagnostics.py          Policy-inert transition capture and deterministic replay
 │   ├── e1_policy.py            Stateless E1S/E1C policy and local model transport
 │   ├── safe_operations.py      Spawn-isolated bounded E1C operations
 │   ├── evidence.py             T0-T3 evidence retention
 │   └── representation.py       Raw R and engineered F bundles
 ├── config/                     Versioned contracts and experiment registries
-├── evaluation/                 Scoring, M0 profiles, and Phase 1 selection estimands
+├── evaluation/                 Scoring, experiment analysis, and treatment-contract gates
 ├── scripts/
 │   ├── play_competition_like.py Runs the production lifecycle locally
 │   ├── build_notebook.py       Packages your agent into a Kaggle notebook
+│   ├── replay_phase2_diagnostics.py Replays and groups local diagnostic bundles
 │   └── validate_m0_exit.py     Enforces the Phase 0F/M0 exit gate
 ├── notebooks/
 │   ├── kernel-metadata.json    Production Kaggle metadata
 │   └── m0-*/                   Frozen target-RTX profiling notebooks
 ├── reports/                    Phase status and immutable profile records
-├── tests/                      Phase 0, Phase 0F/M0, and Phase 1 tests
+├── tests/                      Phase 0 through Phase 2 diagnostic tests
 ├── vendor/                     Cloned framework (gitignored)
 ├── .venv/                      Python 3.12 venv (gitignored)
 ├── .kaggle/                    Your project-local Kaggle token (gitignored)
