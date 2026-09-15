@@ -1,0 +1,465 @@
+{
+  "schema_version": 3,
+  "protocol_id": "H1-architecture-guardrail-v3-draft",
+  "status": "draft_inactive_no_eligible_candidate",
+  "created_at": "2026-09-14T01:27:02Z",
+  "previous_draft": "config/h1_architecture_guardrail_protocol_v2.yaml",
+  "purpose": "one-time aggregate-only catastrophic-regression guardrail for a genuinely distinct development-qualified architecture",
+  "claim_boundary": {
+    "holdout_classification": "reduced_exposure_procedural_guardrail",
+    "execution_privacy_mode": "process_redacted",
+    "implementer_blinding_claim": false,
+    "positive_performance_claim_allowed": false,
+    "no_veto_means": "no_predeclared_catastrophic_regression_was_detected_on_H1",
+    "no_veto_does_not_establish": [
+      "architecture_improvement",
+      "statistical_significance",
+      "private_distribution_generalization"
+    ]
+  },
+  "architecture_eligibility": {
+    "evaluation_mode": "distinct_candidate_vs_E1S-R",
+    "current_state": "ineligible",
+    "current_reason": "Phase_3_retained_E1S-R_and_admitted_no_E5_or_E6_treatment",
+    "eligible_only_if_all": [
+      "candidate_was_accepted_under_a_frozen_development_protocol",
+      "candidate_has_a_policy_affecting_difference_from_E1S-R",
+      "candidate_manifest_and_all_policy_affecting_hashes_are_bound",
+      "candidate_request_and_resource_ceilings_are_inherited_from_accepted_development_evidence",
+      "single_action_E1S-R_rollback_remains_available"
+    ],
+    "no_candidate_rule": "do_not_freeze_do_not_run_and_do_not_reserve_or_consume_H1",
+    "identical_parent_rule": "E1S-R_vs_E1S-R_is_a_repeatability_check_not_an_H1_architecture_guardrail",
+    "repeatability_location": "development_games_only",
+    "anti_placeholder_rule": "do_not_create_or_admit_a_treatment_only_to_fill_the_candidate_slot"
+  },
+  "draft_provenance": {
+    "repository_commit": "754572208e29ac3e65c957d6b305233c6c78d264",
+    "holdout_ledger": {
+      "path": "config/holdout_ledger.yaml",
+      "draft_input_sha256": "59c3c1d02b0e63b55c10def86d246477df0ded1c01bb32597bdb4fbba258481a"
+    },
+    "statistics_protocol": {
+      "path": "config/statistics_protocol.yaml",
+      "sha256": "a0666221e34a057e8caa9b60e1e4144256a73cb2b449d34c79a9c6172144b005"
+    },
+    "phase3_preparation": {
+      "path": "config/phase3_preparation.json",
+      "sha256": "4d82e6ac57461b1fb4986b6e89ec71a9604aba8bea3cb7db6e26bca473ab0909"
+    },
+    "sealed_output_schema": {
+      "path": "config/sealed_output_schema.json",
+      "sha256": "cd04b489dfe5d8731d6f8268da546621ded7cd44bae0ca5d95c20b11be69060a"
+    }
+  },
+  "parent_binding": {
+    "cell_id": "E1S-R",
+    "operational_config": "config/operational_primary.yaml",
+    "operational_config_sha256": "489765d436df7e0ae7c80b9494c3c1ab4b7153b46f8dc5951724b59561ebb709",
+    "model_id": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+    "model_revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+    "model_artifact_tree_sha256": "052ab27f06c28261e143b8c1638382d107b034692bc0cd1792ec4e02ddab8627",
+    "engine": "vllm==0.19.0",
+    "reasoning_setting": "instruct_non_thinking",
+    "maximum_actions_per_game": 80,
+    "maximum_model_requests_per_game": 80
+  },
+  "candidate_binding": {
+    "architecture_id": null,
+    "manifest_sha256": null,
+    "source_tree_sha256": null,
+    "configuration_sha256": null,
+    "model_artifact_sha256": null,
+    "prompt_sha256": null,
+    "scheduler_sha256": null,
+    "development_protocol_sha256": null,
+    "development_decision_sha256": null,
+    "maximum_actions_per_game": 80,
+    "maximum_model_requests_per_game": null,
+    "request_ceiling_source": "accepted_development_protocol",
+    "distinct_from_parent": null
+  },
+  "workload": {
+    "game_count": 5,
+    "seed_derivation": "first_32_bits_big_endian_of_sha256('h1-architecture-guardrail-v1:' + full_game_id)_masked_to_31_bits",
+    "game_seed_pairs_sha256": "757bd592a54ec3eba492b1b4266c5e905f8d7b65262fd6602881082f7e27819a",
+    "game_seed_pairs": [
+      {"game_id": "bp35-0a0ad940", "seed": 1775893099},
+      {"game_id": "dc22-fdcac232", "seed": 275058116},
+      {"game_id": "r11l-495a7899", "seed": 1260464494},
+      {"game_id": "tn36-ef4dde99", "seed": 398532725},
+      {"game_id": "tu93-0768757b", "seed": 544638318}
+    ],
+    "game_order": "listed_order_in_every_arm",
+    "seed_policy": "one_fixed_seed_per_game_no_seed_selection_or_selective_replay"
+  },
+  "comparison_design": {
+    "mode": "shared_resource_whole_run",
+    "treatment_unit": "complete_five_game_workload",
+    "blocking_unit": "paired_complete_workload_block",
+    "uncertainty_unit": "paired_complete_workload_block",
+    "order_assignment": "fixed_counterbalanced_AB_BA",
+    "randomized": false,
+    "blocks": [
+      {"block_id": "B1", "arm_order": ["parent", "candidate"]},
+      {"block_id": "B2", "arm_order": ["candidate", "parent"]}
+    ],
+    "valid_arm_runs": 4,
+    "valid_game_plays": 20,
+    "fresh_per_arm": [
+      "model_process",
+      "model_KV_cache",
+      "inference_queue",
+      "arcade_sessions",
+      "policy_state",
+      "process_private_scratch"
+    ],
+    "filesystem_page_cache": "uncontrolled_on_ordinary_Kaggle_and_not_claimed_as_isolated",
+    "filesystem_cache_mitigation": "counterbalance_arm_order_and_charge_observed_artifact_and_model_loading_time",
+    "score_unit": "official_RHAE_percentage_points"
+  },
+  "compute_contract": {
+    "accelerator": "NvidiaRtxPro6000",
+    "requested_accelerator_hours": 2.0,
+    "authorized_accelerator_hours": 0.0,
+    "authorization_status": "not_reserved",
+    "maximum_wall_clock_seconds": 7200,
+    "non_cleanup_cutoff_elapsed_seconds": 6600,
+    "cleanup_reserve_seconds": 600,
+    "allocation_seconds": {
+      "preflight_bindings_and_stale_scrub": 300,
+      "parent_B1_including_fresh_load": 900,
+      "candidate_B1_including_fresh_load": 1500,
+      "candidate_B2_including_fresh_load": 1500,
+      "parent_B2_including_fresh_load": 900,
+      "pre_observation_infrastructure_restart_contingency": 600,
+      "aggregation_ledger_and_output_validation": 300,
+      "finalization_and_cleanup_reserve": 600,
+      "unallocated_safety_margin": 600,
+      "total": 7200
+    },
+    "per_arm_deadlines_seconds": {
+      "parent_B1": 900,
+      "candidate_B1": 1500,
+      "candidate_B2": 1500,
+      "parent_B2": 900
+    },
+    "parent_total_ceiling_seconds": 1800,
+    "candidate_total_ceiling_seconds": 3000,
+    "maximum_actions_per_game": 80,
+    "parent_maximum_model_requests_per_game": 80,
+    "candidate_maximum_model_requests_per_game": null,
+    "family_request_ceiling_formula": "2 * 5 * (80 + candidate_maximum_model_requests_per_game)",
+    "peak_vram_bytes_ceiling": 96636764160,
+    "peak_ram_bytes_ceiling": 34359738368,
+    "all_work_charged": true,
+    "compute_ledger_reservation_id": null
+  },
+  "budget_enforcement": {
+    "clock": "monotonic_elapsed_seconds_from_kernel_start",
+    "supervisor_checks": [
+      "before_every_arm",
+      "before_every_game",
+      "after_every_game",
+      "before_aggregate_write",
+      "before_cleanup"
+    ],
+    "start_next_unit_only_if": "remaining_time_exceeds_cleanup_reserve_plus_the_frozen_allocation_for_that_unit",
+    "preflight_exceeds_300_seconds_before_H1_access": "PRE_RUN_BLOCKED_or_use_only_the_600_second_pre_observation_restart_contingency",
+    "parent_arm_deadline_reached": "terminate_parent_arm_preserve_cleanup_reserve_and_return_INVALID_NO_RERUN_after_H1_access",
+    "parent_total_exceeds_1800_seconds": "stop_before_next_non_cleanup_unit_preserve_cleanup_reserve_and_return_INVALID_NO_RERUN",
+    "candidate_arm_deadline_reached": "terminate_candidate_arm_zero_impute_any_candidate_caused_missing_score_increment_candidate_timeout_and_missing_score_counters_and_return_VETO",
+    "candidate_total_exceeds_3000_seconds": "stop_before_next_non_cleanup_unit_preserve_cleanup_reserve_and_return_VETO",
+    "global_non_cleanup_cutoff_reached_during_candidate_work": "terminate_candidate_work_preserve_600_seconds_for_cleanup_and_return_VETO_if_candidate_caused_otherwise_INVALID_NO_RERUN",
+    "global_non_cleanup_cutoff_reached_outside_candidate_work": "stop_all_non_cleanup_work_preserve_600_seconds_for_cleanup_and_return_INVALID_NO_RERUN",
+    "cleanup_reserve_threatened": "external_supervisor_terminates_the_active_child_process_and_enters_cleanup_immediately",
+    "early_stop_allowed": "candidate_safety_or_resource_veto_only;_no_early_positive_or_NO_VETO_stop"
+  },
+  "play_and_failure_semantics": {
+    "completed_game_play_if_any": [
+      "official_terminal_state_with_finalized_score",
+      "80_action_cap_reached_with_finalized_score",
+      "arm_caused_crash_timeout_or_missing_score_finalized_at_zero"
+    ],
+    "zero_levels_at_action_cap": "completed_game_play_not_incomplete_execution",
+    "incomplete_workload_execution": "an_arm_has_fewer_than_five_finalized_game_rows_because_shared_infrastructure_prevented_execution_or_attribution",
+    "arm_caused_missing_score": "impute_zero_official_RHAE_percentage_points",
+    "parent_policy_failure": "impute_zero_if_needed_and_keep_the_block_valid_unless_the_parent_time_ceiling_is_exceeded",
+    "candidate_policy_failure": "impute_zero_if_needed_and_apply_an_explicit_candidate_failure_veto",
+    "shared_infrastructure_failure": "invalidate_the_complete_paired_block_without_advantaging_either_arm",
+    "ambiguous_attribution": "classify_as_shared_infrastructure_invalidity",
+    "candidate_failure_attribution": {
+      "candidate_crash": "candidate_process_or_candidate_owned_component_exits_or_raises_while_shared_services_remain_healthy",
+      "candidate_timeout": "candidate_owned_request_or_candidate_arm_deadline_expires_while_shared_services_remain_healthy",
+      "candidate_missing_score": "candidate_arm_has_no_official_score_and_the_absence_is_attributable_to_candidate_behavior_or_candidate_owned_failure",
+      "shared_failure": "environment_transport_host_or_shared_model_service_failure_affects_or_could_affect_both_arms",
+      "unresolved": "shared_infrastructure_invalidity"
+    }
+  },
+  "decision_algorithm": {
+    "precedence": [
+      "PRE_RUN_BLOCKED",
+      "INVALID_RERUN_PERMITTED_or_INVALID_NO_RERUN",
+      "VETO_SAFETY_FAILURE_OR_RESOURCE",
+      "VETO_SCORE",
+      "NO_VETO"
+    ],
+    "pre_run_blocked_if_any": [
+      "candidate_is_absent_or_not_distinct",
+      "required_hash_request_ceiling_or_runner_binding_is_missing",
+      "runner_validation_failed",
+      "compute_reservation_missing",
+      "durable_holdout_reservation_missing",
+      "frozen_protocol_byte_hash_mismatch",
+      "pre_reservation_ledger_snapshot_hash_mismatch"
+    ],
+    "invalid_if_any": [
+      "shared_infrastructure_failure",
+      "ambiguous_failure_attribution",
+      "parent_arm_or_parent_total_time_ceiling_exceeded",
+      "aggregate_output_contract_failure",
+      "cleanup_not_verified"
+    ],
+    "candidate_failure_vetoes": {
+      "candidate_crash_count": {"operator": ">", "threshold": 0},
+      "candidate_timeout_count": {"operator": ">", "threshold": 0},
+      "candidate_missing_score_count": {"operator": ">", "threshold": 0}
+    },
+    "candidate_safety_vetoes": {
+      "candidate_invalid_action_count": {"operator": ">", "threshold": 0},
+      "candidate_uncaught_exception_count": {"operator": ">", "threshold": 0},
+      "candidate_duplicate_make_count": {"operator": ">", "threshold": 0},
+      "candidate_cross_client_leakage_count": {"operator": ">", "threshold": 0},
+      "candidate_unresolved_dispatch_continuation_count": {"operator": ">", "threshold": 0}
+    },
+    "candidate_resource_vetoes": {
+      "candidate_total_wall_clock_seconds": {"operator": ">", "threshold": 3000},
+      "candidate_actions_per_game": {"operator": ">", "threshold": 80},
+      "candidate_model_requests_per_game": {"operator": ">", "threshold_from": "candidate_binding.maximum_model_requests_per_game"},
+      "candidate_peak_vram_bytes": {"operator": ">", "threshold": 96636764160},
+      "candidate_peak_ram_bytes": {"operator": ">", "threshold": 34359738368}
+    },
+    "score_calculation": {
+      "parent_game_score": "mean_of_the_two_parent_block_scores_for_that_game",
+      "candidate_game_score": "mean_of_the_two_candidate_block_scores_for_that_game",
+      "game_delta_pp": "candidate_game_score_minus_parent_game_score",
+      "aggregate_delta_pp": "mean_of_the_five_game_delta_pp_values",
+      "minimum_game_delta_pp": "minimum_of_the_five_game_delta_pp_values",
+      "negative_game_count": "count_of_game_delta_pp_less_than_zero"
+    },
+    "score_vetoes": {
+      "aggregate_regression": {"metric": "aggregate_delta_pp", "operator": "<=", "threshold": -0.10, "unit": "official_RHAE_percentage_points"},
+      "catastrophic_tail": {"metric": "minimum_game_delta_pp", "operator": "<=", "threshold": -0.10, "unit": "official_RHAE_percentage_points"},
+      "broad_regression": {
+        "all": [
+          {"metric": "negative_game_count", "operator": ">=", "threshold": 4},
+          {"metric": "aggregate_delta_pp", "operator": "<", "threshold": 0, "unit": "official_RHAE_percentage_points"}
+        ]
+      }
+    },
+    "score_rule_dependency_note": "with_equal_-0.10_thresholds_the_tail_rule_logically_subsumes_the_aggregate_rule;_the_aggregate_rule_is_retained_for_readability_and_reporting",
+    "no_veto_if": "both_complete_blocks_are_valid_and_no_candidate_failure_safety_resource_or_score_veto_is_true",
+    "allowed_internal_results": [
+      "PRE_RUN_BLOCKED",
+      "INVALID_RERUN_PERMITTED",
+      "INVALID_NO_RERUN",
+      "VETO",
+      "NO_VETO"
+    ]
+  },
+  "rerun_contract": {
+    "maximum_reruns": 1,
+    "rerun_permitted_only_if_all": [
+      "failure_occurred_before_first_H1_semantic_observation_or_policy_result",
+      "no_frame_prompt_response_proposal_per_game_value_or_qualitative_observation_was_emitted",
+      "candidate_frozen_protocol_runner_and_all_hashes_are_unchanged",
+      "failure_reason_is_durably_recorded",
+      "remaining_compute_allocation_can_complete_the_full_frozen_design"
+    ],
+    "otherwise": "INVALID_NO_RERUN_and_H1_is_consumed"
+  },
+  "runner_boundary": {
+    "runner_path": "scripts/h1_guardrail_runner.py",
+    "runner_sha256": null,
+    "independent_operator_required_for_this_mode": false,
+    "sealed_label_allowed": false,
+    "sealed_label_upgrade_requires": "independent_trusted_runner_or_access_control_boundary_bound_before_freeze",
+    "private_scratch_root": "/tmp/arc3-sealed",
+    "run_directory_permissions_octal": "0700",
+    "withhold": [
+      "frames",
+      "deltas",
+      "animations",
+      "prompts",
+      "responses",
+      "proposals",
+      "hypotheses",
+      "reasoning",
+      "recordings",
+      "per_step_logs",
+      "per_game_scores",
+      "per_game_resources",
+      "game_specific_errors",
+      "qualitative_observations"
+    ],
+    "stdout_allowlist": [
+      "H1_START",
+      "H1_PREFLIGHT_OK",
+      "H1_RESERVATION_VERIFIED",
+      "H1_EXECUTION_COMPLETE",
+      "H1_AGGREGATE_WRITTEN",
+      "H1_CLEANUP_VERIFIED",
+      "H1_INVALID"
+    ],
+    "retained_file_allowlist": ["h1_aggregate.json"],
+    "disable": [
+      "framework_recording",
+      "debug_rendering",
+      "prompt_dumps",
+      "traceback_locals",
+      "evidence_exports",
+      "core_dumps_when_supported"
+    ]
+  },
+  "aggregate_output_contract": {
+    "base_schema": "config/sealed_output_schema.json",
+    "base_schema_is_sufficient": false,
+    "top_level_exact_keys": ["run_id", "validity", "aggregate"],
+    "aggregate_exact_keys": [
+      "veto",
+      "rerun_permitted",
+      "valid_complete_workload_blocks",
+      "parent_mean_official_rhae_percent",
+      "candidate_mean_official_rhae_percent",
+      "candidate_minus_parent_mean_official_rhae_percent",
+      "negative_game_difference_count",
+      "catastrophic_tail_triggered",
+      "candidate_crash_count",
+      "candidate_timeout_count",
+      "candidate_missing_score_count",
+      "candidate_invalid_action_count",
+      "candidate_uncaught_exception_count",
+      "candidate_duplicate_make_count",
+      "candidate_cross_client_leakage_count",
+      "candidate_unresolved_dispatch_continuation_count",
+      "candidate_resource_ceiling_breached",
+      "parent_time_ceiling_breached",
+      "global_cleanup_reserve_threatened",
+      "incomplete_workload_execution_count",
+      "shared_infrastructure_failure_count",
+      "total_accelerator_hours",
+      "total_wall_clock_seconds",
+      "total_model_requests",
+      "total_actions",
+      "peak_vram_bytes",
+      "peak_ram_bytes",
+      "cleanup_attempted",
+      "cleanup_verified",
+      "stale_scratch_entries_removed",
+      "retained_raw_file_count",
+      "retained_file_count"
+    ],
+    "aggregate_value_types": ["integer", "number", "boolean", "null"],
+    "strings_arrays_and_objects_inside_aggregate": "forbidden",
+    "retained_write_order": "derive_the_scalar_aggregate_in_supervisor_memory_cleanup_and_verify_private_scratch_then_construct_validate_and_atomically_write_the_only_retained_file",
+    "runner_enforcement_order": [
+      "construct_output_from_the_exact_allowlist_only",
+      "reject_if_actual_top_level_key_set_differs_from_top_level_exact_keys",
+      "reject_if_actual_aggregate_key_set_differs_from_aggregate_exact_keys",
+      "reject_if_any_aggregate_value_has_a_forbidden_type",
+      "validate_against_the_base_schema",
+      "scan_serialized_output_for_forbidden_semantic_fields",
+      "atomically_write_h1_aggregate.json",
+      "reopen_and_repeat_all_checks",
+      "only_then_accept_the_retained_output"
+    ],
+    "contract_failure": "do_not_retain_the_candidate_output;_write_only_a_minimal_invalid_aggregate_built_by_the_supervisor_if_that_minimal_output_itself_passes_the_exact_contract",
+    "required_negative_tests": [
+      "extra_aggregate_field_rejected",
+      "missing_aggregate_field_rejected",
+      "extra_top_level_field_rejected",
+      "nested_object_rejected",
+      "array_rejected",
+      "string_aggregate_value_rejected",
+      "per_game_field_name_rejected",
+      "private_scratch_path_rejected"
+    ]
+  },
+  "cleanup_contract": {
+    "attempt_on": [
+      "normal_return",
+      "caught_exception",
+      "handled_SIGINT",
+      "handled_SIGTERM",
+      "finally",
+      "external_supervisor",
+      "next_start_stale_scrub"
+    ],
+    "valid_result_requires_all": [
+      "run_directory_absent",
+      "retained_file_set_equals_allowlist",
+      "retained_raw_file_count_equals_zero",
+      "aggregate_file_reopened_after_atomic_write",
+      "aggregate_output_contract_passed"
+    ],
+    "reported_statuses": ["verified_clean", "cleanup_attempted", "cleanup_unverified"],
+    "non_guarantees": [
+      "SIGKILL",
+      "kernel_OOM",
+      "host_termination",
+      "filesystem_snapshots",
+      "swap",
+      "platform_behavior_outside_the_process"
+    ]
+  },
+  "immutable_freeze_and_reservation": {
+    "frozen_artifact_path": "config/h1_architecture_guardrail_protocol_frozen.yaml",
+    "frozen_artifact_status": "frozen",
+    "frozen_artifact_rule": "render_a_new_file_from_this_draft_with_every_required_binding_filled_and_no_policy_affecting_nulls",
+    "hash_definition": "sha256_of_the_exact_UTF-8_bytes_of_the_complete_frozen_artifact_file",
+    "hash_exclusions": [],
+    "protocol_hash_storage": "reservation_event_only_not_inside_the_self_hashed_frozen_artifact",
+    "lifecycle_storage": "append_only_holdout_ledger_events_not_mutations_to_the_frozen_artifact",
+    "frozen_artifact_mutation_after_hash": "forbidden",
+    "reservation_sequence_under_one_exclusive_ledger_lock": [
+      "read_and_hash_the_current_ledger_bytes_as_pre_reservation_ledger_snapshot_sha256",
+      "generate_the_reservation_event_id_and_run_id",
+      "render_the_complete_frozen_artifact_including_the_pre_reservation_snapshot_hash_reservation_event_id_run_id_candidate_runner_and_compute_bindings",
+      "atomically_write_and_fsync_the_frozen_artifact",
+      "compute_protocol_immutable_sha256_from_its_exact_bytes",
+      "append_and_fsync_the_reservation_event_containing_both_hashes_and_identifiers",
+      "reopen_the_frozen_artifact_and_ledger_and_verify_the_hash_chain",
+      "release_the_ledger_lock"
+    ],
+    "execution_preflight": "load_the_reservation_event_hash_the_exact_frozen_artifact_bytes_compare_every_bound_hash_and_require_no_later_cancellation_or_consumption_event_for_the_same_reservation",
+    "status_change_after_reservation": "forbidden_in_the_frozen_artifact;_execution_state_is_derived_only_from_the_ledger",
+    "pre_reservation_ledger_snapshot_sha256": null,
+    "reservation_event_id": null,
+    "run_id": null
+  },
+  "holdout_ledger_protocol": {
+    "path": "config/holdout_ledger.yaml",
+    "append_only_stream": "consumption_events",
+    "event_order": ["reservation", "consumption", "finalization"],
+    "reservation_timing": "before_any_H1_environment_access",
+    "consumption_timing": "at_first_H1_semantic_observation_or_policy_result",
+    "finalization_timing": "after_aggregate_contract_validation_and_cleanup",
+    "crash_safety": "reservation_without_finalization_is_reserved_unknown_and_conservatively_treated_as_consumed_until_durable_adjudication_proves_no_semantic_access",
+    "post_H1_change_rule": "any_design_or_threshold_change_informed_by_H1_moves_all_five_H1_games_to_development_for_later_claims"
+  },
+  "freeze_checklist": {
+    "requires_all": [
+      "architecture_eligibility.current_state=eligible",
+      "candidate_binding.distinct_from_parent=true",
+      "all_candidate_hashes_are_64_hex",
+      "candidate_request_ceiling_is_bound_to_the_development_protocol",
+      "runner_sha256_is_bound_and_all_runner_negative_tests_pass",
+      "authorized_accelerator_hours=2.0",
+      "compute_ledger_reservation_id_is_bound",
+      "immutable_frozen_artifact_and_reservation_are_created_in_the_declared_atomic_sequence"
+    ],
+    "post_freeze_protocol_edits": "forbidden",
+    "change_before_H1_access": "append_cancellation_create_a_new_frozen_artifact_and_make_a_new_reservation",
+    "change_after_H1_access": "H1_is_consumed_and_cannot_be_rerun_for_the_revised_architecture"
+  }
+}

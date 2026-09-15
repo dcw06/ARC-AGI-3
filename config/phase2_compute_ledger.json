@@ -6,6 +6,18 @@
       "attempt_id": "cd82-v1-user-reported",
       "seconds": 7200,
       "basis": "user reported launching the frozen two-hour diagnostic notebook; actual provider runtime and historical attempt inventory pending"
+    },
+    {
+      "kind": "reconcile",
+      "attempt_id": "cd82-v1-user-reported",
+      "seconds": 1165.0,
+      "evidence_path": "/Users/dcw06/Desktop/AGI/reports/phase2_runtime_owner_confirmation.json",
+      "evidence_sha256": "cb7b627a1ddd31534235b6c3514fd46b64b2b4f80e89701e578b2f93206bffb4"
+    },
+    {
+      "kind": "inventory_confirmed",
+      "evidence_path": "/Users/dcw06/Desktop/AGI/reports/phase2_runtime_owner_confirmation.json",
+      "evidence_sha256": "cb7b627a1ddd31534235b6c3514fd46b64b2b4f80e89701e578b2f93206bffb4"
     }
   ]
 }

@@ -1,6 +1,10 @@
 # Phase 2 diagnostic capture and replay
 
-Status: **capture/replay implemented; historical Phase 1 replay pending**.
+Status: **V1 capture/replay complete; fresh cd82 reproduction validated**.
+
+Current closure: `config/phase2_closure.json`. The fresh parent runs establish
+their own reproduced trajectory; they do not recover missing Phase 1 evidence.
+The infrastructure account below describes the earlier capture milestone.
 
 ## Captured transition fields
 
@@ -47,6 +51,6 @@ That fixture proves the capture/replay mechanism, but it is not represented as
 a retrospective reproduction of a particular Kaggle transition. The existing
 Phase 1 downloads retain aggregate game/cell policy-failure counts and zero
 scores, but not raw proposals or transition frames. Therefore the historical
-part of the exit gate remains pending until a fresh instrumented E1S-R parent
-run on a frozen development game produces a replayable bundle. No E2–E4
-treatment is admitted or activated by this work.
+Phase 1 transition evidence remains unavailable. The later fresh instrumented
+E1S-R runs produced replayable bundles, closing the new diagnostic investigation
+with `unsupported_other`. No E2–E4 treatment was admitted.

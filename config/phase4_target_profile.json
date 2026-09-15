@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "protocol_id": "P4-target-service-profile-v1-draft",
+  "status": "draft_not_authorized",
+  "parent": "E1S-R",
+  "workload_id": "P4-E1SR-request-shapes-v1",
+  "workload_sha256": "b57674ab1b37bfe672a9db23e717f945ef62b54123d4ef2fdd3bb7225cb8baf4",
+  "scope": "model_service_prescreen_not_full_game_certification",
+  "target_accelerator": "NvidiaRtxPro6000",
+  "proposed_budget": {
+    "accelerator_hours": 8,
+    "notebook_runs": 1,
+    "full_game_passes": 0,
+    "scored_submissions": 0,
+    "holdout_runs": 0,
+    "automatic_restarts": 0,
+    "includes_startup_faults_finalization_and_failed_attempts": true
+  },
+  "authorized_accelerator_hours": 0,
+  "execution_authorized": false,
+  "runner_sha256": null,
+  "sampling": {
+    "clients": 110,
+    "workers": 8,
+    "requests": 8800,
+    "windows": 8,
+    "requests_per_window": 1100,
+    "window_rule": "eight_sequential_global_windows_each_with_10_rounds_per_client; include_queue_and_idle_time; no_posthoc_window_selection",
+    "cold_start": true,
+    "prefix_caching": "must_match_frozen_launch_spec_not_changed_for_profile",
+    "request_seed": 0,
+    "tokens": "record_server_reported_prompt_and_completion_counts_never_estimate_from_bytes"
+  },
+  "capacity_rule": {
+    "service_budget_seconds": 19800,
+    "service_headroom_fraction": 0.2,
+    "nominal_rate": "total_completed_requests_divided_by_sum_of_window_wall_seconds",
+    "guard_rate": "0.8_times_minimum_completed_requests_per_window_wall_second",
+    "C_nominal": "floor(19800_times_nominal_rate)",
+    "C_admit": "min(C_nominal,floor(15840_times_guard_rate))",
+    "interpretation": "empirical_stress_projection_not_a_statistical_confidence_or_hard_capacity_guarantee",
+    "acceptance": "C_admit_at_least_8800_with_zero_failed_or_missing_requests_in_all_fixed_windows"
+  },
+  "runtime": {
+    "full_lifecycle_limit_seconds": 27540,
+    "admission_cutoff_seconds": 26940,
+    "finalization_reserve_seconds": 600,
+    "startup_limit_seconds": 900,
+    "queue_age_limit_seconds": 300,
+    "request_timeout_seconds": 300
+  },
+  "required_before_authorization": [
+    "validate_exact_model_artifact_and_engine_binding",
+    "bind_executable_runner_and_all_transitive_sources",
+    "audit_actual_tokenized_context_lengths_against_launch_limit",
+    "verify_backend_cancellation_and_failed_startup_cleanup",
+    "register_resource_limits_and_fault_injection_schedule",
+    "freeze_protocol_and_compute_ledger_reservation"
+  ],
+  "limits": [
+    "generated_request_shapes_do_not_establish_empirical_game_prompt_distribution",
+    "repeated_fixture_cache_behavior_can_overstate_real_game_throughput",
+    "service_profile_does_not_certify_environment_dispatch_or_finalization",
+    "no_scheduler_alternative_is_admitted",
+    "H1_remains_unreserved_and_unconsumed"
+  ]
+}

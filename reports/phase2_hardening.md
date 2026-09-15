@@ -1,4 +1,9 @@
-# Phase 2 remaining-gap hardening
+# Phase 2 hardening — historical preparation record
+
+This report describes the state before the completed cd82 execution. Current
+closure is `config/phase2_closure.json`; current evidence and accounting are in
+`reports/phase2_cd82_evidence_review.md`. References below to open work and
+pending reconciliation are historical, not the current phase status.
 
 Phase 2 remains open. The user reported launching the V1 diagnostic run; its
 source lock, parent policy and capture behavior have not been changed. No V2

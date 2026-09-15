@@ -1,8 +1,8 @@
 # Phase 2 parent diagnostic execution
 
 The earlier no-treatment selection is an evidence-availability decision, not
-proof that richer evidence or memory cannot help. Phase 2 remains open while
-two prospective E1S-R parent reproductions are captured on cd82-fb555c5d,
+proof that richer evidence or memory cannot help. Phase 2 is now closed with
+no justified treatment after two E1S-R parent reproductions on cd82-fb555c5d,
 environment and model request seed 104759 (the Phase 1 experimental seed).
 
 The broken experiment policy factory has been repaired and is exercised by a
@@ -31,8 +31,11 @@ admission follows from zero scores or a matching trajectory alone.
 
 Commands: make phase2-cd82-push, make phase2-cd82-status,
 make phase2-cd82-output, make validate-phase2-reproduction.
-Canonical execution evidence is pending the target run. The initial automatic
-launch was blocked, after which the user reported launching V1 manually. No
-downloaded evidence is present yet. V1 is unchanged and retains final frames;
-it must not be relabeled as full-sequence capture. See phase2_hardening.md for
-the separate V2 recorder, artifact-bound admission and family accounting.
+Both V1 runs have been downloaded and validated. They reproduce the same
+80-action unproductive trajectory; the retained-evidence review is recorded in
+phase2_cd82_evidence_review.md. No single Phase 2 capability is justified.
+The owner confirmed a provider runtime of 19m 25s and no other attempts.
+The ledger is reconciled at 1165 seconds; config/phase2_closure.json records
+the final no-treatment decision, validated by make validate-phase2-exit. V1
+retains final frames and must not be relabeled as full-sequence capture. See
+phase2_hardening.md for the separate V2 recorder and admission/accounting rules.

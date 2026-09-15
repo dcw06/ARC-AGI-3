@@ -100,8 +100,10 @@ def validate_contract(root: str | Path) -> dict[str, Any]:
         or set(activation.get("registered_treatments", [])) != registered_ids
         or activation.get("contract") != "config/phase2_contract.yaml"
         or activation.get("contract_sha256") != file_sha256(contract_path)
-        or registry.get("current_phase")
-        != "phase_2_contract_frozen_no_treatment_admitted"
+        or registry.get("current_phase") not in {
+            "phase_2_contract_frozen_no_treatment_admitted",
+            "complete_no_justified_treatment_H1_not_applicable",
+        }
         or activation.get("status") != "contract_frozen_no_treatment_admitted"
         or activation.get("maximum_activated_treatments") != 2
         or cap.get("maximum_activated_treatments") != 2

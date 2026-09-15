@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "protocol_id": "P4-fixture-prescreen-v2",
+  "status": "frozen_pending_compute_approval",
+  "scope": "fixture_service_performance_only_not_full_game_certification",
+  "workload_sha256": "b57674ab1b37bfe672a9db23e717f945ef62b54123d4ef2fdd3bb7225cb8baf4",
+  "budget_seconds": 28800,
+  "maximum_attempts": 1,
+  "automatic_restarts": 0,
+  "scored_submissions": 0,
+  "holdout_runs": 0,
+  "limits": {
+    "lifecycle_seconds": 27540,
+    "admission_cutoff_seconds": 26940,
+    "finalization_seconds": 600,
+    "setup_seconds": 900,
+    "startup_seconds": 900,
+    "request_seconds": 300,
+    "cancellation_grace_seconds": 10,
+    "kill_verification_seconds": 5,
+    "vram_bytes": 92341796864,
+    "group_rss_bytes": 137438953472,
+    "scratch_bytes": 4294967296,
+    "retained_bytes": 67108864,
+    "monitor_interval_seconds": 0.25
+  },
+  "gpu_binding": "require_one_RTX_PRO_6000_and_no_compute_processes; record_UUID_before_model_start; reject_any_UUID_change; require_no_GPU_processes_after_cleanup",
+  "sampling": {
+    "windows": 8,
+    "requests_per_window": 1100,
+    "clients": 110,
+    "workers": 8,
+    "rounds_per_window": 10,
+    "prefix_caching": "unchanged_frozen_launch_spec_enabled",
+    "claim_limit": "repeated_generated_fixtures_may_benefit_from_prefix_cache; no_generalization_to_real_game_distribution"
+  },
+  "capacity": {
+    "service_seconds": 19800,
+    "headroom_fraction": 0.2,
+    "minimum_window_rate_multiplier": 0.8,
+    "required_admitted_requests": 8800,
+    "rule": "C_nominal=floor(19800*8800/sum(window_seconds)); C_admit=min(C_nominal,floor(15840*0.8*min(1100/window_seconds)))",
+    "claim": "empirical_projection_not_hard_or_statistical_capacity_guarantee"
+  },
+  "recovery": {
+    "request_failure": "invalidate_attempt_no_retry_stop_model_group",
+    "startup_failure": "invalidate_attempt_stop_group_no_restart",
+    "resource_or_telemetry_failure": "stop_group_invalidate_attempt",
+    "completion": "after_windows_start_one_additional_request_then_terminate_entire_group; require_disappearance_of_group_and_GPU_compute_processes_within_15_seconds",
+    "fault_scope": "local_injected_storage_timeout_and_hang_tests_are_separate; target_model_group_termination_is_measured; not_per_request_server_cancellation"
+  },
+  "accounting": "reserve_full_28800_seconds_before_packaging; retain_full_charge_for_success_failure_missing_output; provider_inventory_required_before_any_future_release",
+  "supersedes": "P4-fixture-prescreen-v1",
+  "evidence_revision": "error_precedence_final_checkpoint_and_per_fixture_token_usage_v2"
+}

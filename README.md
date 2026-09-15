@@ -13,16 +13,29 @@ superiority claim. Ineligible published reproductions remain explicitly
 unavailable. The Phase 2 contract is frozen with a cap of two strictly
 sequential failure-admitted treatments; E2a–E4 remain inactive. The E0 public
 score of 0.08 is a pipeline-validation baseline, not a competitiveness claim.
-Phase 2 diagnostic capture and deterministic local replay are implemented;
-the dedicated two-run cd82 execution path and cross-run validator now pass local
-tests. Its private Kaggle launch awaits explicit approval. Phase 2 remains open;
-the historical replay gate remains pending because the completed Phase 1 logs
-contain aggregate failures but no retained transition frames or proposals. The
-frozen admission rule therefore yields an explicit **no justified Phase 2
-treatment** decision: no treatment is selected, activated, or allocated GPU
-time. Consequently, the conditional E2/E3/E4 implementation chunks are closed
-as not applicable; no unselected enricher, memory store, or retrieval surface
-has been added.
+Phase 2 closed after two validated cd82 parent diagnostic runs reproduced an
+ineffective click streak without establishing a missing registered capability.
+Phase 3's admission review likewise retained E1S-R with no E5/E6 treatment.
+Under the supplied H1 v3 protocol, the architecture guardrail is not applicable
+until a distinct candidate qualifies on development evidence. Phase 3 is complete
+by that conditional disposition; H1 remains unreserved and unconsumed, and no
+guardrail pass or architecture improvement is claimed. The full H1 protocol is
+preserved as an inactive draft for a future eligible candidate. Run
+`make validate-phase3` to check the closure's current applicability and evidence
+bindings. Run `make validate-phase23-history` to verify the archived historical
+completion independently of subsequent development. Neither grants permission
+to execute H1. See [evidence restoration and validation scopes](reports/phase23_evidence.md).
+
+Phase 4 has started with a frozen **local-preparation-only** contract, a
+110-client synthetic load harness, and local fault tests. Run
+`make validate-phase4` and `make phase4-load`. Target-GPU certification remains
+pending; no advanced scheduler, GPU allocation, or holdout execution is authorized.
+See [Phase 4 status and remaining gates](reports/phase4_status.md).
+
+The private target prescreen is now packaged for review with
+`make phase4-target-notebook`. Its versioned execution protocol and source lock
+are separate from the earlier preparation draft. The review notebook contains
+zero spending authority and must not be launched; no upload target is provided.
 
 This is a starter kit for the [ARC Prize 2026 — ARC-AGI-3](https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3)
 competition. Production uses a multi-file agent package and a dedicated

@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "status": "complete_no_justified_treatment_H1_not_applicable",
+  "phase3_complete": true,
+  "completion_basis": "user_supplied_H1_v3_no_candidate_rule",
+  "completion_scope": "conditional_phase_disposition_not_architecture_performance_acceptance",
+  "parent_policy": "E1S-R",
+  "bindings": {
+    "config/phase2_closure.json": "6f64777bf97b847e1b90c566d50d4d218f1e961ddb4032db36a70d50467ea7be",
+    "config/operational_primary.yaml": "489765d436df7e0ae7c80b9494c3c1ab4b7153b46f8dc5951724b59561ebb709",
+    "config/e1_feature_manifests.yaml": "65312c43d8499d86fb1a7262efc2ec483b4a4424cd180c14d7abd1a477d89eae",
+    "reports/phase2_cd82_evidence_review.md": "5a165230b1b81e5b2f36e7127f127e674779333b28761bb1f610b1bcd7ff9c07"
+  },
+  "admitted_treatments": [],
+  "selected_policy": "E1S-R",
+  "candidate_dispositions": {
+    "E5": {
+      "status": "not_admitted",
+      "reason": "Ineffective click repetition is reproduced, but no competing mechanic hypotheses, discriminating probe outcomes or orientation diagnosis establish the missing capability."
+    },
+    "E6-DISC": {
+      "status": "not_admitted",
+      "reason": "No useful action sequence with discriminating action-relevant support is demonstrated; queueing repeated ineffective clicks has no established benefit."
+    },
+    "E6-REPEAT": {
+      "status": "not_admitted",
+      "reason": "Repeated clicks and bottom-row pixel changes do not verify a useful scoped action-effect relation. No action-saving or replanning comparison supports queue activation."
+    }
+  },
+  "treatment_comparison": "not_applicable_no_admitted_treatment",
+  "allocated_accelerator_seconds": 0,
+  "phase2_budget_transfer": false,
+  "H1": {
+    "status": "not_applicable_no_distinct_development_qualified_candidate",
+    "protocol": "config/h1_architecture_guardrail_protocol_v3.yaml",
+    "protocol_sha256": "dbf5f7287e9cb2355dd184f12bc7eceec4a1451409442f69715c6883d65b1af1",
+    "ledger_sha256_at_closure": "59c3c1d02b0e63b55c10def86d246477df0ded1c01bb32597bdb4fbba258481a",
+    "reserved": false,
+    "executed": false,
+    "result": null,
+    "exposure_classification": "reduced_exposure_guardrail_only",
+    "privacy_claim": "process_redacted_not_independently_blinded",
+    "consumed": false,
+    "positive_performance_claim": false,
+    "required_before_execution": [
+      "Accept a policy-distinct candidate under a frozen development protocol and create a new Phase 3/H1 eligibility decision",
+      "Freeze architecture and resource-stability evidence hashes",
+      "Freeze aggregate veto thresholds, seeds, resource ceilings and invalid-run rule",
+      "Allocate H1 compute explicitly without automatically transferring Phase 2 funds",
+      "Validate aggregate-only runner output and process-private scratch cleanup",
+      "Reserve one-shot ledger consumption before environment access"
+    ]
+  }
+}

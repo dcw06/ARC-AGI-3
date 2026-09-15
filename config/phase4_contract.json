@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "protocol_id": "P4-local-certification-v1",
+  "status": "frozen_local_preparation_only",
+  "parent": "E1S-R",
+  "bindings": {
+    "config/operational_primary.yaml": "489765d436df7e0ae7c80b9494c3c1ab4b7153b46f8dc5951724b59561ebb709",
+    "config/e1_feature_manifests.yaml": "65312c43d8499d86fb1a7262efc2ec483b4a4424cd180c14d7abd1a477d89eae",
+    "config/e1_experiment_protocol.yaml": "6b0938ad82df741ddf967e26701faabea44f9e3bcd374ec2b9ee46951be32906",
+    "config/runtime_profiles.yaml": "23f0888b57a81f69b6319aef2c50365a5a2a8155ca3ce4c84147349de9afe2ff",
+    "config/phase23_evidence_package.json": "efefb4d8970174287951c1d15303f495d4eb588c3cad4f8167336e061ac46e13",
+    "config/phase2_closure.json": "6f64777bf97b847e1b90c566d50d4d218f1e961ddb4032db36a70d50467ea7be",
+    "config/phase3_decision.json": "137533a219f258e1e8ec91720d9c3533d50948eb2fd1cd0e43ee26cbae6e5f22",
+    "config/holdout_ledger.yaml": "59c3c1d02b0e63b55c10def86d246477df0ded1c01bb32597bdb4fbba258481a",
+    "agent/scheduler.py": "9b8a9961fc3e7eefe9755ac00dada154f1c98b3eca47faebcac45b6a90fcf7f7",
+    "agent/watchdog.py": "180fa253d50e1c5848bf26bfe9d15514ebc748b9b7ed072da81ec178e8b47f31",
+    "agent/e1_policy.py": "f11b793608469fb75a4a8a5493908867340445a87babda210f31cc2b3f77932d",
+    "agent/competition_loop.py": "08bef472a29b01a0698cb8469683291c006fff6639cff04735e4857609f42284",
+    "agent/production_policy.py": "c66a7c0edc002725c1d63b55ac5be3708816cfea6bbed060d044f6c54381272a"
+  },
+  "scheduler": {
+    "policy": "minimum_fair_v1",
+    "capacity": 110,
+    "worker_count": 8,
+    "max_age_seconds": 300,
+    "priority_unit": "FIFO_request_sequence",
+    "identity_use": "opaque_isolation_only_no_game_or_baseline_features"
+  },
+  "workload": {
+    "clients": 110,
+    "requests_per_client": 80,
+    "maximum_requests": 8800,
+    "synthetic_seed": 271828,
+    "request_seed": 0,
+    "payload_bytes": [
+      1024,
+      8192,
+      32768
+    ],
+    "payload_assignment": "(client_index + request_index) modulo 3",
+    "synthetic_service_seconds": 0.001,
+    "description": "Synthetic byte payloads, not tokenized multimodal E1 prompts or game trajectories",
+    "development_game_seed_pairs": "config/e1_experiment_protocol.yaml#development_game_seed_pairs",
+    "target_workload_status": "requires_separate_frozen_110_client_manifest_and_real_prompt_capture_before_GPU"
+  },
+  "runtime": {
+    "operational_target_seconds": 27540,
+    "finalization_reserve_seconds": 600,
+    "stop_admission_seconds": 26940,
+    "startup_target_seconds": 900,
+    "inference_timeout_seconds": 300,
+    "model_service_budget_seconds": 19800
+  },
+  "budget": {
+    "authorized_accelerator_hours": 0,
+    "authorized_target_notebook_runs": 0,
+    "authorized_full_game_passes": 0,
+    "scored_submissions": 0,
+    "holdout_runs": 0,
+    "local_harness_deadline_seconds": 60,
+    "no_phase2_budget_transfer": true
+  },
+  "capacity": {
+    "C_nominal": null,
+    "C_admit": null,
+    "service_headroom_fraction": 0.2,
+    "conservative_throughput_bound": null,
+    "measurement_rule": "Before GPU execution register fixed mixed-workload windows and a conservative sustained-throughput lower bound; include cold load, cancellation, memory pressure and long tails; never use synthetic throughput for admission",
+    "capacity_freeze_status": "blocked_pending_target_protocol_and_measurements"
+  },
+  "metrics": [
+    "completed_requests",
+    "failed_requests",
+    "per_client_completions",
+    "queue_wait_p50_p90_p99_seconds",
+    "service_p50_p90_p99_seconds",
+    "max_queue_age_seconds",
+    "max_queue_size",
+    "elapsed_seconds",
+    "synthetic_requests_per_second"
+  ],
+  "target_metrics_required": [
+    "cold_load_seconds",
+    "first_request_seconds",
+    "time_to_first_observation_seconds",
+    "time_to_first_model_action_seconds",
+    "sustained_requests_per_second",
+    "peak_VRAM_bytes",
+    "peak_RAM_bytes",
+    "peak_disk_bytes",
+    "evidence_bytes",
+    "calls_and_tokens_per_client",
+    "cancellation_seconds",
+    "finalization_seconds",
+    "full_lifecycle_seconds"
+  ],
+  "failure_rules": {
+    "queue_full": "reject_without_dispatch",
+    "stale_or_canceled": "discard_no_action",
+    "inference_error_or_timeout": "surface_to_existing_legal_fallback_no_model_retry",
+    "storage_failure": "T2_storage_degrades_preserving_T0_T1; T0_journal_failure_denies_unjournaled_dispatch",
+    "ambiguous_dispatch": "quarantine_no_retry",
+    "startup_failure": "existing_E0_fallback_not_E1_certification",
+    "finalization_unknown": "report_unknown_never_claim_acknowledged"
+  },
+  "local_acceptance": {
+    "completed_requests": 8800,
+    "failed_requests": 0,
+    "max_queue_size": 110,
+    "max_queue_age_seconds": 300,
+    "all_clients_complete": true,
+    "unit_fault_tests_required": true,
+    "target_gpu_certified": false
+  },
+  "target_acceptance": {
+    "full_lifecycle_seconds_strictly_below": 27540,
+    "admission_cutoff_seconds": 26940,
+    "finalization_reserve_seconds": 600,
+    "no_identity_or_baseline_features": true,
+    "bounded_queue_and_legal_degradation": true,
+    "capacity_bound_frozen": true,
+    "complete_target_evidence_required": true
+  },
+  "advanced_scheduler": {
+    "maximum_alternatives": 1,
+    "registered_alternative": null,
+    "execution_authorized": false,
+    "admission": "measured_queueing_starvation_or_resource_allocation_failure_with_prospective_isolated_delta",
+    "comparison": "separate_fresh_complete_workload_runs_counterbalanced_order_paired_whole_run_uncertainty",
+    "acceptance": "predeclare_numeric_value_or_reliability_improvement_threshold_and_compute_allocation_before_any_comparison; otherwise retain_minimum_fair_v1"
+  },
+  "phase4_complete": false
+}

@@ -20,7 +20,7 @@ def main() -> int:
         print(f"PHASE2_CONDITIONAL_FAILED reason={exc}")
         return 1
     print(
-        "PHASE2_CONDITIONAL_PASSED no_unselected_features=true phase2_complete=false "
+        "PHASE2_CONDITIONAL_PASSED scope=conditional_implementation no_unselected_features=true phase_completion_not_evaluated=true closure_record=config/phase2_closure.json "
         f"status={closure['status']} selected={closure['selected_treatment']} "
         "e2_variants=0 memory_stores=0 retrieval_schemas=0"
     )

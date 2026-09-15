@@ -9,10 +9,24 @@ from pathlib import Path
 FAMILY_SECONDS = 8 * 3600
 
 
-def verify_event_evidence(event, prior):
+def verify_event_evidence(event, prior, evidence_root=None):
     if event["kind"] not in {"reconcile", "inventory_confirmed"}:
         return
     source = Path(event["evidence_path"])
+    if evidence_root is not None:
+        root = Path(evidence_root).resolve()
+        mapping_path = root / "config/evidence_path_map.json"
+        mappings = json.loads(mapping_path.read_text())["legacy_references"] if mapping_path.exists() else {}
+        if str(source) in mappings:
+            ref = mappings[str(source)]
+            if ref["sha256"] != event["evidence_sha256"]:
+                raise ValueError("legacy evidence mapping hash mismatch")
+            source = root / ref["path"]
+        elif not source.is_absolute():
+            source = root / source
+        source = source.resolve()
+        if not source.is_relative_to(root):
+            raise ValueError("evidence escapes declared root; explicit portable mapping required")
     if hashlib.sha256(source.read_bytes()).hexdigest() != event["evidence_sha256"]:
         raise ValueError("ledger evidence missing or changed")
     evidence = json.loads(source.read_text())
@@ -60,11 +74,13 @@ def summarize(events):
 
 
 def read_ledger(path):
-    value = json.loads(Path(path).read_text())
+    path = Path(path).resolve()
+    root = path.parent.parent if path.parent.name == "config" else path.parent
+    value = json.loads(path.read_text())
     if value["schema_version"] != 1:
         raise ValueError("unknown ledger schema")
     for i, event in enumerate(value["events"]):
-        verify_event_evidence(event, summarize(value["events"][:i]))
+        verify_event_evidence(event, summarize(value["events"][:i]), root)
     return summarize(value["events"])
 
 
@@ -76,7 +92,8 @@ def append_event(path, event):
         value = json.loads(path.read_text())
         read_ledger(path)
         prior = summarize(value["events"])
-        verify_event_evidence(event, prior)
+        root = path.resolve().parent.parent if path.parent.name == "config" else path.resolve().parent
+        verify_event_evidence(event, prior, root)
         if event["kind"] == "reserve" and (not prior["new_execution_allowed"] or event["seconds"] > prior["remaining_seconds"]):
             raise ValueError("unreconciled inventory/attempts or insufficient remaining family budget")
         events = value["events"] + [event]

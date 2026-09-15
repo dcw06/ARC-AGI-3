@@ -410,6 +410,7 @@ def main() -> int:
         in {
             "phase_1_complete_provisional_primary",
             "phase_2_contract_frozen_no_treatment_admitted",
+            "complete_no_justified_treatment_H1_not_applicable",
         }
         and success.get("phase_1", {}).get("status")
         == "passed_provisional_primary"

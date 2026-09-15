@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "status": "complete_no_justified_treatment",
+  "decision": "retain_E1S-R",
+  "taxonomy_id": "unsupported_other",
+  "failure_reproduced": true,
+  "admitted_treatments": [],
+  "implemented_treatments": [],
+  "phase2_complete": true,
+  "evidence_review": "reports/phase2_cd82_evidence_review.md",
+  "evidence_review_sha256": "5a165230b1b81e5b2f36e7127f127e674779333b28761bb1f610b1bcd7ff9c07",
+  "execution_directory": "reports/runs/phase2-cd82/phase2-cd82",
+  "runs": [
+    {"path": "cd82-a53509512e87466c8ae53b19f45f0924-R1/run.json", "sha256": "97c75b84abbb069ab0de022c41febb640ac9aff1e23cec9382695d1b382a17f7"},
+    {"path": "cd82-17b05b0c3e6344ebbd6c45399d941155-R2/run.json", "sha256": "bebcefe0b336170f24f13f9d8ed1e52e6537400bb88e079994e99f33e794f993"}
+  ],
+  "trajectory_sha256": "88c74f82cb9d1b4b376c7314bb6894bf5683132a0305274aa3a81c3a24b1b13f",
+  "compute_ledger": "config/phase2_compute_ledger.json",
+  "charged_accelerator_seconds": 1165,
+  "remaining_family_seconds": 27635,
+  "accounting_basis": "owner_attested_provider_runtime_and_single_attempt_inventory",
+  "limitations": [
+    "V1 retains final frames; intermediate-only cues cannot be assessed.",
+    "Repeated ineffective clicks do not isolate a missing E2-E4 capability.",
+    "No treatment comparison or performance improvement is claimed.",
+    "Closure does not activate E5/E6 or transfer unused compute to another phase."
+  ]
+}

@@ -110,6 +110,37 @@ phase2-cd82-output: _check-kaggle ## Download parent diagnostic evidence
 	$(KAGGLE) kernels output daichongwei06/arc3-phase2-cd82-diagnostics -p reports/runs/phase2-cd82
 
 .PHONY: validate-phase2-reproduction
+.PHONY: validate-phase2-exit
+.PHONY: validate-phase3
+.PHONY: validate-phase23-history
+validate-phase23-history: ## Verify immutable archived completion independently of current eligibility
+	$(PYTHON_ENV) $(VENV_PY) scripts/phase23_evidence.py verify
+
+.PHONY: validate-phase4 phase4-load phase4-workload phase4-service-probe
+validate-phase4: ## Validate local preparation and faults; no target-GPU certification
+	$(PYTHON_ENV) $(VENV_PY) -m unittest tests.test_phase4 tests.test_phase4_workload tests.test_phase4_runner tests.test_phase4_preflight tests.test_phase4_execution tests.test_phase4_launch_review tests.test_phase0.OrchestrationTests tests.test_phase0.AdapterTests tests.test_phase0f.RetentionTests tests.test_phase1.OperationalPrimaryTests -v
+	$(PYTHON_ENV) $(VENV_PY) scripts/validate_phase4.py
+
+phase4-workload: ## Capture frozen E1S-R request shapes offline; no model or environment execution
+	$(PYTHON_ENV) $(VENV_PY) scripts/phase4_workload.py
+
+phase4-service-probe: ## Supervised fake-service workload (FAULT=none/startup/inference/timeout/storage/finalization/hang/finalization_hang)
+	$(PYTHON_ENV) $(VENV_PY) scripts/run_phase4_service.py --fault $(or $(FAULT),none)
+
+.PHONY: phase4-target-notebook
+phase4-target-notebook: ## Build private REVIEW-ONLY target notebook; never uploads or authorizes compute
+	$(PYTHON_ENV) $(VENV_PY) scripts/build_phase4_target_notebook.py
+
+phase4-load: ## Exercise real minimum queue with 110 synthetic clients and 8800 requests
+	$(PYTHON_ENV) $(VENV_PY) scripts/validate_phase4.py --load
+
+validate-phase3: ## Validate Phase 3 closure and conditional H1 non-execution
+	$(PYTHON_ENV) $(VENV_PY) -m unittest tests.test_phase3 tests.test_phase3_exit -v
+	$(PYTHON_ENV) $(VENV_PY) scripts/validate_phase3.py --require-exit
+
+validate-phase2-exit: ## Validate final evidence-backed Phase 2 no-treatment closure
+	$(PYTHON_ENV) $(VENV_PY) scripts/validate_phase2_exit.py
+
 .PHONY: phase2-budget phase2-cd82-v2-notebook
 phase2-budget: ## Show cumulative Phase 2 charges, reservations and unresolved inventory
 	$(PYTHON_ENV) $(VENV_PY) scripts/phase2_budget.py status

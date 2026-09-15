@@ -621,6 +621,10 @@ class ConfigurationTests(unittest.TestCase):
     def test_all_registries_are_json_compatible_and_versioned(self) -> None:
         root = Path(__file__).resolve().parents[1] / "config"
         for path in root.iterdir():
+            # The budget ledger uses an empty flock file, not a registry.
+            # Keep dependency_manifest.lock in the versioned JSON audit.
+            if path.name == "phase2_compute_ledger.lock":
+                continue
             if path.suffix in {".yaml", ".json", ".lock"}:
                 value = json.loads(path.read_text())
                 self.assertIsInstance(value["schema_version"], int, path.name)

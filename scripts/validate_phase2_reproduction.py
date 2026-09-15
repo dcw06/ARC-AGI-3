@@ -59,7 +59,9 @@ def main():
     report["compute_ledger"] = read_ledger(ROOT / "config/phase2_compute_ledger.json")
     report["remaining_phase2_hours"] = report["compute_ledger"]["remaining_seconds"] / 3600
     report["cost_reconciliation_required"] = True
-    report["phase2_complete"] = False
+    report["scope"] = "diagnostic_reproduction_only"
+    report["phase_completion_not_evaluated"] = True
+    report["closure_record"] = "config/phase2_closure.json"
     print(json.dumps(report,indent=2,sort_keys=True))
     return 0 if args.report_only or report["failure_reproduced"] else 2
 

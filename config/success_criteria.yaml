@@ -41,6 +41,15 @@
     "offline_bundle": "complete_for_public_Kaggle_runtime_use_not_redistribution",
     "remaining_exit_gates": []
   },
+  "phase_3": {
+    "status": "complete_no_justified_treatment_H1_not_applicable",
+    "decision_record": "config/phase3_decision.json",
+    "admitted_treatments": [],
+    "selected_policy": "E1S-R",
+    "acceptance_claim": false,
+    "H1_executed": false,
+    "exit_gate": "validated_no_candidate_disposition_under_user_supplied_H1_v3"
+  },
   "phase_2_contract": {
     "status": "frozen_no_treatment_admitted",
     "maximum_activated_treatments": 2,
@@ -51,14 +60,17 @@
     "exit_gate": "validator_pass"
   },
   "phase_2_diagnostics": {
-    "status": "capture_and_replay_implemented_historical_exit_pending",
+    "status": "fresh_cd82_reproduction_complete_no_capability_attribution",
     "per_transition_fields": "complete",
     "closed_bundle_schema": "config/phase2_diagnostic_schema.json",
     "local_replay_and_grouping": "implemented",
     "policy_behavior_parity_fixture": "passing",
     "deterministic_E1S-R_failure_fixture": "passing",
     "historical_phase1_transition_reproduced": false,
-    "remaining_exit_gate": "run_the_instrumented_E1S-R_parent_on_a_frozen_development_game_and_replay_its_retained_bundle"
+    "closure_record": "config/phase2_closure.json",
+    "fresh_parent_reproduction_completed": true,
+    "historical_phase1_evidence_recovered": false,
+    "remaining_exit_gate": null
   },
   "phase_2_treatment_selection": {
     "status": "complete_no_justified_treatment",

@@ -21,7 +21,7 @@ def main() -> int:
         return 1
     decision = selection["decision"]
     print(
-        "PHASE2_SELECTION_PASSED historical_disposition_only=true phase2_complete=false "
+        "PHASE2_SELECTION_PASSED scope=historical_selection_record phase_completion_not_evaluated=true closure_record=config/phase2_closure.json "
         f"conclusion={decision['conclusion']} selected={decision['selected_treatment']} "
         f"activated={len(decision['activated_treatments'])} allocated_hours={decision['allocated_accelerator_hours']}"
     )
