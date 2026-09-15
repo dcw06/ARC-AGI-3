@@ -1,1 +1,13 @@
-{"schema_version":1,"authorized_seconds":0,"approval_reference":null,"events":[]}
+{
+  "schema_version": 1,
+  "authorized_seconds": 28800,
+  "approval_reference": "reports/phase4_authorization_v2.md",
+  "events": [
+    {
+      "kind": "reserve",
+      "attempt_id": "p4-v2-20260915T104415Z",
+      "seconds": 28800,
+      "execution_lock_sha256": "1f0fd4014fb6170c3673513ea504225e101dd98e8c1ada4f8c9b1a9aede6780d"
+    }
+  ]
+}
