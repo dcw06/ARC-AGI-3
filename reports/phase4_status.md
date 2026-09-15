@@ -1,6 +1,46 @@
-# Phase 4 — local preparation started
+# Phase 4 — V2 fixture prescreen passed; accounting pending
 
-## Current handoff: reviewable target prescreen
+## Authorized V2 execution
+
+The user authorized one private, unscored eight-hour V2 attempt. Reviewed source
+and bound Phase 2–3 evidence were checkpointed in `7f85a80`; authorization,
+reservation and the reserved notebook were checkpointed in `3a10d81`.
+Attempt `p4-v2-20260915T104415Z` reserves 28,800 seconds. Exactly one upload was
+accepted as version 1 of `daichongwei06/arc3-phase4-fixture-prescreen-v2`.
+Kaggle confirmed private visibility, internet disabled and `NvidiaRtxPro6000`.
+The provider completed the run, and the strict evaluator passed all eight windows
+(8,800 requests). `C_nominal=419210` and `C_admit=252717` are frozen-rule fixture
+projections, not realistic game throughput. First-cell elapsed time was 1,074.16
+seconds, maximum queue age 8.73 seconds, and verified process/GPU cleanup 0.28
+seconds. Peak VRAM was 72.22 GiB; peak process-group RSS was 14.06 GiB.
+
+See `reports/phase4_prescreen_v2_result.json` for results and limitations, and
+`reports/phase4_launch_v2.json` for launch bindings. The account-wide GPU counter
+decreased between observations and cannot establish per-attempt billing. Exact
+provider runtime and complete session inventory remain unresolved; all 28,800
+seconds remain charged or reserved, with zero released. The terminal ledger event
+consumes this attempt and prevents the current launch gate from reusing it. No
+automatic retry, V1 run, scored submission or holdout access is authorized.
+
+The checksummed output archive and inventory are recorded in
+`reports/phase4_prescreen_v2_evidence.json`. All archived file hashes and sizes
+were verified, and evaluation passed again after extraction to a fresh temporary
+directory. To reevaluate from a clean checkout, extract the referenced ZIP into
+a new directory and run:
+
+```sh
+.venv/bin/python scripts/evaluate_phase4_prescreen.py /path/to/extracted/phase4-prescreen
+```
+
+Next: obtain provider billing/session evidence to finalize accounting, then scope
+full-game lifecycle certification covering environment dispatch, legal fallback,
+cancellation and scorecard finalization. This service-only pass does not complete
+Phase 4 or justify advanced scheduling. H1 remains preserved.
+
+The preparation and review notes below describe the pre-authorization milestone;
+their statements about zero authorized compute are historical, not current.
+
+## Historical prelaunch handoff: reviewable target prescreen
 
 The latest target protocol is `config/phase4_execution_protocol_v2.json`, with
 `config/phase4_execution_lock_v2.json` binding the full packaged source/config

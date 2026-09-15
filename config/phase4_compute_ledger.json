@@ -8,6 +8,19 @@
       "attempt_id": "p4-v2-20260915T104415Z",
       "seconds": 28800,
       "execution_lock_sha256": "1f0fd4014fb6170c3673513ea504225e101dd98e8c1ada4f8c9b1a9aede6780d"
+    },
+    {
+      "kind": "attempt_completed_accounting_pending",
+      "attempt_id": "p4-v2-20260915T104415Z",
+      "provider_version": 1,
+      "provider_status": "COMPLETE",
+      "result_reference": "reports/phase4_prescreen_v2_result.json",
+      "result_sha256": "059d934bf49a07d604142a80b07037632de613fe419d53ea1017c5a62929f5e2",
+      "charged_or_reserved_seconds": 28800,
+      "released_seconds": 0,
+      "exact_provider_billed_seconds": null,
+      "accounting_status": "provider_runtime_unresolved_full_reservation_retained",
+      "attempt_consumed": true
     }
   ]
 }
