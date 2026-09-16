@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "protocol_id": "P4-development-lifecycle-v1",
+  "status": "frozen_preparation_contract_not_target_launch_ready",
+  "parent": "E1S-R",
+  "scope": "110_independent_bounded_development_clients_not_110_distinct_official_games",
+  "workload": "certification/phase4_v1/workload.json",
+  "clients": 110,
+  "maximum_actions_per_client": 80,
+  "maximum_policy_requests": 8800,
+  "maximum_preflight_requests": 1,
+  "request_seed": 0,
+  "max_new_tokens": 128,
+  "temperature": 0,
+  "model_binding_reference": "config/operational_primary.yaml",
+  "scheduler": {"policy": "minimum_fair_v1", "capacity": 110, "workers": 8, "max_age_seconds": 300, "isolation_key": "opaque_client_id_not_game_id"},
+  "limits": {
+    "lifecycle_seconds_strictly_below": 27540,
+    "stop_admission_seconds": 26940,
+    "finalization_reserve_seconds": 600,
+    "dependency_setup_seconds": 900,
+    "model_startup_seconds": 900,
+    "request_timeout_seconds": 300,
+    "vram_bytes": 92341796864,
+    "group_rss_bytes": 137438953472,
+    "scratch_bytes": 4294967296,
+    "retained_evidence_bytes": 67108864,
+    "monitor_interval_seconds": 0.25,
+    "cleanup_grace_seconds": 10,
+    "cleanup_kill_verification_seconds": 5
+  },
+  "acceptance": {
+    "clients_accounted_for": 110,
+    "scorecard_close_acknowledgements_required": 110,
+    "illegal_duplicate_stale_or_unjournaled_dispatches": 0,
+    "nominal_ambiguous_dispatches": 0,
+    "unknown_finalizations": 0,
+    "nominal_infrastructure_failures": 0,
+    "nominal_policy_failures": 0,
+    "require_model_completion_for_each_nonterminal_client": true,
+    "require_all_resource_limits_and_complete_evidence": true,
+    "minimum_levels_completed": 0,
+    "zero_score_interpretation": "reliability_only_no_solving_progress_claim"
+  },
+  "faults": {
+    "local_actual_environment": ["scripted_E1_dispatch", "inference_error_legal_fallback", "cancel_after_proposal_before_dispatch"],
+    "local_regressions": ["missing_policy", "empty_close_receipt", "close_exception", "policy_factory_exception", "queue_isolation", "missing_evidence"],
+    "existing_local_fault_suite": "tests/test_phase4.py",
+    "target_injected_faults": "none_in_nominal_workload; separate_future_registered_segment_required",
+    "ambiguous_dispatch": "quarantine_no_retry",
+    "startup_failure": "fail_E1_certification_even_if_E0_operates",
+    "finalization_unknown": "fail_never_infer_acknowledgement"
+  },
+  "capacity": {
+    "C_nominal": null,
+    "C_admit": null,
+    "fixture_prescreen_not_admission_authority": true,
+    "real_trajectory_capacity_freeze_required_before_target_launch": true
+  },
+  "launch_blockers": [
+    "All 15 exact development environment artifacts not yet locally available and hash-bound",
+    "Real-trajectory capacity and admission evidence not yet frozen",
+    "Externally supervised 110-client target integration and independent GPU evaluator not yet implemented",
+    "Offline target notebook/environment package and GPU UUID resource enforcement not yet reviewed",
+    "Separate compute approval, allowance verification and reservation absent"
+  ],
+  "scored_submissions": 0,
+  "holdout_runs": 0,
+  "advanced_scheduler_alternatives": 0,
+  "phase4_complete": false
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "protocol_id": "P4-development-terminal-lifecycle-v3",
+  "status": "passed_local_scripted_lifecycle_only",
+  "archive": "evidence/phase4-v3-terminal-lifecycle-evidence-portable.zip",
+  "archive_sha256": "b50632d597290cf28f8e4735c5232172685e2b38c470d2c8e496a29f192074b0",
+  "fresh_extraction_source_and_evaluation_verification": "passed",
+  "source_snapshot_sha256": "65d7152990a177295b1fe5ba4d959863dd2b357879b7c39ccbdb0424bcba4d45",
+  "diagnostic_evidence": "reports/phase4_v3_terminal_reproduction.json",
+  "paired_reproductions": 10,
+  "fresh_diagnostic_runs": 20,
+  "root_cause": "Non-reset action submitted after acknowledged GAME_OVER; engine returns frame=[]; strict Observation parser raises ValueError; old adapter quarantines.",
+  "fix": "Stop and finalize on acknowledged GAME_OVER; no model/policy change, reset, fabricated frame, or retry.",
+  "clients": 110,
+  "terminal_reasons": {
+    "game_over": 35,
+    "action_cap": 75
+  },
+  "quarantines": 0,
+  "acknowledged_actions": 7722,
+  "requests": 7722,
+  "acknowledged_scorecard_closes": 110,
+  "elapsed_seconds": 27.303113708003366,
+  "peak_group_rss_bytes": 264667136,
+  "peak_scratch_bytes": 20005280,
+  "cleanup_verified": true,
+  "cleanup_seconds": 0.02317491699795937,
+  "tests_passed": 33,
+  "runtime_packages": {
+    "arc-agi": "0.9.9",
+    "arcengine": "0.9.3"
+  },
+  "model_inference": false,
+  "C_nominal": null,
+  "C_admit": null,
+  "target_gpu_certified": false,
+  "phase4_complete": false,
+  "new_compute_authorized_seconds": 0,
+  "scope": "110_repeated_development_clients_separate_scorecards_single_episode_not_production_110_distinct_one_scorecard",
+  "historical_v2_result": "preserved_failed_not_relabelled"
+}

@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "fault": "cancel",
+  "smoke_action_limit": 2,
+  "frozen_target_action_limit": 80,
+  "record": {
+    "client_id": "p4-client-006",
+    "game_id": "ls20-9607627b",
+    "environment_seed": 104801,
+    "request_seed": 0,
+    "max_actions": 2,
+    "parent": "E1S-R",
+    "error": null,
+    "result": {
+      "game_id": "ls20-9607627b",
+      "status": "complete",
+      "levels_completed": 0,
+      "acknowledged_actions": 0,
+      "ambiguous_actions": 0,
+      "terminal_reason": "pre_dispatch_failure",
+      "controller_iterations": 1,
+      "policy_failures": 0,
+      "inference_requests": 1,
+      "inference_completions": 1,
+      "inference_transport_failures": 0,
+      "inference_queue_failures": 0,
+      "inference_prompt_tokens": 0,
+      "inference_completion_tokens": 0,
+      "inference_elapsed_seconds": 0.0,
+      "workspace_invocations": 0,
+      "workspace_elapsed_seconds": 0.0,
+      "parser_repairs": 0
+    },
+    "scorecard_id": "933b840f-cb19-476d-905f-4fcfb12a20de",
+    "scorecard_receipt": {
+      "source_url": null,
+      "tags": [
+        "p4-development-lifecycle"
+      ],
+      "opaque": null,
+      "card_id": "933b840f-cb19-476d-905f-4fcfb12a20de",
+      "api_key": null,
+      "score": 0.0,
+      "environments": [
+        {
+          "id": "ls20-9607627b",
+          "runs": [
+            {
+              "id": null,
+              "guid": "9ee475b4-9bb8-4e8d-a797-a9b4fd3debe0",
+              "score": 0.0,
+              "levels_completed": 0,
+              "actions": 0,
+              "resets": 0,
+              "state": "NOT_FINISHED",
+              "completed": false,
+              "level_scores": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "level_actions": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "level_baseline_actions": [
+                22,
+                123,
+                73,
+                84,
+                96,
+                192,
+                186
+              ],
+              "number_of_levels": null,
+              "number_of_environments": null,
+              "message": null
+            }
+          ],
+          "score": 0.0,
+          "actions": 0,
+          "levels_completed": 0,
+          "completed": false,
+          "level_count": 7,
+          "resets": 0
+        }
+      ],
+      "tags_scores": [
+        {
+          "id": "keyboard",
+          "guid": null,
+          "score": 0.0,
+          "levels_completed": 0,
+          "actions": 0,
+          "resets": null,
+          "state": null,
+          "completed": null,
+          "level_scores": null,
+          "level_actions": null,
+          "level_baseline_actions": null,
+          "number_of_levels": 7,
+          "number_of_environments": 1,
+          "message": null
+        }
+      ],
+      "competition_mode": null,
+      "total_environments_completed": 0,
+      "total_environments": 1,
+      "total_levels_completed": 0,
+      "total_levels": 7,
+      "total_actions": 0
+    },
+    "finalization_status": "acknowledged_local_framework",
+    "finalization_seconds": 0.00014320799527922645,
+    "lifecycle_journal": [
+      {
+        "transaction_id": "scorecard_open:local-lifecycle:1:088e1a1085d8",
+        "kind": "scorecard_open",
+        "status": "acknowledged",
+        "sequence": 1,
+        "prepared_fields": {},
+        "fields": {
+          "card_id": "933b840f-cb19-476d-905f-4fcfb12a20de"
+        }
+      },
+      {
+        "transaction_id": "scorecard_close:local-lifecycle:2:4862b6de09bb",
+        "kind": "scorecard_close",
+        "status": "acknowledged",
+        "sequence": 2,
+        "prepared_fields": {
+          "card_id": "933b840f-cb19-476d-905f-4fcfb12a20de"
+        },
+        "fields": {
+          "card_id": "933b840f-cb19-476d-905f-4fcfb12a20de"
+        }
+      }
+    ],
+    "client_journal": [
+      {
+        "transaction_id": "bootstrap_reset:ls20-9607627b:1:b307217f5495",
+        "kind": "bootstrap_reset",
+        "status": "acknowledged",
+        "sequence": 1,
+        "prepared_fields": {
+          "requested_game_id": "ls20-9607627b",
+          "scorecard_id": "933b840f-cb19-476d-905f-4fcfb12a20de"
+        },
+        "fields": {
+          "requested_game_id": "ls20-9607627b",
+          "scorecard_id": "933b840f-cb19-476d-905f-4fcfb12a20de",
+          "guid": "9ee475b4-9bb8-4e8d-a797-a9b4fd3debe0",
+          "observation_hash": "1eacfd1b2aab1cd52cbe5f2a9d18280eec465aca889f540961dc8c430ab9d9e6"
+        }
+      }
+    ],
+    "client_closed": true,
+    "blocked_after_cancellation": 1,
+    "elapsed_seconds": 0.025189416999637615
+  },
+  "evaluation": {
+    "passed": true,
+    "failures": [],
+    "scope": "local_actual_environment_scripted_completion_only",
+    "model_inference": false,
+    "target_gpu_certified": false,
+    "phase4_complete": false
+  }
+}

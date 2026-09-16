@@ -1,0 +1,329 @@
+{
+  "schema_version": 1,
+  "protocol_id": "H1-architecture-guardrail-v1",
+  "status": "draft_inactive_candidate_and_runner_unbound",
+  "drafted_at": "2026-09-13T15:05:15Z",
+  "purpose": "one-time aggregate-only catastrophic-regression guardrail for the stable Phase 3 architecture",
+  "interpretation": {
+    "holdout_classification": "reduced_exposure_procedural_guardrail_only",
+    "positive_claim_allowed": false,
+    "no_veto_means": "no_predeclared_catastrophic_regression_was_observed_under_this_five_game_guardrail",
+    "no_veto_does_not_mean": "architecture_improvement_or_generalization_was_established",
+    "ordinary_tuning_allowed": false
+  },
+  "source_binding": {
+    "repository_commit": "754572208e29ac3e65c957d6b305233c6c78d264",
+    "holdout_ledger": "config/holdout_ledger.yaml",
+    "holdout_ledger_sha256": "59c3c1d02b0e63b55c10def86d246477df0ded1c01bb32597bdb4fbba258481a",
+    "statistics_protocol": "config/statistics_protocol.yaml",
+    "statistics_protocol_sha256": "a0666221e34a057e8caa9b60e1e4144256a73cb2b449d34c79a9c6172144b005",
+    "phase3_preparation": "config/phase3_preparation.json",
+    "phase3_preparation_sha256": "4d82e6ac57461b1fb4986b6e89ec71a9604aba8bea3cb7db6e26bca473ab0909",
+    "sealed_output_schema": "config/sealed_output_schema.json",
+    "sealed_output_schema_sha256": "cd04b489dfe5d8731d6f8268da546621ded7cd44bae0ca5d95c20b11be69060a"
+  },
+  "freeze_gate": {
+    "state": "fail_closed",
+    "activation_requires_all": [
+      "phase3_architecture_accepted_on_development_evidence",
+      "candidate_manifest_and_all_policy_affecting_hashes_bound",
+      "candidate_resource_profile_within_the_below_ceilings",
+      "dedicated_runner_hash_bound",
+      "runner_redaction_cleanup_and_failure_path_tests_pass",
+      "independent_trusted_operator_or_access_control_boundary_confirmed",
+      "two_accelerator_hours_reserved_in_the_compute_ledger",
+      "protocol_status_changed_once_to_frozen_pending_execution_before_any_H1_frame_is_opened"
+    ],
+    "unresolved_bindings": [
+      "candidate_architecture_id",
+      "candidate_manifest_sha256",
+      "candidate_source_tree_sha256",
+      "candidate_configuration_sha256",
+      "candidate_model_sha256",
+      "candidate_prompt_sha256",
+      "candidate_scheduler_sha256",
+      "phase3_decision_sha256",
+      "dedicated_runner_sha256",
+      "compute_ledger_reservation_id",
+      "trusted_operator_id"
+    ],
+    "immutable_after_freeze": [
+      "game_seed_pairs",
+      "parent_and_candidate_bindings",
+      "run_order",
+      "resource_ceilings",
+      "veto_rules",
+      "invalid_run_and_rerun_rules",
+      "permitted_output_fields",
+      "cleanup_requirements"
+    ],
+    "post_freeze_change_rule": "cancel_before_execution_or_create_a_new_protocol_revision; never edit this revision after H1 evidence access"
+  },
+  "arms": {
+    "parent": {
+      "cell_id": "E1S-R",
+      "operational_label": "Provisional primary",
+      "operational_config": "config/operational_primary.yaml",
+      "operational_config_sha256": "489765d436df7e0ae7c80b9494c3c1ab4b7153b46f8dc5951724b59561ebb709",
+      "model_id": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+      "model_revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+      "model_artifact_tree_sha256": "052ab27f06c28261e143b8c1638382d107b034692bc0cd1792ec4e02ddab8627",
+      "engine": "vllm==0.19.0",
+      "reasoning_setting": "instruct_non_thinking"
+    },
+    "candidate": {
+      "architecture_id": null,
+      "manifest_sha256": null,
+      "source_tree_sha256": null,
+      "configuration_sha256": null,
+      "model_sha256": null,
+      "prompt_sha256": null,
+      "scheduler_sha256": null,
+      "phase3_decision_sha256": null,
+      "binding_rule": "all_values_must_be_64_hex_except_architecture_id_and_must_match_the_development_accepted_architecture_exactly"
+    }
+  },
+  "workload": {
+    "games": 5,
+    "seed_derivation": "first_32_bits_big_endian_of_sha256('h1-architecture-guardrail-v1:' + full_game_id)_masked_to_31_bits",
+    "game_seed_pairs_sha256": "757bd592a54ec3eba492b1b4266c5e905f8d7b65262fd6602881082f7e27819a",
+    "game_seed_pairs": [
+      {"game_id": "bp35-0a0ad940", "seed": 1775893099},
+      {"game_id": "dc22-fdcac232", "seed": 275058116},
+      {"game_id": "r11l-495a7899", "seed": 1260464494},
+      {"game_id": "tn36-ef4dde99", "seed": 398532725},
+      {"game_id": "tu93-0768757b", "seed": 544638318}
+    ],
+    "game_order": "listed_order_for_every_complete_workload",
+    "seed_selection": "one_fixed_seed_per_game_no_best_seed_or_selective_rerun"
+  },
+  "execution_design": {
+    "mode": "shared_resource_whole_run",
+    "treatment_unit": "one_complete_five_game_workload",
+    "randomization_unit": "paired_complete_workload_run_block",
+    "uncertainty_unit": "paired_complete_workload_run_block",
+    "paired_run_blocks": 2,
+    "blocks": [
+      {"block_id": "B1", "order": ["parent", "candidate"]},
+      {"block_id": "B2", "order": ["candidate", "parent"]}
+    ],
+    "fresh_runtime_per_arm": true,
+    "state_isolation": "fresh_model_process_queue_arcade_sessions_policy_state_and_process_private_scratch_for_each_arm",
+    "cache_policy": "no_prefix_inference_or_filesystem_cache_may_cross_arms",
+    "comparison_score": "mean_over_blocks_of_candidate_five_game_mean_official_RHAE_percent_minus_parent_five_game_mean_official_RHAE_percent",
+    "per_game_use": "internal_veto_computation_only_never_retained_or_emitted"
+  },
+  "compute_allocation": {
+    "authorization_status": "requested_not_reserved",
+    "requested_accelerator": "NvidiaRtxPro6000",
+    "requested_accelerator_hours": 2.0,
+    "currently_authorized_accelerator_hours": 0.0,
+    "accounting_scope": "kernel_start_through_cleanup_including_model_load_all_valid_and_failed_work",
+    "maximum_valid_guardrail_executions": 1,
+    "maximum_complete_workload_arm_runs": 4,
+    "maximum_valid_game_plays": 20,
+    "maximum_actions_per_game": 80,
+    "maximum_actions_per_complete_workload": 400,
+    "maximum_model_requests_per_game": 160,
+    "maximum_model_requests_per_complete_workload": 800,
+    "maximum_family_model_requests": 3200,
+    "maximum_wall_clock_seconds": 7200,
+    "finalization_and_cleanup_reserve_seconds": 600,
+    "failed_infrastructure_run_allowance": 1,
+    "failed_work_is_charged": true,
+    "budget_exhaustion_rule": "veto_candidate_if_candidate_caused; otherwise_invalid_no_rerun_when_remaining_budget_cannot_complete_the_frozen_design",
+    "compute_ledger_reservation_id": null
+  },
+  "aggregate_veto_rules": {
+    "evaluation_order": [
+      "binding_and_information_boundary_validity",
+      "candidate_safety_and_resource_vetoes",
+      "aggregate_score_and_tail_vetoes",
+      "no_veto"
+    ],
+    "veto_if_any": {
+      "aggregate_mean_regression": "candidate_minus_parent_mean_official_RHAE_percent_less_than_or_equal_to_-0.10",
+      "catastrophic_tail": "any_internal_game_level_candidate_minus_parent_block_mean_official_RHAE_percent_less_than_or_equal_to_-0.10",
+      "broad_regression": "at_least_4_of_5_internal_game_level_block_mean_differences_are_negative_and_the_aggregate_mean_difference_is_negative",
+      "candidate_invalid_action_count": ">0",
+      "candidate_uncaught_exception_count": ">0",
+      "candidate_duplicate_make_count": ">0",
+      "candidate_cross_client_leakage_count": ">0",
+      "candidate_unresolved_dispatch_continuation_count": ">0",
+      "candidate_missing_or_ambiguous_outcome_count": ">0",
+      "candidate_incomplete_game_count": ">0",
+      "candidate_resource_ceiling_breached": true
+    },
+    "resource_ceiling_breach_if_any": {
+      "candidate_accelerator_hours": ">1.0_including_charged_failed_candidate_work",
+      "candidate_total_wall_clock_seconds": ">3600_across_both_candidate_workloads",
+      "candidate_model_requests_per_game": ">160",
+      "candidate_actions_per_game": ">80",
+      "candidate_peak_vram_bytes": ">96636764160",
+      "candidate_peak_ram_bytes": ">34359738368",
+      "cleanup_and_finalization_reserve_seconds_remaining": "<600"
+    },
+    "no_veto_if": "the_run_is_valid_and_no_veto_condition_is_true",
+    "decision_values": ["VETO", "NO_VETO", "INVALID_RERUN_PERMITTED", "INVALID_NO_RERUN"],
+    "decision_semantics": {
+      "VETO": "rollback_to_the_frozen_parent; do_not_repair_or_tune_on_H1",
+      "NO_VETO": "architecture_may_continue_to_final_candidate_work_without_a_positive_performance_claim",
+      "INVALID_RERUN_PERMITTED": "no_H1_semantic_evidence_or_usable_policy_result_was_produced_or_emitted_and_all_rerun_conditions_hold",
+      "INVALID_NO_RERUN": "guardrail_is_consumed_or_cannot_be_completed_within_the_frozen_budget"
+    }
+  },
+  "invalid_run_and_rerun": {
+    "runner_or_infrastructure_invalidity": [
+      "binding_mismatch_detected_before_policy_execution",
+      "environment_unavailable_before_first_H1_observation",
+      "model_service_failed_before_first_H1_prompt",
+      "aggregate_output_schema_validation_failure",
+      "cleanup_not_verified"
+    ],
+    "candidate_failures_are_vetoes_not_infrastructure_invalidity": true,
+    "maximum_reruns": 1,
+    "rerun_requires_all": [
+      "failure_occurred_before_first_H1_semantic_observation_or_candidate_policy_result",
+      "no_frame_prompt_response_proposal_per_game_value_or_qualitative_observation_was_emitted",
+      "candidate_protocol_runner_and_all_bindings_are_unchanged",
+      "trusted_operator_records_the_failure_reason",
+      "remaining_two_hour_family_budget_can_complete_all_four_arm_runs"
+    ],
+    "otherwise": "consume_H1_and_do_not_rerun"
+  },
+  "information_boundary": {
+    "dedicated_runner": "scripts/h1_guardrail_runner.py",
+    "dedicated_runner_sha256": null,
+    "required_execution_boundary": "independent_trusted_runner_or_access_control_boundary",
+    "label_without_independent_boundary": "process_redacted_guardrail_not_sealed",
+    "withhold_from_implementer": [
+      "frames",
+      "deltas",
+      "animations",
+      "prompts",
+      "responses",
+      "proposals",
+      "hypotheses",
+      "reasoning",
+      "recordings",
+      "per_step_logs",
+      "per_game_scores",
+      "per_game_resource_values",
+      "game_specific_errors",
+      "qualitative_observations"
+    ],
+    "stdout_allowlist": [
+      "H1_START",
+      "H1_BINDINGS_OK",
+      "H1_EXECUTION_COMPLETE",
+      "H1_AGGREGATE_WRITTEN",
+      "H1_CLEANUP_VERIFIED",
+      "H1_INVALID"
+    ],
+    "retained_file_allowlist": ["h1_aggregate.json"],
+    "environment_identifiers_in_retained_output": false,
+    "traceback_locals_enabled": false,
+    "framework_recording_enabled": false,
+    "debug_rendering_enabled": false,
+    "prompt_dump_enabled": false,
+    "evidence_export_enabled": false,
+    "core_dumps_disabled_when_supported": true
+  },
+  "permitted_output": {
+    "schema": "config/sealed_output_schema.json",
+    "only_top_level_fields": ["run_id", "validity", "aggregate"],
+    "aggregate_numeric_or_boolean_fields": [
+      "veto",
+      "rerun_permitted",
+      "valid_complete_workload_blocks",
+      "parent_mean_official_rhae_percent",
+      "candidate_mean_official_rhae_percent",
+      "candidate_minus_parent_mean_official_rhae_percent",
+      "negative_game_difference_count",
+      "catastrophic_tail_triggered",
+      "candidate_invalid_action_count",
+      "candidate_uncaught_exception_count",
+      "candidate_duplicate_make_count",
+      "candidate_cross_client_leakage_count",
+      "candidate_unresolved_dispatch_continuation_count",
+      "candidate_missing_or_ambiguous_outcome_count",
+      "candidate_incomplete_game_count",
+      "candidate_resource_ceiling_breached",
+      "total_accelerator_hours",
+      "total_wall_clock_seconds",
+      "total_model_requests",
+      "total_actions",
+      "peak_vram_bytes",
+      "peak_ram_bytes",
+      "cleanup_attempted",
+      "cleanup_verified",
+      "stale_scratch_entries_removed",
+      "retained_raw_file_count",
+      "retained_file_count",
+      "output_schema_valid"
+    ],
+    "forbidden_even_if_aggregated": [
+      "game_ids",
+      "seeds",
+      "per_game_arrays",
+      "error_text",
+      "free_text_notes",
+      "paths_into_private_scratch"
+    ]
+  },
+  "cleanup_contract": {
+    "scratch_root": "/tmp/arc3-sealed",
+    "run_directory": "/tmp/arc3-sealed/<unguessable_run_id>",
+    "directory_permissions_octal": "0700",
+    "required_paths": [
+      "next_start_stale_directory_scrub",
+      "normal_return",
+      "caught_exception",
+      "handled_SIGINT",
+      "handled_SIGTERM",
+      "finally",
+      "external_supervisor"
+    ],
+    "cleanup_statuses": ["verified_clean", "cleanup_attempted", "cleanup_unverified"],
+    "valid_result_requires": "verified_clean_and_output_schema_valid",
+    "verification": [
+      "run_directory_absent",
+      "no_raw_file_under_retained_output_root",
+      "retained_file_set_equals_allowlist",
+      "retained_raw_file_count_equals_zero",
+      "aggregate_file_reopened_and_schema_validated_after_atomic_write"
+    ],
+    "non_guarantees": [
+      "SIGKILL",
+      "kernel_OOM",
+      "host_termination",
+      "filesystem_snapshots",
+      "swap",
+      "platform_behavior_outside_the_process"
+    ]
+  },
+  "holdout_consumption": {
+    "ledger": "config/holdout_ledger.yaml",
+    "append_only": true,
+    "consume_at": "first_H1_semantic_observation_or_candidate_policy_result",
+    "event_must_include": [
+      "timestamp",
+      "run_id",
+      "purpose",
+      "protocol_sha256",
+      "candidate_manifest_sha256",
+      "runner_sha256",
+      "operator",
+      "permitted_output",
+      "decision",
+      "cleanup_status"
+    ],
+    "post_H1_policy_change": "any_design_or_threshold_change_informed_by_H1_moves_all_five_H1_games_to_development_for_later_claims",
+    "second_architecture_guardrail_run": "forbidden_except_the_single_predeclared_invalid_infrastructure_rerun"
+  },
+  "next_artifact": {
+    "required": "dedicated_runner",
+    "path": "scripts/h1_guardrail_runner.py",
+    "must_validate_against_this_protocol_before_H1_activation": true
+  }
+}

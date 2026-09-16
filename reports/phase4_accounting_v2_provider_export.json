@@ -1,0 +1,36 @@
+{
+  "observed_at_utc": "2026-09-15T13:25:30.320930+00:00",
+  "requested_version_label": "1",
+  "kernel": "daichongwei06/arc3-phase4-fixture-prescreen-v2",
+  "method": "read_only_authenticated_public_SDK",
+  "responses": {
+    "version_1_metadata": {
+      "error_type": "HTTPError"
+    },
+    "version_1_status": {
+      "error_type": "HTTPError"
+    },
+    "account_quota_not_per_attempt": {
+      "quotaRefreshTime": "2026-09-19T00:00:00.000Z",
+      "gpuQuota": {
+        "timeUsed": "26171.27.0s",
+        "timeReserved": "0s",
+        "totalTimeAllowed": "21600s",
+        "minimumTimeAllowed": "21600s",
+        "hasEverRun": true
+      },
+      "tpuQuota": {
+        "timeUsed": "0s",
+        "timeReserved": "0s",
+        "totalTimeAllowed": "72000s",
+        "minimumTimeAllowed": "72000s"
+      }
+    }
+  },
+  "available_session_related_read_methods": [
+    "get_accelerator_quota_statistics",
+    "get_kernel_session_logs_stream",
+    "get_kernel_session_status",
+    "list_kernel_session_output"
+  ]
+}

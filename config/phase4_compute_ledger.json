@@ -21,6 +21,56 @@
       "exact_provider_billed_seconds": null,
       "accounting_status": "provider_runtime_unresolved_full_reservation_retained",
       "attempt_consumed": true
+    },
+    {
+      "kind": "accounting_disposition",
+      "attempt_id": "p4-v2-20260915T104415Z",
+      "disposition_reference": "reports/phase4_accounting_v2_disposition.md",
+      "disposition_sha256": "656afa67192aefa2f7aa6c9c40b60654c4e196486ff26e9d3cc2d04c560e954d",
+      "status": "provider_per_attempt_usage_and_inventory_unavailable_owner_confirmation_pending",
+      "charged_or_reserved_seconds": 28800,
+      "additional_reserved_seconds": 0,
+      "released_seconds": 0,
+      "exact_provider_billed_seconds": null,
+      "owner_confirmation_received": false,
+      "transfer_to_full_game_seconds": 0
+    },
+    {
+      "kind": "accounting_disposition",
+      "attempt_id": "p4-v2-20260915T104415Z",
+      "disposition_reference": "reports/phase4_accounting_v2_screenshot.json",
+      "disposition_sha256": "0d0bd0398bd7de139cb8c4d8253bd0623a41e931c35ff34e2419dfe9e4aadd3f",
+      "status": "displayed_duration_evidenced_billing_and_inventory_unresolved",
+      "provider_displayed_run_duration_seconds": 1083.8,
+      "exact_provider_billed_seconds": null,
+      "charged_or_reserved_seconds": 28800,
+      "additional_reserved_seconds": 0,
+      "released_seconds": 0,
+      "transfer_to_full_game_seconds": 0
+    },
+    {
+      "kind": "accounting_disposition",
+      "attempt_id": "p4-v2-20260915T104415Z",
+      "disposition_reference": "reports/phase4_accounting_v2_version_count.json",
+      "disposition_sha256": "09453b392c499e51d3f14252aff991f99dd690c3b555003aad33f6c1cb290cef",
+      "status": "single_saved_version_evidenced_billing_and_session_history_unresolved",
+      "visible_total_versions": 1,
+      "charged_or_reserved_seconds": 28800,
+      "additional_reserved_seconds": 0,
+      "released_seconds": 0,
+      "transfer_to_full_game_seconds": 0
+    },
+    {
+      "kind": "owner_recollection_recorded",
+      "attempt_id": "p4-v2-20260915T104415Z",
+      "disposition_reference": "reports/phase4_accounting_owner_recollection.json",
+      "disposition_sha256": "93124096e99dfeeb3b074cd16cf8ed4c60fc85c754bf124916612e77adfb50c5",
+      "recorded_as": "no additional sessions recalled",
+      "verified_session_history": false,
+      "charged_or_reserved_seconds": 28800,
+      "additional_reserved_seconds": 0,
+      "released_seconds": 0,
+      "transfer_to_full_game_seconds": 0
     }
   ]
 }

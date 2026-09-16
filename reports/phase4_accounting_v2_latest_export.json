@@ -1,0 +1,46 @@
+{
+  "observed_at_utc": "2026-09-15T13:26:06.471832+00:00",
+  "kernel": "daichongwei06/arc3-phase4-fixture-prescreen-v2",
+  "responses": {
+    "1_metadata": {
+      "error_type": "HTTPError",
+      "http_status": 404
+    },
+    "1_status": {
+      "error_type": "HTTPError",
+      "http_status": 404
+    },
+    "None_metadata": {
+      "id": 134478860,
+      "ref": "daichongwei06/arc3-phase4-fixture-prescreen-v2",
+      "title": "ARC3 Phase4 Fixture Prescreen v2",
+      "author": "dai_chongwei06",
+      "slug": "arc3-phase4-fixture-prescreen-v2",
+      "lastRunTime": "2026-09-12T13:26:14.566Z",
+      "language": "python",
+      "kernelType": "notebook",
+      "isPrivate": true,
+      "enableGpu": true,
+      "enableInternet": false,
+      "categoryIds": [
+        "gpu"
+      ],
+      "datasetDataSources": [
+        "driessmit1/arc3-vllm-h100-wheelhouse-v3"
+      ],
+      "competitionDataSources": [
+        "arc-prize-2026-arc-agi-3"
+      ],
+      "modelDataSources": [
+        "qwen-lm/qwen-3-vl/Transformers/30b-a3b-instruct-fp8/1"
+      ],
+      "enableTpu": false,
+      "currentVersionNumber": 1,
+      "dockerImage": "gcr.io/kaggle-private-byod/python@sha256:37c64f7dd9c54116ecd1bcc88817c5469b88387388fade02bfa8bf3fc647d461",
+      "machineShape": "NvidiaRtxPro6000"
+    },
+    "None_status": {
+      "status": "COMPLETE"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "revision": "P4-model-development-integration-v4-review",
+  "status": "review_only_not_launch_ready",
+  "bindings": {
+    "notebooks/phase4-lifecycle-v4-review/profile.ipynb": "f9f129eaac04d4106cf693c7168eed1bc6bc14a5d4dbce082abea8212ff88565",
+    "notebooks/phase4-lifecycle-v4-review/kernel-metadata.json": "5f2f487aad912d28988fa532e525a11a496276af517cc4590b87dc6a20cb7a63",
+    "notebooks/phase4-lifecycle-v4-review/review-source-lock.json": "4347804f982a68c11624f3111df2f1ff7442afecbb044d90d54144fa78fe0597",
+    "tests/test_phase4_model_integration.py": "375fd2c687bf00f7889a62703f7f1e074f14aca8080f6299cb372ef9f624814d",
+    "certification/phase4_v4/protocol.json": "783fc0f4c9f33d18cd574e231fd55726de724eb07024acf6214aaaa9d4d6135e",
+    "certification/phase4_v4/compute_ledger.json": "0bba7a9812d2d560fecfe42ebaefecd923509bdff6e5a762cd6c73ba9e9d621e"
+  },
+  "new_tests_passed": 10,
+  "sandbox_safe_combined_tests_passed": 34,
+  "full_43_test_rerun": "blocked_by_approval_service_usage_limit_not_executed",
+  "embedded_source_inventory": "verified",
+  "embedded_bootstrap_without_site_packages": "PermissionError_before_install_no_missing_dependencies",
+  "historical_snapshots": "v3_v1_and_prescreen_v2_valid",
+  "model_inference": false,
+  "gpu_measurements": false,
+  "notebook_uploaded": false,
+  "authorized_seconds": 0,
+  "C_nominal": null,
+  "C_admit": null,
+  "phase4_complete": false
+}

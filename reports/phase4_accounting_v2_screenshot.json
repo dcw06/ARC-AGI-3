@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "attempt_id": "p4-v2-20260915T104415Z",
+  "kernel": "daichongwei06/arc3-phase4-fixture-prescreen-v2",
+  "provider_version_from_prior_metadata": 1,
+  "version_visible_in_screenshot": false,
+  "evidence_source": "owner_supplied_provider_UI_screenshot_and_pasted_log",
+  "files": {
+    "evidence/phase4-v2-provider-duration.png": "5c7881943f272edac66343b57bd0b65940f52704411e8196465bc89fcbf42ad8",
+    "evidence/phase4-v2-owner-pasted-log.txt": "6f2747c360eb6ef1dd13201b4f2ce80cbcf34640e6683f2d3adfea1bb340b819"
+  },
+  "provider_display_text": "Successfully ran in 1083.8s",
+  "provider_displayed_run_duration_seconds": 1083.8,
+  "provider_displayed_accelerator": "GPU RTX Pro 6000",
+  "provider_displayed_output": "31.76 kB",
+  "internal_timer_seconds": 1074.1611904619997,
+  "duration_interpretation": "Provider-displayed successful run duration, not explicitly charged GPU time; kept separate from internal timer.",
+  "association": "Screenshot title matches V2 notebook; pasted log entries 58 and 59 carry the exact local attempt ID and frozen execution lock. Screenshot alone does not expose provider version or session ID.",
+  "provider_session_id": null,
+  "provider_start_timestamp": null,
+  "provider_end_timestamp": null,
+  "provider_timestamp_timezone": null,
+  "exact_provider_billed_seconds": null,
+  "complete_session_inventory": null,
+  "owner_confirmed_no_additional_sessions_or_failed_starts": null,
+  "accounting_status": "displayed_duration_evidenced_billing_and_inventory_unresolved",
+  "charged_or_reserved_seconds": 28800,
+  "released_seconds": 0,
+  "transfer_to_full_game_seconds": 0,
+  "notes": [
+    "Screenshot filename is not evidence of provider start/end time or timezone.",
+    "Repeated dependency warnings and duplicate printed measurement summaries do not establish additional attempts.",
+    "Prescreen pass remains fixture-only; original result and prior accounting dispositions remain unchanged.",
+    "Earlier assistant URL scriptVersionId=1 was not verified: a displayed version number is not a recovered provider script-version ID. Use the canonical notebook URL without that query."
+  ]
+}

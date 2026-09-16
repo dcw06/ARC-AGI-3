@@ -1,5 +1,228 @@
 # Phase 4 — V2 fixture prescreen passed; accounting pending
 
+## v6 integrated development pilot — local pass; target launch blocked
+
+The unified runner now connects the shared clock/store, worker, monitor, bounded
+logs, retained readiness, monitoring through worker/model-group cleanup, and
+independent evaluation. A retained actual-environment CPU run passed: 110 clients,
+7,722 requests, 23.35 seconds. Requests and actions matched the archived v3 scripted
+run exactly. Seventeen process/integration tests passed; related regressions and
+packaging checks passed separately. No model inference or real GPU telemetry.
+
+Current notebook: `notebooks/phase4-lifecycle-v6-review-r2/profile.ipynb`, with a
+hash-bound source/protocol review snapshot. Private, GPU-disabled, no upload or
+authority. Initial v6 review artifacts are superseded and preserved after fixing
+pre-install import order. The corrected portable archive was hash-verified and
+its local evidence reevaluated successfully after fresh extraction. Details:
+`reports/phase4_v6_integrated_result.json` and `certification/phase4_v6/README.md`.
+
+**Not launch-ready:** clean Linux/CUDA offline installation could not be verified
+on this Darwin ARM64 host without Docker or a local model wheelhouse. Independent
+target review and an approved execution lock plus separate reservation also remain.
+No new compute authorized; prescreen hours remain retained. Production one-scorecard,
+110-distinct-game certification and measured capacity remain open.
+
+## v6 live-adapter and shared evidence wiring — implemented locally
+
+The live-probe adapter exists behind an explicitly closed v6 authority gate.
+Monitor samples/receipts carry a shared first-cell clock, with validated conversion
+into evaluator fields. Injected resource evidence cannot pass target evaluation.
+The monitor can use a cross-process-locked evidence store with component budgets
+summing to 64 MiB and reserved failure receipts. Twenty-two adapter, monitor,
+measurement and capacity tests passed; hardware calls were mocked throughout.
+
+This is not a complete target runner. Migrating every output producer, GPU-bound
+readiness, sampling through GPU cleanup, bounded logs, clean offline installation
+and the new notebook/approved execution lock remain pending. No live hardware
+query, GPU/model run, upload or budget change occurred. See the v6 README for the
+exact implemented-versus-pending boundary.
+
+## v6 injected resource monitor — integrated with outer startup gate
+
+`certification/phase4_v6/monitor.py` validates binding, UUID/resource samples and
+sampling gaps, retaining the first checkpoint before readiness. Its fixture-only
+entrypoint runs under the outer owner; monitor errors cause a failing exit and
+cleanup. Bounded telemetry retains the last complete checkpoint and reserves a
+small failure receipt. All records explicitly identify injected resource evidence.
+
+Six monitor tests, fourteen outer/handshake tests and eleven measurement/capacity
+tests passed (31 total). Historical snapshot verification passed. Live GPU probes,
+shared-clock evaluator integration, whole-output budgeting, target notebook
+packaging and clean offline installation remain unfinished. No GPU/model run,
+upload, new reservation, or capacity/Phase 4 completion claim occurred.
+
+## v6 monitor-ready handshake — September 16 local checks
+
+Worker release now requires a bounded atomic monitor acknowledgement binding a
+fresh nonce and both owned PIDs. Missing, malformed, mismatched, oversized,
+symlinked or late readiness fails closed. The global admission cutoff bounds the
+handshake deadline. Thirteen handshake/process tests and eleven measurement/
+capacity tests passed. This is explicitly local-CPU readiness, not GPU binding.
+
+Target GPU readiness, continuous monitor/evidence integration, the new notebook
+and clean offline installation remain pending. No GPU/model execution or compute
+authority changed; the v4 notebook and historical evidence remain untouched.
+
+## v6 outer ownership prototype — local process cleanup implemented
+
+The new `certification/phase4_v6/outer.py` directly owns worker and monitor
+session groups; its gated bootstrap prevents worker execution before ownership
+registration. It enforces an external deadline, reserves cleanup time, and
+verifies both groups are absent even when a leader exits before its descendants.
+Local process tests cover monitor failures/hangs, worker failure, orphaned
+TERM-ignoring descendants and pre-release launch failure. See the v6 README.
+
+This does not yet replace the target supervisor. GPU-ready handshake, target
+monitor/evidence/evaluator integration, bounded logs and clean offline installation
+remain pending. No GPU execution, notebook upload or compute authority changed.
+
+## Measurement integration v6 — local only, outer supervision still pending
+
+`certification/phase4_v6/README.md` records the new timeline-instrumented worker,
+bounded atomic checkpoint writer, telemetry coverage checks and additional
+capacity evaluator. Seven new tests passed, including the 110-client mocked
+request-invariance comparison; 11 passed with the v5 capacity tests and 65 in the
+combined related local suite. Historical snapshot verification passed. No actual
+environment/model performance measurement is claimed by that comparison.
+
+The outer notebook watchdog/descendant ownership protocol, supervisor output
+integration, clean offline install and approved pilot freeze remain unfinished.
+The v4 notebook is unchanged and v6 direct execution is explicitly disabled.
+Measured C_admit and new compute authorization remain absent.
+
+## Development capacity design v5 — review draft, not a launch freeze
+
+`certification/phase4_v5/README.md` scopes the approved development-only next
+step and records the focused v4 source-review blockers: missing request timeline
+events, no outer supervisor watchdog, incomplete retained-output size enforcement,
+telemetry coverage validation, and unverified clean offline installation.
+The existing v4 notebook is preserved, not approved for launch.
+
+The new capacity arithmetic separates nominal wall-time throughput, a minimum-
+window empirical rate margin, and 20% service-budget headroom. Four tests passed,
+including concurrent timing, empty windows and malformed evidence. The calculator
+is not an evidence validator and deliberately leaves actual C_admit unset; no
+measurements or statistically guaranteed capacity are claimed. One eight-hour
+pilot remains a proposal with zero authorization, not a new reservation. A new
+runtime revision, reviewed pilot freeze and separate approval must precede GPU
+execution; production one-scorecard/110-distinct-game certification stays open.
+
+## Expanded local scheduler/fault matrix
+
+`reports/phase4_scheduler_fault_matrix.md` records FIFO priority, exact aging
+boundaries, 1/2/8-worker concurrency over 110 requests, model-error legal fallback,
+forbidden workspace rejection, storage/finalization failure and cancellation
+coverage. Nine new tests plus existing related suites passed: 54 tests together
+and five real-process fake-service tests separately with approved process-table
+access. The initial restricted process run failed resource monitoring; the
+approved rerun passed. Frozen runtime/notebook sources remain unchanged.
+
+This completes the added local regression matrix, not target GPU batching or
+integrated full-game fault certification. Actual vLLM batching, realistic queue
+tails, target filesystem faults and full-model lifecycle cancellation remain
+measurement gates. No GPU execution or new authority was used.
+
+## Model integration v4 — review notebook built, no execution authority
+
+`certification/phase4_v4/README.md` documents the shared model-service path,
+per-request tokenizer/server audit, single canary, external GPU supervision and
+independent evaluator. The private review notebook at
+`notebooks/phase4-lifecycle-v4-review/profile.ipynb` has GPU and internet disabled,
+zero authorization and a standard-library-only pre-install gate. No upload or
+model/GPU run occurred. Readiness remains false and capacity estimates remain null.
+
+All 10 new tests and the combined 34-test sandbox-safe suite passed. A new full
+43-test process-level rerun was blocked by the approval service's usage limit;
+the prior local passes are not relabeled as that rerun. Focused target-path review,
+clean offline installation, prospective capacity design, approved execution lock
+and separate compute authorization remain launch gates.
+
+## Terminal lifecycle v3 — local workload passed
+
+The five v2 failure cases were reproduced twice under each old/new arm in fresh,
+counterbalanced local runtimes. Cause: another non-reset action after acknowledged
+GAME_OVER yields an engine response with no frames; strict parsing quarantines it.
+v3 stops and finalizes at that terminal loss, without resetting, fabricating frames
+or changing E1S-R policy. This is an explicit prospective lifecycle amendment,
+not retrospective relabeling of v2. See `certification/phase4_v3/README.md`.
+
+The snapshotted 110-client CPU run passed independent evaluation: 35 GAME_OVER
+terminations, 75 action caps, zero quarantines, 7,722 acknowledged actions and
+110 acknowledged local scorecard closes. Cleanup verified; 33 tests passed.
+`reports/phase4_v3_terminal_result.json` binds the complete evidence/source archive.
+Actual model integration, target GPU checks, real-trajectory capacity and the
+production one-scorecard/110-distinct-game gate remain pending. No new GPU authority.
+
+## Development integration v2 — local workload failed closed
+
+See `certification/phase4_v2/README.md`. All 15 exact development environments
+and 31 environment dependency wheels are packaged and checksummed; offline
+Linux/Python-3.12 dependency resolution passed (not a clean runtime install).
+The new external CPU supervisor ran 110 clients through the shared eight-worker
+scripted-completion service. All 110 local scorecards closed, cleanup verified,
+but 35 clients quarantined across five games: independent evaluation failed.
+Evidence is in `reports/phase4_v2_integration_result.json`. Preparation v1 remains
+unchanged. Model-backed target notebook integration, GPU resource checks and
+real-model trajectory capacity are still pending; no target execution freeze or
+new spending authority is claimed. The one-scorecard, 110-distinct-game production
+gate remains separate from this repeated-development/separate-scorecard workload.
+
+`reports/phase4_accounting_owner_recollection.json` records “no additional sessions
+recalled” as tentative owner evidence, not verified history. The ledger retains
+all eight prescreen hours, releases zero and transfers zero to the next run.
+
+## Frozen development lifecycle preparation v1
+
+`certification/phase4_v1/README.md` documents the frozen E1S-R source bindings,
+explicit 110-client development-only workload, seeds, 80-action limits, resource
+ceilings, acceptance rules and separate eight-hour budget proposal. Authorization
+is zero. This supersedes the earlier draft for the implemented preparation scope.
+
+Actual offline ls20 dispatch, inference-error legal fallback, cancellation before
+dispatch and local scorecard finalization all passed with scripted completions.
+The 19 targeted tests passed; final-lock evidence and environment hashes are in
+`reports/phase4_lifecycle_v1_preparation.json`. This is not real-model inference,
+target GPU evidence, remote finalization or a complete 110-client certification.
+Full target orchestration/supervision, environment packaging, real-workload capacity
+and new approval remain explicit launch blockers. Both V2 and new lifecycle locks
+validate; historical Phase 2–3 verification remains valid.
+
+## Owner-supplied provider duration evidence
+
+The subsequent screenshot, recorded in
+`reports/phase4_accounting_v2_version_count.json`, additionally confirms the
+canonical notebook URL, PRIVATE visibility and **Version 1 of 1**. Its rounded
+runtime of **18m 4s** is consistent with the Logs display. One saved version is
+not a complete inventory of interactive sessions or failed starts; billing and
+session-history limitations below remain unchanged.
+
+The screenshot and pasted log are retained with hashes in
+`reports/phase4_accounting_v2_screenshot.json`. Kaggle displays successful run
+duration **1,083.8 seconds**, on **GPU RTX Pro 6000**. This is distinct from the
+1,074.16-second internal timer and is not labeled charged GPU time. Provider
+session ID, start/end timestamps and complete session history remain unknown.
+All eight hours remain retained; no credit or new compute authorization results.
+The earlier API-only collection notes below are historical evidence limitations.
+
+## Accounting collection and separate certification draft
+
+Read-only provider queries and their exports are documented in
+`reports/phase4_accounting_v2_disposition.md`. Latest metadata still confirms
+version 1, private visibility and RTX PRO 6000; status is COMPLETE. Explicit
+version requests returned 404. Session ID, charged duration, start/end and complete
+interactive/failed-session inventory were not available. No values were inferred
+from the internal timer or the inconsistent account quota response. An append-only
+ledger disposition retains all 28,800 seconds and releases/transfers zero; owner
+confirmation remains requested, not received. Original result/evidence are unchanged.
+
+`reports/phase4_full_game_certification_protocol_draft.md` and
+`reports/phase4_full_game_budget_draft.json` propose a separate one-attempt,
+eight-hour lifecycle experiment, with **zero authorized seconds**. They require
+real dispatch/finalization, local fault tests, a frozen workload and real-trajectory
+capacity bound, independent allowance verification and a reviewed execution lock.
+Repeated development-game load is explicitly not 110 distinct official games.
+No GPU run, retry or additional session was started during this preparation.
+
 ## Authorized V2 execution
 
 The user authorized one private, unscored eight-hour V2 attempt. Reviewed source

@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "protocol_id": "P4-model-development-integration-v4-review",
+  "execution_ready": false,
+  "scope": "110_repeated_development_clients_separate_scorecards_single_episode",
+  "parent": "E1S-R",
+  "terminal_amendment": "certification/phase4_v3/protocol.json",
+  "workload": "certification/phase4_v1/workload.json",
+  "limits": {
+    "lifecycle_seconds": 27540,
+    "finalization_reserve_seconds": 600,
+    "startup_seconds": 900,
+    "request_seconds": 300,
+    "vram_bytes": 92341796864,
+    "rss_bytes": 137438953472,
+    "scratch_bytes": 4294967296,
+    "retained_bytes": 67108864,
+    "grace_seconds": 10,
+    "kill_verification_seconds": 5
+  },
+  "capacity": {
+    "C_nominal": null,
+    "C_admit": null,
+    "rule_status": "design_pending_review_and_real_model_measurements",
+    "real_trajectory_sampling": "retain_all_request_digests_token_counts_and_service_times; bounded_prompt_examples_are_not_representative_capacity_evidence",
+    "forbidden_inference": "Do not use scripted timings, fixture rates, or sum of concurrent request latencies as whole-workload throughput."
+  },
+  "launch_blockers": [
+    "Independent target evaluator and measurement design require review",
+    "Clean target-compatible offline dependency install not yet verified",
+    "Full execution inventory lock not yet approved",
+    "Separate compute authorization and reservation absent"
+  ],
+  "phase4_complete": false,
+  "production_one_scorecard_110_distinct_games_certified": false
+}

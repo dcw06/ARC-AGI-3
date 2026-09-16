@@ -1,0 +1,154 @@
+"""110 independent development lifecycles, one bounded shared inference queue.
+
+Local scripted backend only in this implementation revision. No model launch.
+"""
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import json
+import hashlib
+import logging
+from pathlib import Path
+import sys
+import threading
+import time
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+
+from certification.phase4_v1.lifecycle import IsolatedInference, run_client, validate_freeze
+from certification.phase4_v1.local_probe import ScriptedCompletion
+from certification.phase4_v2.supervisor import save
+from agent.e1_policy import E1Policy, E1ModelBinding
+from agent.feature_manifest import load_e1_feature_manifests
+from agent.framework_adapter import LocalFrameworkAdapter
+from agent.scheduler import QueuedInferenceExecutor
+from agent.watchdog import DeadlineWatchdog
+
+
+class AuditedAdapter:
+    def __init__(self, adapter):
+        self.adapter = adapter
+        self.audit = []
+
+    def __getattr__(self, name):
+        return getattr(self.adapter, name)
+
+    def dispatch(self, client, decision):
+        entry = {'action_id': decision.action_id, 'action_data': dict(decision.action_data),
+                 'legal_actions': list(client.observation.available_actions),
+                 'decision_id': decision.decision_id, 'outcome': 'entered'}
+        self.audit.append(entry)
+        try:
+            result = self.adapter.dispatch(client, decision)
+            entry['outcome'] = 'acknowledged'
+            return result
+        except Exception as exc:
+            entry['outcome'] = type(exc).__name__
+            raise
+
+
+def run_workload(rows, adapter_factory, completion_factory, checkpoint, cancel_path,
+                 *, seconds=27540, reserve=600):
+    """Injectable service seam; 110 simultaneous client workers, eight inference workers."""
+    _, frozen = validate_freeze()
+    if rows != frozen:
+        raise ValueError('exact 110-client workload required')
+    manifests = load_e1_feature_manifests(ROOT / 'config/e1_feature_manifests.yaml')
+    binding = E1ModelBinding.from_mapping(json.loads(
+        (ROOT / 'config/operational_primary.yaml').read_text())['primary']['model_binding'])
+    watchdog = DeadlineWatchdog(seconds, reserve)
+    stop = threading.Event()
+    state = {'schema_version': 1, 'status': 'running', 'error': None, 'clients': [],
+             'model_inference': False, 'scope': 'scripted_development_integration',
+             'requests': [], 'prompt_samples': [], 'prompt_sample_bytes': 0,
+             'prompt_samples_omitted': 0, 'maximum_client_workers': 110}
+    mutex = threading.Lock()
+
+    def poll_cancel():
+        while not stop.wait(.02):
+            if cancel_path.exists() or watchdog.stop_admission:
+                watchdog.cancel()
+                return
+
+    watcher = threading.Thread(target=poll_cancel, daemon=True)
+    watcher.start()
+    save(checkpoint, state)
+    try:
+        with QueuedInferenceExecutor(maxsize=110, worker_count=8, max_age_seconds=300) as executor:
+            def client(row):
+                completion = completion_factory(row, watchdog)
+                class MeasuredCompletion:
+                    def complete(self, request):
+                        begin = time.monotonic()
+                        payload = json.dumps(request, sort_keys=True).encode()
+                        error = None
+                        try:
+                            result = completion.complete(request)
+                            return result
+                        except Exception as exc:
+                            error = type(exc).__name__
+                            raise
+                        finally:
+                            # Real trajectory prompt retained; no synthetic fixture replacement.
+                            with mutex:
+                                state['requests'].append({'client_id': row['client_id'],
+                                    'request_sha256': hashlib.sha256(payload).hexdigest(),
+                                    'request_bytes': len(payload), 'error': error,
+                                    'service_seconds': time.monotonic() - begin})
+                                if (len(state['prompt_samples']) < 64 and
+                                        state['prompt_sample_bytes'] + len(payload) <= 16 * 1024**2):
+                                    state['prompt_samples'].append({'client_id': row['client_id'], 'request': request})
+                                    state['prompt_sample_bytes'] += len(payload)
+                                else:
+                                    state['prompt_samples_omitted'] += 1
+                adapter = AuditedAdapter(adapter_factory(row))
+                def factory(_):
+                    return E1Policy(manifest=manifests['E1S-R'], binding=binding,
+                        client=MeasuredCompletion(), inference=IsolatedInference(executor, row['client_id']),
+                        seed=row['request_seed'])
+                record = run_client(row, adapter, factory, watchdog)
+                record['dispatch_audit'] = adapter.audit
+                return record
+            with ThreadPoolExecutor(max_workers=110) as pool:
+                futures = {pool.submit(client, row): row for row in rows}
+                for future in as_completed(futures):
+                    row = futures[future]
+                    try:
+                        record = future.result()
+                    except Exception as exc:
+                        record = {'client_id': row['client_id'], 'error': type(exc).__name__ + ': ' + str(exc)}
+                    with mutex:
+                        state['clients'].append(record)
+                        save(checkpoint, state)
+            state['queue'] = {'max_size': executor.queue.max_observed_size,
+                              'max_age_seconds': executor.queue.max_observed_age}
+        state['status'] = 'complete'
+    except Exception as exc:
+        state['error'] = type(exc).__name__ + ': ' + str(exc)
+    finally:
+        stop.set()
+        watcher.join(timeout=1)
+        save(checkpoint, state)
+    return state
+
+
+if __name__ == '__main__':
+    from arc_agi import Arcade, OperationMode
+    scratch, environments = map(Path, sys.argv[1:3])
+    _, rows = validate_freeze()
+    # Validate all required exact game files before any scorecard or inference.
+    for row in rows:
+        base, version = row['game_id'].split('-', 1)
+        for name in (base + '.py', 'metadata.json'):
+            if not (environments / base / version / name).is_file():
+                save(scratch / 'state.json', {'status': 'failed', 'error': 'missing development artifact: ' + row['game_id']})
+                raise SystemExit(1)
+    logger = logging.getLogger('p4-development-v2')
+    logger.addHandler(logging.NullHandler())
+    logger.propagate = False
+    def adapter(row):
+        arcade = Arcade(operation_mode=OperationMode.OFFLINE, environments_dir=str(environments),
+                        recordings_dir=str(scratch / row['client_id']), logger=logger)
+        return LocalFrameworkAdapter(arcade, seed_by_game={row['game_id']: row['environment_seed']})
+    result = run_workload(rows, adapter, lambda row, watchdog: ScriptedCompletion('none', watchdog),
+                          scratch / 'state.json', scratch / 'cancel')
+    raise SystemExit(0 if result['status'] == 'complete' else 1)

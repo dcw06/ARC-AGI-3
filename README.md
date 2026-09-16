@@ -26,16 +26,20 @@ bindings. Run `make validate-phase23-history` to verify the archived historical
 completion independently of subsequent development. Neither grants permission
 to execute H1. See [evidence restoration and validation scopes](reports/phase23_evidence.md).
 
-Phase 4 has started with a frozen **local-preparation-only** contract, a
-110-client synthetic load harness, and local fault tests. Run
-`make validate-phase4` and `make phase4-load`. Target-GPU certification remains
-pending; no advanced scheduler, GPU allocation, or holdout execution is authorized.
+Phase 4's one private V2 GPU fixture prescreen passed. Its eight-hour reservation
+remains retained pending exact billing/session accounting; no retry is authorized.
+The separate [frozen development lifecycle preparation](certification/phase4_v1/README.md)
+now binds E1S-R, 110 development client rows, seeds, action/resource limits and a
+new budget proposal with zero authorization. Actual local dispatch, fallback,
+cancellation and scorecard-close exercises pass with scripted completions, not
+model inference. Full target lifecycle certification remains pending.
+The earlier local synthetic checks remain available via `make validate-phase4`
+and `make phase4-load`. No advanced scheduler or holdout execution is authorized.
 See [Phase 4 status and remaining gates](reports/phase4_status.md).
 
-The private target prescreen is now packaged for review with
-`make phase4-target-notebook`. Its versioned execution protocol and source lock
-are separate from the earlier preparation draft. The review notebook contains
-zero spending authority and must not be launched; no upload target is provided.
+The completed prescreen's notebook and V2 source lock are historical evidence.
+`make phase4-target-notebook` is not a lifecycle-certification build command;
+do not rebuild and launch the consumed prescreen attempt.
 
 This is a starter kit for the [ARC Prize 2026 — ARC-AGI-3](https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3)
 competition. Production uses a multi-file agent package and a dedicated

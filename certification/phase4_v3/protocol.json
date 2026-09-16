@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "protocol_id": "P4-development-terminal-lifecycle-v3",
+  "status": "registered_local_integration_amendment_not_GPU_launch_authority",
+  "supersedes_for_future_local_runs": "P4-development-integration-v2",
+  "parent": "E1S-R_unchanged_policy",
+  "workload": "certification/phase4_v1/workload.json",
+  "delta": "Stop client on acknowledged GAME_OVER before another proposal; finalize scorecard. No reset, fabricated frame, or retry.",
+  "accepted_nominal_terminal_reasons": ["win", "game_over", "action_cap"],
+  "game_over_acceptance": "Retained rendered terminal observation must match final acknowledged dispatch audit and journal hash; no post-terminal dispatch allowed.",
+  "claim": "bounded_single_episode_development_reliability_not_successful_game_completion_or_production_reset_lifecycle",
+  "clients": 110,
+  "distinct_development_games": 15,
+  "scorecards": 110,
+  "max_actions_per_client": 80,
+  "model_request_seed": 0,
+  "new_gpu_authorized_seconds": 0,
+  "prescreen_credit_seconds": 0,
+  "phase4_complete": false,
+  "production_one_scorecard_110_distinct_games_certified": false
+}

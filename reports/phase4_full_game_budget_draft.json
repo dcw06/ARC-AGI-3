@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "protocol_id": "P4-full-game-lifecycle-v1-draft",
+  "status": "proposal_only_not_launch_authority",
+  "protocol_reference": "reports/phase4_full_game_certification_protocol_draft.md",
+  "proposed_accelerator": "NvidiaRtxPro6000",
+  "proposed_attempts": 1,
+  "proposed_maximum_reservation_seconds": 28800,
+  "authorized_seconds": 0,
+  "approval_reference": null,
+  "events": [],
+  "automatic_retries": 0,
+  "interactive_sessions_authorized": 0,
+  "scored_submissions": 0,
+  "holdout_runs": 0,
+  "prescreen_credit_seconds": 0,
+  "startup_failures_and_incomplete_runs_charged": true,
+  "release_rule": "Retain full new reservation until per-attempt accounting and complete inventory support an explicit append-only disposition; never infer credit from notebook timer.",
+  "preauthorization_gates": [
+    "Reviewed real lifecycle runner, independent evaluator and offline notebook",
+    "Explicit workload manifest and truthful certification scope",
+    "Real-trajectory capacity and admission bound frozen independently of V2 fixtures",
+    "Local fault matrix passed and GPU fault segment schedule/allocation frozen",
+    "Source/model/environment/evidence lock frozen",
+    "Provider allowance independently verified; no transfer from prescreen",
+    "Explicit owner authorization for this separate reservation"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "protocol_id": "P4-development-lifecycle-v1",
+  "status": "frozen_proposal_zero_authority",
+  "proposed_accelerator": "NvidiaRtxPro6000",
+  "proposed_attempts": 1,
+  "maximum_reservation_seconds": 28800,
+  "authorized_seconds": 0,
+  "approval_reference": null,
+  "events": [],
+  "automatic_retries": 0,
+  "interactive_sessions_authorized": 0,
+  "prescreen_credit_seconds": 0,
+  "startup_failures_and_missing_output_charged": true,
+  "release_rule": "Full reservation retained unless a later explicit accounting disposition justifies release; internal timers alone never establish credit.",
+  "note": "New approved ledger and execution lock required before any target packaging or launch; this frozen proposal is not mutable launch authority."
+}
