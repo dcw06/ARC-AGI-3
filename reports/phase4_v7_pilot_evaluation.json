@@ -1,0 +1,107 @@
+{
+  "recorded_at": "2026-09-17T14:13:42.295989+00:00",
+  "attempt_id": "p4-v7-pilot-20260917T132406Z",
+  "provider_version": 1,
+  "provider_status": "ERROR",
+  "passed": false,
+  "phase4_complete": false,
+  "installation_passed": true,
+  "worker_error": "ValueError: environment mount inventory differs from package",
+  "model_start_reached": false,
+  "internal_elapsed_seconds": 132.5438536900001,
+  "source_removed": true,
+  "dependency_trees_removed": true,
+  "scratch_removed": true,
+  "process_cleanup_verified": true,
+  "gpu_cleanup_verified": true,
+  "evidence_limitations": "Installation and early-abort cleanup passed; no model workload or capacity evidence.",
+  "account_gpu_seconds_before": 26675.767,
+  "account_gpu_seconds_after": 26818.521,
+  "account_gpu_usage_delta_seconds": 142.754,
+  "account_delta_scope": "Aggregate account change, not exact per-attempt billing",
+  "exact_provider_billed_seconds": null,
+  "charged_or_reserved_seconds": 28800,
+  "released_seconds": 0,
+  "attempt_consumed": true,
+  "retry_authorized": false,
+  "evidence_archive": "evidence/phase4-v7-pilot-failed-v1.zip",
+  "evidence_archive_sha256": "560e93ca94b90a8ecb187287b9524bb6be91296cd4b05db2dade678c8b5dbc7c",
+  "evidence": {
+    "output/arc3-phase4-development-v7-pilot.log": {
+      "sha256": "395954fcc449a58ee8ce58bdae441ead256bf6def79aad799de5398bfa9c72ca",
+      "bytes": 6311
+    },
+    "output/phase4-development-v7/.evidence.lock": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "output/phase4-development-v7/control/installation.json": {
+      "sha256": "c31964592c4a2cad34b02cae1ab3e8612c559ccb4814b219795edd2e8fa9dd13",
+      "bytes": 2849
+    },
+    "output/phase4-development-v7/control/notebook-cost.json": {
+      "sha256": "1f2cb1a1148b13712718637b63ce05c9f6b8ff2ab8dd74f34ace5acce18eac85",
+      "bytes": 206
+    },
+    "output/phase4-development-v7/control/outer.json": {
+      "sha256": "d299c3f28208edfe93f410c55ecb9baaf316d78c82922ea2cba05deb21af1a41",
+      "bytes": 553
+    },
+    "output/phase4-development-v7/control/ownership.json": {
+      "sha256": "ac0ee1f78532e305107e14ef59db9b89dd9bbe8d5af79de31365d9f6c6699333",
+      "bytes": 158
+    },
+    "output/phase4-development-v7/control/stop-monitor.json": {
+      "sha256": "e5d4399003dc1726fe3977d698cfed5fff8b72d8a8c546dc5d70641c4f592c42",
+      "bytes": 62
+    },
+    "output/phase4-development-v7/evaluation/notebook-result.json": {
+      "sha256": "76f6ea37914dc2c37867b6b300c2df8c385c0193ea1f498ca53da32a384344c4",
+      "bytes": 200
+    },
+    "output/phase4-development-v7/evaluation/result.json": {
+      "sha256": "2ad77b59fa1cb7dfa480d8d59c875ae97a5e49428bd8c2668305fe4a3d4c6c45",
+      "bytes": 479
+    },
+    "output/phase4-development-v7/logs/306.json": {
+      "sha256": "23f1155862526e152652531113f83131d4f860c99b07cff6b106ceb754257e80",
+      "bytes": 893
+    },
+    "output/phase4-development-v7/logs/308.json": {
+      "sha256": "50e31b712644548df2ea205f2e49aed62d938a59070d48f36338db20c2753895",
+      "bytes": 102
+    },
+    "output/phase4-development-v7/logs/install-game.json": {
+      "sha256": "8b70f158fad139a4017be40c7e4202d0b9d79be7771e30564367cd8d21aa086c",
+      "bytes": 599508
+    },
+    "output/phase4-development-v7/logs/install-model.json": {
+      "sha256": "544ad86f53523a3a70bc497eea8242dce7dd956577210650de8d527d855d2b11",
+      "bytes": 2099360
+    },
+    "output/phase4-development-v7/monitor/monitor-result.json": {
+      "sha256": "cc706fde52268126238903edb8396443f54155ed3618c70c5c5d9d52d3fe3373",
+      "bytes": 688
+    },
+    "output/phase4-development-v7/monitor/ready.json": {
+      "sha256": "b09308317cc5e754f484da0556195a01542ca6822c83fae4f415eacec88d3908",
+      "bytes": 636
+    },
+    "output/phase4-development-v7/monitor/samples-0000.json": {
+      "sha256": "2e1db89776089f6386e2100fb3397a6354505b3251544652a686ee3d6ba44941",
+      "bytes": 403
+    },
+    "output/phase4-development-v7/monitor/telemetry.json": {
+      "sha256": "697276ae02213f653cb3926321ed5ba3bcba0d689ba929995ab53b2a366360ef",
+      "bytes": 889
+    },
+    "output/phase4-development-v7/worker/failure.json": {
+      "sha256": "21f7cc74d41ea0fd4a65062a8760d4664396d0dd7a062050eaccc5b226c9d1ca",
+      "bytes": 73
+    },
+    "provider-observations.jsonl": {
+      "sha256": "a5f9a35edbc4a9bf166d2f88162ab7af5daad722c19b381854e807d53913d3f9",
+      "bytes": 3151
+    }
+  }
+}

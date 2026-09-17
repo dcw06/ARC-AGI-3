@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "scope": "Torch wheel selection only; dry-run --no-deps",
+  "full_dependency_resolution_verified": false,
+  "cuda_runtime_verified": false,
+  "gpu_run_launched": false,
+  "scratch_removed": true,
+  "results": {
+    "old": {
+      "pin": "torch==2.10.0+cu128",
+      "exit_code": 1
+    },
+    "corrected": {
+      "pin": "torch==2.10.0",
+      "exit_code": 0
+    }
+  },
+  "wheel_sha256": "98c01b8bb5e3240426dcde1446eed6f40c778091c8544767ef1168fc663a05a6"
+}

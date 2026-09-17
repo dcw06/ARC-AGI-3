@@ -1,0 +1,34 @@
+{
+  "attempt_id": "p4-v10-pilot-20260917T153958Z",
+  "authorized_seconds": 28800,
+  "maximum_attempts": 1,
+  "automatic_retries": 0,
+  "approval_reference": "reports/phase4_v10_compute_authorization.json",
+  "events": [
+    {
+      "kind": "reserve",
+      "attempt_id": "p4-v10-pilot-20260917T153958Z",
+      "seconds": 28800,
+      "recorded_at": "2026-09-17T15:39:58.153869+00:00",
+      "execution_lock_sha256": "a8afbadee10a9275b23919bcd7e475a29baba7af4917afb5e6dc5478c068fa17",
+      "released_seconds": 0
+    },
+    {
+      "kind": "launch_request_started",
+      "attempt_id": "p4-v10-pilot-20260917T153958Z",
+      "recorded_at": "2026-09-17T15:40:52.419887+00:00",
+      "attempt_consumed": true,
+      "package_sha256": "2642536e630f176cb62f78d43ebc3fd062d51ca7447076c92d59476f0da1149b",
+      "charged_or_reserved_seconds": 28800,
+      "automatic_retries": 0
+    },
+    {
+      "kind": "launch_receipt",
+      "attempt_id": "p4-v10-pilot-20260917T153958Z",
+      "reference": "reports/phase4_v10_pilot_launch.json",
+      "status": "launch_outcome_unknown_no_retry",
+      "charged_or_reserved_seconds": 28800,
+      "released_seconds": 0
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "status": "approved",
+  "approved_at": "2026-09-17T14:23:53.386652+00:00",
+  "user_response": "Now launch another one?",
+  "approval_basis": "User requested a new launch after the manifest-staging repair was explained; agent reviewed and tested the implementation within that scope. No claim of user inspection of the resulting hash.",
+  "scope": "v8 manifest-selected game staging repair; original v7 snapshot preserved",
+  "review_lock": "notebooks/phase4-lifecycle-v8-review-r1/review-source-lock.json",
+  "review_lock_sha256": "4c317c41c211ebd5be43e41aed18884e3f5c31684a696a316486a068187da63c",
+  "artifacts": {
+    "profile.ipynb": "e5f87f8b7a2c39ca6a2ebb0b8ba0c2e8c9022c55502d7f4118a47fe1167df34e",
+    "kernel-metadata.json": "53494b7ab81316c62fba5e8e8d7d54df9302fcbb178291aa67dd24c56e2dccb8"
+  },
+  "validation": "15 Linux staging, bridge, authority, deadline and cleanup tests passed",
+  "gpu_seconds_authorized": 0,
+  "gpu_launch_authorized": false
+}

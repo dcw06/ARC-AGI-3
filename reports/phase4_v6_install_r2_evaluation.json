@@ -1,0 +1,61 @@
+{
+  "recorded_at": "2026-09-17T10:59:07.642319+00:00",
+  "attempt_id": "p4-v6-install-r2-20260917T104442Z",
+  "provider_version": 1,
+  "provider_status": "ERROR",
+  "passed": false,
+  "failure_stage": "install_model_service",
+  "cause": "torch==2.10.0+cu128 requested; offline resolver offers only 2.10.0",
+  "empty_venv_bootstrap_passed": true,
+  "host_pip_targeting_passed": true,
+  "host_python": "3.12.13",
+  "host_pip": "24.1.2",
+  "wheelhouses": {
+    "model_payloads": 178,
+    "environment_wheels": 31,
+    "model_manifests": {
+      "SHA256SUMS": "44029b360a9c0073e4b0add10703fc3386dc06bf1314f5913a0dad9564144cbb",
+      "wheelhouse-manifest.json": "bc016164d15664c52911fcd11f4e26e72a483e248f3cc9b59ae02b3fce09cc6a"
+    }
+  },
+  "internal_elapsed_seconds": 32.386323642000036,
+  "cuda_check_reached": false,
+  "model_loaded": false,
+  "pilot_launched": false,
+  "gpu_cleanup_verified": false,
+  "scratch_cleanup_verified": false,
+  "cleanup_evidence_note": "Failure result does not emit affirmative cleanup receipts.",
+  "account_gpu_seconds_before": 26212.276,
+  "account_gpu_seconds_after": 26253.548,
+  "account_gpu_usage_delta_seconds": 41.272,
+  "account_delta_scope": "Aggregate account change; not exact attempt billing.",
+  "exact_provider_billed_seconds": null,
+  "charged_or_reserved_seconds": 1800,
+  "released_seconds": 0,
+  "attempt_consumed": true,
+  "retry_authorized": false,
+  "evidence_archive": "evidence/phase4-v6-install-r2-failed-v1.zip",
+  "evidence_archive_sha256": "5d8f6ca2e104f10388b94453d6e3725d67594a5f989d091d85aa3565a76466b7",
+  "evidence": {
+    "output/arc3-phase4-v6-install-repair-r2.log": {
+      "sha256": "6b0185cfee953c7b6ad3419edaf229b5b376007e781e60519d893766d62358b3",
+      "bytes": 4869
+    },
+    "output/phase4-v6-install-check/bootstrap/stages.json": {
+      "sha256": "31dc6c213dceef02231f6048ede6ff3c11c092df45fd493e38b9e3e197d89d4f",
+      "bytes": 917
+    },
+    "output/phase4-v6-install-check/bootstrap/stages.log": {
+      "sha256": "416208ef3f0691cf67598c38d5629f29995ccf9385bf3eb8e81d50feaf8542e6",
+      "bytes": 1149
+    },
+    "output/phase4-v6-install-check/result.json": {
+      "sha256": "5ddf93ed1ca4c0e6ff864ac0a6ce0a22e885b8763660d3f0832c02b70630debb",
+      "bytes": 617
+    },
+    "provider-observations.jsonl": {
+      "sha256": "4e9d5c1310742b30beb8dc55a5b73835bd7a3366210b33495a37f281cf6402af",
+      "bytes": 1882
+    }
+  }
+}

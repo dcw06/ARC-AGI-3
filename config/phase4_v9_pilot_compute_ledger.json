@@ -1,0 +1,50 @@
+{
+  "attempt_id": "p4-v9-pilot-20260917T152108Z",
+  "authorized_seconds": 28800,
+  "maximum_attempts": 1,
+  "automatic_retries": 0,
+  "approval_reference": "reports/phase4_v9_compute_authorization.json",
+  "events": [
+    {
+      "kind": "reserve",
+      "attempt_id": "p4-v9-pilot-20260917T152108Z",
+      "seconds": 28800,
+      "recorded_at": "2026-09-17T15:21:08.645175+00:00",
+      "execution_lock_sha256": "fb599de0da7c952c3fa4b13e2453f1a2a8377ba6c3e1aeb3f465c8a5fe9b6124",
+      "released_seconds": 0
+    },
+    {
+      "kind": "launch_request_started",
+      "attempt_id": "p4-v9-pilot-20260917T152108Z",
+      "recorded_at": "2026-09-17T15:21:16.738164+00:00",
+      "attempt_consumed": true,
+      "package_sha256": "63f20d9893e7d3f856ee6fc40677bc0f1156c8e79e5045a560e50f55cb578125",
+      "charged_or_reserved_seconds": 28800,
+      "automatic_retries": 0
+    },
+    {
+      "kind": "launch_receipt",
+      "attempt_id": "p4-v9-pilot-20260917T152108Z",
+      "reference": "reports/phase4_v9_pilot_launch.json",
+      "status": "provider_response_received",
+      "charged_or_reserved_seconds": 28800,
+      "released_seconds": 0
+    },
+    {
+      "kind": "attempt_completed_accounting_pending",
+      "attempt_id": "p4-v9-pilot-20260917T152108Z",
+      "recorded_at": "2026-09-17T15:29:32.294512+00:00",
+      "provider_status": "ERROR",
+      "provider_version": 1,
+      "passed": false,
+      "result_reference": "reports/phase4_v9_pilot_evaluation.json",
+      "result_sha256": "b6e2833f65e67219b9ba34c0117c92855bd068b53fc3f155a922ee5c678d27ce",
+      "charged_or_reserved_seconds": 28800,
+      "released_seconds": 0,
+      "exact_provider_billed_seconds": null,
+      "account_gpu_usage_delta_seconds": 168.812,
+      "attempt_consumed": true,
+      "retry_authorized": false
+    }
+  ]
+}

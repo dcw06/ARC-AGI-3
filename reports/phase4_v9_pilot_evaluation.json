@@ -1,0 +1,140 @@
+{
+  "recorded_at": "2026-09-17T15:29:32.294512+00:00",
+  "attempt_id": "p4-v9-pilot-20260917T152108Z",
+  "provider_version": 1,
+  "provider_status": "ERROR",
+  "passed": false,
+  "phase4_complete": false,
+  "installation_passed": true,
+  "game_staging_passed": true,
+  "monitor_error": "ValueError: monitor limit: sampling_gap_seconds",
+  "model_start_reached": true,
+  "model_readiness_verified": false,
+  "triggering_measurement_retained": true,
+  "failure_diagnostics": {
+    "current_seconds": 149.71115001800007,
+    "gap_seconds": 1.6848104300000841,
+    "gpu_total_bytes": 102641958912,
+    "gpu_used_bytes": 714080256,
+    "gpu_uuid": "GPU-4b8ef2cd-0cce-0159-3a97-d0d862253dbf",
+    "limits": {
+      "rss_bytes": 137438953472,
+      "sampling_gap_seconds": 1,
+      "scratch_bytes": 4294967296
+    },
+    "phase": "limits",
+    "previous_persistence_seconds": 1.4207350369999858,
+    "previous_seconds": 148.02633958799998,
+    "probe_seconds": {
+      "gpu": 0.011193271000024652,
+      "rss": 0.002461070000094878,
+      "scratch": 0.0003152000000454791
+    },
+    "rss_bytes": 1095081984,
+    "scratch_bytes": 59159,
+    "violations": [
+      "sampling_gap_seconds"
+    ]
+  },
+  "retained_samples": 45,
+  "max_retained_gap_seconds": 0.8704832109999643,
+  "max_retained_rss_bytes": 1095081984,
+  "max_retained_scratch_bytes": 59159,
+  "max_retained_vram_bytes": 714080256,
+  "internal_elapsed_seconds": 156.810117253,
+  "source_removed": true,
+  "dependency_trees_removed": true,
+  "scratch_removed": true,
+  "process_cleanup_verified": true,
+  "gpu_cleanup_verified": true,
+  "evidence_limitations": "Staging and installation passed; source/dependency/scratch/process cleanup receipts passed. Independent post-termination GPU cleanup passed; continuous monitoring coverage remains invalid. No completed model workload or capacity evidence.",
+  "account_gpu_seconds_before": 26976.712,
+  "account_gpu_seconds_after": 27145.524,
+  "account_gpu_usage_delta_seconds": 168.812,
+  "account_delta_scope": "Aggregate account change, not exact per-attempt billing",
+  "exact_provider_billed_seconds": null,
+  "charged_or_reserved_seconds": 28800,
+  "released_seconds": 0,
+  "attempt_consumed": true,
+  "retry_authorized": false,
+  "evidence_archive": "evidence/phase4-v9-pilot-failed-v1.zip",
+  "evidence_archive_sha256": "1e08f9fcd06ed6cd8659c8b40986f8d04ce266b6b1def75a52c9e3052024a4fc",
+  "evidence": {
+    "output/arc3-phase4-development-v9-pilot.log": {
+      "sha256": "a99e356a8f3227bb6b94989bbee7e675d3387e80ef961f570628e812fba34079",
+      "bytes": 6318
+    },
+    "output/phase4-development-v9/.evidence.lock": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "output/phase4-development-v9/control/game-assets.json": {
+      "sha256": "e783b1b82a54fa1df9ca6b746fe14692eca8d00b809f52cabfea7ec6857b3fd6",
+      "bytes": 74
+    },
+    "output/phase4-development-v9/control/gpu-cleanup.json": {
+      "sha256": "16e5aaf9138a55e3ceb1fe795a3e677a32f7f23c9dfb78f43c47b3ac144cfb18",
+      "bytes": 282
+    },
+    "output/phase4-development-v9/control/installation.json": {
+      "sha256": "80c599be27fafc894df00afb39dced692e1a68d206f029f90e7f502e1706f43b",
+      "bytes": 2850
+    },
+    "output/phase4-development-v9/control/notebook-cost.json": {
+      "sha256": "586a2d217a0b4d36069421c96a5efae2f970c17230487137f2cf988dcb39aeeb",
+      "bytes": 206
+    },
+    "output/phase4-development-v9/control/outer.json": {
+      "sha256": "800476a314dd50995a1e0eecb7a761899bf93736fa628be4b05dc36de08ab991",
+      "bytes": 507
+    },
+    "output/phase4-development-v9/control/ownership.json": {
+      "sha256": "aa79e51a4940d8a1cd434270e9e255e8f7702b8b7d255c7a741101c1dbb940fd",
+      "bytes": 157
+    },
+    "output/phase4-development-v9/evaluation/notebook-result.json": {
+      "sha256": "f0a79440aebb29fee07ae95c269028e1f74ebbf35256e90581c3db58b8d580db",
+      "bytes": 196
+    },
+    "output/phase4-development-v9/evaluation/result.json": {
+      "sha256": "2ad77b59fa1cb7dfa480d8d59c875ae97a5e49428bd8c2668305fe4a3d4c6c45",
+      "bytes": 479
+    },
+    "output/phase4-development-v9/logs/306.json": {
+      "sha256": "f1b05d480ab4dd651a0923cd769ed26784b220206550977d229b80913c354068",
+      "bytes": 549
+    },
+    "output/phase4-development-v9/logs/308.json": {
+      "sha256": "d636eeb68b9c7e0ea60d2608ebbc31a779da911c6e552392f058b7a61720e636",
+      "bytes": 975
+    },
+    "output/phase4-development-v9/logs/install-game.json": {
+      "sha256": "1f3ea69a7d5ad5fd63115f49bd14fafd7b053901b3a942c8f553ee0cf7b70a23",
+      "bytes": 599500
+    },
+    "output/phase4-development-v9/logs/install-model.json": {
+      "sha256": "91f0b3a2ce8b542b34634177c038647305f1a60282bad3d26880f26b37fd6e8f",
+      "bytes": 2099368
+    },
+    "output/phase4-development-v9/monitor/failure.json": {
+      "sha256": "64049ae0dd21bb19be31e2662d6f8b3079bc511d49436c59dacc1a4d73938de6",
+      "bytes": 725
+    },
+    "output/phase4-development-v9/monitor/ready.json": {
+      "sha256": "0805f461623ea3a8d0bbcdcd4c565826d26161039377cba90dbd1fb2347ef0d3",
+      "bytes": 630
+    },
+    "output/phase4-development-v9/monitor/samples-0000.json": {
+      "sha256": "3124145c66d4eb9137387d4da5ab6b7bb5bf80bd8f59c52ead9f2947715efb42",
+      "bytes": 1423
+    },
+    "output/phase4-development-v9/monitor/telemetry.json": {
+      "sha256": "02cef30deeac8e72cfeb26a8f01a111bc926c2b88d1be12fa395eae15b015f84",
+      "bytes": 733
+    },
+    "provider-observations.jsonl": {
+      "sha256": "007c57506f37dc23f40ff16e6a19efa3c5162a0db643c8f0485ce5d73c33690d",
+      "bytes": 627
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "status": "approved",
+  "approved_at": "2026-09-17T15:39:58.153869+00:00",
+  "user_response": "And after the fix you can launch a new gpu run yourself",
+  "approval_basis": "User explicitly authorized implementing the documented repair and then launching one GPU run; agent reviewed and tested this snapshot within that scope.",
+  "scope": "v10 bounded asynchronous lossless telemetry repair; historical snapshots preserved",
+  "review_lock": "notebooks/phase4-lifecycle-v10-review-r1/review-source-lock.json",
+  "review_lock_sha256": "7e4411c9c697c78d6d030fc719e6bdfa8f1a0aba2cd6227609b4801b33de6047",
+  "artifacts": {
+    "profile.ipynb": "a4db5e83ef01c90aa0b1a04815e0a078ffc587e795f2a6cf654e2df36365198c",
+    "kernel-metadata.json": "ae6ac5bb8c80a954a3d7bbc3b2691915659495d8c073499bdbe247efdb59c227"
+  },
+  "validation": "28 Linux tests passed; full CPU-only 110-client pilot passed with 7722 requests and request/action invariance",
+  "gpu_seconds_authorized": 0,
+  "gpu_launch_authorized": false
+}

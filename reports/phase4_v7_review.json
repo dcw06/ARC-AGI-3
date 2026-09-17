@@ -1,0 +1,53 @@
+{
+  "scope": "v7 implementation/source review; not model pilot certification",
+  "source_approval": "pending_user_review",
+  "gpu_launched": false,
+  "authorized_gpu_seconds": 0,
+  "review_lock_sha256": "2ccab9336f3d27d174741f03b437138dd94c682ab449372ed9a0a38f9957e87b",
+  "bound_sources": 248,
+  "artifacts": {
+    "profile.ipynb": "f4a1affd6a2102612430252246c546d1a905cab51272b3ec443e54454fa5f236",
+    "kernel-metadata.json": "f1c39e5007dcaf822bc378461bb7d29b7e959a2a1e180b04ce82cc70e618a123"
+  },
+  "focused_tests_passed": 10,
+  "local_lifecycle": {
+    "action_invariance": true,
+    "authorized_seconds": 0,
+    "clients": 110,
+    "elapsed_seconds": 70.87711041499999,
+    "historical_comparison": "v3 archived scripted run; not a randomized performance comparison",
+    "historical_v3_evaluation": {
+      "C_admit": null,
+      "C_nominal": null,
+      "capacity_status": "requires_real_model_token_audit_and_trajectory_measurements",
+      "errors": [
+        "resource limit/evidence: elapsed_seconds"
+      ],
+      "model_inference": false,
+      "passed": false,
+      "phase4_complete": false,
+      "scope": "development_repeated_games_separate_scorecards_local_integration",
+      "target_gpu_certified": false
+    },
+    "local_cpu_smoke_seconds": 300,
+    "model_inference": false,
+    "passed": true,
+    "phase4_complete": false,
+    "request_invariance": true,
+    "requests": 7722,
+    "scope": "local_actual_development_scripted_model_injected_GPU"
+  },
+  "archive": "evidence/phase4-v7-local-review.zip",
+  "archive_sha256": "0027325817b44fa071678eb5e055ee3da2d978bca06e307b95274cf1a45c09e8",
+  "historical_installation_snapshots_unchanged": true,
+  "reviewed_controls": [
+    "separate interpreter and import boundaries",
+    "per-request audit hashes and token parity",
+    "bounded frames/concurrency; no retry",
+    "monitor before GPU readiness through process-group cleanup",
+    "aggregate evidence budgets",
+    "shared first-cell deadline and final cleanup acceptance",
+    "read-only dependency tree permissions",
+    "separate source approval and compute authority"
+  ]
+}

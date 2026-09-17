@@ -1,0 +1,23 @@
+{
+  "attempt_id": "p4-v9-pilot-20260917T152108Z",
+  "authorized_seconds": 28800,
+  "maximum_attempts": 1,
+  "automatic_retries": 0,
+  "approval_reference": "reports/phase4_v9_compute_authorization.json",
+  "events": [
+    {
+      "kind": "reserve",
+      "attempt_id": "p4-v9-pilot-20260917T152108Z",
+      "seconds": 28800,
+      "recorded_at": "2026-09-17T15:21:08.645175+00:00",
+      "execution_lock_sha256": "fb599de0da7c952c3fa4b13e2453f1a2a8377ba6c3e1aeb3f465c8a5fe9b6124",
+      "released_seconds": 0
+    },
+    {
+      "kind": "launch_request_started",
+      "attempt_id": "p4-v9-pilot-20260917T152108Z",
+      "prepared_at": "2026-09-17T15:21:08.645175+00:00",
+      "scope": "embedded single-attempt gate; external claim required before upload"
+    }
+  ]
+}

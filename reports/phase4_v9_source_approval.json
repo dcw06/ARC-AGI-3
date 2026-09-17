@@ -1,0 +1,16 @@
+{
+  "status": "approved",
+  "approved_at": "2026-09-17T15:21:08.645175+00:00",
+  "user_response": "Explicit invocation of start_phase4_v9_pilot.py --authorize-and-launch",
+  "approval_basis": "Explicit launch command invocation approves the frozen v9 snapshot and one separate compute attempt.",
+  "scope": "v9 monitor diagnostics and independent cleanup repair; historical snapshots preserved",
+  "review_lock": "notebooks/phase4-lifecycle-v9-review-r1/review-source-lock.json",
+  "review_lock_sha256": "f8211f06a0a45efc137ffbeabeb1b218535c913eccbbb15e485f6c5276d4a3f3",
+  "artifacts": {
+    "profile.ipynb": "be4c973d5a354bb8ebd956e9e088c05a9738e0c085b63b97757ee358075549bc",
+    "kernel-metadata.json": "9be8cd17955aa02d971308fc8bd8e3e93d1087dd8501ca291c7877f52b6bd5f2"
+  },
+  "validation": "23 Linux monitor repair, staging, bridge, authority, deadline and cleanup tests passed",
+  "gpu_seconds_authorized": 0,
+  "gpu_launch_authorized": false
+}

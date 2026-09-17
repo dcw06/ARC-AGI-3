@@ -1,0 +1,111 @@
+{
+  "recorded_at": "2026-09-17T14:59:56.573019+00:00",
+  "attempt_id": "p4-v8-pilot-20260917T142353Z",
+  "provider_version": 1,
+  "provider_status": "ERROR",
+  "passed": false,
+  "phase4_complete": false,
+  "installation_passed": true,
+  "game_staging_passed": true,
+  "monitor_error": "ValueError: monitor resource or sampling-gap limit",
+  "model_start_reached": true,
+  "model_readiness_verified": false,
+  "triggering_measurement_retained": false,
+  "retained_samples": 24,
+  "max_retained_gap_seconds": 0.8989596060000622,
+  "max_retained_rss_bytes": 1095053312,
+  "max_retained_scratch_bytes": 59159,
+  "max_retained_vram_bytes": 714080256,
+  "internal_elapsed_seconds": 147.545103433,
+  "source_removed": true,
+  "dependency_trees_removed": true,
+  "scratch_removed": true,
+  "process_cleanup_verified": true,
+  "gpu_cleanup_verified": null,
+  "evidence_limitations": "Staging and installation passed; source/dependency/scratch/process cleanup receipts passed. GPU cleanup is unverified because the monitor failed before cleanup. No completed model workload or capacity evidence.",
+  "account_gpu_seconds_before": 26818.521,
+  "account_gpu_seconds_after": 26976.712,
+  "account_gpu_usage_delta_seconds": 158.191,
+  "account_delta_scope": "Aggregate account change, not exact per-attempt billing",
+  "exact_provider_billed_seconds": null,
+  "charged_or_reserved_seconds": 28800,
+  "released_seconds": 0,
+  "attempt_consumed": true,
+  "retry_authorized": false,
+  "evidence_archive": "evidence/phase4-v8-pilot-failed-v1.zip",
+  "evidence_archive_sha256": "56ddd7748bc8f632b01cab621a0d4c6e88d3a543d40245770cde98788aaed1a2",
+  "evidence": {
+    "output/arc3-phase4-development-v8-pilot.log": {
+      "sha256": "c9288f1e29d4cf14caff9388ade059242e83ef4bf3131f61608f80711037e336",
+      "bytes": 6320
+    },
+    "output/phase4-development-v8/.evidence.lock": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "output/phase4-development-v8/control/game-assets.json": {
+      "sha256": "e783b1b82a54fa1df9ca6b746fe14692eca8d00b809f52cabfea7ec6857b3fd6",
+      "bytes": 74
+    },
+    "output/phase4-development-v8/control/installation.json": {
+      "sha256": "d6c85ff56489f89c654f29974e0d77606ca7205dad36a940039efc0a8cb151f1",
+      "bytes": 2850
+    },
+    "output/phase4-development-v8/control/notebook-cost.json": {
+      "sha256": "7e820a91759dca408f902252dbd3258a14bcafcaf2eb7022a43c234eae851d64",
+      "bytes": 205
+    },
+    "output/phase4-development-v8/control/outer.json": {
+      "sha256": "d947bc91878b179e1af657dd0b3685a0a13e56f7da6848834458d04b4445515a",
+      "bytes": 465
+    },
+    "output/phase4-development-v8/control/ownership.json": {
+      "sha256": "92087c444359f6c01b983658e1a79079a00593876ea759572624990a6d036629",
+      "bytes": 157
+    },
+    "output/phase4-development-v8/evaluation/notebook-result.json": {
+      "sha256": "a58c91cc084420f59a8029f8e859432e2fe8b74e42b38ad0ac10c3b88abbf204",
+      "bytes": 196
+    },
+    "output/phase4-development-v8/evaluation/result.json": {
+      "sha256": "2ad77b59fa1cb7dfa480d8d59c875ae97a5e49428bd8c2668305fe4a3d4c6c45",
+      "bytes": 479
+    },
+    "output/phase4-development-v8/logs/306.json": {
+      "sha256": "1f3f5a6aaa171714b602662f1143966388e18dd2a55ef261fc0c15c857595a21",
+      "bytes": 549
+    },
+    "output/phase4-development-v8/logs/308.json": {
+      "sha256": "4a99df2591e6ae339a2320d43d3d04774c901e333dfb96cdaa1e10d910921cff",
+      "bytes": 606
+    },
+    "output/phase4-development-v8/logs/install-game.json": {
+      "sha256": "6a26b98a86641875bbbfb2fa015aa77d0333bdfc5901ce56eddc661d6d6a3495",
+      "bytes": 599504
+    },
+    "output/phase4-development-v8/logs/install-model.json": {
+      "sha256": "73da625fc91e86fc70106085cd48937a1b5929296425caaca27cb532a625478a",
+      "bytes": 2099388
+    },
+    "output/phase4-development-v8/monitor/failure.json": {
+      "sha256": "52d993d103556bbcc512433406ee80862a0f6aabdd32564927ef29ed39671635",
+      "bytes": 63
+    },
+    "output/phase4-development-v8/monitor/ready.json": {
+      "sha256": "aa7bba901e6efa1251b0c5aed0cdfd93778db956973d25429c227a52f2a69fd6",
+      "bytes": 636
+    },
+    "output/phase4-development-v8/monitor/samples-0000.json": {
+      "sha256": "b04956accb05674acb347ee9b0ca8655fd459280ce2d04511699b28e8a9918bb",
+      "bytes": 951
+    },
+    "output/phase4-development-v8/monitor/telemetry.json": {
+      "sha256": "1e8e7338db95c152ecc05367ee4f4d2466701662e8f2444377ff9e2a55a1ba21",
+      "bytes": 734
+    },
+    "provider-observations.jsonl": {
+      "sha256": "72328ddb29a563885be2c0347e8eef5ec8fe5e8ad25bd413c627e8da62bf8ff7",
+      "bytes": 2514
+    }
+  }
+}

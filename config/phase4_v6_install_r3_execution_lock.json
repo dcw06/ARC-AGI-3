@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "scope": "single_installation_check_only_not_model_pilot",
+  "status": "user_authorized_preflight_passed",
+  "authorization_reference": "reports/phase4_v6_install_r3_authorization_20260917.md",
+  "attempt_id": "p4-v6-install-r3-20260917T112448Z",
+  "kernel_id": "daichongwei06/arc3-phase4-v6-install-repair-r3",
+  "accelerator": "NvidiaRtxPro6000",
+  "review_lock": "config/phase4_v6_install_r3_launch_review.json",
+  "review_lock_sha256": "34c2b56637b24148806f63922657770272d919b6fa95f07a5f21d9c7e95a1076",
+  "notebook_sha256": "0988509ad8fd0b276d1d8ab883330b779d6bb4f8df60c6679bae0e5acab87f95",
+  "metadata_sha256": "503338be9295596dd228ba687f3565e481a4424f26de535e78c60fc84c04c056",
+  "budget_proposal_sha256": "9b334934065504d5da5cf4adab586dc32de3291b8262b14294a39882ec746391",
+  "attempts": 1,
+  "automatic_retries": 0,
+  "internal_seconds": 900,
+  "reservation_seconds": 1800,
+  "model_loading_authorized": false,
+  "model_pilot_authorized": false,
+  "holdout_runs": 0,
+  "scored_submissions": 0,
+  "prescreen_credit_seconds": 0
+}

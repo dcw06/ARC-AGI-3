@@ -1,0 +1,73 @@
+{
+  "recorded_at": "2026-09-17T11:38:28.133599+00:00",
+  "attempt_id": "p4-v6-install-r3-20260917T112448Z",
+  "provider_version": 1,
+  "provider_status": "ERROR",
+  "passed": false,
+  "failure_stage": "dependency_check",
+  "cause": "Frozen numpy 2.4.4 conflicts with numba 0.61.2 (<2.3) and mistral-common 1.11.1 (<2.4 on Python 3.12).",
+  "model_service_install_command_passed": true,
+  "environment_install_command_passed": true,
+  "dependency_check_passed": false,
+  "torch_wheel_contract_verified": true,
+  "empty_venv_bootstrap_passed": true,
+  "host_pip_targeting_passed": true,
+  "host_python": "3.12.13",
+  "host_pip": "24.1.2",
+  "wheelhouses": {
+    "model_payloads": 178,
+    "environment_wheels": 31,
+    "model_manifests": {
+      "SHA256SUMS": "44029b360a9c0073e4b0add10703fc3386dc06bf1314f5913a0dad9564144cbb",
+      "wheelhouse-manifest.json": "bc016164d15664c52911fcd11f4e26e72a483e248f3cc9b59ae02b3fce09cc6a"
+    }
+  },
+  "internal_elapsed_seconds": 120.81383449000003,
+  "cuda_check_reached": false,
+  "model_loaded": false,
+  "pilot_launched": false,
+  "gpu_cleanup_verified": false,
+  "scratch_cleanup_verified": false,
+  "cleanup_evidence_note": "Failure result does not emit affirmative cleanup receipts.",
+  "account_gpu_seconds_before": 26253.548,
+  "account_gpu_seconds_after": 26383.221,
+  "account_gpu_usage_delta_seconds": 129.673,
+  "account_delta_scope": "Aggregate account change; not exact attempt billing.",
+  "exact_provider_billed_seconds": null,
+  "charged_or_reserved_seconds": 1800,
+  "released_seconds": 0,
+  "attempt_consumed": true,
+  "retry_authorized": false,
+  "evidence_archive": "evidence/phase4-v6-install-r3-failed-v1.zip",
+  "evidence_archive_sha256": "edbf126372deff4fdee106bc58cb22e2d78dd29bfca1045b83523b3fbe1a2dd1",
+  "evidence": {
+    "output/arc3-phase4-v6-install-repair-r3.log": {
+      "sha256": "38aac5dab5ba246910f3c4733c0d8551a64122fb2f98724dcbd7400a63ec2119",
+      "bytes": 7498
+    },
+    "output/phase4-v6-install-check/bootstrap/install_frozen_environment.json": {
+      "sha256": "7f56693de6d29aba59edbcb948f64ae8f4ae4e252263e2e2f9e8404463ca24d9",
+      "bytes": 388896
+    },
+    "output/phase4-v6-install-check/bootstrap/install_model_service.json": {
+      "sha256": "f619509838ccff99cbcaed2b07456d92a7e03b435f97c193b0a478054bd8b414",
+      "bytes": 1895008
+    },
+    "output/phase4-v6-install-check/bootstrap/stages.json": {
+      "sha256": "d55e7bc5d0a2a8be141895e4b73db582f965af61920bab468d969078e1035fff",
+      "bytes": 1250
+    },
+    "output/phase4-v6-install-check/bootstrap/stages.log": {
+      "sha256": "5175befd839ffe454ad001dd06f716814916a63cb951df02f2a00fc0c66dc43a",
+      "bytes": 43224
+    },
+    "output/phase4-v6-install-check/result.json": {
+      "sha256": "89e37fd2d06cdc899ddc1b6c67211d69ede253de4c900c6f227a6f5e399e3680",
+      "bytes": 3166
+    },
+    "provider-observations.jsonl": {
+      "sha256": "ffb7921c161d5db9e3034ad0f690b0523d0ce678972758bb186608b25a76d94d",
+      "bytes": 2510
+    }
+  }
+}

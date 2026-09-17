@@ -1,0 +1,21 @@
+{
+ "id": "daichongwei06/arc3-phase4-development-v7-pilot",
+ "title": "ARC3 Phase4 Development V7 Pilot",
+ "code_file": "profile.ipynb",
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": true,
+ "enable_gpu": true,
+ "enable_tpu": false,
+ "enable_internet": false,
+ "competition_sources": [
+  "arc-prize-2026-arc-agi-3"
+ ],
+ "dataset_sources": [
+  "driessmit1/arc3-vllm-h100-wheelhouse-v3"
+ ],
+ "model_sources": [
+  "qwen-lm/qwen-3-vl/Transformers/30b-a3b-instruct-fp8/1"
+ ],
+ "machine_shape": "NvidiaRtxPro6000"
+}

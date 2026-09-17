@@ -1,0 +1,11 @@
+# V8 game-staging repair and single-pilot review
+
+User requested a new launch after the v7 game-directory integration failure was explained. V8 implements that repair in a new namespace; v7 source bindings and historical notebooks remain intact. The source approval record documents authorization to implement and launch, not user inspection of the generated hash.
+
+Before dependency installation, `entry.py` stages only manifest-listed development game files into the temporary source tree and passes that directory to the worker. `game_assets.py` rejects missing files, size/hash changes, symlinks and path escapes. It reads no unlisted game content and requires exact staged inventory. The notebook's existing source-tree cleanup also removes these staged games, including partial staging on error.
+
+Reviewed delta from v7, after namespace replacement: new staging helper, entry staging/path, builder inclusion of both historical v7 and new v8. Remaining pilot implementation and numerical protocol limits are unchanged. The failure evaluator's missing monitor fields on early worker failure result from the failure branch skipping report assembly; final monitor receipts are retained separately. This does not admit an unsuccessful attempt. Nonfatal host `sitecustomize` warnings remain a known startup observation.
+
+Validation: 15 tests passed under the WSL Linux development interpreter (`tests.test_phase4_v8_game_assets`, `tests.test_phase4_v8_review`, `tests.test_phase4_v8_bridge`), including the real 15-game package in a mount containing unrelated files, missing and modified files, symlinks, path escape, authority refusal, process cleanup, bridge and final deadline checks. Launch packaging hashes and the embedded authorized gate passed locally without installation or GPU access. These are local regressions, not target model/capacity evidence.
+
+Frozen review lock SHA-256: `4c317c41c211ebd5be43e41aed18884e3f5c31684a696a316486a068187da63c`. The review notebook remains GPU-disabled. The separately packaged private offline pilot has one fresh 28,800-second reservation, a 27,540-second internal deadline, no automatic retry, and a new exclusive launch claim. V7's consumed reservation is not reused.

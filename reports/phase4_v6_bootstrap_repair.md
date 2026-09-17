@@ -1,5 +1,32 @@
 # Clean-environment bootstrap repair — September 17, 2026
 
+Full-pilot follow-up: v7 now integrates the split environments and model-side
+tokenizer/audit bridge. The implementation and new notebook are frozen for
+source approval; see [v7 review](phase4_v7_review.md). No GPU pilot is authorized
+or launched by this implementation work.
+
+**Latest outcome: r5 passed target offline installation and CUDA smoke checks.**
+Both isolated environments, game imports, vLLM extension import, CUDA tensor
+operation and cleanup succeeded on RTX PRO 6000 / Python 3.12.13 / CUDA 12.8.
+See [r5 verified result](phase4_v6_install_r5_status.md). Model loading and the
+integrated pilot remain pending. Earlier entries below document repair history.
+
+R4 follow-up: both split installs and dependency checks passed on target, but
+game imports inherited an unavailable notebook plotting backend. Explicit `Agg`
+selection passed a local reproduction; see [r4 status](phase4_v6_install_r4_status.md).
+The prospective helper is not yet integrated into a new notebook revision.
+
+Latest follow-up: r3 installed both dependency sets but failed their combined
+dependency check. A separate r4 proposal now isolates the model and game
+environments; see [split environment repair](phase4_v6_split_environment_repair.md)
+for local evidence and remaining pilot integration work. No r4 run was launched.
+
+Follow-up: the repaired bootstrap passed on Kaggle in r2, which then failed
+because the probe confused Torch's package version with its runtime build
+version. That mismatch is now verified and corrected in the separate r3 review
+snapshot; see [Torch version repair](phase4_v6_torch_version_repair.md).
+No r3 GPU run has been launched.
+
 The replacement bootstrap passed a real, offline Linux/Python 3.12 installation
 using the frozen environment wheels. This is a head start for the next target
 probe, not a new GPU run or a target-installation pass.

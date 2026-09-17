@@ -1,0 +1,89 @@
+{
+  "recorded_at": "2026-09-17T12:04:43.343806+00:00",
+  "attempt_id": "p4-v6-install-r4-20260917T115636Z",
+  "provider_version": 1,
+  "provider_status": "ERROR",
+  "passed": false,
+  "failure_stage": "game_runtime_and_isolation",
+  "cause": "Inherited MPLBACKEND selects unavailable matplotlib_inline backend in the isolated game environment.",
+  "model_service_install_command_passed": true,
+  "environment_install_command_passed": true,
+  "dependency_check_passed": true,
+  "torch_wheel_contract_verified": true,
+  "empty_venv_bootstrap_passed": true,
+  "host_pip_targeting_passed": true,
+  "host_python": "3.12.13",
+  "host_pip": "24.1.2",
+  "wheelhouses": {
+    "model_payloads": 178,
+    "environment_wheels": 31,
+    "model_manifests": {
+      "SHA256SUMS": "44029b360a9c0073e4b0add10703fc3386dc06bf1314f5913a0dad9564144cbb",
+      "wheelhouse-manifest.json": "bc016164d15664c52911fcd11f4e26e72a483e248f3cc9b59ae02b3fce09cc6a"
+    }
+  },
+  "internal_elapsed_seconds": 139.779277697,
+  "cuda_check_reached": false,
+  "model_loaded": false,
+  "pilot_launched": false,
+  "gpu_cleanup_verified": true,
+  "scratch_cleanup_verified": true,
+  "cleanup_evidence_note": "Target reports scratch removal and empty GPU process inventory.",
+  "account_gpu_seconds_before": 26383.221,
+  "account_gpu_seconds_after": 26532.504,
+  "account_gpu_usage_delta_seconds": 149.283,
+  "account_delta_scope": "Aggregate account change; not exact attempt billing.",
+  "exact_provider_billed_seconds": null,
+  "charged_or_reserved_seconds": 1800,
+  "released_seconds": 0,
+  "attempt_consumed": true,
+  "retry_authorized": false,
+  "evidence_archive": "evidence/phase4-v6-install-r4-failed-v1.zip",
+  "evidence_archive_sha256": "3d1932190491d65dad1fcc62d622c468220b0813ae569bb55db4e3efcd07f61e",
+  "evidence": {
+    "output/arc3-phase4-v6-install-repair-r4.log": {
+      "sha256": "73d1dea01b322565c0e570ec8808f7d0d6ea531860ced8d85b900a5837e98147",
+      "bytes": 7558
+    },
+    "output/phase4-v6-install-check/game/install_game.json": {
+      "sha256": "b84f60f2a36f1a3623ebe4f92e313fbf64de43451afc1becab1c54d3c7f9ff39",
+      "bytes": 537955
+    },
+    "output/phase4-v6-install-check/game/resolution.json": {
+      "sha256": "b84f60f2a36f1a3623ebe4f92e313fbf64de43451afc1becab1c54d3c7f9ff39",
+      "bytes": 537955
+    },
+    "output/phase4-v6-install-check/game/stages.json": {
+      "sha256": "5ebe3a7f7a3dcf83a8deb0c6970168fdaa335c26224af7b1b86eb0eca15960b4",
+      "bytes": 1561
+    },
+    "output/phase4-v6-install-check/game/stages.log": {
+      "sha256": "8baa8f3b6a698b5141ba38205ad25f6ebdcf61643fe66509f25ea774a9158bf7",
+      "bytes": 14535
+    },
+    "output/phase4-v6-install-check/model/install_model.json": {
+      "sha256": "7c2e3d5498f6a66b1d13d633ab23ee7d4ce38d5f41ece2a7961449f8f60ed0b8",
+      "bytes": 1895007
+    },
+    "output/phase4-v6-install-check/model/resolution.json": {
+      "sha256": "7c2e3d5498f6a66b1d13d633ab23ee7d4ce38d5f41ece2a7961449f8f60ed0b8",
+      "bytes": 1895007
+    },
+    "output/phase4-v6-install-check/model/stages.json": {
+      "sha256": "4aa2779fc6c5ad630dbfb547dde0f1365ef7c8ed8f36ace535044c30705f35c4",
+      "bytes": 1328
+    },
+    "output/phase4-v6-install-check/model/stages.log": {
+      "sha256": "329e75aff4f11fa05ebd0a62ef9a17b04bbcc4529e11f751312d16c0e6086209",
+      "bytes": 73833
+    },
+    "output/phase4-v6-install-check/result.json": {
+      "sha256": "8fe88e4e9bc14305a83a26e519e21987a0e7ff80549cb721b5d49bcd51f52ac7",
+      "bytes": 3230
+    },
+    "provider-observations.jsonl": {
+      "sha256": "147ef263fb8a103625fbd4414eb836a91237b4b8b1c6a1f98bf49063fdf0ca44",
+      "bytes": 2523
+    }
+  }
+}

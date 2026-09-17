@@ -1,0 +1,46 @@
+{
+  "scope": "Static metadata dependency audit; not installation or GPU execution",
+  "target": {
+    "implementation_name": "cpython",
+    "implementation_version": "3.12.13",
+    "os_name": "posix",
+    "platform_machine": "x86_64",
+    "platform_release": "6.12.90+",
+    "platform_system": "Linux",
+    "platform_version": "#1 SMP Sat May 30 15:40:53 UTC 2026",
+    "python_full_version": "3.12.13",
+    "platform_python_implementation": "CPython",
+    "python_version": "3.12",
+    "sys_platform": "linux"
+  },
+  "model_report_sha256": "f619509838ccff99cbcaed2b07456d92a7e03b435f97c193b0a478054bd8b414",
+  "model": {
+    "package_count": 174,
+    "passed": true,
+    "conflicts": []
+  },
+  "game_inventory": {
+    "package_count": 31,
+    "passed": true,
+    "conflicts": []
+  },
+  "combined": {
+    "package_count": 187,
+    "passed": false,
+    "conflicts": [
+      {
+        "package": "numba",
+        "requirement": "numpy<2.3,>=1.24",
+        "installed": "2.4.4"
+      },
+      {
+        "package": "mistral-common",
+        "requirement": "numpy<2.4,>=1.25; python_version <= \"3.12\"",
+        "installed": "2.4.4"
+      }
+    ]
+  },
+  "model_numpy": "2.2.6",
+  "game_numpy": "2.4.4",
+  "gpu_run_launched": false
+}

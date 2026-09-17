@@ -1,0 +1,107 @@
+{
+  "recorded_at": "2026-09-17T12:19:47.526548+00:00",
+  "attempt_id": "p4-v6-install-r5-20260917T121119Z",
+  "provider_version": 1,
+  "provider_status": "COMPLETE",
+  "passed": true,
+  "scope": "split_offline_install_and_cuda_smoke_only",
+  "runtime": {
+    "model": {
+      "versions": {
+        "torch": "2.10.0",
+        "vllm": "0.19.0",
+        "transformers": "4.57.6",
+        "numpy": "2.2.6"
+      },
+      "python": "3.12.13",
+      "torch_runtime_version": "2.10.0+cu128",
+      "cuda_build": "12.8",
+      "device": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+      "driver_inventory": "GPU-5a2c0c62-5f3e-e3c9-ac97-d968126c3ab9, NVIDIA RTX PRO 6000 Blackwell Server Edition, 580.159.04",
+      "cuda_tensor_operation_passed": true,
+      "vllm_extension_import_passed": true
+    },
+    "game": {
+      "versions": {
+        "arc-agi": "0.9.8",
+        "arcengine": "0.9.3",
+        "numpy": "2.4.4",
+        "requests": "2.33.1",
+        "pydantic": "2.13.2",
+        "python-dotenv": "1.2.2"
+      },
+      "isolated_game_imports_passed": true
+    }
+  },
+  "wheelhouses": {
+    "model_payloads": 178,
+    "environment_wheels": 31,
+    "model_manifests": {
+      "SHA256SUMS": "44029b360a9c0073e4b0add10703fc3386dc06bf1314f5913a0dad9564144cbb",
+      "wheelhouse-manifest.json": "bc016164d15664c52911fcd11f4e26e72a483e248f3cc9b59ae02b3fce09cc6a"
+    }
+  },
+  "internal_elapsed_seconds": 133.00061414200002,
+  "scratch_removed": true,
+  "gpu_cleanup_verified": true,
+  "model_loaded": false,
+  "pilot_launched": false,
+  "phase4_complete": false,
+  "account_gpu_seconds_before": 26532.504,
+  "account_gpu_seconds_after": 26675.767,
+  "account_gpu_usage_delta_seconds": 143.263,
+  "account_delta_scope": "Aggregate account change, not exact per-attempt billing",
+  "exact_provider_billed_seconds": null,
+  "charged_or_reserved_seconds": 1800,
+  "released_seconds": 0,
+  "attempt_consumed": true,
+  "retry_authorized": false,
+  "evidence_archive": "evidence/phase4-v6-install-r5-passed-v1.zip",
+  "evidence_archive_sha256": "7eab12700172f0e3e0683509d917c6c71aba242efb7cfd3893de70d0312d5a2d",
+  "evidence": {
+    "output/arc3-phase4-v6-install-repair-r5.log": {
+      "sha256": "fdf4bd1cab7933707330b91b8858e745ea901df90874ba4c9ac1059d5c58b1fd",
+      "bytes": 5387
+    },
+    "output/phase4-v6-install-check/game/install_game.json": {
+      "sha256": "b84f60f2a36f1a3623ebe4f92e313fbf64de43451afc1becab1c54d3c7f9ff39",
+      "bytes": 537955
+    },
+    "output/phase4-v6-install-check/game/resolution.json": {
+      "sha256": "b84f60f2a36f1a3623ebe4f92e313fbf64de43451afc1becab1c54d3c7f9ff39",
+      "bytes": 537955
+    },
+    "output/phase4-v6-install-check/game/stages.json": {
+      "sha256": "b1d9f5ad32e60046fdbe3bbf57db8e515dac664c51907ba65d9981ed23eeca32",
+      "bytes": 1496
+    },
+    "output/phase4-v6-install-check/game/stages.log": {
+      "sha256": "c5fbd1154d3ec13dd27ebf9cb57211652a6102f582bd9ae39ef0550d36cad3f2",
+      "bytes": 13261
+    },
+    "output/phase4-v6-install-check/model/install_model.json": {
+      "sha256": "7c2e3d5498f6a66b1d13d633ab23ee7d4ce38d5f41ece2a7961449f8f60ed0b8",
+      "bytes": 1895007
+    },
+    "output/phase4-v6-install-check/model/resolution.json": {
+      "sha256": "7c2e3d5498f6a66b1d13d633ab23ee7d4ce38d5f41ece2a7961449f8f60ed0b8",
+      "bytes": 1895007
+    },
+    "output/phase4-v6-install-check/model/stages.json": {
+      "sha256": "ec4e1271b8ecaf927867a31148578c7901ab2ac951149bece501edcc5478559d",
+      "bytes": 1501
+    },
+    "output/phase4-v6-install-check/model/stages.log": {
+      "sha256": "c51579150dfa4e1e4d3e1cf912257672b110b11072f5fcbf15a6cdf4255aafeb",
+      "bytes": 74405
+    },
+    "output/phase4-v6-install-check/result.json": {
+      "sha256": "dc757710e7823575b912509a94a91edff07f8678e939166309927c6e351f04e4",
+      "bytes": 3172
+    },
+    "provider-observations.jsonl": {
+      "sha256": "9cc7a53cd232abc9b09f643a46c60f7a4bfd911595101c1a39fb622dbaa260b3",
+      "bytes": 1895
+    }
+  }
+}
