@@ -10,6 +10,22 @@ ENVIRONMENTS=ROOT/'reports/runs/phase4-v2-assets/environment_files'
 
 
 class PilotTests(unittest.TestCase):
+    def test_failed_pilot_cli_retains_original_error_without_worker(self):
+        from certification.phase4_v6.run_local_pilot import main
+        report = {'error': 'TimeoutError: external deadline reserves cleanup',
+                  'elapsed_seconds': 86, 'cleanup_verified': True}
+        result = {'passed': False, 'errors': ['missing worker']}
+        with tempfile.TemporaryDirectory() as directory, patch(
+                'certification.phase4_v6.run_local_pilot.run', return_value=(report, result)), patch('builtins.print'):
+            output = Path(directory)/'output'
+            self.assertEqual(main(['--output', str(output)]), 1)
+            summary = json.loads((output/'evaluation/local-summary.json').read_text())
+        self.assertEqual(summary['error'], report['error'])
+        self.assertFalse(summary['passed'])
+        self.assertTrue(summary['cleanup_verified'])
+        self.assertIsNone(summary['request_invariance'])
+        self.assertIsNone(summary['action_invariance'])
+
     def test_live_gate_precedes_output_or_processes(self):
         with tempfile.TemporaryDirectory() as directory, patch('subprocess.Popen') as launch:
             output=Path(directory)/'output'

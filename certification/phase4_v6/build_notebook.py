@@ -1,5 +1,6 @@
 """Package a hash-bound v6 REVIEW notebook; GPU disabled and authority closed."""
 import base64
+import argparse
 import json
 from pathlib import Path
 import zlib
@@ -77,7 +78,10 @@ finally:
 
 
 if __name__=='__main__':
-    output=ROOT/'notebooks/phase4-lifecycle-v6-review-r2';output.mkdir(parents=True,exist_ok=False)
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--output',type=Path,default=ROOT/'notebooks/phase4-lifecycle-v6-review-r2')
+    args=parser.parse_args()
+    output=args.output;output.mkdir(parents=True,exist_ok=False)
     for name,value in zip(('profile.ipynb','kernel-metadata.json','review-source-lock.json'),build()):
         (output/name).write_text(json.dumps(value,indent=1))
     print(output)

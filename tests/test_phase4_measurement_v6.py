@@ -14,6 +14,55 @@ from certification.phase4_v6.evaluate import capacity_from_worker
 
 
 class MeasurementTests(unittest.TestCase):
+    def test_checkpoint_write_does_not_block_inference_completions(self):
+        from certification.phase4_v1.lifecycle import validate_freeze
+        from certification.phase4_v6 import worker
+        from types import SimpleNamespace
+        _, rows = validate_freeze()
+        release = threading.Event()
+        completed = threading.Event()
+        checkpoints = []
+
+        def client(row, adapter, factory, watchdog):
+            if row != rows[0] and not release.wait(5):
+                raise TimeoutError('checkpoint did not release clients')
+            policy = factory(None)
+            policy.inference.execute(client_id='test', generation=0, state_hash='s',
+                callback=lambda: policy.client.complete({'client': row['client_id']}))
+            if row != rows[0]:
+                completed.set()
+            return {'client_id': row['client_id']}
+
+        class Store:
+            def save(self, name, value):
+                checkpoints.append(value)
+                if len(checkpoints) == 2:
+                    release.set()
+                    if not completed.wait(5):
+                        raise TimeoutError('checkpoint blocked inference completion')
+
+        with tempfile.TemporaryDirectory() as directory, patch.object(worker, 'run_client', client):
+            root = Path(directory)
+            state = worker.run_workload(rows, lambda row: object(),
+                lambda row, watchdog: SimpleNamespace(complete=lambda request: 'ok'),
+                root/'state.json', root/'cancel', evidence_store=Store())
+        self.assertEqual(state['status'], 'complete', state['error'])
+        self.assertIsNone(state['error'])
+        self.assertEqual(len(state['clients']), 110)
+        self.assertEqual(checkpoints[0]['clients'], [])
+        self.assertEqual(len(checkpoints[1]['clients']), 1)
+        self.assertEqual(len(checkpoints[-1]['request_timeline']), 110)
+
+    def test_timeline_snapshot_is_detached_from_later_updates(self):
+        timeline = RequestTimeline(time.monotonic())
+        timeline.events.append({'request_id': 'request-0', 'outcome': 'pending'})
+        snapshot = timeline.snapshot()
+        timeline.events[0]['outcome'] = 'completed'
+        timeline.events.append({'request_id': 'request-1'})
+        self.assertEqual(snapshot, [{'request_id': 'request-0', 'outcome': 'pending'}])
+        snapshot[0]['outcome'] = 'changed'
+        self.assertEqual(timeline.events[0]['outcome'], 'completed')
+
     def test_110_worker_instrumentation_does_not_change_requests(self):
         from certification.phase4_v1.lifecycle import validate_freeze
         from certification.phase4_v4 import worker as old

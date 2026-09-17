@@ -8,6 +8,40 @@ from certification.phase4_v6.measurement import validate_telemetry
 from certification.phase4_v6.monitor import validate_binding
 
 
+LOCAL_CPU_SMOKE_SECONDS = 300
+
+
+def evaluate_local_smoke(report, rows, *, seconds=LOCAL_CPU_SMOKE_SECONDS):
+    """Local functional gate with an explicit host-portable execution budget.
+
+    Keep the frozen v3 verdict verbatim: passing this gate is not a v3 timing
+    pass. All non-time v3 checks still apply, including complete client journals,
+    cleanup, resource limits and successful request accounting.
+    """
+    from certification.phase4_v3.evaluate import evaluate as evaluate_v3
+    historical = evaluate_v3(report, rows)
+    errors = [error for error in historical['errors']
+              if error != 'resource limit/evidence: elapsed_seconds']
+    elapsed = report.get('elapsed_seconds')
+    if (type(seconds) not in (int, float) or not math.isfinite(seconds)
+            or not 0 < seconds <= LOCAL_CPU_SMOKE_SECONDS
+            or type(elapsed) not in (int, float) or not math.isfinite(elapsed)
+            or not 0 <= elapsed < seconds):
+        errors.append('local CPU smoke deadline/evidence')
+    if report.get('lifecycle_seconds') != seconds:
+        errors.append('local CPU smoke budget binding mismatch')
+    worker = report.get('worker')
+    if (report.get('scope') != 'local_development_pilot'
+            or not isinstance(worker, dict) or worker.get('model_inference') is not False):
+        errors.append('local scripted CPU evidence required')
+    if report.get('admission_canceled'):
+        errors.append('local CPU smoke admission canceled')
+    return {**historical, 'passed': not errors, 'errors': errors,
+            'scope': 'v6_local_cpu_functional_smoke_not_historical_timing_certification',
+            'local_cpu_smoke_seconds': seconds, 'historical_v3_evaluation': historical,
+            'target_gpu_certified': False, 'phase4_complete': False}
+
+
 def monitor_fields(receipt, telemetry, *, first_cell_monotonic):
     """Convert retained monitor evidence without rebasing or dropping samples."""
     if (type(first_cell_monotonic) not in (float, int)
@@ -20,6 +54,8 @@ def monitor_fields(receipt, telemetry, *, first_cell_monotonic):
             or receipt.get('worker_pid') != telemetry.get('worker_pid')
             or receipt.get('ready_published') is not True
             or telemetry.get('ready_published') is not True
+            or (receipt.get('scope') == 'live_resource_monitor'
+                and receipt.get('gpu_binding') != telemetry.get('gpu_binding'))
             or receipt.get('status') != telemetry.get('status')
             or receipt.get('status') not in ('injected_monitor_completed', 'live_monitor_completed')):
         raise ValueError('monitor identity/clock/status mismatch')
@@ -69,6 +105,10 @@ def capacity_from_worker(worker):
 def evaluate(report, rows):
     result = evaluate_v4(report, rows)
     result['capacity_candidate'] = None
+    if report.get('gpu_cleanup_verified') is not True:
+        result['errors'].append('actual GPU cleanup evidence required')
+    if report.get('admission_canceled'):
+        result['errors'].append('admission canceled; incomplete target lifecycle')
     if report.get('resource_evidence_class') != 'live_resource_monitor':
         result['errors'].append('live resource monitor evidence required; injected probes cannot certify')
     try:

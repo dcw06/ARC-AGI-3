@@ -63,6 +63,8 @@ def monitor(args):
     from certification.phase4_v6.monitor import validate_binding, validate_sample, VRAM, RAM, SCRATCH
     from certification.phase4_v6.measurement import validate_telemetry
     store = EvidenceStore(args.output, 'monitor')
+    from certification.phase4_v6.telemetry import TelemetryWriter
+    telemetry_writer = TelemetryWriter(store)
     state = {'scope': 'live_resource_monitor' if args.mode=='live' else 'injected_resource_monitor_not_target_evidence',
              'error': None, 'status': 'running', 'samples': [],
              'worker_pid': args.worker_pid, 'first_cell_monotonic': args.started,
@@ -97,7 +99,7 @@ def monitor(args):
             state['samples'].append({'uuid': uuid, 'used_bytes': gpu['used_bytes'],
                 'rss_bytes': memory, 'scratch_bytes': disk, 'elapsed_seconds': now,
                 'monotonic_seconds': now+args.started})
-            store.save('telemetry.json', state)
+            telemetry_writer.save(state)
             previous = now
             if not state['ready_published']:
                 store.save('ready.json', {'nonce': args.nonce, 'worker_pid': args.worker_pid,
@@ -115,7 +117,7 @@ def monitor(args):
         state['monitor_ended_seconds'] = state['monitor_ended_monotonic']-args.started
         state['samples_attempted'] = len(state['samples'])
         validate_telemetry(state['samples'], state['monitor_started_seconds'], state['monitor_ended_seconds'], uuid)
-        store.save('telemetry.json', state)
+        telemetry_writer.save(state)
         store.save('monitor-result.json', {k:v for k,v in state.items() if k!='samples'})
     except Exception as exc:
         store.save('failure.json', {'error': type(exc).__name__+': '+str(exc)[:512]}, failure_receipt=True)

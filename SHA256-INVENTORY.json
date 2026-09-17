@@ -1,0 +1,2186 @@
+{
+  "AGI/.env.example": {
+    "bytes": 416,
+    "sha256": "63e3bbcf1cf7b1fe5230b746c6afed32760498e3e7e973d7c417323fe8ab3a72"
+  },
+  "AGI/.gitignore": {
+    "bytes": 597,
+    "sha256": "08e7d484cfc4926ae1de1e6fdfc65fbb1977f31231cf29bd2018e26bb61f8f54"
+  },
+  "AGI/.python-version": {
+    "bytes": 5,
+    "sha256": "7b55f8e67b5623c4bef3fa691288da9437d79d3aba156de48d481db32ac7d16d"
+  },
+  "AGI/LICENSE": {
+    "bytes": 11358,
+    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  },
+  "AGI/Makefile": {
+    "bytes": 12587,
+    "sha256": "426d8de421b2afc27f57c62e4247428a83982f70a2b5d9283df1afe841238bef"
+  },
+  "AGI/README.md": {
+    "bytes": 15241,
+    "sha256": "5162688f3967341859eb6156f0ca26d11d8dc37369d914a0fb5ece637f511ca7"
+  },
+  "AGI/agent/__init__.py": {
+    "bytes": 219,
+    "sha256": "b3eb0af7a0a461dde9fcc9cadf4987ccf282db7936d87fa49114d3fe2488eab0"
+  },
+  "AGI/agent/action.py": {
+    "bytes": 6138,
+    "sha256": "f39c95a7b096830416bd1ea85d1d26ed7e8d52328291894863f66bfea4a4c23a"
+  },
+  "AGI/agent/action_journal.py": {
+    "bytes": 5707,
+    "sha256": "720203276ae1a452e74b5f2f61ff3a29b1ac3eeec85ecd5f35290d148fa30073"
+  },
+  "AGI/agent/competition_loop.py": {
+    "bytes": 13095,
+    "sha256": "08bef472a29b01a0698cb8469683291c006fff6639cff04735e4857609f42284"
+  },
+  "AGI/agent/config.py": {
+    "bytes": 747,
+    "sha256": "bfc392859e8460d855d53ceb1aaded7aec36532826a24a88a49fea63bbcda0d7"
+  },
+  "AGI/agent/controller.py": {
+    "bytes": 2420,
+    "sha256": "1382b598c3c633223dc901af560b0161837dea60c2293816f1edc535eea042b0"
+  },
+  "AGI/agent/diagnostics.py": {
+    "bytes": 26515,
+    "sha256": "14bd8686d57c9ba4091d93ceef3ba964238aa79576b123c0baadbf860c449d85"
+  },
+  "AGI/agent/e1_policy.py": {
+    "bytes": 14355,
+    "sha256": "f11b793608469fb75a4a8a5493908867340445a87babda210f31cc2b3f77932d"
+  },
+  "AGI/agent/evidence.py": {
+    "bytes": 17677,
+    "sha256": "01d98b290240341597b55d9f44d93b30e9d0f1b139d7e6759fb6d2ade9d054fd"
+  },
+  "AGI/agent/feature_manifest.py": {
+    "bytes": 7592,
+    "sha256": "ce99c04c7ed70b7eea383615172071984c57afe31efc21262eb49cee0256b26d"
+  },
+  "AGI/agent/framework_adapter.py": {
+    "bytes": 17207,
+    "sha256": "3ac7848aecb2cadcab80f08d762a55114093151cee9d8c8e3ab824c6372218ef"
+  },
+  "AGI/agent/my_agent.py": {
+    "bytes": 1575,
+    "sha256": "10aa6ccee94dad24190e03efa816cf0b71b1e7e505d6b0baffe71fb5dfe749f6"
+  },
+  "AGI/agent/output_policy.py": {
+    "bytes": 1052,
+    "sha256": "da0fff48fb2e233d50b95aaa19fc68fb82b3041817048fd2f403e83e55952a24"
+  },
+  "AGI/agent/production_main.py": {
+    "bytes": 5422,
+    "sha256": "91b1c417444236cf8b820c04ff3e7bd1fff5e5a2c5008a447a0ec48cb2d3f275"
+  },
+  "AGI/agent/production_policy.py": {
+    "bytes": 10015,
+    "sha256": "c66a7c0edc002725c1d63b55ac5be3708816cfea6bbed060d044f6c54381272a"
+  },
+  "AGI/agent/representation.py": {
+    "bytes": 20359,
+    "sha256": "f676bf5f27e5ab13498bf44c3b638d3b231f3e1ee974ef6a8fe92e8853a63ae6"
+  },
+  "AGI/agent/runtime_audit.py": {
+    "bytes": 4528,
+    "sha256": "ecba26051855534233c8fd8d4c9fee0193f41535b092bd196cbafc3caffc913a"
+  },
+  "AGI/agent/safe_operations.py": {
+    "bytes": 10653,
+    "sha256": "6a59e0c4d7ab3f457daffcab579851b73b2038e968828a1877cd1ebb1c2c50f7"
+  },
+  "AGI/agent/scheduler.py": {
+    "bytes": 6101,
+    "sha256": "9b8a9961fc3e7eefe9755ac00dada154f1c98b3eca47faebcac45b6a90fcf7f7"
+  },
+  "AGI/agent/state.py": {
+    "bytes": 6435,
+    "sha256": "c038905633455f77fb99582cac092809c29e2ee5de06d3666b53bd3c9bc754d7"
+  },
+  "AGI/agent/watchdog.py": {
+    "bytes": 1653,
+    "sha256": "180fa253d50e1c5848bf26bfe9d15514ebc748b9b7ed072da81ec178e8b47f31"
+  },
+  "AGI/certification/phase4_v1/README.md": {
+    "bytes": 4338,
+    "sha256": "3e55e4ad8b61417dd9d2ad40a04cda9becb47b6d5c2807a49c48f88732690da2"
+  },
+  "AGI/certification/phase4_v1/budget.json": {
+    "bytes": 772,
+    "sha256": "72f4e6544264b16c454a3f91df83542c91ae62cae1257ab47317b3932fc18c1a"
+  },
+  "AGI/certification/phase4_v1/contract.json": {
+    "bytes": 3218,
+    "sha256": "905e552eb997cee4bac4fd2646f0b20ab705c3ac50a71c0b42d5df4f4e18455a"
+  },
+  "AGI/certification/phase4_v1/lifecycle.py": {
+    "bytes": 10031,
+    "sha256": "c78b22d02a510185a2c87290c6492cba4fb7f67d4547a3e1f7eecf67854df900"
+  },
+  "AGI/certification/phase4_v1/local_probe.py": {
+    "bytes": 3680,
+    "sha256": "0655543dadb8183cca5ebfa12dc8674e39327b94e7697f04e19aa123bb10f995"
+  },
+  "AGI/certification/phase4_v1/lock.json": {
+    "bytes": 2250,
+    "sha256": "53317b89d9c80d1c8097ea60fbe20826fe85dcc8bbc6a89d82f19a35defe4e4a"
+  },
+  "AGI/certification/phase4_v1/workload.json": {
+    "bytes": 16723,
+    "sha256": "38125d49ba97a5bc93656c57200a6808ac7b01ab618667709d8416ce4f43e4b7"
+  },
+  "AGI/certification/phase4_v2/README.md": {
+    "bytes": 6502,
+    "sha256": "09b67cf987fc205c803bd60d29328a9ea7faf110c1a3288fea3499a61f6e99ef"
+  },
+  "AGI/certification/phase4_v2/budget_proposal.json": {
+    "bytes": 585,
+    "sha256": "89b3e50e857a11aba22aa9c9e91cbe5cfab841c79a4a75221924964b1f4691fc"
+  },
+  "AGI/certification/phase4_v2/evaluate.py": {
+    "bytes": 6259,
+    "sha256": "09da3fb7e819bd07d81373753e1fa64b3dd8f6b6063a5d4401332e4d8bd38847"
+  },
+  "AGI/certification/phase4_v2/package.py": {
+    "bytes": 5002,
+    "sha256": "cfa7425c7c181bd628a4ede26dcf0193ae0364578ac5b09188295f1e09acefef"
+  },
+  "AGI/certification/phase4_v2/run_local.py": {
+    "bytes": 1357,
+    "sha256": "2344c65e692e6fc3fc71b0642b29bd0a545d1fa1a44c35045618ca18b8064406"
+  },
+  "AGI/certification/phase4_v2/supervisor.py": {
+    "bytes": 5357,
+    "sha256": "56e7ab38598bfcbc4d85a63f210da8ba2654ca7533b6bfa7904a68ae9e3a614a"
+  },
+  "AGI/certification/phase4_v2/worker.py": {
+    "bytes": 7441,
+    "sha256": "5ecea6a6f4cbc7d297b7475d5e1e9bf0d5ef913163f81205b03f07d4028c7916"
+  },
+  "AGI/certification/phase4_v3/README.md": {
+    "bytes": 4024,
+    "sha256": "34800263486418a5f9cbf295af6d26100d00641205da9a570b73d24fd1b3e53c"
+  },
+  "AGI/certification/phase4_v3/diagnose.py": {
+    "bytes": 4926,
+    "sha256": "5ac8a29f98d69de073c6e25846de280ef9dc968d73224c50023c0d567f00ef7f"
+  },
+  "AGI/certification/phase4_v3/evaluate.py": {
+    "bytes": 7043,
+    "sha256": "c763134836049e1bc4c40eed81d66634ea50f0c847055170f07eed9a753ac8fa"
+  },
+  "AGI/certification/phase4_v3/freeze.py": {
+    "bytes": 1438,
+    "sha256": "9181248549e65cd02bcecf5404832ec6f30955d63396c754d9ca493d7d703f34"
+  },
+  "AGI/certification/phase4_v3/lifecycle.py": {
+    "bytes": 4941,
+    "sha256": "cf91c095b5a08fae58fb850eb1227f1798b195a7dcfe1fd340ea9fa80c085431"
+  },
+  "AGI/certification/phase4_v3/protocol.json": {
+    "bytes": 1120,
+    "sha256": "104a5935a4762182fcdb0af5ec710e62e1c2cd050ee7252b51a6b692197ef6ca"
+  },
+  "AGI/certification/phase4_v3/run_local.py": {
+    "bytes": 1561,
+    "sha256": "a11182e4a9b136c7cdf247a8fa51d17f714157d1517f90a06e6ae5616cacd819"
+  },
+  "AGI/certification/phase4_v3/source_snapshot.json": {
+    "bytes": 13289,
+    "sha256": "65d7152990a177295b1fe5ba4d959863dd2b357879b7c39ccbdb0424bcba4d45"
+  },
+  "AGI/certification/phase4_v3/terminal.py": {
+    "bytes": 5337,
+    "sha256": "7f759f717311de18a11cff94b425f3656432f352b25732830749616925a02037"
+  },
+  "AGI/certification/phase4_v3/worker.py": {
+    "bytes": 7735,
+    "sha256": "02b107bdb86e63397dea31435ee11eabe09aab885148da5e1276a876720dc7bb"
+  },
+  "AGI/certification/phase4_v4/README.md": {
+    "bytes": 4456,
+    "sha256": "10156bfa75ee7bf79e8bcfe0cd9ae1e9d8929138261f6ee31bdd8cf63c799fe5"
+  },
+  "AGI/certification/phase4_v4/authority.py": {
+    "bytes": 2588,
+    "sha256": "41139ab1786f19fa7150a7df30acd8f68c0beee1847b3cafff8b147aa4d5ccbc"
+  },
+  "AGI/certification/phase4_v4/build_notebook.py": {
+    "bytes": 5415,
+    "sha256": "a1cf102a9d9b9b7c1d1bf1ced5d0b5d10916ec96413cd3b613a18c643e26989d"
+  },
+  "AGI/certification/phase4_v4/compute_ledger.json": {
+    "bytes": 269,
+    "sha256": "0bba7a9812d2d560fecfe42ebaefecd923509bdff6e5a762cd6c73ba9e9d621e"
+  },
+  "AGI/certification/phase4_v4/evaluate.py": {
+    "bytes": 9545,
+    "sha256": "bae50c6e6f8f3d4234092c49e537f683d0b507fd65b326b2714851914fc0def0"
+  },
+  "AGI/certification/phase4_v4/protocol.json": {
+    "bytes": 1498,
+    "sha256": "783fc0f4c9f33d18cd574e231fd55726de724eb07024acf6214aaaa9d4d6135e"
+  },
+  "AGI/certification/phase4_v4/run_target.py": {
+    "bytes": 1406,
+    "sha256": "a591185c124776d0d008215b87bf9538a16f1762fdae01c6292f2bff865791ee"
+  },
+  "AGI/certification/phase4_v4/service.py": {
+    "bytes": 6103,
+    "sha256": "9bce691a37c90c28c8a4d818fd03e042afcd1700112c9cb9fbce865fa1613a1d"
+  },
+  "AGI/certification/phase4_v4/supervisor.py": {
+    "bytes": 6695,
+    "sha256": "3087e1b159629b815f42f4ee523772fc1c45618028922dfe7931e72816f0a9f3"
+  },
+  "AGI/certification/phase4_v4/worker.py": {
+    "bytes": 8481,
+    "sha256": "2b05b99f5992412315280f3232028f8c38bc79c6df0ad432485da7e504f91510"
+  },
+  "AGI/certification/phase4_v5/README.md": {
+    "bytes": 5702,
+    "sha256": "9d4dd08d01f085def14c60a6b38e54d6ef660ebfaf7c667efdc00b8363826798"
+  },
+  "AGI/certification/phase4_v5/capacity.py": {
+    "bytes": 3076,
+    "sha256": "8f6fcd85b0c5c8a78f67d1ecbebd0640d03e0a0683e100efe4c3d7ef04b8df3e"
+  },
+  "AGI/certification/phase4_v6/README.md": {
+    "bytes": 13999,
+    "sha256": "6798e4b83a6e386fc5a6525ad7895dfb93867c33b0aaa0c898ba8ec8d35de008"
+  },
+  "AGI/certification/phase4_v6/build_notebook.py": {
+    "bytes": 5085,
+    "sha256": "40ffbaffb09975769906f193fe24b80570897de8703e0daa7b95eca742145e59"
+  },
+  "AGI/certification/phase4_v6/evaluate.py": {
+    "bytes": 5292,
+    "sha256": "069b4248a565a6126a1169e1a03797b300efaa6f958dce7f0902239e6a965e5c"
+  },
+  "AGI/certification/phase4_v6/evidence.py": {
+    "bytes": 3129,
+    "sha256": "18613d60a592270459ddef9bb1deb93ea17b5f0f00ba5bc5d6c12a386e0a34ef"
+  },
+  "AGI/certification/phase4_v6/gated_exec.py": {
+    "bytes": 526,
+    "sha256": "1fff710b21e855ed4fc00b38997e2927da0042258fc868de97a3a6712a3cfada"
+  },
+  "AGI/certification/phase4_v6/handshake.py": {
+    "bytes": 1250,
+    "sha256": "94897ac749772e733428e5fecaf5309b45b1ea1a07f190adfb31e922ba3fcd82"
+  },
+  "AGI/certification/phase4_v6/install.py": {
+    "bytes": 2343,
+    "sha256": "42e96a639917e01a5949487ab8866167985cc0982007e6fb23f52f87d9198c00"
+  },
+  "AGI/certification/phase4_v6/live_probes.py": {
+    "bytes": 1901,
+    "sha256": "fee63065ee739fc6771ad6f2a260303680e2e6fbe92a2e50cff70459b2b9b2c9"
+  },
+  "AGI/certification/phase4_v6/measurement.py": {
+    "bytes": 4497,
+    "sha256": "01265b74422c861e2cc07d109b0051ac174ba22db5ec473bbbbe253987ae000a"
+  },
+  "AGI/certification/phase4_v6/monitor.py": {
+    "bytes": 6693,
+    "sha256": "73ca81866fb401a43bd9ab28b15c47365b0388ab8922fa140d8717a887e524e8"
+  },
+  "AGI/certification/phase4_v6/outer.py": {
+    "bytes": 7685,
+    "sha256": "39e7316a6ec6099819e527c2883cb1234c1eb0c7e452bda264b9089ff59a0186"
+  },
+  "AGI/certification/phase4_v6/package_local.py": {
+    "bytes": 1713,
+    "sha256": "609619daca40f78473320c596f1d28e040b73cdcd9700bd3517114a71ca12231"
+  },
+  "AGI/certification/phase4_v6/pilot.py": {
+    "bytes": 10152,
+    "sha256": "5b598e554e778554cb7db9f768e816452a54b1f3703eb9cef4629c577b3a5cf4"
+  },
+  "AGI/certification/phase4_v6/pilot_child.py": {
+    "bytes": 7616,
+    "sha256": "9f59e34860477d5fc269beed18b9dbac100d41a9db75b1f2e03dd96bdf818819"
+  },
+  "AGI/certification/phase4_v6/protocol.json": {
+    "bytes": 1407,
+    "sha256": "e5fef2fa792ead456a195f5ea734dca1c0ffc9d3c1836fea25c7a7a3e7fcf562"
+  },
+  "AGI/certification/phase4_v6/run_local_pilot.py": {
+    "bytes": 2174,
+    "sha256": "b3696295eccf337d47d355c5f2b53765cea0631fd2718f3f651acf53b38d5828"
+  },
+  "AGI/certification/phase4_v6/service.py": {
+    "bytes": 6186,
+    "sha256": "ca50e36defa24ff4331a04d0a8ef09de99454d6a6151f38442add3db9fbf3588"
+  },
+  "AGI/certification/phase4_v6/worker.py": {
+    "bytes": 7974,
+    "sha256": "02a5b6ccf145fe37e0152f64958c44987d19d27f4ed33de8564c9483c5f389e9"
+  },
+  "AGI/config/action_journal_schema.json": {
+    "bytes": 605,
+    "sha256": "7eeb65abde77ee72d6e7f6edf75024cad56ae6698f06ab20a9112e04f5a8fee5"
+  },
+  "AGI/config/activation_record.json": {
+    "bytes": 2712,
+    "sha256": "f59b7a4abcd629f0faf9bc3e256409d17609c335ed30edc81304cb32859a2994"
+  },
+  "AGI/config/authority_registry.yaml": {
+    "bytes": 553,
+    "sha256": "5e16b60e774dd3c308b39218496fe97137ad56d35c9ab5a10c569334ffbaeb5a"
+  },
+  "AGI/config/competition_constraints.yaml": {
+    "bytes": 7668,
+    "sha256": "5444879f7041484ff60c146e74e45098df2134705eada02d0c05fdbc5502d203"
+  },
+  "AGI/config/context_policy.yaml": {
+    "bytes": 563,
+    "sha256": "6760b15d6335a1caefac34ce9e9ee0f2b4d80af2e51c7173d94b4e313b77bf6c"
+  },
+  "AGI/config/control_registry.yaml": {
+    "bytes": 15076,
+    "sha256": "3150f82b44dcd9263bc25f47ccc04f15683889c0f2fd8403d59eb6562aa361fb"
+  },
+  "AGI/config/dependency_manifest.lock": {
+    "bytes": 2487,
+    "sha256": "4900aa11491603004a574ffcecd2c052d413307d4149497b3ff89a101f492da0"
+  },
+  "AGI/config/e1_experiment_protocol.yaml": {
+    "bytes": 12618,
+    "sha256": "6b0938ad82df741ddf967e26701faabea44f9e3bcd374ec2b9ee46951be32906"
+  },
+  "AGI/config/e1_feature_manifests.yaml": {
+    "bytes": 2039,
+    "sha256": "65312c43d8499d86fb1a7262efc2ec483b4a4424cd180c14d7abd1a477d89eae"
+  },
+  "AGI/config/e1_proposal_schema.json": {
+    "bytes": 1243,
+    "sha256": "7242ba8b67ad8a7ec7fc5e4686aebe8b2557374bdfd5b36933c6390c5a99b201"
+  },
+  "AGI/config/e1_safe_operations.yaml": {
+    "bytes": 893,
+    "sha256": "6779d5786e582d4f80fcc04cfae7461f17e26829d992344ed7a2aea9e991e5f5"
+  },
+  "AGI/config/e1_whole_run_protocol.yaml": {
+    "bytes": 3455,
+    "sha256": "26f86ad761617adfd1b3cff78f5bec8aafd8f8e1757757bdd026030d77ef1c1e"
+  },
+  "AGI/config/evidence_path_map.json": {
+    "bytes": 437,
+    "sha256": "aecd3d734c63f1a0282e13b06c519ab3189b74967bdc79293429ccf82256b959"
+  },
+  "AGI/config/evidence_policy.yaml": {
+    "bytes": 1136,
+    "sha256": "72e0450c9e4c49b251e1da45c5635ce70810364a13a470886ef6c858d172185c"
+  },
+  "AGI/config/experiment_registry.yaml": {
+    "bytes": 5241,
+    "sha256": "29fd33645f4c9d0b9a0fc3ea4ee30c61a8e7c0e34b703a209d4589576f75e5db"
+  },
+  "AGI/config/framework_adapter_manifest.yaml": {
+    "bytes": 2095,
+    "sha256": "b006d93dfea57d3bf2ceca6477beb3b19e7c31ed4d8d0a8a7cf79bae68c15665"
+  },
+  "AGI/config/h1_architecture_guardrail_protocol_v3.yaml": {
+    "bytes": 22064,
+    "sha256": "dbf5f7287e9cb2355dd184f12bc7eceec4a1451409442f69715c6883d65b1af1"
+  },
+  "AGI/config/holdout_ledger.yaml": {
+    "bytes": 1042,
+    "sha256": "59c3c1d02b0e63b55c10def86d246477df0ded1c01bb32597bdb4fbba258481a"
+  },
+  "AGI/config/lifecycle_journal_schema.json": {
+    "bytes": 679,
+    "sha256": "4c290e1391d9916d768e62e75364fe4997805d2415845f5292a8ec926b07ebf6"
+  },
+  "AGI/config/m0_launch_spec_q38.json": {
+    "bytes": 987,
+    "sha256": "a92a31b39625bf17b42a15173292813a0fdb5d88bfa804fa438f02e2ad67c464"
+  },
+  "AGI/config/m0_launch_spec_q3vl30.json": {
+    "bytes": 1043,
+    "sha256": "88b23283f930b7968e75c087ffb44024fcf279254fb4993e88f18243ac12eb4a"
+  },
+  "AGI/config/m0_launch_spec_q3vl8.json": {
+    "bytes": 1028,
+    "sha256": "7db7f9ed689b8856ac2367be77d2e79eb948c58619ee547f7bf36f6bc2c81b2b"
+  },
+  "AGI/config/m0_profile_schema.json": {
+    "bytes": 2359,
+    "sha256": "a0ec41038b52d5b0334bf5a413846c1acfb609084566b79afd36ea7e32a1e24c"
+  },
+  "AGI/config/model_manifest.yaml": {
+    "bytes": 6125,
+    "sha256": "de5ecf590cb4ebdf720749d0c1d7e8febe9deea944517a892b2201a9a7f03a03"
+  },
+  "AGI/config/operational_primary.yaml": {
+    "bytes": 2973,
+    "sha256": "489765d436df7e0ae7c80b9494c3c1ab4b7153b46f8dc5951724b59561ebb709"
+  },
+  "AGI/config/output_policy.yaml": {
+    "bytes": 540,
+    "sha256": "0bce027fdae4a8901188ba875ae69532b7d3293e7d3ec4bd447c0b035d84777a"
+  },
+  "AGI/config/phase1_decision.yaml": {
+    "bytes": 2575,
+    "sha256": "a2e34e3f97b84daad5197643e5ea06e6aa90c48c1d5eb8df28d0d218a9027854"
+  },
+  "AGI/config/phase23_evidence_package.json": {
+    "bytes": 19348,
+    "sha256": "efefb4d8970174287951c1d15303f495d4eb588c3cad4f8167336e061ac46e13"
+  },
+  "AGI/config/phase2_admission_index.json": {
+    "bytes": 80,
+    "sha256": "2dcaafeacb6477e7a0184199cc14e9d38e534f2f8474d489b90ab02d2114161d"
+  },
+  "AGI/config/phase2_closure.json": {
+    "bytes": 1429,
+    "sha256": "6f64777bf97b847e1b90c566d50d4d218f1e961ddb4032db36a70d50467ea7be"
+  },
+  "AGI/config/phase2_compute_ledger.json": {
+    "bytes": 837,
+    "sha256": "308bb94db8101419045f40ac53bf1fb845ccaa18ffbf60de42f908622107915e"
+  },
+  "AGI/config/phase2_compute_ledger.lock": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "AGI/config/phase2_conditional_implementation.yaml": {
+    "bytes": 2820,
+    "sha256": "7b58a5aa1e16ae4a1bc182f5668c6f884ed637fb7d71a11665018d8abea10e32"
+  },
+  "AGI/config/phase2_contract.yaml": {
+    "bytes": 12642,
+    "sha256": "ac93fec5404824cc58744f3d1da72a1bc2c4706d96ad3eb1ecd634a37b43b430"
+  },
+  "AGI/config/phase2_diagnostic_capture.yaml": {
+    "bytes": 2527,
+    "sha256": "b99b880ad241b7140ef158bc725db184896839126bb656e2b99aeefcb4f620bf"
+  },
+  "AGI/config/phase2_diagnostic_schema.json": {
+    "bytes": 9074,
+    "sha256": "b0457889ee023d0b4d9cba80064051ab92de16c467ee0b636a47fc1b1804089f"
+  },
+  "AGI/config/phase2_failure_record_schema.json": {
+    "bytes": 5933,
+    "sha256": "c5a564276d9219e588a7e0de19a2447f68ebb54067958a9b88954e343d1f6227"
+  },
+  "AGI/config/phase2_treatment_manifest_schema.json": {
+    "bytes": 6139,
+    "sha256": "a3fcfd9e9020276b4cc6b76488127986fa0c681775d0c073f9355369532b7d3d"
+  },
+  "AGI/config/phase2_treatment_selection.yaml": {
+    "bytes": 8236,
+    "sha256": "e730a1a6c7336dc10d3cff71eeb4f22d6031c599c968f997d44ea7ec2d2a66f9"
+  },
+  "AGI/config/phase2_treatment_selection_schema.json": {
+    "bytes": 8860,
+    "sha256": "b96dd149ab39e80bec74ef5acd1247dd56affba2368163f4ecdf5220e3636d2b"
+  },
+  "AGI/config/phase3_decision.json": {
+    "bytes": 2880,
+    "sha256": "137533a219f258e1e8ec91720d9c3533d50948eb2fd1cd0e43ee26cbae6e5f22"
+  },
+  "AGI/config/phase3_prediction_schema.json": {
+    "bytes": 2856,
+    "sha256": "51bfdfc60633d9bd2add4295bd2586d8038d4d7ae5452a3677591e1d381e0e3f"
+  },
+  "AGI/config/phase3_preparation.json": {
+    "bytes": 1578,
+    "sha256": "4d82e6ac57461b1fb4986b6e89ec71a9604aba8bea3cb7db6e26bca473ab0909"
+  },
+  "AGI/config/phase4_compute_ledger.json": {
+    "bytes": 3231,
+    "sha256": "d4ae5b9f9fe7c3a1795311a40d7ced0f333654d299f99924653a132208786958"
+  },
+  "AGI/config/phase4_contract.json": {
+    "bytes": 5724,
+    "sha256": "8f0e95c9433d97d59c0811a3390e67a5b41c148c9aecb0983eadd32bc86b0a5b"
+  },
+  "AGI/config/phase4_contract_lock.json": {
+    "bytes": 209,
+    "sha256": "b2e8c62cf616e7a8ad83384d0a4c9e24aaa4d6b066b915dfe794821d2652fd39"
+  },
+  "AGI/config/phase4_execution_lock_v1.json": {
+    "bytes": 10867,
+    "sha256": "917f400b02ae44a84ae0df5d946dd5de9111f026b54af472094484fd59a48e66"
+  },
+  "AGI/config/phase4_execution_lock_v2.json": {
+    "bytes": 10983,
+    "sha256": "1f0fd4014fb6170c3673513ea504225e101dd98e8c1ada4f8c9b1a9aede6780d"
+  },
+  "AGI/config/phase4_execution_protocol_v1.json": {
+    "bytes": 2451,
+    "sha256": "5f84511aa74df9a53c848acf200bc57f479d986051a0c15353bfde5d601d1804"
+  },
+  "AGI/config/phase4_execution_protocol_v2.json": {
+    "bytes": 2585,
+    "sha256": "9140fcc07f736370310e4007e113953788e3a8f577f650c8459fc585811c912a"
+  },
+  "AGI/config/phase4_preflight_lock.json": {
+    "bytes": 326,
+    "sha256": "b41f3ffbdf03835c3652e20c4864ca689005516c100fbf8021b1c29b38de0d56"
+  },
+  "AGI/config/phase4_target_profile.json": {
+    "bytes": 2809,
+    "sha256": "0f93da89fcbd2d2df20b3f076995c720c51f383a06b84a174af7e94d2d5749c6"
+  },
+  "AGI/config/prediction_schema.json": {
+    "bytes": 463,
+    "sha256": "b7ed168f87e46fd1855cfa8ed24ce5515e40f67f97c5e0cd8ccdcae7d3f13b03"
+  },
+  "AGI/config/representation_manifest.yaml": {
+    "bytes": 1330,
+    "sha256": "acd44c30082b6f8d0e8fcfc272844d3f6fd57aa2d5b93612472b2d08d96fb2b7"
+  },
+  "AGI/config/runtime_profiles.yaml": {
+    "bytes": 3931,
+    "sha256": "23f0888b57a81f69b6319aef2c50365a5a2a8155ca3ce4c84147349de9afe2ff"
+  },
+  "AGI/config/scorer_fixture.json": {
+    "bytes": 1080,
+    "sha256": "05536c0818b6a5539013557f6eb4ad84efd6500bd8860c5f7644c2634d90dee1"
+  },
+  "AGI/config/sealed_output_schema.json": {
+    "bytes": 466,
+    "sha256": "cd04b489dfe5d8731d6f8268da546621ded7cd44bae0ca5d95c20b11be69060a"
+  },
+  "AGI/config/source_manifest.yaml": {
+    "bytes": 498,
+    "sha256": "c64ca4f77be542059084952ebca1a11f90138901b4dc5a3f4e8269b2b3f2605b"
+  },
+  "AGI/config/statistics_protocol.yaml": {
+    "bytes": 1423,
+    "sha256": "a0666221e34a057e8caa9b60e1e4144256a73cb2b449d34c79a9c6172144b005"
+  },
+  "AGI/config/success_criteria.yaml": {
+    "bytes": 3826,
+    "sha256": "60135b7c868286d871bb6a6016a749d1435bcbf49a52b2ea61c1fa93d3cc1107"
+  },
+  "AGI/docs/ARC-AGI-3_Final_Project_Plan.docx": {
+    "bytes": 31762,
+    "sha256": "31fdfd6772bc2e50607cb3da7e64e7a1828dca0b515092748f172ad785630436"
+  },
+  "AGI/docs/ARC-AGI-3_Final_Project_Plan.md": {
+    "bytes": 37499,
+    "sha256": "b568b6752735a5759c083123ed708a0f04af29e7020b58cf28ecb239539ac235"
+  },
+  "AGI/docs/ARC-AGI-3_Preliminary_Project_Plan.docx": {
+    "bytes": 23517,
+    "sha256": "d9e6aa226dfa2c35dab804c7ca0dfd25608d4dfa0d9ce4f3dbd9c7e9c31077c3"
+  },
+  "AGI/docs/ARC-AGI-3_Preliminary_Project_Plan.md": {
+    "bytes": 41540,
+    "sha256": "a8ebecb14897af6c5f26a0c0ee40ef852a14f59ad2b128d6c194445a02779fd0"
+  },
+  "AGI/docs/ARC-AGI-3_Project_Plan.md": {
+    "bytes": 34153,
+    "sha256": "8413c6f4fe6c001d74176e5424da978c2ece63db56ec72b2c36b654c388500b4"
+  },
+  "AGI/docs/ARC-AGI-3_Project_Plan_2.md": {
+    "bytes": 28955,
+    "sha256": "eeabdf76ec2faa988e275c52c0e0ca26d7a50f009d833565ceeaf6486eed9757"
+  },
+  "AGI/docs/ARC-AGI-3_Project_Plan_3.md": {
+    "bytes": 44077,
+    "sha256": "6a605aa576e58baaa05888362fa27fdd7ae9630b17bb1b71d0d1960a1be99917"
+  },
+  "AGI/docs/ARC-AGI-3_Project_Plan_4.md": {
+    "bytes": 41889,
+    "sha256": "e1a7ba1583fb1c89da11fc4562e8a5479a4ed7d5777ec83a6f2facab736bcdee"
+  },
+  "AGI/docs/ARC-AGI-3_Project_Plan_5.md": {
+    "bytes": 51756,
+    "sha256": "019fd0b03706a8b6cf75f72e67f8ba0f69ed827298839f54fa944b56ddc4491c"
+  },
+  "AGI/docs/ARC-AGI-3_Project_Plan_6.md": {
+    "bytes": 63598,
+    "sha256": "af5a2286a003aba0b2b0cca2252b5826da43a9ac6eb756011bcc8b38fa951fff"
+  },
+  "AGI/docs/ARC-AGI-3_Project_Plan_7.md": {
+    "bytes": 67786,
+    "sha256": "15834ee4ceb8204c1e8b313c2fe1d483a3765246b214dfc9c4086711257f6820"
+  },
+  "AGI/docs/ARC-AGI-3_Project_Plan_8.docx": {
+    "bytes": 88408,
+    "sha256": "e0602fa8b51f234fdd5e15a16b1aac0263eb3e112095cedef32f54e7b7c9f606"
+  },
+  "AGI/docs/ARC-AGI-3_Project_Plan_8.md": {
+    "bytes": 172549,
+    "sha256": "53f5fe8583f8c0596d57089044cae4b56dd21f5d180faac6215839dc068b41d4"
+  },
+  "AGI/docs/Preliminary_So_Reasoning_Agent_Proposal.md": {
+    "bytes": 10240,
+    "sha256": "ea29e949d529568b2846d8ded6cede67ac0f08f0ed11206b773e86b4fecbd028"
+  },
+  "AGI/docs/WINDOWS_TRANSFER.md": {
+    "bytes": 2935,
+    "sha256": "41af7c9fcfa419d0d98b2df817d2add0a5fdc71065df0c78367eaf048ca8b46c"
+  },
+  "AGI/environment_files/ls20/9607627b/ls20.py": {
+    "bytes": 105874,
+    "sha256": "298c810da2850d557c95d92a2cbd846df29a45d7134e20888617bedf5dafcd92"
+  },
+  "AGI/environment_files/ls20/9607627b/metadata.json": {
+    "bytes": 298,
+    "sha256": "5ce5f9413ff271c07573b1e8e1396d3cc3753e1fc45cbe58041ba7ab7e4a3513"
+  },
+  "AGI/environment_files/vc33/5430563c/metadata.json": {
+    "bytes": 293,
+    "sha256": "f9fdf650e38eb8eb8ac788431ab5efb71ae426542f89fe69d5826d9a57e10fc7"
+  },
+  "AGI/environment_files/vc33/5430563c/vc33.py": {
+    "bytes": 75241,
+    "sha256": "8afa9f55054b2a2460b6c44ec5c66e120f6d6f4c2289e24d50832a68d1e3fcfd"
+  },
+  "AGI/evaluation/__init__.py": {
+    "bytes": 191,
+    "sha256": "3f4ca54eb60ba1c30c4ebd5921d8e961407f056b9d665d5b406b7a524dd9f619"
+  },
+  "AGI/evaluation/counters.py": {
+    "bytes": 1471,
+    "sha256": "156b5cff21dca704dbf24d850037678b8991e045adc42dbe60ff0323ab8bbca1"
+  },
+  "AGI/evaluation/e1_experiment.py": {
+    "bytes": 10651,
+    "sha256": "4c1cf2176b84c633dfbd252f9091e68c90ab3840c0f1e45a27a240e35a97fd70"
+  },
+  "AGI/evaluation/e1_profile.py": {
+    "bytes": 4941,
+    "sha256": "b74d56be118fe11bd98ceb5163b5a3643feae6ee7c7c7c4db69835a5ed4ec0a6"
+  },
+  "AGI/evaluation/e1_whole_run.py": {
+    "bytes": 8727,
+    "sha256": "9089ec859562174d44a910df6d8447a7f5e18b00c93aa58479e0ab95a8ce574d"
+  },
+  "AGI/evaluation/h1_guardrail.py": {
+    "bytes": 4313,
+    "sha256": "85ac062e4c7ec82a4f1419def4ccc2557e44d27ccf2d7b2973f36f93b70a1da1"
+  },
+  "AGI/evaluation/m0_profile.py": {
+    "bytes": 6485,
+    "sha256": "615cdfa0ec94d38d404d35d5f0ff51a7a6fccf46001b7544b0873a6f11246d24"
+  },
+  "AGI/evaluation/metrics.py": {
+    "bytes": 2568,
+    "sha256": "8a5ed5b0029126ecd255cbea425371745075d8a778ab458cc5569c5fd306a5a5"
+  },
+  "AGI/evaluation/phase1.py": {
+    "bytes": 7733,
+    "sha256": "ba11fe0ab770b9623b5658d50a30b2a58e8c99e0fc7b17289528eb235fe44e3c"
+  },
+  "AGI/evaluation/phase2_budget.py": {
+    "bytes": 5218,
+    "sha256": "11223d08334a4b939732b728fde385725822ad7eb8e22dfc5368dc87282cba12"
+  },
+  "AGI/evaluation/phase2_contract.py": {
+    "bytes": 31228,
+    "sha256": "89d86d5619511fcfa02cdf23d464c6ed9ae69a61c844de554d264632c8b48a30"
+  },
+  "AGI/evaluation/phase2_evidence_gate.py": {
+    "bytes": 4673,
+    "sha256": "b95da97a176c0fb45f58a693ff4989607580464fc7850546bd12aa0e38aa648f"
+  },
+  "AGI/evaluation/phase2_reproduction.py": {
+    "bytes": 8169,
+    "sha256": "e123d3e75086eea42eb3ea1e2d4baa55b9ee028d7f68d18accc7b60067f5a672"
+  },
+  "AGI/evaluation/phase2_selection.py": {
+    "bytes": 19002,
+    "sha256": "d8fbd6646b1b8bb40f809fbdd0615b6a1b175f2b8f477dedeabea24ef7406513"
+  },
+  "AGI/evaluation/phase2_sequences.py": {
+    "bytes": 5340,
+    "sha256": "a0ea7f6b9573b1dfc9abdc897e30d78ddf659e7809cda6b76e760ed1e2857398"
+  },
+  "AGI/evaluation/phase3.py": {
+    "bytes": 10051,
+    "sha256": "869e382095476c5e88970ed37ff6be6b5dd7a89a6a6511cbb7cb869d6f9ad25a"
+  },
+  "AGI/evaluation/phase4.py": {
+    "bytes": 6130,
+    "sha256": "73aa9bb920c411c6dddd34508003611e07e04c735db4ffc413251bcf95d76aec"
+  },
+  "AGI/evaluation/phase4_execution.py": {
+    "bytes": 3922,
+    "sha256": "2c5c305b56b9ff3068802b3212995850991b47c1fde19cd9756ad758ae8a3a7e"
+  },
+  "AGI/evaluation/phase4_preflight.py": {
+    "bytes": 6660,
+    "sha256": "99dc9d422ee21e7352014461dd1f90e7a60f1da9bd018f98a732a64cafb39e88"
+  },
+  "AGI/evaluation/phase4_runner.py": {
+    "bytes": 12166,
+    "sha256": "c577d12c20e7b978109b65dcff843ebb43719e6ad67bdc9c1e9e7bc730d1ca86"
+  },
+  "AGI/evaluation/phase4_target.py": {
+    "bytes": 13258,
+    "sha256": "36002728bca962f916a36694871e09b84d9d26bc0a421e20a34414cd32f2a932"
+  },
+  "AGI/evaluation/phase4_workload.py": {
+    "bytes": 4181,
+    "sha256": "78e6d761add8d29ffb24acc8042472cb4c6a3c179184335e81e93768eee01b7a"
+  },
+  "AGI/evidence/phase23-closure-v1.zip": {
+    "bytes": 278942,
+    "sha256": "04e7de561a0f12813a7c1608882f1a2602f8b50772e8f4cce5538943333cd657"
+  },
+  "AGI/evidence/phase4-prescreen-v2-p4-v2-20260915T104415Z.zip": {
+    "bytes": 13912,
+    "sha256": "fb73c581f934d71f13e048b0254960b25aae89df14c66c2b11c4c2847c8dd9fd"
+  },
+  "AGI/evidence/phase4-v2-development-offline.zip": {
+    "bytes": 43383437,
+    "sha256": "777dbf17e601a0f205a8fd2fd03bc42a473d2b1359bab36947ddd9be7b0f473e"
+  },
+  "AGI/evidence/phase4-v2-local-110-evidence.zip": {
+    "bytes": 1311002,
+    "sha256": "5906d5c79a0c2881a4bdaf2c48052656602f6c345d953f9900c5fb3fc8405be6"
+  },
+  "AGI/evidence/phase4-v2-owner-pasted-log.txt": {
+    "bytes": 41442,
+    "sha256": "6f2747c360eb6ef1dd13201b4f2ce80cbcf34640e6683f2d3adfea1bb340b819"
+  },
+  "AGI/evidence/phase4-v2-provider-duration.png": {
+    "bytes": 409319,
+    "sha256": "5c7881943f272edac66343b57bd0b65940f52704411e8196465bc89fcbf42ad8"
+  },
+  "AGI/evidence/phase4-v2-provider-version-count.png": {
+    "bytes": 500561,
+    "sha256": "4de7569270d40e19281f4111bcf6096cf3ba0cc13c5887e19e96fee8a07e2096"
+  },
+  "AGI/evidence/phase4-v3-terminal-lifecycle-evidence-portable.zip": {
+    "bytes": 1805452,
+    "sha256": "b50632d597290cf28f8e4735c5232172685e2b38c470d2c8e496a29f192074b0"
+  },
+  "AGI/evidence/phase4-v3-terminal-lifecycle-evidence.zip": {
+    "bytes": 1800109,
+    "sha256": "f54ecc41723367156a8513f30dfbca11776df278ad3c0f46686662baf8e2b27e"
+  },
+  "AGI/evidence/phase4-v6-integrated-local-review-r2.zip": {
+    "bytes": 1817363,
+    "sha256": "39e2bf9cd66c0edcb9335827d07453dabedff6dcdc475f4aa556cbb58b8f70d0"
+  },
+  "AGI/evidence/phase4-v6-integrated-local-review.zip": {
+    "bytes": 1817195,
+    "sha256": "b47a2b42411d239439b5d5a23f3a2244dc24b784e64ba10cc199a7554dfad887"
+  },
+  "AGI/h1_architecture_guardrail_protocol (1).yaml": {
+    "bytes": 13992,
+    "sha256": "03310ed91726d47fffcb7d7df34df8cd387a1ba54c598e9af3f288559aae0174"
+  },
+  "AGI/notebooks/e1-four-cell/kernel-metadata.json": {
+    "bytes": 576,
+    "sha256": "5c068bf8bc97f7f4625150aa96d538643041d08a5a2267a08062338ddcec148b"
+  },
+  "AGI/notebooks/e1-four-cell/profile.ipynb": {
+    "bytes": 121210,
+    "sha256": "591ccf7865f341c0b5ad98bbd5382ab5d9ef2dc0c6201fbf7678576a600e6506"
+  },
+  "AGI/notebooks/e1-q3vl30/kernel-metadata.json": {
+    "bytes": 584,
+    "sha256": "57bb0f88820519a61d74e699f58e4483a06744ae70283da06d80a673667a4fdd"
+  },
+  "AGI/notebooks/e1-q3vl30/profile.ipynb": {
+    "bytes": 49147,
+    "sha256": "83a6de79104a35f7d3fd560c9583cc17d4c783b235afcb727052364013390d78"
+  },
+  "AGI/notebooks/kernel-metadata.json": {
+    "bytes": 602,
+    "sha256": "d70e372b832219f90530bda0095bcc58f4ebac122fd30a3c6e646e34a00233ed"
+  },
+  "AGI/notebooks/m0-q38/kernel-metadata.json": {
+    "bytes": 590,
+    "sha256": "c90bd715d98462775559f826b10aadf3ff801617ba5323f6f1b1e9f5090cf6c5"
+  },
+  "AGI/notebooks/m0-q38/profile.ipynb": {
+    "bytes": 48640,
+    "sha256": "ded26bc73b2874606936cb54c85e52ee41f8ccef1a08e64e806fa70c6fda9090"
+  },
+  "AGI/notebooks/m0-q3vl30/kernel-metadata.json": {
+    "bytes": 580,
+    "sha256": "f0e3fe4399e2a7c4a1da231f341aa1328aeeb4847d2a2e44157b3d5ce49dfd54"
+  },
+  "AGI/notebooks/m0-q3vl30/profile.ipynb": {
+    "bytes": 48707,
+    "sha256": "7f08611ddc01491d174810b5edd9f398055e90b849135cb2e4a860f78ddb6c68"
+  },
+  "AGI/notebooks/m0-q3vl8/kernel-metadata.json": {
+    "bytes": 573,
+    "sha256": "e9951c717dcd1febcfc6d6c14e5d593fd7414152b23078f3e10c6aab0ecd03af"
+  },
+  "AGI/notebooks/m0-q3vl8/profile.ipynb": {
+    "bytes": 48659,
+    "sha256": "3019c9a2c34e585b2bf1852ce5860b749bba099e78343411f7d573996ec28053"
+  },
+  "AGI/notebooks/phase2-cd82/execution-lock.json": {
+    "bytes": 4098,
+    "sha256": "7d54616454a85bcca0c4c3b216aa6841f286bc311397fee44f4e2b199089686c"
+  },
+  "AGI/notebooks/phase2-cd82/kernel-metadata.json": {
+    "bytes": 528,
+    "sha256": "a98ee49af08ad1f8e2b8f2dac099d654f73b8a1debc06ac263019da71007c2c6"
+  },
+  "AGI/notebooks/phase2-cd82/profile.ipynb": {
+    "bytes": 156987,
+    "sha256": "1da4595869d3d47c25ddffadf2240ca9096836e10f124072db8b834d1a24ba14"
+  },
+  "AGI/notebooks/phase2-cd82-v2/capture-extension.json": {
+    "bytes": 429,
+    "sha256": "8145ce216c774b0fd43ed49280ab0f6f585fec9779b78449d0490cd5897fc150"
+  },
+  "AGI/notebooks/phase2-cd82-v2/profile.ipynb": {
+    "bytes": 162920,
+    "sha256": "e19fa5a90eead526795dd1ac6089f44bba4db02cb953501a2da81610dbf20d7e"
+  },
+  "AGI/notebooks/phase4-lifecycle-v4-review/kernel-metadata.json": {
+    "bytes": 497,
+    "sha256": "5f2f487aad912d28988fa532e525a11a496276af517cc4590b87dc6a20cb7a63"
+  },
+  "AGI/notebooks/phase4-lifecycle-v4-review/profile.ipynb": {
+    "bytes": 423676,
+    "sha256": "f9f129eaac04d4106cf693c7168eed1bc6bc14a5d4dbce082abea8212ff88565"
+  },
+  "AGI/notebooks/phase4-lifecycle-v4-review/review-source-lock.json": {
+    "bytes": 14198,
+    "sha256": "4347804f982a68c11624f3111df2f1ff7442afecbb044d90d54144fa78fe0597"
+  },
+  "AGI/notebooks/phase4-lifecycle-v6-review/kernel-metadata.json": {
+    "bytes": 497,
+    "sha256": "b3d90364fe611f8267584ba37b35cb3c6c25f0ac5abfab760e7b1187abeaf7f5"
+  },
+  "AGI/notebooks/phase4-lifecycle-v6-review/profile.ipynb": {
+    "bytes": 510680,
+    "sha256": "fb3aa25f00d631b27c67ef8552798c7cff46131bacfc9ce4289566184b125c57"
+  },
+  "AGI/notebooks/phase4-lifecycle-v6-review/review-source-lock.json": {
+    "bytes": 18277,
+    "sha256": "ce4771f3354a133b0873eaffd8b2a81122b0f33ba3f163db4ff4950d2f8212ad"
+  },
+  "AGI/notebooks/phase4-lifecycle-v6-review-r2/kernel-metadata.json": {
+    "bytes": 497,
+    "sha256": "b3d90364fe611f8267584ba37b35cb3c6c25f0ac5abfab760e7b1187abeaf7f5"
+  },
+  "AGI/notebooks/phase4-lifecycle-v6-review-r2/profile.ipynb": {
+    "bytes": 510888,
+    "sha256": "0e48bd104889d8765f4bb6571a5011530811e9534cf9b8138453eb2f636b3ff1"
+  },
+  "AGI/notebooks/phase4-lifecycle-v6-review-r2/review-source-lock.json": {
+    "bytes": 18277,
+    "sha256": "7b458b2f365f975264e00599fec34883a069b17ea7659ac2f341c17a8e92e55a"
+  },
+  "AGI/notebooks/phase4-prescreen-v1/REVIEW_BLOCKED.md": {
+    "bytes": 359,
+    "sha256": "b0d9afb16c3766902e99f9f28987f2fe45b5f071fca27f892db06f92077d85a7"
+  },
+  "AGI/notebooks/phase4-prescreen-v1/kernel-metadata.json": {
+    "bytes": 551,
+    "sha256": "8006f62bc11c976008ce11615ee55d4b927ddc96b84de6a1e0bbc26aba28862a"
+  },
+  "AGI/notebooks/phase4-prescreen-v1/profile.ipynb": {
+    "bytes": 319230,
+    "sha256": "8e8e2207e9e93fadae4d516c3701a1e84c407bf39f97c316491e66833ae7f5d9"
+  },
+  "AGI/notebooks/phase4-prescreen-v2/kernel-metadata.json": {
+    "bytes": 551,
+    "sha256": "ced0014dd35f33d272142b064c0a2011b41350734441b3e0e039b5132ffbc789"
+  },
+  "AGI/notebooks/phase4-prescreen-v2/profile.ipynb": {
+    "bytes": 323967,
+    "sha256": "4ad2d09f5dc6ef4c79bf3eb6d08d83a645f31b60aefd85674c6bab7e6cb9e2d8"
+  },
+  "AGI/notebooks/submission.ipynb": {
+    "bytes": 212507,
+    "sha256": "251d989e49cf6c956b5aa6e46098bcb65fea1110f1c1bd75ddf26d6eebe6932f"
+  },
+  "AGI/reference/phase1/forge/arc-agi-3-lb-0-86-3rd-place-candidate-milestone.ipynb": {
+    "bytes": 109209,
+    "sha256": "d07a894a6ad287e60389cc6925e26a357a187028999f1a5926bc0f4e7b149b8c"
+  },
+  "AGI/reference/phase1/forge/kernel-metadata.json": {
+    "bytes": 842,
+    "sha256": "78b37f0cad6e54a6605dd61cb186355a75a8b608eb71433f88258ba0819c1391"
+  },
+  "AGI/reference/phase1/foysal-duck-v12/kernel-metadata.json": {
+    "bytes": 859,
+    "sha256": "7cb0deb0dbe65ce87ff76054aefd480f40655991c22900bd0f9539bbef8a5290"
+  },
+  "AGI/reference/phase1/foysal-duck-v12/lb-9-arc3-duck-v12-with-qwen-3-8-27b.ipynb": {
+    "bytes": 30377,
+    "sha256": "a1993f6dd4eac64501046aab561f8222c0b6ee8a03944998560acbc58d66a7d8"
+  },
+  "AGI/reference/phase1/reki/kernel-metadata.json": {
+    "bytes": 738,
+    "sha256": "5b4f3506e5c71c54f3f471e4be11736d4d84304f170edd960bbc17883ad4c7ee"
+  },
+  "AGI/reference/phase1/reki/milestone1-2nd-solution.ipynb": {
+    "bytes": 98034,
+    "sha256": "3cb34c4a04140535081afa611159fc303ccd29481bd34a62e3bc6aa44bff0618"
+  },
+  "AGI/reference/phase1/wuliao-duck-anim/duck-qwen3-8-anim-base.ipynb": {
+    "bytes": 30224,
+    "sha256": "72d6f35147b5d1c422a2959cc378727df6b688c4f478c2aa9ad3580b4a247122"
+  },
+  "AGI/reference/phase1/wuliao-duck-anim/kernel-metadata.json": {
+    "bytes": 822,
+    "sha256": "fad2f7a0b09954df1ae8bc5a366dc1877d9872ce1aca76021026ee6d80792d8a"
+  },
+  "AGI/reports/AGI_MEMORY_HANDOFF_2026-09-16.md": {
+    "bytes": 12087,
+    "sha256": "ffd67055f12993860323b09b1a61ca78c130b25b8aecbd98cb312306fccf860f"
+  },
+  "AGI/reports/e1_causal_four_cell.md": {
+    "bytes": 4512,
+    "sha256": "3bf4d313ed5a5d0c8808563ff50d3495bc3a97a0ac0f35d0a92a7351f8ab11f6"
+  },
+  "AGI/reports/e1_profiles/q3vl30-mixed-v3.json": {
+    "bytes": 15896,
+    "sha256": "e83f750635fc862bba8138229c97bcd8c5dd7ae56e4a99dc31a48ce9acf157a7"
+  },
+  "AGI/reports/e1_results/e1-causal-four-cell-v5.json": {
+    "bytes": 61555,
+    "sha256": "f186192705e061734bf7bb93dd64f2afbe2f5538eaf828a04a123fca9515eb9d"
+  },
+  "AGI/reports/e1_results/e1-whole-run-four-cell-v1.json": {
+    "bytes": 131929,
+    "sha256": "7ca485b51f38955ca73b148e3396426f09ea6ade911c170a2dc203f6ef5bb245"
+  },
+  "AGI/reports/m0_candidate_audit.md": {
+    "bytes": 3012,
+    "sha256": "4f19d4829f4cfcc0a4979ecd8964de1276351774a72cb359addc6b81907059a3"
+  },
+  "AGI/reports/m0_profiles/m0-q38-low.json": {
+    "bytes": 3846,
+    "sha256": "37a55b245841a7d9f285e6c7da7660e5f2e4fb89c4468c01808ce307abf6956f"
+  },
+  "AGI/reports/m0_profiles/m0-q3vl30-instruct.json": {
+    "bytes": 3897,
+    "sha256": "91c75f60ce8e9f1725bfd6f40509249411221901b708f1dac9024882c9def949"
+  },
+  "AGI/reports/m0_profiles/m0-q3vl8-instruct.json": {
+    "bytes": 3877,
+    "sha256": "7eda72028dbc61c6cc0a89a30534c046637e68f01933561ec21893f7d6d46fbf"
+  },
+  "AGI/reports/phase0_phase0f_completion_audit.md": {
+    "bytes": 7081,
+    "sha256": "719ce1bb1f5fa979963c8e504fe09d29ea1a346a2c3821e33c8415cfc84f3a08"
+  },
+  "AGI/reports/phase0_status.md": {
+    "bytes": 4821,
+    "sha256": "a3358e88203d56b462be9aa701cd0af2e8a5f9cdfded413a29cf4375ff546665"
+  },
+  "AGI/reports/phase0_transport_revalidation.md": {
+    "bytes": 3098,
+    "sha256": "67c8c64bf802bdfaacf0956f81e595d775c8fa87403c0df86fc799ce1b93cf21"
+  },
+  "AGI/reports/phase0f_m0_status.md": {
+    "bytes": 4063,
+    "sha256": "3d054ee86f39137534f665a7f870a15b2cc7b98f407ce7a1a32c41a47907fc52"
+  },
+  "AGI/reports/phase1_completion_audit.md": {
+    "bytes": 5410,
+    "sha256": "e776d1813ec97061b6ec1b51b712d3565ad3f4c4839e6f6ed9592e2e1b215b4a"
+  },
+  "AGI/reports/phase1_control_audit_2026-09-11.json": {
+    "bytes": 3235,
+    "sha256": "356d6bec08522dd2e80f4214d1919b50d845261bbb39f2849788be5281e6c114"
+  },
+  "AGI/reports/phase1_control_freeze.md": {
+    "bytes": 5501,
+    "sha256": "45d1001f41968cef308dafabf2a3a2822aacf27abe560d4fc61471fc5c59f081"
+  },
+  "AGI/reports/phase1_hierarchical_decision.md": {
+    "bytes": 6293,
+    "sha256": "840db9a49af9bb1261399e33be51a0b574c2f278cfd2a26676c60df9a3cbf592"
+  },
+  "AGI/reports/phase1_status.md": {
+    "bytes": 11871,
+    "sha256": "54e856d1fce823c13f6c49f2611389a88cbafd1e78a9f887c765f67944546507"
+  },
+  "AGI/reports/phase23_evidence.md": {
+    "bytes": 3113,
+    "sha256": "2fef33288f9beb45cbef7e452bbad788501e454a8ce1cd6e1ba668dd076793ff"
+  },
+  "AGI/reports/phase2_cd82_evidence_review.md": {
+    "bytes": 3890,
+    "sha256": "5a165230b1b81e5b2f36e7127f127e674779333b28761bb1f610b1bcd7ff9c07"
+  },
+  "AGI/reports/phase2_conditional_implementation.md": {
+    "bytes": 1701,
+    "sha256": "e0443ff32e0762498cfbc6722d914375dc685f51841887d52d8168b3ce50d8ae"
+  },
+  "AGI/reports/phase2_contract.md": {
+    "bytes": 4065,
+    "sha256": "94058175fc62180d2a8e38e73c98e11ebaa7fa856d6b769ad6f978730ed77980"
+  },
+  "AGI/reports/phase2_diagnostic_status.md": {
+    "bytes": 2678,
+    "sha256": "d08b5e9459568cebb804a9d37930c483568197506858067e37b31d38713946b0"
+  },
+  "AGI/reports/phase2_execution_status.md": {
+    "bytes": 2603,
+    "sha256": "df4aa8da7e4984f74909c3f5ac2f8719382d1f153e57bf8280465b8b78087aed"
+  },
+  "AGI/reports/phase2_hardening.md": {
+    "bytes": 6818,
+    "sha256": "d2712fcd5a1511698b94c38baf4f7397e304cf837ac653cec9e21582244fb014"
+  },
+  "AGI/reports/phase2_runtime_owner_confirmation.json": {
+    "bytes": 647,
+    "sha256": "cb7b627a1ddd31534235b6c3514fd46b64b2b4f80e89701e578b2f93206bffb4"
+  },
+  "AGI/reports/phase2_treatment_selection.md": {
+    "bytes": 3216,
+    "sha256": "7f2ebac2bea3a436309e20ead1889e4177b88749495f2d1097857f85bb508a47"
+  },
+  "AGI/reports/phase3_preparation.md": {
+    "bytes": 4850,
+    "sha256": "4c93acabafd37756442783d2eb2e2e43ee0ab5751fe2f042eaf016470c76747b"
+  },
+  "AGI/reports/phase3_status.md": {
+    "bytes": 4487,
+    "sha256": "030cc80a556dc2db041505770f81cb22b2a7efed8ffcfcb7b08794bd4f89166d"
+  },
+  "AGI/reports/phase4_accounting_owner_recollection.json": {
+    "bytes": 531,
+    "sha256": "93124096e99dfeeb3b074cd16cf8ed4c60fc85c754bf124916612e77adfb50c5"
+  },
+  "AGI/reports/phase4_accounting_v2_disposition.md": {
+    "bytes": 3872,
+    "sha256": "656afa67192aefa2f7aa6c9c40b60654c4e196486ff26e9d3cc2d04c560e954d"
+  },
+  "AGI/reports/phase4_accounting_v2_latest_export.json": {
+    "bytes": 1351,
+    "sha256": "d8d357ecb7955bec64dd6f49d42b1a1efec7ca97fdd38eebc9ffd1996962778c"
+  },
+  "AGI/reports/phase4_accounting_v2_provider_export.json": {
+    "bytes": 1014,
+    "sha256": "5d0c158b62b1a361ce0ce3f5d7c1f0997d9d8acd490235803f13991405ce90b4"
+  },
+  "AGI/reports/phase4_accounting_v2_screenshot.json": {
+    "bytes": 2153,
+    "sha256": "0d0bd0398bd7de139cb8c4d8253bd0623a41e931c35ff34e2419dfe9e4aadd3f"
+  },
+  "AGI/reports/phase4_accounting_v2_version_count.json": {
+    "bytes": 1280,
+    "sha256": "09453b392c499e51d3f14252aff991f99dd690c3b555003aad33f6c1cb290cef"
+  },
+  "AGI/reports/phase4_authorization_v2.md": {
+    "bytes": 1105,
+    "sha256": "7dbf62c7667eaf0c4cdb0bc96237b651e4a39cc8a17d406b3dc13f91df1f0f73"
+  },
+  "AGI/reports/phase4_full_game_budget_draft.json": {
+    "bytes": 1344,
+    "sha256": "2a0afc0f03dffe41e1c9c46a486f27a5de0baa39cefc9a8e19210c896b42d86b"
+  },
+  "AGI/reports/phase4_full_game_certification_protocol_draft.md": {
+    "bytes": 9598,
+    "sha256": "b10dff888b7fdfbfec0663ec5539d4247d558e46ff177cef1d305250674b07d7"
+  },
+  "AGI/reports/phase4_launch_v2.json": {
+    "bytes": 1314,
+    "sha256": "3ff2261ae90c9910fd9cfc7a3f8bd41dde3dc8605eb787827189babeac17c007"
+  },
+  "AGI/reports/phase4_lifecycle_local_nominal.json": {
+    "bytes": 6738,
+    "sha256": "efdbdbdfff5cbd808c675e1896271a2fcaf890032c274bc38906a4d724477c7b"
+  },
+  "AGI/reports/phase4_lifecycle_v1_cancel.json": {
+    "bytes": 5023,
+    "sha256": "8f503fada085605ec8760ea8025d0ee483729c2c83984a4eb898d0e7cc29c93a"
+  },
+  "AGI/reports/phase4_lifecycle_v1_fallback.json": {
+    "bytes": 6707,
+    "sha256": "fbe67c544f76f8b96f589ea62f5971b833ee2596ea7e0e80327418fd01683012"
+  },
+  "AGI/reports/phase4_lifecycle_v1_nominal.json": {
+    "bytes": 6738,
+    "sha256": "2f88c6b623337ab5b6571e811c8fcf33f8f67d664c55c94576becf0028e21c3e"
+  },
+  "AGI/reports/phase4_lifecycle_v1_preparation.json": {
+    "bytes": 1591,
+    "sha256": "a8f9aaa0e4e11ae0c895e290cc371dedcc469d49fb78c76e795b64559a84fa20"
+  },
+  "AGI/reports/phase4_local_load.json": {
+    "bytes": 2093,
+    "sha256": "410e7b975c62bc650ed8bd6990f9b1df00dec0f7110020d62dbc4604f4d25c75"
+  },
+  "AGI/reports/phase4_prescreen_v2_evidence.json": {
+    "bytes": 1515,
+    "sha256": "899fe2b968cc1eeb5df25a9a1ec591f5fa06d771cbba66cfcc599d406fd7ef35"
+  },
+  "AGI/reports/phase4_prescreen_v2_result.json": {
+    "bytes": 2700,
+    "sha256": "059d934bf49a07d604142a80b07037632de613fe419d53ea1017c5a62929f5e2"
+  },
+  "AGI/reports/phase4_scheduler_fault_matrix.md": {
+    "bytes": 3706,
+    "sha256": "a83ee7f0d2f3b0839e1b63089815b7b18b1491fd9aa9a093f3a4cd5423e5fbaa"
+  },
+  "AGI/reports/phase4_status.md": {
+    "bytes": 32130,
+    "sha256": "006b35cf82b359761b8abfa034b60b3ece8f33d16c882eaa5ce86c2e850de17b"
+  },
+  "AGI/reports/phase4_v2_integration_result.json": {
+    "bytes": 7008,
+    "sha256": "17eb8be3ddd016f975ddd18ffddbf67eefda7aa8ed2838f23b87bb4055b5d283"
+  },
+  "AGI/reports/phase4_v2_offline_dependency_resolution.json": {
+    "bytes": 541110,
+    "sha256": "d26167bbc74537ef3882a4a77f1d616d20ee136b7e8d57694fb5b0a6517a75ea"
+  },
+  "AGI/reports/phase4_v2_offline_package.json": {
+    "bytes": 10592,
+    "sha256": "d2de00800e3067dc42d4346be83a7468c2c3756b710c83453d6ce6e95eb8875c"
+  },
+  "AGI/reports/phase4_v3_terminal_reproduction.json": {
+    "bytes": 1493403,
+    "sha256": "6ab87231ff3b97e7b0f0fc3407c5101a25fa56bbc7adaa82d2e58e431ec840cb"
+  },
+  "AGI/reports/phase4_v3_terminal_result.json": {
+    "bytes": 1719,
+    "sha256": "280ceb37eb58d0526e1ae63b2d30a82012468f8949b53c588b288783f53d1da0"
+  },
+  "AGI/reports/phase4_v4_review_status.json": {
+    "bytes": 1428,
+    "sha256": "b2af0b2c97a9bf1bb14d4f2c16d30b37e018a4dfd0e4e0cf6ed84fb5e631ddb6"
+  },
+  "AGI/reports/phase4_v6_integrated_result.json": {
+    "bytes": 2148,
+    "sha256": "a78021a7a928338991a4609232fa61ea713dafdd14ecb31e1105c9074d4b8a4c"
+  },
+  "AGI/reports/runs/e1-four-cell/arc3-e1-causal-four-cell.log": {
+    "bytes": 13279,
+    "sha256": "11e0a6150e97bb150047ed0e4109334369348a86dde4b0fd73d33c271b6667ae"
+  },
+  "AGI/reports/runs/e1-four-cell/e1-causal-four-cell-v1.json": {
+    "bytes": 51452,
+    "sha256": "a3275e8f6024247cbebd8967ff1b64288f820840f26e8db1a4f8bdc26db9d3ea"
+  },
+  "AGI/reports/runs/e1-four-cell/e1-causal-four-cell-v1.server.log": {
+    "bytes": 450070,
+    "sha256": "ba7f96e4b21404b0d00d4ed8a3f4dfae921e856e70170596f07985bcbed29c61"
+  },
+  "AGI/reports/runs/e1-four-cell/e1-whole-run-four-cell-v1.json": {
+    "bytes": 131929,
+    "sha256": "7ca485b51f38955ca73b148e3396426f09ea6ade911c170a2dc203f6ef5bb245"
+  },
+  "AGI/reports/runs/e1-four-cell/e1-whole-run-server-logs/B1-E1C-F.server.log": {
+    "bytes": 236920,
+    "sha256": "319f7a37f28e9e0f66138d091adc4a5321be7c58c32095eccb2d43c2f75ae51e"
+  },
+  "AGI/reports/runs/e1-four-cell/e1-whole-run-server-logs/B1-E1C-R.server.log": {
+    "bytes": 295771,
+    "sha256": "e0d3608eae5701db104cc4c9c8905e905cc8d57eb8550975c4458bc9afce132b"
+  },
+  "AGI/reports/runs/e1-four-cell/e1-whole-run-server-logs/B1-E1S-F.server.log": {
+    "bytes": 217337,
+    "sha256": "d68c59a164f660b30035337c1f0dfd98b5dab602253d4d736528daffe95279e9"
+  },
+  "AGI/reports/runs/e1-four-cell/e1-whole-run-server-logs/B1-E1S-R.server.log": {
+    "bytes": 145089,
+    "sha256": "729c1d087228ccd8b9de7f2f1f2c5c68a4ee744816d1d3688fee27bb1ebe52ce"
+  },
+  "AGI/reports/runs/e1-four-cell/e1-whole-run-server-logs/B2-E1C-F.server.log": {
+    "bytes": 236880,
+    "sha256": "ed70bb51fda380e1a5465cb25220e8fa763837b70d1b7f56a0a3f59ddec8554b"
+  },
+  "AGI/reports/runs/e1-four-cell/e1-whole-run-server-logs/B2-E1C-R.server.log": {
+    "bytes": 289879,
+    "sha256": "eb4c0b2f40fa81398d98948cd419b8688c41bbee05e20efa9339e9d1c2d03b61"
+  },
+  "AGI/reports/runs/e1-four-cell/e1-whole-run-server-logs/B2-E1S-F.server.log": {
+    "bytes": 218681,
+    "sha256": "0217e90ed10d5096e64ac3c7c2dfc88cb658a929d63c903d24c233323fc411d9"
+  },
+  "AGI/reports/runs/e1-four-cell/e1-whole-run-server-logs/B2-E1S-R.server.log": {
+    "bytes": 149067,
+    "sha256": "c7736db537b712ea94aa7677246eeae2b35276efabde2239e74c92353416571b"
+  },
+  "AGI/reports/runs/e1-four-cell/v1/arc3-e1-causal-four-cell.log": {
+    "bytes": 16460,
+    "sha256": "252cbf50f3697892695788767668853378ed50786cf9755006f41c7687b2b239"
+  },
+  "AGI/reports/runs/e1-four-cell/v2/arc3-e1-causal-four-cell.log": {
+    "bytes": 12199,
+    "sha256": "28f97bb9704bbdbc888f839c7bc7ab4d022ee73d3e8c9a031c591c5cfbf96d7d"
+  },
+  "AGI/reports/runs/e1-four-cell/v2/e1-causal-four-cell-v1.json": {
+    "bytes": 51452,
+    "sha256": "a3275e8f6024247cbebd8967ff1b64288f820840f26e8db1a4f8bdc26db9d3ea"
+  },
+  "AGI/reports/runs/e1-four-cell/v2/e1-causal-four-cell-v1.server.log": {
+    "bytes": 450070,
+    "sha256": "ba7f96e4b21404b0d00d4ed8a3f4dfae921e856e70170596f07985bcbed29c61"
+  },
+  "AGI/reports/runs/e1-four-cell/v3/e1-causal-four-cell-v1.json": {
+    "bytes": 55938,
+    "sha256": "f6df1212c492d84efba845681a2a99041cba65334325b3e6f43c6d968feb1b7c"
+  },
+  "AGI/reports/runs/e1-four-cell/v3/e1-causal-four-cell-v1.server.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "AGI/reports/runs/e1-four-cell/v5/arc3-e1-causal-four-cell.log": {
+    "bytes": 12177,
+    "sha256": "e1cda188b0a675cfde7b1d24439098e7fbcf66a0d74bc01f55da8bcf700ac3da"
+  },
+  "AGI/reports/runs/e1-four-cell/v5/e1-causal-four-cell-v1.json": {
+    "bytes": 61555,
+    "sha256": "f186192705e061734bf7bb93dd64f2afbe2f5538eaf828a04a123fca9515eb9d"
+  },
+  "AGI/reports/runs/e1-four-cell/v5/e1-causal-four-cell-v1.server.log": {
+    "bytes": 811323,
+    "sha256": "d98a174119cd1c4fb10097a0bb428925a7ea408700a6edcb3c9dc7db41fac078"
+  },
+  "AGI/reports/runs/e1-q3vl30/arc3-e1-q3vl30-mixed-profile.log": {
+    "bytes": 2465,
+    "sha256": "6f4b36354307898f9130dc1e01f63d6bdab8514dc42b674c9cb7bad1d73c5b0b"
+  },
+  "AGI/reports/runs/e1-q3vl30/e1-q3vl30-mixed-profile.json": {
+    "bytes": 15896,
+    "sha256": "e83f750635fc862bba8138229c97bcd8c5dd7ae56e4a99dc31a48ce9acf157a7"
+  },
+  "AGI/reports/runs/e1-q3vl30/e1-q3vl30-mixed-profile.server.log": {
+    "bytes": 23587,
+    "sha256": "863052ad04706a864a591d6df613f110ee2c7342906a8deedc9829d4e7f46c77"
+  },
+  "AGI/reports/runs/e1-q3vl30/v2/arc3-e1-q3vl30-mixed-profile.log": {
+    "bytes": 5645,
+    "sha256": "627fec81a89e214af9282e6324df64d5c6d3f5afe55813e53119be18c97c0dc8"
+  },
+  "AGI/reports/runs/e1-q3vl30/v2/e1-q3vl30-mixed-profile.json": {
+    "bytes": 14325,
+    "sha256": "d9d0144356323a60267998aafeb8f473496df3cbb4f4b079c87da160e3f03c8f"
+  },
+  "AGI/reports/runs/e1-q3vl30/v2/e1-q3vl30-mixed-profile.server.log": {
+    "bytes": 23588,
+    "sha256": "8d7e0e91ef7acbc606ed67b42f3646f2f3b7ca8a4514e0e9ab8f13cb25a0d257"
+  },
+  "AGI/reports/runs/e1-q3vl30/v3/arc3-e1-q3vl30-mixed-profile.log": {
+    "bytes": 2465,
+    "sha256": "6f4b36354307898f9130dc1e01f63d6bdab8514dc42b674c9cb7bad1d73c5b0b"
+  },
+  "AGI/reports/runs/e1-q3vl30/v3/e1-q3vl30-mixed-profile.json": {
+    "bytes": 15896,
+    "sha256": "e83f750635fc862bba8138229c97bcd8c5dd7ae56e4a99dc31a48ce9acf157a7"
+  },
+  "AGI/reports/runs/e1-q3vl30/v3/e1-q3vl30-mixed-profile.server.log": {
+    "bytes": 23587,
+    "sha256": "863052ad04706a864a591d6df613f110ee2c7342906a8deedc9829d4e7f46c77"
+  },
+  "AGI/reports/runs/p4-v2-20260915T104415Z/arc3-phase4-fixture-prescreen-v2.log": {
+    "bytes": 47881,
+    "sha256": "43cdf36a0c26d99020c7cf68272ec4efbe2f872a0c8490d93fed98fbe87b959b"
+  },
+  "AGI/reports/runs/p4-v2-20260915T104415Z/phase4-prescreen/claim.json": {
+    "bytes": 170,
+    "sha256": "aa0f2487439fc751809537b57e5270e5c54f6cbf2f206bbf9d515a3c4fa7ccfe"
+  },
+  "AGI/reports/runs/p4-v2-20260915T104415Z/phase4-prescreen/gpu_binding.json": {
+    "bytes": 269,
+    "sha256": "c2a92df3f3b6fcb83099bdd381bf720a402e4de6ec393174cdccb3074b54c68a"
+  },
+  "AGI/reports/runs/p4-v2-20260915T104415Z/phase4-prescreen/measurement.json": {
+    "bytes": 17177,
+    "sha256": "c4e5bd8ecb0b3fd166d6ff014c9627be19cc543c05b226842a63b9c74eb57f0b"
+  },
+  "AGI/reports/runs/p4-v2-20260915T104415Z/phase4-prescreen/notebook-cost.json": {
+    "bytes": 236,
+    "sha256": "28d843cc44bb33faebed8cf986bafd80c4f5075a0208c813d5ff53c7eb762f8b"
+  },
+  "AGI/reports/runs/p4-v2-20260915T104415Z/phase4-prescreen/phase4_compute_ledger.json": {
+    "bytes": 342,
+    "sha256": "c70f381103f895ca094ad19b836ba8d0f955387b822eb973b52ef6e76b2f117d"
+  },
+  "AGI/reports/runs/p4-v2-20260915T104415Z/phase4-prescreen/phase4_execution_lock_v2.json": {
+    "bytes": 10983,
+    "sha256": "1f0fd4014fb6170c3673513ea504225e101dd98e8c1ada4f8c9b1a9aede6780d"
+  },
+  "AGI/reports/runs/p4-v2-20260915T104415Z/phase4-prescreen/phase4_execution_protocol_v2.json": {
+    "bytes": 2585,
+    "sha256": "9140fcc07f736370310e4007e113953788e3a8f577f650c8459fc585811c912a"
+  },
+  "AGI/reports/runs/phase2-cd82/arc3-phase2-cd82-diagnostics.log": {
+    "bytes": 14607,
+    "sha256": "502f0f883c1948c75e7c2314978f751e452b11417c41244176af31712abcb504"
+  },
+  "AGI/reports/runs/phase2-cd82/phase2-cd82/cd82-17b05b0c3e6344ebbd6c45399d941155-R2/bundles/cd82-17b05b0c3e6344ebbd6c45399d941155-R2/E1S-R/E1S-R-984a2e4a809ccb076d9e.json": {
+    "bytes": 442309,
+    "sha256": "c20ec545d7431a0877a286c52cce1ec660c5fa77479113523840ad9c9fcdaf68"
+  },
+  "AGI/reports/runs/phase2-cd82/phase2-cd82/cd82-17b05b0c3e6344ebbd6c45399d941155-R2/run.json": {
+    "bytes": 536264,
+    "sha256": "bebcefe0b336170f24f13f9d8ed1e52e6537400bb88e079994e99f33e794f993"
+  },
+  "AGI/reports/runs/phase2-cd82/phase2-cd82/cd82-17b05b0c3e6344ebbd6c45399d941155-R2/server.log": {
+    "bytes": 30022,
+    "sha256": "b3db424a7b1ba404e36b95e2e42f79829d1336598bde77fb83605ed81f4dedbb"
+  },
+  "AGI/reports/runs/phase2-cd82/phase2-cd82/cd82-a53509512e87466c8ae53b19f45f0924-R1/bundles/cd82-a53509512e87466c8ae53b19f45f0924-R1/E1S-R/E1S-R-984a2e4a809ccb076d9e.json": {
+    "bytes": 442309,
+    "sha256": "0594fb6c48ce9e51bb8305468c5eeb05e74ec5bf942685fd714352da001a7295"
+  },
+  "AGI/reports/runs/phase2-cd82/phase2-cd82/cd82-a53509512e87466c8ae53b19f45f0924-R1/run.json": {
+    "bytes": 536263,
+    "sha256": "97c75b84abbb069ab0de022c41febb640ac9aff1e23cec9382695d1b382a17f7"
+  },
+  "AGI/reports/runs/phase2-cd82/phase2-cd82/cd82-a53509512e87466c8ae53b19f45f0924-R1/server.log": {
+    "bytes": 29953,
+    "sha256": "734f8c5b3d0377138ecf9dbcf3d3f1fd9689844781fcb49fad828ef55a5fdd8f"
+  },
+  "AGI/reports/runs/phase2-cd82/phase2-cd82/comparison.json": {
+    "bytes": 1848,
+    "sha256": "07aa50fc8c4431da3fb7fbd25a794bba231b35714b27009a20ee2e5b3e7b3d52"
+  },
+  "AGI/reports/runs/phase2-cd82/phase2-cd82/execution-lock.json": {
+    "bytes": 4097,
+    "sha256": "c301c92edd3b254288a17d6121d56e6e1ebac3fc2ce4991160b1393c8ec58cfe"
+  },
+  "AGI/reports/runs/phase2-cd82/phase2-cd82/execution.json": {
+    "bytes": 198,
+    "sha256": "19ad82256ca9b56d4e17fefcb79175eecfdc8f0d9c9ceb1718456cd74370ea17"
+  },
+  "AGI/reports/runs/phase2-cd82/phase2-cd82/notebook-cost.json": {
+    "bytes": 59,
+    "sha256": "eb134018631b4fadebf0babc9c9943950d8e8fb668f335d9b6f47bd325d67a9a"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/annotated_types-0.7.0-py3-none-any.whl": {
+    "bytes": 13643,
+    "sha256": "1f02e8b43a8fbbc3f3e0d4f0f4bfc8131bcb4eebe8849b8e5c773f3a1c582a53"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/arc_agi-0.9.8-py3-none-any.whl": {
+    "bytes": 40151,
+    "sha256": "aeca1663db342e91cb8fc96cf0c83e2fa39db1640bc1298e80a8d522e3af70f3"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/arcengine-0.9.3-py3-none-any.whl": {
+    "bytes": 38374,
+    "sha256": "5f9739d6d0055780a4581fd6fe09066bb08775c4c8212c9adcca2eb008aef59c"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/blinker-1.9.0-py3-none-any.whl": {
+    "bytes": 8458,
+    "sha256": "ba0efaa9080b619ff2f3459d1d500c57bddea4a6b424b60a91141db6fd2f08bc"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/certifi-2026.2.25-py3-none-any.whl": {
+    "bytes": 153684,
+    "sha256": "027692e4402ad994f1c42e52a4997a9763c646b73e4096e4d5d6db8af1d6f0fa"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/charset_normalizer-3.4.7-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl": {
+    "bytes": 216589,
+    "sha256": "5649fd1c7bade02f320a462fdefd0b4bd3ce036065836d4f42e0de958038e116"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/click-8.3.2-py3-none-any.whl": {
+    "bytes": 108379,
+    "sha256": "1924d2c27c5653561cd2cae4548d1406039cb79b858b747cfea24924bbc1616d"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/contourpy-1.3.3-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+    "bytes": 362601,
+    "sha256": "4d00e655fcef08aba35ec9610536bfe90267d7ab5ba944f7032549c55a146da1"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/cycler-0.12.1-py3-none-any.whl": {
+    "bytes": 8321,
+    "sha256": "85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/flask-3.1.3-py3-none-any.whl": {
+    "bytes": 103424,
+    "sha256": "f4bcbefc124291925f1a26446da31a5178f9483862233b23c0c96a20701f670c"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/fonttools-4.62.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl": {
+    "bytes": 4988768,
+    "sha256": "149f7d84afca659d1a97e39a4778794a2f83bf344c5ee5134e09995086cc2392"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/idna-3.11-py3-none-any.whl": {
+    "bytes": 71008,
+    "sha256": "771a87f49d9defaf64091e6e6fe9c18d4833f140bd19464795bc32d966ca37ea"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/itsdangerous-2.2.0-py3-none-any.whl": {
+    "bytes": 16234,
+    "sha256": "c6242fc49e35958c8b15141343aa660db5fc54d4f13a1db01a3f5891b98700ef"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/jinja2-3.1.6-py3-none-any.whl": {
+    "bytes": 134899,
+    "sha256": "85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/kiwisolver-1.5.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl": {
+    "bytes": 1477934,
+    "sha256": "bb5136fb5352d3f422df33f0c879a1b0c204004324150cc3b5e3c4f310c9049f"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl": {
+    "bytes": 22947,
+    "sha256": "d6dd0be5b5b189d31db7cda48b91d7e0a9795f31430b7f271219ab30f1d3ac9d"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/matplotlib-3.10.8-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl": {
+    "bytes": 8716944,
+    "sha256": "3ab4aabc72de4ff77b3ec33a6d78a68227bf1123465887f9905ba79184a1cc04"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/numpy-2.4.4-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+    "bytes": 16645480,
+    "sha256": "81f4a14bee47aec54f883e0cad2d73986640c1590eb9bfaaba7ad17394481e6e"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/packaging-26.1-py3-none-any.whl": {
+    "bytes": 95831,
+    "sha256": "5d9c0669c6285e491e0ced2eee587eaf67b670d94a19e94e3984a481aba6802f"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/pillow-12.2.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+    "bytes": 7087215,
+    "sha256": "62f5409336adb0663b7caa0da5c7d9e7bdbaae9ce761d34669420c2a801b2780"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/pydantic-2.13.2-py3-none-any.whl": {
+    "bytes": 471947,
+    "sha256": "a525087f4c03d7e7456a3de89b64cd693d2229933bb1068b9af6befd5563694e"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/pydantic_core-2.46.2-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": {
+    "bytes": 2094058,
+    "sha256": "48649cf2d8c358d79586e9fb2f8235902fcaa2d969ec1c5301f2d1873b2f8321"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/pyparsing-3.3.2-py3-none-any.whl": {
+    "bytes": 122781,
+    "sha256": "850ba148bd908d7e2411587e247a1e4f0327839c40e2e5e6d05a007ecc69911d"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/python_dateutil-2.9.0.post0-py2.py3-none-any.whl": {
+    "bytes": 229892,
+    "sha256": "a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/python_dotenv-1.2.2-py3-none-any.whl": {
+    "bytes": 22101,
+    "sha256": "1d8214789a24de455a8b8bd8ae6fe3c6b69a5e3d64aa8a8e5d68e694bbcb285a"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/requests-2.33.1-py3-none-any.whl": {
+    "bytes": 64947,
+    "sha256": "4e6d1ef462f3626a1f0a0a9c42dd93c63bad33f9f1c1937509b8c5c8718ab56a"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/six-1.17.0-py2.py3-none-any.whl": {
+    "bytes": 11050,
+    "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/typing_extensions-4.15.0-py3-none-any.whl": {
+    "bytes": 44614,
+    "sha256": "f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/typing_inspection-0.4.2-py3-none-any.whl": {
+    "bytes": 14611,
+    "sha256": "4ed1cacbdc298c220f1bd249ed5287caa16f34d44ef4e9c3d0cbad5b521545e7"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/urllib3-2.6.3-py3-none-any.whl": {
+    "bytes": 131584,
+    "sha256": "bf272323e553dfb2e87d9bfd225ca7b0f467b919d7bbd355436d3fd37cb0acd4"
+  },
+  "AGI/reports/runs/phase4-v2-assets/arc_agi_3_wheels/werkzeug-3.1.8-py3-none-any.whl": {
+    "bytes": 226459,
+    "sha256": "63a77fb8892bf28ebc3178683445222aa500e48ebad5ec77b0ad80f8726b1f50"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/ar25/0c556536/ar25.py": {
+    "bytes": 75395,
+    "sha256": "0c556536ad902afddb600cdb2b766ac9fda243dcd07b7f3a0a0d6277339745bf"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/ar25/0c556536/metadata.json": {
+    "bytes": 310,
+    "sha256": "2c493063d34141b70207bd50d3318c586b9221a37024b2792153d4fd4671f706"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/cd82/fb555c5d/cd82.py": {
+    "bytes": 34273,
+    "sha256": "fb555c5ddf0a3b742188646bb28d2f57cb98cf2d3263c594032b45ec8fce2a86"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/cd82/fb555c5d/metadata.json": {
+    "bytes": 292,
+    "sha256": "ccfe95990d5a9c5df2cfe134452abd3397d63ede9c22afe02584f3b2a5184c9f"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/ft09/0d8bbf25/ft09.py": {
+    "bytes": 64236,
+    "sha256": "0d8bbf2573e8f9837c649a1ffda2e7bde3734d26c3cb0fc4bbfd772d7f87a6bf"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/ft09/0d8bbf25/metadata.json": {
+    "bytes": 268,
+    "sha256": "abfa2c74192ad7d6330f0981d3a1609e331ce29a00d9b1d14c584c02c13d326b"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/g50t/5849a774/g50t.py": {
+    "bytes": 192353,
+    "sha256": "5849a7740de172289b99f39680e60d7657de203a11b7361e24181e2104eebed5"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/g50t/5849a774/metadata.json": {
+    "bytes": 298,
+    "sha256": "c3fb569bc681661d597fb5a6700abafb19f13503f235891ccfa96b7dec045177"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/ka59/38d34dbb/ka59.py": {
+    "bytes": 831580,
+    "sha256": "38d34dbbf83b9a220903d11d3e5f4cdb73230c7376576669d7d66cc157f22144"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/ka59/38d34dbb/metadata.json": {
+    "bytes": 304,
+    "sha256": "fcbcc16b233a4692c88661e1f8d3e676c86f4ae4548b1157f005a2703ff1458a"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/lf52/271a04aa/lf52.py": {
+    "bytes": 216183,
+    "sha256": "271a04aa4aafd1b035194b346c5333ec024d2e570d349edd413499c98e9e00d8"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/lf52/271a04aa/metadata.json": {
+    "bytes": 322,
+    "sha256": "e7a2bcb0ef7a1731ff552fe2af901f6e761868eea4e6e2b90b212fbc6cc78b61"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/ls20/9607627b/ls20.py": {
+    "bytes": 104880,
+    "sha256": "9607627b3d85bdb21ff28b40fefaa6a873691175981c6351b7e5a6637416f9d5"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/ls20/9607627b/metadata.json": {
+    "bytes": 298,
+    "sha256": "181e2f8a540962461a1c799160bdd11963d7276d6c42a368324dd84f3573803f"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/s5i5/18d95033/metadata.json": {
+    "bytes": 302,
+    "sha256": "1b4f3bfa7472ae0d9071f83183ecdcde04fa041e1530d868964829b5f7ed4a68"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/s5i5/18d95033/s5i5.py": {
+    "bytes": 168955,
+    "sha256": "18d950333a006e984941ceaa16cdc4dc8dca8ca26cb82194198759089aac5965"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/sc25/635fd71a/metadata.json": {
+    "bytes": 293,
+    "sha256": "07fd2772925d73810fd3f3afb11a441e2f66f6ebe050dc684a2269111b056510"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/sc25/635fd71a/sc25.py": {
+    "bytes": 225958,
+    "sha256": "635fd71a8670ff1c9c93ed9d2ebaaf333aca4964266a0563d5337ff32eb4340e"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/sk48/d8078629/metadata.json": {
+    "bytes": 315,
+    "sha256": "81b0cb7a0e2b1f6196209b9f06145617d10d3d56206692b27ce70b9e9d54e0be"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/sk48/d8078629/sk48.py": {
+    "bytes": 44635,
+    "sha256": "d8078629ec82e3f66d70423ad188969d36cecaecf0d96d8a4496210042573a80"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/sp80/589a99af/metadata.json": {
+    "bytes": 295,
+    "sha256": "01cd99e417ab864aeef2e6b7629b17d002b4489075449e8f956f04a7146308e3"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/sp80/589a99af/sp80.py": {
+    "bytes": 39981,
+    "sha256": "589a99af30f07879d044c56c88a2e9882fe04e6f13e9f943f5195c81d3b85a1f"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/su15/1944f8ab/metadata.json": {
+    "bytes": 308,
+    "sha256": "5465b9b5d13effcf1d63950ed5a29e17f80ca194645b582ad5a6e7ecd4c9bd87"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/su15/1944f8ab/su15.py": {
+    "bytes": 88005,
+    "sha256": "1944f8aba6f2f8860d991745ba768131f02d918bcd5465466e85fcb2726d115a"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/tr87/cd924810/metadata.json": {
+    "bytes": 288,
+    "sha256": "2b398c92a205f605847835aa7a435375249f089baa381689dd04885e3bc84801"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/tr87/cd924810/tr87.py": {
+    "bytes": 48068,
+    "sha256": "cd924810f136aab40570209ff54a0069dd2306608414d16012f92d4ce66e23fb"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/vc33/5430563c/metadata.json": {
+    "bytes": 293,
+    "sha256": "7a474852608bf393c7a88fd7f42a0bfbf22496a9d0c4942406feaee5195f401e"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/vc33/5430563c/vc33.py": {
+    "bytes": 74307,
+    "sha256": "5430563c386ca51ff4c9a84b032579245a0613cb98c477c6eaeaa1086c80a2d5"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/wa30/ee6fef47/metadata.json": {
+    "bytes": 315,
+    "sha256": "b6ae84e88913fb68f884615ef1f20e7638aaade6540ff6a8577b831d8df4b780"
+  },
+  "AGI/reports/runs/phase4-v2-assets/environment_files/wa30/ee6fef47/wa30.py": {
+    "bytes": 58285,
+    "sha256": "ee6fef476d4db0d64ebe5d37ea9036d41bace2e26974f9b0b2516af0948e202a"
+  },
+  "AGI/reports/runs/phase4-v2-local-110/evaluation.json": {
+    "bytes": 6887,
+    "sha256": "9c9ea2bf4c4464e39c57a49b188aff6d2c710ac0f33b6705b85af6172409b119"
+  },
+  "AGI/reports/runs/phase4-v2-local-110/supervisor.json": {
+    "bytes": 9491321,
+    "sha256": "8301793b9a29e10b8356d6df69ff637dc270f553d5a920b6c9c6ed0f99eea00b"
+  },
+  "AGI/reports/runs/phase4-v2-local-110/worker.json": {
+    "bytes": 9490867,
+    "sha256": "220f43bebe54c438f1ef743c324d984f09739a3f721dab941ff1c01b4ccab751"
+  },
+  "AGI/reports/runs/phase4-v3-local-110/evaluation.json": {
+    "bytes": 308,
+    "sha256": "6903e8f47f0a18b13ce071b512de9cd3c8df784bf0595257dc0fa2b8e3daf9dc"
+  },
+  "AGI/reports/runs/phase4-v3-local-110/supervisor.json": {
+    "bytes": 10496038,
+    "sha256": "b790185044d567d56d01066b3a512c013f0cce999c219f63a12f1e0663987fe8"
+  },
+  "AGI/reports/runs/phase4-v3-local-110/worker.json": {
+    "bytes": 10495490,
+    "sha256": "0c868d6e5b4d343f021a5d56a0f85510623fc40f7fb7caf2fc5e5b835a7f8966"
+  },
+  "AGI/reports/runs/phase4-v6-integrated-local-20260916/.evidence.lock": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "AGI/reports/runs/phase4-v6-integrated-local-20260916/control/outer.json": {
+    "bytes": 996,
+    "sha256": "097ee6cea0e1c3108585e26e3561018235da3d11109c69baf55ecc6eea2ec8b4"
+  },
+  "AGI/reports/runs/phase4-v6-integrated-local-20260916/control/ownership.json": {
+    "bytes": 160,
+    "sha256": "0b509915f06ff34dd1d1d6ead96f9d734e36bad1ea89f14539ff0bac87a0c702"
+  },
+  "AGI/reports/runs/phase4-v6-integrated-local-20260916/control/stop-monitor.json": {
+    "bytes": 68,
+    "sha256": "d19c85b31de719fe2da7ceed9037c1d65eff79322f56e5c01a94245eca5a24bc"
+  },
+  "AGI/reports/runs/phase4-v6-integrated-local-20260916/evaluation/local-summary.json": {
+    "bytes": 380,
+    "sha256": "9fce268fd0d18894ed9a9e74572d4192a27dd28621773122ed78b6be783a6a73"
+  },
+  "AGI/reports/runs/phase4-v6-integrated-local-20260916/evaluation/result.json": {
+    "bytes": 325,
+    "sha256": "10f1cdb5c447cb882c42aa6daf90c8d05ecc8b46a7c5aeda0469f9639305db1f"
+  },
+  "AGI/reports/runs/phase4-v6-integrated-local-20260916/logs/95641.json": {
+    "bytes": 34100,
+    "sha256": "3b350f8cef3fbad6449817c7f0f57aa04000ac0bdb98396217d2389b9cdc22ec"
+  },
+  "AGI/reports/runs/phase4-v6-integrated-local-20260916/monitor/monitor-result.json": {
+    "bytes": 634,
+    "sha256": "49a57147dc4766e2a0d29a5a80fd97944addecc8964206b31376664be531f8ef"
+  },
+  "AGI/reports/runs/phase4-v6-integrated-local-20260916/monitor/ready.json": {
+    "bytes": 549,
+    "sha256": "5e86bbf018da0c9d85a24e772ebe40495cfa300f4edb62e438faf63f6f9b259c"
+  },
+  "AGI/reports/runs/phase4-v6-integrated-local-20260916/monitor/telemetry.json": {
+    "bytes": 14842,
+    "sha256": "2101ea97ef7e886a843a44db40ce218aea239824a9a5c8e7db58f5a21a199ffd"
+  },
+  "AGI/reports/runs/phase4-v6-integrated-local-20260916/worker/model-ready.json": {
+    "bytes": 64,
+    "sha256": "ae94d1352a4ec27637df8f234f73cfe8a7fdf64c1cc5491dc0989a6bfa88fc73"
+  },
+  "AGI/reports/runs/phase4-v6-integrated-local-20260916/worker/state.json": {
+    "bytes": 12841430,
+    "sha256": "6e6d73f028738377b40375db7f7476728ca8b3df2108a41bf214ee29aff63be0"
+  },
+  "AGI/scripts/build_e1_four_cell_notebook.py": {
+    "bytes": 8646,
+    "sha256": "49dbdcd0d5218043e87919db5b70fae92b5df25481eb126beb23eff4392b2da9"
+  },
+  "AGI/scripts/build_e1_profile_notebook.py": {
+    "bytes": 5158,
+    "sha256": "6c971a37db3b46e8ae165a954606df417f0183f4c3e0c98c95a08b47192ab4d9"
+  },
+  "AGI/scripts/build_m0_profile_notebook.py": {
+    "bytes": 12098,
+    "sha256": "3e5d0fb3f5f0eab0388b60a9b62f9b3852b2d60a15ba410ae43d12f72f3cb5d3"
+  },
+  "AGI/scripts/build_notebook.py": {
+    "bytes": 6997,
+    "sha256": "d6d32b30efc9adb600606fa90d4920f03e1a1e443b31a2035fb308a2fee4a62f"
+  },
+  "AGI/scripts/build_phase2_diagnostic_notebook.py": {
+    "bytes": 4138,
+    "sha256": "56149cf32419078b69faf94a093387d30efa139b4d76e70f15e58c2255e7d1be"
+  },
+  "AGI/scripts/build_phase2_diagnostic_notebook_v2.py": {
+    "bytes": 4373,
+    "sha256": "0267af9c6ad5d268b3b6dec0626553b546fafdb5251b8a62a68203d685ff1608"
+  },
+  "AGI/scripts/build_phase4_target_notebook.py": {
+    "bytes": 4846,
+    "sha256": "1cc01a810f4970ab9a1e6e8ae58fd824be32fc74f04096a8033d24baab88dc88"
+  },
+  "AGI/scripts/check_kaggle_config.py": {
+    "bytes": 1219,
+    "sha256": "6d941c66afd36de77ce990c7d76fcda950d9ebdf4f654c9ce5c588a4e9b3044e"
+  },
+  "AGI/scripts/evaluate_phase4_prescreen.py": {
+    "bytes": 7379,
+    "sha256": "115afe5cb1f26740d29451ceecb0156f7943b6476bfb3b99ca4bcd41ad5beeaa"
+  },
+  "AGI/scripts/export_windows_transfer.py": {
+    "bytes": 5879,
+    "sha256": "c5d9a5a575b78d60da37033288a5f3cf06212e8c9c87116350ebb8f5c71ab17f"
+  },
+  "AGI/scripts/phase23_evidence.py": {
+    "bytes": 6783,
+    "sha256": "218d2789a6361bed98704c52a358da966cd144ec4d59edfb97f28cb148d441e0"
+  },
+  "AGI/scripts/phase2_budget.py": {
+    "bytes": 2283,
+    "sha256": "467e6310d8a7e230b4cf95851e9bd3856c3ba933bb8a4ffedf5d948a3b11f427"
+  },
+  "AGI/scripts/phase2_supervisor.py": {
+    "bytes": 1653,
+    "sha256": "7d7dabf961c293ca6ef9c26a6f2578df19ebfe5bc15c3b9da55bfd40e95290ad"
+  },
+  "AGI/scripts/phase3_prepare.py": {
+    "bytes": 757,
+    "sha256": "ce67960058a6550f8bceeaeb93cfb9fbc58c07a6cc10f522d30be22f62c7fe6c"
+  },
+  "AGI/scripts/phase4_budget.py": {
+    "bytes": 494,
+    "sha256": "0df0a9ebec69cdf53a21c17feb9d4746a62655b01c966d02ccaa33d083866187"
+  },
+  "AGI/scripts/phase4_preflight.py": {
+    "bytes": 680,
+    "sha256": "607cae273c1479b95cc2524d9368097c239777ff0451b8aebb22edfcb7388500"
+  },
+  "AGI/scripts/phase4_workload.py": {
+    "bytes": 620,
+    "sha256": "3407cbc510fe8e5297891334b3f0e3a32f84eb678d3b570eb2b42c9b925af3aa"
+  },
+  "AGI/scripts/play_competition_like.py": {
+    "bytes": 4042,
+    "sha256": "a009c4d206861096c138f87272a0ac6fda254f0d184f3d2473ad7d91a524c182"
+  },
+  "AGI/scripts/play_local.py": {
+    "bytes": 4839,
+    "sha256": "5e857ca888d0ddcd2813c77a829f66a3ad105e6833a9a6a54d830b85d8fff2b1"
+  },
+  "AGI/scripts/profile_e1_openai.py": {
+    "bytes": 14734,
+    "sha256": "5f454700e29fd234fa274dd44840998670e4f3f34fca6c95a51dae3dd5ba3369"
+  },
+  "AGI/scripts/profile_m0_openai.py": {
+    "bytes": 21334,
+    "sha256": "d1a99160228f91c07c57cf8c57c55795074232fa5fa0bce58a14ebb847752691"
+  },
+  "AGI/scripts/replay_phase2_diagnostics.py": {
+    "bytes": 1735,
+    "sha256": "761aeaf352199cc64be9de633aaab004214d4f927eb239a29d91e901a2fe2df4"
+  },
+  "AGI/scripts/review_phase2_trajectory.py": {
+    "bytes": 2856,
+    "sha256": "618b2a92015fbe933b3603d8587e694f8bc81b27a17811ddf1abf61ffd19c9af"
+  },
+  "AGI/scripts/run_e1_four_cell.py": {
+    "bytes": 15869,
+    "sha256": "3e72aba6cd6549568a0acf0072c8a4b788164211d445db286d2763cc5f1e68cc"
+  },
+  "AGI/scripts/run_e1_whole_run.py": {
+    "bytes": 10744,
+    "sha256": "1dbd2879f5b3dcbdd89cffc259435a90ce6f718fbd1b46e22b1970bdb88b24b0"
+  },
+  "AGI/scripts/run_phase2_diagnostics.py": {
+    "bytes": 5377,
+    "sha256": "bf3c1de611e65525f8241716d993e41012222abc8539d12b3d5716ffda7ac3e2"
+  },
+  "AGI/scripts/run_phase2_diagnostics_v2.py": {
+    "bytes": 1361,
+    "sha256": "e8d0a842f07948b7e90c774f9284a47f44345346381dd8d0303d1705bde6b87b"
+  },
+  "AGI/scripts/run_phase4_service.py": {
+    "bytes": 1340,
+    "sha256": "085a20858b8c4f56c597f2de694893a3e3bc0d9870ca6fe806845e6b01e184a5"
+  },
+  "AGI/scripts/run_phase4_target.py": {
+    "bytes": 1157,
+    "sha256": "3a66a96530fd4ccac0cf27ab2d9ed0f9e6bb38794940123c8fa4d89037984514"
+  },
+  "AGI/scripts/slim_framework.py": {
+    "bytes": 1347,
+    "sha256": "fde3a56225c1ef8740b1270f4297fcbd2ad550eabeed079d7ecf41f6aa7b9f24"
+  },
+  "AGI/scripts/validate_e1_four_cell.py": {
+    "bytes": 2881,
+    "sha256": "e7e1f40541ca63169a3fdf9b1b9d961facf5c63b22eaea90e77f72ef09486e46"
+  },
+  "AGI/scripts/validate_e1_whole_run.py": {
+    "bytes": 2266,
+    "sha256": "9ef51cfb8b568c46951f2c736fe6afe3469d22fb6484819b68022237da8b1118"
+  },
+  "AGI/scripts/validate_local_gateway.py": {
+    "bytes": 4213,
+    "sha256": "e7e2886b0ee0a07f03dbe1d45fecb6576879edaab134c3f58681a477dca4befd"
+  },
+  "AGI/scripts/validate_m0_exit.py": {
+    "bytes": 7464,
+    "sha256": "b2beb4388604ba29f41987543707e99481e28a0ba3ab45a6a0ed3230be7154f3"
+  },
+  "AGI/scripts/validate_phase0.py": {
+    "bytes": 9147,
+    "sha256": "8fe0879c4a2e33470106e42dbab641161acda28078f25122ee6771eb780156e4"
+  },
+  "AGI/scripts/validate_phase0f.py": {
+    "bytes": 9210,
+    "sha256": "a20bf22cbde4df776fe5e98f40fc1480ed06c0e7fa5448d96ec3359dae6c760b"
+  },
+  "AGI/scripts/validate_phase1.py": {
+    "bytes": 26961,
+    "sha256": "6ace9432422e32d7860b809bf84ac53adb39664a819fa343f9dfad7d6a707cd8"
+  },
+  "AGI/scripts/validate_phase2_conditional.py": {
+    "bytes": 1001,
+    "sha256": "3a2edd1d45a4070eacbda603a584f680f351b2822ef771efa2881ced44076040"
+  },
+  "AGI/scripts/validate_phase2_contract.py": {
+    "bytes": 2219,
+    "sha256": "af3d7cbebbc36e1aabfaa2b71f344094ebe4fb58d94a4c4a8566ec3bab0a4856"
+  },
+  "AGI/scripts/validate_phase2_exit.py": {
+    "bytes": 3172,
+    "sha256": "8eefc96bdf7206b8f4c8c0353add570af4d791def7ab2e384ecb69f90cf2369f"
+  },
+  "AGI/scripts/validate_phase2_reproduction.py": {
+    "bytes": 3773,
+    "sha256": "ba4e3439874df331638dfec4743b2fb616b873dca88b90ba4068dab798eba543"
+  },
+  "AGI/scripts/validate_phase2_selection.py": {
+    "bytes": 1060,
+    "sha256": "9be3e0399bc833aefd0b5ba059988b17050ba63f6cc49733f1fd3f7bb823f2fa"
+  },
+  "AGI/scripts/validate_phase3.py": {
+    "bytes": 4300,
+    "sha256": "13e449506ed3f48bee7613bc268f50195103ca64695ab39ce54baee24e4d19cb"
+  },
+  "AGI/scripts/validate_phase4.py": {
+    "bytes": 813,
+    "sha256": "bd99cc456373b00683ec0640596019c973219992d3826cd10affd92ef025fe9e"
+  },
+  "AGI/scripts/validate_submission.py": {
+    "bytes": 1869,
+    "sha256": "388420a7fdeb82fe12da12524f7ad993e135288523e00165d543e54e9e625ea9"
+  },
+  "AGI/tests/__init__.py": {
+    "bytes": 26,
+    "sha256": "08b8e5387013e869a19974637957373870abb44c916683d143d1209df831dd61"
+  },
+  "AGI/tests/fixtures/mounted_arc_agi_0_9_8/LICENSE": {
+    "bytes": 1092,
+    "sha256": "0a7b46075e23b129b4e33ddadc6734d68c17136da5db98ec54f39f726625c6fb"
+  },
+  "AGI/tests/fixtures/mounted_arc_agi_0_9_8/remote_wrapper.py": {
+    "bytes": 9434,
+    "sha256": "ebe8fd0a5ab2d5f65600f072fb22cf1de21c347a55b8c5ef569d6d7305c520e5"
+  },
+  "AGI/tests/test_phase0.py": {
+    "bytes": 28796,
+    "sha256": "c01ccc93fe299e209266a5234d9f081a92d06e3520c063f7b7e4fcd73d322480"
+  },
+  "AGI/tests/test_phase0_transport_equivalence.py": {
+    "bytes": 12448,
+    "sha256": "aa2048f531387646eaffac75c5eab0fd60a1ae2c5e37f0da0bbc669ddf17424e"
+  },
+  "AGI/tests/test_phase0f.py": {
+    "bytes": 20237,
+    "sha256": "36c8ed23fdf1a28d4fe2d2b7578fa07692fafe9a891af9178a350673277ce6a1"
+  },
+  "AGI/tests/test_phase1.py": {
+    "bytes": 38127,
+    "sha256": "2bac9394d28994b7288a2cb7d652c8554f6ecd3fd8347bb2fab0a781d657dfae"
+  },
+  "AGI/tests/test_phase2.py": {
+    "bytes": 11508,
+    "sha256": "ad1e64f1f6d0f4b73917ae354bac415def136a5c0b0a2121c208b2a1eec61128"
+  },
+  "AGI/tests/test_phase23_history.py": {
+    "bytes": 4203,
+    "sha256": "99b71545b2873cdadca9c06db0dcf0d88b913433af97894b5d79ecda1a08a4a1"
+  },
+  "AGI/tests/test_phase2_conditional.py": {
+    "bytes": 4224,
+    "sha256": "b9780eb2e96143c86e1f0b825a5e5e2051ac19e18373f0d5b0e6b8534342b574"
+  },
+  "AGI/tests/test_phase2_diagnostics.py": {
+    "bytes": 13032,
+    "sha256": "d04adc5c422a3f6ae26b146f1104d0277f2894eaa569dc0b514c59afa9cd7fae"
+  },
+  "AGI/tests/test_phase2_execution.py": {
+    "bytes": 8531,
+    "sha256": "4e7c9f1c7654504bc4a932dd694cf800c8cdbe566219865356898ff16222a0d3"
+  },
+  "AGI/tests/test_phase2_hardening.py": {
+    "bytes": 11407,
+    "sha256": "307537f36cf9371356be3aa2142f1391740fc964d5efa8fb55b622afdc60a792"
+  },
+  "AGI/tests/test_phase2_selection.py": {
+    "bytes": 4065,
+    "sha256": "011eeea31b7cafb1ec73c8f77d5c1861e4ee507df7e9a3ddc44af71f2af6160e"
+  },
+  "AGI/tests/test_phase3.py": {
+    "bytes": 8338,
+    "sha256": "b15022e2b8f9b7f3b419edb0c36cd52b39c734f30a7951ebe83ce95dcd53037a"
+  },
+  "AGI/tests/test_phase3_exit.py": {
+    "bytes": 6479,
+    "sha256": "1de4cba93d50a65500ddbeac4ef664d1997a61090b382180833556d5ab861c92"
+  },
+  "AGI/tests/test_phase4.py": {
+    "bytes": 5202,
+    "sha256": "db3a9f12c13285e0254a30a916101d313a4e4a62954c93e5dc6a924218a2c7b1"
+  },
+  "AGI/tests/test_phase4_capacity_design.py": {
+    "bytes": 2517,
+    "sha256": "761d526bc0d064a2b0af6bb22cfec6f2df82866d5fc2d6e2df855231e8d772e4"
+  },
+  "AGI/tests/test_phase4_execution.py": {
+    "bytes": 6061,
+    "sha256": "f42592a1d32dd2181fd04b4327cd7355dc3ba23d4bd55e4a565aef5661add139"
+  },
+  "AGI/tests/test_phase4_handshake_v6.py": {
+    "bytes": 1529,
+    "sha256": "a93b605cea9d8996fcda594e4edb69a1ea0bb5a636ba2e9e3d44d0952591d8e3"
+  },
+  "AGI/tests/test_phase4_integration.py": {
+    "bytes": 6363,
+    "sha256": "7cc6e89ebbd2ea4bff6fd0821146b090d5ad846c272b5111a58e4f5f4dba7273"
+  },
+  "AGI/tests/test_phase4_launch_review.py": {
+    "bytes": 9394,
+    "sha256": "907b467572c3b30e486825bbbe00cbd09ac562880e5102c54998c60d4f87856b"
+  },
+  "AGI/tests/test_phase4_lifecycle.py": {
+    "bytes": 4114,
+    "sha256": "305f1c4199e6ce4b7bdfdc8cf44093dbd0af5d07e8699157d0eeba4f7f4e6231"
+  },
+  "AGI/tests/test_phase4_live_adapter_v6.py": {
+    "bytes": 4481,
+    "sha256": "d728f73b8711f29f8cb66bf49415e29c1e5481ed39216159a5fa7705a8ca852e"
+  },
+  "AGI/tests/test_phase4_measurement_v6.py": {
+    "bytes": 6628,
+    "sha256": "e1b40d38f09ff31f0fb7a6be36e7af7632f5b3230d13f5d7a163183919ca8958"
+  },
+  "AGI/tests/test_phase4_model_integration.py": {
+    "bytes": 6909,
+    "sha256": "375fd2c687bf00f7889a62703f7f1e074f14aca8080f6299cb372ef9f624814d"
+  },
+  "AGI/tests/test_phase4_monitor_v6.py": {
+    "bytes": 3233,
+    "sha256": "c87ec4125978dba2fe8d0c75da4f4bfd574e025e21dcdcaa694c0a3c48ae338b"
+  },
+  "AGI/tests/test_phase4_outer_v6.py": {
+    "bytes": 5892,
+    "sha256": "c3fdc0c27b39f74771c5879cfeecd8af1b66ba10859f2f69e98ad7cc26db7fa9"
+  },
+  "AGI/tests/test_phase4_pilot_package_v6.py": {
+    "bytes": 2312,
+    "sha256": "56bac5817c2c7ffe312bb46ceff213357fc0686a7fc2835fe7a259d9abb7eee2"
+  },
+  "AGI/tests/test_phase4_pilot_v6.py": {
+    "bytes": 2128,
+    "sha256": "3c07efcb923cfc3f6cf091abffaa8c55324c2ee84a11afbddd0dc63791624756"
+  },
+  "AGI/tests/test_phase4_preflight.py": {
+    "bytes": 5369,
+    "sha256": "2a233311a14dd2724a0cbcf054da15f0216b2ee0718f0c354daff2da62618ca5"
+  },
+  "AGI/tests/test_phase4_runner.py": {
+    "bytes": 3106,
+    "sha256": "2b9c9b2eb8a6a7508dca77f167b7732231b08f27040d9f71b73e81be381c6d2d"
+  },
+  "AGI/tests/test_phase4_scheduler_fault_matrix.py": {
+    "bytes": 7499,
+    "sha256": "057fba5a0140fd00131591e3974938cf52737ac37ba8c4630bd55e233cec8a4f"
+  },
+  "AGI/tests/test_phase4_terminal.py": {
+    "bytes": 3359,
+    "sha256": "156176318a6c0f0b46345af1bc872c54281453a4c0a44222635d1fcce987e208"
+  },
+  "AGI/tests/test_phase4_workload.py": {
+    "bytes": 2361,
+    "sha256": "192b616c28f4b7cf9f7643973734401b379e01a99bf97ca00b75c55b0ce63664"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/.env.example": {
+    "bytes": 1491,
+    "sha256": "00d062814880ee0166499c247af7fb82aead21ffc66ff97c972361abd572d896"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/.gitignore": {
+    "bytes": 297,
+    "sha256": "abbce13df3950d1e761e117df220e51e4c220234a9970a6ad0096e5ea7b16c86"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/.pre-commit-config.yaml": {
+    "bytes": 394,
+    "sha256": "d5747ec10713a2f056faa49b389f719b535aa2447451cb19d03ec8779a26193e"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/.python-version": {
+    "bytes": 4,
+    "sha256": "33307da56af13f791584518fef2e49641180bfbf2ef7b2d256c9ab6fad564f80"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/LICENSE": {
+    "bytes": 1065,
+    "sha256": "75c4276c506fd93082b38ad39f67ee97aa859574401ef978e701710c7a40af04"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/README.md": {
+    "bytes": 4552,
+    "sha256": "a19475e046a4bbc2ca3b4d7933b9c88db5df42dc8354a5ad442418fdb29d6fae"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/README.md": {
+    "bytes": 229,
+    "sha256": "fa235f29e5ba898d0a296745717cbe8a2dbf381734bc1156a0547065d6accdc2"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/__init__.py": {
+    "bytes": 327,
+    "sha256": "6ba4669ef87b7bf4b9df0511351cb90d544e5a185c3dd3f8dc38349503a15252"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/agent.py": {
+    "bytes": 9681,
+    "sha256": "49f1a349cd5e2123fceb266aec4a3a758d18ef5520e0212e808f695905d9e073"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/recorder.py": {
+    "bytes": 3472,
+    "sha256": "0a08d89f4067a760012767c05d4406bd2bf409f426e29a1193106abfcbb696c8"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/swarm.py": {
+    "bytes": 4201,
+    "sha256": "d9dc48f710f1b90a6552db0921293c7e89c8a925ed00a3faefa07ae19998ad39"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/templates/README.md": {
+    "bytes": 298,
+    "sha256": "b1f74e614f7d8ba43c19ff5c9b0d6c3fc736148baa860ce768e9c36f445b38ca"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/templates/langgraph_functional_agent.py": {
+    "bytes": 7715,
+    "sha256": "e4c562567bbf5f3d240a5e0e4c0068d7dc461f53484e5ac893adcc2ed90fad67"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/templates/langgraph_random_agent.py": {
+    "bytes": 3673,
+    "sha256": "0d1ecd9392564a4f5ad1fa16b403af5d521116588e879c7d5ea1c525d3dda30d"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/templates/langgraph_thinking/__init__.py": {
+    "bytes": 70,
+    "sha256": "8d8ac1061598d8166e7867b40f857b25450a846e5f464de8c48506c68a5f9cfd"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/templates/langgraph_thinking/agent.py": {
+    "bytes": 3334,
+    "sha256": "8a653f9c3c545bf3d094aa16487b83d3c7662f8af9e3bbb0eccc09127536844c"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/templates/langgraph_thinking/llm.py": {
+    "bytes": 390,
+    "sha256": "4fda747b607666811b783eaf7b94ae3cad4a31d029b5089c55c1ace2a0ff57bd"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/templates/langgraph_thinking/nodes.py": {
+    "bytes": 8676,
+    "sha256": "ed1ad9dea8e8ec24aebb414d62b58896749010d17ed935d5015b0c81ea116ac8"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/templates/langgraph_thinking/prompts.py": {
+    "bytes": 8132,
+    "sha256": "ff2cf487fc5a4184f94e607907586c179dcc03f40482a6dd54e28ed9ca223a3e"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/templates/langgraph_thinking/schema.py": {
+    "bytes": 1285,
+    "sha256": "a4ad8b3202c2c70a17cb7025947dad928909c13a37127f3815cb4166ad1f121e"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/templates/langgraph_thinking/tools.py": {
+    "bytes": 2101,
+    "sha256": "0b4a4729f8c8e24b5559473eb4fac64eab49a9402120f18a49de9d5fd8d17eb8"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/templates/langgraph_thinking/vision.py": {
+    "bytes": 7069,
+    "sha256": "4aa5798b0aa1f9eb3cfc9ae7f0963e5691412d5f4947dfce06ed9c8dd1487fdf"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/templates/llm_agents.py": {
+    "bytes": 24654,
+    "sha256": "dd6579e5e09155a673d084ca40fbcebde8a548a23303e4fe265f1150715784c2"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/templates/multimodal.py": {
+    "bytes": 20472,
+    "sha256": "7c4142ee95c5425bf9cdbeeb3b7bd6765e10c32454f553fb664e51204d060070"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/templates/openclaw_agent/README.md": {
+    "bytes": 7910,
+    "sha256": "09879ad0b1954fa21403312e5287e7d30dd83d8cbcfc3068d6d233ae70f323d6"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/templates/openclaw_agent/__init__.py": {
+    "bytes": 61,
+    "sha256": "41b0e1c63c45d97e4f120b91b33bebb975387fe843fabc75560946fe9a7c7aad"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/templates/openclaw_agent/docker/.env.example": {
+    "bytes": 1530,
+    "sha256": "0d8263c2bacbb5b42d90cbf2768b3b3a21aa12185312243e1734b11a2f0ea79e"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/templates/openclaw_agent/docker/docker-compose.yml": {
+    "bytes": 8051,
+    "sha256": "c72fe1963bc455633152f46faec212d8223ad451fc8969137f7a653d51a7e70e"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/templates/openclaw_agent/openclaw_agent.py": {
+    "bytes": 16152,
+    "sha256": "986ff023548c1eded09dccb8fade77291ff54ae9e772202a35b38b86d5fc06ef"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/templates/random_agent.py": {
+    "bytes": 2028,
+    "sha256": "e5e3610fd56a4819572cc0f0d768cff426ac8b935b549735bb396aefc810705e"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/templates/reasoning_agent.py": {
+    "bytes": 14116,
+    "sha256": "65de45e46f3c69e862e52b74b3a2560853d8fd6f61c8b66f74a27aa0a34b2af6"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/templates/smolagents.py": {
+    "bytes": 16911,
+    "sha256": "4f8b4eb9983b5354cb7b06866a2368f1d42f2f765c7be20054c5dfd2645babfc"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/agents/tracing.py": {
+    "bytes": 4082,
+    "sha256": "951ca56508c524504e116303f7c64f4eb5cf723c72cab892d4d1a3292b1cc51f"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/llms.txt": {
+    "bytes": 2808,
+    "sha256": "eef44c942576279f1efc25962f3fb732f4faf63212ba5e36d5d94fa5d72997c7"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/main.py": {
+    "bytes": 6202,
+    "sha256": "864254c750bbbd12a211f2d8aa1b1025d0609283f07dea4ede83722f2435301b"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/pyproject.toml": {
+    "bytes": 818,
+    "sha256": "229ce397a05bc03825c9917a1267d1e02fa7b8511c18a0d0f49b864cf7b94a94"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/pytest.ini": {
+    "bytes": 405,
+    "sha256": "3c57a8e782f6b93eb54d6e04adaa09c6c393492d2328db2226f5567cadc7e003"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/tests/README.md": {
+    "bytes": 218,
+    "sha256": "e889568bb454f18f32ab58727f20cc4011f7752fcb21bce0cfa45348c8b451a3"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/tests/__init__.py": {
+    "bytes": 16,
+    "sha256": "735469839c842bc3fbc34792d87ecca2fb190d80bc5c631024bb850a07b5bbfb"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/tests/conftest.py": {
+    "bytes": 1832,
+    "sha256": "7ebd62baabffc5a66dad66409f00ccfa6b0b44c50025c4195a3ef1011e01e004"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/tests/unit/test_core.py": {
+    "bytes": 11072,
+    "sha256": "5b18afd087d06563d54dc30a39878bb8b07d98b6f56309235f76bc989c151a73"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/tests/unit/test_openclaw_model_override.py": {
+    "bytes": 3548,
+    "sha256": "c2d8b0bdf311fb2820375dfd7e59df334a29c33255f48c664829e3a3f22cd199"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/tests/unit/test_openclaw_parser.py": {
+    "bytes": 10768,
+    "sha256": "29d0d86e1b896c287fdac07f074b697103f41981fe34a1f048ad5c96d9c09850"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/tests/unit/test_recorder.py": {
+    "bytes": 9586,
+    "sha256": "5a9d5a42ecf749770763683e6aa9fb565daa1ba99e63df422145ba23d125e02c"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/tests/unit/test_swarm.py": {
+    "bytes": 7617,
+    "sha256": "8a16fe20a9da8dcd88bb29b34a9e6e473a3bfa34102827801f79ccbef5398923"
+  },
+  "AGI/vendor/ARC-AGI-3-Agents/uv.lock": {
+    "bytes": 408167,
+    "sha256": "a54ea020d02035a522a2feb9b5063d936c71f18ab8b263742418643aa8ebff6a"
+  },
+  "repository.bundle": {
+    "bytes": 54768087,
+    "sha256": "c719ebae445b940a62bcc9255b18b251c60d4b0205ff37b4c72fd1cad0415570"
+  },
+  "installed-packages-macos-reference.txt": {
+    "bytes": 1090,
+    "sha256": "3a7f0845aee35bef7f9f403fedbbdd429b036530f5d54588e5740bfe3c8e8236"
+  },
+  "TRANSFER.json": {
+    "bytes": 342,
+    "sha256": "a7ca1dcc13f04b85baddb15523c3742e10f5f9f41206f430fa415a37883f6ac2"
+  }
+}

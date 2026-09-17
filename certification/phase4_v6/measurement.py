@@ -1,5 +1,4 @@
 """Bounded local measurement primitives; never authorize target execution."""
-import copy
 import json
 import math
 import os
@@ -26,7 +25,9 @@ class RequestTimeline:
 
     def snapshot(self):
         with self.lock:
-            return copy.deepcopy(self.events)
+            # Events contain only scalar values. Copy the mutable dictionaries,
+            # without recursively visiting every scalar while blocking service.
+            return [event.copy() for event in self.events]
 
 
 class MeasuredInference(IsolatedInference):

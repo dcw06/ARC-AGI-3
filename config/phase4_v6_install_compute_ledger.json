@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "scope": "installation_check_only_separate_from_prescreen_and_model_pilot",
+  "authorized_seconds": 1800,
+  "approval_reference": "reports/phase4_v6_install_authorization_20260917.md",
+  "maximum_attempts": 1,
+  "automatic_retries": 0,
+  "events": [
+    {
+      "kind": "reserve",
+      "recorded_at": "2026-09-17T08:44:16Z",
+      "attempt_id": "p4-v6-install-20260917T084416Z",
+      "seconds": 1800,
+      "execution_lock_sha256": "faa1df242b799ce6e8f684e849036e743fd586a718e572750de4d1a67802e503",
+      "released_seconds": 0,
+      "prescreen_credit_seconds": 0
+    },
+    {
+      "kind": "prelaunch_blocked",
+      "attempt_id": "p4-v6-install-20260917T084416Z",
+      "reason": "Kaggle credentials not configured",
+      "launch_request_sent": false,
+      "attempt_consumed": false,
+      "charged_or_reserved_seconds": 1800,
+      "exact_provider_billed_seconds": null,
+      "released_seconds": 0
+    },
+    {
+      "kind": "launch_request_started",
+      "attempt_id": "p4-v6-install-20260917T084416Z",
+      "recorded_at": "2026-09-17T09:13:44.119525+00:00",
+      "attempt_consumed": true,
+      "execution_lock_sha256": "faa1df242b799ce6e8f684e849036e743fd586a718e572750de4d1a67802e503",
+      "charged_or_reserved_seconds": 1800,
+      "provider_timeout_requested_seconds": 1800,
+      "automatic_retries": 0
+    },
+    {
+      "kind": "launch_receipt",
+      "attempt_id": "p4-v6-install-20260917T084416Z",
+      "reference": "reports/phase4_v6_install_launch.json",
+      "status": "provider_response_received",
+      "attempt_consumed": true,
+      "charged_or_reserved_seconds": 1800,
+      "released_seconds": 0
+    },
+    {
+      "kind": "attempt_completed_accounting_pending",
+      "attempt_id": "p4-v6-install-20260917T084416Z",
+      "recorded_at": "2026-09-17T10:00:44.049988+00:00",
+      "provider_version": 1,
+      "provider_status": "ERROR",
+      "result_reference": "reports/phase4_v6_install_evaluation.json",
+      "result_sha256": "6dcc27b8906a900205c8dacd7580284bc3c748fb9cabeab8ce284f28b43648d1",
+      "charged_or_reserved_seconds": 1800,
+      "released_seconds": 0,
+      "exact_provider_billed_seconds": null,
+      "account_gpu_usage_delta_seconds": 41.249,
+      "attempt_consumed": true,
+      "retry_authorized": false
+    }
+  ]
+}

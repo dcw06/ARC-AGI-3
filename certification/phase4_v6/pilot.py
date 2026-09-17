@@ -14,6 +14,9 @@ import time
 from certification.phase4_v6.evidence import EvidenceStore
 from certification.phase4_v6.live_probes import require_live_authority
 from certification.phase4_v6.outer import signal_owned, group_present
+from certification.phase4_v6.evaluate import LOCAL_CPU_SMOKE_SECONDS
+from certification.phase4_v6.telemetry import read_telemetry
+from certification.phase4_v6.scratch import worker_environment
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -24,7 +27,18 @@ def read(path):
     return json.loads(path.read_text())
 
 
-def run(output, environments, *, mode='local', seconds=90, reserve=10,
+def enforce_finalization_deadline(report, result, *, started, seconds):
+    """Include evaluator work in the verdict; late completion cannot yield capacity."""
+    report['elapsed_seconds'] = time.monotonic()-started
+    if report['elapsed_seconds'] >= seconds:
+        report['status'] = 'failed'
+        report['error'] = report.get('error') or 'final evaluation exceeded lifecycle deadline'
+        result['errors'].append('final evaluation exceeded lifecycle deadline')
+        result.update(passed=False, development_model_lifecycle_passed=False,
+                      capacity_candidate=None, C_nominal=None, C_admit=None)
+
+
+def run(output, environments, *, mode='local', seconds=LOCAL_CPU_SMOKE_SECONDS, reserve=10,
         started=None, fault='none', prepared=False):
     if mode not in ('local','live') or fault not in ('none','worker','monitor','evidence','cancel'):
         raise ValueError('invalid pilot mode/fault')
@@ -35,6 +49,8 @@ def run(output, environments, *, mode='local', seconds=90, reserve=10,
     if (any(type(v) not in (float,int) or not math.isfinite(v) for v in (seconds,reserve))
             or not 5 < reserve < seconds):
         raise ValueError('invalid pilot deadline')
+    if mode == 'local' and seconds > LOCAL_CPU_SMOKE_SECONDS:
+        raise ValueError('local CPU smoke deadline exceeds ceiling')
     started = time.monotonic() if started is None else started
     if type(started) not in (float,int) or not math.isfinite(started) or not 0 <= time.monotonic()-started < seconds-reserve:
         raise ValueError('invalid/exhausted first-cell clock')
@@ -48,7 +64,8 @@ def run(output, environments, *, mode='local', seconds=90, reserve=10,
     logs = EvidenceStore(output, 'logs')
     report = {'status':'failed', 'error':None, 'scope':mode+'_development_pilot',
         'first_cell_monotonic':started, 'worker_released':False, 'cleanup_verified':False,
-        'phase4_complete':False, 'target_gpu_certified':False}
+        'phase4_complete':False, 'target_gpu_certified':False,
+        'lifecycle_seconds':seconds, 'finalization_reserve_seconds':reserve}
     owned, drainers, log_errors = [], [], []
     rfd = wfd = None
     def drain(process, name):
@@ -96,7 +113,8 @@ def run(output, environments, *, mode='local', seconds=90, reserve=10,
             child = [sys.executable,'-m','certification.phase4_v6.pilot_child']
             rfd,wfd = os.pipe()
             worker = launch([sys.executable,str(ROOT/'certification/phase4_v6/gated_exec.py'),
-                             str(rfd),*child,'worker',*common], pass_fds=(rfd,))
+                             str(rfd),*child,'worker',*common], pass_fds=(rfd,),
+                            env=worker_environment(os.environ, scratch))
             os.close(rfd); rfd=None
             nonce = secrets.token_hex(32)
             monitor = launch([*child,'monitor',*common,'--worker-pid',str(worker.pid),'--nonce',nonce])
@@ -115,7 +133,7 @@ def run(output, environments, *, mode='local', seconds=90, reserve=10,
             if (ready['nonce']!=nonce or ready['worker_pid']!=worker.pid or ready['monitor_pid']!=monitor.pid
                     or ready['scope']!=expected_scope or ready['sample']['uuid']!=uuid):
                 raise ValueError('ready identity mismatch')
-            telemetry = read(output/'monitor/telemetry.json')
+            telemetry = read_telemetry(output/'monitor')
             if not telemetry['samples'] or telemetry['samples'][0]!=ready['sample']:
                 raise ValueError('ready not backed by retained sample')
             check_deadline()
@@ -148,7 +166,7 @@ def run(output, environments, *, mode='local', seconds=90, reserve=10,
             report['gpu_cleanup_verified']=receipt.get('gpu_cleanup_verified',False)
             report['worker']=read(output/'worker/state.json')
             from certification.phase4_v6.evaluate import monitor_fields
-            report.update(monitor_fields(receipt,read(output/'monitor/telemetry.json'), first_cell_monotonic=started))
+            report.update(monitor_fields(receipt,read_telemetry(output/'monitor'), first_cell_monotonic=started))
             report['status']='worker_completed_pending_independent_evaluation'
         except Exception as exc:
             report['error']=type(exc).__name__+': '+str(exc)[:512]
@@ -176,9 +194,19 @@ def run(output, environments, *, mode='local', seconds=90, reserve=10,
     _,rows=validate_freeze()
     if mode=='live':
         from certification.phase4_v6.evaluate import evaluate
+        result=evaluate(report,rows)
     else:
-        from certification.phase4_v3.evaluate import evaluate
-    result=evaluate(report,rows)
+        from certification.phase4_v6.evaluate import evaluate_local_smoke
+        result=evaluate_local_smoke(report,rows,seconds=seconds)
+    enforce_finalization_deadline(report, result, started=started, seconds=seconds)
+    control.save('outer.json', {k:v for k,v in report.items() if k not in ('worker','gpu_telemetry')})
     result.update(phase4_complete=False, target_gpu_certified=False, mode=mode)
     EvidenceStore(output,'evaluation').save('result.json',result)
+    # Include publication in the completion check as well. A late initial result
+    # is explicitly replaced with failure; no measured capacity is released.
+    before = result['passed']
+    enforce_finalization_deadline(report, result, started=started, seconds=seconds)
+    if before and not result['passed']:
+        control.save('outer.json', {k:v for k,v in report.items() if k not in ('worker','gpu_telemetry')})
+        EvidenceStore(output,'evaluation').save('result.json',result)
     return report,result

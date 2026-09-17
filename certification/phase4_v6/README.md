@@ -1,5 +1,47 @@
 # v6 — local measurement integration, target execution disabled
 
+## September 17: target-gate review and separate installation proposal
+
+See `reports/phase4_v6_target_review_20260917.md` for the current gate disposition.
+The target evaluator now requires actual GPU cleanup and rejects canceled admission.
+Telemetry uses lossless, hash-checked chunks under the existing 16 MiB component
+budget; no samples or timing precision are discarded. Known model/compiler caches
+are routed into monitored scratch, and completion checks include evaluation and
+result publication. These changes remain pending real target validation.
+
+`notebooks/phase4-v6-install-check-proposal-r1` is a separate installation-only
+proposal: a fresh venv, both frozen wheelhouses, dependency checks, exact package
+versions and a CUDA smoke test. It loads no model and runs no development pilot.
+Its GPU-enabled metadata describes the proposed session; uploading it spends
+compute and is not authorized. Its proposed 1,800-second reservation is separate
+from the later 28,800-second pilot and from the consumed prescreen reservation.
+
+`notebooks/phase4-lifecycle-v6-review-r3` is the new GPU-disabled source/protocol
+review snapshot. It is not an approved execution lock. Historical r2 stays intact.
+
+## September 17: portable local CPU smoke validation
+
+The current development runner uses a bounded 300-second local CPU smoke budget
+with a 10-second finalization reserve. The former 90-second runner budget also
+reused the historical v3 evaluator's separate 60-second cutoff, making a complete
+local run fail on slower hosts. `evaluate_local_smoke` retains the unmodified v3
+verdict under `historical_v3_evaluation` and applies the explicitly supplied local
+budget only to the local functional verdict. Non-time resource limits, complete
+client/request evidence and cleanup remain required. A smoke pass is not a v3
+timing pass, measured model capacity, or target certification. Historical results
+are not reevaluated or relabeled under this new scope.
+
+Checkpoint snapshots now copy scalar timeline events and list containers under
+their locks, then serialize and persist outside the inference-completion lock.
+Clients already finished at collection time share a checkpoint; no client or
+request evidence is discarded. Failed CLI runs retain the original error and
+leave invariance checks unset rather than indexing a missing worker result.
+
+The target protocol's 27,540-second lifecycle, 600-second reserve and closed
+authority gate are unchanged. Existing review-r2 notebook/archives remain exact
+historical snapshots; they do not include these source changes. A future review
+package must be a new revision.
+
 ## Current handoff: integrated pilot and review-r2 notebook
 
 The newest implementation is `pilot.py` plus `pilot_child.py`. It unifies the

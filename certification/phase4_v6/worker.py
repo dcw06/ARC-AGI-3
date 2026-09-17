@@ -2,7 +2,7 @@
 
 Gated real model backend; separate approval required before startup.
 """
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor, wait, FIRST_COMPLETED
 import json
 import hashlib
 import logging
@@ -62,10 +62,17 @@ def run_workload(rows, adapter_factory, completion_factory, checkpoint, cancel_p
     if rows != frozen:
         raise ValueError('exact 110-client workload required')
     def retain():
+        # Appended request/client/sample records are no longer mutated. Copy
+        # their containers under the lock, then encode and fsync outside it so
+        # checkpoint I/O cannot hold up inference completion callbacks.
+        with mutex:
+            snapshot = {key: list(value) if isinstance(value, list) else value
+                        for key, value in state.items()}
+            snapshot['request_timeline'] = timeline.snapshot()
         if evidence_store is None:
-            save(checkpoint, state)
+            save(checkpoint, snapshot)
         else:
-            evidence_store.save('state.json', state)
+            evidence_store.save('state.json', snapshot)
     manifests = load_e1_feature_manifests(ROOT / 'config/e1_feature_manifests.yaml')
     binding = E1ModelBinding.from_mapping(json.loads(
         (ROOT / 'config/operational_primary.yaml').read_text())['primary']['model_binding'])
@@ -133,16 +140,21 @@ def run_workload(rows, adapter_factory, completion_factory, checkpoint, cancel_p
                 return record
             with ThreadPoolExecutor(max_workers=110) as pool:
                 futures = {pool.submit(client, row): row for row in rows}
-                for future in as_completed(futures):
-                    row = futures[future]
-                    try:
-                        record = future.result()
-                    except Exception as exc:
-                        record = {'client_id': row['client_id'], 'error': type(exc).__name__ + ': ' + str(exc)}
-                    with mutex:
-                        state['clients'].append(record)
-                        state['request_timeline'] = timeline.snapshot()
-                        retain()
+                pending = set(futures)
+                while pending:
+                    # A checkpoint can take long enough for several clients to
+                    # finish. Drain all ready records into the next checkpoint,
+                    # instead of rewriting the entire history for each one.
+                    done, pending = wait(pending, return_when=FIRST_COMPLETED)
+                    for future in done:
+                        row = futures[future]
+                        try:
+                            record = future.result()
+                        except Exception as exc:
+                            record = {'client_id': row['client_id'], 'error': type(exc).__name__ + ': ' + str(exc)}
+                        with mutex:
+                            state['clients'].append(record)
+                    retain()
             state['workload_ended_seconds'] = timeline.now()
             state['queue'] = {'max_size': executor.queue.max_observed_size,
                               'max_age_seconds': executor.queue.max_observed_age}

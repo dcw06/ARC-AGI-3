@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-17T10:00:44.049988+00:00",
+  "attempt_id": "p4-v6-install-20260917T084416Z",
+  "provider_version": 1,
+  "provider_status": "KernelWorkerStatus.ERROR",
+  "passed": false,
+  "failure_stage": "fresh_venv_ensurepip_bootstrap",
+  "underlying_ensurepip_failure_reason": "not exposed by retained venv stderr",
+  "verified_model_wheelhouse_payloads": 178,
+  "verified_environment_wheels": 31,
+  "dependency_installation_reached": false,
+  "cuda_check_reached": false,
+  "model_loaded": false,
+  "pilot_launched": false,
+  "internal_elapsed_seconds": 32.318900168,
+  "account_gpu_seconds_before": 26171.027,
+  "account_gpu_seconds_after": 26212.276,
+  "account_gpu_usage_delta_seconds": 41.249,
+  "account_delta_scope": "aggregate quota change, not verified per-attempt billing or complete session inventory",
+  "exact_provider_billed_seconds": null,
+  "charged_or_reserved_seconds": 1800,
+  "released_seconds": 0,
+  "attempt_consumed": true,
+  "retry_authorized": false,
+  "phase4_complete": false,
+  "evidence": {
+    "reports/runs/phase4-v6-install-20260917/output/arc3-phase4-v6-clean-installation-check.log": {
+      "sha256": "b73b40343c833471503bdfdb20744c5cfe5661d37ecf51fd25fc66c137d898d2",
+      "bytes": 4871
+    },
+    "reports/runs/phase4-v6-install-20260917/output/phase4-v6-install-check/install.log": {
+      "sha256": "6e35e819e529d57459beedf51d7beacb7acf62fa5acbd95ce7cfbd70c7f2fe53",
+      "bytes": 151
+    },
+    "reports/runs/phase4-v6-install-20260917/output/phase4-v6-install-check/result.json": {
+      "sha256": "9a9e47e0116d0d72f8218e51f2873b3973fe2b1264bbef3b79037bce51bb2dda",
+      "bytes": 616
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "scope": "local_clean_bootstrap_and_frozen_engine_install_only",
+  "passed": true,
+  "target_cuda_verified": false,
+  "model_service_installed": false,
+  "gpu_run_launched": false,
+  "error": null,
+  "verified_wheels": 31,
+  "scratch_removed": true,
+  "stages": [
+    {
+      "stage": "host_inventory",
+      "started_seconds": 2.0382112159999997,
+      "passed": true,
+      "error": null,
+      "ended_seconds": 2.1594314600000004
+    },
+    {
+      "stage": "create_empty_venv",
+      "started_seconds": 2.167548234,
+      "passed": true,
+      "error": null,
+      "ended_seconds": 2.2437900070000003
+    },
+    {
+      "stage": "verify_empty_isolated_venv",
+      "started_seconds": 2.2592037300000003,
+      "passed": true,
+      "error": null,
+      "ended_seconds": 2.387995945
+    },
+    {
+      "stage": "host_pip_targets_empty_venv",
+      "started_seconds": 2.400570974,
+      "passed": true,
+      "error": null,
+      "ended_seconds": 3.1781137200000007
+    },
+    {
+      "stage": "install_frozen_environment",
+      "started_seconds": 3.2147955790000005,
+      "passed": true,
+      "error": null,
+      "ended_seconds": 15.439410207000002
+    },
+    {
+      "stage": "dependency_check",
+      "started_seconds": 15.446380964,
+      "passed": true,
+      "error": null,
+      "ended_seconds": 16.222643799
+    },
+    {
+      "stage": "installed_inventory",
+      "started_seconds": 16.234594616,
+      "passed": true,
+      "error": null,
+      "ended_seconds": 17.009782067
+    },
+    {
+      "stage": "runtime_imports_and_isolation",
+      "started_seconds": 17.021354327,
+      "passed": true,
+      "error": null,
+      "ended_seconds": 18.255669899
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-17",
+  "status": "local_remediation_verified_target_evidence_and_separate_authorization_pending",
+  "workspace": "C:/Users/jjzzw/Desktop/AGI",
+  "native_linux_copy_synchronized": false,
+  "full_suite": {
+    "command": "python -m unittest discover -s tests -q",
+    "runtime": "WSL Ubuntu Linux x86_64 Python 3.12.3",
+    "tests": 320,
+    "seconds": 220.816,
+    "exit_code": 0,
+    "passed": true
+  },
+  "diff_check_passed": true,
+  "installation_proposal": {
+    "directory": "notebooks/phase4-v6-install-check-proposal-r1",
+    "review_lock_sha256": "31919622ba208a936fa7bd5c2cf816e05372a9531063c0b902a9f81ba00b90bf",
+    "source_bindings": 3,
+    "source_and_artifact_hashes_verified": true,
+    "internal_seconds": 900,
+    "proposed_reservation_seconds": 1800,
+    "attempts": 1,
+    "authorized_seconds": 0,
+    "reserved_seconds": 0,
+    "model_loaded": false,
+    "uploaded": false
+  },
+  "pilot_review": {
+    "directory": "notebooks/phase4-lifecycle-v6-review-r3",
+    "review_lock_sha256": "2ed0baf17ca08aff58c7017ce916296402f01d5eff1ab40bff28c8d9875d13d7",
+    "source_bindings": 181,
+    "source_hashes_verified": true,
+    "gpu_enabled": false,
+    "approved_execution_lock": false,
+    "live_authority": "closed",
+    "proposed_reservation_seconds": 28800,
+    "authorized_seconds": 0,
+    "reserved_seconds": 0,
+    "uploaded": false
+  },
+  "target_clean_install_verified": false,
+  "target_driver_verified": false,
+  "actual_model_process_topology_verified": false,
+  "actual_gpu_cleanup_verified": false,
+  "kaggle_credentials_detected": false,
+  "gpu_job_launched": false,
+  "compute_ledgers_modified": false,
+  "prescreen_reservation_reused": false,
+  "C_nominal": null,
+  "C_admit": null,
+  "phase4_complete": false
+}
