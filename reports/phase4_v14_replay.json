@@ -1,0 +1,57 @@
+{
+  "recorded_at": "2026-09-18T11:24:21.377525+00:00",
+  "scope": "offline_v14_evaluator_replay_of_v13_target_evidence",
+  "result": {
+    "passed": true,
+    "errors": [],
+    "scope": "model_development_lifecycle_not_production_certification",
+    "model_inference": true,
+    "C_nominal": null,
+    "C_admit": null,
+    "capacity_status": "requires_real_model_token_audit_and_trajectory_measurements",
+    "development_model_lifecycle_passed": true,
+    "target_gpu_certified": false,
+    "phase4_complete": false,
+    "capacity_candidate": {
+      "scope": "development_repeated_games_pilot_projection_only",
+      "window_completed_requests": [
+        1029,
+        858,
+        842,
+        849,
+        1004,
+        974,
+        1050,
+        976
+      ],
+      "window_seconds": 477.215031097625,
+      "nominal_requests_per_wall_second": 1.9860019870290224,
+      "conservative_requests_per_wall_second": 1.4115230160514374,
+      "conservative_rule": "0.8_times_minimum_of_8_equal_wall_time_windows",
+      "bound_kind": "empirical_margin_not_statistical_or_deterministic_bound",
+      "service_budget_seconds": 19800,
+      "service_headroom_fraction": 0.2,
+      "service_headroom_seconds": 3960.0,
+      "effective_service_seconds": 15840.0,
+      "C_nominal": 39322,
+      "C_admit_candidate": 22358,
+      "C_admit": null,
+      "subsequent_admission_authorized": false,
+      "phase4_complete": false
+    }
+  },
+  "successful_configuration": "E1S-R-derived arc_action_v12; revised prompt and constrained decoding",
+  "source_bindings": {
+    "certification/phase4_v14/__init__.py": "10fc843dc2e34c6795bbefb2ccdae0eeb4fbf5fb1bd9fc1f4c5cc953a1ffdfda",
+    "certification/phase4_v14/evaluate.py": "886c061f0c41ebb9d1ea663adc88683a5289b485039eef256d8d7f2ba539f5d0",
+    "certification/phase4_v14/replay.py": "abfdab1e1ea61a8f9b0c07e93629d425b64b7090307ea008b67e07f6af8a7cd7",
+    "tests/test_phase4_v14_evaluate.py": "135a495e4d72e55eddef4a0618894f74cd631b8afd6f117242fa543475e7588a",
+    "scripts/review_phase4_v14.py": "7b12a441b842477fb1b213b55c1db0fc00f97d49acbe8372bd880eff4d5204f1"
+  },
+  "evidence_receipt_sha256": "047d9a5bf5744bee23ce8231d6acce3744a2d1f361cddf995561ab6e5682027a",
+  "tests_passed": 5,
+  "negative_mutations": 19,
+  "original_verdict_changed": false,
+  "gpu_run_performed": false,
+  "gpu_seconds_authorized": 0
+}

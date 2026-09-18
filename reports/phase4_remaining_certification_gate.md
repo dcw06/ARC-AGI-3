@@ -1,0 +1,18 @@
+# Remaining one-scorecard / 110-distinct-game gate
+
+V13 establishes a successful development lifecycle for E1S-R-derived `arc_action_v12` on the exercised Linux/Python/CUDA stack. V14 strengthens offline acceptance of that evidence. Neither establishes production certification for one scorecard containing 110 distinct games.
+
+Before any certification attempt:
+
+1. Establish an eligible, authorized inventory of 110 distinct game IDs and one scorecard's required lifecycle. Freeze its inventory hash, uniqueness check, environment/API versions and allowable access. Fifteen development games repeated across clients cannot substitute for this inventory. If the inventory or required access is unavailable, the gate remains blocked; do not use holdout access or submit scores implicitly.
+2. Freeze a new reviewed protocol and notebook integrating the hardened evaluator and a one-scorecard adapter. Specify the exact derived policy, prompt, constrained decoding, model/tokenizer hashes, seeds, per-game limits, deadlines and evidence budgets. Define a single owner for scorecard opening and finalization, with concurrency/transaction semantics supported by the actual framework. The current evaluator's separate per-client receipt assumptions require a reviewed change, not only a different workload list.
+3. Demonstrate locally that one open and one acknowledged close bind exactly 110 distinct games to the same scorecard ID; reject duplicates, omissions, extra games, mismatched IDs, unresolved actions and missing final receipts. Preserve strict legal-action/coordinate checks, contract identity, zero policy/transport failures, cancellation, no post-terminal dispatch, continuous monitoring and independently evaluated GPU cleanup. Fault-test shared scorecard cleanup and finalization.
+4. Review capacity against this specific workload's trajectory/token requirements. The development projection of 22,358 requests is evidence for planning, not admission or a guarantee that every unseen trajectory fits. Define before launch how incomplete games, deadline cutoff and evidence exhaustion fail the gate. Retain both runtime success and actual solving outcomes separately.
+5. Obtain separate source/protocol approval and a fresh bounded compute authorization, with holdout/scored-submission permission explicit if relevant. Resolve or formally carry outstanding accounting obligations; do not reuse consumed reservations. No such run is authorized by the present offline review.
+6. For a future target attempt, retain source/package bindings, installation/runtime verification, request and action evidence, the single scorecard's final receipt, the full 110-game inventory, monitoring through termination, independent cleanup, deadline compliance and usage reconciliation. Independently evaluate and archive the exact evidence before claiming this gate passed.
+
+## Separate action-selection investigation
+
+The strategic limitation is zero completed levels, despite valid actions and a reliable lifecycle. A proposed next scope is to inspect retained development trajectories for repeated clicks/actions, observation grounding and state changes; develop hypotheses about action selection; and design a small, controlled development-only comparison with per-game progress, repeated-action rate and level completion as outcomes. Any new model calls, prompt/policy changes, or compute budget need an explicit scope and reviewed protocol. This document does not start that investigation or authorize runs.
+
+Keep the validated infrastructure fixed where possible so solving changes can be assessed. Advanced scheduling should wait for measured queue/deadline/resource contention showing an allocation problem; zero solving progress alone is not that evidence.

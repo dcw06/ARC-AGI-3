@@ -1,0 +1,44 @@
+{
+  "status": "reviewed_accepted_as_development_projection_only",
+  "basis": "v13 real target evidence independently replayed with v14 cleanup and policy-binding gates",
+  "configuration": "E1S-R-derived arc_action_v12; revised prompt and constrained decoding",
+  "measured_candidate": {
+    "scope": "development_repeated_games_pilot_projection_only",
+    "window_completed_requests": [
+      1029,
+      858,
+      842,
+      849,
+      1004,
+      974,
+      1050,
+      976
+    ],
+    "window_seconds": 477.215031097625,
+    "nominal_requests_per_wall_second": 1.9860019870290224,
+    "conservative_requests_per_wall_second": 1.4115230160514374,
+    "conservative_rule": "0.8_times_minimum_of_8_equal_wall_time_windows",
+    "bound_kind": "empirical_margin_not_statistical_or_deterministic_bound",
+    "service_budget_seconds": 19800,
+    "service_headroom_fraction": 0.2,
+    "service_headroom_seconds": 3960.0,
+    "effective_service_seconds": 15840.0,
+    "C_nominal": 39322,
+    "C_admit_candidate": 22358,
+    "C_admit": null,
+    "subsequent_admission_authorized": false,
+    "phase4_complete": false
+  },
+  "production_capacity_approved": false,
+  "C_admit": null,
+  "new_spending_authorized": false,
+  "advanced_scheduling_justified": false,
+  "reason": "No observed allocation failure; zero completed levels directs next work to separately scoped action selection.",
+  "limitations": [
+    "110 clients repeat 15 development games on separate scorecards",
+    "Empirical single-run rate margin, not a confidence bound or production guarantee",
+    "Prompt lengths, trajectories and model behavior may differ on distinct unseen games",
+    "Rate haircut and service-time headroom are separate reductions"
+  ],
+  "replay_reference": "reports/phase4_v14_replay.json"
+}

@@ -1,3 +1,31 @@
+# Phase 4 — development lifecycle passed; production certification and solving remain open
+
+## Current summary — September 18, 2026
+
+**V13 passed the target development pilot**, including final notebook cleanup and independent local evidence replay. V14 now directly enforces independent GPU cleanup and the worker/client action-contract and parent bindings; five regression tests (19 negative mutations) and replay of the existing v13 evidence passed without a GPU rerun. Historical frozen sources and verdicts remain unchanged.
+
+The successful configuration is **E1S-R-derived `arc_action_v12`**, with a revised prompt and constrained decoding; it is not unchanged historical E1S-R. Offline split-environment installation was verified on the target in v6 install R5, followed by actual model/trajectory validation in v13: Linux/Python 3.12, torch 2.10.0 distribution / 2.10.0+cu128 runtime, CUDA 12.8, vLLM 0.19.0 and transformers 4.57.6 on RTX PRO 6000. Earlier statements below about installation being unverified describe historical checkpoints only.
+
+V13 completed 110 clients and 7,582 real requests, including 5,262 accepted ACTION6 actions, with zero policy or inference transport failures. Runtime was 4,500.288 seconds; monitoring and all cleanup checks passed. **Zero levels were completed.** Infrastructure validation does not establish useful solving.
+
+The reviewed development-capacity disposition accepts `C_nominal = 39,322`, conservative empirical rate 1.411523016 requests/second, separate 20% service-time headroom, and `C_admit_candidate = 22,358` only as development projections. Production admission remains unset; no new spending or advanced scheduling is authorized.
+
+The accounting reconciliation inventories 16 attempts and preserves known terminal/rejected/ambiguous outcomes. Exact per-attempt billing remains unresolved; aggregate quota observations are not billed usage or reusable reservation credit. The remaining production gate is one scorecard covering 110 distinct games, rather than 110 clients repeating 15 development games on separate scorecards. A separately scoped action-selection investigation is the next strategic priority; advanced scheduling has no observed allocation problem to address.
+
+Current references:
+
+- [Offline action-selection investigation and unexecuted prompt probe](phase4_action_selection_investigation.md): 97.28% of clicks matched the prompt's example coordinates; 96.99% of adjacent action pairs repeated. This is descriptive evidence, not a causal finding or authorization for model calls.
+- [V13 target evidence](phase4_v13_pilot_status.md)
+- [V14 evaluator, capacity and accounting review](phase4_v14_review.md)
+- [V14 replay receipt](phase4_v14_replay.json)
+- [Capacity disposition](phase4_development_capacity_disposition.json)
+- [Attempt-accounting reconciliation](phase4_attempt_accounting_reconciliation.json)
+- [Remaining certification gate and action-selection scope](phase4_remaining_certification_gate.md)
+
+## Historical checkpoints — preserved verbatim below
+
+The following sections record the state at their original checkpoints. Their uses of “current,” “pending,” and “unverified” are historical, superseded by the current summary above.
+
 # Phase 4 — V2 fixture prescreen passed; accounting pending
 
 ## v6 integrated development pilot — local pass; target launch blocked
