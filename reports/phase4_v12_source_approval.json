@@ -1,0 +1,16 @@
+{
+  "status": "approved",
+  "approved_at": "2026-09-18T04:24:23.991638+00:00",
+  "user_response": "Full v12 pilot: validate the schema and run all 110 clients under the existing eight-hour reservation.",
+  "approval_basis": "User selected full v12 pilot after reviewing the implemented action contract; fresh reservation required because prior attempt is consumed.",
+  "scope": "arc_action_v12 prompt, per-legal-action JSON schema, strict integer guard and constrained startup canary",
+  "review_lock": "notebooks/phase4-lifecycle-v12-review-r1/review-source-lock.json",
+  "review_lock_sha256": "c9123cab5b4409f4333bb01a4cda091a4f920e79fa70a30810375814e9b35542",
+  "artifacts": {
+    "profile.ipynb": "0995ae9ad4b237446cb6e45d7a9bb490d372bd92f935d70dde8b63e3c2bbd29e",
+    "kernel-metadata.json": "909ad791e93cf27b7c1c0499a8100deab44cf31b2f474238113c2c1c66379c1d"
+  },
+  "validation": "39 Linux tests and final 110-client / 7722-request CPU pilot passed; target vLLM validation pending",
+  "gpu_seconds_authorized": 0,
+  "gpu_launch_authorized": false
+}

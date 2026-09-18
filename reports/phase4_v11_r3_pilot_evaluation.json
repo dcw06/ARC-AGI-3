@@ -1,0 +1,242 @@
+{
+  "recorded_at": "2026-09-18T03:16:40.108217+00:00",
+  "attempt_id": "p4-v11-r3-pilot-20260918T010208Z",
+  "provider_status": "ERROR",
+  "provider_version": 1,
+  "passed": false,
+  "phase4_complete": false,
+  "clients": 110,
+  "requests": 7565,
+  "worker_completed": true,
+  "internal_elapsed_seconds": 7363.292489541,
+  "policy_failures": 1128,
+  "affected_clients": 41,
+  "rejection_categories": {
+    "invalid_action_data": 1128
+  },
+  "retained_examples": 208,
+  "example_messages": {
+    "ACTION6 requires exactly x and y": 208
+  },
+  "example_responses": {
+    "{\"action\":{\"action_id\":6,\"action_data\":{}}}": 208
+  },
+  "example_hashes_and_request_bindings_verified": true,
+  "all_failures_have_retained_responses": false,
+  "gpu_samples": 26676,
+  "max_sampling_gap_seconds": 0.2811580360003063,
+  "gpu_cleanup_verified": true,
+  "independent_gpu_cleanup_verified": true,
+  "source_removed": true,
+  "dependency_trees_removed": true,
+  "scratch_removed": true,
+  "process_cleanup_verified": true,
+  "inference_transport_failures": 0,
+  "inference_queue_failures": 0,
+  "account_gpu_usage_delta_seconds": 7373.181,
+  "account_delta_scope": "Aggregate account change, not exact per-attempt billing",
+  "exact_provider_billed_seconds": null,
+  "charged_or_reserved_seconds": 28800,
+  "released_seconds": 0,
+  "retry_authorized": false,
+  "evidence_archive": "evidence/phase4-v11-r3-pilot-failed-v1.zip",
+  "evidence_archive_sha256": "16889f6eb3d093ac9afc0b4cfc4e8b1978d562670f87ce63aed5be2ff72e8956",
+  "evidence": {
+    "output/arc3-phase4-development-v11-pilot-r3.log": {
+      "sha256": "b751db073d088273f03ded858dfee21fdc983204e55a76d71b7f1230ee336ea9",
+      "bytes": 6317
+    },
+    "output/phase4-development-v11/.evidence.lock": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "output/phase4-development-v11/control/game-assets.json": {
+      "sha256": "e783b1b82a54fa1df9ca6b746fe14692eca8d00b809f52cabfea7ec6857b3fd6",
+      "bytes": 74
+    },
+    "output/phase4-development-v11/control/gpu-cleanup.json": {
+      "sha256": "375b259f8b6e1684acb9663ce0ef20007949a33ee04cfb4d8cd6af460b8408f4",
+      "bytes": 282
+    },
+    "output/phase4-development-v11/control/installation.json": {
+      "sha256": "f7804a0a5f2002f9a77bfa0c262d0772ffd4d46ffa2c7872c1d6e555b5e07218",
+      "bytes": 2847
+    },
+    "output/phase4-development-v11/control/monitor-ready-ack.json": {
+      "sha256": "9f96f7bc2db4b3874574ae66466b30ce3b50198963bf84fbc1421449265362b7",
+      "bytes": 77
+    },
+    "output/phase4-development-v11/control/notebook-cost.json": {
+      "sha256": "2ed19379e77313137a003a450b28cc4d3cadb91b5aa32fc3e51c4929a4133fb3",
+      "bytes": 202
+    },
+    "output/phase4-development-v11/control/outer.json": {
+      "sha256": "d729f8a1cf715b90d1fa2b91250c906009673808079aa986090cb9f51d3cba7f",
+      "bytes": 1184
+    },
+    "output/phase4-development-v11/control/ownership.json": {
+      "sha256": "34d7d8c49ba3b86d7af7c0590aacefddf6d9843d87f4934da1469743ad9aeb6d",
+      "bytes": 157
+    },
+    "output/phase4-development-v11/control/stop-monitor.json": {
+      "sha256": "7068049bd7461871363ad2838521a1b52c80914459bb0eaa97acf81cfb303b5d",
+      "bytes": 64
+    },
+    "output/phase4-development-v11/evaluation/notebook-result.json": {
+      "sha256": "6a7100aed0a1ef4c08e062e6304ff4638439a52e04b207585807ad7ead177e19",
+      "bytes": 197
+    },
+    "output/phase4-development-v11/evaluation/result.json": {
+      "sha256": "5c7a46305b4adfc629971e9eb8285ce0dda9c785ed03e0d91709a94b8979f7bf",
+      "bytes": 1881
+    },
+    "output/phase4-development-v11/logs/306.json": {
+      "sha256": "ae650c19a1753febb1cf2e1a161a5f86dd261e33cfdb334e35dc1635b10cab0e",
+      "bytes": 919479
+    },
+    "output/phase4-development-v11/logs/308.json": {
+      "sha256": "50e31b712644548df2ea205f2e49aed62d938a59070d48f36338db20c2753895",
+      "bytes": 102
+    },
+    "output/phase4-development-v11/logs/install-game.json": {
+      "sha256": "ef49d372b1b4aec9d02674669cd8b95b3bfcd64fd5234199a0455a68d7de4622",
+      "bytes": 599352
+    },
+    "output/phase4-development-v11/logs/install-model.json": {
+      "sha256": "3a9f7a9ac5fe70ae63d73ccb1930da575db1e3779b1e6bd67f5afeb9f8e717df",
+      "bytes": 2099580
+    },
+    "output/phase4-development-v11/monitor/monitor-result.json": {
+      "sha256": "b898a1c091915139c5d1ae046520ab8b2754852ebbc0431919c9d25ae850debe",
+      "bytes": 1220
+    },
+    "output/phase4-development-v11/monitor/ready.json": {
+      "sha256": "36db1d05e4f6e9ee220a6a02302b0fb703df3de5e5fb7c291e3bc5dfa86c5639",
+      "bytes": 635
+    },
+    "output/phase4-development-v11/monitor/samples-0000.json": {
+      "sha256": "2d37cb6992a510f15c83f9ba748f464aa0d1b108ba25d3536d70772fe71da601",
+      "bytes": 23079
+    },
+    "output/phase4-development-v11/monitor/samples-0001.json": {
+      "sha256": "3fb80143eb7ff7ce91cdeed891aaca5f0022fea2f884309f566ae1dba5d7bdbb",
+      "bytes": 26987
+    },
+    "output/phase4-development-v11/monitor/samples-0002.json": {
+      "sha256": "70952b3c2770c022145c03d271f8282fcce58d691f4b2b37c23d8bbe0db4a4ca",
+      "bytes": 25615
+    },
+    "output/phase4-development-v11/monitor/samples-0003.json": {
+      "sha256": "c3fecf96201c8c1512329691d09809783b09b14cb03055607bbf9b432f75522c",
+      "bytes": 24151
+    },
+    "output/phase4-development-v11/monitor/samples-0004.json": {
+      "sha256": "b44aaf73f97f1e04d2683cf10bde42c8d13a039d6c9f005dd754f5b79c7b5e8c",
+      "bytes": 24343
+    },
+    "output/phase4-development-v11/monitor/samples-0005.json": {
+      "sha256": "6e7a974adf5de0d91d191f1a80e74cc6b08bd4f21e52c11009f21d8252969e52",
+      "bytes": 24131
+    },
+    "output/phase4-development-v11/monitor/samples-0006.json": {
+      "sha256": "3e373799ee3e95efe38d786fbcd52ea22f5a640a071bda523558494e1df1bdec",
+      "bytes": 24359
+    },
+    "output/phase4-development-v11/monitor/samples-0007.json": {
+      "sha256": "908a33f85a073a1bf6c41f40d4e0f5e16b45202c406186ffcaba3b914a426c33",
+      "bytes": 23567
+    },
+    "output/phase4-development-v11/monitor/samples-0008.json": {
+      "sha256": "c07878cd7ab21d1ade532b0d9bb7ca8be9b74c340a2e136d10ed18930895220c",
+      "bytes": 23443
+    },
+    "output/phase4-development-v11/monitor/samples-0009.json": {
+      "sha256": "c6e92df24089e8c87e08514a802585f6a7b249ebe830ecf92eb6e7003f41afac",
+      "bytes": 23499
+    },
+    "output/phase4-development-v11/monitor/samples-0010.json": {
+      "sha256": "a5d4c6eeb5986bf1f627f9dac403e2ef3e897e42dffe4042e325c50618b6c84f",
+      "bytes": 23351
+    },
+    "output/phase4-development-v11/monitor/samples-0011.json": {
+      "sha256": "684c678a9af8c61ff7054660189e59add478436d3abb17182cfd1e43f99fd864",
+      "bytes": 23779
+    },
+    "output/phase4-development-v11/monitor/samples-0012.json": {
+      "sha256": "629a9f0e7930d24ca6d2ffb4ab98b40cd4cd5e1d6e32670246caee1c0ec4284a",
+      "bytes": 23555
+    },
+    "output/phase4-development-v11/monitor/samples-0013.json": {
+      "sha256": "1bd050d6857db984231f46b9fd3a188f666801808e2fc19b39e376b30b786e87",
+      "bytes": 23331
+    },
+    "output/phase4-development-v11/monitor/samples-0014.json": {
+      "sha256": "36384bbf994f0f5b8e674fbf31e935369bc7df1bb944c6ed7aa2dd4123dc4b8b",
+      "bytes": 23095
+    },
+    "output/phase4-development-v11/monitor/samples-0015.json": {
+      "sha256": "945fff33c38411a6f8b24b67a7d229b5ce43cbf072ad0cc666cd9ccca112b894",
+      "bytes": 22783
+    },
+    "output/phase4-development-v11/monitor/samples-0016.json": {
+      "sha256": "6a8a8a60692321bb2c0daca1c9184f3840e5edfbfa2effb573e674ae0f798163",
+      "bytes": 23323
+    },
+    "output/phase4-development-v11/monitor/samples-0017.json": {
+      "sha256": "b7a0af877c7b01bf727e8905caef7e49ebb79861e5fb5205ac4c3e041f607db3",
+      "bytes": 23187
+    },
+    "output/phase4-development-v11/monitor/samples-0018.json": {
+      "sha256": "c50a5f94af61aa103fbc7edc1f6722d77c13a04fef4ceb1f292d0c19e0268634",
+      "bytes": 23123
+    },
+    "output/phase4-development-v11/monitor/samples-0019.json": {
+      "sha256": "182bc51ec21b0cd170c8bdc6c7747958a039bad339b59a6d34c5e96576b6c43f",
+      "bytes": 22915
+    },
+    "output/phase4-development-v11/monitor/samples-0020.json": {
+      "sha256": "73cca8d6d2179d900f6225a32ad9c6c5836a62c361711baef46dfe5ab14dfc87",
+      "bytes": 22763
+    },
+    "output/phase4-development-v11/monitor/samples-0021.json": {
+      "sha256": "9cb1d41653265943f5777cb13faebaadb6d93abc03634594d50699a0835650ab",
+      "bytes": 22631
+    },
+    "output/phase4-development-v11/monitor/samples-0022.json": {
+      "sha256": "6cabbe7abd3637aec86c79c458f6725095a0ec248d220f1611c84dd34a285a03",
+      "bytes": 22787
+    },
+    "output/phase4-development-v11/monitor/samples-0023.json": {
+      "sha256": "08bd02e5d5c069ff7e7a3ff204a6237538d305f180b9e394dda30d15a6147c62",
+      "bytes": 22403
+    },
+    "output/phase4-development-v11/monitor/samples-0024.json": {
+      "sha256": "a163b2daf71d6b1c891395278bf4e42e5f6f0ece44645be9ae8e27e05ff18c6f",
+      "bytes": 22711
+    },
+    "output/phase4-development-v11/monitor/samples-0025.json": {
+      "sha256": "31102d2bf1b75dc9a9399f3458dc8c5b906b4b1bcd4d38ff5b71738dfb9d7402",
+      "bytes": 22939
+    },
+    "output/phase4-development-v11/monitor/samples-0026.json": {
+      "sha256": "5ea47e309ef0035badb2e0e87005152b6f8ce4eb554276ed94bc404d7d79dc02",
+      "bytes": 1399
+    },
+    "output/phase4-development-v11/monitor/telemetry.json": {
+      "sha256": "aa7b6731e153a9a582915eae3917d18f9f5d575343d7ad9d892d7dee73e8ad96",
+      "bytes": 4117
+    },
+    "output/phase4-development-v11/worker/model-ready.json": {
+      "sha256": "8588783e441eb2062517deeaa5e001f5576fe7d72c18b0c853bb7c4d1094bbf3",
+      "bytes": 59
+    },
+    "output/phase4-development-v11/worker/state.json": {
+      "sha256": "6b8d37d2635d0c774f88d3085b62e60d6cb629e41cf49b7deb645f5e7d88c5e3",
+      "bytes": 13842286
+    },
+    "provider-observations.jsonl": {
+      "sha256": "7ab5e6c5a8067d11d63e8003261fc38cfbe717e993e128905c929432487e5ba9",
+      "bytes": 4455
+    }
+  }
+}

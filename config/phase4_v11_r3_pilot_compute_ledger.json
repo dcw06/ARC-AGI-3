@@ -1,0 +1,45 @@
+{
+  "attempt_id": "p4-v11-r3-pilot-20260918T010208Z",
+  "authorized_seconds": 28800,
+  "maximum_attempts": 1,
+  "automatic_retries": 0,
+  "approval_reference": "reports/phase4_v11_r3_compute_authorization.json",
+  "events": [
+    {
+      "kind": "reserve",
+      "attempt_id": "p4-v11-r3-pilot-20260918T010208Z",
+      "seconds": 28800,
+      "recorded_at": "2026-09-18T01:02:08.761267+00:00",
+      "execution_lock_sha256": "bb4631685b26c55b375e2198e67ee80ad58e650fad39784abdf4897422ea2a68",
+      "released_seconds": 0
+    },
+    {
+      "kind": "launch_request_started",
+      "attempt_id": "p4-v11-r3-pilot-20260918T010208Z",
+      "recorded_at": "2026-09-18T01:02:16.455392+00:00",
+      "attempt_consumed": true,
+      "package_sha256": "99f0ddd10c806ef0878ef006cb0d457de11090d69c2dbb81fbd374c6182e5845",
+      "charged_or_reserved_seconds": 28800,
+      "automatic_retries": 0
+    },
+    {
+      "kind": "launch_receipt",
+      "attempt_id": "p4-v11-r3-pilot-20260918T010208Z",
+      "reference": "reports/phase4_v11_r3_pilot_launch.json",
+      "status": "provider_response_received",
+      "charged_or_reserved_seconds": 28800,
+      "released_seconds": 0
+    },
+    {
+      "kind": "attempt_completed_accounting_pending",
+      "attempt_id": "p4-v11-r3-pilot-20260918T010208Z",
+      "provider_status": "ERROR",
+      "result_reference": "reports/phase4_v11_r3_pilot_evaluation.json",
+      "result_sha256": "c1347663c10e25911f04bc3b035f85fc060ea95e5fa7a71724b3830e25debc3f",
+      "charged_or_reserved_seconds": 28800,
+      "released_seconds": 0,
+      "account_gpu_usage_delta_seconds": 7373.181,
+      "retry_authorized": false
+    }
+  ]
+}

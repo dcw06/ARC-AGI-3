@@ -1,0 +1,254 @@
+{
+  "recorded_at": "2026-09-18T10:38:12.684577+00:00",
+  "attempt_id": "p4-v13-pilot-20260918T073734Z",
+  "provider_status": "COMPLETE",
+  "provider_version": 1,
+  "passed": true,
+  "phase4_complete": false,
+  "scope": "development_model_lifecycle_not_production_certification",
+  "independent_local_replay_passed": true,
+  "clients": 110,
+  "requests": 7582,
+  "metrics": {
+    "policy_failures": 0,
+    "parser_repairs": 0,
+    "inference_queue_failures": 0,
+    "inference_transport_failures": 0,
+    "acknowledged_actions": 7582,
+    "levels_completed": 0
+  },
+  "canary_audit": {
+    "action_contract": "arc_action_v12",
+    "request_sha256": "06853cc44e570cebee4b4623655b73c43072ee040d025e87e47696b3e15fac38",
+    "server_completion_tokens": 29,
+    "server_prompt_tokens": 46,
+    "service_seconds": 23.83615747500005,
+    "status": "passed",
+    "tokenizer_prompt_tokens": 46
+  },
+  "action6_acknowledged": 5262,
+  "internal_elapsed_seconds": 4500.287564211,
+  "source_removed": true,
+  "dependency_trees_removed": true,
+  "cleanup": {
+    "cleanup_verified": true,
+    "gpu_cleanup_verified": true,
+    "independent_gpu_cleanup_verified": true,
+    "scratch_removed": true
+  },
+  "gpu_samples": 16133,
+  "max_sampling_gap_seconds": 0.28126692599994385,
+  "evaluation": {
+    "passed": true,
+    "errors": [],
+    "scope": "model_development_lifecycle_not_production_certification",
+    "model_inference": true,
+    "C_nominal": null,
+    "C_admit": null,
+    "capacity_status": "requires_real_model_token_audit_and_trajectory_measurements",
+    "development_model_lifecycle_passed": true,
+    "target_gpu_certified": false,
+    "phase4_complete": false,
+    "capacity_candidate": {
+      "scope": "development_repeated_games_pilot_projection_only",
+      "window_completed_requests": [
+        1029,
+        858,
+        842,
+        849,
+        1004,
+        974,
+        1050,
+        976
+      ],
+      "window_seconds": 477.215031097625,
+      "nominal_requests_per_wall_second": 1.9860019870290224,
+      "conservative_requests_per_wall_second": 1.4115230160514374,
+      "conservative_rule": "0.8_times_minimum_of_8_equal_wall_time_windows",
+      "bound_kind": "empirical_margin_not_statistical_or_deterministic_bound",
+      "service_budget_seconds": 19800,
+      "service_headroom_fraction": 0.2,
+      "service_headroom_seconds": 3960.0,
+      "effective_service_seconds": 15840.0,
+      "C_nominal": 39322,
+      "C_admit_candidate": 22358,
+      "C_admit": null,
+      "subsequent_admission_authorized": false,
+      "phase4_complete": false
+    }
+  },
+  "final_receipt": {
+    "cleanup_sha256": "c86b729d9a975dec1ac71e462cfbbc56dbe929402beda8da0551fad7e3224b9a",
+    "completed": true,
+    "elapsed_seconds": 4500.287564211,
+    "error": null,
+    "evaluation_sha256": "b30dcfd9d6414bbf6ef37ea3fe8f9350c19a8a11b345657fd51dc40b3b981220",
+    "passed": true,
+    "phase4_complete": false,
+    "source_removed": true
+  },
+  "account_gpu_usage_delta_seconds": 4509.597,
+  "account_delta_scope": "Aggregate account change, not exact per-attempt billing",
+  "exact_provider_billed_seconds": null,
+  "provider_reserved_seconds_observed": 0.0,
+  "charged_or_reserved_seconds": 28800,
+  "released_seconds": 0,
+  "attempt_consumed": true,
+  "retry_authorized": false,
+  "evidence_archive": "evidence/phase4-v13-pilot-passed-v1.zip",
+  "evidence_archive_sha256": "114259a4fb2bcc650cda7dc79e5d16ff4f678ba037898eb232258900ed6d0b61",
+  "evidence": {
+    "download/arc3-phase4-development-v13-pilot-r1.log": {
+      "sha256": "004ee4741aafe0c4ceb3d1d6692a8115e50cd2d0e9d59b32ecf624a9ded73d17",
+      "bytes": 2864
+    },
+    "download/phase4-development-v13/.evidence.lock": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "download/phase4-development-v13/control/game-assets.json": {
+      "sha256": "e783b1b82a54fa1df9ca6b746fe14692eca8d00b809f52cabfea7ec6857b3fd6",
+      "bytes": 74
+    },
+    "download/phase4-development-v13/control/gpu-cleanup.json": {
+      "sha256": "1766d3237f49160d6204836dc6bb68c122b0d213cbc87f7d85ccc629eb636913",
+      "bytes": 282
+    },
+    "download/phase4-development-v13/control/installation.json": {
+      "sha256": "3259b979e2a6d0ae695657fef962a0ece3a9f32806a0bb838ff8b59d94109708",
+      "bytes": 2853
+    },
+    "download/phase4-development-v13/control/monitor-ready-ack.json": {
+      "sha256": "90c87dffa3336ce2d5e5436feac0755f8aba885023251ce3b3ac5a8b69de8c3d",
+      "bytes": 77
+    },
+    "download/phase4-development-v13/control/notebook-cost.json": {
+      "sha256": "c86b729d9a975dec1ac71e462cfbbc56dbe929402beda8da0551fad7e3224b9a",
+      "bytes": 152
+    },
+    "download/phase4-development-v13/control/outer.json": {
+      "sha256": "2d3e443a69504b44a5e717918ea4a148095032a88a5f65b5445d2932af6054a0",
+      "bytes": 1184
+    },
+    "download/phase4-development-v13/control/ownership.json": {
+      "sha256": "a0d745d72fda993954e54ab3e65bc60f0ba8eef1590df4620dece758357c69ac",
+      "bytes": 157
+    },
+    "download/phase4-development-v13/control/stop-monitor.json": {
+      "sha256": "7eab45709e0ddd0180b165114c73e15cbe451a47095d40c1f87970b510cfb8d1",
+      "bytes": 64
+    },
+    "download/phase4-development-v13/evaluation/notebook-result.json": {
+      "sha256": "37a8de7f382054619cf3dda36979b190ae355a1290f9682cc9e88854d358ca64",
+      "bytes": 310
+    },
+    "download/phase4-development-v13/evaluation/result.json": {
+      "sha256": "b30dcfd9d6414bbf6ef37ea3fe8f9350c19a8a11b345657fd51dc40b3b981220",
+      "bytes": 1133
+    },
+    "download/phase4-development-v13/logs/306.json": {
+      "sha256": "4d0f18ce8c89c4a7cd3e42916b25574afd37ff68a446ca82ea392c8b47c4e39e",
+      "bytes": 852086
+    },
+    "download/phase4-development-v13/logs/308.json": {
+      "sha256": "50e31b712644548df2ea205f2e49aed62d938a59070d48f36338db20c2753895",
+      "bytes": 102
+    },
+    "download/phase4-development-v13/logs/install-game.json": {
+      "sha256": "5044ea83314df5cc8c38102ffab324c52805b8579e2da550585cfb4b9bc6967b",
+      "bytes": 599316
+    },
+    "download/phase4-development-v13/logs/install-model.json": {
+      "sha256": "4824c0e94b8e4b1e15f75f381ec53c59f55d6829ba1f07bf3ccebda5404ec737",
+      "bytes": 2099552
+    },
+    "download/phase4-development-v13/monitor/monitor-result.json": {
+      "sha256": "22a69ccbda94d981cfa8accef70dcafe044e39deab583a2bf99fdd1f623fc3eb",
+      "bytes": 1219
+    },
+    "download/phase4-development-v13/monitor/ready.json": {
+      "sha256": "9bf17a455d4c0c702822fc906dd192d035019fe705d19ad01a564b6fe621a65b",
+      "bytes": 635
+    },
+    "download/phase4-development-v13/monitor/samples-0000.json": {
+      "sha256": "c2a53427cf43e264bed6e3a1b32dde5facf79ac62117ca77af465bb8363dfef4",
+      "bytes": 22663
+    },
+    "download/phase4-development-v13/monitor/samples-0001.json": {
+      "sha256": "59aae01880c824f34ca0d8172d259b1d9df6f3a9f87a45f7dffad0eb91d17828",
+      "bytes": 27371
+    },
+    "download/phase4-development-v13/monitor/samples-0002.json": {
+      "sha256": "e30c57e0bd405a119b236ede85b3e86353467086cbe1a8c946dcb1fa39b7246b",
+      "bytes": 26363
+    },
+    "download/phase4-development-v13/monitor/samples-0003.json": {
+      "sha256": "6a21c1163fa0719ef55af3379b7673b404e879e69ba1df35c00aa39ed71b1078",
+      "bytes": 24803
+    },
+    "download/phase4-development-v13/monitor/samples-0004.json": {
+      "sha256": "649ab1f4e814f4e07ec605b00395998dd455b929e6aa094ef9dc0425ac626cfd",
+      "bytes": 24395
+    },
+    "download/phase4-development-v13/monitor/samples-0005.json": {
+      "sha256": "1376898c313edfbdc15a4f9bdd1998998727a63a3bb9dc397829d03508d865bb",
+      "bytes": 24243
+    },
+    "download/phase4-development-v13/monitor/samples-0006.json": {
+      "sha256": "af24adf23ee1b5a8840bf04d9492a816d156ad65ad10f99631027654321e1bee",
+      "bytes": 24203
+    },
+    "download/phase4-development-v13/monitor/samples-0007.json": {
+      "sha256": "7c59e0ad192c451ed32b118905bb5e0992ff6432d14e3555d4a0bfe1e32b6d1f",
+      "bytes": 23599
+    },
+    "download/phase4-development-v13/monitor/samples-0008.json": {
+      "sha256": "ea77a31d7d9f448d2d37d60498603b4b70ebd297b7f672a2aea7ca62c053fcdd",
+      "bytes": 23123
+    },
+    "download/phase4-development-v13/monitor/samples-0009.json": {
+      "sha256": "f72ae448d22946f96a59e004e13f4fef5e7a58d58cb49da4bb4311bf289d87d6",
+      "bytes": 23251
+    },
+    "download/phase4-development-v13/monitor/samples-0010.json": {
+      "sha256": "9d8b8624c91f336732de40d48c4b0c5e658296c654876618bc021b7ac8a9f6d1",
+      "bytes": 23631
+    },
+    "download/phase4-development-v13/monitor/samples-0011.json": {
+      "sha256": "389f8f1bc27bd9cdc56839258a6eb0c93d5f7c71ffc275745c03e0f6be7362d1",
+      "bytes": 23723
+    },
+    "download/phase4-development-v13/monitor/samples-0012.json": {
+      "sha256": "6f4a764ab0b64a0a2967a133cfbe3e19d63ef9d14054b5cf257245922298b92e",
+      "bytes": 23243
+    },
+    "download/phase4-development-v13/monitor/samples-0013.json": {
+      "sha256": "c70265f398979ff25ae80b516eb5f3168e35eb35f15129cb82462ceae93ab54e",
+      "bytes": 23471
+    },
+    "download/phase4-development-v13/monitor/samples-0014.json": {
+      "sha256": "4df847b74a580d019f8cbd6e7f21423165f5a8a44409cddfc477490167c79e03",
+      "bytes": 22947
+    },
+    "download/phase4-development-v13/monitor/samples-0015.json": {
+      "sha256": "e6ef688830be8dd428c025fabe61552fefe79e4075ab30c27eaa1e82280a632c",
+      "bytes": 17239
+    },
+    "download/phase4-development-v13/monitor/telemetry.json": {
+      "sha256": "499fe1691124bf675d42e55155bb1fdd89cf9277f58b8c08857fd59473d98384",
+      "bytes": 2754
+    },
+    "download/phase4-development-v13/worker/model-ready.json": {
+      "sha256": "28056d4ecf18d8fae12e387d2f7c9061730a4973cc7d9e40a949df82c3a7854f",
+      "bytes": 59
+    },
+    "download/phase4-development-v13/worker/state.json": {
+      "sha256": "5af4e348df19549ceca65ccd7b83fb69b670db31297f5581bff780ff24cfa0da",
+      "bytes": 13889598
+    },
+    "provider-observations.jsonl": {
+      "sha256": "6e7a78266d99995020242a1a30b1c58b8ea854b1485c29f6bfcd404db7f96ffe",
+      "bytes": 3176
+    }
+  }
+}

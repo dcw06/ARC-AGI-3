@@ -1,0 +1,152 @@
+"""Independent evidence checks; does not trust worker success flags."""
+from collections import Counter
+import math
+from certification.phase4_v13.canary import valid_canary
+
+
+def evaluate(report, rows):
+    errors = []
+    worker = report.get('worker')
+    if not isinstance(worker, dict):
+        return {'passed': False, 'errors': ['missing worker'], 'phase4_complete': False}
+    if report.get('error') or worker.get('error') or report.get('status') != 'worker_completed_pending_independent_evaluation':
+        errors.append('supervisor/worker failure')
+    if report.get('cleanup_verified') is not True or report.get('scratch_removed') is not True:
+        errors.append('cleanup not verified')
+    for key, limit in [('elapsed_seconds', 27540), ('peak_rss_bytes', 128 * 1024**3),
+                       ('peak_scratch_bytes', 4 * 1024**3), ('final_scratch_bytes', 4 * 1024**3),
+                       ('cleanup_seconds', 15)]:
+        value = report.get(key)
+        if type(value) not in (int, float) or not math.isfinite(value) or not 0 <= value < limit:
+            errors.append('resource limit/evidence: ' + key)
+    if worker.get('model_inference') is not True:
+        errors.append('actual model evidence missing')
+    startup = worker.get('model_startup_seconds')
+    if type(startup) not in (int, float) or not math.isfinite(startup) or not 0 <= startup <= 900:
+        errors.append('startup evidence/limit violation')
+    if not valid_canary(worker.get('canary_audit')):
+        errors.append('invalid arc_action_v12 canary evidence')
+    artifact = worker.get('model_artifact') or {}
+    if artifact.get('tree_sha256') != '052ab27f06c28261e143b8c1638382d107b034692bc0cd1792ec4e02ddab8627':
+        errors.append('model artifact binding missing/wrong')
+    binding = report.get('gpu_binding') or {}
+    uuid = binding.get('gpu_uuid')
+    initial = binding.get('initial_telemetry') or {}
+    telemetry = report.get('gpu_telemetry', [])
+    if (not uuid or initial.get('uuid') != uuid or 'RTX PRO 6000' not in initial.get('name', '')
+            or not telemetry or len(telemetry) != report.get('gpu_samples')):
+        errors.append('GPU binding/telemetry missing')
+    used = []
+    for row in telemetry:
+        value = row.get('used_bytes')
+        if row.get('uuid') != uuid or type(value) is not int or not 0 <= value <= 86 * 1024**3:
+            errors.append('GPU identity/resource violation')
+        else:
+            used.append(value)
+    if not used or max(used) != report.get('peak_vram_bytes'):
+        errors.append('GPU peak mismatch')
+    requests = worker.get('requests', [])
+    audit = worker.get('model_token_audit', [])
+    if Counter(a.get('request_sha256') for a in audit) != Counter(a.get('request_sha256') for a in requests):
+        errors.append('missing/extra model token audit')
+    for a in audit:
+        prompt, completion = a.get('server_prompt_tokens'), a.get('server_completion_tokens')
+        if (type(prompt) is not int or prompt <= 0 or prompt != a.get('tokenizer_prompt_tokens')
+                or type(completion) is not int or not 0 <= completion <= 128 or prompt + 128 > 65536):
+            errors.append('token parity/context violation')
+    clients = worker.get('clients', [])
+    expected = {r['client_id']: r for r in rows}
+    if len(rows) != 110 or len(expected) != 110:
+        errors.append('expected inventory is not 110 unique clients')
+    if Counter(c.get('client_id') for c in clients) != Counter(expected.keys()):
+        errors.append('missing/duplicate/extra client')
+    for c in clients:
+        cid = c.get('client_id')
+        row = expected.get(cid)
+        if row is None:
+            continue
+        if any(c.get(k) != row[k] for k in ('game_id', 'environment_seed', 'request_seed', 'max_actions')):
+            errors.append(f'{cid}: workload drift')
+        result = c.get('result') or {}
+        if c.get('error') or c.get('client_closed') is not True:
+            errors.append(f'{cid}: client failure')
+        receipt = c.get('scorecard_receipt') or {}
+        if (not c.get('scorecard_id') or receipt.get('card_id') != c['scorecard_id']
+                or c.get('finalization_status') != 'acknowledged_local_framework'):
+            errors.append(f'{cid}: missing/mismatched receipt')
+        life = c.get('lifecycle_journal', [])
+        if Counter(e.get('kind') for e in life) != Counter(['scorecard_open', 'scorecard_close']):
+            errors.append(f'{cid}: lifecycle inventory')
+        if any(e.get('status') != 'acknowledged' for e in life):
+            errors.append(f'{cid}: lifecycle unresolved')
+        terminal = c.get('terminal_observation') or {}
+        if result.get('terminal_reason') == 'game_over' and (terminal.get('state') != 'GAME_OVER' or not terminal.get('rendered_frames')):
+            errors.append(f'{cid}: unsubstantiated game_over')
+        entries = c.get('client_journal', [])
+        bootstrap = [e for e in entries if e.get('kind') == 'bootstrap_reset']
+        actions = [e for e in entries if e.get('kind') == 'action']
+        audit = c.get('dispatch_audit', [])
+        if len(audit) != len(actions):
+            errors.append(f'{cid}: missing dispatch audit')
+        for index, entry in enumerate(audit):
+            if entry.get('pre_state') in ('GAME_OVER', 'WIN'):
+                errors.append(f'{cid}: post-terminal dispatch')
+            action = entry.get('action_id')
+            if (type(action) is not int or action not in entry.get('legal_actions', [])
+                    or entry.get('outcome') != 'acknowledged'):
+                errors.append(f'{cid}: illegal/unresolved action')
+            data = entry.get('action_data')
+            if action == 6:
+                if (not isinstance(data, dict) or set(data) != {'x', 'y'}
+                        or any(type(v) is not int or not 0 <= v < 64 for v in data.values())):
+                    errors.append(f'{cid}: illegal click')
+            elif data != {}:
+                errors.append(f'{cid}: unexpected action data')
+            if index < len(actions):
+                prepared = actions[index].get('prepared_fields', {})
+                if prepared.get('action_id') != action or prepared.get('decision_id') != entry.get('decision_id'):
+                    errors.append(f'{cid}: journal/action mismatch')
+        if len(bootstrap) != 1 or any(e.get('status') != 'acknowledged' for e in entries):
+            errors.append(f'{cid}: dispatch unresolved')
+        ids = [e.get('transaction_id') for e in entries]
+        if None in ids or len(ids) != len(set(ids)):
+            errors.append(f'{cid}: duplicate transaction')
+        if result.get('terminal_reason') == 'game_over':
+            if (not audit or audit[-1].get('post_state') != 'GAME_OVER'
+                    or audit[-1].get('post_hash') != terminal.get('hash')
+                    or not actions or actions[-1].get('fields', {}).get('post_state_hash') != terminal.get('hash')):
+                errors.append(f'{cid}: terminal journal mismatch')
+        acknowledged = sum(e.get('status') == 'acknowledged' for e in actions)
+        if (type(result.get('acknowledged_actions')) is not int
+                or acknowledged != result.get('acknowledged_actions')
+                or len(actions) > row['max_actions']):
+            errors.append(f'{cid}: action count')
+        if result.get('terminal_reason') not in ('win', 'game_over', 'action_cap'):
+            errors.append(f'{cid}: incomplete lifecycle')
+        if result.get('terminal_reason') == 'action_cap' and len(actions) != row['max_actions']:
+            errors.append(f'{cid}: partial action cap')
+        for key in ('policy_failures', 'ambiguous_actions', 'inference_queue_failures', 'inference_transport_failures'):
+            if result.get(key) != 0:
+                errors.append(f'{cid}: {key}')
+        if result.get('inference_requests') != result.get('inference_completions'):
+            errors.append(f'{cid}: missing completions')
+        calls = [r for r in worker.get('requests', []) if r.get('client_id') == cid]
+        if len(calls) != result.get('inference_requests'):
+            errors.append(f'{cid}: missing request accounting')
+        for call in calls:
+            duration = call.get('service_seconds')
+            if (type(duration) not in (int, float) or not math.isfinite(duration) or duration < 0
+                    or call.get('error')):
+                errors.append(f'{cid}: invalid request measurement')
+    queue = worker.get('queue', {})
+    for key, limit in [('max_size', 110), ('max_age_seconds', 300)]:
+        value = queue.get(key)
+        if type(value) not in (int, float) or not math.isfinite(value) or not 0 <= value <= limit:
+            errors.append('queue limit/evidence')
+    return {'passed': not errors, 'errors': errors,
+            'scope': 'model_development_lifecycle_not_production_certification',
+            'model_inference': worker.get('model_inference') is True,
+            'C_nominal': None, 'C_admit': None,
+            'capacity_status': 'requires_real_model_token_audit_and_trajectory_measurements',
+            'development_model_lifecycle_passed': not errors,
+            'target_gpu_certified': False, 'phase4_complete': False}

@@ -1,0 +1,11 @@
+# V11 policy-rejection diagnostics
+
+V10 R2 completed the live workload but failed the zero-policy-failure requirement. V11 adds bounded evidence around the unchanged E1 policy to identify these proposal exceptions before a semantic repair is considered. It is a diagnostic pilot, not a claim that the 1,119 v10 rejections have been fixed.
+
+Each client records counts for every rejection category and up to eight examples. Examples include exception type/message (384 characters), request ID and SHA-256, full response SHA-256 and byte count, completion token count, and the first 1,024 response bytes with a truncation marker. Evidence is attached to the existing per-client worker checkpoint and covered by its shared output budget. Prefixes may not contain the entire rejected response; hashes allow exact correlation without claiming recoverability of omitted content.
+
+The observer clears completion context at the start of each proposal, captures the actual returned model text, rethrows the original policy exception, and leaves existing fallback/counters in control. It does not retry, repair model output, change prompts, change action selection, or relax acceptance. Model/tokenizer versions and request/deadline/resource limits remain unchanged. The subclass passes the existing E1Policy/manifest/binding checks. This instrumentation is bounded for the frozen 110 clients and at most 80 actions per client.
+
+32 Linux unit/regression tests passed in 18.648 seconds, including real strict-JSON rejection, original exception identity, unchanged success return, stale completion reset, bounded counts/examples, response hashing, and existing asynchronous monitoring, cleanup, staging and bridge checks. Full CPU-only pilot results are retained in `reports/runs/phase4-v11-local-native` and must pass before submission. Local results do not establish target success.
+
+The user explicitly requested one new GPU run. A fresh v11 snapshot, authority and 28,800-second reservation will be used; historical attempts remain consumed. The internal limit stays 27,540 seconds with no automatic retry. Upload network timeouts are increased to 60 seconds for connection/write and 120 seconds for response wait to accommodate the earlier ambiguous upload; this does not add retries or alter GPU runtime limits.

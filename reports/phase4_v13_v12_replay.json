@@ -1,0 +1,96 @@
+{
+  "scope": "offline_diagnostic_replay_not_new_target_execution",
+  "historical_provider_status": "ERROR",
+  "historical_verdict_changed": false,
+  "original_evaluator": {
+    "passed": false,
+    "errors": [
+      "single audited canary evidence missing"
+    ],
+    "scope": "model_development_lifecycle_not_production_certification",
+    "model_inference": true,
+    "C_nominal": null,
+    "C_admit": null,
+    "capacity_status": "requires_real_model_token_audit_and_trajectory_measurements",
+    "development_model_lifecycle_passed": false,
+    "target_gpu_certified": false,
+    "phase4_complete": false,
+    "capacity_candidate": null
+  },
+  "corrected_evaluator": {
+    "passed": true,
+    "errors": [],
+    "scope": "model_development_lifecycle_not_production_certification",
+    "model_inference": true,
+    "C_nominal": null,
+    "C_admit": null,
+    "capacity_status": "requires_real_model_token_audit_and_trajectory_measurements",
+    "development_model_lifecycle_passed": true,
+    "target_gpu_certified": false,
+    "phase4_complete": false,
+    "capacity_candidate": {
+      "scope": "development_repeated_games_pilot_projection_only",
+      "window_completed_requests": [
+        1024,
+        880,
+        878,
+        882,
+        933,
+        929,
+        1026,
+        1030
+      ],
+      "window_seconds": 458.25856385562497,
+      "nominal_requests_per_wall_second": 2.0681555670797893,
+      "conservative_requests_per_wall_second": 1.5327591351272427,
+      "conservative_rule": "0.8_times_minimum_of_8_equal_wall_time_windows",
+      "bound_kind": "empirical_margin_not_statistical_or_deterministic_bound",
+      "service_budget_seconds": 19800,
+      "service_headroom_fraction": 0.2,
+      "service_headroom_seconds": 3960.0,
+      "effective_service_seconds": 15840.0,
+      "C_nominal": 40949,
+      "C_admit_candidate": 24278,
+      "C_admit": null,
+      "subsequent_admission_authorized": false,
+      "phase4_complete": false
+    }
+  },
+  "negative_replay_cases": {
+    "missing": [
+      "invalid arc_action_v12 canary evidence"
+    ],
+    "wrong_contract": [
+      "invalid arc_action_v12 canary evidence"
+    ],
+    "token_mismatch": [
+      "invalid arc_action_v12 canary evidence"
+    ],
+    "over_limit": [
+      "invalid arc_action_v12 canary evidence"
+    ],
+    "cleanup_verified": [
+      "cleanup not verified"
+    ],
+    "gpu_cleanup_verified": [
+      "actual GPU cleanup evidence required"
+    ],
+    "independent_gpu_cleanup_verified": [
+      "supervisor/worker failure"
+    ]
+  },
+  "source_lock_sha256": "c9123cab5b4409f4333bb01a4cda091a4f920e79fa70a30810375814e9b35542",
+  "evidence_archive_sha256": "02d9da0a78c90e65a44ac8d9c5a066fd93efdff91f7918e3755d7216756285b8",
+  "notebook_result_sha256": "77cb8fffbdc30b58ecae1ef294a8f92bee38fcbaeb4acd480b1424c448a50d93",
+  "revision_bindings": {
+    "certification/phase4_v13/__init__.py": "1c4e6a3d84a2ecb8b1cb192c3a2a3b4dccf2d9dc4acf2f24523549ec36ddecda",
+    "certification/phase4_v13/base_evaluate.py": "67c294330524bd8446113531b61ee14e65a7873ace41092bb409ed888d1d2137",
+    "certification/phase4_v13/canary.py": "37fce9dea44646ebb8c09b634146e865ea9bbe4ec72f28d269d8abf56ecb217e",
+    "certification/phase4_v13/evaluate.py": "b893246209a3712a766c05162980bac7a7c780d3b69095cd3dd579d3d2c3bb24",
+    "tests/test_phase4_v13_evaluator.py": "6fc4d672dd8744f306598e099c7e018172d97689da0ad32b30cfae9eb9409a92",
+    "scripts/replay_phase4_v12_with_v13.py": "9483775f84f4fd11a301704f3a2dbc21f04d9a49fdb22320ba93a4729a796ed7"
+  },
+  "gpu_seconds_authorized": 0,
+  "phase4_complete": false,
+  "limitations": "Replay validates retained lifecycle evidence under corrected canary acceptance. It does not change the failed notebook verdict or establish a newly executed end-to-end notebook."
+}

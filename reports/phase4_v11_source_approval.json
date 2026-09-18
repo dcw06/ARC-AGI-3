@@ -1,0 +1,16 @@
+{
+  "status": "approved",
+  "approved_at": "2026-09-18T00:34:43.753279+00:00",
+  "user_response": "Sure go on and launch a new GPU run",
+  "approval_basis": "User explicitly authorized implementing the documented repair and then launching one GPU run; agent reviewed and tested this snapshot within that scope.",
+  "scope": "v11 bounded policy-rejection diagnostics; frozen policy semantics unchanged; historical snapshots preserved",
+  "review_lock": "notebooks/phase4-lifecycle-v11-review-r1/review-source-lock.json",
+  "review_lock_sha256": "ef3e387d2df10e14aff9951fedb930bfce49e627f77c51cbea63ed04708e26eb",
+  "artifacts": {
+    "profile.ipynb": "d9cdfbb2338aeb8396c250fd78deab294c1b6443983fd9b7b8be9d0fd7efa6b4",
+    "kernel-metadata.json": "638a86216668dd8ff1221bb9e30e466d2d5d867867af8ac362f53cf24f6bb926"
+  },
+  "validation": "32 Linux tests passed; full CPU-only pilot validation retained in reports/runs/phase4-v11-local-native",
+  "gpu_seconds_authorized": 0,
+  "gpu_launch_authorized": false
+}

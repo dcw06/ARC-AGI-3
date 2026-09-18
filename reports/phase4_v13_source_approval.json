@@ -1,0 +1,16 @@
+{
+  "status": "approved",
+  "approved_at": "2026-09-18T07:36:28.709403+00:00",
+  "user_response": "OK now can you give me the command to launch v13 again",
+  "approval_basis": "User accepted the reviewed integrated v13 snapshot and requested its launch command. Compute authorization and upload occur only on explicit command invocation.",
+  "scope": "Integrated v13 canary evaluator correction retaining arc_action_v12 policy contract",
+  "review_lock": "notebooks/phase4-lifecycle-v13-review-r1/review-source-lock.json",
+  "review_lock_sha256": "b7acedd48bb452debf7a0a1fa0ecc04f96126b2976745cdd301b3d4177bc0e05",
+  "artifacts": {
+    "profile.ipynb": "acbf781734f14f8e48d8420a56f64609055ac184b5f8589a1de13524e49a83d3",
+    "kernel-metadata.json": "841c229515728424a274825e3c96661126c1471cab689aeafd77e2df04afc094"
+  },
+  "validation": "43 Linux tests passed; 110-client CPU pilot passed; corrected evaluator passed retained v12 target evidence replay",
+  "gpu_seconds_authorized": 0,
+  "gpu_launch_authorized": false
+}

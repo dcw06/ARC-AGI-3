@@ -1,0 +1,46 @@
+{
+  "historical_and_current_locks_verified": {
+    "7": "2ccab9336f3d27d174741f03b437138dd94c682ab449372ed9a0a38f9957e87b",
+    "8": "4c317c41c211ebd5be43e41aed18884e3f5c31684a696a316486a068187da63c",
+    "9": "f8211f06a0a45efc137ffbeabeb1b218535c913eccbbb15e485f6c5276d4a3f3",
+    "10": "7e4411c9c697c78d6d030fc719e6bdfa8f1a0aba2cd6227609b4801b33de6047",
+    "11": "ef3e387d2df10e14aff9951fedb930bfce49e627f77c51cbea63ed04708e26eb",
+    "12": "c9123cab5b4409f4333bb01a4cda091a4f920e79fa70a30810375814e9b35542",
+    "13": "b7acedd48bb452debf7a0a1fa0ecc04f96126b2976745cdd301b3d4177bc0e05"
+  },
+  "reviewed_evaluator_bindings_unchanged": true,
+  "notebook_bytes": 509327,
+  "archive_sha256": "f072675a71827e64fa7f4a80484bd8fd39ba4f3751bfe370935543cd8f688a84",
+  "archive": "evidence/phase4-v13-local-review.zip",
+  "tests_passed": 43,
+  "local_summary": {
+    "action_invariance": true,
+    "authorized_seconds": 0,
+    "clients": 110,
+    "elapsed_seconds": 115.38641094200001,
+    "historical_comparison": "v3 archived scripted run; not a randomized performance comparison",
+    "historical_v3_evaluation": {
+      "C_admit": null,
+      "C_nominal": null,
+      "capacity_status": "requires_real_model_token_audit_and_trajectory_measurements",
+      "errors": [
+        "resource limit/evidence: elapsed_seconds"
+      ],
+      "model_inference": false,
+      "passed": false,
+      "phase4_complete": false,
+      "scope": "development_repeated_games_separate_scorecards_local_integration",
+      "target_gpu_certified": false
+    },
+    "local_cpu_smoke_seconds": 300,
+    "model_inference": false,
+    "passed": true,
+    "phase4_complete": false,
+    "request_invariance": false,
+    "request_invariance_expected": false,
+    "requests": 7722,
+    "scope": "local_actual_development_scripted_model_injected_GPU"
+  },
+  "gpu_authorized": false,
+  "gpu_launched": false
+}
