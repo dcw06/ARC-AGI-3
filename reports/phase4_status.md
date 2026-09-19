@@ -1,6 +1,16 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
-## Diagnostic update — September 19, 2026
+## Latest diagnostic result — September 19, 2026
+
+Diagnostic v4 R1 and independent archived-evidence replay passed, with all 45
+requests plus the canary complete and final cleanup verified in 612.344 seconds.
+All 45 actions reproduced the preceding diagnostic. For two initial observations,
+relocating the example coordinates moved the model's click to the new example;
+this supports example copying in those cases, not improved solving. Evidence is
+archived and usage observations reconciled; exact per-job billing remains open.
+See `reports/phase4_diagnostic_v4_results.md`. No new compute is authorized.
+
+## Earlier diagnostic update — September 19, 2026
 
 Diagnostic v2 R2 completed its canary and all 45 requests with verified cleanup,
 but Kaggle reported ERROR after a floating-point request-window comparison

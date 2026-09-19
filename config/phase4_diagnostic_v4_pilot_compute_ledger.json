@@ -1,0 +1,46 @@
+{
+  "attempt_id": "p4-diagnostic-v4-r1-20260919T071303Z",
+  "authorized_seconds": 3600,
+  "maximum_attempts": 1,
+  "automatic_retries": 0,
+  "approval_reference": "reports/phase4_diagnostic_v4_compute_authorization.json",
+  "events": [
+    {
+      "kind": "reserve",
+      "attempt_id": "p4-diagnostic-v4-r1-20260919T071303Z",
+      "seconds": 3600,
+      "recorded_at": "2026-09-19T07:13:03.243047+00:00",
+      "execution_lock_sha256": "9605221b8cb4f4d8a1dc3372d36da5c794c2193f375fddc88e3e5d56278cf6bd",
+      "released_seconds": 0
+    },
+    {
+      "kind": "launch_request_started",
+      "attempt_id": "p4-diagnostic-v4-r1-20260919T071303Z",
+      "recorded_at": "2026-09-19T07:13:34.096511+00:00",
+      "attempt_consumed": true,
+      "package_sha256": "633ff39c3f7e193c83599692440458557551a92e395a492216d8448fae5020da",
+      "charged_or_reserved_seconds": 3600,
+      "automatic_retries": 0
+    },
+    {
+      "kind": "launch_receipt",
+      "attempt_id": "p4-diagnostic-v4-r1-20260919T071303Z",
+      "reference": "reports/phase4_diagnostic_v4_pilot_launch.json",
+      "status": "provider_response_received",
+      "charged_or_reserved_seconds": 3600,
+      "released_seconds": 0
+    },
+    {
+      "kind": "attempt_completed_passed",
+      "attempt_id": "p4-diagnostic-v4-r1-20260919T071303Z",
+      "observed_at": "2026-09-19T09:28:45.512961+00:00",
+      "provider_status": "KernelWorkerStatus.COMPLETE",
+      "reference": "reports/phase4_diagnostic_v4_usage_reconciliation.json",
+      "evaluation_reference": "reports/phase4_diagnostic_v4_evaluation.json",
+      "observed_account_usage_delta_seconds": 621.454,
+      "account_reserved_seconds_at_terminal": 0,
+      "exact_provider_billed_seconds": null,
+      "automatic_retry_authorized": false
+    }
+  ]
+}

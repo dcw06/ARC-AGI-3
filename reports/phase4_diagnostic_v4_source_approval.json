@@ -1,0 +1,16 @@
+{
+  "status": "approved",
+  "approved_at": "2026-09-19T07:13:03.031249+00:00",
+  "user_response": "Sure launch another GPU run",
+  "approval_basis": "Explicit request to execute another bounded diagnostic after disclosure of the evaluator correction; authorizes integration of that correction into this new frozen runtime",
+  "scope": "same 45-case three-arm diagnostic with v3 evaluator correction integrated",
+  "review_lock": "notebooks/phase4-action-diagnostic-v4-review-r1/review-source-lock.json",
+  "review_lock_sha256": "ed200b3403edf5550b033dc31d8400f1b681bce48dd43390200178ba8662c102",
+  "requirements_lock": "reports/phase4_diagnostic_v4_requirements_lock.json",
+  "requirements_lock_sha256": "09a867b5a8edf2bd12bd852946c0225e9996553ce4e31b9d95cbabb775cf845b",
+  "artifacts": {
+    "profile.ipynb": "8b19da2ed3534ed6f689184c4b256ccac552c76a0deccab7040d31eed0b781f6",
+    "kernel-metadata.json": "86681aa29024df1d43ee894f26a3ebf551be5e9c4b1c660c84ca747d43c97d6d"
+  },
+  "compute_authority": "Separate reports/phase4_diagnostic_v4_compute_authorization.json"
+}

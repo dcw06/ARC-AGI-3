@@ -1,0 +1,198 @@
+{
+  "attempt_id": "p4-diagnostic-v4-r1-20260919T071303Z",
+  "provider_status": "KernelWorkerStatus.COMPLETE",
+  "observed_at": "2026-09-19T09:28:45.512961+00:00",
+  "independent_evaluation_passed": true,
+  "notebook_elapsed_seconds": 612.344379936,
+  "provider_timeout_requested_seconds": 3600,
+  "internal_deadline_seconds": 3300,
+  "prelaunch": {
+    "recorded_at": "2026-09-19T07:13:33.954568+00:00",
+    "gpu_quota_seconds": {
+      "time_used": 829.088,
+      "time_reserved": 0.0,
+      "total_time_allowed": 108000.0
+    }
+  },
+  "provider_observations": [
+    {
+      "observed_at": "2026-09-19T07:14:05.909382+00:00",
+      "kernel": "daichongwei06/arc3-phase4-action-diagnostic-v4-r1",
+      "provider_version": 1,
+      "status": "KernelWorkerStatus.QUEUED",
+      "failure_message": "",
+      "account_quota": {
+        "quotaRefreshTime": "2026-09-26T00:00:00.000Z",
+        "gpuQuota": {
+          "timeUsed": "829.88.0s",
+          "timeReserved": "0s",
+          "totalTimeAllowed": "21600s",
+          "minimumTimeAllowed": "21600s",
+          "hasEverRun": true
+        },
+        "tpuQuota": {
+          "timeUsed": "0s",
+          "timeReserved": "0s",
+          "totalTimeAllowed": "72000s",
+          "minimumTimeAllowed": "72000s"
+        }
+      },
+      "gpu_quota_seconds": {
+        "time_used": 829.088,
+        "time_reserved": 0.0,
+        "total_time_allowed": 108000.0
+      }
+    },
+    {
+      "observed_at": "2026-09-19T07:27:46.260481+00:00",
+      "kernel": "daichongwei06/arc3-phase4-action-diagnostic-v4-r1",
+      "provider_version": 1,
+      "status": "KernelWorkerStatus.QUEUED",
+      "failure_message": "",
+      "account_quota": {
+        "quotaRefreshTime": "2026-09-26T00:00:00.000Z",
+        "gpuQuota": {
+          "timeUsed": "829.88.0s",
+          "timeReserved": "0s",
+          "totalTimeAllowed": "21600s",
+          "minimumTimeAllowed": "21600s",
+          "hasEverRun": true
+        },
+        "tpuQuota": {
+          "timeUsed": "0s",
+          "timeReserved": "0s",
+          "totalTimeAllowed": "72000s",
+          "minimumTimeAllowed": "72000s"
+        }
+      },
+      "gpu_quota_seconds": {
+        "time_used": 829.088,
+        "time_reserved": 0.0,
+        "total_time_allowed": 108000.0
+      }
+    },
+    {
+      "observed_at": "2026-09-19T08:35:25.178234+00:00",
+      "kernel": "daichongwei06/arc3-phase4-action-diagnostic-v4-r1",
+      "provider_version": 1,
+      "status": "KernelWorkerStatus.QUEUED",
+      "failure_message": "",
+      "account_quota": {
+        "quotaRefreshTime": "2026-09-26T00:00:00.000Z",
+        "gpuQuota": {
+          "timeUsed": "829.88.0s",
+          "timeReserved": "0s",
+          "totalTimeAllowed": "21600s",
+          "minimumTimeAllowed": "21600s",
+          "hasEverRun": true
+        },
+        "tpuQuota": {
+          "timeUsed": "0s",
+          "timeReserved": "0s",
+          "totalTimeAllowed": "72000s",
+          "minimumTimeAllowed": "72000s"
+        }
+      },
+      "gpu_quota_seconds": {
+        "time_used": 829.088,
+        "time_reserved": 0.0,
+        "total_time_allowed": 108000.0
+      }
+    },
+    {
+      "observed_at": "2026-09-19T08:47:26.617800+00:00",
+      "kernel": "daichongwei06/arc3-phase4-action-diagnostic-v4-r1",
+      "provider_version": 1,
+      "status": "KernelWorkerStatus.QUEUED",
+      "failure_message": "",
+      "account_quota": {
+        "quotaRefreshTime": "2026-09-26T00:00:00.000Z",
+        "gpuQuota": {
+          "timeUsed": "829.88.0s",
+          "timeReserved": "0s",
+          "totalTimeAllowed": "21600s",
+          "minimumTimeAllowed": "21600s",
+          "hasEverRun": true
+        },
+        "tpuQuota": {
+          "timeUsed": "0s",
+          "timeReserved": "0s",
+          "totalTimeAllowed": "72000s",
+          "minimumTimeAllowed": "72000s"
+        }
+      },
+      "gpu_quota_seconds": {
+        "time_used": 829.088,
+        "time_reserved": 0.0,
+        "total_time_allowed": 108000.0
+      }
+    },
+    {
+      "observed_at": "2026-09-19T09:25:46.379867+00:00",
+      "kernel": "daichongwei06/arc3-phase4-action-diagnostic-v4-r1",
+      "provider_version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure_message": "",
+      "account_quota": {
+        "quotaRefreshTime": "2026-09-26T00:00:00.000Z",
+        "gpuQuota": {
+          "timeUsed": "1450.542.0s",
+          "timeReserved": "0s",
+          "totalTimeAllowed": "21600s",
+          "minimumTimeAllowed": "21600s",
+          "hasEverRun": true
+        },
+        "tpuQuota": {
+          "timeUsed": "0s",
+          "timeReserved": "0s",
+          "totalTimeAllowed": "72000s",
+          "minimumTimeAllowed": "72000s"
+        }
+      },
+      "gpu_quota_seconds": {
+        "time_used": 1450.542,
+        "time_reserved": 0.0,
+        "total_time_allowed": 108000.0
+      }
+    },
+    {
+      "observed_at": "2026-09-19T09:28:45.512961+00:00",
+      "kernel": "daichongwei06/arc3-phase4-action-diagnostic-v4-r1",
+      "provider_version": 1,
+      "status": "KernelWorkerStatus.COMPLETE",
+      "failure_message": "",
+      "account_quota": {
+        "quotaRefreshTime": "2026-09-26T00:00:00.000Z",
+        "gpuQuota": {
+          "timeUsed": "1450.542.0s",
+          "timeReserved": "0s",
+          "totalTimeAllowed": "21600s",
+          "minimumTimeAllowed": "21600s",
+          "hasEverRun": true
+        },
+        "tpuQuota": {
+          "timeUsed": "0s",
+          "timeReserved": "0s",
+          "totalTimeAllowed": "72000s",
+          "minimumTimeAllowed": "72000s"
+        }
+      },
+      "gpu_quota_seconds": {
+        "time_used": 1450.542,
+        "time_reserved": 0.0,
+        "total_time_allowed": 108000.0
+      }
+    }
+  ],
+  "observed_account_usage_delta_seconds": 621.454,
+  "account_reserved_seconds_at_terminal": 0.0,
+  "exact_provider_billed_seconds": null,
+  "limitations": [
+    "Account-level quota delta is not a per-attempt invoice or exact billing.",
+    "SDK raw serialized duration strings and parsed total allowance disagree; both retained.",
+    "Unused requested runtime is not reusable authorization or a provider refund."
+  ],
+  "attempt_consumed": true,
+  "automatic_retry_authorized": false,
+  "exact_billing_reconciliation": "open"
+}

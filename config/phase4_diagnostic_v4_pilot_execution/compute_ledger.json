@@ -1,0 +1,23 @@
+{
+  "attempt_id": "p4-diagnostic-v4-r1-20260919T071303Z",
+  "authorized_seconds": 3600,
+  "maximum_attempts": 1,
+  "automatic_retries": 0,
+  "approval_reference": "reports/phase4_diagnostic_v4_compute_authorization.json",
+  "events": [
+    {
+      "kind": "reserve",
+      "attempt_id": "p4-diagnostic-v4-r1-20260919T071303Z",
+      "seconds": 3600,
+      "recorded_at": "2026-09-19T07:13:03.243047+00:00",
+      "execution_lock_sha256": "9605221b8cb4f4d8a1dc3372d36da5c794c2193f375fddc88e3e5d56278cf6bd",
+      "released_seconds": 0
+    },
+    {
+      "kind": "launch_request_started",
+      "attempt_id": "p4-diagnostic-v4-r1-20260919T071303Z",
+      "prepared_at": "2026-09-19T07:13:03.243047+00:00",
+      "scope": "embedded single-attempt gate; external claim required before upload"
+    }
+  ]
+}
