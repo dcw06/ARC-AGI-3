@@ -1,0 +1,410 @@
+{
+  "id": "phase4-closed-loop-v1",
+  "status": "frozen_protocol_pending_review_and_runner",
+  "configuration": "E1S-R-derived arc_action_v12 closed-loop two-arm development comparison",
+  "model_binding": {
+    "candidate_id": "M0-Q3VL-30B-A3B-FP8",
+    "model_id": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+    "revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+    "engine": "vllm==0.19.0",
+    "reasoning_setting": "instruct_non_thinking"
+  },
+  "model_tree_sha256": "052ab27f06c28261e143b8c1638382d107b034692bc0cd1792ec4e02ddab8627",
+  "environment": {
+    "python": "3.12",
+    "torch_distribution": "2.10.0",
+    "torch_runtime": "2.10.0+cu128",
+    "cuda": "12.8",
+    "vllm": "0.19.0",
+    "transformers": "4.57.6",
+    "split_model_game_environments": true
+  },
+  "model_mount": "/kaggle/input/models/qwen-lm/qwen-3-vl/transformers/30b-a3b-instruct-fp8/1",
+  "prompts": {
+    "baseline": {
+      "text": "You control one ARC-AGI-3 game from a stateless observation. history_compaction explicitly reports any older transitions omitted from this prompt. Return only one compact JSON object matching the supplied action schema. Omit intent, rationale, Markdown and reset/action 0. Choose exactly one currently legal action_id. For ACTION6, choose a display-grid location and include integer x and y in [0,63]. Valid ACTION6 shape: {\"action\":{\"action_id\":6,\"action_data\":{\"x\":12,\"y\":34}}}. These coordinates illustrate the format; choose coordinates from the observation. For actions 1,2,3,4,5,7 use empty action_data, for example {\"action\":{\"action_id\":1,\"action_data\":{}}}. Never return ACTION6 with empty action_data. Keep the response under 64 tokens.",
+      "sha256": "4acb47d636bb7efff0e4fc9e0969cc97eb6b504be67a0ac77a52f5aa249db5e1"
+    },
+    "no_concrete_examples": {
+      "text": "You control one ARC-AGI-3 game from a stateless observation. history_compaction explicitly reports any older transitions omitted from this prompt. Return only one compact JSON object matching the supplied action schema. Omit intent, rationale, Markdown and reset/action 0. Choose exactly one currently legal action_id. For ACTION6, choose a display-grid location and include integer x and y in [0,63]. For actions 1,2,3,4,5,7 use empty action_data. Never return ACTION6 with empty action_data. Keep the response under 64 tokens.",
+      "sha256": "b3738b4fd76cb5b795c0ba36aaf877906bfb62e51a137437fce0883ef9ba5fc8"
+    }
+  },
+  "schedule": [
+    {
+      "episode_id": "cl1-00-baseline",
+      "pair_index": 0,
+      "game_id": "ar25-0c556536",
+      "arm": "baseline",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-00-no_concrete_examples",
+      "pair_index": 0,
+      "game_id": "ar25-0c556536",
+      "arm": "no_concrete_examples",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-01-no_concrete_examples",
+      "pair_index": 1,
+      "game_id": "cd82-fb555c5d",
+      "arm": "no_concrete_examples",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-01-baseline",
+      "pair_index": 1,
+      "game_id": "cd82-fb555c5d",
+      "arm": "baseline",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-02-baseline",
+      "pair_index": 2,
+      "game_id": "ft09-0d8bbf25",
+      "arm": "baseline",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-02-no_concrete_examples",
+      "pair_index": 2,
+      "game_id": "ft09-0d8bbf25",
+      "arm": "no_concrete_examples",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-03-no_concrete_examples",
+      "pair_index": 3,
+      "game_id": "g50t-5849a774",
+      "arm": "no_concrete_examples",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-03-baseline",
+      "pair_index": 3,
+      "game_id": "g50t-5849a774",
+      "arm": "baseline",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-04-baseline",
+      "pair_index": 4,
+      "game_id": "ka59-38d34dbb",
+      "arm": "baseline",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-04-no_concrete_examples",
+      "pair_index": 4,
+      "game_id": "ka59-38d34dbb",
+      "arm": "no_concrete_examples",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-05-no_concrete_examples",
+      "pair_index": 5,
+      "game_id": "lf52-271a04aa",
+      "arm": "no_concrete_examples",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-05-baseline",
+      "pair_index": 5,
+      "game_id": "lf52-271a04aa",
+      "arm": "baseline",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-06-baseline",
+      "pair_index": 6,
+      "game_id": "ls20-9607627b",
+      "arm": "baseline",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-06-no_concrete_examples",
+      "pair_index": 6,
+      "game_id": "ls20-9607627b",
+      "arm": "no_concrete_examples",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-07-no_concrete_examples",
+      "pair_index": 7,
+      "game_id": "s5i5-18d95033",
+      "arm": "no_concrete_examples",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-07-baseline",
+      "pair_index": 7,
+      "game_id": "s5i5-18d95033",
+      "arm": "baseline",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-08-baseline",
+      "pair_index": 8,
+      "game_id": "sc25-635fd71a",
+      "arm": "baseline",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-08-no_concrete_examples",
+      "pair_index": 8,
+      "game_id": "sc25-635fd71a",
+      "arm": "no_concrete_examples",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-09-no_concrete_examples",
+      "pair_index": 9,
+      "game_id": "sk48-d8078629",
+      "arm": "no_concrete_examples",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-09-baseline",
+      "pair_index": 9,
+      "game_id": "sk48-d8078629",
+      "arm": "baseline",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-10-baseline",
+      "pair_index": 10,
+      "game_id": "sp80-589a99af",
+      "arm": "baseline",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-10-no_concrete_examples",
+      "pair_index": 10,
+      "game_id": "sp80-589a99af",
+      "arm": "no_concrete_examples",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-11-no_concrete_examples",
+      "pair_index": 11,
+      "game_id": "su15-1944f8ab",
+      "arm": "no_concrete_examples",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-11-baseline",
+      "pair_index": 11,
+      "game_id": "su15-1944f8ab",
+      "arm": "baseline",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-12-baseline",
+      "pair_index": 12,
+      "game_id": "tr87-cd924810",
+      "arm": "baseline",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-12-no_concrete_examples",
+      "pair_index": 12,
+      "game_id": "tr87-cd924810",
+      "arm": "no_concrete_examples",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-13-no_concrete_examples",
+      "pair_index": 13,
+      "game_id": "vc33-5430563c",
+      "arm": "no_concrete_examples",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-13-baseline",
+      "pair_index": 13,
+      "game_id": "vc33-5430563c",
+      "arm": "baseline",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-14-baseline",
+      "pair_index": 14,
+      "game_id": "wa30-ee6fef47",
+      "arm": "baseline",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "cl1-14-no_concrete_examples",
+      "pair_index": 14,
+      "game_id": "wa30-ee6fef47",
+      "arm": "no_concrete_examples",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    }
+  ],
+  "distinct_games": 15,
+  "pairs": 15,
+  "episodes": 30,
+  "request_settings": {
+    "temperature": 0,
+    "seed": 0,
+    "max_tokens": 128,
+    "enable_thinking": false,
+    "action_output_contract": "arc_action_v12",
+    "context_tokens": 65536,
+    "prompt_token_ceiling": 65408
+  },
+  "representation": {
+    "treatment_parent": "E1S-R",
+    "workspace": "none",
+    "recent_transition_limit": 1,
+    "context_mode": "stateless_reconstruction_visible_compaction_v1",
+    "history_loss_reporting": "lifetime_count_and_rolling_sha256_v1"
+  },
+  "initial_pair_equality_required": true,
+  "policy_fallbacks": 0,
+  "later_resets": 0,
+  "automatic_retries": 0,
+  "primary_measures": [
+    "paired_completed_level_delta",
+    "episodes_ending_WIN"
+  ],
+  "secondary_measures": [
+    "acknowledged_transitions",
+    "canonical_change_rate",
+    "frame_change_rate",
+    "adjacent_action_repeat_rate",
+    "longest_action_streak",
+    "repeats_after_unchanged_observation",
+    "first_level_progress_step",
+    "action_distribution",
+    "click_coordinates",
+    "terminal_reason"
+  ],
+  "full_transition_evidence_required": true,
+  "partial_attempt_cannot_pass": true,
+  "source_approval": null,
+  "compute_authorization": null,
+  "phase4_complete": false,
+  "production_C_admit": null
+}

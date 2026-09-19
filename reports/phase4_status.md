@@ -1,5 +1,17 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
+## Closed-loop comparison preparation — September 19, 2026
+
+A controlled original-prompt versus no-example development comparison is prepared
+in `reports/phase4_closed_loop_v1_protocol.md`, with exact prompt texts, a fixed
+30-episode schedule over 15 games, matched environment/request seed 0, and a
+20-action cap per episode. The separate one-hour budget proposal permits at most
+600 policy calls plus a canary if later authorized; currently zero compute is
+authorized or reserved. Three preparation tests passed. The protocol and dependencies
+are hash-locked; runner implementation, local fault testing, notebook freeze and
+separate source/compute approvals remain prelaunch gates. No diagnostic rerun or
+production run is requested. Exact billing and production certification remain open.
+
 ## Latest diagnostic result — September 19, 2026
 
 Diagnostic v4 R1 and independent archived-evidence replay passed, with all 45
