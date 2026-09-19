@@ -1,5 +1,16 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
+## Diagnostic update — September 19, 2026
+
+Diagnostic v2 R2 completed its canary and all 45 requests with verified cleanup,
+but Kaggle reported ERROR after a floating-point request-window comparison
+failed. A separately frozen v3 offline evaluator passes replay of retained evidence;
+the historical notebook remains failed. Three regression tests preserve real
+deadline, cleanup, inventory and token-count rejection. See
+`reports/phase4_diagnostic_v2_r2_failure.md`. Paired initial responses show
+example-coordinate sensitivity, not improved solving. No GPU rerun was launched;
+exact billing and the production gates remain open.
+
 ## Current summary — September 18, 2026
 
 **V13 passed the target development pilot**, including final notebook cleanup and independent local evidence replay. V14 now directly enforces independent GPU cleanup and the worker/client action-contract and parent bindings; five regression tests (19 negative mutations) and replay of the existing v13 evidence passed without a GPU rerun. Historical frozen sources and verdicts remain unchanged.
@@ -14,6 +25,7 @@ The accounting reconciliation inventories 16 attempts and preserves known termin
 
 Current references:
 
+- [Diagnostic v2 response-retention repair](phase4_diagnostic_v2_review.md): bounded response/token evidence is captured before validation and retained across bridge failures. Eighteen tests passed; a new GPU-disabled snapshot is frozen pending separate source approval and compute authorization. No GPU run occurred.
 - [Three-arm diagnostic runner: frozen budget, cleanup, evidence and local tests](phase4_diagnostic_v1_review.md). GPU-disabled review only; 45 cases plus one proposed startup canary, no launch authorization or new target execution.
 - [Offline action-selection investigation and unexecuted prompt probe](phase4_action_selection_investigation.md): 97.28% of clicks matched the prompt's example coordinates; 96.99% of adjacent action pairs repeated. This is descriptive evidence, not a causal finding or authorization for model calls.
 - [V13 target evidence](phase4_v13_pilot_status.md)

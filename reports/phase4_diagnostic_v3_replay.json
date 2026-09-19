@@ -1,0 +1,344 @@
+{
+  "scope": "offline_evaluator_revision_not_new_GPU_run",
+  "original_evaluator": {
+    "passed": false,
+    "errors": [
+      "request window"
+    ],
+    "scope": "three_arm_diagnostic_live",
+    "comparison": null,
+    "comparison_is_scripted": false,
+    "model_inference": true,
+    "capacity_candidate": null,
+    "C_nominal": null,
+    "C_admit": null,
+    "development_model_lifecycle_passed": false,
+    "phase4_complete": false
+  },
+  "revised_evaluator": {
+    "passed": true,
+    "errors": [],
+    "scope": "three_arm_diagnostic_live",
+    "comparison": {
+      "per_game": {
+        "ar25-0c556536": {
+          "click_legal": true,
+          "baseline": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "relocated_example": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "no_concrete_examples": {
+            "action_data": {},
+            "action_id": 1
+          }
+        },
+        "cd82-fb555c5d": {
+          "click_legal": true,
+          "relocated_example": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "no_concrete_examples": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "baseline": {
+            "action_data": {},
+            "action_id": 1
+          }
+        },
+        "ft09-0d8bbf25": {
+          "click_legal": true,
+          "no_concrete_examples": {
+            "action_data": {
+              "x": 32,
+              "y": 16
+            },
+            "action_id": 6
+          },
+          "baseline": {
+            "action_data": {
+              "x": 12,
+              "y": 34
+            },
+            "action_id": 6
+          },
+          "relocated_example": {
+            "action_data": {
+              "x": 47,
+              "y": 9
+            },
+            "action_id": 6
+          }
+        },
+        "g50t-5849a774": {
+          "click_legal": false,
+          "baseline": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "relocated_example": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "no_concrete_examples": {
+            "action_data": {},
+            "action_id": 1
+          }
+        },
+        "ka59-38d34dbb": {
+          "click_legal": true,
+          "relocated_example": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "no_concrete_examples": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "baseline": {
+            "action_data": {},
+            "action_id": 1
+          }
+        },
+        "lf52-271a04aa": {
+          "click_legal": true,
+          "no_concrete_examples": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "baseline": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "relocated_example": {
+            "action_data": {},
+            "action_id": 1
+          }
+        },
+        "ls20-9607627b": {
+          "click_legal": false,
+          "baseline": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "relocated_example": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "no_concrete_examples": {
+            "action_data": {},
+            "action_id": 1
+          }
+        },
+        "s5i5-18d95033": {
+          "click_legal": true,
+          "relocated_example": {
+            "action_data": {
+              "x": 10,
+              "y": 10
+            },
+            "action_id": 6
+          },
+          "no_concrete_examples": {
+            "action_data": {
+              "x": 11,
+              "y": 10
+            },
+            "action_id": 6
+          },
+          "baseline": {
+            "action_data": {
+              "x": 12,
+              "y": 12
+            },
+            "action_id": 6
+          }
+        },
+        "sc25-635fd71a": {
+          "click_legal": true,
+          "no_concrete_examples": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "baseline": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "relocated_example": {
+            "action_data": {},
+            "action_id": 1
+          }
+        },
+        "sk48-d8078629": {
+          "click_legal": true,
+          "baseline": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "relocated_example": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "no_concrete_examples": {
+            "action_data": {},
+            "action_id": 1
+          }
+        },
+        "sp80-589a99af": {
+          "click_legal": true,
+          "relocated_example": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "no_concrete_examples": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "baseline": {
+            "action_data": {},
+            "action_id": 1
+          }
+        },
+        "su15-1944f8ab": {
+          "click_legal": true,
+          "no_concrete_examples": {
+            "action_data": {},
+            "action_id": 7
+          },
+          "baseline": {
+            "action_data": {},
+            "action_id": 7
+          },
+          "relocated_example": {
+            "action_data": {},
+            "action_id": 7
+          }
+        },
+        "tr87-cd924810": {
+          "click_legal": false,
+          "baseline": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "relocated_example": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "no_concrete_examples": {
+            "action_data": {},
+            "action_id": 1
+          }
+        },
+        "vc33-5430563c": {
+          "click_legal": true,
+          "relocated_example": {
+            "action_data": {
+              "x": 47,
+              "y": 9
+            },
+            "action_id": 6
+          },
+          "no_concrete_examples": {
+            "action_data": {
+              "x": 59,
+              "y": 25
+            },
+            "action_id": 6
+          },
+          "baseline": {
+            "action_data": {
+              "x": 12,
+              "y": 34
+            },
+            "action_id": 6
+          }
+        },
+        "wa30-ee6fef47": {
+          "click_legal": false,
+          "no_concrete_examples": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "baseline": {
+            "action_data": {},
+            "action_id": 1
+          },
+          "relocated_example": {
+            "action_data": {},
+            "action_id": 1
+          }
+        }
+      },
+      "arms": {
+        "baseline": {
+          "cases": 15,
+          "click_legal_cases": 11,
+          "clicks": 3,
+          "at_original_example": 2,
+          "at_relocated_example": 0,
+          "same_action_as_baseline": 15,
+          "action_type_switches_from_baseline": 0
+        },
+        "relocated_example": {
+          "cases": 15,
+          "click_legal_cases": 11,
+          "clicks": 3,
+          "at_original_example": 0,
+          "at_relocated_example": 2,
+          "same_action_as_baseline": 12,
+          "action_type_switches_from_baseline": 0
+        },
+        "no_concrete_examples": {
+          "cases": 15,
+          "click_legal_cases": 11,
+          "clicks": 3,
+          "at_original_example": 0,
+          "at_relocated_example": 0,
+          "same_action_as_baseline": 12,
+          "action_type_switches_from_baseline": 0
+        }
+      }
+    },
+    "comparison_is_scripted": false,
+    "model_inference": true,
+    "capacity_candidate": null,
+    "C_nominal": null,
+    "C_admit": null,
+    "development_model_lifecycle_passed": true,
+    "phase4_complete": false
+  },
+  "original_notebook_result": {
+    "completed": false,
+    "elapsed_seconds": 820.07357641,
+    "error": "ValueError: notebook completion/cleanup/deadline not satisfied",
+    "passed": false,
+    "phase4_complete": false,
+    "source_removed": true
+  },
+  "notebook_cost": {
+    "dependency_trees_removed": true,
+    "elapsed_seconds": 820.059538338,
+    "error": "RuntimeError: pilot or independent evaluation failed",
+    "phase4_complete": false,
+    "provider_reconciliation_required": true
+  },
+  "independent_cleanup": {
+    "error": null,
+    "gpu_cleanup_verified": true,
+    "gpu_uuid": "GPU-4362624b-54d6-7098-da0b-70da62ef28f1",
+    "groups_absent": true,
+    "monitoring_coverage_restored": false,
+    "probe_seconds": 0.04538465299992822,
+    "remaining_process_count": 0,
+    "scope": "independent_post_termination_GPU_check"
+  },
+  "historical_notebook_status_changed": false,
+  "phase4_complete": false,
+  "new_compute_authorized": false,
+  "exact_provider_billed_seconds": null
+}

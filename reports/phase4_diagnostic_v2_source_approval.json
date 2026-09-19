@@ -1,0 +1,16 @@
+{
+    "status":  "pending_explicit_confirmation",
+    "user_response":  "ok continue",
+    "approval_basis":  "Prior broad interpretation of ok continue withdrawn; frozen source review remains complete and awaits explicit confirmation.",
+    "scope":  "Diagnostic v2 response retention repair; original 45-case three-arm proposal unchanged",
+    "review_lock":  "notebooks/phase4-action-diagnostic-v2-review-r1/review-source-lock.json",
+    "review_lock_sha256":  "4c3cbe6204b310fcf1111604b7bccc7417f283220709619f02f62be4cb20d82c",
+    "requirements_lock":  "reports/phase4_diagnostic_v2_requirements_lock.json",
+    "requirements_lock_sha256":  "6382db62fe433eeca28cf008150866389c93be5d55826ede4d69e13cb7d40ecf",
+    "artifacts":  {
+                      "profile.ipynb":  "bd539aab8287678f9d692393f2724d218ad01c38142a55428c388526d37b1743",
+                      "kernel-metadata.json":  "c53949c1a93e9c3cb3c83b9d8f9c3c7bc8bacb934f90fd5923ed24b6e2c3a482"
+                  },
+    "validation":  "18 tests passed; 45-case CPU diagnostic passed; cross-process token-mismatch evidence retained",
+    "compute_authority":  "Separate reports/phase4_diagnostic_v2_compute_authorization.json required"
+}
