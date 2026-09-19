@@ -1,0 +1,50 @@
+{
+  "attempt_id": "p4-closed-loop-v1-r1-20260919T113037Z",
+  "authorized_seconds": 3600,
+  "maximum_attempts": 1,
+  "automatic_retries": 0,
+  "approval_reference": "reports/phase4_closed_loop_v1_compute_authorization.json",
+  "events": [
+    {
+      "kind": "reserve",
+      "attempt_id": "p4-closed-loop-v1-r1-20260919T113037Z",
+      "seconds": 3600,
+      "recorded_at": "2026-09-19T11:30:37.927660+00:00",
+      "execution_lock_sha256": "b248d85cdabadc701474b5eb1feb2252daba3b92dcc6ad30c346db3ba94f50a6",
+      "released_seconds": 0
+    },
+    {
+      "kind": "launch_request_started",
+      "attempt_id": "p4-closed-loop-v1-r1-20260919T113037Z",
+      "recorded_at": "2026-09-19T11:31:33.468165+00:00",
+      "attempt_consumed": true,
+      "package_sha256": "932a89d81230ea758d7412a48743d47a3429f10c82de04f30f3dda7734a529e4",
+      "charged_or_reserved_seconds": 3600,
+      "automatic_retries": 0
+    },
+    {
+      "kind": "launch_receipt",
+      "attempt_id": "p4-closed-loop-v1-r1-20260919T113037Z",
+      "reference": "reports/phase4_closed_loop_v1_pilot_launch.json",
+      "status": "provider_response_received",
+      "charged_or_reserved_seconds": 3600,
+      "released_seconds": 0
+    },
+    {
+      "kind": "attempt_completed_independent_pass",
+      "attempt_id": "p4-closed-loop-v1-r1-20260919T113037Z",
+      "recorded_at": "2026-09-19T13:41:03.095357+00:00",
+      "provider_status": "KernelWorkerStatus.COMPLETE",
+      "reference": "reports/phase4_closed_loop_v1_evidence_receipt.json",
+      "account_usage_delta_seconds": 1668.501,
+      "notebook_elapsed_seconds": 1659.2813016599998,
+      "exact_provider_billed_seconds": null,
+      "provider_account_reserved_seconds": 0,
+      "charged_or_reserved_seconds": 3600,
+      "released_seconds": 0,
+      "attempt_consumed": true,
+      "automatic_retries": 0,
+      "note": "Terminal account observation reconciled; exact billing open. No reusable authority."
+    }
+  ]
+}

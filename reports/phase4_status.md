@@ -1,6 +1,25 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
-## Closed-loop runner review — September 19, 2026
+## Closed-loop GPU result — September 19, 2026
+
+The authorized closed-loop v1 R1 run completed on Kaggle and passed independent
+replay of the archived evidence. All 15 matched game pairs completed their 20-action
+episodes: 600 policy calls/actions plus the startup canary. Startup-inclusive
+runtime was 1659.281 seconds (27 minutes 39 seconds),
+within the 3,300-second internal deadline and 3,600-second authorized attempt.
+Independent GPU/process cleanup, dependency/source removal, finalization hashes,
+request/action bindings, initial-state equality, progress counters, and evidence
+completeness passed. All 664 frozen source bindings still match.
+
+Original vs no-example adjacent repetition was 95.1% vs 62.5%; both arms
+completed zero levels and all 15 pairs tied on level progress. The 20-action cap
+limits this to early progress; it does not rule out later benefit. Evidence and
+usage observations are archived/reconciled; exact billing remains open. See
+`reports/phase4_closed_loop_v1_results.md`. The single attempt is consumed; no
+additional compute is authorized. Production one-scorecard/110-distinct-game
+certification and production `C_admit` remain open.
+
+## Historical closed-loop runner review — September 19, 2026
 
 The runner and independent trajectory/terminal evaluator are implemented in
 `certification/phase4_closed_loop_v1`. Twenty regression cases passed across the

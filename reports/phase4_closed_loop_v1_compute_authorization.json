@@ -1,0 +1,19 @@
+{
+  "approved_at": "2026-09-19T11:30:37.927660+00:00",
+  "user_response": "Now you can launch a new GPU run",
+  "approval_basis": "Explicit launch request after presentation and publication of the frozen closed-loop source review and separate one-hour budget",
+  "scope": "phase4-closed-loop-v1",
+  "maximum_total_completions": 601,
+  "maximum_policy_calls": 600,
+  "maximum_episodes": 30,
+  "maximum_actions_per_episode": 20,
+  "startup_canary_calls": 1,
+  "maximum_environment_actions": 600,
+  "authorized_seconds": 3600,
+  "internal_seconds": 3300,
+  "maximum_attempts": 1,
+  "automatic_retries": 0,
+  "holdout_runs": 0,
+  "scored_submissions": 0,
+  "source_approval_reference": "reports/phase4_closed_loop_v1_source_approval.json"
+}

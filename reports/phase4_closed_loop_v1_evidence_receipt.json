@@ -1,0 +1,85 @@
+{
+  "independent_passed": true,
+  "errors": [],
+  "source_bindings_verified": 664,
+  "source_lock_sha256": "078b1dc692e0a1a9580218e642f2329893593e0931959900a5ca565f5ce457f3",
+  "downloaded_files": 1007,
+  "archive": "evidence/phase4-closed-loop-v1-r1-completed-v1.zip",
+  "archive_sha256": "994dc62307777a1adf301986aa2548bb9dad84ab438963d20392736abd493f9d",
+  "archive_bytes": 4080172,
+  "evaluation_sha256": "1e3df3d291f50e7077565ce10880fce8719cca01b7a455c71c5c45461cb3868e",
+  "recorder_sha256": "6aca30db7d7d7168da8a809d8bd469f98746f6bb4cc93b5763435e279c571479",
+  "startup_inclusive_elapsed_seconds": 1659.2813016599998,
+  "metrics": {
+    "baseline": {
+      "completed_level_increase": 0,
+      "wins": 0,
+      "game_overs": 0,
+      "acknowledged_transitions": 300,
+      "episodes": 15,
+      "actions": 300,
+      "adjacent_repeats": 271,
+      "adjacent_opportunities": 285,
+      "repeat_rate": 0.9508771929824561,
+      "canonical_changes": 173,
+      "frame_changes": 169,
+      "repeats_after_unchanged": 113,
+      "longest_streak": 20,
+      "click_actions": 220,
+      "example_coordinate_clicks": 210
+    },
+    "no_concrete_examples": {
+      "completed_level_increase": 0,
+      "wins": 0,
+      "game_overs": 0,
+      "acknowledged_transitions": 300,
+      "episodes": 15,
+      "actions": 300,
+      "adjacent_repeats": 178,
+      "adjacent_opportunities": 285,
+      "repeat_rate": 0.624561403508772,
+      "canonical_changes": 173,
+      "frame_changes": 168,
+      "repeats_after_unchanged": 81,
+      "longest_streak": 20,
+      "click_actions": 218,
+      "example_coordinate_clicks": 0
+    }
+  },
+  "provider_observation": {
+    "observed_at": "2026-09-19T12:44:05.095706+00:00",
+    "kernel": "daichongwei06/arc3-phase4-action-closed-loop-v1-r1",
+    "provider_version": 1,
+    "status": "KernelWorkerStatus.COMPLETE",
+    "failure_message": "",
+    "account_quota": {
+      "quotaRefreshTime": "2026-09-26T00:00:00.000Z",
+      "gpuQuota": {
+        "timeUsed": "3119.43.0s",
+        "timeReserved": "0s",
+        "totalTimeAllowed": "21600s",
+        "minimumTimeAllowed": "21600s",
+        "hasEverRun": true
+      },
+      "tpuQuota": {
+        "timeUsed": "0s",
+        "timeReserved": "0s",
+        "totalTimeAllowed": "72000s",
+        "minimumTimeAllowed": "72000s"
+      }
+    },
+    "gpu_quota_seconds": {
+      "time_used": 3119.043,
+      "time_reserved": 0.0,
+      "total_time_allowed": 108000.0
+    }
+  },
+  "account_time_used_before": 1450.542,
+  "account_time_used_after": 3119.043,
+  "account_usage_delta_seconds": 1668.501,
+  "exact_provider_billed_seconds": null,
+  "accounting_limit": "Account quota delta only; malformed SDK duration serialization and inconsistent total allowance retained in archive. Not exact per-job billing.",
+  "phase4_complete": false,
+  "production_C_admit": null,
+  "new_compute_authorized": false
+}

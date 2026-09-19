@@ -1,0 +1,16 @@
+{
+  "status": "approved",
+  "approved_at": "2026-09-19T11:30:37.683333+00:00",
+  "user_response": "Now you can launch a new GPU run",
+  "approval_basis": "Explicit launch instruction following the reviewed frozen closed-loop notebook and separate budget presentation",
+  "scope": "original versus no-example prompt, 15 matched game pairs, at most 20 actions per episode",
+  "review_lock": "notebooks/phase4-closed-loop-v1-review-r1/review-source-lock.json",
+  "review_lock_sha256": "078b1dc692e0a1a9580218e642f2329893593e0931959900a5ca565f5ce457f3",
+  "requirements_lock": "reports/phase4_closed_loop_v1_launch_requirements.json",
+  "requirements_lock_sha256": "38a2f71649bc810a3a0c2937548ce76fb8bfd63bc9f8117118b19e3aa94cdb68",
+  "artifacts": {
+    "profile.ipynb": "5886228cc7ac9c1a6571405bf64ee0c3817d6759fc3a4b44a2797dbfc4c0fd08",
+    "kernel-metadata.json": "733dd54314257ad1964c929f4c250648ff24b1ca4f6fe5a3681f12641cc79f8b"
+  },
+  "compute_authority": "Separate reports/phase4_closed_loop_v1_compute_authorization.json"
+}
