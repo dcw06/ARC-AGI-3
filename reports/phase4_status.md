@@ -14,6 +14,7 @@ The accounting reconciliation inventories 16 attempts and preserves known termin
 
 Current references:
 
+- [Three-arm diagnostic runner: frozen budget, cleanup, evidence and local tests](phase4_diagnostic_v1_review.md). GPU-disabled review only; 45 cases plus one proposed startup canary, no launch authorization or new target execution.
 - [Offline action-selection investigation and unexecuted prompt probe](phase4_action_selection_investigation.md): 97.28% of clicks matched the prompt's example coordinates; 96.99% of adjacent action pairs repeated. This is descriptive evidence, not a causal finding or authorization for model calls.
 - [V13 target evidence](phase4_v13_pilot_status.md)
 - [V14 evaluator, capacity and accounting review](phase4_v14_review.md)
