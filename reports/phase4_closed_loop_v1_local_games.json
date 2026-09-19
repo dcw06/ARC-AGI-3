@@ -1,0 +1,2844 @@
+{
+  "scope": "actual local game engines with scripted CPU actions; not model evidence",
+  "passed": true,
+  "episodes": 30,
+  "requests_started": 600,
+  "elapsed_seconds": 169.649559341,
+  "model_inference": false,
+  "comparison": {
+    "episodes": [
+      {
+        "game_id": "ar25-0c556536",
+        "arm": "baseline",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.25,
+        "frame_change_rate": 0.25,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 14,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      },
+      {
+        "game_id": "ar25-0c556536",
+        "arm": "no_concrete_examples",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.25,
+        "frame_change_rate": 0.25,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 14,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      },
+      {
+        "game_id": "cd82-fb555c5d",
+        "arm": "no_concrete_examples",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.65,
+        "frame_change_rate": 0.65,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 7,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      },
+      {
+        "game_id": "cd82-fb555c5d",
+        "arm": "baseline",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.65,
+        "frame_change_rate": 0.65,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 7,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      },
+      {
+        "game_id": "ft09-0d8bbf25",
+        "arm": "baseline",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.050000000000000044,
+        "frame_change_rate": 0.0,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 18,
+        "action_distribution": {
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 20,
+          "7": 0
+        },
+        "click_coordinates": [
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          }
+        ]
+      },
+      {
+        "game_id": "ft09-0d8bbf25",
+        "arm": "no_concrete_examples",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.050000000000000044,
+        "frame_change_rate": 0.0,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 18,
+        "action_distribution": {
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 20,
+          "7": 0
+        },
+        "click_coordinates": [
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          }
+        ]
+      },
+      {
+        "game_id": "g50t-5849a774",
+        "arm": "no_concrete_examples",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.5,
+        "frame_change_rate": 0.5,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 10,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      },
+      {
+        "game_id": "g50t-5849a774",
+        "arm": "baseline",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.5,
+        "frame_change_rate": 0.5,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 10,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      },
+      {
+        "game_id": "ka59-38d34dbb",
+        "arm": "baseline",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.7,
+        "frame_change_rate": 0.7,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 6,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      },
+      {
+        "game_id": "ka59-38d34dbb",
+        "arm": "no_concrete_examples",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.7,
+        "frame_change_rate": 0.7,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 6,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      },
+      {
+        "game_id": "lf52-271a04aa",
+        "arm": "no_concrete_examples",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 1.0,
+        "frame_change_rate": 1.0,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 0,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      },
+      {
+        "game_id": "lf52-271a04aa",
+        "arm": "baseline",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 1.0,
+        "frame_change_rate": 1.0,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 0,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      },
+      {
+        "game_id": "ls20-9607627b",
+        "arm": "baseline",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.35,
+        "frame_change_rate": 0.30000000000000004,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 12,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      },
+      {
+        "game_id": "ls20-9607627b",
+        "arm": "no_concrete_examples",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.35,
+        "frame_change_rate": 0.30000000000000004,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 12,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      },
+      {
+        "game_id": "s5i5-18d95033",
+        "arm": "no_concrete_examples",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 1.0,
+        "frame_change_rate": 1.0,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 0,
+        "action_distribution": {
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 20,
+          "7": 0
+        },
+        "click_coordinates": [
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          }
+        ]
+      },
+      {
+        "game_id": "s5i5-18d95033",
+        "arm": "baseline",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 1.0,
+        "frame_change_rate": 1.0,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 0,
+        "action_distribution": {
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 20,
+          "7": 0
+        },
+        "click_coordinates": [
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          }
+        ]
+      },
+      {
+        "game_id": "sc25-635fd71a",
+        "arm": "baseline",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.7,
+        "frame_change_rate": 0.65,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 6,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      },
+      {
+        "game_id": "sc25-635fd71a",
+        "arm": "no_concrete_examples",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.7,
+        "frame_change_rate": 0.65,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 6,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      },
+      {
+        "game_id": "sk48-d8078629",
+        "arm": "no_concrete_examples",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.5,
+        "frame_change_rate": 0.44999999999999996,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 9,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      },
+      {
+        "game_id": "sk48-d8078629",
+        "arm": "baseline",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.5,
+        "frame_change_rate": 0.44999999999999996,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 9,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      },
+      {
+        "game_id": "sp80-589a99af",
+        "arm": "baseline",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 1.0,
+        "frame_change_rate": 1.0,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 0,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      },
+      {
+        "game_id": "sp80-589a99af",
+        "arm": "no_concrete_examples",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 1.0,
+        "frame_change_rate": 1.0,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 0,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      },
+      {
+        "game_id": "su15-1944f8ab",
+        "arm": "no_concrete_examples",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 1.0,
+        "frame_change_rate": 1.0,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 0,
+        "action_distribution": {
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 20,
+          "7": 0
+        },
+        "click_coordinates": [
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          }
+        ]
+      },
+      {
+        "game_id": "su15-1944f8ab",
+        "arm": "baseline",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 1.0,
+        "frame_change_rate": 1.0,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 0,
+        "action_distribution": {
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 20,
+          "7": 0
+        },
+        "click_coordinates": [
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          }
+        ]
+      },
+      {
+        "game_id": "tr87-cd924810",
+        "arm": "baseline",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 1.0,
+        "frame_change_rate": 1.0,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 0,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      },
+      {
+        "game_id": "tr87-cd924810",
+        "arm": "no_concrete_examples",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 1.0,
+        "frame_change_rate": 1.0,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 0,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      },
+      {
+        "game_id": "vc33-5430563c",
+        "arm": "no_concrete_examples",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 1.0,
+        "frame_change_rate": 1.0,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 0,
+        "action_distribution": {
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 20,
+          "7": 0
+        },
+        "click_coordinates": [
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          }
+        ]
+      },
+      {
+        "game_id": "vc33-5430563c",
+        "arm": "baseline",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 1.0,
+        "frame_change_rate": 1.0,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 0,
+        "action_distribution": {
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 20,
+          "7": 0
+        },
+        "click_coordinates": [
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          }
+        ]
+      },
+      {
+        "game_id": "wa30-ee6fef47",
+        "arm": "baseline",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.35,
+        "frame_change_rate": 0.35,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 12,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      },
+      {
+        "game_id": "wa30-ee6fef47",
+        "arm": "no_concrete_examples",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.35,
+        "frame_change_rate": 0.35,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 12,
+        "action_distribution": {
+          "1": 20,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0
+        },
+        "click_coordinates": []
+      }
+    ],
+    "pairs": [
+      {
+        "game_id": "ar25-0c556536",
+        "level_delta_difference": 0,
+        "arms": {
+          "baseline": {
+            "game_id": "ar25-0c556536",
+            "arm": "baseline",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.25,
+            "frame_change_rate": 0.25,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 14,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          },
+          "no_concrete_examples": {
+            "game_id": "ar25-0c556536",
+            "arm": "no_concrete_examples",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.25,
+            "frame_change_rate": 0.25,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 14,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          }
+        }
+      },
+      {
+        "game_id": "cd82-fb555c5d",
+        "level_delta_difference": 0,
+        "arms": {
+          "no_concrete_examples": {
+            "game_id": "cd82-fb555c5d",
+            "arm": "no_concrete_examples",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.65,
+            "frame_change_rate": 0.65,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 7,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          },
+          "baseline": {
+            "game_id": "cd82-fb555c5d",
+            "arm": "baseline",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.65,
+            "frame_change_rate": 0.65,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 7,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          }
+        }
+      },
+      {
+        "game_id": "ft09-0d8bbf25",
+        "level_delta_difference": 0,
+        "arms": {
+          "baseline": {
+            "game_id": "ft09-0d8bbf25",
+            "arm": "baseline",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.050000000000000044,
+            "frame_change_rate": 0.0,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 18,
+            "action_distribution": {
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 20,
+              "7": 0
+            },
+            "click_coordinates": [
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              }
+            ]
+          },
+          "no_concrete_examples": {
+            "game_id": "ft09-0d8bbf25",
+            "arm": "no_concrete_examples",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.050000000000000044,
+            "frame_change_rate": 0.0,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 18,
+            "action_distribution": {
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 20,
+              "7": 0
+            },
+            "click_coordinates": [
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              }
+            ]
+          }
+        }
+      },
+      {
+        "game_id": "g50t-5849a774",
+        "level_delta_difference": 0,
+        "arms": {
+          "no_concrete_examples": {
+            "game_id": "g50t-5849a774",
+            "arm": "no_concrete_examples",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.5,
+            "frame_change_rate": 0.5,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 10,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          },
+          "baseline": {
+            "game_id": "g50t-5849a774",
+            "arm": "baseline",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.5,
+            "frame_change_rate": 0.5,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 10,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          }
+        }
+      },
+      {
+        "game_id": "ka59-38d34dbb",
+        "level_delta_difference": 0,
+        "arms": {
+          "baseline": {
+            "game_id": "ka59-38d34dbb",
+            "arm": "baseline",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.7,
+            "frame_change_rate": 0.7,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 6,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          },
+          "no_concrete_examples": {
+            "game_id": "ka59-38d34dbb",
+            "arm": "no_concrete_examples",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.7,
+            "frame_change_rate": 0.7,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 6,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          }
+        }
+      },
+      {
+        "game_id": "lf52-271a04aa",
+        "level_delta_difference": 0,
+        "arms": {
+          "no_concrete_examples": {
+            "game_id": "lf52-271a04aa",
+            "arm": "no_concrete_examples",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 1.0,
+            "frame_change_rate": 1.0,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 0,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          },
+          "baseline": {
+            "game_id": "lf52-271a04aa",
+            "arm": "baseline",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 1.0,
+            "frame_change_rate": 1.0,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 0,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          }
+        }
+      },
+      {
+        "game_id": "ls20-9607627b",
+        "level_delta_difference": 0,
+        "arms": {
+          "baseline": {
+            "game_id": "ls20-9607627b",
+            "arm": "baseline",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.35,
+            "frame_change_rate": 0.30000000000000004,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 12,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          },
+          "no_concrete_examples": {
+            "game_id": "ls20-9607627b",
+            "arm": "no_concrete_examples",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.35,
+            "frame_change_rate": 0.30000000000000004,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 12,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          }
+        }
+      },
+      {
+        "game_id": "s5i5-18d95033",
+        "level_delta_difference": 0,
+        "arms": {
+          "no_concrete_examples": {
+            "game_id": "s5i5-18d95033",
+            "arm": "no_concrete_examples",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 1.0,
+            "frame_change_rate": 1.0,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 0,
+            "action_distribution": {
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 20,
+              "7": 0
+            },
+            "click_coordinates": [
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              }
+            ]
+          },
+          "baseline": {
+            "game_id": "s5i5-18d95033",
+            "arm": "baseline",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 1.0,
+            "frame_change_rate": 1.0,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 0,
+            "action_distribution": {
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 20,
+              "7": 0
+            },
+            "click_coordinates": [
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              }
+            ]
+          }
+        }
+      },
+      {
+        "game_id": "sc25-635fd71a",
+        "level_delta_difference": 0,
+        "arms": {
+          "baseline": {
+            "game_id": "sc25-635fd71a",
+            "arm": "baseline",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.7,
+            "frame_change_rate": 0.65,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 6,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          },
+          "no_concrete_examples": {
+            "game_id": "sc25-635fd71a",
+            "arm": "no_concrete_examples",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.7,
+            "frame_change_rate": 0.65,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 6,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          }
+        }
+      },
+      {
+        "game_id": "sk48-d8078629",
+        "level_delta_difference": 0,
+        "arms": {
+          "no_concrete_examples": {
+            "game_id": "sk48-d8078629",
+            "arm": "no_concrete_examples",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.5,
+            "frame_change_rate": 0.44999999999999996,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 9,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          },
+          "baseline": {
+            "game_id": "sk48-d8078629",
+            "arm": "baseline",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.5,
+            "frame_change_rate": 0.44999999999999996,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 9,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          }
+        }
+      },
+      {
+        "game_id": "sp80-589a99af",
+        "level_delta_difference": 0,
+        "arms": {
+          "baseline": {
+            "game_id": "sp80-589a99af",
+            "arm": "baseline",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 1.0,
+            "frame_change_rate": 1.0,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 0,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          },
+          "no_concrete_examples": {
+            "game_id": "sp80-589a99af",
+            "arm": "no_concrete_examples",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 1.0,
+            "frame_change_rate": 1.0,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 0,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          }
+        }
+      },
+      {
+        "game_id": "su15-1944f8ab",
+        "level_delta_difference": 0,
+        "arms": {
+          "no_concrete_examples": {
+            "game_id": "su15-1944f8ab",
+            "arm": "no_concrete_examples",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 1.0,
+            "frame_change_rate": 1.0,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 0,
+            "action_distribution": {
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 20,
+              "7": 0
+            },
+            "click_coordinates": [
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              }
+            ]
+          },
+          "baseline": {
+            "game_id": "su15-1944f8ab",
+            "arm": "baseline",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 1.0,
+            "frame_change_rate": 1.0,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 0,
+            "action_distribution": {
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 20,
+              "7": 0
+            },
+            "click_coordinates": [
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              }
+            ]
+          }
+        }
+      },
+      {
+        "game_id": "tr87-cd924810",
+        "level_delta_difference": 0,
+        "arms": {
+          "baseline": {
+            "game_id": "tr87-cd924810",
+            "arm": "baseline",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 1.0,
+            "frame_change_rate": 1.0,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 0,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          },
+          "no_concrete_examples": {
+            "game_id": "tr87-cd924810",
+            "arm": "no_concrete_examples",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 1.0,
+            "frame_change_rate": 1.0,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 0,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          }
+        }
+      },
+      {
+        "game_id": "vc33-5430563c",
+        "level_delta_difference": 0,
+        "arms": {
+          "no_concrete_examples": {
+            "game_id": "vc33-5430563c",
+            "arm": "no_concrete_examples",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 1.0,
+            "frame_change_rate": 1.0,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 0,
+            "action_distribution": {
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 20,
+              "7": 0
+            },
+            "click_coordinates": [
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              }
+            ]
+          },
+          "baseline": {
+            "game_id": "vc33-5430563c",
+            "arm": "baseline",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 1.0,
+            "frame_change_rate": 1.0,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 0,
+            "action_distribution": {
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 20,
+              "7": 0
+            },
+            "click_coordinates": [
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              }
+            ]
+          }
+        }
+      },
+      {
+        "game_id": "wa30-ee6fef47",
+        "level_delta_difference": 0,
+        "arms": {
+          "baseline": {
+            "game_id": "wa30-ee6fef47",
+            "arm": "baseline",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.35,
+            "frame_change_rate": 0.35,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 12,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          },
+          "no_concrete_examples": {
+            "game_id": "wa30-ee6fef47",
+            "arm": "no_concrete_examples",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.35,
+            "frame_change_rate": 0.35,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 12,
+            "action_distribution": {
+              "1": 20,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 0,
+              "7": 0
+            },
+            "click_coordinates": []
+          }
+        }
+      }
+    ],
+    "paired_level_wins": 0,
+    "paired_level_ties": 15,
+    "paired_level_losses": 0,
+    "interpretation": "20-action early-progress experiment; zero progress does not establish that the prompt change can never help"
+  }
+}

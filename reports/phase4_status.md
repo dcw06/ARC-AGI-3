@@ -1,6 +1,22 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
-## Closed-loop comparison preparation — September 19, 2026
+## Closed-loop runner review — September 19, 2026
+
+The runner and independent trajectory/terminal evaluator are implemented in
+`certification/phase4_closed_loop_v1`. Twenty regression cases passed across the
+final suite and targeted cap-test rerun. Supervised CPU lifecycle replay passed;
+actual local game integration completed all 30 episodes and 600 scripted actions,
+with independent replay passing. These are CPU integration results, not model
+performance evidence. The private GPU-disabled review notebook is frozen at
+`notebooks/phase4-closed-loop-v1-review-r1/`; all 664 bindings, decompressed code
+and the fail-closed authority gate were checked. Source approval and separate
+one-hour compute authorization/reservation remain pending. See
+`reports/phase4_closed_loop_v1_implementation_receipt.json` and
+`reports/phase4_closed_loop_v1_implementation_review.md`. No GPU run was launched.
+The 20-action cap measures early progress; zero progress would not establish that
+the prompt change can never help. Exact billing and production certification remain open.
+
+## Historical protocol preparation — September 19, 2026
 
 A controlled original-prompt versus no-example development comparison is prepared
 in `reports/phase4_closed_loop_v1_protocol.md`, with exact prompt texts, a fixed

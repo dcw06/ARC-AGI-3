@@ -1,0 +1,26 @@
+{
+  "status": "reviewed_pending_user_source_approval_and_separate_compute_authorization",
+  "source_lock_sha256": "078b1dc692e0a1a9580218e642f2329893593e0931959900a5ca565f5ce457f3",
+  "notebook_bytes": 627323,
+  "bindings_verified": 664,
+  "packaged_python_compiled": true,
+  "unpacked_payload_verified": true,
+  "isolated_no_authority_gate_passed": true,
+  "gpu_enabled": false,
+  "cpu_lifecycle_replay_passed": true,
+  "actual_game_scripted_replay_passed": true,
+  "actual_game_episodes": 30,
+  "actual_game_actions": 600,
+  "tests_passed": 20,
+  "gpu_seconds_authorized": 0,
+  "reservation": null,
+  "gpu_runs_launched": 0,
+  "evidence_bindings": {
+    "evidence/phase4-closed-loop-v1-local-review.zip": "feb7003d9a4eec3fac87013fc759d9e37c96026c3abcea224c89b1149b4a68bf",
+    "evidence/phase4-closed-loop-v1-local-games.zip": "df9dc97cce0d45263e351c858f3e047850cc097c0712263af490b176879fd3a4",
+    "reports/phase4_closed_loop_v1_review_lock.json": "329d6e6f38248dd88311f36e6ae7746d41d52ed731976e0ac86d8013992c9668",
+    "reports/phase4_closed_loop_v1_compute_budget.json": "ba7f6a66ebe81bd5a103ec5aecc7b415f0d29dd3c4f4dcbe709efc7d53e44f92",
+    "reports/phase4_closed_loop_v1_implementation_review.md": "80cee7a4e0390f87eb83c7238f52573874f100363ebc8a973c54380f75accae5"
+  },
+  "interpretation": "early-progress experiment; zero progress at 20 actions does not establish the prompt change can never help"
+}
