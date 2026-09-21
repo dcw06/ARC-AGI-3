@@ -1,0 +1,8 @@
+{
+  "label": "privileged retrospective interpretation; never a policy input",
+  "path": "environment_files/ft09/0d8bbf25/ft09.py",
+  "sha256": "0d8bbf2573e8f9837c649a1ffda2e7bde3734d26c3cb0fc4bbfd772d7f87a6bf",
+  "start_line": 2328,
+  "end_line": 2371,
+  "text": "    def step(self) -> None:\n        if self.action.id.value == 0:\n            self.complete_action()\n            return\n\n        if self.our > 0 and self.zth:\n            self.our -= 1\n\n            aIT = 0 if self.our % 2 == 1 else 2\n            Ytt = self.zth.pixels > -1\n            self.zth.pixels[Ytt] = aIT\n            if self.our == 0:\n                self.complete_action()\n            return\n\n        kMO = None\n        ATn = False\n        Hzf = None\n\n        if self.action.id.value == 6:\n            AfP = self.action.data.get(\"x\", 0)\n            Ywt = self.action.data.get(\"y\", 0)\n\n            Hzf = self.camera.display_to_grid(AfP, Ywt)\n            if Hzf:\n                ppb, tut = Hzf\n\n                Wmr = self.current_level.get_sprite_at(ppb, tut, \"Hkx\")\n                if not Wmr:\n                    Wmr = self.current_level.get_sprite_at(ppb, tut, \"NTi\")\n                    if Wmr:\n                        ATn = True\n                if Wmr:\n                    self.blr = Wmr\n                    kMO = 5\n\n        if kMO is None and Hzf is not None:\n            uTB = Hzf and self.current_level.get_sprite_at(Hzf[0], Hzf[1], \"bsT\")\n            if self.level_index == 0 and self.zth and not uTB:\n                self.our = 4\n                return\n            self.complete_action()\n            return\n"
+}

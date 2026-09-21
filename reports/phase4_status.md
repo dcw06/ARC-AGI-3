@@ -1,5 +1,19 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
+## Offline information trace — September 21, 2026
+
+The missing inspection generator and findings report were recovered exactly from
+local Git objects; all 13 historical bindings verify, and temporary regeneration
+reproduced all 11 artifacts. A new `ft09` trace separates observed transient frame
+changes from retrospective game-source interpretation. The next policy call
+omitted a two-flash outline signal, but this does not establish that animation
+handling caused failure or justify a memory treatment. A single intermediate-frame
+input addition and a six-episode comparison are proposed, pending local checks,
+review and separate compute approval; no run was launched or prompt promoted.
+See `reports/phase4_ft09_information_v1/findings.md`. These are E1S-R-derived
+`arc_action_v12` development variants, not unchanged E1S-R admission evidence.
+Production certification, production `C_admit`, and exact billing remain open.
+
 ## Closed-loop GPU result — September 19, 2026
 
 The authorized closed-loop v1 R1 run completed on Kaggle and passed independent

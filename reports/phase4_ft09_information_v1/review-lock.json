@@ -1,0 +1,31 @@
+{
+  "status": "offline_analysis_complete_comparison_proposed_not_authorized",
+  "historical_lock_sha256": "c8e15a3996e7773dd0441a36673149517490778598f6550d2ddcc783946d4da8",
+  "recovery": {
+    "method": "SHA256-matched unreachable local Git blobs",
+    "blobs_checked": 30,
+    "restored_files": 2,
+    "historical_bindings_verified": 13,
+    "regenerated_artifacts_verified": 11,
+    "historical_outputs_overwritten": false
+  },
+  "bindings": {
+    "reports/phase4_ft09_information_v1/findings.md": "75ceb7867127611c2d49448ef17d18b21d0b732dda0f22e222935a33b4a36b1e",
+    "reports/phase4_ft09_information_v1/frame_sequence.png": "f20cd06987858cf0d13fd248eab152fbe3651038166772a38b612d09404b9f09",
+    "reports/phase4_ft09_information_v1/observation_trace.json": "203e006b31fb0883455e25415a390ada2172bc491acfbfd10a02ddf5940d705b",
+    "reports/phase4_ft09_information_v1/source_interpretation_evidence.json": "70b545a7f17d6ec0dd4858969013e82626bab9c1db51cf615d6ddfb98dc3a9c6",
+    "scripts/analyze_phase4_ft09_information_v1.py": "4f7f2136173c16da60b271a252a258c07a42965d7c17c169a9e98fd12a3b84c0",
+    "scripts/verify_phase4_inspection_recovery.py": "c8b75e8769b22cd4d7c128bd1c4f427cc6cba64e4be1c4b416bde06579f09cc5"
+  },
+  "validation": [
+    "temporary historical regeneration matched all locked artifacts",
+    "single-case next-request continuity and exact grid comparisons passed",
+    "frozen closed-loop source and notebook verification passed"
+  ],
+  "policy_changed": false,
+  "model_calls": 0,
+  "game_actions_executed": 0,
+  "gpu_runs_launched": 0,
+  "compute_authorized_seconds": 0,
+  "proposed_comparison_requires_local_implementation_and_review": true
+}
