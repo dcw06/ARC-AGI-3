@@ -46,3 +46,12 @@ seconds, and 60 acknowledged transitions per arm. Both arms report zero complete
 levels. These are downloaded target results, not yet independently replayed local
 acceptance. Independent evaluation, archival, and exact usage reconciliation
 remain pending. No additional attempt is authorized.
+
+## Final independent disposition
+
+All 156 download checksums verified. Frozen v2 replay and clean-checkout archive
+replay passed, including selected frames, retained token parity, deadlines and
+final cleanup. Both arms completed zero levels; no solving improvement is
+demonstrated. The reservation remains consumed and exact billing unresolved.
+See `phase4_transient_v2_disposition.md`, `phase4_transient_v2_final_replay.json`,
+and `phase4_transient_v2_archive.json` for final results and accounting limits.

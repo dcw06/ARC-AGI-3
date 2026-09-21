@@ -1,0 +1,3296 @@
+{
+  "passed": true,
+  "review_lock_sha256": "5e0341ec0bd14a1b8ca054ff3df678ea71344d41ccd941058881253c7c8be842",
+  "source_bindings_verified": 763,
+  "archive_sha256": "8d6c49a8edbcb75067fb5519282b5d62078260988c462ed0b8fd8c5af965145e",
+  "downloaded_files_verified": 156,
+  "archive_files_verified": 165,
+  "replay": {
+    "passed": true,
+    "errors": [],
+    "scope": "closed_loop_development_live",
+    "comparison": {
+      "episodes": [
+        {
+          "pair_index": 0,
+          "request_seed": 0,
+          "game_id": "ft09-0d8bbf25",
+          "arm": "control",
+          "actions": 20,
+          "level_delta": 0,
+          "terminal_reason": "action_cap",
+          "progress_events": [],
+          "canonical_change_rate": 0.050000000000000044,
+          "frame_change_rate": 0.0,
+          "adjacent_repeats": 18,
+          "repeat_rate": 0.9473684210526315,
+          "longest_streak": 19,
+          "repeats_after_unchanged": 18,
+          "action_distribution": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 20,
+            "7": 0
+          },
+          "click_coordinates": [
+            {
+              "x": 32,
+              "y": 16
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            }
+          ]
+        },
+        {
+          "pair_index": 0,
+          "request_seed": 0,
+          "game_id": "ft09-0d8bbf25",
+          "arm": "transient",
+          "actions": 20,
+          "level_delta": 0,
+          "terminal_reason": "action_cap",
+          "progress_events": [],
+          "canonical_change_rate": 0.050000000000000044,
+          "frame_change_rate": 0.0,
+          "adjacent_repeats": 18,
+          "repeat_rate": 0.9473684210526315,
+          "longest_streak": 19,
+          "repeats_after_unchanged": 18,
+          "action_distribution": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 20,
+            "7": 0
+          },
+          "click_coordinates": [
+            {
+              "x": 32,
+              "y": 16
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            }
+          ]
+        },
+        {
+          "pair_index": 1,
+          "request_seed": 1,
+          "game_id": "ft09-0d8bbf25",
+          "arm": "transient",
+          "actions": 20,
+          "level_delta": 0,
+          "terminal_reason": "action_cap",
+          "progress_events": [],
+          "canonical_change_rate": 0.050000000000000044,
+          "frame_change_rate": 0.0,
+          "adjacent_repeats": 18,
+          "repeat_rate": 0.9473684210526315,
+          "longest_streak": 19,
+          "repeats_after_unchanged": 18,
+          "action_distribution": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 20,
+            "7": 0
+          },
+          "click_coordinates": [
+            {
+              "x": 32,
+              "y": 12
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            }
+          ]
+        },
+        {
+          "pair_index": 1,
+          "request_seed": 1,
+          "game_id": "ft09-0d8bbf25",
+          "arm": "control",
+          "actions": 20,
+          "level_delta": 0,
+          "terminal_reason": "action_cap",
+          "progress_events": [],
+          "canonical_change_rate": 0.050000000000000044,
+          "frame_change_rate": 0.0,
+          "adjacent_repeats": 18,
+          "repeat_rate": 0.9473684210526315,
+          "longest_streak": 19,
+          "repeats_after_unchanged": 18,
+          "action_distribution": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 20,
+            "7": 0
+          },
+          "click_coordinates": [
+            {
+              "x": 32,
+              "y": 12
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            }
+          ]
+        },
+        {
+          "pair_index": 2,
+          "request_seed": 2,
+          "game_id": "ft09-0d8bbf25",
+          "arm": "control",
+          "actions": 20,
+          "level_delta": 0,
+          "terminal_reason": "action_cap",
+          "progress_events": [],
+          "canonical_change_rate": 0.050000000000000044,
+          "frame_change_rate": 0.0,
+          "adjacent_repeats": 18,
+          "repeat_rate": 0.9473684210526315,
+          "longest_streak": 19,
+          "repeats_after_unchanged": 18,
+          "action_distribution": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 20,
+            "7": 0
+          },
+          "click_coordinates": [
+            {
+              "x": 32,
+              "y": 16
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            }
+          ]
+        },
+        {
+          "pair_index": 2,
+          "request_seed": 2,
+          "game_id": "ft09-0d8bbf25",
+          "arm": "transient",
+          "actions": 20,
+          "level_delta": 0,
+          "terminal_reason": "action_cap",
+          "progress_events": [],
+          "canonical_change_rate": 0.050000000000000044,
+          "frame_change_rate": 0.0,
+          "adjacent_repeats": 18,
+          "repeat_rate": 0.9473684210526315,
+          "longest_streak": 19,
+          "repeats_after_unchanged": 18,
+          "action_distribution": {
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 20,
+            "7": 0
+          },
+          "click_coordinates": [
+            {
+              "x": 32,
+              "y": 12
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            },
+            {
+              "x": 32,
+              "y": 32
+            }
+          ]
+        }
+      ],
+      "pairs": [
+        {
+          "pair_index": 0,
+          "game_id": "ft09-0d8bbf25",
+          "level_delta_difference": 0,
+          "arms": {
+            "control": {
+              "pair_index": 0,
+              "request_seed": 0,
+              "game_id": "ft09-0d8bbf25",
+              "arm": "control",
+              "actions": 20,
+              "level_delta": 0,
+              "terminal_reason": "action_cap",
+              "progress_events": [],
+              "canonical_change_rate": 0.050000000000000044,
+              "frame_change_rate": 0.0,
+              "adjacent_repeats": 18,
+              "repeat_rate": 0.9473684210526315,
+              "longest_streak": 19,
+              "repeats_after_unchanged": 18,
+              "action_distribution": {
+                "1": 0,
+                "2": 0,
+                "3": 0,
+                "4": 0,
+                "5": 0,
+                "6": 20,
+                "7": 0
+              },
+              "click_coordinates": [
+                {
+                  "x": 32,
+                  "y": 16
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                }
+              ]
+            },
+            "transient": {
+              "pair_index": 0,
+              "request_seed": 0,
+              "game_id": "ft09-0d8bbf25",
+              "arm": "transient",
+              "actions": 20,
+              "level_delta": 0,
+              "terminal_reason": "action_cap",
+              "progress_events": [],
+              "canonical_change_rate": 0.050000000000000044,
+              "frame_change_rate": 0.0,
+              "adjacent_repeats": 18,
+              "repeat_rate": 0.9473684210526315,
+              "longest_streak": 19,
+              "repeats_after_unchanged": 18,
+              "action_distribution": {
+                "1": 0,
+                "2": 0,
+                "3": 0,
+                "4": 0,
+                "5": 0,
+                "6": 20,
+                "7": 0
+              },
+              "click_coordinates": [
+                {
+                  "x": 32,
+                  "y": 16
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                }
+              ]
+            }
+          }
+        },
+        {
+          "pair_index": 1,
+          "game_id": "ft09-0d8bbf25",
+          "level_delta_difference": 0,
+          "arms": {
+            "transient": {
+              "pair_index": 1,
+              "request_seed": 1,
+              "game_id": "ft09-0d8bbf25",
+              "arm": "transient",
+              "actions": 20,
+              "level_delta": 0,
+              "terminal_reason": "action_cap",
+              "progress_events": [],
+              "canonical_change_rate": 0.050000000000000044,
+              "frame_change_rate": 0.0,
+              "adjacent_repeats": 18,
+              "repeat_rate": 0.9473684210526315,
+              "longest_streak": 19,
+              "repeats_after_unchanged": 18,
+              "action_distribution": {
+                "1": 0,
+                "2": 0,
+                "3": 0,
+                "4": 0,
+                "5": 0,
+                "6": 20,
+                "7": 0
+              },
+              "click_coordinates": [
+                {
+                  "x": 32,
+                  "y": 12
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                }
+              ]
+            },
+            "control": {
+              "pair_index": 1,
+              "request_seed": 1,
+              "game_id": "ft09-0d8bbf25",
+              "arm": "control",
+              "actions": 20,
+              "level_delta": 0,
+              "terminal_reason": "action_cap",
+              "progress_events": [],
+              "canonical_change_rate": 0.050000000000000044,
+              "frame_change_rate": 0.0,
+              "adjacent_repeats": 18,
+              "repeat_rate": 0.9473684210526315,
+              "longest_streak": 19,
+              "repeats_after_unchanged": 18,
+              "action_distribution": {
+                "1": 0,
+                "2": 0,
+                "3": 0,
+                "4": 0,
+                "5": 0,
+                "6": 20,
+                "7": 0
+              },
+              "click_coordinates": [
+                {
+                  "x": 32,
+                  "y": 12
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                }
+              ]
+            }
+          }
+        },
+        {
+          "pair_index": 2,
+          "game_id": "ft09-0d8bbf25",
+          "level_delta_difference": 0,
+          "arms": {
+            "control": {
+              "pair_index": 2,
+              "request_seed": 2,
+              "game_id": "ft09-0d8bbf25",
+              "arm": "control",
+              "actions": 20,
+              "level_delta": 0,
+              "terminal_reason": "action_cap",
+              "progress_events": [],
+              "canonical_change_rate": 0.050000000000000044,
+              "frame_change_rate": 0.0,
+              "adjacent_repeats": 18,
+              "repeat_rate": 0.9473684210526315,
+              "longest_streak": 19,
+              "repeats_after_unchanged": 18,
+              "action_distribution": {
+                "1": 0,
+                "2": 0,
+                "3": 0,
+                "4": 0,
+                "5": 0,
+                "6": 20,
+                "7": 0
+              },
+              "click_coordinates": [
+                {
+                  "x": 32,
+                  "y": 16
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                }
+              ]
+            },
+            "transient": {
+              "pair_index": 2,
+              "request_seed": 2,
+              "game_id": "ft09-0d8bbf25",
+              "arm": "transient",
+              "actions": 20,
+              "level_delta": 0,
+              "terminal_reason": "action_cap",
+              "progress_events": [],
+              "canonical_change_rate": 0.050000000000000044,
+              "frame_change_rate": 0.0,
+              "adjacent_repeats": 18,
+              "repeat_rate": 0.9473684210526315,
+              "longest_streak": 19,
+              "repeats_after_unchanged": 18,
+              "action_distribution": {
+                "1": 0,
+                "2": 0,
+                "3": 0,
+                "4": 0,
+                "5": 0,
+                "6": 20,
+                "7": 0
+              },
+              "click_coordinates": [
+                {
+                  "x": 32,
+                  "y": 12
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                },
+                {
+                  "x": 32,
+                  "y": 32
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "paired_level_wins": 0,
+      "paired_level_ties": 3,
+      "paired_level_losses": 0,
+      "arms": {
+        "control": {
+          "completed_level_increase": 0,
+          "wins": 0,
+          "game_overs": 0,
+          "acknowledged_transitions": 60
+        },
+        "transient": {
+          "completed_level_increase": 0,
+          "wins": 0,
+          "game_overs": 0,
+          "acknowledged_transitions": 60
+        }
+      },
+      "interpretation": "20-action early-progress experiment; zero progress does not establish that the prompt change can never help"
+    },
+    "comparison_is_scripted": false,
+    "model_inference": true,
+    "capacity_candidate": null,
+    "C_nominal": null,
+    "C_admit": null,
+    "development_model_lifecycle_passed": true,
+    "phase4_complete": false,
+    "independent_replay": true,
+    "evidence_bytes": 7262529,
+    "exact_provider_billed_seconds": null
+  },
+  "decision_inspection": {
+    "episodes": [
+      {
+        "episode_id": "tf1-00-control",
+        "arm": "control",
+        "pair_index": 0,
+        "eligible_nonnull_requests": 19,
+        "actually_exposed_requests": 0,
+        "repeats_after_eligible_frame": 18,
+        "exposures": [
+          {
+            "decision_index_zero_based": 1,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": false
+          },
+          {
+            "decision_index_zero_based": 2,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 3,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 4,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 5,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 6,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 7,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 8,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 9,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 10,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 11,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 12,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 13,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 14,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 15,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 16,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 17,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 18,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 19,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          }
+        ]
+      },
+      {
+        "episode_id": "tf1-00-transient",
+        "arm": "transient",
+        "pair_index": 0,
+        "eligible_nonnull_requests": 19,
+        "actually_exposed_requests": 19,
+        "repeats_after_eligible_frame": 18,
+        "exposures": [
+          {
+            "decision_index_zero_based": 1,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": false
+          },
+          {
+            "decision_index_zero_based": 2,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 3,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 4,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 5,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 6,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 7,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 8,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 9,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 10,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 11,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 12,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 13,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 14,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 15,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 16,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 17,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 18,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 19,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          }
+        ]
+      },
+      {
+        "episode_id": "tf1-01-transient",
+        "arm": "transient",
+        "pair_index": 1,
+        "eligible_nonnull_requests": 19,
+        "actually_exposed_requests": 19,
+        "repeats_after_eligible_frame": 18,
+        "exposures": [
+          {
+            "decision_index_zero_based": 1,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": false
+          },
+          {
+            "decision_index_zero_based": 2,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 3,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 4,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 5,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 6,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 7,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 8,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 9,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 10,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 11,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 12,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 13,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 14,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 15,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 16,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 17,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 18,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 19,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          }
+        ]
+      },
+      {
+        "episode_id": "tf1-01-control",
+        "arm": "control",
+        "pair_index": 1,
+        "eligible_nonnull_requests": 19,
+        "actually_exposed_requests": 0,
+        "repeats_after_eligible_frame": 18,
+        "exposures": [
+          {
+            "decision_index_zero_based": 1,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": false
+          },
+          {
+            "decision_index_zero_based": 2,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 3,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 4,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 5,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 6,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 7,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 8,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 9,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 10,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 11,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 12,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 13,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 14,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 15,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 16,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 17,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 18,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 19,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          }
+        ]
+      },
+      {
+        "episode_id": "tf1-02-control",
+        "arm": "control",
+        "pair_index": 2,
+        "eligible_nonnull_requests": 19,
+        "actually_exposed_requests": 0,
+        "repeats_after_eligible_frame": 18,
+        "exposures": [
+          {
+            "decision_index_zero_based": 1,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": false
+          },
+          {
+            "decision_index_zero_based": 2,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 3,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 4,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 5,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 6,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 7,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 8,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 9,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 10,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 11,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 12,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 13,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 14,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 15,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 16,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 17,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 18,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 19,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          }
+        ]
+      },
+      {
+        "episode_id": "tf1-02-transient",
+        "arm": "transient",
+        "pair_index": 2,
+        "eligible_nonnull_requests": 19,
+        "actually_exposed_requests": 19,
+        "repeats_after_eligible_frame": 18,
+        "exposures": [
+          {
+            "decision_index_zero_based": 1,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": false
+          },
+          {
+            "decision_index_zero_based": 2,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 3,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 4,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 5,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 6,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 7,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 8,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 9,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 10,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 11,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 12,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 13,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 14,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 15,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 16,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 17,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 18,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          },
+          {
+            "decision_index_zero_based": 19,
+            "selected_frame_index": 1,
+            "returned_frame_count": 5,
+            "action": {
+              "action_data": {
+                "x": 32,
+                "y": 32
+              },
+              "action_id": 6
+            },
+            "repeats_previous_action": true
+          }
+        ]
+      }
+    ],
+    "pairs": [
+      {
+        "pair_index": 0,
+        "decisions": [
+          {
+            "decision_index_zero_based": 0,
+            "transient_exposed": false,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 1,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 2,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 3,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 4,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 5,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 6,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 7,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 8,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 9,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 10,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 11,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 12,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 13,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 14,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 15,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 16,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 17,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 18,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 19,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          }
+        ]
+      },
+      {
+        "pair_index": 1,
+        "decisions": [
+          {
+            "decision_index_zero_based": 0,
+            "transient_exposed": false,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 1,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 2,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 3,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 4,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 5,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 6,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 7,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 8,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 9,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 10,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 11,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 12,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 13,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 14,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 15,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 16,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 17,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 18,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 19,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": true
+          }
+        ]
+      },
+      {
+        "pair_index": 2,
+        "decisions": [
+          {
+            "decision_index_zero_based": 0,
+            "transient_exposed": false,
+            "same_action": false,
+            "same_observation_without_field": true
+          },
+          {
+            "decision_index_zero_based": 1,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": false
+          },
+          {
+            "decision_index_zero_based": 2,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": false
+          },
+          {
+            "decision_index_zero_based": 3,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": false
+          },
+          {
+            "decision_index_zero_based": 4,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": false
+          },
+          {
+            "decision_index_zero_based": 5,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": false
+          },
+          {
+            "decision_index_zero_based": 6,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": false
+          },
+          {
+            "decision_index_zero_based": 7,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": false
+          },
+          {
+            "decision_index_zero_based": 8,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": false
+          },
+          {
+            "decision_index_zero_based": 9,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": false
+          },
+          {
+            "decision_index_zero_based": 10,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": false
+          },
+          {
+            "decision_index_zero_based": 11,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": false
+          },
+          {
+            "decision_index_zero_based": 12,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": false
+          },
+          {
+            "decision_index_zero_based": 13,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": false
+          },
+          {
+            "decision_index_zero_based": 14,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": false
+          },
+          {
+            "decision_index_zero_based": 15,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": false
+          },
+          {
+            "decision_index_zero_based": 16,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": false
+          },
+          {
+            "decision_index_zero_based": 17,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": false
+          },
+          {
+            "decision_index_zero_based": 18,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": false
+          },
+          {
+            "decision_index_zero_based": 19,
+            "transient_exposed": true,
+            "same_action": true,
+            "same_observation_without_field": false
+          }
+        ]
+      }
+    ],
+    "interpretation_limit": "Observed decisions only; matched step indices after diverging actions are not a controlled causal counterfactual."
+  },
+  "accounting": {
+    "reserved_seconds": 3600,
+    "reservation_status": "consumed",
+    "automatic_retry_authorized": false,
+    "notebook_elapsed_seconds": 754.4507471119999,
+    "account_usage_before_seconds": 3119.043,
+    "account_usage_after_seconds": 3883.525,
+    "account_usage_delta_seconds": 764.482,
+    "provider_reserved_seconds_at_last_observation": 0.0,
+    "provider_last_status": "KernelWorkerStatus.COMPLETE",
+    "exact_provider_billed_seconds": null,
+    "limitations": [
+      "Account-level quota delta is not an attempt-specific invoice.",
+      "Raw usage duration is malformed; raw allowance disagrees with SDK conversion.",
+      "Queue observations do not establish exact GPU start or finish time.",
+      "Unused nominal reservation is not new spending authority."
+    ]
+  },
+  "disposition": "No demonstrated solving improvement in this bounded comparison; not proof the capability can never help.",
+  "phase4_complete": false
+}

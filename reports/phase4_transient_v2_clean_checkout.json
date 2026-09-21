@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "base_commit": "1f26a77dd0152b6b26d36d19a43e01a08c806b80",
+  "method": "git archive HEAD plus three new replay/archive deliverables; temporary directory; no reports/runs or ignored assets",
+  "matches_local_replay_exactly": true,
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "packages": {
+    "arc-agi": "0.9.9",
+    "arcengine": "0.9.3",
+    "numpy": "2.5.2",
+    "requests": "2.34.2",
+    "pydantic": "2.13.5"
+  },
+  "gpu_used": false,
+  "credentials_used": false
+}

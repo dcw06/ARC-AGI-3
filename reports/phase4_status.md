@@ -1,5 +1,23 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
+## Transient v2 R1 independently replayed - September 21, 2026
+
+All 156 downloaded files verified, and the unchanged frozen v2 replay passed
+trajectory, selected-frame, retained token-parity, deadline, and final-cleanup
+checks. The archived evidence also replays from a clean checkout without ignored
+assets. Both arms completed 60 actions and zero levels. All 57 decisions following
+non-null transient exposure matched the paired control action at the same step.
+There is no demonstrated solving improvement in this bounded comparison, not
+proof the capability can never help. No treatment promotion or new run is approved.
+
+The one-hour reservation remains consumed. Observed account usage increased
+764.482 seconds; exact billing remains unresolved. Production certification and
+production C_admit also remain open. See
+[final disposition](phase4_transient_v2_disposition.md) and
+[independent replay](phase4_transient_v2_final_replay.json).
+Earlier sections below retain historical states.
+
+
 ## Transient-frame implementation review — September 21, 2026
 
 The isolated transient-frame field is implemented in `certification/phase4_transient_v1`
