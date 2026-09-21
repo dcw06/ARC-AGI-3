@@ -1,5 +1,13 @@
 # Retained offline inspection artifacts
 
+**Clean-checkout reproduction:** `python scripts/verify_phase4_inspection_recovery.py`
+now stages the ignored game-file layout from committed, hash-checked archives in
+a temporary checkout. It reproduces historical CRLF text bytes on Linux only when
+the locked hash confirms the conversion. The generator, retained artifacts and
+historical lock remain unchanged. Windows and Linux clean-checkout regressions
+passed; the new wrapper is bound by the transient-v1 R3 review, rather than
+rewriting older review receipts.
+
 **Recovery update — September 21, 2026:** Both files listed as missing below were
 recovered from local Git blobs with exact historical hashes. The restored generator
 reproduced all 11 locked artifacts in a temporary directory. The historical lock

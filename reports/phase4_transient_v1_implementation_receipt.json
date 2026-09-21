@@ -1,0 +1,40 @@
+{
+  "status": "local_implementation_complete_pending_review_no_compute_authority",
+  "review_revision": "R3",
+  "superseded_review_revisions": [
+    "R1",
+    "R2"
+  ],
+  "bindings": {
+    "reports/phase4_transient_v1_package_review.json": "1437dcb0243da5d34b86de570b8adbf394da3845505e29f29c8c119bbb79d0c3",
+    "reports/phase4_transient_v1_final_checks.json": "6652c52257162e8e88f6f977bba9dff5783159c197a57c8a75c6880ddda0f181",
+    "reports/phase4_transient_v1_local.json": "271a9c426adacfb8be115b1c3ef35a562b0e3dd71a96e4b39cdff21690e6db68",
+    "reports/phase4_transient_v1_token_audit.json": "d0210eb10f6d6619562b0ebf51e0150899b8923b6508cb6b6b15b13ca0da45e6",
+    "reports/phase4_transient_v1_compute_budget.json": "b621ee1fc09853fac01d2f9a8bbf96e96c683ac2f939dd0d3cc17b7487519223",
+    "evidence/phase4-transient-v1-local.zip": "7e4c031c720536b4d82d40df3cf2c6b0922783083dd67ef42fab78c96e343da9",
+    "evidence/phase4-transient-v1-tokenizer.zip": "c95a86b0bcea9cb6be5ae5402498e45cd59bffd621fde2d5cc75cf4a4cd15d20",
+    "notebooks/phase4-transient-v1-review-r3/review-source-lock.json": "7cf4378b3e4674b6c74ddac119ab4ce8d637272bf2b109b88ebb1605fa0be943",
+    "reports/phase4_closed_loop_v1_inspection/inspection-lock.json": "c8e15a3996e7773dd0441a36673149517490778598f6550d2ddcc783946d4da8"
+  },
+  "clean_checkout_regression": {
+    "windows": "passed",
+    "linux": "passed",
+    "ignored_environment_files_supplied": false,
+    "historical_generator_modified": false,
+    "historical_lock_modified": false
+  },
+  "transient_regression_tests": 10,
+  "local_actual_game_episodes": 6,
+  "local_scripted_policy_calls": 120,
+  "archived_independent_replay_passed": true,
+  "historical_target_token_counts_reproduced": 600,
+  "maximum_audited_treatment_prompt_tokens": 43668,
+  "completion_token_reserve": 128,
+  "gpu_disabled": true,
+  "model_inference": false,
+  "gpu_runs_launched": 0,
+  "authorized_attempts": 0,
+  "authorized_seconds": 0,
+  "reservation": null,
+  "production_certification": false
+}

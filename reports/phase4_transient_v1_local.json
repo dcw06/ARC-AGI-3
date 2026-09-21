@@ -1,0 +1,1343 @@
+{
+  "scope": "scripted CPU fixtures and actual development engine, not model performance",
+  "passed": true,
+  "smoke_passed": true,
+  "smoke_elapsed_seconds": 3.4674818390000013,
+  "cleanup_verified": true,
+  "scratch_removed": true,
+  "actual_engine_requests": 120,
+  "actual_engine_episodes": 6,
+  "actual_engine_seconds": 11.638923225000006,
+  "comparison": {
+    "episodes": [
+      {
+        "pair_index": 0,
+        "request_seed": 0,
+        "game_id": "ft09-0d8bbf25",
+        "arm": "control",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.050000000000000044,
+        "frame_change_rate": 0.0,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 18,
+        "action_distribution": {
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 20,
+          "7": 0
+        },
+        "click_coordinates": [
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          }
+        ]
+      },
+      {
+        "pair_index": 0,
+        "request_seed": 0,
+        "game_id": "ft09-0d8bbf25",
+        "arm": "transient",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.050000000000000044,
+        "frame_change_rate": 0.0,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 18,
+        "action_distribution": {
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 20,
+          "7": 0
+        },
+        "click_coordinates": [
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          }
+        ]
+      },
+      {
+        "pair_index": 1,
+        "request_seed": 1,
+        "game_id": "ft09-0d8bbf25",
+        "arm": "transient",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.050000000000000044,
+        "frame_change_rate": 0.0,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 18,
+        "action_distribution": {
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 20,
+          "7": 0
+        },
+        "click_coordinates": [
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          }
+        ]
+      },
+      {
+        "pair_index": 1,
+        "request_seed": 1,
+        "game_id": "ft09-0d8bbf25",
+        "arm": "control",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.050000000000000044,
+        "frame_change_rate": 0.0,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 18,
+        "action_distribution": {
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 20,
+          "7": 0
+        },
+        "click_coordinates": [
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          }
+        ]
+      },
+      {
+        "pair_index": 2,
+        "request_seed": 2,
+        "game_id": "ft09-0d8bbf25",
+        "arm": "control",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.050000000000000044,
+        "frame_change_rate": 0.0,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 18,
+        "action_distribution": {
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 20,
+          "7": 0
+        },
+        "click_coordinates": [
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          }
+        ]
+      },
+      {
+        "pair_index": 2,
+        "request_seed": 2,
+        "game_id": "ft09-0d8bbf25",
+        "arm": "transient",
+        "actions": 20,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "progress_events": [],
+        "canonical_change_rate": 0.050000000000000044,
+        "frame_change_rate": 0.0,
+        "adjacent_repeats": 19,
+        "repeat_rate": 1.0,
+        "longest_streak": 20,
+        "repeats_after_unchanged": 18,
+        "action_distribution": {
+          "1": 0,
+          "2": 0,
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 20,
+          "7": 0
+        },
+        "click_coordinates": [
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          },
+          {
+            "x": 12,
+            "y": 34
+          }
+        ]
+      }
+    ],
+    "pairs": [
+      {
+        "pair_index": 0,
+        "game_id": "ft09-0d8bbf25",
+        "level_delta_difference": 0,
+        "arms": {
+          "control": {
+            "pair_index": 0,
+            "request_seed": 0,
+            "game_id": "ft09-0d8bbf25",
+            "arm": "control",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.050000000000000044,
+            "frame_change_rate": 0.0,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 18,
+            "action_distribution": {
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 20,
+              "7": 0
+            },
+            "click_coordinates": [
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              }
+            ]
+          },
+          "transient": {
+            "pair_index": 0,
+            "request_seed": 0,
+            "game_id": "ft09-0d8bbf25",
+            "arm": "transient",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.050000000000000044,
+            "frame_change_rate": 0.0,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 18,
+            "action_distribution": {
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 20,
+              "7": 0
+            },
+            "click_coordinates": [
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              }
+            ]
+          }
+        }
+      },
+      {
+        "pair_index": 1,
+        "game_id": "ft09-0d8bbf25",
+        "level_delta_difference": 0,
+        "arms": {
+          "transient": {
+            "pair_index": 1,
+            "request_seed": 1,
+            "game_id": "ft09-0d8bbf25",
+            "arm": "transient",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.050000000000000044,
+            "frame_change_rate": 0.0,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 18,
+            "action_distribution": {
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 20,
+              "7": 0
+            },
+            "click_coordinates": [
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              }
+            ]
+          },
+          "control": {
+            "pair_index": 1,
+            "request_seed": 1,
+            "game_id": "ft09-0d8bbf25",
+            "arm": "control",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.050000000000000044,
+            "frame_change_rate": 0.0,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 18,
+            "action_distribution": {
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 20,
+              "7": 0
+            },
+            "click_coordinates": [
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              }
+            ]
+          }
+        }
+      },
+      {
+        "pair_index": 2,
+        "game_id": "ft09-0d8bbf25",
+        "level_delta_difference": 0,
+        "arms": {
+          "control": {
+            "pair_index": 2,
+            "request_seed": 2,
+            "game_id": "ft09-0d8bbf25",
+            "arm": "control",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.050000000000000044,
+            "frame_change_rate": 0.0,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 18,
+            "action_distribution": {
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 20,
+              "7": 0
+            },
+            "click_coordinates": [
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              }
+            ]
+          },
+          "transient": {
+            "pair_index": 2,
+            "request_seed": 2,
+            "game_id": "ft09-0d8bbf25",
+            "arm": "transient",
+            "actions": 20,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "progress_events": [],
+            "canonical_change_rate": 0.050000000000000044,
+            "frame_change_rate": 0.0,
+            "adjacent_repeats": 19,
+            "repeat_rate": 1.0,
+            "longest_streak": 20,
+            "repeats_after_unchanged": 18,
+            "action_distribution": {
+              "1": 0,
+              "2": 0,
+              "3": 0,
+              "4": 0,
+              "5": 0,
+              "6": 20,
+              "7": 0
+            },
+            "click_coordinates": [
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              },
+              {
+                "x": 12,
+                "y": 34
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "paired_level_wins": 0,
+    "paired_level_ties": 3,
+    "paired_level_losses": 0,
+    "arms": {
+      "control": {
+        "completed_level_increase": 0,
+        "wins": 0,
+        "game_overs": 0,
+        "acknowledged_transitions": 60
+      },
+      "transient": {
+        "completed_level_increase": 0,
+        "wins": 0,
+        "game_overs": 0,
+        "acknowledged_transitions": 60
+      }
+    },
+    "interpretation": "20-action early-progress experiment; zero progress does not establish that the prompt change can never help"
+  },
+  "model_inference": false,
+  "archive": "evidence/phase4-transient-v1-local.zip",
+  "archive_sha256": "7e4c031c720536b4d82d40df3cf2c6b0922783083dd67ef42fab78c96e343da9"
+}

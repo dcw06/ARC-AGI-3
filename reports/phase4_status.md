@@ -1,5 +1,25 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
+## Transient-frame implementation review — September 21, 2026
+
+The isolated transient-frame field is implemented in `certification/phase4_transient_v1`
+with the no-example prompt held constant. Ten CPU regressions passed, including
+independent selection replay, matched requests, failure paths, and the 120-action
+cap. Clean-checkout inspection recovery passed on Windows and Linux using only
+committed archives; the historical generator and lock remain unchanged. Six local
+development episodes completed 120 scripted actions with independent replay.
+These are integration results, not model-performance evidence.
+
+An actual frozen-tokenizer audit matched all 600 historical target counts and
+checked 600 paired archived requests. Maximum treatment prompt was 43,668 tokens;
+per-request byte/context guards remain enforced without truncation. The new
+private/offline GPU-disabled review candidate is
+`notebooks/phase4-transient-v1-review-r3/`; R1/R2 are superseded snapshots.
+See `reports/phase4_transient_v1_review.md` and the package review receipt. Source
+review and separate compute approval/reservation remain outstanding. No GPU run
+was launched, no prompt was promoted, and production certification/admission and
+exact billing remain open.
+
 ## Offline information trace — September 21, 2026
 
 The missing inspection generator and findings report were recovered exactly from
