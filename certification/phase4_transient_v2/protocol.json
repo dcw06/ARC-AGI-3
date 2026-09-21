@@ -1,0 +1,173 @@
+{
+  "id": "phase4-transient-v2",
+  "status": "local_implementation_review_no_compute_authority",
+  "configuration": "E1S-R-derived arc_action_v12 transient-frame-only development comparison",
+  "model_binding": {
+    "candidate_id": "M0-Q3VL-30B-A3B-FP8",
+    "model_id": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+    "revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+    "engine": "vllm==0.19.0",
+    "reasoning_setting": "instruct_non_thinking"
+  },
+  "model_tree_sha256": "052ab27f06c28261e143b8c1638382d107b034692bc0cd1792ec4e02ddab8627",
+  "environment": {
+    "python": "3.12",
+    "torch_distribution": "2.10.0",
+    "torch_runtime": "2.10.0+cu128",
+    "cuda": "12.8",
+    "vllm": "0.19.0",
+    "transformers": "4.57.6",
+    "split_model_game_environments": true
+  },
+  "model_mount": "/kaggle/input/models/qwen-lm/qwen-3-vl/transformers/30b-a3b-instruct-fp8/1",
+  "prompts": {
+    "control": {
+      "text": "You control one ARC-AGI-3 game from a stateless observation. history_compaction explicitly reports any older transitions omitted from this prompt. Return only one compact JSON object matching the supplied action schema. Omit intent, rationale, Markdown and reset/action 0. Choose exactly one currently legal action_id. For ACTION6, choose a display-grid location and include integer x and y in [0,63]. For actions 1,2,3,4,5,7 use empty action_data. Never return ACTION6 with empty action_data. Keep the response under 64 tokens.",
+      "sha256": "b3738b4fd76cb5b795c0ba36aaf877906bfb62e51a137437fce0883ef9ba5fc8"
+    },
+    "transient": {
+      "text": "You control one ARC-AGI-3 game from a stateless observation. history_compaction explicitly reports any older transitions omitted from this prompt. Return only one compact JSON object matching the supplied action schema. Omit intent, rationale, Markdown and reset/action 0. Choose exactly one currently legal action_id. For ACTION6, choose a display-grid location and include integer x and y in [0,63]. For actions 1,2,3,4,5,7 use empty action_data. Never return ACTION6 with empty action_data. Keep the response under 64 tokens.",
+      "sha256": "b3738b4fd76cb5b795c0ba36aaf877906bfb62e51a137437fce0883ef9ba5fc8"
+    }
+  },
+  "schedule": [
+    {
+      "episode_id": "tf1-00-control",
+      "pair_index": 0,
+      "game_id": "ft09-0d8bbf25",
+      "arm": "control",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "tf1-00-transient",
+      "pair_index": 0,
+      "game_id": "ft09-0d8bbf25",
+      "arm": "transient",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "tf1-01-transient",
+      "pair_index": 1,
+      "game_id": "ft09-0d8bbf25",
+      "arm": "transient",
+      "environment_seed": 0,
+      "request_seed": 1,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "tf1-01-control",
+      "pair_index": 1,
+      "game_id": "ft09-0d8bbf25",
+      "arm": "control",
+      "environment_seed": 0,
+      "request_seed": 1,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "tf1-02-control",
+      "pair_index": 2,
+      "game_id": "ft09-0d8bbf25",
+      "arm": "control",
+      "environment_seed": 0,
+      "request_seed": 2,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "tf1-02-transient",
+      "pair_index": 2,
+      "game_id": "ft09-0d8bbf25",
+      "arm": "transient",
+      "environment_seed": 0,
+      "request_seed": 2,
+      "max_decisions": 20,
+      "max_dispatch_attempts": 20,
+      "max_initial_bootstraps": 1
+    }
+  ],
+  "distinct_games": 1,
+  "pairs": 3,
+  "episodes": 6,
+  "request_settings": {
+    "temperature": 0,
+    "max_tokens": 128,
+    "enable_thinking": false,
+    "action_output_contract": "arc_action_v12",
+    "context_tokens": 65536,
+    "prompt_token_ceiling": 65408,
+    "seeds": [
+      0,
+      1,
+      2
+    ]
+  },
+  "representation": {
+    "treatment_parent": "E1S-R",
+    "workspace": "none",
+    "recent_transition_limit": 1,
+    "context_mode": "stateless_reconstruction_visible_compaction_v1",
+    "history_loss_reporting": "lifetime_count_and_rolling_sha256_v1"
+  },
+  "initial_pair_equality_required": true,
+  "policy_fallbacks": 0,
+  "later_resets": 0,
+  "automatic_retries": 0,
+  "primary_measures": [
+    "paired_completed_level_delta",
+    "episodes_ending_WIN"
+  ],
+  "secondary_measures": [
+    "acknowledged_transitions",
+    "canonical_change_rate",
+    "frame_change_rate",
+    "adjacent_action_repeat_rate",
+    "longest_action_streak",
+    "repeats_after_unchanged_observation",
+    "first_level_progress_step",
+    "action_distribution",
+    "click_coordinates",
+    "terminal_reason"
+  ],
+  "full_transition_evidence_required": true,
+  "partial_attempt_cannot_pass": true,
+  "source_approval": null,
+  "compute_authorization": null,
+  "phase4_complete": false,
+  "production_C_admit": null,
+  "limits": {
+    "maximum_policy_calls": 120,
+    "maximum_total_calls": 121,
+    "maximum_episodes": 6,
+    "request_bytes": 65536,
+    "selected_field_bytes": 16384,
+    "maximum_frames_per_observation": 64,
+    "maximum_grid_rows": 64,
+    "maximum_grid_columns": 64,
+    "internal_seconds": 3300,
+    "provider_seconds_proposed": 3600,
+    "cleanup_reserve_seconds": 300,
+    "authorized_seconds": 0
+  },
+  "selection": {
+    "version": "transient_frame_v1",
+    "field": "last_transition_intermediate_grid",
+    "eligibility": "nonfinal frame differs from both prior final and current final; filter before ranking",
+    "rank": "maximum changed cells from prior final; earliest zero-based index breaks ties",
+    "shape_change": "any shape difference anywhere in the preceding transition is an error; no resize or null substitution",
+    "null": "initial request, one-frame sequence, or no eligible nonfinal frame",
+    "payload": "null or {grid, frame_index_zero_based, returned_frame_count}; no action coordinates or semantic labels"
+  }
+}
