@@ -1,0 +1,26 @@
+{
+  "scope": "offline_retained_frame_inspection",
+  "input_archive": "evidence/phase4-closed-loop-v1-r1-completed-v1.zip",
+  "input_archive_sha256": "994dc62307777a1adf301986aa2548bb9dad84ab438963d20392736abd493f9d",
+  "bindings": {
+    "reports/phase4_closed_loop_v1_inspection/ar25.png": "0cf3dfac0b42d3165c3d27f44b885f8aa833b715b01223813990af58d3bc807f",
+    "reports/phase4_closed_loop_v1_inspection/audit.json": "d01a029165ffbbaaa7e76cb8ae08cbacc2e4180d30ec73327a11d69a49bf1c55",
+    "reports/phase4_closed_loop_v1_inspection/cd82.png": "0cf7bcc1a04e08a167f22e0f9c0959fde4ee7355b2ca02ec707de019a170f059",
+    "reports/phase4_closed_loop_v1_inspection/frames.html": "f9ddd8a64cca1d4bfc111f67b23cd57677e12e123d5daff97a733dfff35b0ab2",
+    "reports/phase4_closed_loop_v1_inspection/ft09.png": "e9edb234fc470fe926085274c9e8d7b446e70630bc524b497823a4b49c96b7a4",
+    "reports/phase4_closed_loop_v1_inspection/initial_frames.png": "46a390afb9b1a9e9ee96a0d2d7c121a5f93d5c0e05a2f50f03ef2a25d2e0dbcf",
+    "reports/phase4_closed_loop_v1_inspection/ls20.png": "ff9f2ceb4d7b9c521e1c95ff9270ad4b8ecf85fc30b4f65dceced13ed89f06f0",
+    "reports/phase4_closed_loop_v1_inspection/sc25.png": "324b92fe6346b08141510f0c818a7dc55ad8de679034a8b0c909ff390f66bcb9",
+    "reports/phase4_closed_loop_v1_inspection/sk48.png": "833ef9e2a758421dadb5e72fea225126aef095954402919957a7ab0019c24b21",
+    "reports/phase4_closed_loop_v1_inspection/source_excerpts.json": "6b84566f5f6fd9aa85f24e161369e7018618c91952a89d20886fbaffa36cb606",
+    "reports/phase4_closed_loop_v1_inspection/wa30.png": "d2e8bea1c7f9fd41f28482f389fc9d0ab7e91510e89ed22b081347075eb006f6",
+    "scripts/inspect_phase4_closed_loop_v1.py": "4a3aba9cdcd9c6716c1925ab919feadc30f7be51181a2e72f96beddf952aa9f8",
+    "reports/phase4_closed_loop_v1_offline_findings.md": "81ae462e03ad86d14fd9234c4c16a55d3e8bc565062dfb34c3f00055a628ce4a"
+  },
+  "model_calls": 0,
+  "game_actions_executed": 0,
+  "gpu_runs_launched": 0,
+  "policy_promoted": false,
+  "compute_authority": false,
+  "validation": "All 600 current/previous request grids and recent-action histories checked; 15 development sources matched frozen manifest; 7 case strips visually inspected; case counts verified; frozen review verified unchanged."
+}
