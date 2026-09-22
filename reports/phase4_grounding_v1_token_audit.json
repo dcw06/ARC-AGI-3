@@ -1,0 +1,137 @@
+{
+  "status": "passed_pinned_cpu_tokenizer_not_target_vllm",
+  "transformers": "4.57.6",
+  "tokenizers": "0.22.2",
+  "jinja2": "3.1.6",
+  "tokenizer_files": {
+    "repo": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+    "revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+    "files": {
+      "tokenizer.json": {
+        "sha256": "ba85e4e5222d9f53d4bd00b303ef7e9743c8ac3d07e3c23f8498dbe17baa9a2d",
+        "bytes": 10179867
+      },
+      "tokenizer_config.json": {
+        "sha256": "c2da771801886ad9ae98181793ffd3dfb7f1af30f6f7c6a4e15d7dbba52e2399",
+        "bytes": 10868
+      },
+      "chat_template.json": {
+        "sha256": "2c1437f11fc16ab501b984c000f6e291c599f0d28d2c9c6bf2c4533e65429b42",
+        "bytes": 5497
+      },
+      "config.json": {
+        "sha256": "e52cea0eb24df634274d028d969b513edeced033988eb4528d1e8d2a08dd025d",
+        "bytes": 14458
+      },
+      "vocab.json": {
+        "sha256": "7a0cfa95c65792d7510205839f80cfd8a3c8f6b1fdad5132d95cee481800374d",
+        "bytes": 4957462
+      },
+      "merges.txt": {
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+        "bytes": 1671853
+      }
+    }
+  },
+  "cases": [
+    {
+      "case_id": "g01",
+      "request_sha256": "d5a3be5f62864a3e5b58d27f581db39f75566e0977f5f0f63c5e34534339171b",
+      "prompt_tokens": 8636,
+      "completion_cap": 128,
+      "max_serialized_bytes": 10120
+    },
+    {
+      "case_id": "g02",
+      "request_sha256": "bbde4ddef267ccc73e751118d90ad21ba1f6167b680bfacc0c76f78424dde4ca",
+      "prompt_tokens": 8606,
+      "completion_cap": 128,
+      "max_serialized_bytes": 9587
+    },
+    {
+      "case_id": "g03",
+      "request_sha256": "90239ba8bf1c5fd6b8d89106998f910f488082441d9aab5e0e44e653b2276c75",
+      "prompt_tokens": 17128,
+      "completion_cap": 128,
+      "max_serialized_bytes": 19021
+    },
+    {
+      "case_id": "g04",
+      "request_sha256": "2b42a5d58f165c36e0a13248c71bb23ec3e087b63a8891406a464bc9a46ff488",
+      "prompt_tokens": 8402,
+      "completion_cap": 128,
+      "max_serialized_bytes": 9886
+    },
+    {
+      "case_id": "g05",
+      "request_sha256": "66535ce2b9b8853ca96919af3e0309476e0d4d0d8d2f9669686a522c1e2fbe60",
+      "prompt_tokens": 8372,
+      "completion_cap": 128,
+      "max_serialized_bytes": 9353
+    },
+    {
+      "case_id": "g06",
+      "request_sha256": "380ff7d05a0f0848c437270d756e033ad92e962e5b5699041ae7613b8d6702a2",
+      "prompt_tokens": 16660,
+      "completion_cap": 128,
+      "max_serialized_bytes": 18553
+    },
+    {
+      "case_id": "g07",
+      "request_sha256": "7c7c6c8e529e53f2c94c75097bc17fd324af7e9553320f53c9cd7724048c25ca",
+      "prompt_tokens": 8431,
+      "completion_cap": 128,
+      "max_serialized_bytes": 9915
+    },
+    {
+      "case_id": "g08",
+      "request_sha256": "fdf6cc1c41324c617c7cc49202aa8d7c5d05f06e63d7a5606af09e060ad49659",
+      "prompt_tokens": 8401,
+      "completion_cap": 128,
+      "max_serialized_bytes": 9382
+    },
+    {
+      "case_id": "g09",
+      "request_sha256": "46fe5864f8e3b9cdbbd690e98bf3655bcb18c1067460ac12d32ac2e53157298f",
+      "prompt_tokens": 16718,
+      "completion_cap": 128,
+      "max_serialized_bytes": 18611
+    },
+    {
+      "case_id": "g10",
+      "request_sha256": "c3ae7bd2fb3bf0947b9eac65a177c79cd87c6c053aa681670a81433384729b89",
+      "prompt_tokens": 8505,
+      "completion_cap": 128,
+      "max_serialized_bytes": 9989
+    },
+    {
+      "case_id": "g11",
+      "request_sha256": "04e45d40f5d69db08842fd7f3e5da419e33e409b23ce531ea10f17e1106dedc6",
+      "prompt_tokens": 8476,
+      "completion_cap": 128,
+      "max_serialized_bytes": 9457
+    },
+    {
+      "case_id": "g12",
+      "request_sha256": "98b3bcff20831adbfc874a3e96342648a34401a4ebda67b657e0e568e6c3ea4e",
+      "prompt_tokens": 16877,
+      "completion_cap": 128,
+      "max_serialized_bytes": 18770
+    },
+    {
+      "case_id": "startup-canary",
+      "request_sha256": "06853cc44e570cebee4b4623655b73c43072ee040d025e87e47696b3e15fac38",
+      "prompt_tokens": 46,
+      "completion_cap": 128,
+      "max_serialized_bytes": 967
+    }
+  ],
+  "diagnostic_calls": 12,
+  "canary_calls": 1,
+  "maximum_total_completions": 13,
+  "maximum_diagnostic_prompt_tokens": 17128,
+  "total_diagnostic_prompt_tokens": 135212,
+  "total_prompt_tokens_including_canary": 135258,
+  "maximum_generated_tokens_including_canary": 1664,
+  "model_calls": 0
+}

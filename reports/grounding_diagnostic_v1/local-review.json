@@ -1,0 +1,205 @@
+{
+  "status": "offline_protocol_draft_ready_for_review",
+  "review_lock_sha256": "5b6daddc6af18b67d6fab277cc0c908b3e9bbe0b9c94e280231087e71c4ef854",
+  "tests_passed": 6,
+  "regeneration_check_passed": true,
+  "independent_mechanical_answer_check_passed": true,
+  "model_calls": 0,
+  "authorized_compute_seconds": 0,
+  "actual_tokenizer_audit": "pending_before_any_launch",
+  "cases": [
+    {
+      "case_id": "g01",
+      "kind": "locate",
+      "source_game": "ar25-0c556536",
+      "expected": {
+        "bbox": [
+          19,
+          16,
+          25,
+          22
+        ],
+        "count": 5,
+        "first": {
+          "x": 19,
+          "y": 16
+        }
+      },
+      "request_bytes": 9247
+    },
+    {
+      "case_id": "g02",
+      "kind": "coordinate",
+      "source_game": "ar25-0c556536",
+      "expected": {
+        "color": 10
+      },
+      "request_bytes": 9172
+    },
+    {
+      "case_id": "g03",
+      "kind": "changes",
+      "source_game": "ar25-0c556536",
+      "expected": {
+        "bbox": null,
+        "count": 0,
+        "first": null,
+        "first_change": null
+      },
+      "request_bytes": 17920
+    },
+    {
+      "case_id": "g04",
+      "kind": "locate",
+      "source_game": "ft09-0d8bbf25",
+      "expected": {
+        "bbox": [
+          12,
+          10,
+          51,
+          49
+        ],
+        "count": 64,
+        "first": {
+          "x": 14,
+          "y": 10
+        }
+      },
+      "request_bytes": 9013
+    },
+    {
+      "case_id": "g05",
+      "kind": "coordinate",
+      "source_game": "ft09-0d8bbf25",
+      "expected": {
+        "color": 5
+      },
+      "request_bytes": 8938
+    },
+    {
+      "case_id": "g06",
+      "kind": "changes",
+      "source_game": "ft09-0d8bbf25",
+      "expected": {
+        "bbox": [
+          32,
+          32,
+          61,
+          61
+        ],
+        "count": 80,
+        "first": {
+          "x": 32,
+          "y": 32
+        },
+        "first_change": {
+          "after": 0,
+          "before": 2
+        }
+      },
+      "request_bytes": 17452
+    },
+    {
+      "case_id": "g07",
+      "kind": "locate",
+      "source_game": "ls20-9607627b",
+      "expected": {
+        "bbox": [
+          20,
+          32,
+          21,
+          33
+        ],
+        "count": 2,
+        "first": {
+          "x": 20,
+          "y": 32
+        }
+      },
+      "request_bytes": 9043
+    },
+    {
+      "case_id": "g08",
+      "kind": "coordinate",
+      "source_game": "ls20-9607627b",
+      "expected": {
+        "color": 4
+      },
+      "request_bytes": 8967
+    },
+    {
+      "case_id": "g09",
+      "kind": "changes",
+      "source_game": "ls20-9607627b",
+      "expected": {
+        "bbox": [
+          13,
+          40,
+          38,
+          62
+        ],
+        "count": 52,
+        "first": {
+          "x": 34,
+          "y": 40
+        },
+        "first_change": {
+          "after": 12,
+          "before": 3
+        }
+      },
+      "request_bytes": 17510
+    },
+    {
+      "case_id": "g10",
+      "kind": "locate",
+      "source_game": "sc25-635fd71a",
+      "expected": {
+        "bbox": [
+          12,
+          51,
+          19,
+          58
+        ],
+        "count": 16,
+        "first": {
+          "x": 15,
+          "y": 51
+        }
+      },
+      "request_bytes": 9118
+    },
+    {
+      "case_id": "g11",
+      "kind": "coordinate",
+      "source_game": "sc25-635fd71a",
+      "expected": {
+        "color": 14
+      },
+      "request_bytes": 9042
+    },
+    {
+      "case_id": "g12",
+      "kind": "changes",
+      "source_game": "sc25-635fd71a",
+      "expected": {
+        "bbox": [
+          29,
+          49,
+          31,
+          51
+        ],
+        "count": 9,
+        "first": {
+          "x": 29,
+          "y": 49
+        },
+        "first_change": {
+          "after": 14,
+          "before": 0
+        }
+      },
+      "request_bytes": 17669
+    }
+  ]
+}

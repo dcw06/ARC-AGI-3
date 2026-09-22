@@ -1,5 +1,9 @@
 # Transient v2 R1: independent acceptance and decision inspection
 
+**Experiment closed: no demonstrated benefit. Do not repeat unchanged.**
+Further work is limited to a separately reviewed observation-grounding diagnostic;
+this closure grants no new model-call or GPU authority.
+
 The frozen v2 replay passes. This six-episode, 120-action ft09 development
 comparison demonstrates **no solving improvement**: both arms completed zero
 levels. It does not establish that transient-frame exposure can never help.

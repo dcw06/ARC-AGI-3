@@ -1,0 +1,241 @@
+{
+  "passed": true,
+  "errors": [],
+  "scope": "observation_grounding_live",
+  "comparison": {
+    "by_task": {
+      "locate": {
+        "planned": 4,
+        "received": 4,
+        "correct": 0,
+        "malformed": 0,
+        "exact_accuracy": 0.0
+      },
+      "coordinate": {
+        "planned": 4,
+        "received": 4,
+        "correct": 2,
+        "malformed": 0,
+        "exact_accuracy": 0.5
+      },
+      "changes": {
+        "planned": 4,
+        "received": 4,
+        "correct": 0,
+        "malformed": 0,
+        "exact_accuracy": 0.0
+      }
+    },
+    "by_game": {
+      "ar25-0c556536": {
+        "planned": 3,
+        "received": 3,
+        "correct": 1,
+        "malformed": 0,
+        "exact_accuracy": 0.3333333333333333
+      },
+      "ft09-0d8bbf25": {
+        "planned": 3,
+        "received": 3,
+        "correct": 1,
+        "malformed": 0,
+        "exact_accuracy": 0.3333333333333333
+      },
+      "ls20-9607627b": {
+        "planned": 3,
+        "received": 3,
+        "correct": 0,
+        "malformed": 0,
+        "exact_accuracy": 0.0
+      },
+      "sc25-635fd71a": {
+        "planned": 3,
+        "received": 3,
+        "correct": 0,
+        "malformed": 0,
+        "exact_accuracy": 0.0
+      }
+    },
+    "source_groups": {
+      "cl1-00-no_concrete_examples": [
+        "g01",
+        "g02",
+        "g03"
+      ],
+      "cl1-02-no_concrete_examples": [
+        "g04",
+        "g05",
+        "g06"
+      ],
+      "cl1-06-no_concrete_examples": [
+        "g07",
+        "g08",
+        "g09"
+      ],
+      "cl1-08-no_concrete_examples": [
+        "g10",
+        "g11",
+        "g12"
+      ]
+    },
+    "cases": [
+      {
+        "case_id": "g01",
+        "malformed": false,
+        "correct": false,
+        "fields": {
+          "count": true,
+          "bbox": false,
+          "first": false
+        },
+        "axis_swap_match": false
+      },
+      {
+        "case_id": "g02",
+        "malformed": false,
+        "correct": true,
+        "fields": {
+          "color": true
+        },
+        "axis_swap_match": false
+      },
+      {
+        "case_id": "g03",
+        "malformed": false,
+        "correct": false,
+        "fields": {
+          "count": false,
+          "bbox": false,
+          "first": false,
+          "first_change": false
+        },
+        "axis_swap_match": false
+      },
+      {
+        "case_id": "g04",
+        "malformed": false,
+        "correct": false,
+        "fields": {
+          "count": true,
+          "bbox": false,
+          "first": false
+        },
+        "axis_swap_match": false
+      },
+      {
+        "case_id": "g05",
+        "malformed": false,
+        "correct": true,
+        "fields": {
+          "color": true
+        },
+        "axis_swap_match": false
+      },
+      {
+        "case_id": "g06",
+        "malformed": false,
+        "correct": false,
+        "fields": {
+          "count": false,
+          "bbox": false,
+          "first": false,
+          "first_change": false
+        },
+        "axis_swap_match": false
+      },
+      {
+        "case_id": "g07",
+        "malformed": false,
+        "correct": false,
+        "fields": {
+          "count": true,
+          "bbox": false,
+          "first": false
+        },
+        "axis_swap_match": false
+      },
+      {
+        "case_id": "g08",
+        "malformed": false,
+        "correct": false,
+        "fields": {
+          "color": false
+        },
+        "axis_swap_match": true
+      },
+      {
+        "case_id": "g09",
+        "malformed": false,
+        "correct": false,
+        "fields": {
+          "count": false,
+          "bbox": false,
+          "first": false,
+          "first_change": false
+        },
+        "axis_swap_match": false
+      },
+      {
+        "case_id": "g10",
+        "malformed": false,
+        "correct": false,
+        "fields": {
+          "count": true,
+          "bbox": false,
+          "first": false
+        },
+        "axis_swap_match": false
+      },
+      {
+        "case_id": "g11",
+        "malformed": false,
+        "correct": false,
+        "fields": {
+          "color": false
+        },
+        "axis_swap_match": true
+      },
+      {
+        "case_id": "g12",
+        "malformed": false,
+        "correct": false,
+        "fields": {
+          "count": false,
+          "bbox": false,
+          "first": false,
+          "first_change": false
+        },
+        "axis_swap_match": false
+      }
+    ],
+    "transport_failures": 0,
+    "unattempted_cases": 0,
+    "malformed_responses": 0,
+    "prompt_tokens": 135212,
+    "completion_tokens": 430,
+    "latency_seconds": [
+      0.6542166479999878,
+      0.33610504900002525,
+      1.1583375310000292,
+      0.5469965319999801,
+      0.314085369000054,
+      1.134656490999987,
+      0.5316500620000397,
+      0.314809189000016,
+      1.111773362000008,
+      0.5676553099999637,
+      0.31674174900001617,
+      1.1381756409999753
+    ]
+  },
+  "comparison_is_scripted": false,
+  "model_inference": true,
+  "capacity_candidate": null,
+  "C_nominal": null,
+  "C_admit": null,
+  "development_model_lifecycle_passed": true,
+  "phase4_complete": false,
+  "independent_replay": true,
+  "evidence_bytes": 2967759,
+  "exact_provider_billed_seconds": null
+}

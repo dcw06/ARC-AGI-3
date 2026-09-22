@@ -1,5 +1,45 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
+## Completed grounding diagnostic: independent technical pass
+
+Grounding R1 completed; all 24 downloaded files verified and frozen replay passed.
+Exact diagnostic answers: grid reading 2/4, localization 0/4, changes 0/4; no
+malformed responses or transport failures. Correctness is separate from technical
+acceptance. The 1800-second reservation remains consumed; no follow-up run is
+authorized. See [final disposition](phase4_grounding_v1_disposition.md).
+Earlier status entries below are historical.
+
+
+## Grounding diagnostic implementation ready for source review
+
+The new `phase4_grounding_v1` package freezes twelve cases across four development
+games/source groups, an independent grader, and the supervised zero-action,
+zero-scorecard runner. Nineteen local tests passed, including valid-but-incorrect
+answers, malformed output, transport/token failures, cleanup and authority gates.
+The pinned tokenizer audit covers all twelve requests and one canary. The new
+budget proposes 1,800 provider seconds (1,680 internal), not a reused hour.
+
+The private/offline review notebook remains GPU-disabled; source approval and
+separate compute authorization are pending. No reservation or model call was made.
+See [review and budget](phase4_grounding_v1_review.md). The original draft below
+is historical; the transient experiment remains closed with no demonstrated
+benefit. Production certification, admission limits, and accounting stay open.
+
+
+## Experiment closure and grounding protocol draft
+
+Transient v2 is closed as **no demonstrated benefit** and must not be repeated
+unchanged. A 12-case observation-grounding protocol is prepared from retained
+observations only: explicit color-feature localization, coordinate lookup, and
+frame-change identification. Six local tests and deterministic answer checks
+passed. Protocol review, exact tokenizer auditing, and separate execution approval
+are still required; no model calls or compute are authorized. See
+[grounding protocol](grounding_diagnostic_v1_protocol.md).
+
+Production one-scorecard/110-distinct-game certification, workload-specific
+admission limits, and accounting remain separate open gates.
+
+
 ## Transient v2 R1 independently replayed - September 21, 2026
 
 All 156 downloaded files verified, and the unchanged frozen v2 replay passed

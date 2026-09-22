@@ -1,0 +1,128 @@
+{
+  "kernel": "daichongwei06/arc3-phase4-grounding-v1-r1",
+  "requested_version": 1,
+  "provider_output_files": 23,
+  "console_log_retained": true,
+  "files": [
+    {
+      "path": ".og1-b98f644f0122470699224f74b5961d49.runtime-consumed.json",
+      "bytes": 76,
+      "sha256": "f9fe3edbac205fa06ca35f1d6ed56df2d9d21cb87cba60e3d7e3290e4eb6d236"
+    },
+    {
+      "path": "phase4-grounding-v1/.evidence.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "phase4-grounding-v1/control/gpu-cleanup.json",
+      "bytes": 282,
+      "sha256": "08b572b3d6603d7f47758812014bc8720f2448a0b6965a9d7a32c418e1e2dcc8"
+    },
+    {
+      "path": "phase4-grounding-v1/control/installation.json",
+      "bytes": 2848,
+      "sha256": "affbbf297988db43fbdab7577e707102f46aa58a53a4c49609f9aea764442051"
+    },
+    {
+      "path": "phase4-grounding-v1/control/monitor-ready-ack.json",
+      "bytes": 77,
+      "sha256": "7d1cadd8cd0401bf956b02f0a261339f62b9be81502384c3f8eb3e871292662b"
+    },
+    {
+      "path": "phase4-grounding-v1/control/notebook-cost.json",
+      "bytes": 151,
+      "sha256": "e90e9a1cd696e72290eec543d2322a6986d6f947d20e314b65a999095f8073b8"
+    },
+    {
+      "path": "phase4-grounding-v1/control/outer.json",
+      "bytes": 1168,
+      "sha256": "22a9cd83c37e350f5c4685e41cadc28b518411acf8b83a721270d6113ca7a8ad"
+    },
+    {
+      "path": "phase4-grounding-v1/control/ownership.json",
+      "bytes": 157,
+      "sha256": "b9ffb872b7c27f0950a11b8fac4f268f70ffa85f7ffff04526763b67e34161c4"
+    },
+    {
+      "path": "phase4-grounding-v1/control/stop-monitor.json",
+      "bytes": 63,
+      "sha256": "bd9c6fcc1567d2f85d5bef2dd21a524a3436f7d3a49a3a3c4d217d3a6c0060ac"
+    },
+    {
+      "path": "phase4-grounding-v1/evaluation/notebook-result.json",
+      "bytes": 309,
+      "sha256": "9915b4e4891004aa1a6cd639d2961220d5aaa7ca51e39bd930ea588adf34af01"
+    },
+    {
+      "path": "phase4-grounding-v1/evaluation/result.json",
+      "bytes": 3420,
+      "sha256": "0bf522e67a60d62ad5f0dc5313134f36564e4546e6059904dad931045d2eb88d"
+    },
+    {
+      "path": "phase4-grounding-v1/logs/306.json",
+      "bytes": 32324,
+      "sha256": "fcff8fe113ddde13977155fe9e615b4f83fa9b0fb3c09c48f770d3fd60a9bbad"
+    },
+    {
+      "path": "phase4-grounding-v1/logs/308.json",
+      "bytes": 102,
+      "sha256": "50e31b712644548df2ea205f2e49aed62d938a59070d48f36338db20c2753895"
+    },
+    {
+      "path": "phase4-grounding-v1/logs/install-game.json",
+      "bytes": 599324,
+      "sha256": "9f84fb7327e167cce78f69e37085fc20b9551d2b526e5f92a87ca3613ece1858"
+    },
+    {
+      "path": "phase4-grounding-v1/logs/install-model.json",
+      "bytes": 2099568,
+      "sha256": "5b9c77d1d65aa153c63cb65003971b583baa58ee47bba9263ed8f791e8fa0a3a"
+    },
+    {
+      "path": "phase4-grounding-v1/monitor/monitor-result.json",
+      "bytes": 1212,
+      "sha256": "eceae63baf934c720f52b76bc7cf449d6dd6775b509174936cbbf87f838539f1"
+    },
+    {
+      "path": "phase4-grounding-v1/monitor/ready.json",
+      "bytes": 630,
+      "sha256": "94a52d0cc504ac895ca6d9d2a27911fefdeacb5491175a385ccb93c62abc76fe"
+    },
+    {
+      "path": "phase4-grounding-v1/monitor/samples-0000.json",
+      "bytes": 22299,
+      "sha256": "d933141cdd98199ff5cab5e2297c6f35b88baaaa97b8df15dcfebd359021f94c"
+    },
+    {
+      "path": "phase4-grounding-v1/monitor/samples-0001.json",
+      "bytes": 22663,
+      "sha256": "aaa517ec15ec5e7921b4e2a4e9b159de948eeb833f8c10778665295d38c04771"
+    },
+    {
+      "path": "phase4-grounding-v1/monitor/samples-0002.json",
+      "bytes": 14339,
+      "sha256": "44ce6cd08ade1a6d787adabe65ad46070a3dab06b88001973f78c18c767daa86"
+    },
+    {
+      "path": "phase4-grounding-v1/monitor/telemetry.json",
+      "bytes": 1133,
+      "sha256": "c2254585f9dad7f3bc09c5fa72d39fbd9931320252aead56077a121af4006fdd"
+    },
+    {
+      "path": "phase4-grounding-v1/worker/model-ready.json",
+      "bytes": 59,
+      "sha256": "5168ac445c0ca2153480abd13cfdc452e7a43da34b5e8b29cc799bfd55256e69"
+    },
+    {
+      "path": "phase4-grounding-v1/worker/state.json",
+      "bytes": 165631,
+      "sha256": "e7e6e2950d77b9b697c67d47e5c58f61955be963914f8630e8feb46413fb09ea"
+    },
+    {
+      "path": "arc3-phase4-grounding-v1-r1.log",
+      "bytes": 2820,
+      "sha256": "46675d9f7d5da74a1ecb6393ffcad715063b54cf964456c7c2f7140fc168487a"
+    }
+  ]
+}
