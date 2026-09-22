@@ -1,0 +1,55 @@
+{
+  "tests_passed": 21,
+  "fixture_elapsed_seconds": {
+    "correct": 3.2456259430000003,
+    "transposed": 3.2100013960000027,
+    "other": 3.526349250999999,
+    "malformed": 3.181106756999995,
+    "transport": 1.6522468260000025,
+    "mismatch": 1.6396038089999934
+  },
+  "archive_replay": {
+    "correct": {
+      "technical_passed": true,
+      "correct": 56,
+      "malformed": 0,
+      "transport_failures": 0
+    },
+    "transposed": {
+      "technical_passed": true,
+      "correct": 0,
+      "malformed": 0,
+      "transport_failures": 0
+    },
+    "other": {
+      "technical_passed": true,
+      "correct": 0,
+      "malformed": 0,
+      "transport_failures": 0
+    },
+    "malformed": {
+      "technical_passed": true,
+      "correct": 0,
+      "malformed": 56,
+      "transport_failures": 0
+    },
+    "transport": {
+      "technical_passed": false,
+      "correct": 0,
+      "malformed": 0,
+      "transport_failures": 1
+    },
+    "mismatch": {
+      "technical_passed": false,
+      "correct": 1,
+      "malformed": 0,
+      "transport_failures": 0
+    }
+  },
+  "model_calls": 0,
+  "gpu_runs": 0,
+  "environment_actions": 0,
+  "scorecards": 0,
+  "additional_retention_regressions_passed": 3,
+  "test_runs": "18-case suite plus three retention/late-response regressions"
+}

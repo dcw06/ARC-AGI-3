@@ -1,0 +1,693 @@
+{
+  "passed": true,
+  "errors": [],
+  "scope": "observation_grounding_live",
+  "comparison": {
+    "technical_passed": true,
+    "errors": [],
+    "by_condition": {
+      "baseline": {
+        "planned": 28,
+        "transposed": 3,
+        "correct": 15,
+        "other_valid": 10,
+        "exact_accuracy": 0.5357142857142857
+      },
+      "explicit": {
+        "planned": 28,
+        "correct": 16,
+        "other_valid": 10,
+        "transposed": 2,
+        "exact_accuracy": 0.5714285714285714
+      }
+    },
+    "by_size": {
+      "retained-64": {
+        "planned": 32,
+        "transposed": 5,
+        "correct": 14,
+        "other_valid": 13,
+        "exact_accuracy": 0.4375
+      },
+      "synthetic-8": {
+        "planned": 8,
+        "correct": 8,
+        "exact_accuracy": 1.0
+      },
+      "synthetic-16": {
+        "planned": 8,
+        "correct": 4,
+        "other_valid": 4,
+        "exact_accuracy": 0.5
+      },
+      "synthetic-32": {
+        "planned": 8,
+        "correct": 5,
+        "other_valid": 3,
+        "exact_accuracy": 0.625
+      }
+    },
+    "by_stratum": {
+      "boundary": {
+        "planned": 28,
+        "transposed": 3,
+        "correct": 24,
+        "other_valid": 1,
+        "exact_accuracy": 0.8571428571428571
+      },
+      "interior": {
+        "planned": 28,
+        "other_valid": 19,
+        "correct": 7,
+        "transposed": 2,
+        "exact_accuracy": 0.25
+      }
+    },
+    "by_source": {
+      "cl1-00-no_concrete_examples": {
+        "planned": 8,
+        "transposed": 1,
+        "correct": 3,
+        "other_valid": 4,
+        "exact_accuracy": 0.375
+      },
+      "cl1-02-no_concrete_examples": {
+        "planned": 8,
+        "correct": 6,
+        "other_valid": 2,
+        "exact_accuracy": 0.75
+      },
+      "cl1-06-no_concrete_examples": {
+        "planned": 8,
+        "correct": 4,
+        "other_valid": 4,
+        "exact_accuracy": 0.5
+      },
+      "cl1-08-no_concrete_examples": {
+        "planned": 8,
+        "other_valid": 3,
+        "correct": 1,
+        "transposed": 4,
+        "exact_accuracy": 0.125
+      },
+      "synthetic-8": {
+        "planned": 8,
+        "correct": 8,
+        "exact_accuracy": 1.0
+      },
+      "synthetic-16": {
+        "planned": 8,
+        "correct": 4,
+        "other_valid": 4,
+        "exact_accuracy": 0.5
+      },
+      "synthetic-32": {
+        "planned": 8,
+        "correct": 5,
+        "other_valid": 3,
+        "exact_accuracy": 0.625
+      }
+    },
+    "condition_by_size": {
+      "baseline:retained-64": {
+        "planned": 16,
+        "transposed": 3,
+        "correct": 7,
+        "other_valid": 6,
+        "exact_accuracy": 0.4375
+      },
+      "explicit:retained-64": {
+        "planned": 16,
+        "correct": 7,
+        "other_valid": 7,
+        "transposed": 2,
+        "exact_accuracy": 0.4375
+      },
+      "baseline:synthetic-8": {
+        "planned": 4,
+        "correct": 4,
+        "exact_accuracy": 1.0
+      },
+      "explicit:synthetic-8": {
+        "planned": 4,
+        "correct": 4,
+        "exact_accuracy": 1.0
+      },
+      "explicit:synthetic-16": {
+        "planned": 4,
+        "correct": 2,
+        "other_valid": 2,
+        "exact_accuracy": 0.5
+      },
+      "baseline:synthetic-16": {
+        "planned": 4,
+        "correct": 2,
+        "other_valid": 2,
+        "exact_accuracy": 0.5
+      },
+      "baseline:synthetic-32": {
+        "planned": 4,
+        "correct": 2,
+        "other_valid": 2,
+        "exact_accuracy": 0.5
+      },
+      "explicit:synthetic-32": {
+        "planned": 4,
+        "correct": 3,
+        "other_valid": 1,
+        "exact_accuracy": 0.75
+      }
+    },
+    "condition_by_stratum": {
+      "baseline:boundary": {
+        "planned": 14,
+        "transposed": 2,
+        "correct": 12,
+        "exact_accuracy": 0.8571428571428571
+      },
+      "explicit:boundary": {
+        "planned": 14,
+        "correct": 12,
+        "other_valid": 1,
+        "transposed": 1,
+        "exact_accuracy": 0.8571428571428571
+      },
+      "baseline:interior": {
+        "planned": 14,
+        "other_valid": 10,
+        "correct": 3,
+        "transposed": 1,
+        "exact_accuracy": 0.21428571428571427
+      },
+      "explicit:interior": {
+        "planned": 14,
+        "other_valid": 9,
+        "correct": 4,
+        "transposed": 1,
+        "exact_accuracy": 0.2857142857142857
+      }
+    },
+    "condition_by_source": {
+      "baseline:cl1-00-no_concrete_examples": {
+        "planned": 4,
+        "transposed": 1,
+        "correct": 1,
+        "other_valid": 2,
+        "exact_accuracy": 0.25
+      },
+      "explicit:cl1-00-no_concrete_examples": {
+        "planned": 4,
+        "correct": 2,
+        "other_valid": 2,
+        "exact_accuracy": 0.5
+      },
+      "explicit:cl1-02-no_concrete_examples": {
+        "planned": 4,
+        "correct": 3,
+        "other_valid": 1,
+        "exact_accuracy": 0.75
+      },
+      "baseline:cl1-02-no_concrete_examples": {
+        "planned": 4,
+        "correct": 3,
+        "other_valid": 1,
+        "exact_accuracy": 0.75
+      },
+      "baseline:cl1-06-no_concrete_examples": {
+        "planned": 4,
+        "correct": 2,
+        "other_valid": 2,
+        "exact_accuracy": 0.5
+      },
+      "explicit:cl1-06-no_concrete_examples": {
+        "planned": 4,
+        "correct": 2,
+        "other_valid": 2,
+        "exact_accuracy": 0.5
+      },
+      "explicit:cl1-08-no_concrete_examples": {
+        "planned": 4,
+        "other_valid": 2,
+        "transposed": 2,
+        "exact_accuracy": 0.0
+      },
+      "baseline:cl1-08-no_concrete_examples": {
+        "planned": 4,
+        "correct": 1,
+        "transposed": 2,
+        "other_valid": 1,
+        "exact_accuracy": 0.25
+      },
+      "baseline:synthetic-8": {
+        "planned": 4,
+        "correct": 4,
+        "exact_accuracy": 1.0
+      },
+      "explicit:synthetic-8": {
+        "planned": 4,
+        "correct": 4,
+        "exact_accuracy": 1.0
+      },
+      "explicit:synthetic-16": {
+        "planned": 4,
+        "correct": 2,
+        "other_valid": 2,
+        "exact_accuracy": 0.5
+      },
+      "baseline:synthetic-16": {
+        "planned": 4,
+        "correct": 2,
+        "other_valid": 2,
+        "exact_accuracy": 0.5
+      },
+      "baseline:synthetic-32": {
+        "planned": 4,
+        "correct": 2,
+        "other_valid": 2,
+        "exact_accuracy": 0.5
+      },
+      "explicit:synthetic-32": {
+        "planned": 4,
+        "correct": 3,
+        "other_valid": 1,
+        "exact_accuracy": 0.75
+      }
+    },
+    "pairs": {
+      "p0-boundary-0": {
+        "baseline": "transposed",
+        "explicit": "correct"
+      },
+      "p0-boundary-1": {
+        "explicit": "correct",
+        "baseline": "correct"
+      },
+      "p0-interior-0": {
+        "baseline": "other_valid",
+        "explicit": "other_valid"
+      },
+      "p0-interior-1": {
+        "explicit": "other_valid",
+        "baseline": "other_valid"
+      },
+      "p1-boundary-0": {
+        "explicit": "correct",
+        "baseline": "correct"
+      },
+      "p1-boundary-1": {
+        "baseline": "correct",
+        "explicit": "correct"
+      },
+      "p1-interior-0": {
+        "explicit": "correct",
+        "baseline": "correct"
+      },
+      "p1-interior-1": {
+        "baseline": "other_valid",
+        "explicit": "other_valid"
+      },
+      "p2-boundary-0": {
+        "baseline": "correct",
+        "explicit": "correct"
+      },
+      "p2-boundary-1": {
+        "explicit": "correct",
+        "baseline": "correct"
+      },
+      "p2-interior-0": {
+        "baseline": "other_valid",
+        "explicit": "other_valid"
+      },
+      "p2-interior-1": {
+        "explicit": "other_valid",
+        "baseline": "other_valid"
+      },
+      "p3-boundary-0": {
+        "explicit": "other_valid",
+        "baseline": "correct"
+      },
+      "p3-boundary-1": {
+        "baseline": "transposed",
+        "explicit": "transposed"
+      },
+      "p3-interior-0": {
+        "explicit": "other_valid",
+        "baseline": "other_valid"
+      },
+      "p3-interior-1": {
+        "baseline": "transposed",
+        "explicit": "transposed"
+      },
+      "p4-boundary-0": {
+        "baseline": "correct",
+        "explicit": "correct"
+      },
+      "p4-boundary-1": {
+        "explicit": "correct",
+        "baseline": "correct"
+      },
+      "p4-interior-0": {
+        "baseline": "correct",
+        "explicit": "correct"
+      },
+      "p4-interior-1": {
+        "explicit": "correct",
+        "baseline": "correct"
+      },
+      "p5-boundary-0": {
+        "explicit": "correct",
+        "baseline": "correct"
+      },
+      "p5-boundary-1": {
+        "baseline": "correct",
+        "explicit": "correct"
+      },
+      "p5-interior-0": {
+        "explicit": "other_valid",
+        "baseline": "other_valid"
+      },
+      "p5-interior-1": {
+        "baseline": "other_valid",
+        "explicit": "other_valid"
+      },
+      "p6-boundary-0": {
+        "baseline": "correct",
+        "explicit": "correct"
+      },
+      "p6-boundary-1": {
+        "explicit": "correct",
+        "baseline": "correct"
+      },
+      "p6-interior-0": {
+        "baseline": "other_valid",
+        "explicit": "other_valid"
+      },
+      "p6-interior-1": {
+        "explicit": "correct",
+        "baseline": "other_valid"
+      }
+    },
+    "cases": [
+      {
+        "case_id": "p0-boundary-0-baseline",
+        "category": "transposed"
+      },
+      {
+        "case_id": "p0-boundary-0-explicit",
+        "category": "correct"
+      },
+      {
+        "case_id": "p0-boundary-1-explicit",
+        "category": "correct"
+      },
+      {
+        "case_id": "p0-boundary-1-baseline",
+        "category": "correct"
+      },
+      {
+        "case_id": "p0-interior-0-baseline",
+        "category": "other_valid"
+      },
+      {
+        "case_id": "p0-interior-0-explicit",
+        "category": "other_valid"
+      },
+      {
+        "case_id": "p0-interior-1-explicit",
+        "category": "other_valid"
+      },
+      {
+        "case_id": "p0-interior-1-baseline",
+        "category": "other_valid"
+      },
+      {
+        "case_id": "p1-boundary-0-explicit",
+        "category": "correct"
+      },
+      {
+        "case_id": "p1-boundary-0-baseline",
+        "category": "correct"
+      },
+      {
+        "case_id": "p1-boundary-1-baseline",
+        "category": "correct"
+      },
+      {
+        "case_id": "p1-boundary-1-explicit",
+        "category": "correct"
+      },
+      {
+        "case_id": "p1-interior-0-explicit",
+        "category": "correct"
+      },
+      {
+        "case_id": "p1-interior-0-baseline",
+        "category": "correct"
+      },
+      {
+        "case_id": "p1-interior-1-baseline",
+        "category": "other_valid"
+      },
+      {
+        "case_id": "p1-interior-1-explicit",
+        "category": "other_valid"
+      },
+      {
+        "case_id": "p2-boundary-0-baseline",
+        "category": "correct"
+      },
+      {
+        "case_id": "p2-boundary-0-explicit",
+        "category": "correct"
+      },
+      {
+        "case_id": "p2-boundary-1-explicit",
+        "category": "correct"
+      },
+      {
+        "case_id": "p2-boundary-1-baseline",
+        "category": "correct"
+      },
+      {
+        "case_id": "p2-interior-0-baseline",
+        "category": "other_valid"
+      },
+      {
+        "case_id": "p2-interior-0-explicit",
+        "category": "other_valid"
+      },
+      {
+        "case_id": "p2-interior-1-explicit",
+        "category": "other_valid"
+      },
+      {
+        "case_id": "p2-interior-1-baseline",
+        "category": "other_valid"
+      },
+      {
+        "case_id": "p3-boundary-0-explicit",
+        "category": "other_valid"
+      },
+      {
+        "case_id": "p3-boundary-0-baseline",
+        "category": "correct"
+      },
+      {
+        "case_id": "p3-boundary-1-baseline",
+        "category": "transposed"
+      },
+      {
+        "case_id": "p3-boundary-1-explicit",
+        "category": "transposed"
+      },
+      {
+        "case_id": "p3-interior-0-explicit",
+        "category": "other_valid"
+      },
+      {
+        "case_id": "p3-interior-0-baseline",
+        "category": "other_valid"
+      },
+      {
+        "case_id": "p3-interior-1-baseline",
+        "category": "transposed"
+      },
+      {
+        "case_id": "p3-interior-1-explicit",
+        "category": "transposed"
+      },
+      {
+        "case_id": "p4-boundary-0-baseline",
+        "category": "correct"
+      },
+      {
+        "case_id": "p4-boundary-0-explicit",
+        "category": "correct"
+      },
+      {
+        "case_id": "p4-boundary-1-explicit",
+        "category": "correct"
+      },
+      {
+        "case_id": "p4-boundary-1-baseline",
+        "category": "correct"
+      },
+      {
+        "case_id": "p4-interior-0-baseline",
+        "category": "correct"
+      },
+      {
+        "case_id": "p4-interior-0-explicit",
+        "category": "correct"
+      },
+      {
+        "case_id": "p4-interior-1-explicit",
+        "category": "correct"
+      },
+      {
+        "case_id": "p4-interior-1-baseline",
+        "category": "correct"
+      },
+      {
+        "case_id": "p5-boundary-0-explicit",
+        "category": "correct"
+      },
+      {
+        "case_id": "p5-boundary-0-baseline",
+        "category": "correct"
+      },
+      {
+        "case_id": "p5-boundary-1-baseline",
+        "category": "correct"
+      },
+      {
+        "case_id": "p5-boundary-1-explicit",
+        "category": "correct"
+      },
+      {
+        "case_id": "p5-interior-0-explicit",
+        "category": "other_valid"
+      },
+      {
+        "case_id": "p5-interior-0-baseline",
+        "category": "other_valid"
+      },
+      {
+        "case_id": "p5-interior-1-baseline",
+        "category": "other_valid"
+      },
+      {
+        "case_id": "p5-interior-1-explicit",
+        "category": "other_valid"
+      },
+      {
+        "case_id": "p6-boundary-0-baseline",
+        "category": "correct"
+      },
+      {
+        "case_id": "p6-boundary-0-explicit",
+        "category": "correct"
+      },
+      {
+        "case_id": "p6-boundary-1-explicit",
+        "category": "correct"
+      },
+      {
+        "case_id": "p6-boundary-1-baseline",
+        "category": "correct"
+      },
+      {
+        "case_id": "p6-interior-0-baseline",
+        "category": "other_valid"
+      },
+      {
+        "case_id": "p6-interior-0-explicit",
+        "category": "other_valid"
+      },
+      {
+        "case_id": "p6-interior-1-explicit",
+        "category": "correct"
+      },
+      {
+        "case_id": "p6-interior-1-baseline",
+        "category": "other_valid"
+      }
+    ],
+    "paired_correctness": {
+      "improvement": 2,
+      "unchanged_correctness": 25,
+      "regression": 1
+    },
+    "transport_failures": 0,
+    "prompt_tokens": 299768,
+    "completion_tokens": 413,
+    "latency_seconds": [
+      0.3928259170002093,
+      0.08954788900018684,
+      0.07879921899984765,
+      0.07738698999992266,
+      0.08383021000008739,
+      0.08592393900016759,
+      0.0846888390001368,
+      0.08377342999983739,
+      0.3154121880002094,
+      0.07933357899992188,
+      0.08510511999975279,
+      0.08850335899978745,
+      0.0803320889999668,
+      0.07882461899998816,
+      0.07753630999968664,
+      0.08034369999995761,
+      0.31456180699979086,
+      0.0810303200000817,
+      0.07703433000006044,
+      0.07796920900000259,
+      0.07809394000014436,
+      0.07923568000023806,
+      0.07788511000035214,
+      0.07838455999990401,
+      0.3178110700000616,
+      0.08620290899989413,
+      0.08402505000003657,
+      0.0868647699999201,
+      0.07854047999990144,
+      0.07629163000001427,
+      0.08316118899983849,
+      0.08508771000015258,
+      0.06792014999973617,
+      0.06234881000000314,
+      0.06646052900032373,
+      0.06700075999970068,
+      0.06781808000005185,
+      0.06636808000030214,
+      0.060068609999689215,
+      0.06012277999980142,
+      0.6406863279999016,
+      0.06141956000010396,
+      0.06736933000001954,
+      0.06960150999975667,
+      0.06056239000008645,
+      0.061612609999883716,
+      0.06793161000041437,
+      0.06324083999970753,
+      0.10799720000022717,
+      0.06822204000036436,
+      0.06341809000014109,
+      0.06498052000006282,
+      0.060691879999922094,
+      0.06356993000008515,
+      0.06969378999974651,
+      0.07108305000019755
+    ]
+  },
+  "comparison_is_scripted": false,
+  "model_inference": true,
+  "capacity_candidate": null,
+  "C_nominal": null,
+  "C_admit": null,
+  "development_model_lifecycle_passed": true,
+  "phase4_complete": false,
+  "independent_replay": true,
+  "evidence_bytes": 3224473,
+  "exact_provider_billed_seconds": null
+}

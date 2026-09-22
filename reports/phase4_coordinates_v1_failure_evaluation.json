@@ -1,0 +1,48 @@
+{
+  "technical_passed": false,
+  "capability_disposition": "inconclusive_no_diagnostic_responses",
+  "failure": "corrupted expected vocab.json SHA-256 in coordinates manifest",
+  "prior_expected": "7a0cfa95c65792d7510205839f80cfd8a3c8f6b1fdad5132d95cee481800374d",
+  "failed_revision_expected": "7a0cfa95c65792d7510205839f80cfd8a3c8f6b1fdad5132d95cee482100374d",
+  "local_pinned_vocab_sha256": "7a0cfa95c65792d7510205839f80cfd8a3c8f6b1fdad5132d95cee481800374d",
+  "runtime_received_vocab_sha256": null,
+  "runtime_failure_message": "tokenizer artifact hash: vocab.json",
+  "root_cause": "Unscoped 1800-to-2100 text replacement during revision copying altered a digest substring.",
+  "audit_gap": "CPU audit verified inherited grounding manifest; it did not verify new coordinate runtime manifest.",
+  "frozen_replay": "source/provenance/archive validation succeeded; replay raised FileNotFoundError for worker/state.json because startup failed before request loop.",
+  "cleanup": {
+    "error": null,
+    "gpu_cleanup_verified": true,
+    "gpu_uuid": "GPU-1a535f4a-193e-2c00-3481-12fd1bd483be",
+    "groups_absent": true,
+    "monitoring_coverage_restored": false,
+    "probe_seconds": 0.0604724920000308,
+    "remaining_process_count": 0,
+    "scope": "independent_post_termination_GPU_check"
+  },
+  "finalization": {
+    "completed": false,
+    "elapsed_seconds": 762.5444944110001,
+    "error": "ValueError: notebook completion/cleanup/deadline not satisfied",
+    "passed": false,
+    "phase4_complete": false,
+    "source_removed": true
+  },
+  "notebook_cost": {
+    "dependency_trees_removed": true,
+    "elapsed_seconds": 762.528570953,
+    "error": "RuntimeError: pilot or independent evaluation failed",
+    "phase4_complete": false,
+    "provider_reconciliation_required": true
+  },
+  "accounting": {
+    "reservation_seconds": 2100,
+    "reservation_status": "consumed",
+    "account_usage_before_seconds": 4724.817,
+    "account_usage_after_seconds": 5496.679,
+    "account_delta_seconds": 771.862,
+    "exact_provider_billed_seconds": null,
+    "automatic_retry_authorized": false
+  },
+  "phase4_complete": false
+}

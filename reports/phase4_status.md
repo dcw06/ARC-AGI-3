@@ -1,5 +1,44 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
+## Coordinate v2 completed; no wording promotion
+
+The repaired target run and independent archive replay passed. Baseline accuracy
+was 15/28 and explicit indexing 16/28; the predeclared wording threshold was not
+met. Both scored 4/4 on the synthetic 8x8 grid and 7/16 on retained 64x64 boards,
+a grounding lead with size/content confounds. Cleanup verified; reservation
+consumed. Exact billing and production Phase 4 gates remain open. See
+[disposition and replay](phase4_coordinates_v2_disposition.md). Earlier entries
+below are historical.
+
+## Coordinate attempt ended in tokenizer-manifest failure
+
+Kaggle reports ERROR. All 23 downloaded files were verified and archived. A
+revision-copy substitution corrupted the expected vocab.json digest; tokenizer
+verification stopped startup before diagnostic responses. Capability results are
+inconclusive. Independent process/GPU cleanup and source/dependency removal were
+retained. The reservation remains consumed; no retry was launched. See
+[failure report](phase4_coordinates_v1_failure.md). Older entries below describe
+historical preparation and queue status.
+
+
+## Paired coordinate diagnostic R2 ready for review
+
+A new offline package freezes 56 requests (28 paired targets) across four retained
+64x64 development boards and three synthetic size controls. The prior system
+prompt already states grid[y][x]; treatment repeats indexing in the task-local
+instruction only. Historical grounding/transient snapshots remain unchanged.
+
+Twenty-one local tests passed, including scoring and lifecycle/authority failure
+paths. Exact pinned-tokenizer audit, unpacked R2 notebook review, clean-checkout
+archive replay, and synthetic single-launch packaging passed. Failed packaging R1
+is preserved and superseded. The proposal is one fresh 2100-second provider
+attempt, with 56 diagnostic calls plus one canary, zero actions/scorecards/retries.
+No source approval, compute authorization, reservation, or model call has been
+made. See [coordinate review](phase4_coordinates_v1_review.md) and
+[final checks](phase4_coordinates_v1_final_checks.json). Production Phase 4 gates
+remain separate.
+
+
 ## Completed grounding diagnostic: independent technical pass
 
 Grounding R1 completed; all 24 downloaded files verified and frozen replay passed.

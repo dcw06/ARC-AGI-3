@@ -1,0 +1,49 @@
+{
+  "clean_checkout_replay_passed": true,
+  "method": "git archive HEAD plus task deliverables; no ignored downloads or assets; existing CPU interpreter",
+  "archive_results": {
+    "correct": {
+      "technical_passed": true,
+      "correct": 56,
+      "malformed": 0,
+      "transport_failures": 0
+    },
+    "transposed": {
+      "technical_passed": true,
+      "correct": 0,
+      "malformed": 0,
+      "transport_failures": 0
+    },
+    "other": {
+      "technical_passed": true,
+      "correct": 0,
+      "malformed": 0,
+      "transport_failures": 0
+    },
+    "malformed": {
+      "technical_passed": true,
+      "correct": 0,
+      "malformed": 56,
+      "transport_failures": 0
+    },
+    "transport": {
+      "technical_passed": false,
+      "correct": 0,
+      "malformed": 0,
+      "transport_failures": 1
+    },
+    "mismatch": {
+      "technical_passed": false,
+      "correct": 1,
+      "malformed": 0,
+      "transport_failures": 0
+    }
+  },
+  "synthetic_launch_packaging_verified": true,
+  "synthetic_upload_count": 1,
+  "second_upload_rejected": true,
+  "launch_notebook_bytes": 881899,
+  "review_lock_sha256": "dee7b8c941e4961fe682005e6d8a926ca3cea714c80406f8fdbf7408a325918f",
+  "real_authorizations": 0,
+  "gpu_runs": 0
+}

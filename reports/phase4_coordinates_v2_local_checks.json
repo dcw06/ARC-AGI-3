@@ -1,0 +1,53 @@
+{
+  "tests_passed": 24,
+  "fixture_elapsed_seconds": {
+    "correct": 4.440469190000002,
+    "transposed": 3.99882135,
+    "other": 4.232338945999999,
+    "malformed": 4.001108221999999,
+    "transport": 2.055886999000002,
+    "mismatch": 1.9301858330000101
+  },
+  "archive_replay": {
+    "correct": {
+      "technical_passed": true,
+      "correct": 56,
+      "malformed": 0,
+      "transport_failures": 0
+    },
+    "transposed": {
+      "technical_passed": true,
+      "correct": 0,
+      "malformed": 0,
+      "transport_failures": 0
+    },
+    "other": {
+      "technical_passed": true,
+      "correct": 0,
+      "malformed": 0,
+      "transport_failures": 0
+    },
+    "malformed": {
+      "technical_passed": true,
+      "correct": 0,
+      "malformed": 56,
+      "transport_failures": 0
+    },
+    "transport": {
+      "technical_passed": false,
+      "correct": 0,
+      "malformed": 0,
+      "transport_failures": 1
+    },
+    "mismatch": {
+      "technical_passed": false,
+      "correct": 1,
+      "malformed": 0,
+      "transport_failures": 0
+    }
+  },
+  "model_calls": 0,
+  "gpu_runs": 0,
+  "environment_actions": 0,
+  "scorecards": 0
+}
