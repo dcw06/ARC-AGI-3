@@ -1,0 +1,70 @@
+{
+  "id": "phase4-integrated-v1",
+  "configuration": "integrated ar25 perception-to-action scaffold case study v1",
+  "status": "executable_review_no_compute_authority",
+  "model_binding": {
+    "candidate_id": "M0-Q3VL-30B-A3B-FP8",
+    "model_id": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+    "revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+    "engine": "vllm==0.19.0",
+    "reasoning_setting": "instruct_non_thinking"
+  },
+  "model_tree_sha256": "052ab27f06c28261e143b8c1638382d107b034692bc0cd1792ec4e02ddab8627",
+  "environment": {
+    "python": "3.12",
+    "torch_distribution": "2.10.0",
+    "torch_runtime": "2.10.0+cu128",
+    "cuda": "12.8",
+    "vllm": "0.19.0",
+    "transformers": "4.57.6",
+    "split_model_game_environments": true
+  },
+  "model_mount": "/kaggle/input/models/qwen-lm/qwen-3-vl/transformers/30b-a3b-instruct-fp8/1",
+  "prompts": {
+    "control": {
+      "text": "You control one ARC-AGI-3 game from a stateless observation. history_compaction explicitly reports any older transitions omitted from this prompt. Return only one compact JSON object matching the supplied action schema. Omit intent, rationale, Markdown and reset/action 0. Choose exactly one currently legal action_id. For ACTION6, choose a display-grid location and include integer x and y in [0,63]. For actions 1,2,3,4,5,7 use empty action_data. Never return ACTION6 with empty action_data. Keep the response under 64 tokens.",
+      "sha256": "b3738b4fd76cb5b795c0ba36aaf877906bfb62e51a137437fce0883ef9ba5fc8"
+    }
+  },
+  "schedule": [
+    {
+      "episode_id": "ic1-control",
+      "game_id": "ar25-0c556536",
+      "arm": "control",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 8,
+      "max_dispatch_attempts": 8,
+      "max_initial_bootstraps": 1
+    },
+    {
+      "episode_id": "ic1-structured",
+      "game_id": "ar25-0c556536",
+      "arm": "structured",
+      "environment_seed": 0,
+      "request_seed": 0,
+      "max_decisions": 8,
+      "max_dispatch_attempts": 8,
+      "max_initial_bootstraps": 1
+    }
+  ],
+  "budget": {
+    "provider_seconds": 3600,
+    "internal_seconds": 3300,
+    "admission_cutoff_seconds": 3000,
+    "cleanup_reserve_seconds": 300,
+    "workload_seconds": 1200,
+    "install_seconds": 450,
+    "model_startup_seconds": 900,
+    "request_seconds": 120,
+    "study_calls": 25,
+    "canaries": 1,
+    "actions": 16,
+    "prompt_tokens_per_call": 60000,
+    "study_prompt_tokens": 1500000,
+    "generated_tokens_including_canary": 19584,
+    "request_bytes": 196608,
+    "response_bytes": 32768,
+    "returned_frames_per_transition": 8
+  }
+}

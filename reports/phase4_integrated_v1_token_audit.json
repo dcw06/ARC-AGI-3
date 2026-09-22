@@ -1,0 +1,304 @@
+{
+  "versions": {
+    "transformers": "4.57.6",
+    "tokenizers": "0.22.2",
+    "jinja2": "3.1.6"
+  },
+  "tokenizer_manifest_sha256": "9b23b48f0615f43aee0d6b344982cbd17d36841cd92b3ebaf52c5e0c7a60db72",
+  "rows": [
+    {
+      "id": "cap/worker/ic1-control-call-00.json",
+      "request_sha256": "c696b68440a280a1dfccff1e8d57df85dd75303a957b6e1fe388b16147111152",
+      "prompt_tokens": 8721,
+      "completion_cap": 128,
+      "bytes": 10610,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-control-call-01.json",
+      "request_sha256": "e05e1fef6288f423abb9a7b2d746ade7ada53ae9c485f15e854e9d8caba857e3",
+      "prompt_tokens": 25760,
+      "completion_cap": 128,
+      "bytes": 27911,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-control-call-02.json",
+      "request_sha256": "55fd761683c1f26cb30bfd03035c69927bcae2196d651beba69e369763fb4093",
+      "prompt_tokens": 25765,
+      "completion_cap": 128,
+      "bytes": 27912,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-control-call-03.json",
+      "request_sha256": "9a8e5e82d1c25fc020e064cb5fcf9ec5f3e7ea7d5e98608582cd4997d47d6517",
+      "prompt_tokens": 25762,
+      "completion_cap": 128,
+      "bytes": 27912,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-control-call-04.json",
+      "request_sha256": "512043197c3d1777c2bd38fb32cf846b6d41340e4648ecacac81309b54c6d7a1",
+      "prompt_tokens": 25761,
+      "completion_cap": 128,
+      "bytes": 27912,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-control-call-05.json",
+      "request_sha256": "1338d8e658d282ad9d8966b57dc3aef6cee6c28199300835de1a6b151b93f591",
+      "prompt_tokens": 25765,
+      "completion_cap": 128,
+      "bytes": 27912,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-control-call-06.json",
+      "request_sha256": "16d2b3b2d01756be173b684caece822feaa824621b363966d541ecc79cf72749",
+      "prompt_tokens": 25761,
+      "completion_cap": 128,
+      "bytes": 27912,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-control-call-07.json",
+      "request_sha256": "082bab65d4b34fc7dc7832c6bbb441b37c366b06f682856e51fc2ad62a804c35",
+      "prompt_tokens": 25757,
+      "completion_cap": 128,
+      "bytes": 27910,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-structured-call-00.json",
+      "request_sha256": "093ca4c8e32fa7c6058a8ce2701ceb9505c07c7c80ac0cf85213e2f0871fa4f7",
+      "prompt_tokens": 8676,
+      "completion_cap": 2048,
+      "bytes": 11938,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-structured-call-01.json",
+      "request_sha256": "6b25c93fe9028446c919a40d0abcca0f2097cf1beda055c811b964e08df15d80",
+      "prompt_tokens": 8810,
+      "completion_cap": 1024,
+      "bytes": 14116,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-structured-call-02.json",
+      "request_sha256": "f006f3fc4f9a66d4a6e39a7def78664080366e8e60148b4926ba8d9480f9e98e",
+      "prompt_tokens": 26220,
+      "completion_cap": 1024,
+      "bytes": 30658,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-structured-call-03.json",
+      "request_sha256": "08435179bdb017255c6046bd7a5c091eb454c9191d2202fce2ec5886ac8b216d",
+      "prompt_tokens": 17597,
+      "completion_cap": 1024,
+      "bytes": 23892,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-structured-call-04.json",
+      "request_sha256": "ac576e40a276fff0d6b14fde64224dc9fbbb9e94055d4f299d08600b58fa16c2",
+      "prompt_tokens": 26551,
+      "completion_cap": 1024,
+      "bytes": 31922,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-structured-call-05.json",
+      "request_sha256": "4e0c15abca5c8075a8518d87e64b8a0ab28e6e4a7faf30f7c674c0a4a84c56cf",
+      "prompt_tokens": 17916,
+      "completion_cap": 1024,
+      "bytes": 25108,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-structured-call-06.json",
+      "request_sha256": "dc293c473d2f4f26afae6b9e6bc0b3742cfdaefae99eb52151cee8d66cabc50e",
+      "prompt_tokens": 26906,
+      "completion_cap": 1024,
+      "bytes": 33246,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-structured-call-07.json",
+      "request_sha256": "1a771c0a79a1615f29b64a529fce70baaaabe04039a560dfea455360897fcab2",
+      "prompt_tokens": 18253,
+      "completion_cap": 1024,
+      "bytes": 26378,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-structured-call-08.json",
+      "request_sha256": "b71616a6547a142e30a6a56779a9a34a6b1916fc14c439cd654f5aefb697d000",
+      "prompt_tokens": 27279,
+      "completion_cap": 1024,
+      "bytes": 34624,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-structured-call-09.json",
+      "request_sha256": "0621a91e07c08c2da4e27a1bc8798ada47dc8e587c7ac707d91bbe0d74f112e4",
+      "prompt_tokens": 18608,
+      "completion_cap": 1024,
+      "bytes": 27702,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-structured-call-10.json",
+      "request_sha256": "75d6edd9f55b857fe41883c6f9b0dd9d0a68e03a6e614ce5572098cd3df321b7",
+      "prompt_tokens": 27670,
+      "completion_cap": 1024,
+      "bytes": 36056,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-structured-call-11.json",
+      "request_sha256": "e1168d8d6b2445bae4d75db60cff7b796d964a5d3fd3af578f02c971767768ab",
+      "prompt_tokens": 18981,
+      "completion_cap": 1024,
+      "bytes": 29080,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-structured-call-12.json",
+      "request_sha256": "772335048d347cb276dcf93017eb60206d37625805130b871eb6499b5f5f03c9",
+      "prompt_tokens": 28079,
+      "completion_cap": 1024,
+      "bytes": 37542,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-structured-call-13.json",
+      "request_sha256": "f8246c13fa9fc6c9982af4113847fc808f710f4b1302440ff7928728078e52f8",
+      "prompt_tokens": 19372,
+      "completion_cap": 1024,
+      "bytes": 30512,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-structured-call-14.json",
+      "request_sha256": "2c9eac7f138667bb8242739ea71c504a4b2c1c9a40005769fdf7ab0614dd7559",
+      "prompt_tokens": 28505,
+      "completion_cap": 1024,
+      "bytes": 39081,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-structured-call-15.json",
+      "request_sha256": "3fa281674f53089abb8ab2a4ee5e23ad5e575fb57d981b0308623d4d899b5a13",
+      "prompt_tokens": 19780,
+      "completion_cap": 1024,
+      "bytes": 31997,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic1-structured-call-16.json",
+      "request_sha256": "f0e16dd68a11036d4a845c07cbf8650a9c4b8dae5bd5f97341ec5399cf208bd0",
+      "prompt_tokens": 28949,
+      "completion_cap": 1024,
+      "bytes": 40674,
+      "admissible": true
+    },
+    {
+      "id": "correct/worker/ic1-control-call-00.json",
+      "request_sha256": "c696b68440a280a1dfccff1e8d57df85dd75303a957b6e1fe388b16147111152",
+      "prompt_tokens": 8721,
+      "completion_cap": 128,
+      "bytes": 10610,
+      "admissible": true
+    },
+    {
+      "id": "correct/worker/ic1-control-call-01.json",
+      "request_sha256": "e05e1fef6288f423abb9a7b2d746ade7ada53ae9c485f15e854e9d8caba857e3",
+      "prompt_tokens": 25760,
+      "completion_cap": 128,
+      "bytes": 27911,
+      "admissible": true
+    },
+    {
+      "id": "correct/worker/ic1-structured-call-00.json",
+      "request_sha256": "093ca4c8e32fa7c6058a8ce2701ceb9505c07c7c80ac0cf85213e2f0871fa4f7",
+      "prompt_tokens": 8676,
+      "completion_cap": 2048,
+      "bytes": 11938,
+      "admissible": true
+    },
+    {
+      "id": "correct/worker/ic1-structured-call-01.json",
+      "request_sha256": "6b25c93fe9028446c919a40d0abcca0f2097cf1beda055c811b964e08df15d80",
+      "prompt_tokens": 8810,
+      "completion_cap": 1024,
+      "bytes": 14116,
+      "admissible": true
+    },
+    {
+      "id": "correct/worker/ic1-structured-call-02.json",
+      "request_sha256": "f006f3fc4f9a66d4a6e39a7def78664080366e8e60148b4926ba8d9480f9e98e",
+      "prompt_tokens": 26220,
+      "completion_cap": 1024,
+      "bytes": 30658,
+      "admissible": true
+    },
+    {
+      "id": "correct/worker/ic1-structured-call-03.json",
+      "request_sha256": "08435179bdb017255c6046bd7a5c091eb454c9191d2202fce2ec5886ac8b216d",
+      "prompt_tokens": 17597,
+      "completion_cap": 1024,
+      "bytes": 23892,
+      "admissible": true
+    },
+    {
+      "id": "correct/worker/ic1-structured-call-04.json",
+      "request_sha256": "7b16384d3756b08de2191be7c1a2132a0beda9380fd83ade3699e0cbbe86998c",
+      "prompt_tokens": 26551,
+      "completion_cap": 1024,
+      "bytes": 31922,
+      "admissible": true
+    },
+    {
+      "id": "canary",
+      "request_sha256": "06853cc44e570cebee4b4623655b73c43072ee040d025e87e47696b3e15fac38",
+      "prompt_tokens": 46,
+      "completion_cap": 128,
+      "bytes": 967,
+      "admissible": true
+    },
+    {
+      "id": "initial_inventory",
+      "request_sha256": "093ca4c8e32fa7c6058a8ce2701ceb9505c07c7c80ac0cf85213e2f0871fa4f7",
+      "prompt_tokens": 8676,
+      "completion_cap": 2048,
+      "bytes": 11938,
+      "admissible": true
+    },
+    {
+      "id": "eight_frame_feedback",
+      "request_sha256": "e2444cd2e69125d27c90185e82eb8032375b11f72663ba48d9c9affad3aa23bb",
+      "prompt_tokens": 76606,
+      "completion_cap": 1024,
+      "bytes": 80042,
+      "admissible": false
+    },
+    {
+      "id": "bounded_history_stress",
+      "request_sha256": "6b69b71aaab7ef2d9d1c674db46d16ca2d037b15f3b72c7c2e9abfb745cb2aab",
+      "prompt_tokens": 25269,
+      "completion_cap": 1024,
+      "bytes": 128989,
+      "admissible": true
+    }
+  ],
+  "adaptive_rule": "Every actual request is tokenized before inference; >60000 prompt tokens or 196608 bytes fails closed with no truncation/retry. Stress cases are not a guarantee all histories fit.",
+  "study_prompt_ceiling": 1500000,
+  "generated_ceiling_including_canary": 19584,
+  "max_completions": 26,
+  "model_calls": 0,
+  "gpu_runs": 0
+}

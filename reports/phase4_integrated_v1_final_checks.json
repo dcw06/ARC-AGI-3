@@ -1,0 +1,677 @@
+{
+  "clean_checkout_replay_passed": true,
+  "method": "git archive HEAD plus task deliverables; no ignored downloads or assets; existing CPU interpreter",
+  "archive_results": {
+    "correct": {
+      "passed": true,
+      "errors": [],
+      "comparison": {
+        "episodes": [
+          {
+            "arm": "control",
+            "actions": 2,
+            "calls": 2,
+            "level_delta": 1,
+            "terminal_reason": "progress",
+            "adjacent_repeats": 1,
+            "feedback": [],
+            "initial_geometry": null,
+            "intent_for_control": "unobserved"
+          },
+          {
+            "arm": "structured",
+            "actions": 2,
+            "calls": 5,
+            "level_delta": 1,
+            "terminal_reason": "progress",
+            "adjacent_repeats": 1,
+            "feedback": [
+              {
+                "step": 0,
+                "declared_target_hit": null,
+                "changes": [
+                  {
+                    "frame_index": 0,
+                    "count": 0,
+                    "bbox": []
+                  },
+                  {
+                    "frame_index": 1,
+                    "count": 1,
+                    "bbox": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                ],
+                "primary_truth": "supported",
+                "alternative_truth": "contradicted",
+                "feedback_changes_exact": true,
+                "feedback_verdicts_exact": true,
+                "visible_object_grounding": "requires_current_frame_adjudication",
+                "behavioral_use": "requires_rubric_adjudication"
+              },
+              {
+                "step": 1,
+                "declared_target_hit": null,
+                "changes": [
+                  {
+                    "frame_index": 0,
+                    "count": 1,
+                    "bbox": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  },
+                  {
+                    "frame_index": 1,
+                    "count": 1,
+                    "bbox": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                ],
+                "primary_truth": "supported",
+                "alternative_truth": "contradicted",
+                "feedback_changes_exact": true,
+                "feedback_verdicts_exact": true,
+                "visible_object_grounding": "requires_current_frame_adjudication",
+                "behavioral_use": "requires_rubric_adjudication"
+              }
+            ],
+            "initial_geometry": {
+              "mask_matches": [
+                {
+                  "reference": "A",
+                  "prediction_id": null,
+                  "iou": 0.0,
+                  "localized": false,
+                  "silhouette_exact": false,
+                  "bbox_exact": false
+                },
+                {
+                  "reference": "B",
+                  "prediction_id": null,
+                  "iou": 0.0,
+                  "localized": false,
+                  "silhouette_exact": false,
+                  "bbox_exact": false
+                },
+                {
+                  "reference": "C",
+                  "prediction_id": null,
+                  "iou": 0.0,
+                  "localized": false,
+                  "silhouette_exact": false,
+                  "bbox_exact": false
+                }
+              ],
+              "unmatched_prediction_ids": [],
+              "prose_geometry_markings_and_context_regions": "pending_rubric_adjudication",
+              "reference_not_sent_to_model": true
+            },
+            "intent_for_control": "unobserved"
+          }
+        ],
+        "calls": 7,
+        "actions": 4,
+        "prompt_tokens": 70,
+        "interpretation": "Single inspected scaffold case; no automatic policy promotion; human rubric adjudication remains separate."
+      }
+    },
+    "cap": {
+      "passed": true,
+      "errors": [],
+      "comparison": {
+        "episodes": [
+          {
+            "arm": "control",
+            "actions": 8,
+            "calls": 8,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "adjacent_repeats": 7,
+            "feedback": [],
+            "initial_geometry": null,
+            "intent_for_control": "unobserved"
+          },
+          {
+            "arm": "structured",
+            "actions": 8,
+            "calls": 17,
+            "level_delta": 0,
+            "terminal_reason": "action_cap",
+            "adjacent_repeats": 7,
+            "feedback": [
+              {
+                "step": 0,
+                "declared_target_hit": null,
+                "changes": [
+                  {
+                    "frame_index": 0,
+                    "count": 0,
+                    "bbox": []
+                  },
+                  {
+                    "frame_index": 1,
+                    "count": 1,
+                    "bbox": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                ],
+                "primary_truth": "supported",
+                "alternative_truth": "contradicted",
+                "feedback_changes_exact": true,
+                "feedback_verdicts_exact": true,
+                "visible_object_grounding": "requires_current_frame_adjudication",
+                "behavioral_use": "requires_rubric_adjudication"
+              },
+              {
+                "step": 1,
+                "declared_target_hit": null,
+                "changes": [
+                  {
+                    "frame_index": 0,
+                    "count": 1,
+                    "bbox": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  },
+                  {
+                    "frame_index": 1,
+                    "count": 1,
+                    "bbox": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                ],
+                "primary_truth": "supported",
+                "alternative_truth": "contradicted",
+                "feedback_changes_exact": true,
+                "feedback_verdicts_exact": true,
+                "visible_object_grounding": "requires_current_frame_adjudication",
+                "behavioral_use": "requires_rubric_adjudication"
+              },
+              {
+                "step": 2,
+                "declared_target_hit": null,
+                "changes": [
+                  {
+                    "frame_index": 0,
+                    "count": 1,
+                    "bbox": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  },
+                  {
+                    "frame_index": 1,
+                    "count": 1,
+                    "bbox": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                ],
+                "primary_truth": "supported",
+                "alternative_truth": "contradicted",
+                "feedback_changes_exact": true,
+                "feedback_verdicts_exact": true,
+                "visible_object_grounding": "requires_current_frame_adjudication",
+                "behavioral_use": "requires_rubric_adjudication"
+              },
+              {
+                "step": 3,
+                "declared_target_hit": null,
+                "changes": [
+                  {
+                    "frame_index": 0,
+                    "count": 1,
+                    "bbox": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  },
+                  {
+                    "frame_index": 1,
+                    "count": 1,
+                    "bbox": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                ],
+                "primary_truth": "supported",
+                "alternative_truth": "contradicted",
+                "feedback_changes_exact": true,
+                "feedback_verdicts_exact": true,
+                "visible_object_grounding": "requires_current_frame_adjudication",
+                "behavioral_use": "requires_rubric_adjudication"
+              },
+              {
+                "step": 4,
+                "declared_target_hit": null,
+                "changes": [
+                  {
+                    "frame_index": 0,
+                    "count": 1,
+                    "bbox": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  },
+                  {
+                    "frame_index": 1,
+                    "count": 1,
+                    "bbox": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                ],
+                "primary_truth": "supported",
+                "alternative_truth": "contradicted",
+                "feedback_changes_exact": true,
+                "feedback_verdicts_exact": true,
+                "visible_object_grounding": "requires_current_frame_adjudication",
+                "behavioral_use": "requires_rubric_adjudication"
+              },
+              {
+                "step": 5,
+                "declared_target_hit": null,
+                "changes": [
+                  {
+                    "frame_index": 0,
+                    "count": 1,
+                    "bbox": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  },
+                  {
+                    "frame_index": 1,
+                    "count": 1,
+                    "bbox": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                ],
+                "primary_truth": "supported",
+                "alternative_truth": "contradicted",
+                "feedback_changes_exact": true,
+                "feedback_verdicts_exact": true,
+                "visible_object_grounding": "requires_current_frame_adjudication",
+                "behavioral_use": "requires_rubric_adjudication"
+              },
+              {
+                "step": 6,
+                "declared_target_hit": null,
+                "changes": [
+                  {
+                    "frame_index": 0,
+                    "count": 1,
+                    "bbox": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  },
+                  {
+                    "frame_index": 1,
+                    "count": 1,
+                    "bbox": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                ],
+                "primary_truth": "supported",
+                "alternative_truth": "contradicted",
+                "feedback_changes_exact": true,
+                "feedback_verdicts_exact": true,
+                "visible_object_grounding": "requires_current_frame_adjudication",
+                "behavioral_use": "requires_rubric_adjudication"
+              },
+              {
+                "step": 7,
+                "declared_target_hit": null,
+                "changes": [
+                  {
+                    "frame_index": 0,
+                    "count": 1,
+                    "bbox": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  },
+                  {
+                    "frame_index": 1,
+                    "count": 1,
+                    "bbox": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                ],
+                "primary_truth": "supported",
+                "alternative_truth": "contradicted",
+                "feedback_changes_exact": true,
+                "feedback_verdicts_exact": true,
+                "visible_object_grounding": "requires_current_frame_adjudication",
+                "behavioral_use": "requires_rubric_adjudication"
+              }
+            ],
+            "initial_geometry": {
+              "mask_matches": [
+                {
+                  "reference": "A",
+                  "prediction_id": null,
+                  "iou": 0.0,
+                  "localized": false,
+                  "silhouette_exact": false,
+                  "bbox_exact": false
+                },
+                {
+                  "reference": "B",
+                  "prediction_id": null,
+                  "iou": 0.0,
+                  "localized": false,
+                  "silhouette_exact": false,
+                  "bbox_exact": false
+                },
+                {
+                  "reference": "C",
+                  "prediction_id": null,
+                  "iou": 0.0,
+                  "localized": false,
+                  "silhouette_exact": false,
+                  "bbox_exact": false
+                }
+              ],
+              "unmatched_prediction_ids": [],
+              "prose_geometry_markings_and_context_regions": "pending_rubric_adjudication",
+              "reference_not_sent_to_model": true
+            },
+            "intent_for_control": "unobserved"
+          }
+        ],
+        "calls": 25,
+        "actions": 16,
+        "prompt_tokens": 250,
+        "interpretation": "Single inspected scaffold case; no automatic policy promotion; human rubric adjudication remains separate."
+      }
+    },
+    "incorrect": {
+      "passed": true,
+      "errors": [],
+      "comparison": {
+        "episodes": [
+          {
+            "arm": "control",
+            "actions": 2,
+            "calls": 2,
+            "level_delta": 1,
+            "terminal_reason": "progress",
+            "adjacent_repeats": 1,
+            "feedback": [],
+            "initial_geometry": null,
+            "intent_for_control": "unobserved"
+          },
+          {
+            "arm": "structured",
+            "actions": 2,
+            "calls": 5,
+            "level_delta": 1,
+            "terminal_reason": "progress",
+            "adjacent_repeats": 1,
+            "feedback": [
+              {
+                "step": 0,
+                "declared_target_hit": null,
+                "changes": [
+                  {
+                    "frame_index": 0,
+                    "count": 0,
+                    "bbox": []
+                  },
+                  {
+                    "frame_index": 1,
+                    "count": 1,
+                    "bbox": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                ],
+                "primary_truth": "supported",
+                "alternative_truth": "contradicted",
+                "feedback_changes_exact": false,
+                "feedback_verdicts_exact": false,
+                "visible_object_grounding": "requires_current_frame_adjudication",
+                "behavioral_use": "requires_rubric_adjudication"
+              },
+              {
+                "step": 1,
+                "declared_target_hit": null,
+                "changes": [
+                  {
+                    "frame_index": 0,
+                    "count": 1,
+                    "bbox": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  },
+                  {
+                    "frame_index": 1,
+                    "count": 1,
+                    "bbox": [
+                      0,
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                ],
+                "primary_truth": "supported",
+                "alternative_truth": "contradicted",
+                "feedback_changes_exact": false,
+                "feedback_verdicts_exact": false,
+                "visible_object_grounding": "requires_current_frame_adjudication",
+                "behavioral_use": "requires_rubric_adjudication"
+              }
+            ],
+            "initial_geometry": {
+              "mask_matches": [
+                {
+                  "reference": "A",
+                  "prediction_id": null,
+                  "iou": 0.0,
+                  "localized": false,
+                  "silhouette_exact": false,
+                  "bbox_exact": false
+                },
+                {
+                  "reference": "B",
+                  "prediction_id": null,
+                  "iou": 0.0,
+                  "localized": false,
+                  "silhouette_exact": false,
+                  "bbox_exact": false
+                },
+                {
+                  "reference": "C",
+                  "prediction_id": null,
+                  "iou": 0.0,
+                  "localized": false,
+                  "silhouette_exact": false,
+                  "bbox_exact": false
+                }
+              ],
+              "unmatched_prediction_ids": [],
+              "prose_geometry_markings_and_context_regions": "pending_rubric_adjudication",
+              "reference_not_sent_to_model": true
+            },
+            "intent_for_control": "unobserved"
+          }
+        ],
+        "calls": 7,
+        "actions": 4,
+        "prompt_tokens": 70,
+        "interpretation": "Single inspected scaffold case; no automatic policy promotion; human rubric adjudication remains separate."
+      }
+    },
+    "invalid": {
+      "passed": true,
+      "errors": [],
+      "comparison": {
+        "episodes": [
+          {
+            "arm": "control",
+            "actions": 2,
+            "calls": 2,
+            "level_delta": 1,
+            "terminal_reason": "progress",
+            "adjacent_repeats": 1,
+            "feedback": [],
+            "initial_geometry": null,
+            "intent_for_control": "unobserved"
+          },
+          {
+            "arm": "structured",
+            "actions": 0,
+            "calls": 2,
+            "level_delta": 0,
+            "terminal_reason": "invalid_output",
+            "adjacent_repeats": 0,
+            "feedback": [],
+            "initial_geometry": {
+              "mask_matches": [
+                {
+                  "reference": "A",
+                  "prediction_id": null,
+                  "iou": 0.0,
+                  "localized": false,
+                  "silhouette_exact": false,
+                  "bbox_exact": false
+                },
+                {
+                  "reference": "B",
+                  "prediction_id": null,
+                  "iou": 0.0,
+                  "localized": false,
+                  "silhouette_exact": false,
+                  "bbox_exact": false
+                },
+                {
+                  "reference": "C",
+                  "prediction_id": null,
+                  "iou": 0.0,
+                  "localized": false,
+                  "silhouette_exact": false,
+                  "bbox_exact": false
+                }
+              ],
+              "unmatched_prediction_ids": [],
+              "prose_geometry_markings_and_context_regions": "pending_rubric_adjudication",
+              "reference_not_sent_to_model": true
+            },
+            "intent_for_control": "unobserved"
+          }
+        ],
+        "calls": 4,
+        "actions": 2,
+        "prompt_tokens": 40,
+        "interpretation": "Single inspected scaffold case; no automatic policy promotion; human rubric adjudication remains separate."
+      }
+    },
+    "mismatch": {
+      "passed": false,
+      "errors": [
+        "supervisor failure",
+        "peak_rss_bytes",
+        "peak_scratch_bytes",
+        "worker completion/class",
+        "monitor coverage",
+        "trajectory: incomplete pair"
+      ],
+      "comparison": null
+    },
+    "transport": {
+      "passed": false,
+      "errors": [
+        "supervisor failure",
+        "peak_rss_bytes",
+        "peak_scratch_bytes",
+        "worker completion/class",
+        "monitor coverage",
+        "trajectory: incomplete pair"
+      ],
+      "comparison": null
+    },
+    "cleanup": {
+      "passed": false,
+      "errors": [
+        "supervisor failure",
+        "peak_rss_bytes",
+        "peak_scratch_bytes",
+        "worker completion/class",
+        "monitor coverage",
+        "trajectory: incomplete pair"
+      ],
+      "comparison": null
+    }
+  },
+  "synthetic_launch_packaging_verified": true,
+  "synthetic_upload_count": 1,
+  "second_upload_rejected": true,
+  "launch_notebook_bytes": 790114,
+  "review_lock_sha256": "e254bd8f0ce129535b4a6e8b1ac0e963ffb6ba58be19aaf2b0a744acb9beb372",
+  "real_authorizations": 0,
+  "gpu_runs": 0
+}
