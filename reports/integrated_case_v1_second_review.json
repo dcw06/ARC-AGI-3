@@ -1,0 +1,35 @@
+{
+  "status": "review_probes_passed_not_launch_acceptance",
+  "frozen_spec_unchanged": true,
+  "geometry_and_budget_checks": true,
+  "historical_completion_guard": "request settings",
+  "historical_prompt_guard": "prompt",
+  "constructed_six_frame_request_bytes": 89132,
+  "historical_payload_guard": "request byte limit",
+  "response_8193_bytes_retained": 8192,
+  "response_full_hash_preserved": true,
+  "response_truncation_flag": true,
+  "historical_bridge_max_bytes": 1048576,
+  "baseline_code_not_bound_by_spec_lock": [
+    "certification/phase4_transient_v2/contract.py",
+    "certification/phase4_transient_v2/action_contract.py",
+    "agent/representation.py"
+  ],
+  "missing_executable_deliverables": [
+    "certification/phase4_integrated_v1/worker.py",
+    "certification/phase4_integrated_v1/evaluate.py",
+    "notebooks/phase4-integrated-v1-review-r1/profile.ipynb"
+  ],
+  "inspected_file_hashes": {
+    "certification/phase4_transient_v2/request_contract.py": "9ae8fe4a016c69772f8e8435b1441269c69fffefee424131eaa10b5ffdc04079",
+    "certification/phase4_transient_v2/service.py": "7a7ca258ba38d9289fb52349fc77d3eab1b4ff4aa2f90ad78f69d103aa4c27f5",
+    "certification/phase4_transient_v2/bridge.py": "3fa12f0a3a73adac16feeed3466f4d6cc7bea04b02c987d0665c653c21985dad",
+    "certification/phase4_transient_v2/response_evidence.py": "e4380d6da0769a1291b175250286e4c530a8644f6a0363f0dcba16d41e361479",
+    "agent/state.py": "c038905633455f77fb99582cac092809c29e2ee5de06d3666b53bd3c9bc754d7",
+    "agent/framework_adapter.py": "3ac7848aecb2cadcab80f08d762a55114093151cee9d8c8e3ab824c6372218ef",
+    "reports/integrated_case_v1/spec-lock.json": "b234e4d43c70238f49176fd7dbeb0ca4ce14c1cfc15760049432cede4620d81b"
+  },
+  "model_calls": 0,
+  "environment_actions": 0,
+  "gpu_runs": 0
+}

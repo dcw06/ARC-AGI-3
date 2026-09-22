@@ -1,0 +1,33 @@
+{
+  "arms": [
+    "unassisted_control",
+    "structured_diagnostic"
+  ],
+  "available_actions": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "environment_seed": 0,
+  "frame_index": 0,
+  "game_id": "ar25-0c556536",
+  "grid_sha256": "73cc76b0761e6c69a8c6683e44e2ac70cf90caf417b0d61d3cf47e5eda28841b",
+  "id": "integrated-ar25-v1",
+  "initial_canonical_hash": "2318e77b3f8aceb099c4e7b625ede6b23bf465b59e0575c587e5964ff29636d9",
+  "max_actions_per_arm": 8,
+  "max_canaries": 1,
+  "max_generated_tokens": 19584,
+  "max_model_calls": 26,
+  "provider_seconds_authorized": 0,
+  "request_seed": 0,
+  "source_archive": "evidence/phase4-closed-loop-v1-r1-completed-v1.zip",
+  "source_archive_sha256": "994dc62307777a1adf301986aa2548bb9dad84ab438963d20392736abd493f9d",
+  "source_episode": "cl1-00-no_concrete_examples",
+  "source_member": "output/phase4-closed-loop-v1/worker/obs-30a1a72091d01e4dfef33e2c414c0b2d9fc5a8438e8d999d67357a54a4b86495.json",
+  "source_member_sha256": "30a1a72091d01e4dfef33e2c414c0b2d9fc5a8438e8d999d67357a54a4b86495",
+  "status": "frozen_specification_pending_review_and_implementation"
+}
