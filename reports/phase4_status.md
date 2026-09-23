@@ -1,5 +1,32 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
+## Multimodal preflight v2 completed: image path still unverified
+
+The separately authorized v2 attempt completed; frozen independent replay and
+cleanup passed. Startup took 624.321 seconds, including 482.438 seconds hashing
+the model. The text control passed, but all three image probes failed locally:
+the mounted fast processor accepts PyTorch tensors and the expectation helper
+requested NumPy. No image request reached vLLM. The frozen verdict is
+`token_accounting_mismatch`, and the perception comparison remains blocked.
+
+All 24 downloads were hash-verified and archived. Account usage increased
+777.475 seconds, not exact billing. The attempt is consumed; no retry is
+authorized. See [disposition](phase4_multimodal_preflight_v2_disposition.md)
+for the next local processor-contract repair and replay command.
+
+## Historical preparation: multimodal preflight v2 startup repair
+
+The proposed startup repair now has a separate v2 source namespace, preserving
+v1 R2 and its consumed attempt. It adds timestamped startup stages and periodic
+model-hash progress, raises the shared startup ceiling to 900 seconds, and
+drains small log messages promptly. Probes and image-support blocking rules
+remain unchanged. See the [new review](phase4_multimodal_preflight_v2_review.md)
+and its local/package verification receipts for the frozen review state.
+
+The new proposal remains one 1,800-second attempt, subject to separate source
+approval and compute authorization. No new attempt has been reserved or
+launched. The text-versus-image comparison and Phase 4 remain open.
+
 ## Multimodal preflight r2 run: startup timeout before any probe
 
 Kaggle reported ERROR. The model host did not become ready within the frozen

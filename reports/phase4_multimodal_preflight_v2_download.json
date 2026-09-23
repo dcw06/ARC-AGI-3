@@ -1,0 +1,128 @@
+{
+  "kernel": "daichongwei06/arc3-phase4-multimodal-preflight-v2-r1",
+  "requested_version": 1,
+  "provider_output_files": 23,
+  "console_log_retained": true,
+  "files": [
+    {
+      "path": ".mm2-a4445329d2de4bec975d5b238a510ab9.runtime-consumed.json",
+      "bytes": 76,
+      "sha256": "01a11edbfc87ac994b12708a36239cd7158a23e90556a1bbc99d7c9c1ed65eac"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/.evidence.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/control/gpu-cleanup.json",
+      "bytes": 282,
+      "sha256": "31c3509457a6943c73e69010847eb9eb776a27dd7ce7c6ca4687b20cd72bdc2f"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/control/installation.json",
+      "bytes": 2853,
+      "sha256": "abdd63fa5bac21b0a5cb7f22e263d865250c382b6ed1f599a5ed8410bfad2517"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/control/monitor-ready-ack.json",
+      "bytes": 77,
+      "sha256": "4960ae6a6e3b854507aeb7c8e9d6556f70cea94ccc3ee9f8d0dddc01cd80f5b2"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/control/notebook-cost.json",
+      "bytes": 155,
+      "sha256": "eaf51632a170e2a27932011d99582c585c86d6a545246fff9faea4f7ca06dd0b"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/control/outer.json",
+      "bytes": 1192,
+      "sha256": "8347437525a0ec57c12ff90dbc408967b2c40bca2af3caed1490a838f24e583d"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/control/ownership.json",
+      "bytes": 158,
+      "sha256": "87487023b9eb2e899e136adc1fe701af70716ec8c5db5e30392fa2ccd7248533"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/control/stop-monitor.json",
+      "bytes": 67,
+      "sha256": "34ab54f693705724a63436b564b812aec10913413aac1a9dbe3dcbc20a6b48ff"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/evaluation/notebook-result.json",
+      "bytes": 313,
+      "sha256": "2f11775fa2051111c65c4900eeaf959cc2dd39381accf083618326e52fa8abd5"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/evaluation/result.json",
+      "bytes": 2373,
+      "sha256": "ca3a9920929e5561f40d6a390e208fe6e1668d363d3faf022f9483c8e0f446a6"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/logs/306.json",
+      "bytes": 37198,
+      "sha256": "a8190aa0de25f355556ecd0a65a23f561976f6e15b06450059c8f1b456d61acd"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/logs/308.json",
+      "bytes": 102,
+      "sha256": "50e31b712644548df2ea205f2e49aed62d938a59070d48f36338db20c2753895"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/logs/install-game.json",
+      "bytes": 599348,
+      "sha256": "ef66ddfd3afa074e9fd5603596b109256a7cd49adfc8808780bb1ef14b016624"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/logs/install-model.json",
+      "bytes": 2099628,
+      "sha256": "5537e91368a1e02c9214eebdea5b2f5aeceaf906ab705aa400c25bef77d7341d"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/monitor/monitor-result.json",
+      "bytes": 1221,
+      "sha256": "16c2ea056b0c109af11388cd824e85b82fb074f78d4f9a9d725efd3ef7b1886a"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/monitor/ready.json",
+      "bytes": 636,
+      "sha256": "288e15d70637c5847b514d400121987a78ca99d2c8f5064d2ce68686f894f3e1"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/monitor/samples-0000.json",
+      "bytes": 23799,
+      "sha256": "4094a6faf5814142b42af765b90d3e560ddc3b334244d945decb3ae6b5211afc"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/monitor/samples-0001.json",
+      "bytes": 24587,
+      "sha256": "36bb4ee6644e14742aedb3ceedded088e4552795b37bea2d15e3dffe6a9aa743"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/monitor/samples-0002.json",
+      "bytes": 9995,
+      "sha256": "a041eadbeb5d3dbc3e9b2da656736fee1c4cca85039ff895aaca29109017336c"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/monitor/telemetry.json",
+      "bytes": 1145,
+      "sha256": "43ab2b6f1b27d5d367479d8254b8f0d4381a3e1f6af9e41bdeb757f5ecf43907"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/worker/model-ready.json",
+      "bytes": 59,
+      "sha256": "95bd82de1a31f98c6788a9e124ec4cfd15ca214a2c35e25ce7e4b6141a89955e"
+    },
+    {
+      "path": "phase4-multimodal-preflight-v2/worker/state.json",
+      "bytes": 37190,
+      "sha256": "44d74ff8707dad874be8ed6b13027de894f8c5d257ff3f0f0de0545bfde7fe75"
+    },
+    {
+      "path": "arc3-phase4-multimodal-preflight-v2-r1.log",
+      "bytes": 2822,
+      "sha256": "d62b9296a7aac4a5bba3f089af3513fd457af1d8ee93968d16ec46c662ebba9b"
+    }
+  ]
+}
