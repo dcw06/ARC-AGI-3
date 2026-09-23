@@ -1,5 +1,15 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
+## Integrated ar25 v1 completed: technical pass, inventory stop
+
+Independent archived replay and cleanup passed. Baseline used eight actions with
+zero level increase. The structured arm returned incomplete inventory JSON at its
+2048-token cap and stopped before taking an action. Later diagnostic stages are
+unobserved; this does not establish scaffold efficacy. All 43 downloads were
+verified and archived; the reservation remains consumed. See
+[final disposition](phase4_integrated_v1_disposition.md). Production certification
+and exact billing remain open. Earlier entries below are historical.
+
 ## Coordinate v2 completed; no wording promotion
 
 The repaired target run and independent archive replay passed. Baseline accuracy

@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "errors": [],
+  "scope": "closed_loop_development_live",
+  "comparison": {
+    "episodes": [
+      {
+        "arm": "control",
+        "actions": 8,
+        "calls": 8,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "adjacent_repeats": 3,
+        "feedback": [],
+        "initial_geometry": null,
+        "intent_for_control": "unobserved"
+      },
+      {
+        "arm": "structured",
+        "actions": 0,
+        "calls": 1,
+        "level_delta": 0,
+        "terminal_reason": "invalid_output",
+        "adjacent_repeats": 0,
+        "feedback": [],
+        "initial_geometry": null,
+        "intent_for_control": "unobserved"
+      }
+    ],
+    "calls": 9,
+    "actions": 8,
+    "prompt_tokens": 197702,
+    "interpretation": "Single inspected scaffold case; no automatic policy promotion; human rubric adjudication remains separate."
+  },
+  "comparison_is_scripted": false,
+  "model_inference": true,
+  "capacity_candidate": null,
+  "C_nominal": null,
+  "C_admit": null,
+  "development_model_lifecycle_passed": true,
+  "phase4_complete": false,
+  "independent_replay": true,
+  "evidence_bytes": 3075353,
+  "exact_provider_billed_seconds": null
+}
