@@ -1,0 +1,80 @@
+{
+  "passed": true,
+  "errors": [],
+  "scope": "closed_loop_development_live",
+  "comparison": {
+    "episodes": [
+      {
+        "arm": "control",
+        "actions": 8,
+        "calls": 8,
+        "level_delta": 0,
+        "terminal_reason": "action_cap",
+        "adjacent_repeats": 3,
+        "feedback": [],
+        "initial_geometry": null,
+        "intent_for_control": "unobserved"
+      },
+      {
+        "arm": "structured",
+        "actions": 0,
+        "calls": 2,
+        "level_delta": 0,
+        "terminal_reason": "invalid_output",
+        "adjacent_repeats": 0,
+        "feedback": [],
+        "initial_geometry": {
+          "bbox_matches": [
+            {
+              "reference": "A",
+              "prediction_id": null,
+              "bbox_iou": 0.0,
+              "localized": false,
+              "contour_accuracy": "not_in_coarse_inventory_see_decision_target_contour",
+              "bbox_exact": false
+            },
+            {
+              "reference": "B",
+              "prediction_id": null,
+              "bbox_iou": 0.0,
+              "localized": false,
+              "contour_accuracy": "not_in_coarse_inventory_see_decision_target_contour",
+              "bbox_exact": false
+            },
+            {
+              "reference": "C",
+              "prediction_id": null,
+              "bbox_iou": 0.0,
+              "localized": false,
+              "contour_accuracy": "not_in_coarse_inventory_see_decision_target_contour",
+              "bbox_exact": false
+            }
+          ],
+          "unmatched_prediction_ids": [
+            "region_1",
+            "region_2",
+            "region_3",
+            "region_4"
+          ],
+          "prose_geometry_markings_and_context_regions": "pending_rubric_adjudication",
+          "reference_not_sent_to_model": true
+        },
+        "intent_for_control": "unobserved"
+      }
+    ],
+    "calls": 10,
+    "actions": 8,
+    "prompt_tokens": 206733,
+    "interpretation": "Single inspected scaffold case; no automatic policy promotion; human rubric adjudication remains separate."
+  },
+  "comparison_is_scripted": false,
+  "model_inference": true,
+  "capacity_candidate": null,
+  "C_nominal": null,
+  "C_admit": null,
+  "development_model_lifecycle_passed": true,
+  "phase4_complete": false,
+  "independent_replay": true,
+  "evidence_bytes": 3101257,
+  "exact_provider_billed_seconds": null
+}

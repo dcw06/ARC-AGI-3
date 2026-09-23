@@ -1,5 +1,18 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
+## Integrated ar25 v2 completed: inventory feasible, first decision invalid
+
+Independent and clean-checkout replays passed. The compact inventory finished
+with `finish_reason=stop` at 462 tokens (v1 hit its 2,048 cap), so output burden
+is resolved. All four inventory regions missed every reference object
+(IoU 0). The first decision gave a reversed target span `[16,25,16]` and was
+rejected before dispatch, so the structured arm took zero actions. Control
+repeated v1: eight clicks, zero levels. The remaining obstruction is grounding
+and target specification, which is unisolated. All 45 downloads were archived
+and the attempt is consumed; account usage delta was 658.957 s, not exact
+billing. See the [disposition](phase4_integrated_v2_disposition.md). Earlier
+entries are historical.
+
 ## Integrated ar25 v2: output contract repaired and frozen for review
 
 The inventory is now a bounded coarse list: at most four bboxes, with no cell or
