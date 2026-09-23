@@ -1,5 +1,23 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
+## Multimodal preflight r2 run: startup timeout before any probe
+
+Kaggle reported ERROR. The model host did not become ready within the frozen
+750 s startup ceiling, so no probe was sent. The verdict is
+`lifecycle_failure`, which carries no image-support finding, and the
+perception comparison stays blocked.
+
+Cleanup was verified, and all 20 downloads were archived. The frozen evaluator
+reproduces the target's result. Monitor telemetry shows the pre-server stage
+(model-tree hash through processor load) running more than 748 s, against
+about 385 s in integrated v2. The cause is not isolated because that stage had
+no timestamps. The attempt is consumed; account delta 918.581 s, not exact
+billing.
+
+Proposed r3, not built: startup stage markers and a 900 s startup ceiling
+within the same budget. See the
+[disposition](phase4_multimodal_preflight_v1_disposition.md).
+
 ## Multimodal image-input preflight v1: reviewable, not authorized
 
 This is a zero-action Kaggle preflight. It inventories the model mount, loads

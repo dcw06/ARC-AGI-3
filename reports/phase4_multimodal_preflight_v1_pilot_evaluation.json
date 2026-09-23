@@ -1,0 +1,29 @@
+{
+  "independent_evaluation_passed": false,
+  "verdict": "lifecycle_failure",
+  "matches_target_evaluation": true,
+  "supervisor_error": "TimeoutError: model startup ceiling",
+  "worker_state_retained": false,
+  "probes_sent": 0,
+  "note": "Frozen replay() requires worker/state.json, absent because startup timed out before probes; the frozen evaluate() was applied to the retained supervisor report instead.",
+  "errors": [
+    "supervisor failure",
+    "peak_rss_bytes",
+    "peak_scratch_bytes",
+    "cleanup_seconds",
+    "worker completion/class",
+    "environment work forbidden",
+    "configuration binding",
+    "startup deadline",
+    "mount/processor evidence",
+    "gpu_cleanup_verified",
+    "actual monitor required",
+    "canary audit",
+    "canary body",
+    "model binding",
+    "mount inventory completeness",
+    "monitor coverage",
+    "probe inventory",
+    "request window"
+  ]
+}
