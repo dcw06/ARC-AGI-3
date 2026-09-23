@@ -4,7 +4,7 @@ from pathlib import Path
 from unittest.mock import patch
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 MODES={'verified':True,'incorrect':True,'invalid':True,'mismatch':False,'transport':False,'evidence':False}
-MANIFEST=ROOT/'reports/phase4_perception_v1_local_archive.json'
+MANIFEST=ROOT/'reports/phase4_perception_v1_r2_local_archive.json'
 def replay_archive():
     from certification.phase4_perception_v1.replay import replay
     m=json.loads(MANIFEST.read_bytes());archive=ROOT/m['archive']
@@ -26,7 +26,7 @@ def build():
     if not result.wasSuccessful():raise SystemExit(1)
     from certification.phase4_perception_v1.pilot import run
     members={};timings={}
-    archive=ROOT/'evidence/phase4-perception-v1-local.zip'
+    archive=ROOT/'evidence/phase4-perception-v1-r2-local.zip'
     with tempfile.TemporaryDirectory() as tmp:
         folder=Path(tmp)
         for mode in MODES:
@@ -43,5 +43,5 @@ def build():
     MANIFEST.write_bytes((json.dumps(m,indent=2)+'\n').encode())
     value={'tests_passed':result.testsRun,'fixture_elapsed_seconds':timings,'archive_replay':replay_archive(),
         'monitor_and_cancellation_cleanup_verified':True,'model_calls':0,'gpu_runs':0,'environment_actions':0,'scorecards':0}
-    (ROOT/'reports/phase4_perception_v1_local_checks.json').write_bytes((json.dumps(value,indent=2)+'\n').encode());return value
+    (ROOT/'reports/phase4_perception_v1_r2_local_checks.json').write_bytes((json.dumps(value,indent=2)+'\n').encode());return value
 if __name__=='__main__':print(json.dumps(replay_archive() if '--replay' in sys.argv else build(),indent=2))

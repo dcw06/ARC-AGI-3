@@ -115,7 +115,7 @@
      "content": [
       {
        "type": "text",
-       "text": "Describe visually distinct bounded objects, keeping borders/stripes in non_object_regions. Do not infer game rules, goals, actions or object effects. Report inclusive bbox [xmin,ymin,xmax,ymax]. Coordinates are zero-based grid cells, grid[y][x]; x increases right and y down. Colors include internal markings; report markings separately. Occupancy is a 3x3 mask within each object bbox: boundaries floor(i*size/3), a block is 1 when at least half its cells belong to the object. Match outer geometry independently of color/position; transform maps a to b, reflection before rotation. Use uncertain when ambiguous. Use unique short IDs, at most 6 objects, 3 non-object regions and 6 relations. Describe only the supplied observation. Palette legend (color index: RGB): 0:(255,255,255), 1:(204,204,204), 2:(153,153,153), 3:(102,102,102), 4:(51,51,51), 5:(0,0,0), 6:(229,58,163), 7:(255,123,204), 8:(249,60,49), 9:(30,147,255), 10:(136,216,241), 11:(255,220,0), 12:(255,133,27), 13:(146,18,49), 14:(79,204,48), 15:(163,86,214). Grid size is 64x64. An image, when supplied, uses 16x16 pixels per cell."
+       "text": "Describe visually distinct bounded objects, keeping borders/stripes in non_object_regions. Do not infer game rules, goals, actions or object effects. Report inclusive bbox [xmin,ymin,xmax,ymax]. Coordinates are zero-based grid cells, grid[y][x]; x increases right and y down. Colors include internal markings; report markings separately. Occupancy is a 3x3 mask within each object bbox: boundaries floor(i*size/3), a block is 1 when at least half its cells belong to the object. Match outer geometry independently of color/position; transform maps a to b, reflection before rotation. When multiple transforms fit, report any valid transform; use uncertain when you cannot identify one. Use unique short IDs, at most 6 objects, 3 non-object regions and 6 relations. Describe only the supplied observation. Palette legend (color index: RGB): 0:(255,255,255), 1:(204,204,204), 2:(153,153,153), 3:(102,102,102), 4:(51,51,51), 5:(0,0,0), 6:(229,58,163), 7:(255,123,204), 8:(249,60,49), 9:(30,147,255), 10:(136,216,241), 11:(255,220,0), 12:(255,133,27), 13:(146,18,49), 14:(79,204,48), 15:(163,86,214). Grid size is 64x64. An image, when supplied, uses 16x16 pixels per cell."
       },
       {
        "type": "text",
@@ -302,10 +302,10 @@
     }
    }
   },
-  "request_sha256": "00638e78ad31caf66621279ca74e2025693b0eb31bfe62f883155c7e9355ba34",
+  "request_sha256": "ecd31dfcf91cc934ba9f731f16b2f824b3e321884bb296630938a6a4c2885fe1",
   "frozen_local_expectation": {
-   "template_tokens": 8964,
-   "expected_prompt_tokens": 8964
+   "template_tokens": 8977,
+   "expected_prompt_tokens": 8977
   }
  },
  {
@@ -326,7 +326,7 @@
      "content": [
       {
        "type": "text",
-       "text": "Describe visually distinct bounded objects, keeping borders/stripes in non_object_regions. Do not infer game rules, goals, actions or object effects. Report inclusive bbox [xmin,ymin,xmax,ymax]. Coordinates are zero-based grid cells, grid[y][x]; x increases right and y down. Colors include internal markings; report markings separately. Occupancy is a 3x3 mask within each object bbox: boundaries floor(i*size/3), a block is 1 when at least half its cells belong to the object. Match outer geometry independently of color/position; transform maps a to b, reflection before rotation. Use uncertain when ambiguous. Use unique short IDs, at most 6 objects, 3 non-object regions and 6 relations. Describe only the supplied observation. Palette legend (color index: RGB): 0:(255,255,255), 1:(204,204,204), 2:(153,153,153), 3:(102,102,102), 4:(51,51,51), 5:(0,0,0), 6:(229,58,163), 7:(255,123,204), 8:(249,60,49), 9:(30,147,255), 10:(136,216,241), 11:(255,220,0), 12:(255,133,27), 13:(146,18,49), 14:(79,204,48), 15:(163,86,214). Grid size is 64x64. An image, when supplied, uses 16x16 pixels per cell."
+       "text": "Describe visually distinct bounded objects, keeping borders/stripes in non_object_regions. Do not infer game rules, goals, actions or object effects. Report inclusive bbox [xmin,ymin,xmax,ymax]. Coordinates are zero-based grid cells, grid[y][x]; x increases right and y down. Colors include internal markings; report markings separately. Occupancy is a 3x3 mask within each object bbox: boundaries floor(i*size/3), a block is 1 when at least half its cells belong to the object. Match outer geometry independently of color/position; transform maps a to b, reflection before rotation. When multiple transforms fit, report any valid transform; use uncertain when you cannot identify one. Use unique short IDs, at most 6 objects, 3 non-object regions and 6 relations. Describe only the supplied observation. Palette legend (color index: RGB): 0:(255,255,255), 1:(204,204,204), 2:(153,153,153), 3:(102,102,102), 4:(51,51,51), 5:(0,0,0), 6:(229,58,163), 7:(255,123,204), 8:(249,60,49), 9:(30,147,255), 10:(136,216,241), 11:(255,220,0), 12:(255,133,27), 13:(146,18,49), 14:(79,204,48), 15:(163,86,214). Grid size is 64x64. An image, when supplied, uses 16x16 pixels per cell."
       },
       {
        "type": "image_url",
@@ -515,9 +515,9 @@
     }
    }
   },
-  "request_sha256": "34673e01d45b7924f070905e942059126fa745b9970f2fffeb059bac5e961a5e",
+  "request_sha256": "9482547d9be64ab804936347344711d9c0bb52980c45ce85253f6c5d2a14eea1",
   "frozen_local_expectation": {
-   "template_tokens": 472,
+   "template_tokens": 485,
    "input_width": 1024,
    "input_height": 1024,
    "image_grid_thw": [
@@ -531,9 +531,9 @@
    "processed_height": 1024,
    "processed_width": 1024,
    "image_tokens_processor": 1024,
-   "processor_full_prompt_tokens": 1495,
-   "manual_prompt_tokens": 1495,
-   "expected_prompt_tokens": 1495
+   "processor_full_prompt_tokens": 1508,
+   "manual_prompt_tokens": 1508,
+   "expected_prompt_tokens": 1508
   }
  },
  {
@@ -554,7 +554,7 @@
      "content": [
       {
        "type": "text",
-       "text": "Describe visually distinct bounded objects, keeping borders/stripes in non_object_regions. Do not infer game rules, goals, actions or object effects. Report inclusive bbox [xmin,ymin,xmax,ymax]. Coordinates are zero-based grid cells, grid[y][x]; x increases right and y down. Colors include internal markings; report markings separately. Occupancy is a 3x3 mask within each object bbox: boundaries floor(i*size/3), a block is 1 when at least half its cells belong to the object. Match outer geometry independently of color/position; transform maps a to b, reflection before rotation. Use uncertain when ambiguous. Use unique short IDs, at most 6 objects, 3 non-object regions and 6 relations. Describe only the supplied observation. Palette legend (color index: RGB): 0:(255,255,255), 1:(204,204,204), 2:(153,153,153), 3:(102,102,102), 4:(51,51,51), 5:(0,0,0), 6:(229,58,163), 7:(255,123,204), 8:(249,60,49), 9:(30,147,255), 10:(136,216,241), 11:(255,220,0), 12:(255,133,27), 13:(146,18,49), 14:(79,204,48), 15:(163,86,214). Grid size is 64x64. An image, when supplied, uses 16x16 pixels per cell."
+       "text": "Describe visually distinct bounded objects, keeping borders/stripes in non_object_regions. Do not infer game rules, goals, actions or object effects. Report inclusive bbox [xmin,ymin,xmax,ymax]. Coordinates are zero-based grid cells, grid[y][x]; x increases right and y down. Colors include internal markings; report markings separately. Occupancy is a 3x3 mask within each object bbox: boundaries floor(i*size/3), a block is 1 when at least half its cells belong to the object. Match outer geometry independently of color/position; transform maps a to b, reflection before rotation. When multiple transforms fit, report any valid transform; use uncertain when you cannot identify one. Use unique short IDs, at most 6 objects, 3 non-object regions and 6 relations. Describe only the supplied observation. Palette legend (color index: RGB): 0:(255,255,255), 1:(204,204,204), 2:(153,153,153), 3:(102,102,102), 4:(51,51,51), 5:(0,0,0), 6:(229,58,163), 7:(255,123,204), 8:(249,60,49), 9:(30,147,255), 10:(136,216,241), 11:(255,220,0), 12:(255,133,27), 13:(146,18,49), 14:(79,204,48), 15:(163,86,214). Grid size is 64x64. An image, when supplied, uses 16x16 pixels per cell."
       },
       {
        "type": "text",
@@ -741,10 +741,10 @@
     }
    }
   },
-  "request_sha256": "83bdeaf1e83f470661082be813cd8ffad00e5d448cc1fb4ac794e891ba52344a",
+  "request_sha256": "c18edaac3977f71a9296ed8173071003fbccb880c373e8448902af40a2d06e4c",
   "frozen_local_expectation": {
-   "template_tokens": 8711,
-   "expected_prompt_tokens": 8711
+   "template_tokens": 8724,
+   "expected_prompt_tokens": 8724
   }
  },
  {
@@ -765,7 +765,7 @@
      "content": [
       {
        "type": "text",
-       "text": "Describe visually distinct bounded objects, keeping borders/stripes in non_object_regions. Do not infer game rules, goals, actions or object effects. Report inclusive bbox [xmin,ymin,xmax,ymax]. Coordinates are zero-based grid cells, grid[y][x]; x increases right and y down. Colors include internal markings; report markings separately. Occupancy is a 3x3 mask within each object bbox: boundaries floor(i*size/3), a block is 1 when at least half its cells belong to the object. Match outer geometry independently of color/position; transform maps a to b, reflection before rotation. Use uncertain when ambiguous. Use unique short IDs, at most 6 objects, 3 non-object regions and 6 relations. Describe only the supplied observation. Palette legend (color index: RGB): 0:(255,255,255), 1:(204,204,204), 2:(153,153,153), 3:(102,102,102), 4:(51,51,51), 5:(0,0,0), 6:(229,58,163), 7:(255,123,204), 8:(249,60,49), 9:(30,147,255), 10:(136,216,241), 11:(255,220,0), 12:(255,133,27), 13:(146,18,49), 14:(79,204,48), 15:(163,86,214). Grid size is 64x64. An image, when supplied, uses 16x16 pixels per cell."
+       "text": "Describe visually distinct bounded objects, keeping borders/stripes in non_object_regions. Do not infer game rules, goals, actions or object effects. Report inclusive bbox [xmin,ymin,xmax,ymax]. Coordinates are zero-based grid cells, grid[y][x]; x increases right and y down. Colors include internal markings; report markings separately. Occupancy is a 3x3 mask within each object bbox: boundaries floor(i*size/3), a block is 1 when at least half its cells belong to the object. Match outer geometry independently of color/position; transform maps a to b, reflection before rotation. When multiple transforms fit, report any valid transform; use uncertain when you cannot identify one. Use unique short IDs, at most 6 objects, 3 non-object regions and 6 relations. Describe only the supplied observation. Palette legend (color index: RGB): 0:(255,255,255), 1:(204,204,204), 2:(153,153,153), 3:(102,102,102), 4:(51,51,51), 5:(0,0,0), 6:(229,58,163), 7:(255,123,204), 8:(249,60,49), 9:(30,147,255), 10:(136,216,241), 11:(255,220,0), 12:(255,133,27), 13:(146,18,49), 14:(79,204,48), 15:(163,86,214). Grid size is 64x64. An image, when supplied, uses 16x16 pixels per cell."
       },
       {
        "type": "image_url",
@@ -954,9 +954,9 @@
     }
    }
   },
-  "request_sha256": "1daedc69a2988bf7980529e8fa5fd437e00b0a5998c079782ce153e5036ded27",
+  "request_sha256": "a13ef65d8149b76c6ebd721a6056d54f9a4325c76d5d95ccc1b6fc6a02f6c976",
   "frozen_local_expectation": {
-   "template_tokens": 472,
+   "template_tokens": 485,
    "input_width": 1024,
    "input_height": 1024,
    "image_grid_thw": [
@@ -970,9 +970,9 @@
    "processed_height": 1024,
    "processed_width": 1024,
    "image_tokens_processor": 1024,
-   "processor_full_prompt_tokens": 1495,
-   "manual_prompt_tokens": 1495,
-   "expected_prompt_tokens": 1495
+   "processor_full_prompt_tokens": 1508,
+   "manual_prompt_tokens": 1508,
+   "expected_prompt_tokens": 1508
   }
  },
  {
@@ -993,7 +993,7 @@
      "content": [
       {
        "type": "text",
-       "text": "Describe visually distinct bounded objects, keeping borders/stripes in non_object_regions. Do not infer game rules, goals, actions or object effects. Report inclusive bbox [xmin,ymin,xmax,ymax]. Coordinates are zero-based grid cells, grid[y][x]; x increases right and y down. Colors include internal markings; report markings separately. Occupancy is a 3x3 mask within each object bbox: boundaries floor(i*size/3), a block is 1 when at least half its cells belong to the object. Match outer geometry independently of color/position; transform maps a to b, reflection before rotation. Use uncertain when ambiguous. Use unique short IDs, at most 6 objects, 3 non-object regions and 6 relations. Describe only the supplied observation. Palette legend (color index: RGB): 0:(255,255,255), 1:(204,204,204), 2:(153,153,153), 3:(102,102,102), 4:(51,51,51), 5:(0,0,0), 6:(229,58,163), 7:(255,123,204), 8:(249,60,49), 9:(30,147,255), 10:(136,216,241), 11:(255,220,0), 12:(255,133,27), 13:(146,18,49), 14:(79,204,48), 15:(163,86,214). Grid size is 64x64. An image, when supplied, uses 16x16 pixels per cell."
+       "text": "Describe visually distinct bounded objects, keeping borders/stripes in non_object_regions. Do not infer game rules, goals, actions or object effects. Report inclusive bbox [xmin,ymin,xmax,ymax]. Coordinates are zero-based grid cells, grid[y][x]; x increases right and y down. Colors include internal markings; report markings separately. Occupancy is a 3x3 mask within each object bbox: boundaries floor(i*size/3), a block is 1 when at least half its cells belong to the object. Match outer geometry independently of color/position; transform maps a to b, reflection before rotation. When multiple transforms fit, report any valid transform; use uncertain when you cannot identify one. Use unique short IDs, at most 6 objects, 3 non-object regions and 6 relations. Describe only the supplied observation. Palette legend (color index: RGB): 0:(255,255,255), 1:(204,204,204), 2:(153,153,153), 3:(102,102,102), 4:(51,51,51), 5:(0,0,0), 6:(229,58,163), 7:(255,123,204), 8:(249,60,49), 9:(30,147,255), 10:(136,216,241), 11:(255,220,0), 12:(255,133,27), 13:(146,18,49), 14:(79,204,48), 15:(163,86,214). Grid size is 64x64. An image, when supplied, uses 16x16 pixels per cell."
       },
       {
        "type": "text",
@@ -1180,10 +1180,10 @@
     }
    }
   },
-  "request_sha256": "878478e8bc9b932929016634d3ad12da55b7623de4dcd1109f26f921f4d2d26d",
+  "request_sha256": "e66df89605b183f952c92ca9c17784d063a279fec1dd5d28b0bfbf4b5575bec8",
   "frozen_local_expectation": {
-   "template_tokens": 8711,
-   "expected_prompt_tokens": 8711
+   "template_tokens": 8724,
+   "expected_prompt_tokens": 8724
   }
  },
  {
@@ -1204,7 +1204,7 @@
      "content": [
       {
        "type": "text",
-       "text": "Describe visually distinct bounded objects, keeping borders/stripes in non_object_regions. Do not infer game rules, goals, actions or object effects. Report inclusive bbox [xmin,ymin,xmax,ymax]. Coordinates are zero-based grid cells, grid[y][x]; x increases right and y down. Colors include internal markings; report markings separately. Occupancy is a 3x3 mask within each object bbox: boundaries floor(i*size/3), a block is 1 when at least half its cells belong to the object. Match outer geometry independently of color/position; transform maps a to b, reflection before rotation. Use uncertain when ambiguous. Use unique short IDs, at most 6 objects, 3 non-object regions and 6 relations. Describe only the supplied observation. Palette legend (color index: RGB): 0:(255,255,255), 1:(204,204,204), 2:(153,153,153), 3:(102,102,102), 4:(51,51,51), 5:(0,0,0), 6:(229,58,163), 7:(255,123,204), 8:(249,60,49), 9:(30,147,255), 10:(136,216,241), 11:(255,220,0), 12:(255,133,27), 13:(146,18,49), 14:(79,204,48), 15:(163,86,214). Grid size is 64x64. An image, when supplied, uses 16x16 pixels per cell."
+       "text": "Describe visually distinct bounded objects, keeping borders/stripes in non_object_regions. Do not infer game rules, goals, actions or object effects. Report inclusive bbox [xmin,ymin,xmax,ymax]. Coordinates are zero-based grid cells, grid[y][x]; x increases right and y down. Colors include internal markings; report markings separately. Occupancy is a 3x3 mask within each object bbox: boundaries floor(i*size/3), a block is 1 when at least half its cells belong to the object. Match outer geometry independently of color/position; transform maps a to b, reflection before rotation. When multiple transforms fit, report any valid transform; use uncertain when you cannot identify one. Use unique short IDs, at most 6 objects, 3 non-object regions and 6 relations. Describe only the supplied observation. Palette legend (color index: RGB): 0:(255,255,255), 1:(204,204,204), 2:(153,153,153), 3:(102,102,102), 4:(51,51,51), 5:(0,0,0), 6:(229,58,163), 7:(255,123,204), 8:(249,60,49), 9:(30,147,255), 10:(136,216,241), 11:(255,220,0), 12:(255,133,27), 13:(146,18,49), 14:(79,204,48), 15:(163,86,214). Grid size is 64x64. An image, when supplied, uses 16x16 pixels per cell."
       },
       {
        "type": "image_url",
@@ -1393,9 +1393,9 @@
     }
    }
   },
-  "request_sha256": "8e131ec576d00ac85aa8d819ba521f1ec473bb39658f0d1f35d416a2faa87a2b",
+  "request_sha256": "ea5e20b56358ebeef240a36d43a2a3ddb650bda8bcf5aa014195472db7c918a3",
   "frozen_local_expectation": {
-   "template_tokens": 472,
+   "template_tokens": 485,
    "input_width": 1024,
    "input_height": 1024,
    "image_grid_thw": [
@@ -1409,9 +1409,9 @@
    "processed_height": 1024,
    "processed_width": 1024,
    "image_tokens_processor": 1024,
-   "processor_full_prompt_tokens": 1495,
-   "manual_prompt_tokens": 1495,
-   "expected_prompt_tokens": 1495
+   "processor_full_prompt_tokens": 1508,
+   "manual_prompt_tokens": 1508,
+   "expected_prompt_tokens": 1508
   }
  },
  {
@@ -1432,7 +1432,7 @@
      "content": [
       {
        "type": "text",
-       "text": "Describe visually distinct bounded objects, keeping borders/stripes in non_object_regions. Do not infer game rules, goals, actions or object effects. Report inclusive bbox [xmin,ymin,xmax,ymax]. Coordinates are zero-based grid cells, grid[y][x]; x increases right and y down. Colors include internal markings; report markings separately. Occupancy is a 3x3 mask within each object bbox: boundaries floor(i*size/3), a block is 1 when at least half its cells belong to the object. Match outer geometry independently of color/position; transform maps a to b, reflection before rotation. Use uncertain when ambiguous. Use unique short IDs, at most 6 objects, 3 non-object regions and 6 relations. Describe only the supplied observation. Palette legend (color index: RGB): 0:(255,255,255), 1:(204,204,204), 2:(153,153,153), 3:(102,102,102), 4:(51,51,51), 5:(0,0,0), 6:(229,58,163), 7:(255,123,204), 8:(249,60,49), 9:(30,147,255), 10:(136,216,241), 11:(255,220,0), 12:(255,133,27), 13:(146,18,49), 14:(79,204,48), 15:(163,86,214). Grid size is 64x64. An image, when supplied, uses 16x16 pixels per cell."
+       "text": "Describe visually distinct bounded objects, keeping borders/stripes in non_object_regions. Do not infer game rules, goals, actions or object effects. Report inclusive bbox [xmin,ymin,xmax,ymax]. Coordinates are zero-based grid cells, grid[y][x]; x increases right and y down. Colors include internal markings; report markings separately. Occupancy is a 3x3 mask within each object bbox: boundaries floor(i*size/3), a block is 1 when at least half its cells belong to the object. Match outer geometry independently of color/position; transform maps a to b, reflection before rotation. When multiple transforms fit, report any valid transform; use uncertain when you cannot identify one. Use unique short IDs, at most 6 objects, 3 non-object regions and 6 relations. Describe only the supplied observation. Palette legend (color index: RGB): 0:(255,255,255), 1:(204,204,204), 2:(153,153,153), 3:(102,102,102), 4:(51,51,51), 5:(0,0,0), 6:(229,58,163), 7:(255,123,204), 8:(249,60,49), 9:(30,147,255), 10:(136,216,241), 11:(255,220,0), 12:(255,133,27), 13:(146,18,49), 14:(79,204,48), 15:(163,86,214). Grid size is 64x64. An image, when supplied, uses 16x16 pixels per cell."
       },
       {
        "type": "text",
@@ -1619,10 +1619,10 @@
     }
    }
   },
-  "request_sha256": "ef61d3b7da9fe20366906e2ef80862b7eb242cc9895191b3bc443c786053758b",
+  "request_sha256": "bae2683e6944e2bb1a996c9c5aa389a3e7d4363616eea061385db2d3141b2e96",
   "frozen_local_expectation": {
-   "template_tokens": 8903,
-   "expected_prompt_tokens": 8903
+   "template_tokens": 8916,
+   "expected_prompt_tokens": 8916
   }
  },
  {
@@ -1643,7 +1643,7 @@
      "content": [
       {
        "type": "text",
-       "text": "Describe visually distinct bounded objects, keeping borders/stripes in non_object_regions. Do not infer game rules, goals, actions or object effects. Report inclusive bbox [xmin,ymin,xmax,ymax]. Coordinates are zero-based grid cells, grid[y][x]; x increases right and y down. Colors include internal markings; report markings separately. Occupancy is a 3x3 mask within each object bbox: boundaries floor(i*size/3), a block is 1 when at least half its cells belong to the object. Match outer geometry independently of color/position; transform maps a to b, reflection before rotation. Use uncertain when ambiguous. Use unique short IDs, at most 6 objects, 3 non-object regions and 6 relations. Describe only the supplied observation. Palette legend (color index: RGB): 0:(255,255,255), 1:(204,204,204), 2:(153,153,153), 3:(102,102,102), 4:(51,51,51), 5:(0,0,0), 6:(229,58,163), 7:(255,123,204), 8:(249,60,49), 9:(30,147,255), 10:(136,216,241), 11:(255,220,0), 12:(255,133,27), 13:(146,18,49), 14:(79,204,48), 15:(163,86,214). Grid size is 64x64. An image, when supplied, uses 16x16 pixels per cell."
+       "text": "Describe visually distinct bounded objects, keeping borders/stripes in non_object_regions. Do not infer game rules, goals, actions or object effects. Report inclusive bbox [xmin,ymin,xmax,ymax]. Coordinates are zero-based grid cells, grid[y][x]; x increases right and y down. Colors include internal markings; report markings separately. Occupancy is a 3x3 mask within each object bbox: boundaries floor(i*size/3), a block is 1 when at least half its cells belong to the object. Match outer geometry independently of color/position; transform maps a to b, reflection before rotation. When multiple transforms fit, report any valid transform; use uncertain when you cannot identify one. Use unique short IDs, at most 6 objects, 3 non-object regions and 6 relations. Describe only the supplied observation. Palette legend (color index: RGB): 0:(255,255,255), 1:(204,204,204), 2:(153,153,153), 3:(102,102,102), 4:(51,51,51), 5:(0,0,0), 6:(229,58,163), 7:(255,123,204), 8:(249,60,49), 9:(30,147,255), 10:(136,216,241), 11:(255,220,0), 12:(255,133,27), 13:(146,18,49), 14:(79,204,48), 15:(163,86,214). Grid size is 64x64. An image, when supplied, uses 16x16 pixels per cell."
       },
       {
        "type": "image_url",
@@ -1832,9 +1832,9 @@
     }
    }
   },
-  "request_sha256": "a0a8034e5ce833232f2b7eb7eb8c3fac9ee41f050fd0825c2a04655ce0713e16",
+  "request_sha256": "1537169bb02df7556b1e79b0d5768bf14e6cfd8c6228ba3318ff4c83a33e0452",
   "frozen_local_expectation": {
-   "template_tokens": 472,
+   "template_tokens": 485,
    "input_width": 1024,
    "input_height": 1024,
    "image_grid_thw": [
@@ -1848,9 +1848,9 @@
    "processed_height": 1024,
    "processed_width": 1024,
    "image_tokens_processor": 1024,
-   "processor_full_prompt_tokens": 1495,
-   "manual_prompt_tokens": 1495,
-   "expected_prompt_tokens": 1495
+   "processor_full_prompt_tokens": 1508,
+   "manual_prompt_tokens": 1508,
+   "expected_prompt_tokens": 1508
   }
  },
  {
@@ -1871,7 +1871,7 @@
      "content": [
       {
        "type": "text",
-       "text": "Describe visually distinct bounded objects, keeping borders/stripes in non_object_regions. Do not infer game rules, goals, actions or object effects. Report inclusive bbox [xmin,ymin,xmax,ymax]. Coordinates are zero-based grid cells, grid[y][x]; x increases right and y down. Colors include internal markings; report markings separately. Occupancy is a 3x3 mask within each object bbox: boundaries floor(i*size/3), a block is 1 when at least half its cells belong to the object. Match outer geometry independently of color/position; transform maps a to b, reflection before rotation. Use uncertain when ambiguous. Use unique short IDs, at most 6 objects, 3 non-object regions and 6 relations. Describe only the supplied observation. Palette legend (color index: RGB): 0:(255,255,255), 1:(204,204,204), 2:(153,153,153), 3:(102,102,102), 4:(51,51,51), 5:(0,0,0), 6:(229,58,163), 7:(255,123,204), 8:(249,60,49), 9:(30,147,255), 10:(136,216,241), 11:(255,220,0), 12:(255,133,27), 13:(146,18,49), 14:(79,204,48), 15:(163,86,214). Grid size is 64x64. An image, when supplied, uses 16x16 pixels per cell."
+       "text": "Describe visually distinct bounded objects, keeping borders/stripes in non_object_regions. Do not infer game rules, goals, actions or object effects. Report inclusive bbox [xmin,ymin,xmax,ymax]. Coordinates are zero-based grid cells, grid[y][x]; x increases right and y down. Colors include internal markings; report markings separately. Occupancy is a 3x3 mask within each object bbox: boundaries floor(i*size/3), a block is 1 when at least half its cells belong to the object. Match outer geometry independently of color/position; transform maps a to b, reflection before rotation. When multiple transforms fit, report any valid transform; use uncertain when you cannot identify one. Use unique short IDs, at most 6 objects, 3 non-object regions and 6 relations. Describe only the supplied observation. Palette legend (color index: RGB): 0:(255,255,255), 1:(204,204,204), 2:(153,153,153), 3:(102,102,102), 4:(51,51,51), 5:(0,0,0), 6:(229,58,163), 7:(255,123,204), 8:(249,60,49), 9:(30,147,255), 10:(136,216,241), 11:(255,220,0), 12:(255,133,27), 13:(146,18,49), 14:(79,204,48), 15:(163,86,214). Grid size is 64x64. An image, when supplied, uses 16x16 pixels per cell."
       },
       {
        "type": "text",
@@ -2058,10 +2058,10 @@
     }
    }
   },
-  "request_sha256": "3350d40ea69fd7a1245b6e393e1944db7a93380e73302a77edc4380a48eb8354",
+  "request_sha256": "6c2984aeac1033bd24d88e86e370a556f44a6bd459235dfb37846cae70eef976",
   "frozen_local_expectation": {
-   "template_tokens": 8666,
-   "expected_prompt_tokens": 8666
+   "template_tokens": 8679,
+   "expected_prompt_tokens": 8679
   }
  },
  {
@@ -2082,7 +2082,7 @@
      "content": [
       {
        "type": "text",
-       "text": "Describe visually distinct bounded objects, keeping borders/stripes in non_object_regions. Do not infer game rules, goals, actions or object effects. Report inclusive bbox [xmin,ymin,xmax,ymax]. Coordinates are zero-based grid cells, grid[y][x]; x increases right and y down. Colors include internal markings; report markings separately. Occupancy is a 3x3 mask within each object bbox: boundaries floor(i*size/3), a block is 1 when at least half its cells belong to the object. Match outer geometry independently of color/position; transform maps a to b, reflection before rotation. Use uncertain when ambiguous. Use unique short IDs, at most 6 objects, 3 non-object regions and 6 relations. Describe only the supplied observation. Palette legend (color index: RGB): 0:(255,255,255), 1:(204,204,204), 2:(153,153,153), 3:(102,102,102), 4:(51,51,51), 5:(0,0,0), 6:(229,58,163), 7:(255,123,204), 8:(249,60,49), 9:(30,147,255), 10:(136,216,241), 11:(255,220,0), 12:(255,133,27), 13:(146,18,49), 14:(79,204,48), 15:(163,86,214). Grid size is 64x64. An image, when supplied, uses 16x16 pixels per cell."
+       "text": "Describe visually distinct bounded objects, keeping borders/stripes in non_object_regions. Do not infer game rules, goals, actions or object effects. Report inclusive bbox [xmin,ymin,xmax,ymax]. Coordinates are zero-based grid cells, grid[y][x]; x increases right and y down. Colors include internal markings; report markings separately. Occupancy is a 3x3 mask within each object bbox: boundaries floor(i*size/3), a block is 1 when at least half its cells belong to the object. Match outer geometry independently of color/position; transform maps a to b, reflection before rotation. When multiple transforms fit, report any valid transform; use uncertain when you cannot identify one. Use unique short IDs, at most 6 objects, 3 non-object regions and 6 relations. Describe only the supplied observation. Palette legend (color index: RGB): 0:(255,255,255), 1:(204,204,204), 2:(153,153,153), 3:(102,102,102), 4:(51,51,51), 5:(0,0,0), 6:(229,58,163), 7:(255,123,204), 8:(249,60,49), 9:(30,147,255), 10:(136,216,241), 11:(255,220,0), 12:(255,133,27), 13:(146,18,49), 14:(79,204,48), 15:(163,86,214). Grid size is 64x64. An image, when supplied, uses 16x16 pixels per cell."
       },
       {
        "type": "image_url",
@@ -2271,9 +2271,9 @@
     }
    }
   },
-  "request_sha256": "3cfda810c45f08d64a35b2d3961f2b59ba1d7a0bfc8a4b22bd88f01ac4b4e6ae",
+  "request_sha256": "3ed02b98e4026209986eccd12e926132c5d8f9c73305fe8996508e4a845abf17",
   "frozen_local_expectation": {
-   "template_tokens": 472,
+   "template_tokens": 485,
    "input_width": 1024,
    "input_height": 1024,
    "image_grid_thw": [
@@ -2287,9 +2287,9 @@
    "processed_height": 1024,
    "processed_width": 1024,
    "image_tokens_processor": 1024,
-   "processor_full_prompt_tokens": 1495,
-   "manual_prompt_tokens": 1495,
-   "expected_prompt_tokens": 1495
+   "processor_full_prompt_tokens": 1508,
+   "manual_prompt_tokens": 1508,
+   "expected_prompt_tokens": 1508
   }
  },
  {

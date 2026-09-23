@@ -51,7 +51,7 @@ def run():
         'prompt_token_ceiling_actual_workload':sum(r['expected_prompt_tokens'] for r in summary)+canary['expected_prompt_tokens'],
         'completion_ceiling':sum(r['request']['max_tokens'] for r in rows)+128,'calls_including_canaries':14,
         'model_calls':0,'gpu_runs':0,'limitations':'CPU processor/template audit; representative maximum-schema outputs, not an upper bound on arbitrary Unicode or whitespace.'}
-    for path,value in [('certification/phase4_perception_v1/cases.json',rows),('reports/phase4_perception_v1_token_audit.json',report),
+    for path,value in [('certification/phase4_perception_v1/cases.json',rows),('reports/phase4_perception_v1_r2_token_audit.json',report),
                        ('reports/phase4_perception_v1_output_examples.json',examples)]:
         (ROOT/path).write_bytes((json.dumps(value,indent=1)+'\n').encode())
     print(json.dumps(report,indent=2))

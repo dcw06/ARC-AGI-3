@@ -48,7 +48,7 @@ def review(folder):
         'gpu_disabled':True,'internet_disabled':True,'live_gate_refused':True,'temporary_source_removed':True,
         'authorized_seconds':0,'gpu_runs':0}
     print(json.dumps(receipt,indent=2))
-    (ROOT/'reports/phase4_perception_v1_package_review.json').write_bytes((json.dumps(receipt,indent=2)+'\n').encode())
+    (ROOT/'reports/phase4_perception_v1_r2_package_review.json').write_bytes((json.dumps(receipt,indent=2)+'\n').encode())
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--folder',type=Path,required=True)

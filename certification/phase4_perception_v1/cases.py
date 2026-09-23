@@ -14,7 +14,8 @@ TASK=('Describe visually distinct bounded objects, keeping borders/stripes in no
       'Colors include internal markings; report markings separately. Occupancy is a 3x3 mask within each '
       'object bbox: boundaries floor(i*size/3), a block is 1 when at least half its cells belong to the object. '
       'Match outer geometry independently of color/position; transform maps a to b, reflection before rotation. '
-      'Use uncertain when ambiguous. Use unique short IDs, at most 6 objects, 3 non-object regions and '
+      'When multiple transforms fit, report any valid transform; use uncertain when you cannot identify one. '
+      'Use unique short IDs, at most 6 objects, 3 non-object regions and '
       '6 relations. Describe only the supplied observation. '+LEGEND+
       ' Grid size is 64x64. An image, when supplied, uses 16x16 pixels per cell.')
 def obj(props):return {'type':'object','properties':props,'required':list(props),'additionalProperties':False}

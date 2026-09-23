@@ -22,12 +22,12 @@ def build(output):
         'reports/integrated_case_v1/geometry_reference.json',
         'certification/phase4_multimodal_preflight_v3/cases.json',
         'certification/phase4_multimodal_preflight_v3/tokenizer_manifest.json',
-        'scripts/audit_phase4_perception_v1.py','reports/phase4_perception_v1_token_audit.json',
+        'scripts/audit_phase4_perception_v1.py','reports/phase4_perception_v1_r2_token_audit.json',
         'reports/phase4_perception_v1_output_examples.json'])
     names.update(['scripts/check_phase4_perception_v1.py',
         'scripts/phase4_perception_v1_launch.py','scripts/review_phase4_perception_v1_notebook.py',
-        'reports/phase4_perception_v1_review.md','reports/phase4_perception_v1_local_checks.json',
-        'reports/phase4_perception_v1_local_archive.json','reports/phase4_perception_v1_protocol.md',
+        'reports/phase4_perception_v1_review_r2.md','reports/phase4_perception_v1_r2_local_checks.json',
+        'reports/phase4_perception_v1_r2_local_archive.json','reports/phase4_perception_v1_protocol.md',
         'certification/phase4_perception_v1/cases.json',
         'certification/phase4_perception_v1/tokenizer_manifest.json','certification/phase4_transient_v2/protocol.json'])
     bindings={name:hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in sorted(names)}
@@ -62,9 +62,9 @@ finally:
         finalize('/kaggle/working/phase4-perception-v1',started,completed)
 '''
     notebook={'nbformat':4,'nbformat_minor':4,'metadata':{'kernelspec':{'name':'python3','display_name':'Python 3','language':'python'}},
-        'cells':[{'cell_type':'markdown','metadata':{},'source':'# Paired perception v1: review only\nFive text/image board pairs, two interface controls, and two canaries. Zero actions/scorecards. GPU disabled. Separate source approval and new 2400-second compute authorization required. No authority granted by this notebook.'},
+        'cells':[{'cell_type':'markdown','metadata':{},'source':'# Paired perception v1 R2: review only\nClarified ambiguous-transform instruction. Five text/image board pairs, two interface controls, and two canaries. Zero actions/scorecards. GPU disabled. Separate source approval and new 2400-second compute authorization required. No authority granted by this notebook.'},
                  {'cell_type':'code','metadata':{},'execution_count':None,'outputs':[],'source':code}]}
-    metadata={'id':'daichongwei06/arc3-phase4-perception-v1-review','title':'ARC3 Phase4 Perception V1 Review',
+    metadata={'id':'daichongwei06/arc3-phase4-perception-v1-review-r2','title':'ARC3 Phase4 Perception V1 R2 Review',
         'code_file':'profile.ipynb','language':'python','kernel_type':'notebook','is_private':True,
         'enable_gpu':False,'enable_tpu':False,'enable_internet':False,
         'competition_sources':['arc-prize-2026-arc-agi-3'],

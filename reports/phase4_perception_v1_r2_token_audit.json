@@ -1,0 +1,259 @@
+{
+ "versions": {
+  "torch": "2.10.0+cpu",
+  "torchvision": "0.25.0+cpu",
+  "transformers": "4.57.6",
+  "pillow": "12.2.0"
+ },
+ "cases": [
+  {
+   "id": "image_canary",
+   "request_sha256": "828b6a25fa62185aeab4201a15ab71258441968be1c7fd8fb1cf8e70ed2f10d8",
+   "payload_bytes": 8716,
+   "template_tokens": 355,
+   "input_width": 1024,
+   "input_height": 1024,
+   "image_grid_thw": [
+    1,
+    64,
+    64
+   ],
+   "patch_size": 16,
+   "merge_size": 2,
+   "tensor_format": "pt",
+   "processed_height": 1024,
+   "processed_width": 1024,
+   "image_tokens_processor": 1024,
+   "processor_full_prompt_tokens": 1378,
+   "manual_prompt_tokens": 1378,
+   "expected_prompt_tokens": 1378
+  },
+  {
+   "id": "P1_text",
+   "request_sha256": "ecd31dfcf91cc934ba9f731f16b2f824b3e321884bb296630938a6a4c2885fe1",
+   "payload_bytes": 12481,
+   "template_tokens": 8977,
+   "expected_prompt_tokens": 8977
+  },
+  {
+   "id": "P1_image",
+   "request_sha256": "9482547d9be64ab804936347344711d9c0bb52980c45ce85253f6c5d2a14eea1",
+   "payload_bytes": 14480,
+   "template_tokens": 485,
+   "input_width": 1024,
+   "input_height": 1024,
+   "image_grid_thw": [
+    1,
+    64,
+    64
+   ],
+   "patch_size": 16,
+   "merge_size": 2,
+   "tensor_format": "pt",
+   "processed_height": 1024,
+   "processed_width": 1024,
+   "image_tokens_processor": 1024,
+   "processor_full_prompt_tokens": 1508,
+   "manual_prompt_tokens": 1508,
+   "expected_prompt_tokens": 1508
+  },
+  {
+   "id": "P2_text",
+   "request_sha256": "c18edaac3977f71a9296ed8173071003fbccb880c373e8448902af40a2d06e4c",
+   "payload_bytes": 12228,
+   "template_tokens": 8724,
+   "expected_prompt_tokens": 8724
+  },
+  {
+   "id": "P2_image",
+   "request_sha256": "a13ef65d8149b76c6ebd721a6056d54f9a4325c76d5d95ccc1b6fc6a02f6c976",
+   "payload_bytes": 10928,
+   "template_tokens": 485,
+   "input_width": 1024,
+   "input_height": 1024,
+   "image_grid_thw": [
+    1,
+    64,
+    64
+   ],
+   "patch_size": 16,
+   "merge_size": 2,
+   "tensor_format": "pt",
+   "processed_height": 1024,
+   "processed_width": 1024,
+   "image_tokens_processor": 1024,
+   "processor_full_prompt_tokens": 1508,
+   "manual_prompt_tokens": 1508,
+   "expected_prompt_tokens": 1508
+  },
+  {
+   "id": "P3_text",
+   "request_sha256": "e66df89605b183f952c92ca9c17784d063a279fec1dd5d28b0bfbf4b5575bec8",
+   "payload_bytes": 12228,
+   "template_tokens": 8724,
+   "expected_prompt_tokens": 8724
+  },
+  {
+   "id": "P3_image",
+   "request_sha256": "ea5e20b56358ebeef240a36d43a2a3ddb650bda8bcf5aa014195472db7c918a3",
+   "payload_bytes": 10976,
+   "template_tokens": 485,
+   "input_width": 1024,
+   "input_height": 1024,
+   "image_grid_thw": [
+    1,
+    64,
+    64
+   ],
+   "patch_size": 16,
+   "merge_size": 2,
+   "tensor_format": "pt",
+   "processed_height": 1024,
+   "processed_width": 1024,
+   "image_tokens_processor": 1024,
+   "processor_full_prompt_tokens": 1508,
+   "manual_prompt_tokens": 1508,
+   "expected_prompt_tokens": 1508
+  },
+  {
+   "id": "P4_text",
+   "request_sha256": "bae2683e6944e2bb1a996c9c5aa389a3e7d4363616eea061385db2d3141b2e96",
+   "payload_bytes": 12420,
+   "template_tokens": 8916,
+   "expected_prompt_tokens": 8916
+  },
+  {
+   "id": "P4_image",
+   "request_sha256": "1537169bb02df7556b1e79b0d5768bf14e6cfd8c6228ba3318ff4c83a33e0452",
+   "payload_bytes": 13948,
+   "template_tokens": 485,
+   "input_width": 1024,
+   "input_height": 1024,
+   "image_grid_thw": [
+    1,
+    64,
+    64
+   ],
+   "patch_size": 16,
+   "merge_size": 2,
+   "tensor_format": "pt",
+   "processed_height": 1024,
+   "processed_width": 1024,
+   "image_tokens_processor": 1024,
+   "processor_full_prompt_tokens": 1508,
+   "manual_prompt_tokens": 1508,
+   "expected_prompt_tokens": 1508
+  },
+  {
+   "id": "P5_text",
+   "request_sha256": "6c2984aeac1033bd24d88e86e370a556f44a6bd459235dfb37846cae70eef976",
+   "payload_bytes": 12183,
+   "template_tokens": 8679,
+   "expected_prompt_tokens": 8679
+  },
+  {
+   "id": "P5_image",
+   "request_sha256": "3ed02b98e4026209986eccd12e926132c5d8f9c73305fe8996508e4a845abf17",
+   "payload_bytes": 10940,
+   "template_tokens": 485,
+   "input_width": 1024,
+   "input_height": 1024,
+   "image_grid_thw": [
+    1,
+    64,
+    64
+   ],
+   "patch_size": 16,
+   "merge_size": 2,
+   "tensor_format": "pt",
+   "processed_height": 1024,
+   "processed_width": 1024,
+   "image_tokens_processor": 1024,
+   "processor_full_prompt_tokens": 1508,
+   "manual_prompt_tokens": 1508,
+   "expected_prompt_tokens": 1508
+  },
+  {
+   "id": "control_I1",
+   "request_sha256": "fd967baf1cd4be1877a0f23b03e2fddcfb79c0ab13f61f1e2d25090600f5717d",
+   "payload_bytes": 3682,
+   "template_tokens": 306,
+   "expected_prompt_tokens": 306
+  },
+  {
+   "id": "control_I2",
+   "request_sha256": "62d6763c285f7ccf5945247c338af3bef0cc4950860ecda5b95bdeb377876acf",
+   "payload_bytes": 3862,
+   "template_tokens": 345,
+   "expected_prompt_tokens": 345
+  }
+ ],
+ "startup_canary": {
+  "template_tokens": 46,
+  "expected_prompt_tokens": 46
+ },
+ "output_audit": [
+  {
+   "kind": "perception",
+   "example": "english",
+   "style": "compact",
+   "tokens_with_eos": 997,
+   "cap": 2048
+  },
+  {
+   "kind": "perception",
+   "example": "english",
+   "style": "normal",
+   "tokens_with_eos": 1218,
+   "cap": 2048
+  },
+  {
+   "kind": "perception",
+   "example": "english",
+   "style": "pretty",
+   "tokens_with_eos": 1640,
+   "cap": 2048
+  },
+  {
+   "kind": "perception",
+   "example": "dense",
+   "style": "compact",
+   "tokens_with_eos": 1177,
+   "cap": 2048
+  },
+  {
+   "kind": "perception",
+   "example": "dense",
+   "style": "normal",
+   "tokens_with_eos": 1387,
+   "cap": 2048
+  },
+  {
+   "kind": "perception",
+   "example": "dense",
+   "style": "pretty",
+   "tokens_with_eos": 1802,
+   "cap": 2048
+  },
+  {
+   "kind": "control",
+   "example": "I1",
+   "style": "pretty",
+   "tokens_with_eos": 150,
+   "cap": 512
+  },
+  {
+   "kind": "control",
+   "example": "I2",
+   "style": "pretty",
+   "tokens_with_eos": 150,
+   "cap": 512
+  }
+ ],
+ "prompt_token_ceiling_actual_workload": 53635,
+ "completion_ceiling": 21696,
+ "calls_including_canaries": 14,
+ "model_calls": 0,
+ "gpu_runs": 0,
+ "limitations": "CPU processor/template audit; representative maximum-schema outputs, not an upper bound on arbitrary Unicode or whitespace."
+}

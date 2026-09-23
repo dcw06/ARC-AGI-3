@@ -1,6 +1,18 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
-## Paired perception v1: GPU-disabled implementation ready for source review
+## Paired perception R2: ambiguity instruction repaired, review pending
+
+R1's prompt told the model to answer `uncertain` for multiple fitting transforms,
+although the independent scorer credits any valid transform. R2 now asks for
+any valid transform when several fit. Every valid P1 transform passed the
+new regression. The pinned CPU processor audit, 17 local tests, isolated archive
+replay and unpacked GPU-disabled notebook review passed. See the
+[R2 review](phase4_perception_v1_review_r2.md) and
+[package receipt](phase4_perception_v1_r2_package_review.json). R1's notebook
+and lock remain preserved. R2 has no source approval, compute authorization,
+reservation or GPU run; the proposal remains one 2,400-second attempt.
+
+## Historical paired perception R1 preparation
 
 The zero-action text/image diagnostic is implemented and locally tested:
 five board pairs, two interface controls, and two canaries (14 calls total).

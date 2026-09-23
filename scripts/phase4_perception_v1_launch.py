@@ -9,7 +9,7 @@ from certification.phase4_perception_v1.authority import (SCOPE,REVIEW,SOURCE,CO
 EXECUTION='config/phase4_perception_v1_execution/execution_lock.json'
 RESERVATION='config/phase4_perception_v1_reservation.json'
 CLAIM='config/phase4_perception_v1_launch_claim.json'
-PACKAGE='notebooks/phase4-perception-v1-launch-r1'
+PACKAGE='notebooks/phase4-perception-v1-launch-r2'
 RECEIPT='reports/phase4_perception_v1_pilot_launch.json'
 now=lambda:datetime.now(timezone.utc).isoformat()
 
@@ -89,7 +89,7 @@ def materialize(root,execution,reservation):
     metadata=json.loads((folder/'kernel-metadata.json').read_bytes())
     if metadata.get('enable_gpu') is not False or metadata.get('enable_internet') is not False or metadata.get('is_private') is not True:
         raise ValueError('review metadata')
-    metadata.update(id='daichongwei06/arc3-phase4-perception-v1-r1',title='ARC3 Phase4 Perception V1 R1',
+    metadata.update(id='daichongwei06/arc3-phase4-perception-v1-r2',title='ARC3 Phase4 Perception V1 R2',
         enable_gpu=True,machine_shape='NvidiaRtxPro6000')
     artifacts={'profile.ipynb':data(notebook),'kernel-metadata.json':data(metadata)}
     if len(artifacts['profile.ipynb'])>=900000:raise ValueError('notebook size ceiling')

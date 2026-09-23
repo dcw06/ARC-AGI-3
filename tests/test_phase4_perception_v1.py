@@ -3,12 +3,32 @@ from pathlib import Path
 from unittest.mock import patch
 from certification.phase4_perception_v1.cases import load_cases,image_part,score,request_hash
 from certification.phase4_multimodal_preflight_v3.images import grid_from_png
-from research.perception_v1.fixtures import build
+from research.perception_v1.fixtures import build,gold
+from research.perception_v1.scoring import score as geometry_score
 from certification.phase4_perception_v1.worker import ScriptedService,run_cases
 from certification.phase4_perception_v1.evidence import EvidenceStore
 ROOT=Path(__file__).resolve().parents[1]
 
 class PerceptionTests(unittest.TestCase):
+    def test_p1_all_valid_ambiguous_transforms(self):
+        case=build()[0];reference=gold(case)
+        ambiguous=[r for r in case['reference']['relations'] if len(r['transforms'])>1]
+        self.assertEqual(len(ambiguous),3)
+        for relation in ambiguous:
+            pair=(relation['a'],relation['b'])
+            for transform in relation['transforms']:
+                with self.subTest(pair=pair,transform=transform):
+                    answer=copy.deepcopy(reference)
+                    next(r for r in answer['relations'] if (r['a'],r['b'])==pair)['transform']=transform
+                    result=geometry_score(case,json.dumps(answer))
+                    self.assertTrue(result['valid'])
+                    self.assertEqual(result['transform']['numerator'],3)
+            answer=copy.deepcopy(reference)
+            next(r for r in answer['relations'] if (r['a'],r['b'])==pair)['transform']='uncertain'
+            result=geometry_score(case,json.dumps(answer))
+            self.assertTrue(result['valid'])
+            self.assertEqual(result['transform']['numerator'],2)
+
     def test_matched_requests_only_observation_differs(self):
         rows=load_cases();self.assertEqual(len(rows),13)
         for j,case in enumerate(build()):
@@ -18,6 +38,7 @@ class PerceptionTests(unittest.TestCase):
             self.assertEqual(json.loads(text['text'])['grid'],case['grid'])
             self.assertEqual(grid_from_png(image_part(rows[2+2*j]['request'])),case['grid'])
             self.assertNotIn('reference',json.dumps(a));self.assertEqual(a['max_tokens'],2048)
+            self.assertIn('When multiple transforms fit, report any valid transform',a['messages'][1]['content'][0]['text'])
     def run_worker(self,folder,mode='verified',clock=time.monotonic):
         start=clock()
         return run_cases(ScriptedService(mode),EvidenceStore(folder,'worker'),started=start,
