@@ -32,7 +32,16 @@ def review(folder):
         result=subprocess.run([sys.executable,str(script)],cwd=tmp,env=environment,capture_output=True,text=True,timeout=60)
         assert result.returncode!=0 and 'PermissionError: integrated v2 requires matching source/compute approvals' in result.stderr,result.stderr[-500:]
         assert {p.name for p in Path(tmp).iterdir()}=={'review.py'},'source staging leaked'
+    # The referenced snapshot must survive the real approval/reserve/package path and packaged gate.
+    if (ROOT/'certification/phase4_integrated_v2/authority.py').exists():
+        sys.path.insert(0,str(ROOT))
+        from certification.phase4_integrated_v2.authority import REVIEW
+        assert (ROOT/REVIEW).resolve()==(folder/'review-source-lock.json').resolve(),'authority references another review: '+REVIEW
+    result=subprocess.run([sys.executable,'-m','unittest','tests.test_phase4_integrated_v2_snapshot'],cwd=ROOT,
+        capture_output=True,text=True,timeout=600)
+    assert result.returncode==0,'actual snapshot approval/package path failed: '+result.stderr[-1500:]
     receipt={'status':'package_verified_pending_external_source_review_not_compute_authority',
+        'authority_review_reference_matches':True,'actual_snapshot_approval_package_gate_verified':True,
         'notebook':(folder/'profile.ipynb').relative_to(ROOT).as_posix(),
         'source_bindings_verified':len(payload),'notebook_bytes':(folder/'profile.ipynb').stat().st_size,
         'review_lock_sha256':hashlib.sha256((folder/'review-source-lock.json').read_bytes()).hexdigest(),

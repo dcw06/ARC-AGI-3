@@ -3,7 +3,7 @@ import hashlib,json,os,re
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 SCOPE='phase4-integrated-v2'
-REVIEW='notebooks/phase4-integrated-v2-review-r1/review-source-lock.json'
+REVIEW='notebooks/phase4-integrated-v2-review-r3/review-source-lock.json'
 SOURCE='reports/phase4_integrated_v2_source_approval.json'
 COMPUTE='reports/phase4_integrated_v2_compute_authorization.json'
 LIMITS={'authorized_seconds':3600,'internal_seconds':3300,'maximum_attempts':1,

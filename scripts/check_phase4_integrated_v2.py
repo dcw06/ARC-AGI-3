@@ -4,7 +4,7 @@ from pathlib import Path
 from unittest.mock import patch
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 def replay_manifest(path):
- lock=ROOT/'notebooks/phase4-integrated-v2-review-r2/review-source-lock.json'
+ lock=ROOT/'notebooks/phase4-integrated-v2-review-r3/review-source-lock.json'
  if lock.exists():
   frozen=json.loads(lock.read_bytes())
   for name,h in frozen['bindings'].items():assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==h,name

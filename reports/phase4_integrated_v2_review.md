@@ -142,9 +142,22 @@ tokens. Nothing from v1's consumed reservation carries forward.
 
 ## Review boundary
 
-Current notebook: `notebooks/phase4-integrated-v2-review-r2/`. R1, commit
-`7391674`, is preserved and superseded; its lock predates the accumulated-history
-audit and no longer matches the bound audit files. The notebook is private, offline and GPU-disabled; it refuses execution without
+Current notebook: `notebooks/phase4-integrated-v2-review-r3/`. R1 (`7391674`)
+and R2 (`17a9ec6`) are preserved and superseded, and neither can be approved.
+R1's lock no longer matches the bound audit files. R2 froze an `authority.py`
+whose `REVIEW` constant still named R1, so recording an approval failed with
+source drift. The synthetic authority tests missed this because they build
+their fixture at whatever path `REVIEW` names.
+
+R3 points `REVIEW`, and therefore the launcher, at itself.
+`tests/test_phase4_integrated_v2_snapshot.py` copies the actual bound snapshot
+into a temporary root and runs the real path: source and compute approval
+recording, reservation, packaging, validation, one fake upload, then rejection
+of a second. It then unpacks the launch notebook's payload and authority
+sidecars and runs the packaged `authority.require`, which must pass, and fails
+once the reservation is removed. It also asserts that `REVIEW` names the newest
+review revision. Against the R2 state, with `REVIEW` naming R1, both tests fail.
+The package review script runs this regression on every freeze. The notebook is private, offline and GPU-disabled; it refuses execution without
 a source approval and separate compute authorization bound to this review lock,
 plus an unconsumed reservation. User intent is recorded in
 `phase4_integrated_v2_launch_intent.json` and is not an approval. These checks

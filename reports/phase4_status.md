@@ -16,9 +16,12 @@ A worst-case valid eight-step history fits: every prior answer at maximum size,
 largest one-frame request 33,068 of 60,000 tokens. Late feedback admits at most
 four returned frames; larger transitions stop technically, without truncation.
 
-GPU-disabled review notebook: `notebooks/phase4-integrated-v2-review-r2/`, review
-lock SHA-256 `a9fb9eefcee3a8e2c2a3cc636809cde307408dd838114cf725a6c511f55eea17`
-(896 bindings). R1 is superseded. Source approval and separate compute authorization are pending;
+GPU-disabled review notebook: `notebooks/phase4-integrated-v2-review-r3/`, review
+lock SHA-256 `eba5b1a59d977e1448caa7934be860339591f7d3d7a74a5b75521e95704ec93c`
+(897 bindings). R1 and R2 are superseded. R2's authority code still referenced
+R1, which blocked approval recording. R3 fixes the reference. A new regression
+runs the actual frozen snapshot through approval, reservation, packaging and the
+packaged gate, and it fails on the R2 state. Source approval and separate compute authorization are pending;
 no model call, reservation or upload was made. See
 [v2 review](phase4_integrated_v2_review.md). The entries below are historical.
 
