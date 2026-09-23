@@ -1,5 +1,16 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
+## Perception diagnostic v1: provisional protocol (not frozen)
+
+This is a zero-action diagnostic of object identification, localization,
+3×3-occupancy contour, same shape across colours, reflection versus rotation
+and markings. It covers the ar25 frame plus four synthetic boards, and compares
+the current grid text with a lossless 16 px/cell image. An action-interface
+probe runs separately. A multimodal preflight on Kaggle, separately budgeted,
+must pass before cases, scoring and budget are frozen and authorized. No model
+call, reservation or upload has been made. See the
+[protocol](phase4_perception_v1_protocol.md).
+
 ## Integrated ar25 v2 completed: inventory feasible, first decision invalid
 
 Independent and clean-checkout replays passed. The compact inventory finished
