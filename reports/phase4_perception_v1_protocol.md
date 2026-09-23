@@ -86,26 +86,65 @@ A strict schema with every array and string bounded:
 There is no span enumeration. The worst-case output will be tokenized with the
 pinned tokenizer before freezing, as was done for integrated v2.
 
-### Scoring (each dimension reported separately; no composite)
+### Scoring (deterministic; each dimension separate; no composite)
 
-1. **Detection.** Predicted objects are matched to reference objects by bbox
-   IoU. Report recall and precision at IoU ≥ 0.5, and whether a declared
-   non-object distractor (stripe, border) was reported as an object.
-2. **Localization.** Bbox IoU per matched reference object, and exact-bbox
-   rate.
-3. **Contour.** The 3×3 occupancy, scored against the reference object's own
-   mask (block occupied if at least half its cells belong to the object) as
-   exact match and cells correct out of 9. It is scored for matched objects
-   only, so it stays independent of localization error.
-4. **Colours.** Set equality with the reference colours.
-5. **Same shape across colours.** Accuracy of `same_shape` per reference pair.
-6. **Reflection versus rotation.** The transform is correct if it lies in the
-   pair's valid D4 set. On chiral pairs (P2, P3), also report the coarse class:
-   rotation versus reflection.
-7. **Markings.** `has_markings` correct, and marking colours correct.
+Every metric is computed per case × representation, with explicit numerators
+and denominators. With five boards this is **descriptive**, with no
+significance claim.
 
-Every metric is computed per case × representation. With five boards this is
-**descriptive**, with no significance claim.
+**Invalid output.** A response that fails parsing, schema or bounds, or that
+finishes with anything other than `stop`, is *invalid* for that case. It stays
+in every denominator below as a failure (for example, recall 0 on that board).
+Invalid counts are reported separately. Valid-only rates may be shown only
+alongside the all-cases rate and their own denominators.
+
+**One-to-one object matching.** Predicted objects are assigned to reference
+objects as follows:
+
+- Candidate pairs are those with bbox IoU > 0, using exact rational IoU.
+- The assignment is the one-to-one choice that maximizes total IoU.
+- Ties are broken deterministically by (reference order, prediction array
+  order).
+- A pair counts as *matched* only if its IoU is at least 0.5.
+- A reference left without a match is a *miss*.
+- A prediction left unassigned, or assigned below 0.5, is *extraneous*.
+- An extraneous prediction with IoU ≥ 0.5 against an already matched reference
+  is additionally counted as a *duplicate*.
+
+**Metrics:**
+
+1. **Detection.**
+   - Recall = matched / reference objects (a fixed denominator per board).
+   - Precision = matched / predicted objects; this is `null` when nothing was
+     predicted, never 1.
+   - Distractor error: any prediction with IoU ≥ 0.5 against a declared
+     non-object region (stripe, border).
+2. **Localization.** Bbox IoU for each matched pair, and exact-bbox count out of
+   matched pairs.
+3. **Contour, conditional on detection.** The reference mask is the 3×3
+   occupancy of the reference object inside its own bbox. Block boundaries are
+   `floor(i·size/3)`, and a block is occupied if at least half its cells belong
+   to the object. It is scored only on matched pairs, as exact matches out of
+   matched and cells correct out of 9 × matched. It is **not** independent of
+   localization: an undetected object has no contour score. The joint rate,
+   detected and contour exact out of reference objects, is reported too.
+4. **Colours.** Set equality on matched pairs, out of matched.
+5. **Markings.** On matched pairs: `has_markings` correct, and marking colour
+   set equal, each out of matched. Plus the joint rate out of reference objects.
+6. **Relations.**
+   - Reference pairs are fixed per board, oriented in reference order.
+   - A predicted relation maps to a reference pair only if both of its objects
+     are matched. If it names them in reverse order, its transform is inverted
+     before scoring.
+   - The first predicted relation for a pair, in array order, is scored. Later
+     ones for the same pair are *duplicates* and are ignored.
+   - A reference pair with no mapped relation counts as *missing* and is scored
+     incorrect.
+   - A relation naming any unmatched object is *extraneous*.
+   - Same shape: correct `same_shape`, out of all reference pairs.
+   - Transform: in the pair's valid D4 set, out of reference pairs whose
+     shapes are the same. On the chiral pairs (P2, P3), the coarse class
+     (rotation versus reflection) is also reported over the same denominator.
 
 Provisional working threshold for "grounding works" in a representation, which
 gates the next stage:
@@ -169,28 +208,60 @@ against 16 files and 32.3 GB at the pinned Hugging Face revision. It is
 packaged differently, so its image-processor files cannot be inferred. No image
 request has ever been sent through this stack.
 
-The preflight is one minimal private run: zero actions, zero study calls, same
-model, engine and launch spec. It must:
+The preflight is one minimal private run with zero actions and zero
+scorecards, using the same model, engine and unchanged launch spec. The
+implementation is `certification/phase4_multimodal_preflight_v1`.
 
-1. Inventory the mount: every file name and size, plus hashes of the small
-   configs. Require the preprocessor config to be present and record whether it
-   matches the pinned hash.
-2. Start the server unchanged and send one text canary, expecting
-   `finish_reason=stop`.
-3. Send one image canary: a lossless 4×4-cell rendered grid with a known
-   answer (for example, the colour index of a stated cell). Record the exact
-   response and whether it is correct. Correctness is informative, not a pass
-   condition.
-4. Record server prompt tokens for the image request against the offline count
-   (text tokens plus the computed image tokens). A mismatch is recorded and
-   blocks freezing R-image until explained.
-5. Verify independent process and GPU cleanup, as in every earlier run.
+1. **Mount inventory.** Record every file's name and size, and hash each small
+   config. Record whether the preprocessor configs are present and match the
+   pinned hashes.
+2. **Text canary.** The existing canary, which must finish with `stop`.
+3. **Probes.** Four calls, each attempted and recorded; a failure in one does
+   not abort the rest:
+   - **T0**, text control: the board question with no image.
+   - **I1**, a 4×4-cell canary at 16 px/cell (64×64 px). This is below the
+     processor's pixel minimum, so the resize must appear in the retained
+     processed dimensions.
+   - **I2 and I3**, two visibly different synthetic 64×64 boards at
+     **1024×1024 px**, the intended perception size. Same question, different
+     correct answers.
+4. **Processor evidence**, computed in the model interpreter from the
+   *mounted* processor. For each image request, retain:
+   - `image_grid_thw` and the processed pixel dimensions;
+   - the processor's expanded prompt count;
+   - a manual count: template tokens − 1 + t·h·w/merge²;
+   - the frozen local expectation.
 
-Proposed budget: one attempt, 1,800 provider seconds, no retry, with its own
-review lock, source approval and compute authorization. If the preflight fails,
-the perception experiment proceeds text-only (R-text plus the interface probe),
-and R-image is recorded as unsupported on this stack rather than as a
-perception result.
+   The server's prompt count must equal the processor count.
+5. **Consumption evidence.** The server's I2 − T0 prompt-token delta must equal
+   the processor's image expansion + 2. Only the vision-marker tokens separate
+   those two requests. Correct answers do **not** substitute for this evidence.
+6. **Behavioural sanity check.** The I2 and I3 answers are compared. Identical
+   answers to visibly different images mark the result *review required*,
+   even if the processor evidence passes. Correctness is recorded, not required.
+7. **Cleanup.** Independent process and GPU cleanup, as in every earlier run.
+
+**Outcome classes.** These are kept distinct; they are not collapsed into
+"unsupported":
+
+| Class | Meaning |
+|---|---|
+| `image_input_verified` | Accounting and consumption evidence pass for I1–I3 |
+| `dependency_missing` | Preprocessor files are absent, or processor or image libraries fail to load. No image request is sent |
+| `image_rejected_by_server` | Server returns an HTTP error for an image request; the body is retained |
+| `token_accounting_mismatch` | Server prompt tokens differ from the processor count |
+| `image_not_consumed` | Server delta differs from the expansion |
+| `lifecycle_failure` | Startup, monitor or cleanup failure |
+
+Separately, `arithmetic_revision_required` marks a verified run whose processor
+counts differ from this document's arithmetic. The protocol is then revised,
+but support is not denied.
+
+**Any outcome other than `image_input_verified` without review flags blocks the
+representation comparison pending review.** It does not automatically
+establish that images are unsupported, and it does not launch a text-only
+substitute. Proposed budget: one attempt of 1,800 provider seconds, no retry,
+with its own review lock, source approval and compute authorization.
 
 ## After perception
 
