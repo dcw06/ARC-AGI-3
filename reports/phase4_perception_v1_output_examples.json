@@ -1,0 +1,600 @@
+{
+ "english": {
+  "objects": [
+   {
+    "id": "A!@#$%^&*()-_=+[]{};:,./",
+    "bbox": [
+     12,
+     23,
+     45,
+     56
+    ],
+    "colors": [
+     10,
+     11,
+     12
+    ],
+    "occupancy": [
+     [
+      1,
+      0,
+      1
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      1,
+      0,
+      1
+     ]
+    ],
+    "has_markings": true,
+    "marking_colors": [
+     10,
+     11,
+     12
+    ],
+    "description": "Bounded visible region with internal markings. B"
+   },
+   {
+    "id": "B!@#$%^&*()-_=+[]{};:,./",
+    "bbox": [
+     12,
+     23,
+     45,
+     56
+    ],
+    "colors": [
+     10,
+     11,
+     12
+    ],
+    "occupancy": [
+     [
+      1,
+      0,
+      1
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      1,
+      0,
+      1
+     ]
+    ],
+    "has_markings": true,
+    "marking_colors": [
+     10,
+     11,
+     12
+    ],
+    "description": "Bounded visible region with internal markings. B"
+   },
+   {
+    "id": "C!@#$%^&*()-_=+[]{};:,./",
+    "bbox": [
+     12,
+     23,
+     45,
+     56
+    ],
+    "colors": [
+     10,
+     11,
+     12
+    ],
+    "occupancy": [
+     [
+      1,
+      0,
+      1
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      1,
+      0,
+      1
+     ]
+    ],
+    "has_markings": true,
+    "marking_colors": [
+     10,
+     11,
+     12
+    ],
+    "description": "Bounded visible region with internal markings. B"
+   },
+   {
+    "id": "D!@#$%^&*()-_=+[]{};:,./",
+    "bbox": [
+     12,
+     23,
+     45,
+     56
+    ],
+    "colors": [
+     10,
+     11,
+     12
+    ],
+    "occupancy": [
+     [
+      1,
+      0,
+      1
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      1,
+      0,
+      1
+     ]
+    ],
+    "has_markings": true,
+    "marking_colors": [
+     10,
+     11,
+     12
+    ],
+    "description": "Bounded visible region with internal markings. B"
+   },
+   {
+    "id": "E!@#$%^&*()-_=+[]{};:,./",
+    "bbox": [
+     12,
+     23,
+     45,
+     56
+    ],
+    "colors": [
+     10,
+     11,
+     12
+    ],
+    "occupancy": [
+     [
+      1,
+      0,
+      1
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      1,
+      0,
+      1
+     ]
+    ],
+    "has_markings": true,
+    "marking_colors": [
+     10,
+     11,
+     12
+    ],
+    "description": "Bounded visible region with internal markings. B"
+   },
+   {
+    "id": "F!@#$%^&*()-_=+[]{};:,./",
+    "bbox": [
+     12,
+     23,
+     45,
+     56
+    ],
+    "colors": [
+     10,
+     11,
+     12
+    ],
+    "occupancy": [
+     [
+      1,
+      0,
+      1
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      1,
+      0,
+      1
+     ]
+    ],
+    "has_markings": true,
+    "marking_colors": [
+     10,
+     11,
+     12
+    ],
+    "description": "Bounded visible region with internal markings. B"
+   }
+  ],
+  "non_object_regions": [
+   {
+    "bbox": [
+     0,
+     0,
+     63,
+     63
+    ],
+    "description": "Bounded visible region with internal markings. B"
+   },
+   {
+    "bbox": [
+     0,
+     0,
+     63,
+     63
+    ],
+    "description": "Bounded visible region with internal markings. B"
+   },
+   {
+    "bbox": [
+     0,
+     0,
+     63,
+     63
+    ],
+    "description": "Bounded visible region with internal markings. B"
+   }
+  ],
+  "relations": [
+   {
+    "a": "A!@#$%^&*()-_=+[]{};:,./",
+    "b": "B!@#$%^&*()-_=+[]{};:,./",
+    "same_shape": true,
+    "transform": "mirror_left_right_then_rotate_cw_270"
+   },
+   {
+    "a": "A!@#$%^&*()-_=+[]{};:,./",
+    "b": "C!@#$%^&*()-_=+[]{};:,./",
+    "same_shape": true,
+    "transform": "mirror_left_right_then_rotate_cw_270"
+   },
+   {
+    "a": "A!@#$%^&*()-_=+[]{};:,./",
+    "b": "D!@#$%^&*()-_=+[]{};:,./",
+    "same_shape": true,
+    "transform": "mirror_left_right_then_rotate_cw_270"
+   },
+   {
+    "a": "A!@#$%^&*()-_=+[]{};:,./",
+    "b": "E!@#$%^&*()-_=+[]{};:,./",
+    "same_shape": true,
+    "transform": "mirror_left_right_then_rotate_cw_270"
+   },
+   {
+    "a": "A!@#$%^&*()-_=+[]{};:,./",
+    "b": "F!@#$%^&*()-_=+[]{};:,./",
+    "same_shape": true,
+    "transform": "mirror_left_right_then_rotate_cw_270"
+   },
+   {
+    "a": "B!@#$%^&*()-_=+[]{};:,./",
+    "b": "C!@#$%^&*()-_=+[]{};:,./",
+    "same_shape": true,
+    "transform": "mirror_left_right_then_rotate_cw_270"
+   }
+  ]
+ },
+ "dense": {
+  "objects": [
+   {
+    "id": "A!@#$%^&*()-_=+[]{};:,./",
+    "bbox": [
+     12,
+     23,
+     45,
+     56
+    ],
+    "colors": [
+     10,
+     11,
+     12
+    ],
+    "occupancy": [
+     [
+      1,
+      0,
+      1
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      1,
+      0,
+      1
+     ]
+    ],
+    "has_markings": true,
+    "marking_colors": [
+     10,
+     11,
+     12
+    ],
+    "description": "!@#$%^&*()-_=+[]{};:,./?!@#$%^&*()-_=+[]{};:,./?"
+   },
+   {
+    "id": "B!@#$%^&*()-_=+[]{};:,./",
+    "bbox": [
+     12,
+     23,
+     45,
+     56
+    ],
+    "colors": [
+     10,
+     11,
+     12
+    ],
+    "occupancy": [
+     [
+      1,
+      0,
+      1
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      1,
+      0,
+      1
+     ]
+    ],
+    "has_markings": true,
+    "marking_colors": [
+     10,
+     11,
+     12
+    ],
+    "description": "!@#$%^&*()-_=+[]{};:,./?!@#$%^&*()-_=+[]{};:,./?"
+   },
+   {
+    "id": "C!@#$%^&*()-_=+[]{};:,./",
+    "bbox": [
+     12,
+     23,
+     45,
+     56
+    ],
+    "colors": [
+     10,
+     11,
+     12
+    ],
+    "occupancy": [
+     [
+      1,
+      0,
+      1
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      1,
+      0,
+      1
+     ]
+    ],
+    "has_markings": true,
+    "marking_colors": [
+     10,
+     11,
+     12
+    ],
+    "description": "!@#$%^&*()-_=+[]{};:,./?!@#$%^&*()-_=+[]{};:,./?"
+   },
+   {
+    "id": "D!@#$%^&*()-_=+[]{};:,./",
+    "bbox": [
+     12,
+     23,
+     45,
+     56
+    ],
+    "colors": [
+     10,
+     11,
+     12
+    ],
+    "occupancy": [
+     [
+      1,
+      0,
+      1
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      1,
+      0,
+      1
+     ]
+    ],
+    "has_markings": true,
+    "marking_colors": [
+     10,
+     11,
+     12
+    ],
+    "description": "!@#$%^&*()-_=+[]{};:,./?!@#$%^&*()-_=+[]{};:,./?"
+   },
+   {
+    "id": "E!@#$%^&*()-_=+[]{};:,./",
+    "bbox": [
+     12,
+     23,
+     45,
+     56
+    ],
+    "colors": [
+     10,
+     11,
+     12
+    ],
+    "occupancy": [
+     [
+      1,
+      0,
+      1
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      1,
+      0,
+      1
+     ]
+    ],
+    "has_markings": true,
+    "marking_colors": [
+     10,
+     11,
+     12
+    ],
+    "description": "!@#$%^&*()-_=+[]{};:,./?!@#$%^&*()-_=+[]{};:,./?"
+   },
+   {
+    "id": "F!@#$%^&*()-_=+[]{};:,./",
+    "bbox": [
+     12,
+     23,
+     45,
+     56
+    ],
+    "colors": [
+     10,
+     11,
+     12
+    ],
+    "occupancy": [
+     [
+      1,
+      0,
+      1
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      1,
+      0,
+      1
+     ]
+    ],
+    "has_markings": true,
+    "marking_colors": [
+     10,
+     11,
+     12
+    ],
+    "description": "!@#$%^&*()-_=+[]{};:,./?!@#$%^&*()-_=+[]{};:,./?"
+   }
+  ],
+  "non_object_regions": [
+   {
+    "bbox": [
+     0,
+     0,
+     63,
+     63
+    ],
+    "description": "!@#$%^&*()-_=+[]{};:,./?!@#$%^&*()-_=+[]{};:,./?"
+   },
+   {
+    "bbox": [
+     0,
+     0,
+     63,
+     63
+    ],
+    "description": "!@#$%^&*()-_=+[]{};:,./?!@#$%^&*()-_=+[]{};:,./?"
+   },
+   {
+    "bbox": [
+     0,
+     0,
+     63,
+     63
+    ],
+    "description": "!@#$%^&*()-_=+[]{};:,./?!@#$%^&*()-_=+[]{};:,./?"
+   }
+  ],
+  "relations": [
+   {
+    "a": "A!@#$%^&*()-_=+[]{};:,./",
+    "b": "B!@#$%^&*()-_=+[]{};:,./",
+    "same_shape": true,
+    "transform": "mirror_left_right_then_rotate_cw_270"
+   },
+   {
+    "a": "A!@#$%^&*()-_=+[]{};:,./",
+    "b": "C!@#$%^&*()-_=+[]{};:,./",
+    "same_shape": true,
+    "transform": "mirror_left_right_then_rotate_cw_270"
+   },
+   {
+    "a": "A!@#$%^&*()-_=+[]{};:,./",
+    "b": "D!@#$%^&*()-_=+[]{};:,./",
+    "same_shape": true,
+    "transform": "mirror_left_right_then_rotate_cw_270"
+   },
+   {
+    "a": "A!@#$%^&*()-_=+[]{};:,./",
+    "b": "E!@#$%^&*()-_=+[]{};:,./",
+    "same_shape": true,
+    "transform": "mirror_left_right_then_rotate_cw_270"
+   },
+   {
+    "a": "A!@#$%^&*()-_=+[]{};:,./",
+    "b": "F!@#$%^&*()-_=+[]{};:,./",
+    "same_shape": true,
+    "transform": "mirror_left_right_then_rotate_cw_270"
+   },
+   {
+    "a": "B!@#$%^&*()-_=+[]{};:,./",
+    "b": "C!@#$%^&*()-_=+[]{};:,./",
+    "same_shape": true,
+    "transform": "mirror_left_right_then_rotate_cw_270"
+   }
+  ]
+ }
+}

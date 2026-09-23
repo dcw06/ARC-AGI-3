@@ -1,5 +1,23 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
+## Paired perception v1: GPU-disabled implementation ready for source review
+
+The zero-action text/image diagnostic is implemented and locally tested:
+five board pairs, two interface controls, and two canaries (14 calls total).
+The pinned CPU processor audit covers all exact requests and output-budget
+fixtures. Six archived scripted outcomes replay from an isolated copy without
+ignored environment files. All 16 runner/authority regressions and both frozen
+snapshot checks passed; notebook unpacking, source hashes and refusal before
+installation were verified.
+
+See [the implementation review](phase4_perception_v1_review.md) and
+[package verification](phase4_perception_v1_package_review.json). The proposed
+reservation is 2,400 seconds, with a 2,280-second internal ceiling and a
+21,696-token completion ceiling. No source approval, compute authorization,
+reservation or GPU submission has been made for this study. This is a descriptive
+comparison of one retained board and four synthetic controls, not solving or
+production admission evidence. Exact billing and Phase 4 certification remain open.
+
 ## Multimodal preflight v3 completed: image compatibility prerequisite passed
 
 Frozen independent replay returns `image_input_verified`, with no review flags.
