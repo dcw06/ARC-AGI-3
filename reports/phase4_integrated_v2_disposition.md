@@ -43,8 +43,9 @@ message reads "out-of-frame span"; the span is reversed rather than out of frame
 so the message is imprecise but the rejection is correct. No repair, retry or
 fallback followed.
 
-These fragments are qualitative evidence from one case. Decision, prediction,
-dispatch and feedback stages remain **unobserved**. This is not a scaffold
+These fragments are qualitative evidence from one case. A decision, target and
+prediction/alternative proposal **was observed, but invalid**. Executed
+structured actions and feedback remain **unobserved**. This is not a scaffold
 efficacy result, and it does not show that scaffolding cannot help. The pattern
 is consistent with the earlier grounding diagnostic (localization 0/4). One case
 does not isolate whether the cause is visual grounding, the `[y,x0,x1]` span
