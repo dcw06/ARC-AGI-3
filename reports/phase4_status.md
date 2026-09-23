@@ -1,5 +1,38 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
+## Multimodal preflight v3 completed: image compatibility prerequisite passed
+
+Frozen independent replay returns `image_input_verified`, with no review flags.
+All three image probes reached vLLM and server/processor counts agreed. I2 and
+I3 returned distinct correct answers; I1's valid but incorrect colour answer
+is retained. Cleanup and finalization passed. See the
+[v3 disposition](phase4_multimodal_preflight_v3_disposition.md).
+
+All 24 downloads were verified and archived. Notebook elapsed was 789.925 s;
+account usage increased 799.981 s, not exact billing. The attempt is consumed.
+The compatibility prerequisite for reviewing the perception comparison is now
+cleared; the comparison itself still needs completed implementation, budget
+review and separate authorization. No perception or solving capability is
+established by this preflight, and Phase 4 remains open.
+
+## Historical preparation: multimodal preflight v3
+
+The successor uses PyTorch processor tensors and distinguishes processor
+execution failures from measured token-count disagreements. A real pinned
+processor CPU regression reproduced the historical NumPy failure and verified
+all image dimensions, patch geometry and full/manual counts (394 for I1,
+1,378 each for I2/I3). The v2 source and classification remain frozen.
+
+The new GPU-disabled review package and tests are documented in
+[the v3 review](phase4_multimodal_preflight_v3_review.md). Separate source
+approval and fresh compute authorization remain required. Actual vLLM image
+dispatch is still unverified, and the representation comparison remains blocked.
+
+Separately, [local perception groundwork](perception_v1_local_review.md) now
+provides five boards, independent scoring dimensions, interface tests and a
+transition-record contract. These are local infrastructure, not model results
+or a frozen/authorized perception experiment. Phase 4 remains open.
+
 ## Multimodal preflight v2 completed: image path still unverified
 
 The separately authorized v2 attempt completed; frozen independent replay and

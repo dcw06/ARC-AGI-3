@@ -1,0 +1,94 @@
+{
+  "tests_passed": 32,
+  "fixture_elapsed_seconds": {
+    "verified": 8.949303917000009,
+    "incorrect": 7.057591395999992,
+    "identical": 7.052219844000007,
+    "invalid": 7.334194370000006,
+    "arithmetic": 6.924843984999995,
+    "dependency": 6.71467387200002,
+    "rejected": 6.90996878499999,
+    "mismatch": 7.00373768,
+    "not_consumed": 7.526103209999974,
+    "transport": 4.657410878000007,
+    "processor": 9.585405843999979
+  },
+  "archive_replay": {
+    "verified": {
+      "technical_passed": true,
+      "verdict": "image_input_verified",
+      "flags": [],
+      "representation_comparison_unblocked": true
+    },
+    "incorrect": {
+      "technical_passed": true,
+      "verdict": "image_input_verified",
+      "flags": [],
+      "representation_comparison_unblocked": true
+    },
+    "identical": {
+      "technical_passed": true,
+      "verdict": "image_input_verified",
+      "flags": [
+        "review_required_behavioural"
+      ],
+      "representation_comparison_unblocked": false
+    },
+    "invalid": {
+      "technical_passed": true,
+      "verdict": "image_input_verified",
+      "flags": [
+        "review_required_behavioural"
+      ],
+      "representation_comparison_unblocked": false
+    },
+    "arithmetic": {
+      "technical_passed": true,
+      "verdict": "image_input_verified",
+      "flags": [
+        "arithmetic_revision_required"
+      ],
+      "representation_comparison_unblocked": false
+    },
+    "dependency": {
+      "technical_passed": true,
+      "verdict": "dependency_missing",
+      "flags": [],
+      "representation_comparison_unblocked": false
+    },
+    "rejected": {
+      "technical_passed": true,
+      "verdict": "image_rejected_by_server",
+      "flags": [],
+      "representation_comparison_unblocked": false
+    },
+    "mismatch": {
+      "technical_passed": true,
+      "verdict": "token_accounting_mismatch",
+      "flags": [],
+      "representation_comparison_unblocked": false
+    },
+    "not_consumed": {
+      "technical_passed": true,
+      "verdict": "image_not_consumed",
+      "flags": [],
+      "representation_comparison_unblocked": false
+    },
+    "transport": {
+      "technical_passed": false,
+      "verdict": "lifecycle_failure",
+      "flags": [],
+      "representation_comparison_unblocked": false
+    },
+    "processor": {
+      "technical_passed": true,
+      "verdict": "processor_execution_failure",
+      "flags": [],
+      "representation_comparison_unblocked": false
+    }
+  },
+  "model_calls": 0,
+  "gpu_runs": 0,
+  "environment_actions": 0,
+  "scorecards": 0
+}

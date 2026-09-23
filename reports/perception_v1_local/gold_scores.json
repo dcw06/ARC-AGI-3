@@ -1,0 +1,522 @@
+{
+ "perception": [
+  {
+   "valid": true,
+   "error": null,
+   "case": "P1",
+   "source_group": "ar25-initial",
+   "detection_recall": {
+    "numerator": 3,
+    "denominator": 3,
+    "rate": 1.0
+   },
+   "detection_precision": {
+    "numerator": 3,
+    "denominator": 3,
+    "rate": 1.0
+   },
+   "misses": 0,
+   "extraneous_objects": 0,
+   "duplicate_objects": 0,
+   "distractor_errors": 0,
+   "localization": [
+    {
+     "reference": "A",
+     "prediction": "A",
+     "bbox_iou": 1.0
+    },
+    {
+     "reference": "B",
+     "prediction": "B",
+     "bbox_iou": 1.0
+    },
+    {
+     "reference": "C",
+     "prediction": "C",
+     "bbox_iou": 1.0
+    }
+   ],
+   "bbox_exact": {
+    "numerator": 3,
+    "denominator": 3,
+    "rate": 1.0
+   },
+   "contour_exact": {
+    "numerator": 3,
+    "denominator": 3,
+    "rate": 1.0
+   },
+   "contour_cells": {
+    "numerator": 27,
+    "denominator": 27,
+    "rate": 1.0
+   },
+   "detected_and_contour_exact": {
+    "numerator": 3,
+    "denominator": 3,
+    "rate": 1.0
+   },
+   "colors": {
+    "numerator": 3,
+    "denominator": 3,
+    "rate": 1.0
+   },
+   "has_markings": {
+    "numerator": 3,
+    "denominator": 3,
+    "rate": 1.0
+   },
+   "marking_colors": {
+    "numerator": 3,
+    "denominator": 3,
+    "rate": 1.0
+   },
+   "detected_and_markings_correct": {
+    "numerator": 3,
+    "denominator": 3,
+    "rate": 1.0
+   },
+   "detected_and_marking_colors_correct": {
+    "numerator": 3,
+    "denominator": 3,
+    "rate": 1.0
+   },
+   "same_shape": {
+    "numerator": 3,
+    "denominator": 3,
+    "rate": 1.0
+   },
+   "transform": {
+    "numerator": 3,
+    "denominator": 3,
+    "rate": 1.0
+   },
+   "rotation_vs_reflection": null,
+   "missing_relations": 0,
+   "duplicate_relations": 0,
+   "extraneous_relations": 0
+  },
+  {
+   "valid": true,
+   "error": null,
+   "case": "P2",
+   "source_group": "synthetic-P2",
+   "detection_recall": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "detection_precision": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "misses": 0,
+   "extraneous_objects": 0,
+   "duplicate_objects": 0,
+   "distractor_errors": 0,
+   "localization": [
+    {
+     "reference": "A",
+     "prediction": "A",
+     "bbox_iou": 1.0
+    },
+    {
+     "reference": "B",
+     "prediction": "B",
+     "bbox_iou": 1.0
+    }
+   ],
+   "bbox_exact": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "contour_exact": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "contour_cells": {
+    "numerator": 18,
+    "denominator": 18,
+    "rate": 1.0
+   },
+   "detected_and_contour_exact": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "colors": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "has_markings": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "marking_colors": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "detected_and_markings_correct": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "detected_and_marking_colors_correct": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "same_shape": {
+    "numerator": 1,
+    "denominator": 1,
+    "rate": 1.0
+   },
+   "transform": {
+    "numerator": 1,
+    "denominator": 1,
+    "rate": 1.0
+   },
+   "rotation_vs_reflection": {
+    "numerator": 1,
+    "denominator": 1,
+    "rate": 1.0
+   },
+   "missing_relations": 0,
+   "duplicate_relations": 0,
+   "extraneous_relations": 0
+  },
+  {
+   "valid": true,
+   "error": null,
+   "case": "P3",
+   "source_group": "synthetic-P3",
+   "detection_recall": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "detection_precision": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "misses": 0,
+   "extraneous_objects": 0,
+   "duplicate_objects": 0,
+   "distractor_errors": 0,
+   "localization": [
+    {
+     "reference": "A",
+     "prediction": "A",
+     "bbox_iou": 1.0
+    },
+    {
+     "reference": "B",
+     "prediction": "B",
+     "bbox_iou": 1.0
+    }
+   ],
+   "bbox_exact": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "contour_exact": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "contour_cells": {
+    "numerator": 18,
+    "denominator": 18,
+    "rate": 1.0
+   },
+   "detected_and_contour_exact": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "colors": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "has_markings": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "marking_colors": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "detected_and_markings_correct": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "detected_and_marking_colors_correct": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "same_shape": {
+    "numerator": 1,
+    "denominator": 1,
+    "rate": 1.0
+   },
+   "transform": {
+    "numerator": 1,
+    "denominator": 1,
+    "rate": 1.0
+   },
+   "rotation_vs_reflection": {
+    "numerator": 1,
+    "denominator": 1,
+    "rate": 1.0
+   },
+   "missing_relations": 0,
+   "duplicate_relations": 0,
+   "extraneous_relations": 0
+  },
+  {
+   "valid": true,
+   "error": null,
+   "case": "P4",
+   "source_group": "synthetic-P4",
+   "detection_recall": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "detection_precision": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "misses": 0,
+   "extraneous_objects": 0,
+   "duplicate_objects": 0,
+   "distractor_errors": 0,
+   "localization": [
+    {
+     "reference": "A",
+     "prediction": "A",
+     "bbox_iou": 1.0
+    },
+    {
+     "reference": "B",
+     "prediction": "B",
+     "bbox_iou": 1.0
+    }
+   ],
+   "bbox_exact": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "contour_exact": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "contour_cells": {
+    "numerator": 18,
+    "denominator": 18,
+    "rate": 1.0
+   },
+   "detected_and_contour_exact": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "colors": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "has_markings": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "marking_colors": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "detected_and_markings_correct": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "detected_and_marking_colors_correct": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "same_shape": {
+    "numerator": 1,
+    "denominator": 1,
+    "rate": 1.0
+   },
+   "transform": {
+    "numerator": 1,
+    "denominator": 1,
+    "rate": 1.0
+   },
+   "rotation_vs_reflection": null,
+   "missing_relations": 0,
+   "duplicate_relations": 0,
+   "extraneous_relations": 0
+  },
+  {
+   "valid": true,
+   "error": null,
+   "case": "P5",
+   "source_group": "synthetic-P5",
+   "detection_recall": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "detection_precision": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "misses": 0,
+   "extraneous_objects": 0,
+   "duplicate_objects": 0,
+   "distractor_errors": 0,
+   "localization": [
+    {
+     "reference": "A",
+     "prediction": "A",
+     "bbox_iou": 1.0
+    },
+    {
+     "reference": "B",
+     "prediction": "B",
+     "bbox_iou": 1.0
+    }
+   ],
+   "bbox_exact": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "contour_exact": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "contour_cells": {
+    "numerator": 18,
+    "denominator": 18,
+    "rate": 1.0
+   },
+   "detected_and_contour_exact": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "colors": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "has_markings": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "marking_colors": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "detected_and_markings_correct": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "detected_and_marking_colors_correct": {
+    "numerator": 2,
+    "denominator": 2,
+    "rate": 1.0
+   },
+   "same_shape": {
+    "numerator": 1,
+    "denominator": 1,
+    "rate": 1.0
+   },
+   "transform": {
+    "numerator": 0,
+    "denominator": 0,
+    "rate": null
+   },
+   "rotation_vs_reflection": null,
+   "missing_relations": 0,
+   "duplicate_relations": 0,
+   "extraneous_relations": 0
+  }
+ ],
+ "controls": [
+  {
+   "valid": true,
+   "error": null,
+   "arguments": {
+    "numerator": 7,
+    "denominator": 7,
+    "rate": 1.0
+   },
+   "click": {
+    "numerator": true,
+    "denominator": 1,
+    "rate": 1.0
+   },
+   "non_coordinate": {
+    "numerator": true,
+    "denominator": 1,
+    "rate": 1.0
+   },
+   "directional": {
+    "numerator": true,
+    "denominator": 1,
+    "rate": 1.0
+   }
+  },
+  {
+   "valid": true,
+   "error": null,
+   "arguments": {
+    "numerator": 7,
+    "denominator": 7,
+    "rate": 1.0
+   },
+   "click": {
+    "numerator": true,
+    "denominator": 1,
+    "rate": 1.0
+   },
+   "non_coordinate": {
+    "numerator": true,
+    "denominator": 1,
+    "rate": 1.0
+   },
+   "directional": {
+    "numerator": true,
+    "denominator": 1,
+    "rate": 1.0
+   }
+  }
+ ]
+}

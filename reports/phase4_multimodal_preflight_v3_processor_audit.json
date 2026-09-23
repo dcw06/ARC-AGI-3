@@ -1,0 +1,102 @@
+{
+  "passed": true,
+  "versions": {
+    "torch": "2.10.0+cpu",
+    "torchvision": "0.25.0+cpu",
+    "transformers": "4.57.6",
+    "pillow": "12.2.0"
+  },
+  "python": "3.11.9",
+  "platform": "win32",
+  "processor_class": "Qwen3VLProcessor",
+  "image_processor_class": "Qwen2VLImageProcessorFast",
+  "revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+  "file_hashes": {
+    "tokenizer.json": "ba85e4e5222d9f53d4bd00b303ef7e9743c8ac3d07e3c23f8498dbe17baa9a2d",
+    "tokenizer_config.json": "c2da771801886ad9ae98181793ffd3dfb7f1af30f6f7c6a4e15d7dbba52e2399",
+    "chat_template.json": "2c1437f11fc16ab501b984c000f6e291c599f0d28d2c9c6bf2c4533e65429b42",
+    "config.json": "e52cea0eb24df634274d028d969b513edeced033988eb4528d1e8d2a08dd025d",
+    "vocab.json": "7a0cfa95c65792d7510205839f80cfd8a3c8f6b1fdad5132d95cee481800374d",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "preprocessor_config.json": "6a970fd06f30e6943b3e2c14d5d3b42d49b06cf99b99103d56689bef462d90f8",
+    "video_preprocessor_config.json": "e203bc065dfcd75226838b8e937d624bec8f0eb6ef6630a397e9a675f2873ea6"
+  },
+  "cases": [
+    {
+      "probe_id": "T0",
+      "request_sha256": "d81d0457a0329024c12f2fdd874ac88ad9171b73330b7791122e625759b309fc",
+      "template_tokens": 352,
+      "expected_prompt_tokens": 352
+    },
+    {
+      "probe_id": "I1",
+      "request_sha256": "d39383a88615d6ba79acd4457188d846c3cd69745a1e188627efcfa93bb10edc",
+      "template_tokens": 331,
+      "input_width": 64,
+      "input_height": 64,
+      "image_grid_thw": [
+        1,
+        16,
+        16
+      ],
+      "patch_size": 16,
+      "merge_size": 2,
+      "tensor_format": "pt",
+      "processed_height": 256,
+      "processed_width": 256,
+      "image_tokens_processor": 64,
+      "processor_full_prompt_tokens": 394,
+      "manual_prompt_tokens": 394,
+      "expected_prompt_tokens": 394
+    },
+    {
+      "probe_id": "I2",
+      "request_sha256": "828b6a25fa62185aeab4201a15ab71258441968be1c7fd8fb1cf8e70ed2f10d8",
+      "template_tokens": 355,
+      "input_width": 1024,
+      "input_height": 1024,
+      "image_grid_thw": [
+        1,
+        64,
+        64
+      ],
+      "patch_size": 16,
+      "merge_size": 2,
+      "tensor_format": "pt",
+      "processed_height": 1024,
+      "processed_width": 1024,
+      "image_tokens_processor": 1024,
+      "processor_full_prompt_tokens": 1378,
+      "manual_prompt_tokens": 1378,
+      "expected_prompt_tokens": 1378
+    },
+    {
+      "probe_id": "I3",
+      "request_sha256": "2f498bc103ac58df407fe46d66d7540c8abc71a445a8165701dc8705c2084484",
+      "template_tokens": 355,
+      "input_width": 1024,
+      "input_height": 1024,
+      "image_grid_thw": [
+        1,
+        64,
+        64
+      ],
+      "patch_size": 16,
+      "merge_size": 2,
+      "tensor_format": "pt",
+      "processed_height": 1024,
+      "processed_width": 1024,
+      "image_tokens_processor": 1024,
+      "processor_full_prompt_tokens": 1378,
+      "manual_prompt_tokens": 1378,
+      "expected_prompt_tokens": 1378
+    }
+  ],
+  "historical_numpy_failure_reproduced_all_images": true,
+  "processor_calls_on_cpu": true,
+  "image_server_dispatches": 0,
+  "model_calls": 0,
+  "gpu_runs": 0,
+  "limitation": "Pinned processor API and image accounting on CPU; not target Python/CUDA or vLLM compatibility.",
+  "portable_inputs_sha256": "af5aebbe4761d80b50effd5758fbadac13f80edacbf37a1f0591baa473c913d1"
+}

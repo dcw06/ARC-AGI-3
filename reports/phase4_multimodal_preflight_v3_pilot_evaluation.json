@@ -1,0 +1,164 @@
+{
+  "passed": true,
+  "errors": [],
+  "scope": "multimodal_preflight_live",
+  "comparison": {
+    "probes": {
+      "T0": {
+        "status": "complete",
+        "failure_kind": null,
+        "failure_stage": null,
+        "exception_type": null,
+        "transport_attempted": true,
+        "server_prompt_tokens": 352,
+        "expected_prompt_tokens": 352,
+        "image_grid_thw": null,
+        "processed": null,
+        "image_tokens_processor": null,
+        "finish_reason": "stop",
+        "answer": {
+          "answer": {
+            "color": null,
+            "quadrant": "none"
+          },
+          "correct": true,
+          "error": null,
+          "valid": true
+        },
+        "http_status": null
+      },
+      "I1": {
+        "status": "complete",
+        "failure_kind": null,
+        "failure_stage": null,
+        "exception_type": null,
+        "transport_attempted": true,
+        "server_prompt_tokens": 394,
+        "expected_prompt_tokens": 394,
+        "image_grid_thw": [
+          1,
+          16,
+          16
+        ],
+        "processed": [
+          256,
+          256
+        ],
+        "image_tokens_processor": 64,
+        "finish_reason": "stop",
+        "answer": {
+          "answer": {
+            "color": 11
+          },
+          "correct": false,
+          "error": null,
+          "valid": true
+        },
+        "http_status": null
+      },
+      "I2": {
+        "status": "complete",
+        "failure_kind": null,
+        "failure_stage": null,
+        "exception_type": null,
+        "transport_attempted": true,
+        "server_prompt_tokens": 1378,
+        "expected_prompt_tokens": 1378,
+        "image_grid_thw": [
+          1,
+          64,
+          64
+        ],
+        "processed": [
+          1024,
+          1024
+        ],
+        "image_tokens_processor": 1024,
+        "finish_reason": "stop",
+        "answer": {
+          "answer": {
+            "color": 8,
+            "quadrant": "top_left"
+          },
+          "correct": true,
+          "error": null,
+          "valid": true
+        },
+        "http_status": null
+      },
+      "I3": {
+        "status": "complete",
+        "failure_kind": null,
+        "failure_stage": null,
+        "exception_type": null,
+        "transport_attempted": true,
+        "server_prompt_tokens": 1378,
+        "expected_prompt_tokens": 1378,
+        "image_grid_thw": [
+          1,
+          64,
+          64
+        ],
+        "processed": [
+          1024,
+          1024
+        ],
+        "image_tokens_processor": 1024,
+        "finish_reason": "stop",
+        "answer": {
+          "answer": {
+            "color": 9,
+            "quadrant": "bottom_right"
+          },
+          "correct": true,
+          "error": null,
+          "valid": true
+        },
+        "http_status": null
+      }
+    },
+    "flags": [],
+    "consumption": {
+      "server_delta_I2_minus_T0": 1026,
+      "expected_image_tokens_plus_markers": 1026
+    },
+    "behavioural": "answers_differ_both_correct",
+    "mount_processor_files": {
+      "preprocessor_config.json": {
+        "matches_pinned": true,
+        "present": true,
+        "sha256": "6a970fd06f30e6943b3e2c14d5d3b42d49b06cf99b99103d56689bef462d90f8"
+      },
+      "video_preprocessor_config.json": {
+        "matches_pinned": true,
+        "present": true,
+        "sha256": "e203bc065dfcd75226838b8e937d624bec8f0eb6ef6630a397e9a675f2873ea6"
+      }
+    },
+    "processor": {
+      "available": true,
+      "error": null,
+      "image_processor_class": "Qwen2VLImageProcessorFast",
+      "merge_size": 2,
+      "processor_class": "Qwen3VLProcessor",
+      "versions": {
+        "pillow": "12.2.0",
+        "torch": "2.10.0",
+        "torchvision": "0.25.0",
+        "transformers": "4.57.6"
+      }
+    },
+    "verdict": "image_input_verified",
+    "representation_comparison_unblocked": true
+  },
+  "comparison_is_scripted": false,
+  "model_inference": true,
+  "capacity_candidate": null,
+  "C_nominal": null,
+  "C_admit": null,
+  "development_model_lifecycle_passed": true,
+  "phase4_complete": false,
+  "independent_replay": true,
+  "evidence_bytes": 2848679,
+  "exact_provider_billed_seconds": null
+}
