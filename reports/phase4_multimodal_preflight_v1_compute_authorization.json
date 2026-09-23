@@ -1,0 +1,20 @@
+{
+  "approval_kind": "compute",
+  "approved_at": "2026-09-23T05:29:31.536772+00:00",
+  "authorized_seconds": 1800,
+  "automatic_retries": 0,
+  "holdout_runs": 0,
+  "internal_seconds": 1680,
+  "maximum_attempts": 1,
+  "maximum_environment_actions": 0,
+  "maximum_probe_calls": 4,
+  "maximum_scorecards": 0,
+  "maximum_total_completions": 5,
+  "review_lock_sha256": "8742c81bdaf1e2676dc11280f5c5b23f670f8f4544108a30b90713b81857dbdc",
+  "scope": "phase4-multimodal-preflight-v1",
+  "scored_submissions": 0,
+  "source_approval_reference": "reports/phase4_multimodal_preflight_v1_source_approval.json",
+  "source_approval_sha256": "5c8249d2115119e9aaa56a3c1854f9c7ac9cf6695216adb32e2cad14fdd5096d",
+  "status": "approved",
+  "user_response": "Approve and authorize: source approval of review lock 8742c81bdaf1e2676dc11280f5c5b23f670f8f4544108a30b90713b81857dbdc (preflight r2, commit 6b7890a); exactly one attempt of at most 1,800 provider seconds including startup and failures, no retry."
+}
