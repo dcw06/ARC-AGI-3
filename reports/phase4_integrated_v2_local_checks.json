@@ -1,0 +1,33 @@
+{
+  "tests_passed": 27,
+  "supervised_results": {
+    "correct": true,
+    "cap": true,
+    "incorrect": true,
+    "invalid": true,
+    "partial_inventory": true,
+    "partial_decision": true,
+    "partial_feedback": true,
+    "v1_inventory": true,
+    "mismatch": false,
+    "transport": false,
+    "cleanup": false
+  },
+  "fixture_seconds": {
+    "correct": 6.381564417999996,
+    "cap": 7.806938410000001,
+    "incorrect": 5.952335125000005,
+    "invalid": 5.489029033000008,
+    "partial_inventory": 5.486528727000007,
+    "partial_decision": 5.910084397000006,
+    "partial_feedback": 5.886002722000001,
+    "v1_inventory": 5.715409863999994,
+    "mismatch": 5.4199479870000005,
+    "transport": 5.036943209000015,
+    "cleanup": 5.58764855299998
+  },
+  "monitor_failure_rejected_cleanup_verified": true,
+  "archive_replay_verified": true,
+  "model_calls": 0,
+  "gpu_runs": 0
+}

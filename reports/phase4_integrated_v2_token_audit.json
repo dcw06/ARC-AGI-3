@@ -1,0 +1,304 @@
+{
+  "versions": {
+    "transformers": "4.57.6",
+    "tokenizers": "0.22.2",
+    "jinja2": "3.1.6"
+  },
+  "tokenizer_manifest_sha256": "9b23b48f0615f43aee0d6b344982cbd17d36841cd92b3ebaf52c5e0c7a60db72",
+  "rows": [
+    {
+      "id": "cap/worker/ic2-control-call-00.json",
+      "request_sha256": "c696b68440a280a1dfccff1e8d57df85dd75303a957b6e1fe388b16147111152",
+      "prompt_tokens": 8721,
+      "completion_cap": 128,
+      "bytes": 10610,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-control-call-01.json",
+      "request_sha256": "e05e1fef6288f423abb9a7b2d746ade7ada53ae9c485f15e854e9d8caba857e3",
+      "prompt_tokens": 25760,
+      "completion_cap": 128,
+      "bytes": 27911,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-control-call-02.json",
+      "request_sha256": "55fd761683c1f26cb30bfd03035c69927bcae2196d651beba69e369763fb4093",
+      "prompt_tokens": 25765,
+      "completion_cap": 128,
+      "bytes": 27912,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-control-call-03.json",
+      "request_sha256": "9a8e5e82d1c25fc020e064cb5fcf9ec5f3e7ea7d5e98608582cd4997d47d6517",
+      "prompt_tokens": 25762,
+      "completion_cap": 128,
+      "bytes": 27912,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-control-call-04.json",
+      "request_sha256": "512043197c3d1777c2bd38fb32cf846b6d41340e4648ecacac81309b54c6d7a1",
+      "prompt_tokens": 25761,
+      "completion_cap": 128,
+      "bytes": 27912,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-control-call-05.json",
+      "request_sha256": "1338d8e658d282ad9d8966b57dc3aef6cee6c28199300835de1a6b151b93f591",
+      "prompt_tokens": 25765,
+      "completion_cap": 128,
+      "bytes": 27912,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-control-call-06.json",
+      "request_sha256": "16d2b3b2d01756be173b684caece822feaa824621b363966d541ecc79cf72749",
+      "prompt_tokens": 25761,
+      "completion_cap": 128,
+      "bytes": 27912,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-control-call-07.json",
+      "request_sha256": "082bab65d4b34fc7dc7832c6bbb441b37c366b06f682856e51fc2ad62a804c35",
+      "prompt_tokens": 25757,
+      "completion_cap": 128,
+      "bytes": 27910,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-structured-call-00.json",
+      "request_sha256": "5019fcc980ca9e8609d9efc3e943a39c20f0fb86c666046c6b1e08a5575e790a",
+      "prompt_tokens": 8692,
+      "completion_cap": 2048,
+      "bytes": 11819,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-structured-call-01.json",
+      "request_sha256": "644de8950f5fa80c2ef08f66f97e286e9bb10f8d453dfc6010727be7fa7cc5a4",
+      "prompt_tokens": 8805,
+      "completion_cap": 2048,
+      "bytes": 14072,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-structured-call-02.json",
+      "request_sha256": "721d27557508d3347440c8bb0746060e5f2aa23e90a72e5e7975702d48ee92e4",
+      "prompt_tokens": 26215,
+      "completion_cap": 1024,
+      "bytes": 30621,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-structured-call-03.json",
+      "request_sha256": "7a53d000d694cecfbd846723429a8698f83e068ebbd3ca0168bf003666a07f28",
+      "prompt_tokens": 17592,
+      "completion_cap": 2048,
+      "bytes": 23848,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-structured-call-04.json",
+      "request_sha256": "fccfa74725ad9368ce05d9e5ace0218bff3cea980609499b8afdd104daeb0fde",
+      "prompt_tokens": 26546,
+      "completion_cap": 1024,
+      "bytes": 31885,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-structured-call-05.json",
+      "request_sha256": "841f149265b0595911755ddb436de61802906202452d0c0fab21ea55502297ae",
+      "prompt_tokens": 17911,
+      "completion_cap": 2048,
+      "bytes": 25064,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-structured-call-06.json",
+      "request_sha256": "00c0e43eeb4c522daaace60bb2180689eafac15e95bad13b14bb2b53b4ae55f5",
+      "prompt_tokens": 26901,
+      "completion_cap": 1024,
+      "bytes": 33209,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-structured-call-07.json",
+      "request_sha256": "b536ac6beea7b4b7c82ee8e34bcf7db7dcdeb518e9a1e35b81cd491541c15c8c",
+      "prompt_tokens": 18248,
+      "completion_cap": 2048,
+      "bytes": 26334,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-structured-call-08.json",
+      "request_sha256": "6c90d2da1b8befc639c8c3cc575e3fcc1df764bf2c7edda19a35c56fbea869c3",
+      "prompt_tokens": 27274,
+      "completion_cap": 1024,
+      "bytes": 34587,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-structured-call-09.json",
+      "request_sha256": "be232c30ecc0f8d4c9633e70e24999995101f4e9f94edcba2449b15af8ab654c",
+      "prompt_tokens": 18603,
+      "completion_cap": 2048,
+      "bytes": 27658,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-structured-call-10.json",
+      "request_sha256": "fba884b30870d92bb788a9b5b23c2f5806ce3475cb88d700aabeef505913825f",
+      "prompt_tokens": 27665,
+      "completion_cap": 1024,
+      "bytes": 36019,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-structured-call-11.json",
+      "request_sha256": "8082fb107f62b8855d0d8088af1a2a5308a41f6d0cbc7a25da4c1cf08871ebba",
+      "prompt_tokens": 18976,
+      "completion_cap": 2048,
+      "bytes": 29036,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-structured-call-12.json",
+      "request_sha256": "229b21300f8e83b1ddab076c2539b50a3dc72336f1a95ee8c138ecbad8af62df",
+      "prompt_tokens": 28074,
+      "completion_cap": 1024,
+      "bytes": 37505,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-structured-call-13.json",
+      "request_sha256": "5565943d90ef73f9c5dc207049952c424961ded35ae32b602e54809b78be121e",
+      "prompt_tokens": 19367,
+      "completion_cap": 2048,
+      "bytes": 30468,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-structured-call-14.json",
+      "request_sha256": "d67adb32d2346b8efeeaaf521bcf740055e5e12e05c767db1edef45967867ed4",
+      "prompt_tokens": 28500,
+      "completion_cap": 1024,
+      "bytes": 39044,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-structured-call-15.json",
+      "request_sha256": "ddc8feabe78e05e4a5c8f307af73a3396ee20599339895a6d6c9c8ecea0e9a36",
+      "prompt_tokens": 19775,
+      "completion_cap": 2048,
+      "bytes": 31953,
+      "admissible": true
+    },
+    {
+      "id": "cap/worker/ic2-structured-call-16.json",
+      "request_sha256": "53e64cf92034bbb7774a4b4d7965d399e9ed586026a391a022ef956a874fba25",
+      "prompt_tokens": 28944,
+      "completion_cap": 1024,
+      "bytes": 40637,
+      "admissible": true
+    },
+    {
+      "id": "correct/worker/ic2-control-call-00.json",
+      "request_sha256": "c696b68440a280a1dfccff1e8d57df85dd75303a957b6e1fe388b16147111152",
+      "prompt_tokens": 8721,
+      "completion_cap": 128,
+      "bytes": 10610,
+      "admissible": true
+    },
+    {
+      "id": "correct/worker/ic2-control-call-01.json",
+      "request_sha256": "e05e1fef6288f423abb9a7b2d746ade7ada53ae9c485f15e854e9d8caba857e3",
+      "prompt_tokens": 25760,
+      "completion_cap": 128,
+      "bytes": 27911,
+      "admissible": true
+    },
+    {
+      "id": "correct/worker/ic2-structured-call-00.json",
+      "request_sha256": "5019fcc980ca9e8609d9efc3e943a39c20f0fb86c666046c6b1e08a5575e790a",
+      "prompt_tokens": 8692,
+      "completion_cap": 2048,
+      "bytes": 11819,
+      "admissible": true
+    },
+    {
+      "id": "correct/worker/ic2-structured-call-01.json",
+      "request_sha256": "644de8950f5fa80c2ef08f66f97e286e9bb10f8d453dfc6010727be7fa7cc5a4",
+      "prompt_tokens": 8805,
+      "completion_cap": 2048,
+      "bytes": 14072,
+      "admissible": true
+    },
+    {
+      "id": "correct/worker/ic2-structured-call-02.json",
+      "request_sha256": "721d27557508d3347440c8bb0746060e5f2aa23e90a72e5e7975702d48ee92e4",
+      "prompt_tokens": 26215,
+      "completion_cap": 1024,
+      "bytes": 30621,
+      "admissible": true
+    },
+    {
+      "id": "correct/worker/ic2-structured-call-03.json",
+      "request_sha256": "7a53d000d694cecfbd846723429a8698f83e068ebbd3ca0168bf003666a07f28",
+      "prompt_tokens": 17592,
+      "completion_cap": 2048,
+      "bytes": 23848,
+      "admissible": true
+    },
+    {
+      "id": "correct/worker/ic2-structured-call-04.json",
+      "request_sha256": "0025bfb1d026350adc7982ced56f997616446291d56ad6431719929ae0303eab",
+      "prompt_tokens": 26546,
+      "completion_cap": 1024,
+      "bytes": 31885,
+      "admissible": true
+    },
+    {
+      "id": "canary",
+      "request_sha256": "06853cc44e570cebee4b4623655b73c43072ee040d025e87e47696b3e15fac38",
+      "prompt_tokens": 46,
+      "completion_cap": 128,
+      "bytes": 967,
+      "admissible": true
+    },
+    {
+      "id": "initial_inventory",
+      "request_sha256": "5019fcc980ca9e8609d9efc3e943a39c20f0fb86c666046c6b1e08a5575e790a",
+      "prompt_tokens": 8692,
+      "completion_cap": 2048,
+      "bytes": 11819,
+      "admissible": true
+    },
+    {
+      "id": "eight_frame_feedback",
+      "request_sha256": "646bf1b9b73d709455a45ec0804894b24f49f58236c7346fb1391f9f616162e4",
+      "prompt_tokens": 76606,
+      "completion_cap": 1024,
+      "bytes": 80040,
+      "admissible": false
+    },
+    {
+      "id": "bounded_history_stress",
+      "request_sha256": "d3fecc8a5d1772b2acb73c92caa6f5dfee75778d5aa47858d57cdbb5391d033b",
+      "prompt_tokens": 25269,
+      "completion_cap": 2048,
+      "bytes": 128980,
+      "admissible": true
+    }
+  ],
+  "adaptive_rule": "Every actual request is tokenized before inference; >60000 prompt tokens or 196608 bytes fails closed with no truncation/retry. Stress cases are not a guarantee all histories fit.",
+  "study_prompt_ceiling": 1500000,
+  "generated_ceiling_including_canary": 27776,
+  "max_completions": 26,
+  "model_calls": 0,
+  "gpu_runs": 0
+}

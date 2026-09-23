@@ -1,5 +1,24 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
+## Integrated ar25 v2: output contract repaired and frozen for review
+
+The inventory is now a bounded coarse list: at most four bboxes, with no cell or
+row-span lists. Row-span masks appear only for a selected decision target, and
+contour accuracy is scored separately there against the initial-frame reference.
+With the pinned tokenizer, maximum-size outputs for all three stages fit their
+caps (worst 1,767/2048). Offline counting of the actual v1 cap body reproduces
+the server's 2,048 tokens. `finish_reason` is retained from transport through
+replay. Partial JSON at every stage, including the real v1 body, is retained and
+stops the episode as `invalid_output`, with no repair, retry or downstream
+scoring. 27 tests and 11 supervised CPU modes passed. An 8-frame feedback request
+still exceeds the 60,000-token input guard.
+
+GPU-disabled review notebook: `notebooks/phase4-integrated-v2-review-r1/`, review
+lock SHA-256 `ffb159ef8e81ef2e13379766f7b11902973b95b9a4c7b84a37c998e158dbaadf`
+(896 bindings). Source approval and separate compute authorization are pending;
+no model call, reservation or upload was made. See
+[v2 review](phase4_integrated_v2_review.md). The entries below are historical.
+
 ## Integrated ar25 v1 completed: technical pass, inventory stop
 
 Independent archived replay and cleanup passed. Baseline used eight actions with

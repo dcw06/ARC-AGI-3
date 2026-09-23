@@ -1,0 +1,1002 @@
+[
+  {
+    "stage": "inventory",
+    "variant": "realistic_maximum_cardinality",
+    "response": {
+      "objects": [
+        {
+          "id": "object_00000000000000000",
+          "bbox": [
+            0,
+            0,
+            8,
+            8
+          ],
+          "silhouette": "Visible contour and markings remain uncertain. V",
+          "markings": "Visible contour and markings remain uncertain. V"
+        },
+        {
+          "id": "object_00000000000000001",
+          "bbox": [
+            10,
+            0,
+            18,
+            8
+          ],
+          "silhouette": "Visible contour and markings remain uncertain. V",
+          "markings": "Visible contour and markings remain uncertain. V"
+        },
+        {
+          "id": "object_00000000000000002",
+          "bbox": [
+            20,
+            0,
+            28,
+            8
+          ],
+          "silhouette": "Visible contour and markings remain uncertain. V",
+          "markings": "Visible contour and markings remain uncertain. V"
+        },
+        {
+          "id": "object_00000000000000003",
+          "bbox": [
+            30,
+            0,
+            38,
+            8
+          ],
+          "silhouette": "Visible contour and markings remain uncertain. V",
+          "markings": "Visible contour and markings remain uncertain. V"
+        }
+      ],
+      "relationships": [
+        {
+          "a": "object_00000000000000000",
+          "b": "object_00000000000000001",
+          "transforms": [
+            "rotate_cw_180",
+            "rotate_cw_180"
+          ],
+          "claim": "Visible contour and markings remain uncertain. V"
+        },
+        {
+          "a": "object_00000000000000001",
+          "b": "object_00000000000000002",
+          "transforms": [
+            "rotate_cw_180",
+            "rotate_cw_180"
+          ],
+          "claim": "Visible contour and markings remain uncertain. V"
+        },
+        {
+          "a": "object_00000000000000002",
+          "b": "object_00000000000000003",
+          "transforms": [
+            "rotate_cw_180",
+            "rotate_cw_180"
+          ],
+          "claim": "Visible contour and markings remain uncertain. V"
+        }
+      ],
+      "controls": [
+        {
+          "action_id": 1,
+          "arguments": "empty",
+          "effect": "Visible contour and markings remain uncertain. V"
+        },
+        {
+          "action_id": 2,
+          "arguments": "empty",
+          "effect": "Visible contour and markings remain uncertain. V"
+        },
+        {
+          "action_id": 3,
+          "arguments": "empty",
+          "effect": "Visible contour and markings remain uncertain. V"
+        },
+        {
+          "action_id": 4,
+          "arguments": "empty",
+          "effect": "Visible contour and markings remain uncertain. V"
+        },
+        {
+          "action_id": 5,
+          "arguments": "empty",
+          "effect": "Visible contour and markings remain uncertain. V"
+        },
+        {
+          "action_id": 6,
+          "arguments": "x_y",
+          "effect": "Visible contour and markings remain uncertain. V"
+        },
+        {
+          "action_id": 7,
+          "arguments": "empty",
+          "effect": "Visible contour and markings remain uncertain. V"
+        }
+      ],
+      "hypotheses": [
+        {
+          "id": "Visible contour and mark",
+          "claim": "Visible contour and markings remain uncertain. V",
+          "status": "hypothesized"
+        },
+        {
+          "id": "Visible contour and mark",
+          "claim": "Visible contour and markings remain uncertain. V",
+          "status": "hypothesized"
+        }
+      ],
+      "ambiguities": "Visible contour and markings remain uncertain. V"
+    }
+  },
+  {
+    "stage": "inventory",
+    "variant": "punctuation_stress",
+    "response": {
+      "objects": [
+        {
+          "id": "object_00000000000000000",
+          "bbox": [
+            0,
+            0,
+            8,
+            8
+          ],
+          "silhouette": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8",
+          "markings": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8"
+        },
+        {
+          "id": "object_00000000000000001",
+          "bbox": [
+            10,
+            0,
+            18,
+            8
+          ],
+          "silhouette": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8",
+          "markings": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8"
+        },
+        {
+          "id": "object_00000000000000002",
+          "bbox": [
+            20,
+            0,
+            28,
+            8
+          ],
+          "silhouette": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8",
+          "markings": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8"
+        },
+        {
+          "id": "object_00000000000000003",
+          "bbox": [
+            30,
+            0,
+            38,
+            8
+          ],
+          "silhouette": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8",
+          "markings": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8"
+        }
+      ],
+      "relationships": [
+        {
+          "a": "object_00000000000000000",
+          "b": "object_00000000000000001",
+          "transforms": [
+            "rotate_cw_180",
+            "rotate_cw_180"
+          ],
+          "claim": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8"
+        },
+        {
+          "a": "object_00000000000000001",
+          "b": "object_00000000000000002",
+          "transforms": [
+            "rotate_cw_180",
+            "rotate_cw_180"
+          ],
+          "claim": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8"
+        },
+        {
+          "a": "object_00000000000000002",
+          "b": "object_00000000000000003",
+          "transforms": [
+            "rotate_cw_180",
+            "rotate_cw_180"
+          ],
+          "claim": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8"
+        }
+      ],
+      "controls": [
+        {
+          "action_id": 1,
+          "arguments": "empty",
+          "effect": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8"
+        },
+        {
+          "action_id": 2,
+          "arguments": "empty",
+          "effect": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8"
+        },
+        {
+          "action_id": 3,
+          "arguments": "empty",
+          "effect": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8"
+        },
+        {
+          "action_id": 4,
+          "arguments": "empty",
+          "effect": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8"
+        },
+        {
+          "action_id": 5,
+          "arguments": "empty",
+          "effect": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8"
+        },
+        {
+          "action_id": 6,
+          "arguments": "x_y",
+          "effect": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8"
+        },
+        {
+          "action_id": 7,
+          "arguments": "empty",
+          "effect": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8"
+        }
+      ],
+      "hypotheses": [
+        {
+          "id": "Q7!z9?x3#v5@k2%j8&b4*d6+",
+          "claim": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8",
+          "status": "hypothesized"
+        },
+        {
+          "id": "Q7!z9?x3#v5@k2%j8&b4*d6+",
+          "claim": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8",
+          "status": "hypothesized"
+        }
+      ],
+      "ambiguities": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8"
+    }
+  },
+  {
+    "stage": "decision",
+    "variant": "realistic_maximum_cardinality",
+    "response": {
+      "action": {
+        "action_id": 6,
+        "action_data": {
+          "x": 10,
+          "y": 10
+        }
+      },
+      "target": {
+        "kind": "region",
+        "label": "Visible contour and markings remain uncertain. V",
+        "spans": [
+          [
+            0,
+            10,
+            18
+          ],
+          [
+            1,
+            10,
+            18
+          ],
+          [
+            2,
+            10,
+            18
+          ],
+          [
+            3,
+            10,
+            18
+          ],
+          [
+            4,
+            10,
+            18
+          ],
+          [
+            5,
+            10,
+            18
+          ],
+          [
+            6,
+            10,
+            18
+          ],
+          [
+            7,
+            10,
+            18
+          ],
+          [
+            8,
+            10,
+            18
+          ],
+          [
+            9,
+            10,
+            18
+          ],
+          [
+            10,
+            10,
+            18
+          ],
+          [
+            11,
+            10,
+            18
+          ]
+        ]
+      },
+      "hypotheses": [
+        {
+          "id": "Visible contour and mark",
+          "claim": "Visible contour and markings remain uncertain. V",
+          "status": "hypothesized"
+        },
+        {
+          "id": "Visible contour and mark",
+          "claim": "Visible contour and markings remain uncertain. V",
+          "status": "hypothesized"
+        }
+      ],
+      "prediction": {
+        "kind": "exact_translation_of_mask",
+        "frame": "any_returned",
+        "spans": [
+          [
+            0,
+            10,
+            18
+          ],
+          [
+            1,
+            10,
+            18
+          ],
+          [
+            2,
+            10,
+            18
+          ],
+          [
+            3,
+            10,
+            18
+          ],
+          [
+            4,
+            10,
+            18
+          ],
+          [
+            5,
+            10,
+            18
+          ],
+          [
+            6,
+            10,
+            18
+          ],
+          [
+            7,
+            10,
+            18
+          ],
+          [
+            8,
+            10,
+            18
+          ],
+          [
+            9,
+            10,
+            18
+          ],
+          [
+            10,
+            10,
+            18
+          ],
+          [
+            11,
+            10,
+            18
+          ]
+        ],
+        "x": 63,
+        "y": 63,
+        "color": 15,
+        "dx": 63,
+        "dy": 63
+      },
+      "alternative": {
+        "kind": "exact_translation_of_mask",
+        "frame": "any_returned",
+        "spans": [
+          [
+            0,
+            10,
+            18
+          ],
+          [
+            1,
+            10,
+            18
+          ],
+          [
+            2,
+            10,
+            18
+          ],
+          [
+            3,
+            10,
+            18
+          ],
+          [
+            4,
+            10,
+            18
+          ],
+          [
+            5,
+            10,
+            18
+          ],
+          [
+            6,
+            10,
+            18
+          ],
+          [
+            7,
+            10,
+            18
+          ],
+          [
+            8,
+            10,
+            18
+          ],
+          [
+            9,
+            10,
+            18
+          ],
+          [
+            10,
+            10,
+            18
+          ],
+          [
+            11,
+            10,
+            18
+          ]
+        ],
+        "x": 63,
+        "y": 63,
+        "color": 15,
+        "dx": 63,
+        "dy": 63
+      },
+      "unresolved": "Visible contour and markings remain uncertain. V",
+      "subgoal": "Visible contour and markings remain uncertain. V",
+      "information": "Visible contour and markings remain uncertain. V",
+      "evidence_ids": [
+        "Visible contour and mark",
+        "Visible contour and mark",
+        "Visible contour and mark",
+        "Visible contour and mark",
+        "Visible contour and mark",
+        "Visible contour and mark",
+        "Visible contour and mark",
+        "Visible contour and mark",
+        "Visible contour and mark",
+        "Visible contour and mark",
+        "Visible contour and mark",
+        "Visible contour and mark",
+        "Visible contour and mark",
+        "Visible contour and mark",
+        "Visible contour and mark",
+        "Visible contour and mark",
+        "Visible contour and mark"
+      ],
+      "repeat_justification": "Visible contour and markings remain uncertain. V"
+    }
+  },
+  {
+    "stage": "decision",
+    "variant": "punctuation_stress",
+    "response": {
+      "action": {
+        "action_id": 6,
+        "action_data": {
+          "x": 10,
+          "y": 10
+        }
+      },
+      "target": {
+        "kind": "region",
+        "label": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8",
+        "spans": [
+          [
+            0,
+            10,
+            18
+          ],
+          [
+            1,
+            10,
+            18
+          ],
+          [
+            2,
+            10,
+            18
+          ],
+          [
+            3,
+            10,
+            18
+          ],
+          [
+            4,
+            10,
+            18
+          ],
+          [
+            5,
+            10,
+            18
+          ],
+          [
+            6,
+            10,
+            18
+          ],
+          [
+            7,
+            10,
+            18
+          ],
+          [
+            8,
+            10,
+            18
+          ],
+          [
+            9,
+            10,
+            18
+          ],
+          [
+            10,
+            10,
+            18
+          ],
+          [
+            11,
+            10,
+            18
+          ]
+        ]
+      },
+      "hypotheses": [
+        {
+          "id": "Q7!z9?x3#v5@k2%j8&b4*d6+",
+          "claim": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8",
+          "status": "hypothesized"
+        },
+        {
+          "id": "Q7!z9?x3#v5@k2%j8&b4*d6+",
+          "claim": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8",
+          "status": "hypothesized"
+        }
+      ],
+      "prediction": {
+        "kind": "exact_translation_of_mask",
+        "frame": "any_returned",
+        "spans": [
+          [
+            0,
+            10,
+            18
+          ],
+          [
+            1,
+            10,
+            18
+          ],
+          [
+            2,
+            10,
+            18
+          ],
+          [
+            3,
+            10,
+            18
+          ],
+          [
+            4,
+            10,
+            18
+          ],
+          [
+            5,
+            10,
+            18
+          ],
+          [
+            6,
+            10,
+            18
+          ],
+          [
+            7,
+            10,
+            18
+          ],
+          [
+            8,
+            10,
+            18
+          ],
+          [
+            9,
+            10,
+            18
+          ],
+          [
+            10,
+            10,
+            18
+          ],
+          [
+            11,
+            10,
+            18
+          ]
+        ],
+        "x": 63,
+        "y": 63,
+        "color": 15,
+        "dx": 63,
+        "dy": 63
+      },
+      "alternative": {
+        "kind": "exact_translation_of_mask",
+        "frame": "any_returned",
+        "spans": [
+          [
+            0,
+            10,
+            18
+          ],
+          [
+            1,
+            10,
+            18
+          ],
+          [
+            2,
+            10,
+            18
+          ],
+          [
+            3,
+            10,
+            18
+          ],
+          [
+            4,
+            10,
+            18
+          ],
+          [
+            5,
+            10,
+            18
+          ],
+          [
+            6,
+            10,
+            18
+          ],
+          [
+            7,
+            10,
+            18
+          ],
+          [
+            8,
+            10,
+            18
+          ],
+          [
+            9,
+            10,
+            18
+          ],
+          [
+            10,
+            10,
+            18
+          ],
+          [
+            11,
+            10,
+            18
+          ]
+        ],
+        "x": 63,
+        "y": 63,
+        "color": 15,
+        "dx": 63,
+        "dy": 63
+      },
+      "unresolved": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8",
+      "subgoal": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8",
+      "information": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8",
+      "evidence_ids": [
+        "Q7!z9?x3#v5@k2%j8&b4*d6+",
+        "Q7!z9?x3#v5@k2%j8&b4*d6+",
+        "Q7!z9?x3#v5@k2%j8&b4*d6+",
+        "Q7!z9?x3#v5@k2%j8&b4*d6+",
+        "Q7!z9?x3#v5@k2%j8&b4*d6+",
+        "Q7!z9?x3#v5@k2%j8&b4*d6+",
+        "Q7!z9?x3#v5@k2%j8&b4*d6+",
+        "Q7!z9?x3#v5@k2%j8&b4*d6+",
+        "Q7!z9?x3#v5@k2%j8&b4*d6+",
+        "Q7!z9?x3#v5@k2%j8&b4*d6+",
+        "Q7!z9?x3#v5@k2%j8&b4*d6+",
+        "Q7!z9?x3#v5@k2%j8&b4*d6+",
+        "Q7!z9?x3#v5@k2%j8&b4*d6+",
+        "Q7!z9?x3#v5@k2%j8&b4*d6+",
+        "Q7!z9?x3#v5@k2%j8&b4*d6+",
+        "Q7!z9?x3#v5@k2%j8&b4*d6+",
+        "Q7!z9?x3#v5@k2%j8&b4*d6+"
+      ],
+      "repeat_justification": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8"
+    }
+  },
+  {
+    "stage": "feedback",
+    "variant": "realistic_maximum_cardinality",
+    "response": {
+      "changes": [
+        {
+          "frame_index": 0,
+          "count": 4096,
+          "bbox": [
+            0,
+            0,
+            63,
+            63
+          ]
+        },
+        {
+          "frame_index": 1,
+          "count": 4096,
+          "bbox": [
+            0,
+            0,
+            63,
+            63
+          ]
+        },
+        {
+          "frame_index": 2,
+          "count": 4096,
+          "bbox": [
+            0,
+            0,
+            63,
+            63
+          ]
+        },
+        {
+          "frame_index": 3,
+          "count": 4096,
+          "bbox": [
+            0,
+            0,
+            63,
+            63
+          ]
+        },
+        {
+          "frame_index": 4,
+          "count": 4096,
+          "bbox": [
+            0,
+            0,
+            63,
+            63
+          ]
+        },
+        {
+          "frame_index": 5,
+          "count": 4096,
+          "bbox": [
+            0,
+            0,
+            63,
+            63
+          ]
+        },
+        {
+          "frame_index": 6,
+          "count": 4096,
+          "bbox": [
+            0,
+            0,
+            63,
+            63
+          ]
+        },
+        {
+          "frame_index": 7,
+          "count": 4096,
+          "bbox": [
+            0,
+            0,
+            63,
+            63
+          ]
+        }
+      ],
+      "primary": "contradicted",
+      "alternative": "contradicted",
+      "hypotheses": [
+        {
+          "id": "Visible contour and mark",
+          "claim": "Visible contour and markings remain uncertain. V",
+          "status": "hypothesized"
+        },
+        {
+          "id": "Visible contour and mark",
+          "claim": "Visible contour and markings remain uncertain. V",
+          "status": "hypothesized"
+        }
+      ],
+      "evidence_frames": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "next_test": "Visible contour and markings remain uncertain. V"
+    }
+  },
+  {
+    "stage": "feedback",
+    "variant": "punctuation_stress",
+    "response": {
+      "changes": [
+        {
+          "frame_index": 0,
+          "count": 4096,
+          "bbox": [
+            0,
+            0,
+            63,
+            63
+          ]
+        },
+        {
+          "frame_index": 1,
+          "count": 4096,
+          "bbox": [
+            0,
+            0,
+            63,
+            63
+          ]
+        },
+        {
+          "frame_index": 2,
+          "count": 4096,
+          "bbox": [
+            0,
+            0,
+            63,
+            63
+          ]
+        },
+        {
+          "frame_index": 3,
+          "count": 4096,
+          "bbox": [
+            0,
+            0,
+            63,
+            63
+          ]
+        },
+        {
+          "frame_index": 4,
+          "count": 4096,
+          "bbox": [
+            0,
+            0,
+            63,
+            63
+          ]
+        },
+        {
+          "frame_index": 5,
+          "count": 4096,
+          "bbox": [
+            0,
+            0,
+            63,
+            63
+          ]
+        },
+        {
+          "frame_index": 6,
+          "count": 4096,
+          "bbox": [
+            0,
+            0,
+            63,
+            63
+          ]
+        },
+        {
+          "frame_index": 7,
+          "count": 4096,
+          "bbox": [
+            0,
+            0,
+            63,
+            63
+          ]
+        }
+      ],
+      "primary": "contradicted",
+      "alternative": "contradicted",
+      "hypotheses": [
+        {
+          "id": "Q7!z9?x3#v5@k2%j8&b4*d6+",
+          "claim": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8",
+          "status": "hypothesized"
+        },
+        {
+          "id": "Q7!z9?x3#v5@k2%j8&b4*d6+",
+          "claim": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8",
+          "status": "hypothesized"
+        }
+      ],
+      "evidence_frames": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "next_test": "Q7!z9?x3#v5@k2%j8&b4*d6+f1=m0/wQ7!z9?x3#v5@k2%j8"
+    }
+  }
+]
