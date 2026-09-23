@@ -138,7 +138,7 @@ class InventoryAndTransportTests(unittest.TestCase):
 EXPECTED={'verified':('image_input_verified',True,[]),'incorrect':('image_input_verified',True,[]),
     'identical':('image_input_verified',False,['review_required_behavioural']),
     'invalid':('image_input_verified',False,['review_required_behavioural']),
-    'arithmetic':('image_input_verified',True,['arithmetic_revision_required']),
+    'arithmetic':('image_input_verified',False,['arithmetic_revision_required']),
     'dependency':('dependency_missing',False,[]),'rejected':('image_rejected_by_server',False,[]),
     'mismatch':('token_accounting_mismatch',False,[]),'not_consumed':('image_not_consumed',False,[])}
 

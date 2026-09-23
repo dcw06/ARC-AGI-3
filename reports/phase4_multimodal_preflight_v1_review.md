@@ -86,12 +86,16 @@ mismatch claim is rejected when the counts are equal.
 
 The flag `arithmetic_revision_required` is raised when verified processor
 counts differ from the provisional arithmetic or the frozen local expectation.
-Support is not denied, but the perception protocol must adopt the measured
-numbers.
+Image support is not denied, but the measured dimensions and token counts must
+be reviewed and incorporated into the frozen perception protocol first.
 
 `representation_comparison_unblocked` is true only for `image_input_verified`
-without a behavioural review flag. **Every other outcome blocks the comparison
-pending review.** No outcome establishes that images are "unsupported", and
+with **no review flag of either kind**. Every other outcome, and any flagged
+verified outcome, blocks the comparison pending review.
+
+R1 (`8bd5b2c`) left the comparison unblocked under
+`arithmetic_revision_required`, which contradicted this rule. R2 fixes the
+evaluator and its regression expectation. R1 is preserved and superseded. No outcome establishes that images are "unsupported", and
 nothing launches a text-only substitute.
 
 ## Local results

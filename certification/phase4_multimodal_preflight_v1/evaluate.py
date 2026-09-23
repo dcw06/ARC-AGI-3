@@ -89,7 +89,9 @@ def classify(worker,cases,lifecycle_ok):
             if (e['image_grid_thw']!=arith['grid_thw'] or e['image_tokens_processor']!=arith['image_tokens']
                 or frozen!=e['expected_prompt_tokens']):
                 if 'arithmetic_revision_required' not in summary['flags']:summary['flags'].append('arithmetic_revision_required')
-    summary['representation_comparison_unblocked']=verdict=='image_input_verified' and 'review_required_behavioural' not in summary['flags']
+    # Any review flag blocks the comparison: behavioural concerns, and measured processor
+    # geometry/counts that must first be reviewed into the frozen perception protocol.
+    summary['representation_comparison_unblocked']=verdict=='image_input_verified' and not summary['flags']
     return summary
 
 def evaluate(report,rows=None,*,live=True,seconds=1680):

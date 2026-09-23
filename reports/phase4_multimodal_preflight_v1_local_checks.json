@@ -1,16 +1,16 @@
 {
   "tests_passed": 24,
   "fixture_elapsed_seconds": {
-    "verified": 8.634758246000047,
-    "incorrect": 8.665041563999921,
-    "identical": 7.8507341140000335,
-    "invalid": 8.38731024599997,
-    "arithmetic": 8.53455334900002,
-    "dependency": 8.080465531000073,
-    "rejected": 8.290716984000028,
-    "mismatch": 8.48981242299999,
-    "not_consumed": 9.119416640000054,
-    "transport": 6.421187594000003
+    "verified": 8.681283223999998,
+    "incorrect": 8.008833336999999,
+    "identical": 8.341006507000003,
+    "invalid": 8.317856519999992,
+    "arithmetic": 8.392971769000013,
+    "dependency": 8.115700127999986,
+    "rejected": 8.562140169999992,
+    "mismatch": 8.30413979399998,
+    "not_consumed": 8.413648069999994,
+    "transport": 6.015310518999996
   },
   "archive_replay": {
     "verified": {
@@ -47,7 +47,7 @@
       "flags": [
         "arithmetic_revision_required"
       ],
-      "representation_comparison_unblocked": true
+      "representation_comparison_unblocked": false
     },
     "dependency": {
       "technical_passed": true,

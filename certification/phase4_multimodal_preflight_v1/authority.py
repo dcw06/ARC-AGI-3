@@ -3,7 +3,7 @@ import hashlib,json,os,re
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 SCOPE='phase4-multimodal-preflight-v1'
-REVIEW='notebooks/phase4-multimodal-preflight-v1-review-r1/review-source-lock.json'
+REVIEW='notebooks/phase4-multimodal-preflight-v1-review-r2/review-source-lock.json'
 SOURCE='reports/phase4_multimodal_preflight_v1_source_approval.json'
 COMPUTE='reports/phase4_multimodal_preflight_v1_compute_authorization.json'
 LIMITS={'authorized_seconds':1800,'internal_seconds':1680,'maximum_attempts':1,

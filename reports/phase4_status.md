@@ -10,9 +10,11 @@ delta must equal the image expansion. Failures are classified as dependency,
 server rejection, token accounting, image not consumed, or lifecycle. Any
 unverified outcome blocks the perception comparison pending review.
 
-24 tests and 10 supervised CPU modes passed with cleanup verified. The review
-notebook is `notebooks/phase4-multimodal-preflight-v1-review-r1/`, lock
-`0e34a813…c524f` (671 bindings). The actual-snapshot approval, package and
+24 tests and 10 supervised CPU modes passed with cleanup verified. Any review
+flag, including `arithmetic_revision_required`, keeps the comparison blocked
+(fixed in r2; r1 is superseded). The review notebook is
+`notebooks/phase4-multimodal-preflight-v1-review-r2/`, lock
+`8742c81b…57dbdc` (671 bindings). The actual-snapshot approval, package and
 gate regression passed. The proposal is one 1,800-second attempt; source
 approval and compute authorization are pending. See the
 [review](phase4_multimodal_preflight_v1_review.md).
