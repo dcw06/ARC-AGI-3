@@ -1,5 +1,19 @@
 # Local perception, control and transition groundwork
 
+Chronology repair (local R2): consecutive records now require
+`previous.returned_at <= next.committed_at <= next.started_at <= next.returned_at`.
+The predecessor is replay-validated before its return time is trusted. All
+timestamps must use elapsed seconds from one shared monotonic episode clock;
+the runner must retain that origin across steps. This validates internal
+chronology, not durable pre-dispatch storage, which remains the runner's duty.
+
+The current source/fixture lock is `reports/perception_v1_local_r2/fixture-lock.json`.
+Fourteen tests cover the original cases plus backdated/overlapping chains,
+boundary equality, later timestamps and invalid predecessor times. Fixture
+grids, reference answers and scores match R1 byte-for-byte. The original
+`reports/perception_v1_local/` lock remains historical at commit `04a0ca9`;
+the command below now checks R2. Frozen preflight notebooks are unchanged.
+
 Implemented under `research/perception_v1/`, independently of the preflight.
 No model calls, environment actions or scorecards. The original provisional
 perception protocol remains historical; this local fixture lock does not freeze

@@ -1,4 +1,10 @@
-"""Local record contract only: no environment, dispatch, memory or model calls."""
+"""Local record contract only: no environment, dispatch, memory or model calls.
+
+All timestamps are elapsed seconds on one shared monotonic episode clock.
+Callers must not reset the origin between steps or mix wall/process clocks.
+Chronology checks do not prove durable pre-dispatch retention; that remains
+the future runner's responsibility.
+"""
 import json,math,re
 from .fixtures import digest
 from certification.phase4_multimodal_preflight_v3.images import check_grid
@@ -59,7 +65,10 @@ def verify(record,previous=None):
     expected=finalize(record['intent'],intent_sha256=record['intent_sha256'],dispatch=record['dispatch'],after=record['after'],update=record['model_update'])
     if expected!=record:raise ValueError('record replay mismatch')
     if previous is not None:
+        verify(previous)  # Validate the predecessor before trusting its return time.
         a,b=previous['intent'],record['intent']
         if any(a[k]!=b[k] for k in ('episode_id','game_id','seed')) or b['step']!=a['step']+1 or b['before_sha256']!=previous['after_sha256']:
             raise ValueError('episode continuity/fresh observation')
+        if previous['dispatch']['returned_at']>b['committed_at']:
+            raise ValueError('episode chronology: prediction committed before previous return')
     return True
