@@ -1,5 +1,22 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
+## Multimodal image-input preflight v1: reviewable, not authorized
+
+This is a zero-action Kaggle preflight. It inventories the model mount, loads
+the mounted processor, sends one text canary, then four probes: a text control,
+a 4×4 canary, and two different 64×64 boards at 1024×1024. Server prompt
+tokens must match the mounted processor's count, and the image-minus-text
+delta must equal the image expansion. Failures are classified as dependency,
+server rejection, token accounting, image not consumed, or lifecycle. Any
+unverified outcome blocks the perception comparison pending review.
+
+24 tests and 10 supervised CPU modes passed with cleanup verified. The review
+notebook is `notebooks/phase4-multimodal-preflight-v1-review-r1/`, lock
+`0e34a813…c524f` (671 bindings). The actual-snapshot approval, package and
+gate regression passed. The proposal is one 1,800-second attempt; source
+approval and compute authorization are pending. See the
+[review](phase4_multimodal_preflight_v1_review.md).
+
 ## Perception diagnostic v1: provisional protocol (not frozen)
 
 This is a zero-action diagnostic of object identification, localization,
