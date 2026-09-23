@@ -4,6 +4,155 @@
     "tokenizers": "0.22.2",
     "jinja2": "3.1.6"
   },
+  "accumulated_history_worst_case": {
+    "answer_tokens_used": {
+      "inventory": 1462,
+      "decision": 1231,
+      "feedback": 439
+    },
+    "rows": [
+      {
+        "step": 0,
+        "stage": "decision",
+        "history_entries": 1,
+        "prompt_tokens": 10151,
+        "bytes": 15967,
+        "admissible": true
+      },
+      {
+        "step": 0,
+        "stage": "feedback",
+        "history_entries": 2,
+        "prompt_tokens": 21140,
+        "bytes": 26199,
+        "admissible": true,
+        "max_admissible_returned_frames": 5
+      },
+      {
+        "step": 1,
+        "stage": "decision",
+        "history_entries": 3,
+        "prompt_tokens": 11855,
+        "bytes": 18924,
+        "admissible": true
+      },
+      {
+        "step": 1,
+        "stage": "feedback",
+        "history_entries": 4,
+        "prompt_tokens": 22844,
+        "bytes": 29156,
+        "admissible": true,
+        "max_admissible_returned_frames": 5
+      },
+      {
+        "step": 2,
+        "stage": "decision",
+        "history_entries": 5,
+        "prompt_tokens": 13559,
+        "bytes": 21881,
+        "admissible": true
+      },
+      {
+        "step": 2,
+        "stage": "feedback",
+        "history_entries": 6,
+        "prompt_tokens": 24548,
+        "bytes": 32113,
+        "admissible": true,
+        "max_admissible_returned_frames": 5
+      },
+      {
+        "step": 3,
+        "stage": "decision",
+        "history_entries": 7,
+        "prompt_tokens": 15263,
+        "bytes": 24838,
+        "admissible": true
+      },
+      {
+        "step": 3,
+        "stage": "feedback",
+        "history_entries": 8,
+        "prompt_tokens": 26252,
+        "bytes": 35070,
+        "admissible": true,
+        "max_admissible_returned_frames": 4
+      },
+      {
+        "step": 4,
+        "stage": "decision",
+        "history_entries": 9,
+        "prompt_tokens": 16967,
+        "bytes": 27795,
+        "admissible": true
+      },
+      {
+        "step": 4,
+        "stage": "feedback",
+        "history_entries": 10,
+        "prompt_tokens": 27956,
+        "bytes": 38027,
+        "admissible": true,
+        "max_admissible_returned_frames": 4
+      },
+      {
+        "step": 5,
+        "stage": "decision",
+        "history_entries": 11,
+        "prompt_tokens": 18671,
+        "bytes": 30752,
+        "admissible": true
+      },
+      {
+        "step": 5,
+        "stage": "feedback",
+        "history_entries": 12,
+        "prompt_tokens": 29660,
+        "bytes": 40984,
+        "admissible": true,
+        "max_admissible_returned_frames": 4
+      },
+      {
+        "step": 6,
+        "stage": "decision",
+        "history_entries": 13,
+        "prompt_tokens": 20375,
+        "bytes": 33709,
+        "admissible": true
+      },
+      {
+        "step": 6,
+        "stage": "feedback",
+        "history_entries": 14,
+        "prompt_tokens": 31364,
+        "bytes": 43941,
+        "admissible": true,
+        "max_admissible_returned_frames": 4
+      },
+      {
+        "step": 7,
+        "stage": "decision",
+        "history_entries": 15,
+        "prompt_tokens": 22079,
+        "bytes": 36666,
+        "admissible": true
+      },
+      {
+        "step": 7,
+        "stage": "feedback",
+        "history_entries": 16,
+        "prompt_tokens": 33068,
+        "bytes": 46898,
+        "admissible": true,
+        "max_admissible_returned_frames": 4
+      }
+    ],
+    "largest_one_frame_prompt": 33068,
+    "all_one_frame_requests_admissible": true,
+    "min_admissible_returned_frames_final_feedback": 4,
+    "scope": "Worst-case valid answers at maximum cardinality/length (punctuation-stress where denser), compact as serialized in requests; frames are copies of the initial grid. Not a bound for grids that tokenize more densely."
+  },
   "tokenizer_manifest_sha256": "9b23b48f0615f43aee0d6b344982cbd17d36841cd92b3ebaf52c5e0c7a60db72",
   "rows": [
     {

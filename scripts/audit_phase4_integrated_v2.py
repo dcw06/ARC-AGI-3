@@ -32,7 +32,36 @@ def run(folder):
   admissible=len(ids)<=60000 and len(ids)+r['max_tokens']<=65536 and size<=196608
   rows.append({'id':name,'request_sha256':digest(r),'prompt_tokens':len(ids),'completion_cap':r['max_tokens'],'bytes':size,'admissible':admissible})
   if name not in ('eight_frame_feedback','bounded_history_stress'):assert admissible,name
- report={'versions':versions,'tokenizer_manifest_sha256':hashlib.sha256((ROOT/'certification/phase4_integrated_v2/tokenizer_manifest.json').read_bytes()).hexdigest(),
+ # Worst-case accumulated history: every prior answer is the maximum-size, most
+ # token-dense valid output, built exactly as worker.run_cases composes contexts.
+ examples=json.loads((ROOT/'reports/phase4_integrated_v2_output_examples.json').read_bytes())
+ worst={}
+ for case in examples:
+  raw=json.dumps(case['response'],sort_keys=True,separators=(',',':'))
+  n=len(tok.encode(raw,add_special_tokens=False))
+  if n>worst.get(case['stage'],(0,None))[0]:worst[case['stage']]=(n,case['response'])
+ grid=initial['frames'][-1];history=[{'call_id':'ic2-structured-call-00','stage':'inventory','answer':worst['inventory'][1]}]
+ accumulated=[];cursor=1
+ def measure(stage,frames,context):
+  r=make_request(stage,{**initial,'frames':[grid]*frames},context)
+  ids=tok.apply_chat_template(r['messages'],tokenize=True,add_generation_prompt=True,truncation=False,**r['chat_template_kwargs'])
+  size=max(len(json.dumps(r).encode()),len(json.dumps(r,separators=(',',':')).encode()))
+  return {'prompt_tokens':len(ids),'bytes':size,'admissible':len(ids)<=60000 and len(ids)+r['max_tokens']<=65536 and size<=196608}
+ for step in range(8):
+  dec=f'ic2-structured-call-{cursor:02d}';cursor+=1
+  accumulated.append({'step':step,'stage':'decision','history_entries':len(history),**measure('decision',1,{'history':history})})
+  history.append({'call_id':dec,'stage':'decision','answer':worst['decision'][1]})
+  context={'history':history,'pre_grid':grid,'pre_levels':initial['levels_completed'],'decision_call_id':dec,'decision':worst['decision'][1]}
+  row={'step':step,'stage':'feedback','history_entries':len(history),**measure('feedback',1,context)}
+  row['max_admissible_returned_frames']=max([f for f in range(1,9) if measure('feedback',f,context)['admissible']],default=0)
+  accumulated.append(row)
+  history.append({'call_id':f'ic2-structured-call-{cursor:02d}','stage':'feedback','answer':worst['feedback'][1]});cursor+=1
+ accumulated_summary={'answer_tokens_used':{k:v[0] for k,v in worst.items()},'rows':accumulated,
+  'largest_one_frame_prompt':max(r['prompt_tokens'] for r in accumulated),
+  'all_one_frame_requests_admissible':all(r['admissible'] for r in accumulated),
+  'min_admissible_returned_frames_final_feedback':min(r['max_admissible_returned_frames'] for r in accumulated if r['stage']=='feedback'),
+  'scope':'Worst-case valid answers at maximum cardinality/length (punctuation-stress where denser), compact as serialized in requests; frames are copies of the initial grid. Not a bound for grids that tokenize more densely.'}
+ report={'versions':versions,'accumulated_history_worst_case':accumulated_summary,'tokenizer_manifest_sha256':hashlib.sha256((ROOT/'certification/phase4_integrated_v2/tokenizer_manifest.json').read_bytes()).hexdigest(),
   'rows':rows,'adaptive_rule':'Every actual request is tokenized before inference; >60000 prompt tokens or 196608 bytes fails closed with no truncation/retry. Stress cases are not a guarantee all histories fit.',
   'study_prompt_ceiling':1500000,'generated_ceiling_including_canary':27776,'max_completions':26,'model_calls':0,'gpu_runs':0}
  (ROOT/'reports/phase4_integrated_v2_token_audit.json').write_bytes((json.dumps(report,indent=2)+'\n').encode());print(json.dumps(report,indent=2))

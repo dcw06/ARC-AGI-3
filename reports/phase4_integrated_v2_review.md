@@ -73,15 +73,52 @@ Deleting the retained `finish_reason`, or turning a valid body into a `length`
 finish, fails replay. Transport, token-count mismatch and cleanup failures still
 terminate as technical failures with verified cleanup.
 
-## Input admission (unchanged limit, stated explicitly)
+## Input admission and accumulated history
 
 `phase4_integrated_v2_token_audit.json` tokenizes all 25 requests of the
 full-cap scripted trajectory (557,140 prompt tokens, largest 28,944), the
-canary and the initial inventory request (8,692). A feedback request carrying
-eight returned frames needs 76,606 tokens and is rejected by the 60,000-token
-guard. v1's retained ar25 observations each had one frame. A transition that
-returns roughly six or more frames would therefore end the case as a technical
-incomplete, without truncation. Approval should account for this.
+canary and the initial inventory request (8,692).
+
+Scripted fixture answers are short, so the audit also builds a **worst-case
+valid history**. Every prior answer is the maximum-size, most token-dense valid
+output (inventory 1,462, decision 1,231 and feedback 439 tokens as serialized in
+requests). The contexts are assembled exactly as the worker does over all eight
+structured steps. Findings:
+
+- **One-frame transitions:** all 16 decision and feedback requests fit. The
+  largest is the final feedback at 33,068 tokens.
+- **Multi-frame transitions:** the admissible returned-frame count falls from 5
+  to 4 as history grows. A late transition returning five or more frames fails
+  the 60,000-token guard.
+- **Eight frames:** an eight-frame feedback request needs 76,606 tokens even
+  with an empty history.
+
+v1's retained ar25 observations each had one frame. An over-limit request is a
+technical stop of the run, with evidence retained and no truncation or pruning.
+It is not a censored model outcome. Approval should account for this.
+
+## Reviewer findings (source, evaluator, limits, budget)
+
+- **Stage flow.** The worker, `worker.py`, stops the structured episode at the
+  first invalid or non-`stop` response. It dispatches only from a valid
+  decision, still runs feedback after an acknowledged action, and never falls
+  back or retries. Replay (`trajectory.py`) independently reconstructs every
+  request and recomputes validity from the retained body plus `finish_reason`.
+  It does not rely on the worker's summary.
+- **Evaluator bindings.** The hard-coded canary request hash and model tree
+  hash match the token audit and protocol. The canary must finish with `stop`.
+- **Known inefficiency, kept deliberately.** A feedback request carries its
+  decision twice, in `history` and as `context.decision` (about 1.2k tokens).
+  It is included in every measurement above. Removing it would change the
+  request contract for no admission benefit at one frame.
+- **Prompt budget.** The worst-case study prompt total is about 545k tokens.
+  That is about 355k for the structured arm (from the history audit) plus about
+  189k for eight control requests, v1's measured control usage. The ceiling is
+  1,500,000.
+- **Time budget.** v1 generated 2,048 tokens in 15.2 s, about 135 tokens/s.
+  The worst-case structured generation is 26,624 tokens, about 200 s. This fits
+  the 1,200-second study window and the 120-second per-request limit (at most
+  about 15 s per call). Model startup in v1 was 404 s, against a 900-second cap.
 
 ## Local results
 
@@ -105,7 +142,9 @@ tokens. Nothing from v1's consumed reservation carries forward.
 
 ## Review boundary
 
-The notebook is private, offline and GPU-disabled; it refuses execution without
+Current notebook: `notebooks/phase4-integrated-v2-review-r2/`. R1, commit
+`7391674`, is preserved and superseded; its lock predates the accumulated-history
+audit and no longer matches the bound audit files. The notebook is private, offline and GPU-disabled; it refuses execution without
 a source approval and separate compute authorization bound to this review lock,
 plus an unconsumed reservation. User intent is recorded in
 `phase4_integrated_v2_launch_intent.json` and is not an approval. These checks
