@@ -1,0 +1,15 @@
+{
+  "scope": "phase4-grounded-action-stage-b-live-r3",
+  "review_revision": "r6",
+  "review_lock_sha256": "3afce33e6d3e7bbe763b3850cccb9e8cf901c11a8aec390c4e09ef78a8266da3",
+  "commands": [
+    "python -m unittest tests.test_grounded_action_v1_import_boundary tests.test_grounded_action_v1_target_live tests.test_grounded_action_v1_target_supervisor tests.test_grounded_action_v1_authority tests.test_grounded_action_v1_packaged_import tests.test_grounded_action_v1_package tests.test_grounded_action_v1_engine",
+    "python -m scripts.review_grounded_action_v1_launch_notebook"
+  ],
+  "tests_passed": 24,
+  "tests_failed": 0,
+  "source_files_verified": 1043,
+  "gpu_enabled": false,
+  "unapproved_execution_rejected": true,
+  "new_gpu_runs": 0
+}

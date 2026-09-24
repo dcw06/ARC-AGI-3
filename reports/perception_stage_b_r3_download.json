@@ -1,0 +1,143 @@
+{
+  "kernel": "daichongwei06/arc3-grounded-action-v1-r3",
+  "requested_version": 1,
+  "attempt_id": "gab1-75481e91d3704b17980b7bb5d9f0dea0",
+  "file_count": 27,
+  "files": [
+    {
+      "path": ".gab1-75481e91d3704b17980b7bb5d9f0dea0.runtime-consumed.json",
+      "bytes": 77,
+      "sha256": "1e13dea3895cd431d46c9c639c3b7f2680946ffeeecd6fd56d994c71863c4f03"
+    },
+    {
+      "path": "arc3-grounded-action-v1-r3.log",
+      "bytes": 4621,
+      "sha256": "bd1e3d10d3d627341410f092509fbd7f4c4771da50c72d32a617c45b9ec722ea"
+    },
+    {
+      "path": "phase4-grounded-action-v1/.evidence.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "phase4-grounded-action-v1/control/cancel.json",
+      "bytes": 50,
+      "sha256": "20250f8be426d8efc44d3c68345d4f0d75e3677b79bb4d6c0f13f2663d87ad0d"
+    },
+    {
+      "path": "phase4-grounded-action-v1/control/first-cell-supervisor-cleanup.json",
+      "bytes": 106,
+      "sha256": "c41b9119857086cec96788e8d3c205eb37c008f8e2185675be8ae81842b200df"
+    },
+    {
+      "path": "phase4-grounded-action-v1/control/gpu-cleanup.json",
+      "bytes": 193,
+      "sha256": "139f85224ba8242bb538bcef3810a0cd40f3f4b754802584d8c449a1db87468e"
+    },
+    {
+      "path": "phase4-grounded-action-v1/control/installation.json",
+      "bytes": 2849,
+      "sha256": "67409da5c4089c46b8db5eb923edd52f4cad755d08fc1431b8b8b8b036c60778"
+    },
+    {
+      "path": "phase4-grounded-action-v1/control/monitor-ready-ack.json",
+      "bytes": 77,
+      "sha256": "ce08116af5ac74222d9a6d22ad5b24e40fe59a8532dbb38882cdbbbaeeac3649"
+    },
+    {
+      "path": "phase4-grounded-action-v1/control/notebook-cost.json",
+      "bytes": 278,
+      "sha256": "e45f8bd8290bb520bd3b8e61bf7008f0bc8694132139c938b7124c63e3a64419"
+    },
+    {
+      "path": "phase4-grounded-action-v1/control/outer.json",
+      "bytes": 426,
+      "sha256": "9e58e39129347f55c9a0b7562583ff7f62e0893ad2ee4f632c9420d6001affab"
+    },
+    {
+      "path": "phase4-grounded-action-v1/control/ownership.json",
+      "bytes": 158,
+      "sha256": "8dc8e1a91255f8fea95bab2312671809996e275d74d4764534cd854304f2fb67"
+    },
+    {
+      "path": "phase4-grounded-action-v1/logs/307.json",
+      "bytes": 23039,
+      "sha256": "93563542fe5370aa6a3a1cdd8045b965077b2593c74731ab5fa0589ea39044c4"
+    },
+    {
+      "path": "phase4-grounded-action-v1/logs/309.json",
+      "bytes": 102,
+      "sha256": "50e31b712644548df2ea205f2e49aed62d938a59070d48f36338db20c2753895"
+    },
+    {
+      "path": "phase4-grounded-action-v1/logs/install-game.json",
+      "bytes": 599376,
+      "sha256": "31e84f587442c99fe6a2aca7b1ff465b1cf6a6ebf695fbac3aa1f5c4699f5595"
+    },
+    {
+      "path": "phase4-grounded-action-v1/logs/install-model.json",
+      "bytes": 2099444,
+      "sha256": "b057abf2c15496257f73e42b327d3411de50bf2615e3c69036766a4586351fa2"
+    },
+    {
+      "path": "phase4-grounded-action-v1/logs/supervisor.json",
+      "bytes": 102,
+      "sha256": "50e31b712644548df2ea205f2e49aed62d938a59070d48f36338db20c2753895"
+    },
+    {
+      "path": "phase4-grounded-action-v1/monitor/ready.json",
+      "bytes": 644,
+      "sha256": "22784e4896fc9e98b440efbdc4003e5727f287286849421fc9eb1af693fe19cb"
+    },
+    {
+      "path": "phase4-grounded-action-v1/monitor/samples-0000.json",
+      "bytes": 23763,
+      "sha256": "334785aeba6c065bc8b1a1c107fe8f5e27f966b2611d3b26f1fd072fe7c3d20f"
+    },
+    {
+      "path": "phase4-grounded-action-v1/monitor/samples-0001.json",
+      "bytes": 25035,
+      "sha256": "3e58ba942a780a76ec60e23a16cfc4376da44b2df19f318e38af0c35f9ea2130"
+    },
+    {
+      "path": "phase4-grounded-action-v1/monitor/samples-0002.json",
+      "bytes": 10403,
+      "sha256": "12b63054542181a0828cc5bb1223350571fef6fe9955a39545e50479698ca162"
+    },
+    {
+      "path": "phase4-grounded-action-v1/monitor/telemetry.json",
+      "bytes": 924,
+      "sha256": "39668279009794e1da9d3095cc45037def44eb79d5b26ff4a8433c55ec8f7c79"
+    },
+    {
+      "path": "phase4-grounded-action-v1/worker/canary.json",
+      "bytes": 1519,
+      "sha256": "624d08f6862d4dadee9987ceb98cd72c692fbc17e0c43a5179840ccba88a61eb"
+    },
+    {
+      "path": "phase4-grounded-action-v1/worker/failure.json",
+      "bytes": 283,
+      "sha256": "247d50fefe8b5c291cb2727d93cda968dd9a6971a5afe68a3ff3886ee2f22dc9"
+    },
+    {
+      "path": "phase4-grounded-action-v1/worker/host-status.json",
+      "bytes": 148,
+      "sha256": "76a944025d33d11b85f9f0ec637ff0509b9a9edc7e24255178a5803257c50757"
+    },
+    {
+      "path": "phase4-grounded-action-v1/worker/model-process.json",
+      "bytes": 49,
+      "sha256": "a7e87bf6329dde47a279f5098ac83fa8d1b55d20ab3fafffedd30d5ae3d2e9a4"
+    },
+    {
+      "path": "phase4-grounded-action-v1/worker/model-ready.json",
+      "bytes": 260,
+      "sha256": "252046a366f3bdd807af84266f2df763098c1559bb9edcb6c4d263be2247a667"
+    },
+    {
+      "path": "phase4-grounded-action-v1/worker/trajectory.json",
+      "bytes": 663,
+      "sha256": "177033d8dde9dd014465c718e41385da9eb51c629cbda6fcac8ccf07f363942b"
+    }
+  ]
+}

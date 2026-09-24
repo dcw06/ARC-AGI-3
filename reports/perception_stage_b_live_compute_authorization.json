@@ -1,0 +1,18 @@
+{
+  "approval_kind": "compute",
+  "approved_at": "2026-09-24T08:00:14.371923+00:00",
+  "authorized_seconds": 3600,
+  "automatic_retries": 0,
+  "internal_seconds": 3300,
+  "maximum_actions_per_episode": 2,
+  "maximum_attempts": 1,
+  "maximum_episodes": 2,
+  "maximum_study_calls": 12,
+  "maximum_total_completions": 13,
+  "review_lock_sha256": "2452a94693d37e051bc1b70092e537b316614c56d4dbcdcdc82f33d46d1ba57a",
+  "scope": "phase4-grounded-action-stage-b-live-r1",
+  "scored_submissions": 0,
+  "source_approval_sha256": "d4e142e63021dfacdad01ba0471266e9418094c631a035578aa8265bc91716f3",
+  "status": "approved",
+  "user_response": "Yes go ahead: one Stage B R2 GPU attempt under the stated 3600-second provider reservation, 3300-second internal limit, 12 study calls plus one canary, and no automatic retry"
+}

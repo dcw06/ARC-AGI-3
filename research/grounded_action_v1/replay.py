@@ -42,8 +42,10 @@ def evaluate(value):
         (INITIAL.parents[1] / 'perception_stage_b_v1_case_protocol.json').read_bytes()).hexdigest(),
         'case protocol binding')
     kind = value.get('kind')
-    require(value.get('version') == 'grounded_action_local_v1' and
+    require(value.get('version') in ('grounded_action_local_v1', 'grounded_action_local_v2') and
             kind in ('scripted_cpu_only', 'offline_development_engine'), 'record version')
+    feedback_encoding = ('legacy_grid_json_v1' if value['version'] == 'grounded_action_local_v1'
+                         else 'hex_rows_v1')
     require(value.get('status') == 'complete' and value.get('error') is None, 'incomplete pair')
     limit = value['limit']
     require(limit['steps_per_arm'] == MAX_STEPS and limit['calls'] == MAX_CALLS and
@@ -158,7 +160,8 @@ def evaluate(value):
                         'development journal binding')
             require(step['feedback_call'] == cursor, 'feedback pointer')
             feedback = call('feedback', audit_request('feedback', pack(post), action,
-                                                      before=pack(obs), prediction=prediction), post)
+                                                      before=pack(obs), prediction=prediction,
+                                                      feedback_encoding=feedback_encoding), post)
             require(step['feedback'] == feedback, 'feedback binding')
             changes = changed(pack(obs), pack(post))
             truth = [r['frame'] for r in changes if r['shape_changed'] or r['changed_cells']]

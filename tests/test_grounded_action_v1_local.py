@@ -7,7 +7,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from research.grounded_action_v1.contract import audit_request, parse_policy
+from research.grounded_action_v1.contract import audit_request, feedback_grid, parse_policy
 from research.grounded_action_v1 import contract as grounded_contract
 from research.grounded_action_v1.local import ScriptedAdapter, ScriptedService, run
 from research.grounded_action_v1.replay import evaluate, replay_file
@@ -49,6 +49,7 @@ class GroundedActionLocalTests(unittest.TestCase):
 
     def test_complete_pair_and_transient_frame(self):
         result, path = self.execute()
+        self.assertEqual(result['version'], 'grounded_action_local_v2')
         score = replay_file(path)
         self.assertEqual((score['calls'], score['dispatches']), (12, 4))
         self.assertEqual(score['episodes'][0]['outcomes'][0]['changed_frames'], [0])
@@ -86,15 +87,42 @@ class GroundedActionLocalTests(unittest.TestCase):
                           normal['episodes'][0]['steps'][0]['action'],
                           before=normal['episodes'][0]['steps'][0]['before'])
 
-    def test_seven_frame_feedback_fails_closed_without_dropping_frames(self):
+    def test_eight_frame_feedback_is_lossless_and_bounded(self):
         result, _ = self.execute()
         step = result['episodes'][0]['steps'][0]
         after = copy.deepcopy(step['after'])
-        after['frames'] = [after['frames'][-1]] * 7
-        self.assertEqual(len(after['frames']), 7)
+        after['frames'] = [after['frames'][-1]] * 8
+        request = audit_request('feedback', after, step['action'], before=step['before'],
+                                prediction=step['prediction'])
+        payload = json.loads(request['messages'][1]['content'])
+        self.assertEqual(payload['grid_encoding'], 'hex_rows_v1')
+        self.assertEqual(len(payload['observation']['frames']), 8)
+        decoded = [[[int(digit, 16) for digit in row] for row in frame]
+                   for frame in payload['observation']['frames']]
+        self.assertEqual(decoded, after['frames'])
+        self.assertEqual(len(json.dumps(request, separators=(',', ':')).encode()) < 45000, True)
+        dense = [[(x + 7 * y) % 16 for x in range(64)] for y in range(64)]
+        after['frames'] = [dense] * 8
+        dense_request = audit_request('feedback', after, step['action'], before={'frames': [dense],
+            'levels_completed': step['before']['levels_completed'], 'state': step['before']['state']},
+            prediction=step['prediction'])
+        self.assertLess(len(json.dumps(dense_request, separators=(',', ':')).encode()), 45000)
+        after['frames'].append(after['frames'][-1])
         with self.assertRaisesRegex(ValueError, 'feedback frame admission'):
             audit_request('feedback', after, step['action'], before=step['before'],
                           prediction=step['prediction'])
+
+    def test_feedback_encoding_rejects_shape_palette_and_bool(self):
+        frame = [[0] * 64 for _ in range(64)]
+        self.assertEqual(feedback_grid(frame), ['0' * 64] * 64)
+        for mutation, error in (((0, 0, 16), 'palette'), ((0, 0, True), 'palette')):
+            broken = copy.deepcopy(frame)
+            y, x, value = mutation
+            broken[y][x] = value
+            with self.assertRaisesRegex(ValueError, error):
+                feedback_grid(broken)
+        with self.assertRaisesRegex(ValueError, 'shape'):
+            feedback_grid(frame[:-1])
 
     def test_candidate_request_changes_only_instruction_and_schema(self):
         result, _ = self.execute()
@@ -175,6 +203,15 @@ class GroundedActionLocalTests(unittest.TestCase):
         missing_frame = copy.deepcopy(result)
         missing_frame['episodes'][0]['steps'][0]['after']['frames'].pop(0)
         variants.append(missing_frame)
+        wrong_feedback_grid = copy.deepcopy(result)
+        call_index = wrong_feedback_grid['episodes'][0]['steps'][0]['feedback_call']
+        feedback_call = wrong_feedback_grid['episodes'][0]['calls'][call_index]
+        payload = json.loads(feedback_call['request']['messages'][1]['content'])
+        row = payload['observation']['frames'][0][0]
+        payload['observation']['frames'][0][0] = ('1' if row[0] != '1' else '0') + row[1:]
+        feedback_call['request']['messages'][1]['content'] = json.dumps(payload, sort_keys=True,
+                                                                        separators=(',', ':'))
+        variants.append(wrong_feedback_grid)
         count_drift = copy.deepcopy(result)
         count_drift['episodes'][0]['calls'][0]['server_prompt_tokens'] += 1
         variants.append(count_drift)

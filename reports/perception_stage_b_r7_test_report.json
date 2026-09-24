@@ -1,0 +1,14 @@
+{
+  "scope": "phase4-grounded-action-stage-b-live-r4",
+  "review_revision": "r7",
+  "review_lock_sha256": "5e2e74c64fe828092c4402ea7ccf52a30380cadfc76819907ecf257850be1da9",
+  "full_suite_command": "python -m unittest discover -s tests -p 'test_grounded_action_v1_*.py'",
+  "full_suite_tests_passed": 56,
+  "full_suite_tests_failed": 0,
+  "focused_post_assertion_tests_passed": 2,
+  "source_files_verified": 1043,
+  "gpu_enabled": false,
+  "unapproved_execution_rejected": true,
+  "new_gpu_runs": 0,
+  "remaining_authority": "separate R7 source approval and one-attempt compute authorization"
+}

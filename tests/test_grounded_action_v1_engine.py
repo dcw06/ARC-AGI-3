@@ -49,7 +49,7 @@ class GroundedActionEngineTests(unittest.TestCase):
         source = ROOT / 'notebooks/phase4-grounded-action-v1-review-r5'
         self.assertEqual(review_notebook(source, compare_checkout=False)['status'],
                          'review_snapshot_verified_no_launch_authority')
-        for revision in ('r1', 'r2', 'r3', 'r4'):
+        for revision in ('r1', 'r2', 'r3', 'r4', 'r5'):
             historical = ROOT / ('notebooks/phase4-grounded-action-v1-review-' + revision)
             self.assertEqual(review_notebook(historical, compare_checkout=False)['status'],
                              'review_snapshot_verified_no_launch_authority')
@@ -65,14 +65,15 @@ class GroundedActionEngineTests(unittest.TestCase):
 
     def test_target_launch_review_unpacks_and_rejects_unapproved_execution(self):
         from research.grounded_action_v1.authority import REVIEW, REQUIRED_SOURCE
-        source = ROOT / 'notebooks/phase4-grounded-action-v1-launch-r2'
+        source = ROOT / 'notebooks/phase4-grounded-action-v1-launch-r9'
         self.assertEqual((ROOT / REVIEW).resolve(),
                          (source / 'review-source-lock.json').resolve())
         result = review_launch_notebook(source)
         self.assertTrue(result['unapproved_execution_rejected'])
-        historical = ROOT / 'notebooks/phase4-grounded-action-v1-launch-r1'
-        self.assertTrue(review_launch_notebook(historical, compare_checkout=False)
-                        ['unapproved_execution_rejected'])
+        for revision in ('r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'r7', 'r8'):
+            historical = ROOT / ('notebooks/phase4-grounded-action-v1-launch-' + revision)
+            self.assertTrue(review_launch_notebook(historical, compare_checkout=False)
+                            ['unapproved_execution_rejected'])
         lock = json.loads((source / 'review-source-lock.json').read_bytes())
         self.assertTrue(REQUIRED_SOURCE <= set(lock['bindings']))
         with tempfile.TemporaryDirectory() as folder:

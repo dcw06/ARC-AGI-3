@@ -24,6 +24,7 @@ def count(tokenizer, request):
 def run(record, folder, output):
     from transformers import AutoTokenizer
     from certification.phase4_integrated_v2.tokenizer_binding import verify
+    from research.grounded_action_v1.contract import feedback_grid
     versions = {k: importlib.metadata.version(k) for k in VERSION}
     if versions != VERSION:
         raise ValueError('tokenizer environment drift')
@@ -43,9 +44,10 @@ def run(record, folder, output):
                 raise ValueError('exact request limit/hash')
             rows.append(row)
     initial = json.loads((ROOT / 'reports/integrated_case_v1/initial_observation.json').read_bytes())
-    frame = initial['frames'][-1]
+    frame = feedback_grid(initial['frames'][-1])
     stress = []
-    # The feedback request carries one pre-action frame and all returned frames.
+    # The feedback request carries one pre-action frame and all returned frames
+    # in the exact lossless hex-row format admitted by the live contract.
     for episode in evidence['episodes']:
         sample = next(c['request'] for c in episode['calls'] if c['stage'] == 'feedback')
         for count_frames in range(1, 9):
@@ -55,6 +57,16 @@ def run(record, folder, output):
             payload['observation']['frames'] = [frame] * count_frames
             request['messages'][1]['content'] = json.dumps(payload, sort_keys=True, separators=(',', ':'))
             stress.append({'arm': episode['arm'], 'returned_frames': count_frames, **count(tokenizer, request)})
+    dense = [''.join('0123456789abcdef'[(x + 7 * y) % 16] for x in range(64))
+             for y in range(64)]
+    for episode in evidence['episodes']:
+        sample = next(c['request'] for c in episode['calls'] if c['stage'] == 'feedback')
+        request = copy.deepcopy(sample)
+        payload = json.loads(request['messages'][1]['content'])
+        payload['before']['frames'] = [dense]
+        payload['observation']['frames'] = [dense] * 8
+        request['messages'][1]['content'] = json.dumps(payload, sort_keys=True, separators=(',', ':'))
+        stress.append({'arm': episode['arm'], 'returned_frames': 8, 'pattern': 'dense_hex', **count(tokenizer, request)})
     examples = {
         'control': {'action': {'action_id': 6, 'action_data': {'x': 63, 'y': 63}}},
         'target': {'action': {'action_id': 6, 'action_data': {'x': 63, 'y': 63}},
@@ -76,7 +88,7 @@ def run(record, folder, output):
               'limits': {'context': 65536, 'prompt_per_call': 60000, 'request_bytes': 196608,
                          'completion_per_call': 128, 'calls': 12, 'generated_total': 1536},
               'model_calls': 0, 'gpu_runs': 0,
-              'caveat': 'Stress copies the retained initial frame; different returned grids can tokenize more densely. Every live request must be re-tokenized and rejected before transport if over limit.'}
+              'caveat': 'Stress copies the retained initial frame or a dense hexadecimal pattern; actual requests can tokenize differently. Every live request is re-tokenized and rejected before transport if over limit.'}
     Path(output).write_bytes((json.dumps(report, indent=2) + '\n').encode())
     return report
 

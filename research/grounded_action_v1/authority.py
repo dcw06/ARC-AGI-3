@@ -1,7 +1,8 @@
 """Stage B-only source, compute and one-attempt reservation gate.
 
-The referenced launch review does not exist in this GPU-disabled revision.
-Consequently the real repository cannot pass this gate or start a live run.
+The current review snapshot alone cannot authorize a live run. Separate
+source approval, compute authorization, and an unconsumed reservation are
+required for each revision.
 """
 import hashlib
 import json
@@ -10,12 +11,12 @@ from pathlib import Path
 import re
 
 ROOT = Path(__file__).resolve().parents[2]
-SCOPE = 'phase4-grounded-action-stage-b-live-r1'
-REVIEW = 'notebooks/phase4-grounded-action-v1-launch-r2/review-source-lock.json'
-SOURCE = 'reports/perception_stage_b_live_source_approval.json'
-COMPUTE = 'reports/perception_stage_b_live_compute_authorization.json'
-EXECUTION = 'research/grounded_action_v1/execution_lock.json'
-RESERVATION = 'research/grounded_action_v1/reservation.json'
+SCOPE = 'phase4-grounded-action-stage-b-live-r6'
+REVIEW = 'notebooks/phase4-grounded-action-v1-launch-r9/review-source-lock.json'
+SOURCE = 'reports/perception_stage_b_r6_source_approval.json'
+COMPUTE = 'reports/perception_stage_b_r6_compute_authorization.json'
+EXECUTION = 'research/grounded_action_v1/execution_lock_r6.json'
+RESERVATION = 'research/grounded_action_v1/reservation_r6.json'
 LIMITS = {'authorized_seconds': 3600, 'internal_seconds': 3300,
           'maximum_attempts': 1, 'maximum_study_calls': 12,
           'maximum_total_completions': 13, 'maximum_episodes': 2,

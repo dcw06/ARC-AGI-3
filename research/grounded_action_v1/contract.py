@@ -44,11 +44,33 @@ PREDICTION_INSTRUCTION = (
     "for the already committed action; this answer cannot change the action."
 )
 FEEDBACK_INSTRUCTION = (
+    "Return only JSON. Feedback grids use hex_rows_v1: each row is 64 hexadecimal "
+    "digits, one color value per cell, with rows in y order and digits in x order. "
+    "Compare every returned frame with the supplied before frame. "
+    "Assess the supplied committed prediction as supported, contradicted, or "
+    "unresolved; report changed frame indices. This answer cannot change the "
+    "committed action or enter a later policy request."
+)
+LEGACY_FEEDBACK_INSTRUCTION = (
     "Return only JSON. Compare every returned frame with the supplied before frame. "
     "Assess the supplied committed prediction as supported, contradicted, or "
     "unresolved; report changed frame indices. This answer cannot change the "
     "committed action or enter a later policy request."
 )
+
+
+def feedback_grid(frame):
+    """Losslessly encode the fixed 64x64 development board for sealed audits."""
+    if (type(frame) is not list or len(frame) != 64 or
+            any(type(row) is not list or len(row) != 64 for row in frame)):
+        raise ValueError('feedback grid shape')
+    digits = '0123456789abcdef'
+    rows = []
+    for row in frame:
+        if any(type(value) is not int or not 0 <= value < 16 for value in row):
+            raise ValueError('feedback grid palette')
+        rows.append(''.join(digits[value] for value in row))
+    return rows
 
 
 def digest(value):
@@ -81,24 +103,31 @@ def policy_request(runtime, arm):
     return request
 
 
-def audit_request(stage, observation, action, *, before=None, prediction=None):
+def audit_request(stage, observation, action, *, before=None, prediction=None,
+                  feedback_encoding='hex_rows_v1'):
     if stage not in ('prediction', 'feedback'):
         raise ValueError('audit stage')
     payload = {'stage': stage, 'action': action,
                'observation': {k: observation[k] for k in ('frames', 'levels_completed', 'state')}}
     if stage == 'feedback':
-        if not 1 <= len(observation['frames']) <= 6:
+        if feedback_encoding not in ('hex_rows_v1', 'legacy_grid_json_v1'):
+            raise ValueError('feedback encoding')
+        if not 1 <= len(observation['frames']) <= (6 if feedback_encoding == 'legacy_grid_json_v1' else 8):
             raise ValueError('feedback frame admission; retain all returned frames and stop')
         if before is None or type(prediction) is not dict or set(prediction) != {'prediction', 'alternative'} or \
                 {prediction['prediction'], prediction['alternative']} != {'change', 'no_change'}:
             raise ValueError('missing or invalid committed prediction')
         # The prediction was made from the latest pre-action grid. Earlier
         # returned frames remain in evidence but are not repeated in this audit.
-        payload['before'] = {'frames': [before['frames'][-1]],
+        if feedback_encoding == 'hex_rows_v1':
+            payload['grid_encoding'] = feedback_encoding
+            payload['observation']['frames'] = [feedback_grid(frame) for frame in observation['frames']]
+        payload['before'] = {'frames': [feedback_grid(before['frames'][-1])
+                                       if feedback_encoding == 'hex_rows_v1' else before['frames'][-1]],
                              'levels_completed': before['levels_completed'], 'state': before['state']}
         payload['committed_prediction'] = prediction
     else:
-        if before is not None or prediction is not None:
+        if before is not None or prediction is not None or feedback_encoding != 'hex_rows_v1':
             raise ValueError('unexpected pre-action observation/prediction')
     fields = ({'prediction': {'type': 'string', 'enum': ['change', 'no_change']},
                'alternative': {'type': 'string', 'enum': ['change', 'no_change']}}
@@ -107,7 +136,8 @@ def audit_request(stage, observation, action, *, before=None, prediction=None):
                'changed_frames': {'type': 'array', 'items': {'type': 'integer', 'minimum': 0, 'maximum': 7},
                                   'maxItems': 8}})
     return {'model': baseline_request_model(), 'messages': [
-        {'role': 'system', 'content': PREDICTION_INSTRUCTION if stage == 'prediction' else FEEDBACK_INSTRUCTION},
+        {'role': 'system', 'content': PREDICTION_INSTRUCTION if stage == 'prediction' else
+         (LEGACY_FEEDBACK_INSTRUCTION if feedback_encoding == 'legacy_grid_json_v1' else FEEDBACK_INSTRUCTION)},
         {'role': 'user', 'content': json.dumps(payload, sort_keys=True, separators=(',', ':'))}],
         'temperature': 0, 'seed': 0, 'max_tokens': 128,
         'chat_template_kwargs': {'enable_thinking': False},

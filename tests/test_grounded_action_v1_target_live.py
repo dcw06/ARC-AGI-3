@@ -1,4 +1,5 @@
 """The real target entrypoints are inert without new Stage B authority."""
+import json
 from pathlib import Path
 import os
 import subprocess
@@ -11,10 +12,101 @@ from unittest.mock import patch
 import zipfile
 
 from research.grounded_action_v1.target_supervisor import run_live
-from scripts.phase4_grounded_action_v1_launch import run as run_first_cell
+from scripts.phase4_grounded_action_v1_launch import run as run_first_cell, run_game_supervisor
 
 
 class TargetLiveGateTests(unittest.TestCase):
+    @unittest.skipUnless(os.name == 'posix', 'requires POSIX process groups')
+    def test_first_cell_game_supervisor_owns_process_group_and_report(self):
+        from scripts.phase4_grounded_action_v1_launch import _group_exited
+
+        child = '''
+import json,os,subprocess,sys,time
+from pathlib import Path
+output,mode=Path(sys.argv[1]),sys.argv[2]
+if mode == 'deadline': time.sleep(30)
+if mode == 'malformed':
+    (output/'control').mkdir(exist_ok=True)
+    (output/'control/ownership.json').write_text('{')
+    time.sleep(30)
+if mode == 'descendant':
+    subprocess.Popen([sys.executable,'-c','import signal,time;signal.signal(signal.SIGTERM,signal.SIG_IGN);time.sleep(30)'])
+if mode != 'missing':
+    (output/'control').mkdir(exist_ok=True)
+    (output/'control/outer.json').write_text(json.dumps({
+      'status':'development_study_complete_pending_archive_review',
+      'independent_gpu_cleanup_verified':True,'process_groups_exited':True,
+      'error':None}))
+print('fixture supervisor',flush=True)
+'''
+        for mode in ('success', 'descendant', 'missing', 'deadline', 'malformed'):
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as folder:
+                output = Path(folder) / 'out'
+                output.mkdir()
+                processes = []
+
+                def spawn(_argv, **kwargs):
+                    self.assertEqual(kwargs['env']['MPLBACKEND'], 'Agg')
+                    process = subprocess.Popen([sys.executable, '-c', child, str(output), mode], **kwargs)
+                    processes.append(process)
+                    return process
+
+                started = time.monotonic() - (3294.8 if mode in ('deadline', 'malformed') else 0)
+                args = (output, Path(folder), sys.executable, '/other/python', Path(folder))
+                with patch.dict(os.environ, {'MPLBACKEND': 'module://matplotlib_inline.backend_inline'}):
+                    if mode in ('success', 'descendant'):
+                        report = run_game_supervisor(*args, started=started, spawn=spawn)
+                        self.assertEqual(report['status'], 'development_study_complete_pending_archive_review')
+                    else:
+                        with self.assertRaises((RuntimeError, TimeoutError)):
+                            run_game_supervisor(*args, started=started, spawn=spawn)
+                self.assertEqual(len(processes), 1)
+                self.assertTrue(_group_exited(processes[0].pid))
+                receipt = output / 'control/first-cell-supervisor-cleanup.json'
+                self.assertTrue(receipt.is_file())
+                self.assertTrue(all(v is True for v in json.loads(
+                    receipt.read_bytes())['groups'].values()))
+                if mode == 'malformed':
+                    self.assertIn('ownership evidence', receipt.read_text())
+
+    @unittest.skipUnless(os.name == 'posix', 'requires POSIX game interpreter')
+    def test_first_cell_headless_env_bootstraps_real_offline_game(self):
+        child = '''
+import json,os,sys
+from pathlib import Path
+from research.grounded_action_v1.engine import DevelopmentAdapter, restore_game_mount
+output,root=Path(sys.argv[1]),Path(sys.argv[2])
+assert os.environ['MPLBACKEND']=='Agg'
+games=restore_game_mount(root/'games')
+adapter=DevelopmentAdapter('control',games,root/'recordings')
+try:
+    observation=adapter.bootstrap()
+    assert observation.game_id=='ar25-0c556536'
+finally:
+    cleanup=adapter.close()
+assert cleanup['closed'] and cleanup['scorecard_closed']
+(output/'control').mkdir(exist_ok=True)
+(output/'control/bootstrap.json').write_text(json.dumps({'game_id':observation.game_id,'closed':True}))
+(output/'control/outer.json').write_text(json.dumps({
+    'status':'development_study_complete_pending_archive_review',
+    'independent_gpu_cleanup_verified':True,'process_groups_exited':True,'error':None}))
+'''
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            output = root / 'out'
+            output.mkdir()
+
+            def spawn(_argv, **kwargs):
+                self.assertEqual(kwargs['env']['MPLBACKEND'], 'Agg')
+                return subprocess.Popen([sys.executable, '-c', child, str(output), str(root)], **kwargs)
+
+            with patch.dict(os.environ, {'MPLBACKEND': 'module://matplotlib_inline.backend_inline'}):
+                result = run_game_supervisor(output, root, sys.executable, '/other/python', root,
+                                             started=time.monotonic(), spawn=spawn)
+            self.assertEqual(result['status'], 'development_study_complete_pending_archive_review')
+            self.assertEqual(json.loads((output / 'control/bootstrap.json').read_bytes()),
+                             {'game_id': 'ar25-0c556536', 'closed': True})
+
     def test_no_approval_precedes_output_subprocess_and_gpu_query(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
@@ -146,6 +238,7 @@ while not (output / 'control/stop-monitor.json').exists(): time.sleep(.01)
 
                 def spawn(argv, **kwargs):
                     nonlocal timer
+                    self.assertEqual(kwargs['env']['MPLBACKEND'], 'Agg')
                     if not processes:
                         command = [sys.executable, '-c', worker_code, str(argv[2]),
                                    str(output), str(record), mode]
@@ -185,8 +278,9 @@ while not (output / 'control/stop-monitor.json').exists(): time.sleep(.01)
                 try:
                     for item in patches:
                         item.start()
-                    report = run_live(output, root, sys.executable, Path('/usr/bin/python3'),
-                                      root / 'games', started=started, spawn=spawn)
+                    with patch.dict(os.environ, {'MPLBACKEND': 'Agg'}):
+                        report = run_live(output, root, sys.executable, Path('/usr/bin/python3'),
+                                          root / 'games', started=started, spawn=spawn)
                 finally:
                     for item in reversed(patches):
                         item.stop()

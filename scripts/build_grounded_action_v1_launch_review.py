@@ -6,7 +6,7 @@ import lzma
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'notebooks/phase4-grounded-action-v1-launch-r2'
+OUT = ROOT / 'notebooks/phase4-grounded-action-v1-launch-r9'
 
 
 def inventory():
@@ -20,6 +20,7 @@ def inventory():
                   'scripts/phase4_grounded_action_v1_launch.py',
                   'reports/perception_stage_b_v1_case_protocol.json',
                   'reports/phase4_v2_offline_package.json',
+                  'reports/phase4_torch_wheel_inspection.json',
                   'reports/phase4_transient_v2_protocol.json',
                   'reports/m0_profiles/m0-q3vl30-instruct.json',
                   'reports/integrated_case_v1/initial_observation.json',
@@ -70,8 +71,8 @@ def build(output=OUT):
                                      'bound source approval, compute authorization, and reservation.'},
                           {'cell_type': 'code', 'metadata': {}, 'execution_count': None,
                            'outputs': [], 'source': code}]}
-    metadata = {'id': 'daichongwei06/arc3-phase4-grounded-action-v1-launch-review-r2',
-                'title': 'ARC3 Grounded Action Launch Review R2',
+    metadata = {'id': 'daichongwei06/arc3-phase4-grounded-action-v1-launch-review-r9',
+                'title': 'ARC3 Grounded Action Launch Review R9',
                 'code_file': 'profile.ipynb', 'language': 'python', 'kernel_type': 'notebook',
                 'is_private': True, 'enable_gpu': False, 'enable_tpu': False,
                 'enable_internet': False,
@@ -82,7 +83,7 @@ def build(output=OUT):
     for name, value in (('profile.ipynb', notebook), ('kernel-metadata.json', metadata)):
         (output / name).write_bytes((json.dumps(value, indent=2) + '\n').encode())
     lock = {'status': 'reviewed_launch_source',
-            'scope': 'phase4-grounded-action-stage-b-live-r1',
+            'scope': 'phase4-grounded-action-stage-b-live-r6',
             'bindings': hashes,
             'artifacts': {name: hashlib.sha256((output / name).read_bytes()).hexdigest()
                           for name in ('profile.ipynb', 'kernel-metadata.json')},
