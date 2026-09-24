@@ -48,7 +48,10 @@ def pinned_model_factory(retain, deadline):
         owner.start()
         client = OpenAICompatibleCompletionClient(primary.base_url, timeout_seconds=120)
         bridge = BridgeService(primary.model_path, client.complete, retain_canary=retain)
-        bridge.artifact = artifact
+        # Return only the identity fields independently known to the game
+        # worker from frozen source; the host already verified the full tree.
+        bridge.artifact = {'tree_sha256': artifact['tree_sha256'],
+                           'file_count': artifact['file_count']}
         return bridge, owner
     except BaseException:
         owner.close()
@@ -110,7 +113,18 @@ def serve_host(socket_path, evidence_root, cancel_path, *, deadline, service_fac
 
 
 def main():
-    raise PermissionError('Stage B R3 is review-only: no source/compute approval or live launch entrypoint')
+    import argparse
+    from .authority import require
+    require()  # Before model import, environment inspection, subprocess or GPU query.
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--socket', type=Path, required=True)
+    parser.add_argument('--evidence', type=Path, required=True)
+    parser.add_argument('--cancel', type=Path, required=True)
+    parser.add_argument('--deadline', type=float, required=True)
+    args = parser.parse_args()
+    result = serve_host(args.socket, args.evidence, args.cancel,
+                        deadline=args.deadline, service_factory=pinned_model_factory)
+    raise SystemExit(0 if result['status'] == 'stopped' else 1)
 
 
 if __name__ == '__main__':

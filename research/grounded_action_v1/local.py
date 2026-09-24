@@ -111,7 +111,8 @@ class ScriptedService:
                 'finish_reason': 'length' if self.mode == 'partial' and name == 'grounded_target_v1' else 'stop'}
 
 
-def run(path, service, adapter_factory, *, deadline_seconds=30, kind='scripted_cpu_only', clock=time.monotonic):
+def run(path, service, adapter_factory, *, deadline_seconds=30, kind='scripted_cpu_only',
+        clock=time.monotonic, writer=save):
     """Record all received evidence before validation. Stop both arms on failure."""
     frozen = case_protocol()
     if kind not in ('scripted_cpu_only', 'offline_development_engine'):
@@ -126,7 +127,7 @@ def run(path, service, adapter_factory, *, deadline_seconds=30, kind='scripted_c
     adapters = {}
 
     def persist():
-        save(path, report)
+        writer(path, report)
 
     def now():
         return clock() - started
