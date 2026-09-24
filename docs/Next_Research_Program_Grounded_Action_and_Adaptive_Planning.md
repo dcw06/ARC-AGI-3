@@ -2,7 +2,7 @@
 
 Date: September 23, 2026  
 Evidence baseline: commit `3283cbf`  
-Status: proposed development program, not a frozen experiment or compute authorization.
+Status: Stage A offline inspection complete; Stage B remains a draft, not a frozen experiment or compute authorization.
 
 ## Central question
 
@@ -59,6 +59,9 @@ No model calls or GPU run are needed.
 
 - Render predicted and reference boxes over each retained board, keeping text and
   image answers separate.
+- Quantify nearest-box overlap, center displacement and box dimensions with a
+  declared exploratory matching rule; report the retained development board
+  separately from synthetic controls. Do not replace frozen one-to-one scores.
 - Inspect coordinate scale, offsets, swapped axes, inclusive-boundary conventions,
   object selection, and apparent misunderstanding of the requested description.
 - Separate measured observations from explanations. Test proposed transformations
@@ -69,6 +72,11 @@ No model calls or GPU run are needed.
 Deliverable: a short failure analysis with overlays, a case-by-case table, and
 one prioritized hypothesis suitable for a prospective test. Do not claim a
 universal failure mechanism from this small workload.
+
+Completed offline in `reports/perception_stage_a_v1_findings.md`, with ten
+hash-locked overlays under `reports/perception_stage_a_v1/`. The prioritized
+question is whether one explicit target and coordinate commitment improves
+target-to-action binding; it is not yet an approved intervention.
 
 ## Stage B — a minimal grounded-action experiment
 
@@ -83,6 +91,9 @@ Next bounded question:
   and bounded relevant history. Avoid a mandatory exhaustive object inventory.
 - Define a compact response: one intended target where applicable, one legal
   action, one predicted effect, and one distinguishable alternative outcome.
+- Represent the target as a cell or box in the same grid coordinates as the
+  action. Replay target recognition, click-to-target binding and observed effect
+  separately; a free-text target description alone is insufficient.
 - Validate actions without silently rewriting the model's proposal. Retain rejected
   proposals and any separately labeled execution fallback.
 - Integrate transition records with a shared monotonic episode clock and durable
@@ -100,6 +111,13 @@ Select the precise intervention after Stage A. Use an unchanged baseline and one
 isolated candidate, with matched model, cases, seeds, observation access, and total
 action/compute ceilings wherever applicable. A simplified prompt is itself a
 treatment and must be recorded as such.
+Prove initial observation equality. Compare the unchanged baseline and
+candidate on shared environment outcomes; if only the candidate emits target
+fields, treat target binding as a candidate process measure. Elicit prediction
+and post-action interpretation through identical sealed audit calls in both
+arms, without changing either committed action. The Stage B draft specifies
+this separation; later feedback-use experiments must test whether such an
+update actually changes action choice.
 
 If evaluator-derived boxes or targets are supplied to isolate action learning,
 label the condition **assisted**. It tests downstream competence given help,
@@ -111,6 +129,7 @@ an incorrect causal prediction.
 
 Deliverable: a locally tested, supervised runner and independently replayable
 evaluator, followed by a frozen protocol and separately proposed GPU budget.
+The current unfrozen local design is `reports/perception_stage_b_v0_protocol.md`.
 
 ## Stage C — learn from transitions
 

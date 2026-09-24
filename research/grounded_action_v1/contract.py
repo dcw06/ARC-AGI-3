@@ -1,0 +1,142 @@
+"""Versioned, deliberately small Stage B request and response contract."""
+import copy
+import hashlib
+import json
+
+from certification.phase4_integrated_v2.contract import baseline_request
+from certification.phase4_transient_v2.action_contract import validate_action
+
+TARGET_INSTRUCTION = (
+    " Commit one visible target as an inclusive cell or box in grid[y][x] "
+    "coordinates alongside the action. Use null only for a nonspatial action. "
+    "Do not infer a game rule from visual similarity."
+)
+AUDIT_INSTRUCTION = (
+    "Return only JSON. Report an observable prediction and distinct alternative "
+    "for the already committed action; this answer cannot change the action."
+)
+
+
+def digest(value):
+    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+
+
+def target_schema():
+    return {'type': 'object', 'properties': {
+        'kind': {'type': 'string', 'enum': ['cell', 'box', 'none']},
+        'box': {'anyOf': [{'type': 'array', 'items': {'type': 'integer', 'minimum': 0, 'maximum': 63},
+                          'minItems': 4, 'maxItems': 4}, {'type': 'null'}]}},
+        'required': ['kind', 'box'], 'additionalProperties': False}
+
+
+def policy_request(runtime, arm):
+    request = baseline_request(runtime)
+    if arm == 'control':
+        return request
+    if arm != 'target':
+        raise ValueError('arm')
+    request = copy.deepcopy(request)
+    request['messages'][0]['content'] += TARGET_INSTRUCTION
+    schema = request['response_format']['json_schema']['schema']
+    schema['properties']['target'] = target_schema()
+    schema['required'].append('target')
+    request['response_format']['json_schema']['name'] = 'grounded_target_v1'
+    return request
+
+
+def audit_request(stage, observation, action, *, before=None):
+    if stage not in ('prediction', 'feedback'):
+        raise ValueError('audit stage')
+    payload = {'stage': stage, 'action': action,
+               'observation': {k: observation[k] for k in ('frames', 'levels_completed', 'state')}}
+    if stage == 'feedback':
+        if before is None:
+            raise ValueError('missing pre-action observation')
+        payload['before'] = {k: before[k] for k in ('frames', 'levels_completed', 'state')}
+    else:
+        if before is not None:
+            raise ValueError('unexpected pre-action observation')
+    fields = ({'prediction': {'type': 'string', 'enum': ['change', 'no_change']},
+               'alternative': {'type': 'string', 'enum': ['change', 'no_change']}}
+              if stage == 'prediction' else
+              {'assessment': {'type': 'string', 'enum': ['supported', 'contradicted', 'unresolved']},
+               'changed_frames': {'type': 'array', 'items': {'type': 'integer', 'minimum': 0, 'maximum': 7},
+                                  'maxItems': 8}})
+    return {'model': baseline_request_model(), 'messages': [
+        {'role': 'system', 'content': AUDIT_INSTRUCTION},
+        {'role': 'user', 'content': json.dumps(payload, sort_keys=True, separators=(',', ':'))}],
+        'temperature': 0, 'seed': 0, 'max_tokens': 128,
+        'chat_template_kwargs': {'enable_thinking': False},
+        'response_format': {'type': 'json_schema', 'json_schema': {
+            'name': 'grounded_' + stage + '_v1', 'strict': True,
+            'schema': {'type': 'object', 'properties': fields, 'required': list(fields),
+                       'additionalProperties': False}}}}
+
+
+def baseline_request_model():
+    from certification.phase4_transient_v2.request_contract import protocol
+    return protocol()['model_binding']['model_id']
+
+
+def strict_json(raw):
+    def pairs(items):
+        out = {}
+        for key, value in items:
+            if key in out:
+                raise ValueError('duplicate JSON key')
+            out[key] = value
+        return out
+    return json.loads(raw, object_pairs_hook=pairs)
+
+
+def parse_policy(raw, arm, legal, grid):
+    value = strict_json(raw)
+    if type(value) is not dict or set(value) != ({'action'} if arm == 'control' else {'action', 'target'}):
+        raise ValueError('policy fields')
+    action = validate_action(json.dumps({'action': value['action']}), legal)['action']
+    if arm == 'control':
+        return value
+    target = value['target']
+    if type(target) is not dict or set(target) != {'kind', 'box'}:
+        raise ValueError('target fields')
+    kind, box = target['kind'], target['box']
+    if kind == 'none':
+        if box is not None or action['action_id'] == 6:
+            raise ValueError('click requires target')
+    elif kind in ('cell', 'box'):
+        if type(box) is not list or len(box) != 4 or any(type(v) is not int for v in box):
+            raise ValueError('target box')
+        x0, y0, x1, y1 = box
+        if not (0 <= x0 <= x1 < len(grid[0]) and 0 <= y0 <= y1 < len(grid)):
+            raise ValueError('target bounds')
+        if kind == 'cell' and (x0 != x1 or y0 != y1):
+            raise ValueError('cell extent')
+    else:
+        raise ValueError('target kind')
+    return value
+
+
+def parse_audit(raw, stage, frames):
+    value = strict_json(raw)
+    if type(value) is not dict:
+        raise ValueError('audit object')
+    if stage == 'prediction':
+        if set(value) != {'prediction', 'alternative'} or {value['prediction'], value['alternative']} != {'change', 'no_change'}:
+            raise ValueError('prediction alternatives')
+    elif stage == 'feedback':
+        if (set(value) != {'assessment', 'changed_frames'} or value['assessment'] not in
+                ('supported', 'contradicted', 'unresolved') or type(value['changed_frames']) is not list or
+                len(value['changed_frames']) > len(frames) or len(set(value['changed_frames'])) != len(value['changed_frames']) or
+                any(type(i) is not int or not 0 <= i < len(frames) for i in value['changed_frames'])):
+            raise ValueError('feedback fields')
+    else:
+        raise ValueError('audit stage')
+    return value
+
+
+def target_hit(value):
+    if 'target' not in value or value['action']['action_id'] != 6:
+        return None
+    x, y = (value['action']['action_data'][k] for k in ('x', 'y'))
+    x0, y0, x1, y1 = value['target']['box']
+    return x0 <= x <= x1 and y0 <= y <= y1

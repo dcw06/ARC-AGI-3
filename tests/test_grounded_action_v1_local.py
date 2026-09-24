@@ -1,0 +1,151 @@
+"""Stage B local contract and independent replay regressions (no GPU/game)."""
+import copy
+import json
+import tempfile
+import unittest
+from pathlib import Path
+
+from research.grounded_action_v1.contract import parse_policy
+from research.grounded_action_v1.local import ScriptedAdapter, ScriptedService, run
+from research.grounded_action_v1.replay import evaluate, replay_file
+
+
+class GroundedActionLocalTests(unittest.TestCase):
+    def execute(self, service_mode='normal', adapter_mode='normal', *, clock=None, deadline_seconds=30):
+        folder = tempfile.TemporaryDirectory()
+        self.addCleanup(folder.cleanup)
+        path = Path(folder.name) / 'run.json'
+        result = run(path, ScriptedService(service_mode),
+                     lambda arm: ScriptedAdapter(arm, adapter_mode), deadline_seconds=deadline_seconds,
+                     **({'clock': clock} if clock else {}))
+        self.assertEqual(json.loads(path.read_bytes()), result)
+        return result, path
+
+    def test_complete_pair_and_transient_frame(self):
+        result, path = self.execute()
+        score = replay_file(path)
+        self.assertEqual((score['calls'], score['dispatches']), (12, 4))
+        self.assertEqual(score['episodes'][0]['outcomes'][0]['changed_frames'], [0])
+        self.assertTrue(score['episodes'][1]['outcomes'][0]['target_hit'])
+        self.assertFalse(score['episodes'][1]['outcomes'][0]['reviewer_visible_object_contact'])
+        self.assertEqual([ep['level_delta'] for ep in score['episodes']], [0, 0])
+        self.assertEqual(result['episodes'][0]['steps'][0]['after']['frames'][-1],
+                         result['episodes'][0]['steps'][0]['before']['frames'][-1])
+
+    def test_wrong_target_retained_as_process_failure(self):
+        result, _ = self.execute('wrong_target')
+        score = evaluate(result)
+        self.assertFalse(score['episodes'][1]['outcomes'][0]['target_hit'])
+
+    def test_valid_incorrect_feedback_remains_scored_outcome(self):
+        result, _ = self.execute('wrong_feedback')
+        score = evaluate(result)
+        self.assertEqual(score['status'], 'valid_local_scripted_pair')
+        self.assertFalse(score['episodes'][0]['outcomes'][0]['feedback_exact'])
+        self.assertFalse(score['episodes'][0]['outcomes'][0]['feedback_assessment_exact'])
+
+    def test_candidate_request_changes_only_instruction_and_schema(self):
+        result, _ = self.execute()
+        a = result['episodes'][0]['calls'][0]['request']
+        b = result['episodes'][1]['calls'][0]['request']
+        self.assertEqual(a['messages'][1], b['messages'][1])
+        self.assertEqual({k: v for k, v in a.items() if k not in ('messages', 'response_format')},
+                         {k: v for k, v in b.items() if k not in ('messages', 'response_format')})
+        for ep in result['episodes']:
+            policy = ep['calls'][3]['request']['messages'][1]['content']
+            self.assertNotIn('assessment', policy)
+            self.assertNotIn('prediction', policy)
+
+    def test_invalid_target_and_partial_response_censor_pair(self):
+        for mode in ('missing_target', 'partial'):
+            with self.subTest(mode=mode):
+                result, _ = self.execute(mode)
+                self.assertEqual(result['status'], 'failed')
+                self.assertEqual(result['episodes'][1]['steps'], [])
+                received = result['episodes'][1]['calls'][0]
+                self.assertIn('response', received)
+                self.assertIn('response_sha256', received)
+                self.assertIn('server_prompt_tokens', received)
+                self.assertIn('finish_reason', received)
+                with self.assertRaisesRegex(ValueError, 'incomplete pair'):
+                    evaluate(result)
+
+    def test_token_mismatch_retained_before_rejection(self):
+        result, _ = self.execute('mismatch')
+        row = result['episodes'][1]['calls'][0]
+        self.assertEqual(result['status'], 'failed')
+        self.assertEqual((row['tokenizer_prompt_tokens'], row['server_prompt_tokens']), (10, 11))
+        self.assertIn('response', row)
+        self.assertEqual(result['episodes'][1]['steps'], [])
+
+    def test_oversized_response_is_bounded_and_censors_pair(self):
+        result, _ = self.execute('oversize')
+        row = result['episodes'][1]['calls'][0]
+        self.assertEqual(result['status'], 'failed')
+        self.assertTrue(row['response_truncated'])
+        self.assertGreater(row['response_bytes'], 32768)
+        self.assertLessEqual(len(row['response'].encode()), 32771)
+        self.assertEqual(result['episodes'][1]['steps'], [])
+
+    def test_transport_and_unknown_dispatch_do_not_retry(self):
+        result, _ = self.execute('transport')
+        self.assertEqual(result['episodes'][1]['calls'][0]['status'], 'failed')
+        self.assertEqual(result['episodes'][1]['steps'], [])
+        result, _ = self.execute(adapter_mode='unknown_dispatch')
+        self.assertEqual(result['dispatches'], 1)
+        self.assertEqual(result['episodes'][0]['steps'][0]['status'], 'dispatch_entered')
+
+    def test_cleanup_failure_censors_result(self):
+        result, _ = self.execute(adapter_mode='cleanup_failure')
+        self.assertEqual(result['status'], 'failed')
+        self.assertFalse(result['episodes'][0]['cleanup']['closed'])
+        with self.assertRaisesRegex(ValueError, 'incomplete pair'):
+            evaluate(result)
+
+    def test_deadline_stops_without_dispatch(self):
+        ticks = iter(range(100))
+        result, _ = self.execute(clock=lambda: next(ticks), deadline_seconds=2)
+        self.assertEqual(result['status'], 'failed')
+        self.assertEqual(result['dispatches'], 0)
+
+    def test_independent_replay_rejects_tampering(self):
+        result, _ = self.execute()
+        variants = []
+        incomplete = copy.deepcopy(result)
+        incomplete['episodes'].pop()
+        variants.append(incomplete)
+        backdated = copy.deepcopy(result)
+        backdated['episodes'][0]['calls'][1]['started_at'] = -1
+        variants.append(backdated)
+        wrong_action = copy.deepcopy(result)
+        wrong_action['episodes'][0]['steps'][0]['action']['action_data']['x'] = 1
+        variants.append(wrong_action)
+        missing_frame = copy.deepcopy(result)
+        missing_frame['episodes'][0]['steps'][0]['after']['frames'].pop(0)
+        variants.append(missing_frame)
+        count_drift = copy.deepcopy(result)
+        count_drift['episodes'][0]['calls'][0]['server_prompt_tokens'] += 1
+        variants.append(count_drift)
+        uncleared = copy.deepcopy(result)
+        uncleared['episodes'][1]['cleanup']['closed'] = False
+        variants.append(uncleared)
+        for variant in variants:
+            with self.subTest(kind=variants.index(variant)):
+                with self.assertRaises((ValueError, KeyError)):
+                    evaluate(variant)
+
+    def test_policy_rejects_coordinate_swap_bounds_and_duplicate_key(self):
+        grid = [[0] * 4 for _ in range(3)]
+        action = {'action': {'action_id': 6, 'action_data': {'x': 3, 'y': 2}},
+                  'target': {'kind': 'cell', 'box': [3, 2, 3, 2]}}
+        self.assertEqual(parse_policy(json.dumps(action), 'target', [6], grid), action)
+        swapped = copy.deepcopy(action)
+        swapped['target']['box'] = [2, 3, 2, 3]
+        with self.assertRaisesRegex(ValueError, 'target bounds'):
+            parse_policy(json.dumps(swapped), 'target', [6], grid)
+        with self.assertRaises(ValueError):
+            parse_policy('{"action":{},"action":{}}', 'target', [6], grid)
+
+
+if __name__ == '__main__':
+    unittest.main()
