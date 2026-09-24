@@ -4,7 +4,10 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import subprocess
+import sys
 import tempfile
+import time
 import unittest
 
 from research.grounded_action_v1.replay import evaluate
@@ -42,8 +45,11 @@ class GroundedActionEngineTests(unittest.TestCase):
 
     def test_gpu_disabled_notebook_unpacks_and_rejects_tampering(self):
         from shutil import copyfile
-        source = ROOT / 'notebooks/phase4-grounded-action-v1-review-r1'
-        self.assertEqual(review_notebook()['status'], 'review_snapshot_verified_no_launch_authority')
+        source = ROOT / 'notebooks/phase4-grounded-action-v1-review-r2'
+        self.assertEqual(review_notebook(source)['status'], 'review_snapshot_verified_no_launch_authority')
+        historical = ROOT / 'notebooks/phase4-grounded-action-v1-review-r1'
+        self.assertEqual(review_notebook(historical, compare_checkout=False)['status'],
+                         'review_snapshot_verified_no_launch_authority')
         with tempfile.TemporaryDirectory() as folder:
             target = Path(folder)
             for name in ('profile.ipynb', 'kernel-metadata.json', 'review-source-lock.json'):
@@ -82,6 +88,33 @@ class GroundedActionEngineTests(unittest.TestCase):
             self.assertIn('evidence limit', monitor['error'])
             self.assertTrue(monitor['temporary_games_removed'])
             self.assertTrue(monitor['process_group_exited'])
+
+    @unittest.skipUnless(os.name == 'posix', 'POSIX process groups required')
+    def test_cleanup_kills_descendant_after_leader_exits(self):
+        from scripts.run_grounded_action_v1_engine_local import group_exited, terminate_group
+        with tempfile.TemporaryDirectory() as folder:
+            marker = Path(folder) / 'descendant-ready'
+            code = (
+                'import os,signal,sys,time,pathlib\n'
+                'if os.fork(): sys.exit(0)\n'
+                'signal.signal(signal.SIGTERM,signal.SIG_IGN)\n'
+                'pathlib.Path(sys.argv[1]).write_text(str(os.getpid()))\n'
+                'while True: time.sleep(1)\n'
+            )
+            process = subprocess.Popen([sys.executable, '-c', code, str(marker)], start_new_session=True,
+                                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            try:
+                process.wait(timeout=5)
+                limit = time.monotonic() + 5
+                while not marker.exists() and time.monotonic() < limit:
+                    time.sleep(.02)
+                self.assertTrue(marker.exists(), 'descendant did not start')
+                self.assertFalse(group_exited(process.pid), 'descendant must survive leader')
+                self.assertTrue(terminate_group(process, grace=.2, verification_seconds=2))
+                self.assertTrue(group_exited(process.pid))
+            finally:
+                if not group_exited(process.pid):
+                    os.killpg(process.pid, 9)
 
 
 if __name__ == '__main__':

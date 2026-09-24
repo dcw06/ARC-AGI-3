@@ -7,10 +7,10 @@ import lzma
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-FOLDER = ROOT / 'notebooks/phase4-grounded-action-v1-review-r1'
+FOLDER = ROOT / 'notebooks/phase4-grounded-action-v1-review-r2'
 
 
-def review(folder=FOLDER):
+def review(folder=FOLDER, *, compare_checkout=True):
     folder = Path(folder)
     lock = json.loads((folder / 'review-source-lock.json').read_bytes())
     if (lock['status'] != 'review_only_gpu_disabled_no_live_authority' or
@@ -43,7 +43,7 @@ def review(folder=FOLDER):
     for name, b64 in payload.items():
         raw = base64.b64decode(b64)
         if (hashlib.sha256(raw).hexdigest() != lock['bindings'][name] or
-                hashlib.sha256((ROOT / name).read_bytes()).hexdigest() != lock['bindings'][name]):
+                (compare_checkout and hashlib.sha256((ROOT / name).read_bytes()).hexdigest() != lock['bindings'][name])):
             raise ValueError('unpacked source drift: ' + name)
         if name.endswith('.py'):
             ast.parse(raw.decode())

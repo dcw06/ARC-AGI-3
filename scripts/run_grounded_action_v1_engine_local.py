@@ -24,15 +24,35 @@ def child(output, games, recordings, seconds):
     print(json.dumps(replay_file(output), sort_keys=True), flush=True)
 
 
-def terminate_group(process):
-    if group_exited(process.pid):
-        return
-    os.killpg(process.pid, signal.SIGTERM)
-    try:
-        process.wait(timeout=5)
-    except subprocess.TimeoutExpired:
-        os.killpg(process.pid, signal.SIGKILL)
-        process.wait(timeout=5)
+def terminate_group(process, *, grace=1.0, verification_seconds=2.0, interval=.05):
+    """Stop the owned session even if its leader already exited.
+
+    Only a Popen created with start_new_session=True may be passed here. The
+    process-group ID is the recorded leader PID; parent exit never ends cleanup.
+    """
+    pgid = process.pid
+    if pgid == os.getpgrp():
+        raise RuntimeError('refusing to signal own process group')
+    if not group_exited(pgid):
+        try:
+            os.killpg(pgid, signal.SIGTERM)
+        except ProcessLookupError:
+            pass
+    until = time.monotonic() + grace
+    while time.monotonic() < until and not group_exited(pgid):
+        time.sleep(min(interval, max(0, until - time.monotonic())))
+    if not group_exited(pgid):
+        try:
+            os.killpg(pgid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+    deadline = time.monotonic() + verification_seconds
+    while time.monotonic() < deadline and not group_exited(pgid):
+        time.sleep(min(interval, max(0, deadline - time.monotonic())))
+    process.wait(timeout=max(.001, verification_seconds))
+    if not group_exited(pgid):
+        raise RuntimeError('owned process group still has live members after SIGKILL')
+    return True
 
 
 def rss_bytes(pid):
@@ -46,11 +66,14 @@ def rss_bytes(pid):
 
 
 def group_exited(pid):
-    try:
-        os.killpg(pid, 0)
-    except ProcessLookupError:
-        return True
-    return False
+    # A reparented zombie may retain the PGID until the host init reaps it.
+    # Zombies cannot execute or hold GPU memory; test for live members using
+    # process state, rather than treating killpg(0) as proof of execution.
+    result = subprocess.run(['ps', '-axo', 'pgid=,stat='], capture_output=True,
+                            text=True, timeout=1, check=True)
+    return not any(int(parts[0]) == pid and not parts[1].startswith('Z')
+                   for line in result.stdout.splitlines()
+                   if len(parts := line.split()) >= 2 and parts[0].isdigit())
 
 
 def supervise(output, games_source=None, *, seconds=180, evidence_limit=8 * 1024 * 1024):
@@ -119,8 +142,11 @@ def supervise(output, games_source=None, *, seconds=180, evidence_limit=8 * 1024
         except Exception as exc:
             monitor.update(status='failed', error=type(exc).__name__ + ': ' + str(exc)[:240])
             if process is not None:
-                terminate_group(process)
-                monitor['worker_exit_code'] = process.returncode
+                try:
+                    terminate_group(process)
+                except Exception as cleanup_exc:
+                    monitor['cleanup_error'] = type(cleanup_exc).__name__ + ': ' + str(cleanup_exc)[:240]
+                monitor['worker_exit_code'] = process.poll()
                 monitor['process_group_exited'] = group_exited(process.pid)
         finally:
             monitor['elapsed_seconds'] = time.monotonic() - started
