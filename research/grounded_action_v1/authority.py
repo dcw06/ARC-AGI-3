@@ -11,7 +11,7 @@ import re
 
 ROOT = Path(__file__).resolve().parents[2]
 SCOPE = 'phase4-grounded-action-stage-b-live-r1'
-REVIEW = 'notebooks/phase4-grounded-action-v1-launch-r1/review-source-lock.json'
+REVIEW = 'notebooks/phase4-grounded-action-v1-launch-r2/review-source-lock.json'
 SOURCE = 'reports/perception_stage_b_live_source_approval.json'
 COMPUTE = 'reports/perception_stage_b_live_compute_authorization.json'
 EXECUTION = 'research/grounded_action_v1/execution_lock.json'

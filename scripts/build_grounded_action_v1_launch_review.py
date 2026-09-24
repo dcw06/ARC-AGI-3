@@ -6,7 +6,7 @@ import lzma
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'notebooks/phase4-grounded-action-v1-launch-r1'
+OUT = ROOT / 'notebooks/phase4-grounded-action-v1-launch-r2'
 
 
 def inventory():
@@ -70,8 +70,8 @@ def build(output=OUT):
                                      'bound source approval, compute authorization, and reservation.'},
                           {'cell_type': 'code', 'metadata': {}, 'execution_count': None,
                            'outputs': [], 'source': code}]}
-    metadata = {'id': 'daichongwei06/arc3-phase4-grounded-action-v1-launch-review-r1',
-                'title': 'ARC3 Grounded Action Launch Review R1',
+    metadata = {'id': 'daichongwei06/arc3-phase4-grounded-action-v1-launch-review-r2',
+                'title': 'ARC3 Grounded Action Launch Review R2',
                 'code_file': 'profile.ipynb', 'language': 'python', 'kernel_type': 'notebook',
                 'is_private': True, 'enable_gpu': False, 'enable_tpu': False,
                 'enable_internet': False,

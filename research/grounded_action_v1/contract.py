@@ -4,7 +4,6 @@ import hashlib
 import json
 from pathlib import Path
 
-from certification.phase4_integrated_v2.contract import baseline_request
 from certification.phase4_transient_v2.action_contract import validate_action
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -65,6 +64,9 @@ def target_schema():
 
 
 def policy_request(runtime, arm):
+    # The model host imports this module for the canary/protocol. Only the game
+    # worker builds policy requests; its historical builder imports arcengine.
+    from certification.phase4_integrated_v2.contract import baseline_request
     request = baseline_request(runtime)
     if arm == 'control':
         return request

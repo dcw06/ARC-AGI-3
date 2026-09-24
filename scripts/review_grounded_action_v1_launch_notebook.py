@@ -11,7 +11,7 @@ import sys
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
-FOLDER = ROOT / 'notebooks/phase4-grounded-action-v1-launch-r1'
+FOLDER = ROOT / 'notebooks/phase4-grounded-action-v1-launch-r2'
 
 
 def review(folder=FOLDER, *, compare_checkout=True):
