@@ -10,6 +10,9 @@ from research.grounded_action_v1.target_host import main as host_main
 from research.grounded_action_v1.target_monitor import main as monitor_main
 from research.grounded_action_v1.target_worker import main as worker_main
 from research.grounded_action_v1.target_worker import expected_artifact
+from research.grounded_action_v1.target_host import pinned_model_factory
+from unittest.mock import MagicMock, patch
+import time
 
 
 def write(root, name, value):
@@ -45,6 +48,44 @@ class AuthorityTests(unittest.TestCase):
         artifact = expected_artifact()
         self.assertEqual(artifact['file_count'], 81)
         self.assertEqual(len(artifact['tree_sha256']), 64)
+        self.assertEqual(artifact['bytes'], 64526033084)
+
+    def test_host_verified_artifact_matches_worker_contract_including_bytes(self):
+        artifact = expected_artifact()
+        class FakeOwner:
+            def __init__(self, _primary):
+                pass
+
+            def start(self):
+                pass
+
+            def close(self):
+                pass
+
+        with (patch('certification.phase4_v6.target_install_probe_r5.MODEL_CHECK', 'pass'),
+              patch('research.grounded_action_v1.target_host.importlib.metadata.version',
+                    side_effect=lambda name: {'transformers': '4.57.6', 'tokenizers': '0.22.2',
+                                              'jinja2': '3.1.6', 'vllm': '0.19.0',
+                                              'torch': '2.10.0'}[name]),
+              patch('certification.phase4_integrated_v2.model_artifact.verify_artifact',
+                    return_value=artifact),
+              patch('certification.phase4_integrated_v2.model_process.ModelService', FakeOwner),
+              patch('certification.phase4_integrated_v2.model_transport.OpenAICompatibleCompletionClient'),
+              patch('research.grounded_action_v1.target_host.BridgeService') as bridge_class):
+            bridge_class.return_value = MagicMock()
+            bridge, owner = pinned_model_factory(lambda _record: None, time.monotonic() + 5)
+            self.assertEqual(bridge.artifact, expected_artifact())
+            owner.close()
+        with (patch('certification.phase4_v6.target_install_probe_r5.MODEL_CHECK', 'pass'),
+              patch('research.grounded_action_v1.target_host.importlib.metadata.version',
+                    side_effect=lambda name: {'transformers': '4.57.6', 'tokenizers': '0.22.2',
+                                              'jinja2': '3.1.6', 'vllm': '0.19.0',
+                                              'torch': '2.10.0'}[name])):
+            # Any mismatched measured byte count is rejected before server start.
+            with patch('certification.phase4_integrated_v2.model_artifact.verify_artifact',
+                       return_value={**artifact, 'bytes': artifact['bytes'] - 1}):
+                with self.assertRaisesRegex(ValueError, 'frozen Stage B profile'):
+                    pinned_model_factory(lambda _record: None, time.monotonic() + 5)
 
     def test_current_review_cannot_authorize_live_launch(self):
         with self.assertRaises(PermissionError):

@@ -5,9 +5,11 @@ import tempfile
 import threading
 import time
 import unittest
+from unittest.mock import patch
 
 from certification.phase4_integrated_v2.monitor import VRAM
 from research.grounded_action_v1.target_monitor import observe
+from research.grounded_action_v1.target_resources import LiveProbes
 
 
 class FakeProbes:
@@ -30,6 +32,33 @@ class FakeProbes:
 
 
 class TargetMonitorTests(unittest.TestCase):
+    def test_monitor_accepts_real_probe_rss_signature(self):
+        from certification.phase4_integrated_v2.evidence import EvidenceStore
+
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            control = EvidenceStore(root, 'control')
+            control.save('monitor-ready-ack.json', {'review_fixture': True})
+            control.save('stop.json', {'review_fixture': True})
+            gpu = {'uuid': 'GPU-INJECTED', 'name': 'RTX PRO 6000 fixture',
+                   'used_bytes': 1, 'total_bytes': 96 * 1024**3}
+            with (patch('research.grounded_action_v1.target_resources.require'),
+                  patch.object(LiveProbes, 'bind', return_value={
+                      'gpu_uuid': gpu['uuid'], 'initial_telemetry': gpu,
+                      'max_used_vram_bytes': VRAM}),
+                  patch.object(LiveProbes, 'sample', return_value=gpu),
+                  patch.object(LiveProbes, 'scratch_bytes', return_value=1),
+                  patch('evaluation.phase4_runner.group_rss_bytes', return_value=1) as rss):
+                result = observe(123, root, root, started=time.monotonic(),
+                                 deadline=time.monotonic() + 6,
+                                 stop=root / 'control/stop.json', nonce='fixture',
+                                 probes_factory=LiveProbes)
+                self.assertEqual(result['status'], 'injected_monitor_completed', result)
+                rss.assert_called_with(123)
+                with self.assertRaisesRegex(ValueError, 'owned worker'):
+                    LiveProbes(123, root).rss(124)
+            self.assertTrue((root / 'monitor/ready.json').exists())
+
     def test_ready_requires_durable_sample_and_clean_stop(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)

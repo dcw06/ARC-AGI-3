@@ -8,12 +8,35 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from research.grounded_action_v1.contract import audit_request, parse_policy
+from research.grounded_action_v1 import contract as grounded_contract
 from research.grounded_action_v1.local import ScriptedAdapter, ScriptedService, run
 from research.grounded_action_v1.replay import evaluate, replay_file
 from research.grounded_action_v1.model_service import TokenGuardedService
 
 
 class GroundedActionLocalTests(unittest.TestCase):
+    def test_target_case_binding_without_embedded_development_archive(self):
+        root = Path(__file__).resolve().parents[1]
+        with tempfile.TemporaryDirectory() as folder:
+            target = Path(folder)
+            for name in ('reports/perception_stage_b_v1_case_protocol.json',
+                         'reports/phase4_v2_offline_package.json',
+                         'reports/integrated_case_v1/initial_observation.json',
+                         'reports/integrated_case_v1/geometry_reference.json',
+                         'reports/phase4_transient_v2_protocol.json',
+                         'certification/phase4_integrated_v2/tokenizer_manifest.json'):
+                path = target / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes((root / name).read_bytes())
+            with patch.object(grounded_contract, 'ROOT', target):
+                self.assertEqual(grounded_contract.case_protocol()['game_id'], 'ar25-0c556536')
+                manifest = target / 'reports/phase4_v2_offline_package.json'
+                value = json.loads(manifest.read_bytes())
+                value['archive_sha256'] = '0' * 64
+                manifest.write_text(json.dumps(value))
+                with self.assertRaisesRegex(ValueError, 'archive manifest drift'):
+                    grounded_contract.case_protocol()
+
     def execute(self, service_mode='normal', adapter_mode='normal', *, clock=None, deadline_seconds=30):
         folder = tempfile.TemporaryDirectory()
         self.addCleanup(folder.cleanup)

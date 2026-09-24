@@ -8,6 +8,7 @@ import time
 
 from certification.phase4_integrated_v2.bridge import ModelProxy
 from certification.phase4_integrated_v2.evidence import EvidenceStore
+from .artifact_contract import expected_artifact
 from .authority import require
 from .bridge_service import ProxyService
 from .engine import DevelopmentAdapter, verified_game_mount
@@ -15,17 +16,6 @@ from .local import run
 from .replay import replay_file
 
 ROOT = Path(__file__).resolve().parents[2]
-
-
-def expected_artifact():
-    from certification.phase4_integrated_v2.model_process import load_operational_primary
-    primary = load_operational_primary(ROOT)
-    profile = json.loads((ROOT / 'reports/m0_profiles/m0-q3vl30-instruct.json').read_bytes())
-    artifact = profile['artifact']
-    if (artifact['tree_sha256'] != primary.model_tree_sha256 or
-            type(artifact['file_count']) is not int or artifact['file_count'] <= 0):
-        raise ValueError('pinned model artifact identity drift')
-    return {'tree_sha256': artifact['tree_sha256'], 'file_count': artifact['file_count']}
 
 
 def run_worker(output, scratch, environments, model_python, *, deadline):

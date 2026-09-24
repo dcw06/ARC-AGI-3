@@ -14,12 +14,21 @@ def case_protocol():
     value = json.loads((ROOT / 'reports/perception_stage_b_v1_case_protocol.json').read_bytes())
     bindings = {'initial_observation_sha256': 'reports/integrated_case_v1/initial_observation.json',
                 'reviewer_geometry_sha256': 'reports/integrated_case_v1/geometry_reference.json',
-                'development_archive_sha256': 'evidence/phase4-v2-development-offline.zip',
                 'baseline_protocol_sha256': 'reports/phase4_transient_v2_protocol.json',
                 'tokenizer_manifest_sha256': 'certification/phase4_integrated_v2/tokenizer_manifest.json'}
     if any(hashlib.sha256((ROOT / path).read_bytes()).hexdigest() != value[key]
            for key, path in bindings.items()):
         raise ValueError('Stage B case/source binding drift')
+    archive = ROOT / 'evidence/phase4-v2-development-offline.zip'
+    if archive.is_file():
+        if hashlib.sha256(archive.read_bytes()).hexdigest() != value['development_archive_sha256']:
+            raise ValueError('Stage B development archive drift')
+    else:
+        # The target uses the separately mounted, manifest-verified game files.
+        # The 43 MiB historical archive is not embedded in the notebook.
+        manifest = json.loads((ROOT / 'reports/phase4_v2_offline_package.json').read_bytes())
+        if manifest['archive_sha256'] != value['development_archive_sha256']:
+            raise ValueError('Stage B development archive manifest drift')
     if (value['game_id'] != 'ar25-0c556536' or value['arms_in_order'] != ['control', 'target'] or
             value['max_actions_per_arm'] != 2 or value['max_model_calls'] != 12 or
             value['provider_seconds_authorized'] != 0 or value['gpu_launch_authorized'] is not False):

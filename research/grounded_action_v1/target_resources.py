@@ -35,9 +35,11 @@ class LiveProbes:
         validate_sample(sample, uuid)
         return sample
 
-    def rss(self):
+    def rss(self, pid):
+        if type(pid) is not int or pid != self.worker_pid:
+            raise ValueError('RSS probe is bound to the owned worker')
         from evaluation.phase4_runner import group_rss_bytes
-        return group_rss_bytes(self.worker_pid)
+        return group_rss_bytes(pid)
 
     def scratch_bytes(self):
         if not self.scratch.is_dir() or self.scratch.is_symlink():

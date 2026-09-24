@@ -14,6 +14,7 @@ from research.grounded_action_v1.replay import evaluate
 from scripts.replay_grounded_action_v1_archive import run as replay_archive
 from scripts.inspect_phase4_perception_stage_a_v1 import decoded_rgb_identity
 from scripts.review_grounded_action_v1_notebook import review as review_notebook
+from scripts.review_grounded_action_v1_launch_notebook import review as review_launch_notebook
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -46,7 +47,8 @@ class GroundedActionEngineTests(unittest.TestCase):
     def test_gpu_disabled_notebook_unpacks_and_rejects_tampering(self):
         from shutil import copyfile
         source = ROOT / 'notebooks/phase4-grounded-action-v1-review-r5'
-        self.assertEqual(review_notebook(source)['status'], 'review_snapshot_verified_no_launch_authority')
+        self.assertEqual(review_notebook(source, compare_checkout=False)['status'],
+                         'review_snapshot_verified_no_launch_authority')
         for revision in ('r1', 'r2', 'r3', 'r4'):
             historical = ROOT / ('notebooks/phase4-grounded-action-v1-review-' + revision)
             self.assertEqual(review_notebook(historical, compare_checkout=False)['status'],
@@ -59,7 +61,26 @@ class GroundedActionEngineTests(unittest.TestCase):
             metadata['enable_gpu'] = True
             (target / 'kernel-metadata.json').write_text(json.dumps(metadata))
             with self.assertRaises(ValueError):
-                review_notebook(target)
+                review_notebook(target, compare_checkout=False)
+
+    def test_target_launch_review_unpacks_and_rejects_unapproved_execution(self):
+        from research.grounded_action_v1.authority import REVIEW, REQUIRED_SOURCE
+        source = ROOT / 'notebooks/phase4-grounded-action-v1-launch-r1'
+        self.assertEqual((ROOT / REVIEW).resolve(),
+                         (source / 'review-source-lock.json').resolve())
+        result = review_launch_notebook(source)
+        self.assertTrue(result['unapproved_execution_rejected'])
+        lock = json.loads((source / 'review-source-lock.json').read_bytes())
+        self.assertTrue(REQUIRED_SOURCE <= set(lock['bindings']))
+        with tempfile.TemporaryDirectory() as folder:
+            target = Path(folder)
+            for name in ('profile.ipynb', 'kernel-metadata.json', 'review-source-lock.json'):
+                (target / name).write_bytes((source / name).read_bytes())
+            metadata = json.loads((target / 'kernel-metadata.json').read_bytes())
+            metadata['enable_gpu'] = True
+            (target / 'kernel-metadata.json').write_text(json.dumps(metadata))
+            with self.assertRaises(ValueError):
+                review_launch_notebook(target)
 
     @unittest.skipUnless(os.name == 'posix' and importlib.util.find_spec('arc_agi'),
                          'requires Linux CPU development engine')

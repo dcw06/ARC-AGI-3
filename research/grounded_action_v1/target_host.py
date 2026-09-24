@@ -13,6 +13,7 @@ import time
 
 from certification.phase4_integrated_v2.bridge import BridgeServer
 from certification.phase4_integrated_v2.evidence import EvidenceStore
+from .artifact_contract import expected_artifact
 from .bridge_service import BridgeService
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -37,6 +38,8 @@ def pinned_model_factory(retain, deadline):
                       completion_canary_timeout_seconds=120, request_timeout_seconds=120,
                       hard_seconds=3300, finalization_reserve_seconds=300)
     artifact = verify_artifact(primary)
+    if artifact != expected_artifact(ROOT):
+        raise ValueError('verified model artifact differs from frozen Stage B profile')
 
     class ServerWithoutLegacyCanary(ModelService):
         def _completion_canary(self):
@@ -48,10 +51,7 @@ def pinned_model_factory(retain, deadline):
         owner.start()
         client = OpenAICompatibleCompletionClient(primary.base_url, timeout_seconds=120)
         bridge = BridgeService(primary.model_path, client.complete, retain_canary=retain)
-        # Return only the identity fields independently known to the game
-        # worker from frozen source; the host already verified the full tree.
-        bridge.artifact = {'tree_sha256': artifact['tree_sha256'],
-                           'file_count': artifact['file_count']}
+        bridge.artifact = artifact
         return bridge, owner
     except BaseException:
         owner.close()
