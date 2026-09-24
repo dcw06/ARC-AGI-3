@@ -6,7 +6,7 @@ import lzma
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'notebooks/phase4-grounded-action-v1-review-r2'
+OUT = ROOT / 'notebooks/phase4-grounded-action-v1-review-r3'
 
 
 def inventory():
@@ -18,12 +18,15 @@ def inventory():
         'inspect_phase4_perception_stage_a_v1')]
     names += ['tests/test_grounded_action_v1_local.py', 'tests/test_grounded_action_v1_engine.py',
               'tests/test_grounded_action_v1_bridge.py',
+              'tests/test_grounded_action_v1_target_host.py',
+              'tests/test_grounded_action_v1_target_supervisor.py',
               'reports/perception_stage_b_v1_case_protocol.json',
               'reports/perception_stage_b_v1_token_audit.json',
               'reports/perception_stage_b_v1_local_archive.json',
               'reports/perception_stage_b_v1_local_review.md',
               'reports/perception_stage_b_v0_protocol.md',
-              'reports/perception_stage_b_v2_integration_review.md']
+              'reports/perception_stage_b_v2_integration_review.md',
+              'reports/perception_stage_b_v3_host_review.md']
     return sorted(set(names))
 
 
@@ -53,8 +56,8 @@ def build(output=OUT):
                                      'CPU archive and token audit are bound below. No model startup, game action, '
                                      'source approval, reservation, or launch entrypoint is included.'},
                           {'cell_type': 'code', 'metadata': {}, 'execution_count': None, 'outputs': [], 'source': cell}]}
-    metadata = {'id': 'daichongwei06/arc3-phase4-grounded-action-v1-review-r2',
-                'title': 'ARC3 Grounded Action V1 Review R2', 'code_file': 'profile.ipynb',
+    metadata = {'id': 'daichongwei06/arc3-phase4-grounded-action-v1-review-r3',
+                'title': 'ARC3 Grounded Action V1 Review R3', 'code_file': 'profile.ipynb',
                 'language': 'python', 'kernel_type': 'notebook', 'is_private': True,
                 'enable_gpu': False, 'enable_tpu': False, 'enable_internet': False,
                 'competition_sources': [], 'dataset_sources': [], 'model_sources': []}

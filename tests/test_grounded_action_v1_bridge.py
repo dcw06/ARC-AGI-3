@@ -41,17 +41,20 @@ class GroundedBridgeTests(unittest.TestCase):
                                                 'jinja2': '3.1.6'}[name]):
             scratch = Path(folder)
             service = BridgeService('unused', transport, tokenizer=Tokens())
+            service.startup_canary()
+            service.artifact = {'sha256': 'fixture'}
+            service.startup_seconds = .1
             server = BridgeServer(scratch / 'model.sock', service, time.monotonic() + 5, scratch / 'cancel')
             thread = threading.Thread(target=server.serve_forever, kwargs={'poll_interval': .01})
             thread.start()
             proxy = ModelProxy(scratch, 'unused', time.monotonic() + client_deadline, scratch / 'cancel')
-            proxy.started = True
             request = {'model': service.guard.protocol['model_id'], 'messages': [
                 {'role': 'system', 'content': 'Return only JSON'}, {'role': 'user', 'content': '{}'}],
                 'temperature': 0, 'seed': 0, 'max_tokens': 128,
                 'chat_template_kwargs': {'enable_thinking': False}, 'response_format': {'type': 'json_object'}}
             try:
-                service.startup_canary()
+                self.assertFalse(proxy.started)
+                ProxyService(proxy).connect_ready(expected_artifact={'sha256': 'fixture'})
                 return proxy.complete(request), calls
             finally:
                 server.shutdown()
@@ -123,12 +126,14 @@ class GroundedBridgeTests(unittest.TestCase):
             service = BridgeService('unused', transport, tokenizer=Tokens())
             # The startup canary uses the same ACTION6 schema as the fixture.
             service.startup_canary()
+            service.artifact = {'sha256': 'fixture'}
+            service.startup_seconds = .1
             server = BridgeServer(scratch / 'model.sock', service, time.monotonic() + 45, scratch / 'cancel')
             thread = threading.Thread(target=server.serve_forever, kwargs={'poll_interval': .01})
             thread.start()
             proxy = ModelProxy(scratch, 'unused', time.monotonic() + 45, scratch / 'cancel')
-            proxy.started = True
             try:
+                ProxyService(proxy).connect_ready(expected_artifact={'sha256': 'fixture'})
                 result = run(scratch / 'run.json', ProxyService(proxy),
                              lambda arm: ScriptedAdapter(arm), deadline_seconds=30)
                 self.assertEqual(result['status'], 'complete', result['error'])

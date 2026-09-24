@@ -7,7 +7,7 @@ import lzma
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-FOLDER = ROOT / 'notebooks/phase4-grounded-action-v1-review-r2'
+FOLDER = ROOT / 'notebooks/phase4-grounded-action-v1-review-r3'
 
 
 def review(folder=FOLDER, *, compare_checkout=True):

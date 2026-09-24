@@ -4,6 +4,8 @@ No server, GPU, or model is started by this module. The injected transport
 returns a CompletionResult; received evidence crosses the bridge even when
 token parity or deadline validation subsequently fails.
 """
+import math
+
 from certification.phase4_integrated_v2.bridge import request_hash
 from certification.phase4_integrated_v2.model_transport import CompletionResult
 from certification.phase4_integrated_v2.response_evidence import ResponseValidationError, capture
@@ -86,6 +88,26 @@ class ProxyService:
 
     def __init__(self, proxy):
         self.proxy = proxy
+
+    def connect_ready(self, *, expected_artifact=None):
+        """Admit calls only after the server's real ready reply is checked."""
+        if self.proxy.started:
+            raise RuntimeError('model bridge already admitted')
+        ready = self.proxy.call({'op': 'ready'})
+        canary = ready.get('canary_audit')
+        seconds = ready.get('startup_seconds')
+        if (not isinstance(canary, dict) or canary.get('status') != 'passed' or
+                not isinstance(canary.get('request_sha256'), str) or
+                not isinstance(canary.get('response_sha256'), str) or
+                len(canary['response_sha256']) != 64 or
+                type(seconds) not in (int, float) or not math.isfinite(seconds) or seconds < 0 or
+                (expected_artifact is not None and ready.get('artifact') != expected_artifact)):
+            raise ValueError('model bridge readiness evidence')
+        self.proxy.artifact = ready.get('artifact')
+        self.proxy.canary_audit = canary
+        self.proxy.startup_seconds = seconds
+        self.proxy.started = True
+        return ready
 
     def complete(self, request):
         result = self.proxy.complete(request)

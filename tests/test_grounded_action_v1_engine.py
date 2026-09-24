@@ -45,11 +45,12 @@ class GroundedActionEngineTests(unittest.TestCase):
 
     def test_gpu_disabled_notebook_unpacks_and_rejects_tampering(self):
         from shutil import copyfile
-        source = ROOT / 'notebooks/phase4-grounded-action-v1-review-r2'
+        source = ROOT / 'notebooks/phase4-grounded-action-v1-review-r3'
         self.assertEqual(review_notebook(source)['status'], 'review_snapshot_verified_no_launch_authority')
-        historical = ROOT / 'notebooks/phase4-grounded-action-v1-review-r1'
-        self.assertEqual(review_notebook(historical, compare_checkout=False)['status'],
-                         'review_snapshot_verified_no_launch_authority')
+        for revision in ('r1', 'r2'):
+            historical = ROOT / ('notebooks/phase4-grounded-action-v1-review-' + revision)
+            self.assertEqual(review_notebook(historical, compare_checkout=False)['status'],
+                             'review_snapshot_verified_no_launch_authority')
         with tempfile.TemporaryDirectory() as folder:
             target = Path(folder)
             for name in ('profile.ipynb', 'kernel-metadata.json', 'review-source-lock.json'):
