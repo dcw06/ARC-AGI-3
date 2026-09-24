@@ -1,6 +1,17 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
-## Paired perception R2: ambiguity instruction repaired, review pending
+## Paired perception R2: completed; object localization missed in both arms
+
+The one authorized, unscored R2 Kaggle run completed. Frozen independent and
+clean-copy replays passed with verified cleanup. All ten board answers were
+valid, but detected zero of eleven reference objects in each representation
+at the frozen overlap threshold. The two interface controls each classified
+only one of seven coordinate-argument flags correctly. See the
+[completed disposition](phase4_perception_v1_r2_disposition.md). This is a
+small development grounding diagnostic, not a solving result or Phase 4
+production certification. Exact per-attempt billing remains unknown.
+
+## Historical R2 preparation: ambiguity instruction repaired
 
 R1's prompt told the model to answer `uncertain` for multiple fitting transforms,
 although the independent scorer credits any valid transform. R2 now asks for

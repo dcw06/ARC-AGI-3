@@ -1,0 +1,1263 @@
+{
+  "passed": true,
+  "errors": [],
+  "comparison": {
+    "rows": [
+      {
+        "id": "image_canary",
+        "kind": "canary",
+        "source_group": "synthetic_preflight_I2",
+        "representation": null,
+        "status": "complete",
+        "answer": {
+          "answer": {
+            "color": 8,
+            "quadrant": "top_left"
+          },
+          "correct": true,
+          "error": null,
+          "valid": true
+        },
+        "failure_kind": null,
+        "audit": {
+          "expectation": {
+            "expected_prompt_tokens": 1378,
+            "image_grid_thw": [
+              1,
+              64,
+              64
+            ],
+            "image_tokens_processor": 1024,
+            "input_height": 1024,
+            "input_width": 1024,
+            "manual_prompt_tokens": 1378,
+            "merge_size": 2,
+            "patch_size": 16,
+            "processed_height": 1024,
+            "processed_width": 1024,
+            "processor_full_prompt_tokens": 1378,
+            "template_tokens": 355,
+            "tensor_format": "pt"
+          },
+          "finish_reason": "stop",
+          "frozen_local_expected_prompt_tokens": 1378,
+          "request_sha256": "828b6a25fa62185aeab4201a15ab71258441968be1c7fd8fb1cf8e70ed2f10d8",
+          "server_completion_tokens": 16,
+          "server_prompt_tokens": 1378,
+          "service_seconds": 0.22017047600002115,
+          "tokenizer_prompt_tokens": 1378,
+          "transport_attempted": true
+        }
+      },
+      {
+        "id": "P1_text",
+        "kind": "perception",
+        "source_group": "ar25-initial",
+        "representation": "text",
+        "status": "complete",
+        "answer": {
+          "bbox_exact": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "case": "P1",
+          "colors": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "contour_cells": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "contour_exact": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "detected_and_contour_exact": {
+            "denominator": 3,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detected_and_marking_colors_correct": {
+            "denominator": 3,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detected_and_markings_correct": {
+            "denominator": 3,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detection_precision": {
+            "denominator": 6,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detection_recall": {
+            "denominator": 3,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "distractor_errors": 0,
+          "duplicate_objects": 0,
+          "duplicate_relations": 0,
+          "error": null,
+          "extraneous_objects": 6,
+          "extraneous_relations": 6,
+          "has_markings": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "localization": [],
+          "marking_colors": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "misses": 3,
+          "missing_relations": 3,
+          "rotation_vs_reflection": null,
+          "same_shape": {
+            "denominator": 3,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "source_group": "ar25-initial",
+          "transform": {
+            "denominator": 3,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "valid": true
+        },
+        "failure_kind": null,
+        "audit": {
+          "expectation": {
+            "expected_prompt_tokens": 8977,
+            "template_tokens": 8977
+          },
+          "finish_reason": "stop",
+          "frozen_local_expected_prompt_tokens": 8977,
+          "request_sha256": "ecd31dfcf91cc934ba9f731f16b2f824b3e321884bb296630938a6a4c2885fe1",
+          "server_completion_tokens": 799,
+          "server_prompt_tokens": 8977,
+          "service_seconds": 6.578184276000002,
+          "tokenizer_prompt_tokens": 8977,
+          "transport_attempted": true
+        }
+      },
+      {
+        "id": "P1_image",
+        "kind": "perception",
+        "source_group": "ar25-initial",
+        "representation": "image",
+        "status": "complete",
+        "answer": {
+          "bbox_exact": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "case": "P1",
+          "colors": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "contour_cells": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "contour_exact": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "detected_and_contour_exact": {
+            "denominator": 3,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detected_and_marking_colors_correct": {
+            "denominator": 3,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detected_and_markings_correct": {
+            "denominator": 3,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detection_precision": {
+            "denominator": 6,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detection_recall": {
+            "denominator": 3,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "distractor_errors": 0,
+          "duplicate_objects": 0,
+          "duplicate_relations": 0,
+          "error": null,
+          "extraneous_objects": 6,
+          "extraneous_relations": 4,
+          "has_markings": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "localization": [],
+          "marking_colors": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "misses": 3,
+          "missing_relations": 3,
+          "rotation_vs_reflection": null,
+          "same_shape": {
+            "denominator": 3,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "source_group": "ar25-initial",
+          "transform": {
+            "denominator": 3,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "valid": true
+        },
+        "failure_kind": null,
+        "audit": {
+          "expectation": {
+            "expected_prompt_tokens": 1508,
+            "image_grid_thw": [
+              1,
+              64,
+              64
+            ],
+            "image_tokens_processor": 1024,
+            "input_height": 1024,
+            "input_width": 1024,
+            "manual_prompt_tokens": 1508,
+            "merge_size": 2,
+            "patch_size": 16,
+            "processed_height": 1024,
+            "processed_width": 1024,
+            "processor_full_prompt_tokens": 1508,
+            "template_tokens": 485,
+            "tensor_format": "pt"
+          },
+          "finish_reason": "stop",
+          "frozen_local_expected_prompt_tokens": 1508,
+          "request_sha256": "9482547d9be64ab804936347344711d9c0bb52980c45ce85253f6c5d2a14eea1",
+          "server_completion_tokens": 759,
+          "server_prompt_tokens": 1508,
+          "service_seconds": 5.077263459000051,
+          "tokenizer_prompt_tokens": 1508,
+          "transport_attempted": true
+        }
+      },
+      {
+        "id": "P2_text",
+        "kind": "perception",
+        "source_group": "synthetic-P2",
+        "representation": "text",
+        "status": "complete",
+        "answer": {
+          "bbox_exact": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "case": "P2",
+          "colors": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "contour_cells": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "contour_exact": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "detected_and_contour_exact": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detected_and_marking_colors_correct": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detected_and_markings_correct": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detection_precision": {
+            "denominator": 6,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detection_recall": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "distractor_errors": 0,
+          "duplicate_objects": 0,
+          "duplicate_relations": 0,
+          "error": null,
+          "extraneous_objects": 6,
+          "extraneous_relations": 6,
+          "has_markings": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "localization": [],
+          "marking_colors": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "misses": 2,
+          "missing_relations": 1,
+          "rotation_vs_reflection": {
+            "denominator": 1,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "same_shape": {
+            "denominator": 1,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "source_group": "synthetic-P2",
+          "transform": {
+            "denominator": 1,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "valid": true
+        },
+        "failure_kind": null,
+        "audit": {
+          "expectation": {
+            "expected_prompt_tokens": 8724,
+            "template_tokens": 8724
+          },
+          "finish_reason": "stop",
+          "frozen_local_expected_prompt_tokens": 8724,
+          "request_sha256": "c18edaac3977f71a9296ed8173071003fbccb880c373e8448902af40a2d06e4c",
+          "server_completion_tokens": 778,
+          "server_prompt_tokens": 8724,
+          "service_seconds": 5.604004019000058,
+          "tokenizer_prompt_tokens": 8724,
+          "transport_attempted": true
+        }
+      },
+      {
+        "id": "P2_image",
+        "kind": "perception",
+        "source_group": "synthetic-P2",
+        "representation": "image",
+        "status": "complete",
+        "answer": {
+          "bbox_exact": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "case": "P2",
+          "colors": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "contour_cells": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "contour_exact": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "detected_and_contour_exact": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detected_and_marking_colors_correct": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detected_and_markings_correct": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detection_precision": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detection_recall": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "distractor_errors": 0,
+          "duplicate_objects": 0,
+          "duplicate_relations": 0,
+          "error": null,
+          "extraneous_objects": 2,
+          "extraneous_relations": 1,
+          "has_markings": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "localization": [],
+          "marking_colors": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "misses": 2,
+          "missing_relations": 1,
+          "rotation_vs_reflection": {
+            "denominator": 1,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "same_shape": {
+            "denominator": 1,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "source_group": "synthetic-P2",
+          "transform": {
+            "denominator": 1,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "valid": true
+        },
+        "failure_kind": null,
+        "audit": {
+          "expectation": {
+            "expected_prompt_tokens": 1508,
+            "image_grid_thw": [
+              1,
+              64,
+              64
+            ],
+            "image_tokens_processor": 1024,
+            "input_height": 1024,
+            "input_width": 1024,
+            "manual_prompt_tokens": 1508,
+            "merge_size": 2,
+            "patch_size": 16,
+            "processed_height": 1024,
+            "processed_width": 1024,
+            "processor_full_prompt_tokens": 1508,
+            "template_tokens": 485,
+            "tensor_format": "pt"
+          },
+          "finish_reason": "stop",
+          "frozen_local_expected_prompt_tokens": 1508,
+          "request_sha256": "a13ef65d8149b76c6ebd721a6056d54f9a4325c76d5d95ccc1b6fc6a02f6c976",
+          "server_completion_tokens": 330,
+          "server_prompt_tokens": 1508,
+          "service_seconds": 2.2193139829998927,
+          "tokenizer_prompt_tokens": 1508,
+          "transport_attempted": true
+        }
+      },
+      {
+        "id": "P3_text",
+        "kind": "perception",
+        "source_group": "synthetic-P3",
+        "representation": "text",
+        "status": "complete",
+        "answer": {
+          "bbox_exact": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "case": "P3",
+          "colors": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "contour_cells": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "contour_exact": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "detected_and_contour_exact": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detected_and_marking_colors_correct": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detected_and_markings_correct": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detection_precision": {
+            "denominator": 6,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detection_recall": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "distractor_errors": 0,
+          "duplicate_objects": 0,
+          "duplicate_relations": 0,
+          "error": null,
+          "extraneous_objects": 6,
+          "extraneous_relations": 6,
+          "has_markings": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "localization": [],
+          "marking_colors": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "misses": 2,
+          "missing_relations": 1,
+          "rotation_vs_reflection": {
+            "denominator": 1,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "same_shape": {
+            "denominator": 1,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "source_group": "synthetic-P3",
+          "transform": {
+            "denominator": 1,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "valid": true
+        },
+        "failure_kind": null,
+        "audit": {
+          "expectation": {
+            "expected_prompt_tokens": 8724,
+            "template_tokens": 8724
+          },
+          "finish_reason": "stop",
+          "frozen_local_expected_prompt_tokens": 8724,
+          "request_sha256": "e66df89605b183f952c92ca9c17784d063a279fec1dd5d28b0bfbf4b5575bec8",
+          "server_completion_tokens": 821,
+          "server_prompt_tokens": 8724,
+          "service_seconds": 5.814891310999883,
+          "tokenizer_prompt_tokens": 8724,
+          "transport_attempted": true
+        }
+      },
+      {
+        "id": "P3_image",
+        "kind": "perception",
+        "source_group": "synthetic-P3",
+        "representation": "image",
+        "status": "complete",
+        "answer": {
+          "bbox_exact": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "case": "P3",
+          "colors": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "contour_cells": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "contour_exact": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "detected_and_contour_exact": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detected_and_marking_colors_correct": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detected_and_markings_correct": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detection_precision": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detection_recall": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "distractor_errors": 0,
+          "duplicate_objects": 0,
+          "duplicate_relations": 0,
+          "error": null,
+          "extraneous_objects": 2,
+          "extraneous_relations": 1,
+          "has_markings": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "localization": [],
+          "marking_colors": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "misses": 2,
+          "missing_relations": 1,
+          "rotation_vs_reflection": {
+            "denominator": 1,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "same_shape": {
+            "denominator": 1,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "source_group": "synthetic-P3",
+          "transform": {
+            "denominator": 1,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "valid": true
+        },
+        "failure_kind": null,
+        "audit": {
+          "expectation": {
+            "expected_prompt_tokens": 1508,
+            "image_grid_thw": [
+              1,
+              64,
+              64
+            ],
+            "image_tokens_processor": 1024,
+            "input_height": 1024,
+            "input_width": 1024,
+            "manual_prompt_tokens": 1508,
+            "merge_size": 2,
+            "patch_size": 16,
+            "processed_height": 1024,
+            "processed_width": 1024,
+            "processor_full_prompt_tokens": 1508,
+            "template_tokens": 485,
+            "tensor_format": "pt"
+          },
+          "finish_reason": "stop",
+          "frozen_local_expected_prompt_tokens": 1508,
+          "request_sha256": "ea5e20b56358ebeef240a36d43a2a3ddb650bda8bcf5aa014195472db7c918a3",
+          "server_completion_tokens": 312,
+          "server_prompt_tokens": 1508,
+          "service_seconds": 2.088346225999885,
+          "tokenizer_prompt_tokens": 1508,
+          "transport_attempted": true
+        }
+      },
+      {
+        "id": "P4_text",
+        "kind": "perception",
+        "source_group": "synthetic-P4",
+        "representation": "text",
+        "status": "complete",
+        "answer": {
+          "bbox_exact": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "case": "P4",
+          "colors": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "contour_cells": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "contour_exact": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "detected_and_contour_exact": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detected_and_marking_colors_correct": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detected_and_markings_correct": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detection_precision": {
+            "denominator": 6,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detection_recall": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "distractor_errors": 0,
+          "duplicate_objects": 0,
+          "duplicate_relations": 0,
+          "error": null,
+          "extraneous_objects": 6,
+          "extraneous_relations": 6,
+          "has_markings": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "localization": [],
+          "marking_colors": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "misses": 2,
+          "missing_relations": 1,
+          "rotation_vs_reflection": null,
+          "same_shape": {
+            "denominator": 1,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "source_group": "synthetic-P4",
+          "transform": {
+            "denominator": 1,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "valid": true
+        },
+        "failure_kind": null,
+        "audit": {
+          "expectation": {
+            "expected_prompt_tokens": 8916,
+            "template_tokens": 8916
+          },
+          "finish_reason": "stop",
+          "frozen_local_expected_prompt_tokens": 8916,
+          "request_sha256": "bae2683e6944e2bb1a996c9c5aa389a3e7d4363616eea061385db2d3141b2e96",
+          "server_completion_tokens": 794,
+          "server_prompt_tokens": 8916,
+          "service_seconds": 5.744475271000056,
+          "tokenizer_prompt_tokens": 8916,
+          "transport_attempted": true
+        }
+      },
+      {
+        "id": "P4_image",
+        "kind": "perception",
+        "source_group": "synthetic-P4",
+        "representation": "image",
+        "status": "complete",
+        "answer": {
+          "bbox_exact": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "case": "P4",
+          "colors": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "contour_cells": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "contour_exact": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "detected_and_contour_exact": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detected_and_marking_colors_correct": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detected_and_markings_correct": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detection_precision": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detection_recall": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "distractor_errors": 0,
+          "duplicate_objects": 0,
+          "duplicate_relations": 0,
+          "error": null,
+          "extraneous_objects": 2,
+          "extraneous_relations": 1,
+          "has_markings": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "localization": [],
+          "marking_colors": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "misses": 2,
+          "missing_relations": 1,
+          "rotation_vs_reflection": null,
+          "same_shape": {
+            "denominator": 1,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "source_group": "synthetic-P4",
+          "transform": {
+            "denominator": 1,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "valid": true
+        },
+        "failure_kind": null,
+        "audit": {
+          "expectation": {
+            "expected_prompt_tokens": 1508,
+            "image_grid_thw": [
+              1,
+              64,
+              64
+            ],
+            "image_tokens_processor": 1024,
+            "input_height": 1024,
+            "input_width": 1024,
+            "manual_prompt_tokens": 1508,
+            "merge_size": 2,
+            "patch_size": 16,
+            "processed_height": 1024,
+            "processed_width": 1024,
+            "processor_full_prompt_tokens": 1508,
+            "template_tokens": 485,
+            "tensor_format": "pt"
+          },
+          "finish_reason": "stop",
+          "frozen_local_expected_prompt_tokens": 1508,
+          "request_sha256": "1537169bb02df7556b1e79b0d5768bf14e6cfd8c6228ba3318ff4c83a33e0452",
+          "server_completion_tokens": 300,
+          "server_prompt_tokens": 1508,
+          "service_seconds": 2.019802092999953,
+          "tokenizer_prompt_tokens": 1508,
+          "transport_attempted": true
+        }
+      },
+      {
+        "id": "P5_text",
+        "kind": "perception",
+        "source_group": "synthetic-P5",
+        "representation": "text",
+        "status": "complete",
+        "answer": {
+          "bbox_exact": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "case": "P5",
+          "colors": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "contour_cells": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "contour_exact": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "detected_and_contour_exact": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detected_and_marking_colors_correct": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detected_and_markings_correct": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detection_precision": {
+            "denominator": 6,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detection_recall": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "distractor_errors": 0,
+          "duplicate_objects": 0,
+          "duplicate_relations": 0,
+          "error": null,
+          "extraneous_objects": 6,
+          "extraneous_relations": 6,
+          "has_markings": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "localization": [],
+          "marking_colors": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "misses": 2,
+          "missing_relations": 1,
+          "rotation_vs_reflection": null,
+          "same_shape": {
+            "denominator": 1,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "source_group": "synthetic-P5",
+          "transform": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "valid": true
+        },
+        "failure_kind": null,
+        "audit": {
+          "expectation": {
+            "expected_prompt_tokens": 8679,
+            "template_tokens": 8679
+          },
+          "finish_reason": "stop",
+          "frozen_local_expected_prompt_tokens": 8679,
+          "request_sha256": "6c2984aeac1033bd24d88e86e370a556f44a6bd459235dfb37846cae70eef976",
+          "server_completion_tokens": 777,
+          "server_prompt_tokens": 8679,
+          "service_seconds": 5.551474846000019,
+          "tokenizer_prompt_tokens": 8679,
+          "transport_attempted": true
+        }
+      },
+      {
+        "id": "P5_image",
+        "kind": "perception",
+        "source_group": "synthetic-P5",
+        "representation": "image",
+        "status": "complete",
+        "answer": {
+          "bbox_exact": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "case": "P5",
+          "colors": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "contour_cells": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "contour_exact": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "detected_and_contour_exact": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detected_and_marking_colors_correct": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detected_and_markings_correct": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detection_precision": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "detection_recall": {
+            "denominator": 2,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "distractor_errors": 0,
+          "duplicate_objects": 0,
+          "duplicate_relations": 0,
+          "error": null,
+          "extraneous_objects": 2,
+          "extraneous_relations": 1,
+          "has_markings": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "localization": [],
+          "marking_colors": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "misses": 2,
+          "missing_relations": 1,
+          "rotation_vs_reflection": null,
+          "same_shape": {
+            "denominator": 1,
+            "numerator": 0,
+            "rate": 0.0
+          },
+          "source_group": "synthetic-P5",
+          "transform": {
+            "denominator": 0,
+            "numerator": 0,
+            "rate": null
+          },
+          "valid": true
+        },
+        "failure_kind": null,
+        "audit": {
+          "expectation": {
+            "expected_prompt_tokens": 1508,
+            "image_grid_thw": [
+              1,
+              64,
+              64
+            ],
+            "image_tokens_processor": 1024,
+            "input_height": 1024,
+            "input_width": 1024,
+            "manual_prompt_tokens": 1508,
+            "merge_size": 2,
+            "patch_size": 16,
+            "processed_height": 1024,
+            "processed_width": 1024,
+            "processor_full_prompt_tokens": 1508,
+            "template_tokens": 485,
+            "tensor_format": "pt"
+          },
+          "finish_reason": "stop",
+          "frozen_local_expected_prompt_tokens": 1508,
+          "request_sha256": "3ed02b98e4026209986eccd12e926132c5d8f9c73305fe8996508e4a845abf17",
+          "server_completion_tokens": 298,
+          "server_prompt_tokens": 1508,
+          "service_seconds": 1.998326218000102,
+          "tokenizer_prompt_tokens": 1508,
+          "transport_attempted": true
+        }
+      },
+      {
+        "id": "control_I1",
+        "kind": "control",
+        "source_group": "interface_I1",
+        "representation": null,
+        "status": "complete",
+        "answer": {
+          "arguments": {
+            "denominator": 7,
+            "numerator": 1,
+            "rate": 0.14285714285714285
+          },
+          "click": {
+            "denominator": 1,
+            "numerator": true,
+            "rate": 1.0
+          },
+          "directional": {
+            "denominator": 1,
+            "numerator": true,
+            "rate": 1.0
+          },
+          "error": null,
+          "non_coordinate": {
+            "denominator": 1,
+            "numerator": true,
+            "rate": 1.0
+          },
+          "valid": true
+        },
+        "failure_kind": null,
+        "audit": {
+          "expectation": {
+            "expected_prompt_tokens": 306,
+            "template_tokens": 306
+          },
+          "finish_reason": "stop",
+          "frozen_local_expected_prompt_tokens": 306,
+          "request_sha256": "fd967baf1cd4be1877a0f23b03e2fddcfb79c0ab13f61f1e2d25090600f5717d",
+          "server_completion_tokens": 100,
+          "server_prompt_tokens": 306,
+          "service_seconds": 0.6691907809999975,
+          "tokenizer_prompt_tokens": 306,
+          "transport_attempted": true
+        }
+      },
+      {
+        "id": "control_I2",
+        "kind": "control",
+        "source_group": "interface_I2",
+        "representation": null,
+        "status": "complete",
+        "answer": {
+          "arguments": {
+            "denominator": 7,
+            "numerator": 1,
+            "rate": 0.14285714285714285
+          },
+          "click": {
+            "denominator": 1,
+            "numerator": true,
+            "rate": 1.0
+          },
+          "directional": {
+            "denominator": 1,
+            "numerator": true,
+            "rate": 1.0
+          },
+          "error": null,
+          "non_coordinate": {
+            "denominator": 1,
+            "numerator": true,
+            "rate": 1.0
+          },
+          "valid": true
+        },
+        "failure_kind": null,
+        "audit": {
+          "expectation": {
+            "expected_prompt_tokens": 345,
+            "template_tokens": 345
+          },
+          "finish_reason": "stop",
+          "frozen_local_expected_prompt_tokens": 345,
+          "request_sha256": "62d6763c285f7ccf5945247c338af3bef0cc4950860ecda5b95bdeb377876acf",
+          "server_completion_tokens": 109,
+          "server_prompt_tokens": 345,
+          "service_seconds": 0.7171940470000209,
+          "tokenizer_prompt_tokens": 345,
+          "transport_attempted": true
+        }
+      }
+    ],
+    "verdict": "completed",
+    "interpretation": "Five descriptive board pairs, correlated within source; no automatic promotion or solving claim."
+  },
+  "independent_replay": true,
+  "evidence_bytes": 3050458,
+  "exact_provider_billed_seconds": null,
+  "phase4_complete": false
+}
