@@ -20,6 +20,16 @@ def digest(raw):
     return hashlib.sha256(raw).hexdigest()
 
 
+def decoded_rgb_identity(raw):
+    """Compare rendered RGB pixels across PNG encoder versions."""
+    from PIL import Image
+    with Image.open(io.BytesIO(raw)) as source:
+        if source.format != 'PNG':
+            raise ValueError('overlay is not PNG')
+        image = source.convert('RGB')
+        return image.size, digest(image.tobytes())
+
+
 def overlap(left, right):
     x0, y0 = max(left[0], right[0]), max(left[1], right[1])
     x1, y1 = min(left[2], right[2]), min(left[3], right[3])
@@ -167,12 +177,22 @@ def check():
     lock=json.loads((OUTPUT/'inspection-lock.json').read_bytes())
     with tempfile.TemporaryDirectory() as temp:
         generated=build(Path(temp)/'inspection')
-        if generated!=lock:
-            raise ValueError('inspection lock drift')
+        if generated['archive_sha256']!=lock['archive_sha256'] or set(generated['files'])!=set(lock['files']):
+            raise ValueError('inspection source/inventory drift')
+        png_byte_matches=0
         for name,digest_value in lock['files'].items():
-            if digest((OUTPUT/name).read_bytes())!=digest_value:
-                raise ValueError('inspection artifact drift: '+name)
-    print(json.dumps({'status':'verified','overlays':10,'archive_sha256':lock['archive_sha256']}))
+            original=(OUTPUT/name).read_bytes()
+            rebuilt=(Path(temp)/'inspection'/name).read_bytes()
+            if digest(original)!=digest_value:
+                raise ValueError('committed inspection artifact drift: '+name)
+            if name.endswith('.png'):
+                if decoded_rgb_identity(original)!=decoded_rgb_identity(rebuilt):
+                    raise ValueError('decoded overlay pixels drift: '+name)
+                png_byte_matches+=int(digest(rebuilt)==digest_value)
+            elif original!=rebuilt:
+                raise ValueError('inspection analysis drift: '+name)
+    print(json.dumps({'status':'verified','overlays':10,'png_byte_matches':png_byte_matches,
+                      'archive_sha256':lock['archive_sha256']}))
 
 
 if __name__=='__main__':

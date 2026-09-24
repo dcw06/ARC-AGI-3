@@ -2,18 +2,44 @@
 import copy
 import hashlib
 import json
+from pathlib import Path
 
 from certification.phase4_integrated_v2.contract import baseline_request
 from certification.phase4_transient_v2.action_contract import validate_action
+
+ROOT = Path(__file__).resolve().parents[2]
+
+
+def case_protocol():
+    value = json.loads((ROOT / 'reports/perception_stage_b_v1_case_protocol.json').read_bytes())
+    bindings = {'initial_observation_sha256': 'reports/integrated_case_v1/initial_observation.json',
+                'reviewer_geometry_sha256': 'reports/integrated_case_v1/geometry_reference.json',
+                'development_archive_sha256': 'evidence/phase4-v2-development-offline.zip',
+                'baseline_protocol_sha256': 'reports/phase4_transient_v2_protocol.json',
+                'tokenizer_manifest_sha256': 'certification/phase4_integrated_v2/tokenizer_manifest.json'}
+    if any(hashlib.sha256((ROOT / path).read_bytes()).hexdigest() != value[key]
+           for key, path in bindings.items()):
+        raise ValueError('Stage B case/source binding drift')
+    if (value['game_id'] != 'ar25-0c556536' or value['arms_in_order'] != ['control', 'target'] or
+            value['max_actions_per_arm'] != 2 or value['max_model_calls'] != 12 or
+            value['provider_seconds_authorized'] != 0 or value['gpu_launch_authorized'] is not False):
+        raise ValueError('Stage B case protocol drift')
+    return value
 
 TARGET_INSTRUCTION = (
     " Commit one visible target as an inclusive cell or box in grid[y][x] "
     "coordinates alongside the action. Use null only for a nonspatial action. "
     "Do not infer a game rule from visual similarity."
 )
-AUDIT_INSTRUCTION = (
+PREDICTION_INSTRUCTION = (
     "Return only JSON. Report an observable prediction and distinct alternative "
     "for the already committed action; this answer cannot change the action."
+)
+FEEDBACK_INSTRUCTION = (
+    "Return only JSON. Compare every returned frame with the supplied before frame. "
+    "Assess the supplied committed prediction as supported, contradicted, or "
+    "unresolved; report changed frame indices. This answer cannot change the "
+    "committed action or enter a later policy request."
 )
 
 
@@ -44,18 +70,25 @@ def policy_request(runtime, arm):
     return request
 
 
-def audit_request(stage, observation, action, *, before=None):
+def audit_request(stage, observation, action, *, before=None, prediction=None):
     if stage not in ('prediction', 'feedback'):
         raise ValueError('audit stage')
     payload = {'stage': stage, 'action': action,
                'observation': {k: observation[k] for k in ('frames', 'levels_completed', 'state')}}
     if stage == 'feedback':
-        if before is None:
-            raise ValueError('missing pre-action observation')
-        payload['before'] = {k: before[k] for k in ('frames', 'levels_completed', 'state')}
+        if not 1 <= len(observation['frames']) <= 6:
+            raise ValueError('feedback frame admission; retain all returned frames and stop')
+        if before is None or type(prediction) is not dict or set(prediction) != {'prediction', 'alternative'} or \
+                {prediction['prediction'], prediction['alternative']} != {'change', 'no_change'}:
+            raise ValueError('missing or invalid committed prediction')
+        # The prediction was made from the latest pre-action grid. Earlier
+        # returned frames remain in evidence but are not repeated in this audit.
+        payload['before'] = {'frames': [before['frames'][-1]],
+                             'levels_completed': before['levels_completed'], 'state': before['state']}
+        payload['committed_prediction'] = prediction
     else:
-        if before is not None:
-            raise ValueError('unexpected pre-action observation')
+        if before is not None or prediction is not None:
+            raise ValueError('unexpected pre-action observation/prediction')
     fields = ({'prediction': {'type': 'string', 'enum': ['change', 'no_change']},
                'alternative': {'type': 'string', 'enum': ['change', 'no_change']}}
               if stage == 'prediction' else
@@ -63,7 +96,7 @@ def audit_request(stage, observation, action, *, before=None):
                'changed_frames': {'type': 'array', 'items': {'type': 'integer', 'minimum': 0, 'maximum': 7},
                                   'maxItems': 8}})
     return {'model': baseline_request_model(), 'messages': [
-        {'role': 'system', 'content': AUDIT_INSTRUCTION},
+        {'role': 'system', 'content': PREDICTION_INSTRUCTION if stage == 'prediction' else FEEDBACK_INSTRUCTION},
         {'role': 'user', 'content': json.dumps(payload, sort_keys=True, separators=(',', ':'))}],
         'temperature': 0, 'seed': 0, 'max_tokens': 128,
         'chat_template_kwargs': {'enable_thinking': False},

@@ -1,7 +1,8 @@
 # Stage B v1 local executable review
 
-Status: **CPU-only scripted prototype; no source approval, provider reservation,
-GPU notebook, or live launch authorization.** It implements the next local part
+Status: **CPU-only scripted answers with actual offline development-engine
+transitions; no source approval, provider reservation, or live launch
+authorization.** It implements the next local part
 of [the Stage B draft](perception_stage_b_v0_protocol.md). The completed R2
 perception evidence and all historical integrated/transient source locks remain
 unchanged.
@@ -16,13 +17,17 @@ the same frozen baseline raw-grid request builder and deterministic settings.
 The target arm changes only the system instruction and JSON response schema to
 add an inclusive `grid[y][x]` cell/box or `none`; a coordinate click requires a
 non-null target. The control arm retains the exact historical `arc_action_v12`
-request. The same sealed prediction and feedback calls are made for each arm;
-their answers never enter later policy requests. A prediction is retained before
+request. The same sealed prediction and feedback calls are made for each arm.
+Feedback receives the exact committed prediction and its own instruction;
+audit answers never enter later policy requests. A prediction is retained before
 dispatch. No invalid answer is rewritten into a legal action.
 
-Local cap: two isolated episodes, two actions per arm, twelve model calls
-(policy/prediction/feedback per action), 128 completion tokens per call, a
-32,768-byte response retention cap, and a 30-second local absolute deadline.
+The [case protocol](perception_stage_b_v1_case_protocol.json) freezes ar25 seed 0,
+the initial canonical hash, control-then-target order, two actions per arm, and
+environment-confirmed level delta as the shared primary outcome. Local cap:
+two isolated episodes, twelve calls (policy/prediction/feedback per action),
+128 completion tokens per call, and a 32,768-byte response retention cap.
+The scripted-only path retains its 30-second local deadline.
 The synthetic adapter returns a transient changed first frame followed by the
 unchanged final frame. Its click at `(0,0)` lands inside its declared target,
 but outside the reviewer's visible object cells. This intentionally proves the
@@ -66,16 +71,64 @@ Generate a local fixture record with:
 python scripts/run_grounded_action_v1_local.py --output /tmp/grounded-stage-b-v1.json
 ```
 
+## Real offline engine and token audit
+
+The [development adapter](../research/grounded_action_v1/engine.py) restores
+the committed development archive with SHA-256 checks, stages the
+manifest-bound games, and opens two separate local ar25 scorecards. The
+[external CPU supervisor](../scripts/run_grounded_action_v1_engine_local.py)
+uses a 90-second startup-inclusive local deadline, samples worker RSS and
+evidence size, terminates a failed process group, and verifies temporary-game
+removal. The independent replay checks equal canonical initial states, action
+journals, returned observations and both local scorecard closes.
+
+The completed CPU check is [archived with member hashes](perception_stage_b_v1_local_archive.json).
+Read-only clean-checkout replay:
+
+```bash
+python scripts/replay_grounded_action_v1_archive.py
+```
+
+It verifies twelve scripted calls, four real offline game actions, and zero
+level progress in both arms. The scripted `(0,0)` click caused no visible
+change in the actual engine. Scripted feedback incorrectly claimed change;
+replay retains and scores that mistake rather than treating it as a technical
+failure. This is **not model inference or solving evidence**.
+
+Local validation: **20 tests passed** in the CPU WSL development environment,
+including opposite predictions on the same transition, an incomplete pair,
+token mismatch, uncertain dispatch, archive-backed isolated starts, monitor
+evidence exhaustion, and process cleanup. The clean-checkout archive replay
+verified all three retained member hashes.
+
+The [pinned tokenizer audit](perception_stage_b_v1_token_audit.json) verified
+the tokenizer files and package versions and tokenized every exact request
+from this CPU record. The largest policy request used 25,798 prompt tokens;
+maximum-cardinality compact and pretty response examples fit the 128-token
+cap. For the retained initial grid, feedback with six returned frames used
+59,569 prompt tokens and fit; seven used 68,061 and did not. Every returned
+frame remains in evidence, but feedback with more than six frames fails
+closed before transport. Different grids may tokenize more densely, so the
+[token guard](../research/grounded_action_v1/model_service.py) must audit each
+exact future live request. It performs no retries and returns raw transport
+evidence for durable retention before parity validation.
+
+The Stage A [overlay checker](../scripts/inspect_phase4_perception_stage_a_v1.py)
+still requires the original committed PNG byte hashes. It compares decoded
+RGB size and pixels for regenerated overlays; `analysis.json` remains
+byte-exact. Encoder differences therefore cannot change the findings or
+overwrite historical artifacts.
+
 ## Remaining launch gates
 
-This prototype is not a reviewed live executable. The scripted adapter does
-not prove real environment isolation, action receipts, hidden-state equality,
-independent process/GPU cleanup or game progress. The local feedback predicate
-checks changed frames but does not establish mechanics or feedback use; sealed
-audits cannot affect later choices. The two-action limit is a contract test,
-not an approved experiment horizon. A live successor still needs a real
-development environment adapter, evidence and monitor integration, tokenizer
-audit of *all exact and worst-case adaptive requests*, startup-inclusive
-runtime sizing, provider budget, GPU-disabled notebook and independent unpacked
-review. Only then seek explicit source approval and a **separate fresh compute
-authorization**. No GPU attempt is reserved or authorized by this report.
+The [GPU-disabled review notebook](../notebooks/phase4-grounded-action-v1-review-r1/profile.ipynb)
+is a hash-bound source snapshot with no launch cell. It is **not a reviewed
+target executable**. A live successor still needs retention across the real
+model-process bridge, a startup canary, target GPU monitoring and independent
+GPU cleanup, a startup-inclusive provider budget with cleanup reserve, and
+review of a launch-enabled notebook. The local canonical hash establishes
+equal visible starting observations, not hidden-state equality. Fixed arm
+order leaves order effects open. Sealed audits measure prediction and
+interpretation, not learning from feedback. Only after those gates should
+explicit source approval and **separate fresh compute authorization** be
+requested. No GPU attempt is reserved or authorized by this report.

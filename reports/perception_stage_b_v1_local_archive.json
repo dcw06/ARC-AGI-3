@@ -1,0 +1,27 @@
+{
+  "scope": "CPU-only scripted responses on real offline development engine",
+  "archive": "evidence/perception-stage-b-v1-local-engine.zip",
+  "archive_sha256": "a5df4f7a252ad64e6e001718605dc2ae3e690b636f1536ed82e68b179963346c",
+  "members": {
+    "monitor.json": {
+      "sha256": "c07c1b620652c19c0eb6b90431555646f9fd3063f1ebcab24a1cfa572a517e7a",
+      "bytes": 1977
+    },
+    "run.json": {
+      "sha256": "2f7f40df110cd6c208cdeac0ebd25fbae5991ac1eee606274878fbce63585c0c",
+      "bytes": 315664
+    },
+    "worker.log": {
+      "sha256": "e46484b7abd8966b21c3bc85ad3b7c436fca66795d3bf866d844b8829e69fd69",
+      "bytes": 1911
+    }
+  },
+  "independent_replay_status": "valid_offline_development_pair",
+  "model_calls": 0,
+  "gpu_runs": 0,
+  "primary_outcome": "environment_confirmed_level_delta_within_two_actions_per_arm",
+  "level_deltas": [
+    0,
+    0
+  ]
+}

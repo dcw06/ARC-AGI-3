@@ -1,12 +1,15 @@
 # Stage B v0: minimal grounded-action draft
 
-Status: **draft with a local scripted v1 prototype**, not a frozen live executable, source
+Status: **superseded for the offline case/horizon by the Stage B v1 case protocol**,
+not a frozen live executable, source
 approval, compute reservation or GPU launch. It follows the Stage A analysis
 at `reports/perception_stage_a_v1_findings.md`. The completed R2 run and its
 0/11 frozen scores remain unchanged.
 
-The local prototype and its remaining live-integration limits are recorded in
-`reports/perception_stage_b_v1_local_review.md`.
+The [v1 case protocol](perception_stage_b_v1_case_protocol.json) fixes ar25,
+seed 0, control and target order, two actions per arm, and the common primary
+outcome. Its CPU engine integration, tokenizer audit and remaining target gates
+are recorded in `reports/perception_stage_b_v1_local_review.md`.
 
 ## Question and scope
 
@@ -76,7 +79,7 @@ answers do not feed the policy. Keep observation-only findings
 separate from game-source-assisted interpretation. Human walkthroughs and
 source-derived winning moves never enter model requests.
 
-## Decisions still required before freezing
+## Decisions that remained in this v0 draft
 
 1. Choose the exact eligible case and action allowance. In particular, decide
    whether a coordinate click is a permissible informative action without
@@ -90,6 +93,10 @@ source-derived winning moves never enter model requests.
 5. Test malformed outputs, wrong coordinates, missing target, incomplete pair,
    deadline, unknown dispatch, monitor failure and cleanup in a supervised
    local runner. Package a GPU-disabled notebook and review its unpacked code.
+
+Items 1, 2 and the local parts of 4–5 are now resolved in the v1 case
+protocol and CPU review. Item 3 still requires a **target provider** startup
+and cleanup budget; the 90-second CPU supervisor is not a GPU reservation.
 
 Only after those decisions, local tests and a new source lock should separate
 source approval and compute authorization be considered. No new GPU session or

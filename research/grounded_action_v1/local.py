@@ -8,7 +8,7 @@ from pathlib import Path
 
 from agent.state import GameRuntimeState
 from certification.phase4_transient_v2.contract import pack, unpack
-from .contract import audit_request, digest, parse_audit, parse_policy, policy_request
+from .contract import audit_request, case_protocol, digest, parse_audit, parse_policy, policy_request
 
 ROOT = Path(__file__).resolve().parents[2]
 INITIAL = ROOT / 'reports/integrated_case_v1/initial_observation.json'
@@ -88,8 +88,12 @@ class ScriptedService:
                 answer['target'] = {'kind': 'none', 'box': None}
         elif name == 'grounded_prediction_v1':
             answer = {'prediction': 'change', 'alternative': 'no_change'}
+            if self.mode == 'opposite_prediction':
+                answer = {'prediction': 'no_change', 'alternative': 'change'}
         elif name == 'grounded_feedback_v1':
-            answer = {'assessment': 'supported', 'changed_frames': [0]}
+            committed = json.loads(request['messages'][1]['content'])['committed_prediction']
+            answer = {'assessment': 'supported' if committed['prediction'] == 'change' else 'contradicted',
+                      'changed_frames': [0]}
             if self.mode == 'wrong_feedback':
                 answer = {'assessment': 'contradicted', 'changed_frames': []}
         else:
@@ -107,13 +111,18 @@ class ScriptedService:
                 'finish_reason': 'length' if self.mode == 'partial' and name == 'grounded_target_v1' else 'stop'}
 
 
-def run(path, service, adapter_factory, *, deadline_seconds=30, clock=time.monotonic):
+def run(path, service, adapter_factory, *, deadline_seconds=30, kind='scripted_cpu_only', clock=time.monotonic):
     """Record all received evidence before validation. Stop both arms on failure."""
+    frozen = case_protocol()
+    if kind not in ('scripted_cpu_only', 'offline_development_engine'):
+        raise ValueError('unsupported local evidence kind')
     started = clock()
     deadline = started + deadline_seconds
-    report = {'version': 'grounded_action_local_v1', 'kind': 'scripted_cpu_only', 'status': 'running',
+    report = {'version': 'grounded_action_local_v1', 'kind': kind, 'status': 'running',
+              'case_protocol_sha256': hashlib.sha256((ROOT / 'reports/perception_stage_b_v1_case_protocol.json').read_bytes()).hexdigest(),
               'limit': {'steps_per_arm': MAX_STEPS, 'calls': MAX_CALLS, 'seconds': deadline_seconds},
-              'episodes': [], 'calls': 0, 'dispatches': 0, 'error': None}
+              'episodes': [], 'calls': 0, 'dispatches': 0,
+              'prompt_tokens': 0, 'completion_tokens': 0, 'error': None}
     adapters = {}
 
     def persist():
@@ -130,6 +139,8 @@ def run(path, service, adapter_factory, *, deadline_seconds=30, clock=time.monot
         check()
         if report['calls'] >= MAX_CALLS:
             raise ValueError('call limit')
+        if len(json.dumps(request, separators=(',', ':')).encode()) > 196608:
+            raise ValueError('request byte admission')
         row = {'stage': stage, 'pre_hash': obs.canonical_hash, 'request': request,
                'request_sha256': digest(request), 'started_at': now(), 'status': 'started'}
         episode['calls'].append(row)
@@ -157,6 +168,12 @@ def run(path, service, adapter_factory, *, deadline_seconds=30, clock=time.monot
                 raise ValueError('response/token audit')
             if row['finish_reason'] != 'stop':
                 raise ValueError('non-stop response')
+            if row['server_prompt_tokens'] + request['max_tokens'] > 65536:
+                raise ValueError('context ceiling')
+            report['prompt_tokens'] += row['server_prompt_tokens']
+            report['completion_tokens'] += row['server_completion_tokens']
+            if report['prompt_tokens'] > 720000 or report['completion_tokens'] > 1536:
+                raise ValueError('total token ceiling')
             value = (parse_policy(raw, 'control' if stage == 'control' else 'target', obs.available_actions,
                                   obs.latest_frame.tolist()) if stage in ('control', 'target') else
                      parse_audit(raw, stage, obs.frames))
@@ -164,6 +181,8 @@ def run(path, service, adapter_factory, *, deadline_seconds=30, clock=time.monot
             persist()
             return value
         except Exception as exc:
+            if hasattr(exc, 'response_evidence'):
+                row['bridge_response_evidence'] = exc.response_evidence
             row.update(status='failed', error=type(exc).__name__ + ': ' + str(exc)[:200])
             persist()
             raise
@@ -175,13 +194,16 @@ def run(path, service, adapter_factory, *, deadline_seconds=30, clock=time.monot
             check()
             adapter = adapter_factory(arm)
             adapters[arm] = adapter
-            obs = adapter.bootstrap()
-            episode = {'arm': arm, 'initial': pack(obs), 'calls': [], 'steps': [], 'final': None,
-                       'status': 'bootstrapped', 'cleanup': None}
+            episode = {'arm': arm, 'initial': None, 'calls': [], 'steps': [], 'final': None,
+                       'status': 'opening', 'cleanup': None}
             report['episodes'].append(episode)
             persist()
+            obs = adapter.bootstrap()
+            episode.update(initial=pack(obs), status='bootstrapped')
+            persist()
         first, second = (unpack(ep['initial']) for ep in report['episodes'])
-        if first.canonical_hash != second.canonical_hash or first.canonical_hash != initial()['canonical_hash']:
+        if (first.canonical_hash != second.canonical_hash or first.canonical_hash != frozen['initial_canonical_hash'] or
+                not first.full_reset or not second.full_reset):
             raise ValueError('initial-state equality')
         for ep in report['episodes']:
             obs = unpack(ep['initial'])
@@ -209,7 +231,8 @@ def run(path, service, adapter_factory, *, deadline_seconds=30, clock=time.monot
                 step.update(status='acknowledged', receipt=receipt, after=pack(post), returned_at=now())
                 persist()
                 check()
-                feedback = call(ep, 'feedback', audit_request('feedback', pack(post), action, before=pack(obs)), post)
+                feedback = call(ep, 'feedback', audit_request('feedback', pack(post), action,
+                                                             before=pack(obs), prediction=prediction), post)
                 step['feedback_call'] = len(ep['calls']) - 1
                 step['feedback'] = feedback
                 persist()

@@ -4,10 +4,13 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
 
-from research.grounded_action_v1.contract import parse_policy
+from research.grounded_action_v1.contract import audit_request, parse_policy
 from research.grounded_action_v1.local import ScriptedAdapter, ScriptedService, run
 from research.grounded_action_v1.replay import evaluate, replay_file
+from research.grounded_action_v1.model_service import TokenGuardedService
 
 
 class GroundedActionLocalTests(unittest.TestCase):
@@ -43,6 +46,32 @@ class GroundedActionLocalTests(unittest.TestCase):
         self.assertEqual(score['status'], 'valid_local_scripted_pair')
         self.assertFalse(score['episodes'][0]['outcomes'][0]['feedback_exact'])
         self.assertFalse(score['episodes'][0]['outcomes'][0]['feedback_assessment_exact'])
+
+    def test_opposite_prediction_requires_opposite_feedback_assessment(self):
+        normal, _ = self.execute()
+        opposite, _ = self.execute('opposite_prediction')
+        for report, expected in ((normal, 'supported'), (opposite, 'contradicted')):
+            step = report['episodes'][0]['steps'][0]
+            feedback_request = report['episodes'][0]['calls'][step['feedback_call']]['request']
+            payload = json.loads(feedback_request['messages'][1]['content'])
+            self.assertEqual(payload['committed_prediction'], step['prediction'])
+            self.assertEqual(step['feedback']['assessment'], expected)
+            self.assertTrue(evaluate(report)['episodes'][0]['outcomes'][0]['feedback_assessment_exact'])
+        self.assertEqual(normal['episodes'][0]['steps'][0]['after'], opposite['episodes'][0]['steps'][0]['after'])
+        with self.assertRaisesRegex(ValueError, 'committed prediction'):
+            audit_request('feedback', normal['episodes'][0]['steps'][0]['after'],
+                          normal['episodes'][0]['steps'][0]['action'],
+                          before=normal['episodes'][0]['steps'][0]['before'])
+
+    def test_seven_frame_feedback_fails_closed_without_dropping_frames(self):
+        result, _ = self.execute()
+        step = result['episodes'][0]['steps'][0]
+        after = copy.deepcopy(step['after'])
+        after['frames'] = [after['frames'][-1]] * 7
+        self.assertEqual(len(after['frames']), 7)
+        with self.assertRaisesRegex(ValueError, 'feedback frame admission'):
+            audit_request('feedback', after, step['action'], before=step['before'],
+                          prediction=step['prediction'])
 
     def test_candidate_request_changes_only_instruction_and_schema(self):
         result, _ = self.execute()
@@ -145,6 +174,38 @@ class GroundedActionLocalTests(unittest.TestCase):
             parse_policy(json.dumps(swapped), 'target', [6], grid)
         with self.assertRaises(ValueError):
             parse_policy('{"action":{},"action":{}}', 'target', [6], grid)
+
+    def test_model_preflight_rejects_context_before_transport(self):
+        result, _ = self.execute()
+        request = result['episodes'][0]['calls'][0]['request']
+        calls = []
+
+        class Tokenizer:
+            count = 10
+
+            def apply_chat_template(self, *_args, **_kwargs):
+                return [1] * self.count
+
+        tokenizer = Tokenizer()
+
+        def transport(value):
+            calls.append(value)
+            return SimpleNamespace(content='{"action":{"action_id":1,"action_data":{}}}',
+                                   prompt_tokens=11, completion_tokens=16, finish_reason='stop')
+
+        with patch('research.grounded_action_v1.model_service.verify'), \
+                patch('research.grounded_action_v1.model_service.importlib.metadata.version',
+                      side_effect=lambda name: {'transformers': '4.57.6', 'tokenizers': '0.22.2',
+                                                'jinja2': '3.1.6'}[name]):
+            service = TokenGuardedService('unused', transport, tokenizer=tokenizer)
+            tokenizer.count = 65536
+            with self.assertRaisesRegex(ValueError, 'pre-transport tokenizer'):
+                service.complete(request)
+            self.assertEqual(calls, [])
+            tokenizer.count = 10
+            received = service.complete(request)
+            self.assertEqual((received['tokenizer_prompt_tokens'], received['server_prompt_tokens']), (10, 11))
+            self.assertEqual(len(calls), 1)
 
 
 if __name__ == '__main__':
