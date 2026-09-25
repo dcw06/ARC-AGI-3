@@ -1,6 +1,17 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
-## Action-effect history v1: GPU-disabled review package (not authorized)
+## Action-effect history v1: live result (attempt aeh1-4c75150a)
+
+r3 was approved and run once: 737 s of 3,600 s authorized, all 12 episodes,
+144 calls. The run is technically complete and passes independent replay.
+**Behaviour: inconclusive** (3 of 6 pairs eligible; pooled repeat rate 0.304
+baseline against 0.250 history). **Solving: no improvement** (0 levels in
+every episode). Reliability is identical across arms. Post-hoc observations:
+a step-counter row confounds change detection in s5i5 and wa30; the model was
+non-deterministic at temperature 0; ar25's history arm swapped to ACTION7
+instead of trying ACTION1-4. See `reports/action_effect_history_v1_results.md`.
+
+## Action-effect history v1: review package (approved as r3)
 
 The question is whether a short history of exact actions and deterministically
 measured effects improves action selection over action-ID-only history. It is
