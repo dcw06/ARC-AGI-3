@@ -1,8 +1,11 @@
-# Action-effect history v1: protocol draft for review
+# Action-effect history v1: protocol draft, revision 2 for review
 
-**Status: draft for review.** It is not frozen and not authorized. There is no
-reservation, runner, notebook or model call yet. Decisions marked **[review]**
-need sign-off before freezing.
+**Status: revised draft.** It is not frozen and not authorized. There is no
+reservation, notebook or model call. Revision 2 applies the review of
+`5dc1cd6`:
+- seeds decided;
+- denominator and outcome rules fixed;
+- admission, token-ceiling and environment-check corrections A–C.
 
 ## Question
 
@@ -11,42 +14,41 @@ the agent choose informative actions and avoid ineffective repetition,
 compared with its existing action-ID-only history?
 
 The intervention is **tool-assisted feedback**. A deterministic
-frame-comparison tool computes the effects, not the model. A positive result
-would therefore not show that the model learned to compare frames. It is a
-bounded exploratory comparison, not a solving or generalization claim, and not
-Phase 4 certification.
+frame-comparison tool computes the effects, not the model. The comparison
+asks whether factual action-effect history changes behaviour. It does not ask
+whether the agent has learned perception, planning or game solving. It is a
+bounded exploratory development comparison, not a generalization claim, and
+not Phase 4 certification.
 
 ## Departures from earlier runs (documented)
 
 1. **New common baseline.** This is not unchanged E1S-R and not a continuation
-   of R8. Both arms use one corrected system prompt (below). Compared with
-   R8's control request, only the system prompt differs; the observation
-   payload, response schema and decoding settings are byte-identical, and a
-   test checks this.
-2. **No prediction or feedback calls in either arm.** R8's sealed model
-   prediction and feedback calls are removed from both arms. There is one
-   policy call per action, and effects are computed deterministically.
+   of R8. Both arms use one corrected system prompt. Compared with R8's
+   control request, only the system prompt differs; the observation payload,
+   response schema and decoding settings are byte-identical, and a test checks
+   this.
+2. **No model prediction or feedback calls in either arm.** There is one policy
+   call per action, and effects are computed deterministically.
 3. **Horizon of 12 actions** per episode (R8 used 2).
 4. **Three development cases** instead of ar25 alone.
 
 ## Cases
 
 Only the development partition of `config/holdout_ledger.yaml` is eligible;
-the 10 H1 and H2 holdouts are excluded.
+H1 and H2 are excluded.
 
-**Prior-exposure audit.** All 15 development games were already run with the
-model: all 15 in closed-loop v1 (20 actions each) and in the v13 pilot. None is
-genuinely unexposed, so the two additional games are **additional development
-cases, not independent validation**. ar25 informed this intervention and is the
-design-informed development case.
+**Prior exposure.** All 15 development games were already run with the model
+(closed-loop v1 and the v13 pilot). None is unexposed, so all three cases are
+**development cases, not independent validation**. ar25 informed this
+intervention.
 
 **Selection rule, written before any outcome was inspected.** It uses only
-each game's initial `available_actions` from
-`reports/action_effect_history_v1_control_inventory.json` (zero actions
+initial `available_actions`
+(`reports/action_effect_history_v1_control_inventory.json`, zero actions
 dispatched):
 
 1. Development partition; exclude ar25 (the design case) and cd82 and ft09
-   (subjects of dedicated single-game diagnostics that shaped this design).
+   (subjects of dedicated single-game diagnostics).
 2. Select one game whose initial controls are **coordinate-only** (ACTION6
    present, no ACTION1–4). Select one whose controls have **no coordinate
    action** (ACTION6 absent).
@@ -55,20 +57,38 @@ dispatched):
 
 | Case | Role | Initial legal actions | Win levels | Seed |
 |---|---|---|---:|---:|
-| `ar25-0c556536` | design-informed development case | 1, 2, 3, 4, 5, 6, 7 | 8 | 0 |
-| `s5i5-18d95033` | additional development case (coordinate-only) | 6 | 8 | 0 |
-| `wa30-ee6fef47` | additional development case (no coordinate action) | 1, 2, 3, 4, 5 | 9 | 0 |
+| `ar25-0c556536` | design-informed development case | 1–7 | 8 | 0 |
+| `s5i5-18d95033` | development case, coordinate-only | 6 | 8 | 0 |
+| `wa30-ee6fef47` | development case, no coordinate action | 1–5 | 9 | 0 |
 
-The other candidates were su15 and vc33 for the coordinate-only group, and
-ls20, tr87 and g50t for the no-coordinate group. In s5i5 the history can help
-only by changing coordinates, never the action type. In wa30 clicking is
-impossible, so neither arm can get stuck on ACTION6.
+**Predeclared replacement rule (technical incompatibility only).** A
+selected game is replaced only if the CPU environment and dispatch check below
+shows a technical incompatibility that prevents execution. The replacement is
+the next game in the same group's tie-break order:
+- coordinate-only group: s5i5, then su15, then vc33;
+- no-coordinate group: wa30, then ls20, then tr87, then g50t.
+
+The failure is documented. A game is never replaced for any outcome-based
+reason.
+
+**Environment check (correction C).** s5i5 was one of five games with
+`outcome_unknown` quarantines in the historical v2 lifecycle run: an extra
+action after `GAME_OVER` returned no frames. v3's terminal-aware loop fixed
+that, and its reproduction passed on s5i5.
+
+`reports/action_effect_history_v1_environment_check.json` drives the runner's
+own offline dispatch path with 12 fixed scripted legal actions per case, and
+records technical fields only (no effect statistics). **All three cases are
+compatible:** 12 of 12 dispatches acknowledged with 64×64 frames, no
+empty-frame response, no exception, client and scorecard closed. No
+replacement applies. The runner still stops at `GAME_OVER` and records any
+frameless acknowledgement as `outcome_unknown`.
 
 ## Arms
 
-Both arms use the same model and engine as all previous runs: Qwen3-VL-30B-A3B
-FP8, vLLM 0.19.0, temperature 0, `max_tokens` 128, thinking disabled, and the
-same `arc_action_v12` legal-action schema. The implementation is
+Both arms use Qwen3-VL-30B-A3B FP8 on vLLM 0.19.0, temperature 0, request
+seed 0, `max_tokens` 128, thinking disabled, and the `arc_action_v12`
+legal-action schema. The implementation is
 `research/action_effect_history_v1/contract.py`.
 
 **Common system prompt (identical in both arms):**
@@ -86,36 +106,23 @@ any older transitions omitted from this prompt.
 ```
 
 The argument rules were checked against the pinned `arcengine` `GameAction`
-definitions: ACTION1–5 and 7 are `SimpleAction`, and ACTION6 is
-`ComplexAction` with x and y in 0..63. The prompt never states what any action
-does and never mentions any game.
+definitions.
 
 **Observation payload (both arms).** The unchanged `build_raw_bundle(...,
-recent_limit=1).policy_payload()`, containing:
-- `current_grid`, `previous_grid` and one `recent_final_grids` entry;
-- `recent_actions` (action IDs only);
-- `legal_actions`, `levels_completed`, `win_levels` and `state`;
-- `history_compaction`.
+recent_limit=1).policy_payload()`: current, previous and one recent final
+grid; action-ID-only `recent_actions`; legal actions; levels; state;
+`history_compaction`.
 
-**History arm only: one extra observation field, `action_effect_history`:**
+**History arm only: one extra field, `action_effect_history`.** It holds the
+last 4 `action_effect_record_v1` policy views since the latest level change
+or reset, oldest first. It is labelled as computed by a frame-comparison
+tool, not the model. `null` counts mean the dispatch failed or its outcome is
+unknown, not "no change". It holds no hashes, grids, object labels,
+recommendations or offline probe data. Each record is built only from that
+arm's own pre-action observation, dispatched action and returned frames.
+**Histories are isolated per episode and per arm.**
 
-```json
-{"computed_by": "deterministic frame-comparison tool, not the model",
- "scope": "up to the 4 most recent dispatched actions since the last level change or reset, oldest first",
- "fields": "changed_cells_by_frame counts cells that differ from the frame before that action; null means the dispatch failed or its outcome is unknown, not that nothing changed",
- "omitted_entries": 0,
- "entries": [{"step": 0, "action_id": 6, "action_data": {"x": 16, "y": 16}, "status": "acknowledged",
-              "returned_frame_count": 1, "changed_cells_by_frame": [0], "final_frame_changed": false,
-              "level_delta": 0, "reset": false}]}
-```
-
-Each entry is `policy_view()` of an `action_effect_record_v1`, built only from
-three things: the pre-action observation, the dispatched action and what the
-engine returned. Entries contain no hashes, grids, object labels,
-recommendations or offline probe data. A new segment starts after a level
-change or reset. The first decision after one therefore sees an empty list.
-
-## Schedule (two paired blocks, ABBA)
+## Schedule
 
 | Order | Block 1 | Block 2 |
 |---|---|---|
@@ -126,125 +133,174 @@ change or reset. The first decision after one therefore sees an empty list.
 | 5 | wa30 baseline | ar25 history |
 | 6 | wa30 history | ar25 baseline |
 
-The schedule has 12 episodes. Each one gets:
-- a fresh offline environment (seed 0) and its own offline scorecard;
-- a fresh, isolated policy context (no state carried between episodes);
-- at most **12 dispatched actions**, with **one policy call per action**.
+Every episode gets a fresh offline environment and its own scorecard, a
+fresh policy context, at most **12 dispatched actions**, and **one policy
+call per action**. That makes at most **144 policy calls**, plus one startup
+canary.
 
-That makes at most **144 policy calls**, plus one startup canary.
-
-**[review]** Both blocks use environment seed 0 and request seed 0, with
-temperature 0. Differences between blocks therefore measure order effects
-and server nondeterminism, not independent samples. The alternative is
-request seed 1 in block 2.
+**Seeds (decided).** Environment seed 0 and request seed 0 in both blocks.
+Block 2 is an **order-reversed replication, not an independent sample**.
+Broader seed coverage belongs in a later experiment.
 
 ## Stop rules
 
 **Per episode.** An episode stops at the first of:
-- **12 actions** (`action_cap`);
+- **12 actions**;
 - **`WIN`**;
 - **`GAME_OVER`** (no reset, no restart);
 - an **invalid policy output**: unparseable, schema-invalid, illegal, or
   `finish_reason` other than `stop`. It is retained and stops the episode as
-  `invalid_output`, with no retry and no fallback action;
-- a **failed or unknown dispatch**: retained as such (never as a no-op), and
-  the episode stops as `dispatch_failure`.
+  `invalid_output`, with no retry and no fallback;
+- a **failed or unknown dispatch**, including a frameless acknowledgement. It
+  is retained as such, never as a no-op, and stops the episode as
+  `dispatch_failure`.
 
-A **level completion does not stop the episode.** A new history segment
-begins and play continues within the 12-action cap.
+A level completion does not stop the episode; a new history segment begins.
 
-**Per run.**
-- A technical failure (model service, monitor, deadline or cleanup) stops the
-  run.
-- A pair (both arms of one game in one block) is analyzed only if both
-  episodes completed without a technical or dispatch failure. Incomplete
-  pairs are reported, not analyzed.
-- **Balanced admission.** A pair starts only if the remaining workload time
-  covers both of its episodes at the conservative rate below. Otherwise the
-  run stops before that pair; it is never cut off mid-pair.
+**Per run (correction A).**
+- **Admission.** A pair (both arms of one game in one block) is admitted only
+  if the remaining workload time covers the frozen conservative pair
+  allowance: 2 bootstraps and scorecards, 24 policy calls at 10 s each, 24
+  dispatches, evidence writing and finalization for both episodes. That is
+  **300 s per pair**.
+- **Deadline.** The run deadline is enforced **even if a pair is
+  interrupted**. An allowance is a planning figure, not a hard bound on
+  inference, dispatch or failures.
+- **Incomplete pairs.** An interrupted or incomplete pair is **retained and
+  reported**.
+- **What each analysis uses.** Behaviour comparisons use complete pairs.
+  **Reliability reporting covers every attempted episode**, including
+  interrupted, invalid-output and dispatch-failure episodes. An arm-specific
+  failure can never disappear through pair exclusion.
+- **Technical failures.** A technical failure (model service, monitor,
+  cleanup) stops the run. All evidence written so far is retained.
 
-## Metrics (reported separately; no composite)
+## Metrics
 
-A **comparable observed state** is one whose pre-action final frame hash and
-level count are identical.
+All metrics are reported per game and per block, and pooled. Every rate shows
+its **numerator and denominator**. **A rate with a zero denominator is `null`,
+never 0.**
+
+A **comparable observed state** is one with an identical pre-action final
+frame hash and level count.
 
 1. **Level completion:** total `level_delta` per episode, and episodes reaching
    `WIN`. This is the only solving metric.
 2. **Exact repetition after no change** (primary behaviour metric).
-   - An opportunity is any action whose predecessor was acknowledged with
+   - An opportunity is an action whose predecessor was acknowledged with
      `final_frame_changed = false` and `level_delta = 0`, from a comparable
      observed state.
    - A repeat is the identical `action_id` and `action_data`.
-   - It is also reported for any earlier no-change action taken from the same
-     observed state within the segment.
-3. **Action-type repetition after no change,** at the same opportunities: the
-   same `action_id` with different `action_data`. It is reported separately
-   from coordinate-exact repeats.
-4. **Observable-change frequency:** the share of acknowledged actions with any
-   changed frame.
-5. **State coverage:** distinct observed states, and revisits of an earlier
-   state. These flag back-and-forth movement.
-6. **Cost and validity:** invalid outputs, failed or unknown dispatches,
-   per-call latency, and prompt and completion tokens.
+   - Report repeats, opportunities and the rate, both immediate and against
+     any earlier no-change action from the same state within the segment.
+3. **Opportunity creation,** reported alongside metric 2:
+   - the number of no-change results each arm produced;
+   - valid actions taken;
+   - actions producing observable change;
+   - level progress.
 
-Action diversity and observable change are **never counted as success on their
-own**. More changes together with more state revisits is reported as possible
-oscillation.
+   An arm can have fewer repetition opportunities because it chose effective
+   actions sooner, or because it stopped early. Fewer opportunities are
+   interpreted with these counts, never as a repetition improvement by
+   themselves.
+4. **Action-type repetition after no change:** the same `action_id` with
+   different `action_data`, reported separately from exact repeats.
+5. **Observable-change frequency:** acknowledged actions with any changed
+   frame, as a share of acknowledged actions.
+6. **State coverage:** distinct observed states and revisits. These flag
+   back-and-forth movement.
+7. **Reliability and cost:** per attempted episode:
+   - the stop reason;
+   - invalid outputs;
+   - failed or unknown dispatches;
+   - interruptions;
+   - per-call latency;
+   - prompt and completion tokens.
 
-## Interpretation rules [review: thresholds]
+Action diversity and observable change are never counted as success on their
+own.
 
-- **Behaviour changed as hypothesized** requires all of the following:
-  - the history arm's pooled exact-repeat rate is **at most half** the
-    baseline's;
-  - the baseline had **at least 4** opportunities;
-  - the reduction is in the same direction in **at least 2 of 3 games in each
-    block**.
-- **Solving signal** means the history arm completes more levels than the
-  baseline, in both blocks, for at least 2 of 3 games. Otherwise the result
-  is reported as **no demonstrated solving improvement**, even if behaviour
-  changed.
-- Anything else is **inconclusive**. With one seed per game, no result
-  generalizes beyond these three development cases.
+## Outcome classes and interpretation (frozen before results)
 
-## Budget proposal (separate; zero authority)
+**Behaviour.** A game–block comparison is **eligible** only if:
+- both episodes are complete;
+- neither stopped on invalid output or a dispatch failure before 12 actions,
+  unless it stopped on `WIN` or `GAME_OVER`;
+- the baseline repeat rate is **positive**, with at least 1 repeat.
 
-See `action_effect_history_v1_budget.json`. The proposal is one attempt of
-**3,600 provider seconds**, with a 3,300-second internal limit and no
-automatic retry.
+An arm that stops early on invalid output is **ineligible** for the repetition
+comparison and is counted as an arm failure. It can never earn a favourable
+repetition result by taking fewer actions.
 
-| Component | Basis | Conservative allowance |
+Each eligible comparison is classified as follows:
+
+- **reduced**: both arms had repetition opportunities, and the history arm's
+  rate is at most half the baseline's rate.
+- **opportunities eliminated**: the history arm had zero opportunities, so its
+  rate is `null`. This is reported **separately**, together with valid action
+  counts, observable changes and progress. It is **never counted as reduced**.
+- **not reduced**: both arms had opportunities and the history arm's rate is
+  above half the baseline's rate;
+- **worse**: the history arm's rate is at least 1.5× the baseline's, with at
+  least 2 more repeats.
+
+**Overall behaviour result.** This requires **all six planned pairs**
+complete. Otherwise it is **inconclusive: incomplete schedule**. With all six:
+- **Behaviour changed as hypothesized:** at least 2 of 3 games are *reduced*
+  in **each** block, and no game is *worse* in either block.
+- **Candidate worse:** at least 2 of 3 games are *worse* in either block, or
+  the history arm has more invalid-output or dispatch-failure episodes than
+  the baseline across the six pairs.
+- **No improvement observed:** every comparison is eligible and none is
+  *reduced* or *opportunities eliminated*.
+- **Inconclusive:** anything else, including too few eligible comparisons.
+  *Opportunities eliminated* comparisons are listed with their action,
+  change and progress counts, whichever overall class applies.
+
+**Solving (strong exploratory signal only).** The history arm completes more
+levels than the baseline in both blocks for at least 2 of 3 games, with all
+six pairs complete. Otherwise the result is **no demonstrated solving
+improvement**, even if behaviour changed. Neither class is a statistical or
+generalization claim. A behaviour change without level progress is evidence
+of changed behaviour, not of solving.
+
+## Budget proposal (separate; zero authority; correction B)
+
+The proposal is one attempt of **3,600 provider seconds**, with a
+3,300-second internal limit and no automatic retry. It is plausible but
+**conditional on runtime admission and clean stopping**. The audited request
+sizes are estimates, not a worst-case proof.
+
+| Component | Basis | Planning allowance |
 |---|---|---:|
-| Install and setup | measured 134 s (Stage B R2) and 157 s (preflight worker start) | 160 s |
+| Install and setup | measured 134 s and 157 s | 160 s |
 | Model startup | measured 423–630 s; cap | 900 s |
-| 144 policy calls | worst prompt 26,292 tokens (audited); R8's 25.8k-token decisions took 1.4–1.7 s; allow 4 s per call, about 2.5× | 576 s |
-| 12 bootstraps, transitions, evidence writing | engine steps take milliseconds | 60 s |
+| 144 policy calls | largest audited request 26,292 tokens; R8's 25.8k-token decisions took 1.4–1.7 s; allow 4 s per call | 576 s |
+| Bootstraps, transitions, evidence, finalization | | 60 s |
 | Cleanup reserve | unchanged | 300 s |
-| **Total** | | **1,996 s** |
+| **Planning total** | | **1,996 s** |
 
-That leaves about 1,300 s of margin within the 3,300-second limit. At 8 s per
-call (1,152 s), the total is 2,572 s, which still fits. The workload therefore
-does not need to shrink. The balanced-admission rule above uses 10 s per call
-to decide whether a pair may start.
+The live pair-admission allowance is stricter, at 300 s per pair, or 1,800 s
+for six pairs.
 
-Token ceilings:
-- Prompts: at most 144 × 26,292 = 3.79 M tokens, plus the canary.
-- Completions: at most 144 × 128 = 18,432 tokens.
-- Per request: a hard ceiling of 60,000 prompt tokens, checked by exact
-  tokenization before inference, with no truncation.
+- **Largest audited request:** 26,292 prompt tokens, from the exact first and
+  steady-state requests for each case plus a maximal history. It is not a
+  proven maximum: later frames and history contents can tokenize differently.
+- **Live ceiling:** 60,000 prompt tokens per request, enforced by exact
+  tokenization before inference, with no truncation. At the live ceiling, 144
+  calls allow up to **8.64 M prompt tokens**, excluding the canary. The
+  audited estimate is about 3.79 M.
+- **Completions:** at most 144 × 128 = 18,432 tokens.
 
-## Not yet done (before any reservation)
+## Before freezing
 
-Runner implementation still has to:
-- reuse the Stage B supervisor, monitor, bridge and cleanup stack;
-- take effect records from the dispatch receipts;
-- implement balanced admission.
+The protocol is frozen only with:
+- the runner, meeting the next milestone list;
+- CPU rehearsals of deadline overrun, invalid output, failed dispatch and
+  unknown outcome;
+- an evaluator that implements the null-denominator and eligibility rules;
+- unchanged historical R8 replay.
 
-It also still needs:
-- local CPU rehearsal with scripted responses, including invalid output,
-  dispatch failure and unknown outcome;
-- a check that records carry only previously observed information;
-- confirmation that historical R8 replay is unchanged;
-- a frozen review notebook and lock, source approval and a separate compute
-  authorization.
-
-Geometry and localization work remains queued. Phase 4 remains open.
+After that come a review notebook and source lock, source approval, and a
+separate compute authorization. Geometry and localization work remains
+queued. Phase 4 remains open.
