@@ -121,9 +121,12 @@ def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted
             result = service.complete(request)
         except Exception as exc:
             evidence = getattr(exc, 'response_evidence', None)
-            row.update(status='transport_failure', returned_at=now(), error=type(exc).__name__ + ': ' + str(exc)[:200],
-                       response_evidence=evidence)
+            interrupted = clock() >= deadline or (cancel is not None and Path(cancel).exists())
+            row.update(status='interrupted' if interrupted else 'transport_failure', returned_at=now(),
+                       error=type(exc).__name__ + ': ' + str(exc)[:200], response_evidence=evidence)
             persist(episode)
+            if interrupted:  # the bridge refused because the run was being stopped: an interruption, not a model fault
+                raise DeadlineExceeded('supervisor cancellation' if clock() < deadline else 'run deadline') from exc
             raise TechnicalFailure('model transport') from exc
         raw = result['content']
         blob = raw.encode() if type(raw) is str else b''

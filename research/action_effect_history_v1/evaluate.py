@@ -216,7 +216,21 @@ def evaluate(report, spec=None):
         pooled[arm] = {'immediate_repeats': rep, 'immediate_repeat_opportunities': opp, 'immediate_repeat_rate': rate(rep, opp),
                        'levels_gained': sum(m['levels_gained'] for m in ms), 'episodes': len(ms),
                        'episodes_with_invalid_output_or_dispatch_failure': failures[arm]}
+    # Reliability is reported for every attempted episode, whatever the behaviour classification.
+    reliability = {}
+    for arm in ('baseline', 'history'):
+        ms = [m for m in metrics if m['arm'] == arm]
+        stops = {}
+        for m in ms:
+            stops[m['stop_reason'] or 'unfinished'] = stops.get(m['stop_reason'] or 'unfinished', 0) + 1
+        reliability[arm] = {'episodes_attempted': len(ms), 'stop_reasons': stops,
+                            'invalid_outputs': sum(m['invalid_outputs'] for m in ms),
+                            'dispatch_failures': sum(m['dispatch_failures'] for m in ms),
+                            'interrupted_or_technical': sum(m['status'] in ('interrupted', 'technical_failure') for m in ms)}
+    arm_specific = [key for key in ('invalid_outputs', 'dispatch_failures', 'interrupted_or_technical')
+                    if reliability['history'][key] != reliability['baseline'][key]]
     return {'replay_passed': not errors, 'errors': errors, 'episodes': metrics, 'pairs': pairs, 'pooled': pooled,
+            'reliability_by_arm': reliability, 'arm_specific_reliability_differences': arm_specific,
             'all_six_pairs_complete': all_six, 'behaviour_result': behaviour, 'solving_result': solving,
             'opportunities_eliminated_pairs': [p['pair_id'] for p in pairs if p['class'] == 'opportunities_eliminated'],
             'run_status': report['status'], 'interpretation_scope': 'exploratory; development cases only; not generalization'}
