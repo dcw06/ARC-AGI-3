@@ -4,6 +4,8 @@ Each file is written to a temporary name, fsynced and renamed; the manifest (eve
 and size) is then rewritten the same way. A crash between the two leaves a detectable mismatch,
 so partial evidence is retained but can never be mistaken for complete evidence.
 """
+import contextlib
+import fcntl
 import hashlib
 import json
 import os
@@ -38,9 +40,12 @@ def atomic_write(path, raw):
 class RunEvidence:
     """Callable writer for the runner: writer(absolute_path, value)."""
 
-    def __init__(self, folder, budget_bytes=64 * 1024**2):
+    def __init__(self, folder, budget_bytes=64 * 1024**2, lock_root=None):
         self.folder = Path(folder)
         self.budget = budget_bytes
+        # Share the output tree's evidence lock so concurrent scanners (the monitor's store)
+        # never observe a temporary file mid-rename.
+        self.lock_path = Path(lock_root) / '.evidence.lock' if lock_root is not None else None
         self.files = {}
         self.sequence = 0
         if (self.folder / MANIFEST).exists():
@@ -54,11 +59,22 @@ class RunEvidence:
         used = sum(v['bytes'] for k, v in self.files.items() if k != relative)
         if used + len(raw) > self.budget:
             raise StorageExhausted(f'evidence budget {self.budget} bytes exhausted writing {relative}')
-        atomic_write(self.folder / relative, raw)
-        self.files[relative] = {'sha256': hashlib.sha256(raw).hexdigest(), 'bytes': len(raw)}
-        self.sequence += 1
-        atomic_write(self.folder / MANIFEST, encode({'version': VERSION, 'sequence': self.sequence,
-                                                     'files': self.files}))
+        with self._locked():
+            atomic_write(self.folder / relative, raw)
+            self.files[relative] = {'sha256': hashlib.sha256(raw).hexdigest(), 'bytes': len(raw)}
+            self.sequence += 1
+            atomic_write(self.folder / MANIFEST, encode({'version': VERSION, 'sequence': self.sequence,
+                                                         'files': self.files}))
+
+    @contextlib.contextmanager
+    def _locked(self):
+        if self.lock_path is None:
+            yield
+            return
+        fd = os.open(self.lock_path, os.O_CREAT | os.O_RDWR | os.O_NOFOLLOW, 0o600)
+        with os.fdopen(fd, 'r+b') as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX)
+            yield
 
 
 def load_verified(folder):

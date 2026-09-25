@@ -123,6 +123,7 @@ class RunnerRehearsals(unittest.TestCase):
         spec=copy.deepcopy(R.protocol());spec['limits']['pair_admission_seconds']=10**6
         report,result=self.run_schedule(ScriptedPolicy(),spec=spec)
         self.assertEqual([p['status'] for p in report['pairs']],['not_admitted']*6);self.assertEqual(report['episodes'],[])
+        self.assertEqual(report['status'],'incomplete')  # nothing ran: never reported as complete
 
 class MetricRuleTests(unittest.TestCase):
     def m(self,arm,rep,opp,stop='action_cap',status='complete'):

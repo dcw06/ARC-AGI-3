@@ -75,7 +75,8 @@ def parse_action(raw, legal):
 
 
 def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted_cpu_only',
-        clock=time.monotonic, writer=None, spec=None, evidence_budget_bytes=64 * 1024**2):
+        clock=time.monotonic, writer=None, spec=None, evidence_budget_bytes=64 * 1024**2, cancel=None,
+        evidence_lock_root=None):
     """Run the frozen schedule. `adapter_factory(game_id, arm, episode_id)` returns a fresh adapter with
     bootstrap() -> Observation, dispatch(action, before) -> (Observation, receipt), close() -> dict."""
     spec = spec or protocol()
@@ -90,7 +91,7 @@ def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted
     folder = Path(path)
     if writer is None:
         from research.action_effect_history_v1.evidence import RunEvidence
-        writer = RunEvidence(folder, evidence_budget_bytes)
+        writer = RunEvidence(folder, evidence_budget_bytes, lock_root=evidence_lock_root)
 
     def persist(episode=None):
         # Bounded writes: the small index always, plus only the episode that changed.
@@ -104,6 +105,8 @@ def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted
     def check():
         if clock() >= deadline:
             raise DeadlineExceeded('run deadline')
+        if cancel is not None and Path(cancel).exists():
+            raise DeadlineExceeded('supervisor cancellation')
 
     def call(episode, request, obs):
         check()
@@ -260,9 +263,12 @@ def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted
                 episode_run(pair, arm, index)
             entry['status'] = 'complete'
             persist()
-        report['status'] = 'complete'
-    except DeadlineExceeded:
-        report.update(status='deadline_exceeded', error='run deadline enforced')
+        # Complete only when every scheduled pair ran to completion; unadmitted pairs make the run incomplete.
+        report['status'] = 'complete' if all(p['status'] == 'complete' for p in report['pairs']) else 'incomplete'
+    except DeadlineExceeded as exc:
+        canceled = 'cancellation' in str(exc)
+        report.update(status='canceled' if canceled else 'deadline_exceeded',
+                      error='supervisor cancellation' if canceled else 'run deadline enforced')
         if report['pairs'] and report['pairs'][-1].get('status') == 'running':
             report['pairs'][-1]['status'] = 'interrupted'
     except TechnicalFailure as exc:
