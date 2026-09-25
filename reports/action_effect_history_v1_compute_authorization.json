@@ -1,0 +1,19 @@
+{
+  "approval_kind": "compute",
+  "approved_at": "2026-09-25T20:50:29.242839+00:00",
+  "authorized_seconds": 3600,
+  "automatic_retries": 0,
+  "holdout_runs": 0,
+  "internal_seconds": 3300,
+  "maximum_actions_per_episode": 12,
+  "maximum_attempts": 1,
+  "maximum_canaries": 1,
+  "maximum_episodes": 12,
+  "maximum_policy_calls": 144,
+  "review_lock_sha256": "0f870a1a73e6ffc8a4a8ba740df3576083d0d8690798805399072b27c451e386",
+  "scope": "action-effect-history-v1",
+  "scored_submissions": 0,
+  "source_approval_sha256": "ba7d225af08c6b56e4aae9ea403902c05c66b1b24af727ff7e141a5bffcf263a",
+  "status": "approved",
+  "user_response": "Approve and authorize (one GPU attempt, up to 3,600 s, 144 policy calls + 1 canary, no retries)"
+}
