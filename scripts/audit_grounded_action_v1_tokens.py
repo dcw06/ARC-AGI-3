@@ -1,6 +1,5 @@
 """Audit exact offline-engine requests and adaptive frame stress with pinned tokenizer."""
 import argparse
-import copy
 import hashlib
 import importlib.metadata
 import json
@@ -24,7 +23,7 @@ def count(tokenizer, request):
 def run(record, folder, output):
     from transformers import AutoTokenizer
     from certification.phase4_integrated_v2.tokenizer_binding import verify
-    from research.grounded_action_v1.contract import feedback_grid
+    from research.grounded_action_v1.contract import audit_request
     versions = {k: importlib.metadata.version(k) for k in VERSION}
     if versions != VERSION:
         raise ValueError('tokenizer environment drift')
@@ -44,35 +43,40 @@ def run(record, folder, output):
                 raise ValueError('exact request limit/hash')
             rows.append(row)
     initial = json.loads((ROOT / 'reports/integrated_case_v1/initial_observation.json').read_bytes())
-    frame = feedback_grid(initial['frames'][-1])
+    frame = initial['frames'][-1]
     stress = []
     # The feedback request carries one pre-action frame and all returned frames
     # in the exact lossless hex-row format admitted by the live contract.
     for episode in evidence['episodes']:
         sample = next(c['request'] for c in episode['calls'] if c['stage'] == 'feedback')
+        payload = json.loads(sample['messages'][1]['content'])
         for count_frames in range(1, 9):
-            request = copy.deepcopy(sample)
-            payload = json.loads(request['messages'][1]['content'])
-            payload['before']['frames'] = [frame]
-            payload['observation']['frames'] = [frame] * count_frames
-            request['messages'][1]['content'] = json.dumps(payload, sort_keys=True, separators=(',', ':'))
+            request = audit_request('feedback', {'frames': [initial['frames'][-1]] * count_frames,
+                'levels_completed': payload['observation']['levels_completed'],
+                'state': payload['observation']['state']}, payload['action'],
+                before={'frames': [initial['frames'][-1]],
+                        'levels_completed': payload['before']['levels_completed'],
+                        'state': payload['before']['state']},
+                prediction=payload['committed_prediction'])
             stress.append({'arm': episode['arm'], 'returned_frames': count_frames, **count(tokenizer, request)})
-    dense = [''.join('0123456789abcdef'[(x + 7 * y) % 16] for x in range(64))
-             for y in range(64)]
+    dense = [[(x + 7 * y) % 16 for x in range(64)] for y in range(64)]
     for episode in evidence['episodes']:
         sample = next(c['request'] for c in episode['calls'] if c['stage'] == 'feedback')
-        request = copy.deepcopy(sample)
-        payload = json.loads(request['messages'][1]['content'])
-        payload['before']['frames'] = [dense]
-        payload['observation']['frames'] = [dense] * 8
-        request['messages'][1]['content'] = json.dumps(payload, sort_keys=True, separators=(',', ':'))
+        payload = json.loads(sample['messages'][1]['content'])
+        request = audit_request('feedback', {'frames': [dense] * 8,
+            'levels_completed': payload['observation']['levels_completed'],
+            'state': payload['observation']['state']}, payload['action'],
+            before={'frames': [dense], 'levels_completed': payload['before']['levels_completed'],
+                    'state': payload['before']['state']},
+            prediction=payload['committed_prediction'])
         stress.append({'arm': episode['arm'], 'returned_frames': 8, 'pattern': 'dense_hex', **count(tokenizer, request)})
     examples = {
         'control': {'action': {'action_id': 6, 'action_data': {'x': 63, 'y': 63}}},
         'target': {'action': {'action_id': 6, 'action_data': {'x': 63, 'y': 63}},
                    'target': {'kind': 'box', 'box': [0, 0, 63, 63]}},
         'prediction': {'prediction': 'no_change'},
-        'feedback': {'assessment': 'contradicted', 'changed_frames': list(range(8))},
+        'feedback': {'assessment': 'contradicted',
+                     **{f'frame_{i}_changed': True for i in range(8)}},
     }
     output_rows = []
     for stage, response in examples.items():

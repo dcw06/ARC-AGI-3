@@ -1,0 +1,27 @@
+{
+  "scope": "cpu_only_stage_b_r11_review",
+  "gpu_runs": 0,
+  "model_calls": 0,
+  "full_suite": {
+    "command": "python -m unittest discover -s tests -p test_grounded_action_v1*.py -q",
+    "passed": 62,
+    "failed": 0
+  },
+  "feedback_contract": "frame_flags_v2",
+  "trajectory_version": "grounded_action_local_v4",
+  "frame_count_cases": [1, 2, 3, 4, 5, 6, 7, 8],
+  "r7_invalid_response_retained_and_rejected": true,
+  "valid_incorrect_response_scored_not_failed": true,
+  "complete_v3_legacy_replay_passed": true,
+  "r6_archive_replay": "archive_verified",
+  "r7_archive_replay": "archive_verified",
+  "exact_scripted_requests": 12,
+  "maximum_exact_prompt_tokens": 25799,
+  "maximum_eight_frame_stress_prompt_tokens": 36226,
+  "maximum_response_tokens_plus_end": 84,
+  "all_audited_requests_admissible": true,
+  "review_source_files": 1043,
+  "unapproved_notebook_execution_rejected": true,
+  "review_lock_sha256": "e7be0ab939c33aefb0a211a6159f9ed244d74c18ff6c5846028fa8f874e51bef",
+  "token_audit_sha256": "2673c46ceadbe75787a800bec256568d82480743e36e7d8188d2db0ce025927e"
+}

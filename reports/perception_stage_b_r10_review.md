@@ -1,5 +1,11 @@
 # Stage B R10 prediction-output contract review
 
+**Historical review snapshot.** R10 was subsequently approved and packaged
+for the consumed R7 attempt. Its prelaunch statements below describe the
+state at review time; the final R7 disposition is in
+`reports/perception_stage_b_r7_failure.md`. The R11 successor preserves this
+review lock unchanged.
+
 **Status:** R10 is a GPU-disabled review revision. The consumed R6 GPU
 reservation remains consumed. There is no R7-scope source approval,
 compute authorization, reservation, GPU-enabled package, or upload.

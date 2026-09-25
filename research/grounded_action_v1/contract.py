@@ -54,6 +54,15 @@ FEEDBACK_INSTRUCTION = (
     "digits, one color value per cell, with rows in y order and digits in x order. "
     "Compare every returned frame with the supplied before frame. "
     "Assess the supplied committed prediction as supported, contradicted, or "
+    "unresolved; report one Boolean frame_i_changed for every returned frame "
+    "i, indexed from zero. Do not report a changed_frames array. This answer cannot change the "
+    "committed action or enter a later policy request."
+)
+LEGACY_HEX_FEEDBACK_INSTRUCTION = (
+    "Return only JSON. Feedback grids use hex_rows_v1: each row is 64 hexadecimal "
+    "digits, one color value per cell, with rows in y order and digits in x order. "
+    "Compare every returned frame with the supplied before frame. "
+    "Assess the supplied committed prediction as supported, contradicted, or "
     "unresolved; report changed frame indices. This answer cannot change the "
     "committed action or enter a later policy request."
 )
@@ -110,7 +119,8 @@ def policy_request(runtime, arm):
 
 
 def audit_request(stage, observation, action, *, before=None, prediction=None,
-                  feedback_encoding='hex_rows_v1', prediction_contract='single_choice_v2'):
+                  feedback_encoding='hex_rows_v1', prediction_contract='single_choice_v2',
+                  feedback_contract='frame_flags_v2'):
     if stage not in ('prediction', 'feedback'):
         raise ValueError('audit stage')
     if prediction_contract not in ('single_choice_v2', 'legacy_pair_v1'):
@@ -118,6 +128,8 @@ def audit_request(stage, observation, action, *, before=None, prediction=None,
     payload = {'stage': stage, 'action': action,
                'observation': {k: observation[k] for k in ('frames', 'levels_completed', 'state')}}
     if stage == 'feedback':
+        if feedback_contract not in ('frame_flags_v2', 'legacy_indices_v1'):
+            raise ValueError('feedback contract')
         if feedback_encoding not in ('hex_rows_v1', 'legacy_grid_json_v1'):
             raise ValueError('feedback encoding')
         if not 1 <= len(observation['frames']) <= (6 if feedback_encoding == 'legacy_grid_json_v1' else 8):
@@ -142,18 +154,24 @@ def audit_request(stage, observation, action, *, before=None, prediction=None,
                   if prediction_contract == 'legacy_pair_v1' else {})}
               if stage == 'prediction' else
               {'assessment': {'type': 'string', 'enum': ['supported', 'contradicted', 'unresolved']},
-               'changed_frames': {'type': 'array', 'items': {'type': 'integer', 'minimum': 0, 'maximum': 7},
-                                  'maxItems': 8}})
+               **({f'frame_{i}_changed': {'type': 'boolean'} for i in range(len(observation['frames']))}
+                  if feedback_contract == 'frame_flags_v2' else
+                  {'changed_frames': {'type': 'array', 'items': {'type': 'integer', 'minimum': 0, 'maximum': 7},
+                                      'maxItems': 8}})})
     return {'model': baseline_request_model(), 'messages': [
         {'role': 'system', 'content': (LEGACY_PREDICTION_INSTRUCTION if prediction_contract == 'legacy_pair_v1'
                                     else PREDICTION_INSTRUCTION) if stage == 'prediction' else
-         (LEGACY_FEEDBACK_INSTRUCTION if feedback_encoding == 'legacy_grid_json_v1' else FEEDBACK_INSTRUCTION)},
+         ((LEGACY_FEEDBACK_INSTRUCTION if feedback_encoding == 'legacy_grid_json_v1' else
+           LEGACY_HEX_FEEDBACK_INSTRUCTION) if feedback_contract == 'legacy_indices_v1' else
+          FEEDBACK_INSTRUCTION)},
         {'role': 'user', 'content': json.dumps(payload, sort_keys=True, separators=(',', ':'))}],
         'temperature': 0, 'seed': 0, 'max_tokens': 128,
         'chat_template_kwargs': {'enable_thinking': False},
         'response_format': {'type': 'json_schema', 'json_schema': {
             'name': ('grounded_prediction_v2' if stage == 'prediction' and
-                     prediction_contract == 'single_choice_v2' else 'grounded_' + stage + '_v1'),
+                     prediction_contract == 'single_choice_v2' else
+                     'grounded_feedback_v2' if stage == 'feedback' and feedback_contract == 'frame_flags_v2'
+                     else 'grounded_' + stage + '_v1'),
             'strict': True,
             'schema': {'type': 'object', 'properties': fields, 'required': list(fields),
                        'additionalProperties': False}}}}
@@ -202,7 +220,8 @@ def parse_policy(raw, arm, legal, grid):
     return value
 
 
-def parse_audit(raw, stage, frames, *, prediction_contract='single_choice_v2'):
+def parse_audit(raw, stage, frames, *, prediction_contract='single_choice_v2',
+                feedback_contract='frame_flags_v2'):
     value = strict_json(raw)
     if type(value) is not dict:
         raise ValueError('audit object')
@@ -218,6 +237,16 @@ def parse_audit(raw, stage, frames, *, prediction_contract='single_choice_v2'):
         else:
             raise ValueError('prediction contract')
     elif stage == 'feedback':
+        if feedback_contract == 'frame_flags_v2':
+            keys = {f'frame_{i}_changed' for i in range(len(frames))}
+            if (not 1 <= len(frames) <= 8 or set(value) != keys | {'assessment'} or
+                    value['assessment'] not in ('supported', 'contradicted', 'unresolved') or
+                    any(type(value[key]) is not bool for key in keys)):
+                raise ValueError('feedback fields')
+            return {'assessment': value['assessment'],
+                    'changed_frames': [i for i in range(len(frames)) if value[f'frame_{i}_changed']]}
+        if feedback_contract != 'legacy_indices_v1':
+            raise ValueError('feedback contract')
         if (set(value) != {'assessment', 'changed_frames'} or value['assessment'] not in
                 ('supported', 'contradicted', 'unresolved') or type(value['changed_frames']) is not list or
                 len(value['changed_frames']) > len(frames) or len(set(value['changed_frames'])) != len(value['changed_frames']) or

@@ -1,5 +1,6 @@
 """Stage B local contract and independent replay regressions (no GPU/game)."""
 import copy
+import hashlib
 import json
 import tempfile
 import unittest
@@ -7,7 +8,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from research.grounded_action_v1.contract import audit_request, feedback_grid, parse_audit, parse_policy
+from research.grounded_action_v1.contract import audit_request, digest, feedback_grid, parse_audit, parse_policy
 from research.grounded_action_v1 import contract as grounded_contract
 from research.grounded_action_v1.local import ScriptedAdapter, ScriptedService, run
 from research.grounded_action_v1.replay import evaluate, replay_file
@@ -49,7 +50,7 @@ class GroundedActionLocalTests(unittest.TestCase):
 
     def test_complete_pair_and_transient_frame(self):
         result, path = self.execute()
-        self.assertEqual(result['version'], 'grounded_action_local_v3')
+        self.assertEqual(result['version'], 'grounded_action_local_v4')
         score = replay_file(path)
         self.assertEqual((score['calls'], score['dispatches']), (12, 4))
         self.assertEqual(score['episodes'][0]['outcomes'][0]['changed_frames'], [0])
@@ -70,6 +71,66 @@ class GroundedActionLocalTests(unittest.TestCase):
         self.assertEqual(score['status'], 'valid_local_scripted_pair')
         self.assertFalse(score['episodes'][0]['outcomes'][0]['feedback_exact'])
         self.assertFalse(score['episodes'][0]['outcomes'][0]['feedback_assessment_exact'])
+
+    def test_feedback_flags_bind_one_to_eight_frames_and_reject_r7_response(self):
+        result, _ = self.execute()
+        step = result['episodes'][0]['steps'][0]
+        for count in range(1, 9):
+            after = copy.deepcopy(step['after'])
+            after['frames'] = [after['frames'][-1]] * count
+            request = audit_request('feedback', after, step['action'], before=step['before'],
+                                    prediction=step['prediction'])
+            schema = request['response_format']['json_schema']['schema']
+            keys = {f'frame_{i}_changed' for i in range(count)}
+            self.assertEqual(set(schema['required']), keys | {'assessment'})
+            self.assertEqual(set(schema['properties']), keys | {'assessment'})
+            self.assertFalse(schema['additionalProperties'])
+            for i in range(count):
+                self.assertEqual(schema['properties'][f'frame_{i}_changed'], {'type': 'boolean'})
+            for changed in (set(), {0}, {count - 1}, set(range(count))):
+                body = {'assessment': 'supported',
+                        **{f'frame_{i}_changed': i in changed for i in range(count)}}
+                self.assertEqual(parse_audit(json.dumps(body), 'feedback', after['frames']),
+                                 {'assessment': 'supported', 'changed_frames': sorted(changed)})
+            with self.assertRaisesRegex(ValueError, 'feedback fields'):
+                parse_audit(json.dumps({'assessment': 'contradicted',
+                    'changed_frames': [1, 2, 3, 4, 5, 6, 7, 1]}), 'feedback', after['frames'])
+            for body in ({'assessment': 'supported', **{f'frame_{i}_changed': False for i in range(count - 1)}},
+                         {'assessment': 'supported', **{f'frame_{i}_changed': False for i in range(count)},
+                          f'frame_{count}_changed': True},
+                         {'assessment': 'supported', **{f'frame_{i}_changed': False for i in range(count - 1)},
+                          f'frame_{count - 1}_changed': 0}):
+                with self.assertRaisesRegex(ValueError, 'feedback fields'):
+                    parse_audit(json.dumps(body), 'feedback', after['frames'])
+
+    def test_r7_feedback_failure_retained_and_censors_target(self):
+        result, _ = self.execute('r7_feedback')
+        self.assertEqual((result['status'], result['calls'], result['dispatches']), ('failed', 3, 1))
+        self.assertEqual(result['episodes'][1]['calls'], [])
+        row = result['episodes'][0]['calls'][2]
+        self.assertEqual(row['response'], '{"assessment":"contradicted","changed_frames":[1,2,3,4,5,6,7,1]}')
+        self.assertEqual(row['error'], 'ValueError: feedback fields')
+        self.assertIn('response_sha256', row)
+        self.assertEqual(row['finish_reason'], 'stop')
+        with self.assertRaisesRegex(ValueError, 'incomplete pair'):
+            evaluate(result)
+
+    def test_complete_v3_legacy_feedback_replays_without_changing_v4(self):
+        result, _ = self.execute()
+        legacy = copy.deepcopy(result)
+        legacy['version'] = 'grounded_action_local_v3'
+        for episode in legacy['episodes']:
+            for step in episode['steps']:
+                row = episode['calls'][step['feedback_call']]
+                row['request'] = audit_request('feedback', step['after'], step['action'],
+                    before=step['before'], prediction=step['prediction'],
+                    feedback_contract='legacy_indices_v1')
+                row['request_sha256'] = digest(row['request'])
+                row['response'] = json.dumps(step['feedback'], separators=(',', ':'))
+                row['response_bytes'] = len(row['response'].encode())
+                row['response_sha256'] = hashlib.sha256(row['response'].encode()).hexdigest()
+        self.assertEqual(evaluate(legacy)['status'], 'valid_local_scripted_pair')
+        self.assertEqual(evaluate(result)['status'], 'valid_local_scripted_pair')
 
     def test_opposite_prediction_requires_opposite_feedback_assessment(self):
         normal, _ = self.execute()

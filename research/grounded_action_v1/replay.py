@@ -43,12 +43,15 @@ def evaluate(value):
         'case protocol binding')
     kind = value.get('kind')
     require(value.get('version') in ('grounded_action_local_v1', 'grounded_action_local_v2',
-                                     'grounded_action_local_v3') and
+                                     'grounded_action_local_v3', 'grounded_action_local_v4') and
             kind in ('scripted_cpu_only', 'offline_development_engine'), 'record version')
     feedback_encoding = ('legacy_grid_json_v1' if value['version'] == 'grounded_action_local_v1'
                          else 'hex_rows_v1')
-    prediction_contract = ('single_choice_v2' if value['version'] == 'grounded_action_local_v3'
+    prediction_contract = ('single_choice_v2' if value['version'] in ('grounded_action_local_v3',
+                                                                       'grounded_action_local_v4')
                            else 'legacy_pair_v1')
+    feedback_contract = ('frame_flags_v2' if value['version'] == 'grounded_action_local_v4'
+                         else 'legacy_indices_v1')
     require(value.get('status') == 'complete' and value.get('error') is None, 'incomplete pair')
     limit = value['limit']
     require(limit['steps_per_arm'] == MAX_STEPS and limit['calls'] == MAX_CALLS and
@@ -121,7 +124,8 @@ def evaluate(value):
             if stage in ('control', 'target'):
                 return parse_policy(row['response'], stage, current.available_actions, current.latest_frame.tolist())
             return parse_audit(row['response'], stage, current.frames,
-                               prediction_contract=prediction_contract)
+                               prediction_contract=prediction_contract,
+                               feedback_contract=feedback_contract)
 
         for index, step in enumerate(episode['steps']):
             require(step['index'] == index and step['before'] == pack(obs) and step['status'] == 'acknowledged', 'fresh pre-observation')
@@ -166,7 +170,8 @@ def evaluate(value):
             require(step['feedback_call'] == cursor, 'feedback pointer')
             feedback = call('feedback', audit_request('feedback', pack(post), action,
                                                       before=pack(obs), prediction=prediction,
-                                                      feedback_encoding=feedback_encoding), post)
+                                                      feedback_encoding=feedback_encoding,
+                                                      feedback_contract=feedback_contract), post)
             require(step['feedback'] == feedback, 'feedback binding')
             changes = changed(pack(obs), pack(post))
             truth = [r['frame'] for r in changes if r['shape_changed'] or r['changed_cells']]

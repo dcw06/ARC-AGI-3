@@ -146,7 +146,8 @@ def evaluate(download=DOWNLOAD, manifest_path=MANIFEST, record_root=ROOT):
                                     prediction_contract='single_choice_v2')
     require(step['prediction'] == parsed_prediction, 'committed prediction binding')
     expected_feedback = audit_request('feedback', step['after'], action, before=step['before'],
-                                      prediction=parsed_prediction, feedback_encoding='hex_rows_v1')
+                                      prediction=parsed_prediction, feedback_encoding='hex_rows_v1',
+                                      feedback_contract='legacy_indices_v1')
     require(feedback['request'] == expected_feedback and
             feedback['request_sha256'] == digest(expected_feedback), 'feedback request binding')
     receipt = step['receipt']
@@ -180,7 +181,8 @@ def evaluate(download=DOWNLOAD, manifest_path=MANIFEST, record_root=ROOT):
             received['changed_frames'] == [1, 2, 3, 4, 5, 6, 7, 1] and
             len(after.frames) == 1, 'unexpected feedback failure evidence')
     try:
-        parse_audit(feedback['response'], 'feedback', after.frames)
+        parse_audit(feedback['response'], 'feedback', after.frames,
+                    feedback_contract='legacy_indices_v1')
     except ValueError as exc:
         require(str(exc) == 'feedback fields', 'wrong feedback rejection')
     else:

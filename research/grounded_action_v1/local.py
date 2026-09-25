@@ -92,12 +92,23 @@ class ScriptedService:
                 answer = {'prediction': 'no_change'}
             if self.mode == 'duplicate_prediction_fields':
                 answer['alternative'] = 'change'
-        elif name == 'grounded_feedback_v1':
+        elif name in ('grounded_feedback_v1', 'grounded_feedback_v2'):
             committed = json.loads(request['messages'][1]['content'])['committed_prediction']
-            answer = {'assessment': 'supported' if committed['prediction'] == 'change' else 'contradicted',
-                      'changed_frames': [0]}
+            answer = {'assessment': 'supported' if committed['prediction'] == 'change' else 'contradicted'}
+            if name == 'grounded_feedback_v2':
+                count = sum(key.startswith('frame_') for key in
+                            request['response_format']['json_schema']['schema']['properties'])
+                answer.update({f'frame_{i}_changed': i == 0 for i in range(count)})
+            else:
+                answer['changed_frames'] = [0]
             if self.mode == 'wrong_feedback':
-                answer = {'assessment': 'contradicted', 'changed_frames': []}
+                answer = {'assessment': 'contradicted'}
+                if name == 'grounded_feedback_v2':
+                    answer.update({f'frame_{i}_changed': False for i in range(count)})
+                else:
+                    answer['changed_frames'] = []
+            if self.mode == 'r7_feedback' and name == 'grounded_feedback_v2':
+                answer = {'assessment': 'contradicted', 'changed_frames': [1, 2, 3, 4, 5, 6, 7, 1]}
         else:
             raise ValueError('scripted stage')
         raw = json.dumps(answer, separators=(',', ':'))
@@ -125,7 +136,7 @@ def run(path, service, adapter_factory, *, deadline_seconds=30, kind='scripted_c
         raise ValueError('unsupported local evidence kind')
     started = clock()
     deadline = started + deadline_seconds
-    report = {'version': 'grounded_action_local_v3', 'kind': kind, 'status': 'running',
+    report = {'version': 'grounded_action_local_v4', 'kind': kind, 'status': 'running',
               'case_protocol_sha256': hashlib.sha256((ROOT / 'reports/perception_stage_b_v1_case_protocol.json').read_bytes()).hexdigest(),
               'limit': {'steps_per_arm': MAX_STEPS, 'calls': MAX_CALLS, 'seconds': deadline_seconds},
               'episodes': [], 'calls': 0, 'dispatches': 0,

@@ -6,7 +6,7 @@ import lzma
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'notebooks/phase4-grounded-action-v1-launch-r10'
+OUT = ROOT / 'notebooks/phase4-grounded-action-v1-launch-r11'
 
 
 def inventory():
@@ -71,8 +71,8 @@ def build(output=OUT):
                                      'bound source approval, compute authorization, and reservation.'},
                           {'cell_type': 'code', 'metadata': {}, 'execution_count': None,
                            'outputs': [], 'source': code}]}
-    metadata = {'id': 'daichongwei06/arc3-phase4-grounded-action-v1-launch-review-r10',
-                'title': 'ARC3 Grounded Action Launch Review R10',
+    metadata = {'id': 'daichongwei06/arc3-phase4-grounded-action-v1-launch-review-r11',
+                'title': 'ARC3 Grounded Action Launch Review R11',
                 'code_file': 'profile.ipynb', 'language': 'python', 'kernel_type': 'notebook',
                 'is_private': True, 'enable_gpu': False, 'enable_tpu': False,
                 'enable_internet': False,
@@ -83,7 +83,7 @@ def build(output=OUT):
     for name, value in (('profile.ipynb', notebook), ('kernel-metadata.json', metadata)):
         (output / name).write_bytes((json.dumps(value, indent=2) + '\n').encode())
     lock = {'status': 'reviewed_launch_source',
-            'scope': 'phase4-grounded-action-stage-b-live-r7',
+            'scope': 'phase4-grounded-action-stage-b-live-r8',
             'bindings': hashes,
             'artifacts': {name: hashlib.sha256((output / name).read_bytes()).hexdigest()
                           for name in ('profile.ipynb', 'kernel-metadata.json')},

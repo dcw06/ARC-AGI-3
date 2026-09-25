@@ -11,20 +11,21 @@ import sys
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
-FOLDER = ROOT / 'notebooks/phase4-grounded-action-v1-launch-r10'
+FOLDER = ROOT / 'notebooks/phase4-grounded-action-v1-launch-r11'
 
 
 def review(folder=FOLDER, *, compare_checkout=True):
     folder = Path(folder)
     lock = json.loads((folder / 'review-source-lock.json').read_bytes())
-    allowed_scopes = ({'phase4-grounded-action-stage-b-live-r7'} if compare_checkout else
+    allowed_scopes = ({'phase4-grounded-action-stage-b-live-r8'} if compare_checkout else
                       {'phase4-grounded-action-stage-b-live-r1',
                        'phase4-grounded-action-stage-b-live-r2',
                        'phase4-grounded-action-stage-b-live-r3',
                        'phase4-grounded-action-stage-b-live-r4',
                        'phase4-grounded-action-stage-b-live-r5',
                        'phase4-grounded-action-stage-b-live-r6',
-                       'phase4-grounded-action-stage-b-live-r7'})
+                       'phase4-grounded-action-stage-b-live-r7',
+                       'phase4-grounded-action-stage-b-live-r8'})
     if (lock.get('status') != 'reviewed_launch_source' or
             lock.get('scope') not in allowed_scopes or
             lock.get('authorized_seconds') != 0 or lock.get('gpu_launch_authorized') is not False):

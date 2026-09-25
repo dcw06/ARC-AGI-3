@@ -1,5 +1,10 @@
 # Stage B R7 pilot status
 
+**Historical initial-status snapshot.** Kaggle later reported `ERROR`.
+The downloaded, independently evaluated and archived failure is recorded in
+`reports/perception_stage_b_r7_failure.md`; the initial `RUNNING` observation
+below is not the final result.
+
 The private, unscored R7 notebook was uploaded once to
 https://www.kaggle.com/code/daichongwei06/arc3-grounded-action-v1-r7.
 Kaggle accepted provider version 1 at 2026-09-25 00:19:37 UTC. The
