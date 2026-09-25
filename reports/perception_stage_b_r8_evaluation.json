@@ -1,0 +1,75 @@
+{
+  "account_gpu_time_used_after_seconds": 13547.424,
+  "account_gpu_time_used_before_seconds": 12975.5,
+  "account_gpu_time_used_delta_seconds": 571.924,
+  "attempt_id": "gab1-2b4f10a6f6b949aaa26aa457b9f56272",
+  "automatic_retry_authorized": false,
+  "completion_tokens": 292,
+  "dependency_trees_removed": true,
+  "downloaded_files_verified": 28,
+  "episodes": [
+    {
+      "actions": 2,
+      "arm": "control",
+      "level_delta": 0,
+      "outcomes": [
+        {
+          "changed_frames": [],
+          "feedback_assessment_exact": true,
+          "feedback_exact": false,
+          "level_delta": 0,
+          "prediction_supported": true,
+          "reviewer_visible_object_contact": false,
+          "target_hit": null
+        },
+        {
+          "changed_frames": [],
+          "feedback_assessment_exact": true,
+          "feedback_exact": false,
+          "level_delta": 0,
+          "prediction_supported": true,
+          "reviewer_visible_object_contact": false,
+          "target_hit": null
+        }
+      ]
+    },
+    {
+      "actions": 2,
+      "arm": "target",
+      "level_delta": 0,
+      "outcomes": [
+        {
+          "changed_frames": [],
+          "feedback_assessment_exact": true,
+          "feedback_exact": false,
+          "level_delta": 0,
+          "prediction_supported": true,
+          "reviewer_visible_object_contact": false,
+          "target_hit": true
+        },
+        {
+          "changed_frames": [],
+          "feedback_assessment_exact": true,
+          "feedback_exact": false,
+          "level_delta": 0,
+          "prediction_supported": true,
+          "reviewer_visible_object_contact": false,
+          "target_hit": true
+        }
+      ]
+    }
+  ],
+  "exact_provider_billed_seconds": null,
+  "first_cell_elapsed_seconds": 562.197766555,
+  "game_actions": 4,
+  "independent_gpu_cleanup_verified": true,
+  "model_ready": true,
+  "monitor_samples": 1631,
+  "phase4_complete": false,
+  "process_groups_exited": true,
+  "prompt_tokens": 136182,
+  "provider_status": "KernelWorkerStatus.COMPLETE",
+  "startup_canary_passed": true,
+  "status": "verified_complete_development_pair",
+  "study_calls": 12
+}
