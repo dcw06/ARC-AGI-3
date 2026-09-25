@@ -173,7 +173,12 @@ A level completion does not stop the episode; a new history segment begins.
   interrupted, invalid-output and dispatch-failure episodes. An arm-specific
   failure can never disappear through pair exclusion.
 - **Technical failures.** A technical failure (model service, monitor,
-  cleanup) stops the run. All evidence written so far is retained.
+  cleanup, or a token-count mismatch) stops the run. All evidence written so
+  far is retained.
+- **Evidence layout.** The run directory holds a small index (`run.json`) and
+  one file per episode. Only the index and the current episode are rewritten
+  and fsynced at each event. Intent is durable before every call and
+  dispatch, and received bytes are durable before validation.
 
 ## Metrics
 
@@ -256,6 +261,17 @@ complete. Otherwise it is **inconclusive: incomplete schedule**. With all six:
 - **Inconclusive:** anything else, including too few eligible comparisons.
   *Opportunities eliminated* comparisons are listed with their action,
   change and progress counts, whichever overall class applies.
+
+**Precedence.** The classes are checked in a fixed order, and the first that
+applies is reported:
+1. incomplete schedule;
+2. candidate worse;
+3. behaviour changed as hypothesized;
+4. no improvement observed;
+5. inconclusive.
+
+Checking candidate worse first means an arm that stops more often on errors
+can never also be reported as having reduced repetition.
 
 **Solving (strong exploratory signal only).** The history arm completes more
 levels than the baseline in both blocks for at least 2 of 3 games, with all
