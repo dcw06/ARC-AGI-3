@@ -1,0 +1,284 @@
+<title>Action-Effect History Replay</title>
+<meta name="description" content="Step-by-step replay of the archived action-effect history v1 attempt: baseline and history arms side by side on ar25, s5i5 and wa30.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#F3F5F4;--panel:#FFFFFF;--ink:#1B2025;--muted:#5B666F;--line:#D9DFDD;--soft:#E9EDEB;
+  --click:#0E7C86;--change:#C8235F;--accent:#0E7C86;
+  --none:#B3261E;--none-bg:#FBE7E5;--hud:#9A6412;--hud-bg:#FBF0DC;--eff:#1E7F4E;--eff-bg:#E3F3EA;--note-bg:#EEF0FB;
+  --grid:rgba(0,0,0,.14);--grid-strong:rgba(0,0,0,.34);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  color-scheme:dark;--ground:#121619;--panel:#1A2024;--ink:#E4E7E9;--muted:#98A3AB;--line:#2C353B;--soft:#232B30;
+  --click:#3FC1CB;--change:#F0588E;--accent:#3FC1CB;
+  --none:#FF8A80;--none-bg:#3A1D1B;--hud:#E8B45A;--hud-bg:#35290F;--eff:#6BD69A;--eff-bg:#173127;--note-bg:#20243F;
+  --grid:rgba(255,255,255,.12);--grid-strong:rgba(255,255,255,.3);}}
+:root[data-theme="dark"]{
+  color-scheme:dark;--ground:#121619;--panel:#1A2024;--ink:#E4E7E9;--muted:#98A3AB;--line:#2C353B;--soft:#232B30;
+  --click:#3FC1CB;--change:#F0588E;--accent:#3FC1CB;
+  --none:#FF8A80;--none-bg:#3A1D1B;--hud:#E8B45A;--hud-bg:#35290F;--eff:#6BD69A;--eff-bg:#173127;--note-bg:#20243F;
+  --grid:rgba(255,255,255,.12);--grid-strong:rgba(255,255,255,.3);}
+body{background:var(--ground);color:var(--ink);font:15px/1.5 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:20px;padding-block:24px 48px;display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
+h1{font-size:1.6rem;line-height:1.2;margin:0;font-weight:600;text-wrap:balance}
+h2{font-size:1.05rem;margin:0;font-weight:600}
+h3{font-size:.78rem;margin:0;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+p{margin:0;max-width:72ch}
+.mono,code,pre{font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace;font-size:.85em}
+.muted{color:var(--muted)}
+header{display:grid;gap:10px}
+.facts{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.88rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.facts b{color:var(--ink);font-weight:500}
+.note{background:var(--note-bg);border-radius:8px;padding:10px 14px;font-size:.88rem;display:grid;gap:6px}
+.note ul{margin:0;padding-left:1.2em;display:grid;gap:4px}
+.tablebox{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:.88rem;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-weight:500;color:var(--muted);font-size:.8rem;letter-spacing:.03em}
+tbody tr:last-child td{border-bottom:0}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:var(--soft)}
+tbody tr[aria-selected="true"]{background:var(--soft);box-shadow:inset 3px 0 0 var(--accent)}
+.bar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;position:sticky;top:env(safe-area-inset-top,0px);z-index:2;
+  background:var(--ground);padding-block:10px;border-bottom:1px solid var(--line)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel)}
+.seg button{font:inherit;font-size:.9rem;border:0;background:transparent;color:var(--ink);padding:6px 12px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
+.stepper{display:inline-flex;align-items:center;gap:8px;font-variant-numeric:tabular-nums}
+.stepper button{font:inherit;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:8px;padding:5px 10px;cursor:pointer}
+button:focus-visible,input:focus-visible,tr:focus-visible{outline:2px solid var(--click);outline-offset:2px}
+label.toggle{display:inline-flex;gap:6px;align-items:center;font-size:.9rem;cursor:pointer}
+.swatch{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-1px}
+.timelines{display:grid;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.tl{display:grid;grid-template-columns:120px 1fr;gap:10px;align-items:center}
+.tlsteps{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px}
+.tlstep{font:inherit;font-size:.72rem;line-height:1.2;border:1px solid transparent;border-radius:6px;padding:4px 2px;cursor:pointer;
+  display:grid;gap:1px;justify-items:center;font-variant-numeric:tabular-nums;position:relative;min-width:0}
+.tlstep .a{font-family:"IBM Plex Mono",monospace;font-weight:500;overflow:hidden;text-overflow:ellipsis;max-width:100%;white-space:nowrap}
+.tlstep.none{background:var(--none-bg);color:var(--none)}
+.tlstep.hud{background:var(--hud-bg);color:var(--hud)}
+.tlstep.eff{background:var(--eff-bg);color:var(--eff)}
+.tlstep[aria-current="true"]{border-color:var(--ink)}
+.tlstep .mk{position:absolute;top:-6px;right:-3px;font-size:.7rem;background:var(--ink);color:var(--ground);border-radius:999px;padding:0 4px;line-height:1.4}
+.arms{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:20px;align-items:start}
+.arm{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:14px}
+.armhead{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}
+.frames{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.boardbox{position:relative;width:100%;max-width:560px;aspect-ratio:1/1}
+canvas{width:100%;height:100%;display:block;image-rendering:pixelated;border-radius:4px}
+.readout{font-variant-numeric:tabular-nums;font-size:.85rem;min-height:1.4em}
+.kv{display:grid;grid-template-columns:max-content 1fr;gap:4px 12px;font-size:.88rem;margin:0}
+.kv dt{color:var(--muted)}.kv dd{margin:0;font-variant-numeric:tabular-nums}
+.chip{display:inline-block;font-size:.76rem;font-weight:500;padding:1px 8px;border-radius:999px;background:var(--soft);color:var(--muted);white-space:nowrap}
+.chip.none{background:var(--none-bg);color:var(--none)}.chip.hud{background:var(--hud-bg);color:var(--hud)}.chip.eff{background:var(--eff-bg);color:var(--eff)}
+.saw{display:grid;gap:6px}
+.saw table{font-size:.8rem}.saw th,.saw td{padding:4px 8px}
+.saw tbody tr{cursor:default}.saw tbody tr:hover{background:transparent}
+pre{margin:0;background:var(--soft);padding:8px 10px;border-radius:6px;overflow-x:auto;white-space:pre-wrap;word-break:break-word}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.84rem;color:var(--muted)}
+footer{font-size:.82rem;color:var(--muted);display:grid;gap:4px}
+footer .mono{word-break:break-all}
+@media (max-width:640px){.tl{grid-template-columns:1fr}.tlsteps{grid-template-columns:repeat(4,minmax(0,1fr))}}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Action-Effect History Replay</h1>
+    <p class="muted">Twelve 12-action episodes from the one authorized attempt: the action-ID-only baseline and the arm that also saw the last four actions with their measured effects, side by side on each development case. Every frame, request and response below comes from the hash-verified archive.</p>
+    <div class="facts" id="facts"></div>
+  </header>
+
+  <section class="tablebox" aria-label="Frozen pair results">
+    <table>
+      <thead><tr><th>Pair</th><th>Case</th><th>Order</th><th>Frozen class</th><th>Repeats after no change<br>baseline · history</th><th>Reason</th></tr></thead>
+      <tbody id="pairs"></tbody>
+    </table>
+  </section>
+
+  <div class="note">
+    <b>What to look for (post-hoc observations, not frozen results)</b>
+    <ul>
+      <li><b>s5i5:</b> every action changes one or two cells on the bottom row, whichever cell is clicked. The history reports "changed 1 cell", and the history arm clicked (11, 10) all 12 times.</li>
+      <li><b>ar25:</b> no click changes anything in either arm. The history arm switched to ACTION7, which also changes nothing; neither arm tried ACTION1–4.</li>
+      <li><b>wa30:</b> the history arm cycles ACTION1→5. ACTION5 only changes a single bottom-row cell.</li>
+      <li>Both history episodes of a case are identical across blocks; the baseline episodes are not, although their first requests were byte-identical.</li>
+    </ul>
+  </div>
+
+  <div class="bar" role="toolbar" aria-label="Replay controls">
+    <div class="seg" id="games" aria-label="Case"></div>
+    <div class="seg" id="blocks" aria-label="Block"></div>
+    <div class="stepper"><button type="button" id="prev" aria-label="Previous action">←</button><span id="stepLabel" class="mono"></span><button type="button" id="next" aria-label="Next action">→</button></div>
+    <label class="toggle"><input type="checkbox" id="showGrid" checked> Grid</label>
+    <label class="toggle"><input type="checkbox" id="showChange" checked> <span class="swatch" style="background:var(--change)"></span> Changed cells</label>
+  </div>
+
+  <section class="timelines" id="timelines" aria-label="All twelve actions in each arm"></section>
+  <div class="legend">
+    <span><span class="swatch" style="background:var(--none-bg);outline:1px solid var(--none)"></span> No cell changed</span>
+    <span><span class="swatch" style="background:var(--hud-bg);outline:1px solid var(--hud)"></span> Only bottom-row cells changed (post-hoc marker)</span>
+    <span><span class="swatch" style="background:var(--eff-bg);outline:1px solid var(--eff)"></span> Playfield cells changed</span>
+    <span><b>↻</b> exact repeat after no change · <b>≈</b> same action type, different click · <b>→</b> switched action after no change</span>
+  </div>
+
+  <section class="arms" id="arms"></section>
+  <div class="legend">
+    <span><span class="swatch" style="border:2px solid var(--click);border-radius:50%"></span> Click cell</span>
+    <span><span class="swatch" style="background:var(--change)"></span> Cell differs from the before frame</span>
+    <span>Cell colours use the standard 16-colour ARC palette; hover a cell for its exact value. Use ← and → keys to step.</span>
+  </div>
+  <footer id="footer"></footer>
+</div>
+
+<script>
+const DATA=/*__DATA__*/null;
+const PALETTE=['#FFFFFF','#CCCCCC','#999999','#666666','#333333','#000000','#E53AA3','#FF7BCC','#F93C31','#1E93FF','#88D8F1','#FFDC00','#FF851B','#921231','#4FCC30','#A356D6'];
+const GAMES=['ar25','s5i5','wa30'];
+const CLASS_TEXT={reduced:'reduced',not_reduced:'not reduced',ineligible:'ineligible',worse:'worse',opportunities_eliminated:'opportunities eliminated'};
+const MARK={repeat:['↻','Exact repeat of an action that just changed nothing'],type_repeat:['≈','Same action type after no change, different click'],switched:['→','Switched to a different action after no change']};
+const state={game:'ar25',block:1,step:0,frame:{},showGrid:true,showChange:true};
+const $=s=>document.querySelector(s);
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function el(tag,attrs={},...kids){const e=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k==='class')e.className=v;else if(k==='text')e.textContent=v;else e.setAttribute(k,v)}for(const k of kids)if(k!=null)e.append(k);return e}
+const cache={};
+function grid(key){if(cache[key])return cache[key];const f=DATA.frames[key];const g=[];for(let y=0;y<f.h;y++){const row=[];for(let x=0;x<f.w;x++)row.push(parseInt(f.cells[y*f.w+x],16));g.push(row)}return cache[key]=g}
+const pairId=()=>`b${state.block}-${state.game}`;
+const episode=arm=>DATA.episodes[`${pairId()}-${arm}`];
+const pairOf=id=>DATA.pairs.find(p=>p.pair_id===id);
+function actionText(a,short){const d=a.action_data||{};if('x' in d)return short?`6·${d.x},${d.y}`:`ACTION6 click (${d.x}, ${d.y})`;return short?`A${a.action_id}`:`ACTION${a.action_id}`}
+function tone(st){return st.changed===0?'none':st.bottom_row_only?'hud':'eff'}
+function effectText(st){if(st.changed===0)return 'no cell changed';const n=`${st.changed} cell${st.changed===1?'':'s'} changed`;return st.bottom_row_only?n+', all on the bottom row':n}
+const armName=a=>a==='baseline'?'Baseline (action IDs only)':'History (actions + measured effects)';
+
+function facts(){
+  const p=DATA.pooled;const f=$('#facts');
+  const items=[['Attempt',DATA.attempt_id],['Technically complete',DATA.technically_complete?'yes':'no'],['Behaviour',DATA.behaviour_result],
+    ['Solving',DATA.solving_result.replaceAll('_',' ')],
+    ['Pooled repeat rate',`baseline ${p.baseline.immediate_repeats}/${p.baseline.immediate_repeat_opportunities} · history ${p.history.immediate_repeats}/${p.history.immediate_repeat_opportunities}`]];
+  for(const[k,v]of items)f.append(el('span',{},k+': ',el('b',{text:String(v)})));
+}
+function pairsTable(){
+  const body=$('#pairs');body.replaceChildren();
+  for(const p of DATA.pairs){
+    const g=p.game_id.split('-')[0];const b=DATA.episodes[p.pair_id+'-baseline'].metrics,h=DATA.episodes[p.pair_id+'-history'].metrics;
+    const first=DATA.episodes[p.pair_id+'-baseline'].order===0?'baseline first':'history first';
+    const tr=el('tr',{tabindex:'0','aria-selected':String(p.pair_id===pairId())},
+      el('td',{class:'mono',text:p.pair_id}),el('td',{text:g}),el('td',{class:'muted',text:first}),
+      el('td',{},el('b',{text:CLASS_TEXT[p.class]||p.class})),
+      el('td',{class:'mono',text:`${b.immediate_repeats}/${b.immediate_repeat_opportunities} · ${h.immediate_repeats}/${h.immediate_repeat_opportunities}`}),
+      el('td',{class:'muted',text:p.reason}));
+    const pick=()=>{state.game=g;state.block=p.block;state.step=0;state.frame={};render()};
+    tr.addEventListener('click',pick);tr.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick()}});
+    body.append(tr);
+  }
+}
+function controls(){
+  const gs=$('#games');gs.replaceChildren();
+  for(const g of GAMES){const b=el('button',{type:'button','aria-pressed':String(state.game===g),text:g});b.addEventListener('click',()=>{state.game=g;state.frame={};render()});gs.append(b)}
+  const bs=$('#blocks');bs.replaceChildren();
+  for(const k of [1,2]){const b=el('button',{type:'button','aria-pressed':String(state.block===k),text:`Block ${k}`});b.addEventListener('click',()=>{state.block=k;state.frame={};render()});bs.append(b)}
+  $('#stepLabel').textContent=`Action ${String(state.step+1).padStart(2,' ')} of 12`;
+}
+function timelines(){
+  const box=$('#timelines');box.replaceChildren();
+  const arms=['baseline','history'].sort((a,b)=>episode(a).order-episode(b).order);
+  for(const arm of arms){
+    const ep=episode(arm);const row=el('div',{class:'tlsteps'});
+    ep.steps.forEach((st,i)=>{
+      const b=el('button',{type:'button',class:'tlstep '+tone(st),'aria-current':String(i===state.step),
+        'aria-label':`${arm} action ${i+1}: ${actionText(st.action)}, ${effectText(st)}${st.mark?', '+MARK[st.mark][1]:''}`,title:`${actionText(st.action)} · ${effectText(st)}${st.mark?' · '+MARK[st.mark][1]:''}`},
+        el('span',{class:'a',text:actionText(st.action,true)}),el('span',{text:String(st.changed)}));
+      if(st.mark)b.append(el('span',{class:'mk',text:MARK[st.mark][0]}));
+      b.addEventListener('click',()=>{state.step=i;state.frame={};render()});row.append(b);
+    });
+    const m=ep.metrics;
+    box.append(el('div',{class:'tl'},el('div',{},el('b',{text:arm==='baseline'?'Baseline':'History'}),el('div',{class:'muted',style:'font-size:.78rem',text:`${ep.order===0?'ran first':'ran second'} · ${m.distinct_actions} distinct`})),row));
+  }
+}
+
+function draw(canvas,st,frame){
+  const g=frame.grid,H=g.length,W=g[0].length;const margin=18;
+  const size=canvas.clientWidth||512;const dpr=window.devicePixelRatio||1;
+  canvas.width=Math.round(size*dpr);canvas.height=Math.round(size*dpr);
+  const ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
+  const cell=(size-margin)/Math.max(W,H);const ox=margin,oy=margin;
+  ctx.fillStyle=css('--panel');ctx.fillRect(0,0,size,size);
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){ctx.fillStyle=PALETTE[g[y][x]]||'#888';ctx.fillRect(ox+x*cell,oy+y*cell,Math.ceil(cell),Math.ceil(cell))}
+  if(state.showGrid){
+    for(let i=0;i<=W;i++){ctx.strokeStyle=i%8===0?css('--grid-strong'):css('--grid');ctx.lineWidth=i%8===0?1:.5;ctx.beginPath();ctx.moveTo(ox+i*cell,oy);ctx.lineTo(ox+i*cell,oy+H*cell);ctx.stroke()}
+    for(let j=0;j<=H;j++){ctx.strokeStyle=j%8===0?css('--grid-strong'):css('--grid');ctx.lineWidth=j%8===0?1:.5;ctx.beginPath();ctx.moveTo(ox,oy+j*cell);ctx.lineTo(ox+W*cell,oy+j*cell);ctx.stroke()}
+  }
+  ctx.fillStyle=css('--muted');ctx.font='10px "IBM Plex Mono",monospace';ctx.textAlign='center';ctx.textBaseline='middle';
+  for(let i=0;i<W;i+=8)ctx.fillText(String(i),ox+(i+.5)*cell,margin/2);
+  ctx.textAlign='right';for(let j=0;j<H;j+=8)ctx.fillText(String(j),margin-3,oy+(j+.5)*cell);
+  if(state.showChange&&frame.changes){ctx.fillStyle=css('--change');ctx.globalAlpha=.75;for(const[x,y]of frame.changes)ctx.fillRect(ox+x*cell,oy+y*cell,cell,cell);ctx.globalAlpha=1;
+    ctx.strokeStyle=css('--change');ctx.lineWidth=2;for(const[x,y]of frame.changes)ctx.strokeRect(ox+x*cell-2,oy+y*cell-2,cell+4,cell+4)}
+  const d=st.action.action_data||{};
+  if('x' in d){const cx=ox+(d.x+.5)*cell,cy=oy+(d.y+.5)*cell;ctx.lineWidth=2.5;ctx.strokeStyle=css('--click');ctx.beginPath();ctx.arc(cx,cy,Math.max(cell*.9,6),0,Math.PI*2);ctx.stroke();
+    ctx.globalAlpha=.45;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(cx,oy);ctx.lineTo(cx,cy-cell);ctx.moveTo(ox,cy);ctx.lineTo(cx-cell,cy);ctx.stroke();ctx.globalAlpha=1}
+  const out=canvas.parentElement.nextElementSibling;
+  canvas.onmousemove=e=>{const r=canvas.getBoundingClientRect();const s=r.width/size;const x=Math.floor(((e.clientX-r.left)/s-ox)/cell),y=Math.floor(((e.clientY-r.top)/s-oy)/cell);
+    if(x>=0&&y>=0&&x<W&&y<H)out.textContent=`cell x=${x}, y=${y} · value ${g[y][x]}`+(frame.changes&&frame.changes.some(c=>c[0]===x&&c[1]===y)?' · changed':'');else out.textContent=''};
+  canvas.onmouseleave=()=>{out.textContent='Hover a cell for its coordinates and value.'};
+}
+
+function sawBlock(arm,st){
+  const box=el('div',{class:'saw'});
+  box.append(el('h3',{text:'What this request contained'}));
+  const recent=st.saw.recent_actions;
+  if(arm==='baseline'){
+    box.append(el('p',{style:'font-size:.88rem'},'The current and previous grids, and recent action IDs ',el('span',{class:'mono',text:JSON.stringify(recent)}),'. No coordinates and no effects.'));
+    return box;
+  }
+  const h=st.saw.history;
+  if(!h||!h.length){box.append(el('p',{style:'font-size:.88rem',text:'The same observation as the baseline, with an empty action-effect history (first action of the episode).'}));return box}
+  box.append(el('p',{style:'font-size:.88rem',text:`The same observation as the baseline, plus the last ${h.length} action${h.length===1?'':'s'} with their measured effects:`}));
+  const t=el('table',{},el('thead',{},el('tr',{},...['Step','Action','Cells changed','Final frame changed','Level Δ'].map(x=>el('th',{text:x})))));
+  const tb=el('tbody');
+  for(const e of h)tb.append(el('tr',{},el('td',{text:String(e.step+1)}),el('td',{class:'mono',text:actionText(e,false)}),
+    el('td',{class:'mono',text:JSON.stringify(e.changed_cells_by_frame)}),el('td',{text:String(e.final_frame_changed)}),el('td',{text:String(e.level_delta)})));
+  t.append(tb);box.append(el('div',{class:'tablebox'},t));
+  return box;
+}
+
+function armPanel(arm){
+  const ep=episode(arm);const st=ep.steps[state.step];
+  const panel=el('section',{class:'arm','aria-label':armName(arm)});
+  panel.append(el('div',{class:'armhead'},el('h2',{text:armName(arm)}),el('span',{class:'mono muted',text:`${ep.episode_id} · ${ep.order===0?'ran first':'ran second'}`})));
+  const frames=[{label:'Before',grid:grid(st.before),changes:null}].concat(st.returned.map((k,i)=>({label:st.returned.length>1?`After (frame ${i+1}/${st.returned.length})`:'After',grid:grid(k),changes:st.changes[i]})));
+  const current=Math.min(state.frame[arm]??frames.length-1,frames.length-1);
+  const seg=el('div',{class:'seg'});frames.forEach((f,i)=>{const b=el('button',{type:'button','aria-pressed':String(i===current),text:f.label});b.addEventListener('click',()=>{state.frame[arm]=i;render()});seg.append(b)});
+  panel.append(el('div',{class:'frames'},el('span',{class:'muted',text:'Frame:'}),seg));
+  const box=el('div',{class:'boardbox'});const canvas=el('canvas',{role:'img','aria-label':`${armName(arm)}, action ${state.step+1}, ${frames[current].label} frame`});box.append(canvas);
+  panel.append(box,el('div',{class:'readout mono muted',text:'Hover a cell for its coordinates and value.'}));
+  const kv=el('dl',{class:'kv'});const add=(k,v)=>kv.append(el('dt',{text:k}),el('dd',{},v));
+  add('Action',el('span',{class:'mono',text:actionText(st.action)}));
+  add('Effect',el('span',{class:'chip '+tone(st),text:effectText(st)}));
+  add('Measured record',el('span',{class:'mono',text:`cells by frame ${JSON.stringify(st.effect.changed_cells_by_frame)} · final changed ${st.effect.final_frame_changed} · level Δ ${st.effect.level_delta}`}));
+  add('Repeat check',st.mark?MARK[st.mark][1]:state.step===0?'first action':'previous action changed the frame, so not a repeat opportunity');
+  add('Levels',`${st.levels[0]} → ${st.levels[1]} · ${st.effect.state_after}`);
+  add('Model call',`#${st.call.index} · ${st.call.seconds.toFixed(2)} s · ${st.call.prompt_tokens.toLocaleString()} prompt + ${st.call.completion_tokens} completion tokens · finish ${st.call.finish}`);
+  panel.append(kv,sawBlock(arm,st),el('div',{class:'saw'},el('h3',{text:'Model response'}),el('pre',{},st.call.response)),
+    el('div',{class:'mono muted',style:'font-size:.75rem;word-break:break-all',text:'request sha256 '+st.call.request_sha256}));
+  requestAnimationFrame(()=>draw(canvas,st,frames[current]));
+  return panel;
+}
+function render(){
+  controls();pairsTable();timelines();
+  const arms=['baseline','history'].sort((a,b)=>episode(a).order-episode(b).order);
+  $('#arms').replaceChildren(...arms.map(armPanel));
+}
+function go(d){const n=state.step+d;if(n>=0&&n<12){state.step=n;state.frame={};render()}}
+
+facts();render();
+$('#prev').addEventListener('click',()=>go(-1));$('#next').addEventListener('click',()=>go(1));
+document.addEventListener('keydown',e=>{if(e.target.closest('input,textarea'))return;if(e.key==='ArrowLeft')go(-1);if(e.key==='ArrowRight')go(1)});
+for(const id of ['showGrid','showChange'])document.getElementById(id).addEventListener('change',e=>{state[id]=e.target.checked;render()});
+let t;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(render,120)});
+$('#footer').append(el('div',{},'Source: archive sha256 ',el('span',{class:'mono',text:DATA.archive_sha256})),
+  el('div',{},'Run evidence manifest sha256 ',el('span',{class:'mono',text:DATA.run_manifest_sha256})),
+  el('div',{text:'Changed cells are computed by comparing each returned frame with the before frame, cell by cell. Repeat marks use the frozen evaluator\'s definitions. The bottom-row marker is a post-hoc annotation; it was never a policy input or a frozen metric.'}));
+</script>
