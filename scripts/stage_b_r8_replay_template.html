@@ -1,0 +1,220 @@
+<title>R8 Action Replay</title>
+<meta name="description" content="Frame-by-frame replay of the archived Stage B R8 control and structured-target arms.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#F3F5F4;--panel:#FFFFFF;--ink:#1B2025;--muted:#5B666F;--line:#D9DFDD;--soft:#E9EDEB;
+  --click:#0E7C86;--target:#B7791F;--change:#C8235F;--ref:#4C5BD4;
+  --good:#1E7F4E;--good-bg:#E3F3EA;--bad:#B3261E;--bad-bg:#FBE7E5;--note-bg:#EEF0FB;
+  --grid:rgba(0,0,0,.14);--grid-strong:rgba(0,0,0,.34);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  color-scheme:dark;--ground:#121619;--panel:#1A2024;--ink:#E4E7E9;--muted:#98A3AB;--line:#2C353B;--soft:#232B30;
+  --click:#3FC1CB;--target:#E0A546;--change:#F0588E;--ref:#8E99FF;
+  --good:#6BD69A;--good-bg:#173127;--bad:#FF8A80;--bad-bg:#3A1D1B;--note-bg:#20243F;
+  --grid:rgba(255,255,255,.12);--grid-strong:rgba(255,255,255,.3);}}
+:root[data-theme="dark"]{
+  color-scheme:dark;--ground:#121619;--panel:#1A2024;--ink:#E4E7E9;--muted:#98A3AB;--line:#2C353B;--soft:#232B30;
+  --click:#3FC1CB;--target:#E0A546;--change:#F0588E;--ref:#8E99FF;
+  --good:#6BD69A;--good-bg:#173127;--bad:#FF8A80;--bad-bg:#3A1D1B;--note-bg:#20243F;
+  --grid:rgba(255,255,255,.12);--grid-strong:rgba(255,255,255,.3);}
+body{background:var(--ground);color:var(--ink);font:15px/1.5 "IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:20px;padding-block:24px 48px;display:grid;gap:20px}
+h1{font-size:1.6rem;line-height:1.2;margin:0;font-weight:600;text-wrap:balance}
+h2{font-size:1.05rem;margin:0;font-weight:600}
+h3{font-size:.78rem;margin:0;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+p{margin:0;max-width:72ch}
+.mono,code,pre{font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace;font-size:.85em}
+.muted{color:var(--muted)}
+header{display:grid;gap:10px}
+.facts{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.88rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.facts b{color:var(--ink);font-weight:500}
+.note{background:var(--note-bg);border-radius:8px;padding:10px 14px;font-size:.88rem}
+.bar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;position:sticky;top:env(safe-area-inset-top,0px);z-index:2;
+  background:var(--ground);padding-block:10px;border-bottom:1px solid var(--line)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel)}
+.seg button{font:inherit;font-size:.9rem;border:0;background:transparent;color:var(--ink);padding:6px 14px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--click);outline-offset:2px}
+label.toggle{display:inline-flex;gap:6px;align-items:center;font-size:.9rem;cursor:pointer}
+.swatch{display:inline-block;width:12px;height:12px;border-radius:2px;vertical-align:-1px}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}
+.sumcard{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:grid;gap:4px;font-size:.86rem}
+.sumcard .row{display:flex;justify-content:space-between;gap:8px;font-variant-numeric:tabular-nums}
+.arms{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:20px;align-items:start}
+.arm{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;display:grid;gap:14px}
+.armhead{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}
+.frames{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.boardbox{position:relative;width:100%;max-width:560px;aspect-ratio:1/1}
+canvas{width:100%;height:100%;display:block;image-rendering:pixelated;border-radius:4px}
+.readout{font-variant-numeric:tabular-nums;font-size:.85rem;min-height:1.4em}
+.kv{display:grid;grid-template-columns:max-content 1fr;gap:4px 12px;font-size:.88rem}
+.kv dt{color:var(--muted)}.kv dd{margin:0;font-variant-numeric:tabular-nums}
+.calls{display:grid;gap:10px}
+.call{border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:grid;gap:6px}
+.callhead{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;align-items:center}
+.chip{display:inline-block;font-size:.76rem;font-weight:500;padding:1px 8px;border-radius:999px;background:var(--soft);color:var(--muted);white-space:nowrap}
+.chip.ok{background:var(--good-bg);color:var(--good)}.chip.no{background:var(--bad-bg);color:var(--bad)}
+pre{margin:0;background:var(--soft);padding:8px 10px;border-radius:6px;overflow-x:auto;white-space:pre-wrap;word-break:break-word}
+details summary{cursor:pointer;color:var(--muted);font-size:.85rem}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:.84rem;color:var(--muted)}
+footer{font-size:.82rem;color:var(--muted);display:grid;gap:4px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>R8 Action Replay</h1>
+    <p class="muted">Stage B R8 on the ar25 development game: the unchanged control policy and the structured-target policy, two clicks each, from the same frozen starting frame. Every frame, request and response below comes from the hash-verified archive.</p>
+    <div class="facts" id="facts"></div>
+    <div class="note">Feedback in R8 was <b>sealed</b>: it was recorded but never entered a later request, so this run does not test learning from feedback. Reviewer objects (A, B, C) are <b>evaluation annotations</b> added after the fact; no policy request contained them.</div>
+  </header>
+
+  <div class="bar" role="toolbar" aria-label="Replay controls">
+    <div class="seg" id="steps" aria-label="Action"></div>
+    <label class="toggle"><input type="checkbox" id="showGrid" checked> Grid and coordinates</label>
+    <label class="toggle"><input type="checkbox" id="showChange" checked> <span class="swatch" style="background:var(--change)"></span> Changed cells</label>
+    <label class="toggle"><input type="checkbox" id="showRef"> <span class="swatch" style="border:2px dashed var(--ref)"></span> Reviewer objects (evaluation only)</label>
+  </div>
+
+  <section class="summary" id="summary" aria-label="All four actions"></section>
+  <section class="arms" id="arms"></section>
+
+  <div class="legend">
+    <span><span class="swatch" style="border:2px solid var(--click);border-radius:50%"></span> Click cell</span>
+    <span><span class="swatch" style="border:2px solid var(--target)"></span> Declared target</span>
+    <span><span class="swatch" style="background:var(--change)"></span> Cell differs from the before frame</span>
+    <span><span class="swatch" style="border:2px dashed var(--ref)"></span> Reviewer object (not a policy input)</span>
+    <span>Cell colours use this viewer's fixed 16-colour palette; hover a cell for its exact value.</span>
+  </div>
+  <footer id="footer"></footer>
+</div>
+
+<script>
+const DATA=/*__DATA__*/null;
+const PALETTE=['#FFFFFF','#CCCCCC','#999999','#666666','#333333','#000000','#E53AA3','#FF7BCC','#F93C31','#1E93FF','#88D8F1','#FFDC00','#FF851B','#921231','#4FCC30','#A356D6'];
+const ARM_NAME={control:'Control policy',target:'Structured target'};
+const state={step:0,frame:{},showGrid:true,showChange:true,showRef:false};
+const $=s=>document.querySelector(s);
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function el(tag,attrs={},...kids){const e=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k==='class')e.className=v;else if(k==='text')e.textContent=v;else e.setAttribute(k,v)}for(const k of kids)if(k!=null)e.append(k);return e}
+function chip(ok,yes,no){return el('span',{class:'chip '+(ok?'ok':'no'),text:ok?yes:no})}
+const fmt=s=>s.toFixed(2)+' s';
+function clickOf(step){const d=step.action.action_data||{};return 'x' in d?[d.x,d.y]:null}
+function onRef(xy){if(!xy)return null;for(const a of DATA.annotations)if(a.cells.some(c=>c[0]===xy[0]&&c[1]===xy[1]))return a.id;return null}
+function nearestRef(xy){if(!xy)return null;let best=null;for(const a of DATA.annotations)for(const c of a.cells){const d=Math.abs(c[0]-xy[0])+Math.abs(c[1]-xy[1]);if(!best||d<best.d)best={id:a.id,d}}return best}
+
+function facts(){
+  const f=$('#facts');const items=[['Game',DATA.game_id],['Model calls',DATA.calls],['Game actions',DATA.dispatches],
+    ['Prompt tokens',DATA.prompt_tokens.toLocaleString()],['Completion tokens',DATA.completion_tokens],['Trajectory',DATA.version]];
+  for(const[k,v]of items)f.append(el('span',{},k+': ',el('b',{text:String(v)})));
+}
+function summary(){
+  const s=$('#summary');s.replaceChildren();
+  DATA.arms.forEach(arm=>arm.steps.forEach((st,i)=>{
+    const xy=clickOf(st);const ref=onRef(xy);const near=nearestRef(xy);
+    const card=el('button',{class:'sumcard','aria-label':`${ARM_NAME[arm.arm]}, action ${i+1}`,style:'text-align:left;font:inherit;color:inherit;cursor:pointer'},
+      el('div',{class:'row'},el('b',{text:`${ARM_NAME[arm.arm]} · action ${i+1}`}),el('span',{class:'mono',text:xy?`click (${xy[0]}, ${xy[1]})`:'no click'})),
+      el('div',{class:'row'},el('span',{class:'muted',text:'Cells changed'}),el('span',{text:String(st.changes.reduce((n,c)=>n+(c?c.length:0),0))})),
+      el('div',{class:'row'},el('span',{class:'muted',text:'Reviewer object at click'}),el('span',{text:ref?ref:`none (nearest ${near.id}, ${near.d} cell${near.d===1?'':'s'} away)`})),
+      el('div',{class:'row'},el('span',{class:'muted',text:'Prediction'}),chip(st.prediction_correct,st.prediction.prediction+' · correct',st.prediction.prediction+' · wrong')),
+      el('div',{class:'row'},el('span',{class:'muted',text:'Feedback frame report'}),chip(st.feedback_frames_correct.every(Boolean),'correct','says changed · wrong')));
+    card.addEventListener('click',()=>{state.step=i;render();document.getElementById('arm-'+arm.arm).scrollIntoView({behavior:'smooth',block:'start'})});
+    s.append(card);
+  }));
+}
+function stepTabs(){
+  const box=$('#steps');box.replaceChildren();const n=Math.max(...DATA.arms.map(a=>a.steps.length));
+  for(let i=0;i<n;i++){const b=el('button',{type:'button','aria-pressed':String(state.step===i),text:`Action ${i+1}`});b.addEventListener('click',()=>{state.step=i;state.frame={};render()});box.append(b)}
+}
+function frameList(st){return [{label:'Before',grid:st.before[st.before.length-1],changes:null}].concat(st.returned.map((g,i)=>({label:`Returned frame ${i} of ${st.returned.length}`,grid:g,changes:st.changes[i],index:i})))}
+
+function draw(canvas,st,frame){
+  const grid=frame.grid,H=grid.length,W=grid[0].length;const margin=18;
+  const size=canvas.clientWidth||512;const dpr=window.devicePixelRatio||1;
+  canvas.width=Math.round(size*dpr);canvas.height=Math.round(size*dpr);
+  const ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);
+  const cell=(size-margin)/Math.max(W,H);const ox=margin,oy=margin;
+  ctx.fillStyle=css('--panel');ctx.fillRect(0,0,size,size);
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){ctx.fillStyle=PALETTE[grid[y][x]]||'#888';ctx.fillRect(ox+x*cell,oy+y*cell,Math.ceil(cell),Math.ceil(cell))}
+  if(state.showGrid){
+    for(let i=0;i<=W;i++){ctx.strokeStyle=i%8===0?css('--grid-strong'):css('--grid');ctx.lineWidth=i%8===0?1:.5;ctx.beginPath();ctx.moveTo(ox+i*cell,oy);ctx.lineTo(ox+i*cell,oy+H*cell);ctx.stroke()}
+    for(let j=0;j<=H;j++){ctx.strokeStyle=j%8===0?css('--grid-strong'):css('--grid');ctx.lineWidth=j%8===0?1:.5;ctx.beginPath();ctx.moveTo(ox,oy+j*cell);ctx.lineTo(ox+W*cell,oy+j*cell);ctx.stroke()}
+    ctx.fillStyle=css('--muted');ctx.font='10px "IBM Plex Mono",monospace';ctx.textAlign='center';ctx.textBaseline='middle';
+    for(let i=0;i<W;i+=8){ctx.fillText(String(i),ox+(i+.5)*cell,margin/2);}
+    ctx.textAlign='right';for(let j=0;j<H;j+=8){ctx.fillText(String(j),margin-3,oy+(j+.5)*cell)}
+  }
+  if(state.showRef){
+    ctx.setLineDash([4,3]);ctx.lineWidth=2;ctx.strokeStyle=css('--ref');ctx.fillStyle=css('--ref');ctx.font='600 12px "IBM Plex Sans",sans-serif';ctx.textAlign='left';ctx.textBaseline='bottom';
+    for(const a of DATA.annotations){const[x0,y0,x1,y1]=a.bbox;ctx.strokeRect(ox+x0*cell-1,oy+y0*cell-1,(x1-x0+1)*cell+2,(y1-y0+1)*cell+2);ctx.fillText(a.id+' (reviewer)',ox+x0*cell,oy+y0*cell-3)}
+    ctx.setLineDash([]);
+  }
+  if(state.showChange&&frame.changes){ctx.fillStyle=css('--change');ctx.globalAlpha=.7;for(const[x,y]of frame.changes)ctx.fillRect(ox+x*cell,oy+y*cell,cell,cell);ctx.globalAlpha=1}
+  if(st.target&&st.target.box){const[x0,y0,x1,y1]=st.target.box;ctx.lineWidth=2.5;ctx.strokeStyle=css('--target');ctx.strokeRect(ox+x0*cell-3,oy+y0*cell-3,(x1-x0+1)*cell+6,(y1-y0+1)*cell+6)}
+  const xy=clickOf(st);if(xy){ctx.lineWidth=2.5;ctx.strokeStyle=css('--click');ctx.beginPath();ctx.arc(ox+(xy[0]+.5)*cell,oy+(xy[1]+.5)*cell,cell*.9,0,Math.PI*2);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(ox+(xy[0]+.5)*cell,oy);ctx.lineTo(ox+(xy[0]+.5)*cell,oy+(xy[1]-.5)*cell);ctx.moveTo(ox,oy+(xy[1]+.5)*cell);ctx.lineTo(ox+(xy[0]-.5)*cell,oy+(xy[1]+.5)*cell);ctx.globalAlpha=.45;ctx.lineWidth=1;ctx.stroke();ctx.globalAlpha=1}
+  canvas.onmousemove=e=>{const r=canvas.getBoundingClientRect();const s=r.width/size;const x=Math.floor(((e.clientX-r.left)/s-ox)/cell),y=Math.floor(((e.clientY-r.top)/s-oy)/cell);
+    const out=canvas.parentElement.nextElementSibling;if(x>=0&&y>=0&&x<W&&y<H){const ref=state.showRef?onRef([x,y]):null;out.textContent=`cell x=${x}, y=${y} · value ${grid[y][x]}`+(frame.changes&&frame.changes.some(c=>c[0]===x&&c[1]===y)?' · changed':'')+(ref?` · reviewer ${ref}`:'')}else out.textContent=''};
+  canvas.onmouseleave=()=>{canvas.parentElement.nextElementSibling.textContent='Hover a cell for its coordinates and value.'};
+}
+
+function callCard(st,call,armName){
+  const card=el('div',{class:'call'});
+  const title={control:'Decision (control)',target:'Decision (structured target)',prediction:'Sealed prediction',feedback:'Sealed feedback'}[call.stage]||call.stage;
+  const head=el('div',{class:'callhead'},el('h3',{text:`Call ${call.index} · ${title}`}),
+    el('span',{class:'chip mono',text:`${fmt(call.started_at)} → ${fmt(call.returned_at)} · ${call.seconds.toFixed(2)} s`}));
+  card.append(head);
+  const tokens=el('div',{class:'muted',style:'font-size:.82rem'},`Prompt ${call.prompt_tokens.toLocaleString()} tokens (tokenizer ${call.tokenizer_prompt_tokens.toLocaleString()}) · completion ${call.completion_tokens} · finish ${call.finish_reason}`);
+  card.append(tokens,el('pre',{},call.response_text));
+  if(call.stage==='prediction')card.append(el('div',{},chip(st.prediction_correct,`Correct: frames show ${st.any_change?'a change':'no change'}`,`Wrong: frames show ${st.any_change?'a change':'no change'}`)));
+  if(call.stage==='feedback'){
+    const row=el('div',{style:'display:flex;flex-wrap:wrap;gap:6px'});
+    st.feedback_reported.forEach((r,i)=>row.append(chip(st.feedback_frames_correct[i],`frame ${i}: reported ${r}, actual ${st.feedback_truth[i]}`,`frame ${i}: reported ${r}, actual ${st.feedback_truth[i]}`)));
+    row.append(chip(st.assessment_correct,`assessment "${st.feedback.assessment}" matches the prediction`,`assessment "${st.feedback.assessment}" should be "${st.assessment_expected}"`));
+    card.append(row);
+    if(st.feedback.assessment==='supported'&&st.feedback_reported.some(Boolean)&&st.prediction.prediction==='no_change')
+      card.append(el('p',{class:'muted',style:'font-size:.84rem'},'Internally inconsistent: a "no_change" prediction cannot be supported if a returned frame changed.'));
+  }
+  const d=el('details',{},el('summary',{text:'System prompt and request hash'}),el('pre',{},call.system_prompt),el('div',{class:'mono muted',style:'margin-top:4px'},'request sha256 '+call.request_sha256));
+  card.append(d);return card;
+}
+
+function armPanel(arm){
+  const st=arm.steps[state.step];const key=arm.arm;
+  const panel=el('section',{class:'arm',id:'arm-'+key,'aria-label':ARM_NAME[key]});
+  panel.append(el('div',{class:'armhead'},el('h2',{text:`${ARM_NAME[key]} · action ${state.step+1}`}),el('span',{class:'mono muted',text:`ACTION${st.action.action_id} ${JSON.stringify(st.action.action_data)}`})));
+  if(!st){panel.append(el('p',{text:'No step recorded.'}));return panel}
+  const frames=frameList(st);const current=Math.min(state.frame[key]??0,frames.length-1);
+  const seg=el('div',{class:'seg'});frames.forEach((f,i)=>{const b=el('button',{type:'button','aria-pressed':String(i===current),text:f.label});b.addEventListener('click',()=>{state.frame[key]=i;render()});seg.append(b)});
+  panel.append(el('div',{class:'frames'},el('span',{class:'muted',text:'Frame:'}),seg));
+  const box=el('div',{class:'boardbox'});const canvas=el('canvas',{role:'img','aria-label':`${ARM_NAME[key]} ${frames[current].label}`});box.append(canvas);
+  panel.append(box,el('div',{class:'readout mono muted',text:'Hover a cell for its coordinates and value.'}));
+  const f=frames[current];
+  const xy=clickOf(st);const ref=onRef(xy);const near=nearestRef(xy);
+  const kv=el('dl',{class:'kv'});
+  const add=(k,v)=>kv.append(el('dt',{text:k}),el('dd',{},v));
+  add('Showing',f.label+(f.changes?` · ${f.changes.length} cell${f.changes.length===1?'':'s'} differ from before`:''));
+  add('Click',xy?`(${xy[0]}, ${xy[1]}), value ${st.before[st.before.length-1][xy[1]][xy[0]]} in the before frame`:'none');
+  add('Declared target',st.target?`${st.target.kind} ${JSON.stringify(st.target.box)}${st.target.box&&xy&&xy[0]>=st.target.box[0]&&xy[0]<=st.target.box[2]&&xy[1]>=st.target.box[1]&&xy[1]<=st.target.box[3]?' · contains the click':''}`:'not requested in this arm');
+  add('Reviewer object at click',ref?ref:`none · nearest is ${near.id}, ${near.d} cell${near.d===1?'':'s'} away`);
+  add('History given to the decision',`${st.history_seen.retained_transitions} earlier transition(s); recent action ids ${JSON.stringify(st.history_seen.recent_actions)}`+(st.history_seen.previous_grid_equals_current===null?'':st.history_seen.previous_grid_equals_current?'; previous grid identical to current':'; previous grid differs')+'. Earlier click coordinates were not included.');
+  add('Outcome',`levels ${st.before_levels} → ${st.after_levels}, state ${st.after_state}`);
+  add('Step timing',`committed ${fmt(st.timeline.committed_at)}, dispatched ${fmt(st.timeline.dispatch_started_at)}, acknowledged ${fmt(st.timeline.returned_at)}`);
+  panel.append(kv);
+  const calls=el('div',{class:'calls'});for(const c of st.calls)calls.append(callCard(st,c,key));panel.append(calls);
+  requestAnimationFrame(()=>draw(canvas,st,f));
+  return panel;
+}
+function render(){stepTabs();const arms=$('#arms');arms.replaceChildren(...DATA.arms.map(armPanel))}
+
+facts();summary();render();
+for(const id of ['showGrid','showChange','showRef'])document.getElementById(id).addEventListener('change',e=>{state[id]=e.target.checked;render()});
+let t;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(render,120)});
+$('#footer').append(el('div',{},'Source: archive sha256 ',el('span',{class:'mono',text:DATA.archive_sha256})),
+  el('div',{},'Trajectory sha256 ',el('span',{class:'mono',text:DATA.trajectory_sha256})),
+  el('div',{text:'Reviewer annotation scope: '+DATA.annotation_scope+'. Other visible regions: '+DATA.other_regions}),
+  el('div',{text:'Changed cells are computed by comparing each returned frame with the last before frame, cell by cell. Frames are shown exactly as recorded; nothing is interpolated between them.'}));
+</script>
