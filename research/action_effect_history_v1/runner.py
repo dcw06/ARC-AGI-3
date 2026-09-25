@@ -59,11 +59,9 @@ def index_view(report):
 
 
 def load(folder):
-    """Reassemble the full report from the index and per-episode files."""
-    folder = Path(folder)
-    index = json.loads((folder / 'run.json').read_bytes())
-    episodes = [json.loads((folder / 'episodes' / (e['episode_id'] + '.json')).read_bytes()) for e in index['episodes']]
-    return {**index, 'episodes': episodes}
+    """Reassemble and verify the full report (manifest hashes, inventory, index agreement)."""
+    from research.action_effect_history_v1.evidence import load_verified
+    return load_verified(folder)
 
 
 def pack(obs):
@@ -77,7 +75,7 @@ def parse_action(raw, legal):
 
 
 def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted_cpu_only',
-        clock=time.monotonic, writer=save, spec=None):
+        clock=time.monotonic, writer=None, spec=None, evidence_budget_bytes=64 * 1024**2):
     """Run the frozen schedule. `adapter_factory(game_id, arm, episode_id)` returns a fresh adapter with
     bootstrap() -> Observation, dispatch(action, before) -> (Observation, receipt), close() -> dict."""
     spec = spec or protocol()
@@ -90,6 +88,9 @@ def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted
               'pairs': [], 'episodes': [], 'calls': 0, 'dispatches': 0, 'prompt_tokens': 0, 'completion_tokens': 0}
 
     folder = Path(path)
+    if writer is None:
+        from research.action_effect_history_v1.evidence import RunEvidence
+        writer = RunEvidence(folder, evidence_budget_bytes)
 
     def persist(episode=None):
         # Bounded writes: the small index always, plus only the episode that changed.
@@ -268,6 +269,12 @@ def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted
         report.update(status='technical_failure', error=str(exc)[:200])
         if report['pairs'] and report['pairs'][-1].get('status') == 'running':
             report['pairs'][-1]['status'] = 'interrupted'
+    except Exception as exc:  # e.g. StorageExhausted raised while checkpointing an episode
+        report.update(status='technical_failure', error=type(exc).__name__ + ': ' + str(exc)[:200])
+        if report['pairs'] and report['pairs'][-1].get('status') == 'running':
+            report['pairs'][-1]['status'] = 'interrupted'
+        if report['episodes'] and report['episodes'][-1]['status'] in ('opening', 'running', 'complete'):
+            report['episodes'][-1].setdefault('evidence_error', type(exc).__name__)
     finally:
         # Every scheduled pair appears exactly once, with a status.
         seen = {p['pair_id'] for p in report['pairs']}
@@ -276,5 +283,10 @@ def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted
                 report['pairs'].append({'pair_id': pair['pair_id'], 'block': pair['block'], 'game_id': pair['game_id'],
                                         'order': pair['order'], 'status': 'not_started'})
         report['ended_at'] = now()
-        persist()
+        try:
+            persist()
+        except Exception as exc:  # e.g. storage exhausted: keep the failure visible, never mask the first error
+            report['evidence_error'] = type(exc).__name__ + ': ' + str(exc)[:200]
+            if report['status'] == 'complete':
+                report['status'] = 'technical_failure'
     return report
