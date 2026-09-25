@@ -36,9 +36,29 @@ def evaluate_output(output, *, mode='live'):
     if not (outer.get('process_groups_exited') is True and outer.get('independent_gpu_cleanup_verified') is True
             and outer.get('scratch_removed') is True):
         lifecycle.append('supervisor cleanup')
-    if first_cell.get('errors') or not all(v is True for v in first_cell.get('groups', {}).values()):
-        lifecycle.append('first-cell group cleanup')
-    if gpu.get('gpu_cleanup_verified') is not True or gpu.get('remaining_gpu_pids') != 0:
+    if outer.get('worker_released') is not True or (outer.get('run_evidence') or {}).get('verified') is not True:
+        lifecycle.append('supervisor release/run-evidence verification')
+    # First-cell ownership cleanup: nonempty, every owned group verified gone, drain finished, clean exit.
+    groups = first_cell.get('groups')
+    if (first_cell.get('errors') != [] or not isinstance(groups, dict) or not groups
+            or not all(v is True for v in groups.values()) or first_cell.get('drain_finished') is not True
+            or first_cell.get('returncode') != 0):
+        lifecycle.append('first-cell group cleanup, log drain or supervisor return code')
+    try:
+        ownership = read(output, 'control/ownership.json', 8192)
+        owned = {str(ownership['worker_pgid']), str(ownership['monitor_pgid'])}
+        if not owned <= set(groups or {}):
+            raise ValueError('owned groups missing from cleanup evidence')
+    except Exception as exc:
+        lifecycle.append('ownership evidence: ' + type(exc).__name__ + ': ' + str(exc)[:80])
+    # Notebook finalization receipt.
+    trees = cost.get('dependency_trees_removed')
+    if (cost.get('error') is not None or cost.get('study_status') != 'study_complete_pending_independent_evaluation'
+            or cost.get('first_cell_cleanup_verified') is not True
+            or (trees is not True if mode == 'live' else trees is not None)):
+        lifecycle.append('notebook finalization receipt')
+    if (gpu.get('gpu_cleanup_verified') is not True or gpu.get('remaining_gpu_pids') != 0
+            or gpu.get('groups_absent') is not True):
         lifecycle.append('independent GPU cleanup')
     elapsed = cost.get('elapsed_seconds')
     if type(elapsed) not in (int, float) or not 0 <= elapsed < outer.get('internal_seconds', 3300):

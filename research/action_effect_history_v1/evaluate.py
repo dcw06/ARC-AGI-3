@@ -24,67 +24,143 @@ def frame_key(observation):
 
 # ---------------------------------------------------------------- replay validation
 
+TERMINAL = {'WIN': 'win', 'GAME_OVER': 'game_over'}
+CALL_STATUSES = ('valid', 'invalid_output', 'interrupted', 'transport_failure', 'audit_failure', 'started', 'received')
+
+
+def check_call(call, request_max_tokens, limits):
+    """Independently re-derive a call's validity from its retained evidence; return a list of problems."""
+    problems = []
+    if call.get('status') not in CALL_STATUSES:
+        return ['unknown call status']
+    if call['status'] in ('valid', 'invalid_output'):
+        body = call.get('response')
+        raw = body.encode() if type(body) is str else None
+        p, c = call.get('server_prompt_tokens'), call.get('tokenizer_prompt_tokens')
+        n = call.get('server_completion_tokens')
+        if (raw is None or call.get('response_truncated') is not False or call.get('response_bytes') != len(raw)
+                or call.get('response_sha256') != hashlib.sha256(raw).hexdigest()):
+            problems.append('response evidence does not match its hash/size')
+        if type(p) is not int or p != c or not 0 < p <= limits['live_prompt_token_ceiling']:
+            problems.append('prompt-token disagreement or out of range')
+        if type(n) is not int or not 0 < n <= request_max_tokens:
+            problems.append('completion tokens out of range')
+        if call['status'] == 'valid' and call.get('finish_reason') != 'stop':
+            problems.append('call labelled valid without finish_reason stop')
+        if (type(call.get('started_at')) not in (int, float) or type(call.get('returned_at')) not in (int, float)
+                or call['returned_at'] < call['started_at']):
+            problems.append('call timing')
+    return problems
+
+
 def replay_episode(episode, case, limits):
-    """Rebuild every request and record from retained observations only; return a list of errors."""
+    """Rebuild every request and record from retained observations only, and independently re-check every
+    call, observation transition, terminal state, final observation, closure and count. Returns errors."""
     from agent.state import GameRuntimeState
     from certification.phase4_transient_v2.contract import unpack
+    eid = episode.get('episode_id', '?')
     errors = []
-    if episode['status'] not in ('complete', 'interrupted', 'technical_failure'):
-        return [f"{episode['episode_id']}: unknown status"]
-    if episode['initial'] is None:
-        return [] if episode['status'] != 'complete' else [f"{episode['episode_id']}: missing initial"]
-    if episode['initial']['canonical_hash'] != case['initial_canonical_hash']:
-        errors.append(f"{episode['episode_id']}: initial state")
+    status, stop = episode.get('status'), episode.get('stop_reason')
+    if status not in ('complete', 'interrupted', 'technical_failure', 'opening', 'running'):
+        return [f'{eid}: unknown status']
+    if status == 'complete' and stop not in COMPLETE_STOPS + ('invalid_output', 'dispatch_failure'):
+        errors.append(f'{eid}: complete episode with stop reason {stop}')
+    if status == 'complete':
+        cleanup = episode.get('cleanup')
+        if not isinstance(cleanup, dict) or cleanup.get('closed') is not True:
+            errors.append(f'{eid}: complete episode without a successful client/scorecard closure')
+    if episode.get('initial') is None:
+        if status == 'complete' or episode['calls'] or episode['steps']:
+            errors.append(f'{eid}: missing initial observation')
+        return errors
+    if episode['initial']['canonical_hash'] != case['initial_canonical_hash'] or episode['initial'].get('full_reset') is not True:
+        errors.append(f'{eid}: initial state')
     obs = unpack(episode['initial'])
+    last_observed = episode['initial']
     runtime = GameRuntimeState(obs, action_budget_limit=limits['actions_per_episode'])
     history = EffectHistory(limit=16)
     arm = episode['arm']
-    if len(episode['steps']) > limits['actions_per_episode']:
-        errors.append(f"{episode['episode_id']}: action cap exceeded")
-    for i, step in enumerate(episode['steps']):
-        call = episode['calls'][step['call_index']]
+    steps, calls = episode['steps'], episode['calls']
+    if len(steps) > limits['actions_per_episode']:
+        errors.append(f'{eid}: action cap exceeded')
+    for index, call in enumerate(calls):
+        for problem in check_call(call, call['request'].get('max_tokens', 0), limits):
+            errors.append(f'{eid} call {index}: {problem}')
+        if call['status'] != 'valid' and index != len(calls) - 1:
+            errors.append(f'{eid} call {index}: a non-valid call must be the last call of its episode')
+    stopped_early = False
+    for i, step in enumerate(steps):
+        if step.get('index') != i or step.get('call_index') != i or i >= len(calls):
+            errors.append(f'{eid} step {i}: step/call index accounting')
+            break
+        if step['before'] != last_observed:
+            errors.append(f'{eid} step {i}: pre-state is not the preceding observation')
+        if obs.state.value in TERMINAL:
+            errors.append(f'{eid} step {i}: action after a terminal state')
+        call = calls[i]
         expected = policy_request(runtime, arm, history if arm == 'history' else None, seed=limits['request_seed'])
         if call['request'] != expected or call['request_sha256'] != digest(expected):
-            errors.append(f"{episode['episode_id']} step {i}: request not reproducible from past observations")
-        if call['status'] != 'valid' or parse_action(call['response'], obs.available_actions) != step['action']:
-            errors.append(f"{episode['episode_id']} step {i}: call/action binding")
-        if step['before'] != episode['initial'] and i == 0:
-            errors.append(f"{episode['episode_id']}: first step pre-state")
+            errors.append(f'{eid} step {i}: request not reproducible from past observations')
+        try:
+            parsed = parse_action(call['response'], obs.available_actions) if call['status'] == 'valid' else None
+        except (ValueError, KeyError, TypeError):
+            parsed = None
+        if call['status'] != 'valid' or parsed != step['action']:
+            errors.append(f'{eid} step {i}: action not bound to a valid call')
         record = step.get('effect_record')
         if record is None:
-            errors.append(f"{episode['episode_id']} step {i}: missing effect record")
+            if i != len(steps) - 1 or status == 'complete':
+                errors.append(f'{eid} step {i}: missing effect record')
+            stopped_early = True
             break
         if record['status'] == 'acknowledged':
-            outcome = {'status': 'acknowledged', 'post': step['after']}
+            outcome = {'status': 'acknowledged', 'post': step.get('after')}
         elif record['status'] == 'dispatch_failed':
             outcome = {'status': 'dispatch_failed', 'error': record['detail']}
         else:
             outcome = {'status': 'outcome_unknown', 'reason': record['detail']}
-        if effect_record(step['before'], step['action'], outcome) != record:
-            errors.append(f"{episode['episode_id']} step {i}: effect record not reproducible")
+        try:
+            if effect_record(step['before'], step['action'], outcome) != record:
+                raise ValueError('mismatch')
+        except (ValueError, KeyError, TypeError):
+            errors.append(f'{eid} step {i}: effect record not reproducible from retained frames')
         history.append(record)
         if record['status'] != 'acknowledged':
-            if i != len(episode['steps']) - 1 or episode['stop_reason'] != 'dispatch_failure':
-                errors.append(f"{episode['episode_id']}: dispatch failure must stop the episode")
+            if i != len(steps) - 1 or stop != 'dispatch_failure':
+                errors.append(f'{eid}: dispatch failure must be the last step and stop the episode')
+            stopped_early = True
             break
         post = unpack(step['after'])
         runtime.counters.conservative_spent_actions += 1
-        runtime.replace_observation(post, action_id=step['action']['action_id'], action_data=step['action']['action_data'],
-                                    transition_id=f"{episode['episode_id']}-{i}")
-        obs = post
-    if episode['stop_reason'] == 'invalid_output':
-        last = episode['calls'][-1] if episode['calls'] else None
-        if last is None or last['status'] != 'invalid_output' or len(episode['calls']) != len(episode['steps']) + 1:
-            errors.append(f"{episode['episode_id']}: invalid-output stop not bound to its call")
+        runtime.replace_observation(post, action_id=step['action']['action_id'],
+                                    action_data=step['action']['action_data'], transition_id=f'{eid}-{i}')
+        obs, last_observed = post, step['after']
+    extra = len(calls) - len(steps)
+    if extra not in (0, 1):
+        errors.append(f'{eid}: call/action accounting ({len(calls)} calls, {len(steps)} actions)')
+    if stop == 'invalid_output':
+        last = calls[-1] if calls else None
+        if extra != 1 or last['status'] != 'invalid_output':
+            errors.append(f'{eid}: invalid-output stop not bound to a final invalid call')
         else:
             try:
-                if last['finish_reason'] == 'stop':
+                if last.get('finish_reason') == 'stop':
                     parse_action(last['response'], obs.available_actions)
-                    errors.append(f"{episode['episode_id']}: output marked invalid but parses")
+                    errors.append(f'{eid}: output labelled invalid but parses')
             except (ValueError, KeyError, TypeError):
                 pass
-    if episode['stop_reason'] == 'action_cap' and len(episode['steps']) != limits['actions_per_episode']:
-        errors.append(f"{episode['episode_id']}: action_cap before the cap")
+    if status == 'complete' and not stopped_early:
+        state = obs.state.value
+        if stop in ('win', 'game_over') and TERMINAL.get(state) != stop:
+            errors.append(f'{eid}: stop reason {stop} but final state is {state}')
+        if state in TERMINAL and stop != TERMINAL[state]:
+            errors.append(f'{eid}: terminal state {state} not reported as the stop reason')
+        if stop == 'action_cap' and (len(steps) != limits['actions_per_episode'] or state in TERMINAL):
+            errors.append(f'{eid}: action_cap without 12 actions or with a terminal state')
+        if stop in COMPLETE_STOPS and extra != 0:
+            errors.append(f'{eid}: extra call after the final action')
+        if episode.get('final') != last_observed:
+            errors.append(f'{eid}: final observation is not the last observed state')
     return errors
 
 
@@ -95,7 +171,9 @@ def episode_metrics(episode):
     acknowledged = [s for s in steps if s['effect_record']['status'] == 'acknowledged']
     m = {'episode_id': episode['episode_id'], 'pair_id': episode['pair_id'], 'block': episode['block'],
          'game_id': episode['game_id'], 'arm': episode['arm'], 'status': episode['status'],
-         'stop_reason': episode['stop_reason'], 'valid_actions': len(steps),
+         'stop_reason': episode['stop_reason'], 'play_stop_reason': episode.get('play_stop_reason'),
+         'closure_failed': not (isinstance(episode.get('cleanup'), dict) and episode['cleanup'].get('closed') is True),
+         'valid_actions': len(steps),
          'acknowledged_actions': len(acknowledged),
          'invalid_outputs': sum(c['status'] == 'invalid_output' for c in episode['calls']),
          'dispatch_failures': sum(s['effect_record']['status'] != 'acknowledged' for s in steps),
@@ -175,6 +253,24 @@ def evaluate(report, spec=None):
         errors.append('pair inventory differs from the schedule')
     for episode in report['episodes']:
         errors.extend(replay_episode(episode, cases[episode['game_id']], limits))
+    # Run-level accounting, independent of the runner's own totals and labels.
+    episodes = report['episodes']
+    if report.get('calls') != sum(len(e['calls']) for e in episodes):
+        errors.append('run call total differs from the episodes')
+    if report.get('dispatches') != sum(len(e['steps']) for e in episodes):
+        errors.append('run dispatch total differs from the episodes')
+    if sum(len(e['calls']) for e in episodes) > limits['maximum_policy_calls']:
+        errors.append('policy call ceiling exceeded')
+    schedule = {p['pair_id']: p for p in spec['schedule']}
+    for pair in report['pairs']:
+        members = [e for e in episodes if e['pair_id'] == pair['pair_id']]
+        if [e['arm'] for e in members] != schedule[pair['pair_id']]['order'][:len(members)]:
+            errors.append(f"{pair['pair_id']}: episodes out of schedule order")
+        if pair['status'] == 'complete' and (len(members) != 2 or any(e['status'] != 'complete' for e in members)):
+            errors.append(f"{pair['pair_id']}: pair labelled complete without two complete episodes")
+    if report.get('status') == 'complete' and (any(p['status'] != 'complete' for p in report['pairs'])
+                                               or any(e['status'] != 'complete' for e in episodes)):
+        errors.append('run labelled complete with incomplete pairs or episodes')
     metrics = [episode_metrics(e) for e in report['episodes']]
     by_pair = {}
     for m in metrics:
@@ -226,8 +322,9 @@ def evaluate(report, spec=None):
         reliability[arm] = {'episodes_attempted': len(ms), 'stop_reasons': stops,
                             'invalid_outputs': sum(m['invalid_outputs'] for m in ms),
                             'dispatch_failures': sum(m['dispatch_failures'] for m in ms),
-                            'interrupted_or_technical': sum(m['status'] in ('interrupted', 'technical_failure') for m in ms)}
-    arm_specific = [key for key in ('invalid_outputs', 'dispatch_failures', 'interrupted_or_technical')
+                            'interrupted_or_technical': sum(m['status'] in ('interrupted', 'technical_failure') for m in ms),
+                            'closure_failures': sum(m['closure_failed'] for m in ms)}
+    arm_specific = [key for key in ('invalid_outputs', 'dispatch_failures', 'interrupted_or_technical', 'closure_failures')
                     if reliability['history'][key] != reliability['baseline'][key]]
     return {'replay_passed': not errors, 'errors': errors, 'episodes': metrics, 'pairs': pairs, 'pooled': pooled,
             'reliability_by_arm': reliability, 'arm_specific_reliability_differences': arm_specific,

@@ -7,8 +7,15 @@ measured effects improves action selection over action-ID-only history. It is
 tested as a two-block, three-development-case, 12-action comparison with at
 most 144 policy calls.
 
-The review notebook is `notebooks/action-effect-history-v1-review-r1/`, lock
-`ceddda80…d59e`, with 1,063 runtime bindings plus hash-bound review documents.
+The review notebook is `notebooks/action-effect-history-v1-review-r2/`, lock
+`5859a014…e139`, with 1,063 runtime bindings plus hash-bound review documents.
+r1 is preserved and superseded. Review of r1 found three detection gaps, now
+fixed in r2:
+- failed scorecard closure could still yield a complete run;
+- replay trusted runner verdicts;
+- contradictory cleanup receipts were accepted.
+
+Each gap has a regression that fails on r1's source.
 It refuses to run without authority. The same cell in rehearsal mode completed
 the full connected study (launcher, supervisor, worker, host, bridge, runner)
 with a scripted model and passed the independent evaluator.

@@ -11,7 +11,7 @@ import re
 
 ROOT = Path(__file__).resolve().parents[2]
 SCOPE = 'action-effect-history-v1'
-REVIEW = 'notebooks/action-effect-history-v1-review-r1/review-source-lock.json'
+REVIEW = 'notebooks/action-effect-history-v1-review-r2/review-source-lock.json'
 SOURCE = 'reports/action_effect_history_v1_source_approval.json'
 COMPUTE = 'reports/action_effect_history_v1_compute_authorization.json'
 EXECUTION = 'research/action_effect_history_v1/execution_lock.json'

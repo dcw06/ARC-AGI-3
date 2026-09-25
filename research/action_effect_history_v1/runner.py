@@ -247,6 +247,12 @@ def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted
                 except Exception as exc:
                     episode['cleanup'] = {'closed': False, 'error': type(exc).__name__ + ': ' + str(exc)[:200]}
             persist(episode)
+        # Reached only when play itself ended normally: an unclosed client or scorecard is a technical failure.
+        if adapter is None or not isinstance(episode['cleanup'], dict) or episode['cleanup'].get('closed') is not True:
+            episode.update(play_stop_reason=episode['stop_reason'], status='technical_failure',
+                           stop_reason='technical_failure', error='client/scorecard closure failed')
+            persist(episode)
+            raise TechnicalFailure('client/scorecard closure failed')
         return episode
 
     persist()

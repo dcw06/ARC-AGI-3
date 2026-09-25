@@ -7,7 +7,7 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 3.6
+      "seconds": 4.1
     },
     "request_contract": {
       "module": "tests.test_action_effect_history_v1_contract",
@@ -23,7 +23,7 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 75.0
+      "seconds": 82.8
     },
     "connected_path_rehearsals": {
       "module": "tests.test_action_effect_history_v1_connected",
@@ -31,7 +31,15 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 135.0
+      "seconds": 154.1
+    },
+    "negative_regressions_from_r1_review": {
+      "module": "tests.test_action_effect_history_v1_negative",
+      "tests_run": 8,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 60.8
     },
     "r8_evaluator_repair": {
       "module": "tests.test_grounded_action_v1_r8_evaluation",
@@ -39,7 +47,7 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 1.7
+      "seconds": 2.5
     }
   },
   "all_passed": true,

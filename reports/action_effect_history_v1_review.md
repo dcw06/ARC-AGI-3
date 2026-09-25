@@ -5,6 +5,34 @@ has been no reservation, upload or model call. This package is for an
 independent review. Source approval and a separate compute authorization
 would follow only after that review.
 
+## Changes in r2 (review of r1 at `075114c`)
+
+r1 is preserved and superseded. Three failure-detection gaps found in review
+are fixed. Each has a regression in `tests/test_action_effect_history_v1_negative.py`,
+and every one of those regressions fails against r1's source:
+
+1. **Failed closure.** A failed client or scorecard closure now marks the
+   episode `technical_failure`, keeping its play outcome as
+   `play_stop_reason`, and stops the run. It appears in reliability as
+   `closure_failures`. Replay rejects any complete episode without a
+   successful closure receipt.
+2. **Independent replay.** Replay no longer trusts runner verdicts. It
+   re-derives every call's validity (a `stop` finish, token parity, completion
+   bounds, response hash and size), and checks every pre-state against the
+   preceding observation. It checks terminal states against stop reasons, and
+   the final observation against the last observed state. It checks call and
+   action accounting per episode and per run, pair composition, and whether a
+   `complete` label is justified. A forgery re-hashed into the manifest passes
+   the integrity check but fails replay.
+3. **Lifecycle evidence.** The output evaluator now requires:
+   - a first-cell cleanup record with no errors, non-empty groups including
+     the recorded worker and monitor groups, a finished log drain and a
+     supervisor return code of 0;
+   - a notebook receipt with no error, the study complete and dependency trees
+     removed (live) or not applicable (rehearsal);
+   - GPU cleanup confirming the groups are absent;
+   - verified run evidence.
+
 ## What the package contains
 
 | Item | Location |
@@ -38,7 +66,7 @@ before installing anything.
 
 ```sh
 python -m scripts.check_action_effect_history_v1          # every local suite; rewrites the rehearsal results
-python scripts/review_action_effect_history_v1_notebook.py --folder notebooks/action-effect-history-v1-review-r1
+python scripts/review_action_effect_history_v1_notebook.py --folder notebooks/action-effect-history-v1-review-r2
 ```
 
 The review script does four things:

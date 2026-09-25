@@ -7,7 +7,7 @@ import lzma
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-REVISION = 'r1'
+REVISION = 'r2'
 OUT = ROOT / f'notebooks/action-effect-history-v1-review-{REVISION}'
 MARKER = '    # AEH_AUTHORITY_SIDECARS: reviewed packaging inserts bound approvals here.\n'
 MODE_LINE = "MODE='live'\n"
@@ -21,7 +21,8 @@ REVIEW_DOCUMENTS = ('reports/action_effect_history_v1_protocol.md', 'reports/act
                     'scripts/build_action_effect_history_v1_review.py', 'scripts/check_action_effect_history_v1.py',
                     'scripts/rehearse_action_effect_history_v1.py', 'tests/test_action_effect_v1.py',
                     'tests/test_action_effect_history_v1_contract.py', 'tests/test_action_effect_history_v1_runner.py',
-                    'tests/test_action_effect_history_v1_connected.py', 'tests/test_action_effect_history_v1_snapshot.py')
+                    'tests/test_action_effect_history_v1_connected.py', 'tests/test_action_effect_history_v1_snapshot.py',
+                    'tests/test_action_effect_history_v1_negative.py')
 
 
 def inventory():
