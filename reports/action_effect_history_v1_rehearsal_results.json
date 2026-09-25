@@ -1,0 +1,61 @@
+{
+  "scope": "local CPU rehearsals only; scripted model; no model calls or GPU runs",
+  "suites": {
+    "records_and_fixtures": {
+      "module": "tests.test_action_effect_v1",
+      "tests_run": 8,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 3.6
+    },
+    "request_contract": {
+      "module": "tests.test_action_effect_history_v1_contract",
+      "tests_run": 5,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 0.1
+    },
+    "runner_rehearsals": {
+      "module": "tests.test_action_effect_history_v1_runner",
+      "tests_run": 8,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 75.0
+    },
+    "connected_path_rehearsals": {
+      "module": "tests.test_action_effect_history_v1_connected",
+      "tests_run": 2,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 135.0
+    },
+    "r8_evaluator_repair": {
+      "module": "tests.test_grounded_action_v1_r8_evaluation",
+      "tests_run": 3,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 1.7
+    }
+  },
+  "all_passed": true,
+  "covers": [
+    "full schedule and replay from past observations only",
+    "null-denominator metrics and outcome classes",
+    "invalid output, rejected/unknown/frameless dispatch",
+    "transport failure and token mismatch",
+    "deadline overrun mid-pair and non-admission",
+    "connected launcher->supervisor->worker->host->bridge->runner",
+    "model startup failure, monitor exit, cancellation, storage exhaustion, SIGTERM-ignoring child",
+    "instrumentation leaves requests and actions unchanged",
+    "R8 archive replay unchanged"
+  ],
+  "environment_check": "reports/action_effect_history_v1_environment_check.json",
+  "token_audit": "reports/action_effect_history_v1_token_audit.json",
+  "model_calls": 0,
+  "gpu_runs": 0
+}

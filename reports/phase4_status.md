@@ -1,5 +1,33 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
+## Action-effect history v1: GPU-disabled review package (not authorized)
+
+The question is whether a short history of exact actions and deterministically
+measured effects improves action selection over action-ID-only history. It is
+tested as a two-block, three-development-case, 12-action comparison with at
+most 144 policy calls.
+
+The review notebook is `notebooks/action-effect-history-v1-review-r1/`, lock
+`ceddda80…d59e`, with 1,063 runtime bindings plus hash-bound review documents.
+It refuses to run without authority. The same cell in rehearsal mode completed
+the full connected study (launcher, supervisor, worker, host, bridge, runner)
+with a scripted model and passed the independent evaluator.
+
+Connected fault rehearsals ended with verified cleanup and honest partial
+evidence:
+- model startup failure;
+- transport failure;
+- monitor death;
+- cancellation;
+- storage exhaustion;
+- a surviving child process;
+- invalid output.
+
+The actual-snapshot approval and packaging path passes. There has been no
+reservation, upload or model call. See the
+[review](action_effect_history_v1_review.md) and
+[protocol](action_effect_history_v1_protocol.md). Phase 4 remains open.
+
 ## Paired perception R2: completed; object localization missed in both arms
 
 The one authorized, unscored R2 Kaggle run completed. Frozen independent and

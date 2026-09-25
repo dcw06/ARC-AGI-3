@@ -308,15 +308,53 @@ for six pairs.
   audited estimate is about 3.79 M.
 - **Completions:** at most 144 × 128 = 18,432 tokens.
 
-## Before freezing
+## Live path and review status
 
-The protocol is frozen only with:
-- the runner, meeting the next milestone list;
-- CPU rehearsals of deadline overrun, invalid output, failed dispatch and
-  unknown outcome;
-- an evaluator that implements the null-denominator and eligibility rules;
-- unchanged historical R8 replay.
+The live path is implemented in `research/action_effect_history_v1/`. All of it
+runs on the one first-cell clock:
+- **launcher:** installation;
+- **supervisor:** owns the worker and monitor process groups;
+- **gated game worker;**
+- **model host:** vLLM, one canary, the bounded bridge;
+- **runner**, then the **independent output evaluator.**
 
-After that come a review notebook and source lock, source approval, and a
-separate compute authorization. Geometry and localization work remains
-queued. Phase 4 remains open.
+**Experiment-specific model contract** (`service.py`):
+- one canary, then at most 144 policy calls, where a failed call still counts;
+- exact frozen model settings, system prompt and legal-action schema;
+- only the baseline observation fields, or those plus `action_effect_history`
+  in its frozen shape;
+- tokenizer admission at 60,000 prompt tokens and a 65,536-token context;
+- exact token parity, judged after the received bytes are durable.
+
+Stage B's 12-call bridge contract is not reused.
+
+**Evidence.** Run evidence is written atomically under a byte budget, with a
+hash manifest, under the shared evidence-tree lock. The loader rejects
+missing, extra, truncated, mismatched and duplicate files. A run is `complete`
+only if every scheduled pair completed.
+
+**Rehearsal.** Rehearsal mode (scripted model, injected GPU identity, real
+process, memory and disk measurement) needs `AEH_REHEARSAL=1` and no visible
+GPU. It runs the same code from the launcher down. Connected rehearsals cover:
+- normal completion;
+- model startup failure;
+- transport failure;
+- monitor death;
+- cancellation mid-pair;
+- storage exhaustion;
+- a child that ignores SIGTERM;
+- invalid output.
+
+Every one ended with verified cleanup and honestly partial evidence. The
+supervised run's requests and actions are byte-identical to an unsupervised
+in-process run.
+
+**Reporting.** Reliability by arm, and arm-specific differences, are reported
+whatever the behaviour class. Solving is reported separately.
+
+**Before any launch:**
+- an independent review of the exact frozen package;
+- then source approval;
+- then a separate compute authorization and one fresh reservation.
+
+Geometry and localization work remains queued. Phase 4 remains open.
