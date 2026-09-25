@@ -39,8 +39,11 @@ policy input and makes no claim about what the changes mean.
 - **ACTION5:** 1 cell changed, at (63,0).
 - **ACTION7:** 0 cells changed.
 
-In this state, then, **no click tested changes anything, and each directional
-action does**. Both R8 arms chose only ACTION6.
+In this state, then, **all nine tested clicks were ineffective, and each
+directional action produced a visible effect**. Nine positions do not prove
+that every possible click is ineffective; no exhaustive check was run. A
+109-cell change establishes an effect, not useful progress or any
+understanding of the game. Both R8 arms chose only ACTION6.
 
 ## Answers to the six questions
 
@@ -65,16 +68,17 @@ reference objects. R8 alone cannot show whether the model located A.
   under-count, but a fixed prior for (16,16) also fits: integrated v1 and v2
   control clicked the same cells, although neither R8 prompt contains `16` or
   any example coordinate. The retained evidence cannot separate the two.
-- *It does not matter for R8's outcome.* A click inside A would also have
+- *It does not matter for R8's outcome.* Among the tested positions, a click inside A would also have
   changed nothing.
 
 **3. Did the selected target correspond to an object or merely contain the
 click?**
 It merely contained the click (confirmed). Both targets are one-cell boxes
 identical to the click. The protocol allowed `kind: "cell"`, so "target
-contains click" was satisfied by construction and says nothing about object
-selection. That makes it a measurement-design weakness, not evidence of
-grounding.
+contains click" was satisfied by construction. **The R8 target metric is
+downgraded:** a one-cell target equal to the click demonstrates only
+coordinate agreement between two fields of one answer. It does not
+demonstrate object grounding, and must not be reported as such.
 
 **4. What history was available when the agent repeated an ineffective
 action?**
@@ -124,7 +128,8 @@ The two fields are independent in the schema (`assessment` enum, then
 - The control prompt states no axis convention.
 - Decision history omits earlier click coordinates and any outcome summary.
   Feedback is sealed by design.
-- The target measure is trivially satisfied by one-cell targets.
+- The target measure is trivially satisfied by one-cell targets; it is
+  downgraded to coordinate agreement only.
 - The feedback stage uses a different grid encoding and an unlabeled "after"
   key.
 - The R8 evaluator did not check the first-cell deadline. This is fixed and
@@ -148,7 +153,8 @@ The two fields are independent in the schema (`assessment` enum, then
 
 **Not supported by the evidence:**
 - That R8's lack of progress came from clicking outside objects. The engine
-  probe shows a click on each reviewer object also changes nothing in this
+  probe shows that a click on each reviewer object, at the tested positions,
+  also changes nothing in this
   state.
 
 ## Strongest next hypothesis
@@ -156,8 +162,14 @@ The two fields are independent in the schema (`assessment` enum, then
 On ar25, **action-type selection is the first-order bottleneck**, ahead of
 click grounding. The policy uses only ACTION6, which has no visible effect
 anywhere tested in this state. It also receives no information that would
-lead it to try another action type. Improving click accuracy alone cannot
+lead it to try another action type. Improving click accuracy cannot explain
+the sampled no-op clicks, and among the tested positions it could not
 produce a visible change here.
+
+Because ar25 informed this hypothesis and the intervention that follows, ar25
+is a development case from here on, not independent evidence of
+generalization. The offline arrow and click probes stay evaluation-only and
+must never reach a policy request.
 
 This is established for one game, one initial state and single actions. It
 does not show that directional actions lead to progress, or that the same
