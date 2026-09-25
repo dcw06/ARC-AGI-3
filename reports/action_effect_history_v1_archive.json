@@ -1,0 +1,931 @@
+{
+  "archive": "evidence/action-effect-history-v1-complete.zip",
+  "archive_sha256": "a67b69557d835f8076e3b80674c29c0032b95ec2dbd9a70f032ed85af54654cb",
+  "attempt_id": "aeh1-4c75150a156640fcad105a770ce81119",
+  "evaluation": {
+    "evaluation": {
+      "all_six_pairs_complete": true,
+      "arm_specific_reliability_differences": [],
+      "behaviour_result": "inconclusive",
+      "episodes": [
+        {
+          "acknowledged_actions": 12,
+          "any_earlier_repeat_opportunities": 11,
+          "any_earlier_repeat_rate": 0.8181818181818182,
+          "any_earlier_repeats": 9,
+          "arm": "baseline",
+          "block": 1,
+          "closure_failed": false,
+          "completion_tokens": 383,
+          "dispatch_failures": 0,
+          "distinct_action_ids": 1,
+          "distinct_actions": 3,
+          "distinct_states": 1,
+          "episode_id": "b1-ar25-baseline",
+          "game_id": "ar25-0c556536",
+          "immediate_repeat_opportunities": 11,
+          "immediate_repeat_rate": 0.2727272727272727,
+          "immediate_repeats": 3,
+          "invalid_outputs": 0,
+          "latency_seconds": [
+            0.984762,
+            1.407482,
+            1.420427,
+            1.406231,
+            1.408721,
+            1.417261,
+            1.408678,
+            1.417391,
+            1.409372,
+            1.413707,
+            1.413161,
+            1.426819
+          ],
+          "levels_gained": 0,
+          "no_change_results": 12,
+          "observable_change_rate": 0.0,
+          "observable_changes": 0,
+          "pair_id": "b1-ar25",
+          "play_stop_reason": null,
+          "prompt_tokens": 292938,
+          "state_revisits": 0,
+          "status": "complete",
+          "stop_reason": "action_cap",
+          "type_repeat_rate": 0.7272727272727273,
+          "type_repeats_after_no_change": 8,
+          "valid_actions": 12
+        },
+        {
+          "acknowledged_actions": 12,
+          "any_earlier_repeat_opportunities": 11,
+          "any_earlier_repeat_rate": 0.8181818181818182,
+          "any_earlier_repeats": 9,
+          "arm": "history",
+          "block": 1,
+          "closure_failed": false,
+          "completion_tokens": 333,
+          "dispatch_failures": 0,
+          "distinct_action_ids": 2,
+          "distinct_actions": 3,
+          "distinct_states": 1,
+          "episode_id": "b1-ar25-history",
+          "game_id": "ar25-0c556536",
+          "immediate_repeat_opportunities": 11,
+          "immediate_repeat_rate": 0.2727272727272727,
+          "immediate_repeats": 3,
+          "invalid_outputs": 0,
+          "latency_seconds": [
+            0.559809,
+            1.671749,
+            1.578839,
+            1.674309,
+            1.586281,
+            1.681535,
+            1.679919,
+            1.590512,
+            1.683929,
+            1.592615,
+            1.591147,
+            1.726635
+          ],
+          "levels_gained": 0,
+          "no_change_results": 12,
+          "observable_change_rate": 0.0,
+          "observable_changes": 0,
+          "pair_id": "b1-ar25",
+          "play_stop_reason": null,
+          "prompt_tokens": 295925,
+          "state_revisits": 0,
+          "status": "complete",
+          "stop_reason": "action_cap",
+          "type_repeat_rate": 0.0,
+          "type_repeats_after_no_change": 0,
+          "valid_actions": 12
+        },
+        {
+          "acknowledged_actions": 12,
+          "any_earlier_repeat_opportunities": 0,
+          "any_earlier_repeat_rate": null,
+          "any_earlier_repeats": 0,
+          "arm": "baseline",
+          "block": 1,
+          "closure_failed": false,
+          "completion_tokens": 395,
+          "dispatch_failures": 0,
+          "distinct_action_ids": 1,
+          "distinct_actions": 4,
+          "distinct_states": 12,
+          "episode_id": "b1-s5i5-baseline",
+          "game_id": "s5i5-18d95033",
+          "immediate_repeat_opportunities": 0,
+          "immediate_repeat_rate": null,
+          "immediate_repeats": 0,
+          "invalid_outputs": 0,
+          "latency_seconds": [
+            0.501691,
+            1.37598,
+            1.371813,
+            1.372085,
+            1.369779,
+            1.372247,
+            1.401296,
+            1.405965,
+            1.383095,
+            1.377055,
+            1.37456,
+            1.398154
+          ],
+          "levels_gained": 0,
+          "no_change_results": 0,
+          "observable_change_rate": 1.0,
+          "observable_changes": 12,
+          "pair_id": "b1-s5i5",
+          "play_stop_reason": null,
+          "prompt_tokens": 285202,
+          "state_revisits": 0,
+          "status": "complete",
+          "stop_reason": "action_cap",
+          "type_repeat_rate": null,
+          "type_repeats_after_no_change": 0,
+          "valid_actions": 12
+        },
+        {
+          "acknowledged_actions": 12,
+          "any_earlier_repeat_opportunities": 0,
+          "any_earlier_repeat_rate": null,
+          "any_earlier_repeats": 0,
+          "arm": "history",
+          "block": 1,
+          "closure_failed": false,
+          "completion_tokens": 372,
+          "dispatch_failures": 0,
+          "distinct_action_ids": 1,
+          "distinct_actions": 1,
+          "distinct_states": 12,
+          "episode_id": "b1-s5i5-history",
+          "game_id": "s5i5-18d95033",
+          "immediate_repeat_opportunities": 0,
+          "immediate_repeat_rate": null,
+          "immediate_repeats": 0,
+          "invalid_outputs": 0,
+          "latency_seconds": [
+            0.507977,
+            1.603785,
+            1.606999,
+            1.630339,
+            1.635611,
+            1.608108,
+            1.630713,
+            1.630927,
+            1.633522,
+            1.633272,
+            1.681999,
+            1.635073
+          ],
+          "levels_gained": 0,
+          "no_change_results": 0,
+          "observable_change_rate": 1.0,
+          "observable_changes": 12,
+          "pair_id": "b1-s5i5",
+          "play_stop_reason": null,
+          "prompt_tokens": 288321,
+          "state_revisits": 0,
+          "status": "complete",
+          "stop_reason": "action_cap",
+          "type_repeat_rate": null,
+          "type_repeats_after_no_change": 0,
+          "valid_actions": 12
+        },
+        {
+          "acknowledged_actions": 12,
+          "any_earlier_repeat_opportunities": 0,
+          "any_earlier_repeat_rate": null,
+          "any_earlier_repeats": 0,
+          "arm": "baseline",
+          "block": 1,
+          "closure_failed": false,
+          "completion_tokens": 246,
+          "dispatch_failures": 0,
+          "distinct_action_ids": 3,
+          "distinct_actions": 3,
+          "distinct_states": 11,
+          "episode_id": "b1-wa30-baseline",
+          "game_id": "wa30-ee6fef47",
+          "immediate_repeat_opportunities": 0,
+          "immediate_repeat_rate": null,
+          "immediate_repeats": 0,
+          "invalid_outputs": 0,
+          "latency_seconds": [
+            0.45027,
+            1.354406,
+            1.322328,
+            1.326075,
+            1.33577,
+            1.303751,
+            1.302461,
+            1.318748,
+            1.305018,
+            1.298266,
+            1.261663,
+            1.294304
+          ],
+          "levels_gained": 0,
+          "no_change_results": 0,
+          "observable_change_rate": 1.0,
+          "observable_changes": 12,
+          "pair_id": "b1-wa30",
+          "play_stop_reason": null,
+          "prompt_tokens": 283148,
+          "state_revisits": 1,
+          "status": "complete",
+          "stop_reason": "action_cap",
+          "type_repeat_rate": null,
+          "type_repeats_after_no_change": 0,
+          "valid_actions": 12
+        },
+        {
+          "acknowledged_actions": 12,
+          "any_earlier_repeat_opportunities": 1,
+          "any_earlier_repeat_rate": 0.0,
+          "any_earlier_repeats": 0,
+          "arm": "history",
+          "block": 1,
+          "closure_failed": false,
+          "completion_tokens": 228,
+          "dispatch_failures": 0,
+          "distinct_action_ids": 5,
+          "distinct_actions": 5,
+          "distinct_states": 11,
+          "episode_id": "b1-wa30-history",
+          "game_id": "wa30-ee6fef47",
+          "immediate_repeat_opportunities": 1,
+          "immediate_repeat_rate": 0.0,
+          "immediate_repeats": 0,
+          "invalid_outputs": 0,
+          "latency_seconds": [
+            0.443095,
+            1.491774,
+            1.503625,
+            1.498645,
+            1.503372,
+            1.528223,
+            1.529118,
+            1.531667,
+            1.520429,
+            1.539916,
+            1.536604,
+            1.521133
+          ],
+          "levels_gained": 0,
+          "no_change_results": 1,
+          "observable_change_rate": 0.9166666666666666,
+          "observable_changes": 11,
+          "pair_id": "b1-wa30",
+          "play_stop_reason": null,
+          "prompt_tokens": 286013,
+          "state_revisits": 0,
+          "status": "complete",
+          "stop_reason": "action_cap",
+          "type_repeat_rate": 0.0,
+          "type_repeats_after_no_change": 0,
+          "valid_actions": 12
+        },
+        {
+          "acknowledged_actions": 12,
+          "any_earlier_repeat_opportunities": 1,
+          "any_earlier_repeat_rate": 0.0,
+          "any_earlier_repeats": 0,
+          "arm": "history",
+          "block": 2,
+          "closure_failed": false,
+          "completion_tokens": 233,
+          "dispatch_failures": 0,
+          "distinct_action_ids": 5,
+          "distinct_actions": 5,
+          "distinct_states": 11,
+          "episode_id": "b2-wa30-history",
+          "game_id": "wa30-ee6fef47",
+          "immediate_repeat_opportunities": 1,
+          "immediate_repeat_rate": 0.0,
+          "immediate_repeats": 0,
+          "invalid_outputs": 0,
+          "latency_seconds": [
+            0.199719,
+            0.229328,
+            0.245787,
+            0.240189,
+            0.200434,
+            0.256067,
+            0.232364,
+            0.241621,
+            0.233066,
+            0.251602,
+            0.239236,
+            0.247725
+          ],
+          "levels_gained": 0,
+          "no_change_results": 1,
+          "observable_change_rate": 0.9166666666666666,
+          "observable_changes": 11,
+          "pair_id": "b2-wa30",
+          "play_stop_reason": null,
+          "prompt_tokens": 286013,
+          "state_revisits": 0,
+          "status": "complete",
+          "stop_reason": "action_cap",
+          "type_repeat_rate": 0.0,
+          "type_repeats_after_no_change": 0,
+          "valid_actions": 12
+        },
+        {
+          "acknowledged_actions": 12,
+          "any_earlier_repeat_opportunities": 1,
+          "any_earlier_repeat_rate": 1.0,
+          "any_earlier_repeats": 1,
+          "arm": "baseline",
+          "block": 2,
+          "closure_failed": false,
+          "completion_tokens": 245,
+          "dispatch_failures": 0,
+          "distinct_action_ids": 3,
+          "distinct_actions": 3,
+          "distinct_states": 11,
+          "episode_id": "b2-wa30-baseline",
+          "game_id": "wa30-ee6fef47",
+          "immediate_repeat_opportunities": 1,
+          "immediate_repeat_rate": 1.0,
+          "immediate_repeats": 1,
+          "invalid_outputs": 0,
+          "latency_seconds": [
+            0.266921,
+            1.315283,
+            1.316427,
+            1.318904,
+            1.305156,
+            1.301282,
+            1.265781,
+            1.274928,
+            1.2618,
+            1.285891,
+            1.298062,
+            1.286323
+          ],
+          "levels_gained": 0,
+          "no_change_results": 1,
+          "observable_change_rate": 0.9166666666666666,
+          "observable_changes": 11,
+          "pair_id": "b2-wa30",
+          "play_stop_reason": null,
+          "prompt_tokens": 283137,
+          "state_revisits": 0,
+          "status": "complete",
+          "stop_reason": "action_cap",
+          "type_repeat_rate": 0.0,
+          "type_repeats_after_no_change": 0,
+          "valid_actions": 12
+        },
+        {
+          "acknowledged_actions": 12,
+          "any_earlier_repeat_opportunities": 0,
+          "any_earlier_repeat_rate": null,
+          "any_earlier_repeats": 0,
+          "arm": "history",
+          "block": 2,
+          "closure_failed": false,
+          "completion_tokens": 372,
+          "dispatch_failures": 0,
+          "distinct_action_ids": 1,
+          "distinct_actions": 1,
+          "distinct_states": 12,
+          "episode_id": "b2-s5i5-history",
+          "game_id": "s5i5-18d95033",
+          "immediate_repeat_opportunities": 0,
+          "immediate_repeat_rate": null,
+          "immediate_repeats": 0,
+          "invalid_outputs": 0,
+          "latency_seconds": [
+            0.510722,
+            1.613565,
+            1.609169,
+            1.63128,
+            1.633456,
+            1.612486,
+            1.633969,
+            1.63332,
+            1.634956,
+            1.634306,
+            1.683322,
+            1.636913
+          ],
+          "levels_gained": 0,
+          "no_change_results": 0,
+          "observable_change_rate": 1.0,
+          "observable_changes": 12,
+          "pair_id": "b2-s5i5",
+          "play_stop_reason": null,
+          "prompt_tokens": 288321,
+          "state_revisits": 0,
+          "status": "complete",
+          "stop_reason": "action_cap",
+          "type_repeat_rate": null,
+          "type_repeats_after_no_change": 0,
+          "valid_actions": 12
+        },
+        {
+          "acknowledged_actions": 12,
+          "any_earlier_repeat_opportunities": 0,
+          "any_earlier_repeat_rate": null,
+          "any_earlier_repeats": 0,
+          "arm": "baseline",
+          "block": 2,
+          "closure_failed": false,
+          "completion_tokens": 395,
+          "dispatch_failures": 0,
+          "distinct_action_ids": 1,
+          "distinct_actions": 4,
+          "distinct_states": 12,
+          "episode_id": "b2-s5i5-baseline",
+          "game_id": "s5i5-18d95033",
+          "immediate_repeat_opportunities": 0,
+          "immediate_repeat_rate": null,
+          "immediate_repeats": 0,
+          "invalid_outputs": 0,
+          "latency_seconds": [
+            0.503546,
+            1.381691,
+            1.375421,
+            1.377064,
+            1.37507,
+            1.374649,
+            1.402574,
+            1.401959,
+            1.376585,
+            1.387166,
+            1.381006,
+            1.403205
+          ],
+          "levels_gained": 0,
+          "no_change_results": 0,
+          "observable_change_rate": 1.0,
+          "observable_changes": 12,
+          "pair_id": "b2-s5i5",
+          "play_stop_reason": null,
+          "prompt_tokens": 285202,
+          "state_revisits": 0,
+          "status": "complete",
+          "stop_reason": "action_cap",
+          "type_repeat_rate": null,
+          "type_repeats_after_no_change": 0,
+          "valid_actions": 12
+        },
+        {
+          "acknowledged_actions": 12,
+          "any_earlier_repeat_opportunities": 11,
+          "any_earlier_repeat_rate": 0.8181818181818182,
+          "any_earlier_repeats": 9,
+          "arm": "history",
+          "block": 2,
+          "closure_failed": false,
+          "completion_tokens": 333,
+          "dispatch_failures": 0,
+          "distinct_action_ids": 2,
+          "distinct_actions": 3,
+          "distinct_states": 1,
+          "episode_id": "b2-ar25-history",
+          "game_id": "ar25-0c556536",
+          "immediate_repeat_opportunities": 11,
+          "immediate_repeat_rate": 0.2727272727272727,
+          "immediate_repeats": 3,
+          "invalid_outputs": 0,
+          "latency_seconds": [
+            0.562465,
+            1.695974,
+            1.599816,
+            1.692124,
+            1.601593,
+            1.700439,
+            1.696198,
+            1.604041,
+            1.696393,
+            1.60342,
+            1.604064,
+            1.736981
+          ],
+          "levels_gained": 0,
+          "no_change_results": 12,
+          "observable_change_rate": 0.0,
+          "observable_changes": 0,
+          "pair_id": "b2-ar25",
+          "play_stop_reason": null,
+          "prompt_tokens": 295925,
+          "state_revisits": 0,
+          "status": "complete",
+          "stop_reason": "action_cap",
+          "type_repeat_rate": 0.0,
+          "type_repeats_after_no_change": 0,
+          "valid_actions": 12
+        },
+        {
+          "acknowledged_actions": 12,
+          "any_earlier_repeat_opportunities": 11,
+          "any_earlier_repeat_rate": 0.8181818181818182,
+          "any_earlier_repeats": 9,
+          "arm": "baseline",
+          "block": 2,
+          "closure_failed": false,
+          "completion_tokens": 373,
+          "dispatch_failures": 0,
+          "distinct_action_ids": 1,
+          "distinct_actions": 3,
+          "distinct_states": 1,
+          "episode_id": "b2-ar25-baseline",
+          "game_id": "ar25-0c556536",
+          "immediate_repeat_opportunities": 11,
+          "immediate_repeat_rate": 0.2727272727272727,
+          "immediate_repeats": 3,
+          "invalid_outputs": 0,
+          "latency_seconds": [
+            0.516505,
+            1.425332,
+            1.430466,
+            1.426767,
+            1.42663,
+            1.429739,
+            1.429838,
+            1.437514,
+            1.42934,
+            1.430635,
+            1.429902,
+            1.4306
+          ],
+          "levels_gained": 0,
+          "no_change_results": 12,
+          "observable_change_rate": 0.0,
+          "observable_changes": 0,
+          "pair_id": "b2-ar25",
+          "play_stop_reason": null,
+          "prompt_tokens": 292938,
+          "state_revisits": 0,
+          "status": "complete",
+          "stop_reason": "action_cap",
+          "type_repeat_rate": 0.7272727272727273,
+          "type_repeats_after_no_change": 8,
+          "valid_actions": 12
+        }
+      ],
+      "errors": [],
+      "interpretation_scope": "exploratory; development cases only; not generalization",
+      "opportunities_eliminated_pairs": [],
+      "pairs": [
+        {
+          "block": 1,
+          "class": "not_reduced",
+          "game_id": "ar25-0c556536",
+          "levels": {
+            "baseline": 0,
+            "history": 0
+          },
+          "pair_id": "b1-ar25",
+          "pair_status": "complete",
+          "reason": "0.273 > half of 0.273"
+        },
+        {
+          "block": 1,
+          "class": "ineligible",
+          "game_id": "s5i5-18d95033",
+          "levels": {
+            "baseline": 0,
+            "history": 0
+          },
+          "pair_id": "b1-s5i5",
+          "pair_status": "complete",
+          "reason": "baseline repeat rate not positive"
+        },
+        {
+          "block": 1,
+          "class": "ineligible",
+          "game_id": "wa30-ee6fef47",
+          "levels": {
+            "baseline": 0,
+            "history": 0
+          },
+          "pair_id": "b1-wa30",
+          "pair_status": "complete",
+          "reason": "baseline repeat rate not positive"
+        },
+        {
+          "block": 2,
+          "class": "reduced",
+          "game_id": "wa30-ee6fef47",
+          "levels": {
+            "baseline": 0,
+            "history": 0
+          },
+          "pair_id": "b2-wa30",
+          "pair_status": "complete",
+          "reason": "0.000 <= half of 1.000"
+        },
+        {
+          "block": 2,
+          "class": "ineligible",
+          "game_id": "s5i5-18d95033",
+          "levels": {
+            "baseline": 0,
+            "history": 0
+          },
+          "pair_id": "b2-s5i5",
+          "pair_status": "complete",
+          "reason": "baseline repeat rate not positive"
+        },
+        {
+          "block": 2,
+          "class": "not_reduced",
+          "game_id": "ar25-0c556536",
+          "levels": {
+            "baseline": 0,
+            "history": 0
+          },
+          "pair_id": "b2-ar25",
+          "pair_status": "complete",
+          "reason": "0.273 > half of 0.273"
+        }
+      ],
+      "pooled": {
+        "baseline": {
+          "episodes": 6,
+          "episodes_with_invalid_output_or_dispatch_failure": 0,
+          "immediate_repeat_opportunities": 23,
+          "immediate_repeat_rate": 0.30434782608695654,
+          "immediate_repeats": 7,
+          "levels_gained": 0
+        },
+        "history": {
+          "episodes": 6,
+          "episodes_with_invalid_output_or_dispatch_failure": 0,
+          "immediate_repeat_opportunities": 24,
+          "immediate_repeat_rate": 0.25,
+          "immediate_repeats": 6,
+          "levels_gained": 0
+        }
+      },
+      "reliability_by_arm": {
+        "baseline": {
+          "closure_failures": 0,
+          "dispatch_failures": 0,
+          "episodes_attempted": 6,
+          "interrupted_or_technical": 0,
+          "invalid_outputs": 0,
+          "stop_reasons": {
+            "action_cap": 6
+          }
+        },
+        "history": {
+          "closure_failures": 0,
+          "dispatch_failures": 0,
+          "episodes_attempted": 6,
+          "interrupted_or_technical": 0,
+          "invalid_outputs": 0,
+          "stop_reasons": {
+            "action_cap": 6
+          }
+        }
+      },
+      "replay_passed": true,
+      "run_status": "complete",
+      "solving_result": "no_demonstrated_solving_improvement"
+    },
+    "exact_provider_billed_seconds": null,
+    "lifecycle_errors": [],
+    "lifecycle_passed": true,
+    "mode": "live",
+    "phase4_complete": false,
+    "run_evidence": {
+      "run_status": "complete",
+      "verified": true
+    },
+    "technically_complete": true
+  },
+  "members": {
+    "notebooks/action-effect-history-v1-review-r3/review-source-lock.json": {
+      "bytes": 130572,
+      "sha256": "0f870a1a73e6ffc8a4a8ba740df3576083d0d8690798805399072b27c451e386"
+    },
+    "notebooks/action-effect-history-v1-run/launch-package-lock.json": {
+      "bytes": 1136,
+      "sha256": "a7a1449ea36275333140d5380c9fc26e539aa0e822be4d1c49a8faef8be943a6"
+    },
+    "reports/action_effect_history_v1_compute_authorization.json": {
+      "bytes": 731,
+      "sha256": "e9fbc58f8bc75874eea5b7e00809ec2b0f57ee6469cdeb28132dc16c0747a5e8"
+    },
+    "reports/action_effect_history_v1_download.json": {
+      "bytes": 8268,
+      "sha256": "3af984681c40d1910473f03813a9ac60faceac31e57f8ad7d6490b2d4fb85394"
+    },
+    "reports/action_effect_history_v1_launch.json": {
+      "bytes": 597,
+      "sha256": "b2d0ed2aa589dfcc8f586e9a3d63b0135e7ac417b4b0e51c5a1e4bcb8301ef44"
+    },
+    "reports/action_effect_history_v1_launch_claim.json": {
+      "bytes": 283,
+      "sha256": "58971fe38f3c0e1072f83a8955e94eab0b39b340e163bb31a4209dd1eb88d2f3"
+    },
+    "reports/action_effect_history_v1_live_evaluation.json": {
+      "bytes": 17245,
+      "sha256": "2e22577275229db6e6a1c28e359e8a04b8d2f4ba4974169493a81911890d8e98"
+    },
+    "reports/action_effect_history_v1_prelaunch.json": {
+      "bytes": 232,
+      "sha256": "3e1b3970eb20795a8f4a9f65f85e4d1a81de20841572c4ab6f78f80c6b2a9e1a"
+    },
+    "reports/action_effect_history_v1_results.md": {
+      "bytes": 4757,
+      "sha256": "bd5b8929c0a7f8b43e593c83703a7c853dc449b9b403cb7fe5a2aff44c169de3"
+    },
+    "reports/action_effect_history_v1_source_approval.json": {
+      "bytes": 381,
+      "sha256": "ba7d225af08c6b56e4aae9ea403902c05c66b1b24af727ff7e141a5bffcf263a"
+    },
+    "reports/runs/action-effect-history-v1/download/.aeh1-4c75150a156640fcad105a770ce81119.runtime-consumed.json": {
+      "bytes": 77,
+      "sha256": "68fe34adcfeab4581d8cfe51c1b9447c287357442130e2961499596501f5021f"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/.evidence.lock": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/control/cancel.json": {
+      "bytes": 50,
+      "sha256": "20250f8be426d8efc44d3c68345d4f0d75e3677b79bb4d6c0f13f2663d87ad0d"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/control/first-cell-supervisor-cleanup.json": {
+      "bytes": 106,
+      "sha256": "d982803423b29424116bc95bbdccddccf47e0b988974a4770cbebdca52dcb5a9"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/control/gpu-cleanup.json": {
+      "bytes": 233,
+      "sha256": "739bb336c06487a2a5d66edd014e193fc8df2b95c8c76b14a4970f5601c9d041"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/control/installation.json": {
+      "bytes": 2883,
+      "sha256": "72f607098420ee7ca460d61292c66f1e24340c3e22a48e15e02fbbccbf3e5e5c"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/control/monitor-ready-ack.json": {
+      "bytes": 77,
+      "sha256": "3a0fab65cfa957b9f2c11b8bb08f6dbc8a4c8169e6c5ea2d5f87abb5626c997d"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/control/notebook-cost.json": {
+      "bytes": 318,
+      "sha256": "0b6910bc6fc09c8cb81424732cdcb5cc7b7ff1bf850b0f64aa897483ca93bffc"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/control/outer.json": {
+      "bytes": 575,
+      "sha256": "77840caf25b3895a23b64b524d8d09c8d37c095d9ce96872350c7378e4072127"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/control/ownership.json": {
+      "bytes": 158,
+      "sha256": "628b593a687d288e5b726a3c0eace75a3a2234dc8cd56c74d29e1d9ee3874fa4"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/control/stop-monitor.json": {
+      "bytes": 29,
+      "sha256": "99a789818699d52be838ca49957536fefc3fea436f42e247f48b854a2d51c576"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/logs/307.json": {
+      "bytes": 44184,
+      "sha256": "90fe532709db4c3a69d0d8faedce61d64a719759addc4e8441ea74b7ed070075"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/logs/309.json": {
+      "bytes": 102,
+      "sha256": "50e31b712644548df2ea205f2e49aed62d938a59070d48f36338db20c2753895"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/logs/install-game.json": {
+      "bytes": 599400,
+      "sha256": "4a4916a57e5d4f082eeaa749eb4495c965a9e32643771ca2149dffb8daea9a88"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/logs/install-model.json": {
+      "bytes": 2099632,
+      "sha256": "f647ab85828b5c841f5a12b7409d462392ca83b852002ef6bf1f6594cfa22b0d"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/logs/supervisor.json": {
+      "bytes": 102,
+      "sha256": "50e31b712644548df2ea205f2e49aed62d938a59070d48f36338db20c2753895"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/monitor/monitor-result.json": {
+      "bytes": 537,
+      "sha256": "279c2f2fb9103950a64b065576c4d2b52f8d9a004f1df77a652459e737d57c5f"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/monitor/ready.json": {
+      "bytes": 658,
+      "sha256": "a3df89ab966022658b83644faf3d8c0e27c24840e5d8aa1cde88b16d8a6314a5"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/monitor/samples-0000.json": {
+      "bytes": 24527,
+      "sha256": "401c2856fc0ccaeeb1093e35284c2df6803266726439e987c0e23af2aa935991"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/monitor/samples-0001.json": {
+      "bytes": 29603,
+      "sha256": "c894ca3262415dafcc446b36d7bc34130c6e9b7ac146048710c01717e1ddd59f"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/monitor/samples-0002.json": {
+      "bytes": 5723,
+      "sha256": "7e3f4f7b5c7faf5a0e8799c9b24c672d25ea8a341a137c98b5172aa42b5d64b0"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/monitor/telemetry.json": {
+      "bytes": 991,
+      "sha256": "8c230683833ca97a0f14c140803cefb5d96502cb004f577c60671b30cb92db35"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/worker/canary.json": {
+      "bytes": 1519,
+      "sha256": "624d08f6862d4dadee9987ceb98cd72c692fbc17e0c43a5179840ccba88a61eb"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/worker/host-status.json": {
+      "bytes": 183,
+      "sha256": "b7edd8314a4b9a54fc62f7e65615c37165d58585dedc5a974c931a83c8c788e7"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/worker/model-process.json": {
+      "bytes": 49,
+      "sha256": "bdfdb8118be3ea822d85583db2016a9ca42e892a8623dfdde45dd731d04d6ce3"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/worker/model-ready.json": {
+      "bytes": 277,
+      "sha256": "41172421bdb84e4f2f5e83c0958c206d5ac52e46ea420df9d1295d3034e94837"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/worker/run/episodes/b1-ar25-baseline.json": {
+      "bytes": 581370,
+      "sha256": "e11ae2760f0fbb1b66687e2c802926f72eada671c3d1ce67debf64c662442bad"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/worker/run/episodes/b1-ar25-history.json": {
+      "bytes": 594095,
+      "sha256": "f644761df6396aef9c8fd8a6d2247f40e9a6249630403a69bc96bda29278d247"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/worker/run/episodes/b1-s5i5-baseline.json": {
+      "bytes": 564771,
+      "sha256": "2dc3516afb16896491398485553cf0300f3b64386a543c95368cd278222bcaff"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/worker/run/episodes/b1-s5i5-history.json": {
+      "bytes": 577951,
+      "sha256": "ce8e66e00f5dc7697d242a4d4ad1793b1114ba8e63869cc684c815633d3dfe31"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/worker/run/episodes/b1-wa30-baseline.json": {
+      "bytes": 559305,
+      "sha256": "1dacc50bdbfce14e307848f17054bbcc1bca9ab09fc212488a8d9e077ffc4469"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/worker/run/episodes/b1-wa30-history.json": {
+      "bytes": 571899,
+      "sha256": "3dbd59b4ad9b56fa65914750fa691a478802fce5caf36fa4f6fceb0d46575714"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/worker/run/episodes/b2-ar25-baseline.json": {
+      "bytes": 581442,
+      "sha256": "305bbb1680e30049bf9e852c8d251d362f16f8bfd94dee4bb618c26d1663a1f9"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/worker/run/episodes/b2-ar25-history.json": {
+      "bytes": 594136,
+      "sha256": "a894c1101950029037b99fac4cffe01ec04b1a19522257736d36cb0fc30132e2"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/worker/run/episodes/b2-s5i5-baseline.json": {
+      "bytes": 564821,
+      "sha256": "3814e9eef76d38512c2547e296cc82b883838653b7a39be594bb7066391fe331"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/worker/run/episodes/b2-s5i5-history.json": {
+      "bytes": 578000,
+      "sha256": "50001eafe2f29ccb3ae72fd9338239b0745a2f855cafbc07554367ae84a8749c"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/worker/run/episodes/b2-wa30-baseline.json": {
+      "bytes": 559344,
+      "sha256": "2f7f38c32c540fca20312d75ed309a6137c3e1c74f6258aedc781c324a4c7c3e"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/worker/run/episodes/b2-wa30-history.json": {
+      "bytes": 571934,
+      "sha256": "5865a811642a18e2db6433dfc7cb37b910b980dd375ddf1e124bb7cd644d1593"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/worker/run/manifest.json": {
+      "bytes": 1681,
+      "sha256": "c57fd8c7a469f51ebd3ab202926871ace71090521a3d9751accc5d99d1eab9d3"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/worker/run/run.json": {
+      "bytes": 2228,
+      "sha256": "15e80bf9bf242ddceae4ddf6c5f7943238b2e7a7b6d5dc3a234d5f5a92ed605d"
+    },
+    "reports/runs/action-effect-history-v1/download/action-effect-history-v1/worker/worker-result.json": {
+      "bytes": 131,
+      "sha256": "5bd88572e971525b2658ad2a1fc137ab4a6598a4633f68ae0f4370be7fe0011f"
+    },
+    "reports/runs/action-effect-history-v1/download/arc3-action-effect-history-v1.log": {
+      "bytes": 2113,
+      "sha256": "fcce1b520fae56cc8517f433cf53fb1d6a49689c665a49e3a7c107f6a8ae5747"
+    },
+    "reports/runs/action-effect-history-v1/provider-observations.jsonl": {
+      "bytes": 377,
+      "sha256": "fb32f3e96aa982e8ad263d473870181636bb8a195835e13b51999716d7b9f116"
+    },
+    "research/action_effect_history_v1/execution_lock.json": {
+      "bytes": 389,
+      "sha256": "47ebfcc1a4f72ffc84fdc2d65d976e77b6d9957ff06b905e0fc7fca23c18cedb"
+    },
+    "research/action_effect_history_v1/reservation.json": {
+      "bytes": 309,
+      "sha256": "8a261940218638860b7633ed47dacff84fb1395035c66c02ee8350477958c4ba"
+    }
+  },
+  "run_manifest_sha256": "c57fd8c7a469f51ebd3ab202926871ace71090521a3d9751accc5d99d1eab9d3"
+}

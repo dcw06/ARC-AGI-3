@@ -3,8 +3,9 @@
 Attempt `aeh1-4c75150a156640fcad105a770ce81119`, run from review r3 (lock
 `0f870a1a…e386`), on Kaggle version 1 with a single RTX Pro 6000. The run
 evidence manifest has SHA-256 `c57fd8c7…b9d3`. The full independent evaluation
-is in `reports/action_effect_history_v1_live_evaluation.json`. The raw output
-stays local under `outputs/` and is not committed.
+is in `reports/action_effect_history_v1_live_evaluation.json`. The raw output is
+archived in `evidence/action-effect-history-v1-complete.zip`, locked by
+`reports/action_effect_history_v1_archive.json`.
 
 ## Frozen results
 
@@ -16,6 +17,7 @@ stays local under `outputs/` and is not committed.
 | Solving result | **no demonstrated solving improvement** (0 levels in every episode) |
 | Reliability | identical by arm: 0 invalid outputs, 0 dispatch failures, 0 interruptions, 0 closure failures |
 | Wall time | model startup 403 s; supervisor 735 s; first cell 737 s, against a 3,300 s internal limit |
+| Account GPU time | 747.6 s used (Kaggle quota counter, 13,547.4 s before to 14,295.0 s after), of 3,600 s authorized; exact billed seconds are not reported by the provider |
 
 | Pair | Class | Baseline repeats / opportunities | History repeats / opportunities |
 |---|---|---|---|
