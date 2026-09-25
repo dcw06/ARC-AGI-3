@@ -1,0 +1,291 @@
+{
+  "scope": "offline development engine; evaluation-only click-mapping evidence; not a policy input",
+  "game": "ar25-0c556536",
+  "seed": 0,
+  "initial_state_hash": "2318e77b3f8aceb099c4e7b625ede6b23bf465b59e0575c587e5964ff29636d9",
+  "coordinate_convention": "action_data x = column, y = row of the 64x64 display frame",
+  "probes": [
+    {
+      "label": "r8_control_click",
+      "action_id": 6,
+      "x": 16,
+      "y": 16,
+      "value_at_click": 9,
+      "returned_frames": 1,
+      "changed_cells_per_frame": [
+        0
+      ],
+      "state_hash_changed": false,
+      "levels_before": 0,
+      "levels_after": 0,
+      "state_after": "NOT_FINISHED",
+      "changed_bbox": null,
+      "why": "R8 control clicks, both actions (harness validation)"
+    },
+    {
+      "label": "r8_target_click_1",
+      "action_id": 6,
+      "x": 17,
+      "y": 16,
+      "value_at_click": 9,
+      "returned_frames": 1,
+      "changed_cells_per_frame": [
+        0
+      ],
+      "state_hash_changed": false,
+      "levels_before": 0,
+      "levels_after": 0,
+      "state_after": "NOT_FINISHED",
+      "changed_bbox": null,
+      "why": "R8 target arm, first action"
+    },
+    {
+      "label": "reference_A_solid",
+      "action_id": 6,
+      "x": 20,
+      "y": 15,
+      "value_at_click": 5,
+      "returned_frames": 1,
+      "changed_cells_per_frame": [
+        0
+      ],
+      "state_hash_changed": false,
+      "levels_before": 0,
+      "levels_after": 0,
+      "state_after": "NOT_FINISHED",
+      "changed_bbox": null,
+      "why": "inside reviewer object A, colour 5"
+    },
+    {
+      "label": "reference_A_marking",
+      "action_id": 6,
+      "x": 19,
+      "y": 16,
+      "value_at_click": 0,
+      "returned_frames": 1,
+      "changed_cells_per_frame": [
+        0
+      ],
+      "state_hash_changed": false,
+      "levels_before": 0,
+      "levels_after": 0,
+      "state_after": "NOT_FINISHED",
+      "changed_bbox": null,
+      "why": "inside A on a colour-0 marking"
+    },
+    {
+      "label": "reference_A_left_edge",
+      "action_id": 6,
+      "x": 18,
+      "y": 16,
+      "value_at_click": 5,
+      "returned_frames": 1,
+      "changed_cells_per_frame": [
+        0
+      ],
+      "state_hash_changed": false,
+      "levels_before": 0,
+      "levels_after": 0,
+      "state_after": "NOT_FINISHED",
+      "changed_bbox": null,
+      "why": "A left edge, one cell right of the (17,16) click"
+    },
+    {
+      "label": "reference_B_solid",
+      "action_id": 6,
+      "x": 37,
+      "y": 20,
+      "value_at_click": 4,
+      "returned_frames": 1,
+      "changed_cells_per_frame": [
+        0
+      ],
+      "state_hash_changed": false,
+      "levels_before": 0,
+      "levels_after": 0,
+      "state_after": "NOT_FINISHED",
+      "changed_bbox": null,
+      "why": "inside reviewer object B"
+    },
+    {
+      "label": "reference_C_solid",
+      "action_id": 6,
+      "x": 52,
+      "y": 48,
+      "value_at_click": 11,
+      "returned_frames": 1,
+      "changed_cells_per_frame": [
+        0
+      ],
+      "state_hash_changed": false,
+      "levels_before": 0,
+      "levels_after": 0,
+      "state_after": "NOT_FINISHED",
+      "changed_bbox": null,
+      "why": "inside reviewer object C"
+    },
+    {
+      "label": "stripe",
+      "action_id": 6,
+      "x": 31,
+      "y": 10,
+      "value_at_click": 10,
+      "returned_frames": 1,
+      "changed_cells_per_frame": [
+        0
+      ],
+      "state_hash_changed": false,
+      "levels_before": 0,
+      "levels_after": 0,
+      "state_after": "NOT_FINISHED",
+      "changed_bbox": null,
+      "why": "colour-10 stripe (reviewer non-object region)"
+    },
+    {
+      "label": "far_background",
+      "action_id": 6,
+      "x": 5,
+      "y": 5,
+      "value_at_click": 9,
+      "returned_frames": 1,
+      "changed_cells_per_frame": [
+        0
+      ],
+      "state_hash_changed": false,
+      "levels_before": 0,
+      "levels_after": 0,
+      "state_after": "NOT_FINISHED",
+      "changed_bbox": null,
+      "why": "background far from every object"
+    },
+    {
+      "label": "action_1",
+      "action_id": 1,
+      "x": null,
+      "y": null,
+      "value_at_click": null,
+      "returned_frames": 1,
+      "changed_cells_per_frame": [
+        109
+      ],
+      "state_hash_changed": true,
+      "levels_before": 0,
+      "levels_after": 0,
+      "state_after": "NOT_FINISHED",
+      "changed_bbox": [
+        18,
+        0,
+        63,
+        23
+      ],
+      "why": "one non-coordinate action from the R8 initial state"
+    },
+    {
+      "label": "action_2",
+      "action_id": 2,
+      "x": null,
+      "y": null,
+      "value_at_click": null,
+      "returned_frames": 1,
+      "changed_cells_per_frame": [
+        109
+      ],
+      "state_hash_changed": true,
+      "levels_before": 0,
+      "levels_after": 0,
+      "state_after": "NOT_FINISHED",
+      "changed_bbox": [
+        18,
+        0,
+        63,
+        26
+      ],
+      "why": "one non-coordinate action from the R8 initial state"
+    },
+    {
+      "label": "action_3",
+      "action_id": 3,
+      "x": null,
+      "y": null,
+      "value_at_click": null,
+      "returned_frames": 1,
+      "changed_cells_per_frame": [
+        109
+      ],
+      "state_hash_changed": true,
+      "levels_before": 0,
+      "levels_after": 0,
+      "state_after": "NOT_FINISHED",
+      "changed_bbox": [
+        15,
+        0,
+        63,
+        23
+      ],
+      "why": "one non-coordinate action from the R8 initial state"
+    },
+    {
+      "label": "action_4",
+      "action_id": 4,
+      "x": null,
+      "y": null,
+      "value_at_click": null,
+      "returned_frames": 1,
+      "changed_cells_per_frame": [
+        109
+      ],
+      "state_hash_changed": true,
+      "levels_before": 0,
+      "levels_after": 0,
+      "state_after": "NOT_FINISHED",
+      "changed_bbox": [
+        18,
+        0,
+        63,
+        23
+      ],
+      "why": "one non-coordinate action from the R8 initial state"
+    },
+    {
+      "label": "action_5",
+      "action_id": 5,
+      "x": null,
+      "y": null,
+      "value_at_click": null,
+      "returned_frames": 1,
+      "changed_cells_per_frame": [
+        1
+      ],
+      "state_hash_changed": true,
+      "levels_before": 0,
+      "levels_after": 0,
+      "state_after": "NOT_FINISHED",
+      "changed_bbox": [
+        63,
+        0,
+        63,
+        0
+      ],
+      "why": "one non-coordinate action from the R8 initial state"
+    },
+    {
+      "label": "action_7",
+      "action_id": 7,
+      "x": null,
+      "y": null,
+      "value_at_click": null,
+      "returned_frames": 1,
+      "changed_cells_per_frame": [
+        0
+      ],
+      "state_hash_changed": false,
+      "levels_before": 0,
+      "levels_after": 0,
+      "state_after": "NOT_FINISHED",
+      "changed_bbox": null,
+      "why": "one non-coordinate action from the R8 initial state"
+    }
+  ],
+  "model_calls": 0,
+  "gpu_runs": 0
+}
