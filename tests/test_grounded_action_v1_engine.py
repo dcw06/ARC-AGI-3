@@ -65,12 +65,12 @@ class GroundedActionEngineTests(unittest.TestCase):
 
     def test_target_launch_review_unpacks_and_rejects_unapproved_execution(self):
         from research.grounded_action_v1.authority import REVIEW, REQUIRED_SOURCE
-        source = ROOT / 'notebooks/phase4-grounded-action-v1-launch-r9'
+        source = ROOT / 'notebooks/phase4-grounded-action-v1-launch-r10'
         self.assertEqual((ROOT / REVIEW).resolve(),
                          (source / 'review-source-lock.json').resolve())
         result = review_launch_notebook(source)
         self.assertTrue(result['unapproved_execution_rejected'])
-        for revision in ('r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'r7', 'r8'):
+        for revision in ('r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'r7', 'r8', 'r9'):
             historical = ROOT / ('notebooks/phase4-grounded-action-v1-launch-' + revision)
             self.assertTrue(review_launch_notebook(historical, compare_checkout=False)
                             ['unapproved_execution_rejected'])

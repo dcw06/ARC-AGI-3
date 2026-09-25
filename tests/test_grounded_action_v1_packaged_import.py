@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class PackagedImportTests(unittest.TestCase):
     def test_split_install_imports_from_notebook_payload_without_checkout(self):
-        notebook = json.loads((ROOT / 'notebooks/phase4-grounded-action-v1-launch-r9/profile.ipynb').read_bytes())
+        notebook = json.loads((ROOT / 'notebooks/phase4-grounded-action-v1-launch-r10/profile.ipynb').read_bytes())
         tree = ast.parse(notebook['cells'][1]['source'])
         decodes = [ast.literal_eval(node.args[0]) for node in ast.walk(tree)
                    if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and

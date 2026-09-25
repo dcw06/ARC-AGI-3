@@ -1,0 +1,197 @@
+{
+  "archive": "evidence/phase4-grounded-action-v1-r6-failure.zip",
+  "archive_sha256": "d1ffd0f9b9038fd41896f53306f2a6376ca632c8c4156b105b3f7e3b1b65631f",
+  "evaluation": {
+    "account_gpu_time_used_after_seconds": 12356.213,
+    "account_gpu_time_used_before_seconds": 11618.355,
+    "account_gpu_time_used_delta_seconds": 737.858,
+    "attempt_id": "gab1-0e774953d34141acbbd1e9c30ffdb837",
+    "automatic_retry_authorized": false,
+    "dependency_trees_removed": true,
+    "downloaded_files_verified": 27,
+    "episodes_completed": 0,
+    "exact_provider_billed_seconds": null,
+    "first_cell_elapsed_seconds": 728.5107335390001,
+    "game_actions": 0,
+    "independent_gpu_cleanup_verified": true,
+    "installation_passed": true,
+    "model_ready": true,
+    "monitor_samples": 2238,
+    "phase4_complete": false,
+    "prediction_completion_tokens": 16,
+    "prediction_prompt_tokens": 8569,
+    "prediction_response": "{\"prediction\": \"no_change\", \"alternative\": \"no_change\"}",
+    "process_groups_exited": true,
+    "provider_status": "KernelWorkerStatus.ERROR",
+    "startup_canary_passed": true,
+    "status": "verified_prediction_contract_failure",
+    "study_calls": 2,
+    "trajectory_replay_rejected_incomplete_pair": true
+  },
+  "members": {
+    "notebooks/phase4-grounded-action-v1-launch-r9/review-source-lock.json": {
+      "bytes": 125953,
+      "sha256": "fed295e46233285fa3c92ce190a1b9080fe19d791503d2e2da1ef63253028571"
+    },
+    "notebooks/phase4-grounded-action-v1-run-r6/launch-package-lock.json": {
+      "bytes": 1139,
+      "sha256": "0a8e263958966a1c52b2046105fd31de77d66ca62e3968e1c59a9455902d2629"
+    },
+    "reports/perception_stage_b_r6_compute_authorization.json": {
+      "bytes": 661,
+      "sha256": "63f639758c3735b6ed5c640789d349485637e159091792274b51d569683cfe81"
+    },
+    "reports/perception_stage_b_r6_download.json": {
+      "bytes": 5105,
+      "sha256": "9ca9834f4fb7c2cabe0f824eb229f482aa09395943a5761a52ac0cb898569686"
+    },
+    "reports/perception_stage_b_r6_evaluation.json": {
+      "bytes": 1025,
+      "sha256": "a919665af4025b19921c50e47028cc550c2aa408725bdc6fecb43d52487af872"
+    },
+    "reports/perception_stage_b_r6_failure.md": {
+      "bytes": 2386,
+      "sha256": "f8228521c5665cc9e308f4380c0f14a76adace497336b49473a5df45055c9ee2"
+    },
+    "reports/perception_stage_b_r6_launch.json": {
+      "bytes": 594,
+      "sha256": "9f455bcd2f2999987a1f72ad6d038a09098de84bdb8ceaec87112fc9cbfc5169"
+    },
+    "reports/perception_stage_b_r6_launch_claim.json": {
+      "bytes": 283,
+      "sha256": "aa8883723a249f333582f6df764747198ceaf98d96be23db97992b07bcf82109"
+    },
+    "reports/perception_stage_b_r6_pilot_status.md": {
+      "bytes": 1764,
+      "sha256": "9932f0e84037ce49ffcd8c3154af6e7b62f413e0b4482aaf063d591227e084d5"
+    },
+    "reports/perception_stage_b_r6_prelaunch.json": {
+      "bytes": 232,
+      "sha256": "186b91990a4b51e4b37ee1fcc06b51e81c8f3466d86b8bf0d2b454acb5426d3d"
+    },
+    "reports/perception_stage_b_r6_source_approval.json": {
+      "bytes": 299,
+      "sha256": "f0b233547b8b5bf0035f0b964b989c8406e3658b31b70338b41ba5a2aa06add6"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/.gab1-0e774953d34141acbbd1e9c30ffdb837.runtime-consumed.json": {
+      "bytes": 77,
+      "sha256": "6e768b23639a54487c1d54affe5eba63977d69f5aff5c273310eca203a8123df"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/arc3-grounded-action-v1-r6.log": {
+      "bytes": 4615,
+      "sha256": "a3374bd361a242f1750e5ba23241f28b7548669b0bbd71e0078a86067bfa889f"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/.evidence.lock": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/control/cancel.json": {
+      "bytes": 50,
+      "sha256": "20250f8be426d8efc44d3c68345d4f0d75e3677b79bb4d6c0f13f2663d87ad0d"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/control/first-cell-supervisor-cleanup.json": {
+      "bytes": 106,
+      "sha256": "c41b9119857086cec96788e8d3c205eb37c008f8e2185675be8ae81842b200df"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/control/gpu-cleanup.json": {
+      "bytes": 193,
+      "sha256": "b91cf62009950f53d5ec34e442de97d977c3f034842a36f2964ef67543651c01"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/control/installation.json": {
+      "bytes": 2855,
+      "sha256": "b9f4f16a610b28716d1371432192aac3e24461d5fd0287145dc783914c12e7d0"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/control/monitor-ready-ack.json": {
+      "bytes": 77,
+      "sha256": "26958b1d7fd3b5cb03d62f04fbd974f59cc39c5dc46955e6fcac9770156dd06c"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/control/notebook-cost.json": {
+      "bytes": 278,
+      "sha256": "dc305389c639fa77c4db1bfeb83293269a81872d83251d9869261a2b599bd633"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/control/outer.json": {
+      "bytes": 425,
+      "sha256": "c2b8eff0a4a08470cfd9d9a46aeb7fa7cd190506afda3dae4e012bd337789029"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/control/ownership.json": {
+      "bytes": 157,
+      "sha256": "c75d2611c14c4a1268dac60925ed1b71d8fdddff51a98974d1e4a130dc85da44"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/logs/307.json": {
+      "bytes": 23684,
+      "sha256": "dc2d18e7ea83733be3749777975ad07e38fd20beb1c764a48238abc4a57a68da"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/logs/309.json": {
+      "bytes": 102,
+      "sha256": "50e31b712644548df2ea205f2e49aed62d938a59070d48f36338db20c2753895"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/logs/install-game.json": {
+      "bytes": 599296,
+      "sha256": "500b1f14282243f1601028e0a0d223106818b2fec4feea53ce9e79aca814ef5d"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/logs/install-model.json": {
+      "bytes": 2099412,
+      "sha256": "1788eb2bc49125516836626936b8c0958f0aae21c1ee4eb30ca7dbe7e9ed0feb"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/logs/supervisor.json": {
+      "bytes": 102,
+      "sha256": "50e31b712644548df2ea205f2e49aed62d938a59070d48f36338db20c2753895"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/monitor/ready.json": {
+      "bytes": 643,
+      "sha256": "ab246038c18c4a97f0f19e8c563f8235eff4fb4c924a84e3ff5196145f151c12"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/monitor/samples-0000.json": {
+      "bytes": 22467,
+      "sha256": "df42125fcc19f58dbe02f25e39c1bff23ff266f55a12c57cf6659125b9e5b1a1"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/monitor/samples-0001.json": {
+      "bytes": 25999,
+      "sha256": "60a0bcff48de46d27deb1b97c132d57ef8377777aa27c02830722b9b36e719a5"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/monitor/samples-0002.json": {
+      "bytes": 6159,
+      "sha256": "add86a187fcd33a676c826b1c60a6dbfb480e2022d55189783e867ab730e9b9e"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/monitor/telemetry.json": {
+      "bytes": 923,
+      "sha256": "89b7158765dea1f2af3c1e982f68bb9aff31aea4ad9f4d8bbbbe9a1bd313b1d7"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/worker/canary.json": {
+      "bytes": 1519,
+      "sha256": "624d08f6862d4dadee9987ceb98cd72c692fbc17e0c43a5179840ccba88a61eb"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/worker/failure.json": {
+      "bytes": 84,
+      "sha256": "5a40212903cb80865eb4415ee2ea774f1fedc4e45c9de790df53dbfb2d5a24af"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/worker/host-status.json": {
+      "bytes": 144,
+      "sha256": "573432134bcf1e70142a810ac291cb0120de14ca22a01a77364b74000d77a254"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/worker/model-process.json": {
+      "bytes": 48,
+      "sha256": "db1620c2c479a8fef5cb3915611e4db0aff8ef7d19a4148a2a73fd3c2f63ed24"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/worker/model-ready.json": {
+      "bytes": 256,
+      "sha256": "a1494e5023b581881a89b7562d4ab81d9b1b1eab13a9bf69daa875bf67a1044e"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/download/phase4-grounded-action-v1/worker/trajectory.json": {
+      "bytes": 53014,
+      "sha256": "622255b887b6779819a35948671324ad27c578268e4cc3ca32240569c67055ba"
+    },
+    "reports/runs/phase4-grounded-action-v1-r6/provider-observations.jsonl": {
+      "bytes": 1123,
+      "sha256": "dc242281e92397058f29365083d760831e2f43e2f69c9ccea05f92cfb37d202c"
+    },
+    "research/grounded_action_v1/execution_lock_r6.json": {
+      "bytes": 403,
+      "sha256": "25f76e5770ce0564aeab39279c5c99be8b52c9c2067a7165044a1f95bed87f95"
+    },
+    "research/grounded_action_v1/reservation_r6.json": {
+      "bytes": 309,
+      "sha256": "b8790bb1bde6c04bfdaac53e8d0fc968aa7c7bd19a3114c5be78636eb78b3b4e"
+    }
+  }
+}

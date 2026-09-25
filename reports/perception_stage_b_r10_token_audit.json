@@ -1,0 +1,349 @@
+{
+  "scope": "pinned_tokenizer_cpu_audit_no_model_calls",
+  "versions": {
+    "transformers": "4.57.6",
+    "tokenizers": "0.22.2",
+    "jinja2": "3.1.6"
+  },
+  "tokenizer_manifest_sha256": "9b23b48f0615f43aee0d6b344982cbd17d36841cd92b3ebaf52c5e0c7a60db72",
+  "source_record_sha256": "625c2522259e32dd6d9b9e300bdca0278eab1ca616b278a6b04257afd0e10cf1",
+  "exact_requests": [
+    {
+      "arm": "control",
+      "call_index": 0,
+      "stage": "control",
+      "request_sha256": "1afc47d795cc5cd7e193699fc5876db6aafbcb8e12ac9c9259e2e29be766d0b3",
+      "prompt_tokens": 8721,
+      "completion_cap": 128,
+      "request_bytes": 10512,
+      "admissible": true
+    },
+    {
+      "arm": "control",
+      "call_index": 1,
+      "stage": "prediction",
+      "request_sha256": "1b1e13d97c9d2de767626911e172ab765df91ff599d7850bdcc3764c11fccbf3",
+      "prompt_tokens": 8584,
+      "completion_cap": 128,
+      "request_bytes": 9490,
+      "admissible": true
+    },
+    {
+      "arm": "control",
+      "call_index": 2,
+      "stage": "feedback",
+      "request_sha256": "7063e7605bbe8375132a81dd49a7d1aa4426b2e7406abe6b7f52fde4f6eeffec",
+      "prompt_tokens": 12183,
+      "completion_cap": 128,
+      "request_bytes": 14627,
+      "admissible": true
+    },
+    {
+      "arm": "control",
+      "call_index": 3,
+      "stage": "control",
+      "request_sha256": "23f23667c8c7fa941798fe009ce0bef9c682192f4cf352ea1df4ff4ae7caae47",
+      "prompt_tokens": 25758,
+      "completion_cap": 128,
+      "request_bytes": 27811,
+      "admissible": true
+    },
+    {
+      "arm": "control",
+      "call_index": 4,
+      "stage": "prediction",
+      "request_sha256": "006e2f052d76b763e91705c75e19dc83d4ff5df72598e38330aaee8faeadcbfa",
+      "prompt_tokens": 17077,
+      "completion_cap": 128,
+      "request_bytes": 18111,
+      "admissible": true
+    },
+    {
+      "arm": "control",
+      "call_index": 5,
+      "stage": "feedback",
+      "request_sha256": "7063e7605bbe8375132a81dd49a7d1aa4426b2e7406abe6b7f52fde4f6eeffec",
+      "prompt_tokens": 12183,
+      "completion_cap": 128,
+      "request_bytes": 14627,
+      "admissible": true
+    },
+    {
+      "arm": "target",
+      "call_index": 0,
+      "stage": "target",
+      "request_sha256": "f86e883cfb1d57afa88886835181ab744ce9621310b2c029857f219daa97450d",
+      "prompt_tokens": 8762,
+      "completion_cap": 128,
+      "request_bytes": 10995,
+      "admissible": true
+    },
+    {
+      "arm": "target",
+      "call_index": 1,
+      "stage": "prediction",
+      "request_sha256": "1b1e13d97c9d2de767626911e172ab765df91ff599d7850bdcc3764c11fccbf3",
+      "prompt_tokens": 8584,
+      "completion_cap": 128,
+      "request_bytes": 9490,
+      "admissible": true
+    },
+    {
+      "arm": "target",
+      "call_index": 2,
+      "stage": "feedback",
+      "request_sha256": "7063e7605bbe8375132a81dd49a7d1aa4426b2e7406abe6b7f52fde4f6eeffec",
+      "prompt_tokens": 12183,
+      "completion_cap": 128,
+      "request_bytes": 14627,
+      "admissible": true
+    },
+    {
+      "arm": "target",
+      "call_index": 3,
+      "stage": "target",
+      "request_sha256": "fcc9cf222a282e0a161d1d3b4bf56dcb289ce01a3bdce9159fddc19a71734b43",
+      "prompt_tokens": 25799,
+      "completion_cap": 128,
+      "request_bytes": 28294,
+      "admissible": true
+    },
+    {
+      "arm": "target",
+      "call_index": 4,
+      "stage": "prediction",
+      "request_sha256": "006e2f052d76b763e91705c75e19dc83d4ff5df72598e38330aaee8faeadcbfa",
+      "prompt_tokens": 17077,
+      "completion_cap": 128,
+      "request_bytes": 18111,
+      "admissible": true
+    },
+    {
+      "arm": "target",
+      "call_index": 5,
+      "stage": "feedback",
+      "request_sha256": "7063e7605bbe8375132a81dd49a7d1aa4426b2e7406abe6b7f52fde4f6eeffec",
+      "prompt_tokens": 12183,
+      "completion_cap": 128,
+      "request_bytes": 14627,
+      "admissible": true
+    }
+  ],
+  "feedback_frame_stress": [
+    {
+      "arm": "control",
+      "returned_frames": 1,
+      "prompt_tokens": 8179,
+      "completion_cap": 128,
+      "request_bytes": 10209,
+      "admissible": true
+    },
+    {
+      "arm": "control",
+      "returned_frames": 2,
+      "prompt_tokens": 12183,
+      "completion_cap": 128,
+      "request_bytes": 14627,
+      "admissible": true
+    },
+    {
+      "arm": "control",
+      "returned_frames": 3,
+      "prompt_tokens": 16187,
+      "completion_cap": 128,
+      "request_bytes": 19045,
+      "admissible": true
+    },
+    {
+      "arm": "control",
+      "returned_frames": 4,
+      "prompt_tokens": 20191,
+      "completion_cap": 128,
+      "request_bytes": 23463,
+      "admissible": true
+    },
+    {
+      "arm": "control",
+      "returned_frames": 5,
+      "prompt_tokens": 24195,
+      "completion_cap": 128,
+      "request_bytes": 27881,
+      "admissible": true
+    },
+    {
+      "arm": "control",
+      "returned_frames": 6,
+      "prompt_tokens": 28199,
+      "completion_cap": 128,
+      "request_bytes": 32299,
+      "admissible": true
+    },
+    {
+      "arm": "control",
+      "returned_frames": 7,
+      "prompt_tokens": 32203,
+      "completion_cap": 128,
+      "request_bytes": 36717,
+      "admissible": true
+    },
+    {
+      "arm": "control",
+      "returned_frames": 8,
+      "prompt_tokens": 36207,
+      "completion_cap": 128,
+      "request_bytes": 41135,
+      "admissible": true
+    },
+    {
+      "arm": "target",
+      "returned_frames": 1,
+      "prompt_tokens": 8179,
+      "completion_cap": 128,
+      "request_bytes": 10209,
+      "admissible": true
+    },
+    {
+      "arm": "target",
+      "returned_frames": 2,
+      "prompt_tokens": 12183,
+      "completion_cap": 128,
+      "request_bytes": 14627,
+      "admissible": true
+    },
+    {
+      "arm": "target",
+      "returned_frames": 3,
+      "prompt_tokens": 16187,
+      "completion_cap": 128,
+      "request_bytes": 19045,
+      "admissible": true
+    },
+    {
+      "arm": "target",
+      "returned_frames": 4,
+      "prompt_tokens": 20191,
+      "completion_cap": 128,
+      "request_bytes": 23463,
+      "admissible": true
+    },
+    {
+      "arm": "target",
+      "returned_frames": 5,
+      "prompt_tokens": 24195,
+      "completion_cap": 128,
+      "request_bytes": 27881,
+      "admissible": true
+    },
+    {
+      "arm": "target",
+      "returned_frames": 6,
+      "prompt_tokens": 28199,
+      "completion_cap": 128,
+      "request_bytes": 32299,
+      "admissible": true
+    },
+    {
+      "arm": "target",
+      "returned_frames": 7,
+      "prompt_tokens": 32203,
+      "completion_cap": 128,
+      "request_bytes": 36717,
+      "admissible": true
+    },
+    {
+      "arm": "target",
+      "returned_frames": 8,
+      "prompt_tokens": 36207,
+      "completion_cap": 128,
+      "request_bytes": 41135,
+      "admissible": true
+    },
+    {
+      "arm": "control",
+      "returned_frames": 8,
+      "pattern": "dense_hex",
+      "prompt_tokens": 26379,
+      "completion_cap": 128,
+      "request_bytes": 41135,
+      "admissible": true
+    },
+    {
+      "arm": "target",
+      "returned_frames": 8,
+      "pattern": "dense_hex",
+      "prompt_tokens": 26379,
+      "completion_cap": 128,
+      "request_bytes": 41135,
+      "admissible": true
+    }
+  ],
+  "bounded_response_examples": [
+    {
+      "stage": "control",
+      "serialization": "compact",
+      "tokens_plus_end": 22,
+      "cap": 128,
+      "fits": true
+    },
+    {
+      "stage": "control",
+      "serialization": "pretty",
+      "tokens_plus_end": 42,
+      "cap": 128,
+      "fits": true
+    },
+    {
+      "stage": "target",
+      "serialization": "compact",
+      "tokens_plus_end": 42,
+      "cap": 128,
+      "fits": true
+    },
+    {
+      "stage": "target",
+      "serialization": "pretty",
+      "tokens_plus_end": 81,
+      "cap": 128,
+      "fits": true
+    },
+    {
+      "stage": "prediction",
+      "serialization": "compact",
+      "tokens_plus_end": 7,
+      "cap": 128,
+      "fits": true
+    },
+    {
+      "stage": "prediction",
+      "serialization": "pretty",
+      "tokens_plus_end": 11,
+      "cap": 128,
+      "fits": true
+    },
+    {
+      "stage": "feedback",
+      "serialization": "compact",
+      "tokens_plus_end": 27,
+      "cap": 128,
+      "fits": true
+    },
+    {
+      "stage": "feedback",
+      "serialization": "pretty",
+      "tokens_plus_end": 52,
+      "cap": 128,
+      "fits": true
+    }
+  ],
+  "limits": {
+    "context": 65536,
+    "prompt_per_call": 60000,
+    "request_bytes": 196608,
+    "completion_per_call": 128,
+    "calls": 12,
+    "generated_total": 1536
+  },
+  "model_calls": 0,
+  "gpu_runs": 0,
+  "caveat": "Stress copies the retained initial frame or a dense hexadecimal pattern; actual requests can tokenize differently. Every live request is re-tokenized and rejected before transport if over limit."
+}

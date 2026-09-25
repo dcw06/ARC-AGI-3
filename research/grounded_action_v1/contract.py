@@ -39,9 +39,15 @@ TARGET_INSTRUCTION = (
     "coordinates alongside the action. Use null only for a nonspatial action. "
     "Do not infer a game rule from visual similarity."
 )
-PREDICTION_INSTRUCTION = (
+LEGACY_PREDICTION_INSTRUCTION = (
     "Return only JSON. Report an observable prediction and distinct alternative "
     "for the already committed action; this answer cannot change the action."
+)
+PREDICTION_INSTRUCTION = (
+    "Return only JSON with prediction='change' if at least one visible cell "
+    "will change after the already committed action, otherwise 'no_change'. "
+    "The opposite alternative is derived mechanically; this answer cannot "
+    "change the action."
 )
 FEEDBACK_INSTRUCTION = (
     "Return only JSON. Feedback grids use hex_rows_v1: each row is 64 hexadecimal "
@@ -104,9 +110,11 @@ def policy_request(runtime, arm):
 
 
 def audit_request(stage, observation, action, *, before=None, prediction=None,
-                  feedback_encoding='hex_rows_v1'):
+                  feedback_encoding='hex_rows_v1', prediction_contract='single_choice_v2'):
     if stage not in ('prediction', 'feedback'):
         raise ValueError('audit stage')
+    if prediction_contract not in ('single_choice_v2', 'legacy_pair_v1'):
+        raise ValueError('prediction contract')
     payload = {'stage': stage, 'action': action,
                'observation': {k: observation[k] for k in ('frames', 'levels_completed', 'state')}}
     if stage == 'feedback':
@@ -130,19 +138,23 @@ def audit_request(stage, observation, action, *, before=None, prediction=None,
         if before is not None or prediction is not None or feedback_encoding != 'hex_rows_v1':
             raise ValueError('unexpected pre-action observation/prediction')
     fields = ({'prediction': {'type': 'string', 'enum': ['change', 'no_change']},
-               'alternative': {'type': 'string', 'enum': ['change', 'no_change']}}
+               **({'alternative': {'type': 'string', 'enum': ['change', 'no_change']}}
+                  if prediction_contract == 'legacy_pair_v1' else {})}
               if stage == 'prediction' else
               {'assessment': {'type': 'string', 'enum': ['supported', 'contradicted', 'unresolved']},
                'changed_frames': {'type': 'array', 'items': {'type': 'integer', 'minimum': 0, 'maximum': 7},
                                   'maxItems': 8}})
     return {'model': baseline_request_model(), 'messages': [
-        {'role': 'system', 'content': PREDICTION_INSTRUCTION if stage == 'prediction' else
+        {'role': 'system', 'content': (LEGACY_PREDICTION_INSTRUCTION if prediction_contract == 'legacy_pair_v1'
+                                    else PREDICTION_INSTRUCTION) if stage == 'prediction' else
          (LEGACY_FEEDBACK_INSTRUCTION if feedback_encoding == 'legacy_grid_json_v1' else FEEDBACK_INSTRUCTION)},
         {'role': 'user', 'content': json.dumps(payload, sort_keys=True, separators=(',', ':'))}],
         'temperature': 0, 'seed': 0, 'max_tokens': 128,
         'chat_template_kwargs': {'enable_thinking': False},
         'response_format': {'type': 'json_schema', 'json_schema': {
-            'name': 'grounded_' + stage + '_v1', 'strict': True,
+            'name': ('grounded_prediction_v2' if stage == 'prediction' and
+                     prediction_contract == 'single_choice_v2' else 'grounded_' + stage + '_v1'),
+            'strict': True,
             'schema': {'type': 'object', 'properties': fields, 'required': list(fields),
                        'additionalProperties': False}}}}
 
@@ -190,13 +202,21 @@ def parse_policy(raw, arm, legal, grid):
     return value
 
 
-def parse_audit(raw, stage, frames):
+def parse_audit(raw, stage, frames, *, prediction_contract='single_choice_v2'):
     value = strict_json(raw)
     if type(value) is not dict:
         raise ValueError('audit object')
     if stage == 'prediction':
-        if set(value) != {'prediction', 'alternative'} or {value['prediction'], value['alternative']} != {'change', 'no_change'}:
-            raise ValueError('prediction alternatives')
+        if prediction_contract == 'legacy_pair_v1':
+            if set(value) != {'prediction', 'alternative'} or \
+                    {value['prediction'], value['alternative']} != {'change', 'no_change'}:
+                raise ValueError('prediction alternatives')
+        elif prediction_contract == 'single_choice_v2':
+            if set(value) != {'prediction'} or value['prediction'] not in ('change', 'no_change'):
+                raise ValueError('prediction fields')
+            value['alternative'] = 'no_change' if value['prediction'] == 'change' else 'change'
+        else:
+            raise ValueError('prediction contract')
     elif stage == 'feedback':
         if (set(value) != {'assessment', 'changed_frames'} or value['assessment'] not in
                 ('supported', 'contradicted', 'unresolved') or type(value['changed_frames']) is not list or

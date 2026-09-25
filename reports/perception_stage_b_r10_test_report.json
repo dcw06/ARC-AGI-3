@@ -1,0 +1,28 @@
+{
+  "scope": "cpu_only_stage_b_r10_review",
+  "gpu_runs": 0,
+  "model_calls": 0,
+  "full_suite": {
+    "command": "python -m unittest discover -s tests -p test_grounded_action_v1*.py -q",
+    "passed": 59,
+    "failed": 0,
+    "rerun_after_local_supervisor_failure": true
+  },
+  "first_full_suite_observation": {
+    "passed": 58,
+    "failed": 1,
+    "failure": "CPU fixture worker/monitor exited with failure: [None, 1]",
+    "isolated_rehearsal_passed": true,
+    "supervisor_tests_passed_in_isolation": 3,
+    "root_cause_proven": false
+  },
+  "historical_r6_archive_replay": "archive_verified",
+  "exact_scripted_requests": 12,
+  "maximum_exact_prompt_tokens": 25799,
+  "maximum_eight_frame_stress_prompt_tokens": 36207,
+  "all_audited_requests_admissible": true,
+  "review_source_files": 1043,
+  "unapproved_notebook_execution_rejected": true,
+  "review_lock_sha256": "0b255babdcfd25d293342dc405cdbe154c5e7f8b6dc83988c630fe09792d82cd",
+  "token_audit_sha256": "cad9044b0244898362eee6c7d75bacb4d2d23dda3ac8ece20dd95f6c0486e104"
+}

@@ -42,10 +42,13 @@ def evaluate(value):
         (INITIAL.parents[1] / 'perception_stage_b_v1_case_protocol.json').read_bytes()).hexdigest(),
         'case protocol binding')
     kind = value.get('kind')
-    require(value.get('version') in ('grounded_action_local_v1', 'grounded_action_local_v2') and
+    require(value.get('version') in ('grounded_action_local_v1', 'grounded_action_local_v2',
+                                     'grounded_action_local_v3') and
             kind in ('scripted_cpu_only', 'offline_development_engine'), 'record version')
     feedback_encoding = ('legacy_grid_json_v1' if value['version'] == 'grounded_action_local_v1'
                          else 'hex_rows_v1')
+    prediction_contract = ('single_choice_v2' if value['version'] == 'grounded_action_local_v3'
+                           else 'legacy_pair_v1')
     require(value.get('status') == 'complete' and value.get('error') is None, 'incomplete pair')
     limit = value['limit']
     require(limit['steps_per_arm'] == MAX_STEPS and limit['calls'] == MAX_CALLS and
@@ -117,7 +120,8 @@ def evaluate(value):
             completion_tokens += c
             if stage in ('control', 'target'):
                 return parse_policy(row['response'], stage, current.available_actions, current.latest_frame.tolist())
-            return parse_audit(row['response'], stage, current.frames)
+            return parse_audit(row['response'], stage, current.frames,
+                               prediction_contract=prediction_contract)
 
         for index, step in enumerate(episode['steps']):
             require(step['index'] == index and step['before'] == pack(obs) and step['status'] == 'acknowledged', 'fresh pre-observation')
@@ -126,7 +130,8 @@ def evaluate(value):
             action = decision['action']
             require(step['action'] == action and step['target'] == decision.get('target'), 'action/target binding')
             require(step['prediction_call'] == cursor, 'prediction pointer')
-            prediction = call('prediction', audit_request('prediction', pack(obs), action), obs)
+            prediction = call('prediction', audit_request('prediction', pack(obs), action,
+                                                           prediction_contract=prediction_contract), obs)
             require(step['prediction'] == prediction, 'sealed prediction binding')
             require(last <= stamp(step['committed_at'], end) <= stamp(step['dispatch_started_at'], end), 'pre-dispatch retention chronology')
             receipt = step['receipt']

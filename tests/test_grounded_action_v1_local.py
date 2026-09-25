@@ -7,7 +7,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from research.grounded_action_v1.contract import audit_request, feedback_grid, parse_policy
+from research.grounded_action_v1.contract import audit_request, feedback_grid, parse_audit, parse_policy
 from research.grounded_action_v1 import contract as grounded_contract
 from research.grounded_action_v1.local import ScriptedAdapter, ScriptedService, run
 from research.grounded_action_v1.replay import evaluate, replay_file
@@ -49,7 +49,7 @@ class GroundedActionLocalTests(unittest.TestCase):
 
     def test_complete_pair_and_transient_frame(self):
         result, path = self.execute()
-        self.assertEqual(result['version'], 'grounded_action_local_v2')
+        self.assertEqual(result['version'], 'grounded_action_local_v3')
         score = replay_file(path)
         self.assertEqual((score['calls'], score['dispatches']), (12, 4))
         self.assertEqual(score['episodes'][0]['outcomes'][0]['changed_frames'], [0])
@@ -81,11 +81,47 @@ class GroundedActionLocalTests(unittest.TestCase):
             self.assertEqual(payload['committed_prediction'], step['prediction'])
             self.assertEqual(step['feedback']['assessment'], expected)
             self.assertTrue(evaluate(report)['episodes'][0]['outcomes'][0]['feedback_assessment_exact'])
+        self.assertEqual(opposite['status'], 'complete')
+        self.assertFalse(evaluate(opposite)['episodes'][0]['outcomes'][0]['prediction_supported'])
         self.assertEqual(normal['episodes'][0]['steps'][0]['after'], opposite['episodes'][0]['steps'][0]['after'])
         with self.assertRaisesRegex(ValueError, 'committed prediction'):
             audit_request('feedback', normal['episodes'][0]['steps'][0]['after'],
                           normal['episodes'][0]['steps'][0]['action'],
                           before=normal['episodes'][0]['steps'][0]['before'])
+
+    def test_prediction_single_choice_derives_opposite_without_relaxing_validation(self):
+        result, _ = self.execute()
+        call = result['episodes'][0]['calls'][1]
+        self.assertEqual(call['request']['response_format']['json_schema']['name'],
+                         'grounded_prediction_v2')
+        schema = call['request']['response_format']['json_schema']['schema']
+        self.assertEqual(schema['required'], ['prediction'])
+        self.assertFalse(schema['additionalProperties'])
+        self.assertEqual(json.loads(call['response']), {'prediction': 'change'})
+        self.assertEqual(result['episodes'][0]['steps'][0]['prediction'],
+                         {'prediction': 'change', 'alternative': 'no_change'})
+        self.assertEqual(parse_audit('{"prediction":"no_change"}', 'prediction', []),
+                         {'prediction': 'no_change', 'alternative': 'change'})
+        for body in ('{"prediction":"change","alternative":"change"}',
+                     '{"prediction":"maybe"}', '{}', '{"prediction":"change","prediction":"no_change"}'):
+            with self.subTest(body=body):
+                with self.assertRaises(ValueError):
+                    parse_audit(body, 'prediction', [])
+
+    def test_duplicate_or_partial_prediction_is_retained_and_censors_dispatch(self):
+        for mode in ('duplicate_prediction_fields', 'partial_prediction'):
+            with self.subTest(mode=mode):
+                result, _ = self.execute(mode)
+                self.assertEqual(result['status'], 'failed')
+                self.assertEqual(result['dispatches'], 0)
+                row = result['episodes'][0]['calls'][1]
+                self.assertEqual(row['status'], 'failed')
+                self.assertIn('response', row)
+                self.assertIn('response_sha256', row)
+                self.assertIn('server_prompt_tokens', row)
+                self.assertIn('finish_reason', row)
+                with self.assertRaisesRegex(ValueError, 'incomplete pair'):
+                    evaluate(result)
 
     def test_eight_frame_feedback_is_lossless_and_bounded(self):
         result, _ = self.execute()

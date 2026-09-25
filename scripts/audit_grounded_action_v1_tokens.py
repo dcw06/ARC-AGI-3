@@ -71,7 +71,7 @@ def run(record, folder, output):
         'control': {'action': {'action_id': 6, 'action_data': {'x': 63, 'y': 63}}},
         'target': {'action': {'action_id': 6, 'action_data': {'x': 63, 'y': 63}},
                    'target': {'kind': 'box', 'box': [0, 0, 63, 63]}},
-        'prediction': {'prediction': 'no_change', 'alternative': 'change'},
+        'prediction': {'prediction': 'no_change'},
         'feedback': {'assessment': 'contradicted', 'changed_frames': list(range(8))},
     }
     output_rows = []

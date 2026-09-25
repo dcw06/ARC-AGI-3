@@ -14,10 +14,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from research.grounded_action_v1 import authority
 
-PACKAGE = 'notebooks/phase4-grounded-action-v1-run-r6'
-CLAIM = 'reports/perception_stage_b_r6_launch_claim.json'
-RECEIPT = 'reports/perception_stage_b_r6_launch.json'
-PRELAUNCH = 'reports/perception_stage_b_r6_prelaunch.json'
+PACKAGE = 'notebooks/phase4-grounded-action-v1-run-r7'
+CLAIM = 'reports/perception_stage_b_r7_launch_claim.json'
+RECEIPT = 'reports/perception_stage_b_r7_launch.json'
+PRELAUNCH = 'reports/perception_stage_b_r7_prelaunch.json'
 MARKER = '    # STAGE_B_AUTHORITY_SIDECARS: reviewed packaging inserts bound approvals here.\n'
 
 
@@ -177,8 +177,8 @@ def materialize(root):
         '# Stage B: one separately authorized private development attempt\n'
         'Two episodes, at most two actions each, 12 study calls and one canary. '
         'No automatic retry or scored submission.')
-    metadata.update(id='daichongwei06/arc3-grounded-action-v1-r6',
-                    title='arc3-grounded-action-v1-r6', enable_gpu=True,
+    metadata.update(id='daichongwei06/arc3-grounded-action-v1-r7',
+                    title='arc3-grounded-action-v1-r7', enable_gpu=True,
                     machine_shape='NvidiaRtxPro6000')
     artifacts = {'profile.ipynb': encode(notebook), 'kernel-metadata.json': encode(metadata)}
     if len(artifacts['profile.ipynb']) >= 900000:
