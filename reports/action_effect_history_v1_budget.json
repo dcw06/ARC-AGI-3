@@ -1,0 +1,38 @@
+{
+  "status": "proposal_only_no_authority",
+  "scope": "action-effect-history-v1 two-block comparison",
+  "authorized_seconds": 0,
+  "proposed_provider_seconds": 3600,
+  "internal_seconds": 3300,
+  "cleanup_reserve_seconds": 300,
+  "maximum_attempts": 1,
+  "automatic_retries": 0,
+  "episodes": 12,
+  "maximum_actions_per_episode": 12,
+  "maximum_policy_calls": 144,
+  "startup_canaries": 1,
+  "prediction_or_feedback_model_calls": 0,
+  "maximum_prompt_tokens_per_call": 26292,
+  "prompt_token_ceiling_per_call": 60000,
+  "maximum_completion_tokens_per_call": 128,
+  "maximum_prompt_tokens_total": 3786048,
+  "maximum_completion_tokens_total": 18432,
+  "conservative_allowances_seconds": {
+    "install": 160,
+    "model_startup_cap": 900,
+    "policy_calls_at_4s": 576,
+    "bootstraps_transitions_evidence": 60,
+    "cleanup_reserve": 300,
+    "total": 1996
+  },
+  "stress_check_seconds": {"policy_calls_at_8s": 1152, "total": 2572},
+  "balanced_admission_seconds_per_call": 10,
+  "basis": {
+    "install_and_setup_measured_seconds": [133.658, 156.547],
+    "model_startup_measured_seconds": [423.462, 618.802, 629.707],
+    "r8_steady_decision_prompt_tokens": 25799,
+    "r8_steady_decision_seconds": [1.44, 1.66],
+    "token_audit": "reports/action_effect_history_v1_token_audit.json"
+  },
+  "exact_provider_billing": null
+}

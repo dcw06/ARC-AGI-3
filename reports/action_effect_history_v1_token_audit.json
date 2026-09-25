@@ -1,0 +1,109 @@
+{
+  "scope": "exact requests from each case initial observation; steady state carries current, previous and one recent final grid; worst history = 4 entries x 8 frames x 4096 changed cells",
+  "tokenizer": "pinned Qwen3-VL-30B-A3B-Instruct-FP8 tokenizer (.cache/phase4-tokenizer)",
+  "rows": [
+    {
+      "game_id": "ar25-0c556536",
+      "label": "first_baseline",
+      "prompt_tokens": 8793,
+      "max_completion_tokens": 128,
+      "request_bytes": 10907,
+      "within_limits": true
+    },
+    {
+      "game_id": "ar25-0c556536",
+      "label": "first_history",
+      "prompt_tokens": 8876,
+      "max_completion_tokens": 128,
+      "request_bytes": 11332,
+      "within_limits": true
+    },
+    {
+      "game_id": "ar25-0c556536",
+      "label": "steady_baseline",
+      "prompt_tokens": 25833,
+      "max_completion_tokens": 128,
+      "request_bytes": 28206,
+      "within_limits": true
+    },
+    {
+      "game_id": "ar25-0c556536",
+      "label": "steady_history_worst",
+      "prompt_tokens": 26292,
+      "max_completion_tokens": 128,
+      "request_bytes": 29638,
+      "within_limits": true
+    },
+    {
+      "game_id": "s5i5-18d95033",
+      "label": "first_baseline",
+      "prompt_tokens": 8558,
+      "max_completion_tokens": 128,
+      "request_bytes": 10417,
+      "within_limits": true
+    },
+    {
+      "game_id": "s5i5-18d95033",
+      "label": "first_history",
+      "prompt_tokens": 8641,
+      "max_completion_tokens": 128,
+      "request_bytes": 10842,
+      "within_limits": true
+    },
+    {
+      "game_id": "s5i5-18d95033",
+      "label": "steady_baseline",
+      "prompt_tokens": 25148,
+      "max_completion_tokens": 128,
+      "request_bytes": 27270,
+      "within_limits": true
+    },
+    {
+      "game_id": "s5i5-18d95033",
+      "label": "steady_history_worst",
+      "prompt_tokens": 25607,
+      "max_completion_tokens": 128,
+      "request_bytes": 28702,
+      "within_limits": true
+    },
+    {
+      "game_id": "wa30-ee6fef47",
+      "label": "first_baseline",
+      "prompt_tokens": 8503,
+      "max_completion_tokens": 128,
+      "request_bytes": 10242,
+      "within_limits": true
+    },
+    {
+      "game_id": "wa30-ee6fef47",
+      "label": "first_history",
+      "prompt_tokens": 8586,
+      "max_completion_tokens": 128,
+      "request_bytes": 10667,
+      "within_limits": true
+    },
+    {
+      "game_id": "wa30-ee6fef47",
+      "label": "steady_baseline",
+      "prompt_tokens": 24970,
+      "max_completion_tokens": 128,
+      "request_bytes": 26969,
+      "within_limits": true
+    },
+    {
+      "game_id": "wa30-ee6fef47",
+      "label": "steady_history_worst",
+      "prompt_tokens": 25429,
+      "max_completion_tokens": 128,
+      "request_bytes": 28401,
+      "within_limits": true
+    }
+  ],
+  "max_prompt_tokens": 26292,
+  "history_field_overhead_tokens": {
+    "ar25-0c556536": 459,
+    "s5i5-18d95033": 459,
+    "wa30-ee6fef47": 459
+  },
+  "model_calls": 0
+}
