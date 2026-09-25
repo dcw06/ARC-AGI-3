@@ -1,0 +1,29 @@
+{
+  "account_gpu_time_used_delta_seconds": 571.924,
+  "archive": "evidence/phase4-grounded-action-v1-r8-complete.zip",
+  "archive_sha256": "69eb0f4a5ccd1b016f00d1a9991afe06c73b9bb0ae5a3dc5f6ac7c96c3661a9b",
+  "archive_unchanged": true,
+  "attempt_id": "gab1-2b4f10a6f6b949aaa26aa457b9f56272",
+  "automatic_retry_authorized": false,
+  "evaluator_sha256_after_repair": "1f47f140e2719eb471d022ff3ab63cafb1a93d74facfb0cb5c2734ee146c3659",
+  "exact_provider_billed_seconds": null,
+  "first_cell_elapsed_seconds": 562.197766555,
+  "first_cell_within_deadline": true,
+  "original_evaluation_file_sha256": "d244fdcc28819f3f76bb7599e40768ca6272a24fb220a7b8227731a0495e9833",
+  "phase4_complete": false,
+  "purpose": "Separate record of the R8 evaluator deadline repair; the original evaluation, archive and lock are not rewritten.",
+  "regression_tests": "tests/test_grounded_action_v1_r8_evaluation.py (missing, string, bool, NaN, infinite, negative, at-limit and over-limit values for both durations fail with the deadline reason; original archive passes unchanged)",
+  "repair": "scripts/evaluate_grounded_action_v1_r8.py now requires the first-cell duration (control/notebook-cost.json elapsed_seconds) and the supervisor duration (control/outer.json elapsed_seconds) to be finite, nonnegative reals strictly below 3300 s; previously the first-cell value was reported but never checked and the supervisor value was only compared with < 3300.",
+  "reservation_status": "consumed",
+  "revalidated_archive_replay": {
+    "archive_sha256": "69eb0f4a5ccd1b016f00d1a9991afe06c73b9bb0ae5a3dc5f6ac7c96c3661a9b",
+    "evaluation_status": "verified_complete_development_pair",
+    "files": 42,
+    "game_actions": 4,
+    "status": "archive_verified",
+    "study_calls": 12
+  },
+  "revalidated_evaluation_equals_original": true,
+  "supervisor_elapsed_seconds": 560.1242344089999,
+  "supervisor_within_deadline": true
+}

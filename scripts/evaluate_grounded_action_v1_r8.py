@@ -1,6 +1,7 @@
 """Independently evaluate the consumed Stage B R8 provider evidence."""
 import hashlib
 import json
+import math
 from pathlib import Path
 
 from certification.phase4_integrated_v2.monitor import validate_binding
@@ -18,6 +19,14 @@ RESULT = ROOT / 'reports/perception_stage_b_r8_evaluation.json'
 def require(ok, reason):
     if not ok:
         raise ValueError(reason)
+
+
+INTERNAL_SECONDS = 3300
+
+
+def within_deadline(value, limit=INTERNAL_SECONDS):
+    """A finite, nonnegative real duration strictly below the internal limit (bools rejected)."""
+    return (type(value) in (int, float) and math.isfinite(value) and 0 <= value < limit)
 
 
 def read(download, name):
@@ -87,11 +96,13 @@ def evaluate(download=DOWNLOAD, manifest_path=MANIFEST, record_root=ROOT):
     require(installation['passed'] is True and cost['dependency_trees_removed'] is True and
             cost['error'] is None and cost['study_status'] ==
             'development_study_complete_pending_archive_review', 'installation/finalization')
+    # First-cell lifecycle (install through dependency removal) must itself meet the deadline.
+    require(within_deadline(cost.get('elapsed_seconds')), 'first-cell deadline')
     require(outer['status'] == 'development_study_complete_pending_archive_review' and
             outer['error'] is None and
             outer['worker_released'] is True and outer['process_groups_exited'] is True and
             outer['independent_gpu_cleanup_verified'] is True and outer['scratch_removed'] is True and
-            outer['elapsed_seconds'] < outer['internal_seconds'] == 3300 and
+            within_deadline(outer.get('elapsed_seconds')) and outer['internal_seconds'] == INTERNAL_SECONDS and
             outer['admission_cutoff_seconds'] == 3000, 'supervisor deadline/cleanup')
     require(gpu['gpu_cleanup_verified'] is True and gpu['groups_absent'] is True and
             gpu['remaining_gpu_pids'] == 0 and gpu['gpu_uuid'] == validate_binding(ready['gpu_binding']) and
