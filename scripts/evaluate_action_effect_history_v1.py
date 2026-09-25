@@ -14,7 +14,10 @@ def read(output, name, limit=4 * 1024**2):
     return json.loads(path.read_bytes())
 
 
-def evaluate_output(output, *, mode='live'):
+REHEARSAL_INTERNAL_SECONDS = 2400  # the rehearsal harness's declared lifecycle
+
+
+def evaluate_output(output, *, mode='live', rehearsal_seconds=None):
     """Lifecycle checks, verified run evidence and the frozen behaviour/solving/reliability evaluation.
 
     Lifecycle and evidence problems are reported alongside whatever run evidence verifies; partial
@@ -60,9 +63,19 @@ def evaluate_output(output, *, mode='live'):
     if (gpu.get('gpu_cleanup_verified') is not True or gpu.get('remaining_gpu_pids') != 0
             or gpu.get('groups_absent') is not True):
         lifecycle.append('independent GPU cleanup')
-    elapsed = cost.get('elapsed_seconds')
-    if type(elapsed) not in (int, float) or not 0 <= elapsed < outer.get('internal_seconds', 3300):
-        lifecycle.append('first-cell deadline')
+    # Deadlines are judged against the frozen limit, never a limit claimed by the report itself.
+    import math
+    from research.action_effect_history_v1.runner import protocol
+    limits = protocol()['limits']
+    frozen = limits['internal_seconds'] if mode == 'live' else (rehearsal_seconds or REHEARSAL_INTERNAL_SECONDS)
+    if mode == 'rehearsal' and not 60 <= frozen <= limits['internal_seconds']:
+        lifecycle.append('rehearsal limit outside the frozen envelope')
+    if (outer.get('internal_seconds') != frozen
+            or outer.get('admission_cutoff_seconds') != frozen - limits['cleanup_reserve_seconds']):
+        lifecycle.append('reported limits conflict with the frozen lifecycle')
+    for label, value in (('first-cell', cost.get('elapsed_seconds')), ('supervisor', outer.get('elapsed_seconds'))):
+        if type(value) not in (int, float) or not math.isfinite(value) or not 0 <= value < frozen:
+            lifecycle.append(f'{label} deadline (frozen {frozen} s)')
     try:
         telemetry = read_telemetry(output / 'monitor')
         ready = read(output, 'monitor/ready.json', 65536)

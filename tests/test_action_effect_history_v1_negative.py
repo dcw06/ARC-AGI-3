@@ -69,6 +69,29 @@ class NegativeRegressions(unittest.TestCase):
         self.rejected(report,'run call total')
         report=copy.deepcopy(self.report);report['episodes'][1]['status']='interrupted'
         self.rejected(report,'complete pair with an interrupted episode')
+    # r2 review: dispatch receipts are bound to the engine journal, action and observations.
+    def test_dispatch_receipts_are_verified(self):
+        report=copy.deepcopy(self.report)
+        for e in report['episodes']:
+            for s in e['steps']:s.pop('receipt',None)
+        result=self.rejected(report,'every receipt removed')
+        self.assertTrue(any('dispatch receipt' in x for x in result['errors']))
+        for mutate,why in ((lambda j:j['fields'].update(post_state_hash='0'*64),'post-state hash'),
+                           (lambda j:j['fields'].update(decision_id='other-0'),'decision id'),
+                           (lambda j:j['fields'].update(payload_sha256='0'*64),'payload'),
+                           (lambda j:j.update(sequence=j['sequence']+5),'sequence gap')):
+            with self.subTest(why=why):
+                report=copy.deepcopy(self.report);mutate(report['episodes'][0]['steps'][2]['receipt']['journal'])
+                self.rejected(report,why)
+    # r2 review: case and block assignments are bound to the frozen schedule.
+    def test_schedule_identities_are_bound(self):
+        report=copy.deepcopy(self.report);report['episodes'][3]['block']=99
+        self.rejected(report,'episode block 99')
+        report=copy.deepcopy(self.report);report['pairs'][0]['game_id']='wa30-ee6fef47'
+        self.rejected(report,'pair game swapped to another case')
+        report=copy.deepcopy(self.report);report['episodes'][0]['game_id']='s5i5-18d95033'
+        self.rejected(report,'episode moved to another case')
+
     def test_rehashed_semantic_forgery_passes_integrity_but_fails_replay(self):
         target=Path(self.tmp.name)/'forged';shutil.copytree(self.run_dir,target)
         name='episodes/'+self.report['episodes'][0]['episode_id']+'.json'
@@ -106,5 +129,20 @@ class LifecycleNegativeRegressions(unittest.TestCase):
                 data=json.loads((target/name).read_bytes());data[key]=value;(target/name).write_text(json.dumps(data))
                 result=evaluate_output(target,mode='rehearsal')
                 self.assertFalse(result['technically_complete'],(name,key));self.assertTrue(result['lifecycle_errors'])
+
+    # r2 review: deadlines use the frozen limit, never the report's claimed limit.
+    def test_claimed_limits_cannot_extend_the_deadline(self):
+        from scripts.evaluate_action_effect_history_v1 import evaluate_output
+        for edits in ([('control/notebook-cost.json','elapsed_seconds',4000),('control/outer.json','internal_seconds',5000)],
+                      [('control/outer.json','admission_cutoff_seconds',4700)],
+                      [('control/outer.json','elapsed_seconds',2400.5)]):
+            with self.subTest(edits=edits):
+                target=self.work/'mutated-deadline';shutil.rmtree(target,ignore_errors=True);shutil.copytree(self.output,target)
+                for name,key,value in edits:
+                    data=json.loads((target/name).read_bytes());data[key]=value;(target/name).write_text(json.dumps(data))
+                result=evaluate_output(target,mode='rehearsal')
+                self.assertFalse(result['technically_complete'],edits)
+        # A live-mode evaluation always uses the frozen 3,300 s, whatever the rehearsal limit.
+        self.assertIn('reported limits conflict with the frozen lifecycle',evaluate_output(self.output,mode='live')['lifecycle_errors'])
 
 if __name__=='__main__':unittest.main()

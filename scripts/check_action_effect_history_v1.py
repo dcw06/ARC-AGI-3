@@ -9,7 +9,7 @@ SUITES = {'records_and_fixtures': 'tests.test_action_effect_v1',
           'request_contract': 'tests.test_action_effect_history_v1_contract',
           'runner_rehearsals': 'tests.test_action_effect_history_v1_runner',
           'connected_path_rehearsals': 'tests.test_action_effect_history_v1_connected',
-          'negative_regressions_from_r1_review': 'tests.test_action_effect_history_v1_negative',
+          'negative_regressions_from_r1_r2_reviews': 'tests.test_action_effect_history_v1_negative',
           'r8_evaluator_repair': 'tests.test_grounded_action_v1_r8_evaluation'}
 
 

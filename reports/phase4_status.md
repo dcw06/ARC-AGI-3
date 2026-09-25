@@ -7,9 +7,15 @@ measured effects improves action selection over action-ID-only history. It is
 tested as a two-block, three-development-case, 12-action comparison with at
 most 144 policy calls.
 
-The review notebook is `notebooks/action-effect-history-v1-review-r2/`, lock
-`5859a014…e139`, with 1,063 runtime bindings plus hash-bound review documents.
-r1 is preserved and superseded. Review of r1 found three detection gaps, now
+The review notebook is `notebooks/action-effect-history-v1-review-r3/`, lock
+`0f870a1a…e386`, with 1,063 runtime bindings plus hash-bound review documents.
+r1 and r2 are preserved and superseded. Review of r2 found three more
+evaluator gaps, now fixed in r3:
+- dispatch receipts were not bound to the engine journal;
+- schedule identities were not fully bound;
+- a report's claimed limit could extend its own deadline.
+
+Earlier, r1 was superseded for the reasons below. Review of r1 found three detection gaps, now
 fixed in r2:
 - failed scorecard closure could still yield a complete run;
 - replay trusted runner verdicts;

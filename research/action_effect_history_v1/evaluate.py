@@ -53,6 +53,39 @@ def check_call(call, request_max_tokens, limits):
     return problems
 
 
+def check_receipt(step, index, episode_id, game_id, previous_sequence):
+    """Bind an acknowledged dispatch to its engine journal entry, action and observations. Returns (problems, sequence)."""
+    from agent.action import ActionDecision, serialize_action
+    receipt = step.get('receipt')
+    if not isinstance(receipt, dict) or receipt.get('acknowledged') is not True \
+            or receipt.get('source') != 'offline_development_engine':
+        return ['missing or unacknowledged dispatch receipt'], previous_sequence
+    journal = receipt.get('journal') or {}
+    fields, prepared = journal.get('fields') or {}, journal.get('prepared_fields') or {}
+    action, before, after = step['action'], step['before'], step.get('after') or {}
+    decision_id = f'{episode_id}-{index}'
+    problems = []
+    if journal.get('kind') != 'action' or journal.get('status') != 'acknowledged':
+        problems.append('journal entry is not an acknowledged action')
+    try:
+        wire = serialize_action(ActionDecision(**action, source='action_effect_history_v1', decision_id=decision_id),
+                                game_id=game_id, guid=before['guid'], legal_actions=before['available_actions'])
+        payload = wire.payload_sha256
+    except Exception:
+        payload = None
+    expected = {'action_id': action['action_id'], 'decision_id': decision_id, 'payload_sha256': payload,
+                'pre_state_hash': before['canonical_hash'], 'post_state_hash': after.get('canonical_hash')}
+    if payload is None or fields != expected:
+        problems.append('journal fields not bound to the action and observations')
+    if prepared != {k: v for k, v in expected.items() if k != 'post_state_hash'}:
+        problems.append('journal prepared fields not bound to the action')
+    sequence = journal.get('sequence')
+    if type(sequence) is not int or (previous_sequence is not None and sequence != previous_sequence + 1) \
+            or not str(journal.get('transaction_id', '')).startswith(f'action:{game_id}:{sequence}:'):
+        problems.append('journal sequence or transaction identity')
+    return problems, sequence
+
+
 def replay_episode(episode, case, limits):
     """Rebuild every request and record from retained observations only, and independently re-check every
     call, observation transition, terminal state, final observation, closure and count. Returns errors."""
@@ -89,6 +122,7 @@ def replay_episode(episode, case, limits):
         if call['status'] != 'valid' and index != len(calls) - 1:
             errors.append(f'{eid} call {index}: a non-valid call must be the last call of its episode')
     stopped_early = False
+    sequence = None
     for i, step in enumerate(steps):
         if step.get('index') != i or step.get('call_index') != i or i >= len(calls):
             errors.append(f'{eid} step {i}: step/call index accounting')
@@ -125,6 +159,11 @@ def replay_episode(episode, case, limits):
         except (ValueError, KeyError, TypeError):
             errors.append(f'{eid} step {i}: effect record not reproducible from retained frames')
         history.append(record)
+        if record['status'] == 'acknowledged':
+            problems, sequence = check_receipt(step, i, eid, episode['game_id'], sequence)
+            errors.extend(f'{eid} step {i}: {problem}' for problem in problems)
+        elif isinstance(step.get('receipt'), dict) and step['receipt'].get('acknowledged') is True:
+            errors.append(f'{eid} step {i}: acknowledged receipt on a failed or unknown dispatch')
         if record['status'] != 'acknowledged':
             if i != len(steps) - 1 or stop != 'dispatch_failure':
                 errors.append(f'{eid}: dispatch failure must be the last step and stop the episode')
@@ -252,7 +291,11 @@ def evaluate(report, spec=None):
     if [p['pair_id'] for p in report['pairs']] != [p['pair_id'] for p in spec['schedule']]:
         errors.append('pair inventory differs from the schedule')
     for episode in report['episodes']:
-        errors.extend(replay_episode(episode, cases[episode['game_id']], limits))
+        case = cases.get(episode.get('game_id'))
+        if case is None:
+            errors.append(f"{episode.get('episode_id')}: game is not a frozen case")
+            continue
+        errors.extend(replay_episode(episode, case, limits))
     # Run-level accounting, independent of the runner's own totals and labels.
     episodes = report['episodes']
     if report.get('calls') != sum(len(e['calls']) for e in episodes):
@@ -262,10 +305,24 @@ def evaluate(report, spec=None):
     if sum(len(e['calls']) for e in episodes) > limits['maximum_policy_calls']:
         errors.append('policy call ceiling exceeded')
     schedule = {p['pair_id']: p for p in spec['schedule']}
+    # Pair and episode identities are bound to the frozen schedule: id, block, game, arm and order.
+    for planned, pair in zip(spec['schedule'], report['pairs']):
+        if any(pair.get(key) != planned[key] for key in ('pair_id', 'block', 'game_id', 'order')):
+            errors.append(f"{pair.get('pair_id')}: pair identity differs from the frozen schedule")
+    expected = [(p, arm, i) for p in spec['schedule'] for i, arm in enumerate(p['order'])]
+    if len(episodes) > len(expected):
+        errors.append('more episodes than scheduled')
+    for (planned, arm, position), episode in zip(expected, episodes):
+        want = {'episode_id': f"{planned['pair_id']}-{arm}", 'pair_id': planned['pair_id'], 'block': planned['block'],
+                'game_id': planned['game_id'], 'arm': arm, 'order_in_pair': position}
+        if any(episode.get(key) != value for key, value in want.items()):
+            errors.append(f"{episode.get('episode_id')}: episode identity differs from its schedule slot {want['episode_id']}")
     for pair in report['pairs']:
         members = [e for e in episodes if e['pair_id'] == pair['pair_id']]
-        if [e['arm'] for e in members] != schedule[pair['pair_id']]['order'][:len(members)]:
+        if [e['arm'] for e in members] != schedule.get(pair['pair_id'], {}).get('order', [])[:len(members)]:
             errors.append(f"{pair['pair_id']}: episodes out of schedule order")
+        if pair['status'] in ('not_admitted', 'not_started') and members:
+            errors.append(f"{pair['pair_id']}: episodes recorded for a pair that never ran")
         if pair['status'] == 'complete' and (len(members) != 2 or any(e['status'] != 'complete' for e in members)):
             errors.append(f"{pair['pair_id']}: pair labelled complete without two complete episodes")
     if report.get('status') == 'complete' and (any(p['status'] != 'complete' for p in report['pairs'])

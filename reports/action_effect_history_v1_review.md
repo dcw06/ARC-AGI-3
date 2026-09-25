@@ -5,6 +5,34 @@ has been no reservation, upload or model call. This package is for an
 independent review. Source approval and a separate compute authorization
 would follow only after that review.
 
+## Changes in r3 (review of r2 at `63d732e`)
+
+r2 is preserved and superseded. Three evaluator gaps found in review are
+fixed. Their regressions are in the same negative suite, and all fail against
+r2's source:
+
+1. **Dispatch receipts.** Every acknowledged step must carry an acknowledged
+   offline-engine receipt. Its journal entry must be an acknowledged action
+   whose fields match the step exactly:
+   - the decision ID `{episode_id}-{step}`;
+   - the action ID;
+   - the payload hash, recomputed from the action;
+   - the pre- and post-state hashes.
+
+   Prepared fields must match the same values, sequence numbers must be
+   consecutive, and the transaction ID must name the game. A failed or unknown
+   dispatch must not carry an acknowledged receipt.
+2. **Schedule identities.** The pair list must equal the frozen schedule
+   (ID, block, game, arm order). Every episode's ID, pair, block, game, arm and
+   position must equal its schedule slot. Episodes must form an in-order prefix
+   of the schedule. Episodes for pairs that never ran, and games that are not
+   frozen cases, are rejected.
+3. **Frozen deadlines.** The output evaluator takes the limit from the frozen
+   protocol: 3,300 s live, or the rehearsal harness's declared 2,400 s, which
+   is never above the live limit. A report whose internal limit or admission
+   cutoff conflicts is rejected. Both first-cell and supervisor durations are
+   compared against the frozen value.
+
 ## Changes in r2 (review of r1 at `075114c`)
 
 r1 is preserved and superseded. Three failure-detection gaps found in review
@@ -66,7 +94,7 @@ before installing anything.
 
 ```sh
 python -m scripts.check_action_effect_history_v1          # every local suite; rewrites the rehearsal results
-python scripts/review_action_effect_history_v1_notebook.py --folder notebooks/action-effect-history-v1-review-r2
+python scripts/review_action_effect_history_v1_notebook.py --folder notebooks/action-effect-history-v1-review-r3
 ```
 
 The review script does four things:

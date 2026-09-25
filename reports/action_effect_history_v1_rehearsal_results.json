@@ -7,7 +7,7 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 4.1
+      "seconds": 4.6
     },
     "request_contract": {
       "module": "tests.test_action_effect_history_v1_contract",
@@ -15,7 +15,7 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 0.1
+      "seconds": 0.2
     },
     "runner_rehearsals": {
       "module": "tests.test_action_effect_history_v1_runner",
@@ -23,7 +23,7 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 82.8
+      "seconds": 117.1
     },
     "connected_path_rehearsals": {
       "module": "tests.test_action_effect_history_v1_connected",
@@ -31,15 +31,15 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 154.1
+      "seconds": 175.5
     },
-    "negative_regressions_from_r1_review": {
+    "negative_regressions_from_r1_r2_reviews": {
       "module": "tests.test_action_effect_history_v1_negative",
-      "tests_run": 8,
+      "tests_run": 11,
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 60.8
+      "seconds": 79.0
     },
     "r8_evaluator_repair": {
       "module": "tests.test_grounded_action_v1_r8_evaluation",
@@ -47,7 +47,7 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 2.5
+      "seconds": 2.6
     }
   },
   "all_passed": true,
