@@ -5,8 +5,10 @@ JSON Schema validator (length, numeric bounds, required and forbidden properties
 Only a schema-valid response is scored semantically; integers must be real JSON integers, not
 booleans or floats. Within the schema, lists are compared as sets and duplicates are recorded.
 
-Analysis labels are operational: `criterion_met`, `below_accuracy_floor` or `inconclusive`. They
-describe this diagnostic's criterion only, never general comprehension. Question-level results are
+Analysis labels are operational: `criterion_met`, `below_accuracy_floor`, `inconclusive`,
+`not_diagnostic` or `incomplete`. They describe this diagnostic's criterion only, never general
+comprehension. A missing answer (no returned response) or a missing pass makes a result
+`incomplete`; absence is never scored as success. The gate needs two identified passes. Question-level results are
 clustered by context, so intervals are descriptive (a context-resampling bootstrap), and the gate
 rests on point accuracy plus accuracy on questions where the family's most accurate shortcut answers
 wrongly. A constant shortcut cannot pass: it would need 90% overall, which only a non-diagnostic
@@ -118,29 +120,54 @@ def best_shortcuts(probes):
     return best
 
 
-def group_metrics(probes, correct_of, seed, best):
-    """Metrics for one group of probes; `correct_of(probe)` returns True/False (missing counts as False).
+def group_metrics(probes, outcome_of, seed, best):
+    """Metrics for one group of probes. `outcome_of(probe)` returns 'correct', 'wrong' or 'missing' (no returned
+    response). Any missing answer makes the group `incomplete`: absence is never scored as success or failure.
     `best` is the (name, accuracy) of this condition/family's most accurate shortcut."""
     n = len(probes)
-    hits = [bool(correct_of(p)) for p in probes]
+    outcomes = [outcome_of(p) for p in probes]
+    if any(o not in ('correct', 'wrong', 'missing') for o in outcomes):
+        raise ValueError('unknown outcome')
+    hits = [o == 'correct' for o in outcomes]
+    missing = outcomes.count('missing')
     by_context = {}
     for p, hit in zip(probes, hits):
         by_context.setdefault(p['context_id'], []).append(int(hit))
     disagreement = [hit for p, hit in zip(probes, hits) if best[0] not in p['shortcuts_correct']]
     accuracy = round(sum(hits) / n, 4) if n else None
     dis_acc = round(sum(disagreement) / len(disagreement), 4) if disagreement else None
-    return {'n': n, 'correct': sum(hits), 'accuracy': accuracy,
-            'context_bootstrap_95': context_bootstrap(by_context, seed),
+    return {'n': n, 'answered': n - missing, 'missing': missing, 'correct': sum(hits),
+            'accuracy': accuracy, 'context_bootstrap_95': context_bootstrap(by_context, seed) if not missing else None,
             'contexts': len(by_context), 'contexts_all_correct': sum(all(v) for v in by_context.values()),
             'best_shortcut': best[0], 'best_shortcut_accuracy': best[1],
             'shortcut_disagreement_n': len(disagreement), 'shortcut_disagreement_accuracy': dis_acc,
-            'label': label(accuracy, len(disagreement), dis_acc, best[1])}
+            'label': 'incomplete' if missing or not n else label(accuracy, len(disagreement), dis_acc, best[1])}
+
+
+PASS_IDS = ('pass_1', 'pass_2')
 
 
 def analyze(probes, passes):
-    """`passes` is a list of {probe_id: score row} (one per pass). Missing or invalid answers count as wrong."""
-    def ok(results):
-        return lambda p: bool(results.get(p['probe_id'], {}).get('correct'))
+    """`passes` maps an identified pass ('pass_1', 'pass_2') to {probe_id: score row}; a row exists only for a
+    returned response. The final gate requires both identified passes with every gated probe answered in each;
+    otherwise it is `incomplete`. Single-pass results are diagnostics only. Invalid answers count as wrong."""
+    if not isinstance(passes, dict) or set(passes) - set(PASS_IDS):
+        raise ValueError('passes must be identified as ' + ', '.join(PASS_IDS))
+    missing_passes = [p for p in PASS_IDS if p not in passes]
+
+    def single(results):
+        def outcome(p):
+            row = results.get(p['probe_id'])
+            return 'missing' if row is None else 'correct' if row.get('correct') is True else 'wrong'
+        return outcome
+
+    def joint(p):
+        if missing_passes:
+            return 'missing'
+        rows = [passes[i].get(p['probe_id']) for i in PASS_IDS]
+        if any(r is None for r in rows):
+            return 'missing'
+        return 'correct' if all(r.get('correct') is True for r in rows) else 'wrong'
 
     best = best_shortcuts(probes)
     groups = {}
@@ -148,22 +175,35 @@ def analyze(probes, passes):
         groups.setdefault((p['condition'], p['family']), []).append(p)
         for s in p['strata']:
             groups.setdefault((p['condition'], p['family'], s), []).append(p)
-    report = {'per_pass': [], 'both_correct': {}, 'agreement': {}, 'invalid_or_missing': [], 'matched': {}}
-    for index, results in enumerate(passes):
-        report['per_pass'].append({'/'.join(k): group_metrics(v, ok(results), f'{index}:{"/".join(k)}', best[k[:2]])
-                                   for k, v in sorted(groups.items())})
-        report['invalid_or_missing'].append(sum(not results.get(p['probe_id'], {}).get('valid') for p in probes))
-    both = lambda p: all(ok(r)(p) for r in passes)  # noqa: E731
-    report['both_correct'] = {'/'.join(k): group_metrics(v, both, 'both:' + '/'.join(k), best[k[:2]])
+    report = {'passes_present': [i for i in PASS_IDS if i in passes], 'passes_missing': missing_passes,
+              'single_pass_diagnostics': {}, 'both_correct': {}, 'agreement': {}, 'matched': {}}
+    for index in report['passes_present']:
+        results = passes[index]
+        report['single_pass_diagnostics'][index] = {
+            'answered': sum(p['probe_id'] in results for p in probes),
+            'invalid': sum(results.get(p['probe_id'], {'valid': True}).get('valid') is False for p in probes),
+            'groups': {'/'.join(k): group_metrics(v, single(results), f'{index}:{"/".join(k)}', best[k[:2]])
+                       for k, v in sorted(groups.items())}}
+    report['both_correct'] = {'/'.join(k): group_metrics(v, joint, 'both:' + '/'.join(k), best[k[:2]])
                               for k, v in sorted(groups.items())}
-    if len(passes) > 1:
-        for k, v in sorted(groups.items()):
-            if len(k) != 2:
-                continue
-            same = [len({canonical(r.get(p['probe_id'], {}).get('answer', '<invalid>')) for r in passes}) == 1 for p in v]
-            report['agreement']['/'.join(k)] = {'n': len(v), 'identical_answers': sum(same)}
+    for k, v in sorted(groups.items()):
+        if len(k) != 2:
+            continue
+        row = {'n': len(v), 'valid_pairs': 0, 'identical_answers': 0, 'missing_pairs': 0, 'invalid_pairs': 0}
+        for p in v:
+            pair = [passes[i].get(p['probe_id']) if i in passes else None for i in PASS_IDS]
+            if any(r is None for r in pair):
+                row['missing_pairs'] += 1
+            elif not all(r.get('valid') is True for r in pair):
+                row['invalid_pairs'] += 1
+            else:
+                row['valid_pairs'] += 1
+                row['identical_answers'] += canonical(pair[0]['answer']) == canonical(pair[1]['answer'])
+        report['agreement']['/'.join(k)] = row
     report['gate'] = {k.split('/')[1]: m['label'] for k, m in report['both_correct'].items()
                       if k.startswith(GATE_CONDITION + '/') and k.count('/') == 1}
+    gated = [p for p in probes if p['condition'] == GATE_CONDITION]
+    report['gate_status'] = ('incomplete' if not gated or any(joint(p) == 'missing' for p in gated) else 'complete')
     by_id = {p['probe_id']: p for p in probes}
     for first, second in MATCHED:
         table = {}
@@ -173,10 +213,15 @@ def analyze(probes, passes):
             twin = by_id.get(p['probe_id'].replace(first + ':', second + ':', 1))
             if twin is None or twin['key'] != p['key']:
                 raise ValueError('matched probe missing or keyed differently: ' + p['probe_id'])
-            row = table.setdefault(p['family'], {'n': 0, 'both': 0, f'only_{first}': 0, f'only_{second}': 0, 'neither': 0})
-            a, b = both(p), both(twin)
+            row = table.setdefault(p['family'], {'n': 0, 'both': 0, f'only_{first}': 0, f'only_{second}': 0,
+                                                 'neither': 0, 'incomplete': 0})
+            a, b = joint(p), joint(twin)
             row['n'] += 1
-            row['both' if a and b else f'only_{first}' if a else f'only_{second}' if b else 'neither'] += 1
+            if 'missing' in (a, b):
+                row['incomplete'] += 1
+            else:
+                row['both' if a == b == 'correct' else f'only_{first}' if a == 'correct'
+                    else f'only_{second}' if b == 'correct' else 'neither'] += 1
         report['matched'][f'{first}_vs_{second}'] = table
     return report
 

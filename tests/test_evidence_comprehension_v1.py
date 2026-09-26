@@ -180,9 +180,10 @@ class R1Finding4OperationalLabels(unittest.TestCase):
     gate = [p for p in PROBES if p['condition'] == P.GATE_CONDITION]
 
     def test_labels_are_operational(self):
-        report = analyze(PROBES, [oracle(PROBES), oracle(PROBES)])
+        report = analyze(PROBES, {'pass_1': oracle(PROBES), 'pass_2': oracle(PROBES)})
         labels = {m['label'] for m in report['both_correct'].values()}
-        self.assertLessEqual(labels, {'criterion_met', 'below_accuracy_floor', 'inconclusive', 'not_diagnostic'})
+        self.assertLessEqual(labels, {'criterion_met', 'below_accuracy_floor', 'inconclusive', 'not_diagnostic',
+                                      'incomplete'})
         self.assertEqual(set(report['gate'].values()), {'criterion_met'})
         family = report['both_correct']['evidence_only/outcome_class']
         for key in ('context_bootstrap_95', 'contexts', 'contexts_all_correct', 'best_shortcut',
@@ -193,7 +194,7 @@ class R1Finding4OperationalLabels(unittest.TestCase):
     def test_best_shortcut_responder_cannot_meet_the_criterion(self):
         best = best_shortcuts(self.gate)
         wrong = {p['probe_id'] for p in self.gate if best[(p['condition'], p['family'])][0] not in p['shortcuts_correct']}
-        report = analyze(self.gate, [oracle(self.gate, wrong)] * 2)
+        report = analyze(self.gate, {'pass_1': oracle(self.gate, wrong), 'pass_2': oracle(self.gate, wrong)})
         self.assertNotIn('criterion_met', report['gate'].values())
 
     def test_accuracy_bands(self):
@@ -203,17 +204,18 @@ class R1Finding4OperationalLabels(unittest.TestCase):
         easy = [p for p in probes if best in p['shortcuts_correct']]
         # 20% wrong on shortcut-disagreement questions only: overall >= 0.90 may hold, but the criterion fails.
         wrong = {p['probe_id'] for p in hard[: len(hard) // 5 + 1]}
-        self.assertEqual(analyze(probes, [oracle(probes, wrong)])['gate']['recall_action'], 'inconclusive')
+        self.assertEqual(analyze(probes, {'pass_1': oracle(probes, wrong), 'pass_2': oracle(probes, wrong)})['gate']['recall_action'], 'inconclusive')
         wrong = {p['probe_id'] for p in (easy + hard)[: int(len(probes) * 0.4)]}
-        self.assertEqual(analyze(probes, [oracle(probes, wrong)])['gate']['recall_action'], 'below_accuracy_floor')
+        self.assertEqual(analyze(probes, {'pass_1': oracle(probes, wrong), 'pass_2': oracle(probes, wrong)})['gate']['recall_action'], 'below_accuracy_floor')
 
     def test_two_passes_report_agreement_and_both_correct(self):
         first = oracle(self.gate)
         flipped = {self.gate[0]['probe_id']}
-        report = analyze(self.gate, [first, oracle(self.gate, flipped)])
+        report = analyze(self.gate, {'pass_1': first, 'pass_2': oracle(self.gate, flipped)})
         family = f"evidence_only/{self.gate[0]['family']}"
         self.assertEqual(report['agreement'][family]['identical_answers'], report['agreement'][family]['n'] - 1)
-        self.assertEqual(report['both_correct'][family]['correct'], report['per_pass'][0][family]['correct'] - 1)
+        self.assertEqual(report['both_correct'][family]['correct'],
+                         report['single_pass_diagnostics']['pass_1']['groups'][family]['correct'] - 1)
 
 
 class R1Finding5MatchedGrids(unittest.TestCase):
@@ -231,7 +233,7 @@ class R1Finding5MatchedGrids(unittest.TestCase):
             self.assertEqual({k: v for k, v in full.items() if k not in P.GRID_FIELDS}, bare)
 
     def test_matched_table_is_reported(self):
-        report = analyze(PROBES, [oracle(PROBES)])
+        report = analyze(PROBES, {'pass_1': oracle(PROBES), 'pass_2': oracle(PROBES)})
         table = report['matched']['archived_with_grids_vs_archived_without_grids']
         self.assertTrue(all(row['both'] == row['n'] for row in table.values()))
 
@@ -259,8 +261,79 @@ class R1Finding6LegacyDescription(unittest.TestCase):
 
     def test_gate_ignores_the_legacy_group(self):
         legacy = {p['probe_id'] for p in PROBES if p['condition'] == 'legacy_description'}
-        report = analyze(PROBES, [oracle(PROBES, legacy)])
+        report = analyze(PROBES, {'pass_1': oracle(PROBES, legacy), 'pass_2': oracle(PROBES, legacy)})
         self.assertEqual(set(report['gate'].values()), {'criterion_met'})
+
+
+class R2Finding1MissingEvidence(unittest.TestCase):
+    """Review of r2 at 1a6bf29: absent passes or answers must never pass the gate."""
+    gate = [p for p in PROBES if p['condition'] == P.GATE_CONDITION]
+
+    def test_zero_passes_is_incomplete(self):
+        report = analyze(self.gate, {})
+        self.assertEqual(set(report['gate'].values()), {'incomplete'})
+        self.assertEqual(report['gate_status'], 'incomplete')
+        self.assertEqual(report['passes_missing'], ['pass_1', 'pass_2'])
+        coordinate = report['both_correct']['evidence_only/coordinate_actions']
+        self.assertEqual((coordinate['correct'], coordinate['missing']), (0, coordinate['n']))
+
+    def test_one_perfect_pass_is_incomplete_but_diagnosed(self):
+        for present in ('pass_1', 'pass_2'):
+            report = analyze(self.gate, {present: oracle(self.gate)})
+            self.assertEqual(set(report['gate'].values()), {'incomplete'}, present)
+            self.assertEqual(report['gate_status'], 'incomplete')
+            diagnostics = report['single_pass_diagnostics'][present]['groups']
+            self.assertEqual(diagnostics['evidence_only/coordinate_actions']['label'], 'criterion_met')
+
+    def test_two_empty_passes_have_no_agreement(self):
+        report = analyze(self.gate, {'pass_1': {}, 'pass_2': {}})
+        self.assertEqual(set(report['gate'].values()), {'incomplete'})
+        row = report['agreement']['evidence_only/coordinate_actions']
+        self.assertEqual((row['valid_pairs'], row['identical_answers'], row['missing_pairs']), (0, 0, row['n']))
+
+    def test_interrupted_second_pass_is_incomplete(self):
+        first = oracle(self.gate)
+        # Pass 2 runs in reverse order; interrupted after 60% of its calls, the earliest probes stay unanswered.
+        answered = self.gate[::-1][: int(len(self.gate) * 0.6)]
+        report = analyze(self.gate, {'pass_1': first, 'pass_2': oracle(answered)})
+        self.assertEqual(report['gate_status'], 'incomplete')
+        unanswered = {p['family'] for p in self.gate if p not in answered}
+        self.assertTrue(unanswered)
+        for family in unanswered:
+            self.assertEqual(report['gate'][family], 'incomplete', family)
+
+    def test_interrupted_first_pass_is_incomplete(self):
+        answered = self.gate[: len(self.gate) // 3]
+        report = analyze(self.gate, {'pass_1': oracle(answered)})
+        self.assertEqual(report['gate_status'], 'incomplete')
+        self.assertEqual(set(report['gate'].values()), {'incomplete'})
+
+    def test_single_missing_answer_blocks_its_family(self):
+        rows = oracle(self.gate)
+        victim = next(p for p in self.gate if p['family'] == 'tried_unchanged')
+        second = dict(rows)
+        del second[victim['probe_id']]
+        report = analyze(self.gate, {'pass_1': rows, 'pass_2': second})
+        self.assertEqual(report['gate']['tried_unchanged'], 'incomplete')
+        self.assertEqual(report['gate_status'], 'incomplete')
+        self.assertEqual({v for f, v in report['gate'].items() if f != 'tried_unchanged'}, {'criterion_met'})
+
+    def test_invalid_pairs_are_counted_apart_from_agreement(self):
+        rows = oracle(self.gate)
+        probe = next(p for p in self.gate if p['family'] == 'outcome_class')
+        second = dict(rows)
+        second[probe['probe_id']] = score(probe, 'not json')
+        report = analyze(self.gate, {'pass_1': rows, 'pass_2': second})
+        row = report['agreement']['evidence_only/outcome_class']
+        self.assertEqual((row['invalid_pairs'], row['valid_pairs'], row['identical_answers'], row['missing_pairs']),
+                         (1, row['n'] - 1, row['n'] - 1, 0))
+        self.assertEqual(report['gate_status'], 'complete')  # an invalid answer is answered, and scored wrong
+        self.assertEqual(report['both_correct']['evidence_only/outcome_class']['correct'], row['n'] - 1)
+
+    def test_unidentified_passes_are_rejected(self):
+        for bad in ([oracle(self.gate), oracle(self.gate)], {'pass_3': {}}, {'1': {}}):
+            with self.assertRaises(ValueError):
+                analyze(self.gate, bad)
 
 
 if __name__ == '__main__':

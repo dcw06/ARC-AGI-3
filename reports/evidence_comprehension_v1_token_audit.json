@@ -5387,50 +5387,52 @@
    }
   }
  },
- "measured_bounds": {
+ "historical_planning_estimates": {
+  "status": "historical planning estimates from a cached shared service; not measured guarantees, not lower bounds, and not measurements of cache-disabled performance",
   "source": "action-effect-history v1 archive a67b69557d835f8076e3b80674c29c0032b95ec2dbd9a70f032ed85af54654cb",
-  "decode_lower_bound_tokens_per_second": 110.2,
-  "cold_first_calls": [
+  "max_observed_completion_tokens_per_second": 110.2,
+  "first_calls_after_a_game_change": [
    {
     "episode": "b1-ar25-baseline",
     "prompt_tokens": 8793,
     "latency_seconds": 0.985,
-    "prefill_lower_bound_tokens_per_second": 8929
+    "prompt_tokens_per_second_whole_latency": 8929
    },
    {
     "episode": "b1-s5i5-baseline",
     "prompt_tokens": 8558,
     "latency_seconds": 0.502,
-    "prefill_lower_bound_tokens_per_second": 17058
+    "prompt_tokens_per_second_whole_latency": 17058
    },
    {
     "episode": "b1-wa30-baseline",
     "prompt_tokens": 8503,
     "latency_seconds": 0.45,
-    "prefill_lower_bound_tokens_per_second": 18884
+    "prompt_tokens_per_second_whole_latency": 18884
    },
    {
     "episode": "b2-s5i5-history",
     "prompt_tokens": 8641,
     "latency_seconds": 0.511,
-    "prefill_lower_bound_tokens_per_second": 16919
+    "prompt_tokens_per_second_whole_latency": 16919
    },
    {
     "episode": "b2-ar25-history",
     "prompt_tokens": 8876,
     "latency_seconds": 0.562,
-    "prefill_lower_bound_tokens_per_second": 15781
+    "prompt_tokens_per_second_whole_latency": 15781
    }
   ],
-  "uncached_prefill_lower_bound_tokens_per_second": 8929
+  "slowest_first_call_prompt_tokens_per_second": 8929
  },
  "runtime_scenarios": {
-  "schedule": "evidence_only pass 1, evidence_only pass 2 (reversed), then the descriptive groups pass 1 and pass 2 (reversed); the runner stops admitting calls at the cutoff, so a shortfall can only cut descriptive groups",
+  "status": "planning scenarios only: every rate is a historical estimate or an assumption; actual cache-disabled performance is unmeasured",
+  "schedule": "evidence_only pass 1, evidence_only pass 2 (reversed), then the descriptive groups pass 1 and pass 2 (reversed). Gate-first ordering prioritizes gate completion but cannot guarantee it: slower startup, inference, storage or a failure can interrupt the gate, which is then reported incomplete.",
   "overhead_seconds_per_call": 0.15,
   "startup_seconds": 403,
   "admission_cutoff_seconds": 3000,
   "scenarios": {
-   "measured_bounds": {
+   "historical_estimate": {
     "prefill_tokens_per_second": 8929,
     "decode_tokens_per_second": 110.2,
     "completion_tokens": "key_x2",
@@ -5441,7 +5443,7 @@
     "gate_fits_admission_cutoff": true,
     "everything_fits_admission_cutoff": true
    },
-   "stress_slow_prefill_and_decode": {
+   "assumed_slow": {
     "prefill_tokens_per_second": 2500,
     "decode_tokens_per_second": 40,
     "completion_tokens": "key_x2",
@@ -5452,7 +5454,7 @@
     "gate_fits_admission_cutoff": true,
     "everything_fits_admission_cutoff": true
    },
-   "stress_every_call_at_max_tokens": {
+   "assumed_slow_every_call_at_cap": {
     "prefill_tokens_per_second": 2500,
     "decode_tokens_per_second": 40,
     "completion_tokens": "max_tokens",

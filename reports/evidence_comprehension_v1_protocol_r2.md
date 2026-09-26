@@ -1,48 +1,12 @@
-# Evidence comprehension v1: protocol revision 3 (for review; no compute authorized)
+# Evidence comprehension v1: protocol revision 2 (for review; no compute authorized)
 
-**Status:** revision 3 of the draft. Earlier revisions are preserved:
-- r2 (`1a6bf29`): `reports/evidence_comprehension_v1_protocol_r2.md`;
-- r1 (`064bb9a`): `reports/evidence_comprehension_v1_protocol_r1.md`,
-  `research/evidence_comprehension_v1/probes_r1.json` and
-  `reports/evidence_comprehension_v1_probe_summary_r1.json`.
-
-The frozen probe set is unchanged from r2.
+**Status:** revision 2 of the draft. Revision 1 (`064bb9a`) is preserved as
+`reports/evidence_comprehension_v1_protocol_r1.md`, `research/evidence_comprehension_v1/probes_r1.json`
+and `reports/evidence_comprehension_v1_probe_summary_r1.json`.
 
 The frozen probe set, keys, scorer, token audit and tests are built and pass offline. No model has
 been called. The live runner and GPU-disabled review package come next. No GPU reservation,
 upload or launch.
-
-## Changes in r3 (review of r2)
-
-1. **Missing evidence can never pass.** In r2, "both correct" was computed with `all(...)` over the
-   supplied passes, so zero passes passed everything, one perfect pass met the criterion, and two
-   empty passes showed 100% agreement.
-   - Passes are now supplied as identified `pass_1` and `pass_2`. The final gate requires both.
-   - An answer exists only if the call returned a response. A missing answer or a missing pass makes
-     the family `incomplete`, and the overall gate status is `incomplete` unless every gated probe
-     is answered in both passes.
-   - Single-pass results are reported separately, as diagnostics.
-   - Agreement is computed over valid answer pairs only. Missing and invalid pairs are counted
-     separately.
-   - Regressions: zero passes, one perfect pass (either one), two empty passes, an interrupted
-     first pass, an interrupted second pass, a single missing answer, invalid pairs, and
-     unidentified passes.
-2. **Throughput figures are historical planning estimates, not bounds.**
-   - The largest observed completion rate is one favourable call, not a floor.
-   - "First call after a game change" does not prove a cold cache: the shared service had already
-     seen the block-2 games, and common prefixes may have stayed cached.
-   - Actual cache-disabled performance is unmeasured. The exact token counts do not establish
-     runtime.
-3. **Gate-first ordering prioritizes the gate; it does not guarantee it.** An incomplete gate is
-   explicitly permitted and reported.
-   - Per-call timeouts and admission control protect the cleanup reserve, whatever the timing
-     estimates (see Schedule).
-   - A local simulation interrupts the deadline during gate pass 1, during gate pass 2, and after a
-     slow startup; every run ends `incomplete` and leaves the reserve untouched.
-   - The runner's review package must rehearse the same interruptions on the connected path.
-
-The best-shortcut rule compares against the single most accurate predeclared shortcut. It is an
-engineering diagnostic and does not exclude every possible shortcut.
 
 ## Changes in r2 (review of r1)
 
@@ -101,7 +65,7 @@ Also changed:
   tokenizer even when pretty-printed. r1's flat 192 could truncate a valid eight-action answer,
   which takes 297 tokens pretty-printed.
 - **Exact token audit.**
-- **Cache-disabled runtime scenarios** from archived timings. r2 called these measured bounds; r3 corrects that: they are historical planning estimates (see Budget).
+- **Cache-disabled runtime scenarios**, built from bounds measured in the archive (see Budget).
 
 ## Question
 
@@ -174,28 +138,20 @@ Shortcuts are fixed before any model answers exist. The best shortcut per gated 
 
 The thresholds are provisional engineering thresholds, not established scientific boundaries.
 
-For each gated family, using answers correct in **both** identified passes:
+For each gated family, using answers correct in **both** passes:
 
 | Label | Rule |
 |---|---|
-| `incomplete` | Either pass is missing, or any question in the family has no returned answer in either pass. Checked first. |
 | `not_diagnostic` | The best shortcut reaches ≥ 0.90. None do in the gated set. |
 | `below_accuracy_floor` | Accuracy < 0.70. |
 | `criterion_met` | Accuracy ≥ 0.90, **and** at least 10 questions where the best shortcut is wrong, **and** ≥ 0.90 accuracy on those questions. |
 | `inconclusive` | Anything else, including too few shortcut-wrong questions. |
 
 A constant shortcut cannot meet the criterion: it would need 0.90 overall, which only a
-non-diagnostic family allows. This compares against the single most accurate predeclared
-shortcut; it does not exclude every possible shortcut.
-
-An invalid answer was returned, so it counts as wrong. A missing answer means no response was
-returned, for example after a timeout, cancellation or deadline; it is never scored, and it makes
-the result `incomplete`. The overall gate status is `complete` only when every gated question is
-answered in both passes.
+non-diagnostic family allows. Missing and invalid answers count as wrong.
 
 Always reported, never pooled away:
-- single-pass diagnostics, both-correct accuracy, and answer agreement over valid pairs, with
-  missing and invalid pairs counted separately;
+- per-pass labels, answer agreement, and both-correct accuracy;
 - context-level results and the descriptive context-bootstrap intervals;
 - the strata: near-miss clicks, untried actions, absent steps, empty history, and history
   containing unavailable ids;
@@ -204,27 +160,6 @@ Always reported, never pooled away:
 **Two passes.** Prefix caching is disabled, and the runner must verify that from the running
 server. Pass 2 runs in reverse order. Two passes measure observed disagreement, not a precise
 variance estimate.
-
-## Schedule, timeouts and cleanup protection
-
-These live in `research/evidence_comprehension_v1/schedule.py`.
-
-The order is:
-1. gate pass 1;
-2. gate pass 2, reversed;
-3. descriptive groups, pass 1;
-4. descriptive groups, pass 2, reversed.
-
-This **prioritizes** gate completion but cannot guarantee it. Slower startup, inference or storage,
-or a failure, can interrupt the gate, and an incomplete gate is reported as `incomplete`.
-
-The cleanup reserve does not depend on any estimate:
-- **Admission:** a call starts only if its full 60 s timeout would end by the admission cutoff: the
-  3,300 s internal limit minus the 300 s cleanup reserve. No admitted call can reach the reserve.
-- **Timeout:** a call still running at 60 s is cancelled and recorded as `timed_out`, with no score
-  row. Under the slow assumed rates, the slowest request takes about 19 s.
-- **Consecutive timeouts:** two in a row stop admission as a technical failure.
-- **Backstop:** the supervisor's process-group teardown at the internal limit.
 
 ## How the result is used
 
@@ -257,13 +192,12 @@ These are exact counts from the pinned tokenizer, in `reports/evidence_comprehen
 
 All requests are within the 60,000-token prompt ceiling and the 65,536-token context.
 
-**Runtime is unmeasured.** Actual cache-disabled performance has not been measured, and the
-exact token counts do not establish runtime. The scenarios below are for planning only:
-- **Historical estimate**, from the archived run on a cached shared service. These are not bounds.
-  - 110 completion tokens/s: the largest observed ratio, from one favourable call.
-  - 8,929 prompt tokens/s: the slowest first call after a game change. That call was not
-    necessarily uncached.
-- **Assumed slow:** 2,500 prompt tokens/s and 40 completion tokens/s.
+**Runtime.** Earlier timings came from a cached service and are not a bound. The runtime uses
+bounds measured in the archived run:
+- decode ≥ 110 tokens/s: the maximum over all calls of completion tokens per second of total
+  latency. Caching does not affect decoding.
+- uncached prefill ≥ 8,929 tokens/s: the slowest first call on a newly started game, with its whole
+  latency counted as prefill. Those prompts were about 8.8 k tokens.
 
 The schedule is:
 1. evidence-only pass 1;
@@ -271,16 +205,14 @@ The schedule is:
 3. the descriptive groups, pass 1;
 4. the descriptive groups, pass 2, reversed.
 
-With the 403 s startup, which is itself historical, not guaranteed:
+The runner stops admitting calls at the admission cutoff, so a shortfall can only cut descriptive
+groups. Including the 403 s startup:
 
 | Scenario | Startup + gate | Everything |
 |---|---|---|
-| Historical estimate | 793 s | 1,331 s |
-| Assumed slow | 1,283 s | 2,987 s |
-| Assumed slow, every call at its token cap | 2,464 s | 4,664 s (would be cut at the cutoff) |
-
-If reality is slower than these scenarios, admission control stops the run at the cutoff and the
-result is reported incomplete. The gate itself can be cut.
+| Measured bounds | 793 s | 1,331 s |
+| Stress: prefill 2,500/s, decode 40/s | 1,283 s | 2,987 s |
+| Stress: every call at its token cap | 2,464 s | 4,664 s (descriptive groups cut) |
 
 The admission cutoff is 3,000 s: an internal limit of 3,300 s less a 300 s cleanup reserve. The
 proposal remains one attempt of ≤ 3,600 s.
@@ -289,10 +221,7 @@ proposal remains one attempt of ≤ 3,600 s.
 
 1. Runner, reusing the reviewed action-effect-history host, supervisor and evidence stack:
    - prefix caching disabled and verified from the running server;
-   - the schedule module's order, admission rule, per-call timeouts and cancellation;
+   - the ordered schedule, with admission control;
    - per-call evidence, and scoring by the independent scorer.
-2. The GPU-disabled review package, with CPU rehearsals on the connected path. The package must show:
-   - missing evidence cannot pass the gate;
-   - deadline interruption during each gate pass leaves the result explicitly incomplete;
-   - the cleanup reserve stays protected when the timing estimates are wrong.
+2. The GPU-disabled review package, with a CPU rehearsal.
 3. Your review, then separate source approval and compute authorization.

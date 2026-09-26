@@ -3,16 +3,18 @@
 tokenize (pinned tokenizer env): count every exported request's prompt tokens, and each key answer's
     completion tokens, with the frozen Qwen3-VL tokenizer (requests from
     build_evidence_comprehension_v1.py --export-requests).
-estimate (any env): combine the counts with throughput bounds measured in the archived
-    action-effect-history run, plus pessimistic stress scenarios.
+estimate (any env): combine the counts with historical planning estimates from the archived
+    action-effect-history run and with slower assumed rates.
 
-Measured bounds (cached-service timings are never used as a prefill bound):
-- decode: each call's completion_tokens / total latency is a lower bound on decode throughput, which
-  prefix caching does not affect; the maximum over all 144 archived calls is used;
-- uncached prefill: the first call of an episode on a newly started game had no cached grid prefix;
-  attributing that call's whole latency to prefill bounds throughput from below. The slowest such
-  call is used. Those prompts were ~8.8k tokens, so 26k-token prompts may prefill more slowly per
-  token; the stress scenarios cover that.
+None of these rates is a measured guarantee for this workload. Actual cache-disabled performance is
+unmeasured; the exact token counts do not establish runtime. The historical figures are:
+- a completion rate: the largest completion_tokens / total latency over the 144 archived calls. It
+  is an observed rate for one favourable call, not a minimum across requests or a floor for a new
+  workload;
+- a first-call-on-a-new-game prompt rate: calls whose game differed from the immediately preceding
+  episode. That does not prove the cache was cold (the shared service had already seen block-2
+  games, and common prefixes may have stayed cached), so it is not an uncached measurement.
+The runner, not these figures, protects the deadline (per-call timeouts and admission control).
 """
 import argparse
 import json
@@ -57,7 +59,7 @@ def tokenize():
                       'all_within_limits': all(r['within_limits'] for r in rows)}))
 
 
-def measured_bounds():
+def historical_estimates():
     lock = json.loads(ARCHIVE_LOCK.read_bytes())
     decode, cold, previous = 0.0, [], None
     with zipfile.ZipFile(ROOT / lock['archive']) as bundle:
@@ -69,12 +71,15 @@ def measured_bounds():
                 if i == 0 and episode['game_id'] != previous:
                     cold.append({'episode': name, 'prompt_tokens': call['server_prompt_tokens'],
                                  'latency_seconds': round(latency, 3),
-                                 'prefill_lower_bound_tokens_per_second': round(call['server_prompt_tokens'] / latency)})
+                                 'prompt_tokens_per_second_whole_latency': round(call['server_prompt_tokens'] / latency)})
             previous = episode['game_id']
-    return {'source': 'action-effect-history v1 archive ' + lock['archive_sha256'],
-            'decode_lower_bound_tokens_per_second': round(decode, 1),
-            'cold_first_calls': cold,
-            'uncached_prefill_lower_bound_tokens_per_second': min(c['prefill_lower_bound_tokens_per_second'] for c in cold)}
+    return {'status': 'historical planning estimates from a cached shared service; not measured guarantees, not '
+                      'lower bounds, and not measurements of cache-disabled performance',
+            'source': 'action-effect-history v1 archive ' + lock['archive_sha256'],
+            'max_observed_completion_tokens_per_second': round(decode, 1),
+            'first_calls_after_a_game_change': cold,
+            'slowest_first_call_prompt_tokens_per_second':
+                min(c['prompt_tokens_per_second_whole_latency'] for c in cold)}
 
 
 def seconds(rows, prefill, decode, completion):
@@ -96,16 +101,16 @@ def estimate():
         c['prompt_tokens'] += r['prompt_tokens']
         c['key_completion_tokens'] += r['key_completion_tokens']
         c['max_prompt_tokens'] = max(c['max_prompt_tokens'], r['prompt_tokens'])
-    bounds = measured_bounds()
+    history = historical_estimates()
     admission = INTERNAL_SECONDS - CLEANUP_RESERVE_SECONDS
     gate = [r for r in rows if r['condition'] == GATE]
     rest = [r for r in rows if r['condition'] != GATE]
     scenarios = {}
     for name, prefill, decode, completion in (
-            ('measured_bounds', bounds['uncached_prefill_lower_bound_tokens_per_second'],
-             bounds['decode_lower_bound_tokens_per_second'], 'key_x2'),
-            ('stress_slow_prefill_and_decode', 2500, 40, 'key_x2'),
-            ('stress_every_call_at_max_tokens', 2500, 40, 'max_tokens')):
+            ('historical_estimate', history['slowest_first_call_prompt_tokens_per_second'],
+             history['max_observed_completion_tokens_per_second'], 'key_x2'),
+            ('assumed_slow', 2500, 40, 'key_x2'),
+            ('assumed_slow_every_call_at_cap', 2500, 40, 'max_tokens')):
         gate_phase = PASSES * seconds(gate, prefill, decode, completion)
         descriptive = PASSES * seconds(rest, prefill, decode, completion)
         scenarios[name] = {'prefill_tokens_per_second': prefill, 'decode_tokens_per_second': decode,
@@ -122,15 +127,19 @@ def estimate():
         'prompt_tokens_total': PASSES * sum(r['prompt_tokens'] for r in rows),
         'max_prompt_tokens': max(r['prompt_tokens'] for r in rows),
         'all_within_limits': all(r['within_limits'] for r in rows), 'by_condition': by_condition},
-        measured_bounds=bounds,
-        runtime_scenarios={'schedule': 'evidence_only pass 1, evidence_only pass 2 (reversed), then the descriptive '
-                                       'groups pass 1 and pass 2 (reversed); the runner stops admitting calls at the '
-                                       'cutoff, so a shortfall can only cut descriptive groups',
+        historical_planning_estimates=history,
+        runtime_scenarios={'status': 'planning scenarios only: every rate is a historical estimate or an assumption; '
+                                     'actual cache-disabled performance is unmeasured',
+                           'schedule': 'evidence_only pass 1, evidence_only pass 2 (reversed), then the descriptive '
+                                       'groups pass 1 and pass 2 (reversed). Gate-first ordering prioritizes gate '
+                                       'completion but cannot guarantee it: slower startup, inference, storage or a '
+                                       'failure can interrupt the gate, which is then reported incomplete.',
                            'overhead_seconds_per_call': OVERHEAD_SECONDS_PER_CALL, 'startup_seconds': STARTUP_SECONDS,
                            'admission_cutoff_seconds': admission, 'scenarios': scenarios})
     REPORT.write_text(json.dumps(report, indent=1) + '\n', encoding='utf-8')
     print(json.dumps({'summary': {k: v for k, v in report['summary'].items() if k != 'by_condition'},
-                      'measured_bounds': {k: v for k, v in bounds.items() if k != 'cold_first_calls'},
+                      'historical_planning_estimates': {k: v for k, v in history.items()
+                                                        if k != 'first_calls_after_a_game_change'},
                       'scenarios': scenarios}, indent=1))
 
 

@@ -1,20 +1,17 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
-## Evidence comprehension v1: protocol revision 2 (not authorized)
+## Evidence comprehension v1: protocol revision 3 (not authorized)
 
-Roadmap step 1: can the model read its own controls and action-effect evidence? r2 fixes all six
-findings from the review of r1 (`064bb9a`, preserved):
-- the prompt is a questionnaire, not a policy decision;
-- responses are validated against the full schema by an independent validator;
-- synthetic histories are continuous trajectories, and this is asserted;
-- the labels are operational;
-- the grid comparison is a matched with/without-grids pair;
-- contradictory-description cases are a separate matched group.
+Roadmap step 1: can the model read its own controls and action-effect evidence? r3 closes the
+review of r2 (`1a6bf29`, preserved):
+- the gate requires two identified passes, and missing answers or passes are always `incomplete`;
+- the throughput figures are historical planning estimates, and runtime is unmeasured;
+- gate-first ordering only prioritizes the gate. Per-call timeouts and admission control keep the
+  cleanup reserve safe, and simulated interruptions during both gate passes end `incomplete`.
 
-The probe set has 668 probes; 468 are gated. Token counts are exact, and runtime scenarios come
-from measured cache-independent bounds. The protocol is
-`reports/evidence_comprehension_v1_protocol.md`. No model has been called; the runner and package
-follow.
+The probe set is unchanged: 668 probes, 468 gated. Protocol:
+`reports/evidence_comprehension_v1_protocol.md`. Local runner development is next. No model has
+been called.
 
 ## Action-effect history v1: live result (attempt aeh1-4c75150a)
 
