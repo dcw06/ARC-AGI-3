@@ -22,7 +22,8 @@ from . import schedule
 from .service import ProxyService, validate_server_config
 
 ROOT = Path(__file__).resolve().parents[2]
-HOST_FAULTS = ('model_startup', 'prefix_cache_enabled', 'hang_once', 'no_abort', 'http_error')
+HOST_FAULTS = ('model_startup', 'prefix_cache_enabled', 'hang_once', 'no_abort', 'slow_abort', 'late_abort',
+               'trickle_metrics', 'http_error', 'late_reply')
 FAULTS = ('none', 'storage', 'surviving_child', 'log_flood', 'slow_gate_pass_1', 'slow_gate_pass_2') + HOST_FAULTS
 REHEARSAL_ARTIFACT = {'rehearsal': 'scripted_model_not_target_evidence'}
 # Rehearsal per-call latencies chosen so the admission cutoff falls inside gate pass 1 or gate pass 2.
@@ -58,7 +59,7 @@ def run_worker(output, scratch, model_python, *, started, cutoff_seconds, mode, 
     if time.monotonic() >= deadline:
         raise TimeoutError('worker admission closed')
     call_timeout, verify_seconds, latency = timing(mode, fault)
-    bound = call_timeout + verify_seconds + schedule.BRIDGE_MARGIN_SECONDS
+    bound = call_timeout + schedule.TEARDOWN_SECONDS + verify_seconds + schedule.BRIDGE_MARGIN_SECONDS
     store = EvidenceStore(output, 'worker')
     cancel = output / 'control/cancel.json'
     env = dict(os.environ)
@@ -99,7 +100,8 @@ def run_worker(output, scratch, model_python, *, started, cutoff_seconds, mode, 
         config_path = output / 'worker/server-config.json'
         if config_path.is_symlink() or not config_path.is_file() or config_path.stat().st_size > 65536:
             raise ValueError('host server evidence missing')
-        validate_server_config(json.loads(config_path.read_bytes()), mode, probe_set_sha256)
+        validate_server_config(json.loads(config_path.read_bytes()), mode, probe_set_sha256,
+                               timeout_seconds=call_timeout, verify_seconds=verify_seconds)
         store.save('model-ready.json', {'artifact': ready['artifact'], 'startup_seconds': ready['startup_seconds'],
                                         'canary_sha256': ready['canary_audit']['response_sha256'], 'mode': mode,
                                         'server_config_verified': True})

@@ -4,9 +4,11 @@ Gate-first ordering *prioritizes* gate completion; it cannot guarantee it. Slowe
 storage, or a failure, can interrupt the gate itself, and the result is then reported `incomplete`.
 
 Cleanup protection does not depend on any throughput estimate:
-- a call is admitted only if its whole bound (60 s timeout, 15 s server-idle verification after a
-  cancellation, 5 s bridge margin) ends at or before the admission cutoff (the internal limit minus the
-  cleanup reserve), so an admitted call can never run into the cleanup reserve;
+- a call is admitted only if its whole bound ends at or before the admission cutoff (the internal
+  limit minus the cleanup reserve). The bound is enforced, not estimated: every part of the call has
+  an absolute deadline (60 s inference, 1 s teardown, 15 s idle or cache verification, 4 s bridge
+  margin), and the worker rejects a reply arriving after the bound, so an admitted call can never
+  run into the cleanup reserve;
 - a call still running at its timeout is cancelled and recorded as `timed_out`, with no score row
   (its answer is missing, never scored);
 - two consecutive timeouts stop admission as a technical failure;
@@ -22,11 +24,14 @@ ADMISSION_CUTOFF_SECONDS = INTERNAL_SECONDS - CLEANUP_RESERVE_SECONDS
 # Worst single request under the slow assumed rates (26,294 prompt tokens at 2,500/s plus 320 completion
 # tokens at 40/s) is about 19 s; the timeout allows more than three times that.
 PER_CALL_TIMEOUT_SECONDS = 60
-# After a timeout the model host closes the connection (the server aborts the request) and must observe the
-# server idle through its own metrics within this window before replying; the bridge adds a small margin.
+# Every part of a call has an absolute deadline measured from the call's start on the host:
+#   inference by +60 s; connection teardown by +61 s; after a timeout, server idle observed by +76 s
+#   (after an answer, the cache check by +76 s); the worker rejects any bridge reply after +80 s.
+TEARDOWN_SECONDS = 1
 CANCELLATION_VERIFY_SECONDS = 15
-BRIDGE_MARGIN_SECONDS = 5
-PER_CALL_BOUND_SECONDS = PER_CALL_TIMEOUT_SECONDS + CANCELLATION_VERIFY_SECONDS + BRIDGE_MARGIN_SECONDS
+BRIDGE_MARGIN_SECONDS = 4
+PER_CALL_BOUND_SECONDS = (PER_CALL_TIMEOUT_SECONDS + TEARDOWN_SECONDS + CANCELLATION_VERIFY_SECONDS
+                          + BRIDGE_MARGIN_SECONDS)
 MAX_CONSECUTIVE_TIMEOUTS = 2
 PHASES = ('gate_pass_1', 'gate_pass_2', 'descriptive_pass_1', 'descriptive_pass_2')
 

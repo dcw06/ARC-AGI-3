@@ -18,7 +18,10 @@ def main():
         outcome = unittest.TextTestRunner(verbosity=0).run(unittest.defaultTestLoader.loadTestsFromName(name))
         results[label] = {'module': name, 'tests_run': outcome.testsRun, 'failures': len(outcome.failures),
                           'errors': len(outcome.errors), 'passed': outcome.wasSuccessful(),
-                          'seconds': round(time.monotonic() - begun, 1)}
+                          'seconds': round(time.monotonic() - begun, 1),
+                          # Retained so an intermittent failure is always identifiable from the report.
+                          'problems': [{'test': str(test), 'detail': text[-1500:]}
+                                       for test, text in outcome.failures + outcome.errors]}
     report = {'scope': 'local CPU rehearsals only; CPU fake of the model server with scripted answers; '
                        'no model calls or GPU runs',
               'suites': results, 'all_passed': all(r['passed'] for r in results.values()),
@@ -33,7 +36,12 @@ def main():
                          'model startup failure, HTTP failure, monitor exit, cancellation, storage exhaustion, '
                          'log flood, SIGTERM-ignoring child: bounded, cleaned up, honest partial evidence',
                          'evaluator scores only retained responses; forged hashes, order and token parity rejected',
-                         'instrumentation leaves requests and answers unchanged'],
+                         'instrumentation leaves requests and answers unchanged',
+                         'package r2: independent call-metadata validation (token bounds, finish reason, timing, '
+                         'cache counters) with re-hashed mutation regressions; truncated responses scored invalid',
+                         'package r2: absolute deadlines for inference, teardown, metrics reads, idle verification, '
+                         'cache checks and bridge replies; slow abort, late abort, trickling metrics, late reply',
+                         'package r2: cache and cancellation verdicts recomputed from recorded counters and measurements'],
               'token_audit': 'reports/evidence_comprehension_v1_token_audit.json', 'model_calls': 0, 'gpu_runs': 0}
     (ROOT / 'reports/evidence_comprehension_v1_rehearsal_results.json').write_text(json.dumps(report, indent=2) + '\n')
     print(json.dumps(report, indent=1))

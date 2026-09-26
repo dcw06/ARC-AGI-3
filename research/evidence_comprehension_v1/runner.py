@@ -56,15 +56,18 @@ def run(path, service, *, started, kind, cutoff_seconds=ADMISSION_CUTOFF_SECONDS
                 break
             probe = probes[probe_id]
             request = build_request(contexts[probe['context_id']], probe)
+            call_started = clock()
             record = {'index': n, 'phase': phase, 'pass_id': pass_id, 'probe_id': probe_id,
-                      'request_sha256': request_hash(request), 'started_at': round(clock() - started, 6)}
+                      'request_sha256': request_hash(request), 'started_at': round(call_started - started, 6)}
             try:
-                result = service.complete(request)
+                # The reply must arrive within the call's whole bound; a later reply is rejected by the proxy.
+                result = service.complete(request, deadline=call_started + bound_seconds)
                 record.update(status='answered', response=result['content'],
                               tokenizer_prompt_tokens=result['tokenizer_prompt_tokens'],
                               server_prompt_tokens=result['server_prompt_tokens'],
                               server_completion_tokens=result['server_completion_tokens'],
-                              finish_reason=result['finish_reason'])
+                              finish_reason=result['finish_reason'], cache_check=result.get('cache_check'),
+                              host_timing=result.get('host_timing'))
             except Exception as exc:
                 record.update(status=classify(exc), error=str(exc)[:300])
             record['returned_at'] = round(clock() - started, 6)

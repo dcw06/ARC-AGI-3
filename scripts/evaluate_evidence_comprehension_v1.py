@@ -16,6 +16,29 @@ from pathlib import Path
 
 LIVE_INTERNAL_SECONDS, CLEANUP_RESERVE_SECONDS = 3300, 300
 STATUSES = ('answered', 'timed_out', 'rejected', 'transport_failure')
+MAX_PROMPT_TOKENS = 60000
+ADMISSION_SLACK_SECONDS = 0.5  # stamps are taken just after admission and just after the reply or its rejection
+FINISH_REASONS = ('stop', 'length')
+
+
+def frozen_timing(mode, frozen_internal):
+    """Per-call timing the run must have used: never taken from the evidence being checked."""
+    from research.evidence_comprehension_v1 import schedule
+    from research.evidence_comprehension_v1.worker import timing
+    timeout, verify, _ = timing(mode, 'none')
+    bound = timeout + schedule.TEARDOWN_SECONDS + verify + schedule.BRIDGE_MARGIN_SECONDS
+    return {'timeout': timeout, 'teardown': schedule.TEARDOWN_SECONDS, 'verify': verify, 'bound': bound,
+            'cutoff': frozen_internal - CLEANUP_RESERVE_SECONDS}
+
+
+def finite(value, low=None, high=None):
+    if type(value) not in (int, float) or not math.isfinite(value):
+        return False
+    return (low is None or value >= low) and (high is None or value <= high)
+
+
+def whole(value, low, high):
+    return type(value) is int and low <= value <= high
 
 
 def read(output, name, limit=4 * 1024**2):
@@ -81,7 +104,7 @@ def lifecycle_errors(output, mode, frozen_internal):
     return errors
 
 
-def model_errors(output, mode, probe_set_sha256):
+def model_errors(output, mode, probe_set_sha256, timing=None):
     from research.evidence_comprehension_v1.service import validate_ready, validate_server_config
     errors = []
     try:
@@ -94,29 +117,88 @@ def model_errors(output, mode, probe_set_sha256):
     except Exception as exc:
         errors.append('model readiness/canary: ' + type(exc).__name__ + ': ' + str(exc)[:120])
     try:
-        validate_server_config(read(output, 'worker/server-config.json', 65536), mode, probe_set_sha256)
+        validate_server_config(read(output, 'worker/server-config.json', 65536), mode, probe_set_sha256,
+                               timeout_seconds=timing and timing['timeout'], verify_seconds=timing and timing['verify'])
     except Exception as exc:
         errors.append('server configuration: ' + type(exc).__name__ + ': ' + str(exc)[:120])
     return errors
 
 
-def call_errors(run, frozen, probe_set_sha256, cancellations):
-    """Bind retained calls to the frozen order and requests; returns (errors, per-status counts)."""
+def cancellation_errors(n, record, timing):
+    """Recompute a cancellation's verdict from its measurements; never trust its recorded `idle` flag."""
+    from research.evidence_comprehension_v1.transport import idle_verdict
+    t = record.get('timing') or {}
+    idle = record.get('idle_verification') or {}
+    verify_deadline = timing['timeout'] + timing['teardown'] + timing['verify']
+    errors = []
+    if not (finite(t.get('torn_down_after_seconds'), 0, timing['timeout'] + timing['teardown'])
+            and finite(t.get('ended_after_seconds'), t.get('torn_down_after_seconds') if finite(
+                t.get('torn_down_after_seconds')) else 0, verify_deadline)
+            and t.get('inference_deadline_after_seconds') == timing['timeout']
+            and finite(t.get('verify_deadline_after_seconds')) and abs(t['verify_deadline_after_seconds'] - verify_deadline) < 1e-3):
+        errors.append(f'call {n}: cancellation timing outside the frozen deadlines')
+    window = verify_deadline - t.get('torn_down_after_seconds', verify_deadline) if finite(t.get('torn_down_after_seconds')) else 0
+    if not (idle_verdict(idle, window) and finite(idle.get('aborted_total'), 0)):
+        errors.append(f'call {n}: server not shown idle within the window by its own measurements')
+    return errors
+
+
+def answered_errors(n, call, probe, timing, previous_prompt_total):
+    """Independent checks of one answered call's metadata. Returns (errors, prompt counter to carry forward)."""
+    from research.evidence_comprehension_v1.probes import MAX_TOKENS
+    from research.evidence_comprehension_v1.transport import cache_verdict
+    errors = []
+    cap = MAX_TOKENS[probe['family']]
+    prompt, completion, finish = call.get('server_prompt_tokens'), call.get('server_completion_tokens'), call.get('finish_reason')
+    if type(call.get('response')) is not str:
+        errors.append(f'call {n}: answered without a response')
+    if not whole(prompt, 1, MAX_PROMPT_TOKENS) or call.get('tokenizer_prompt_tokens') != prompt:
+        errors.append(f'call {n}: prompt tokens missing, out of bounds or without tokenizer parity')
+    if not whole(completion, 1, cap):
+        errors.append(f'call {n}: completion tokens missing or outside 1..{cap}')
+    if finish not in FINISH_REASONS:
+        errors.append(f'call {n}: finish reason missing or not stop/length')
+    elif finish == 'length' and completion != cap:
+        errors.append(f'call {n}: length finish without reaching the token cap')
+    verify_deadline = timing['timeout'] + timing['teardown'] + timing['verify']
+    host = call.get('host_timing') or {}
+    if not (finite(host.get('answered_after_seconds'), 0, timing['timeout'] + ADMISSION_SLACK_SECONDS)
+            and finite(host.get('returned_after_seconds'), host.get('answered_after_seconds') if finite(
+                host.get('answered_after_seconds')) else 0, verify_deadline)):
+        errors.append(f'call {n}: host timing outside the frozen deadlines')
+    cache = call.get('cache_check')
+    carried = previous_prompt_total
+    if not isinstance(cache, dict) or not cache_verdict(cache):
+        errors.append(f'call {n}: retained cache counters do not show prefix caching disabled')
+    elif not (finite(cache.get('observed_after_seconds'), 0, verify_deadline)
+              and finite(cache.get('deadline_after_seconds')) and abs(cache['deadline_after_seconds'] - verify_deadline) < 1e-3):
+        errors.append(f'call {n}: cache check outside its deadline')
+    else:
+        total = cache['prompt_tokens_total']
+        if whole(prompt, 1, MAX_PROMPT_TOKENS) and (previous_prompt_total is None or total < previous_prompt_total + prompt):
+            errors.append(f'call {n}: prompt-token counter did not advance by this call')
+        carried = total
+    return errors, carried
+
+
+def call_errors(run, frozen, probe_set_sha256, cancellations, timing, canary_prompt_total=None):
+    """Bind retained calls to the frozen order, requests, limits and timing; returns (errors, per-status counts)."""
     from research.action_effect_history_v1.service import request_hash
     from research.evidence_comprehension_v1.probes import build_request
     from research.evidence_comprehension_v1.schedule import call_order
     errors, counts = [], {}
     if run.get('probe_set_sha256') != probe_set_sha256:
         errors.append('run evidence names a different probe set')
+    order = call_order(frozen['probes'])
+    if (run.get('cutoff_seconds') != timing['cutoff'] or not finite(run.get('bound_seconds'))
+            or abs(run['bound_seconds'] - timing['bound']) > 1e-9 or run.get('scheduled_calls') != len(order)):
+        errors.append('run index limits differ from the frozen cutoff, bound or schedule')
     contexts = {c['context_id']: c for c in frozen['contexts']}
     probes = {p['probe_id']: p for p in frozen['probes']}
-    order = call_order(frozen['probes'])
     if len(run['calls']) > len(order):
         errors.append('more calls than scheduled')
-    cancelled = {}
-    for record in cancellations:
-        if record.get('idle_verification', {}).get('idle') is True:
-            cancelled[record['request_sha256']] = cancelled.get(record['request_sha256'], 0) + 1
+    pending = [c for c in cancellations if isinstance(c, dict)]
+    previous_returned, prompt_total = 0.0, canary_prompt_total
     for call, (phase, pass_id, probe_id) in zip(run['calls'], order):
         n = call['index']
         if (call.get('phase'), call.get('pass_id'), call.get('probe_id')) != (phase, pass_id, probe_id):
@@ -125,26 +207,44 @@ def call_errors(run, frozen, probe_set_sha256, cancellations):
         probe = probes[probe_id]
         if call.get('request_sha256') != request_hash(build_request(contexts[probe['context_id']], probe)):
             errors.append(f'call {n}: request hash differs from the frozen request')
+        started, returned = call.get('started_at'), call.get('returned_at')
+        if not (finite(started, previous_returned) and finite(returned, started)):
+            errors.append(f'call {n}: timestamps missing, non-finite, out of order or overlapping the previous call')
+        else:
+            if started + timing['bound'] > timing['cutoff'] + ADMISSION_SLACK_SECONDS:
+                errors.append(f'call {n}: started after admission was closed')
+            if returned - started > timing['bound'] + ADMISSION_SLACK_SECONDS or returned > timing['cutoff'] + ADMISSION_SLACK_SECONDS:
+                errors.append(f'call {n}: returned outside its bound or after the cutoff')
+            previous_returned = returned
         status = call.get('status')
         counts[status] = counts.get(status, 0) + 1
         if status not in STATUSES:
             errors.append(f'call {n}: unknown status')
         elif status == 'answered':
-            if (type(call.get('response')) is not str or type(call.get('server_prompt_tokens')) is not int
-                    or call.get('server_prompt_tokens') != call.get('tokenizer_prompt_tokens')):
-                errors.append(f'call {n}: answered call lacks a response or token parity')
+            found, prompt_total = answered_errors(n, call, probe, timing, prompt_total)
+            errors.extend(found)
         elif status == 'timed_out':
-            if cancelled.get(call['request_sha256'], 0) < 1:
-                errors.append(f'call {n}: timed out without a verified server-side cancellation')
+            match = next((c for c in pending if c.get('request_sha256') == call['request_sha256']), None)
+            if match is None:
+                errors.append(f'call {n}: timed out without a retained server-side cancellation')
             else:
-                cancelled[call['request_sha256']] -= 1
+                pending.remove(match)
+                errors.extend(cancellation_errors(n, match, timing))
     return errors, counts
+
+
+def score_call(probe, call):
+    """Score one retained answer. A truncated (length) response is always an invalid answer, never parsed."""
+    from research.evidence_comprehension_v1.score import score
+    if call.get('finish_reason') != 'stop':
+        return {'probe_id': probe['probe_id'], 'valid': False, 'correct': False, 'error': 'truncated: finish_reason length'}
+    return score(probe, call['response'])
 
 
 def evaluate_output(output, *, mode='live', rehearsal_seconds=None):
     from research.evidence_comprehension_v1.evidence import load_verified
     from research.evidence_comprehension_v1.probes import load_frozen
-    from research.evidence_comprehension_v1.score import analyze, score
+    from research.evidence_comprehension_v1.score import analyze
     output = Path(output)
     if mode == 'live':
         frozen_internal = LIVE_INTERNAL_SECONDS
@@ -153,22 +253,29 @@ def evaluate_output(output, *, mode='live', rehearsal_seconds=None):
     else:
         raise ValueError('rehearsal evaluation needs the harness-declared internal seconds')
     frozen, probe_set_sha256 = load_frozen()
+    timing = frozen_timing(mode, frozen_internal)
     lifecycle = lifecycle_errors(output, mode, frozen_internal)
-    lifecycle += model_errors(output, mode, probe_set_sha256)
+    lifecycle += model_errors(output, mode, probe_set_sha256, timing)
     evidence, analysis, run_summary, calls_errors = {'verified': False}, None, None, []
     try:
         run = load_verified(output / 'worker/run')
         cancellations = []
         if (output / 'worker/cancellations.json').exists():
             cancellations = read(output, 'worker/cancellations.json')
-        calls_errors, counts = call_errors(run, frozen, probe_set_sha256, cancellations)
+        canary_total = None
+        try:
+            canary_total = read(output, 'worker/server-config.json', 65536)['after_canary']['prompt_tokens_total']
+            canary_total = canary_total if finite(canary_total, 1) else None
+        except Exception:
+            pass
+        calls_errors, counts = call_errors(run, frozen, probe_set_sha256, cancellations, timing, canary_total)
         evidence = {'verified': True}
         passes = {'pass_1': {}, 'pass_2': {}}
         probes = {p['probe_id']: p for p in frozen['probes']}
         if not calls_errors:
             for call in run['calls']:
                 if call['status'] == 'answered':
-                    passes[call['pass_id']][call['probe_id']] = score(probes[call['probe_id']], call['response'])
+                    passes[call['pass_id']][call['probe_id']] = score_call(probes[call['probe_id']], call)
             analysis = analyze(frozen['probes'], {k: v for k, v in passes.items() if v})
         run_summary = {'status': run['status'], 'stop_reason': run['stop_reason'], 'calls_recorded': len(run['calls']),
                        'scheduled_calls': run['scheduled_calls'], 'counts': counts,

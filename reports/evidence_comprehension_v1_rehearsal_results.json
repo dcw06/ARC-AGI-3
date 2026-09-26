@@ -7,7 +7,8 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 21.6
+      "seconds": 17.9,
+      "problems": []
     },
     "schedule_admission_and_interrupted_gate": {
       "module": "tests.test_evidence_comprehension_v1_schedule",
@@ -15,23 +16,26 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 4.8
+      "seconds": 3.7,
+      "problems": []
     },
     "transport_cancellation_and_cache_metrics": {
       "module": "tests.test_evidence_comprehension_v1_transport",
-      "tests_run": 7,
+      "tests_run": 14,
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 8.8
+      "seconds": 20.3,
+      "problems": []
     },
     "connected_path_rehearsals": {
       "module": "tests.test_evidence_comprehension_v1_connected",
-      "tests_run": 8,
+      "tests_run": 10,
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 763.1
+      "seconds": 603.5,
+      "problems": []
     }
   },
   "all_passed": true,
@@ -46,7 +50,10 @@
     "deadline interruption during gate pass 1 and gate pass 2 with the cleanup reserve untouched",
     "model startup failure, HTTP failure, monitor exit, cancellation, storage exhaustion, log flood, SIGTERM-ignoring child: bounded, cleaned up, honest partial evidence",
     "evaluator scores only retained responses; forged hashes, order and token parity rejected",
-    "instrumentation leaves requests and answers unchanged"
+    "instrumentation leaves requests and answers unchanged",
+    "package r2: independent call-metadata validation (token bounds, finish reason, timing, cache counters) with re-hashed mutation regressions; truncated responses scored invalid",
+    "package r2: absolute deadlines for inference, teardown, metrics reads, idle verification, cache checks and bridge replies; slow abort, late abort, trickling metrics, late reply",
+    "package r2: cache and cancellation verdicts recomputed from recorded counters and measurements"
   ],
   "token_audit": "reports/evidence_comprehension_v1_token_audit.json",
   "model_calls": 0,

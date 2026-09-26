@@ -1,6 +1,15 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
-## Evidence comprehension v1: runner and GPU-disabled review package r1 (not authorized)
+## Evidence comprehension v1: runner and GPU-disabled review package r2 (not authorized)
+
+Package r2 (lock `62259bdc…b136`) closes the review of r1 (`0b0e453`, lock `866bffdb`, preserved):
+- call metadata is validated independently, and truncated responses are always scored invalid;
+- absolute deadlines cover every network operation in a call, and late observations are rejected;
+- cache and cancellation verdicts are recomputed from the recorded counters and measurements.
+
+Protocol revision 5.
+
+### Package r1
 
 Roadmap step 1: can the model read its own controls and action-effect evidence? The protocol is at
 revision 4:

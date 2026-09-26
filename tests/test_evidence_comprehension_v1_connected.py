@@ -87,7 +87,7 @@ class Rehearsals(unittest.TestCase):
             for name, mutate, reason in (
                     ('hash', lambda v: v.update(request_sha256='0' * 64), 'request hash'),
                     ('order', lambda v: v.update(probe_id=retained[1]['probe_id']), 'not the scheduled call'),
-                    ('parity', lambda v: v.update(server_prompt_tokens=v['server_prompt_tokens'] + 1), 'token parity')):
+                    ('parity', lambda v: v.update(server_prompt_tokens=v['server_prompt_tokens'] + 1), 'tokenizer parity')):
                 forged = work / name
                 shutil.copytree(output, forged)
                 rewrite(forged, 'calls/00000.json', mutate)
@@ -95,6 +95,56 @@ class Rehearsals(unittest.TestCase):
                 self.assertFalse(result['technically_complete'], name)
                 self.assertTrue(any(reason in e for e in result['call_errors']), (name, result['call_errors']))
                 self.assertIsNone(result['analysis'])  # nothing is scored from evidence that fails binding
+            # 2b. Review of r1: impossible metadata and timing are rejected, even when re-hashed into the manifest.
+            answered = next(c for c in retained if c['finish_reason'] == 'stop')
+            name = f'calls/{answered["index"]:05d}.json'
+
+            def drop(*keys):
+                return lambda v: [v.pop(k) for k in keys]
+            for label, mutate, reason in (
+                    ('negative prompt', lambda v: v.update(server_prompt_tokens=-1, tokenizer_prompt_tokens=-1), 'prompt tokens'),
+                    ('negative completion', lambda v: v.update(server_completion_tokens=-5), 'completion tokens'),
+                    ('missing completion and finish', drop('server_completion_tokens', 'finish_reason'), 'completion tokens'),
+                    ('length below the cap', lambda v: v.update(finish_reason='length'), 'length finish'),
+                    ('unknown finish', lambda v: v.update(finish_reason='abort'), 'finish reason'),
+                    ('after the deadline', lambda v: v.update(started_at=3290.0, returned_at=3350.0), 'admission'),
+                    ('reversed timestamps', lambda v: v.update(returned_at=v['started_at'] - 1), 'timestamps'),
+                    ('non-finite timestamp', lambda v: v.update(returned_at=None), 'timestamps'),
+                    ('forged cache counters', lambda v: v['cache_check'].update(prefix_cache_queries_total=999,
+                                                                               prefix_cache_hits_total=999,
+                                                                               prefix_caching_disabled_verified=True),
+                     'cache counters'),
+                    ('missing cache check', drop('cache_check'), 'cache counters'),
+                    ('stale prompt counter', lambda v: v['cache_check'].update(prompt_tokens_total=1), 'did not advance'),
+                    ('late host answer', lambda v: v['host_timing'].update(answered_after_seconds=999.0), 'host timing')):
+                with self.subTest(mutation=label):
+                    forged = work / label.replace(' ', '-')
+                    shutil.copytree(output, forged)
+                    rewrite(forged, name, mutate)
+                    result = evaluate_output(forged, mode='rehearsal', rehearsal_seconds=REHEARSAL_SECONDS)
+                    self.assertTrue(result['run_evidence']['verified'], label)  # consistent hashes...
+                    self.assertTrue(any(reason in e for e in result['call_errors']), (label, result['call_errors']))
+                    self.assertFalse(result['technically_complete'], label)  # ...but rejected
+                    self.assertIsNone(result['analysis'])
+            # 2c. Review of r1: a forged server record claiming verification with 999 queries is rejected.
+            forged = work / 'server-config'
+            shutil.copytree(output, forged)
+            config = json.loads((forged / 'worker/server-config.json').read_bytes())
+            config['after_canary'].update(prefix_cache_queries_total=999, prefix_cache_hits_total=999,
+                                          prefix_caching_disabled_verified=True)
+            (forged / 'worker/server-config.json').write_text(json.dumps(config))
+            result = evaluate_output(forged, mode='rehearsal', rehearsal_seconds=REHEARSAL_SECONDS)
+            self.assertTrue(any('server configuration' in e for e in result['lifecycle_errors']))
+            self.assertFalse(result['technically_complete'])
+            # 2d. Truncated answers are accepted as evidence but always scored invalid, never parsed.
+            truncated_calls = [c for c in retained if c['finish_reason'] == 'length']
+            self.assertTrue(truncated_calls)
+            from scripts.evaluate_evidence_comprehension_v1 import score_call
+            for c in truncated_calls:
+                self.assertEqual(c['server_completion_tokens'], __import__(
+                    'research.evidence_comprehension_v1.probes', fromlist=['MAX_TOKENS']).MAX_TOKENS[probes[c['probe_id']]['family']])
+                row = score_call(probes[c['probe_id']], c)
+                self.assertEqual((row['valid'], row['correct']), (False, False))
             # 3. A run whose second pass lost its retained calls is incomplete, never a pass.
             truncated = work / 'truncated'
             shutil.copytree(output, truncated)
@@ -123,13 +173,14 @@ class Rehearsals(unittest.TestCase):
         server = FakeVLLM().start()
         try:
             service = QuestionnaireService(FixtureTokenizer(), CancellableTransport(server.base_url, 2),
-                                           metrics=lambda: read_metrics(server.base_url),
-                                           verify_idle=lambda w: verify_idle(server.base_url, w))
+                                           metrics=lambda deadline: read_metrics(server.base_url, deadline),
+                                           verify_idle=lambda deadline: verify_idle(server.base_url, deadline),
+                                           timeout_seconds=2.0, verify_seconds=3.0)
             service.launch = {'rehearsal_fake_server': True}
             service.startup_canary()
 
             class Direct:
-                def complete(self, request):
+                def complete(self, request, deadline=None):
                     result, audit = service.complete(request)
                     return {'content': result.content, 'tokenizer_prompt_tokens': audit['tokenizer_prompt_tokens'],
                             'server_prompt_tokens': audit['server_prompt_tokens'],
@@ -165,7 +216,7 @@ class Rehearsals(unittest.TestCase):
         self.assertEqual(value['run']['counts'].get('timed_out'), 1)
         cancellations = json.loads((output / 'worker/cancellations.json').read_bytes())
         self.assertEqual(len(cancellations), 1)
-        self.assertTrue(cancellations[0]['idle_verification']['idle'])
+        self.assertTrue(cancellations[0]['idle'])
         self.assertEqual(cancellations[0]['idle_verification']['aborted_total'], 1)
         self.assertEqual(value['call_errors'], [])
         self.assertEqual(value['gate_status'], 'incomplete')  # the cancelled question has no answer
@@ -179,16 +230,58 @@ class Rehearsals(unittest.TestCase):
             shutil.copytree(output, work / 'x')
             (work / 'x/worker/cancellations.json').write_text('[]')
             result = evaluate_output(work / 'x', mode='rehearsal', rehearsal_seconds=REHEARSAL_SECONDS)
-            self.assertTrue(any('without a verified server-side cancellation' in e for e in result['call_errors']))
+            self.assertTrue(any('without a retained server-side cancellation' in e for e in result['call_errors']))
+            # Review of r1: the idle verdict is recomputed from its measurements, not read from a flag.
+            for label, mutate in (('still running', lambda r: r['idle_verification'].update(running=1.0)),
+                                  ('waited past the window', lambda r: r['idle_verification'].update(waited_seconds=99.0)),
+                                  ('ended after the deadline', lambda r: r['timing'].update(ended_after_seconds=99.0))):
+                with self.subTest(cancellation=label):
+                    target = work / label.replace(' ', '-')
+                    shutil.copytree(output, target)
+                    record = json.loads((target / 'worker/cancellations.json').read_bytes())
+                    mutate(record[0])
+                    record[0]['idle'] = True
+                    (target / 'worker/cancellations.json').write_text(json.dumps(record))
+                    result = evaluate_output(target, mode='rehearsal', rehearsal_seconds=REHEARSAL_SECONDS)
+                    self.assertTrue(result['call_errors'], label)
+                    self.assertFalse(result['technically_complete'], label)
         finally:
             shutil.rmtree(work, ignore_errors=True)
+
+    def test_slow_abort_within_the_window_is_verified(self):
+        receipt, output, outer, value = run_fault('slow_abort')
+        self.assert_cleaned_and_bounded(receipt, outer, output, REHEARSAL_SECONDS)
+        record = json.loads((output / 'worker/cancellations.json').read_bytes())[0]
+        self.assertTrue(record['idle'])
+        self.assertGreaterEqual(record['idle_verification']['waited_seconds'], 0.9)
+        self.assertEqual(value['call_errors'], [])
+        self.assertEqual(value['run']['counts'].get('timed_out'), 1)
+
+    def test_late_abort_trickling_metrics_and_late_replies_stop_within_the_bound(self):
+        from research.evidence_comprehension_v1 import schedule
+        bound = 2.0 + schedule.TEARDOWN_SECONDS + 3.0 + schedule.BRIDGE_MARGIN_SECONDS  # rehearsal timing
+        for fault in ('late_abort', 'trickle_metrics', 'late_reply'):
+            with self.subTest(fault=fault):
+                receipt, output, outer, value = run_fault(fault)
+                self.assert_cleaned_and_bounded(receipt, outer, output, REHEARSAL_SECONDS)
+                self.assertEqual(receipt['study_status'], 'failed')
+                self.assertEqual(value['run']['stop_reason'], 'transport_failure')
+                self.assertEqual(value['gate_status'], 'incomplete')
+                self.assertEqual(value['call_errors'], [])
+                last = calls(output)[-1]
+                self.assertLessEqual(last['returned_at'] - last['started_at'], bound + 0.5)
+                if fault != 'late_reply':
+                    record = json.loads((output / 'worker/cancellations.json').read_bytes())[0]
+                    self.assertFalse(record['idle'])
+                    self.assertLessEqual(record['timing']['ended_after_seconds'],
+                                         record['timing']['verify_deadline_after_seconds'] + 0.05)
 
     def test_server_that_ignores_cancellation_stops_the_run(self):
         receipt, output, outer, value = run_fault('no_abort')
         self.assert_cleaned_and_bounded(receipt, outer, output, REHEARSAL_SECONDS)
         self.assertEqual(receipt['study_status'], 'failed')
         cancellations = json.loads((output / 'worker/cancellations.json').read_bytes())
-        self.assertFalse(cancellations[0]['idle_verification']['idle'])
+        self.assertFalse(cancellations[0]['idle'])
         self.assertEqual(value['run']['stop_reason'], 'transport_failure')
         self.assertEqual(value['gate_status'], 'incomplete')
 

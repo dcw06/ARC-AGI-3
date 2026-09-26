@@ -1,53 +1,18 @@
-# Evidence comprehension v1: protocol revision 5 (for review; no compute authorized)
+# Evidence comprehension v1: protocol revision 4 (for review; no compute authorized)
 
-**Status:** revision 5, accompanying review package r2. Earlier revisions are preserved:
-- r4 (`0b0e453`, package r1): `reports/evidence_comprehension_v1_protocol_r4.md`;
+**Status:** revision 4, accompanying the local runner and GPU-disabled review package. Earlier
+revisions are preserved:
 - r3 (`fbb70cd`): `reports/evidence_comprehension_v1_protocol_r3.md`;
 - r2 (`1a6bf29`): `reports/evidence_comprehension_v1_protocol_r2.md`;
 - r1 (`064bb9a`): `reports/evidence_comprehension_v1_protocol_r1.md`,
   `research/evidence_comprehension_v1/probes_r1.json` and
   `reports/evidence_comprehension_v1_probe_summary_r1.json`.
 
-The probe set is unchanged from r4, which removed 14 duplicate questions (see below).
+The probe set changed in r4: 14 duplicate questions were removed (see below).
 
 The frozen probe set, keys, scorer, token audit and tests are built and pass offline. No model has
 been called. The live runner and GPU-disabled review package come next. No GPU reservation,
 upload or launch.
-
-## Changes in r5 (review of package r1)
-
-1. **Call metadata is validated independently.** The evaluator checks every retained call against
-   the frozen limits and never against values the run reports about itself.
-   - **Answered calls:**
-     - prompt tokens are an integer from 1 to 60,000, and the tokenizer and server counts match;
-     - completion tokens are an integer from 1 to the family's cap;
-     - the finish reason is `stop`, or `length` only exactly at the cap;
-     - the retained cache counters show caching disabled, and the prompt counter advanced by at least
-       this call's prompt tokens;
-     - the host timings fall within their deadlines.
-   - **Every call:** timestamps are finite and ordered, never overlap the previous call, lie within
-     the call's bound, and start only while admission allowed.
-   - **The run index:** its cutoff and bound must equal the frozen values for the mode.
-2. **Truncated responses.** A response whose finish reason is `length` is kept as evidence. It is
-   always scored as an **invalid answer** (answered, wrong), even when its text parses. Schema-valid
-   text is never taken as proof of a normally completed response.
-3. **Absolute deadlines for every part of a call.** Every network operation takes an absolute
-   deadline on the host's clock and is bounded as a whole, not per socket read. Measured from the
-   call's start:
-   - inference by +60 s;
-   - connection teardown by +61 s (the helper thread is waited on for at most 1 s);
-   - then, by +76 s, either the post-answer cache check or, after a timeout, the server-idle
-     verification.
-
-   Each metrics read is capped at 5 s and at the caller's deadline. An idle observation that
-   completes after its deadline is rejected. The worker rejects any bridge reply arriving after the
-   80 s bound. The 80 s admission allowance is therefore enforced, not estimated.
-4. **Verdicts are recomputed from their evidence.**
-   - **Caching disabled:** recomputed from the recorded counters (finite, non-negative, prompts > 0,
-     no queries or hits) for the canary and for every answered call.
-   - **Cancellations:** recomputed from the recorded measurements: zero running and waiting, the wait
-     within the window, and every timing within its deadline. A recorded `idle: true` flag is never
-     trusted.
 
 ## Changes in r4 (review of r3, and runner development)
 
@@ -256,8 +221,7 @@ A constant shortcut cannot meet the criterion: it would need 0.90 overall, which
 non-diagnostic family allows. This compares against the single most accurate predeclared
 shortcut; it does not exclude every possible shortcut.
 
-An invalid answer was returned, so it counts as wrong. A truncated response (finish reason
-`length`) is always an invalid answer, whatever its text. A missing answer means no response was
+An invalid answer was returned, so it counts as wrong. A missing answer means no response was
 returned, for example after a timeout, cancellation or deadline; it is never scored, and it makes
 the result `incomplete`. The overall gate status is `complete` only when every gated question is
 answered in both passes.

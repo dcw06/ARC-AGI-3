@@ -78,8 +78,9 @@ def pinned_model_factory(retain, deadline, *, fault='none', timeout_seconds, ver
         tokenizer = AutoTokenizer.from_pretrained(str(primary.model_path), local_files_only=True, trust_remote_code=False)
         service = QuestionnaireService(
             tokenizer, CancellableTransport(root, timeout_seconds),
-            metrics=lambda: read_metrics(root), verify_idle=lambda within: verify_idle(root, within),
-            verify_seconds=verify_seconds, **retain)
+            metrics=lambda deadline: read_metrics(root, deadline), verify_idle=lambda deadline: verify_idle(root, deadline),
+            timeout_seconds=timeout_seconds, verify_seconds=verify_seconds, teardown_seconds=schedule.TEARDOWN_SECONDS,
+            **retain)
         service.launch, service.artifact = launch, artifact
         return service, owner
     except BaseException:
@@ -96,12 +97,23 @@ def rehearsal_factory(retain, deadline, *, fault='none', timeout_seconds, verify
     rehearsal_gate()
     if fault == 'model_startup':
         raise TimeoutError('rehearsal model startup failure')
-    server = FakeVLLM(fault=fault if fault in ('prefix_cache_enabled', 'hang_once', 'no_abort', 'http_error') else 'none',
-                      latency_seconds=latency_seconds).start()
+    from .fake_server import FAULTS as SERVER_FAULTS
+    server = FakeVLLM(fault=fault if fault in SERVER_FAULTS else 'none', latency_seconds=latency_seconds).start()
     service = QuestionnaireService(
         FixtureTokenizer(), CancellableTransport(server.base_url, timeout_seconds),
-        metrics=lambda: read_metrics(server.base_url), verify_idle=lambda within: verify_idle(server.base_url, within),
-        verify_seconds=verify_seconds, **retain)
+        metrics=lambda deadline: read_metrics(server.base_url, deadline),
+        verify_idle=lambda deadline: verify_idle(server.base_url, deadline),
+        timeout_seconds=timeout_seconds, verify_seconds=verify_seconds, teardown_seconds=schedule.TEARDOWN_SECONDS,
+        **retain)
+    if fault == 'late_reply':  # rehearsal: the host answers only after the worker's per-call bound has passed
+        answer = service.complete
+
+        def late(request):
+            value = answer(request)
+            if service.calls == 7:
+                time.sleep(timeout_seconds + schedule.TEARDOWN_SECONDS + verify_seconds + schedule.BRIDGE_MARGIN_SECONDS + 1)
+            return value
+        service.complete = late
     service.launch = {'rehearsal_fake_server': True, 'fault': fault, 'latency_seconds': latency_seconds}
     service.artifact = {'rehearsal': 'scripted_model_not_target_evidence'}
 

@@ -16,8 +16,11 @@ import socket
 import threading
 import time
 
-FAULTS = ('none', 'prefix_cache_enabled', 'hang_once', 'no_abort', 'http_error')
+HANG_FAULTS = ('hang_once', 'no_abort', 'slow_abort', 'late_abort', 'trickle_metrics')
+FAULTS = ('none', 'prefix_cache_enabled', 'http_error') + HANG_FAULTS
+ABORT_DELAY = {'slow_abort': 1.0, 'late_abort': 6.0}  # seconds between disconnect and abort
 HANG_AT = 7  # the questionnaire call (1-based, after the canary) that hangs or fails under a fault
+TRUNCATED = '<truncated>'  # marker from ScriptedAnswers: reply with finish_reason 'length' at the cap
 STUCK_SECONDS = 600
 
 
@@ -51,6 +54,8 @@ class ScriptedAnswers:
         bucket = int(hashlib.sha256(probe['probe_id'].encode()).hexdigest(), 16) % 100
         if bucket < 3:
             return 'not json'
+        if bucket == 3:  # truncated at the token cap: the text may even look valid, but the finish is 'length'
+            return TRUNCATED + json.dumps({'answer': probe['key']})
         wrong = bucket < 9 or (occurrence == 2 and bucket < 12)
         return json.dumps({'answer': self.wrong(probe) if wrong else probe['key']})
 
@@ -77,6 +82,7 @@ class FakeVLLM:
         self.counters = {'prompt_tokens': 0, 'generation_tokens': 0, 'prefix_queries': 0, 'prefix_hits': 0,
                          'success_stop': 0, 'success_length': 0, 'success_abort': 0}
         self.completions = 0
+        self.trickling = False  # set once the hung call starts under the trickle_metrics fault
         self.log = []  # (event, detail) for rehearsal assertions
         fake = self
 
@@ -98,6 +104,20 @@ class FakeVLLM:
                 if self.path == '/v1/models':
                     return self.reply(200, b'{"data":[{"id":"rehearsal"}]}')
                 if self.path == '/metrics':
+                    if fake.trickling:  # headers promptly, then the body a byte at a time
+                        raw = fake.metrics().encode()
+                        self.send_response(200)
+                        self.send_header('Content-Type', 'text/plain')
+                        self.send_header('Content-Length', str(len(raw)))
+                        self.end_headers()
+                        try:
+                            for i in range(len(raw)):
+                                self.wfile.write(raw[i:i + 1])
+                                self.wfile.flush()
+                                time.sleep(0.2)
+                        except OSError:
+                            pass
+                        return
                     return self.reply(200, fake.metrics().encode(), 'text/plain')
                 self.reply(404, b'{}')
 
@@ -155,7 +175,9 @@ class FakeVLLM:
             number = self.completions
             self.running += 1
         tokens = count_tokens(request['messages'])
-        hang = not is_canary and number == HANG_AT and self.fault in ('hang_once', 'no_abort')
+        hang = not is_canary and number == HANG_AT and self.fault in HANG_FAULTS
+        if hang and self.fault == 'trickle_metrics':
+            self.trickling = True
         if not is_canary and number == HANG_AT and self.fault == 'http_error':
             with self.lock:
                 self.running -= 1
@@ -167,6 +189,8 @@ class FakeVLLM:
                     self.log.append(('disconnect_ignored', number))
                     time.sleep(STUCK_SECONDS)  # keeps counting as running: cancellation did not reach the engine
                     return
+                if hang and self.fault in ABORT_DELAY:
+                    time.sleep(ABORT_DELAY[self.fault])  # the engine notices the disconnect late
                 with self.lock:
                     self.running -= 1
                     self.counters['success_abort'] += 1
@@ -174,15 +198,18 @@ class FakeVLLM:
                 return
             time.sleep(0.01)
         content = self.answers(request)
+        finish = 'stop'
         completion = max(1, len(content) // 4)
+        if content.startswith(TRUNCATED):
+            content, finish, completion = content[len(TRUNCATED):], 'length', request['max_tokens']
         with self.lock:
             self.running -= 1
             self.counters['prompt_tokens'] += tokens
             self.counters['generation_tokens'] += completion
-            self.counters['success_stop'] += 1
+            self.counters['success_stop' if finish == 'stop' else 'success_length'] += 1
             if self.fault == 'prefix_cache_enabled':
                 self.counters['prefix_queries'] += tokens
-        body = {'choices': [{'index': 0, 'finish_reason': 'stop', 'message': {'role': 'assistant', 'content': content}}],
+        body = {'choices': [{'index': 0, 'finish_reason': finish, 'message': {'role': 'assistant', 'content': content}}],
                 'usage': {'prompt_tokens': tokens, 'completion_tokens': completion}}
         try:
             handler.reply(200, json.dumps(body).encode())
