@@ -1,0 +1,196 @@
+{
+ "contexts": {
+  "evidence_only": 44,
+  "full_observation": 18
+ },
+ "counts": {
+  "evidence_only/available_actions": 44,
+  "evidence_only/available_actions/empty_history": 3,
+  "evidence_only/available_actions/history_has_unavailable_ids": 9,
+  "evidence_only/available_actions/key=value": 44,
+  "evidence_only/coordinate_actions": 44,
+  "evidence_only/coordinate_actions/empty_history": 3,
+  "evidence_only/coordinate_actions/history_has_unavailable_ids": 9,
+  "evidence_only/coordinate_actions/key=empty": 22,
+  "evidence_only/coordinate_actions/key=value": 22,
+  "evidence_only/observed_effect": 106,
+  "evidence_only/observed_effect/dimension_change": 5,
+  "evidence_only/observed_effect/empty_history": 2,
+  "evidence_only/observed_effect/key=acknowledged_no_change": 12,
+  "evidence_only/observed_effect/key=changed_then_returned": 9,
+  "evidence_only/observed_effect/key=dispatch_failed": 5,
+  "evidence_only/observed_effect/key=final_frame_changed": 11,
+  "evidence_only/observed_effect/key=not_observed": 63,
+  "evidence_only/observed_effect/key=outcome_unknown": 6,
+  "evidence_only/observed_effect/near_miss_click": 28,
+  "evidence_only/observed_effect/untried_action": 35,
+  "evidence_only/outcome_class": 114,
+  "evidence_only/outcome_class/absent_step": 19,
+  "evidence_only/outcome_class/dimension_change": 9,
+  "evidence_only/outcome_class/key=acknowledged_no_change": 28,
+  "evidence_only/outcome_class/key=changed_then_returned": 12,
+  "evidence_only/outcome_class/key=dispatch_failed": 9,
+  "evidence_only/outcome_class/key=final_frame_changed": 26,
+  "evidence_only/outcome_class/key=not_shown": 19,
+  "evidence_only/outcome_class/key=outcome_unknown": 20,
+  "evidence_only/recall_action": 110,
+  "evidence_only/recall_action/absent_step": 28,
+  "evidence_only/recall_action/empty_history": 6,
+  "evidence_only/recall_action/key=not_shown": 28,
+  "evidence_only/recall_action/key=value": 82,
+  "evidence_only/tried_unchanged": 44,
+  "evidence_only/tried_unchanged/empty_history": 3,
+  "evidence_only/tried_unchanged/key=empty": 20,
+  "evidence_only/tried_unchanged/key=value": 24,
+  "full_observation/available_actions": 18,
+  "full_observation/available_actions/empty_history": 3,
+  "full_observation/available_actions/key=value": 18,
+  "full_observation/coordinate_actions": 18,
+  "full_observation/coordinate_actions/empty_history": 3,
+  "full_observation/coordinate_actions/key=empty": 6,
+  "full_observation/coordinate_actions/key=value": 12,
+  "full_observation/observed_effect": 47,
+  "full_observation/observed_effect/empty_history": 2,
+  "full_observation/observed_effect/key=acknowledged_no_change": 5,
+  "full_observation/observed_effect/key=final_frame_changed": 10,
+  "full_observation/observed_effect/key=not_observed": 32,
+  "full_observation/observed_effect/near_miss_click": 20,
+  "full_observation/observed_effect/untried_action": 12,
+  "full_observation/outcome_class": 39,
+  "full_observation/outcome_class/absent_step": 9,
+  "full_observation/outcome_class/empty_history": 1,
+  "full_observation/outcome_class/key=acknowledged_no_change": 11,
+  "full_observation/outcome_class/key=final_frame_changed": 19,
+  "full_observation/outcome_class/key=not_shown": 9,
+  "full_observation/recall_action": 42,
+  "full_observation/recall_action/absent_step": 12,
+  "full_observation/recall_action/empty_history": 5,
+  "full_observation/recall_action/key=not_shown": 12,
+  "full_observation/recall_action/key=value": 30,
+  "full_observation/tried_unchanged": 18,
+  "full_observation/tried_unchanged/empty_history": 3,
+  "full_observation/tried_unchanged/key=empty": 13,
+  "full_observation/tried_unchanged/key=value": 5
+ },
+ "heuristic_baselines": {
+  "evidence_only/available_actions/all_seven": {
+   "accuracy": 0.1136,
+   "correct": 5,
+   "n": 44
+  },
+  "evidence_only/available_actions/ids_in_history": {
+   "accuracy": 0.1364,
+   "correct": 6,
+   "n": 44
+  },
+  "evidence_only/coordinate_actions/always_six": {
+   "accuracy": 0.5,
+   "correct": 22,
+   "n": 44
+  },
+  "evidence_only/observed_effect/always_not_observed": {
+   "accuracy": 0.5943,
+   "correct": 63,
+   "n": 106
+  },
+  "evidence_only/observed_effect/ignore_coordinates": {
+   "accuracy": 0.6981,
+   "correct": 74,
+   "n": 106
+  },
+  "evidence_only/outcome_class/always_no_change": {
+   "accuracy": 0.2456,
+   "correct": 28,
+   "n": 114
+  },
+  "evidence_only/outcome_class/latest_entry_outcome": {
+   "accuracy": 0.2807,
+   "correct": 32,
+   "n": 114
+  },
+  "evidence_only/recall_action/latest_entry": {
+   "accuracy": 0.5364,
+   "correct": 59,
+   "n": 110
+  },
+  "evidence_only/tried_unchanged/empty": {
+   "accuracy": 0.4545,
+   "correct": 20,
+   "n": 44
+  },
+  "evidence_only/tried_unchanged/every_unchanged_entry": {
+   "accuracy": 0.5682,
+   "correct": 25,
+   "n": 44
+  },
+  "full_observation/available_actions/all_seven": {
+   "accuracy": 0.3333,
+   "correct": 6,
+   "n": 18
+  },
+  "full_observation/available_actions/ids_in_history": {
+   "accuracy": 0.2778,
+   "correct": 5,
+   "n": 18
+  },
+  "full_observation/coordinate_actions/always_six": {
+   "accuracy": 0.6667,
+   "correct": 12,
+   "n": 18
+  },
+  "full_observation/observed_effect/always_not_observed": {
+   "accuracy": 0.6809,
+   "correct": 32,
+   "n": 47
+  },
+  "full_observation/observed_effect/ignore_coordinates": {
+   "accuracy": 0.5745,
+   "correct": 27,
+   "n": 47
+  },
+  "full_observation/outcome_class/always_no_change": {
+   "accuracy": 0.2821,
+   "correct": 11,
+   "n": 39
+  },
+  "full_observation/outcome_class/latest_entry_outcome": {
+   "accuracy": 0.7692,
+   "correct": 30,
+   "n": 39
+  },
+  "full_observation/recall_action/latest_entry": {
+   "accuracy": 0.6667,
+   "correct": 28,
+   "n": 42
+  },
+  "full_observation/tried_unchanged/empty": {
+   "accuracy": 0.7222,
+   "correct": 13,
+   "n": 18
+  },
+  "full_observation/tried_unchanged/every_unchanged_entry": {
+   "accuracy": 0.9444,
+   "correct": 17,
+   "n": 18
+  }
+ },
+ "probe_set_sha256": "6d001687853398a72f0e87b39a43b07c3894a50fbf170e6cb18ea8f0c99bfd23",
+ "probes": 644,
+ "token_estimate": {
+  "by_condition": {
+   "evidence_only": {
+    "estimated_prompt_tokens": 1214312,
+    "max": 3048,
+    "probes": 462
+   },
+   "full_observation": {
+    "estimated_prompt_tokens": 4522578,
+    "max": 27106,
+    "probes": 182
+   }
+  },
+  "note": "estimate only; the budget proposal must use the pinned tokenizer",
+  "tokens_per_char_from_archive": 0.92119
+ },
+ "version": "evidence_comprehension_v1"
+}

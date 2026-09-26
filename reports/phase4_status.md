@@ -1,5 +1,16 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
+## Evidence comprehension v1: probe set and protocol draft (not authorized)
+
+Roadmap step 1: can the model read its own controls and action-effect evidence? There are 644
+frozen probes in six question families, in two conditions:
+- evidence-only, synthetic plus hand-designed histories;
+- full observation, the exact archived live requests.
+
+Every key is derived twice, by independent code. Shortcut baselines are pre-computed. The
+protocol draft is `reports/evidence_comprehension_v1_protocol.md`. No model has been called;
+the live runner and package follow review.
+
 ## Action-effect history v1: live result (attempt aeh1-4c75150a)
 
 r3 was approved and run once: 737 s of 3,600 s authorized, all 12 episodes,
