@@ -20,7 +20,7 @@ def simulate(call_seconds, *, startup=403, timeouts=()):
             break
         started += 1
         if n in timeouts:
-            clock += S.PER_CALL_TIMEOUT_SECONDS  # cancelled at its timeout: no score row
+            clock += S.PER_CALL_BOUND_SECONDS  # cancelled at its timeout: no score row
             admission.record('timed_out')
             continue
         clock += call_seconds
@@ -43,11 +43,11 @@ class Order(unittest.TestCase):
 
 class Admission(unittest.TestCase):
     def test_no_admitted_call_can_reach_the_cleanup_reserve(self):
-        for elapsed in (0, 1000, S.ADMISSION_CUTOFF_SECONDS - S.PER_CALL_TIMEOUT_SECONDS,
-                        S.ADMISSION_CUTOFF_SECONDS - S.PER_CALL_TIMEOUT_SECONDS + 0.001, S.ADMISSION_CUTOFF_SECONDS):
+        for elapsed in (0, 1000, S.ADMISSION_CUTOFF_SECONDS - S.PER_CALL_BOUND_SECONDS,
+                        S.ADMISSION_CUTOFF_SECONDS - S.PER_CALL_BOUND_SECONDS + 0.001, S.ADMISSION_CUTOFF_SECONDS):
             if S.admit(elapsed):
-                self.assertLessEqual(elapsed + S.PER_CALL_TIMEOUT_SECONDS, S.INTERNAL_SECONDS - S.CLEANUP_RESERVE_SECONDS)
-        self.assertFalse(S.admit(S.ADMISSION_CUTOFF_SECONDS - S.PER_CALL_TIMEOUT_SECONDS + 0.001))
+                self.assertLessEqual(elapsed + S.PER_CALL_BOUND_SECONDS, S.INTERNAL_SECONDS - S.CLEANUP_RESERVE_SECONDS)
+        self.assertFalse(S.admit(S.ADMISSION_CUTOFF_SECONDS - S.PER_CALL_BOUND_SECONDS + 0.001))
 
     def test_invalid_timing_values_are_rejected(self):
         # Review of r3: negative, non-finite and boolean values, and a negative timeout admitting past the cutoff.

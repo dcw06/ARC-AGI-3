@@ -71,6 +71,11 @@ class ProbeSet(unittest.TestCase):
             self.assertNotIn('"events"', request['messages'][1]['content'])
             self.assertEqual((request['temperature'], request['seed']), (0, 0))
 
+    def test_every_request_is_unique(self):
+        from research.action_effect_history_v1.service import request_hash
+        hashes = [request_hash(P.build_request(CONTEXTS[p['context_id']], p)) for p in PROBES]
+        self.assertEqual(len(hashes), len(set(hashes)))
+
     def test_every_key_is_valid_under_an_independent_schema_validator(self):
         for probe in PROBES:
             validator = Draft202012Validator(P.response_format(probe['family'])['json_schema']['schema'])

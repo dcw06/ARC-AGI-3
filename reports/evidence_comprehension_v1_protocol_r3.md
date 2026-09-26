@@ -1,49 +1,16 @@
-# Evidence comprehension v1: protocol revision 4 (for review; no compute authorized)
+# Evidence comprehension v1: protocol revision 3 (for review; no compute authorized)
 
-**Status:** revision 4, accompanying the local runner and GPU-disabled review package. Earlier
-revisions are preserved:
-- r3 (`fbb70cd`): `reports/evidence_comprehension_v1_protocol_r3.md`;
+**Status:** revision 3 of the draft. Earlier revisions are preserved:
 - r2 (`1a6bf29`): `reports/evidence_comprehension_v1_protocol_r2.md`;
 - r1 (`064bb9a`): `reports/evidence_comprehension_v1_protocol_r1.md`,
   `research/evidence_comprehension_v1/probes_r1.json` and
   `reports/evidence_comprehension_v1_probe_summary_r1.json`.
 
-The probe set changed in r4: 14 duplicate questions were removed (see below).
+The frozen probe set is unchanged from r2.
 
 The frozen probe set, keys, scorer, token audit and tests are built and pass offline. No model has
 been called. The live runner and GPU-disabled review package come next. No GPU reservation,
 upload or launch.
-
-## Changes in r4 (review of r3, and runner development)
-
-1. **Admission timing validation.** `admit` now rejects booleans, non-finite values, negative
-   elapsed times, non-positive timeouts, and any cutoff that is not positive or that would eat into
-   the cleanup reserve. `Admission` validates its settings when constructed. Regressions cover every
-   value the review reproduced, including the negative timeout that admitted a call after the cutoff.
-2. **Duplicate questions removed.** While building the host's allow-list of frozen requests, 14 of
-   the 668 probes turned out to repeat another probe's exact request in the same context: two
-   randomly chosen outcome questions could land on the same step. They would have counted one
-   question twice.
-   - Question arguments are now deduplicated per context.
-   - A test requires every request to be unique.
-   - The set is now 654 probes, of which 454 are gated. The coverage minimums still hold.
-3. **Per-call bound.** Admission now budgets 80 s per call:
-   - the 60 s timeout;
-   - a 15 s window in which the host must observe the server idle after a cancellation;
-   - a 5 s bridge margin.
-4. **How caching and cancellation are verified on the running server.**
-   - **Caching off:** the frozen launch spec passes `--enable-prefix-caching`. The live host derives
-     its argv with exactly that flag replaced by `--no-enable-prefix-caching`, refuses any other
-     difference, and retains the derived argv. After the canary, the server's own metrics must show
-     `vllm:prompt_tokens_total` > 0 with `vllm:prefix_cache_queries_total` = 0. With caching off,
-     vLLM 0.19.0's KV-cache manager returns before recording any prefix-cache query. The check is
-     repeated after every answer.
-   - **Cancellation:** the host transport enforces a total 60 s deadline (a per-socket-read timeout
-     would not). On expiry it shuts the connection down. vLLM 0.19.0's `/v1/chat/completions` route
-     carries `with_cancellation`, so the server aborts the request. This is not assumed: the host must
-     observe `vllm:num_requests_running` and `vllm:num_requests_waiting` at zero within 15 s. If they
-     are, the call is recorded `timed_out` with a retained cancellation receipt. If they are not, the
-     service refuses every later call and the run stops.
 
 ## Changes in r3 (review of r2)
 
@@ -161,18 +128,18 @@ alternative explanations.
 
 | Condition | Contexts | Probes | Role |
 |---|---|---|---|
-| `evidence_only` | 36 generated + 8 designed continuous trajectories, no grids | 454 | **the main gate** |
+| `evidence_only` | 36 generated + 8 designed continuous trajectories, no grids | 468 | **the main gate** |
 | `legacy_description` / `corrected_description` | 3 designed dimension-change trajectories | 34 + 34 | matched; legacy-interface ambiguity, reported separately |
 | `archived_with_grids` / `archived_without_grids` | 6 exact archived live observations (b1 history episodes of ar25, s5i5 and wa30, at decisions 5 and 11, preselected) | 66 + 66 | matched; descriptive |
 
-The total is 654 probes per pass, every request unique. Every evidence-only outcome label appears
-as the key at least 9 times. The keys are distributed as follows:
+The total is 668 probes per pass. Every evidence-only outcome label appears as the key at least
+9 times. The keys are distributed as follows:
 
 | Outcome label | Probes |
 |---|---|
-| no change | 40 |
-| changed then returned | 12 |
-| dispatch failed | 13 |
+| no change | 48 |
+| changed then returned | 16 |
+| dispatch failed | 14 |
 | final frame changed | 9 |
 | outcome unknown | 9 |
 | not shown | 22 |
@@ -188,7 +155,7 @@ Every key is computed twice:
    archived engine steps.
 
 The build fails on any disagreement or discontinuity. A fresh build is byte-identical to the
-frozen set, SHA-256 `dc623450…130e`.
+frozen set, SHA-256 `f6f666a5…6309`.
 
 ## Shortcuts
 
@@ -199,8 +166,8 @@ Shortcuts are fixed before any model answers exist. The best shortcut per gated 
 | available_actions | ids seen in history | 0.159 |
 | coordinate_actions | always `[6]` | 0.523 |
 | recall_action | the latest entry | 0.533 |
-| outcome_class | the latest entry's outcome | 0.381 |
-| observed_effect | ignore coordinates | 0.664 |
+| outcome_class | always no-change | 0.407 |
+| observed_effect | ignore coordinates | 0.658 |
 | tried_unchanged | every no-change entry | 0.659 |
 
 ## Pre-registered analysis
@@ -252,12 +219,10 @@ This **prioritizes** gate completion but cannot guarantee it. Slower startup, in
 or a failure, can interrupt the gate, and an incomplete gate is reported as `incomplete`.
 
 The cleanup reserve does not depend on any estimate:
-- **Admission:** a call starts only if its full 80 s bound would end by the admission cutoff. The
-  bound is the 60 s timeout, 15 s of idle verification and a 5 s margin; the cutoff is the 3,300 s
-  internal limit minus the 300 s cleanup reserve. No admitted call can reach the reserve.
-- **Timeout:** a call still running at 60 s is cancelled on the server and recorded as
-  `timed_out`, with no score row, but only once the server is observed idle. Otherwise the run
-  stops. Under the slow assumed rates, the slowest request takes about 19 s.
+- **Admission:** a call starts only if its full 60 s timeout would end by the admission cutoff: the
+  3,300 s internal limit minus the 300 s cleanup reserve. No admitted call can reach the reserve.
+- **Timeout:** a call still running at 60 s is cancelled and recorded as `timed_out`, with no score
+  row. Under the slow assumed rates, the slowest request takes about 19 s.
 - **Consecutive timeouts:** two in a row stop admission as a technical failure.
 - **Backstop:** the supervisor's process-group teardown at the internal limit.
 
@@ -285,8 +250,8 @@ These are exact counts from the pinned tokenizer, in `reports/evidence_comprehen
 
 | Measure | Value |
 |---|---|
-| Calls | 1,308 (654 × 2 passes) |
-| Prompt tokens per pass | 2,064,987 (4.13 M total) |
+| Calls | 1,336 (668 × 2 passes) |
+| Prompt tokens per pass | 2,073,634 (4.15 M total) |
 | Largest prompt | 26,294 tokens |
 | Longest key answer | 52 tokens |
 
@@ -310,9 +275,9 @@ With the 403 s startup, which is itself historical, not guaranteed:
 
 | Scenario | Startup + gate | Everything |
 |---|---|---|
-| Historical estimate | 782 s | 1,320 s |
-| Assumed slow | 1,258 s | 2,963 s |
-| Assumed slow, every call at its token cap | 2,430 s | 4,630 s (would be cut at the cutoff) |
+| Historical estimate | 793 s | 1,331 s |
+| Assumed slow | 1,283 s | 2,987 s |
+| Assumed slow, every call at its token cap | 2,464 s | 4,664 s (would be cut at the cutoff) |
 
 If reality is slower than these scenarios, admission control stops the run at the cutoff and the
 result is reported incomplete. The gate itself can be cut.
@@ -322,6 +287,12 @@ proposal remains one attempt of ≤ 3,600 s.
 
 ## Next
 
-The local runner and GPU-disabled review package are built; see
-`reports/evidence_comprehension_v1_review.md`. Your review comes next, then separate source approval
-and compute authorization.
+1. Runner, reusing the reviewed action-effect-history host, supervisor and evidence stack:
+   - prefix caching disabled and verified from the running server;
+   - the schedule module's order, admission rule, per-call timeouts and cancellation;
+   - per-call evidence, and scoring by the independent scorer.
+2. The GPU-disabled review package, with CPU rehearsals on the connected path. The package must show:
+   - missing evidence cannot pass the gate;
+   - deadline interruption during each gate pass leaves the result explicitly incomplete;
+   - the cleanup reserve stays protected when the timing estimates are wrong.
+3. Your review, then separate source approval and compute authorization.

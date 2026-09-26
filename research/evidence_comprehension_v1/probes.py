@@ -21,6 +21,15 @@ from research.action_effect_history_v1.contract import SYSTEM_PROMPT as LIVE_PRO
 from research.action_effect_v1.records import EffectHistory, effect_record
 
 VERSION = 'evidence_comprehension_v1_r2'
+FROZEN_PATH = __import__('pathlib').Path(__file__).with_name('probes.json')
+
+
+def load_frozen(path=FROZEN_PATH):
+    """(frozen probe set, its SHA-256). Runtime code reads the frozen file, never the builder."""
+    raw = __import__('pathlib').Path(path).read_bytes()
+    return json.loads(raw), hashlib.sha256(raw).hexdigest()
+
+
 MODEL = 'Qwen/Qwen3-VL-30B-A3B-Instruct-FP8'
 # Per-family completion caps: at least the longest schema-valid answer even when pretty-printed, measured with
 # the pinned tokenizer (ids 41, recall 41, labels 13, eight actions 297 tokens), so no valid answer is truncated.
@@ -385,7 +394,11 @@ def probe_args(observation, rng, exhaustive=False):
     if untried:
         args.append(('observed_effect', _simple(rng.choice(untried))))
     args.append(('tried_unchanged', None))  # the question restricts it to the entries shown
-    return args
+    unique = []
+    for arg in args:  # the same question twice in one context would be one request counted twice
+        if arg not in unique:
+            unique.append(arg)
+    return unique
 
 
 def strata(observation, family, arg, key):

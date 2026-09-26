@@ -1,0 +1,54 @@
+{
+  "scope": "local CPU rehearsals only; CPU fake of the model server with scripted answers; no model calls or GPU runs",
+  "suites": {
+    "probe_set_keys_scoring_and_analysis": {
+      "module": "tests.test_evidence_comprehension_v1",
+      "tests_run": 34,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 21.6
+    },
+    "schedule_admission_and_interrupted_gate": {
+      "module": "tests.test_evidence_comprehension_v1_schedule",
+      "tests_run": 9,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 4.8
+    },
+    "transport_cancellation_and_cache_metrics": {
+      "module": "tests.test_evidence_comprehension_v1_transport",
+      "tests_run": 7,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 8.8
+    },
+    "connected_path_rehearsals": {
+      "module": "tests.test_evidence_comprehension_v1_connected",
+      "tests_run": 8,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 763.1
+    }
+  },
+  "all_passed": true,
+  "covers": [
+    "frozen probe set, dual keys, full-schema validation, pass-identified analysis",
+    "missing passes or answers are incomplete, never success",
+    "admission timing validation; per-call bound; interrupted gate in both passes (simulated)",
+    "total-deadline transport; server-side abort on disconnect verified from server metrics",
+    "server that ignores cancellation stops the run",
+    "prefix caching verified disabled from server metrics; enabled caching refused before questions",
+    "connected launcher->supervisor->worker->host->HTTP server->runner->evaluator",
+    "deadline interruption during gate pass 1 and gate pass 2 with the cleanup reserve untouched",
+    "model startup failure, HTTP failure, monitor exit, cancellation, storage exhaustion, log flood, SIGTERM-ignoring child: bounded, cleaned up, honest partial evidence",
+    "evaluator scores only retained responses; forged hashes, order and token parity rejected",
+    "instrumentation leaves requests and answers unchanged"
+  ],
+  "token_audit": "reports/evidence_comprehension_v1_token_audit.json",
+  "model_calls": 0,
+  "gpu_runs": 0
+}

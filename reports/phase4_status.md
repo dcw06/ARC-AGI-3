@@ -1,17 +1,27 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
-## Evidence comprehension v1: protocol revision 3 (not authorized)
+## Evidence comprehension v1: runner and GPU-disabled review package r1 (not authorized)
 
-Roadmap step 1: can the model read its own controls and action-effect evidence? r3 closes the
-review of r2 (`1a6bf29`, preserved):
-- the gate requires two identified passes, and missing answers or passes are always `incomplete`;
-- the throughput figures are historical planning estimates, and runtime is unmeasured;
-- gate-first ordering only prioritizes the gate. Per-call timeouts and admission control keep the
-  cleanup reserve safe, and simulated interruptions during both gate passes end `incomplete`.
+Roadmap step 1: can the model read its own controls and action-effect evidence? The protocol is at
+revision 4:
+- the admission timing validation is hardened;
+- 14 duplicate questions are removed, leaving 654 probes, 454 of them gated;
+- the per-call bound is 80 s.
 
-The probe set is unchanged: 668 probes, 468 gated. Protocol:
-`reports/evidence_comprehension_v1_protocol.md`. Local runner development is next. No model has
-been called.
+The live path reuses the reviewed lifecycle and adds:
+- a total-deadline transport whose cancellation is verified from the server's own metrics;
+- prefix caching disabled by a single derived launch flag, and verified from the metrics after the
+  canary and after every answer;
+- a frozen-request allow-list;
+- an evaluator that scores only retained responses.
+
+CPU rehearsals on the connected path, against a fake server over real HTTP, cover:
+- deadline interruption in each gate pass;
+- server-side abort, and a server that ignores cancellation;
+- caching enabled;
+- storage, logging and cleanup failures.
+
+Review guide: `reports/evidence_comprehension_v1_review.md`. No model has been called.
 
 ## Action-effect history v1: live result (attempt aeh1-4c75150a)
 
