@@ -65,12 +65,13 @@ tokenizer, an injected GPU identity, a 2 s call timeout and a 3 s idle window. I
 
 ## Known intermittent result
 
-While preparing r2, the connected suite ran three times. One run had a single failing test out of 10;
-the other two passed all 10, as did the final full check (67 tests). That run's report kept only
-counts, so the failing test was not identified. The run was noticeably slower (814 s against 604 s),
-which suggests a timing-sensitive assertion under load, but that is not established. The check now
-records each failure's test name and traceback in `reports/evidence_comprehension_v1_rehearsal_results.json`,
-so any recurrence is identifiable.
+One of three connected-suite runs during r2 preparation had one failing test. It has since been
+identified from retained evidence as a race in the `monitor_exit` rehearsal's design, not a defect in
+deadline enforcement, cancellation, cleanup or evidence integrity. See
+`reports/evidence_comprehension_v1_intermittent_failure_investigation.md`. That file covers the
+archived evidence, the replay, the controls and the proposed deterministic fix. Remediation and the
+predeclared repeat runs are pending. **This review guide and the check script are hash-bound, so
+package r2's lock is superseded for approval purposes; approval must be of a new package.**
 
 ## What the local evidence cannot show
 

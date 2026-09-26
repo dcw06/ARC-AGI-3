@@ -25,11 +25,57 @@ CUTOFF_REHEARSAL_SECONDS = 420  # admission cutoff at 120 s
 RESERVE = 300
 
 
+def _json(path):
+    try:
+        return json.loads(Path(path).read_bytes())
+    except Exception as exc:
+        return {'unreadable': type(exc).__name__}
+
+
+def record_rehearsal(fault, seconds, output, receipt, outer, value, started=None, error=None):
+    """Append one rehearsal's identity, evidence directory, receipts and exit codes to the diagnostics log.
+
+    Active only when scripts/check_evidence_comprehension_v1.py sets ECV_DIAGNOSTICS_LOG; the evidence
+    directory is never deleted."""
+    log = os.environ.get('ECV_DIAGNOSTICS_LOG')
+    if not log:
+        return
+    output = Path(output)
+    first = _json(output / 'control/first-cell-supervisor-cleanup.json')
+    row = {'test': os.environ.get('ECV_CURRENT_TEST'), 'fault': fault, 'rehearsal_seconds': seconds,
+           'evidence_directory': str(output), 'started': started,
+           'ended': {'wall': time.time(), 'monotonic': time.monotonic()}, 'harness_error': error,
+           'receipt': receipt, 'supervisor_returncode': first.get('returncode'),
+           'first_cell_cleanup': {k: first.get(k) for k in ('groups', 'errors', 'drain_finished')},
+           'outer': {k: (outer or {}).get(k) for k in ('status', 'error', 'elapsed_seconds', 'process_groups_exited',
+                                                      'independent_gpu_cleanup_verified', 'scratch_removed',
+                                                      'run_evidence')},
+           'host_status': _json(output / 'worker/host-status.json'),
+           'worker_result': _json(output / 'worker/worker-result.json'),
+           'worker_failure': _json(output / 'worker/failure.json') if (output / 'worker/failure.json').exists() else None,
+           'evaluation': None if value is None else {
+               'lifecycle_errors': value['lifecycle_errors'], 'run_evidence': value['run_evidence'],
+               'run': value['run'], 'gate_status': value['gate_status'], 'call_errors': value['call_errors'][:5]}}
+    with open(log, 'a', encoding='utf-8') as stream:
+        stream.write(json.dumps(row, default=str) + '\n')
+
+
 def run_fault(fault, seconds=REHEARSAL_SECONDS):
     BASE.mkdir(exist_ok=True)
-    receipt, output = rehearse(fault, seconds, tempfile.mkdtemp(dir=BASE))
-    outer = json.loads((output / 'control/outer.json').read_bytes())
-    return receipt, output, outer, evaluate_output(output, mode='rehearsal', rehearsal_seconds=seconds)
+    workdir = Path(tempfile.mkdtemp(dir=BASE))
+    started = {'wall': time.time(), 'monotonic': time.monotonic()}
+    receipt = outer = value = error = None
+    output = workdir / 'working' / 'evidence-comprehension-v1'
+    try:
+        receipt, output = rehearse(fault, seconds, workdir)
+        outer = json.loads((output / 'control/outer.json').read_bytes())
+        value = evaluate_output(output, mode='rehearsal', rehearsal_seconds=seconds)
+        return receipt, output, outer, value
+    except Exception as exc:
+        error = type(exc).__name__ + ': ' + str(exc)[:300]
+        raise
+    finally:
+        record_rehearsal(fault, seconds, output, receipt, outer, value, started, error)
 
 
 def calls(output):
