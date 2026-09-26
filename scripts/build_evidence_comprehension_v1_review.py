@@ -21,7 +21,14 @@ REVIEW_DOCUMENTS = ('reports/evidence_comprehension_v1_protocol.md',
                     'scripts/build_evidence_comprehension_v1_review.py', 'scripts/check_evidence_comprehension_v1.py',
                     'scripts/rehearse_evidence_comprehension_v1.py', 'tests/test_evidence_comprehension_v1.py',
                     'tests/test_evidence_comprehension_v1_schedule.py', 'tests/test_evidence_comprehension_v1_transport.py',
-                    'tests/test_evidence_comprehension_v1_connected.py', 'tests/test_evidence_comprehension_v1_snapshot.py')
+                    'tests/test_evidence_comprehension_v1_connected.py', 'tests/test_evidence_comprehension_v1_snapshot.py',
+                    'tests/test_evidence_comprehension_v1_diagnostics.py', 'tests/ecv_diagnostics_fixtures.py',
+                    'tests/ecv_diagnostics_module_fixture.py',
+                    'reports/evidence_comprehension_v1_intermittent_failure_investigation.md',
+                    'reports/evidence_comprehension_v1_repeat_runs_plan.md',
+                    'reports/evidence_comprehension_v1_intermittent_runs_archive.json',
+                    'scripts/archive_evidence_comprehension_v1_intermittent.py',
+                    'scripts/replay_evidence_comprehension_v1_run_a.py')
 
 
 def inventory():

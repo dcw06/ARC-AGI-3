@@ -19,7 +19,8 @@ from .resources import independent_cleanup, probes_for
 ROOT = Path(__file__).resolve().parents[2]
 LIVE_INTERNAL_SECONDS = 3300
 CLEANUP_RESERVE_SECONDS = 300
-SUPERVISOR_FAULTS = ('none', 'monitor_exit', 'cancel')
+SUPERVISOR_FAULTS = ('none', 'monitor_exit', 'monitor_exit_before_ready', 'cancel')
+MONITOR_FAULT = {'monitor_exit': 'exit', 'monitor_exit_before_ready': 'exit_before_ready'}
 
 
 def gate(mode):
@@ -120,7 +121,7 @@ def run(output, working, game_python, model_python, *, started, mode='live',
                               '--worker-pid', str(worker.pid), '--scratch', str(scratch), '--output', str(output),
                               '--started', str(started), '--deadline', str(started + internal_seconds - 3),
                               '--stop', str(output / 'control/stop-monitor.json'), '--nonce', nonce, '--mode', mode,
-                              '--fault', 'exit' if fault == 'monitor_exit' else 'none'], env=env)
+                              '--fault', MONITOR_FAULT.get(fault, 'none')], env=env)
             control.save('ownership.json', {'worker_pgid': worker.pid, 'monitor_pgid': monitor.pid, 'nonce': nonce,
                                             'first_cell_monotonic': started})
             ready_path = output / 'monitor/ready.json'

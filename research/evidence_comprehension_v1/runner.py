@@ -4,7 +4,8 @@ Every call is retained as its own atomically written file (`calls/NNNNN.json`) w
 when answered, the raw response. The runner never scores: the independent evaluator re-derives
 every request and scores only the retained responses. A timeout leaves the answer missing; a
 rejected request, transport failure, service stop, storage limit, cancellation or the admission
-cutoff ends the run with an explicit stop reason. An ended run is `incomplete` unless every
+cutoff ends the run with an explicit stop reason. A call that fails while the cancel file exists is
+recorded as `canceled` (its cause), never as a transport failure. An ended run is `incomplete` unless every
 scheduled call was answered or timed out.
 """
 from pathlib import Path
@@ -69,7 +70,12 @@ def run(path, service, *, started, kind, cutoff_seconds=ADMISSION_CUTOFF_SECONDS
                               finish_reason=result['finish_reason'], cache_check=result.get('cache_check'),
                               host_timing=result.get('host_timing'))
             except Exception as exc:
-                record.update(status=classify(exc), error=str(exc)[:300])
+                status = classify(exc)
+                if status != 'timed_out' and cancel is not None and Path(cancel).exists():
+                    # The call was abandoned because the run was cancelled (the host refuses or drops in-flight
+                    # work once the cancel file exists): the cause is the cancellation, not the transport.
+                    status = 'canceled'
+                record.update(status=status, error=str(exc)[:300])
             record['returned_at'] = round(clock() - started, 6)
             writer(path / f'calls/{n:05d}.json', record, reserve_bytes=INDEX_RESERVE_BYTES)
             index['calls_recorded'] = n + 1

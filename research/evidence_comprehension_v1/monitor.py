@@ -11,6 +11,22 @@ from .resources import probes_for
 
 SCOPES = {'live': 'evidence_comprehension_live_resource_monitor',
           'rehearsal': 'evidence_comprehension_rehearsal_monitor_injected_gpu'}
+MONITOR_FAULTS = ('none', 'exit', 'exit_before_ready')
+MID_STUDY_HANDSHAKE_SECONDS = 120
+
+
+def exit_mid_study(output, bound=MID_STUDY_HANDSHAKE_SECONDS, clock=time.monotonic, sleep=time.sleep):
+    """Rehearsal only: exit once study evidence exists (run manifest and first call), or at the bound."""
+    output = Path(output)
+    begun = clock()
+    while clock() - begun < bound:
+        if (output / 'worker/run/manifest.json').exists() and (output / 'worker/run/calls/00000.json').exists():
+            os._exit(3)
+        sleep(0.05)
+    EvidenceStore(output, 'monitor').save('handshake-timeout.json', {
+        'fault': 'exit', 'bound_seconds': bound,
+        'reason': 'study evidence did not appear before the mid-study handshake bound'})
+    os._exit(4)
 
 
 def observe(worker_pid, scratch, output, *, started, deadline, stop, nonce, mode='live',
@@ -68,16 +84,23 @@ def main():
     parser.add_argument('--stop', type=Path, required=True)
     parser.add_argument('--nonce', required=True)
     parser.add_argument('--mode', choices=('live', 'rehearsal'), required=True)
-    parser.add_argument('--fault', choices=('none', 'exit'), default='none')
+    parser.add_argument('--fault', choices=MONITOR_FAULTS, default='none')
     args = parser.parse_args()
     if args.mode == 'live':
         from .authority import require
         require()
         if args.fault != 'none':
             raise PermissionError('faults are rehearsal-only')
-    if args.fault == 'exit':  # rehearsal: monitor dies after readiness
+    if args.fault == 'exit_before_ready':
+        # Rehearsal: the monitor dies before publishing readiness, so the supervisor never releases the worker
+        # and no study evidence can exist. Deterministic: no timing race is involved.
+        os._exit(3)
+    if args.fault == 'exit':
+        # Rehearsal: the monitor dies mid-study. Bounded readiness handshake: it waits until the worker's run
+        # evidence and first retained call exist, then exits; if they do not appear within the bound it exits
+        # anyway and leaves a receipt saying so, so a slow start is visible rather than silently changing the case.
         import threading
-        threading.Timer(3.0, lambda: os._exit(3)).start()
+        threading.Thread(target=exit_mid_study, args=(args.output,), daemon=True).start()
     state = observe(args.worker_pid, args.scratch, args.output, started=args.started, deadline=args.deadline,
                     stop=args.stop, nonce=args.nonce, mode=args.mode)
     raise SystemExit(0 if state['status'] == 'monitor_completed' else 1)

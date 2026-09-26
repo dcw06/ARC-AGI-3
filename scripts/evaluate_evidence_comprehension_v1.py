@@ -15,7 +15,7 @@ import math
 from pathlib import Path
 
 LIVE_INTERNAL_SECONDS, CLEANUP_RESERVE_SECONDS = 3300, 300
-STATUSES = ('answered', 'timed_out', 'rejected', 'transport_failure')
+STATUSES = ('answered', 'timed_out', 'rejected', 'transport_failure', 'canceled')
 MAX_PROMPT_TOKENS = 60000
 ADMISSION_SLACK_SECONDS = 0.5  # stamps are taken just after admission and just after the reply or its rejection
 FINISH_REASONS = ('stop', 'length')

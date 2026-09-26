@@ -29,6 +29,7 @@ SUMMARY = ROOT / 'reports/evidence_comprehension_v1_rehearsal_results.json'
 SUITES = {'probe_set_keys_scoring_and_analysis': 'tests.test_evidence_comprehension_v1',
           'schedule_admission_and_interrupted_gate': 'tests.test_evidence_comprehension_v1_schedule',
           'transport_cancellation_and_cache_metrics': 'tests.test_evidence_comprehension_v1_transport',
+          'diagnostics_recorder': 'tests.test_evidence_comprehension_v1_diagnostics',
           'connected_path_rehearsals': 'tests.test_evidence_comprehension_v1_connected'}
 CLOCK_STEP_SECONDS = 2.0  # wall-clock minus monotonic drift above this, within one test, is flagged
 
@@ -64,7 +65,11 @@ def git_state():
 
 
 class Recorder(unittest.TextTestResult):
-    """Keeps a record for every test and subtest, whatever its outcome."""
+    """Keeps a record for every test and subtest, whatever its outcome.
+
+    Class, module and suite fixture errors (setUpClass, setUpModule, tearDownClass...) reach the result
+    without startTest; they are kept as separate fixture records, never dropped or allowed to crash
+    the recorder."""
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -90,33 +95,47 @@ class Recorder(unittest.TextTestResult):
         if record['outcome'] is None:
             record['outcome'] = 'failure' if any(s['outcome'] != 'success' for s in record['subtests']) else 'success'
         self.records.append(record)
+        self.current = None
         os.environ.pop('ECV_CURRENT_TEST', None)
         super().stopTest(test)
 
-    def _set(self, outcome, err=None):
+    def _in_test(self, test):
+        return self.current is not None and self.current['test'] == test.id()
+
+    def _set(self, test, outcome, err=None):
+        detail = ''.join(traceback.format_exception(*err))[-4000:] if err is not None else None
+        if not self._in_test(test):
+            # A fixture error outside any running test (for example setUpClass): its own record.
+            self.records.append({'test': str(test), 'kind': 'fixture', 'outcome': outcome, 'detail': detail,
+                                 'at': self._clock(), 'subtests': []})
+            return
         self.current['outcome'] = outcome
-        if err is not None:
-            self.current['detail'] = ''.join(traceback.format_exception(*err))[-4000:]
+        if detail is not None:
+            self.current['detail'] = detail
 
     def addSuccess(self, test):
         super().addSuccess(test)
-        self._set('success')
+        self._set(test, 'success')
 
     def addFailure(self, test, err):
         super().addFailure(test, err)
-        self._set('failure', err)
+        self._set(test, 'failure', err)
 
     def addError(self, test, err):
         super().addError(test, err)
-        self._set('error', err)
+        self._set(test, 'error', err)
 
     def addSkip(self, test, reason):
         super().addSkip(test, reason)
-        self._set('skipped')
-        self.current['detail'] = reason
+        self._set(test, 'skipped')
+        if self._in_test(test):
+            self.current['detail'] = reason
 
     def addSubTest(self, test, subtest, err):
         super().addSubTest(test, subtest, err)
+        if not self._in_test(test):
+            self._set(subtest, 'error' if err is not None else 'success', err)
+            return
         entry = {'subtest': subtest.id(), 'at_monotonic': time.monotonic(),
                  'outcome': 'success' if err is None else
                  ('failure' if issubclass(err[0], test.failureException) else 'error')}
@@ -125,7 +144,13 @@ class Recorder(unittest.TextTestResult):
         self.current['subtests'].append(entry)
 
 
-def run_suites(suites, run_id, directory=DIAGNOSTICS, label=None):
+def run_suites(suites, run_id, directory=DIAGNOSTICS, label=None, runner_factory=None):
+    """Run each requested suite, keeping its record even if the runner itself raises.
+
+    Success requires every requested suite to have completed and passed; a suite whose runner raised is
+    recorded as not completed, with the exception's traceback, and the remaining suites still run.
+    KeyboardInterrupt and SystemExit are recorded and then re-raised."""
+    runner_factory = runner_factory or (lambda: unittest.TextTestRunner(verbosity=0, resultclass=Recorder))
     directory = Path(directory)
     directory.mkdir(parents=True, exist_ok=True)
     rehearsals = directory / f'{run_id}.rehearsals.jsonl'
@@ -133,22 +158,31 @@ def run_suites(suites, run_id, directory=DIAGNOSTICS, label=None):
     record = {'run_id': run_id, 'label': label, 'command': [sys.executable, *sys.argv], 'cwd': os.getcwd(),
               'git': git_state(), 'host_at_start': host(),
               'started': {'wall': time.time(), 'monotonic': time.monotonic()}, 'suites': {}}
+    record['requested_suites'] = list(suites)
     try:
         for suite_label, name in suites.items():
             begun = time.monotonic()
-            runner = unittest.TextTestRunner(verbosity=0, resultclass=Recorder)
-            outcome = runner.run(unittest.defaultTestLoader.loadTestsFromName(name))
+            try:
+                outcome = runner_factory().run(unittest.defaultTestLoader.loadTestsFromName(name))
+            except BaseException as exc:
+                record['suites'][suite_label] = {
+                    'module': name, 'completed': False, 'passed': False, 'seconds': round(time.monotonic() - begun, 1),
+                    'runner_exception': ''.join(traceback.format_exception(type(exc), exc, exc.__traceback__))[-6000:]}
+                if isinstance(exc, (KeyboardInterrupt, SystemExit)):
+                    raise
+                continue
             record['suites'][suite_label] = {
-                'module': name, 'tests_run': outcome.testsRun, 'failures': len(outcome.failures),
+                'module': name, 'completed': True, 'tests_run': outcome.testsRun, 'failures': len(outcome.failures),
                 'errors': len(outcome.errors), 'passed': outcome.wasSuccessful(),
-                'seconds': round(time.monotonic() - begun, 1), 'tests': outcome.records}
+                'seconds': round(time.monotonic() - begun, 1), 'tests': getattr(outcome, 'records', [])}
     finally:
         os.environ.pop('ECV_DIAGNOSTICS_LOG', None)
         record['ended'] = {'wall': time.time(), 'monotonic': time.monotonic()}
         record['host_at_end'] = host()
         record['rehearsals'] = ([json.loads(line) for line in rehearsals.read_text().splitlines() if line.strip()]
                                 if rehearsals.exists() else [])
-        record['all_passed'] = bool(record['suites']) and all(s['passed'] for s in record['suites'].values())
+        record['all_passed'] = (list(record['suites']) == record['requested_suites'] and bool(record['suites'])
+                                and all(s['completed'] and s['passed'] for s in record['suites'].values()))
         (directory / f'{run_id}.json').write_text(json.dumps(record, indent=1) + '\n')
     return record
 
@@ -178,8 +212,11 @@ class _DeliberateFailures(unittest.TestCase):
 
 
 def self_test(directory):
-    record = run_suites({'deliberate_failures': __name__ + '._DeliberateFailures'}, 'self-test', directory,
-                        label='recorder self-test with deliberate failures')
+    record = run_suites({'deliberate_failures': __name__ + '._DeliberateFailures',
+                         'fixture_error_after_a_passing_suite': 'tests.ecv_diagnostics_fixtures.SetUpClassFails'},
+                        'self-test', directory, label='recorder self-test with deliberate failures')
+    fixture = [t for t in record['suites']['fixture_error_after_a_passing_suite'].get('tests', [])
+               if t.get('kind') == 'fixture']
     tests = {t['test'].rsplit('.', 1)[1]: t for t in record['suites']['deliberate_failures']['tests']}
     checks = {
         'suite_marked_failed': record['all_passed'] is False,
@@ -199,6 +236,8 @@ def self_test(directory):
                                         and str(r.get('test')).endswith('test_e_records_a_rehearsal')
                                         for r in record['rehearsals']),
         'host_and_git_recorded': bool(record['host_at_start'].get('cpus')) and 'commit' in record['git'],
+        'setupclass_error_retained': len(fixture) == 1 and 'deliberate setUpClass failure' in (fixture[0]['detail'] or ''),
+        'every_requested_suite_recorded': list(record['suites']) == record['requested_suites'],
     }
     return {'self_test_passed': all(checks.values()), 'checks': checks,
             'record': 'reports/evidence_comprehension_v1_diagnostics/self-test.json'}
@@ -222,8 +261,9 @@ def main():
                         'no model calls or GPU runs',
                'run_id': args.run_id,
                'diagnostics': f'reports/evidence_comprehension_v1_diagnostics/{args.run_id}.json',
-               'suites': {k: {x: v[x] for x in ('module', 'tests_run', 'failures', 'errors', 'passed', 'seconds')}
-                          for k, v in record['suites'].items()},
+               'requested_suites': record['requested_suites'],
+               'suites': {k: {x: v.get(x) for x in ('module', 'completed', 'tests_run', 'failures', 'errors', 'passed',
+                                                    'seconds')} for k, v in record['suites'].items()},
                'all_passed': record['all_passed'], 'model_calls': 0, 'gpu_runs': 0,
                'token_audit': 'reports/evidence_comprehension_v1_token_audit.json'}
     if not args.suites:

@@ -17,6 +17,9 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 LOCK = ROOT / 'reports/evidence_comprehension_v1_intermittent_runs_archive.json'
+# The archived runs executed the connected tests as committed in adf3b9d. Later revisions add cases, so a replay
+# is only meaningful against that exact file; run this script from a checkout (or worktree) of adf3b9d.
+TESTS_AT_RUN_TIME = 'b657c7accb08a6d13171f794c0f4802e3603af41f021bfa141fcb03302e850ad'
 
 
 def extract(run, target):
@@ -41,6 +44,10 @@ def extract(run, target):
 
 
 def replay(run):
+    tests_file = ROOT / 'tests/test_evidence_comprehension_v1_connected.py'
+    if hashlib.sha256(tests_file.read_bytes()).hexdigest() != TESTS_AT_RUN_TIME:
+        raise SystemExit('the connected tests differ from those the archived runs executed; replay from a '
+                         'checkout of adf3b9d (for example: git worktree add ../replay adf3b9d)')
     import tests.test_evidence_comprehension_v1_connected as connected
     from scripts.evaluate_evidence_comprehension_v1 import evaluate_output
     with tempfile.TemporaryDirectory() as folder:

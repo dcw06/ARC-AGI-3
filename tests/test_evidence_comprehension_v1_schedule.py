@@ -1,5 +1,6 @@
 """Evidence comprehension v1: call order, admission control and interrupted-gate reporting (review of r2)."""
 import json
+from pathlib import Path
 import unittest
 
 from research.evidence_comprehension_v1 import schedule as S
@@ -64,6 +65,13 @@ class Admission(unittest.TestCase):
         self.assertTrue(S.admit(0.0))
         self.assertFalse(S.admit(float(S.ADMISSION_CUTOFF_SECONDS)))
 
+    def test_a_cancelled_call_stops_admission_with_its_cause(self):
+        a = S.Admission()
+        a.record('answered')
+        a.record('canceled')
+        self.assertFalse(a.may_start(0))
+        self.assertEqual(a.stopped, 'canceled')
+
     def test_consecutive_timeouts_stop_admission(self):
         a = S.Admission()
         a.record('timed_out')
@@ -73,6 +81,41 @@ class Admission(unittest.TestCase):
         a.record('timed_out')
         self.assertFalse(a.may_start(0))
         self.assertEqual(a.stopped, 'consecutive_timeouts')
+
+
+class CancelledInFlight(unittest.TestCase):
+    """Review of adf3b9d follow-up: a call abandoned because of cancellation is attributed to the cancellation."""
+
+    def run_with(self, raise_after_cancel):
+        import tempfile
+        from research.evidence_comprehension_v1.runner import run
+
+        class Service:
+            def __init__(self, cancel):
+                self.cancel, self.calls = cancel, 0
+
+            def complete(self, request, deadline=None):
+                self.calls += 1
+                if self.calls == 3:
+                    if raise_after_cancel:
+                        self.cancel.write_text('{}')  # the supervisor cancels while this call is in flight
+                    raise RuntimeError('TimeoutError: bridge admission closed')
+                return {'content': '{"answer":[1]}', 'tokenizer_prompt_tokens': 10, 'server_prompt_tokens': 10,
+                        'server_completion_tokens': 3, 'finish_reason': 'stop', 'cache_check': None, 'host_timing': None}
+        with tempfile.TemporaryDirectory() as folder:
+            cancel = Path(folder) / 'cancel.json'
+            index = run(Path(folder) / 'run', Service(cancel), started=__import__('time').monotonic(), kind='test',
+                        cutoff_seconds=3000, bound_seconds=10, cancel=cancel)
+            third = json.loads((Path(folder) / 'run/calls/00002.json').read_bytes())
+        return index, third
+
+    def test_in_flight_call_during_cancellation_is_recorded_as_canceled(self):
+        index, third = self.run_with(True)
+        self.assertEqual((third['status'], index['stop_reason'], index['status']), ('canceled', 'canceled', 'incomplete'))
+
+    def test_a_real_transport_failure_is_still_a_transport_failure(self):
+        index, third = self.run_with(False)
+        self.assertEqual((third['status'], index['stop_reason']), ('transport_failure', 'transport_failure'))
 
 
 class InterruptedGate(unittest.TestCase):

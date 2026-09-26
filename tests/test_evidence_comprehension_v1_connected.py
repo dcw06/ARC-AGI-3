@@ -341,8 +341,11 @@ class Rehearsals(unittest.TestCase):
         self.assertEqual(value['gate_status'], 'incomplete')
 
     def test_failures_are_bounded_cleaned_and_keep_honest_evidence(self):
+        # monitor_exit: lost mid-study after a bounded handshake (study evidence exists by construction).
+        # monitor_exit_before_ready: lost before readiness, so the worker is never released (no study evidence).
         cases = {'http_error': ('transport_failure', True), 'storage': ('storage_exhausted', True),
-                 'cancel': ('canceled', True), 'monitor_exit': ('canceled', True), 'model_startup': (None, False),
+                 'cancel': ('canceled', True), 'monitor_exit': ('canceled', True),
+                 'monitor_exit_before_ready': (None, False), 'model_startup': (None, False),
                  'log_flood': (None, False)}
         for fault, (stop, evidence) in cases.items():
             with self.subTest(fault=fault):
@@ -355,6 +358,12 @@ class Rehearsals(unittest.TestCase):
                 if evidence:
                     self.assertEqual(value['run']['stop_reason'], stop)
                     self.assertEqual(value['call_errors'], [])
+                if fault == 'monitor_exit':
+                    self.assertFalse((output / 'monitor/handshake-timeout.json').exists())
+                    self.assertGreater(value['run']['calls_recorded'], 0)
+                if fault == 'monitor_exit_before_ready':
+                    self.assertFalse(outer['worker_released'])
+                    self.assertFalse((output / 'worker/run').exists())
 
     def test_surviving_child_is_cleaned_up(self):
         receipt, output, outer, value = run_fault('surviving_child')

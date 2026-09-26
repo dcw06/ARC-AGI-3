@@ -109,13 +109,44 @@ passing test, a failing assertion, an error, a failing subtest, and a failure af
 rehearsal. It then verifies that each is retained with its outcome, traceback and timing, and that
 the rehearsal is linked to its test. The output is in `reports/evidence_comprehension_v1_diagnostics/self-test.json`.
 
-## Next steps (proposed, not yet done)
+## Follow-up after the review of `adf3b9d`
 
-1. **Make the monitor-loss rehearsal deterministic.** The monitor would exit a fixed time **after the
-   worker's run evidence first appears**, so the test exercises "monitor lost mid-run" every time.
-   That changes `research/evidence_comprehension_v1/monitor.py`, a hash-bound runtime file.
-2. **Predeclared repeats.** Five sequential full-check runs on the resulting commit, with the
+1. **Recorder defect (fixed).** A `setUpClass` error reaches the result without `startTest`. The
+   recorder crashed with a `TypeError`, masking the original exception, and the saved report
+   contained only the earlier suite with `all_passed: true`. Reproduced on `adf3b9d`'s recorder.
+   - Class, module and suite fixture errors are now kept as their own records.
+   - A runner exception is kept with its traceback, and later suites still run.
+   - An interrupted run saves an incomplete record before re-raising.
+   - Success requires every requested suite to have completed and passed.
+   - Five regressions are in `tests/test_evidence_comprehension_v1_diagnostics.py`, and the
+     self-test now also includes a `setUpClass` failure after a passing suite (11 checks, all pass).
+2. **Deterministic monitor-loss rehearsals (done).**
+   - `monitor_exit` now uses a bounded readiness handshake: the monitor exits once the worker's run
+     evidence and first retained call exist. If they do not appear within 120 s, it exits anyway and
+     leaves `monitor/handshake-timeout.json`, so a slow start stays visible instead of silently
+     changing the case.
+   - A separate `monitor_exit_before_ready` fault makes the monitor exit before publishing readiness,
+     so the supervisor never releases the worker and missing study evidence is guaranteed.
+3. **A second race, surfaced by the handshake (fixed).** The first run of the updated test failed.
+   From its retained evidence, `monitor_exit` stopped with reason `transport_failure` after 4 calls;
+   the second run recorded `canceled` after 6. When the supervisor cancels while a call is in
+   flight, the host's bridge refuses or drops that call, and the runner filed it as a transport
+   failure.
+   - **What it was:** a **labelling defect in the runner**, reproduced on `adf3b9d`'s runner. It did
+     not affect deadlines, cleanup or evidence integrity: that run was bounded, fully cleaned, and
+     its evidence verified.
+   - **The fix:** a call that fails while the cancel file exists is now recorded as `canceled`, and
+     the run stops with reason `canceled`. The evaluator accepts that status.
+   - **Regressions:** deterministic. An in-flight call during cancellation is labelled `canceled`,
+     and a genuine transport failure is still labelled `transport_failure`.
+
+The replay tool now refuses to run unless the connected tests match the version the archived runs
+executed (`adf3b9d`), because later revisions add rehearsal cases.
+
+## Next steps
+
+1. **Predeclared repeats.** Five sequential full-check runs on the resulting commit, with the
    diagnostics recorder, on an otherwise idle machine with nothing else running from this session.
    Every run is reported, with no reruns. Any failure is investigated before launch.
-3. **Freeze package r3.** The check script, the review guide and `monitor.py` are hash-bound, so
-   approval must be of r3.
+2. **Freeze package r3.** The check script, the review guide, `monitor.py`, `runner.py`,
+   `schedule.py` and `supervisor.py` are hash-bound, so approval must be of r3.

@@ -8,10 +8,16 @@
  ],
  "cwd": "/mnt/c/Users/jjzzw/Desktop/AGI",
  "git": {
-  "commit": "c6f9982ecbe928d11d7522d1133b08add49b7fee",
+  "commit": "adf3b9d2f3922d4af48540861fad5db7d3f9b453",
   "dirty_paths": [
-   "M scripts/check_evidence_comprehension_v1.py",
-   " M tests/test_evidence_comprehension_v1_connected.py"
+   "M research/evidence_comprehension_v1/monitor.py",
+   " M research/evidence_comprehension_v1/supervisor.py",
+   " M scripts/check_evidence_comprehension_v1.py",
+   " M scripts/replay_evidence_comprehension_v1_run_a.py",
+   " M tests/test_evidence_comprehension_v1_connected.py",
+   "?? tests/ecv_diagnostics_fixtures.py",
+   "?? tests/ecv_diagnostics_module_fixture.py",
+   "?? tests/test_evidence_comprehension_v1_diagnostics.py"
   ]
  },
  "host_at_start": {
@@ -20,22 +26,23 @@
   "python": "3.12.3",
   "cpus": 8,
   "loadavg": [
-   0.39,
-   0.17,
-   0.09
+   0.86,
+   0.33,
+   0.25
   ],
   "memory_kib": {
    "MemTotal": 8003196,
-   "MemAvailable": 7483860
+   "MemAvailable": 7452140
   }
  },
  "started": {
-  "wall": 1790454749.374169,
-  "monotonic": 442.151186744
+  "wall": 1790464464.674652,
+  "monotonic": 1758.040377746
  },
  "suites": {
   "deliberate_failures": {
    "module": "__main__._DeliberateFailures",
+   "completed": true,
    "tests_run": 5,
    "failures": 3,
    "errors": 1,
@@ -45,24 +52,24 @@
     {
      "test": "__main__._DeliberateFailures.test_a_passes",
      "start": {
-      "wall": 1790454749.3766284,
-      "monotonic": 442.153646454,
+      "wall": 1790464464.6757407,
+      "monotonic": 1758.041466257,
       "loadavg": [
-       0.39,
-       0.17,
-       0.09
+       0.86,
+       0.33,
+       0.25
       ]
      },
      "outcome": "success",
      "subtests": [],
      "detail": null,
      "end": {
-      "wall": 1790454749.3770845,
-      "monotonic": 442.154101791,
+      "wall": 1790464464.6759253,
+      "monotonic": 1758.041650193,
       "loadavg": [
-       0.39,
-       0.17,
-       0.09
+       0.86,
+       0.33,
+       0.25
       ]
      },
      "duration_seconds": 0.0,
@@ -72,90 +79,90 @@
     {
      "test": "__main__._DeliberateFailures.test_b_fails",
      "start": {
-      "wall": 1790454749.3771353,
-      "monotonic": 442.154152468,
+      "wall": 1790464464.6759474,
+      "monotonic": 1758.041672485,
       "loadavg": [
-       0.39,
-       0.17,
-       0.09
+       0.86,
+       0.33,
+       0.25
       ]
      },
      "outcome": "failure",
      "subtests": [],
-     "detail": "Traceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/case.py\", line 58, in testPartExecutor\n    yield\n  File \"/usr/lib/python3.12/unittest/case.py\", line 634, in run\n    self._callTestMethod(testMethod)\n  File \"/usr/lib/python3.12/unittest/case.py\", line 589, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/scripts/check_evidence_comprehension_v1.py\", line 163, in test_b_fails\n    self.assertEqual(1, 2, 'deliberate assertion failure')\nAssertionError: 1 != 2 : deliberate assertion failure\n",
+     "detail": "Traceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/case.py\", line 58, in testPartExecutor\n    yield\n  File \"/usr/lib/python3.12/unittest/case.py\", line 634, in run\n    self._callTestMethod(testMethod)\n  File \"/usr/lib/python3.12/unittest/case.py\", line 589, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/scripts/check_evidence_comprehension_v1.py\", line 196, in test_b_fails\n    self.assertEqual(1, 2, 'deliberate assertion failure')\nAssertionError: 1 != 2 : deliberate assertion failure\n",
      "end": {
-      "wall": 1790454749.3941612,
-      "monotonic": 442.17117878,
+      "wall": 1790464464.6840336,
+      "monotonic": 1758.049758711,
       "loadavg": [
-       0.39,
-       0.17,
-       0.09
+       0.86,
+       0.33,
+       0.25
       ]
      },
-     "duration_seconds": 0.017,
+     "duration_seconds": 0.008,
      "wall_minus_monotonic_seconds": -0.0,
      "wall_clock_step": false
     },
     {
      "test": "__main__._DeliberateFailures.test_c_errors",
      "start": {
-      "wall": 1790454749.394243,
-      "monotonic": 442.171260229,
+      "wall": 1790464464.684079,
+      "monotonic": 1758.049803821,
       "loadavg": [
-       0.39,
-       0.17,
-       0.09
+       0.86,
+       0.33,
+       0.25
       ]
      },
      "outcome": "error",
      "subtests": [],
-     "detail": "Traceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/case.py\", line 58, in testPartExecutor\n    yield\n  File \"/usr/lib/python3.12/unittest/case.py\", line 634, in run\n    self._callTestMethod(testMethod)\n  File \"/usr/lib/python3.12/unittest/case.py\", line 589, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/scripts/check_evidence_comprehension_v1.py\", line 166, in test_c_errors\n    raise RuntimeError('deliberate error')\nRuntimeError: deliberate error\n",
+     "detail": "Traceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/case.py\", line 58, in testPartExecutor\n    yield\n  File \"/usr/lib/python3.12/unittest/case.py\", line 634, in run\n    self._callTestMethod(testMethod)\n  File \"/usr/lib/python3.12/unittest/case.py\", line 589, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/scripts/check_evidence_comprehension_v1.py\", line 199, in test_c_errors\n    raise RuntimeError('deliberate error')\nRuntimeError: deliberate error\n",
      "end": {
-      "wall": 1790454749.3997252,
-      "monotonic": 442.176742798,
+      "wall": 1790464464.6866872,
+      "monotonic": 1758.052412487,
       "loadavg": [
-       0.39,
-       0.17,
-       0.09
+       0.86,
+       0.33,
+       0.25
       ]
      },
-     "duration_seconds": 0.005,
+     "duration_seconds": 0.003,
      "wall_minus_monotonic_seconds": -0.0,
      "wall_clock_step": false
     },
     {
      "test": "__main__._DeliberateFailures.test_d_failing_subtest",
      "start": {
-      "wall": 1790454749.3997927,
-      "monotonic": 442.176809824,
+      "wall": 1790464464.686722,
+      "monotonic": 1758.052446934,
       "loadavg": [
-       0.39,
-       0.17,
-       0.09
+       0.86,
+       0.33,
+       0.25
       ]
      },
      "outcome": "failure",
      "subtests": [
       {
        "subtest": "__main__._DeliberateFailures.test_d_failing_subtest (n=1)",
-       "at_monotonic": 442.176958458,
+       "at_monotonic": 1758.052500494,
        "outcome": "success"
       },
       {
        "subtest": "__main__._DeliberateFailures.test_d_failing_subtest (n=2)",
-       "at_monotonic": 442.178618671,
+       "at_monotonic": 1758.053913261,
        "outcome": "failure",
-       "detail": "Traceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/case.py\", line 58, in testPartExecutor\n    yield\n  File \"/usr/lib/python3.12/unittest/case.py\", line 539, in subTest\n    yield\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/scripts/check_evidence_comprehension_v1.py\", line 171, in test_d_failing_subtest\n    self.assertNotEqual(n, 2, 'deliberate subtest failure')\nAssertionError: 2 == 2 : deliberate subtest failure\n"
+       "detail": "Traceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/case.py\", line 58, in testPartExecutor\n    yield\n  File \"/usr/lib/python3.12/unittest/case.py\", line 539, in subTest\n    yield\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/scripts/check_evidence_comprehension_v1.py\", line 204, in test_d_failing_subtest\n    self.assertNotEqual(n, 2, 'deliberate subtest failure')\nAssertionError: 2 == 2 : deliberate subtest failure\n"
       }
      ],
      "detail": null,
      "end": {
-      "wall": 1790454749.4032028,
-      "monotonic": 442.180220373,
+      "wall": 1790464464.6895897,
+      "monotonic": 1758.055314831,
       "loadavg": [
-       0.39,
-       0.17,
-       0.09
+       0.86,
+       0.33,
+       0.25
       ]
      },
      "duration_seconds": 0.003,
@@ -165,36 +172,67 @@
     {
      "test": "__main__._DeliberateFailures.test_e_records_a_rehearsal",
      "start": {
-      "wall": 1790454749.4032779,
-      "monotonic": 442.18029493,
+      "wall": 1790464464.689668,
+      "monotonic": 1758.055392888,
       "loadavg": [
-       0.39,
-       0.17,
-       0.09
+       0.86,
+       0.33,
+       0.25
       ]
      },
      "outcome": "failure",
      "subtests": [],
-     "detail": "Traceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/case.py\", line 58, in testPartExecutor\n    yield\n  File \"/usr/lib/python3.12/unittest/case.py\", line 634, in run\n    self._callTestMethod(testMethod)\n  File \"/usr/lib/python3.12/unittest/case.py\", line 589, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/scripts/check_evidence_comprehension_v1.py\", line 177, in test_e_records_a_rehearsal\n    self.fail('deliberate failure after recording a rehearsal')\nAssertionError: deliberate failure after recording a rehearsal\n",
+     "detail": "Traceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/case.py\", line 58, in testPartExecutor\n    yield\n  File \"/usr/lib/python3.12/unittest/case.py\", line 634, in run\n    self._callTestMethod(testMethod)\n  File \"/usr/lib/python3.12/unittest/case.py\", line 589, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/scripts/check_evidence_comprehension_v1.py\", line 210, in test_e_records_a_rehearsal\n    self.fail('deliberate failure after recording a rehearsal')\nAssertionError: deliberate failure after recording a rehearsal\n",
      "end": {
-      "wall": 1790454749.5880783,
-      "monotonic": 442.365096042,
+      "wall": 1790464464.858529,
+      "monotonic": 1758.224254399,
       "loadavg": [
-       0.39,
-       0.17,
-       0.09
+       0.86,
+       0.33,
+       0.25
       ]
      },
-     "duration_seconds": 0.185,
+     "duration_seconds": 0.169,
      "wall_minus_monotonic_seconds": -0.0,
      "wall_clock_step": false
     }
    ]
+  },
+  "fixture_error_after_a_passing_suite": {
+   "module": "tests.ecv_diagnostics_fixtures.SetUpClassFails",
+   "completed": true,
+   "tests_run": 0,
+   "failures": 0,
+   "errors": 1,
+   "passed": false,
+   "seconds": 0.0,
+   "tests": [
+    {
+     "test": "setUpClass (tests.ecv_diagnostics_fixtures.SetUpClassFails)",
+     "kind": "fixture",
+     "outcome": "error",
+     "detail": "Traceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/suite.py\", line 166, in _handleClassSetUp\n    setUpClass()\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/tests/ecv_diagnostics_fixtures.py\", line 13, in setUpClass\n    raise RuntimeError('deliberate setUpClass failure')\nRuntimeError: deliberate setUpClass failure\n",
+     "at": {
+      "wall": 1790464464.879482,
+      "monotonic": 1758.245207565,
+      "loadavg": [
+       0.86,
+       0.33,
+       0.25
+      ]
+     },
+     "subtests": []
+    }
+   ]
   }
  },
+ "requested_suites": [
+  "deliberate_failures",
+  "fixture_error_after_a_passing_suite"
+ ],
  "ended": {
-  "wall": 1790454749.5884633,
-  "monotonic": 442.365480484
+  "wall": 1790464464.8796134,
+  "monotonic": 1758.245338502
  },
  "host_at_end": {
   "hostname": "Jingjing",
@@ -202,13 +240,13 @@
   "python": "3.12.3",
   "cpus": 8,
   "loadavg": [
-   0.39,
-   0.17,
-   0.09
+   0.86,
+   0.33,
+   0.25
   ],
   "memory_kib": {
    "MemTotal": 8003196,
-   "MemAvailable": 7482672
+   "MemAvailable": 7448152
   }
  },
  "rehearsals": [
@@ -221,6 +259,45 @@
    "ended": {
     "wall": 1790454749.5755975,
     "monotonic": 442.352615758
+   },
+   "harness_error": null,
+   "receipt": {
+    "study_status": "failed",
+    "elapsed_seconds": 1.0
+   },
+   "supervisor_returncode": null,
+   "first_cell_cleanup": {
+    "groups": null,
+    "errors": null,
+    "drain_finished": null
+   },
+   "outer": {
+    "status": null,
+    "error": null,
+    "elapsed_seconds": null,
+    "process_groups_exited": null,
+    "independent_gpu_cleanup_verified": null,
+    "scratch_removed": null,
+    "run_evidence": null
+   },
+   "host_status": {
+    "unreadable": "FileNotFoundError"
+   },
+   "worker_result": {
+    "unreadable": "FileNotFoundError"
+   },
+   "worker_failure": null,
+   "evaluation": null
+  },
+  {
+   "test": "__main__._DeliberateFailures.test_e_records_a_rehearsal",
+   "fault": "self_test_fault",
+   "rehearsal_seconds": 480,
+   "evidence_directory": "/tmp/self-test-evidence",
+   "started": null,
+   "ended": {
+    "wall": 1790464464.8128183,
+    "monotonic": 1758.178544565
    },
    "harness_error": null,
    "receipt": {
