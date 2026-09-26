@@ -11,6 +11,8 @@ Cleanup protection does not depend on any throughput estimate:
 - two consecutive timeouts stop admission as a technical failure;
 - the supervisor's process-group teardown at the internal limit remains the backstop.
 """
+import math
+
 from research.evidence_comprehension_v1.probes import GATE_CONDITION
 
 INTERNAL_SECONDS = 3300
@@ -32,17 +34,31 @@ def call_order(probes):
             + [('descriptive_pass_2', 'pass_2', i) for i in reversed(rest)])
 
 
+def _time(value, name):
+    if type(value) not in (int, float) or not math.isfinite(value):  # rejects booleans, NaN and infinities
+        raise ValueError(f'{name} must be a finite number')
+    return value
+
+
 def admit(elapsed_seconds, cutoff_seconds=ADMISSION_CUTOFF_SECONDS, timeout_seconds=PER_CALL_TIMEOUT_SECONDS):
     """A call may start only if it would end, even at its full timeout, by the admission cutoff."""
-    if not all(isinstance(v, (int, float)) for v in (elapsed_seconds, cutoff_seconds, timeout_seconds)):
-        raise TypeError('numeric times required')
-    return elapsed_seconds + timeout_seconds <= cutoff_seconds
+    elapsed = _time(elapsed_seconds, 'elapsed')
+    cutoff = _time(cutoff_seconds, 'cutoff')
+    timeout = _time(timeout_seconds, 'timeout')
+    if elapsed < 0:
+        raise ValueError('elapsed must be non-negative')
+    if timeout <= 0:
+        raise ValueError('timeout must be positive')
+    if not 0 < cutoff <= INTERNAL_SECONDS - CLEANUP_RESERVE_SECONDS:
+        raise ValueError('cutoff must be positive and leave the cleanup reserve')
+    return elapsed + timeout <= cutoff
 
 
 class Admission:
     """Stateful admission: the deadline rule plus the consecutive-timeout stop. Records why admission ended."""
 
     def __init__(self, cutoff_seconds=ADMISSION_CUTOFF_SECONDS, timeout_seconds=PER_CALL_TIMEOUT_SECONDS):
+        admit(0, cutoff_seconds, timeout_seconds)  # validates the settings
         self.cutoff, self.timeout = cutoff_seconds, timeout_seconds
         self.consecutive_timeouts = 0
         self.stopped = None

@@ -49,6 +49,21 @@ class Admission(unittest.TestCase):
                 self.assertLessEqual(elapsed + S.PER_CALL_TIMEOUT_SECONDS, S.INTERNAL_SECONDS - S.CLEANUP_RESERVE_SECONDS)
         self.assertFalse(S.admit(S.ADMISSION_CUTOFF_SECONDS - S.PER_CALL_TIMEOUT_SECONDS + 0.001))
 
+    def test_invalid_timing_values_are_rejected(self):
+        # Review of r3: negative, non-finite and boolean values, and a negative timeout admitting past the cutoff.
+        inf, nan = float('inf'), float('nan')
+        for args in ((-1,), (-inf,), (inf,), (nan,), (True,), (False,), ('10',), (None,),
+                     (0, S.ADMISSION_CUTOFF_SECONDS, -1), (S.ADMISSION_CUTOFF_SECONDS + 100, S.ADMISSION_CUTOFF_SECONDS, -200),
+                     (0, S.ADMISSION_CUTOFF_SECONDS, 0), (0, S.ADMISSION_CUTOFF_SECONDS, inf), (0, S.ADMISSION_CUTOFF_SECONDS, True),
+                     (0, -inf), (0, 0), (0, S.INTERNAL_SECONDS), (0, nan)):
+            with self.subTest(args=args), self.assertRaises(ValueError):
+                S.admit(*args)
+        for args in ((S.ADMISSION_CUTOFF_SECONDS, -5), (0, 0)):
+            with self.subTest(settings=args), self.assertRaises(ValueError):
+                S.Admission(*args)
+        self.assertTrue(S.admit(0.0))
+        self.assertFalse(S.admit(float(S.ADMISSION_CUTOFF_SECONDS)))
+
     def test_consecutive_timeouts_stop_admission(self):
         a = S.Admission()
         a.record('timed_out')
