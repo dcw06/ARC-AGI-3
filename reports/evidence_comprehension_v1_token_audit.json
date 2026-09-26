@@ -1,0 +1,5468 @@
+{
+ "tokenizer": "pinned Qwen3-VL-30B-A3B-Instruct-FP8 tokenizer (.cache/phase4-tokenizer)",
+ "requests": [
+  {
+   "probe_id": "evidence_only:syn-00-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 382,
+   "key_completion_tokens": 18,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-00-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 399,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-00-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 394,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-00-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 399,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-00-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 490,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-00-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 461,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-01-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 427,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-01-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 444,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-01-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 439,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-01-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 444,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-01-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 525,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-01-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 525,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-01-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 444,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-01-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 535,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-01-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 535,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-01-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 506,
+   "key_completion_tokens": 15,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-02-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 483,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-02-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 500,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-02-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 495,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-02-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 500,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-02-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 581,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-02-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 581,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-02-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 500,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-02-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 605,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-02-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 605,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-02-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 605,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-02-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 562,
+   "key_completion_tokens": 23,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-03-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 523,
+   "key_completion_tokens": 12,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-03-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 540,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-03-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 535,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-03-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 540,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-03-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 621,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-03-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 621,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-03-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 540,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-03-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 631,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-03-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 631,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-03-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 602,
+   "key_completion_tokens": 15,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-04-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 581,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-04-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 598,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-04-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 593,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-04-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 598,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-04-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 679,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-04-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 679,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-04-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 679,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-04-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 689,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-04-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 703,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-04-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 703,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-04-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 689,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-04-11",
+   "condition": "evidence_only",
+   "prompt_tokens": 660,
+   "key_completion_tokens": 25,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-05-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 566,
+   "key_completion_tokens": 12,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-05-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 583,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-05-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 578,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-05-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 583,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-05-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 664,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-05-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 664,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-05-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 583,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-05-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 674,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-05-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 674,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-05-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 645,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-06-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 587,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-06-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 604,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-06-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 599,
+   "key_completion_tokens": 21,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-06-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 604,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-06-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 685,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-06-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 685,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-06-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 685,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-06-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 709,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-06-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 708,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-06-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 709,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-06-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 695,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-06-11",
+   "condition": "evidence_only",
+   "prompt_tokens": 666,
+   "key_completion_tokens": 51,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-07-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 567,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-07-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 584,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-07-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 579,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-07-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 584,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-07-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 665,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-07-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 665,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-07-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 665,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-07-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 675,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-07-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 646,
+   "key_completion_tokens": 35,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-08-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 488,
+   "key_completion_tokens": 12,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-08-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 505,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-08-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 500,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-08-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 505,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-08-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 586,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-08-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 586,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-08-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 505,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-08-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 610,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-08-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 610,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-08-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 610,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-08-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 596,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-08-11",
+   "condition": "evidence_only",
+   "prompt_tokens": 567,
+   "key_completion_tokens": 23,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-09-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 525,
+   "key_completion_tokens": 16,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-09-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 542,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-09-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 537,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-09-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 542,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-09-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 623,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-09-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 623,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-09-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 623,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-09-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 633,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-09-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 633,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-09-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 604,
+   "key_completion_tokens": 15,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-10-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 573,
+   "key_completion_tokens": 18,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-10-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 590,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-10-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 585,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-10-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 590,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-10-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 671,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-10-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 671,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-10-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 671,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-10-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 681,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-10-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 681,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-10-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 652,
+   "key_completion_tokens": 25,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-11-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 569,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-11-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 586,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-11-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 581,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-11-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 586,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-11-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 667,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-11-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 667,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-11-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 667,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-11-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 677,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-11-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 677,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-11-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 648,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-12-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 370,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-12-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 387,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-12-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 382,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-12-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 387,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-12-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 449,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-13-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 425,
+   "key_completion_tokens": 12,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-13-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 442,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-13-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 437,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-13-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 442,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-13-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 523,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-13-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 523,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-13-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 442,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-13-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 533,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-13-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 533,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-13-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 504,
+   "key_completion_tokens": 15,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-14-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 478,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-14-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 495,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-14-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 490,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-14-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 495,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-14-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 576,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-14-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 576,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-14-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 576,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-14-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 586,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-14-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 586,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-14-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 557,
+   "key_completion_tokens": 25,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-15-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 523,
+   "key_completion_tokens": 12,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-15-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 540,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-15-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 535,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-15-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 540,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-15-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 621,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-15-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 621,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-15-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 540,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-15-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 631,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-15-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 631,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-15-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 602,
+   "key_completion_tokens": 35,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-16-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 591,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-16-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 608,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-16-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 603,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-16-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 608,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-16-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 689,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-16-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 689,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-16-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 608,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-16-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 712,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-16-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 713,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-16-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 713,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-16-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 670,
+   "key_completion_tokens": 52,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-17-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 567,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-17-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 584,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-17-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 579,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-17-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 584,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-17-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 665,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-17-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 665,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-17-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 665,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-17-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 675,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-17-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 646,
+   "key_completion_tokens": 25,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-18-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 585,
+   "key_completion_tokens": 12,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-18-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 602,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-18-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 597,
+   "key_completion_tokens": 21,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-18-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 602,
+   "key_completion_tokens": 21,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-18-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 683,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-18-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 683,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-18-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 602,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-18-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 706,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-18-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 706,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-18-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 706,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-18-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 693,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-18-11",
+   "condition": "evidence_only",
+   "prompt_tokens": 664,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-19-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 584,
+   "key_completion_tokens": 16,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-19-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 601,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-19-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 596,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-19-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 601,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-19-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 682,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-19-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 682,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-19-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 682,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-19-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 692,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-19-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 706,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-19-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 706,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-19-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 692,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-19-11",
+   "condition": "evidence_only",
+   "prompt_tokens": 663,
+   "key_completion_tokens": 15,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-20-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 494,
+   "key_completion_tokens": 18,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-20-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 511,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-20-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 506,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-20-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 511,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-20-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 592,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-20-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 592,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-20-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 592,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-20-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 616,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-20-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 616,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-20-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 616,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-20-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 602,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-20-11",
+   "condition": "evidence_only",
+   "prompt_tokens": 573,
+   "key_completion_tokens": 23,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-21-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 524,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-21-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 541,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-21-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 536,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-21-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 541,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-21-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 622,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-21-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 622,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-21-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 622,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-21-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 632,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-21-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 632,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-21-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 603,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-22-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 597,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-22-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 614,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-22-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 609,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-22-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 614,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-22-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 695,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-22-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 695,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-22-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 695,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-22-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 719,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-22-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 719,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-22-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 719,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-22-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 676,
+   "key_completion_tokens": 23,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-23-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 587,
+   "key_completion_tokens": 12,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-23-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 604,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-23-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 599,
+   "key_completion_tokens": 21,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-23-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 604,
+   "key_completion_tokens": 21,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-23-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 685,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-23-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 685,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-23-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 685,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-23-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 708,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-23-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 708,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-23-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 708,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-23-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 695,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-23-11",
+   "condition": "evidence_only",
+   "prompt_tokens": 666,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-24-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 378,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-24-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 395,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-24-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 390,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-24-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 476,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-24-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 486,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-24-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 457,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-25-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 428,
+   "key_completion_tokens": 12,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-25-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 445,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-25-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 440,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-25-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 445,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-25-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 526,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-25-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 526,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-25-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 445,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-25-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 536,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-25-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 536,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-25-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 507,
+   "key_completion_tokens": 15,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-26-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 481,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-26-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 498,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-26-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 493,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-26-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 498,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-26-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 579,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-26-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 579,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-26-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 498,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-26-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 589,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-26-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 603,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-26-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 603,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-26-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 560,
+   "key_completion_tokens": 34,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-27-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 515,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-27-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 532,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-27-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 527,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-27-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 532,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-27-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 613,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-27-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 613,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-27-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 613,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-27-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 623,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-27-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 594,
+   "key_completion_tokens": 15,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-28-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 571,
+   "key_completion_tokens": 12,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-28-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 588,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-28-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 583,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-28-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 588,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-28-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 669,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-28-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 669,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-28-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 588,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-28-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 679,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-28-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 679,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-28-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 650,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-29-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 575,
+   "key_completion_tokens": 16,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-29-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 592,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-29-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 587,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-29-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 592,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-29-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 673,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-29-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 673,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-29-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 673,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-29-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 683,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-29-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 683,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-29-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 654,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-30-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 591,
+   "key_completion_tokens": 18,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-30-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 608,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-30-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 603,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-30-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 608,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-30-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 689,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-30-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 689,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-30-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 608,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-30-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 699,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-30-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 712,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-30-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 713,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-30-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 699,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-30-11",
+   "condition": "evidence_only",
+   "prompt_tokens": 670,
+   "key_completion_tokens": 15,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-31-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 567,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-31-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 584,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-31-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 579,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-31-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 584,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-31-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 665,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-31-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 665,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-31-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 584,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-31-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 675,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-31-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 675,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-31-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 646,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-32-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 477,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-32-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 494,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-32-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 489,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-32-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 494,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-32-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 575,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-32-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 575,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-32-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 494,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-32-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 599,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-32-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 599,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-32-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 599,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-32-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 556,
+   "key_completion_tokens": 34,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-33-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 522,
+   "key_completion_tokens": 12,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-33-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 539,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-33-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 534,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-33-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 539,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-33-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 620,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-33-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 620,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-33-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 539,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-33-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 630,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-33-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 630,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-33-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 601,
+   "key_completion_tokens": 15,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-34-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 589,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-34-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 606,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-34-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 601,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-34-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 606,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-34-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 687,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-34-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 687,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-34-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 687,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-34-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 697,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-34-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 711,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-34-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 711,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-34-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 697,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-34-11",
+   "condition": "evidence_only",
+   "prompt_tokens": 668,
+   "key_completion_tokens": 52,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-35-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 569,
+   "key_completion_tokens": 12,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-35-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 586,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-35-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 581,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-35-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 586,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-35-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 667,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-35-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 667,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-35-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 667,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-35-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 677,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-35-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 677,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:syn-35-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 648,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-00-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 538,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-00-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 555,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-00-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 550,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-00-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 555,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-00-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 636,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-00-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 636,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-00-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 636,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-00-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 555,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-00-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 660,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-00-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 660,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-00-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 660,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-00-11",
+   "condition": "evidence_only",
+   "prompt_tokens": 617,
+   "key_completion_tokens": 42,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-01-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 569,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-01-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 586,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-01-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 581,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-01-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 586,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-01-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 667,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-01-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 667,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-01-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 667,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-01-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 667,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-01-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 586,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-01-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 677,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-01-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 677,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-01-11",
+   "condition": "evidence_only",
+   "prompt_tokens": 648,
+   "key_completion_tokens": 15,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-02-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 585,
+   "key_completion_tokens": 18,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-02-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 602,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-02-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 597,
+   "key_completion_tokens": 21,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-02-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 602,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-02-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 683,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-02-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 683,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-02-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 683,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-02-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 683,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-02-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 683,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-02-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 693,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-02-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 706,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-02-11",
+   "condition": "evidence_only",
+   "prompt_tokens": 706,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-02-12",
+   "condition": "evidence_only",
+   "prompt_tokens": 693,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-02-13",
+   "condition": "evidence_only",
+   "prompt_tokens": 664,
+   "key_completion_tokens": 25,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-03-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 597,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-03-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 614,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-03-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 609,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-03-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 614,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-03-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 695,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-03-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 695,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-03-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 695,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-03-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 695,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-03-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 695,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-03-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 719,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-03-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 719,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-03-11",
+   "condition": "evidence_only",
+   "prompt_tokens": 719,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-03-12",
+   "condition": "evidence_only",
+   "prompt_tokens": 705,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-03-13",
+   "condition": "evidence_only",
+   "prompt_tokens": 676,
+   "key_completion_tokens": 23,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-04-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 518,
+   "key_completion_tokens": 12,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-04-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 535,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-04-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 530,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-04-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 535,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-04-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 616,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-04-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 616,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-04-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 616,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-04-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 616,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-04-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 626,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-04-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 626,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-04-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 597,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-05-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 572,
+   "key_completion_tokens": 12,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-05-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 589,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-05-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 584,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-05-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 589,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-05-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 670,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-05-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 670,
+   "key_completion_tokens": 9,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-05-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 670,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-05-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 670,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-05-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 589,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-05-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 680,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-05-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 680,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-05-11",
+   "condition": "evidence_only",
+   "prompt_tokens": 651,
+   "key_completion_tokens": 25,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-06-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 571,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-06-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 588,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-06-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 583,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-06-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 588,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-06-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 669,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-06-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 669,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-06-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 669,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-06-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 669,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-06-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 669,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-06-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 679,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-06-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 679,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-06-11",
+   "condition": "evidence_only",
+   "prompt_tokens": 650,
+   "key_completion_tokens": 15,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-07-00",
+   "condition": "evidence_only",
+   "prompt_tokens": 581,
+   "key_completion_tokens": 16,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-07-01",
+   "condition": "evidence_only",
+   "prompt_tokens": 598,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-07-02",
+   "condition": "evidence_only",
+   "prompt_tokens": 593,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-07-03",
+   "condition": "evidence_only",
+   "prompt_tokens": 598,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-07-04",
+   "condition": "evidence_only",
+   "prompt_tokens": 679,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-07-05",
+   "condition": "evidence_only",
+   "prompt_tokens": 679,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-07-06",
+   "condition": "evidence_only",
+   "prompt_tokens": 679,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-07-07",
+   "condition": "evidence_only",
+   "prompt_tokens": 679,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-07-08",
+   "condition": "evidence_only",
+   "prompt_tokens": 598,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-07-09",
+   "condition": "evidence_only",
+   "prompt_tokens": 689,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-07-10",
+   "condition": "evidence_only",
+   "prompt_tokens": 703,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-07-11",
+   "condition": "evidence_only",
+   "prompt_tokens": 703,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-07-12",
+   "condition": "evidence_only",
+   "prompt_tokens": 689,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "evidence_only:des-07-13",
+   "condition": "evidence_only",
+   "prompt_tokens": 660,
+   "key_completion_tokens": 44,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-00-00",
+   "condition": "legacy_description",
+   "prompt_tokens": 516,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-00-01",
+   "condition": "legacy_description",
+   "prompt_tokens": 533,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-00-02",
+   "condition": "legacy_description",
+   "prompt_tokens": 528,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-00-03",
+   "condition": "legacy_description",
+   "prompt_tokens": 533,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-00-04",
+   "condition": "legacy_description",
+   "prompt_tokens": 614,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-00-05",
+   "condition": "legacy_description",
+   "prompt_tokens": 614,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-00-06",
+   "condition": "legacy_description",
+   "prompt_tokens": 614,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-00-07",
+   "condition": "legacy_description",
+   "prompt_tokens": 614,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-00-08",
+   "condition": "legacy_description",
+   "prompt_tokens": 624,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-00-09",
+   "condition": "legacy_description",
+   "prompt_tokens": 595,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-00-00",
+   "condition": "corrected_description",
+   "prompt_tokens": 541,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-00-01",
+   "condition": "corrected_description",
+   "prompt_tokens": 558,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-00-02",
+   "condition": "corrected_description",
+   "prompt_tokens": 553,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-00-03",
+   "condition": "corrected_description",
+   "prompt_tokens": 558,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-00-04",
+   "condition": "corrected_description",
+   "prompt_tokens": 639,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-00-05",
+   "condition": "corrected_description",
+   "prompt_tokens": 639,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-00-06",
+   "condition": "corrected_description",
+   "prompt_tokens": 639,
+   "key_completion_tokens": 7,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-00-07",
+   "condition": "corrected_description",
+   "prompt_tokens": 639,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-00-08",
+   "condition": "corrected_description",
+   "prompt_tokens": 649,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-00-09",
+   "condition": "corrected_description",
+   "prompt_tokens": 620,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-01-00",
+   "condition": "legacy_description",
+   "prompt_tokens": 569,
+   "key_completion_tokens": 12,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-01-01",
+   "condition": "legacy_description",
+   "prompt_tokens": 586,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-01-02",
+   "condition": "legacy_description",
+   "prompt_tokens": 581,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-01-03",
+   "condition": "legacy_description",
+   "prompt_tokens": 586,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-01-04",
+   "condition": "legacy_description",
+   "prompt_tokens": 667,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-01-05",
+   "condition": "legacy_description",
+   "prompt_tokens": 667,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-01-06",
+   "condition": "legacy_description",
+   "prompt_tokens": 667,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-01-07",
+   "condition": "legacy_description",
+   "prompt_tokens": 667,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-01-08",
+   "condition": "legacy_description",
+   "prompt_tokens": 667,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-01-09",
+   "condition": "legacy_description",
+   "prompt_tokens": 677,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-01-10",
+   "condition": "legacy_description",
+   "prompt_tokens": 677,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-01-11",
+   "condition": "legacy_description",
+   "prompt_tokens": 648,
+   "key_completion_tokens": 25,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-01-00",
+   "condition": "corrected_description",
+   "prompt_tokens": 594,
+   "key_completion_tokens": 12,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-01-01",
+   "condition": "corrected_description",
+   "prompt_tokens": 611,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-01-02",
+   "condition": "corrected_description",
+   "prompt_tokens": 606,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-01-03",
+   "condition": "corrected_description",
+   "prompt_tokens": 611,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-01-04",
+   "condition": "corrected_description",
+   "prompt_tokens": 692,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-01-05",
+   "condition": "corrected_description",
+   "prompt_tokens": 692,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-01-06",
+   "condition": "corrected_description",
+   "prompt_tokens": 692,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-01-07",
+   "condition": "corrected_description",
+   "prompt_tokens": 692,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-01-08",
+   "condition": "corrected_description",
+   "prompt_tokens": 692,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-01-09",
+   "condition": "corrected_description",
+   "prompt_tokens": 702,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-01-10",
+   "condition": "corrected_description",
+   "prompt_tokens": 702,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-01-11",
+   "condition": "corrected_description",
+   "prompt_tokens": 673,
+   "key_completion_tokens": 25,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-02-00",
+   "condition": "legacy_description",
+   "prompt_tokens": 533,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-02-01",
+   "condition": "legacy_description",
+   "prompt_tokens": 550,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-02-02",
+   "condition": "legacy_description",
+   "prompt_tokens": 545,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-02-03",
+   "condition": "legacy_description",
+   "prompt_tokens": 550,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-02-04",
+   "condition": "legacy_description",
+   "prompt_tokens": 631,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-02-05",
+   "condition": "legacy_description",
+   "prompt_tokens": 631,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-02-06",
+   "condition": "legacy_description",
+   "prompt_tokens": 631,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-02-07",
+   "condition": "legacy_description",
+   "prompt_tokens": 550,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-02-08",
+   "condition": "legacy_description",
+   "prompt_tokens": 655,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-02-09",
+   "condition": "legacy_description",
+   "prompt_tokens": 655,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-02-10",
+   "condition": "legacy_description",
+   "prompt_tokens": 655,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "legacy_description:dim-02-11",
+   "condition": "legacy_description",
+   "prompt_tokens": 612,
+   "key_completion_tokens": 23,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-02-00",
+   "condition": "corrected_description",
+   "prompt_tokens": 558,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-02-01",
+   "condition": "corrected_description",
+   "prompt_tokens": 575,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-02-02",
+   "condition": "corrected_description",
+   "prompt_tokens": 570,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-02-03",
+   "condition": "corrected_description",
+   "prompt_tokens": 575,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-02-04",
+   "condition": "corrected_description",
+   "prompt_tokens": 656,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-02-05",
+   "condition": "corrected_description",
+   "prompt_tokens": 656,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-02-06",
+   "condition": "corrected_description",
+   "prompt_tokens": 656,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-02-07",
+   "condition": "corrected_description",
+   "prompt_tokens": 575,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-02-08",
+   "condition": "corrected_description",
+   "prompt_tokens": 680,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-02-09",
+   "condition": "corrected_description",
+   "prompt_tokens": 680,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-02-10",
+   "condition": "corrected_description",
+   "prompt_tokens": 680,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "corrected_description:dim-02-11",
+   "condition": "corrected_description",
+   "prompt_tokens": 637,
+   "key_completion_tokens": 23,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d05-00",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26172,
+   "key_completion_tokens": 18,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d05-01",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26189,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d05-02",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26184,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d05-03",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26189,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d05-04",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26270,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d05-05",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26270,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d05-06",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26189,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d05-07",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26280,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d05-08",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26294,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d05-09",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26294,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d05-10",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26280,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d05-11",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26251,
+   "key_completion_tokens": 34,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d05-00",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 685,
+   "key_completion_tokens": 18,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d05-01",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 702,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d05-02",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 697,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d05-03",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 702,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d05-04",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 783,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d05-05",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 783,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d05-06",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 702,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d05-07",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 793,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d05-08",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 807,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d05-09",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 807,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d05-10",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 793,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d05-11",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 764,
+   "key_completion_tokens": 34,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d11-00",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26171,
+   "key_completion_tokens": 18,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d11-01",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26188,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d11-02",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26183,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d11-03",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26188,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d11-04",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26269,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d11-05",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26269,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d11-06",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26269,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d11-07",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26279,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d11-08",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26293,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d11-09",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26293,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d11-10",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26279,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-ar25-history-d11-11",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 26250,
+   "key_completion_tokens": 34,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d11-00",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 684,
+   "key_completion_tokens": 18,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d11-01",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 701,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d11-02",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 696,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d11-03",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 701,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d11-04",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 782,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d11-05",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 782,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d11-06",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 782,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d11-07",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 792,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d11-08",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 806,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d11-09",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 806,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d11-10",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 792,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-ar25-history-d11-11",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 763,
+   "key_completion_tokens": 34,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d05-00",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25511,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d05-01",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25528,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d05-02",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25523,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d05-03",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25528,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d05-04",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25609,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d05-05",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25609,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d05-06",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25528,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d05-07",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25633,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d05-08",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25633,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d05-09",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25633,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d05-10",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25590,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d05-00",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 693,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d05-01",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 710,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d05-02",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 705,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d05-03",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 710,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d05-04",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 791,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d05-05",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 791,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d05-06",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 710,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d05-07",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 815,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d05-08",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 815,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d05-09",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 815,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d05-10",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 772,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d11-00",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25513,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d11-01",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25530,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d11-02",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25525,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d11-03",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25530,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d11-04",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25611,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d11-05",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25611,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d11-06",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25530,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d11-07",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25635,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d11-08",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25635,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d11-09",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25635,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-s5i5-history-d11-10",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25592,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d11-00",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 695,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d11-01",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 712,
+   "key_completion_tokens": 6,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d11-02",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 707,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d11-03",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 712,
+   "key_completion_tokens": 22,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d11-04",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 793,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d11-05",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 793,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d11-06",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 712,
+   "key_completion_tokens": 8,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d11-07",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 817,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d11-08",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 817,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d11-09",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 817,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-s5i5-history-d11-10",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 774,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-wa30-history-d05-00",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25295,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-wa30-history-d05-01",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25312,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-wa30-history-d05-02",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25307,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-wa30-history-d05-03",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25312,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-wa30-history-d05-04",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25393,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-wa30-history-d05-05",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25393,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-wa30-history-d05-06",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25393,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-wa30-history-d05-07",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25403,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-wa30-history-d05-08",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25403,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-wa30-history-d05-09",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25374,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-wa30-history-d05-00",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 666,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-wa30-history-d05-01",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 683,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-wa30-history-d05-02",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 678,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-wa30-history-d05-03",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 683,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-wa30-history-d05-04",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 764,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-wa30-history-d05-05",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 764,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-wa30-history-d05-06",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 764,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-wa30-history-d05-07",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 774,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-wa30-history-d05-08",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 774,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-wa30-history-d05-09",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 745,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-wa30-history-d11-00",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25307,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-wa30-history-d11-01",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25324,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-wa30-history-d11-02",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25319,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-wa30-history-d11-03",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25324,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-wa30-history-d11-04",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25405,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-wa30-history-d11-05",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25405,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-wa30-history-d11-06",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25405,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-wa30-history-d11-07",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25415,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-wa30-history-d11-08",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25415,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_with_grids:b1-wa30-history-d11-09",
+   "condition": "archived_with_grids",
+   "prompt_tokens": 25386,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-wa30-history-d11-00",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 678,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-wa30-history-d11-01",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 695,
+   "key_completion_tokens": 5,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-wa30-history-d11-02",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 690,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-wa30-history-d11-03",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 695,
+   "key_completion_tokens": 14,
+   "max_tokens": 64,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-wa30-history-d11-04",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 776,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-wa30-history-d11-05",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 776,
+   "key_completion_tokens": 10,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-wa30-history-d11-06",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 776,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-wa30-history-d11-07",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 786,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-wa30-history-d11-08",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 786,
+   "key_completion_tokens": 8,
+   "max_tokens": 32,
+   "within_limits": true
+  },
+  {
+   "probe_id": "archived_without_grids:b1-wa30-history-d11-09",
+   "condition": "archived_without_grids",
+   "prompt_tokens": 757,
+   "key_completion_tokens": 5,
+   "max_tokens": 320,
+   "within_limits": true
+  }
+ ],
+ "summary": {
+  "requests_per_pass": 668,
+  "passes": 2,
+  "calls": 1336,
+  "prompt_tokens_per_pass": 2073634,
+  "prompt_tokens_total": 4147268,
+  "max_prompt_tokens": 26294,
+  "all_within_limits": true,
+  "by_condition": {
+   "evidence_only": {
+    "requests": 468,
+    "prompt_tokens": 282254,
+    "max_prompt_tokens": 719,
+    "key_completion_tokens": 5133
+   },
+   "legacy_description": {
+    "requests": 34,
+    "prompt_tokens": 20642,
+    "max_prompt_tokens": 677,
+    "key_completion_tokens": 358
+   },
+   "corrected_description": {
+    "requests": 34,
+    "prompt_tokens": 21492,
+    "max_prompt_tokens": 702,
+    "key_completion_tokens": 358
+   },
+   "archived_with_grids": {
+    "requests": 66,
+    "prompt_tokens": 1699755,
+    "max_prompt_tokens": 26294,
+    "key_completion_tokens": 700
+   },
+   "archived_without_grids": {
+    "requests": 66,
+    "prompt_tokens": 49491,
+    "max_prompt_tokens": 817,
+    "key_completion_tokens": 700
+   }
+  }
+ },
+ "measured_bounds": {
+  "source": "action-effect-history v1 archive a67b69557d835f8076e3b80674c29c0032b95ec2dbd9a70f032ed85af54654cb",
+  "decode_lower_bound_tokens_per_second": 110.2,
+  "cold_first_calls": [
+   {
+    "episode": "b1-ar25-baseline",
+    "prompt_tokens": 8793,
+    "latency_seconds": 0.985,
+    "prefill_lower_bound_tokens_per_second": 8929
+   },
+   {
+    "episode": "b1-s5i5-baseline",
+    "prompt_tokens": 8558,
+    "latency_seconds": 0.502,
+    "prefill_lower_bound_tokens_per_second": 17058
+   },
+   {
+    "episode": "b1-wa30-baseline",
+    "prompt_tokens": 8503,
+    "latency_seconds": 0.45,
+    "prefill_lower_bound_tokens_per_second": 18884
+   },
+   {
+    "episode": "b2-s5i5-history",
+    "prompt_tokens": 8641,
+    "latency_seconds": 0.511,
+    "prefill_lower_bound_tokens_per_second": 16919
+   },
+   {
+    "episode": "b2-ar25-history",
+    "prompt_tokens": 8876,
+    "latency_seconds": 0.562,
+    "prefill_lower_bound_tokens_per_second": 15781
+   }
+  ],
+  "uncached_prefill_lower_bound_tokens_per_second": 8929
+ },
+ "runtime_scenarios": {
+  "schedule": "evidence_only pass 1, evidence_only pass 2 (reversed), then the descriptive groups pass 1 and pass 2 (reversed); the runner stops admitting calls at the cutoff, so a shortfall can only cut descriptive groups",
+  "overhead_seconds_per_call": 0.15,
+  "startup_seconds": 403,
+  "admission_cutoff_seconds": 3000,
+  "scenarios": {
+   "measured_bounds": {
+    "prefill_tokens_per_second": 8929,
+    "decode_tokens_per_second": 110.2,
+    "completion_tokens": "key_x2",
+    "gate_both_passes_seconds": 390,
+    "descriptive_both_passes_seconds": 538,
+    "startup_plus_gate_seconds": 793,
+    "startup_plus_everything_seconds": 1331,
+    "gate_fits_admission_cutoff": true,
+    "everything_fits_admission_cutoff": true
+   },
+   "stress_slow_prefill_and_decode": {
+    "prefill_tokens_per_second": 2500,
+    "decode_tokens_per_second": 40,
+    "completion_tokens": "key_x2",
+    "gate_both_passes_seconds": 880,
+    "descriptive_both_passes_seconds": 1705,
+    "startup_plus_gate_seconds": 1283,
+    "startup_plus_everything_seconds": 2987,
+    "gate_fits_admission_cutoff": true,
+    "everything_fits_admission_cutoff": true
+   },
+   "stress_every_call_at_max_tokens": {
+    "prefill_tokens_per_second": 2500,
+    "decode_tokens_per_second": 40,
+    "completion_tokens": "max_tokens",
+    "gate_both_passes_seconds": 2061,
+    "descriptive_both_passes_seconds": 2200,
+    "startup_plus_gate_seconds": 2464,
+    "startup_plus_everything_seconds": 4664,
+    "gate_fits_admission_cutoff": true,
+    "everything_fits_admission_cutoff": false
+   }
+  }
+ }
+}

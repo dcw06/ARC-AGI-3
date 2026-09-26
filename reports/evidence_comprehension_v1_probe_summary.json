@@ -1,196 +1,420 @@
 {
  "contexts": {
+  "archived_with_grids": 6,
+  "archived_without_grids": 6,
+  "corrected_description": 3,
   "evidence_only": 44,
-  "full_observation": 18
+  "legacy_description": 3
  },
  "counts": {
+  "archived_with_grids/available_actions": 6,
+  "archived_with_grids/available_actions/best_shortcut_wrong": 4,
+  "archived_with_grids/available_actions/key=value": 6,
+  "archived_with_grids/coordinate_actions": 6,
+  "archived_with_grids/coordinate_actions/best_shortcut_wrong": 2,
+  "archived_with_grids/coordinate_actions/key=empty": 2,
+  "archived_with_grids/coordinate_actions/key=value": 4,
+  "archived_with_grids/observed_effect": 18,
+  "archived_with_grids/observed_effect/best_shortcut_wrong": 6,
+  "archived_with_grids/observed_effect/key=acknowledged_no_change": 2,
+  "archived_with_grids/observed_effect/key=final_frame_changed": 4,
+  "archived_with_grids/observed_effect/key=not_observed": 12,
+  "archived_with_grids/observed_effect/near_miss_click": 8,
+  "archived_with_grids/observed_effect/untried_action": 4,
+  "archived_with_grids/outcome_class": 15,
+  "archived_with_grids/outcome_class/absent_step": 3,
+  "archived_with_grids/outcome_class/best_shortcut_wrong": 4,
+  "archived_with_grids/outcome_class/key=acknowledged_no_change": 5,
+  "archived_with_grids/outcome_class/key=final_frame_changed": 7,
+  "archived_with_grids/outcome_class/key=not_shown": 3,
+  "archived_with_grids/recall_action": 15,
+  "archived_with_grids/recall_action/absent_step": 3,
+  "archived_with_grids/recall_action/best_shortcut_wrong": 5,
+  "archived_with_grids/recall_action/key=not_shown": 3,
+  "archived_with_grids/recall_action/key=value": 12,
+  "archived_with_grids/tried_unchanged": 6,
+  "archived_with_grids/tried_unchanged/best_shortcut_wrong": 1,
+  "archived_with_grids/tried_unchanged/key=empty": 4,
+  "archived_with_grids/tried_unchanged/key=value": 2,
+  "archived_without_grids/available_actions": 6,
+  "archived_without_grids/available_actions/best_shortcut_wrong": 4,
+  "archived_without_grids/available_actions/key=value": 6,
+  "archived_without_grids/coordinate_actions": 6,
+  "archived_without_grids/coordinate_actions/best_shortcut_wrong": 2,
+  "archived_without_grids/coordinate_actions/key=empty": 2,
+  "archived_without_grids/coordinate_actions/key=value": 4,
+  "archived_without_grids/observed_effect": 18,
+  "archived_without_grids/observed_effect/best_shortcut_wrong": 6,
+  "archived_without_grids/observed_effect/key=acknowledged_no_change": 2,
+  "archived_without_grids/observed_effect/key=final_frame_changed": 4,
+  "archived_without_grids/observed_effect/key=not_observed": 12,
+  "archived_without_grids/observed_effect/near_miss_click": 8,
+  "archived_without_grids/observed_effect/untried_action": 4,
+  "archived_without_grids/outcome_class": 15,
+  "archived_without_grids/outcome_class/absent_step": 3,
+  "archived_without_grids/outcome_class/best_shortcut_wrong": 4,
+  "archived_without_grids/outcome_class/key=acknowledged_no_change": 5,
+  "archived_without_grids/outcome_class/key=final_frame_changed": 7,
+  "archived_without_grids/outcome_class/key=not_shown": 3,
+  "archived_without_grids/recall_action": 15,
+  "archived_without_grids/recall_action/absent_step": 3,
+  "archived_without_grids/recall_action/best_shortcut_wrong": 5,
+  "archived_without_grids/recall_action/key=not_shown": 3,
+  "archived_without_grids/recall_action/key=value": 12,
+  "archived_without_grids/tried_unchanged": 6,
+  "archived_without_grids/tried_unchanged/best_shortcut_wrong": 1,
+  "archived_without_grids/tried_unchanged/key=empty": 4,
+  "archived_without_grids/tried_unchanged/key=value": 2,
+  "corrected_description/available_actions": 3,
+  "corrected_description/available_actions/best_shortcut_wrong": 1,
+  "corrected_description/available_actions/dimension_change_in_history": 3,
+  "corrected_description/available_actions/key=value": 3,
+  "corrected_description/coordinate_actions": 3,
+  "corrected_description/coordinate_actions/best_shortcut_wrong": 1,
+  "corrected_description/coordinate_actions/dimension_change_in_history": 3,
+  "corrected_description/coordinate_actions/key=empty": 2,
+  "corrected_description/coordinate_actions/key=value": 1,
+  "corrected_description/observed_effect": 6,
+  "corrected_description/observed_effect/best_shortcut_wrong": 2,
+  "corrected_description/observed_effect/dimension_change_in_history": 6,
+  "corrected_description/observed_effect/key=acknowledged_no_change": 3,
+  "corrected_description/observed_effect/key=not_observed": 3,
+  "corrected_description/observed_effect/near_miss_click": 2,
+  "corrected_description/observed_effect/untried_action": 1,
+  "corrected_description/outcome_class": 12,
+  "corrected_description/outcome_class/absent_step": 2,
+  "corrected_description/outcome_class/best_shortcut_wrong": 6,
+  "corrected_description/outcome_class/dimension_change_in_history": 12,
+  "corrected_description/outcome_class/key=acknowledged_no_change": 6,
+  "corrected_description/outcome_class/key=final_frame_changed": 3,
+  "corrected_description/outcome_class/key=not_shown": 2,
+  "corrected_description/outcome_class/key=outcome_unknown": 1,
+  "corrected_description/recall_action": 7,
+  "corrected_description/recall_action/absent_step": 1,
+  "corrected_description/recall_action/best_shortcut_wrong": 4,
+  "corrected_description/recall_action/dimension_change_in_history": 7,
+  "corrected_description/recall_action/key=not_shown": 1,
+  "corrected_description/recall_action/key=value": 6,
+  "corrected_description/tried_unchanged": 3,
+  "corrected_description/tried_unchanged/best_shortcut_wrong": 1,
+  "corrected_description/tried_unchanged/dimension_change_in_history": 3,
+  "corrected_description/tried_unchanged/key=empty": 1,
+  "corrected_description/tried_unchanged/key=value": 2,
   "evidence_only/available_actions": 44,
+  "evidence_only/available_actions/best_shortcut_wrong": 37,
   "evidence_only/available_actions/empty_history": 3,
-  "evidence_only/available_actions/history_has_unavailable_ids": 9,
+  "evidence_only/available_actions/history_has_unavailable_ids": 7,
   "evidence_only/available_actions/key=value": 44,
   "evidence_only/coordinate_actions": 44,
+  "evidence_only/coordinate_actions/best_shortcut_wrong": 21,
   "evidence_only/coordinate_actions/empty_history": 3,
-  "evidence_only/coordinate_actions/history_has_unavailable_ids": 9,
-  "evidence_only/coordinate_actions/key=empty": 22,
-  "evidence_only/coordinate_actions/key=value": 22,
-  "evidence_only/observed_effect": 106,
-  "evidence_only/observed_effect/dimension_change": 5,
+  "evidence_only/coordinate_actions/history_has_unavailable_ids": 7,
+  "evidence_only/coordinate_actions/key=empty": 21,
+  "evidence_only/coordinate_actions/key=value": 23,
+  "evidence_only/observed_effect": 111,
+  "evidence_only/observed_effect/best_shortcut_wrong": 38,
   "evidence_only/observed_effect/empty_history": 2,
-  "evidence_only/observed_effect/key=acknowledged_no_change": 12,
-  "evidence_only/observed_effect/key=changed_then_returned": 9,
-  "evidence_only/observed_effect/key=dispatch_failed": 5,
-  "evidence_only/observed_effect/key=final_frame_changed": 11,
-  "evidence_only/observed_effect/key=not_observed": 63,
-  "evidence_only/observed_effect/key=outcome_unknown": 6,
-  "evidence_only/observed_effect/near_miss_click": 28,
-  "evidence_only/observed_effect/untried_action": 35,
-  "evidence_only/outcome_class": 114,
-  "evidence_only/outcome_class/absent_step": 19,
-  "evidence_only/outcome_class/dimension_change": 9,
-  "evidence_only/outcome_class/key=acknowledged_no_change": 28,
-  "evidence_only/outcome_class/key=changed_then_returned": 12,
-  "evidence_only/outcome_class/key=dispatch_failed": 9,
-  "evidence_only/outcome_class/key=final_frame_changed": 26,
-  "evidence_only/outcome_class/key=not_shown": 19,
-  "evidence_only/outcome_class/key=outcome_unknown": 20,
-  "evidence_only/recall_action": 110,
-  "evidence_only/recall_action/absent_step": 28,
-  "evidence_only/recall_action/empty_history": 6,
-  "evidence_only/recall_action/key=not_shown": 28,
+  "evidence_only/observed_effect/key=acknowledged_no_change": 17,
+  "evidence_only/observed_effect/key=changed_then_returned": 7,
+  "evidence_only/observed_effect/key=dispatch_failed": 8,
+  "evidence_only/observed_effect/key=final_frame_changed": 4,
+  "evidence_only/observed_effect/key=not_observed": 67,
+  "evidence_only/observed_effect/key=outcome_unknown": 8,
+  "evidence_only/observed_effect/near_miss_click": 33,
+  "evidence_only/observed_effect/untried_action": 34,
+  "evidence_only/outcome_class": 118,
+  "evidence_only/outcome_class/absent_step": 22,
+  "evidence_only/outcome_class/best_shortcut_wrong": 70,
+  "evidence_only/outcome_class/empty_history": 1,
+  "evidence_only/outcome_class/key=acknowledged_no_change": 48,
+  "evidence_only/outcome_class/key=changed_then_returned": 16,
+  "evidence_only/outcome_class/key=dispatch_failed": 14,
+  "evidence_only/outcome_class/key=final_frame_changed": 9,
+  "evidence_only/outcome_class/key=not_shown": 22,
+  "evidence_only/outcome_class/key=outcome_unknown": 9,
+  "evidence_only/recall_action": 107,
+  "evidence_only/recall_action/absent_step": 25,
+  "evidence_only/recall_action/best_shortcut_wrong": 50,
+  "evidence_only/recall_action/empty_history": 5,
+  "evidence_only/recall_action/key=not_shown": 25,
   "evidence_only/recall_action/key=value": 82,
   "evidence_only/tried_unchanged": 44,
+  "evidence_only/tried_unchanged/best_shortcut_wrong": 15,
   "evidence_only/tried_unchanged/empty_history": 3,
-  "evidence_only/tried_unchanged/key=empty": 20,
-  "evidence_only/tried_unchanged/key=value": 24,
-  "full_observation/available_actions": 18,
-  "full_observation/available_actions/empty_history": 3,
-  "full_observation/available_actions/key=value": 18,
-  "full_observation/coordinate_actions": 18,
-  "full_observation/coordinate_actions/empty_history": 3,
-  "full_observation/coordinate_actions/key=empty": 6,
-  "full_observation/coordinate_actions/key=value": 12,
-  "full_observation/observed_effect": 47,
-  "full_observation/observed_effect/empty_history": 2,
-  "full_observation/observed_effect/key=acknowledged_no_change": 5,
-  "full_observation/observed_effect/key=final_frame_changed": 10,
-  "full_observation/observed_effect/key=not_observed": 32,
-  "full_observation/observed_effect/near_miss_click": 20,
-  "full_observation/observed_effect/untried_action": 12,
-  "full_observation/outcome_class": 39,
-  "full_observation/outcome_class/absent_step": 9,
-  "full_observation/outcome_class/empty_history": 1,
-  "full_observation/outcome_class/key=acknowledged_no_change": 11,
-  "full_observation/outcome_class/key=final_frame_changed": 19,
-  "full_observation/outcome_class/key=not_shown": 9,
-  "full_observation/recall_action": 42,
-  "full_observation/recall_action/absent_step": 12,
-  "full_observation/recall_action/empty_history": 5,
-  "full_observation/recall_action/key=not_shown": 12,
-  "full_observation/recall_action/key=value": 30,
-  "full_observation/tried_unchanged": 18,
-  "full_observation/tried_unchanged/empty_history": 3,
-  "full_observation/tried_unchanged/key=empty": 13,
-  "full_observation/tried_unchanged/key=value": 5
+  "evidence_only/tried_unchanged/key=empty": 13,
+  "evidence_only/tried_unchanged/key=value": 31,
+  "legacy_description/available_actions": 3,
+  "legacy_description/available_actions/best_shortcut_wrong": 1,
+  "legacy_description/available_actions/dimension_change_in_history": 3,
+  "legacy_description/available_actions/key=value": 3,
+  "legacy_description/coordinate_actions": 3,
+  "legacy_description/coordinate_actions/best_shortcut_wrong": 1,
+  "legacy_description/coordinate_actions/dimension_change_in_history": 3,
+  "legacy_description/coordinate_actions/key=empty": 2,
+  "legacy_description/coordinate_actions/key=value": 1,
+  "legacy_description/observed_effect": 6,
+  "legacy_description/observed_effect/best_shortcut_wrong": 2,
+  "legacy_description/observed_effect/dimension_change_in_history": 6,
+  "legacy_description/observed_effect/key=acknowledged_no_change": 3,
+  "legacy_description/observed_effect/key=not_observed": 3,
+  "legacy_description/observed_effect/near_miss_click": 2,
+  "legacy_description/observed_effect/untried_action": 1,
+  "legacy_description/outcome_class": 12,
+  "legacy_description/outcome_class/absent_step": 2,
+  "legacy_description/outcome_class/best_shortcut_wrong": 6,
+  "legacy_description/outcome_class/dimension_change_in_history": 12,
+  "legacy_description/outcome_class/key=acknowledged_no_change": 6,
+  "legacy_description/outcome_class/key=final_frame_changed": 3,
+  "legacy_description/outcome_class/key=not_shown": 2,
+  "legacy_description/outcome_class/key=outcome_unknown": 1,
+  "legacy_description/recall_action": 7,
+  "legacy_description/recall_action/absent_step": 1,
+  "legacy_description/recall_action/best_shortcut_wrong": 4,
+  "legacy_description/recall_action/dimension_change_in_history": 7,
+  "legacy_description/recall_action/key=not_shown": 1,
+  "legacy_description/recall_action/key=value": 6,
+  "legacy_description/tried_unchanged": 3,
+  "legacy_description/tried_unchanged/best_shortcut_wrong": 1,
+  "legacy_description/tried_unchanged/dimension_change_in_history": 3,
+  "legacy_description/tried_unchanged/key=empty": 1,
+  "legacy_description/tried_unchanged/key=value": 2
  },
- "heuristic_baselines": {
-  "evidence_only/available_actions/all_seven": {
-   "accuracy": 0.1136,
-   "correct": 5,
-   "n": 44
-  },
-  "evidence_only/available_actions/ids_in_history": {
-   "accuracy": 0.1364,
-   "correct": 6,
-   "n": 44
-  },
-  "evidence_only/coordinate_actions/always_six": {
-   "accuracy": 0.5,
-   "correct": 22,
-   "n": 44
-  },
-  "evidence_only/observed_effect/always_not_observed": {
-   "accuracy": 0.5943,
-   "correct": 63,
-   "n": 106
-  },
-  "evidence_only/observed_effect/ignore_coordinates": {
-   "accuracy": 0.6981,
-   "correct": 74,
-   "n": 106
-  },
-  "evidence_only/outcome_class/always_no_change": {
-   "accuracy": 0.2456,
-   "correct": 28,
-   "n": 114
-  },
-  "evidence_only/outcome_class/latest_entry_outcome": {
-   "accuracy": 0.2807,
-   "correct": 32,
-   "n": 114
-  },
-  "evidence_only/recall_action/latest_entry": {
-   "accuracy": 0.5364,
-   "correct": 59,
-   "n": 110
-  },
-  "evidence_only/tried_unchanged/empty": {
-   "accuracy": 0.4545,
-   "correct": 20,
-   "n": 44
-  },
-  "evidence_only/tried_unchanged/every_unchanged_entry": {
-   "accuracy": 0.5682,
-   "correct": 25,
-   "n": 44
-  },
-  "full_observation/available_actions/all_seven": {
-   "accuracy": 0.3333,
-   "correct": 6,
-   "n": 18
-  },
-  "full_observation/available_actions/ids_in_history": {
-   "accuracy": 0.2778,
-   "correct": 5,
-   "n": 18
-  },
-  "full_observation/coordinate_actions/always_six": {
-   "accuracy": 0.6667,
-   "correct": 12,
-   "n": 18
-  },
-  "full_observation/observed_effect/always_not_observed": {
-   "accuracy": 0.6809,
-   "correct": 32,
-   "n": 47
-  },
-  "full_observation/observed_effect/ignore_coordinates": {
-   "accuracy": 0.5745,
-   "correct": 27,
-   "n": 47
-  },
-  "full_observation/outcome_class/always_no_change": {
-   "accuracy": 0.2821,
-   "correct": 11,
-   "n": 39
-  },
-  "full_observation/outcome_class/latest_entry_outcome": {
-   "accuracy": 0.7692,
-   "correct": 30,
-   "n": 39
-  },
-  "full_observation/recall_action/latest_entry": {
-   "accuracy": 0.6667,
-   "correct": 28,
-   "n": 42
-  },
-  "full_observation/tried_unchanged/empty": {
-   "accuracy": 0.7222,
-   "correct": 13,
-   "n": 18
-  },
-  "full_observation/tried_unchanged/every_unchanged_entry": {
-   "accuracy": 0.9444,
-   "correct": 17,
-   "n": 18
-  }
- },
- "probe_set_sha256": "6d001687853398a72f0e87b39a43b07c3894a50fbf170e6cb18ea8f0c99bfd23",
- "probes": 644,
- "token_estimate": {
-  "by_condition": {
-   "evidence_only": {
-    "estimated_prompt_tokens": 1214312,
-    "max": 3048,
-    "probes": 462
-   },
-   "full_observation": {
-    "estimated_prompt_tokens": 4522578,
-    "max": 27106,
-    "probes": 182
+ "probe_set_sha256": "f6f666a5aea582d34c85c73d29be8485c4129397b11d3936e7ce8a6937a76309",
+ "probes": 668,
+ "shortcut_baselines": {
+  "archived_with_grids/available_actions": {
+   "best_shortcut": 0.3333,
+   "n": 6,
+   "shortcuts": {
+    "all_seven": 0.3333,
+    "ids_in_history": 0.3333
    }
   },
-  "note": "estimate only; the budget proposal must use the pinned tokenizer",
-  "tokens_per_char_from_archive": 0.92119
+  "archived_with_grids/coordinate_actions": {
+   "best_shortcut": 0.6667,
+   "n": 6,
+   "shortcuts": {
+    "always_empty": 0.3333,
+    "always_six": 0.6667
+   }
+  },
+  "archived_with_grids/observed_effect": {
+   "best_shortcut": 0.6667,
+   "n": 18,
+   "shortcuts": {
+    "always_not_observed": 0.6667,
+    "ignore_coordinates": 0.5556
+   }
+  },
+  "archived_with_grids/outcome_class": {
+   "best_shortcut": 0.7333,
+   "n": 15,
+   "shortcuts": {
+    "always_no_change": 0.3333,
+    "latest_entry_outcome": 0.7333
+   }
+  },
+  "archived_with_grids/recall_action": {
+   "best_shortcut": 0.6667,
+   "n": 15,
+   "shortcuts": {
+    "latest_entry": 0.6667
+   }
+  },
+  "archived_with_grids/tried_unchanged": {
+   "best_shortcut": 0.8333,
+   "n": 6,
+   "shortcuts": {
+    "empty": 0.6667,
+    "every_unchanged_entry": 0.8333
+   }
+  },
+  "archived_without_grids/available_actions": {
+   "best_shortcut": 0.3333,
+   "n": 6,
+   "shortcuts": {
+    "all_seven": 0.3333,
+    "ids_in_history": 0.3333
+   }
+  },
+  "archived_without_grids/coordinate_actions": {
+   "best_shortcut": 0.6667,
+   "n": 6,
+   "shortcuts": {
+    "always_empty": 0.3333,
+    "always_six": 0.6667
+   }
+  },
+  "archived_without_grids/observed_effect": {
+   "best_shortcut": 0.6667,
+   "n": 18,
+   "shortcuts": {
+    "always_not_observed": 0.6667,
+    "ignore_coordinates": 0.5556
+   }
+  },
+  "archived_without_grids/outcome_class": {
+   "best_shortcut": 0.7333,
+   "n": 15,
+   "shortcuts": {
+    "always_no_change": 0.3333,
+    "latest_entry_outcome": 0.7333
+   }
+  },
+  "archived_without_grids/recall_action": {
+   "best_shortcut": 0.6667,
+   "n": 15,
+   "shortcuts": {
+    "latest_entry": 0.6667
+   }
+  },
+  "archived_without_grids/tried_unchanged": {
+   "best_shortcut": 0.8333,
+   "n": 6,
+   "shortcuts": {
+    "empty": 0.6667,
+    "every_unchanged_entry": 0.8333
+   }
+  },
+  "corrected_description/available_actions": {
+   "best_shortcut": 0.6667,
+   "n": 3,
+   "shortcuts": {
+    "ids_in_history": 0.6667
+   }
+  },
+  "corrected_description/coordinate_actions": {
+   "best_shortcut": 0.6667,
+   "n": 3,
+   "shortcuts": {
+    "always_empty": 0.6667,
+    "always_six": 0.3333
+   }
+  },
+  "corrected_description/observed_effect": {
+   "best_shortcut": 0.6667,
+   "n": 6,
+   "shortcuts": {
+    "always_not_observed": 0.5,
+    "ignore_coordinates": 0.6667
+   }
+  },
+  "corrected_description/outcome_class": {
+   "best_shortcut": 0.5,
+   "n": 12,
+   "shortcuts": {
+    "always_no_change": 0.5,
+    "latest_entry_outcome": 0.5
+   }
+  },
+  "corrected_description/recall_action": {
+   "best_shortcut": 0.4286,
+   "n": 7,
+   "shortcuts": {
+    "latest_entry": 0.4286
+   }
+  },
+  "corrected_description/tried_unchanged": {
+   "best_shortcut": 0.6667,
+   "n": 3,
+   "shortcuts": {
+    "empty": 0.3333,
+    "every_unchanged_entry": 0.6667
+   }
+  },
+  "evidence_only/available_actions": {
+   "best_shortcut": 0.1591,
+   "n": 44,
+   "shortcuts": {
+    "all_seven": 0.1136,
+    "ids_in_history": 0.1591
+   }
+  },
+  "evidence_only/coordinate_actions": {
+   "best_shortcut": 0.5227,
+   "n": 44,
+   "shortcuts": {
+    "always_empty": 0.4773,
+    "always_six": 0.5227
+   }
+  },
+  "evidence_only/observed_effect": {
+   "best_shortcut": 0.6577,
+   "n": 111,
+   "shortcuts": {
+    "always_not_observed": 0.6036,
+    "ignore_coordinates": 0.6577
+   }
+  },
+  "evidence_only/outcome_class": {
+   "best_shortcut": 0.4068,
+   "n": 118,
+   "shortcuts": {
+    "always_no_change": 0.4068,
+    "latest_entry_outcome": 0.322
+   }
+  },
+  "evidence_only/recall_action": {
+   "best_shortcut": 0.5327,
+   "n": 107,
+   "shortcuts": {
+    "latest_entry": 0.5327
+   }
+  },
+  "evidence_only/tried_unchanged": {
+   "best_shortcut": 0.6591,
+   "n": 44,
+   "shortcuts": {
+    "empty": 0.2955,
+    "every_unchanged_entry": 0.6591
+   }
+  },
+  "legacy_description/available_actions": {
+   "best_shortcut": 0.6667,
+   "n": 3,
+   "shortcuts": {
+    "ids_in_history": 0.6667
+   }
+  },
+  "legacy_description/coordinate_actions": {
+   "best_shortcut": 0.6667,
+   "n": 3,
+   "shortcuts": {
+    "always_empty": 0.6667,
+    "always_six": 0.3333
+   }
+  },
+  "legacy_description/observed_effect": {
+   "best_shortcut": 0.6667,
+   "n": 6,
+   "shortcuts": {
+    "always_not_observed": 0.5,
+    "ignore_coordinates": 0.6667
+   }
+  },
+  "legacy_description/outcome_class": {
+   "best_shortcut": 0.5,
+   "n": 12,
+   "shortcuts": {
+    "always_no_change": 0.5,
+    "latest_entry_outcome": 0.5
+   }
+  },
+  "legacy_description/recall_action": {
+   "best_shortcut": 0.4286,
+   "n": 7,
+   "shortcuts": {
+    "latest_entry": 0.4286
+   }
+  },
+  "legacy_description/tried_unchanged": {
+   "best_shortcut": 0.6667,
+   "n": 3,
+   "shortcuts": {
+    "empty": 0.3333,
+    "every_unchanged_entry": 0.6667
+   }
+  }
  },
- "version": "evidence_comprehension_v1"
+ "version": "evidence_comprehension_v1_r2"
 }

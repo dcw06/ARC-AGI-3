@@ -1,120 +1,266 @@
-"""Evidence comprehension v1: frozen probe set, dual keys, request contents and scoring."""
+"""Evidence comprehension v1 (revision 2): frozen probe set, dual keys, requests, scoring and analysis.
+
+The `R1Finding*` classes are regressions for the review of r1 at 064bb9a.
+"""
 import ast
+import copy
 import json
 from pathlib import Path
 import unittest
 
+from jsonschema import Draft202012Validator
+
 from research.action_effect_history_v1.contract import SYSTEM_PROMPT as LIVE_PROMPT
 from research.evidence_comprehension_v1 import independent, probes as P
-from research.evidence_comprehension_v1.score import heuristic_baselines, parse, score, summarize
+from research.evidence_comprehension_v1.score import analyze, best_shortcuts, score, validate
 from scripts import build_evidence_comprehension_v1 as B
 
 ROOT = Path(__file__).resolve().parents[1]
+FROZEN = json.loads(B.OUTPUT.read_bytes())
+CONTEXTS = {c['context_id']: c for c in FROZEN['contexts']}
+PROBES = FROZEN['probes']
+
+
+def oracle(probes, wrong=()):
+    """Score rows answering every key, except probes whose id is in `wrong` (answered with a valid wrong answer)."""
+    rows = {}
+    for p in probes:
+        answer = p['key']
+        if p['probe_id'] in wrong:
+            answer = {'available_actions': [0], 'coordinate_actions': [0], 'recall_action': 'not_shown' if answer != 'not_shown'
+                      else {'action_id': 0, 'action_data': {}}, 'outcome_class': 'not_shown' if answer != 'not_shown'
+                      else 'dispatch_failed', 'observed_effect': 'not_observed' if answer != 'not_observed' else
+                      'dispatch_failed', 'tried_unchanged': [{'action_id': 0, 'action_data': {}}]}[p['family']]
+        rows[p['probe_id']] = score(p, json.dumps({'answer': answer}))
+    return rows
 
 
 class ProbeSet(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.frozen = json.loads(B.OUTPUT.read_bytes())
-        cls.contexts = {c['context_id']: c for c in cls.frozen['contexts']}
-
     def test_frozen_file_matches_a_fresh_build(self):
         self.assertEqual(B.encode(B.build()), B.OUTPUT.read_bytes())
 
     def test_every_key_matches_the_independent_derivation(self):
-        fixtures = json.loads(B.FIXTURES.read_bytes())
         _, episodes = B.archived_episodes()
-        for probe in self.frozen['probes']:
-            context = self.contexts[probe['context_id']]
-            if context['grids']:
+        for probe in PROBES:
+            context = CONTEXTS[probe['context_id']]
+            if 'trajectory' in context:
+                entries, _ = independent.synthetic_entries(context['trajectory'])
+            else:
                 entries, _ = independent.archived_entries(episodes[context['provenance']['episode_id']],
                                                           context['provenance']['decision'])
-            else:
-                entries, _ = independent.synthetic_entries(context, fixtures)
             self.assertEqual(independent.answer(entries, context['observation']['legal_actions'], probe['family'],
                                                 probe['arg']), probe['key'], probe['probe_id'])
 
-    def test_independent_keys_share_no_code_with_the_record_path(self):
+    def test_independent_keys_import_nothing(self):
         tree = ast.parse((ROOT / 'research/evidence_comprehension_v1/independent.py').read_text(encoding='utf-8'))
-        imported = [n for n in ast.walk(tree) if isinstance(n, (ast.Import, ast.ImportFrom))]
-        self.assertEqual(imported, [])
+        self.assertEqual([n for n in ast.walk(tree) if isinstance(n, (ast.Import, ast.ImportFrom))], [])
 
-    def test_real_contexts_are_the_exact_live_observations(self):
+    def test_archived_contexts_are_the_exact_live_observations(self):
         _, episodes = B.archived_episodes()
-        real = [c for c in self.frozen['contexts'] if c['grids']]
-        self.assertEqual(len(real), len(B.REAL_EPISODES) * len(B.REAL_DECISIONS))
-        for context in real:
+        for context in (c for c in FROZEN['contexts'] if c['condition'] == 'archived_with_grids'):
             p = context['provenance']
             call = episodes[p['episode_id']]['calls'][p['call_index']]
             self.assertEqual(call['request_sha256'], p['request_sha256'])
             self.assertEqual(json.loads(call['request']['messages'][1]['content'])['observation'], context['observation'])
 
     def test_requests_carry_only_the_observation_and_question(self):
-        self.assertTrue(P.SYSTEM_PROMPT.endswith(LIVE_PROMPT.split('\n', 1)[1]))  # live control text, verbatim
-        for probe in self.frozen['probes']:
-            request = P.build_request(self.contexts[probe['context_id']], probe)
+        for probe in PROBES:
+            request = P.build_request(CONTEXTS[probe['context_id']], probe)
             user = json.loads(request['messages'][1]['content'])
             self.assertEqual(set(user), {'observation', 'question'})
-            self.assertNotIn('events', json.dumps(user))
+            self.assertNotIn('"events"', request['messages'][1]['content'])
             self.assertEqual((request['temperature'], request['seed']), (0, 0))
 
-    def test_every_key_is_a_valid_answer_under_its_schema(self):
-        for probe in self.frozen['probes']:
-            row = score(probe, json.dumps({'answer': probe['key']}))
-            self.assertTrue(row['valid'] and row['correct'], probe['probe_id'])
+    def test_every_key_is_valid_under_an_independent_schema_validator(self):
+        for probe in PROBES:
+            validator = Draft202012Validator(P.response_format(probe['family'])['json_schema']['schema'])
+            self.assertEqual(list(validator.iter_errors({'answer': probe['key']})), [], probe['probe_id'])
 
-    def test_coverage_minimums(self):
+    def test_gated_coverage_minimums(self):
         counts = json.loads(B.SUMMARY.read_bytes())['counts']
         for label in ('acknowledged_no_change', 'changed_then_returned', 'dispatch_failed', 'final_frame_changed',
                       'outcome_unknown', 'not_shown'):
             self.assertGreaterEqual(counts.get(f'evidence_only/outcome_class/key={label}', 0), 9, label)
-        for label in ('evidence_only/observed_effect/near_miss_click', 'full_observation/observed_effect/near_miss_click',
-                      'evidence_only/coordinate_actions/key=empty', 'evidence_only/coordinate_actions/key=value',
-                      'evidence_only/tried_unchanged/key=value', 'evidence_only/tried_unchanged/key=empty'):
-            self.assertGreaterEqual(counts.get(label, 0), 10, label)
-        self.assertGreaterEqual(counts.get('evidence_only/outcome_class/dimension_change', 0), 5)
+        for family in P.FAMILIES:
+            self.assertGreaterEqual(counts.get(f'evidence_only/{family}/best_shortcut_wrong', 0), 10, family)
+        self.assertGreaterEqual(counts.get('evidence_only/observed_effect/near_miss_click', 0), 10)
 
 
-class Scoring(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.frozen = json.loads(B.OUTPUT.read_bytes())
-        cls.observations = {c['context_id']: c['observation'] for c in cls.frozen['contexts']}
+class R1Finding1Prompt(unittest.TestCase):
+    def test_prompt_is_a_questionnaire_not_a_policy_decision(self):
+        self.assertNotIn(P.LIVE_CHOICE_IMPERATIVE, P.SYSTEM_PROMPT)
+        self.assertIn(P.LIVE_CHOICE_IMPERATIVE, LIVE_PROMPT)  # the departure is from the live prompt
+        self.assertNotIn('choose exactly one', P.SYSTEM_PROMPT)
+        self.assertIn('not a policy decision', P.SYSTEM_PROMPT)
+        for span in (P.LIVE_ARGUMENT_RULES, P.LIVE_EFFECT_NOTE):  # factual rules kept verbatim
+            self.assertIn(span, LIVE_PROMPT)
+            self.assertIn(span, P.SYSTEM_PROMPT)
+        self.assertEqual(FROZEN['system_prompt'], P.SYSTEM_PROMPT)
 
-    def test_oracle_scores_perfectly_and_missing_answers_count_against(self):
-        probes = self.frozen['probes']
-        results = {p['probe_id']: score(p, json.dumps({'answer': p['key']})) for p in probes}
-        table = summarize(probes, results)
-        self.assertTrue(all(g['accuracy'] == 1.0 for g in table.values()))
-        del results[probes[0]['probe_id']]
-        table = summarize(probes, results)
-        label = f"{probes[0]['condition']}/{probes[0]['family']}"
-        self.assertEqual((table[label]['missing'], table[label]['correct']), (1, table[label]['n'] - 1))
 
-    def test_invalid_and_wrong_answers(self):
-        probe = next(p for p in self.frozen['probes'] if p['family'] == 'outcome_class')
-        for content in ('not json', '{"answer": "maybe"}', '{"answer": "final_frame_changed", "why": "x"}', '[]'):
-            self.assertFalse(score(probe, content)['valid'], content)
-        wrong = next(label for label in (*P.OUTCOMES, 'not_shown') if label != probe['key'])
-        self.assertEqual(score(probe, json.dumps({'answer': wrong})), {'probe_id': probe['probe_id'], 'valid': True,
-                         'correct': False, 'duplicate_items': False, 'answer': wrong})
-        recall = next(p for p in self.frozen['probes'] if p['family'] == 'recall_action' and p['key'] != 'not_shown')
-        self.assertFalse(score(recall, json.dumps({'answer': {'action_id': 6, 'action_data': {'x': 1.5}}}))['valid'])
+class R1Finding2SchemaValidation(unittest.TestCase):
+    ids = next(p for p in PROBES if p['family'] == 'available_actions')
+    recall = next(p for p in PROBES if p['family'] == 'recall_action' and p['key'] != 'not_shown')
+    tried = next(p for p in PROBES if p['family'] == 'tried_unchanged')
+    outcome = next(p for p in PROBES if p['family'] == 'outcome_class')
 
-    def test_lists_are_scored_as_sets_and_duplicates_are_recorded(self):
-        probe = next(p for p in self.frozen['probes'] if p['family'] == 'available_actions' and len(p['key']) > 1)
+    def invalid(self, probe, answer_json):
+        row = score(probe, answer_json)
+        self.assertFalse(row['valid'], answer_json)
+        self.assertFalse(row['correct'], answer_json)
+
+    def test_reviewer_case_nine_copies_is_invalid(self):
+        self.invalid(next(p for p in PROBES if p['family'] == 'coordinate_actions' and p['key'] == [6]),
+                     '{"answer":[6,6,6,6,6,6,6,6,6]}')
+
+    def test_length_and_numeric_bounds(self):
+        for text in ('{"answer":[1,2,3,4,5,6,7,1,2]}', '{"answer":[8]}', '{"answer":[-1]}', '{"answer":[true]}',
+                     '{"answer":[6.0]}', '{"answer":[1.5]}', '{"answer":"1"}', '{"answer":null}'):
+            self.invalid(self.ids, text)
+        action = {'action_id': 1, 'action_data': {}}
+        self.invalid(self.tried, json.dumps({'answer': [action] * 9}))
+
+    def test_malformed_action_objects(self):
+        for bad in ({'action_id': 8, 'action_data': {}}, {'action_id': -1, 'action_data': {}},
+                    {'action_id': 6, 'action_data': {'x': 64, 'y': 0}}, {'action_id': 6, 'action_data': {'x': 0, 'y': -1}},
+                    {'action_id': 6, 'action_data': {'x': '3', 'y': 4}}, {'action_id': 6, 'action_data': {'x': 3.5, 'y': 4}},
+                    {'action_id': 6, 'action_data': {'x': 3, 'z': 4}}, {'action_id': 6}, {'action_data': {}},
+                    {'action_id': 1, 'action_data': {}, 'extra': 1}, {'action_id': True, 'action_data': {}},
+                    {'action_id': 6.0, 'action_data': {'x': 1, 'y': 1}}, [6, 1, 1]):
+            with self.subTest(bad=bad):
+                self.invalid(self.recall, json.dumps({'answer': bad}))
+                self.invalid(self.tried, json.dumps({'answer': [bad]}))
+
+    def test_envelope_and_labels(self):
+        for text in ('not json', '[]', '{}', '{"answer":"final_frame_changed","why":"x"}', '{"answer":"maybe"}',
+                     '{"answer":NaN}', '{"Answer":"not_shown"}'):
+            self.invalid(self.outcome, text)
+
+    def test_duplicates_within_the_schema_are_valid_and_recorded(self):
+        probe = next(p for p in PROBES if p['family'] == 'available_actions' and len(p['key']) > 1)
         row = score(probe, json.dumps({'answer': list(reversed(probe['key'])) + probe['key'][:1]}))
-        self.assertTrue(row['correct'] and row['duplicate_items'])
-        self.assertEqual(parse('tried_unchanged', '{"answer": []}'), [])
+        self.assertTrue(row['valid'] and row['correct'] and row['duplicate_items'])
+        self.assertEqual(validate('tried_unchanged', '{"answer": []}'), [])
 
-    def test_near_miss_clicks_are_not_the_clicked_action(self):
-        near = [p for p in self.frozen['probes'] if 'near_miss_click' in p['strata']]
-        self.assertTrue(near and all(p['key'] == 'not_observed' for p in near))
-        entries = {c: o['action_effect_history']['entries'] for c, o in self.observations.items()}
-        # For every near-miss probe the same action type was dispatched, so ignoring coordinates answers wrongly.
-        self.assertTrue(all(any(e['action_id'] == 6 for e in entries[p['context_id']]) for p in near))
-        baselines = heuristic_baselines(near, self.observations)
-        self.assertTrue(all(v['correct'] == 0 for k, v in baselines.items() if k.endswith('ignore_coordinates')))
+
+class R1Finding3Continuity(unittest.TestCase):
+    def trajectories(self):
+        return [c['trajectory'] for c in FROZEN['contexts'] if 'trajectory' in c]
+
+    def test_every_synthetic_trajectory_is_continuous(self):
+        for t in self.trajectories():
+            self.assertEqual(P.continuity_errors(t), [], t['context_id'])
+            independent.check_continuity(t)
+
+    def test_discontinuous_trajectories_are_detected_by_both_checks(self):
+        # r1 combined independent fixture pre/post frames, so an acknowledged result need not be the next
+        # starting frame. Reproduce that defect after an acknowledged event and after a failed dispatch.
+        import random
+        for kind in ('no_change', 'final_change', 'transient', 'dispatch_failed'):
+            t = next(t for t in self.trajectories()
+                     if any(e['kind'] == kind for e in t['events'][:-1]))
+            i = next(i for i, e in enumerate(t['events'][:-1]) if e['kind'] == kind)
+            broken = copy.deepcopy(t)
+            broken['events'][i + 1]['pre'] = P.encode_frame(P.mutate(random.Random(0),
+                                                                      P.decode_frame(broken['events'][i + 1]['pre'])))
+            with self.subTest(kind=kind):
+                self.assertTrue(P.continuity_errors(broken))
+                with self.assertRaises(ValueError):
+                    independent.check_continuity(broken)
+
+    def test_failed_dispatch_never_changes_the_current_frame(self):
+        for t in self.trajectories():
+            for i, event in enumerate(t['events']):
+                if event['kind'] == 'dispatch_failed':
+                    following = t['events'][i + 1]['pre'] if i + 1 < len(t['events']) else t['final']
+                    self.assertEqual(event['pre'], following)
+
+
+class R1Finding4OperationalLabels(unittest.TestCase):
+    gate = [p for p in PROBES if p['condition'] == P.GATE_CONDITION]
+
+    def test_labels_are_operational(self):
+        report = analyze(PROBES, [oracle(PROBES), oracle(PROBES)])
+        labels = {m['label'] for m in report['both_correct'].values()}
+        self.assertLessEqual(labels, {'criterion_met', 'below_accuracy_floor', 'inconclusive', 'not_diagnostic'})
+        self.assertEqual(set(report['gate'].values()), {'criterion_met'})
+        family = report['both_correct']['evidence_only/outcome_class']
+        for key in ('context_bootstrap_95', 'contexts', 'contexts_all_correct', 'best_shortcut',
+                    'shortcut_disagreement_n', 'shortcut_disagreement_accuracy'):
+            self.assertIn(key, family)
+        self.assertEqual(family['contexts_all_correct'], family['contexts'])
+
+    def test_best_shortcut_responder_cannot_meet_the_criterion(self):
+        best = best_shortcuts(self.gate)
+        wrong = {p['probe_id'] for p in self.gate if best[(p['condition'], p['family'])][0] not in p['shortcuts_correct']}
+        report = analyze(self.gate, [oracle(self.gate, wrong)] * 2)
+        self.assertNotIn('criterion_met', report['gate'].values())
+
+    def test_accuracy_bands(self):
+        probes = [p for p in self.gate if p['family'] == 'recall_action']
+        best = best_shortcuts(probes)[('evidence_only', 'recall_action')][0]
+        hard = [p for p in probes if best not in p['shortcuts_correct']]
+        easy = [p for p in probes if best in p['shortcuts_correct']]
+        # 20% wrong on shortcut-disagreement questions only: overall >= 0.90 may hold, but the criterion fails.
+        wrong = {p['probe_id'] for p in hard[: len(hard) // 5 + 1]}
+        self.assertEqual(analyze(probes, [oracle(probes, wrong)])['gate']['recall_action'], 'inconclusive')
+        wrong = {p['probe_id'] for p in (easy + hard)[: int(len(probes) * 0.4)]}
+        self.assertEqual(analyze(probes, [oracle(probes, wrong)])['gate']['recall_action'], 'below_accuracy_floor')
+
+    def test_two_passes_report_agreement_and_both_correct(self):
+        first = oracle(self.gate)
+        flipped = {self.gate[0]['probe_id']}
+        report = analyze(self.gate, [first, oracle(self.gate, flipped)])
+        family = f"evidence_only/{self.gate[0]['family']}"
+        self.assertEqual(report['agreement'][family]['identical_answers'], report['agreement'][family]['n'] - 1)
+        self.assertEqual(report['both_correct'][family]['correct'], report['per_pass'][0][family]['correct'] - 1)
+
+
+class R1Finding5MatchedGrids(unittest.TestCase):
+    def test_every_grid_question_has_a_matched_no_grid_twin(self):
+        with_grids = [p for p in PROBES if p['condition'] == 'archived_with_grids']
+        by_id = {p['probe_id']: p for p in PROBES}
+        self.assertTrue(with_grids)
+        for p in with_grids:
+            twin = by_id[p['probe_id'].replace('archived_with_grids:', 'archived_without_grids:', 1)]
+            for field in ('family', 'arg', 'question', 'key', 'source_context'):
+                self.assertEqual(p[field], twin[field])
+            full = CONTEXTS[p['context_id']]['observation']
+            bare = CONTEXTS[twin['context_id']]['observation']
+            self.assertEqual(set(full) - set(bare), set(P.GRID_FIELDS))
+            self.assertEqual({k: v for k, v in full.items() if k not in P.GRID_FIELDS}, bare)
+
+    def test_matched_table_is_reported(self):
+        report = analyze(PROBES, [oracle(PROBES)])
+        table = report['matched']['archived_with_grids_vs_archived_without_grids']
+        self.assertTrue(all(row['both'] == row['n'] for row in table.values()))
+
+
+class R1Finding6LegacyDescription(unittest.TestCase):
+    def test_dimension_changes_never_enter_the_gate(self):
+        for p in PROBES:
+            if p['condition'] == P.GATE_CONDITION:
+                self.assertNotIn('dimension_change_in_history', p['strata'], p['probe_id'])
+        legacy = [p for p in PROBES if p['condition'] == 'legacy_description']
+        self.assertTrue(legacy and all('dimension_change_in_history' in p['strata'] for p in legacy))
+
+    def test_corrected_twin_differs_only_in_the_description_text(self):
+        by_id = {p['probe_id']: p for p in PROBES}
+        for p in (p for p in PROBES if p['condition'] == 'legacy_description'):
+            twin = by_id[p['probe_id'].replace('legacy_description:', 'corrected_description:', 1)]
+            self.assertEqual((p['question'], p['key']), (twin['question'], twin['key']))
+            a = copy.deepcopy(CONTEXTS[p['context_id']]['observation'])
+            b = copy.deepcopy(CONTEXTS[twin['context_id']]['observation'])
+            self.assertNotEqual(a['action_effect_history']['fields'], b['action_effect_history']['fields'])
+            self.assertEqual(b['action_effect_history']['fields'], P.CORRECTED_FIELDS_TEXT)
+            a['action_effect_history'].pop('fields')
+            b['action_effect_history'].pop('fields')
+            self.assertEqual(a, b)
+
+    def test_gate_ignores_the_legacy_group(self):
+        legacy = {p['probe_id'] for p in PROBES if p['condition'] == 'legacy_description'}
+        report = analyze(PROBES, [oracle(PROBES, legacy)])
+        self.assertEqual(set(report['gate'].values()), {'criterion_met'})
 
 
 if __name__ == '__main__':

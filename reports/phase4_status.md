@@ -1,15 +1,20 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
-## Evidence comprehension v1: probe set and protocol draft (not authorized)
+## Evidence comprehension v1: protocol revision 2 (not authorized)
 
-Roadmap step 1: can the model read its own controls and action-effect evidence? There are 644
-frozen probes in six question families, in two conditions:
-- evidence-only, synthetic plus hand-designed histories;
-- full observation, the exact archived live requests.
+Roadmap step 1: can the model read its own controls and action-effect evidence? r2 fixes all six
+findings from the review of r1 (`064bb9a`, preserved):
+- the prompt is a questionnaire, not a policy decision;
+- responses are validated against the full schema by an independent validator;
+- synthetic histories are continuous trajectories, and this is asserted;
+- the labels are operational;
+- the grid comparison is a matched with/without-grids pair;
+- contradictory-description cases are a separate matched group.
 
-Every key is derived twice, by independent code. Shortcut baselines are pre-computed. The
-protocol draft is `reports/evidence_comprehension_v1_protocol.md`. No model has been called;
-the live runner and package follow review.
+The probe set has 668 probes; 468 are gated. Token counts are exact, and runtime scenarios come
+from measured cache-independent bounds. The protocol is
+`reports/evidence_comprehension_v1_protocol.md`. No model has been called; the runner and package
+follow.
 
 ## Action-effect history v1: live result (attempt aeh1-4c75150a)
 

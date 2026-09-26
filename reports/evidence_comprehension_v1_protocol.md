@@ -1,162 +1,227 @@
-# Evidence comprehension v1: protocol draft (for review; no compute authorized)
+# Evidence comprehension v1: protocol revision 2 (for review; no compute authorized)
 
-**Status:** draft. The frozen probe set, answer keys, scorer and tests are built and pass
-offline. Nothing has been sent to a model. The live runner and review package have not been
-built; they follow only after this protocol is reviewed. No GPU reservation, upload or launch.
+**Status:** revision 2 of the draft. Revision 1 (`064bb9a`) is preserved as
+`reports/evidence_comprehension_v1_protocol_r1.md`, `research/evidence_comprehension_v1/probes_r1.json`
+and `reports/evidence_comprehension_v1_probe_summary_r1.json`.
+
+The frozen probe set, keys, scorer, token audit and tests are built and pass offline. No model has
+been called. The live runner and GPU-disabled review package come next. No GPU reservation,
+upload or launch.
+
+## Changes in r2 (review of r1)
+
+1. **Prompt.** r1 kept the live instruction "choose exactly one action_id from legal_actions",
+   which conflicts with questions asking for several ids, outcome labels or past actions.
+   - The r2 system prompt says the task is a retrospective questionnaire, not a policy decision.
+     It keeps the live factual control rules verbatim: the action-argument rules, and the note
+     that a legal action's effect is unknown until observed.
+   - It restates the one fact the imperative carried: `legal_actions` lists the ids that may be
+     chosen next, and reset is never among them.
+   - This is a documented departure from the live prompt. A test checks that the imperative is
+     absent and that the factual spans match the live prompt.
+2. **Schema validation.** r1's scorer accepted `{"answer":[6,6,6,6,6,6,6,6,6]}` (nine items, above
+   `maxItems: 8`) and ignored numeric bounds.
+   - r2 validates every response against the family's complete schema with an independent
+     validator (`jsonschema`, Draft 2020-12) before any semantic scoring.
+   - Integers must be real JSON integers. The validator itself accepts `6.0` and would otherwise
+     let it through; booleans are rejected too.
+   - Duplicates are recorded only within the permitted schema.
+   - Regressions cover the reviewer's case, list length, numeric bounds, malformed action objects,
+     envelope errors and non-finite numbers.
+3. **Continuity.** r1 combined independent fixture pre- and post-frames, which left 27 adjacent
+   acknowledged transitions discontinuous. That count is reproduced on r1's code.
+   - r2 generates continuous trajectories from the ar25 development frame, using the real record
+     code for every record:
+     - every acknowledged result's final frame is the next action's starting frame;
+     - a failed dispatch leaves the frame unchanged;
+     - after an unknown outcome, the next frame may or may not differ.
+   - Continuity is asserted by the builder, and re-checked independently by the key module, which
+     decodes the frames itself.
+   - Regressions break continuity after each outcome kind and require both checks to reject it.
+4. **Labels and dependence.** r2 uses operational labels only: `criterion_met`,
+   `below_accuracy_floor`, `inconclusive` and `not_diagnostic`. Each describes this diagnostic's
+   criterion, never general comprehension. Questions share contexts, so:
+   - question-level intervals are descriptive. The interval reported is a context-resampling
+     bootstrap (2,000 resamples of whole contexts).
+   - context-level results are reported: contexts, and contexts answered entirely correctly.
+   - the gate uses no confidence bound. It uses point accuracy, plus accuracy on the questions
+     where the family's most accurate shortcut is wrong.
+5. **Grid comparison.** r1 compared different contexts and attributed any difference to the grids.
+   - r2 asks identical questions about six preselected archived live observations twice: verbatim
+     with grids, and with only `current_grid`, `previous_grid` and `recent_final_grids` removed.
+   - The comparison is paired: both correct, only with grids, only without, neither.
+   - It is still descriptive. A difference means presenting these grids changed the answers to
+     these questions. It does not identify why.
+6. **Contradictory description.** The live history description says `null` means a failed or
+   unknown dispatch, but a dimension change also records `null` in an acknowledged entry.
+   - Dimension changes are excluded from the gated set.
+   - Three designed dimension-change trajectories are asked twice: with the live description
+     (`legacy_description`) and with a corrected one (`corrected_description`). Only the
+     description text differs.
+   - The group is reported separately as a legacy-interface ambiguity and never enters the gate.
+
+Also changed:
+- **Per-family `max_tokens`**, set from the longest schema-valid answer, measured with the pinned
+  tokenizer even when pretty-printed. r1's flat 192 could truncate a valid eight-action answer,
+  which takes 297 tokens pretty-printed.
+- **Exact token audit.**
+- **Cache-disabled runtime scenarios**, built from bounds measured in the archive (see Budget).
 
 ## Question
 
-Roadmap step 1: **can the agent read its own controls and action-effect evidence?** The
-action-effect history experiment gave the model accurate evidence and showed no solving
-improvement. Before testing any intervention that relies on that evidence, we check whether the
-model can answer factual questions about it. The model never chooses an action here, and no game
-is played.
+Roadmap step 1: can the model answer factual questions about its own controls and
+action-effect evidence? It never chooses an action, and no game is played.
 
-Success means accurate answers from the model across cases. It does not mean passing the tests
-for the code that builds the records; those tests only establish that the answer keys are right.
+Meeting the criterion means meeting this diagnostic's criterion on these questions. It does not
+establish general comprehension. Failing it would not by itself show that the evidence
+presentation is at fault: the diagnostic prompt and the model's underlying capability remain
+alternative explanations.
 
 ## Question families
 
-Each question maps to one of the research questions in step 1.
+| Family | Research question | Answer |
+|---|---|---|
+| `available_actions` | Available vs unavailable actions (history may contain ids that are not currently legal) | set of ids |
+| `coordinate_actions` | Which choosable actions need x and y | set of ids |
+| `recall_action` | The exact action and coordinates at step *s* (shown, omitted or absent) | action, or `not_shown` |
+| `outcome_class` | Acknowledged no-change vs failed vs unknown; transient vs final change | 5 outcome labels, or `not_shown` |
+| `observed_effect` | An action's effect is unknown until observed (near-miss clicks are different actions) | outcome label, or `not_observed` |
+| `tried_unchanged` | Which exact actions already left the still-current frame unchanged | set of actions |
 
-| Family | Research question | Asks | Answer |
+## Conditions
+
+| Condition | Contexts | Probes | Role |
 |---|---|---|---|
-| `available_actions` | Available vs unavailable actions | Which action_ids can be chosen next? | set of ids |
-| `coordinate_actions` | Which actions need coordinates | Which choosable ids need x and y? | set of ids |
-| `recall_action` | Recover the exact action from history | The exact action at step *s*, or the latest | action, or `not_shown` |
-| `outcome_class` | No-change vs failed/unknown; transient vs final | The outcome of step *s* | one of 5 outcome labels, or `not_shown` |
-| `observed_effect` | An effect is unknown until observed | What the history shows for exactly this action | outcome label, or `not_observed` |
-| `tried_unchanged` | Bridge to step 3: what already failed here | Exact actions tried on the still-current frame without changing it | set of actions |
+| `evidence_only` | 36 generated + 8 designed continuous trajectories, no grids | 468 | **the main gate** |
+| `legacy_description` / `corrected_description` | 3 designed dimension-change trajectories | 34 + 34 | matched; legacy-interface ambiguity, reported separately |
+| `archived_with_grids` / `archived_without_grids` | 6 exact archived live observations (b1 history episodes of ar25, s5i5 and wa30, at decisions 5 and 11, preselected) | 66 + 66 | matched; descriptive |
 
-Outcome labels are `final_frame_changed`, `changed_then_returned`, `acknowledged_no_change`,
-`dispatch_failed` and `outcome_unknown`. Each question defines them. Every answer is constrained
-by a strict JSON schema, and each request asks one question.
+The total is 668 probes per pass. Every evidence-only outcome label appears as the key at least
+9 times. The keys are distributed as follows:
 
-## Contexts and conditions
+| Outcome label | Probes |
+|---|---|
+| no change | 48 |
+| changed then returned | 16 |
+| dispatch failed | 14 |
+| final frame changed | 9 |
+| outcome unknown | 9 |
+| not shown | 22 |
 
-- **evidence_only:** 462 probes in 44 contexts, with no grids.
-  - 36 contexts are seeded synthetic histories.
-  - 8 are hand-designed, each built around one distinction, and ask about every shown step.
-  - Records come from the real record code, applied to the action-effect fixtures.
-  - The observation format is the live one: `legal_actions`, `recent_actions` and the
-    `action_effect_history` field with its live description text.
-  - Deliberate variations: exact repeats, near-miss clicks (±1 cell), history entries whose
-    action_id is not currently available, histories longer than the 4 shown entries, and empty
-    histories.
-- **full_observation:** 182 probes in 18 contexts. Each context is the exact observation the live
-  history arm received: grids, history and everything else. They come from the hash-verified
-  archive, from the block-1 history episodes of ar25, s5i5 and wa30 at decisions 0, 3, 5, 7, 9
-  and 11. The live run only produced acknowledged outcomes, so this condition covers fewer
-  outcome kinds.
+Every gated family has at least 15 questions on which its best shortcut is wrong.
 
-The system prompt is a one-sentence answering instruction followed by the live control text,
-verbatim. The model is told exactly what it was told about its controls in the live run.
-
-## Answer keys
+## Keys
 
 Every key is computed twice:
-1. from the history entries shown to the model (`probes.py`);
-2. from raw frames and dispatch outcomes, by `independent.py`. That module imports nothing: it
-   recounts cell changes, rebuilds the shown window, and answers each question with separate
-   logic. For real contexts, it works from the archived engine steps rather than the request.
+1. **Primary:** from the shown history entries.
+2. **Independent:** `independent.py` imports nothing. It decodes frames, recounts changes,
+   re-checks continuity and answers with separate logic. For archived contexts, it works from the
+   archived engine steps.
 
-The build fails on any disagreement. The tests check that:
-- a fresh build is byte-identical to the frozen set;
-- every key is valid under its schema;
-- real contexts equal the archived requests;
-- requests contain only the observation and the question;
-- coverage minimums are met.
+The build fails on any disagreement or discontinuity. A fresh build is byte-identical to the
+frozen set, SHA-256 `f6f666a5…6309`.
 
-The probe set is `research/evidence_comprehension_v1/probes.json`, SHA-256 in
-`reports/evidence_comprehension_v1_probe_summary.json`.
+## Shortcuts
 
-## Shortcut baselines
-
-Several shortcuts can score well without reading the evidence correctly. Their accuracy on the
-probe set is computed now, before any model answers exist. In evidence_only:
+Shortcuts are fixed before any model answers exist. The best shortcut per gated family:
 
 | Family | Best shortcut | Accuracy |
 |---|---|---|
-| available_actions | ids seen in history | 0.136 |
-| coordinate_actions | always `[6]` | 0.500 |
-| recall_action | always the latest entry | 0.536 |
-| outcome_class | the latest entry's outcome | 0.281 |
-| observed_effect | ignore coordinates (same action_id counts) | 0.698 |
-| tried_unchanged | every no-change entry, ignoring later changes | 0.568 |
-
-In full_observation, some shortcuts are strong (tried_unchanged 0.944, outcome_class 0.769),
-because the real run has few outcome kinds.
+| available_actions | ids seen in history | 0.159 |
+| coordinate_actions | always `[6]` | 0.523 |
+| recall_action | the latest entry | 0.533 |
+| outcome_class | always no-change | 0.407 |
+| observed_effect | ignore coordinates | 0.658 |
+| tried_unchanged | every no-change entry | 0.659 |
 
 ## Pre-registered analysis
 
-Accuracy is reported per condition and family, with Wilson 95% intervals. Invalid or missing
-answers count as wrong.
+The thresholds are provisional engineering thresholds, not established scientific boundaries.
 
-- **Understands** a family: accuracy ≥ 0.90 **and** the Wilson lower bound is above the family's
-  best shortcut.
-- **Does not understand**: accuracy < 0.70, **or** the Wilson lower bound is at or below the best
-  shortcut.
-- Otherwise: **partial**.
-- A family whose best shortcut is ≥ 0.90 in a condition is **not diagnostic** there. It is
-  reported, but not classified.
+For each gated family, using answers correct in **both** passes:
 
-Strata are reported separately and never pooled away:
-- near-miss clicks;
-- absent steps;
-- empty histories;
-- history containing unavailable ids;
-- dimension changes (see the known issue below);
-- designed versus generated contexts.
+| Label | Rule |
+|---|---|
+| `not_diagnostic` | The best shortcut reaches ≥ 0.90. None do in the gated set. |
+| `below_accuracy_floor` | Accuracy < 0.70. |
+| `criterion_met` | Accuracy ≥ 0.90, **and** at least 10 questions where the best shortcut is wrong, **and** ≥ 0.90 accuracy on those questions. |
+| `inconclusive` | Anything else, including too few shortcut-wrong questions. |
 
-**Grids versus no grids.** Accuracy in full_observation minus evidence_only is reported for the
-shared families. It is descriptive only, because the two conditions use different contexts.
+A constant shortcut cannot meet the criterion: it would need 0.90 overall, which only a
+non-diagnostic family allows. Missing and invalid answers count as wrong.
 
-**Repeatability.** There are two passes over all 644 probes, with prefix caching disabled. The
-second pass runs in reverse order. Per-probe answer agreement is reported. In the action-effect
-history run, byte-identical requests got different answers at temperature 0, so this measures
-that variance with caching ruled out. Scores are reported per pass. A probe counts as correct
-only if both passes are correct, and pass-1-only accuracy is also given.
+Always reported, never pooled away:
+- per-pass labels, answer agreement, and both-correct accuracy;
+- context-level results and the descriptive context-bootstrap intervals;
+- the strata: near-miss clicks, untried actions, absent steps, empty history, and history
+  containing unavailable ids;
+- the matched tables for grids and for descriptions.
 
-## How the result feeds the next step
+**Two passes.** Prefix caching is disabled, and the runner must verify that from the running
+server. Pass 2 runs in reverse order. Two passes measure observed disagreement, not a precise
+variance estimate.
 
-- **observed_effect, outcome_class and tried_unchanged understood in evidence_only:** the evidence
-  is readable, and step 3 (evidence-guided action selection) is the next intervention.
-- **Any of them not understood:** the evidence presentation is the first thing to fix. Step 3
-  would be premature, since a policy cannot use evidence it misreads.
-- **Understood without grids but not with them:** the grids are distracting the model from the
-  evidence. That is a presentation problem to address before step 3.
+## How the result is used
 
-## Known issue measured, not fixed
-
-The live history description says `null means the dispatch failed or its outcome is unknown`.
-For an acknowledged action whose returned frame changed dimensions, though, the record holds a
-per-frame count of `null` while `final_frame_changed` is `true`. The live description is kept
-unchanged here, because it is what the live model saw. The dimension-change stratum measures
-whether the model is misled. Any correction belongs to a later, separately reviewed version.
+- **Gate families meet the criterion:** the evidence can be read under this prompt, and roadmap
+  step 3 (evidence-guided action selection) is the next intervention.
+- **Below the floor, or inconclusive:** that family's reading is the first thing to investigate.
+  Candidate causes are the presentation, the diagnostic prompt, and model capability; this
+  diagnostic does not choose between them.
+- **Grid and description tables:** descriptive inputs to later presentation choices.
 
 ## Guardrails
 
-- The bottom-row pattern seen in s5i5 and wa30 remains a hypothesis. Nothing here masks it or
-  reinterprets the completed experiment.
-- The probes never recommend an action, and no answer is fed back into any policy.
-- Development cases only. The archived real contexts come from games the model has seen before,
-  which is fine for reading comprehension, but these results say nothing about generalization.
+- The bottom-row pattern in s5i5 and wa30 stays a hypothesis. Nothing masks it or reinterprets
+  the completed experiment.
+- Probes never recommend an action, and no answer reaches a policy.
+- Development cases only. Archived contexts come from previously exposed games.
+- Step 2 (progress versus visible change) will be a separate question set, with independently
+  justified labels.
 
-## Budget (estimate; to be finalized with the pinned tokenizer)
+## Budget
 
-The total is 1,288 calls: 644 probes in each of two passes. The estimated prompt tokens per pass
-are ~1.21 M for evidence_only and ~4.52 M for full_observation, so ~11.5 M for both passes. That
-is scaled from the archived run's measured tokens per character. The largest request is ~27 k
-tokens. Wall time should be around 1,500 s, including the 403 s model startup and serial calls at
-the latency the archived run measured. The proposal will be ≤ 3,600 s with one attempt, and the
-live path would reuse the reviewed action-effect-history host, supervisor and evidence stack.
+These are exact counts from the pinned tokenizer, in `reports/evidence_comprehension_v1_token_audit.json`:
 
-## Decisions for the reviewer
+| Measure | Value |
+|---|---|
+| Calls | 1,336 (668 × 2 passes) |
+| Prompt tokens per pass | 2,073,634 (4.15 M total) |
+| Largest prompt | 26,294 tokens |
+| Longest key answer | 52 tokens |
 
-1. The pre-registered thresholds (0.90, 0.70, above the best shortcut) and the
-   non-diagnostic rule.
-2. Whether to keep both conditions, or run evidence_only alone first. That would be about 21% of
-   the prompt tokens: ~1.2 M of ~5.7 M per pass.
-3. Two passes with prefix caching disabled, or one pass.
-4. Whether roadmap step 2 (progress versus visible change) should be a separate probe set, as
-   proposed, rather than folded into this one.
+All requests are within the 60,000-token prompt ceiling and the 65,536-token context.
+
+**Runtime.** Earlier timings came from a cached service and are not a bound. The runtime uses
+bounds measured in the archived run:
+- decode ≥ 110 tokens/s: the maximum over all calls of completion tokens per second of total
+  latency. Caching does not affect decoding.
+- uncached prefill ≥ 8,929 tokens/s: the slowest first call on a newly started game, with its whole
+  latency counted as prefill. Those prompts were about 8.8 k tokens.
+
+The schedule is:
+1. evidence-only pass 1;
+2. evidence-only pass 2, reversed;
+3. the descriptive groups, pass 1;
+4. the descriptive groups, pass 2, reversed.
+
+The runner stops admitting calls at the admission cutoff, so a shortfall can only cut descriptive
+groups. Including the 403 s startup:
+
+| Scenario | Startup + gate | Everything |
+|---|---|---|
+| Measured bounds | 793 s | 1,331 s |
+| Stress: prefill 2,500/s, decode 40/s | 1,283 s | 2,987 s |
+| Stress: every call at its token cap | 2,464 s | 4,664 s (descriptive groups cut) |
+
+The admission cutoff is 3,000 s: an internal limit of 3,300 s less a 300 s cleanup reserve. The
+proposal remains one attempt of ≤ 3,600 s.
+
+## Next
+
+1. Runner, reusing the reviewed action-effect-history host, supervisor and evidence stack:
+   - prefix caching disabled and verified from the running server;
+   - the ordered schedule, with admission control;
+   - per-call evidence, and scoring by the independent scorer.
+2. The GPU-disabled review package, with a CPU rehearsal.
+3. Your review, then separate source approval and compute authorization.

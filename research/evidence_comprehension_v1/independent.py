@@ -1,11 +1,21 @@
-"""Independent answer keys, recomputed from raw frames and dispatch outcomes.
+"""Independent answer keys, recomputed from raw frames and dispatch outcomes (revision 2).
 
-Deliberately imports neither the record code nor probes.py: shown entries are rebuilt from the raw
-events (fixture frames for synthetic contexts, archived engine steps for real ones), cell changes
-are recounted, and each question is answered by separate logic. Agreement with the primary keys
-shows the answers do not depend on how the history field was constructed.
+Deliberately imports nothing: shown entries are rebuilt from the raw events (the stored continuous
+trajectories for synthetic contexts, archived engine steps for real ones), frames are decoded and
+cell changes recounted here, trajectory continuity is re-checked here, and each question is
+answered by separate logic. Agreement with the primary keys shows the answers do not depend on how
+the history field was constructed.
 """
 LIMIT = 4  # the live history arm's entry limit
+STATUS = {'dispatch_failed': 'dispatch_failed', 'outcome_unknown': 'outcome_unknown'}
+
+
+def decode(text):
+    size, cells = text.split(':')
+    height, width = (int(v) for v in size.split('x'))
+    if len(cells) != height * width:
+        raise ValueError('frame size')
+    return [[int(cells[y * width + x], 16) for x in range(width)] for y in range(height)]
 
 
 def cells_differ(before, after):
@@ -24,26 +34,36 @@ def raw_entry(step, action, status, before=None, returned=None):
     return {'step': step, 'action': action, 'kind': kind, 'dimension_change': None in counts}
 
 
-def synthetic_entries(context, fixtures):
-    cases = {c['case_id']: c for c in fixtures['cases']}
-    rows = []
-    for step, event in enumerate(context['events']):
-        case = cases[event['template']]
-        outcome = case['outcome']
-        post = outcome.get('post') or {}
-        if outcome['status'] == 'acknowledged' and (post['levels_completed'] != case['pre']['levels_completed']
-                                                     or post.get('full_reset')):
-            raise ValueError('synthetic contexts must stay within one segment')
-        rows.append(raw_entry(step, event['action'], outcome['status'], case['pre']['frames'][-1], post.get('frames')))
+def check_continuity(context):
+    """Each event must start from the frame the previous event left current (independent re-check)."""
+    events = context['events']
+    for i, event in enumerate(events):
+        following = events[i + 1]['pre'] if i + 1 < len(events) else context['final']
+        if event['kind'] == 'dispatch_failed':
+            if event['pre'] != following:
+                raise ValueError(f'{context["context_id"]}: failed dispatch changed the frame')
+        elif event['kind'] != 'outcome_unknown':
+            if decode(event['returned'][-1]) != decode(following):
+                raise ValueError(f'{context["context_id"]}: discontinuous trajectory at event {i}')
+
+
+def synthetic_entries(context):
+    check_continuity(context)
+    rows = [raw_entry(step, event['action'], STATUS.get(event['kind'], 'acknowledged'), decode(event['pre']),
+                      [decode(f) for f in event.get('returned', [])])
+            for step, event in enumerate(context['events'])]
     return rows[-LIMIT:], len(rows) - len(rows[-LIMIT:])
 
 
 def archived_entries(episode, decision):
     """Entries the history arm was shown before decision `decision`, rebuilt from archived engine steps."""
     rows = []
-    for step in episode['steps'][:decision]:
+    steps = episode['steps'][:decision]
+    for i, step in enumerate(steps):
         if step['after']['levels_completed'] != step['before']['levels_completed'] or step['after'].get('full_reset'):
             raise ValueError('real contexts must stay within one segment')
+        if i + 1 < len(steps) and steps[i + 1]['before']['frames'][-1] != step['after']['frames'][-1]:
+            raise ValueError('archived trajectory is discontinuous')
         rows.append(raw_entry(step['index'], step['action'], step['status'],
                               step['before']['frames'][-1], step['after']['frames']))
     return rows[-LIMIT:], len(rows) - len(rows[-LIMIT:])
