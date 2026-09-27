@@ -153,6 +153,54 @@ executed (`adf3b9d`), because later revisions add rehearsal cases.
    that rehearsal. The first repeat series, which had started on `b7e84bc`, was stopped before any
    run completed.
 
+## Series 2 results (predeclared: 5 sequential full checks on `b74b177`, code identical to `ff02ddc`)
+
+All five runs executed with no reruns. Each run's diagnostics record and rehearsal log are in
+`reports/evidence_comprehension_v1_diagnostics/series2-repeat-N.*`, and the driver log is
+`series2-driver.log`. Every run recorded all 19 connected rehearsals, each linked to its test.
+
+| Run | Monotonic duration | Result | Rehearsals recorded | Wall-clock jumps flagged (s) |
+|---|---|---|---|---|
+| 1 | 793 s | all 76 pass | 19 of 19 | 726, 650, 227 |
+| 2 | 683 s | all 76 pass | 19 of 19 | 414, 190 (and −2) |
+| 3 | 759 s | all 76 pass | 19 of 19 | 103, 215, 14,394, 1,124 |
+| 4 | 710 s | **1 error** | 19 of 19 | 301, **41,244** |
+| 5 | 677 s | all 76 pass | 19 of 19 | none |
+
+**Result: 4 of 5 passed.** The series spanned about 17.5 hours of wall time but only about 60 minutes of
+monotonic time. The flagged jumps indicate the WSL VM was repeatedly paused, most likely by the
+Windows host sleeping. That is an inference from the clocks; host sleep was not observed directly.
+
+### Run 4's error
+
+- **Where:** `test_late_abort_trickling_metrics_and_late_replies_stop_within_the_bound`, subtest
+  `late_abort`. The test's assertions up to line 320 passed: the study failed as intended, it stopped
+  with `transport_failure`, the gate was `incomplete`, there were no call errors, and the last call
+  was within its bound. It then raised `FileNotFoundError` reading `worker/cancellations.json`.
+- **What the retained evidence shows** (`~/ecv-rehearsal-tests/tmpl1ad9swe`):
+  - The run stopped on **call 0**, not at the hung 7th call.
+  - The error was `bridge admission closed`, raised on the worker side: the host received **0**
+    questionnaire calls.
+  - The call's start and return stamps are 10.35 s apart on the monotonic clock, just over the 10 s
+    rehearsal bound, with no work in between.
+  - The rehearsal took 33 s against about 11 s normally.
+  - The same test carries a 41,244 s wall-clock jump.
+- **Mechanism (inferred):** a VM pause. On resume, the guest's monotonic clock advanced past the
+  call's per-call deadline, so the worker's proxy correctly refused to send an already-expired call.
+- **Effect on the system:**
+  - **Deadline enforcement:** correct. An expired call was not sent.
+  - **Cancellation:** not reached.
+  - **Cleanup:** complete. All groups were verified gone, and scratch and GPU cleanup were verified.
+  - **Evidence integrity:** the evidence verifies, and the gate was reported `incomplete`.
+- **Defect found:** the stop reason is `transport_failure`, but the cause was the call's own deadline
+  expiring before dispatch. This is a labelling defect of the same kind as the in-flight cancellation
+  case. It was not fixed in the tested commit.
+- **Test assumption:** the test assumes the run reaches the hung call. A pause that consumes a call's
+  bound before dispatch breaks that assumption.
+
+No threshold or assertion has been changed. The remediation options (a distinct `deadline_expired`
+status, and running any further series with host sleep prevented) await the reviewer's decision.
+
 ## Next steps
 
 1. **Predeclared repeats.** Five sequential full-check runs on the resulting commit, with the
