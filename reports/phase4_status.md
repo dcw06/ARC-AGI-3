@@ -1,5 +1,23 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
+## Evidence comprehension v2: question set and protocol r1 (for review; no compute authorized)
+
+Next milestone: reliable reading of controls and action-effect history. This is designed in light of the v1
+result, whose questions are now development material; the v1 baseline is hash-frozen in
+`reports/evidence_comprehension_v1_baseline_freeze.json`.
+- **Decomposition:** 13 question families (4 control, 9 history), with mechanically checkable components
+  behind the v1 target families.
+- **Two isolated comparisons against the unchanged baseline:**
+  - a one-sentence control instruction to intersect the coordinate rule with legal_actions;
+  - normalized history records carrying information-equivalent evidence.
+- **Cases:** fresh seeded trajectories. There are 120 withheld contexts (the decision) and 30 development
+  contexts, plus the 6 v1 archived contexts as a descriptive transfer check.
+- **Keys and decision rules:** dual keys; frozen paired decision rules.
+- **Size:** 4,518 questions and 7,978 scheduled calls.
+
+See `reports/evidence_comprehension_v2_protocol.md`. Runner adaptation, the GPU-disabled package and the
+authorization follow review.
+
 ## Evidence comprehension v1: live result (attempt ecv1-4458251e)
 
 Technically complete: 1,308 of 1,308 answered, prefix caching verified off (0 queries over 4.13 M
