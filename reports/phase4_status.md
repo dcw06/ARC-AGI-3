@@ -1,6 +1,18 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
-## Evidence comprehension v1: runner and GPU-disabled review package r3 (not authorized)
+## Evidence comprehension v1: live result (attempt ecv1-4458251e)
+
+Technically complete: 1,308 of 1,308 answered, prefix caching verified off (0 queries over 4.13 M
+prompt tokens), and both passes identical. Account GPU use was about 936 s.
+
+Gate results:
+- **criterion met:** available_actions;
+- **below the accuracy floor:** coordinate_actions and tried_unchanged;
+- **inconclusive:** recall_action, outcome_class and observed_effect.
+
+The step-3 condition is not met. See `reports/evidence_comprehension_v1_results.md`.
+
+### Package r3 (approved and launched)
 
 Package r3 (lock `fa425fd0…c051`) follows the intermittent-failure investigation:
 - the run-A failure is identified and its rehearsal race removed, with deterministic monitor-loss
