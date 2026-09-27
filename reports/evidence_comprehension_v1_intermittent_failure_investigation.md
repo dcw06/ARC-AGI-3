@@ -198,8 +198,30 @@ Windows host sleeping. That is an inference from the clocks; host sleep was not 
 - **Test assumption:** the test assumes the run reaches the hung call. A pause that consumes a call's
   bound before dispatch breaks that assumption.
 
-No threshold or assertion has been changed. The remediation options (a distinct `deadline_expired`
-status, and running any further series with host sleep prevented) await the reviewer's decision.
+No threshold or assertion has been relaxed.
+
+### Remediation (reviewer's decision: relabel only; no third series)
+
+- **The relabel.** A call that fails after its own per-call deadline has passed, with no cancellation
+  present, is now recorded as `deadline_expired`, and the run stops with that reason. Cancellation
+  keeps precedence. A failure within the bound stays `transport_failure`.
+- **The evaluator.** It accepts the status only when the label is true: the call must span its whole
+  per-call bound.
+- **The `late_reply` fault.** Its reply is rejected at the bound, so it is now correctly labelled
+  `deadline_expired`, and its connected-test expectation is updated to match.
+- **Regressions.** Deterministic, using an injected clock:
+  - a clock jump past the bound gives `deadline_expired`;
+  - a failure within the bound stays `transport_failure`;
+  - cancellation takes precedence;
+  - the evaluator rejects an untrue `deadline_expired` label.
+- **Reproduced first:** on the series-2 code (`ff02ddc`), the run-4 scenario was labelled
+  `transport_failure`.
+- **Not changed.** The `late_abort` test still assumes the run reaches the hung call. A VM pause that
+  consumes a call's bound before dispatch can still make it fail, now with stop reason
+  `deadline_expired`. That remains an **unresolved residual risk** on this host. No controlled series
+  with host sleep prevented has been run, so pause-induced failures have not been separated from any
+  other cause. Accepting that risk is an explicit decision for the reviewer, and it has not been
+  recorded here as accepted. A pause on the live target would be handled the same conservative way.
 
 ## Next steps
 

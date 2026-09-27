@@ -15,7 +15,7 @@ import math
 from pathlib import Path
 
 LIVE_INTERNAL_SECONDS, CLEANUP_RESERVE_SECONDS = 3300, 300
-STATUSES = ('answered', 'timed_out', 'rejected', 'transport_failure', 'canceled')
+STATUSES = ('answered', 'timed_out', 'rejected', 'transport_failure', 'canceled', 'deadline_expired')
 MAX_PROMPT_TOKENS = 60000
 ADMISSION_SLACK_SECONDS = 0.5  # stamps are taken just after admission and just after the reply or its rejection
 FINISH_REASONS = ('stop', 'length')
@@ -223,6 +223,10 @@ def call_errors(run, frozen, probe_set_sha256, cancellations, timing, canary_pro
         elif status == 'answered':
             found, prompt_total = answered_errors(n, call, probe, timing, prompt_total)
             errors.extend(found)
+        elif status == 'deadline_expired':
+            # The label must be true: the call spanned its whole per-call bound before failing.
+            if not (finite(started) and finite(returned) and returned - started >= timing['bound']):
+                errors.append(f'call {n}: deadline_expired before its per-call bound had passed')
         elif status == 'timed_out':
             match = next((c for c in pending if c.get('request_sha256') == call['request_sha256']), None)
             if match is None:

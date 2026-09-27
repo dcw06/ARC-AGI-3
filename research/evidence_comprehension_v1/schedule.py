@@ -81,10 +81,10 @@ class Admission:
         return self.stopped is None
 
     def record(self, status):
-        if status not in ('answered', 'timed_out', 'transport_failure', 'rejected', 'canceled'):
+        if status not in ('answered', 'timed_out', 'transport_failure', 'rejected', 'canceled', 'deadline_expired'):
             raise ValueError('call status')
         self.consecutive_timeouts = self.consecutive_timeouts + 1 if status == 'timed_out' else 0
-        if status in ('transport_failure', 'rejected', 'canceled') and self.stopped is None:
+        if status in ('transport_failure', 'rejected', 'canceled', 'deadline_expired') and self.stopped is None:
             self.stopped = status
         if self.consecutive_timeouts >= MAX_CONSECUTIVE_TIMEOUTS and self.stopped is None:
             self.stopped = 'consecutive_timeouts'

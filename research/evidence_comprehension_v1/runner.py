@@ -5,7 +5,8 @@ when answered, the raw response. The runner never scores: the independent evalua
 every request and scores only the retained responses. A timeout leaves the answer missing; a
 rejected request, transport failure, service stop, storage limit, cancellation or the admission
 cutoff ends the run with an explicit stop reason. A call that fails while the cancel file exists is
-recorded as `canceled` (its cause), never as a transport failure. An ended run is `incomplete` unless every
+recorded as `canceled` (its cause), never as a transport failure. A call that fails after its own
+per-call deadline has passed is recorded as `deadline_expired`. An ended run is `incomplete` unless every
 scheduled call was answered or timed out.
 """
 from pathlib import Path
@@ -75,6 +76,10 @@ def run(path, service, *, started, kind, cutoff_seconds=ADMISSION_CUTOFF_SECONDS
                     # The call was abandoned because the run was cancelled (the host refuses or drops in-flight
                     # work once the cancel file exists): the cause is the cancellation, not the transport.
                     status = 'canceled'
+                elif status == 'transport_failure' and clock() >= call_started + bound_seconds:
+                    # The call's own per-call deadline had passed when it failed (for example the bridge refused
+                    # an already-expired call, or rejected a late reply): the cause is the deadline.
+                    status = 'deadline_expired'
                 record.update(status=status, error=str(exc)[:300])
             record['returned_at'] = round(clock() - started, 6)
             writer(path / f'calls/{n:05d}.json', record, reserve_bytes=INDEX_RESERVE_BYTES)

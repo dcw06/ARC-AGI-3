@@ -311,7 +311,9 @@ class Rehearsals(unittest.TestCase):
                 receipt, output, outer, value = run_fault(fault)
                 self.assert_cleaned_and_bounded(receipt, outer, output, REHEARSAL_SECONDS)
                 self.assertEqual(receipt['study_status'], 'failed')
-                self.assertEqual(value['run']['stop_reason'], 'transport_failure')
+                # A late reply is rejected at the call's bound, so its cause is the deadline.
+                self.assertEqual(value['run']['stop_reason'],
+                                 'deadline_expired' if fault == 'late_reply' else 'transport_failure')
                 self.assertEqual(value['gate_status'], 'incomplete')
                 self.assertEqual(value['call_errors'], [])
                 last = calls(output)[-1]

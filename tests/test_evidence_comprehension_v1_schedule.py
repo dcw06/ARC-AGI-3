@@ -118,6 +118,68 @@ class CancelledInFlight(unittest.TestCase):
         self.assertEqual((third['status'], index['stop_reason']), ('transport_failure', 'transport_failure'))
 
 
+class DeadlineExpired(unittest.TestCase):
+    """Series-2 run 4: a call whose own deadline passed before it could be sent is attributed to the deadline."""
+
+    def run_with(self, jump_seconds, cancel_too=False):
+        import tempfile
+        from research.evidence_comprehension_v1.runner import run
+        now = [100.0]
+
+        class Service:
+            def __init__(self, cancel):
+                self.cancel, self.calls = cancel, 0
+
+            def complete(self, request, deadline=None):
+                self.calls += 1
+                now[0] += 0.01
+                if self.calls == 3:
+                    now[0] += jump_seconds  # e.g. a VM pause: the monotonic clock catches up past the bound
+                    if cancel_too:
+                        self.cancel.write_text('{}')
+                    raise TimeoutError('bridge admission closed')
+                return {'content': '{"answer":[1]}', 'tokenizer_prompt_tokens': 10, 'server_prompt_tokens': 10,
+                        'server_completion_tokens': 3, 'finish_reason': 'stop', 'cache_check': None, 'host_timing': None}
+        with tempfile.TemporaryDirectory() as folder:
+            cancel = Path(folder) / 'cancel.json'
+            index = run(Path(folder) / 'run', Service(cancel), started=100.0, kind='test', cutoff_seconds=3000,
+                        bound_seconds=10, cancel=cancel, clock=lambda: now[0])
+            third = json.loads((Path(folder) / 'run/calls/00002.json').read_bytes())
+        return index, third
+
+    def test_failure_after_the_call_bound_is_deadline_expired(self):
+        index, third = self.run_with(12.0)
+        self.assertEqual((third['status'], index['stop_reason']), ('deadline_expired', 'deadline_expired'))
+        self.assertGreaterEqual(third['returned_at'] - third['started_at'], 10)
+
+    def test_failure_within_the_bound_stays_a_transport_failure(self):
+        index, third = self.run_with(2.0)
+        self.assertEqual((third['status'], index['stop_reason']), ('transport_failure', 'transport_failure'))
+
+    def test_cancellation_takes_precedence(self):
+        index, third = self.run_with(12.0, cancel_too=True)
+        self.assertEqual((third['status'], index['stop_reason']), ('canceled', 'canceled'))
+
+    def test_evaluator_rejects_a_deadline_expired_label_that_is_not_true(self):
+        from research.action_effect_history_v1.service import request_hash
+        from research.evidence_comprehension_v1.probes import build_request, load_frozen
+        from scripts.evaluate_evidence_comprehension_v1 import call_errors, frozen_timing
+        frozen, sha = load_frozen()
+        contexts = {c['context_id']: c for c in frozen['contexts']}
+        probes = {p['probe_id']: p for p in frozen['probes']}
+        phase, pass_id, pid = S.call_order(frozen['probes'])[0]
+        timing = frozen_timing('rehearsal', 480)
+        run = {'probe_set_sha256': sha, 'cutoff_seconds': timing['cutoff'], 'bound_seconds': timing['bound'],
+               'scheduled_calls': 2 * len(frozen['probes'])}
+        base = {'index': 0, 'phase': phase, 'pass_id': pass_id, 'probe_id': pid, 'status': 'deadline_expired',
+                'request_sha256': request_hash(build_request(contexts[probes[pid]['context_id']], probes[pid]))}
+        truthful = dict(base, started_at=5.0, returned_at=5.0 + timing['bound'] + 0.1)
+        false = dict(base, started_at=5.0, returned_at=6.0)
+        self.assertEqual(call_errors({**run, 'calls': [truthful]}, frozen, sha, [], timing)[0], [])
+        errors = call_errors({**run, 'calls': [false]}, frozen, sha, [], timing)[0]
+        self.assertTrue(any('deadline_expired before its per-call bound' in e for e in errors))
+
+
 class InterruptedGate(unittest.TestCase):
     """Deadline interruption during each gate pass, with timing estimates wrong by large factors."""
 
