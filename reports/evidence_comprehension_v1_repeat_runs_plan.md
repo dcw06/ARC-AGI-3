@@ -30,9 +30,11 @@ That commit is the code under test.
   flags are recorded by the check itself.
 - **Retention:** each run's diagnostics record (`reports/evidence_comprehension_v1_diagnostics/series2-repeat-N.json`
   and `.rehearsals.jsonl`) is committed, and every rehearsal evidence directory is kept.
-- **Completeness check on every run:** the record must list all 18 connected-suite rehearsals and
-  both diagnostics-suite rehearsal records, each linked to its test. A run that ran but recorded fewer
-  is a diagnostics failure and is investigated like any other failure.
+- **Completeness check on every run:** the record must list all 19 connected-suite rehearsals (the
+  18 earlier ones plus `monitor_exit_before_ready`), each linked to the test that ran it. The
+  diagnostics suite's nested runs write to their own temporary logs, so they add nothing here. A run
+  that finished but recorded fewer is a diagnostics failure and is investigated like any other
+  failure.
 
 ## Decision rules, fixed in advance
 
