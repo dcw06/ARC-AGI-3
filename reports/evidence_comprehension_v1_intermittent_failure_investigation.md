@@ -143,6 +143,16 @@ the rehearsal is linked to its test. The output is in `reports/evidence_comprehe
 The replay tool now refuses to run unless the connected tests match the version the archived runs
 executed (`adf3b9d`), because later revisions add rehearsal cases.
 
+4. **Nested runs cleared the outer logging (fixed; review of `b7e84bc`).** `run_suites` removed
+   `ECV_DIAGNOSTICS_LOG` unconditionally on exit, and the recorder's `stopTest` removed
+   `ECV_CURRENT_TEST`. The diagnostics suite calls `run_suites` inside the full check, so every
+   connected rehearsal after it went unrecorded, silently. Reproduced on `b7e84bc`'s recorder:
+   `(None, None)` after the nested runs, and no outer rehearsals recorded. Both variables are now
+   saved and restored, including on exceptions. The regression runs nested diagnostics (one normal,
+   one interrupted) followed by a rehearsal-recording test, and requires the outer record to keep
+   that rehearsal. The first repeat series, which had started on `b7e84bc`, was stopped before any
+   run completed.
+
 ## Next steps
 
 1. **Predeclared repeats.** Five sequential full-check runs on the resulting commit, with the

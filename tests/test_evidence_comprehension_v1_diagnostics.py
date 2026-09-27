@@ -80,6 +80,22 @@ class Recorder(unittest.TestCase):
         self.assertEqual(record['requested_suites'], ['first', 'second'])
         self.assertEqual(list(record['suites']), ['first'])  # the second never ran: not success
 
+    def test_nested_runs_do_not_disable_the_outer_rehearsal_log(self):
+        # Review of b7e84bc: a nested run_suites cleared ECV_DIAGNOSTICS_LOG and ECV_CURRENT_TEST, so later
+        # connected rehearsals in the outer full check were silently not recorded.
+        import os
+        from tests.ecv_diagnostics_fixtures import NestedThenRecords
+        before = (os.environ.get('ECV_DIAGNOSTICS_LOG'), os.environ.get('ECV_CURRENT_TEST'))
+        _, record = self.run_record({'outer': FIXTURES + '.NestedThenRecords'})
+        self.assertTrue(record['all_passed'])
+        recorded = [r for r in record['rehearsals'] if r['fault'] == 'outer_fault_after_nested_runs']
+        self.assertEqual(len(recorded), 1)
+        self.assertTrue(recorded[0]['test'].endswith('NestedThenRecords.test_b_records_rehearsal'))
+        log, test = NestedThenRecords.observed['after_nested']
+        self.assertEqual((log, test), NestedThenRecords.observed['before_nested'])  # restored inside the outer test
+        self.assertTrue(log and test.endswith('test_a_nested_runs'))
+        self.assertEqual((os.environ.get('ECV_DIAGNOSTICS_LOG'), os.environ.get('ECV_CURRENT_TEST')), before)
+
     def test_all_requested_suites_passing_is_success(self):
         _, record = self.run_record({'one': FIXTURES + '.Passes', 'two': FIXTURES + '.Passes'})
         self.assertTrue(record['all_passed'])

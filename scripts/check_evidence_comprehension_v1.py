@@ -64,6 +64,14 @@ def git_state():
             'dirty_paths': status.splitlines() if status and not status.startswith('unavailable') else status}
 
 
+def _restore(name, previous):
+    """Put an environment variable back as it was (None means it was unset)."""
+    if previous is None:
+        os.environ.pop(name, None)
+    else:
+        os.environ[name] = previous
+
+
 class Recorder(unittest.TextTestResult):
     """Keeps a record for every test and subtest, whatever its outcome.
 
@@ -74,6 +82,7 @@ class Recorder(unittest.TextTestResult):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.records, self.current = [], None
+        self._outer_test = None  # the enclosing ECV_CURRENT_TEST, restored after each test (nested recorders)
 
     @staticmethod
     def _clock():
@@ -81,6 +90,7 @@ class Recorder(unittest.TextTestResult):
 
     def startTest(self, test):
         self.current = {'test': test.id(), 'start': self._clock(), 'outcome': None, 'subtests': [], 'detail': None}
+        self._outer_test = os.environ.get('ECV_CURRENT_TEST')
         os.environ['ECV_CURRENT_TEST'] = test.id()
         super().startTest(test)
 
@@ -96,7 +106,7 @@ class Recorder(unittest.TextTestResult):
             record['outcome'] = 'failure' if any(s['outcome'] != 'success' for s in record['subtests']) else 'success'
         self.records.append(record)
         self.current = None
-        os.environ.pop('ECV_CURRENT_TEST', None)
+        _restore('ECV_CURRENT_TEST', self._outer_test)
         super().stopTest(test)
 
     def _in_test(self, test):
@@ -154,6 +164,9 @@ def run_suites(suites, run_id, directory=DIAGNOSTICS, label=None, runner_factory
     directory = Path(directory)
     directory.mkdir(parents=True, exist_ok=True)
     rehearsals = directory / f'{run_id}.rehearsals.jsonl'
+    # A nested run (the diagnostics suite calls run_suites inside the full check) must not disturb the
+    # enclosing run's logging: both variables are restored exactly, including when an exception escapes.
+    previous_log, previous_test = os.environ.get('ECV_DIAGNOSTICS_LOG'), os.environ.get('ECV_CURRENT_TEST')
     os.environ['ECV_DIAGNOSTICS_LOG'] = str(rehearsals)
     record = {'run_id': run_id, 'label': label, 'command': [sys.executable, *sys.argv], 'cwd': os.getcwd(),
               'git': git_state(), 'host_at_start': host(),
@@ -176,7 +189,8 @@ def run_suites(suites, run_id, directory=DIAGNOSTICS, label=None, runner_factory
                 'errors': len(outcome.errors), 'passed': outcome.wasSuccessful(),
                 'seconds': round(time.monotonic() - begun, 1), 'tests': getattr(outcome, 'records', [])}
     finally:
-        os.environ.pop('ECV_DIAGNOSTICS_LOG', None)
+        _restore('ECV_DIAGNOSTICS_LOG', previous_log)
+        _restore('ECV_CURRENT_TEST', previous_test)
         record['ended'] = {'wall': time.time(), 'monotonic': time.monotonic()}
         record['host_at_end'] = host()
         record['rehearsals'] = ([json.loads(line) for line in rehearsals.read_text().splitlines() if line.strip()]

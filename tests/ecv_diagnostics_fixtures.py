@@ -23,3 +23,35 @@ class TearDownClassFails(unittest.TestCase):
 
     def test_passes_before_teardown(self):
         self.assertTrue(True)
+
+
+class NestedThenRecords(unittest.TestCase):
+    """Runs nested diagnostics (one normal, one interrupted), then records a rehearsal in the outer run."""
+    observed = {}
+
+    def test_a_nested_runs(self):
+        import os
+        import tempfile
+        from scripts.check_evidence_comprehension_v1 import run_suites
+        outer = (os.environ.get('ECV_DIAGNOSTICS_LOG'), os.environ.get('ECV_CURRENT_TEST'))
+        with tempfile.TemporaryDirectory() as folder:
+            run_suites({'inner': 'tests.ecv_diagnostics_fixtures.Passes'}, 'nested', folder)
+
+            class Interrupting:
+                def run(self, suite):
+                    raise KeyboardInterrupt
+            try:
+                run_suites({'inner': 'tests.ecv_diagnostics_fixtures.Passes'}, 'nested-interrupted', folder,
+                           runner_factory=Interrupting)
+            except KeyboardInterrupt:
+                pass
+        NestedThenRecords.observed['after_nested'] = (os.environ.get('ECV_DIAGNOSTICS_LOG'),
+                                                      os.environ.get('ECV_CURRENT_TEST'))
+        NestedThenRecords.observed['before_nested'] = outer
+
+    def test_b_records_rehearsal(self):
+        import tempfile
+        from pathlib import Path
+        from tests.test_evidence_comprehension_v1_connected import record_rehearsal
+        record_rehearsal('outer_fault_after_nested_runs', 480, Path(tempfile.gettempdir()) / 'outer-evidence',
+                         {'study_status': 'failed'}, None, None)

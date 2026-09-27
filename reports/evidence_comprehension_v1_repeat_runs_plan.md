@@ -1,7 +1,16 @@
 # Evidence comprehension v1: predeclared repeat runs
 
-Declared before any of these runs starts, in the commit that adds this file. That commit is the code
-under test.
+Declared before any run of this series starts, in the commit that adds this revision of the file.
+That commit is the code under test.
+
+## Series history
+
+- **Series 1, on `b7e84bc`: aborted.** It was stopped at 2026-09-26T23:57:57Z, during repeat-1,
+  before any run had completed. Review of `b7e84bc` found that a nested `run_suites` (the
+  diagnostics suite runs inside the full check) cleared `ECV_DIAGNOSTICS_LOG` and `ECV_CURRENT_TEST`.
+  The connected suite, which runs later, would therefore have recorded no rehearsals. The series'
+  driver log is retained as `reports/evidence_comprehension_v1_diagnostics/aborted-series-b7e84bc.log`.
+- **Series 2: this plan.** It runs on the commit that fixes the restoration and adds its regression.
 
 ## Plan
 
@@ -11,7 +20,7 @@ under test.
   rehearsals, via
 
   ```sh
-  .venv/bin/python -m scripts.check_evidence_comprehension_v1 --run-id repeat-N --label "predeclared repeat N of 5"
+  .venv/bin/python -m scripts.check_evidence_comprehension_v1 --run-id series2-repeat-N --label "series 2, predeclared repeat N of 5"
   ```
 
   in WSL, for N = 1…5.
@@ -19,8 +28,11 @@ under test.
   script that records each run's start and end on both clocks. Nothing else is run from this session
   while the runs are in progress. Host details, load before and after every test, and wall-clock step
   flags are recorded by the check itself.
-- **Retention:** each run's diagnostics record (`reports/evidence_comprehension_v1_diagnostics/repeat-N.json`
+- **Retention:** each run's diagnostics record (`reports/evidence_comprehension_v1_diagnostics/series2-repeat-N.json`
   and `.rehearsals.jsonl`) is committed, and every rehearsal evidence directory is kept.
+- **Completeness check on every run:** the record must list all 18 connected-suite rehearsals and
+  both diagnostics-suite rehearsal records, each linked to its test. A run that ran but recorded fewer
+  is a diagnostics failure and is investigated like any other failure.
 
 ## Decision rules, fixed in advance
 
