@@ -125,6 +125,22 @@ class BaselineFreeze(unittest.TestCase):
         for path, digest in record['files'].items():
             self.assertEqual(hashlib.sha256((ROOT / path).read_bytes()).hexdigest(), digest, path)
 
+    def test_baseline_binds_the_protocol_and_lock_the_v1_launch_used(self):
+        record = json.loads(B.BASELINE.read_bytes())
+        lock_raw = (ROOT / record['review_lock']).read_bytes()
+        self.assertEqual(hashlib.sha256(lock_raw).hexdigest(), record['review_lock_sha256'])
+        lock = json.loads(lock_raw)
+        launch = json.loads((ROOT / record['launch_package_lock']).read_bytes())
+        self.assertEqual(launch['review_lock_sha256'], record['review_lock_sha256'])
+        protocol = record['protocol']['path']
+        self.assertEqual(protocol, 'reports/evidence_comprehension_v1_protocol.md')
+        self.assertEqual(lock['review_documents'][protocol], record['files'][protocol])
+        self.assertIn(protocol, record['files_matching_review_lock_bindings'])
+        self.assertNotIn('reports/evidence_comprehension_v1_protocol_r4.md', record['files'])
+        bound = {**lock['bindings'], **lock['review_documents']}
+        for path in record['files_matching_review_lock_bindings']:
+            self.assertEqual(bound[path], record['files'][path], path)
+
     def test_baseline_prompt_is_the_frozen_v1_prompt(self):
         v1 = json.loads(B.V1_PROBES.read_bytes())
         self.assertEqual(P.BASE_PROMPT, v1['system_prompt'])
@@ -343,6 +359,21 @@ class Schemas(unittest.TestCase):
     def test_v1_answer_schemas_are_reused_unchanged_for_v1_families(self):
         for family in ('tried_unchanged', 'outcome_class', 'observed_effect'):
             self.assertEqual(P.ANSWER_SCHEMAS[family], V1.ANSWER_SCHEMAS[family])
+
+    def test_frame_since_step_states_that_stayed_same_compares_final_frames_only(self):
+        for p in (q for q in PROBES if q['family'] == 'frame_since_step'):
+            self.assertIn('compares final returned frames only', p['question'])
+
+    def test_budget_separates_overhead_allowances_from_the_cleanup_reserve(self):
+        audit = json.loads((ROOT / 'reports/evidence_comprehension_v2_token_audit.json').read_bytes())
+        runtime = audit['runtime_scenarios']
+        self.assertEqual(set(runtime['first_cell_overhead_allowance_seconds']),
+                         {'installation', 'model_startup', 'other_pre_question', 'post_question_finalization'})
+        self.assertEqual(runtime['admission_cutoff_seconds'] + runtime['cleanup_reserve_seconds'], 3300)
+        for name, row in runtime['scenarios'].items():
+            self.assertGreater(row['pre_question_seconds'], 500, name)
+            self.assertEqual(row['first_cell_fits_before_cleanup_reserve'],
+                             row['first_cell_end_seconds'] <= runtime['admission_cutoff_seconds'])
 
     def test_max_tokens_cover_the_longest_valid_answer(self):
         audit = json.loads((ROOT / 'reports/evidence_comprehension_v2_token_audit.json').read_bytes())

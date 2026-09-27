@@ -1,4 +1,7 @@
-"""Evidence comprehension v2: failure-decomposition questions and two isolated comparisons (revision 1).
+"""Evidence comprehension v2: failure-decomposition questions and two isolated comparisons (revision 2).
+
+Revision 2 (review of 8e3eb5b): the frame_since_step question states that "stayed_same" compares final
+returned frames only, so it is not read as the absence of intermediate changes.
 
 Informed by the evidence comprehension v1 result (attempt ecv1-4458251e): its questions and answers are
 development material now, not an untouched validation set. Every question here is new, asked about fresh
@@ -25,7 +28,7 @@ import random
 from research.evidence_comprehension_v1 import probes as V1
 from research.evidence_comprehension_v2 import representation as R
 
-VERSION = 'evidence_comprehension_v2_r1'
+VERSION = 'evidence_comprehension_v2_r2'
 FROZEN_PATH = __import__('pathlib').Path(__file__).with_name('probes.json')
 MODEL = V1.MODEL
 BASE_PROMPT = V1.SYSTEM_PROMPT  # frozen v1 questionnaire prompt (a test checks it against v1's frozen file)
@@ -145,8 +148,9 @@ def question_text(family, arg=None):
         return (f'According to action_effect_history, has the frame stayed the same since step {arg} started? '
                 f'Consider the entry at step {arg} and every later shown entry. Answer "changed_at_least_once" if any '
                 'of them was acknowledged with a final returned frame that differs from the frame before it; '
-                'otherwise "cannot_tell" if any of them had an unknown outcome; otherwise "stayed_same". Answer '
-                f'"not_shown" if no entry with step {arg} is shown.')
+                'otherwise "cannot_tell" if any of them had an unknown outcome; otherwise "stayed_same". '
+                '"stayed_same" compares final returned frames only: an intermediate returned frame may still have '
+                f'differed. Answer "not_shown" if no entry with step {arg} is shown.')
     if family == 'qualifying_steps':
         return ('Using only the entries shown in action_effect_history, list the step of every entry whose action was '
                 'dispatched on the frame that is still current and left it unchanged. ' + QUALIFY_RULE +

@@ -2,13 +2,18 @@
  "attempt": "ecv1-4458251ee9aa4e1b9ca39844a1c3a70b",
  "files": {
   "evidence/evidence-comprehension-v1-live.tar.xz": "82ff8481acc3b02ce9b47343606e55691a2bdb5d9c7ab737b795f8d2187aaee4",
+  "notebooks/evidence-comprehension-v1-review-r3/review-source-lock.json": "fa425fd07469defdccae26ffdbdc29233380d0086bbdd480b31e24515715c051",
+  "notebooks/evidence-comprehension-v1-run/launch-package-lock.json": "aded6c13a3721492bbaaf549c6699297bb37fc9f5e970c95b185ad3b20f37f18",
+  "reports/evidence_comprehension_v1_compute_authorization.json": "4bef461626abdba299a26b26a3a7417ae1287fa1e9bcef87a75e3ee800a4eed7",
   "reports/evidence_comprehension_v1_live_archive.json": "8e83d8f3d906fecde4788351bb838dce68691ab9e23cbcc832b91b3e36a42ad9",
   "reports/evidence_comprehension_v1_live_evaluation.json": "753fc1689d208a6bca6609636a5343517f289e5504e11fb33b637388b1717fd7",
   "reports/evidence_comprehension_v1_postrun_provider.json": "e11221d7a78d9d74db01a435679607f55048deb007d313585fa80fb9be8d3ded",
   "reports/evidence_comprehension_v1_probe_summary.json": "c6b13aaa2c7b2681b76bf7081b0e37b1930cc7bbb41cf40d4f341b6dc7683f22",
-  "reports/evidence_comprehension_v1_protocol_r4.md": "677dca2229fafbcc277890bdee620735a6726b4f9f4ed42a6129103601952e2b",
+  "reports/evidence_comprehension_v1_protocol.md": "61286d3a7e74a4a753e8bab2b266a9ba0492e12f3606bcb85b230fde76bffd36",
   "reports/evidence_comprehension_v1_results.md": "4d12c8c5147b977d1ecb1f78960e758dc1a0ba10389d579f8adeb2a3ad179bb5",
+  "reports/evidence_comprehension_v1_review.md": "d22129ef75474b0a54f0b3e79fe818765c8f706ac3ddbd32cbb12f8141027e7e",
   "reports/evidence_comprehension_v1_source_approval.json": "002947cbe493e1bd0a2708f0aa1bddbe87db68bf096f90f58ed8353f71d7072c",
+  "reports/evidence_comprehension_v1_token_audit.json": "0bdaa9593b2461fb750651afdf36871ae577c76fad23f89d5187555554d0edfe",
   "research/action_effect_history_v1/contract.py": "078160596c567bc8fdf8afe49db830fa53d8045b780742c94df52b15f7c890de",
   "research/action_effect_v1/records.py": "a3df922e908bf91f551f677308e1b9778f04a3d85e1a38a228e672c10c7cb586",
   "research/evidence_comprehension_v1/independent.py": "1ac48e6861557e815fb6e99a4bff49a5b450bd03a964060f55b30493902188c7",
@@ -16,12 +21,35 @@
   "research/evidence_comprehension_v1/probes.py": "617512620ad4116f9d035249ff973d9f0c28e385733c1a037ea0fc583e3de8fb",
   "research/evidence_comprehension_v1/score.py": "909a2b5295c5a8c12823ff88a5b6670239271966cfc8349c88b470de62459401"
  },
+ "files_matching_review_lock_bindings": [
+  "reports/evidence_comprehension_v1_probe_summary.json",
+  "reports/evidence_comprehension_v1_protocol.md",
+  "reports/evidence_comprehension_v1_review.md",
+  "reports/evidence_comprehension_v1_token_audit.json",
+  "research/action_effect_history_v1/contract.py",
+  "research/action_effect_v1/records.py",
+  "research/evidence_comprehension_v1/independent.py",
+  "research/evidence_comprehension_v1/probes.json",
+  "research/evidence_comprehension_v1/probes.py",
+  "research/evidence_comprehension_v1/score.py"
+ ],
  "findings_used": [
   "coordinate_actions: all 19 errors answered [6] when ACTION6 was not legal",
   "tried_unchanged: weakest family (15/44)",
   "outcome_class / observed_effect: changed-then-returned read as no change"
  ],
- "package_lock": "fa425fd0...c051",
- "record": "evidence comprehension v1 baseline freeze",
+ "historical_context_only": {
+  "reports/evidence_comprehension_v1_protocol_r4.md": "677dca2229fafbcc277890bdee620735a6726b4f9f4ed42a6129103601952e2b"
+ },
+ "launch_package_lock": "notebooks/evidence-comprehension-v1-run/launch-package-lock.json",
+ "protocol": {
+  "bound_by_review_lock": true,
+  "path": "reports/evidence_comprehension_v1_protocol.md",
+  "revision": 5
+ },
+ "record": "evidence comprehension v1 baseline freeze (revision 2)",
+ "review_lock": "notebooks/evidence-comprehension-v1-review-r3/review-source-lock.json",
+ "review_lock_revision": "r3",
+ "review_lock_sha256": "fa425fd07469defdccae26ffdbdc29233380d0086bbdd480b31e24515715c051",
  "statement": "The completed v1 diagnostic (prompts, questions, keys, responses, scoring rules, evaluation and archive) is the frozen baseline and is not changed. Its questions and answers have been inspected, so they are development material, not an untouched validation set. Follow-up work is labelled as informed by these results."
 }

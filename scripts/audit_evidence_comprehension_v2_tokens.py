@@ -4,7 +4,10 @@ tokenize (pinned tokenizer env): count every exported request's prompt tokens an
     completion tokens with the frozen Qwen3-VL tokenizer (requests from
     build_evidence_comprehension_v2.py --export-requests), and check every family's max_tokens against its
     longest schema-valid answer, pretty-printed.
-estimate (any env): runtime scenarios from the v1 live attempt's measured, cache-disabled call timings.
+estimate (any env): runtime scenarios from the v1 live attempt's measured, cache-disabled call timings, plus
+    explicit first-cell overhead: installation, model startup, other pre-question work and post-question
+    finalization, each measured in v1 and given a planning allowance. The 300 s cleanup reserve is separate
+    and is never spent by any estimate.
 
 The v1 timings are measurements of a different workload on the same model, server configuration and GPU
 type, not guarantees for this one. The runner, not these figures, protects the deadline (per-call bounds and
@@ -25,9 +28,13 @@ PROBES = ROOT / 'research/evidence_comprehension_v2/probes.json'
 V1_ARCHIVE = ROOT / 'evidence/evidence-comprehension-v1-live.tar.xz'
 V1_CALLS = 'reports/runs/evidence-comprehension-v1/download/evidence-comprehension-v1/worker/run/calls/'
 PROMPT_CEILING, CONTEXT = 60000, 65536
-V1_MEASURED_STARTUP_SECONDS = 416  # v1 live attempt, model startup
-CLEANUP_RESERVE_SECONDS, INTERNAL_SECONDS = 300, 3300
+V1_RUN = 'reports/runs/evidence-comprehension-v1/download/evidence-comprehension-v1/'
+CLEANUP_RESERVE_SECONDS, INTERNAL_SECONDS = 300, 3300  # the reserve is never spent by any estimate below
 COMPLETION_SLACK = 2
+# Planning allowances for first-cell work that is not a question, each a multiple of its v1 measurement.
+ALLOWANCE_FACTORS = {'installation': 2.0, 'model_startup': 1.5, 'other_pre_question': 5.0,
+                     'post_question_finalization': 5.0}
+MIN_ALLOWANCE_SECONDS = 30
 
 
 def longest_answers():
@@ -106,11 +113,33 @@ def v1_measurements():
                 a[r] = [x - f * y for x, y in zip(a[r], a[i])]
     coef = [a[i][3] / a[i][i] for i in range(3)]
     slots = sorted(t for _, _, t in rows)
+    with tarfile.open(V1_ARCHIVE, 'r:xz') as bundle:
+        def record(name):
+            return json.load(bundle.extractfile(V1_RUN + name))
+        installation = record('control/installation.json')['elapsed_seconds']
+        startup = record('worker/model-ready.json')['startup_seconds']
+        cell = record('control/notebook-cost.json')['elapsed_seconds']
+    first_start, last_return = calls[0]['started_at'], max(c['returned_at'] for c in calls)
+    timeline = {'installation_seconds': round(installation, 1), 'model_startup_seconds': round(startup, 1),
+                'other_pre_question_seconds': round(first_start - installation - startup, 1),
+                'first_question_started_at_seconds': round(first_start, 1),
+                'questions_seconds': round(last_return - first_start, 1),
+                'post_question_finalization_seconds': round(cell - last_return, 1),
+                'first_cell_seconds': round(cell, 1)}
     return {'source': 'evidence comprehension v1 live attempt ecv1-4458251e (cache disabled, one RTX Pro 6000)',
             'calls': len(calls), 'slots': n, 'total_slot_seconds': round(sum(slots), 1),
             'prompt_tokens': sum(p for p, _, _ in rows), 'max_slot_seconds': round(slots[-1], 3),
             'fit_seconds_per_call': round(coef[0], 5), 'fit_seconds_per_prompt_token': coef[1],
-            'fit_seconds_per_completion_token': coef[2], 'startup_seconds': V1_MEASURED_STARTUP_SECONDS}
+            'fit_seconds_per_completion_token': coef[2], 'first_cell_timeline': timeline}
+
+
+def overheads(timeline):
+    """Measured v1 non-question first-cell work, and the planning allowances derived from it."""
+    measured = {'installation': timeline['installation_seconds'], 'model_startup': timeline['model_startup_seconds'],
+                'other_pre_question': timeline['other_pre_question_seconds'],
+                'post_question_finalization': timeline['post_question_finalization_seconds']}
+    allowance = {k: round(max(MIN_ALLOWANCE_SECONDS, v * ALLOWANCE_FACTORS[k])) for k, v in measured.items()}
+    return measured, allowance
 
 
 def estimate():
@@ -128,17 +157,30 @@ def estimate():
         return total
     phases = [(f"{s['partition']}/{s['pass']}", [by_id[i] for i in s['probe_ids']]) for s in probes['schedule']]
     admission = INTERNAL_SECONDS - CLEANUP_RESERVE_SECONDS
+    measured, allowance = overheads(fit['first_cell_timeline'])
+    withheld_rows = [r for phase, rows in phases if phase.startswith('withheld/') for r in rows]
     scenarios = {}
-    for name, factor, completion in (('v1_measured_rates', 1.0, 'key_x2'), ('three_times_slower', 3.0, 'key_x2'),
-                                     ('three_times_slower_every_call_at_cap', 3.0, 'cap')):
-        elapsed, row = fit['startup_seconds'], {}
+    for name, overhead, factor, completion in (
+            ('measured_overhead_v1_rates', measured, 1.0, 'key_x2'),
+            ('allowance_overhead_v1_rates', allowance, 1.0, 'key_x2'),
+            ('allowance_overhead_two_times_slower', allowance, 2.0, 'key_x2'),
+            ('allowance_overhead_three_times_slower_every_call_at_cap', allowance, 3.0, 'cap')):
+        pre = overhead['installation'] + overhead['model_startup'] + overhead['other_pre_question']
+        elapsed, row = pre, {'pre_question_seconds': round(pre)}
         for phase, rows in phases:
             elapsed += factor * seconds(rows, completion)
             row[phase + '_ends_at_seconds'] = round(elapsed)
         withheld_end = max(v for k, v in row.items() if k.startswith('withheld/'))
         scenarios[name] = {'slowdown_factor': factor, 'completion_tokens': completion, **row,
+                           'first_cell_end_seconds': round(elapsed + overhead['post_question_finalization']),
                            'withheld_fits_admission_cutoff': withheld_end <= admission,
-                           'everything_fits_admission_cutoff': elapsed <= admission}
+                           'everything_fits_admission_cutoff': elapsed <= admission,
+                           'first_cell_fits_before_cleanup_reserve':
+                               elapsed + overhead['post_question_finalization'] <= admission}
+    headroom = {}
+    for label, overhead in (('measured_overhead', measured), ('allowance_overhead', allowance)):
+        pre = overhead['installation'] + overhead['model_startup'] + overhead['other_pre_question']
+        headroom[label] = round((admission - pre) / seconds(withheld_rows, 'key_x2'), 2)
     calls = sum(len(rows) for _, rows in phases)
     report.update(summary={
         'scheduled_calls': calls, 'distinct_requests': len(report['requests']),
@@ -149,9 +191,16 @@ def estimate():
         v1_measurements=fit,
         runtime_scenarios={'status': 'planning scenarios from v1 measured timings of a different workload; not '
                                      'guarantees. Admission control, not these figures, protects the deadline.',
-                           'admission_cutoff_seconds': admission, 'scenarios': scenarios})
+                           'first_cell_overhead_measured_seconds': measured,
+                           'first_cell_overhead_allowance_seconds': allowance,
+                           'allowance_factors': ALLOWANCE_FACTORS, 'minimum_allowance_seconds': MIN_ALLOWANCE_SECONDS,
+                           'cleanup_reserve_seconds': CLEANUP_RESERVE_SECONDS,
+                           'cleanup_reserve_note': 'separate from every allowance; no estimate consumes it',
+                           'admission_cutoff_seconds': admission,
+                           'withheld_rate_headroom_factor': headroom, 'scenarios': scenarios})
     REPORT.write_text(json.dumps(report, indent=1) + '\n', encoding='utf-8')
-    print(json.dumps({'summary': report['summary'], 'v1_measurements': fit, 'scenarios': scenarios}, indent=1))
+    print(json.dumps({'summary': report['summary'], 'v1_measurements': fit, 'measured': measured,
+                      'allowance': allowance, 'headroom': headroom, 'scenarios': scenarios}, indent=1))
 
 
 if __name__ == '__main__':

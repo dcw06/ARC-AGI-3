@@ -1,10 +1,10 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
-## Evidence comprehension v2: question set and protocol r1 (for review; no compute authorized)
+## Evidence comprehension v2: question set and protocol r2 (for review; no compute authorized)
 
 Next milestone: reliable reading of controls and action-effect history. This is designed in light of the v1
-result, whose questions are now development material; the v1 baseline is hash-frozen in
-`reports/evidence_comprehension_v1_baseline_freeze.json`.
+result, whose questions are now development material. The v1 baseline is hash-frozen, bound to the r3
+launch lock and protocol revision 5, in `reports/evidence_comprehension_v1_baseline_freeze.json`.
 - **Decomposition:** 13 question families (4 control, 9 history), with mechanically checkable components
   behind the v1 target families.
 - **Two isolated comparisons against the unchanged baseline:**
@@ -13,7 +13,10 @@ result, whose questions are now development material; the v1 baseline is hash-fr
 - **Cases:** fresh seeded trajectories. There are 120 withheld contexts (the decision) and 30 development
   contexts, plus the 6 v1 archived contexts as a descriptive transfer check.
 - **Keys and decision rules:** dual keys; frozen paired decision rules.
-- **Size:** 4,518 questions and 7,978 scheduled calls.
+- **Size:** 4,532 questions and 8,004 scheduled calls. Estimated at v1 rates with explicit first-cell
+  overhead allowances, the whole first cell ends at 2,216 s, against a 3,000 s admission cutoff.
+- **r2 corrections (review of 8e3eb5b):** the baseline freeze binds what v1 launched; the budget covers
+  all first-cell overhead; `frame_since_step` states that it compares final frames only.
 
 See `reports/evidence_comprehension_v2_protocol.md`. Runner adaptation, the GPU-disabled package and the
 authorization follow review.

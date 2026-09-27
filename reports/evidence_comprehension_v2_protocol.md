@@ -1,17 +1,49 @@
-# Evidence comprehension v2: failure decomposition and two isolated comparisons (protocol r1, for review)
+# Evidence comprehension v2: failure decomposition and two isolated comparisons (protocol r2, for review)
 
-**Status:** revision 1, for review. The question set, keys, conditions, scorer and decision rules are frozen
+**Status:** revision 2, for review. The question set, keys, conditions, scorer and decision rules are frozen
 and tested offline. No model has been called. The runner adaptation, the GPU-disabled notebook, the source
-lock and the budget proposal come after this review. No compute is authorized: the unused v1 authorization
-is not reusable.
+lock and the budget proposal come next. No compute is authorized: the unused v1 authorization is not
+reusable. Revision 1 (`8e3eb5b`) is preserved at `reports/evidence_comprehension_v2_protocol_r1.md`.
+
+## Changes in r2 (review of r1 at 8e3eb5b)
+
+1. **The baseline freeze binds what v1 actually launched.** r1 hashed protocol revision 4
+   (`evidence_comprehension_v1_protocol_r4.md`). The r3 package that launched bound revision 5,
+   `reports/evidence_comprehension_v1_protocol.md`. The freeze record now:
+   - binds revision 5;
+   - binds the full r3 review source lock, SHA-256 `fa425fd07469defdccae26ffdbdc29233380d0086bbdd480b31e24515715c051`,
+     and the launch package lock that names it;
+   - requires every frozen file that the r3 lock binds (the protocol, question set, prompt and record code,
+     scorer, review, summary and token audit) to match the hash that lock recorded. The build fails otherwise.
+
+   Revision 4 is kept as historical context only. The questions themselves are unaffected.
+2. **The budget accounts for the whole first cell.** r1 started from 416 s of model startup and added
+   question time only. The estimate now separates four kinds of work that are not questions, each measured
+   in v1 and given a planning allowance:
+   - installation;
+   - model startup;
+   - other pre-question work;
+   - post-question finalization.
+
+   The 300 s cleanup reserve stays separate and is never spent by an estimate. r1's 1,509 s and 2.3×
+   headroom were partial figures and are superseded (§11).
+3. **`frame_since_step` states its limit.** The question now says that "stayed_same" compares final returned
+   frames only, and that an intermediate returned frame may still have differed.
+
+   Because the question set's version string seeds argument selection, the set was rebuilt as revision 2.
+   It has the same rules and seeds, and every coverage minimum still holds. Counts below are for r2.
+4. **Wording.**
+   - An entry that counts toward `tried_unchanged` left no net final change. It is not described as having
+     "no effect": a transient change can matter.
+   - "No regression detected" under the 0.05 tolerance is not a proof of non-inferiority.
 
 **Informed by the v1 result.** Everything here was designed after the v1 attempt `ecv1-4458251e` was
 inspected. The v1 questions and answers are now development material, not an untouched validation set.
 
 ## Question
 
-Can the model correctly identify what it can do now, and what it has already tried without effect? And
-which isolated representation change, if any, improves that?
+Can the model correctly identify what it can do now, and what it has already tried on the current frame
+without a net final change? And which isolated representation change, if any, improves that?
 
 This is a prerequisite for evidence-guided action selection. It is not a game-solving experiment: no action
 is chosen and no game is played.
@@ -21,10 +53,18 @@ Every question and conclusion is about the frames and outcomes shown to the mode
 
 ## 1. The v1 baseline is frozen
 
-`reports/evidence_comprehension_v1_baseline_freeze.json` records the SHA-256 of 14 v1 files: prompts,
-questions and keys, scoring rules, the protocol, the results, the evaluation, the archive, the source approval
-and the provider record. A test fails if any of them changes. v1's append-only dispositions record is
-deliberately not hashed.
+`reports/evidence_comprehension_v1_baseline_freeze.json` (revision 2) binds the v1 attempt as launched. It
+binds:
+- the r3 review source lock (`fa425fd0…c051`) and the launch package lock that names it;
+- protocol revision 5 (`reports/evidence_comprehension_v1_protocol.md`, the revision the lock bound);
+- the prompts, questions and keys, record code, scorer, review, results, evaluation, archive, source approval,
+  compute authorization and provider record.
+
+That is 19 files in all. Every one the r3 lock binds must match the hash the lock recorded, and a test fails
+if any file changes.
+
+Protocol revision 4 is listed separately, as historical context only. v1's append-only dispositions record
+is deliberately not hashed.
 
 The findings this work targets are:
 
@@ -49,14 +89,23 @@ they are reported and checked for regressions, never gated on their own.
 | history | component | `dispatch_status` | Was step *s* acknowledged, failed or unknown? | 3 statuses / not_shown |
 | history | component | `any_change` | Did any returned frame of step *s* differ from the frame before? | yes / no / not_observed / not_shown |
 | history | component | `final_equals_pre` | Was step *s*'s final frame the same as the frame before? | yes / no / not_observed / not_shown |
-| history | component | `frame_since_step` | Has the frame stayed the same since step *s* started? | stayed_same / changed_at_least_once / cannot_tell / not_shown |
-| history | component | `qualifying_steps` | Which shown entries qualify as "tried here without change"? | set of steps |
+| history | component | `frame_since_step` | Has the frame stayed the same since step *s* started, comparing final returned frames only? | stayed_same / changed_at_least_once / cannot_tell / not_shown |
+| history | component | `qualifying_steps` | Which shown entries left the still-current frame with no net final change? | set of steps |
 | history | **target** | `tried_unchanged` | The deduplicated exact actions that qualify (v1 wording) | set of actions |
 | history | **target** | `outcome_class` | The five-way outcome of step *s* (v1 wording) | 5 labels / not_shown |
 | history | **target** | `observed_effect` | The latest outcome of exactly this action (v1 wording) | 5 labels / not_observed |
 
 Target questions reuse the v1 wording and answer schemas verbatim, so any difference between the conditions
 is attributable to the condition, not to the question.
+
+**What qualifying means.** Following v1's explicit rule, an entry qualifies for `qualifying_steps` and
+`tried_unchanged` if it was acknowledged, its final returned frame equals the frame before it, and no later
+entry changed the final frame or had an unknown outcome. A changed-then-returned (transient) entry therefore
+qualifies. Such entries are described as leaving **no net final change**, never as having "no effect": a
+transient change is evidence and may matter.
+
+**What `stayed_same` means.** In `frame_since_step`, "stayed_same" is a statement about final-frame
+comparisons only. It does not mean that no intermediate returned frame differed, and the question says so.
 
 ## 3. Conditions: one registered intervention each
 
@@ -84,7 +133,7 @@ the same evidence and the same uncertainty as the baseline entry:
 
 Normalization and denormalization are exact inverses, which is tested on every shown entry and on dimension
 changes. Every field is derived from its own entry only. No field aggregates across entries, so the model is
-not handed "tried here without change". A tool that computes that answer would be a separate, separately
+not handed the qualifying set. A tool that computes that answer would be a separate, separately
 labelled arm; it is not part of this protocol.
 
 The interventions contain no game-specific content, no action recommendation and no offline probe discovery.
@@ -142,7 +191,7 @@ and of its most-used correct shortcut. It uses keys and shortcuts only, never an
 key distributions in the withheld partition are:
 - `legal_coordinate_actions`: 60 `[6]` / 60 `[]`;
 - `tried_unchanged`: 62 non-empty / 58 empty;
-- `outcome_class`: 22 no change, 50 changed then returned, 20 failed, 18 final changed, 22 unknown, 37 not
+- `outcome_class`: 23 no change, 52 changed then returned, 21 failed, 18 final changed, 19 unknown, 38 not
   shown;
 - `observed_effect`: every label 20 or more times.
 
@@ -157,8 +206,8 @@ Every key is computed twice:
 The build fails on any disagreement, any discontinuity, any non-equivalent candidate record, or any
 condition that differs from the baseline by more than its intervention.
 
-The frozen set is `research/evidence_comprehension_v2/probes.json`, SHA-256 `a51775a8…3438`, with 4,518
-questions. A fresh build is byte-identical to it.
+The frozen set (revision 2) is `research/evidence_comprehension_v2/probes.json`, SHA-256 `d713e414…7cec`,
+with 4,532 questions. A fresh build is byte-identical to it.
 
 ## 6. Shortcuts (predeclared, withheld partition)
 
@@ -169,13 +218,13 @@ read as no change. The best shortcut per family:
 |---|---|---|---|
 | legal_coordinate_actions | always `[]` (always `[6]` ties) | 0.500 | 60 / 120 |
 | tried_unchanged | transient entries excluded | 0.783 | 26 / 120 |
-| outcome_class | changed-then-returned read as no change | 0.704 | 50 / 169 |
-| observed_effect | changed-then-returned read as no change | 0.844 | 25 / 160 |
+| outcome_class | changed-then-returned read as no change | 0.696 | 52 / 171 |
+| observed_effect | changed-then-returned read as no change | 0.848 | 25 / 164 |
 | legal_actions | all seven | 0.083 | 110 / 120 |
 | action6_legal | always "no" | 0.500 | 60 / 120 |
-| step_action_match | ignore coordinates | 0.647 | 71 / 201 |
-| dispatch_status | the latest entry's status | 0.292 | 85 / 120 |
-| any_change | the final frame only | 0.808 | 23 / 120 |
+| step_action_match | ignore coordinates | 0.657 | 69 / 201 |
+| dispatch_status | the latest entry's status | 0.283 | 86 / 120 |
+| any_change | the final frame only | 0.800 | 24 / 120 |
 | final_equals_pre | null read as no change | 0.525 | 57 / 120 |
 | frame_since_step | unknown read as unchanged | 0.742 | 31 / 120 |
 | qualifying_steps | transient entries excluded | 0.758 | 29 / 120 |
@@ -204,7 +253,7 @@ future events or grids.
   2. withheld, pass 2, in exactly reversed order;
   3. development, pass 1;
   4. transfer, pass 1.
-- **Scheduled calls:** 7,978. The withheld passes take 3,442 calls each, development 868 and transfer 184.
+- **Scheduled calls:** 8,004. The withheld passes take 3,472 calls each, development 874 and transfer 186.
 - **Repetition:** the two withheld passes are repeated deterministic calls, not independent samples. A
   withheld question counts as correct only if it is correct in both passes. Disagreement between the passes
   is reported. Uncertainty is estimated at context level.
@@ -254,7 +303,10 @@ questions. They are provisional engineering thresholds and are not revised after
 | `no_clear_improvement` | Anything else. |
 
 A family regresses when its difference's upper bound is < 0, or when the candidate's accuracy is more than
-0.05 below the baseline's. Only `candidate_clear_improvement` promotes a candidate.
+0.05 below the baseline's. This tolerance is a preregistered engineering choice. When no regression is
+detected, that is reported as such; it is **not** a demonstration of non-inferiority.
+
+Only `candidate_clear_improvement` promotes a candidate.
 
 **Always reported, never pooled away:**
 - the single-condition labels for both conditions;
@@ -289,22 +341,37 @@ The prompt-token counts below are exact, from the pinned tokenizer, in
 
 | Measure | Value |
 |---|---|
-| Scheduled calls | 7,978 (4,518 distinct requests) |
-| Prompt tokens scheduled | 4.94 M |
+| Scheduled calls | 8,004 (4,532 distinct requests) |
+| Prompt tokens scheduled | 4.97 M |
 | Largest prompt | 916 tokens |
 | Longest valid answer | Within every family's `max_tokens` |
 
-**Runtime scenarios.** These are fitted to v1's measured, cache-disabled call timings: 1,308 calls with
-caching off, on one RTX Pro 6000. That was a different workload, so the scenarios are not guarantees.
+**The whole first cell.** v1's first cell took 916.1 s, all of it measured and retained in the v1 archive.
+The allowances are planning figures, not measurements:
 
-| Scenario | Withheld done | Everything done |
+| Work | v1 measured | Allowance |
 |---|---|---|
-| v1 measured rates (416 s startup) | 1,509 s | 1,681 s |
-| 3× slower | 3,695 s (cut: incomplete) | cut |
-| 3× slower, every call at its cap | cut | cut |
+| Installation | 131.2 s | 262 s (2×) |
+| Model startup | 415.8 s | 624 s (1.5×) |
+| Other pre-question work (monitor, canary) | 2.0 s | 30 s (minimum) |
+| Questions | 363.0 s (a different workload) | from the fitted rates below |
+| Post-question finalization | 4.1 s | 30 s (minimum) |
+| Cleanup reserve | — | 300 s, separate; no estimate spends it |
 
-The withheld decision fits the 3,000 s admission cutoff at up to about 2.3× the v1 rates. Beyond that,
-admission control stops the run and the result is `incomplete`.
+**Question time** is fitted to v1's 1,308 measured call slots, taken with caching off on one RTX Pro 6000.
+The fit is 0.0187 s per call, plus 5.5e-5 s per prompt token, plus 0.0066 s per completion token. It
+describes a different workload, so the scenarios are not guarantees.
+
+| Scenario | Questions start | Withheld done | Everything done | First cell ends |
+|---|---|---|---|---|
+| Measured overhead, v1 rates | 549 s | 1,647 s | 1,819 s | 1,823 s |
+| Allowance overhead, v1 rates | 916 s | 2,014 s | 2,186 s | 2,216 s |
+| Allowance overhead, 2× slower | 916 s | 3,112 s: withheld pass 2 cut, `incomplete` | cut | — |
+| Allowance overhead, 3× slower, every call at its cap | 916 s | cut | cut | — |
+
+The withheld decision fits the 3,000 s admission cutoff up to a slowdown of 2.23× the v1 rates with measured
+overhead, or 1.9× with the allowances. Beyond that, admission control stops the run and the result is
+`incomplete`. These figures replace r1's 1,509 s and 2.3×, which counted model startup but no other overhead.
 
 The proposal remains one attempt of ≤ 3,600 s. A new, separately sized authorization is required.
 
@@ -335,4 +402,5 @@ Subgoals, hazard reasoning, recovery and deliberate restarting remain the subseq
 | `scripts/audit_evidence_comprehension_v2_tokens.py` | token audit and runtime scenarios |
 | `reports/evidence_comprehension_v2_probe_summary.json` | counts, strata, shortcuts |
 | `reports/evidence_comprehension_v1_baseline_freeze.json` | v1 baseline hashes |
-| `tests/test_evidence_comprehension_v2.py` | 32 regressions |
+| `tests/test_evidence_comprehension_v2.py` | 35 regressions |
+| `reports/evidence_comprehension_v2_protocol_r1.md` | protocol revision 1, preserved |

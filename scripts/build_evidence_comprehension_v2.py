@@ -38,14 +38,22 @@ SCHEDULE_SEED = 'evidence-comprehension-v2-schedule'
 # Frozen minimums for the withheld partition, per target family and condition.
 MIN_TARGET_QUESTIONS, MIN_TARGET_DISAGREEMENT, MIN_TARGET_CONTEXTS = 60, 20, 30
 MIN_COMPONENT_QUESTIONS = 60
+V1_REVIEW_LOCK = 'notebooks/evidence-comprehension-v1-review-r3/review-source-lock.json'
+V1_LAUNCH_LOCK = 'notebooks/evidence-comprehension-v1-run/launch-package-lock.json'
+V1_REVIEW_LOCK_SHA256 = 'fa425fd07469defdccae26ffdbdc29233380d0086bbdd480b31e24515715c051'
+# Files of the completed v1 attempt. Each one the r3 review lock binds must still match the hash it bound.
 V1_BASELINE_FILES = (
+    V1_REVIEW_LOCK, V1_LAUNCH_LOCK,
+    'reports/evidence_comprehension_v1_protocol.md',  # revision 5: the protocol the r3 package bound
     'research/evidence_comprehension_v1/probes.json', 'research/evidence_comprehension_v1/probes.py',
     'research/evidence_comprehension_v1/independent.py', 'research/evidence_comprehension_v1/score.py',
     'research/action_effect_history_v1/contract.py', 'research/action_effect_v1/records.py',
-    'reports/evidence_comprehension_v1_protocol_r4.md', 'reports/evidence_comprehension_v1_probe_summary.json',
-    'reports/evidence_comprehension_v1_results.md', 'reports/evidence_comprehension_v1_live_evaluation.json',
-    'reports/evidence_comprehension_v1_live_archive.json', 'evidence/evidence-comprehension-v1-live.tar.xz',
-    'reports/evidence_comprehension_v1_source_approval.json', 'reports/evidence_comprehension_v1_postrun_provider.json')
+    'reports/evidence_comprehension_v1_probe_summary.json', 'reports/evidence_comprehension_v1_token_audit.json',
+    'reports/evidence_comprehension_v1_review.md', 'reports/evidence_comprehension_v1_results.md',
+    'reports/evidence_comprehension_v1_live_evaluation.json', 'reports/evidence_comprehension_v1_live_archive.json',
+    'evidence/evidence-comprehension-v1-live.tar.xz', 'reports/evidence_comprehension_v1_source_approval.json',
+    'reports/evidence_comprehension_v1_compute_authorization.json', 'reports/evidence_comprehension_v1_postrun_provider.json')
+V1_HISTORICAL = ('reports/evidence_comprehension_v1_protocol_r4.md',)  # context only: superseded before the launch
 
 
 def sha(raw):
@@ -230,8 +238,29 @@ def summary(value):
 
 
 def baseline_freeze():
-    return {'record': 'evidence comprehension v1 baseline freeze',
-            'attempt': 'ecv1-4458251ee9aa4e1b9ca39844a1c3a70b', 'package_lock': 'fa425fd0...c051',
+    lock_raw = (ROOT / V1_REVIEW_LOCK).read_bytes()
+    if sha(lock_raw) != V1_REVIEW_LOCK_SHA256:
+        raise ValueError('v1 r3 review lock hash mismatch')
+    lock = json.loads(lock_raw)
+    launch = json.loads((ROOT / V1_LAUNCH_LOCK).read_bytes())
+    if launch['review_lock_sha256'] != V1_REVIEW_LOCK_SHA256:
+        raise ValueError('v1 launch package does not bind the r3 review lock')
+    files = {path: sha((ROOT / path).read_bytes()) for path in V1_BASELINE_FILES}
+    bound = {**lock['bindings'], **lock['review_documents']}
+    matched = {}
+    for path, digest in files.items():
+        if path in bound:
+            if bound[path] != digest:
+                raise ValueError(f'{path} differs from the hash the r3 review lock bound')
+            matched[path] = True
+    if 'reports/evidence_comprehension_v1_protocol.md' not in matched:
+        raise ValueError('the r3 review lock does not bind the v1 protocol')
+    return {'record': 'evidence comprehension v1 baseline freeze (revision 2)',
+            'attempt': launch['attempt_id'], 'review_lock': V1_REVIEW_LOCK,
+            'review_lock_sha256': V1_REVIEW_LOCK_SHA256, 'review_lock_revision': lock['revision'],
+            'launch_package_lock': V1_LAUNCH_LOCK,
+            'protocol': {'path': 'reports/evidence_comprehension_v1_protocol.md', 'revision': 5,
+                         'bound_by_review_lock': True},
             'statement': ('The completed v1 diagnostic (prompts, questions, keys, responses, scoring rules, evaluation and '
                           'archive) is the frozen baseline and is not changed. Its questions and answers have been '
                           'inspected, so they are development material, not an untouched validation set. Follow-up '
@@ -239,7 +268,8 @@ def baseline_freeze():
             'findings_used': ['coordinate_actions: all 19 errors answered [6] when ACTION6 was not legal',
                               'tried_unchanged: weakest family (15/44)',
                               'outcome_class / observed_effect: changed-then-returned read as no change'],
-            'files': {path: sha((ROOT / path).read_bytes()) for path in V1_BASELINE_FILES}}
+            'files': files, 'files_matching_review_lock_bindings': sorted(matched),
+            'historical_context_only': {path: sha((ROOT / path).read_bytes()) for path in V1_HISTORICAL}}
 
 
 def export_requests(value):
