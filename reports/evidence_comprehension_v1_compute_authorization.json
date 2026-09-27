@@ -1,0 +1,19 @@
+{
+  "approval_kind": "compute",
+  "approved_at": "2026-09-27T19:03:10.913819+00:00",
+  "authorized_seconds": 3600,
+  "automatic_retries": 0,
+  "game_actions": 0,
+  "holdout_runs": 0,
+  "internal_seconds": 3300,
+  "maximum_attempts": 1,
+  "maximum_canaries": 1,
+  "maximum_questionnaire_calls": 1308,
+  "per_call_timeout_seconds": 60,
+  "review_lock_sha256": "fa425fd07469defdccae26ffdbdc29233380d0086bbdd480b31e24515715c051",
+  "scope": "evidence-comprehension-v1",
+  "scored_submissions": 0,
+  "source_approval_sha256": "002947cbe493e1bd0a2708f0aa1bddbe87db68bf096f90f58ed8353f71d7072c",
+  "status": "approved",
+  "user_response": "Approve and authorize (one GPU attempt, up to 3,600 s, 1,308 questionnaire calls + 1 canary, no retries, no game actions)"
+}
