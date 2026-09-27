@@ -220,10 +220,8 @@ No threshold or assertion has been relaxed.
   consumes a call's bound before dispatch can still make it fail, now with stop reason
   `deadline_expired`. That remains an **unresolved residual risk** on this host. No controlled series
   with host sleep prevented has been run, so pause-induced failures have not been separated from any
-  other cause. A pause on the live target would be handled the same conservative way.
-- **Accepted, 2026-09-27.** The reviewer explicitly accepted this residual test-harness risk ("Approve
-  and authorize") when approving package r3 (lock `fa425fd0…c051`) for launch. The acceptance is
-  recorded in `reports/evidence_comprehension_v1_source_approval.json`.
+  other cause. Accepting that risk is an explicit decision for the reviewer, and it has not been
+  recorded here as accepted. A pause on the live target would be handled the same conservative way.
 
 ## Next steps
 

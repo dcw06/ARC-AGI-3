@@ -3,7 +3,8 @@
 ## Evidence comprehension v1: live result (attempt ecv1-4458251e)
 
 Technically complete: 1,308 of 1,308 answered, prefix caching verified off (0 queries over 4.13 M
-prompt tokens), and both passes identical. Account GPU use was about 936 s.
+prompt tokens), and both passes identical. The account GPU counter rose by 926.26 s (an
+account-counter observation; exact billed time unknown).
 
 Gate results:
 - **criterion met:** available_actions;

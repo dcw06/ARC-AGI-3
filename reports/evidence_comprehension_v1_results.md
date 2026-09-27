@@ -16,9 +16,13 @@ Kaggle (version 1, one RTX Pro 6000).
 | Prefix caching | Off: launched with `--no-enable-prefix-caching`. At the final check the server had processed 4,130,013 prompt tokens with 0 prefix-cache queries and 0 hits. |
 | Cancellations | None needed. The slowest call took 1.8 s, and the mean was 0.26 s. |
 | Two-pass agreement | **Every answer identical** between the passes, in every group |
-| Time | Model startup 416 s; questions 363 s; first cell 916 s against the 3,300 s internal limit. Account GPU use was 0.26 h (about 936 s) of the 3,600 s authorized. |
+| Time | Model startup 416 s; questions 363 s; first cell 916 s against the 3,300 s internal limit. |
+| GPU accounting | Exact billed time: **unknown**. The account counter rose from 0.0 s (prelaunch record) to 926.26 s (post-run provider record `reports/evidence_comprehension_v1_postrun_provider.json`). That is an account-counter observation, not a billed amount, and it would include any other GPU use on the account in that window. The attempt is consumed, and the authorization left unused is not reusable. |
 
 ## Gate results (pre-registered; both-correct accuracy)
+
+"Gate complete" means every gated question was answered in both passes: the questionnaire finished.
+It does **not** mean comprehension passed. The per-family labels below are the result.
 
 | Family | Correct | Accuracy | Best shortcut | Accuracy where the best shortcut is wrong | Label |
 |---|---|---|---|---|---|
