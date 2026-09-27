@@ -1,13 +1,42 @@
-# Evidence comprehension v1: runner and review package r2
+# Evidence comprehension v1: runner and review package r3
 
 **Status:** GPU-disabled review snapshot. Authorized seconds are zero. There has been no
 reservation, upload or model call. This package is for an independent review. Source approval and
 a separate compute authorization would follow only after that review.
 
-The protocol is `reports/evidence_comprehension_v1_protocol.md` (revision 5). Package r1 (`0b0e453`,
-lock `866bffdb…354e`) is preserved in `notebooks/evidence-comprehension-v1-review-r1/`.
+The protocol is `reports/evidence_comprehension_v1_protocol.md` (revision 5, unchanged). Earlier
+packages are preserved:
+- r2 (`c6f9982`, lock `62259bdc…b136`): superseded for approval once its hash-bound check script and
+  review guide changed;
+- r1 (`0b0e453`, lock `866bffdb…354e`).
 
-## Changes in r2 (review of package r1)
+## Changes in r3 (after package r2)
+
+All of these are documented in `reports/evidence_comprehension_v1_intermittent_failure_investigation.md`.
+
+- **Intermittent connected-suite failure.** Identified from retained evidence: the old
+  `monitor_exit` fault killed the monitor on a fixed 3 s timer, racing the model host's canary.
+  - All three runs' evidence is archived, with replays of each.
+  - `monitor_exit` now uses a bounded readiness handshake.
+  - A separate `monitor_exit_before_ready` fault guarantees that no study evidence exists.
+- **Diagnostics.** The check keeps, per test and subtest:
+  - names, both clocks, durations, outcomes and tracebacks;
+  - load before and after;
+  - wall-clock step flags.
+
+  It also records host and git state, and every rehearsal's evidence directory, receipts and exit
+  codes. Fixture errors, runner exceptions and nested runs are handled. The recorder self-test uses
+  deliberate failures.
+- **Labelling fixes in the runner.** A call abandoned because of cancellation is recorded as
+  `canceled`. A call that fails after its own deadline is recorded as `deadline_expired`, and the
+  evaluator checks that label is true.
+- **Predeclared series 2.** Five sequential full checks gave 4 of 5 passed. Run 4's error came after
+  an inferred VM pause of the host: its first call expired before dispatch and was mislabelled, which
+  is now fixed. The test's dependence on the host not pausing remains an **unresolved residual risk**,
+  not recorded as accepted.
+
+## Changes in r2 (after package r1)
+
 
 Each finding was first reproduced on r1's code, then fixed with regressions:
 
@@ -65,13 +94,13 @@ tokenizer, an injected GPU identity, a 2 s call timeout and a 3 s idle window. I
 
 ## Known intermittent result
 
-One of three connected-suite runs during r2 preparation had one failing test. It has since been
-identified from retained evidence as a race in the `monitor_exit` rehearsal's design, not a defect in
-deadline enforcement, cancellation, cleanup or evidence integrity. See
-`reports/evidence_comprehension_v1_intermittent_failure_investigation.md`. That file covers the
-archived evidence, the replay, the controls and the proposed deterministic fix. Remediation and the
-predeclared repeat runs are pending. **This review guide and the check script are hash-bound, so
-package r2's lock is superseded for approval purposes; approval must be of a new package.**
+See "Changes in r3" above, and `reports/evidence_comprehension_v1_intermittent_failure_investigation.md`.
+
+- **Run A's failure:** cause identified, and the rehearsal race it depended on has been removed.
+- **Series 2:** 4 of 5 passed. Run 4's error was diagnosed as host-pause related (inferred), and the
+  mislabel it exposed is fixed.
+- **Residual risk:** the `late_abort` test's dependence on the host not pausing is still unresolved
+  and not recorded as accepted.
 
 ## What the local evidence cannot show
 
@@ -86,7 +115,7 @@ package r2's lock is superseded for approval purposes; approval must be of a new
 
 ```sh
 python -m scripts.check_evidence_comprehension_v1          # every local suite; rewrites the rehearsal results
-python scripts/review_evidence_comprehension_v1_notebook.py --folder notebooks/evidence-comprehension-v1-review-r2
+python scripts/review_evidence_comprehension_v1_notebook.py --folder notebooks/evidence-comprehension-v1-review-r3
 ```
 
 The review script does four things:

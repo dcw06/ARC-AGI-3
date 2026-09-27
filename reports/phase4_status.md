@@ -1,6 +1,19 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
-## Evidence comprehension v1: runner and GPU-disabled review package r2 (not authorized)
+## Evidence comprehension v1: runner and GPU-disabled review package r3 (not authorized)
+
+Package r3 (lock `fa425fd0…c051`) follows the intermittent-failure investigation:
+- the run-A failure is identified and its rehearsal race removed, with deterministic monitor-loss
+  faults;
+- the diagnostics recorder is hardened;
+- cancelled and deadline-expired calls are now correctly labelled;
+- predeclared series 2 gave 4 of 5 passed, with run 4 attributed to an inferred host pause;
+- the pre-freeze check passed.
+
+One residual risk is unresolved and not recorded as accepted: a host pause can still fail
+`late_abort`. r2 is superseded.
+
+### Package r2
 
 Package r2 (lock `62259bdc…b136`) closes the review of r1 (`0b0e453`, lock `866bffdb`, preserved):
 - call metadata is validated independently, and truncated responses are always scored invalid;
