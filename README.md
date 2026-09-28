@@ -41,6 +41,76 @@ The completed prescreen's notebook and V2 source lock are historical evidence.
 `make phase4-target-notebook` is not a lifecycle-certification build command;
 do not rebuild and launch the consumed prescreen attempt.
 
+## Latest research result: can the model read its own controls and history?
+
+Before the agent chooses actions from what it has already tried, we check whether the model reads that
+evidence correctly. These are questionnaires: no game is played. The most recent GPU run is **evidence
+comprehension v2** (attempt `ecv2-65759c16`; full report in
+[reports/evidence_comprehension_v2_results.md](reports/evidence_comprehension_v2_results.md)).
+
+**The run was technically clean.** All 8,004 questions were answered, caching was off, and both passes
+gave identical answers. Each question was asked under a baseline presentation and under one isolated change,
+on fresh cases the design never saw.
+
+**Control: "which legal actions take coordinates?"**
+
+| | Baseline | With the intersect instruction |
+|---|---|---|
+| Accuracy | 0.517 | 0.883 (criterion: 0.90) |
+
+- **The model knows the pieces.** It knows which actions are legal (0.96), whether ACTION6 is legal (0.98),
+  and that only ACTION6 takes coordinates (1.00).
+- **It fails to combine them.** Almost every baseline error answered "ACTION6" when ACTION6 was not legal.
+- **The instruction helps a lot but not enough.** It fixed 44 of those errors without breaking any others, but
+  falls just short of the criterion.
+- **One case remains.** Every remaining error has ACTION6 in the history but not legal. That is consistent with
+  the history interfering, but it is not yet shown to be the cause.
+
+**History: "what have I already tried here without a net change?"**
+
+| Question | Baseline | Normalized records |
+|---|---|---|
+| Did any returned frame change? (where a "final frame only" shortcut fails) | 0.21 | 1.00 |
+| Outcome of a given step | 0.82 | 0.90 |
+| Latest outcome of an exact action | 0.76 | 0.87 |
+| Has the frame stayed the same since a step? | 0.44 | 0.45 |
+| Actions tried on the current frame without net change | 0.53 | 0.53 |
+
+- **Reading one entry improved clearly.** The largest gain was spotting changes that returned to the original
+  frame.
+- **Combining several entries did not improve at all.** Deciding which earlier actions are still relevant to
+  the current frame stayed below the 0.70 floor under both presentations. That is the bottleneck: not reading
+  entries, but reasoning across them.
+
+**What it means.** Neither change met the pre-registered criterion, so neither is adopted. No action-selection
+experiment follows yet. The v2 run established where comprehension breaks, not that it works.
+
+### Next: evidence comprehension v3 (built, not yet run)
+
+[Protocol](reports/evidence_comprehension_v3_protocol.md). Two narrow comparisons against v2's best conditions:
+- **Controls:** each legal action shown with its argument requirement already joined. This is computed
+  assistance: success would mean an easier interface, not that the model learned the rule. A secondary check
+  swaps ACTION6 out of otherwise-identical histories to test the history-interference idea.
+- **History:** a tool marks each entry as eligible or not under a conservative rule, with a reason. The model
+  still has to select and deduplicate the actions. Any success is labelled **tool-assisted**.
+
+**Budget.** These estimates are fitted to v2's measured GPU calls. They are planning figures, not guarantees.
+
+| Scenario | Decision questions done | Whole notebook cell ends |
+|---|---|---|
+| Overheads as measured in v2 | 1,364 s | 1,485 s |
+| Generous overhead allowances | 1,706 s | 1,854 s |
+| Allowances, and inference twice as slow | 2,552 s | 2,818 s |
+
+- **What the scenarios assume.**
+  - The run has 6,054 questions.
+  - The last 300 s of the one-hour limit are reserved for cleanup, and no estimate uses them.
+  - Questions stop being admitted at 3,000 s.
+- **What the result is.** Even at twice v2's inference time, the whole run finishes before the cutoff. The
+  decision questions still fit at about 2.5 to 2.9 times slower.
+- **If it is slower than that.** The run stops cleanly and is reported incomplete; it is never presented as a
+  result.
+
 This is a starter kit for the [ARC Prize 2026 — ARC-AGI-3](https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3)
 competition. Production uses a multi-file agent package and a dedicated
 lifecycle adapter; `agent/my_agent.py` is compatibility-only.
