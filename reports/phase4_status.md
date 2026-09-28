@@ -18,8 +18,22 @@ launch lock and protocol revision 5, in `reports/evidence_comprehension_v1_basel
 - **r2 corrections (review of 8e3eb5b):** the baseline freeze binds what v1 launched; the budget covers
   all first-cell overhead; `frame_since_step` states that it compares final frames only.
 
-See `reports/evidence_comprehension_v2_protocol.md`. Runner adaptation, the GPU-disabled package and the
-authorization follow review.
+See `reports/evidence_comprehension_v2_protocol.md`.
+
+**Review package r1** (`notebooks/evidence-comprehension-v2-review-r1`, lock `de9642c6…82a3`; GPU-disabled,
+zero authorized seconds; see `reports/evidence_comprehension_v2_review.md`):
+- **Runner:** derived from v1's hash-locked stack by counted substitutions.
+- **Run evidence:** one append-only call log. v1's per-call files made per-call time grow with the run in
+  rehearsal.
+- **Notebook contents:** an import-closure inventory of 265 files (757 kB).
+- **Local check:** all six suites passed (96 tests, 19 connected rehearsals).
+- **Notebook review:**
+  - the frozen cell refuses to run without authority;
+  - the rehearsal run from the notebook's own payload answered all 8,004 calls and was technically
+    complete;
+  - the approval, reservation and packaging path was verified.
+
+Independent package review comes next, then source approval and a new compute authorization.
 
 ## Evidence comprehension v1: live result (attempt ecv1-4458251e)
 
