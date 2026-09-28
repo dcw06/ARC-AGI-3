@@ -193,7 +193,12 @@ DERIVED = {
          "        self.assertEqual(set(report['verdicts'].values()), {'baseline_meets_criterion'})", 1),
         ("        self.assertEqual(started, 2 * len(PROBES))", "        self.assertEqual(started, len(S.call_order(FROZEN)))", 1),
     )),
-    'tests/test_evidence_comprehension_v2_snapshot.py': ('tests/test_evidence_comprehension_v1_snapshot.py', ()),
+    'scripts/archive_evidence_comprehension_v2_live.py': ('scripts/archive_evidence_comprehension_v1_live.py', (
+        ("ATTEMPT = 'ecv2-4458251ee9aa4e1b9ca39844a1c3a70b'", "ATTEMPT = 'ecv2-65759c16cf1648a19f8bf0128a070826'", 1),
+        ("'notebooks/evidence-comprehension-v2-review-r3/review-source-lock.json'",
+         "'notebooks/evidence-comprehension-v2-review-r1/review-source-lock.json'", 1),
+    )),
+    'tests/test_evidence_comprehension_v2_snapshot.py':('tests/test_evidence_comprehension_v1_snapshot.py', ()),
     'tests/test_evidence_comprehension_v2_diagnostics.py': ('tests/test_evidence_comprehension_v1_diagnostics.py', ()),
     'tests/ecv2_diagnostics_fixtures.py': ('tests/ecv_diagnostics_fixtures.py', ()),
     'tests/ecv2_diagnostics_module_fixture.py': ('tests/ecv_diagnostics_module_fixture.py', ()),
