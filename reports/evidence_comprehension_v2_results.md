@@ -43,8 +43,10 @@ representations, not general comprehension.
 - **The components are fine.** The model knows which ids are legal (0.958), whether 6 is legal (0.975), and
   that only ACTION6 takes coordinates (1.000). The failure is in intersecting them.
 - **The instruction fixed 44 of the 58 errors, with no regressions.** Every one of the 14 remaining errors is
-  the same case: ACTION6 not legal, but present in the history. The instruction names that case explicitly,
-  and the history still wins.
+  the same case: ACTION6 not legal, but present in the history, even though the instruction names that case.
+  This association is **consistent with interference from the history**. It is not established as the cause:
+  this experiment did not vary the history independently, so establishing it would need a matched comparison
+  that removes or alters ACTION6 in the history while holding everything else fixed.
 - **Why it is not promoted.** The target's 0.883 falls short of the 0.90 criterion (its shortcut-disagreement
   accuracy is 1.00), so the verdict is `improved_below_criterion`.
 
@@ -109,8 +111,9 @@ action-selection experiment follows from this result.
 
 The error patterns suggest targets. These are hypotheses for a new, separately protocolled diagnostic, not
 conclusions:
-- **Control.** The remaining failure is the history's salience overriding an explicit rule (ACTION6 in history
-  but not legal). Candidates to test:
+- **Control.** The remaining failures occur when ACTION6 is in the history but not legal. That is consistent
+  with history interference, which is a hypothesis; a matched history-removal or alteration comparison would
+  test it. Candidates to test:
   - presenting available actions with their argument requirements already joined;
   - placing the intersection rule in the question.
 - **History, per-entry.** Transient changes remain the main error even with explicit phrases.

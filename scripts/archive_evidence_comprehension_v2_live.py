@@ -1,4 +1,4 @@
-# Derived from scripts/archive_evidence_comprehension_v1_live.py by scripts/derive_evidence_comprehension_v2.py; edit the derivation, not this file.
+# Derived from scripts/archive_evidence_comprehension_v1_live.py by scripts/derive_evidence_comprehension_v2_postrun.py; edit the derivation, not this file.
 """Portable checked archive and read-only replay for the evidence-comprehension v2 live attempt.
 
 archive  hashes the downloaded provider output and the launch/approval records into a deterministic
