@@ -30,6 +30,12 @@ from research.evidence_comprehension_v2 import representation as R
 
 VERSION = 'evidence_comprehension_v2_r2'
 FROZEN_PATH = __import__('pathlib').Path(__file__).with_name('probes.json')
+
+
+def load_frozen(path=FROZEN_PATH):
+    """(frozen question set, its SHA-256). Runtime code reads the frozen file, never the builder."""
+    raw = __import__('pathlib').Path(path).read_bytes()
+    return json.loads(raw), hashlib.sha256(raw).hexdigest()
 MODEL = V1.MODEL
 BASE_PROMPT = V1.SYSTEM_PROMPT  # frozen v1 questionnaire prompt (a test checks it against v1's frozen file)
 
