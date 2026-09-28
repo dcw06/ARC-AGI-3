@@ -1,4 +1,4 @@
-"""Scoring and frozen decision rules for evidence comprehension v3 (revision 1).
+"""Scoring and frozen decision rules for evidence comprehension v3 (revision 2).
 
 Validation, per-family labels, both-correct scoring over two identified withheld passes, the context-resampling
 bootstrap and the 0.05 regression tolerance are v2's, imported unchanged. The verdict order is v2's:
@@ -9,6 +9,16 @@ Only original-variant withheld questions enter a verdict. The matched synthetic 
 secondary, non-gating comparison per control condition (`history_alteration`): original against counterfactual on
 the same questions, with improvements meaning the answer was right only after ACTION6 left the history. Matched
 variants are resampled together by their original context.
+
+Completeness has three separate levels (revision 2, review of b9ac66f):
+- primary, per track: every withheld original-variant question of the track answered in both passes. A track's
+  verdict is decided only by its own primary questions; an incomplete primary makes that verdict `incomplete`.
+- secondary: every withheld history-alteration pair (original and counterfactual, both passes) answered.
+- schedule: every scheduled question answered as the repetition policy requires (withheld twice; development and
+  transfer once), and, separately, the withheld partition alone.
+Policy: the history alteration is non-gating. A complete primary result may therefore support promotion when the
+secondary comparison is incomplete; the report states the secondary status, and an incomplete secondary
+comparison is reported as incomplete, never as evidence for or against history interference.
 """
 from research.evidence_comprehension_v2.score import (PASS_IDS, REGRESSION_TOLERANCE, family_metrics,  # noqa: F401
                                                       outcome_fn, paired_metrics, score, validate)
@@ -101,7 +111,19 @@ def analyze(probes, passes):
     gate = report['families'].get(GATE_PARTITION, {}).get('original', {})
     for track in TRACKS:
         report['verdicts'][track] = track_verdict(track, gate, report['paired'].get(GATE_PARTITION, {}).get(track, {}))
-    gated = [p for p in probes if p['partition'] == GATE_PARTITION]
-    report['withheld_status'] = ('incomplete' if not gated or any(outcomes[GATE_PARTITION](p) == 'missing' for p in gated)
-                                 else 'complete')
+    report['completeness'] = completeness(probes, outcomes)
     return report
+
+
+def completeness(probes, outcomes):
+    def status(group):
+        return 'incomplete' if not group or any(outcomes[p['partition']](p) == 'missing' for p in group) else 'complete'
+    withheld = [p for p in probes if p['partition'] == GATE_PARTITION]
+    paired_sources = {p['source_context'] for p in withheld if p['variant'] == 'counterfactual'}
+    secondary = [p for p in withheld if p['track'] == 'control' and p['source_context'] in paired_sources]
+    return {'primary': {track: status([p for p in withheld if p['track'] == track and p['variant'] == 'original'])
+                        for track in TRACKS},
+            'secondary_history_alteration': status(secondary),
+            'withheld_schedule': status(withheld),
+            'whole_schedule': status(probes),
+            'policy': 'verdicts depend only on primary completeness; the history alteration is non-gating'}

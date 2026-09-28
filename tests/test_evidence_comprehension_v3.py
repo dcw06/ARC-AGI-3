@@ -199,7 +199,9 @@ class RequestContent(unittest.TestCase):
 class Scoring(unittest.TestCase):
     def test_all_correct_is_reference_meets_criterion(self):
         report = analyze(PROBES, passes())
-        self.assertEqual(report['withheld_status'], 'complete')
+        self.assertEqual(report['completeness']['primary'], {'control': 'complete', 'history': 'complete'})
+        self.assertEqual(report['completeness']['secondary_history_alteration'], 'complete')
+        self.assertEqual(report['completeness']['whole_schedule'], 'complete')
         self.assertEqual(report['verdicts'], {'control': 'baseline_meets_criterion',
                                               'history': 'baseline_meets_criterion_tool_assisted'})
 
@@ -207,8 +209,64 @@ class Scoring(unittest.TestCase):
         first = next(p['probe_id'] for p in PROBES if p['partition'] == 'withheld' and p['variant'] == 'original')
         for value in ({}, {'pass_1': passes()['pass_1']}, passes(drop=(first,))):
             report = analyze(PROBES, value)
-            self.assertEqual(report['withheld_status'], 'incomplete')
+            self.assertEqual(report['completeness']['withheld_schedule'], 'incomplete')
             self.assertIn('incomplete', ''.join(report['verdicts'].values()))
+
+
+class Completeness(unittest.TestCase):
+    """Review of b9ac66f: primary, secondary and schedule completeness are separate, and stated."""
+
+    @staticmethod
+    def improving(p):  # the reference misses every target the candidate gets right
+        return (p['role'] == 'reference' and p['family_role'] == 'target' and p['variant'] == 'original'
+                and (p['key'] == [] or p['family'] == 'tried_unchanged'))
+
+    def run_missing(self, select, pass_id):
+        value = passes(self.improving)
+        target = next(p for p in PROBES if select(p))
+        del value[pass_id][target['probe_id']]
+        return analyze(PROBES, value)
+
+    def test_missing_original_answer_in_either_pass_makes_only_that_track_incomplete(self):
+        for track, other in (('control', 'history'), ('history', 'control')):
+            for pass_id in ('pass_1', 'pass_2'):
+                with self.subTest(track=track, pass_id=pass_id):
+                    report = self.run_missing(lambda p: (p['partition'] == 'withheld' and p['variant'] == 'original'
+                                                         and p['track'] == track), pass_id)
+                    c = report['completeness']
+                    self.assertEqual(c['primary'][track], 'incomplete')
+                    self.assertEqual(c['primary'][other], 'complete')
+                    self.assertTrue(report['verdicts'][track].startswith('incomplete'))
+                    self.assertTrue(report['verdicts'][other].startswith('candidate_clear_improvement'))
+                    self.assertEqual((c['withheld_schedule'], c['whole_schedule']), ('incomplete', 'incomplete'))
+
+    def test_missing_original_in_an_altered_context_also_leaves_the_secondary_incomplete(self):
+        cf = {p['source_context'] for p in PROBES if p['variant'] == 'counterfactual' and p['partition'] == 'withheld'}
+        report = self.run_missing(lambda p: (p['partition'] == 'withheld' and p['variant'] == 'original'
+                                             and p['track'] == 'control' and p['source_context'] in cf), 'pass_2')
+        self.assertEqual(report['completeness']['secondary_history_alteration'], 'incomplete')
+        self.assertEqual(report['verdicts']['control'], 'incomplete')
+
+    def test_missing_counterfactual_answer_in_either_pass_leaves_promotion_to_the_primary(self):
+        for pass_id in ('pass_1', 'pass_2'):
+            with self.subTest(pass_id=pass_id):
+                report = self.run_missing(lambda p: p['partition'] == 'withheld' and p['variant'] == 'counterfactual',
+                                          pass_id)
+                c = report['completeness']
+                self.assertEqual(c['primary'], {'control': 'complete', 'history': 'complete'})
+                self.assertEqual(c['secondary_history_alteration'], 'incomplete')
+                self.assertEqual((c['withheld_schedule'], c['whole_schedule']), ('incomplete', 'incomplete'))
+                self.assertEqual(report['verdicts'], {'control': 'candidate_clear_improvement',
+                                                      'history': 'candidate_clear_improvement_tool_assisted'})
+                self.assertIn('non-gating', c['policy'])
+
+    def test_missing_development_answer_affects_only_the_whole_schedule(self):
+        value = passes()
+        dev = next(p['probe_id'] for p in PROBES if p['partition'] == 'development')
+        del value['pass_1'][dev]
+        c = analyze(PROBES, value)['completeness']
+        self.assertEqual((c['primary'], c['secondary_history_alteration'], c['withheld_schedule'], c['whole_schedule']),
+                         ({'control': 'complete', 'history': 'complete'}, 'complete', 'complete', 'incomplete'))
 
     def test_candidates_fixing_reference_errors_are_clear_improvements(self):
         def bad(p):

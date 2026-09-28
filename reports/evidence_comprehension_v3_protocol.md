@@ -1,7 +1,8 @@
-# Evidence comprehension v3: protocol revision 1 (for review; no compute authorized)
+# Evidence comprehension v3: protocol revision 2 (for review; no compute authorized)
 
 **Status.** The question set, independent keys, conditions, scorer and decision rules are built, frozen and
-tested offline (19 regressions). No model has been called. Still to come: the runner adaptation, the
+tested offline (23 regressions). The question set is unchanged from revision 1, which is preserved at
+`reports/evidence_comprehension_v3_protocol_r1.md` (`b9ac66f`). No model has been called. Still to come: the runner adaptation, the
 GPU-disabled package and the budget proposal. No GPU run is authorized.
 
 This revises the design draft `reports/evidence_comprehension_v3_design.md` (`2eec54f`), following the review of
@@ -9,6 +10,30 @@ that draft.
 
 **Informed by the v2 result** (attempt `ecv2-65759c16`). v2's questions, including its withheld partition, are
 development material. No v3 observation repeats any v1 or v2 observation; the build checks this.
+
+## Changes in r2 (review of b9ac66f)
+
+**Completeness is separated into three levels, and the policy is stated.** In r1, promotion used only original
+questions, but the single `withheld_status` also counted counterfactual questions. A missing counterfactual answer
+could therefore show `withheld_status: incomplete` alongside promotion verdicts. That contradicted r1's statement
+that any missing withheld answer prevents promotion. The scorer now reports:
+
+| Level | Complete when | Effect |
+|---|---|---|
+| Primary, per track | every withheld original-variant question of that track is answered in both passes | decides that track's verdict; incomplete makes the verdict `incomplete` |
+| Secondary: history alteration | every withheld alteration pair (original and counterfactual, control track, both passes) is answered | none on any verdict; an incomplete comparison is reported as incomplete, never as evidence either way |
+| Withheld schedule | every withheld question in both passes | reported |
+| Whole schedule | every scheduled question under the repetition policy | reported |
+
+**Policy.** The history alteration is non-gating. A complete primary result **may** support promotion when the
+secondary comparison is incomplete. Each track's verdict depends only on its own primary completeness.
+
+Regressions:
+- a missing original answer, in either pass and for either track, makes only that track incomplete;
+- a missing original answer in an altered context also leaves the secondary comparison incomplete;
+- a missing counterfactual answer, in either pass, leaves both verdicts to the primary questions, marks the
+  secondary comparison incomplete, and marks the withheld schedule and whole schedule incomplete;
+- a missing development answer affects only the whole schedule.
 
 ## Changes from the draft (review of 2eec54f)
 
@@ -143,8 +168,13 @@ v2's rules apply unchanged, over original-variant withheld questions:
 - the verdict order: `incomplete`, `baseline_meets_criterion` (the reference already meets it),
   `candidate_clear_improvement`, `mixed`, `improved_below_criterion`, `no_clear_improvement`.
 
-Track B's verdicts carry the suffix `_tool_assisted`. A missing answer is never scored; any missing withheld
-answer makes the result `incomplete`. "No regression detected" is not non-inferiority.
+Track B's verdicts carry the suffix `_tool_assisted`. A missing answer is never scored.
+
+Completeness follows the r2 policy above:
+- any missing primary answer makes that track `incomplete`;
+- missing secondary or descriptive answers never change a verdict, and are reported.
+
+"No regression detected" is not non-inferiority.
 
 | Result | Next step |
 |---|---|
