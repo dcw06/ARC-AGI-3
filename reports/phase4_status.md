@@ -1,5 +1,21 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
+## Evidence comprehension v2: live result (attempt ecv2-65759c16)
+
+**Technically complete.** All 8,004 of 8,004 calls were answered, prefix caching was verified off, and both
+withheld passes were identical. The first cell took 1,358 s. The account GPU counter rose by 1,367.39 s; that
+is an account-counter observation, and the exact billed time is unknown.
+
+Frozen verdicts:
+- **Control: `improved_below_criterion`.** Legal-coordinate accuracy rose from 0.517 to 0.883, with 44
+  errors fixed and none introduced. Every remaining error has ACTION6 in history but not legal.
+- **History: `improved_below_criterion`.** Per-entry reading improved: `outcome_class` 0.819 → 0.895,
+  `observed_effect` 0.762 → 0.866, and transient detection was fixed. Combining entries stayed at the floor
+  under both representations (`tried_unchanged` 0.533 / 0.525).
+
+Neither candidate is promoted. The next step is to investigate the representation or model capability
+before planning. See `reports/evidence_comprehension_v2_results.md`.
+
 ## Evidence comprehension v2: question set and protocol r2 (for review; no compute authorized)
 
 Next milestone: reliable reading of controls and action-effect history. This is designed in light of the v1

@@ -1,0 +1,19 @@
+{
+ "account_counter_delta_seconds": 1367.392,
+ "attempt_id": "ecv2-65759c16cf1648a19f8bf0128a070826",
+ "exact_provider_billed_seconds": null,
+ "gpu_quota_seconds_after": {
+  "time_reserved": 0.0,
+  "time_used": 2293.652,
+  "total_time_allowed": 108000.0
+ },
+ "gpu_quota_seconds_prelaunch": {
+  "time_reserved": 0.0,
+  "time_used": 926.26,
+  "total_time_allowed": 108000.0
+ },
+ "interpretation": "account-counter observation, not a billed amount: it includes any other GPU use on the account between the prelaunch record and this observation; exact billed time is unknown",
+ "kernel": "daichongwei06/arc3-evidence-comprehension-v2",
+ "kernel_status": "completion reported by the user; outputs downloaded (reports/evidence_comprehension_v2_download.json); status not queried by this record",
+ "observed_at": "2026-09-28T05:23:01.372404+00:00"
+}
