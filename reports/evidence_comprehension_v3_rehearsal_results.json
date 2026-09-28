@@ -1,0 +1,73 @@
+{
+  "scope": "local CPU rehearsals only; CPU fake of the model server with scripted answers; no model calls or GPU runs",
+  "run_id": "package-r1-check",
+  "diagnostics": "reports/evidence_comprehension_v3_diagnostics/package-r1-check.json",
+  "requested_suites": [
+    "probe_set_keys_scoring_and_analysis",
+    "schedule_admission_and_interrupted_gate",
+    "transport_cancellation_and_cache_metrics",
+    "diagnostics_recorder",
+    "connected_path_rehearsals",
+    "runtime_derivation_and_inventory"
+  ],
+  "suites": {
+    "probe_set_keys_scoring_and_analysis": {
+      "module": "tests.test_evidence_comprehension_v3",
+      "completed": true,
+      "tests_run": 23,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 223.1
+    },
+    "schedule_admission_and_interrupted_gate": {
+      "module": "tests.test_evidence_comprehension_v3_schedule",
+      "completed": true,
+      "tests_run": 16,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 19.4
+    },
+    "transport_cancellation_and_cache_metrics": {
+      "module": "tests.test_evidence_comprehension_v1_transport",
+      "completed": true,
+      "tests_run": 14,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 20.9
+    },
+    "diagnostics_recorder": {
+      "module": "tests.test_evidence_comprehension_v3_diagnostics",
+      "completed": true,
+      "tests_run": 6,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 27.1
+    },
+    "connected_path_rehearsals": {
+      "module": "tests.test_evidence_comprehension_v3_connected",
+      "completed": true,
+      "tests_run": 10,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 1496.3
+    },
+    "runtime_derivation_and_inventory": {
+      "module": "tests.test_evidence_comprehension_v3_derivation",
+      "completed": true,
+      "tests_run": 7,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 12.2
+    }
+  },
+  "all_passed": true,
+  "model_calls": 0,
+  "gpu_runs": 0,
+  "token_audit": "reports/evidence_comprehension_v3_token_audit.json"
+}
