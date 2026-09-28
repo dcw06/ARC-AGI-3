@@ -1,5 +1,7 @@
 # Evidence comprehension v3: design draft (for review; nothing built, no compute authorized)
 
+**Superseded** by `reports/evidence_comprehension_v3_protocol.md` (revision 1), which applies the review of this draft. Kept as the record of what was reviewed.
+
 **Informed by the v2 result** (attempt `ecv2-65759c16`, `reports/evidence_comprehension_v2_results.md`). v2's
 questions and answers, including its withheld partition, are now development material.
 
