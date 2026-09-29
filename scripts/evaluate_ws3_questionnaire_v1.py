@@ -287,9 +287,8 @@ def evaluate_output(output, *, mode='live', rehearsal_seconds=None):
                        'phase_reached': run['calls'][-1]['phase'] if run['calls'] else None}
     except Exception as exc:
         evidence = {'verified': False, 'error': type(exc).__name__ + ': ' + str(exc)[:200]}
-    gate_status = ('complete' if analysis and analysis['completeness']['primary'] == 'complete'
-                   and analysis['completeness']['over_claim_gates'] == 'complete'
-                   else 'incomplete')  # WS3: the evidence every verdict requires
+    gate_status = ('complete' if analysis and analysis['completeness']['withheld'] == 'complete'
+                   else 'incomplete')  # WS3: every withheld answer; the verdict applies its own policy
     return {'mode': mode, 'frozen_internal_seconds': frozen_internal, 'lifecycle_passed': not lifecycle,
             'lifecycle_errors': lifecycle, 'run_evidence': evidence, 'call_errors': calls_errors[:20],
             'run': run_summary, 'gate_status': gate_status,

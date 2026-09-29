@@ -89,9 +89,8 @@ DERIVED = {
     'scripts/evaluate_ws3_questionnaire_v1.py': (
         ("    gate_status = ('complete' if analysis and set(analysis['completeness']['primary'].values()) == {'complete'}\n"
          "                   else 'incomplete')  # v3: primary completeness of both tracks",
-         "    gate_status = ('complete' if analysis and analysis['completeness']['primary'] == 'complete'\n"
-         "                   and analysis['completeness']['over_claim_gates'] == 'complete'\n"
-         "                   else 'incomplete')  # WS3: the evidence every verdict requires", 1),
+         "    gate_status = ('complete' if analysis and analysis['completeness']['withheld'] == 'complete'\n"
+         "                   else 'incomplete')  # WS3: every withheld answer; the verdict applies its own policy", 1),
         ("            'gate': analysis['verdicts'] if analysis else None,",
          "            'gate': {'questionnaire': analysis['verdict']} if analysis else None,", 1),
     ),
@@ -111,6 +110,10 @@ DERIVED = {
          "            wrong = 'unknown' if probes[flip['probe_id']]['key'] == 'confirmed' else 'confirmed'", 1),
         ("truncate(truncated / 'worker/run', 2664)", "truncate(truncated / 'worker/run', 2500)", 1),
         ("calls_recorded=2664", "calls_recorded=2500", 1),
+        # WS3 policy: a missing regression-check answer withholds promotion; it makes the verdict incomplete only when
+        # the missing answer is primary or in an over-claim gate. Either way, nothing may be promoted.
+        ("        self.assertTrue(value['gate'][track].startswith('incomplete'))",
+         "        self.assertNotEqual(value['gate'][track], 'candidate_clear_improvement_tool_assisted')", 1),
     ),
     'tests/test_ws3_questionnaire_v1_schedule.py': (
         ("report['completeness']['withheld_schedule']", "report['completeness']['withheld']", 3),
