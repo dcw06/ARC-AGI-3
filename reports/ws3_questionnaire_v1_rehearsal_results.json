@@ -1,0 +1,83 @@
+{
+  "scope": "local CPU rehearsals only; CPU fake of the model server with scripted answers; no model calls or GPU runs",
+  "run_id": "package-r1-check",
+  "diagnostics": "reports/ws3_questionnaire_v1_diagnostics/package-r1-check.json",
+  "requested_suites": [
+    "probe_set_keys_scoring_and_analysis",
+    "transition_records_and_fixtures",
+    "schedule_admission_and_interrupted_gate",
+    "transport_cancellation_and_cache_metrics",
+    "diagnostics_recorder",
+    "connected_path_rehearsals",
+    "runtime_derivation_and_inventory"
+  ],
+  "suites": {
+    "probe_set_keys_scoring_and_analysis": {
+      "module": "tests.test_ws3_questionnaire_draft",
+      "completed": true,
+      "tests_run": 22,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 322.2
+    },
+    "transition_records_and_fixtures": {
+      "module": "tests.test_transition_evidence_v1",
+      "completed": true,
+      "tests_run": 16,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 0.2
+    },
+    "schedule_admission_and_interrupted_gate": {
+      "module": "tests.test_ws3_questionnaire_v1_schedule",
+      "completed": true,
+      "tests_run": 16,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 12.0
+    },
+    "transport_cancellation_and_cache_metrics": {
+      "module": "tests.test_evidence_comprehension_v1_transport",
+      "completed": true,
+      "tests_run": 14,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 20.2
+    },
+    "diagnostics_recorder": {
+      "module": "tests.test_ws3_questionnaire_v1_diagnostics",
+      "completed": true,
+      "tests_run": 6,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 14.2
+    },
+    "connected_path_rehearsals": {
+      "module": "tests.test_ws3_questionnaire_v1_connected",
+      "completed": true,
+      "tests_run": 10,
+      "failures": 1,
+      "errors": 0,
+      "passed": false,
+      "seconds": 1149.5
+    },
+    "runtime_derivation_and_inventory": {
+      "module": "tests.test_ws3_questionnaire_v1_derivation",
+      "completed": true,
+      "tests_run": 8,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 14.1
+    }
+  },
+  "all_passed": false,
+  "model_calls": 0,
+  "gpu_runs": 0,
+  "token_audit": "reports/ws3_questionnaire_v1_token_audit.json"
+}
