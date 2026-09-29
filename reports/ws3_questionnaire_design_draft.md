@@ -1,5 +1,7 @@
 # Workstream 3: factual transition questionnaire — design draft r0 (for review; nothing frozen; no compute)
 
+**Superseded** by `reports/ws3_questionnaire_design_draft_r2.md`, which applies the design review of this draft. Kept as the record of what was reviewed.
+
 **Status.** A draft built and tested offline on branch `ws3-action-effects`:
 `research/transition_evidence_v1/questionnaire.py`, and `tests/test_ws3_questionnaire_draft.py` (9 tests), which
 passes alongside the 16 transition tests. No model has been called. Nothing is frozen: the thresholds, sizes and the
