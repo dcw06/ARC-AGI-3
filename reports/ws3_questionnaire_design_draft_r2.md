@@ -1,4 +1,4 @@
-# Workstream 3: factual transition questionnaire — design draft r2 (for review; not frozen; no compute)
+# Workstream 3: factual transition questionnaire — design draft r2.1 (for review; not frozen; no compute)
 
 **Status.** A revision of draft r0 (`5f54940`, `reports/ws3_questionnaire_design_draft.md`), applying the design
 review of r0. It is built and tested offline on branch `ws3-action-effects`, in commit `93142fc`:
@@ -12,6 +12,18 @@ review of r0. It is built and tested offline on branch `ws3-action-effects`, in 
 
 This is not a launch package: no runner, notebook or approval exists. It is submitted with its code and fixtures for
 independent review.
+
+## Changes in r2.1 (review of 93142fc and f7c97e4)
+
+| Finding | Fix | Regression |
+|---|---|---|
+| **P1: a missing check-family answer crashed the evaluator.** The verdict indexed the confidence interval of an incomplete pair. | The verdict uses paired intervals only for families with complete evidence. A regression-check family with any missing answer is listed in `families_without_regression_evidence`, is **never read as showing no regression**, and withholds promotion (`candidate_improvement_unconfirmed_checks_incomplete`). | Missing one answer in **every family × both conditions × both passes** (40 cases): no crash, and the exact completeness consequence is asserted for each. |
+| **P2: an allegedly non-gating check blocked the verdict.** A `level_completion_reported` "no" question is also an over-claim-gate question. | Completeness is declared at separate levels: `primary`, `over_claim_gates`, `checks`, `withheld`, `whole_schedule`, with an explicit policy. **Primary and over-claim-gate questions are required for any verdict**, including the check-family questions that belong to a gate. Other check questions are regression evidence. Development and transfer never change the verdict. | A missing gate question from a check family leaves primary complete, marks gates incomplete, and makes the verdict incomplete, by the stated policy. |
+| **P2: the false-progress gate missed claims made without observed evidence.** It excluded `level_completion_reported` "not observed". | "not observed" joins the gate: a "yes" where nothing was observed is a false-progress claim. The denominator rose from 152 to **178** contexts. | Replacing every withheld candidate "not observed" answer with "yes" now fails the gate, counting each context. |
+| **P2: the `any_frame_differs` wording disagreed with its key.** For partial observations where no valid frame differs, the literal question ("does at least one valid frame differ?") answered "no", while the key was "cannot tell". | The conservative measurement is kept and the question now states it: "yes" if a valid returned frame differs; "no" only if frames were returned, every one is valid and none differs; otherwise "cannot tell" (failed, unknown, no frame, or invalid frames with no valid change, since an invalid frame could hide a change). | Wording test, plus the partial-observation keys. |
+| **The startup allowance.** v3's model startup took 819 s, about 2× v2's. | Budget overheads are now the worse of v2 and v3 per component, and per-call rates are fitted to v3's calls. The startup allowance is now 1,228 s (1.5 × 819). | See Workload and budget. |
+
+**Result.** 36 tests pass: 20 questionnaire and 16 transition.
 
 ## Changes from r0 (design review)
 
@@ -110,21 +122,31 @@ These come from the pinned Qwen3-VL tokenizer, in `reports/ws3_questionnaire_tok
 | Largest prompt | withheld 3,215; development 2,951; transfer 17,520 (64 × 64 frames); all within limits |
 | Completion cap | 32 tokens, which covers the longest valid answer (13 tokens pretty-printed) |
 
-**Runtime scenarios.** These are fitted to v2's measured cache-disabled calls on shorter prompts. They include
-installation, model startup, pre-question work and finalization, measured and with allowances; the 300 s cleanup
-reserve is never spent.
+**Runtime scenarios (r2.1).** These are fitted to v3's measured cache-disabled calls. Each overhead component is
+the worse of the v2 and v3 measurements: installation 141 s, **model startup 819 s**, other pre-question work 2 s,
+finalization 4 s. The allowances are installation 282 s, **startup 1,228 s**, and 30 s minima for the other two.
+The 300 s cleanup reserve is never spent.
 
-| Scenario | Withheld done | First cell ends |
-|---|---|---|
-| v2's measured overhead | 1,267 s | 1,443 s |
-| Allowances (2× installation, 1.5× startup) | 1,609 s | 1,812 s |
-| Allowances, 2× slower | 2,358 s | 2,733 s |
-| Allowances, 3× slower, every call at its cap | cut | cut |
+| Scenario | Questions start | Withheld done | First cell ends |
+|---|---|---|---|
+| Worst measured overhead, v3 rates | 961 s | 1,701 s | 1,849 s |
+| Allowances, v3 rates | 1,540 s | 2,280 s | 2,454 s |
+| Allowances, 2× slower | 1,540 s | **3,019 s (cut in withheld pass 2: incomplete)** | — |
+| Allowances, 3× slower, every call at its cap | 1,540 s | cut | cut |
 
-**A caution from v3.** Its model startup took 819 s, about 2× v2's, which the 602 s startup allowance does not
-cover. Before freezing, the allowance should be revised upward, or v3's measured overhead used. Admission control
-protects the deadline in any case; it does not guarantee a complete experiment. Evaluator costs are CPU-only and
-fall after the run.
+**Headroom.** The withheld decision fits the 3,000 s admission cutoff up to about **2.8× the v3 call rate with the
+worst measured overhead**, or **2.0× with the allowances**. Admission control protects the deadline, but a run
+cut at the cutoff is reported incomplete.
+
+**A decision for review before freezing.** With the higher startup allowance, the 2×-slower scenario no longer
+completes the withheld partition. The options are:
+1. accept about 2.0× headroom;
+2. trim the workload, e.g. withheld targets from 120 to 100 questions per family (the floors), or drop the 64 × 64
+   transfer group (240 calls, the largest prompts);
+3. propose a longer internal limit, which needs a separate compute authorization in any case.
+
+**Other costs.** Evaluator costs are CPU-only and come after the run. Evidence storage uses the append-only call
+log that v2 and v3 exercised live.
 
 ## Next
 

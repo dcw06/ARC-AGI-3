@@ -181,5 +181,71 @@ class Rules(unittest.TestCase):
         self.assertEqual(report['verdict'], 'reference_meets_criterion_tool_assisted')
 
 
+class ReviewOf93142fc(unittest.TestCase):
+    """Regressions for the review of 93142fc: missing answers, gate membership, not_observed over-claims, wording."""
+
+    @staticmethod
+    def improving(p):
+        return p['condition'] == 'raw_evidence' and p['role'] == 'primary' and p['partition'] == 'withheld'
+
+    def test_a_missing_answer_in_any_family_condition_and_pass_never_crashes(self):
+        gate_members = {pair for m in Q.OVER_CLAIM_GATES.values() for pair in m}
+        base = passes(self.improving)
+        for family in Q.FAMILIES:
+            for condition in Q.CONDITIONS:
+                for pass_id in ('pass_1', 'pass_2'):
+                    with self.subTest(family=family, condition=condition, pass_id=pass_id):
+                        target = next(p for p in PROBES if p['partition'] == 'withheld' and p['family'] == family
+                                      and p['condition'] == condition)
+                        value = {k: dict(v) for k, v in base.items()}
+                        del value[pass_id][target['probe_id']]
+                        report = analyze(PROBES, value)
+                        c = report['completeness']
+                        if target['role'] == 'primary':
+                            self.assertEqual((c['primary'], report['verdict']), ('incomplete', 'incomplete_tool_assisted'))
+                        elif (target['family'], target['key']) in gate_members:
+                            self.assertEqual((c['primary'], c['over_claim_gates']), ('complete', 'incomplete'))
+                            self.assertEqual(report['verdict'], 'incomplete_tool_assisted')
+                        else:
+                            self.assertEqual((c['primary'], c['over_claim_gates'], c['checks']),
+                                             ('complete', 'complete', 'incomplete'))
+                            self.assertEqual(report['verdict'],
+                                             'candidate_improvement_unconfirmed_checks_incomplete_tool_assisted')
+                            self.assertIn(family, report['families_without_regression_evidence'])
+
+    def test_a_missing_gate_question_from_a_check_family_is_explicitly_required(self):
+        target = next(p for p in PROBES if p['partition'] == 'withheld' and p['family'] == 'level_completion_reported'
+                      and p['key'] == 'no' and p['condition'] == 'raw_plus_computed_record')
+        report = analyze(PROBES, passes(drop=(target['probe_id'],)))
+        self.assertEqual(report['completeness']['primary'], 'complete')
+        self.assertEqual(report['completeness']['over_claim_gates'], 'incomplete')
+        self.assertEqual(report['verdict'], 'incomplete_tool_assisted')
+        self.assertIn('over-claim-gate question', report['completeness']['policy'])
+
+    def test_affirmative_answers_where_nothing_was_observed_are_false_progress(self):
+        targets = [p for p in PROBES if p['partition'] == 'withheld' and p['condition'] == 'raw_plus_computed_record'
+                   and p['family'] == 'level_completion_reported' and p['key'] == 'not_observed']
+        self.assertTrue(targets)
+        ids = {p['probe_id'] for p in targets}
+        report = analyze(PROBES, passes(lambda p: p['probe_id'] in ids, answer=lambda p: 'yes'))
+        gate = report['over_claims']['raw_plus_computed_record']['false_progress']
+        self.assertEqual(gate['over_claim_contexts'], len({p['case_context'] for p in targets}))
+        self.assertEqual(gate['status'], 'fails')
+
+    def test_any_frame_differs_wording_matches_its_conservative_key(self):
+        text = Q.question_text('any_frame_differs')
+        self.assertIn('every returned frame is valid', text)
+        self.assertIn('invalid', text)
+        partial = [p for p in PROBES if p['family'] == 'any_frame_differs'
+                   and 'invalid' in json.dumps(BUILT['contexts'][p['context_id']].get('returned_frames'))]
+        for p in PROBES:
+            if p['family'] != 'any_frame_differs':
+                continue
+            frames = BUILT['contexts'][p['context_id']]['returned_frames']
+            if isinstance(frames, list) and frames and any(T.grid_problem(f) for f in frames) and p['key'] == 'cannot_tell':
+                partial.append(p)
+        self.assertTrue(partial)  # partial observations with no valid change are keyed cannot_tell, as worded
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -18,13 +18,15 @@ Added here:
   - a missing answer makes the gate incomplete;
   - the cap is 0.02 on at least 100 contexts. It is a benchmark criterion, not a guarantee about the underlying
     error probability.
-- **Primary completeness:** any missing primary answer blocks the verdict (`incomplete`). Missing check or descriptive
-  answers are reported and never change the verdict.
+- **Completeness** (revision r2.1, review of 93142fc): primary questions and over-claim-gate questions are required for
+  any verdict; missing regression-check answers withhold promotion and are never read as "no regression"; development
+  and transfer never change the verdict (COMPLETENESS_POLICY).
 - **Verdict** (suffix `_tool_assisted`; the first rule that applies decides):
   1. `incomplete`;
   2. `reference_meets_criterion` when the reference already meets the criterion on every primary family and passes
      both gates (there is no demonstrated need to promote the candidate);
-  3. `candidate_clear_improvement` when the candidate meets the criterion on every primary family and passes both
+  3. `candidate_clear_improvement` (or `candidate_improvement_unconfirmed_checks_incomplete` when a regression check
+     lacks evidence) when the candidate meets the criterion on every primary family and passes both
      gates, every primary family where the reference falls short improves (paired lower bound > 0), and no family
      regresses;
   4. `mixed`;
@@ -152,40 +154,58 @@ def analyze(probes, passes):
             report['extraction_split'].setdefault(cond, {})[label] = {
                 'n': len(sub), 'correct': hits.count('correct'), 'missing': hits.count('missing')}
         report['over_claims'][cond] = over_claims(probes, passes, cond)
-    primary = [p for p in probes if p['partition'] == 'withheld' and p['role'] == 'primary']
+    held = [p for p in probes if p['partition'] == 'withheld']
+    gate_members = {pair for members in Q.OVER_CLAIM_GATES.values() for pair in members}
+
+    def status(group):
+        return 'incomplete' if not group or any(outcomes['withheld'](p) == 'missing' for p in group) else 'complete'
     report['completeness'] = {
-        'primary': 'incomplete' if not primary or any(outcomes['withheld'](p) == 'missing' for p in primary) else 'complete',
-        'withheld': 'incomplete' if any(outcomes['withheld'](p) == 'missing' for p in probes
-                                        if p['partition'] == 'withheld') else 'complete',
+        'primary': status([p for p in held if p['role'] == 'primary']),
+        'over_claim_gates': status([p for p in held if (p['family'], p['key']) in gate_members]),
+        'checks': status([p for p in held if p['role'] != 'primary']),
+        'withheld': status(held),
         'whole_schedule': 'incomplete' if any(outcomes[p['partition']](p) == 'missing' for p in probes) else 'complete',
-        'policy': 'the verdict depends on primary completeness only; missing checks and descriptive answers are reported'}
+        'policy': COMPLETENESS_POLICY}
     report['verdict'] = verdict(report) + '_tool_assisted'
     return report
 
 
+COMPLETENESS_POLICY = (
+    'Required for any verdict: every withheld primary question and every withheld over-claim-gate question, in both '
+    'conditions and both passes. Gate questions include check-family questions (level_completion_reported keyed no or '
+    'not_observed); a missing one makes the verdict incomplete. Other check-family questions are regression evidence: '
+    'a family with any missing answer has no regression evidence, is never read as showing no regression, and '
+    'withholds promotion (candidate_improvement_unconfirmed_checks_incomplete). Development and transfer answers never '
+    'change the verdict.')
+
+
 def verdict(report):
-    if report['completeness']['primary'] != 'complete':
+    c = report['completeness']
+    if c['primary'] != 'complete' or c['over_claim_gates'] != 'complete':
         return 'incomplete'
     fams = report['families']['withheld']
     paired = report['paired']['withheld']
     primary = Q.ROLES['primary']
     gates = report['over_claims']
-    if any(g['status'] == 'incomplete' for c in Q.CONDITIONS for g in gates[c].values()):
+    if any(g['status'] == 'incomplete' for cond in Q.CONDITIONS for g in gates[cond].values()):
         return 'incomplete'
+    evidenced = {f for f, row in paired.items() if not row['incomplete'] and row['difference_bootstrap_95']}
+    without_evidence = sorted(set(paired) - evidenced)
+    report['families_without_regression_evidence'] = without_evidence
+    lower = {f: paired[f]['difference_bootstrap_95'][0] for f in evidenced}
+    upper = {f: paired[f]['difference_bootstrap_95'][1] for f in evidenced}
+    regressed = [f for f in evidenced if upper[f] < 0 or fams[CANDIDATE][f]['accuracy']
+                 < fams[REFERENCE][f]['accuracy'] - REGRESSION_TOLERANCE]
+    improved = [f for f in primary if lower[f] > 0]
     ref_met = all(fams[REFERENCE][f]['label'] == 'criterion_met' for f in primary)
     cand_met = all(fams[CANDIDATE][f]['label'] == 'criterion_met' for f in primary)
     ref_gates = all(g['status'] == 'passes' for g in gates[REFERENCE].values())
     cand_gates = all(g['status'] == 'passes' for g in gates[CANDIDATE].values())
-    lower = {f: paired[f]['difference_bootstrap_95'][0] for f in paired}
-    upper = {f: paired[f]['difference_bootstrap_95'][1] for f in paired}
-    regressed = [f for f in paired if upper[f] < 0 or fams[CANDIDATE][f]['accuracy']
-                 < fams[REFERENCE][f]['accuracy'] - REGRESSION_TOLERANCE]
-    improved = [f for f in primary if lower[f] > 0]
     if ref_met and ref_gates:
         return 'reference_meets_criterion'
     if (cand_met and cand_gates and not regressed
             and all(fams[REFERENCE][f]['label'] == 'criterion_met' or lower[f] > 0 for f in primary)):
-        return 'candidate_clear_improvement'
+        return 'candidate_improvement_unconfirmed_checks_incomplete' if without_evidence else 'candidate_clear_improvement'
     if improved and regressed:
         return 'mixed'
     if improved:

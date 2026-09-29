@@ -2,9 +2,10 @@
 
 tokenize (pinned tokenizer env): every scheduled request's prompt tokens, the key answer's completion tokens, and
     the longest schema-valid answer against max_tokens.
-estimate (any env): scenarios fitted to the v2 live attempt's measured cache-disabled calls, with explicit
-    first-cell overhead measured in v2 and planning allowances (scripts/audit_evidence_comprehension_v3_tokens.py,
-    unchanged), in schedule order, against the 3,000 s admission cutoff. The 300 s cleanup reserve is never spent.
+estimate (any env): scenarios fitted to the v3 live attempt's measured cache-disabled calls (same stack; the latest
+    measurement), with each first-cell overhead component taken as the worse of the v2 and v3 measurements, and
+    planning allowances on top, in schedule order, against the 3,000 s admission cutoff. v3's model startup took 819 s,
+    about twice v2's, so the startup allowance is 1.5 x 819 s. The 300 s cleanup reserve is never spent.
 
 The raw-frame workload differs from Workstream 1's compact questions: prompts carry whole frame sequences. The fit is
 per call, per prompt token and per completion token, so longer prompts are charged, but it was measured on shorter
@@ -55,15 +56,56 @@ def tokenize():
                       'caps_cover': all(c['covers'] for c in caps.values())}))
 
 
+def measurements(archive, run):
+    """Per-call least-squares fit and first-cell overheads from one archived live attempt with a call log."""
+    import tarfile
+    with tarfile.open(ROOT / archive, 'r:xz') as bundle:
+        def record(name):
+            return json.load(bundle.extractfile(run + name))
+        calls = [json.loads(line) for line in bundle.extractfile(run + 'worker/run/calls.jsonl').read().splitlines()]
+        installation = record('control/installation.json')['elapsed_seconds']
+        startup = record('worker/model-ready.json')['startup_seconds']
+        cell = record('control/notebook-cost.json')['elapsed_seconds']
+    calls.sort(key=lambda c: c['started_at'])
+    rows = [(c['server_prompt_tokens'], c['server_completion_tokens'], n['started_at'] - c['started_at'])
+            for c, n in zip(calls, calls[1:])]
+    sx, sy = [[0.0] * 3 for _ in range(3)], [0.0] * 3
+    for p, q, t in rows:
+        v = (1.0, p, q)
+        for i in range(3):
+            sy[i] += v[i] * t
+            for j in range(3):
+                sx[i][j] += v[i] * v[j]
+    a = [row[:] + [sy[i]] for i, row in enumerate(sx)]
+    for i in range(3):
+        pivot = max(range(i, 3), key=lambda r: abs(a[r][i]))
+        a[i], a[pivot] = a[pivot], a[i]
+        for r in range(3):
+            if r != i:
+                f = a[r][i] / a[i][i]
+                a[r] = [x - f * y for x, y in zip(a[r], a[i])]
+    coef = [a[i][3] / a[i][i] for i in range(3)]
+    first, last = calls[0]['started_at'], max(c['returned_at'] for c in calls)
+    return {'source': archive, 'calls': len(calls), 'fit_seconds_per_call': coef[0],
+            'fit_seconds_per_prompt_token': coef[1], 'fit_seconds_per_completion_token': coef[2],
+            'overhead_measured_seconds': {'installation': round(installation, 1), 'model_startup': round(startup, 1),
+                                          'other_pre_question': round(first - installation - startup, 1),
+                                          'post_question_finalization': round(cell - last, 1)}}
+
+
 def estimate():
     from scripts.audit_evidence_comprehension_v3_tokens import (ALLOWANCE_FACTORS, CLEANUP_RESERVE_SECONDS,
                                                                 COMPLETION_SLACK, INTERNAL_SECONDS,
-                                                                MIN_ALLOWANCE_SECONDS, v2_measurements)
+                                                                MIN_ALLOWANCE_SECONDS)
     report = json.loads(REPORT.read_bytes())
     built, _ = requests()
     rows = {r['probe_id']: r for r in report['requests']}
-    fit = v2_measurements()
-    measured = fit['overhead_measured_seconds']
+    v2 = measurements('evidence/evidence-comprehension-v2-live.tar.xz',
+                      'reports/runs/evidence-comprehension-v2/download/evidence-comprehension-v2/')
+    fit = measurements('evidence/evidence-comprehension-v3-live.tar.xz',
+                       'reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/')
+    measured = {k: max(v, v2['overhead_measured_seconds'][k]) for k, v in fit['overhead_measured_seconds'].items()}
+    fit['v2_overhead_measured_seconds'] = v2['overhead_measured_seconds']
     allowance = {k: round(max(MIN_ALLOWANCE_SECONDS, v * ALLOWANCE_FACTORS[k])) for k, v in measured.items()}
     admission = INTERNAL_SECONDS - CLEANUP_RESERVE_SECONDS
 
@@ -74,8 +116,8 @@ def estimate():
                    for r in items)
     phases = [(f"{b['partition']}/{b['pass']}", [rows[i] for i in b['probe_ids']]) for b in built['schedule']]
     scenarios = {}
-    for name, overhead, factor, completion in (('measured_overhead_v2_rates', measured, 1.0, 'key_x2'),
-                                               ('allowance_overhead_v2_rates', allowance, 1.0, 'key_x2'),
+    for name, overhead, factor, completion in (('measured_overhead_v3_rates', measured, 1.0, 'key_x2'),
+                                               ('allowance_overhead_v3_rates', allowance, 1.0, 'key_x2'),
                                                ('allowance_overhead_two_times_slower', allowance, 2.0, 'key_x2'),
                                                ('allowance_overhead_three_times_slower_every_call_at_cap', allowance, 3.0, 'cap')):
         elapsed = overhead['installation'] + overhead['model_startup'] + overhead['other_pre_question']
@@ -94,8 +136,10 @@ def estimate():
                'prompt_tokens_by_partition_max': {part: max(r['prompt_tokens'] for r in rows.values() if r['partition'] == part)
                                                   for part in ('withheld', 'development', 'transfer')},
                'calls_by_phase': {phase: len(i) for phase, i in phases}}
-    report.update(summary=summary, v2_measurements=fit, runtime_scenarios={
-        'status': 'planning scenarios fitted to v2 measured calls on shorter prompts; not guarantees',
+    report.pop('v2_measurements', None)
+    report.update(summary=summary, measurements=fit, runtime_scenarios={
+        'status': 'planning scenarios fitted to v3 measured calls on shorter prompts; overheads are the worse of v2 '
+                  'and v3 per component; not guarantees',
         'first_cell_overhead_measured_seconds': measured, 'first_cell_overhead_allowance_seconds': allowance,
         'cleanup_reserve_seconds': CLEANUP_RESERVE_SECONDS, 'admission_cutoff_seconds': admission,
         'scenarios': scenarios})
