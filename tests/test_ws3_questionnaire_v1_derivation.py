@@ -92,6 +92,30 @@ class Inventory(unittest.TestCase):
             if name.endswith('.py'):
                 self.assertLessEqual(self.R._dependencies(name), names, name)
 
+    def test_every_packaged_file_is_tracked(self):
+        self.assertFalse([n for n in self.names if n not in self.R._tracked()])
+
+    def test_packaging_is_identical_with_and_without_incidental_ignored_files(self):
+        """Review of 336348e: an extracted archive member present only on the author's machine entered r1's lock.
+        The R8 trajectory path is written as a string in the replay script; it must never enter the package."""
+        target = ROOT / 'reports/runs/phase4-grounded-action-v1-r8/download/phase4-grounded-action-v1/worker/trajectory.json'
+        self.assertNotIn(target.relative_to(ROOT).as_posix(), self.R._tracked())
+        existed = target.exists()
+        backup = target.with_name(target.name + '.ws3-test-backup')
+        try:
+            if existed:
+                target.rename(backup)
+            without = self.R.inventory()
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text('{}', encoding='utf-8')
+            with_file = self.R.inventory()
+        finally:
+            target.unlink(missing_ok=True)
+            if existed:
+                backup.rename(target)
+        self.assertEqual(with_file, without)
+        self.assertNotIn(target.relative_to(ROOT).as_posix(), with_file)
+
     def test_other_question_sets_are_not_carried(self):
         for name in ('research/evidence_comprehension_v2/probes.json', 'research/evidence_comprehension_v3/probes.json',
                      'research/transition_evidence_v1/fixtures.json'):

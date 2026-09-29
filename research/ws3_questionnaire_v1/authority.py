@@ -12,7 +12,7 @@ import re
 
 ROOT = Path(__file__).resolve().parents[2]
 SCOPE = 'ws3-questionnaire-v1'
-REVIEW = 'notebooks/ws3-questionnaire-v1-review-r1/review-source-lock.json'
+REVIEW = 'notebooks/ws3-questionnaire-v1-review-r2/review-source-lock.json'
 SOURCE = 'reports/ws3_questionnaire_v1_source_approval.json'
 COMPUTE = 'reports/ws3_questionnaire_v1_compute_authorization.json'
 EXECUTION = 'research/ws3_questionnaire_v1/execution_lock.json'

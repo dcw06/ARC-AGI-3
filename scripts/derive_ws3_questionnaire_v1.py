@@ -60,6 +60,8 @@ DOCS_NEW = """REVIEW_DOCUMENTS = ('reports/ws3_questionnaire_design_draft_r2.md'
 DERIVED = {
     'research/ws3_questionnaire_v1/authority.py': (
         ("'maximum_questionnaire_calls': 6054,", "'maximum_questionnaire_calls': 5616,", 1),
+        ("REVIEW = 'notebooks/ws3-questionnaire-v1-review-r1/review-source-lock.json'",
+         "REVIEW = 'notebooks/ws3-questionnaire-v1-review-r2/review-source-lock.json'", 1),
         (REQUIRED_OLD, REQUIRED_NEW, 1),
     ),
     'research/ws3_questionnaire_v1/host.py': (),
@@ -78,6 +80,20 @@ DERIVED = {
          1),
     ),
     'scripts/build_ws3_questionnaire_v1_review.py': (
+        ("REVISION = 'r1'", "REVISION = 'r2'", 1),
+        ("            elif text.endswith(('.py', '.json', '.yaml')) and '/' in text and (ROOT / text).is_file():",
+         "            elif text.endswith(('.py', '.json', '.yaml')) and '/' in text and text in _tracked():", 1),
+        ("def _module_file(name):", '_TRACKED = []\n\n\ndef _tracked():\n    """Files tracked by git. Packaging depends only on tracked content, never on incidental workspace files (e.g. an\n    extracted archive member that happens to exist locally)."""\n    if not _TRACKED:\n        import subprocess\n        out = subprocess.run([\'git\', \'ls-files\', \'-z\'], cwd=ROOT, capture_output=True, check=True).stdout\n        _TRACKED.append(frozenset(n for n in out.decode().split(\'\\0\') if n))\n    return _TRACKED[0]\n\n\ndef _module_file(name):', 1),
+        ("                 if p.is_file() and p.suffix in ('.json', '.yaml'))",
+         "                 if p.is_file() and p.suffix in ('.json', '.yaml') and p.relative_to(ROOT).as_posix() in _tracked())", 1),
+        ("                                        for p in (ROOT / 'research/ws3_questionnaire_v1').glob('*.py'))",
+         "                                        for p in (ROOT / 'research/ws3_questionnaire_v1').glob('*.py')\n"
+         "                                        if p.relative_to(ROOT).as_posix() in _tracked())", 1),
+        ("        raise ValueError('missing or linked review source: ' + ', '.join(sorted(missing)[:5]))\n",
+         "        raise ValueError('missing or linked review source: ' + ', '.join(sorted(missing)[:5]))\n"
+         "    untracked = sorted(n for n in names if n not in _tracked())\n"
+         "    if untracked:  # an untracked module import would make the package depend on the workspace\n"
+         "        raise ValueError('untracked review source: ' + ', '.join(untracked[:5]))\n", 1),
         ("'compute authorization and one fresh reservation. 3,390 frozen questions in '\n"
          "                                     '6,054 scheduled calls and one canary; no game actions.'",
          "'compute authorization and one fresh reservation. 3,116 frozen questions in '\n"

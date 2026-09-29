@@ -8,7 +8,7 @@ import lzma
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-REVISION = 'r1'
+REVISION = 'r2'
 OUT = ROOT / f'notebooks/ws3-questionnaire-v1-review-{REVISION}'
 MARKER = '    # WS3Q_AUTHORITY_SIDECARS: reviewed packaging inserts bound approvals here.\n'
 MODE_LINE = "MODE='live'\n"
@@ -45,6 +45,19 @@ DATA_FILES = ('research/ws3_questionnaire_v1/probes.json', 'research/evidence_co
 PACKAGES = ('agent', 'certification', 'evaluation', 'research', 'scripts')
 
 
+_TRACKED = []
+
+
+def _tracked():
+    """Files tracked by git. Packaging depends only on tracked content, never on incidental workspace files (e.g. an
+    extracted archive member that happens to exist locally)."""
+    if not _TRACKED:
+        import subprocess
+        out = subprocess.run(['git', 'ls-files', '-z'], cwd=ROOT, capture_output=True, check=True).stdout
+        _TRACKED.append(frozenset(n for n in out.decode().split('\0') if n))
+    return _TRACKED[0]
+
+
 def _module_file(name):
     parts = name.split('.')
     if parts[0] not in PACKAGES:
@@ -75,7 +88,7 @@ def _dependencies(name):
             text = node.value
             if text.split('.')[0] in PACKAGES and all(p.isidentifier() for p in text.split('.')):
                 modules.add(text)
-            elif text.endswith(('.py', '.json', '.yaml')) and '/' in text and (ROOT / text).is_file():
+            elif text.endswith(('.py', '.json', '.yaml')) and '/' in text and text in _tracked():
                 files.add(text)
     for module in modules:
         parts = module.split('.')
@@ -89,10 +102,11 @@ def _dependencies(name):
 def inventory():
     names = set(DATA_FILES)
     names.update(p.relative_to(ROOT).as_posix() for p in (ROOT / 'config').iterdir()
-                 if p.is_file() and p.suffix in ('.json', '.yaml'))
+                 if p.is_file() and p.suffix in ('.json', '.yaml') and p.relative_to(ROOT).as_posix() in _tracked())
     seen = set()
     queue = list(ENTRY_POINTS) + sorted(p.relative_to(ROOT).as_posix()
-                                        for p in (ROOT / 'research/ws3_questionnaire_v1').glob('*.py'))
+                                        for p in (ROOT / 'research/ws3_questionnaire_v1').glob('*.py')
+                                        if p.relative_to(ROOT).as_posix() in _tracked())
     while queue:
         name = queue.pop()
         if name in seen:
@@ -104,6 +118,9 @@ def inventory():
     missing = [n for n in names if not (ROOT / n).is_file() or (ROOT / n).is_symlink()]
     if missing:
         raise ValueError('missing or linked review source: ' + ', '.join(sorted(missing)[:5]))
+    untracked = sorted(n for n in names if n not in _tracked())
+    if untracked:  # an untracked module import would make the package depend on the workspace
+        raise ValueError('untracked review source: ' + ', '.join(untracked[:5]))
     return sorted(names)
 
 
