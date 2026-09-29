@@ -132,9 +132,17 @@ def analyze(probes, passes):
                 m = family_metrics(group, single, f'{pass_id}/{cond}/{fam}')
                 report['per_pass'].setdefault(pass_id, {}).setdefault(cond, {})[fam] = {
                     k: m[k] for k in ('n', 'missing', 'correct', 'accuracy')}
-            agree = sum(1 for p in group if all(passes.get(i, {}).get(p['probe_id']) for i in PASS_IDS)
-                        and passes['pass_1'][p['probe_id']].get('answer') == passes['pass_2'][p['probe_id']].get('answer'))
-            report['agreement'].setdefault(cond, {})[fam] = {'n': len(group), 'identical_answers': agree}
+            row = {'n': len(group), 'valid_pairs': 0, 'identical_answers': 0, 'invalid_pairs': 0, 'missing_pairs': 0}
+            for p in group:
+                pair = [passes.get(i, {}).get(p['probe_id']) for i in PASS_IDS]
+                if any(r is None for r in pair):
+                    row['missing_pairs'] += 1
+                elif not all(r.get('valid') is True for r in pair):
+                    row['invalid_pairs'] += 1  # an invalid response has no answer to agree with
+                else:
+                    row['valid_pairs'] += 1
+                    row['identical_answers'] += pair[0]['answer'] == pair[1]['answer']
+            report['agreement'].setdefault(cond, {})[fam] = row
     for part in ('withheld', 'development', 'transfer'):
         pairs = {}
         for p in probes:

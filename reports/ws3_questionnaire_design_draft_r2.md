@@ -1,4 +1,4 @@
-# Workstream 3: factual transition questionnaire — design draft r2.1 (for review; not frozen; no compute)
+# Workstream 3: factual transition questionnaire — design draft r2.2 (freeze candidate; not frozen; no compute)
 
 **Status.** A revision of draft r0 (`5f54940`, `reports/ws3_questionnaire_design_draft.md`), applying the design
 review of r0. It is built and tested offline on branch `ws3-action-effects`, in commit `93142fc`:
@@ -12,6 +12,16 @@ review of r0. It is built and tested offline on branch `ws3-action-effects`, in 
 
 This is not a launch package: no runner, notebook or approval exists. It is submitted with its code and fixtures for
 independent review.
+
+## Changes in r2.2 (review of c8c0fd5)
+
+| Finding | Fix |
+|---|---|
+| **P2: invalid responses counted as identical answers.** Two invalid responses both lack an answer field, so `None == None` counted as agreement. | Agreement is now counted **only over pairs where both responses are valid**. Each family reports `valid_pairs`, `identical_answers`, `invalid_pairs` and `missing_pairs`, which sum to n. Regressions: different invalid text in each pass for all 120 candidate causal questions now gives 0 valid and 120 invalid pairs; a missing pair is counted separately. |
+| **P2: dropping transfer cannot fix completion of the withheld partition.** Transfer runs after both withheld passes. | The budget section now separates **whole-run savings** (development and transfer, which run last) from **primary-completion savings** (only the pre-question overhead and the withheld workload itself). The decision is stated explicitly (see Workload and budget). |
+| **P3: superseded definitions and figures remained.** | Reconciled throughout: the false-progress gate includes "not observed"; its denominator is 178; prompt tokens total 10,390,311; the largest transfer prompt is 17,544. |
+
+**Result.** 38 tests pass: 22 questionnaire and 16 transition.
 
 ## Changes in r2.1 (review of 93142fc and f7c97e4)
 
@@ -48,7 +58,7 @@ independent review.
 
 | Gate | Denominator | An over-claim is |
 |---|---|---|
-| **False progress** | distinct withheld transitions (contexts) with a progress question whose key is not affirmative: `progress_status` "unknown", `claim_progress` "not established", or `level_completion_reported` "no" | an affirmative answer on such a question (`confirmed`, `supported`, `yes`) **or an invalid response**, in **either** pass |
+| **False progress** | distinct withheld transitions (contexts) with a progress question whose key is not affirmative: `progress_status` "unknown", `claim_progress` "not established", or `level_completion_reported` "no" or "not observed" | an affirmative answer on such a question (`confirmed`, `supported`, `yes`) **or an invalid response**, in **either** pass |
 | **Unsupported causal claim** | distinct withheld transitions with a causal claim (whose key is never "supported") | a "supported" answer or an invalid response, in either pass. Reported separately for claims that are **unsupported** (not established) and **disproven** (contradicted: no change occurred). |
 
 - **Units.** Rates are contexts with an over-claim ÷ denominator contexts, not ÷ all questions.
@@ -103,7 +113,7 @@ round-robin across (visual effect, dispatch status) strata.
 | visible change without progress | 196 |
 | dimension change | 30 |
 
-**Over-claim denominators:** false progress 152 contexts; unsupported causal claims 120.
+**Over-claim denominators:** false progress 178 contexts; unsupported causal claims 120.
 
 **Transfer.** 16 archived transitions were preselected by a written rule: steps 3 and 9 of each first-block
 action-effect-history v1 episode, plus every Stage B R8 step. Identical archived transitions are asked once, which
@@ -118,8 +128,8 @@ These come from the pinned Qwen3-VL tokenizer, in `reports/ws3_questionnaire_tok
 | Measure | Value |
 |---|---|
 | Scheduled calls | 5,616: withheld 2 × 2,500, development 376, transfer 240 |
-| Prompt tokens | 10,354,131 scheduled. Frames tokenize densely: r0's character-based estimate of 2.7 M was wrong. |
-| Largest prompt | withheld 3,215; development 2,951; transfer 17,520 (64 × 64 frames); all within limits |
+| Prompt tokens | 10,390,311 scheduled. Frames tokenize densely: r0's character-based estimate of 2.7 M was wrong. |
+| Largest prompt | withheld 3,215; development 2,951; transfer 17,544 (64 × 64 frames); all within limits |
 | Completion cap | 32 tokens, which covers the longest valid answer (13 tokens pretty-printed) |
 
 **Runtime scenarios (r2.1).** These are fitted to v3's measured cache-disabled calls. Each overhead component is
@@ -138,12 +148,25 @@ The 300 s cleanup reserve is never spent.
 worst measured overhead**, or **2.0× with the allowances**. Admission control protects the deadline, but a run
 cut at the cutoff is reported incomplete.
 
-**A decision for review before freezing.** With the higher startup allowance, the 2×-slower scenario no longer
-completes the withheld partition. The options are:
-1. accept about 2.0× headroom;
-2. trim the workload, e.g. withheld targets from 120 to 100 questions per family (the floors), or drop the 64 × 64
-   transfer group (240 calls, the largest prompts);
-3. propose a longer internal limit, which needs a separate compute authorization in any case.
+**Two kinds of saving.**
+- **Primary completion.** The withheld decision set runs first. Its completion time depends only on the
+  pre-question overhead (installation, model startup, canary) and the withheld workload itself (2 × 2,500 calls).
+  Only reducing those, or revising the authorized timing limits, can make it finish sooner.
+- **Whole-run completion.** Development (376 calls) and transfer (240 calls) run **after** both withheld passes.
+  Dropping them shortens the whole run, and changes nothing about when, or whether, the withheld partition
+  completes.
+
+**Budget decision (explicit; for the project owner to confirm or override when approving compute).**
+- **Keep the frozen workload,** and accept the stated risk: the withheld partition may be cut, and reported
+  incomplete, if the run is slower than about **2.0× the v3 call rate with the allowances** (about 2.8× with the
+  worst measured overhead).
+- **Rationale.** v3 ran this stack at its actual rates, with a first cell of 1,666 s including an 819 s startup.
+  The 2×-with-allowances scenario already combines a 1.5× startup allowance with doubled call latency.
+  Trimming the withheld targets to the floors (about 100 per family) would raise primary headroom only to roughly
+  2.4×, at the cost of margin above every coverage floor. A longer internal limit would need its own compute
+  authorization.
+- **If a larger margin is preferred.** The lever for primary completion is the withheld workload or the timing
+  limits, not development or transfer.
 
 **Other costs.** Evaluator costs are CPU-only and come after the run. Evidence storage uses the append-only call
 log that v2 and v3 exercised live.

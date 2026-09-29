@@ -247,5 +247,27 @@ class ReviewOf93142fc(unittest.TestCase):
         self.assertTrue(partial)  # partial observations with no valid change are keyed cannot_tell, as worded
 
 
+class ReviewOfC8c0fd5(unittest.TestCase):
+    def test_invalid_responses_never_count_as_agreement(self):
+        causal = [p for p in PROBES if p['partition'] == 'withheld' and p['family'] == 'claim_causal'
+                  and p['condition'] == 'raw_plus_computed_record']
+        value = passes()
+        for p in causal:
+            value['pass_1'][p['probe_id']] = score(p, 'not json at all')
+            value['pass_2'][p['probe_id']] = score(p, '{"answer": "maybe"}')
+        row = analyze(PROBES, value)['agreement']['raw_plus_computed_record']['claim_causal']
+        self.assertEqual((row['n'], row['valid_pairs'], row['invalid_pairs'], row['identical_answers']),
+                         (len(causal), 0, len(causal), 0))
+
+    def test_agreement_separates_missing_pairs(self):
+        target = next(p for p in PROBES if p['partition'] == 'withheld' and p['family'] == 'claim_causal'
+                      and p['condition'] == 'raw_evidence')
+        value = passes()
+        del value['pass_2'][target['probe_id']]
+        row = analyze(PROBES, value)['agreement']['raw_evidence']['claim_causal']
+        self.assertEqual(row['missing_pairs'], 1)
+        self.assertEqual(row['valid_pairs'] + row['invalid_pairs'] + row['missing_pairs'], row['n'])
+
+
 if __name__ == '__main__':
     unittest.main()
