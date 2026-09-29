@@ -1,0 +1,6083 @@
+{
+ "counts": {
+  "action_effect_history_v1/final_frame_differs/unknown": 93,
+  "action_effect_history_v1/no_observed_change/unknown": 51,
+  "perception_stage_b_r8/no_observed_change/unknown": 4
+ },
+ "gallery": [
+  "reports/ws3_transition_replay_v1/r8-control-0-step00.png",
+  "reports/ws3_transition_replay_v1/r8-control-0-step01.png",
+  "reports/ws3_transition_replay_v1/r8-target-1-step00.png",
+  "reports/ws3_transition_replay_v1/r8-target-1-step01.png",
+  "reports/ws3_transition_replay_v1/b1-wa30-baseline-step01.png",
+  "reports/ws3_transition_replay_v1/b1-ar25-baseline-step00.png"
+ ],
+ "model_statement_agreement": {
+  "prediction": {
+   "agree": 4,
+   "disagree": 0,
+   "n": 4
+  },
+  "self_assessment_frame_claim": {
+   "agree": 0,
+   "disagree": 4,
+   "n": 4
+  },
+  "self_assessment_verdict": {
+   "agree": 4,
+   "disagree": 0,
+   "n": 4
+  }
+ },
+ "model_statements": [
+  {
+   "agrees_with_computed": true,
+   "computed_any_returned_frame_differs": false,
+   "episode": "r8-control-0",
+   "index": 0,
+   "kind": "prediction",
+   "statement": {
+    "alternative": "change",
+    "prediction": "no_change"
+   },
+   "status": "hypothesis"
+  },
+  {
+   "agrees_with_computed": false,
+   "computed_frame_0_differs": false,
+   "episode": "r8-control-0",
+   "index": 0,
+   "kind": "self_assessment_frame_claim",
+   "statement": {
+    "assessment": "supported",
+    "frame_0_changed": true
+   },
+   "status": "hypothesis"
+  },
+  {
+   "agrees_with_computed": true,
+   "computed_verdict": "supported",
+   "episode": "r8-control-0",
+   "index": 0,
+   "kind": "self_assessment_verdict",
+   "statement": {
+    "assessment": "supported"
+   },
+   "status": "hypothesis"
+  },
+  {
+   "agrees_with_computed": true,
+   "computed_any_returned_frame_differs": false,
+   "episode": "r8-control-0",
+   "index": 1,
+   "kind": "prediction",
+   "statement": {
+    "alternative": "change",
+    "prediction": "no_change"
+   },
+   "status": "hypothesis"
+  },
+  {
+   "agrees_with_computed": false,
+   "computed_frame_0_differs": false,
+   "episode": "r8-control-0",
+   "index": 1,
+   "kind": "self_assessment_frame_claim",
+   "statement": {
+    "assessment": "supported",
+    "frame_0_changed": true
+   },
+   "status": "hypothesis"
+  },
+  {
+   "agrees_with_computed": true,
+   "computed_verdict": "supported",
+   "episode": "r8-control-0",
+   "index": 1,
+   "kind": "self_assessment_verdict",
+   "statement": {
+    "assessment": "supported"
+   },
+   "status": "hypothesis"
+  },
+  {
+   "agrees_with_computed": true,
+   "computed_any_returned_frame_differs": false,
+   "episode": "r8-target-1",
+   "index": 0,
+   "kind": "prediction",
+   "statement": {
+    "alternative": "change",
+    "prediction": "no_change"
+   },
+   "status": "hypothesis"
+  },
+  {
+   "agrees_with_computed": false,
+   "computed_frame_0_differs": false,
+   "episode": "r8-target-1",
+   "index": 0,
+   "kind": "self_assessment_frame_claim",
+   "statement": {
+    "assessment": "supported",
+    "frame_0_changed": true
+   },
+   "status": "hypothesis"
+  },
+  {
+   "agrees_with_computed": true,
+   "computed_verdict": "supported",
+   "episode": "r8-target-1",
+   "index": 0,
+   "kind": "self_assessment_verdict",
+   "statement": {
+    "assessment": "supported"
+   },
+   "status": "hypothesis"
+  },
+  {
+   "agrees_with_computed": true,
+   "computed_any_returned_frame_differs": false,
+   "episode": "r8-target-1",
+   "index": 1,
+   "kind": "prediction",
+   "statement": {
+    "alternative": "change",
+    "prediction": "no_change"
+   },
+   "status": "hypothesis"
+  },
+  {
+   "agrees_with_computed": false,
+   "computed_frame_0_differs": false,
+   "episode": "r8-target-1",
+   "index": 1,
+   "kind": "self_assessment_frame_claim",
+   "statement": {
+    "assessment": "supported",
+    "frame_0_changed": true
+   },
+   "status": "hypothesis"
+  },
+  {
+   "agrees_with_computed": true,
+   "computed_verdict": "supported",
+   "episode": "r8-target-1",
+   "index": 1,
+   "kind": "self_assessment_verdict",
+   "statement": {
+    "assessment": "supported"
+   },
+   "status": "hypothesis"
+  }
+ ],
+ "recorded_vs_recomputed_disagreements": [],
+ "rows": [
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "first_in_segment",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-baseline",
+   "human_annotation": null,
+   "index": 0,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 17,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-baseline",
+   "human_annotation": null,
+   "index": 1,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 17,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-baseline",
+   "human_annotation": null,
+   "index": 2,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 17,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-baseline",
+   "human_annotation": null,
+   "index": 3,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 16,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-baseline",
+   "human_annotation": null,
+   "index": 4,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 16,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-baseline",
+   "human_annotation": null,
+   "index": 5,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 16,
+      "y": 15
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-baseline",
+   "human_annotation": null,
+   "index": 6,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 16,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-baseline",
+   "human_annotation": null,
+   "index": 7,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 17,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-baseline",
+   "human_annotation": null,
+   "index": 8,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 16,
+      "y": 15
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-baseline",
+   "human_annotation": null,
+   "index": 9,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 17,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-baseline",
+   "human_annotation": null,
+   "index": 10,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 16,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-baseline",
+   "human_annotation": null,
+   "index": 11,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 17,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "first_in_segment",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-history",
+   "human_annotation": null,
+   "index": 0,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 18,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-history",
+   "human_annotation": null,
+   "index": 1,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 18,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-history",
+   "human_annotation": null,
+   "index": 2,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 7
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-history",
+   "human_annotation": null,
+   "index": 3,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 18,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-history",
+   "human_annotation": null,
+   "index": 4,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 7
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-history",
+   "human_annotation": null,
+   "index": 5,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 18,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-history",
+   "human_annotation": null,
+   "index": 6,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 18,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-history",
+   "human_annotation": null,
+   "index": 7,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 7
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-history",
+   "human_annotation": null,
+   "index": 8,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 18,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-history",
+   "human_annotation": null,
+   "index": 9,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 7
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-history",
+   "human_annotation": null,
+   "index": 10,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 7
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-ar25-history",
+   "human_annotation": null,
+   "index": 11,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 19,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "first_in_segment",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-baseline",
+   "human_annotation": null,
+   "index": 0,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     2
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-baseline",
+   "human_annotation": null,
+   "index": 1,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 3,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-baseline",
+   "human_annotation": null,
+   "index": 2,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 13,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-baseline",
+   "human_annotation": null,
+   "index": 3,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-baseline",
+   "human_annotation": null,
+   "index": 4,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     2
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-baseline",
+   "human_annotation": null,
+   "index": 5,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-baseline",
+   "human_annotation": null,
+   "index": 6,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-baseline",
+   "human_annotation": null,
+   "index": 7,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     2
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-baseline",
+   "human_annotation": null,
+   "index": 8,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 10,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-baseline",
+   "human_annotation": null,
+   "index": 9,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-baseline",
+   "human_annotation": null,
+   "index": 10,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-baseline",
+   "human_annotation": null,
+   "index": 11,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "first_in_segment",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-history",
+   "human_annotation": null,
+   "index": 0,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     2
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-history",
+   "human_annotation": null,
+   "index": 1,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-history",
+   "human_annotation": null,
+   "index": 2,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-history",
+   "human_annotation": null,
+   "index": 3,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-history",
+   "human_annotation": null,
+   "index": 4,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     2
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-history",
+   "human_annotation": null,
+   "index": 5,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-history",
+   "human_annotation": null,
+   "index": 6,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-history",
+   "human_annotation": null,
+   "index": 7,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     2
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-history",
+   "human_annotation": null,
+   "index": 8,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-history",
+   "human_annotation": null,
+   "index": 9,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-history",
+   "human_annotation": null,
+   "index": 10,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-s5i5-history",
+   "human_annotation": null,
+   "index": 11,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "first_in_segment",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-baseline",
+   "human_annotation": null,
+   "index": 0,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 1
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     33
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-baseline",
+   "human_annotation": null,
+   "index": 1,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 2
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-baseline",
+   "human_annotation": null,
+   "index": 2,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 3
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-baseline",
+   "human_annotation": null,
+   "index": 3,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 2
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     33
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-baseline",
+   "human_annotation": null,
+   "index": 4,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 3
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-baseline",
+   "human_annotation": null,
+   "index": 5,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 2
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-baseline",
+   "human_annotation": null,
+   "index": 6,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 3
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     29
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-baseline",
+   "human_annotation": null,
+   "index": 7,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 2
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     28
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-baseline",
+   "human_annotation": null,
+   "index": 8,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 1
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     28
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-baseline",
+   "human_annotation": null,
+   "index": 9,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 2
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     25
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-baseline",
+   "human_annotation": null,
+   "index": 10,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 3
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     28
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-baseline",
+   "human_annotation": null,
+   "index": 11,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 1
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "first_in_segment",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-history",
+   "human_annotation": null,
+   "index": 0,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 1
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     33
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-history",
+   "human_annotation": null,
+   "index": 1,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 2
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-history",
+   "human_annotation": null,
+   "index": 2,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 3
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-history",
+   "human_annotation": null,
+   "index": 3,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 4
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-history",
+   "human_annotation": null,
+   "index": 4,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 5
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-history",
+   "human_annotation": null,
+   "index": 5,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 1
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-history",
+   "human_annotation": null,
+   "index": 6,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 2
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     33
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-history",
+   "human_annotation": null,
+   "index": 7,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 3
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-history",
+   "human_annotation": null,
+   "index": 8,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 4
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b1-wa30-history",
+   "human_annotation": null,
+   "index": 9,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 5
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     33
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-history",
+   "human_annotation": null,
+   "index": 10,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 1
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b1-wa30-history",
+   "human_annotation": null,
+   "index": 11,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 2
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "first_in_segment",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-baseline",
+   "human_annotation": null,
+   "index": 0,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 17,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-baseline",
+   "human_annotation": null,
+   "index": 1,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 17,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-baseline",
+   "human_annotation": null,
+   "index": 2,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 17,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-baseline",
+   "human_annotation": null,
+   "index": 3,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 16,
+      "y": 15
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-baseline",
+   "human_annotation": null,
+   "index": 4,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 17,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-baseline",
+   "human_annotation": null,
+   "index": 5,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 16,
+      "y": 15
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-baseline",
+   "human_annotation": null,
+   "index": 6,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 16,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-baseline",
+   "human_annotation": null,
+   "index": 7,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 17,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-baseline",
+   "human_annotation": null,
+   "index": 8,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 16,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-baseline",
+   "human_annotation": null,
+   "index": 9,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 16,
+      "y": 15
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-baseline",
+   "human_annotation": null,
+   "index": 10,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 17,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-baseline",
+   "human_annotation": null,
+   "index": 11,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 17,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "first_in_segment",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-history",
+   "human_annotation": null,
+   "index": 0,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 18,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-history",
+   "human_annotation": null,
+   "index": 1,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 18,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-history",
+   "human_annotation": null,
+   "index": 2,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 7
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-history",
+   "human_annotation": null,
+   "index": 3,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 18,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-history",
+   "human_annotation": null,
+   "index": 4,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 7
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-history",
+   "human_annotation": null,
+   "index": 5,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 18,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-history",
+   "human_annotation": null,
+   "index": 6,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 18,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-history",
+   "human_annotation": null,
+   "index": 7,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 7
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-history",
+   "human_annotation": null,
+   "index": 8,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 18,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-history",
+   "human_annotation": null,
+   "index": 9,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 7
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-history",
+   "human_annotation": null,
+   "index": 10,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 7
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-ar25-history",
+   "human_annotation": null,
+   "index": 11,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 19,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "first_in_segment",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-baseline",
+   "human_annotation": null,
+   "index": 0,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     2
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-baseline",
+   "human_annotation": null,
+   "index": 1,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 3,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-baseline",
+   "human_annotation": null,
+   "index": 2,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 13,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-baseline",
+   "human_annotation": null,
+   "index": 3,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-baseline",
+   "human_annotation": null,
+   "index": 4,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     2
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-baseline",
+   "human_annotation": null,
+   "index": 5,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-baseline",
+   "human_annotation": null,
+   "index": 6,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-baseline",
+   "human_annotation": null,
+   "index": 7,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     2
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-baseline",
+   "human_annotation": null,
+   "index": 8,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 10,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-baseline",
+   "human_annotation": null,
+   "index": 9,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-baseline",
+   "human_annotation": null,
+   "index": 10,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-baseline",
+   "human_annotation": null,
+   "index": 11,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "first_in_segment",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-history",
+   "human_annotation": null,
+   "index": 0,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     2
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-history",
+   "human_annotation": null,
+   "index": 1,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-history",
+   "human_annotation": null,
+   "index": 2,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-history",
+   "human_annotation": null,
+   "index": 3,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-history",
+   "human_annotation": null,
+   "index": 4,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     2
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-history",
+   "human_annotation": null,
+   "index": 5,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-history",
+   "human_annotation": null,
+   "index": 6,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-history",
+   "human_annotation": null,
+   "index": 7,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     2
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-history",
+   "human_annotation": null,
+   "index": 8,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-history",
+   "human_annotation": null,
+   "index": 9,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-history",
+   "human_annotation": null,
+   "index": 10,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-s5i5-history",
+   "human_annotation": null,
+   "index": 11,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 11,
+      "y": 10
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "first_in_segment",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-baseline",
+   "human_annotation": null,
+   "index": 0,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 3
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     33
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-baseline",
+   "human_annotation": null,
+   "index": 1,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 2
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-baseline",
+   "human_annotation": null,
+   "index": 2,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 3
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-baseline",
+   "human_annotation": null,
+   "index": 3,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 2
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     33
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-baseline",
+   "human_annotation": null,
+   "index": 4,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 3
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     28
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-baseline",
+   "human_annotation": null,
+   "index": 5,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 2
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-wa30-baseline",
+   "human_annotation": null,
+   "index": 6,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 2
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-baseline",
+   "human_annotation": null,
+   "index": 7,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 2
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     24
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-baseline",
+   "human_annotation": null,
+   "index": 8,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 3
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     28
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-baseline",
+   "human_annotation": null,
+   "index": 9,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 1
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     29
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-baseline",
+   "human_annotation": null,
+   "index": 10,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 2
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     24
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-baseline",
+   "human_annotation": null,
+   "index": 11,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 3
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "first_in_segment",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-history",
+   "human_annotation": null,
+   "index": 0,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 1
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     33
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-history",
+   "human_annotation": null,
+   "index": 1,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 2
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-history",
+   "human_annotation": null,
+   "index": 2,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 3
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-history",
+   "human_annotation": null,
+   "index": 3,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 4
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     1
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-history",
+   "human_annotation": null,
+   "index": 4,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 5
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-history",
+   "human_annotation": null,
+   "index": 5,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 1
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-history",
+   "human_annotation": null,
+   "index": 6,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 2
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     33
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-history",
+   "human_annotation": null,
+   "index": 7,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 3
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-history",
+   "human_annotation": null,
+   "index": 8,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 4
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "b2-wa30-history",
+   "human_annotation": null,
+   "index": 9,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 5
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     33
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-history",
+   "human_annotation": null,
+   "index": 10,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 1
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     32
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "final_frame_differs"
+   },
+   "episode": "b2-wa30-history",
+   "human_annotation": null,
+   "index": 11,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {},
+     "action_id": 2
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "action_effect_history_v1"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "first_in_segment",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "r8-control-0",
+   "human_annotation": null,
+   "index": 0,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 16,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "perception_stage_b_r8"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "r8-control-0",
+   "human_annotation": null,
+   "index": 1,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 16,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "perception_stage_b_r8"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "first_in_segment",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "r8-target-1",
+   "human_annotation": null,
+   "index": 0,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 17,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "perception_stage_b_r8"
+  },
+  {
+   "computed": {
+    "availability": "complete",
+    "changed_cells_vs_pre": [
+     0
+    ],
+    "continuity": "matches_previous_final",
+    "environment_events": [
+     "none_reported"
+    ],
+    "progress": "unknown",
+    "proposal_equals_dispatched": {
+     "status": "measured",
+     "value": true
+    },
+    "segment": 0,
+    "visual_effect": "no_observed_change"
+   },
+   "episode": "r8-target-1",
+   "human_annotation": null,
+   "index": 1,
+   "observed": {
+    "dispatch": "acknowledged",
+    "dispatched": {
+     "action_data": {
+      "x": 16,
+      "y": 16
+     },
+     "action_id": 6
+    },
+    "environment": {
+     "full_reset_after": false,
+     "levels_completed_after": 0,
+     "levels_completed_before": 0,
+     "state_after": "NOT_FINISHED",
+     "state_before": "NOT_FINISHED"
+    },
+    "returned_frames": 1
+   },
+   "source": "perception_stage_b_r8"
+  }
+ ],
+ "sources": {
+  "action_effect_history_v1": "a67b69557d835f8076e3b80674c29c0032b95ec2dbd9a70f032ed85af54654cb",
+  "perception_stage_b_r8": "69eb0f4a5ccd1b016f00d1a9991afe06c73b9bb0ae5a3dc5f6ac7c96c3661a9b"
+ },
+ "statement_classes": {
+  "computed": "availability, visual effect, changed cells, events, progress, continuity",
+  "human_annotation": "none in this replay",
+  "model_hypothesis": "R8 predictions and self-assessments",
+  "observed": "dispatch status, dispatched action, returned frames, environment fields"
+ },
+ "transitions": 148,
+ "version": "ws3_transition_replay_v1"
+}
