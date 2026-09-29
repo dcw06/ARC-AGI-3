@@ -1,0 +1,6539 @@
+{
+ "archive": "evidence/evidence-comprehension-v3-live.tar.xz",
+ "archive_sha256": "552d5c7ea3f8d64ded684a12ffdccd55c124feaf99b31b7b90e6729a149e9dac",
+ "attempt_id": "ecv3-089bf11fd38c41f88808794a134a3d56",
+ "evaluation": {
+  "analysis": {
+   "agreement": {
+    "withheld/counterfactual/A0_intersect/action6_legal": {
+     "identical_answers": 60,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 60,
+     "valid_pairs": 60
+    },
+    "withheld/counterfactual/A0_intersect/legal_actions": {
+     "identical_answers": 60,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 60,
+     "valid_pairs": 60
+    },
+    "withheld/counterfactual/A0_intersect/legal_coordinate_actions": {
+     "identical_answers": 60,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 60,
+     "valid_pairs": 60
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/action6_legal": {
+     "identical_answers": 60,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 60,
+     "valid_pairs": 60
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_actions": {
+     "identical_answers": 60,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 60,
+     "valid_pairs": 60
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_coordinate_actions": {
+     "identical_answers": 60,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 60,
+     "valid_pairs": 60
+    },
+    "withheld/original/A0_intersect/action6_legal": {
+     "identical_answers": 128,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 128,
+     "valid_pairs": 128
+    },
+    "withheld/original/A0_intersect/legal_actions": {
+     "identical_answers": 128,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 128,
+     "valid_pairs": 128
+    },
+    "withheld/original/A0_intersect/legal_coordinate_actions": {
+     "identical_answers": 128,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 128,
+     "valid_pairs": 128
+    },
+    "withheld/original/A1_computed_control_metadata/action6_legal": {
+     "identical_answers": 128,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 128,
+     "valid_pairs": 128
+    },
+    "withheld/original/A1_computed_control_metadata/legal_actions": {
+     "identical_answers": 128,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 128,
+     "valid_pairs": 128
+    },
+    "withheld/original/A1_computed_control_metadata/legal_coordinate_actions": {
+     "identical_answers": 128,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 128,
+     "valid_pairs": 128
+    },
+    "withheld/original/B0_normalized_history/any_change": {
+     "identical_answers": 128,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 128,
+     "valid_pairs": 128
+    },
+    "withheld/original/B0_normalized_history/observed_effect": {
+     "identical_answers": 128,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 128,
+     "valid_pairs": 128
+    },
+    "withheld/original/B0_normalized_history/outcome_class": {
+     "identical_answers": 128,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 128,
+     "valid_pairs": 128
+    },
+    "withheld/original/B0_normalized_history/qualifying_steps": {
+     "identical_answers": 128,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 128,
+     "valid_pairs": 128
+    },
+    "withheld/original/B0_normalized_history/step_action_match": {
+     "identical_answers": 128,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 128,
+     "valid_pairs": 128
+    },
+    "withheld/original/B0_normalized_history/tried_unchanged": {
+     "identical_answers": 128,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 128,
+     "valid_pairs": 128
+    },
+    "withheld/original/B1_tool_eligibility/any_change": {
+     "identical_answers": 128,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 128,
+     "valid_pairs": 128
+    },
+    "withheld/original/B1_tool_eligibility/observed_effect": {
+     "identical_answers": 128,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 128,
+     "valid_pairs": 128
+    },
+    "withheld/original/B1_tool_eligibility/outcome_class": {
+     "identical_answers": 128,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 128,
+     "valid_pairs": 128
+    },
+    "withheld/original/B1_tool_eligibility/qualifying_steps": {
+     "identical_answers": 128,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 128,
+     "valid_pairs": 128
+    },
+    "withheld/original/B1_tool_eligibility/step_action_match": {
+     "identical_answers": 128,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 128,
+     "valid_pairs": 128
+    },
+    "withheld/original/B1_tool_eligibility/tried_unchanged": {
+     "identical_answers": 128,
+     "invalid_pairs": 0,
+     "missing_pairs": 0,
+     "n": 128,
+     "valid_pairs": 128
+    }
+   },
+   "completeness": {
+    "policy": "verdicts depend only on primary completeness; the history alteration is non-gating",
+    "primary": {
+     "control": "complete",
+     "history": "complete"
+    },
+    "secondary_history_alteration": "complete",
+    "whole_schedule": "complete",
+    "withheld_schedule": "complete"
+   },
+   "families": {
+    "development": {
+     "counterfactual": {
+      "A0_intersect": {
+       "action6_legal": {
+        "accuracy": 1.0,
+        "answered": 13,
+        "best_shortcut": "always_no",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 13,
+        "contexts_all_correct": 13,
+        "correct": 13,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 13,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       },
+       "legal_actions": {
+        "accuracy": 1.0,
+        "answered": 13,
+        "best_shortcut": null,
+        "best_shortcut_accuracy": 0.0,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 13,
+        "contexts_all_correct": 13,
+        "correct": 13,
+        "label": "criterion_met",
+        "missing": 0,
+        "n": 13,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 13
+       },
+       "legal_coordinate_actions": {
+        "accuracy": 0.8462,
+        "answered": 13,
+        "best_shortcut": "always_empty",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         0.6154,
+         1.0
+        ],
+        "contexts": 13,
+        "contexts_all_correct": 11,
+        "correct": 11,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 13,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       }
+      },
+      "A1_computed_control_metadata": {
+       "action6_legal": {
+        "accuracy": 1.0,
+        "answered": 13,
+        "best_shortcut": "always_no",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 13,
+        "contexts_all_correct": 13,
+        "correct": 13,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 13,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       },
+       "legal_actions": {
+        "accuracy": 1.0,
+        "answered": 13,
+        "best_shortcut": null,
+        "best_shortcut_accuracy": 0.0,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 13,
+        "contexts_all_correct": 13,
+        "correct": 13,
+        "label": "criterion_met",
+        "missing": 0,
+        "n": 13,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 13
+       },
+       "legal_coordinate_actions": {
+        "accuracy": 1.0,
+        "answered": 13,
+        "best_shortcut": "always_empty",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 13,
+        "contexts_all_correct": 13,
+        "correct": 13,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 13,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       }
+      }
+     },
+     "original": {
+      "A0_intersect": {
+       "action6_legal": {
+        "accuracy": 0.9333,
+        "answered": 30,
+        "best_shortcut": "always_no",
+        "best_shortcut_accuracy": 0.5,
+        "context_bootstrap_95": [
+         0.8333,
+         1.0
+        ],
+        "contexts": 30,
+        "contexts_all_correct": 28,
+        "correct": 28,
+        "label": "criterion_met",
+        "missing": 0,
+        "n": 30,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 15
+       },
+       "legal_actions": {
+        "accuracy": 1.0,
+        "answered": 30,
+        "best_shortcut": "ids_in_history",
+        "best_shortcut_accuracy": 0.1667,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 30,
+        "contexts_all_correct": 30,
+        "correct": 30,
+        "label": "criterion_met",
+        "missing": 0,
+        "n": 30,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 25
+       },
+       "legal_coordinate_actions": {
+        "accuracy": 0.7667,
+        "answered": 30,
+        "best_shortcut": "always_empty",
+        "best_shortcut_accuracy": 0.5,
+        "context_bootstrap_95": [
+         0.6,
+         0.9
+        ],
+        "contexts": 30,
+        "contexts_all_correct": 23,
+        "correct": 23,
+        "label": "inconclusive",
+        "missing": 0,
+        "n": 30,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 15
+       }
+      },
+      "A1_computed_control_metadata": {
+       "action6_legal": {
+        "accuracy": 1.0,
+        "answered": 30,
+        "best_shortcut": "always_no",
+        "best_shortcut_accuracy": 0.5,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 30,
+        "contexts_all_correct": 30,
+        "correct": 30,
+        "label": "criterion_met",
+        "missing": 0,
+        "n": 30,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 15
+       },
+       "legal_actions": {
+        "accuracy": 1.0,
+        "answered": 30,
+        "best_shortcut": "ids_in_history",
+        "best_shortcut_accuracy": 0.1667,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 30,
+        "contexts_all_correct": 30,
+        "correct": 30,
+        "label": "criterion_met",
+        "missing": 0,
+        "n": 30,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 25
+       },
+       "legal_coordinate_actions": {
+        "accuracy": 1.0,
+        "answered": 30,
+        "best_shortcut": "always_empty",
+        "best_shortcut_accuracy": 0.5,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 30,
+        "contexts_all_correct": 30,
+        "correct": 30,
+        "label": "criterion_met",
+        "missing": 0,
+        "n": 30,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 15
+       }
+      },
+      "B0_normalized_history": {
+       "any_change": {
+        "accuracy": 0.9333,
+        "answered": 30,
+        "best_shortcut": "null_as_no_change",
+        "best_shortcut_accuracy": 0.8333,
+        "context_bootstrap_95": [
+         0.8333,
+         1.0
+        ],
+        "contexts": 30,
+        "contexts_all_correct": 28,
+        "correct": 28,
+        "label": "inconclusive",
+        "missing": 0,
+        "n": 30,
+        "shortcut_disagreement_accuracy": 0.6,
+        "shortcut_disagreement_n": 5
+       },
+       "observed_effect": {
+        "accuracy": 0.9,
+        "answered": 30,
+        "best_shortcut": "ignore_coordinates",
+        "best_shortcut_accuracy": 0.8333,
+        "context_bootstrap_95": [
+         0.8,
+         1.0
+        ],
+        "contexts": 30,
+        "contexts_all_correct": 27,
+        "correct": 27,
+        "label": "inconclusive",
+        "missing": 0,
+        "n": 30,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 5
+       },
+       "outcome_class": {
+        "accuracy": 0.9333,
+        "answered": 30,
+        "best_shortcut": "transient_as_no_change",
+        "best_shortcut_accuracy": 0.7,
+        "context_bootstrap_95": [
+         0.8333,
+         1.0
+        ],
+        "contexts": 30,
+        "contexts_all_correct": 28,
+        "correct": 28,
+        "label": "inconclusive",
+        "missing": 0,
+        "n": 30,
+        "shortcut_disagreement_accuracy": 0.7778,
+        "shortcut_disagreement_n": 9
+       },
+       "qualifying_steps": {
+        "accuracy": 0.4333,
+        "answered": 30,
+        "best_shortcut": "every_unchanged_entry",
+        "best_shortcut_accuracy": 0.7,
+        "context_bootstrap_95": [
+         0.2667,
+         0.6
+        ],
+        "contexts": 30,
+        "contexts_all_correct": 13,
+        "correct": 13,
+        "label": "below_accuracy_floor",
+        "missing": 0,
+        "n": 30,
+        "shortcut_disagreement_accuracy": 0.0,
+        "shortcut_disagreement_n": 9
+       },
+       "step_action_match": {
+        "accuracy": 1.0,
+        "answered": 30,
+        "best_shortcut": "ignore_coordinates",
+        "best_shortcut_accuracy": 0.6333,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 30,
+        "contexts_all_correct": 30,
+        "correct": 30,
+        "label": "criterion_met",
+        "missing": 0,
+        "n": 30,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 11
+       },
+       "tried_unchanged": {
+        "accuracy": 0.4667,
+        "answered": 30,
+        "best_shortcut": "every_unchanged_entry",
+        "best_shortcut_accuracy": 0.7667,
+        "context_bootstrap_95": [
+         0.3,
+         0.6333
+        ],
+        "contexts": 30,
+        "contexts_all_correct": 14,
+        "correct": 14,
+        "label": "below_accuracy_floor",
+        "missing": 0,
+        "n": 30,
+        "shortcut_disagreement_accuracy": 0.0,
+        "shortcut_disagreement_n": 7
+       }
+      },
+      "B1_tool_eligibility": {
+       "any_change": {
+        "accuracy": 1.0,
+        "answered": 30,
+        "best_shortcut": "null_as_no_change",
+        "best_shortcut_accuracy": 0.8333,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 30,
+        "contexts_all_correct": 30,
+        "correct": 30,
+        "label": "inconclusive",
+        "missing": 0,
+        "n": 30,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 5
+       },
+       "observed_effect": {
+        "accuracy": 0.9667,
+        "answered": 30,
+        "best_shortcut": "ignore_coordinates",
+        "best_shortcut_accuracy": 0.8333,
+        "context_bootstrap_95": [
+         0.9,
+         1.0
+        ],
+        "contexts": 30,
+        "contexts_all_correct": 29,
+        "correct": 29,
+        "label": "inconclusive",
+        "missing": 0,
+        "n": 30,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 5
+       },
+       "outcome_class": {
+        "accuracy": 0.9667,
+        "answered": 30,
+        "best_shortcut": "transient_as_no_change",
+        "best_shortcut_accuracy": 0.7,
+        "context_bootstrap_95": [
+         0.9,
+         1.0
+        ],
+        "contexts": 30,
+        "contexts_all_correct": 29,
+        "correct": 29,
+        "label": "inconclusive",
+        "missing": 0,
+        "n": 30,
+        "shortcut_disagreement_accuracy": 0.8889,
+        "shortcut_disagreement_n": 9
+       },
+       "qualifying_steps": {
+        "accuracy": 0.6333,
+        "answered": 30,
+        "best_shortcut": "every_unchanged_entry",
+        "best_shortcut_accuracy": 0.7,
+        "context_bootstrap_95": [
+         0.4667,
+         0.8
+        ],
+        "contexts": 30,
+        "contexts_all_correct": 19,
+        "correct": 19,
+        "label": "below_accuracy_floor",
+        "missing": 0,
+        "n": 30,
+        "shortcut_disagreement_accuracy": 0.3333,
+        "shortcut_disagreement_n": 9
+       },
+       "step_action_match": {
+        "accuracy": 1.0,
+        "answered": 30,
+        "best_shortcut": "ignore_coordinates",
+        "best_shortcut_accuracy": 0.6333,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 30,
+        "contexts_all_correct": 30,
+        "correct": 30,
+        "label": "criterion_met",
+        "missing": 0,
+        "n": 30,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 11
+       },
+       "tried_unchanged": {
+        "accuracy": 0.7667,
+        "answered": 30,
+        "best_shortcut": "every_unchanged_entry",
+        "best_shortcut_accuracy": 0.7667,
+        "context_bootstrap_95": [
+         0.6,
+         0.9
+        ],
+        "contexts": 30,
+        "contexts_all_correct": 23,
+        "correct": 23,
+        "label": "inconclusive",
+        "missing": 0,
+        "n": 30,
+        "shortcut_disagreement_accuracy": 0.4286,
+        "shortcut_disagreement_n": 7
+       }
+      }
+     }
+    },
+    "transfer": {
+     "original": {
+      "A0_intersect": {
+       "action6_legal": {
+        "accuracy": 1.0,
+        "answered": 6,
+        "best_shortcut": "six_in_history",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 6,
+        "contexts_all_correct": 6,
+        "correct": 6,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 6,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       },
+       "legal_actions": {
+        "accuracy": 1.0,
+        "answered": 6,
+        "best_shortcut": "all_seven",
+        "best_shortcut_accuracy": 0.3333,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 6,
+        "contexts_all_correct": 6,
+        "correct": 6,
+        "label": "inconclusive",
+        "missing": 0,
+        "n": 6,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 4
+       },
+       "legal_coordinate_actions": {
+        "accuracy": 1.0,
+        "answered": 6,
+        "best_shortcut": "six_if_in_history",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 6,
+        "contexts_all_correct": 6,
+        "correct": 6,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 6,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       }
+      },
+      "A1_computed_control_metadata": {
+       "action6_legal": {
+        "accuracy": 1.0,
+        "answered": 6,
+        "best_shortcut": "six_in_history",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 6,
+        "contexts_all_correct": 6,
+        "correct": 6,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 6,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       },
+       "legal_actions": {
+        "accuracy": 1.0,
+        "answered": 6,
+        "best_shortcut": "all_seven",
+        "best_shortcut_accuracy": 0.3333,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 6,
+        "contexts_all_correct": 6,
+        "correct": 6,
+        "label": "inconclusive",
+        "missing": 0,
+        "n": 6,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 4
+       },
+       "legal_coordinate_actions": {
+        "accuracy": 1.0,
+        "answered": 6,
+        "best_shortcut": "six_if_in_history",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 6,
+        "contexts_all_correct": 6,
+        "correct": 6,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 6,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       }
+      },
+      "B0_normalized_history": {
+       "any_change": {
+        "accuracy": 1.0,
+        "answered": 6,
+        "best_shortcut": "final_frame_only",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 6,
+        "contexts_all_correct": 6,
+        "correct": 6,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 6,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       },
+       "observed_effect": {
+        "accuracy": 1.0,
+        "answered": 6,
+        "best_shortcut": "transient_as_no_change",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 6,
+        "contexts_all_correct": 6,
+        "correct": 6,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 6,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       },
+       "outcome_class": {
+        "accuracy": 1.0,
+        "answered": 6,
+        "best_shortcut": "transient_as_no_change",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 6,
+        "contexts_all_correct": 6,
+        "correct": 6,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 6,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       },
+       "qualifying_steps": {
+        "accuracy": 0.8333,
+        "answered": 6,
+        "best_shortcut": "transient_excluded",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         0.5,
+         1.0
+        ],
+        "contexts": 6,
+        "contexts_all_correct": 5,
+        "correct": 5,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 6,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       },
+       "step_action_match": {
+        "accuracy": 1.0,
+        "answered": 6,
+        "best_shortcut": "ignore_coordinates",
+        "best_shortcut_accuracy": 0.8333,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 6,
+        "contexts_all_correct": 6,
+        "correct": 6,
+        "label": "inconclusive",
+        "missing": 0,
+        "n": 6,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 1
+       },
+       "tried_unchanged": {
+        "accuracy": 0.8333,
+        "answered": 6,
+        "best_shortcut": "transient_excluded",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         0.5,
+         1.0
+        ],
+        "contexts": 6,
+        "contexts_all_correct": 5,
+        "correct": 5,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 6,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       }
+      },
+      "B1_tool_eligibility": {
+       "any_change": {
+        "accuracy": 1.0,
+        "answered": 6,
+        "best_shortcut": "final_frame_only",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 6,
+        "contexts_all_correct": 6,
+        "correct": 6,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 6,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       },
+       "observed_effect": {
+        "accuracy": 1.0,
+        "answered": 6,
+        "best_shortcut": "transient_as_no_change",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 6,
+        "contexts_all_correct": 6,
+        "correct": 6,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 6,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       },
+       "outcome_class": {
+        "accuracy": 0.8333,
+        "answered": 6,
+        "best_shortcut": "transient_as_no_change",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         0.5,
+         1.0
+        ],
+        "contexts": 6,
+        "contexts_all_correct": 5,
+        "correct": 5,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 6,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       },
+       "qualifying_steps": {
+        "accuracy": 0.8333,
+        "answered": 6,
+        "best_shortcut": "transient_excluded",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         0.5,
+         1.0
+        ],
+        "contexts": 6,
+        "contexts_all_correct": 5,
+        "correct": 5,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 6,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       },
+       "step_action_match": {
+        "accuracy": 1.0,
+        "answered": 6,
+        "best_shortcut": "ignore_coordinates",
+        "best_shortcut_accuracy": 0.8333,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 6,
+        "contexts_all_correct": 6,
+        "correct": 6,
+        "label": "inconclusive",
+        "missing": 0,
+        "n": 6,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 1
+       },
+       "tried_unchanged": {
+        "accuracy": 0.8333,
+        "answered": 6,
+        "best_shortcut": "transient_excluded",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         0.5,
+         1.0
+        ],
+        "contexts": 6,
+        "contexts_all_correct": 5,
+        "correct": 5,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 6,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       }
+      }
+     }
+    },
+    "withheld": {
+     "counterfactual": {
+      "A0_intersect": {
+       "action6_legal": {
+        "accuracy": 1.0,
+        "answered": 60,
+        "best_shortcut": "always_no",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 60,
+        "contexts_all_correct": 60,
+        "correct": 60,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 60,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       },
+       "legal_actions": {
+        "accuracy": 1.0,
+        "answered": 60,
+        "best_shortcut": "ids_in_history",
+        "best_shortcut_accuracy": 0.1333,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 60,
+        "contexts_all_correct": 60,
+        "correct": 60,
+        "label": "criterion_met",
+        "missing": 0,
+        "n": 60,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 52
+       },
+       "legal_coordinate_actions": {
+        "accuracy": 0.9667,
+        "answered": 60,
+        "best_shortcut": "always_empty",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         0.9167,
+         1.0
+        ],
+        "contexts": 60,
+        "contexts_all_correct": 58,
+        "correct": 58,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 60,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       }
+      },
+      "A1_computed_control_metadata": {
+       "action6_legal": {
+        "accuracy": 1.0,
+        "answered": 60,
+        "best_shortcut": "always_no",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 60,
+        "contexts_all_correct": 60,
+        "correct": 60,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 60,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       },
+       "legal_actions": {
+        "accuracy": 1.0,
+        "answered": 60,
+        "best_shortcut": "ids_in_history",
+        "best_shortcut_accuracy": 0.1333,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 60,
+        "contexts_all_correct": 60,
+        "correct": 60,
+        "label": "criterion_met",
+        "missing": 0,
+        "n": 60,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 52
+       },
+       "legal_coordinate_actions": {
+        "accuracy": 1.0,
+        "answered": 60,
+        "best_shortcut": "always_empty",
+        "best_shortcut_accuracy": 1.0,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 60,
+        "contexts_all_correct": 60,
+        "correct": 60,
+        "label": "not_diagnostic",
+        "missing": 0,
+        "n": 60,
+        "shortcut_disagreement_accuracy": null,
+        "shortcut_disagreement_n": 0
+       }
+      }
+     },
+     "original": {
+      "A0_intersect": {
+       "action6_legal": {
+        "accuracy": 1.0,
+        "answered": 128,
+        "best_shortcut": "always_no",
+        "best_shortcut_accuracy": 0.5,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 128,
+        "contexts_all_correct": 128,
+        "correct": 128,
+        "label": "criterion_met",
+        "missing": 0,
+        "n": 128,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 64
+       },
+       "legal_actions": {
+        "accuracy": 0.9922,
+        "answered": 128,
+        "best_shortcut": "all_seven",
+        "best_shortcut_accuracy": 0.0859,
+        "context_bootstrap_95": [
+         0.9766,
+         1.0
+        ],
+        "contexts": 128,
+        "contexts_all_correct": 127,
+        "correct": 127,
+        "label": "criterion_met",
+        "missing": 0,
+        "n": 128,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 117
+       },
+       "legal_coordinate_actions": {
+        "accuracy": 0.8594,
+        "answered": 128,
+        "best_shortcut": "always_empty",
+        "best_shortcut_accuracy": 0.5,
+        "context_bootstrap_95": [
+         0.7969,
+         0.9219
+        ],
+        "contexts": 128,
+        "contexts_all_correct": 110,
+        "correct": 110,
+        "label": "inconclusive",
+        "missing": 0,
+        "n": 128,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 64
+       }
+      },
+      "A1_computed_control_metadata": {
+       "action6_legal": {
+        "accuracy": 1.0,
+        "answered": 128,
+        "best_shortcut": "always_no",
+        "best_shortcut_accuracy": 0.5,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 128,
+        "contexts_all_correct": 128,
+        "correct": 128,
+        "label": "criterion_met",
+        "missing": 0,
+        "n": 128,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 64
+       },
+       "legal_actions": {
+        "accuracy": 1.0,
+        "answered": 128,
+        "best_shortcut": "all_seven",
+        "best_shortcut_accuracy": 0.0859,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 128,
+        "contexts_all_correct": 128,
+        "correct": 128,
+        "label": "criterion_met",
+        "missing": 0,
+        "n": 128,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 117
+       },
+       "legal_coordinate_actions": {
+        "accuracy": 1.0,
+        "answered": 128,
+        "best_shortcut": "always_empty",
+        "best_shortcut_accuracy": 0.5,
+        "context_bootstrap_95": [
+         1.0,
+         1.0
+        ],
+        "contexts": 128,
+        "contexts_all_correct": 128,
+        "correct": 128,
+        "label": "criterion_met",
+        "missing": 0,
+        "n": 128,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 64
+       }
+      },
+      "B0_normalized_history": {
+       "any_change": {
+        "accuracy": 0.9375,
+        "answered": 128,
+        "best_shortcut": "final_frame_only",
+        "best_shortcut_accuracy": 0.7812,
+        "context_bootstrap_95": [
+         0.8906,
+         0.9766
+        ],
+        "contexts": 128,
+        "contexts_all_correct": 120,
+        "correct": 120,
+        "label": "criterion_met",
+        "missing": 0,
+        "n": 128,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 28
+       },
+       "observed_effect": {
+        "accuracy": 0.8516,
+        "answered": 128,
+        "best_shortcut": "ignore_coordinates",
+        "best_shortcut_accuracy": 0.8594,
+        "context_bootstrap_95": [
+         0.7891,
+         0.9062
+        ],
+        "contexts": 128,
+        "contexts_all_correct": 109,
+        "correct": 109,
+        "label": "inconclusive",
+        "missing": 0,
+        "n": 128,
+        "shortcut_disagreement_accuracy": 0.7778,
+        "shortcut_disagreement_n": 18
+       },
+       "outcome_class": {
+        "accuracy": 0.9062,
+        "answered": 128,
+        "best_shortcut": "transient_as_no_change",
+        "best_shortcut_accuracy": 0.6406,
+        "context_bootstrap_95": [
+         0.8516,
+         0.9531
+        ],
+        "contexts": 128,
+        "contexts_all_correct": 116,
+        "correct": 116,
+        "label": "inconclusive",
+        "missing": 0,
+        "n": 128,
+        "shortcut_disagreement_accuracy": 0.8261,
+        "shortcut_disagreement_n": 46
+       },
+       "qualifying_steps": {
+        "accuracy": 0.3672,
+        "answered": 128,
+        "best_shortcut": "transient_excluded",
+        "best_shortcut_accuracy": 0.6094,
+        "context_bootstrap_95": [
+         0.2812,
+         0.4531
+        ],
+        "contexts": 128,
+        "contexts_all_correct": 47,
+        "correct": 47,
+        "label": "below_accuracy_floor",
+        "missing": 0,
+        "n": 128,
+        "shortcut_disagreement_accuracy": 0.22,
+        "shortcut_disagreement_n": 50
+       },
+       "step_action_match": {
+        "accuracy": 0.9766,
+        "answered": 128,
+        "best_shortcut": "ignore_coordinates",
+        "best_shortcut_accuracy": 0.5703,
+        "context_bootstrap_95": [
+         0.9453,
+         1.0
+        ],
+        "contexts": 128,
+        "contexts_all_correct": 125,
+        "correct": 125,
+        "label": "criterion_met",
+        "missing": 0,
+        "n": 128,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 55
+       },
+       "tried_unchanged": {
+        "accuracy": 0.4766,
+        "answered": 128,
+        "best_shortcut": "every_unchanged_entry",
+        "best_shortcut_accuracy": 0.6797,
+        "context_bootstrap_95": [
+         0.3984,
+         0.5703
+        ],
+        "contexts": 128,
+        "contexts_all_correct": 61,
+        "correct": 61,
+        "label": "below_accuracy_floor",
+        "missing": 0,
+        "n": 128,
+        "shortcut_disagreement_accuracy": 0.0488,
+        "shortcut_disagreement_n": 41
+       }
+      },
+      "B1_tool_eligibility": {
+       "any_change": {
+        "accuracy": 0.9219,
+        "answered": 128,
+        "best_shortcut": "final_frame_only",
+        "best_shortcut_accuracy": 0.7812,
+        "context_bootstrap_95": [
+         0.875,
+         0.9609
+        ],
+        "contexts": 128,
+        "contexts_all_correct": 118,
+        "correct": 118,
+        "label": "criterion_met",
+        "missing": 0,
+        "n": 128,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 28
+       },
+       "observed_effect": {
+        "accuracy": 0.8672,
+        "answered": 128,
+        "best_shortcut": "ignore_coordinates",
+        "best_shortcut_accuracy": 0.8594,
+        "context_bootstrap_95": [
+         0.8047,
+         0.9219
+        ],
+        "contexts": 128,
+        "contexts_all_correct": 111,
+        "correct": 111,
+        "label": "inconclusive",
+        "missing": 0,
+        "n": 128,
+        "shortcut_disagreement_accuracy": 0.8889,
+        "shortcut_disagreement_n": 18
+       },
+       "outcome_class": {
+        "accuracy": 0.8906,
+        "answered": 128,
+        "best_shortcut": "transient_as_no_change",
+        "best_shortcut_accuracy": 0.6406,
+        "context_bootstrap_95": [
+         0.8281,
+         0.9375
+        ],
+        "contexts": 128,
+        "contexts_all_correct": 114,
+        "correct": 114,
+        "label": "inconclusive",
+        "missing": 0,
+        "n": 128,
+        "shortcut_disagreement_accuracy": 0.7174,
+        "shortcut_disagreement_n": 46
+       },
+       "qualifying_steps": {
+        "accuracy": 0.625,
+        "answered": 128,
+        "best_shortcut": "transient_excluded",
+        "best_shortcut_accuracy": 0.6094,
+        "context_bootstrap_95": [
+         0.5391,
+         0.7109
+        ],
+        "contexts": 128,
+        "contexts_all_correct": 80,
+        "correct": 80,
+        "label": "below_accuracy_floor",
+        "missing": 0,
+        "n": 128,
+        "shortcut_disagreement_accuracy": 0.66,
+        "shortcut_disagreement_n": 50
+       },
+       "step_action_match": {
+        "accuracy": 0.9531,
+        "answered": 128,
+        "best_shortcut": "ignore_coordinates",
+        "best_shortcut_accuracy": 0.5703,
+        "context_bootstrap_95": [
+         0.9141,
+         0.9844
+        ],
+        "contexts": 128,
+        "contexts_all_correct": 122,
+        "correct": 122,
+        "label": "criterion_met",
+        "missing": 0,
+        "n": 128,
+        "shortcut_disagreement_accuracy": 1.0,
+        "shortcut_disagreement_n": 55
+       },
+       "tried_unchanged": {
+        "accuracy": 0.6641,
+        "answered": 128,
+        "best_shortcut": "every_unchanged_entry",
+        "best_shortcut_accuracy": 0.6797,
+        "context_bootstrap_95": [
+         0.5781,
+         0.7422
+        ],
+        "contexts": 128,
+        "contexts_all_correct": 85,
+        "correct": 85,
+        "label": "below_accuracy_floor",
+        "missing": 0,
+        "n": 128,
+        "shortcut_disagreement_accuracy": 0.3171,
+        "shortcut_disagreement_n": 41
+       }
+      }
+     }
+    }
+   },
+   "history_alteration": {
+    "development": {
+     "A0_intersect": {
+      "action6_legal": {
+       "both": 11,
+       "difference": 0.1538,
+       "difference_bootstrap_95": [
+        0.0,
+        0.3846
+       ],
+       "improvements": 2,
+       "incomplete": 0,
+       "n": 13,
+       "neither": 0,
+       "regressions": 0
+      },
+      "legal_actions": {
+       "both": 13,
+       "difference": 0.0,
+       "difference_bootstrap_95": [
+        0.0,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 13,
+       "neither": 0,
+       "regressions": 0
+      },
+      "legal_coordinate_actions": {
+       "both": 6,
+       "difference": 0.3846,
+       "difference_bootstrap_95": [
+        0.1538,
+        0.6154
+       ],
+       "improvements": 5,
+       "incomplete": 0,
+       "n": 13,
+       "neither": 2,
+       "regressions": 0
+      }
+     },
+     "A1_computed_control_metadata": {
+      "action6_legal": {
+       "both": 13,
+       "difference": 0.0,
+       "difference_bootstrap_95": [
+        0.0,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 13,
+       "neither": 0,
+       "regressions": 0
+      },
+      "legal_actions": {
+       "both": 13,
+       "difference": 0.0,
+       "difference_bootstrap_95": [
+        0.0,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 13,
+       "neither": 0,
+       "regressions": 0
+      },
+      "legal_coordinate_actions": {
+       "both": 13,
+       "difference": 0.0,
+       "difference_bootstrap_95": [
+        0.0,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 13,
+       "neither": 0,
+       "regressions": 0
+      }
+     }
+    },
+    "transfer": {},
+    "withheld": {
+     "A0_intersect": {
+      "action6_legal": {
+       "both": 60,
+       "difference": 0.0,
+       "difference_bootstrap_95": [
+        0.0,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 60,
+       "neither": 0,
+       "regressions": 0
+      },
+      "legal_actions": {
+       "both": 60,
+       "difference": 0.0,
+       "difference_bootstrap_95": [
+        0.0,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 60,
+       "neither": 0,
+       "regressions": 0
+      },
+      "legal_coordinate_actions": {
+       "both": 42,
+       "difference": 0.2667,
+       "difference_bootstrap_95": [
+        0.1667,
+        0.3833
+       ],
+       "improvements": 16,
+       "incomplete": 0,
+       "n": 60,
+       "neither": 2,
+       "regressions": 0
+      }
+     },
+     "A1_computed_control_metadata": {
+      "action6_legal": {
+       "both": 60,
+       "difference": 0.0,
+       "difference_bootstrap_95": [
+        0.0,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 60,
+       "neither": 0,
+       "regressions": 0
+      },
+      "legal_actions": {
+       "both": 60,
+       "difference": 0.0,
+       "difference_bootstrap_95": [
+        0.0,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 60,
+       "neither": 0,
+       "regressions": 0
+      },
+      "legal_coordinate_actions": {
+       "both": 60,
+       "difference": 0.0,
+       "difference_bootstrap_95": [
+        0.0,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 60,
+       "neither": 0,
+       "regressions": 0
+      }
+     }
+    }
+   },
+   "paired": {
+    "development": {
+     "control": {
+      "action6_legal": {
+       "both": 28,
+       "difference": 0.0667,
+       "difference_bootstrap_95": [
+        0.0,
+        0.1667
+       ],
+       "improvements": 2,
+       "incomplete": 0,
+       "n": 30,
+       "neither": 0,
+       "regressions": 0
+      },
+      "legal_actions": {
+       "both": 30,
+       "difference": 0.0,
+       "difference_bootstrap_95": [
+        0.0,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 30,
+       "neither": 0,
+       "regressions": 0
+      },
+      "legal_coordinate_actions": {
+       "both": 23,
+       "difference": 0.2333,
+       "difference_bootstrap_95": [
+        0.1,
+        0.3667
+       ],
+       "improvements": 7,
+       "incomplete": 0,
+       "n": 30,
+       "neither": 0,
+       "regressions": 0
+      }
+     },
+     "history": {
+      "any_change": {
+       "both": 28,
+       "difference": 0.0667,
+       "difference_bootstrap_95": [
+        0.0,
+        0.1667
+       ],
+       "improvements": 2,
+       "incomplete": 0,
+       "n": 30,
+       "neither": 0,
+       "regressions": 0
+      },
+      "observed_effect": {
+       "both": 27,
+       "difference": 0.0667,
+       "difference_bootstrap_95": [
+        0.0,
+        0.1667
+       ],
+       "improvements": 2,
+       "incomplete": 0,
+       "n": 30,
+       "neither": 1,
+       "regressions": 0
+      },
+      "outcome_class": {
+       "both": 28,
+       "difference": 0.0333,
+       "difference_bootstrap_95": [
+        0.0,
+        0.1
+       ],
+       "improvements": 1,
+       "incomplete": 0,
+       "n": 30,
+       "neither": 1,
+       "regressions": 0
+      },
+      "qualifying_steps": {
+       "both": 12,
+       "difference": 0.2,
+       "difference_bootstrap_95": [
+        0.0333,
+        0.3667
+       ],
+       "improvements": 7,
+       "incomplete": 0,
+       "n": 30,
+       "neither": 10,
+       "regressions": 1
+      },
+      "step_action_match": {
+       "both": 30,
+       "difference": 0.0,
+       "difference_bootstrap_95": [
+        0.0,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 30,
+       "neither": 0,
+       "regressions": 0
+      },
+      "tried_unchanged": {
+       "both": 14,
+       "difference": 0.3,
+       "difference_bootstrap_95": [
+        0.1333,
+        0.4667
+       ],
+       "improvements": 9,
+       "incomplete": 0,
+       "n": 30,
+       "neither": 7,
+       "regressions": 0
+      }
+     }
+    },
+    "transfer": {
+     "control": {
+      "action6_legal": {
+       "both": 6,
+       "difference": 0.0,
+       "difference_bootstrap_95": [
+        0.0,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 6,
+       "neither": 0,
+       "regressions": 0
+      },
+      "legal_actions": {
+       "both": 6,
+       "difference": 0.0,
+       "difference_bootstrap_95": [
+        0.0,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 6,
+       "neither": 0,
+       "regressions": 0
+      },
+      "legal_coordinate_actions": {
+       "both": 6,
+       "difference": 0.0,
+       "difference_bootstrap_95": [
+        0.0,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 6,
+       "neither": 0,
+       "regressions": 0
+      }
+     },
+     "history": {
+      "any_change": {
+       "both": 6,
+       "difference": 0.0,
+       "difference_bootstrap_95": [
+        0.0,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 6,
+       "neither": 0,
+       "regressions": 0
+      },
+      "observed_effect": {
+       "both": 6,
+       "difference": 0.0,
+       "difference_bootstrap_95": [
+        0.0,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 6,
+       "neither": 0,
+       "regressions": 0
+      },
+      "outcome_class": {
+       "both": 5,
+       "difference": -0.1667,
+       "difference_bootstrap_95": [
+        -0.5,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 6,
+       "neither": 0,
+       "regressions": 1
+      },
+      "qualifying_steps": {
+       "both": 5,
+       "difference": 0.0,
+       "difference_bootstrap_95": [
+        0.0,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 6,
+       "neither": 1,
+       "regressions": 0
+      },
+      "step_action_match": {
+       "both": 6,
+       "difference": 0.0,
+       "difference_bootstrap_95": [
+        0.0,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 6,
+       "neither": 0,
+       "regressions": 0
+      },
+      "tried_unchanged": {
+       "both": 5,
+       "difference": 0.0,
+       "difference_bootstrap_95": [
+        0.0,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 6,
+       "neither": 1,
+       "regressions": 0
+      }
+     }
+    },
+    "withheld": {
+     "control": {
+      "action6_legal": {
+       "both": 128,
+       "difference": 0.0,
+       "difference_bootstrap_95": [
+        0.0,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 128,
+       "neither": 0,
+       "regressions": 0
+      },
+      "legal_actions": {
+       "both": 127,
+       "difference": 0.0078,
+       "difference_bootstrap_95": [
+        0.0,
+        0.0234
+       ],
+       "improvements": 1,
+       "incomplete": 0,
+       "n": 128,
+       "neither": 0,
+       "regressions": 0
+      },
+      "legal_coordinate_actions": {
+       "both": 110,
+       "difference": 0.1406,
+       "difference_bootstrap_95": [
+        0.0859,
+        0.2031
+       ],
+       "improvements": 18,
+       "incomplete": 0,
+       "n": 128,
+       "neither": 0,
+       "regressions": 0
+      }
+     },
+     "history": {
+      "any_change": {
+       "both": 115,
+       "difference": -0.0156,
+       "difference_bootstrap_95": [
+        -0.0547,
+        0.0234
+       ],
+       "improvements": 3,
+       "incomplete": 0,
+       "n": 128,
+       "neither": 5,
+       "regressions": 5
+      },
+      "observed_effect": {
+       "both": 102,
+       "difference": 0.0156,
+       "difference_bootstrap_95": [
+        -0.0469,
+        0.0781
+       ],
+       "improvements": 9,
+       "incomplete": 0,
+       "n": 128,
+       "neither": 10,
+       "regressions": 7
+      },
+      "outcome_class": {
+       "both": 107,
+       "difference": -0.0156,
+       "difference_bootstrap_95": [
+        -0.0781,
+        0.0469
+       ],
+       "improvements": 7,
+       "incomplete": 0,
+       "n": 128,
+       "neither": 5,
+       "regressions": 9
+      },
+      "qualifying_steps": {
+       "both": 46,
+       "difference": 0.2578,
+       "difference_bootstrap_95": [
+        0.1797,
+        0.3359
+       ],
+       "improvements": 34,
+       "incomplete": 0,
+       "n": 128,
+       "neither": 47,
+       "regressions": 1
+      },
+      "step_action_match": {
+       "both": 122,
+       "difference": -0.0234,
+       "difference_bootstrap_95": [
+        -0.0547,
+        0.0
+       ],
+       "improvements": 0,
+       "incomplete": 0,
+       "n": 128,
+       "neither": 3,
+       "regressions": 3
+      },
+      "tried_unchanged": {
+       "both": 59,
+       "difference": 0.1875,
+       "difference_bootstrap_95": [
+        0.1172,
+        0.2656
+       ],
+       "improvements": 26,
+       "incomplete": 0,
+       "n": 128,
+       "neither": 41,
+       "regressions": 2
+      }
+     }
+    }
+   },
+   "passes_present": [
+    "pass_1",
+    "pass_2"
+   ],
+   "strata": {
+    "development/counterfactual/A0_intersect/action6_legal/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "development/counterfactual/A0_intersect/action6_legal/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A0_intersect/action6_legal/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A0_intersect/action6_legal/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A0_intersect/action6_legal/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A0_intersect/action6_legal/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A0_intersect/action6_legal/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A0_intersect/action6_legal/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A0_intersect/action6_legal/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A0_intersect/action6_legal/template:transient": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A0_intersect/action6_legal/variant:counterfactual": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "development/counterfactual/A0_intersect/legal_actions/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "development/counterfactual/A0_intersect/legal_actions/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A0_intersect/legal_actions/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A0_intersect/legal_actions/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A0_intersect/legal_actions/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A0_intersect/legal_actions/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A0_intersect/legal_actions/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A0_intersect/legal_actions/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A0_intersect/legal_actions/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A0_intersect/legal_actions/template:transient": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A0_intersect/legal_actions/variant:counterfactual": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "development/counterfactual/A0_intersect/legal_coordinate_actions/six_not_legal": {
+     "accuracy": 0.8462,
+     "correct": 11,
+     "missing": 0,
+     "n": 13
+    },
+    "development/counterfactual/A0_intersect/legal_coordinate_actions/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A0_intersect/legal_coordinate_actions/template:level_boundary": {
+     "accuracy": 0.0,
+     "correct": 0,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A0_intersect/legal_coordinate_actions/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A0_intersect/legal_coordinate_actions/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A0_intersect/legal_coordinate_actions/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A0_intersect/legal_coordinate_actions/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A0_intersect/legal_coordinate_actions/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A0_intersect/legal_coordinate_actions/template:stale_unchanged": {
+     "accuracy": 0.5,
+     "correct": 1,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A0_intersect/legal_coordinate_actions/template:transient": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A0_intersect/legal_coordinate_actions/variant:counterfactual": {
+     "accuracy": 0.8462,
+     "correct": 11,
+     "missing": 0,
+     "n": 13
+    },
+    "development/counterfactual/A1_computed_control_metadata/action6_legal/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "development/counterfactual/A1_computed_control_metadata/action6_legal/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A1_computed_control_metadata/action6_legal/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A1_computed_control_metadata/action6_legal/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A1_computed_control_metadata/action6_legal/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A1_computed_control_metadata/action6_legal/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A1_computed_control_metadata/action6_legal/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A1_computed_control_metadata/action6_legal/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A1_computed_control_metadata/action6_legal/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A1_computed_control_metadata/action6_legal/template:transient": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A1_computed_control_metadata/action6_legal/variant:counterfactual": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_actions/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_actions/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_actions/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_actions/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_actions/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_actions/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_actions/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_actions/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_actions/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_actions/template:transient": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_actions/variant:counterfactual": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/template:transient": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/variant:counterfactual": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "development/original/A0_intersect/action6_legal/empty_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "development/original/A0_intersect/action6_legal/six_legal": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "development/original/A0_intersect/action6_legal/six_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 9,
+     "missing": 0,
+     "n": 9
+    },
+    "development/original/A0_intersect/action6_legal/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/original/A0_intersect/action6_legal/six_not_legal_six_in_history": {
+     "accuracy": 0.8462,
+     "correct": 11,
+     "missing": 0,
+     "n": 13
+    },
+    "development/original/A0_intersect/action6_legal/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/action6_legal/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/action6_legal/template:level_boundary": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/action6_legal/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/action6_legal/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/action6_legal/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/action6_legal/template:reset_boundary": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/action6_legal/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/action6_legal/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/action6_legal/template:transient": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/action6_legal/variant:original": {
+     "accuracy": 0.9333,
+     "correct": 28,
+     "missing": 0,
+     "n": 30
+    },
+    "development/original/A0_intersect/legal_actions/empty_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "development/original/A0_intersect/legal_actions/six_legal": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "development/original/A0_intersect/legal_actions/six_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 9,
+     "missing": 0,
+     "n": 9
+    },
+    "development/original/A0_intersect/legal_actions/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/original/A0_intersect/legal_actions/six_not_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "development/original/A0_intersect/legal_actions/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/legal_actions/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/legal_actions/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/legal_actions/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/legal_actions/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/legal_actions/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/legal_actions/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/legal_actions/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/legal_actions/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/legal_actions/template:transient": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/legal_actions/variant:original": {
+     "accuracy": 1.0,
+     "correct": 30,
+     "missing": 0,
+     "n": 30
+    },
+    "development/original/A0_intersect/legal_coordinate_actions/empty_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "development/original/A0_intersect/legal_coordinate_actions/six_legal": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "development/original/A0_intersect/legal_coordinate_actions/six_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 9,
+     "missing": 0,
+     "n": 9
+    },
+    "development/original/A0_intersect/legal_coordinate_actions/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/original/A0_intersect/legal_coordinate_actions/six_not_legal_six_in_history": {
+     "accuracy": 0.4615,
+     "correct": 6,
+     "missing": 0,
+     "n": 13
+    },
+    "development/original/A0_intersect/legal_coordinate_actions/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/legal_coordinate_actions/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/legal_coordinate_actions/template:level_boundary": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/legal_coordinate_actions/template:long_with_omitted": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/legal_coordinate_actions/template:mixed": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/legal_coordinate_actions/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/legal_coordinate_actions/template:reset_boundary": {
+     "accuracy": 0.3333,
+     "correct": 1,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/legal_coordinate_actions/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/legal_coordinate_actions/template:stale_unchanged": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/legal_coordinate_actions/template:transient": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A0_intersect/legal_coordinate_actions/variant:original": {
+     "accuracy": 0.7667,
+     "correct": 23,
+     "missing": 0,
+     "n": 30
+    },
+    "development/original/A1_computed_control_metadata/action6_legal/empty_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "development/original/A1_computed_control_metadata/action6_legal/six_legal": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "development/original/A1_computed_control_metadata/action6_legal/six_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 9,
+     "missing": 0,
+     "n": 9
+    },
+    "development/original/A1_computed_control_metadata/action6_legal/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/original/A1_computed_control_metadata/action6_legal/six_not_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "development/original/A1_computed_control_metadata/action6_legal/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/action6_legal/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/action6_legal/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/action6_legal/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/action6_legal/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/action6_legal/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/action6_legal/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/action6_legal/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/action6_legal/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/action6_legal/template:transient": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/action6_legal/variant:original": {
+     "accuracy": 1.0,
+     "correct": 30,
+     "missing": 0,
+     "n": 30
+    },
+    "development/original/A1_computed_control_metadata/legal_actions/empty_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "development/original/A1_computed_control_metadata/legal_actions/six_legal": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "development/original/A1_computed_control_metadata/legal_actions/six_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 9,
+     "missing": 0,
+     "n": 9
+    },
+    "development/original/A1_computed_control_metadata/legal_actions/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/original/A1_computed_control_metadata/legal_actions/six_not_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "development/original/A1_computed_control_metadata/legal_actions/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/legal_actions/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/legal_actions/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/legal_actions/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/legal_actions/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/legal_actions/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/legal_actions/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/legal_actions/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/legal_actions/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/legal_actions/template:transient": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/legal_actions/variant:original": {
+     "accuracy": 1.0,
+     "correct": 30,
+     "missing": 0,
+     "n": 30
+    },
+    "development/original/A1_computed_control_metadata/legal_coordinate_actions/empty_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "development/original/A1_computed_control_metadata/legal_coordinate_actions/six_legal": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "development/original/A1_computed_control_metadata/legal_coordinate_actions/six_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 9,
+     "missing": 0,
+     "n": 9
+    },
+    "development/original/A1_computed_control_metadata/legal_coordinate_actions/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "development/original/A1_computed_control_metadata/legal_coordinate_actions/six_not_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "development/original/A1_computed_control_metadata/legal_coordinate_actions/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/legal_coordinate_actions/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/legal_coordinate_actions/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/legal_coordinate_actions/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/legal_coordinate_actions/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/legal_coordinate_actions/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/legal_coordinate_actions/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/legal_coordinate_actions/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/legal_coordinate_actions/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/legal_coordinate_actions/template:transient": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/A1_computed_control_metadata/legal_coordinate_actions/variant:original": {
+     "accuracy": 1.0,
+     "correct": 30,
+     "missing": 0,
+     "n": 30
+    },
+    "development/original/B0_normalized_history/any_change/empty_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "development/original/B0_normalized_history/any_change/entry:acknowledged_no_change": {
+     "accuracy": 1.0,
+     "correct": 7,
+     "missing": 0,
+     "n": 7
+    },
+    "development/original/B0_normalized_history/any_change/entry:changed_then_returned": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "development/original/B0_normalized_history/any_change/entry:dispatch_failed": {
+     "accuracy": 0.6,
+     "correct": 3,
+     "missing": 0,
+     "n": 5
+    },
+    "development/original/B0_normalized_history/any_change/entry:final_frame_changed": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/original/B0_normalized_history/any_change/not_observed": {
+     "accuracy": 0.6,
+     "correct": 3,
+     "missing": 0,
+     "n": 5
+    },
+    "development/original/B0_normalized_history/any_change/not_shown": {
+     "accuracy": 1.0,
+     "correct": 11,
+     "missing": 0,
+     "n": 11
+    },
+    "development/original/B0_normalized_history/any_change/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/any_change/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/any_change/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/any_change/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/any_change/template:mixed": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/any_change/template:near_miss_clicks": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/any_change/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/any_change/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/any_change/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/any_change/template:transient": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/any_change/variant:original": {
+     "accuracy": 0.9333,
+     "correct": 28,
+     "missing": 0,
+     "n": 30
+    },
+    "development/original/B0_normalized_history/observed_effect/empty_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "development/original/B0_normalized_history/observed_effect/neighbouring_click": {
+     "accuracy": 1.0,
+     "correct": 5,
+     "missing": 0,
+     "n": 5
+    },
+    "development/original/B0_normalized_history/observed_effect/not_observed": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "development/original/B0_normalized_history/observed_effect/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/observed_effect/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/observed_effect/template:level_boundary": {
+     "accuracy": 0.3333,
+     "correct": 1,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/observed_effect/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/observed_effect/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/observed_effect/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/observed_effect/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/observed_effect/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/observed_effect/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/observed_effect/template:transient": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/observed_effect/variant:original": {
+     "accuracy": 0.9,
+     "correct": 27,
+     "missing": 0,
+     "n": 30
+    },
+    "development/original/B0_normalized_history/outcome_class/empty_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "development/original/B0_normalized_history/outcome_class/entry:acknowledged_no_change": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/outcome_class/entry:changed_then_returned": {
+     "accuracy": 0.7778,
+     "correct": 7,
+     "missing": 0,
+     "n": 9
+    },
+    "development/original/B0_normalized_history/outcome_class/entry:dispatch_failed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/outcome_class/entry:final_frame_changed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/outcome_class/entry:outcome_unknown": {
+     "accuracy": 1.0,
+     "correct": 5,
+     "missing": 0,
+     "n": 5
+    },
+    "development/original/B0_normalized_history/outcome_class/not_shown": {
+     "accuracy": 1.0,
+     "correct": 7,
+     "missing": 0,
+     "n": 7
+    },
+    "development/original/B0_normalized_history/outcome_class/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/outcome_class/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/outcome_class/template:level_boundary": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/outcome_class/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/outcome_class/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/outcome_class/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/outcome_class/template:reset_boundary": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/outcome_class/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/outcome_class/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/outcome_class/template:transient": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/outcome_class/variant:original": {
+     "accuracy": 0.9333,
+     "correct": 28,
+     "missing": 0,
+     "n": 30
+    },
+    "development/original/B0_normalized_history/qualifying_steps/empty_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "development/original/B0_normalized_history/qualifying_steps/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/qualifying_steps/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/qualifying_steps/template:level_boundary": {
+     "accuracy": 0.0,
+     "correct": 0,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/qualifying_steps/template:long_with_omitted": {
+     "accuracy": 0.0,
+     "correct": 0,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/qualifying_steps/template:mixed": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/qualifying_steps/template:near_miss_clicks": {
+     "accuracy": 0.3333,
+     "correct": 1,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/qualifying_steps/template:reset_boundary": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/qualifying_steps/template:same_frame_repeats": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/qualifying_steps/template:stale_unchanged": {
+     "accuracy": 0.0,
+     "correct": 0,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/qualifying_steps/template:transient": {
+     "accuracy": 0.0,
+     "correct": 0,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/qualifying_steps/variant:original": {
+     "accuracy": 0.4333,
+     "correct": 13,
+     "missing": 0,
+     "n": 30
+    },
+    "development/original/B0_normalized_history/step_action_match/different_action": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/original/B0_normalized_history/step_action_match/empty_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "development/original/B0_normalized_history/step_action_match/neighbouring_click": {
+     "accuracy": 1.0,
+     "correct": 11,
+     "missing": 0,
+     "n": 11
+    },
+    "development/original/B0_normalized_history/step_action_match/not_shown": {
+     "accuracy": 1.0,
+     "correct": 10,
+     "missing": 0,
+     "n": 10
+    },
+    "development/original/B0_normalized_history/step_action_match/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/step_action_match/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/step_action_match/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/step_action_match/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/step_action_match/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/step_action_match/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/step_action_match/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/step_action_match/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/step_action_match/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/step_action_match/template:transient": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/step_action_match/variant:original": {
+     "accuracy": 1.0,
+     "correct": 30,
+     "missing": 0,
+     "n": 30
+    },
+    "development/original/B0_normalized_history/tried_unchanged/empty_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "development/original/B0_normalized_history/tried_unchanged/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/tried_unchanged/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/tried_unchanged/template:level_boundary": {
+     "accuracy": 0.0,
+     "correct": 0,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/tried_unchanged/template:long_with_omitted": {
+     "accuracy": 0.0,
+     "correct": 0,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/tried_unchanged/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/tried_unchanged/template:near_miss_clicks": {
+     "accuracy": 0.3333,
+     "correct": 1,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/tried_unchanged/template:reset_boundary": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/tried_unchanged/template:same_frame_repeats": {
+     "accuracy": 0.3333,
+     "correct": 1,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/tried_unchanged/template:stale_unchanged": {
+     "accuracy": 0.0,
+     "correct": 0,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/tried_unchanged/template:transient": {
+     "accuracy": 0.3333,
+     "correct": 1,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B0_normalized_history/tried_unchanged/variant:original": {
+     "accuracy": 0.4667,
+     "correct": 14,
+     "missing": 0,
+     "n": 30
+    },
+    "development/original/B1_tool_eligibility/any_change/empty_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "development/original/B1_tool_eligibility/any_change/entry:acknowledged_no_change": {
+     "accuracy": 1.0,
+     "correct": 7,
+     "missing": 0,
+     "n": 7
+    },
+    "development/original/B1_tool_eligibility/any_change/entry:changed_then_returned": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "development/original/B1_tool_eligibility/any_change/entry:dispatch_failed": {
+     "accuracy": 1.0,
+     "correct": 5,
+     "missing": 0,
+     "n": 5
+    },
+    "development/original/B1_tool_eligibility/any_change/entry:final_frame_changed": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/original/B1_tool_eligibility/any_change/not_observed": {
+     "accuracy": 1.0,
+     "correct": 5,
+     "missing": 0,
+     "n": 5
+    },
+    "development/original/B1_tool_eligibility/any_change/not_shown": {
+     "accuracy": 1.0,
+     "correct": 11,
+     "missing": 0,
+     "n": 11
+    },
+    "development/original/B1_tool_eligibility/any_change/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/any_change/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/any_change/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/any_change/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/any_change/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/any_change/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/any_change/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/any_change/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/any_change/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/any_change/template:transient": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/any_change/variant:original": {
+     "accuracy": 1.0,
+     "correct": 30,
+     "missing": 0,
+     "n": 30
+    },
+    "development/original/B1_tool_eligibility/observed_effect/empty_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "development/original/B1_tool_eligibility/observed_effect/neighbouring_click": {
+     "accuracy": 1.0,
+     "correct": 5,
+     "missing": 0,
+     "n": 5
+    },
+    "development/original/B1_tool_eligibility/observed_effect/not_observed": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "development/original/B1_tool_eligibility/observed_effect/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/observed_effect/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/observed_effect/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/observed_effect/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/observed_effect/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/observed_effect/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/observed_effect/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/observed_effect/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/observed_effect/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/observed_effect/template:transient": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/observed_effect/variant:original": {
+     "accuracy": 0.9667,
+     "correct": 29,
+     "missing": 0,
+     "n": 30
+    },
+    "development/original/B1_tool_eligibility/outcome_class/empty_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "development/original/B1_tool_eligibility/outcome_class/entry:acknowledged_no_change": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/outcome_class/entry:changed_then_returned": {
+     "accuracy": 0.8889,
+     "correct": 8,
+     "missing": 0,
+     "n": 9
+    },
+    "development/original/B1_tool_eligibility/outcome_class/entry:dispatch_failed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/outcome_class/entry:final_frame_changed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/outcome_class/entry:outcome_unknown": {
+     "accuracy": 1.0,
+     "correct": 5,
+     "missing": 0,
+     "n": 5
+    },
+    "development/original/B1_tool_eligibility/outcome_class/not_shown": {
+     "accuracy": 1.0,
+     "correct": 7,
+     "missing": 0,
+     "n": 7
+    },
+    "development/original/B1_tool_eligibility/outcome_class/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/outcome_class/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/outcome_class/template:level_boundary": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/outcome_class/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/outcome_class/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/outcome_class/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/outcome_class/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/outcome_class/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/outcome_class/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/outcome_class/template:transient": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/outcome_class/variant:original": {
+     "accuracy": 0.9667,
+     "correct": 29,
+     "missing": 0,
+     "n": 30
+    },
+    "development/original/B1_tool_eligibility/qualifying_steps/empty_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "development/original/B1_tool_eligibility/qualifying_steps/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/qualifying_steps/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/qualifying_steps/template:level_boundary": {
+     "accuracy": 0.3333,
+     "correct": 1,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/qualifying_steps/template:long_with_omitted": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/qualifying_steps/template:mixed": {
+     "accuracy": 0.3333,
+     "correct": 1,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/qualifying_steps/template:near_miss_clicks": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/qualifying_steps/template:reset_boundary": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/qualifying_steps/template:same_frame_repeats": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/qualifying_steps/template:stale_unchanged": {
+     "accuracy": 0.3333,
+     "correct": 1,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/qualifying_steps/template:transient": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/qualifying_steps/variant:original": {
+     "accuracy": 0.6333,
+     "correct": 19,
+     "missing": 0,
+     "n": 30
+    },
+    "development/original/B1_tool_eligibility/step_action_match/different_action": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "development/original/B1_tool_eligibility/step_action_match/empty_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "development/original/B1_tool_eligibility/step_action_match/neighbouring_click": {
+     "accuracy": 1.0,
+     "correct": 11,
+     "missing": 0,
+     "n": 11
+    },
+    "development/original/B1_tool_eligibility/step_action_match/not_shown": {
+     "accuracy": 1.0,
+     "correct": 10,
+     "missing": 0,
+     "n": 10
+    },
+    "development/original/B1_tool_eligibility/step_action_match/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/step_action_match/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/step_action_match/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/step_action_match/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/step_action_match/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/step_action_match/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/step_action_match/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/step_action_match/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/step_action_match/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/step_action_match/template:transient": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/step_action_match/variant:original": {
+     "accuracy": 1.0,
+     "correct": 30,
+     "missing": 0,
+     "n": 30
+    },
+    "development/original/B1_tool_eligibility/tried_unchanged/empty_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "development/original/B1_tool_eligibility/tried_unchanged/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/tried_unchanged/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/tried_unchanged/template:level_boundary": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/tried_unchanged/template:long_with_omitted": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/tried_unchanged/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/tried_unchanged/template:near_miss_clicks": {
+     "accuracy": 0.3333,
+     "correct": 1,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/tried_unchanged/template:reset_boundary": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/tried_unchanged/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/tried_unchanged/template:stale_unchanged": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/tried_unchanged/template:transient": {
+     "accuracy": 0.6667,
+     "correct": 2,
+     "missing": 0,
+     "n": 3
+    },
+    "development/original/B1_tool_eligibility/tried_unchanged/variant:original": {
+     "accuracy": 0.7667,
+     "correct": 23,
+     "missing": 0,
+     "n": 30
+    },
+    "transfer/original/A0_intersect/action6_legal/six_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "transfer/original/A0_intersect/action6_legal/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "transfer/original/A0_intersect/action6_legal/template:archived": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/A0_intersect/action6_legal/variant:original": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/A0_intersect/legal_actions/six_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "transfer/original/A0_intersect/legal_actions/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "transfer/original/A0_intersect/legal_actions/template:archived": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/A0_intersect/legal_actions/variant:original": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/A0_intersect/legal_coordinate_actions/six_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "transfer/original/A0_intersect/legal_coordinate_actions/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "transfer/original/A0_intersect/legal_coordinate_actions/template:archived": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/A0_intersect/legal_coordinate_actions/variant:original": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/A1_computed_control_metadata/action6_legal/six_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "transfer/original/A1_computed_control_metadata/action6_legal/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "transfer/original/A1_computed_control_metadata/action6_legal/template:archived": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/A1_computed_control_metadata/action6_legal/variant:original": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/A1_computed_control_metadata/legal_actions/six_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "transfer/original/A1_computed_control_metadata/legal_actions/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "transfer/original/A1_computed_control_metadata/legal_actions/template:archived": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/A1_computed_control_metadata/legal_actions/variant:original": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/A1_computed_control_metadata/legal_coordinate_actions/six_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "transfer/original/A1_computed_control_metadata/legal_coordinate_actions/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "transfer/original/A1_computed_control_metadata/legal_coordinate_actions/template:archived": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/A1_computed_control_metadata/legal_coordinate_actions/variant:original": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B0_normalized_history/any_change/entry:acknowledged_no_change": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "transfer/original/B0_normalized_history/any_change/entry:final_frame_changed": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "transfer/original/B0_normalized_history/any_change/not_shown": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "transfer/original/B0_normalized_history/any_change/template:archived": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B0_normalized_history/any_change/variant:original": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B0_normalized_history/observed_effect/neighbouring_click": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "transfer/original/B0_normalized_history/observed_effect/not_observed": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "transfer/original/B0_normalized_history/observed_effect/template:archived": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B0_normalized_history/observed_effect/variant:original": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B0_normalized_history/outcome_class/entry:acknowledged_no_change": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "transfer/original/B0_normalized_history/outcome_class/entry:final_frame_changed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "transfer/original/B0_normalized_history/outcome_class/not_shown": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "transfer/original/B0_normalized_history/outcome_class/template:archived": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B0_normalized_history/outcome_class/variant:original": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B0_normalized_history/qualifying_steps/template:archived": {
+     "accuracy": 0.8333,
+     "correct": 5,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B0_normalized_history/qualifying_steps/variant:original": {
+     "accuracy": 0.8333,
+     "correct": 5,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B0_normalized_history/step_action_match/neighbouring_click": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "transfer/original/B0_normalized_history/step_action_match/not_shown": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "transfer/original/B0_normalized_history/step_action_match/template:archived": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B0_normalized_history/step_action_match/variant:original": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B0_normalized_history/tried_unchanged/template:archived": {
+     "accuracy": 0.8333,
+     "correct": 5,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B0_normalized_history/tried_unchanged/variant:original": {
+     "accuracy": 0.8333,
+     "correct": 5,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B1_tool_eligibility/any_change/entry:acknowledged_no_change": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "transfer/original/B1_tool_eligibility/any_change/entry:final_frame_changed": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "transfer/original/B1_tool_eligibility/any_change/not_shown": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "transfer/original/B1_tool_eligibility/any_change/template:archived": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B1_tool_eligibility/any_change/variant:original": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B1_tool_eligibility/observed_effect/neighbouring_click": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "transfer/original/B1_tool_eligibility/observed_effect/not_observed": {
+     "accuracy": 1.0,
+     "correct": 2,
+     "missing": 0,
+     "n": 2
+    },
+    "transfer/original/B1_tool_eligibility/observed_effect/template:archived": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B1_tool_eligibility/observed_effect/variant:original": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B1_tool_eligibility/outcome_class/entry:acknowledged_no_change": {
+     "accuracy": 0.5,
+     "correct": 1,
+     "missing": 0,
+     "n": 2
+    },
+    "transfer/original/B1_tool_eligibility/outcome_class/entry:final_frame_changed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "transfer/original/B1_tool_eligibility/outcome_class/not_shown": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "transfer/original/B1_tool_eligibility/outcome_class/template:archived": {
+     "accuracy": 0.8333,
+     "correct": 5,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B1_tool_eligibility/outcome_class/variant:original": {
+     "accuracy": 0.8333,
+     "correct": 5,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B1_tool_eligibility/qualifying_steps/template:archived": {
+     "accuracy": 0.8333,
+     "correct": 5,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B1_tool_eligibility/qualifying_steps/variant:original": {
+     "accuracy": 0.8333,
+     "correct": 5,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B1_tool_eligibility/step_action_match/neighbouring_click": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "transfer/original/B1_tool_eligibility/step_action_match/not_shown": {
+     "accuracy": 1.0,
+     "correct": 1,
+     "missing": 0,
+     "n": 1
+    },
+    "transfer/original/B1_tool_eligibility/step_action_match/template:archived": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B1_tool_eligibility/step_action_match/variant:original": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B1_tool_eligibility/tried_unchanged/template:archived": {
+     "accuracy": 0.8333,
+     "correct": 5,
+     "missing": 0,
+     "n": 6
+    },
+    "transfer/original/B1_tool_eligibility/tried_unchanged/variant:original": {
+     "accuracy": 0.8333,
+     "correct": 5,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/action6_legal/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 60,
+     "missing": 0,
+     "n": 60
+    },
+    "withheld/counterfactual/A0_intersect/action6_legal/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/action6_legal/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/action6_legal/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/action6_legal/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/action6_legal/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/action6_legal/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/action6_legal/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/counterfactual/A0_intersect/action6_legal/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 10,
+     "missing": 0,
+     "n": 10
+    },
+    "withheld/counterfactual/A0_intersect/action6_legal/template:transient": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/action6_legal/variant:counterfactual": {
+     "accuracy": 1.0,
+     "correct": 60,
+     "missing": 0,
+     "n": 60
+    },
+    "withheld/counterfactual/A0_intersect/legal_actions/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 60,
+     "missing": 0,
+     "n": 60
+    },
+    "withheld/counterfactual/A0_intersect/legal_actions/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/legal_actions/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/legal_actions/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/legal_actions/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/legal_actions/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/legal_actions/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/legal_actions/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/counterfactual/A0_intersect/legal_actions/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 10,
+     "missing": 0,
+     "n": 10
+    },
+    "withheld/counterfactual/A0_intersect/legal_actions/template:transient": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/legal_actions/variant:counterfactual": {
+     "accuracy": 1.0,
+     "correct": 60,
+     "missing": 0,
+     "n": 60
+    },
+    "withheld/counterfactual/A0_intersect/legal_coordinate_actions/six_not_legal": {
+     "accuracy": 0.9667,
+     "correct": 58,
+     "missing": 0,
+     "n": 60
+    },
+    "withheld/counterfactual/A0_intersect/legal_coordinate_actions/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/legal_coordinate_actions/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/legal_coordinate_actions/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/legal_coordinate_actions/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/legal_coordinate_actions/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/legal_coordinate_actions/template:reset_boundary": {
+     "accuracy": 0.8333,
+     "correct": 5,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/legal_coordinate_actions/template:same_frame_repeats": {
+     "accuracy": 0.875,
+     "correct": 7,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/counterfactual/A0_intersect/legal_coordinate_actions/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 10,
+     "missing": 0,
+     "n": 10
+    },
+    "withheld/counterfactual/A0_intersect/legal_coordinate_actions/template:transient": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A0_intersect/legal_coordinate_actions/variant:counterfactual": {
+     "accuracy": 0.9667,
+     "correct": 58,
+     "missing": 0,
+     "n": 60
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/action6_legal/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 60,
+     "missing": 0,
+     "n": 60
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/action6_legal/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/action6_legal/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/action6_legal/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/action6_legal/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/action6_legal/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/action6_legal/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/action6_legal/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/action6_legal/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 10,
+     "missing": 0,
+     "n": 10
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/action6_legal/template:transient": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/action6_legal/variant:counterfactual": {
+     "accuracy": 1.0,
+     "correct": 60,
+     "missing": 0,
+     "n": 60
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_actions/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 60,
+     "missing": 0,
+     "n": 60
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_actions/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_actions/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_actions/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_actions/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_actions/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_actions/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_actions/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_actions/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 10,
+     "missing": 0,
+     "n": 10
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_actions/template:transient": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_actions/variant:counterfactual": {
+     "accuracy": 1.0,
+     "correct": 60,
+     "missing": 0,
+     "n": 60
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 60,
+     "missing": 0,
+     "n": 60
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 10,
+     "missing": 0,
+     "n": 10
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/template:transient": {
+     "accuracy": 1.0,
+     "correct": 6,
+     "missing": 0,
+     "n": 6
+    },
+    "withheld/counterfactual/A1_computed_control_metadata/legal_coordinate_actions/variant:counterfactual": {
+     "accuracy": 1.0,
+     "correct": 60,
+     "missing": 0,
+     "n": 60
+    },
+    "withheld/original/A0_intersect/action6_legal/empty_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "withheld/original/A0_intersect/action6_legal/six_legal": {
+     "accuracy": 1.0,
+     "correct": 27,
+     "missing": 0,
+     "n": 27
+    },
+    "withheld/original/A0_intersect/action6_legal/six_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 37,
+     "missing": 0,
+     "n": 37
+    },
+    "withheld/original/A0_intersect/action6_legal/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "withheld/original/A0_intersect/action6_legal/six_not_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 60,
+     "missing": 0,
+     "n": 60
+    },
+    "withheld/original/A0_intersect/action6_legal/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/original/A0_intersect/action6_legal/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A0_intersect/action6_legal/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A0_intersect/action6_legal/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A0_intersect/action6_legal/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A0_intersect/action6_legal/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A0_intersect/action6_legal/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A0_intersect/action6_legal/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 16,
+     "missing": 0,
+     "n": 16
+    },
+    "withheld/original/A0_intersect/action6_legal/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 20,
+     "missing": 0,
+     "n": 20
+    },
+    "withheld/original/A0_intersect/action6_legal/template:transient": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A0_intersect/action6_legal/variant:original": {
+     "accuracy": 1.0,
+     "correct": 128,
+     "missing": 0,
+     "n": 128
+    },
+    "withheld/original/A0_intersect/legal_actions/empty_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "withheld/original/A0_intersect/legal_actions/six_legal": {
+     "accuracy": 1.0,
+     "correct": 27,
+     "missing": 0,
+     "n": 27
+    },
+    "withheld/original/A0_intersect/legal_actions/six_legal_six_in_history": {
+     "accuracy": 0.973,
+     "correct": 36,
+     "missing": 0,
+     "n": 37
+    },
+    "withheld/original/A0_intersect/legal_actions/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "withheld/original/A0_intersect/legal_actions/six_not_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 60,
+     "missing": 0,
+     "n": 60
+    },
+    "withheld/original/A0_intersect/legal_actions/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/original/A0_intersect/legal_actions/template:failed_and_unknown": {
+     "accuracy": 0.9167,
+     "correct": 11,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A0_intersect/legal_actions/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A0_intersect/legal_actions/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A0_intersect/legal_actions/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A0_intersect/legal_actions/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A0_intersect/legal_actions/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A0_intersect/legal_actions/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 16,
+     "missing": 0,
+     "n": 16
+    },
+    "withheld/original/A0_intersect/legal_actions/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 20,
+     "missing": 0,
+     "n": 20
+    },
+    "withheld/original/A0_intersect/legal_actions/template:transient": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A0_intersect/legal_actions/variant:original": {
+     "accuracy": 0.9922,
+     "correct": 127,
+     "missing": 0,
+     "n": 128
+    },
+    "withheld/original/A0_intersect/legal_coordinate_actions/empty_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "withheld/original/A0_intersect/legal_coordinate_actions/six_legal": {
+     "accuracy": 1.0,
+     "correct": 27,
+     "missing": 0,
+     "n": 27
+    },
+    "withheld/original/A0_intersect/legal_coordinate_actions/six_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 37,
+     "missing": 0,
+     "n": 37
+    },
+    "withheld/original/A0_intersect/legal_coordinate_actions/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "withheld/original/A0_intersect/legal_coordinate_actions/six_not_legal_six_in_history": {
+     "accuracy": 0.7,
+     "correct": 42,
+     "missing": 0,
+     "n": 60
+    },
+    "withheld/original/A0_intersect/legal_coordinate_actions/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/original/A0_intersect/legal_coordinate_actions/template:failed_and_unknown": {
+     "accuracy": 0.6667,
+     "correct": 8,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A0_intersect/legal_coordinate_actions/template:level_boundary": {
+     "accuracy": 0.9167,
+     "correct": 11,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A0_intersect/legal_coordinate_actions/template:long_with_omitted": {
+     "accuracy": 0.9167,
+     "correct": 11,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A0_intersect/legal_coordinate_actions/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A0_intersect/legal_coordinate_actions/template:near_miss_clicks": {
+     "accuracy": 0.9167,
+     "correct": 11,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A0_intersect/legal_coordinate_actions/template:reset_boundary": {
+     "accuracy": 0.8333,
+     "correct": 10,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A0_intersect/legal_coordinate_actions/template:same_frame_repeats": {
+     "accuracy": 0.8125,
+     "correct": 13,
+     "missing": 0,
+     "n": 16
+    },
+    "withheld/original/A0_intersect/legal_coordinate_actions/template:stale_unchanged": {
+     "accuracy": 0.8,
+     "correct": 16,
+     "missing": 0,
+     "n": 20
+    },
+    "withheld/original/A0_intersect/legal_coordinate_actions/template:transient": {
+     "accuracy": 0.8333,
+     "correct": 10,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A0_intersect/legal_coordinate_actions/variant:original": {
+     "accuracy": 0.8594,
+     "correct": 110,
+     "missing": 0,
+     "n": 128
+    },
+    "withheld/original/A1_computed_control_metadata/action6_legal/empty_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "withheld/original/A1_computed_control_metadata/action6_legal/six_legal": {
+     "accuracy": 1.0,
+     "correct": 27,
+     "missing": 0,
+     "n": 27
+    },
+    "withheld/original/A1_computed_control_metadata/action6_legal/six_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 37,
+     "missing": 0,
+     "n": 37
+    },
+    "withheld/original/A1_computed_control_metadata/action6_legal/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "withheld/original/A1_computed_control_metadata/action6_legal/six_not_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 60,
+     "missing": 0,
+     "n": 60
+    },
+    "withheld/original/A1_computed_control_metadata/action6_legal/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/original/A1_computed_control_metadata/action6_legal/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A1_computed_control_metadata/action6_legal/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A1_computed_control_metadata/action6_legal/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A1_computed_control_metadata/action6_legal/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A1_computed_control_metadata/action6_legal/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A1_computed_control_metadata/action6_legal/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A1_computed_control_metadata/action6_legal/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 16,
+     "missing": 0,
+     "n": 16
+    },
+    "withheld/original/A1_computed_control_metadata/action6_legal/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 20,
+     "missing": 0,
+     "n": 20
+    },
+    "withheld/original/A1_computed_control_metadata/action6_legal/template:transient": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A1_computed_control_metadata/action6_legal/variant:original": {
+     "accuracy": 1.0,
+     "correct": 128,
+     "missing": 0,
+     "n": 128
+    },
+    "withheld/original/A1_computed_control_metadata/legal_actions/empty_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "withheld/original/A1_computed_control_metadata/legal_actions/six_legal": {
+     "accuracy": 1.0,
+     "correct": 27,
+     "missing": 0,
+     "n": 27
+    },
+    "withheld/original/A1_computed_control_metadata/legal_actions/six_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 37,
+     "missing": 0,
+     "n": 37
+    },
+    "withheld/original/A1_computed_control_metadata/legal_actions/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "withheld/original/A1_computed_control_metadata/legal_actions/six_not_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 60,
+     "missing": 0,
+     "n": 60
+    },
+    "withheld/original/A1_computed_control_metadata/legal_actions/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/original/A1_computed_control_metadata/legal_actions/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A1_computed_control_metadata/legal_actions/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A1_computed_control_metadata/legal_actions/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A1_computed_control_metadata/legal_actions/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A1_computed_control_metadata/legal_actions/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A1_computed_control_metadata/legal_actions/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A1_computed_control_metadata/legal_actions/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 16,
+     "missing": 0,
+     "n": 16
+    },
+    "withheld/original/A1_computed_control_metadata/legal_actions/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 20,
+     "missing": 0,
+     "n": 20
+    },
+    "withheld/original/A1_computed_control_metadata/legal_actions/template:transient": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A1_computed_control_metadata/legal_actions/variant:original": {
+     "accuracy": 1.0,
+     "correct": 128,
+     "missing": 0,
+     "n": 128
+    },
+    "withheld/original/A1_computed_control_metadata/legal_coordinate_actions/empty_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "withheld/original/A1_computed_control_metadata/legal_coordinate_actions/six_legal": {
+     "accuracy": 1.0,
+     "correct": 27,
+     "missing": 0,
+     "n": 27
+    },
+    "withheld/original/A1_computed_control_metadata/legal_coordinate_actions/six_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 37,
+     "missing": 0,
+     "n": 37
+    },
+    "withheld/original/A1_computed_control_metadata/legal_coordinate_actions/six_not_legal": {
+     "accuracy": 1.0,
+     "correct": 4,
+     "missing": 0,
+     "n": 4
+    },
+    "withheld/original/A1_computed_control_metadata/legal_coordinate_actions/six_not_legal_six_in_history": {
+     "accuracy": 1.0,
+     "correct": 60,
+     "missing": 0,
+     "n": 60
+    },
+    "withheld/original/A1_computed_control_metadata/legal_coordinate_actions/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/original/A1_computed_control_metadata/legal_coordinate_actions/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A1_computed_control_metadata/legal_coordinate_actions/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A1_computed_control_metadata/legal_coordinate_actions/template:long_with_omitted": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A1_computed_control_metadata/legal_coordinate_actions/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A1_computed_control_metadata/legal_coordinate_actions/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A1_computed_control_metadata/legal_coordinate_actions/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A1_computed_control_metadata/legal_coordinate_actions/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 16,
+     "missing": 0,
+     "n": 16
+    },
+    "withheld/original/A1_computed_control_metadata/legal_coordinate_actions/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 20,
+     "missing": 0,
+     "n": 20
+    },
+    "withheld/original/A1_computed_control_metadata/legal_coordinate_actions/template:transient": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/A1_computed_control_metadata/legal_coordinate_actions/variant:original": {
+     "accuracy": 1.0,
+     "correct": 128,
+     "missing": 0,
+     "n": 128
+    },
+    "withheld/original/B0_normalized_history/any_change/empty_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "withheld/original/B0_normalized_history/any_change/entry:acknowledged_no_change": {
+     "accuracy": 1.0,
+     "correct": 30,
+     "missing": 0,
+     "n": 30
+    },
+    "withheld/original/B0_normalized_history/any_change/entry:changed_then_returned": {
+     "accuracy": 1.0,
+     "correct": 28,
+     "missing": 0,
+     "n": 28
+    },
+    "withheld/original/B0_normalized_history/any_change/entry:dispatch_failed": {
+     "accuracy": 0.6316,
+     "correct": 12,
+     "missing": 0,
+     "n": 19
+    },
+    "withheld/original/B0_normalized_history/any_change/entry:final_frame_changed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "withheld/original/B0_normalized_history/any_change/entry:outcome_unknown": {
+     "accuracy": 1.0,
+     "correct": 11,
+     "missing": 0,
+     "n": 11
+    },
+    "withheld/original/B0_normalized_history/any_change/not_observed": {
+     "accuracy": 0.7667,
+     "correct": 23,
+     "missing": 0,
+     "n": 30
+    },
+    "withheld/original/B0_normalized_history/any_change/not_shown": {
+     "accuracy": 0.973,
+     "correct": 36,
+     "missing": 0,
+     "n": 37
+    },
+    "withheld/original/B0_normalized_history/any_change/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/original/B0_normalized_history/any_change/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/any_change/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/any_change/template:long_with_omitted": {
+     "accuracy": 0.8333,
+     "correct": 10,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/any_change/template:mixed": {
+     "accuracy": 0.9167,
+     "correct": 11,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/any_change/template:near_miss_clicks": {
+     "accuracy": 0.9167,
+     "correct": 11,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/any_change/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/any_change/template:same_frame_repeats": {
+     "accuracy": 0.875,
+     "correct": 14,
+     "missing": 0,
+     "n": 16
+    },
+    "withheld/original/B0_normalized_history/any_change/template:stale_unchanged": {
+     "accuracy": 0.95,
+     "correct": 19,
+     "missing": 0,
+     "n": 20
+    },
+    "withheld/original/B0_normalized_history/any_change/template:transient": {
+     "accuracy": 0.9167,
+     "correct": 11,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/any_change/variant:original": {
+     "accuracy": 0.9375,
+     "correct": 120,
+     "missing": 0,
+     "n": 128
+    },
+    "withheld/original/B0_normalized_history/observed_effect/empty_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "withheld/original/B0_normalized_history/observed_effect/neighbouring_click": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/original/B0_normalized_history/observed_effect/not_observed": {
+     "accuracy": 1.0,
+     "correct": 24,
+     "missing": 0,
+     "n": 24
+    },
+    "withheld/original/B0_normalized_history/observed_effect/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/original/B0_normalized_history/observed_effect/template:failed_and_unknown": {
+     "accuracy": 0.8333,
+     "correct": 10,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/observed_effect/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/observed_effect/template:long_with_omitted": {
+     "accuracy": 0.75,
+     "correct": 9,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/observed_effect/template:mixed": {
+     "accuracy": 0.6667,
+     "correct": 8,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/observed_effect/template:near_miss_clicks": {
+     "accuracy": 0.8333,
+     "correct": 10,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/observed_effect/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/observed_effect/template:same_frame_repeats": {
+     "accuracy": 0.9375,
+     "correct": 15,
+     "missing": 0,
+     "n": 16
+    },
+    "withheld/original/B0_normalized_history/observed_effect/template:stale_unchanged": {
+     "accuracy": 0.8,
+     "correct": 16,
+     "missing": 0,
+     "n": 20
+    },
+    "withheld/original/B0_normalized_history/observed_effect/template:transient": {
+     "accuracy": 0.75,
+     "correct": 9,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/observed_effect/variant:original": {
+     "accuracy": 0.8516,
+     "correct": 109,
+     "missing": 0,
+     "n": 128
+    },
+    "withheld/original/B0_normalized_history/outcome_class/empty_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "withheld/original/B0_normalized_history/outcome_class/entry:acknowledged_no_change": {
+     "accuracy": 1.0,
+     "correct": 15,
+     "missing": 0,
+     "n": 15
+    },
+    "withheld/original/B0_normalized_history/outcome_class/entry:changed_then_returned": {
+     "accuracy": 0.8261,
+     "correct": 38,
+     "missing": 0,
+     "n": 46
+    },
+    "withheld/original/B0_normalized_history/outcome_class/entry:dispatch_failed": {
+     "accuracy": 1.0,
+     "correct": 11,
+     "missing": 0,
+     "n": 11
+    },
+    "withheld/original/B0_normalized_history/outcome_class/entry:final_frame_changed": {
+     "accuracy": 1.0,
+     "correct": 17,
+     "missing": 0,
+     "n": 17
+    },
+    "withheld/original/B0_normalized_history/outcome_class/entry:outcome_unknown": {
+     "accuracy": 1.0,
+     "correct": 16,
+     "missing": 0,
+     "n": 16
+    },
+    "withheld/original/B0_normalized_history/outcome_class/not_shown": {
+     "accuracy": 0.8261,
+     "correct": 19,
+     "missing": 0,
+     "n": 23
+    },
+    "withheld/original/B0_normalized_history/outcome_class/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/original/B0_normalized_history/outcome_class/template:failed_and_unknown": {
+     "accuracy": 0.8333,
+     "correct": 10,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/outcome_class/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/outcome_class/template:long_with_omitted": {
+     "accuracy": 0.9167,
+     "correct": 11,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/outcome_class/template:mixed": {
+     "accuracy": 0.75,
+     "correct": 9,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/outcome_class/template:near_miss_clicks": {
+     "accuracy": 0.9167,
+     "correct": 11,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/outcome_class/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/outcome_class/template:same_frame_repeats": {
+     "accuracy": 0.9375,
+     "correct": 15,
+     "missing": 0,
+     "n": 16
+    },
+    "withheld/original/B0_normalized_history/outcome_class/template:stale_unchanged": {
+     "accuracy": 0.9,
+     "correct": 18,
+     "missing": 0,
+     "n": 20
+    },
+    "withheld/original/B0_normalized_history/outcome_class/template:transient": {
+     "accuracy": 0.8333,
+     "correct": 10,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/outcome_class/variant:original": {
+     "accuracy": 0.9062,
+     "correct": 116,
+     "missing": 0,
+     "n": 128
+    },
+    "withheld/original/B0_normalized_history/qualifying_steps/empty_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "withheld/original/B0_normalized_history/qualifying_steps/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/original/B0_normalized_history/qualifying_steps/template:failed_and_unknown": {
+     "accuracy": 0.5833,
+     "correct": 7,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/qualifying_steps/template:level_boundary": {
+     "accuracy": 0.5,
+     "correct": 6,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/qualifying_steps/template:long_with_omitted": {
+     "accuracy": 0.1667,
+     "correct": 2,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/qualifying_steps/template:mixed": {
+     "accuracy": 0.3333,
+     "correct": 4,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/qualifying_steps/template:near_miss_clicks": {
+     "accuracy": 0.25,
+     "correct": 3,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/qualifying_steps/template:reset_boundary": {
+     "accuracy": 0.75,
+     "correct": 9,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/qualifying_steps/template:same_frame_repeats": {
+     "accuracy": 0.1875,
+     "correct": 3,
+     "missing": 0,
+     "n": 16
+    },
+    "withheld/original/B0_normalized_history/qualifying_steps/template:stale_unchanged": {
+     "accuracy": 0.1,
+     "correct": 2,
+     "missing": 0,
+     "n": 20
+    },
+    "withheld/original/B0_normalized_history/qualifying_steps/template:transient": {
+     "accuracy": 0.25,
+     "correct": 3,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/qualifying_steps/variant:original": {
+     "accuracy": 0.3672,
+     "correct": 47,
+     "missing": 0,
+     "n": 128
+    },
+    "withheld/original/B0_normalized_history/step_action_match/empty_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "withheld/original/B0_normalized_history/step_action_match/neighbouring_click": {
+     "accuracy": 1.0,
+     "correct": 55,
+     "missing": 0,
+     "n": 55
+    },
+    "withheld/original/B0_normalized_history/step_action_match/not_shown": {
+     "accuracy": 0.9286,
+     "correct": 39,
+     "missing": 0,
+     "n": 42
+    },
+    "withheld/original/B0_normalized_history/step_action_match/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/original/B0_normalized_history/step_action_match/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/step_action_match/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/step_action_match/template:long_with_omitted": {
+     "accuracy": 0.8333,
+     "correct": 10,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/step_action_match/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/step_action_match/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/step_action_match/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/step_action_match/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 16,
+     "missing": 0,
+     "n": 16
+    },
+    "withheld/original/B0_normalized_history/step_action_match/template:stale_unchanged": {
+     "accuracy": 1.0,
+     "correct": 20,
+     "missing": 0,
+     "n": 20
+    },
+    "withheld/original/B0_normalized_history/step_action_match/template:transient": {
+     "accuracy": 0.9167,
+     "correct": 11,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/step_action_match/variant:original": {
+     "accuracy": 0.9766,
+     "correct": 125,
+     "missing": 0,
+     "n": 128
+    },
+    "withheld/original/B0_normalized_history/tried_unchanged/empty_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "withheld/original/B0_normalized_history/tried_unchanged/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/original/B0_normalized_history/tried_unchanged/template:failed_and_unknown": {
+     "accuracy": 0.75,
+     "correct": 9,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/tried_unchanged/template:level_boundary": {
+     "accuracy": 0.5833,
+     "correct": 7,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/tried_unchanged/template:long_with_omitted": {
+     "accuracy": 0.25,
+     "correct": 3,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/tried_unchanged/template:mixed": {
+     "accuracy": 0.25,
+     "correct": 3,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/tried_unchanged/template:near_miss_clicks": {
+     "accuracy": 0.25,
+     "correct": 3,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/tried_unchanged/template:reset_boundary": {
+     "accuracy": 0.8333,
+     "correct": 10,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/tried_unchanged/template:same_frame_repeats": {
+     "accuracy": 0.625,
+     "correct": 10,
+     "missing": 0,
+     "n": 16
+    },
+    "withheld/original/B0_normalized_history/tried_unchanged/template:stale_unchanged": {
+     "accuracy": 0.3,
+     "correct": 6,
+     "missing": 0,
+     "n": 20
+    },
+    "withheld/original/B0_normalized_history/tried_unchanged/template:transient": {
+     "accuracy": 0.1667,
+     "correct": 2,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B0_normalized_history/tried_unchanged/variant:original": {
+     "accuracy": 0.4766,
+     "correct": 61,
+     "missing": 0,
+     "n": 128
+    },
+    "withheld/original/B1_tool_eligibility/any_change/empty_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "withheld/original/B1_tool_eligibility/any_change/entry:acknowledged_no_change": {
+     "accuracy": 1.0,
+     "correct": 30,
+     "missing": 0,
+     "n": 30
+    },
+    "withheld/original/B1_tool_eligibility/any_change/entry:changed_then_returned": {
+     "accuracy": 1.0,
+     "correct": 28,
+     "missing": 0,
+     "n": 28
+    },
+    "withheld/original/B1_tool_eligibility/any_change/entry:dispatch_failed": {
+     "accuracy": 0.7895,
+     "correct": 15,
+     "missing": 0,
+     "n": 19
+    },
+    "withheld/original/B1_tool_eligibility/any_change/entry:final_frame_changed": {
+     "accuracy": 1.0,
+     "correct": 3,
+     "missing": 0,
+     "n": 3
+    },
+    "withheld/original/B1_tool_eligibility/any_change/entry:outcome_unknown": {
+     "accuracy": 1.0,
+     "correct": 11,
+     "missing": 0,
+     "n": 11
+    },
+    "withheld/original/B1_tool_eligibility/any_change/not_observed": {
+     "accuracy": 0.8667,
+     "correct": 26,
+     "missing": 0,
+     "n": 30
+    },
+    "withheld/original/B1_tool_eligibility/any_change/not_shown": {
+     "accuracy": 0.8378,
+     "correct": 31,
+     "missing": 0,
+     "n": 37
+    },
+    "withheld/original/B1_tool_eligibility/any_change/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/original/B1_tool_eligibility/any_change/template:failed_and_unknown": {
+     "accuracy": 0.9167,
+     "correct": 11,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/any_change/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/any_change/template:long_with_omitted": {
+     "accuracy": 0.8333,
+     "correct": 10,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/any_change/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/any_change/template:near_miss_clicks": {
+     "accuracy": 0.8333,
+     "correct": 10,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/any_change/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/any_change/template:same_frame_repeats": {
+     "accuracy": 0.875,
+     "correct": 14,
+     "missing": 0,
+     "n": 16
+    },
+    "withheld/original/B1_tool_eligibility/any_change/template:stale_unchanged": {
+     "accuracy": 0.9,
+     "correct": 18,
+     "missing": 0,
+     "n": 20
+    },
+    "withheld/original/B1_tool_eligibility/any_change/template:transient": {
+     "accuracy": 0.9167,
+     "correct": 11,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/any_change/variant:original": {
+     "accuracy": 0.9219,
+     "correct": 118,
+     "missing": 0,
+     "n": 128
+    },
+    "withheld/original/B1_tool_eligibility/observed_effect/empty_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "withheld/original/B1_tool_eligibility/observed_effect/neighbouring_click": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/original/B1_tool_eligibility/observed_effect/not_observed": {
+     "accuracy": 1.0,
+     "correct": 24,
+     "missing": 0,
+     "n": 24
+    },
+    "withheld/original/B1_tool_eligibility/observed_effect/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/original/B1_tool_eligibility/observed_effect/template:failed_and_unknown": {
+     "accuracy": 0.75,
+     "correct": 9,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/observed_effect/template:level_boundary": {
+     "accuracy": 0.8333,
+     "correct": 10,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/observed_effect/template:long_with_omitted": {
+     "accuracy": 0.9167,
+     "correct": 11,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/observed_effect/template:mixed": {
+     "accuracy": 0.75,
+     "correct": 9,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/observed_effect/template:near_miss_clicks": {
+     "accuracy": 0.9167,
+     "correct": 11,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/observed_effect/template:reset_boundary": {
+     "accuracy": 0.9167,
+     "correct": 11,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/observed_effect/template:same_frame_repeats": {
+     "accuracy": 0.9375,
+     "correct": 15,
+     "missing": 0,
+     "n": 16
+    },
+    "withheld/original/B1_tool_eligibility/observed_effect/template:stale_unchanged": {
+     "accuracy": 0.95,
+     "correct": 19,
+     "missing": 0,
+     "n": 20
+    },
+    "withheld/original/B1_tool_eligibility/observed_effect/template:transient": {
+     "accuracy": 0.6667,
+     "correct": 8,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/observed_effect/variant:original": {
+     "accuracy": 0.8672,
+     "correct": 111,
+     "missing": 0,
+     "n": 128
+    },
+    "withheld/original/B1_tool_eligibility/outcome_class/empty_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "withheld/original/B1_tool_eligibility/outcome_class/entry:acknowledged_no_change": {
+     "accuracy": 1.0,
+     "correct": 15,
+     "missing": 0,
+     "n": 15
+    },
+    "withheld/original/B1_tool_eligibility/outcome_class/entry:changed_then_returned": {
+     "accuracy": 0.7174,
+     "correct": 33,
+     "missing": 0,
+     "n": 46
+    },
+    "withheld/original/B1_tool_eligibility/outcome_class/entry:dispatch_failed": {
+     "accuracy": 1.0,
+     "correct": 11,
+     "missing": 0,
+     "n": 11
+    },
+    "withheld/original/B1_tool_eligibility/outcome_class/entry:final_frame_changed": {
+     "accuracy": 1.0,
+     "correct": 17,
+     "missing": 0,
+     "n": 17
+    },
+    "withheld/original/B1_tool_eligibility/outcome_class/entry:outcome_unknown": {
+     "accuracy": 1.0,
+     "correct": 16,
+     "missing": 0,
+     "n": 16
+    },
+    "withheld/original/B1_tool_eligibility/outcome_class/not_shown": {
+     "accuracy": 0.9565,
+     "correct": 22,
+     "missing": 0,
+     "n": 23
+    },
+    "withheld/original/B1_tool_eligibility/outcome_class/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/original/B1_tool_eligibility/outcome_class/template:failed_and_unknown": {
+     "accuracy": 0.8333,
+     "correct": 10,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/outcome_class/template:level_boundary": {
+     "accuracy": 0.8333,
+     "correct": 10,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/outcome_class/template:long_with_omitted": {
+     "accuracy": 0.8333,
+     "correct": 10,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/outcome_class/template:mixed": {
+     "accuracy": 0.8333,
+     "correct": 10,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/outcome_class/template:near_miss_clicks": {
+     "accuracy": 0.8333,
+     "correct": 10,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/outcome_class/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/outcome_class/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 16,
+     "missing": 0,
+     "n": 16
+    },
+    "withheld/original/B1_tool_eligibility/outcome_class/template:stale_unchanged": {
+     "accuracy": 0.85,
+     "correct": 17,
+     "missing": 0,
+     "n": 20
+    },
+    "withheld/original/B1_tool_eligibility/outcome_class/template:transient": {
+     "accuracy": 0.9167,
+     "correct": 11,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/outcome_class/variant:original": {
+     "accuracy": 0.8906,
+     "correct": 114,
+     "missing": 0,
+     "n": 128
+    },
+    "withheld/original/B1_tool_eligibility/qualifying_steps/empty_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "withheld/original/B1_tool_eligibility/qualifying_steps/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/original/B1_tool_eligibility/qualifying_steps/template:failed_and_unknown": {
+     "accuracy": 0.6667,
+     "correct": 8,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/qualifying_steps/template:level_boundary": {
+     "accuracy": 0.6667,
+     "correct": 8,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/qualifying_steps/template:long_with_omitted": {
+     "accuracy": 0.3333,
+     "correct": 4,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/qualifying_steps/template:mixed": {
+     "accuracy": 0.5,
+     "correct": 6,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/qualifying_steps/template:near_miss_clicks": {
+     "accuracy": 0.4167,
+     "correct": 5,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/qualifying_steps/template:reset_boundary": {
+     "accuracy": 0.75,
+     "correct": 9,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/qualifying_steps/template:same_frame_repeats": {
+     "accuracy": 0.625,
+     "correct": 10,
+     "missing": 0,
+     "n": 16
+    },
+    "withheld/original/B1_tool_eligibility/qualifying_steps/template:stale_unchanged": {
+     "accuracy": 0.65,
+     "correct": 13,
+     "missing": 0,
+     "n": 20
+    },
+    "withheld/original/B1_tool_eligibility/qualifying_steps/template:transient": {
+     "accuracy": 0.75,
+     "correct": 9,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/qualifying_steps/variant:original": {
+     "accuracy": 0.625,
+     "correct": 80,
+     "missing": 0,
+     "n": 128
+    },
+    "withheld/original/B1_tool_eligibility/step_action_match/empty_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "withheld/original/B1_tool_eligibility/step_action_match/neighbouring_click": {
+     "accuracy": 1.0,
+     "correct": 55,
+     "missing": 0,
+     "n": 55
+    },
+    "withheld/original/B1_tool_eligibility/step_action_match/not_shown": {
+     "accuracy": 0.9048,
+     "correct": 38,
+     "missing": 0,
+     "n": 42
+    },
+    "withheld/original/B1_tool_eligibility/step_action_match/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/original/B1_tool_eligibility/step_action_match/template:failed_and_unknown": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/step_action_match/template:level_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/step_action_match/template:long_with_omitted": {
+     "accuracy": 0.75,
+     "correct": 9,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/step_action_match/template:mixed": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/step_action_match/template:near_miss_clicks": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/step_action_match/template:reset_boundary": {
+     "accuracy": 1.0,
+     "correct": 12,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/step_action_match/template:same_frame_repeats": {
+     "accuracy": 1.0,
+     "correct": 16,
+     "missing": 0,
+     "n": 16
+    },
+    "withheld/original/B1_tool_eligibility/step_action_match/template:stale_unchanged": {
+     "accuracy": 0.9,
+     "correct": 18,
+     "missing": 0,
+     "n": 20
+    },
+    "withheld/original/B1_tool_eligibility/step_action_match/template:transient": {
+     "accuracy": 0.9167,
+     "correct": 11,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/step_action_match/variant:original": {
+     "accuracy": 0.9531,
+     "correct": 122,
+     "missing": 0,
+     "n": 128
+    },
+    "withheld/original/B1_tool_eligibility/tried_unchanged/empty_history": {
+     "accuracy": 1.0,
+     "correct": 13,
+     "missing": 0,
+     "n": 13
+    },
+    "withheld/original/B1_tool_eligibility/tried_unchanged/template:empty_history": {
+     "accuracy": 1.0,
+     "correct": 8,
+     "missing": 0,
+     "n": 8
+    },
+    "withheld/original/B1_tool_eligibility/tried_unchanged/template:failed_and_unknown": {
+     "accuracy": 0.8333,
+     "correct": 10,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/tried_unchanged/template:level_boundary": {
+     "accuracy": 0.8333,
+     "correct": 10,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/tried_unchanged/template:long_with_omitted": {
+     "accuracy": 0.25,
+     "correct": 3,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/tried_unchanged/template:mixed": {
+     "accuracy": 0.6667,
+     "correct": 8,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/tried_unchanged/template:near_miss_clicks": {
+     "accuracy": 0.3333,
+     "correct": 4,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/tried_unchanged/template:reset_boundary": {
+     "accuracy": 0.8333,
+     "correct": 10,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/tried_unchanged/template:same_frame_repeats": {
+     "accuracy": 0.6875,
+     "correct": 11,
+     "missing": 0,
+     "n": 16
+    },
+    "withheld/original/B1_tool_eligibility/tried_unchanged/template:stale_unchanged": {
+     "accuracy": 0.65,
+     "correct": 13,
+     "missing": 0,
+     "n": 20
+    },
+    "withheld/original/B1_tool_eligibility/tried_unchanged/template:transient": {
+     "accuracy": 0.6667,
+     "correct": 8,
+     "missing": 0,
+     "n": 12
+    },
+    "withheld/original/B1_tool_eligibility/tried_unchanged/variant:original": {
+     "accuracy": 0.6641,
+     "correct": 85,
+     "missing": 0,
+     "n": 128
+    }
+   },
+   "verdicts": {
+    "control": "candidate_clear_improvement",
+    "history": "improved_below_criterion_tool_assisted"
+   }
+  },
+  "call_errors": [],
+  "exact_provider_billed_seconds": null,
+  "frozen_internal_seconds": 3300,
+  "gate": {
+   "control": "candidate_clear_improvement",
+   "history": "improved_below_criterion_tool_assisted"
+  },
+  "gate_status": "complete",
+  "lifecycle_errors": [],
+  "lifecycle_passed": true,
+  "mode": "live",
+  "phase4_complete": false,
+  "run": {
+   "calls_recorded": 6054,
+   "counts": {
+    "answered": 6054
+   },
+   "phase_reached": "transfer_pass_1",
+   "scheduled_calls": 6054,
+   "status": "complete",
+   "stop_reason": null
+  },
+  "run_evidence": {
+   "verified": true
+  },
+  "technically_complete": true
+ },
+ "members": {
+  "notebooks/evidence-comprehension-v3-review-r1/review-source-lock.json": "66713c6282ac395bdd0a23154cc3ea0c4427d66f4bcaf73c4b5b308dd7955cfd",
+  "notebooks/evidence-comprehension-v3-run/launch-package-lock.json": "28ebeb01e4de50151dbfa2f08605254b8cff3a00971b63386583c6530d41bb4e",
+  "reports/evidence_comprehension_v3_compute_authorization.json": "cebde0d6c5c9f1d703bf303aa9eca3c4a3aacad031e5c338af6b69f97f551a78",
+  "reports/evidence_comprehension_v3_launch.json": "39d217930bd941efc0ac76bb8bcc0b950e95779f858c149637704f8ae22639bd",
+  "reports/evidence_comprehension_v3_launch_claim.json": "b7067f43f965202fb20b89fea00a77c1786c339148065667fce1687441371b2f",
+  "reports/evidence_comprehension_v3_prelaunch.json": "7fbf32bc07b16839241ef5424d4533d10b39bad7a762d3f57145862cf3e699dc",
+  "reports/evidence_comprehension_v3_source_approval.json": "445dacbd8a044551eb7966c82f3d26a62164c16c7f3f53b6f8508d4aed8114f9",
+  "reports/runs/evidence-comprehension-v3/download/.ecv3-089bf11fd38c41f88808794a134a3d56.runtime-consumed.json": "f10a8b3e51332ac7da9e610d68ae4b02c703f0528019e5d476805c6ebb3ec9bc",
+  "reports/runs/evidence-comprehension-v3/download/arc3-evidence-comprehension-v3.log": "6fa2c86fc134f97aeabd994f8acaeeb38016f7d3877061f4b0c38e869216b2f1",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/.evidence.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/control/cancel.json": "a013631dee19cde59190ec43222ef4fb83643e369dcca9af3c70f3683294d6e0",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/control/first-cell-supervisor-cleanup.json": "d982803423b29424116bc95bbdccddccf47e0b988974a4770cbebdca52dcb5a9",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/control/gpu-cleanup.json": "f0ba638fcbcecba1bbecd7d195d9ebd5ffe9c73584bafc27438376aa92efa105",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/control/installation.json": "b566acfc76582b3a66a8b3a5d2ab9761dfc9b5b50d19f6fa08a62a854e7649dd",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/control/monitor-ready-ack.json": "5675c52a58a2af2620f28c3cdce7753b606ed8c1c4cc81720d282ed021d8e20b",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/control/notebook-cost.json": "5750247be7c07f37246f0996587a6ec2cf4b87652a175fb7d1afb4da5020d378",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/control/outer.json": "a7c140068d0665311e32a0717f15e771028e90fd43d87fec6d529af3dcd2bcd7",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/control/ownership.json": "f0d23b7a2d9007510c30ad1663ff1f445cc29ba6f6f395e11e7ca69fb0dc86cb",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/control/stop-monitor.json": "99a789818699d52be838ca49957536fefc3fea436f42e247f48b854a2d51c576",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/logs/307.json": "8097f40ee38fdfca524536fd27b9bd9927b12738b6c828a35fe7fd68a4fd12b3",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/logs/309.json": "50e31b712644548df2ea205f2e49aed62d938a59070d48f36338db20c2753895",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/logs/install-game.json": "e37a263330ec3e3ee2cd40f4baf6abd6f6031b42213e13c5a71673c3341caa06",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/logs/install-model.json": "e459beb1e6fbdf36d3a9a592621f734f72a8e6dd9d7d5c3bf54e06037b0c04b1",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/logs/supervisor.json": "50e31b712644548df2ea205f2e49aed62d938a59070d48f36338db20c2753895",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/monitor/monitor-result.json": "cc6a43da358bd8a76a52c245da7462f2393b5450ac8518ee0d2036fe9f2f9e44",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/monitor/ready.json": "4672ba25304e5c6aad1125fa4fe1da77ea243068b4d31f532957f1eb06a2c14c",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/monitor/samples-0000.json": "7db0306d8de418b8fee9a581e1299856de0a3963c2ad711a706a5f6815cdd4d0",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/monitor/samples-0001.json": "bab601701e0ac443eba90ef4b47ba9f41cbec2f8018d9c08bbe7319f51f6968f",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/monitor/samples-0002.json": "27ffe1dd576e0ac8f5bcf2b01ee7e66e6684daf97bdd30b6d88a16e28c179dbd",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/monitor/samples-0003.json": "a8fbdc6a36a7930dc1e39fa55779555ee008217d5f50f4ac2784e22b2941b463",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/monitor/samples-0004.json": "426a5b07bbeef6f37ea85a40c388aec7d8eae1fa2e9b451a2619edf853e206e5",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/monitor/samples-0005.json": "4e25c098225946a3afa6603639763b5db67a37c0109c9d7f13e73fbca07565c0",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/monitor/telemetry.json": "5f40c02717f2666a352f041bb685618a874b2b0a3267195a3659f83c0bf4795e",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/worker/canary.json": "624d08f6862d4dadee9987ceb98cd72c692fbc17e0c43a5179840ccba88a61eb",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/worker/host-status.json": "9aef69657174a23e01087f387a5f2e416de3c281a56f499bb2216b671eddba3a",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/worker/model-process.json": "6f8f86b32439697d7e449f24042f40c63b968a9da49cf2fee2031e51f9a0c76a",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/worker/model-ready.json": "182f49d7860fc0334509b52b45b65c679a4c30ad6ac722d80eb020898e0c038b",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/worker/run/calls.jsonl": "3de072186e77833157cfe267554f0923ceb43583ff6f5de773a8f22a96c5b668",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/worker/run/manifest.json": "e2f16a6a1762e9be226548cd84232e77a8e8a72075af889d8845c0e475b0203e",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/worker/run/run.json": "070aa32e5aa55d87d600e08f34999b480a06158153c40367a560ba476d528073",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/worker/server-config.json": "5d7ece0fd0292f87e938093af0b9040d4b8cb6468f0c2f020d174847249f23fa",
+  "reports/runs/evidence-comprehension-v3/download/evidence-comprehension-v3/worker/worker-result.json": "2aec328d8424c826d70869911ec7b8987d29b3c6e44892eb4c6411cd330a613a",
+  "research/evidence_comprehension_v3/execution_lock.json": "0045754e91bfaadc3ebe6f9d9dbb306c763137f0cfa7fe18533ebad6cb250e45",
+  "research/evidence_comprehension_v3/reservation.json": "3226bc6ca409774f9fac2bf473a8493c8212c63c2547f554af7466998ab9b314"
+ }
+}

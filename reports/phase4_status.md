@@ -1,5 +1,21 @@
 # Phase 4 — development lifecycle passed; production certification and solving remain open
 
+## Evidence comprehension v3: live result (attempt ecv3-089bf11f)
+
+**Technically complete.** All 6,054 of 6,054 calls were answered, every completeness level is complete, prefix
+caching was verified off, and both passes were identical. The first cell took 1,666 s; model startup took 819 s.
+The account GPU counter rose by 1,676.337 s; that is an account-counter observation, and the exact billed time is
+unknown.
+
+- **Control: `candidate_clear_improvement`.** Computed control metadata lifted legal-coordinate accuracy from 0.859
+  to 1.000 (+18 / −0). This shows interface usability, not learned intersection.
+- **History: `improved_below_criterion_tool_assisted`.** Tool eligibility lifted `tried_unchanged` from 0.477 to
+  0.664 and `qualifying_steps` from 0.367 to 0.625, both still below the floor.
+- **Secondary:** removing ACTION6 from otherwise identical histories fixed 16 of 60 reference answers, and broke
+  none. This is evidence of history interference in these synthetic cases.
+
+See `reports/evidence_comprehension_v3_results.md`.
+
 ## Evidence comprehension v2: live result (attempt ecv2-65759c16)
 
 **Technically complete.** All 8,004 of 8,004 calls were answered, prefix caching was verified off, and both
