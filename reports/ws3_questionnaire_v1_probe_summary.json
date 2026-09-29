@@ -1,0 +1,91 @@
+{
+ "calls_by_phase": {
+  "development/pass_1": 376,
+  "transfer/pass_1": 240,
+  "withheld/pass_1": 2500,
+  "withheld/pass_2": 2500
+ },
+ "contexts": 1470,
+ "coverage": {
+  "critical_classes": {
+   "acknowledged_missing_observation": 46,
+   "dimension_change": 30,
+   "failed_dispatch": 56,
+   "final_frame_difference": 175,
+   "progress_without_visible_change": 30,
+   "transient_change": 76,
+   "unknown_outcome": 58,
+   "visible_change_without_progress": 196
+  },
+  "families": {
+   "any_frame_differs": {
+    "best_shortcut_accuracy": 0.7833,
+    "n": 120,
+    "role": "primary",
+    "shortcut_disagreement_n": 26
+   },
+   "claim_causal": {
+    "best_shortcut_accuracy": 0.8,
+    "n": 120,
+    "role": "primary",
+    "shortcut_disagreement_n": 24
+   },
+   "claim_descriptive": {
+    "best_shortcut_accuracy": 0.8556,
+    "n": 180,
+    "role": "primary",
+    "shortcut_disagreement_n": 26
+   },
+   "claim_progress": {
+    "best_shortcut_accuracy": 0.8333,
+    "n": 120,
+    "role": "primary",
+    "shortcut_disagreement_n": 20
+   },
+   "count_defined": {
+    "best_shortcut_accuracy": 0.3636,
+    "n": 110,
+    "role": "boundary_check",
+    "shortcut_disagreement_n": 70
+   },
+   "dispatch_status": {
+    "best_shortcut_accuracy": 0.3333,
+    "n": 120,
+    "role": "extraction_check",
+    "shortcut_disagreement_n": 80
+   },
+   "final_equals_initial": {
+    "best_shortcut_accuracy": 0.7833,
+    "n": 120,
+    "role": "primary",
+    "shortcut_disagreement_n": 26
+   },
+   "level_completion_reported": {
+    "best_shortcut_accuracy": 0.75,
+    "n": 120,
+    "role": "extraction_check",
+    "shortcut_disagreement_n": 30
+   },
+   "observation_availability": {
+    "best_shortcut_accuracy": 0.625,
+    "n": 120,
+    "role": "primary",
+    "shortcut_disagreement_n": 45
+   },
+   "progress_status": {
+    "best_shortcut_accuracy": 0.5833,
+    "n": 120,
+    "role": "primary",
+    "shortcut_disagreement_n": 50
+   }
+  },
+  "over_claim_denominators": {
+   "false_progress": 178,
+   "unsupported_causal_claim": 120
+  }
+ },
+ "probe_set_sha256": "dbf9696ef4743d1667f73909f410a8bd8d8c1339f68a0e2a765da68091159202",
+ "probes": 3116,
+ "scheduled_calls": 5616,
+ "version": "ws3_transition_questionnaire_draft_r2"
+}
