@@ -1,7 +1,7 @@
 {
   "scope": "local CPU rehearsals only; CPU fake of the model server with scripted answers; no model calls or GPU runs",
-  "run_id": "package-r1-check",
-  "diagnostics": "reports/ws3_questionnaire_v1_diagnostics/package-r1-check.json",
+  "run_id": "package-r1-check-2",
+  "diagnostics": "reports/ws3_questionnaire_v1_diagnostics/package-r1-check-2.json",
   "requested_suites": [
     "probe_set_keys_scoring_and_analysis",
     "transition_records_and_fixtures",
@@ -19,7 +19,7 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 322.2
+      "seconds": 330.5
     },
     "transition_records_and_fixtures": {
       "module": "tests.test_transition_evidence_v1",
@@ -28,7 +28,7 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 0.2
+      "seconds": 0.1
     },
     "schedule_admission_and_interrupted_gate": {
       "module": "tests.test_ws3_questionnaire_v1_schedule",
@@ -46,7 +46,7 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 20.2
+      "seconds": 19.4
     },
     "diagnostics_recorder": {
       "module": "tests.test_ws3_questionnaire_v1_diagnostics",
@@ -55,16 +55,16 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 14.2
+      "seconds": 14.4
     },
     "connected_path_rehearsals": {
       "module": "tests.test_ws3_questionnaire_v1_connected",
       "completed": true,
       "tests_run": 10,
-      "failures": 1,
+      "failures": 0,
       "errors": 0,
-      "passed": false,
-      "seconds": 1149.5
+      "passed": true,
+      "seconds": 1424.7
     },
     "runtime_derivation_and_inventory": {
       "module": "tests.test_ws3_questionnaire_v1_derivation",
@@ -73,10 +73,10 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 14.1
+      "seconds": 15.5
     }
   },
-  "all_passed": false,
+  "all_passed": true,
   "model_calls": 0,
   "gpu_runs": 0,
   "token_audit": "reports/ws3_questionnaire_v1_token_audit.json"

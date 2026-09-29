@@ -54,7 +54,26 @@ This is the import closure of the entry points, as in v2 and v3.
 
 ## 4. Local results
 
-RESULTS_PLACEHOLDER
+Full local check (`reports/ws3_questionnaire_v1_rehearsal_results.json`, run `package-r1-check-2`, with per-test
+diagnostics under `reports/ws3_questionnaire_v1_diagnostics/`): **all seven suites passed, 92 tests, 0 failures,
+0 errors.**
+
+| Suite | Tests | Result |
+|---|---|---|
+| Questionnaire: keys, isolation, coverage, schedule, decision rules, review regressions | 22 | passed |
+| Transition records, fixtures and the independent reference | 16 | passed |
+| Schedule, admission and interrupted withheld partition (derived) | 16 | passed |
+| Transport, cancellation and cache metrics (v1's suite, reused unchanged) | 14 | passed |
+| Diagnostics recorder (derived) | 6 | passed |
+| Connected-path rehearsals (derived) | 10 | passed |
+| Runtime derivation, inventory and allow-list | 8 | passed |
+
+**The earlier run, retained.** Run `package-r1-check` failed one connected rehearsal. A timed-out regression-check
+question left the evaluator's `gate_status` at `complete`, although the scorer correctly withheld promotion. The
+evaluator now requires every withheld answer for technical completeness, and the derived rehearsal asserts that
+nothing is promoted (`d57cbd5`). The rerun above passes.
+
+A standalone full rehearsal answered all 5,616 calls in 61 s of first-cell time and was technically complete.
 
 These are CPU rehearsals with scripted answers. Their verdicts are artefacts of those answers, not results.
 
