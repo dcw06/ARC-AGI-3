@@ -128,6 +128,12 @@ DERIVED = {
         ("calls_recorded=2664", "calls_recorded=2500", 1),
         # WS3 policy: a missing regression-check answer withholds promotion; it makes the verdict incomplete only when
         # the missing answer is primary or in an over-claim gate. Either way, nothing may be promoted.
+        # Monitor loss: the worker may finish gracefully (canceled) or be killed mid-write, in which case the committed
+        # partial run is recovered (interrupted_evidence). Either way the evidence must verify.
+        ("'cancel': ('canceled', True), 'monitor_exit': ('canceled', True),",
+         "'cancel': ('canceled', True), 'monitor_exit': (('canceled', 'interrupted_evidence'), True),", 1),
+        ("                    self.assertEqual(value['run']['stop_reason'], stop)",
+         "                    self.assertIn(value['run']['stop_reason'], stop if isinstance(stop, tuple) else (stop,))", 1),
         ("        self.assertTrue(value['gate'][track].startswith('incomplete'))",
          "        self.assertNotEqual(value['gate'][track], 'candidate_clear_improvement_tool_assisted')", 1),
     ),

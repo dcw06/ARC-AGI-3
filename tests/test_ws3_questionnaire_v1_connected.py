@@ -335,7 +335,7 @@ class Rehearsals(unittest.TestCase):
         # monitor_exit: lost mid-study after a bounded handshake (study evidence exists by construction).
         # monitor_exit_before_ready: lost before readiness, so the worker is never released (no study evidence).
         cases = {'http_error': ('transport_failure', True), 'storage': ('storage_exhausted', True),
-                 'cancel': ('canceled', True), 'monitor_exit': ('canceled', True),
+                 'cancel': ('canceled', True), 'monitor_exit': (('canceled', 'interrupted_evidence'), True),
                  'monitor_exit_before_ready': (None, False), 'model_startup': (None, False),
                  'log_flood': (None, False)}
         for fault, (stop, evidence) in cases.items():
@@ -347,7 +347,7 @@ class Rehearsals(unittest.TestCase):
                 self.assertEqual(value['gate_status'], 'incomplete')
                 self.assertEqual(value['run_evidence']['verified'], evidence)
                 if evidence:
-                    self.assertEqual(value['run']['stop_reason'], stop)
+                    self.assertIn(value['run']['stop_reason'], stop if isinstance(stop, tuple) else (stop,))
                     self.assertEqual(value['call_errors'], [])
                 if fault == 'monitor_exit':
                     self.assertFalse((output / 'monitor/handshake-timeout.json').exists())

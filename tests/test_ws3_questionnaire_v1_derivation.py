@@ -123,5 +123,74 @@ class Inventory(unittest.TestCase):
         self.assertIn('research/ws3_questionnaire_v1/probes.json', self.names)
 
 
+class CommittedStateRecovery(unittest.TestCase):
+    """Fresh-checkout review of r2: a SIGTERM during an atomic write must not discard the committed partial run."""
+
+    def setUp(self):
+        import tempfile
+        from research.ws3_questionnaire_v1 import evidence as E
+        self.E = E
+        self.tmp = tempfile.TemporaryDirectory()
+        self.folder = Path(self.tmp.name) / 'run'
+        self.writer = E.RunEvidence(self.folder, 1 << 20)
+        self.writer(self.folder / 'run.json', {'calls_recorded': 0, 'status': 'running', 'stop_reason': None})
+        for i in range(3):
+            self.writer(self.folder / f'calls/{i:05d}.json', {'index': i, 'status': 'answered'})
+            self.writer(self.folder / 'run.json', {'calls_recorded': i + 1, 'status': 'running', 'stop_reason': None})
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def test_a_clean_run_uses_the_strict_path(self):
+        run = self.E.load_verified(self.folder)
+        self.assertNotIn('evidence_recovery', run)
+        self.assertEqual(len(run['calls']), 3)
+
+    def test_interrupted_writes_recover_the_committed_state(self):
+        cases = {
+            'half-written manifest': lambda f: (f / 'manifest.json.tmp').write_bytes(b'{"version": "evid'),
+            'half-written index': lambda f: (f / 'run.json.tmp').write_bytes(b'{"calls_rec'),
+            'appended but uncommitted log line': lambda f: open(f / 'calls.jsonl', 'ab').write(b'{"index": 3, "sta'),
+        }
+        for label, damage in cases.items():
+            with self.subTest(label):
+                self.setUp()
+                damage(self.folder)
+                run = self.E.load_verified(self.folder)
+                self.assertEqual((run['status'], run['stop_reason'], run['calls_recorded']),
+                                 ('incomplete', 'interrupted_evidence', 3))
+                self.assertIn('evidence_recovery', run)
+                self.tearDown()
+
+    def test_the_fresh_checkout_state_index_one_call_behind(self):
+        """The call was logged and committed; the kill came while the index was being replaced."""
+        self.writer(self.folder / 'calls/00003.json', {'index': 3, 'status': 'answered'})
+        (self.folder / 'manifest.json.tmp').write_bytes(b'{"partial')
+        run = self.E.load_verified(self.folder)
+        self.assertEqual((run['calls_recorded'], run['evidence_recovery']['index_calls_recorded']), (4, 3))
+        self.assertEqual([c['index'] for c in run['calls']], [0, 1, 2, 3])
+
+    def test_an_index_one_step_ahead_of_its_manifest_is_used_for_metadata_only(self):
+        """The retained fresh-clone failure: run.json replaced, then the kill during manifest.json.tmp."""
+        from research.evidence_comprehension_v2.evidence import atomic_write, encode
+        atomic_write(self.folder / 'run.json', encode({'calls_recorded': 3, 'status': 'running', 'stop_reason': None,
+                                                       'phase_reached': 'withheld_pass_1'}))
+        (self.folder / 'manifest.json.tmp').write_bytes(b'{"partial')
+        run = self.E.load_verified(self.folder)
+        self.assertFalse(run['evidence_recovery']['index_committed'])
+        self.assertEqual((run['status'], run['calls_recorded'], len(run['calls'])), ('incomplete', 3, 3))
+
+    def test_tampering_or_unexpected_files_are_still_refused(self):
+        raw = (self.folder / 'calls.jsonl').read_bytes()
+        (self.folder / 'calls.jsonl').write_bytes(raw.replace(b'answered', b'timed_out', 1))
+        with self.assertRaises(self.E.EvidenceError):
+            self.E.load_verified(self.folder)
+        self.tearDown()
+        self.setUp()
+        (self.folder / 'extra.json').write_bytes(b'{}')
+        with self.assertRaises(self.E.EvidenceError):
+            self.E.load_verified(self.folder)
+
+
 if __name__ == '__main__':
     unittest.main()
