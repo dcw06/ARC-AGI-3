@@ -1,4 +1,28 @@
-# WS3 transition questionnaire v1: runner and review package r1
+# WS3 transition questionnaire v1: runner and review package r2
+
+**Revision r2** (review of 336348e). Package r1 (`notebooks/ws3-questionnaire-v1-review-r1`, lock
+`c0be18a5…7b28`) is preserved but superseded.
+
+**The r1 blocker.** r1 could not be reviewed from a clean checkout. Its lock bound an ignored, untracked
+extracted archive member:
+`reports/runs/phase4-grounded-action-v1-r8/download/phase4-grounded-action-v1/worker/trajectory.json`.
+The dependency scanner added any literal file path that existed locally. The replay script names that file as a
+string, so it entered the package from the author's workspace. The notebook embedded matching bytes, and every
+runtime hash matched, so this was a reproducibility defect, not evidence corruption.
+
+**The fix.**
+- Literal file paths, config files and the runtime directory now count only when **tracked by git**.
+- Any untracked file reaching the inventory is refused.
+- The inventory is 280 files: r1's 281, minus the trajectory.
+
+**Regressions.**
+- Packaging is identical with and without the incidental file.
+- Every packaged file is tracked.
+
+**Fresh-checkout procedure (r2).**
+1. The full local check ran in a **fresh clone** of the committed branch (`.cache/ws3_fresh_check.sh`), in which
+   the R8 trajectory is absent.
+2. The notebook review and the approval-path rehearsal also ran from a fresh clone of the r2 commit.
 
 **Status.** GPU-disabled review snapshot. Authorized seconds are zero. There has been no reservation, upload or
 model call. Source approval and a separately sized compute authorization would follow only after independent review.
