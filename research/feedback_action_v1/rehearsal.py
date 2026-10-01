@@ -12,6 +12,7 @@ Budgets (all retained in the trajectory, with the stop reason):
 import json
 
 from research.feedback_action_v1 import adapter as AD, environments as ENV, evaluate as EV, evidence as E
+from research.transition_evidence_v1 import transition as T
 
 VERSION = 'feedback_action_v1_rehearsal'
 A = ENV.action
@@ -25,8 +26,12 @@ def observation(obs, legal):
 
 
 def run(env_name, arm, model, budget, env_kwargs=None):
+    """One episode. The candidate's carried statement is computed by the adapter's rules from the previous decision
+    and the transition it produced; the exact user message sent is retained per step, and every valid
+    hypothesis_test is kept as a separate model-statement record (never inside a transition record)."""
     env = ENV.ENVIRONMENTS[env_name](**(env_kwargs or {}))
-    raws, steps, spent, stop = [], [], 0, None
+    raws, steps, statements, spent, stop = [], [], [], 0, None
+    previous = None  # (adapter decision, events of the transition it produced or None, its ref or None)
     while stop is None:
         if env.state != 'NOT_FINISHED':
             stop = 'terminal_' + env.state
@@ -38,7 +43,8 @@ def run(env_name, arm, model, budget, env_kwargs=None):
             break
         obs = env.observe()
         frame = obs['frames'][-1]
-        request = AD.build_request(observation(obs, env.legal_actions), E.view(raws, frame), arm)
+        carried = (AD.carried_statement(*(previous or (None,))) if arm == 'candidate' else None)
+        request = AD.build_request(observation(obs, env.legal_actions), E.view(raws, frame), arm, carried)
         limit = budget.get('max_completion_tokens')
         if limit is not None and limit - spent < request['max_tokens']:
             stop = 'completion_budget'
@@ -50,13 +56,21 @@ def run(env_name, arm, model, budget, env_kwargs=None):
         step = {'raws_before': len(raws), 'legal_actions': list(env.legal_actions), 'current_frame': frame,
                 'response': response, 'prompt_chars': size['system_chars'] + size['user_chars'],
                 'treatment_chars': sum(size.values()) - sum(base.values()), 'adapter_decision': decision,
-                'dispatched_index': None}
+                'request_user_content': request['messages'][1]['content'], 'dispatched_index': None}
+        events = ref = None
         if decision['action'] is not None:
-            raws.append(env.dispatch(decision['action'], proposal=decision['action']))
+            raw = env.dispatch(decision['action'], proposal=decision['action'])
+            raws.append(raw)
             step['dispatched_index'] = len(raws) - 1
+            events, ref = T.build(raw)['environment']['events'], f"T{raw['identity']['action_index']}"
+        if decision['procedure'] is not None:
+            about = (raws[-1]['identity'] if ref is not None else
+                     {'episode_id': env_name, 'decision_index': len(steps), 'dispatched': False})
+            statements.append(T.model_statement(about, 'hypothesis_test', decision['procedure'], 'candidate_policy'))
+        previous = (decision, events, ref)
         steps.append(step)
     return {'version': VERSION, 'arm': arm, 'environment': env_name, 'budget': budget, 'raws': raws,
-            'steps': steps, 'stop_reason': stop}
+            'steps': steps, 'model_statements': statements, 'stop_reason': stop}
 
 
 # ---- scripted models
@@ -165,6 +179,13 @@ def plan_ignored(step, obs, view, arm):
     return A(1), block('ACTION1 moves the marker up', 'new' if step == 0 else 'retained', visual='final_frame_differs')
 
 
+def plan_revised_after_reset(step, obs, view, arm):
+    """The prediction is falsified by a transition that also resets the level, so the carried statement is cleared:
+    the scripted 'revision' cannot be scored as recognizing a statement the request did not contain."""
+    return plan_revised(step, obs, view, arm) if step else (
+        A(2), block('ACTION2 moves the marker down', 'new', visual='final_frame_differs'))
+
+
 def plan_clicker(step, obs, view, arm):
     clicks = [A(6, 1, 1), A(6, 1, 1), A(6, 2, 5), A(6, 5, 5)]
     blocks = [block('clicking (1,1) changes it', 'new', region=[1, 1, 1, 1]),
@@ -196,7 +217,9 @@ SCENARIOS = {
                               None),
     'contradiction_ignored': ('push_to_goal', {}, plan_ignored, ('candidate',), {'max_actions': 2, 'max_decisions': 2},
                               None),
-    'coordinate_actions': ('clicker', {}, plan_clicker, BOTH, {'max_actions': 4, 'max_decisions': 4}, None),
+    'contradiction_at_reset': ('push_to_goal', {'move_limit': 1}, plan_revised_after_reset, ('candidate',),
+                               {'max_actions': 2, 'max_decisions': 2}, None),
+    'coordinate_actions':('clicker', {}, plan_clicker, BOTH, {'max_actions': 4, 'max_decisions': 4}, None),
 }
 
 

@@ -3,14 +3,26 @@
 The adapter changes only the decision procedure. It receives an observation already produced by the existing
 pipeline and the evidence view (`evidence.view`, identical in both arms); it never builds observations, history,
 dispatches or environments. Both arms return the same `action` object, validated by the same frozen validator
-(`certification.phase4_transient_v2.action_contract`). The candidate differs in exactly three places, and
-`strip_procedure` removes all three to give the baseline request byte for byte:
+(`certification.phase4_transient_v2.action_contract`). The candidate differs in exactly four places, and
+`strip_procedure` removes all four to give the baseline request byte for byte:
 
 1. one extra system-prompt paragraph (PROCEDURE);
 2. one extra required response property, `hypothesis_test`, placed before `action`;
-3. a larger completion budget (CANDIDATE_MAX_TOKENS against BASELINE_MAX_TOKENS).
+3. a larger completion budget (CANDIDATE_MAX_TOKENS against BASELINE_MAX_TOKENS);
+4. carried state: a top-level `previous_model_statement` beside (never inside) `observation`.
 
 The candidate's extra prompt and completion tokens are reported, never called compute-matched.
+
+Carried-state rules (`carried_statement`). Requests are otherwise stateless, so the candidate's previous belief must
+be sent explicitly or it cannot be revised. The field is labelled a model statement (a hypothesis), not an
+observation or evidence, and it is never written into a transition record. Exactly one of:
+- the previous decision's valid hypothesis_test (hypothesis, status, prediction, if_different; text capped at
+  TEXT_LIMIT), with `about` = the ref of the transition its action produced, or null if the action was not
+  dispatched;
+- `available: false` with a reason, when there was no previous decision in the episode, when the previous output
+  had no valid hypothesis_test (an older statement is never carried in its place), or when the previous transition
+  ended the segment (reset, level-count change or terminal state: the statement is cleared, like the evidence
+  window).
 
 Dispatch rule (same in both arms): a decision is dispatched if and only if its `action` is valid. A candidate whose
 action is valid but whose `hypothesis_test` block is invalid is still dispatched; the block failure is retained and
@@ -51,8 +63,13 @@ PROCEDURE = (
     "- prediction: what the next returned frames will show after your action: visual_effect, whether a level "
     "will be completed, and optionally changed_region_xyxy [x0, y0, x1, y1] containing every cell that will "
     "differ (null when you do not predict a region or predict no change).\n"
-    "- if_different: one sentence on what a different result would imply for the hypothesis."
+    "- if_different: one sentence on what a different result would imply for the hypothesis.\n"
+    "previous_model_statement is your own previous hypothesis_test, carried forward when available. It is a "
+    "statement, not an observation and not evidence, and cannot be cited. Its about field names the transition "
+    "its prediction was about: compare them, and revise when the transition conflicts with it."
 )
+PREVIOUS_FIELD = 'previous_model_statement'
+STATEMENT_NOTE = 'your own previous statement: a hypothesis, not an observation and not evidence'
 
 VISUAL_PREDICTIONS = ('no_observed_change', 'changed_then_returned', 'final_frame_differs')
 CLAIMS = ('no_observed_change', 'changed_then_returned', 'final_frame_differs', 'indeterminate', 'dispatch_failed',
@@ -88,19 +105,47 @@ def candidate_response_format(legal):
     return value
 
 
-def build_request(observation, evidence_view, arm, *, model='scripted', seed=0):
-    """One stateless policy request. `observation` comes from the existing pipeline and is not modified."""
+def no_statement(reason):
+    return {'record': 'model_statement', 'available': False, 'reason': reason}
+
+
+def carried_statement(previous_decision, previous_events=None, previous_ref=None):
+    """The candidate's carried state for the next request (rules in the module docstring).
+
+    previous_decision: the adapter decision record of the previous call in this episode, or None.
+    previous_events: the environment events of the transition that call's action produced (None if not dispatched).
+    previous_ref: that transition's ref, 'T<n>' (None if not dispatched).
+    """
+    if previous_decision is None:
+        return no_statement('no earlier decision in this episode')
+    block = previous_decision.get('procedure')
+    if block is None:
+        return no_statement('the previous output had no valid hypothesis_test; no older statement is carried')
+    if previous_events is not None and set(previous_events) & E.BOUNDARY_EVENTS:
+        return no_statement('cleared: the previous transition ended the segment (reset, level change or terminal)')
+    return {'record': 'model_statement', 'available': True, 'statement_status': 'hypothesis', 'note': STATEMENT_NOTE,
+            'about': previous_ref, 'hypothesis': block['hypothesis'][:TEXT_LIMIT], 'status': block['status'],
+            'prediction': copy.deepcopy(block['prediction']), 'if_different': block['if_different'][:TEXT_LIMIT]}
+
+
+def build_request(observation, evidence_view, arm, previous=None, *, model='scripted', seed=0):
+    """One policy request. `observation` comes from the existing pipeline and is not modified. The candidate must be
+    given its carried state explicitly (`carried_statement`); the baseline never carries any."""
     if arm not in ARMS:
         raise ValueError('arm')
+    if (arm == 'candidate') != (previous is not None):
+        raise ValueError('the candidate needs carried state (possibly unavailable); the baseline takes none')
     payload = copy.deepcopy(observation)
     payload[E.FIELD] = copy.deepcopy(evidence_view)
     legal = payload['legal_actions']
     system = SYSTEM_PROMPT + ('\n' + PROCEDURE if arm == 'candidate' else '')
+    user = {'observation': payload}
+    if arm == 'candidate':
+        user[PREVIOUS_FIELD] = copy.deepcopy(previous)
     return {'model': model, 'seed': seed, 'temperature': 0,
             'max_tokens': CANDIDATE_MAX_TOKENS if arm == 'candidate' else BASELINE_MAX_TOKENS,
             'messages': [{'role': 'system', 'content': system},
-                         {'role': 'user', 'content': json.dumps({'observation': payload}, sort_keys=True,
-                                                                separators=(',', ':'))}],
+                         {'role': 'user', 'content': json.dumps(user, sort_keys=True, separators=(',', ':'))}],
             'chat_template_kwargs': {'enable_thinking': False},
             'response_format': candidate_response_format(legal) if arm == 'candidate' else response_format(legal)}
 
@@ -108,7 +153,10 @@ def build_request(observation, evidence_view, arm, *, model='scripted', seed=0):
 def strip_procedure(request):
     """The candidate request with the treatment removed; must equal the baseline request exactly."""
     value = copy.deepcopy(request)
-    legal = json.loads(value['messages'][1]['content'])['observation']['legal_actions']
+    user = json.loads(value['messages'][1]['content'])
+    user.pop(PREVIOUS_FIELD, None)
+    value['messages'][1]['content'] = json.dumps(user, sort_keys=True, separators=(',', ':'))
+    legal = user['observation']['legal_actions']
     value['messages'][0]['content'] = SYSTEM_PROMPT
     value['max_tokens'] = BASELINE_MAX_TOKENS
     value['response_format'] = response_format(legal)
@@ -190,8 +238,8 @@ def parse(response, legal, arm):
     return decision
 
 
-def decide(model, observation, evidence_view, arm):
+def decide(model, observation, evidence_view, arm, previous=None):
     """One policy call. `model(request)` returns {'content', 'finish_reason', 'completion_tokens'}."""
-    request = build_request(observation, evidence_view, arm)
+    request = build_request(observation, evidence_view, arm, previous)
     response = model(request)
     return request, response, parse(response, observation['legal_actions'], arm)

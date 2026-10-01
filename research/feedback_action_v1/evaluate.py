@@ -8,7 +8,10 @@ things:
 - citations: the ref must be an earlier transition shown in the window, and its claim must match that transition;
 - untested versus ineffective: per-action evidence status at the decision, and failed or unknown dispatches read as
   "no observed change";
-- contradictions: a prediction falsified by the next transition, and whether the following decision revises;
+- contradictions: a prediction falsified by the next transition, and whether the following decision revises. A
+  revision is scored only relative to a previous statement actually present in that decision's request (read from
+  the retained request bytes, `previous_model_statement`), about the falsifying transition and carrying the same
+  prediction; otherwise the result is `previous_statement_absent`, never `recognized`;
 - legality of the action against the legal actions recorded with the decision;
 - predictions: closed-vocabulary fields compared with the next transition.
 
@@ -195,21 +198,43 @@ def score_prediction(prediction, raw):
     return {'result': 'correct' if all(fields.values()) else 'incorrect', 'fields': fields, 'observed': f['visual']}
 
 
+def previous_statement_from_request(user_content):
+    """The carried statement exactly as sent (top level of the user message), or None if none was sent."""
+    try:
+        value = json.loads(user_content)
+    except (TypeError, ValueError):
+        return None
+    statement = value.get('previous_model_statement') if isinstance(value, dict) else None
+    if not isinstance(statement, dict) or statement.get('record') != 'model_statement' or statement.get('available') is not True:
+        return None
+    return statement
+
+
+def statement_matches(statement, prior):
+    return (statement is not None and statement.get('about') == prior['ref']
+            and statement.get('prediction') == prior['prediction'])
+
+
 def evaluate_decision(raws, decision, prior=None):
     """One decision against the raw transitions dispatched before it.
 
-    decision: {'arm', 'legal_actions', 'current_frame', 'response': {'content', 'finish_reason'}}
-    prior: {'prediction_result': ..., 'ref': 'T<n>'} when the previous decision's prediction was falsified.
+    decision: {'arm', 'legal_actions', 'current_frame', 'response': {'content', 'finish_reason'},
+               'previous_statement': the carried statement present in the request, or None}
+    prior: {'ref': 'T<n>', 'prediction': ...} when the previous decision's prediction was falsified by T<n>.
     """
+    if prior is not None and not statement_matches(decision.get('previous_statement'), prior):
+        prior = dict(prior, absent=True)
     shown = shown_window(raws)
     result = {'shown_refs': [f"T{raws[i]['identity']['action_index']}" for i in shown]}
     value, problem = parse_output(decision['response'].get('content'), decision['response'].get('finish_reason'),
                                   decision['arm'])
     result['output_problem'] = problem
+    if prior is not None and decision['arm'] == 'candidate':
+        result['revision'] = 'previous_statement_absent' if prior.get('absent') else None
     if value is None:
         result['action_problem'] = problem
         result['procedure_problem'] = problem if decision['arm'] == 'candidate' else None
-        if prior is not None:
+        if prior is not None and not prior.get('absent'):
             result['revision'] = 'procedure_invalid' if decision['arm'] == 'candidate' else None
         return result
     action = value.get('action')
@@ -223,7 +248,7 @@ def evaluate_decision(raws, decision, prior=None):
     block = value.get('hypothesis_test')
     result['procedure_problem'] = block_problem(block)
     if result['procedure_problem'] is not None:
-        if prior is not None:
+        if prior is not None and not prior.get('absent'):
             result['revision'] = 'procedure_invalid'
         return result
     result['citations'] = {name: [citation_category(c, raws, shown, decision['current_frame']) for c in block[name]]
@@ -234,7 +259,7 @@ def evaluate_decision(raws, decision, prior=None):
         refs = {c['ref'] for c in block['supporting'] + block['conflicting']}
         latest = [i for i in shown if action_key(raws[i]['dispatched']) == key]
         result['repeat_cites_its_no_change'] = f"T{raws[latest[-1]]['identity']['action_index']}" in refs
-    if prior is not None:
+    if prior is not None and not prior.get('absent'):
         cited = any(c['ref'] == prior['ref'] for c in block['conflicting'])
         revised = block['status'] == 'revised'
         result['revision'] = ('recognized' if cited and revised else 'revised_not_cited' if revised else
@@ -248,7 +273,9 @@ def evaluate_trajectory(trajectory):
     rows, prior = [], None
     for step in steps:
         before = raws[:step['raws_before']]
-        row = evaluate_decision(before, {**step, 'arm': trajectory['arm']}, prior)
+        sent = previous_statement_from_request(step.get('request_user_content'))
+        row = evaluate_decision(before, {**step, 'arm': trajectory['arm'], 'previous_statement': sent}, prior)
+        row['previous_statement_in_request'] = sent is not None
         row['dispatched'] = step['dispatched_index'] is not None
         prior = None
         if step['dispatched_index'] is not None:
@@ -258,7 +285,7 @@ def evaluate_trajectory(trajectory):
             if row.get('prediction') is not None:
                 row['prediction_result'] = score_prediction(row['prediction'], raw)
                 if row['prediction_result']['result'] == 'incorrect':
-                    prior = {'ref': f"T{raw['identity']['action_index']}"}
+                    prior = {'ref': f"T{raw['identity']['action_index']}", 'prediction': row['prediction']}
         rows.append(row)
     return {'version': VERSION, 'arm': trajectory['arm'], 'environment': trajectory['environment'],
             'decisions': rows, 'metrics': metrics(trajectory, rows)}

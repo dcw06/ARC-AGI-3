@@ -1,4 +1,7 @@
-# Feedback-action v1: closed-loop development experiment, protocol draft r0
+# Feedback-action v1: closed-loop development experiment, protocol draft r1
+
+r1 applies review finding P1: the candidate's previous statement is now carried explicitly and is part of the
+treatment.
 
 **Status: draft for review.** It is not frozen and not authorized. There is no reservation, notebook, package or
 model call. Nothing here approves compute. Every number below is a proposal.
@@ -19,14 +22,31 @@ The isolated difference and its exact cost are in `reports/feedback_action_v1_de
 ## Arms
 
 - **Baseline:** the current observation, the legal controls, and the `transition_evidence_v1` evidence view.
-- **Candidate:** the same, plus the `PROCEDURE` paragraph and the `hypothesis_test` response block.
+- **Candidate:** the same, plus:
+  - the `PROCEDURE` paragraph;
+  - the `hypothesis_test` response block, with a 640-token cap against 128;
+  - **carried state**: `previous_model_statement`, beside the observation.
+
+**Carried state.** It holds the previous decision's valid hypothesis, status, prediction and if_different,
+labelled as a model statement, not evidence. It is `available: false` in three cases:
+- at the episode start;
+- after an output with no valid block. An older statement is never substituted;
+- after a reset, level change or terminal state, where it is cleared with the evidence window.
+
+The baseline is stateless. Rules: design §2.
 
 Both arms share:
 - the model, decoding settings (temperature 0, fixed seed) and action schema;
 - the action validator and dispatch rule;
 - the environment and observation pipeline.
 
-A test requires `strip_procedure(candidate) == baseline` at every decision.
+A test requires `strip_procedure(candidate) == baseline` at every decision, rebuilt from the request bytes actually
+sent. Removing the treatment includes removing the carried statement. The live producer must retain:
+- every request's exact user message;
+- every valid block, as a separate `model_statement` record, never in a transition record.
+
+**Not isolated.** The procedure, the response block and the carried statement are applied together, so the result
+cannot attribute an effect to carried state alone. Isolating it would need a further arm (see open items).
 
 ## Cases (selection rule written before any outcome of this design was inspected)
 
@@ -87,7 +107,7 @@ not for solving.
 | Exact repeats after no observed change in the same state | Count of chosen exact actions (id plus coordinates) whose latest same-state observation in the window was `no_observed_change`, **with the number followed by a visible change or level**. Reported without equating repetition with waste. |
 | Chosen-action evidence status | Distribution over `untested`, `tested_other_state`, `failed_only`, `outcome_unknown_only` and the same-state statuses |
 | Prediction accuracy (candidate only) | correct / incorrect / unscoreable over mechanically checkable predictions. Descriptive, with no between-arm comparison. |
-| Revision after contradiction (candidate only) | recognized / revised_not_cited / cited_not_revised / not_recognized / procedure_invalid. Descriptive. Not a success criterion: see design §6, delayed effects. |
+| Revision after contradiction (candidate only) | Counted only when the falsified statement (same `about` ref, same prediction) was present in the next request's bytes. Then the result is one of: recognized / revised_not_cited / cited_not_revised / not_recognized / procedure_invalid. Otherwise it is `previous_statement_absent`, reported but never counted as revision. Descriptive. Not a success criterion: see design §6, delayed effects. |
 | Invalid actions | by reason (not_json, truncated, illegal_action, …); retained, never dispatched |
 | Invalid procedure blocks and unsupported citations | by reason; citations by category (`not_earlier`, `earlier_not_shown`, `wrong_claim`, `failure_read_as_no_change`) |
 | Completed levels | from `levels_completed` increases or WIN only |
@@ -142,3 +162,8 @@ startup. ECv3's startup took 819 s.
 - Decide whether s5i5's counter region is masked: a contract change, Track-independent.
 - Decide whether to add a third arm, a prediction-only arm without hypothesis and references, so that "predicting"
   is separated from "testing hypotheses".
+- Decide whether carried state needs its own isolation: a candidate arm without `previous_model_statement`
+  separates "revising a carried belief" from "reasoning afresh from feedback".
+- Decide whether a statement should survive a level change. It is now cleared there, so revision across levels is
+  not measured.
+- Wire the live producer to retain request bytes and `model_statement` records, as the rehearsal runner does.
