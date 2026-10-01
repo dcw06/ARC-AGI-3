@@ -19,10 +19,13 @@ runtime hash matched, so this was a reproducibility defect, not evidence corrupt
 - Packaging is identical with and without the incidental file.
 - Every packaged file is tracked.
 
-**Fresh-checkout procedure (r2).**
-1. The full local check ran in a **fresh clone** of the committed branch (`.cache/ws3_fresh_check.sh`), in which
-   the R8 trajectory is absent.
-2. The notebook review and the approval-path rehearsal also ran from a fresh clone of the r2 commit.
+**Fresh-checkout procedure (r2, planned; no results retained yet).**
+1. The full local check is to run in a **fresh clone** of the committed branch (`.cache/ws3_fresh_check.sh`), in
+   which the R8 trajectory is absent.
+2. After r2 is built and frozen, the notebook review and the approval-path rehearsal are to run from a fresh clone of
+   the r2 commit.
+
+Until both results are retained here, this package is not ready for approval or launch.
 
 **Evidence recovery (found by the first fresh-checkout check).** When the monitor is lost, the supervisor stops the
 worker with SIGTERM, which can land in the middle of an atomic evidence write. In the first fresh-clone check the
