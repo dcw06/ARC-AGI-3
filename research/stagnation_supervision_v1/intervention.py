@@ -10,7 +10,8 @@ The supervisor must answer with exactly four fields:
   evidence_refs             action indices from the shown evidence (nothing else may be cited);
   assumption_to_reconsider  which belief the behaviour seems to rest on;
   distinguishing_test       {'description', 'actions'}: at most MAX_TEST_ACTIONS available actions whose result would
-                            separate two explanations, not a plan to finish the level.
+                            separate two explanations, not a plan to finish the level. Each action must satisfy
+                            the frozen control contract arc_action_v12 (validated by its own validator).
 `parse` validates an output against its own request; an invalid output is retained with its problems and is never
 delivered. The lexical checks for source references and solution claims are a second line of defence only: the
 first is that the request never contains such material.
@@ -19,6 +20,7 @@ import hashlib
 import json
 import re
 
+from certification.phase4_transient_v2.action_contract import CONTRACT_ID as ACTION_CONTRACT_ID, validate_action
 from research.transition_evidence_v1 import vocabulary as V
 
 VERSION = 'stagnation_supervision_v1_intervention'
@@ -40,7 +42,8 @@ PROMPT = (
     '  "assumption_to_reconsider": which belief the behaviour seems to rest on (at most 300 characters);\n'
     '  "distinguishing_test": {"description": ..., "actions": [at most 3 actions from available_actions, each '
     '{"action_id": ..., "action_data": {...}}]}: a test whose result would separate two explanations, not a plan '
-    'to finish the level.\n'
+    'to finish the level. Action 6 needs integer "x" and "y" inside the frame; every other action has empty '
+    'action_data.\n'
     'Do not claim knowledge of the game\'s code, rules or solution.')
 FORBIDDEN = {
     'source_reference': re.compile(r'\.py\b|source code|\bsource\b|game[_ ]?id|environment[_ ]files|\bimport\b|github'
@@ -91,20 +94,25 @@ def _text_problems(name, value):
 
 
 def _action_problems(action, content):
+    """Argument rules come from the frozen control contract (arc_action_v12, imported read-only): ACTION6 needs
+    exactly integer x and y in [0, 63] and every other action takes no action_data; booleans are not integers.
+    Legal ids are the shown available actions within 1..7. On top of the contract, a click must lie inside the
+    observed frame."""
     if not isinstance(action, dict) or set(action) != {'action_id', 'action_data'}:
         return ['test action: needs exactly action_id and action_data']
-    problems = []
-    if type(action['action_id']) is not int or action['action_id'] not in content['available_actions']:
-        problems.append('test action: action_id not among the available actions')
+    legal = [a for a in content['available_actions'] if type(a) is int and 1 <= a <= 7]
+    if not legal:
+        return ['test action: no action available under ' + ACTION_CONTRACT_ID]
+    try:
+        validate_action(json.dumps({'action': action}), legal)
+    except ValueError as exc:
+        return [f'test action: violates {ACTION_CONTRACT_ID}: {exc}']
     data = action['action_data']
-    if not isinstance(data, dict) or not set(data) <= {'x', 'y'}:
-        problems.append('test action: action_data may hold only x and y')
-    elif data:
+    if data:
         height, width = content['frame_shape']
-        if set(data) != {'x', 'y'} or any(type(v) is not int for v in data.values()) or not (
-                0 <= data['x'] < width and 0 <= data['y'] < height):
-            problems.append('test action: coordinates outside the observed frame')
-    return problems
+        if not (data['x'] < width and data['y'] < height):
+            return ['test action: coordinates outside the observed frame']
+    return []
 
 
 def parse(text, request):

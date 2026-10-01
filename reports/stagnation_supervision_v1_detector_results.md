@@ -186,7 +186,8 @@ use scripted supervisor outputs only. They cover:
 - repeated triggers with cooldown and a cap on interventions;
 - token-budget exhaustion;
 - invalid and over-long outputs, outputs citing unshown evidence, outputs mentioning environment source or game
-  identifiers, solution claims, and over-long test plans;
+  identifiers, solution claims, over-long test plans, and test actions that break the `arc_action_v12`
+  argument rules;
 - call exceptions and a scripted supervisor that runs out of outputs (each charged and retained);
 - triggers from failed dispatches alone (none happen);
 - deferral when the current state was not observed;
@@ -199,7 +200,7 @@ use scripted supervisor outputs only. They cover:
 | Module | Tests | Result |
 |---|---|---|
 | `tests.test_stagnation_supervision_v1` | 18 | pass |
-| `tests.test_stagnation_supervision_v1_intervention` | 20 | pass |
+| `tests.test_stagnation_supervision_v1_intervention` | 25 | pass |
 | `tests.test_stagnation_supervision_v1_evaluation` | 3 | pass |
 | `tests.test_transition_evidence_v1` (the contract, unchanged) | 16 | pass |
 

@@ -33,14 +33,19 @@ def loop(n, start=0):
     return [raw(start + i) for i in range(n)]
 
 
+def well_formed(request):
+    """A contract-valid test action: the first available id in 1..7, with coordinates only for ACTION6."""
+    action_id = next(a for a in request['content']['available_actions'] if 1 <= a <= 7)
+    return {'action_id': action_id, 'action_data': {'x': 0, 'y': 0} if action_id == 6 else {}}
+
+
 def answer(request, **override):
     shown = [e['action_index'] for e in request['content']['evidence']]
     value = {'observed_pattern': 'The same click repeats and the frame stays the same.',
              'evidence_refs': shown[-2:],
              'assumption_to_reconsider': 'That this click position responds at all.',
              'distinguishing_test': {'description': 'Click a different cell once; a change would show position matters.',
-                                     'actions': [{'action_id': request['content']['available_actions'][0],
-                                                  'action_data': {}}]}}
+                                     'actions': [well_formed(request)]}}
     value.update(override)
     return json.dumps(value)
 
@@ -148,14 +153,47 @@ class OutputValidation(unittest.TestCase):
         plan = {'description': 'Try moving.', 'actions': [{'action_id': 2, 'action_data': {}}] * 4}
         self.check_invalid(answer(self.request, distinguishing_test=plan), '1 to 3 actions')
 
+    def with_action(self, action):
+        return answer(self.request, distinguishing_test={'description': 'Probe once.', 'actions': [action]})
+
     def test_test_actions_must_be_available_and_inside_the_frame(self):
-        def with_action(action):
-            return answer(self.request, distinguishing_test={'description': 'Probe once.', 'actions': [action]})
-        self.check_invalid(with_action({'action_id': 4, 'action_data': {}}), 'not among the available')
-        self.check_invalid(with_action({'action_id': 6, 'action_data': {'x': 4, 'y': 0}}), 'outside the observed frame')
-        self.check_invalid(with_action({'action_id': 6, 'action_data': {'x': 1}}), 'outside the observed frame')
-        self.check_invalid(with_action({'action_id': 6, 'action_data': {'x': 1, 'y': 1, 'level': 2}}), 'only x and y')
-        self.assertTrue(I.parse(with_action({'action_id': 6, 'action_data': {'x': 3, 'y': 2}}), self.request)['valid'])
+        self.check_invalid(self.with_action({'action_id': 4, 'action_data': {}}), 'currently legal')
+        self.check_invalid(self.with_action({'action_id': 6, 'action_data': {'x': 4, 'y': 0}}),
+                           'outside the observed frame')
+        self.check_invalid(self.with_action({'action_id': 6, 'action_data': {'x': 1, 'y': 1, 'level': 2}}),
+                           'ACTION6 requires')
+        self.assertTrue(I.parse(self.with_action({'action_id': 6, 'action_data': {'x': 3, 'y': 2}}),
+                                self.request)['valid'])
+
+    def test_action6_arguments_follow_the_control_contract(self):
+        for data in ({}, {'x': 1}, {'y': 1}, {'x': 1.0, 'y': 1}, {'x': '1', 'y': 1}, {'x': True, 'y': 1},
+                     {'x': 1, 'y': False}, {'x': -1, 'y': 0}, {'x': 64, 'y': 0}, {'x': 0, 'y': 3}, None, [1, 1]):
+            with self.subTest(data=data):
+                self.check_invalid(self.with_action({'action_id': 6, 'action_data': data}), 'test action')
+
+    def test_simple_actions_take_no_arguments(self):
+        for action_id in (1, 2):
+            for data in ({'x': 2, 'y': 1}, {'x': 0}, {'note': 'go'}, None):
+                with self.subTest(action_id=action_id, data=data):
+                    self.check_invalid(self.with_action({'action_id': action_id, 'action_data': data}),
+                                       'only ACTION6 may carry action_data')
+            self.assertTrue(I.parse(self.with_action({'action_id': action_id, 'action_data': {}}),
+                                    self.request)['valid'])
+
+    def test_action_ids_must_be_contract_integers(self):
+        for action_id in (True, 1.0, '1', 0, 8, None):
+            with self.subTest(action_id=action_id):
+                self.check_invalid(self.with_action({'action_id': action_id, 'action_data': {}}), 'currently legal')
+        reset_only = I.build_request(records_for(loop(3)), 2, 'triggered', [], available_actions=[0])
+        parsed = I.parse(answer(self.request, distinguishing_test={
+            'description': 'Probe once.', 'actions': [{'action_id': 0, 'action_data': {}}]}), reset_only)
+        self.assertFalse(parsed['valid'])
+        self.assertIn('test action: no action available under arc_action_v12', parsed['problems'])
+
+    def test_the_contract_validator_is_imported_not_copied(self):
+        from certification.phase4_transient_v2 import action_contract
+        self.assertIs(I.validate_action, action_contract.validate_action)
+        self.assertEqual(I.ACTION_CONTRACT_ID, 'arc_action_v12')
 
 
 class PolicyRehearsal(unittest.TestCase):
@@ -199,6 +237,23 @@ class PolicyRehearsal(unittest.TestCase):
         self.assertEqual((summary['invalid_outputs'], summary['failed_calls'], summary['valid_calls']), (2, 2, 0))
         self.assertEqual(summary['tokens_charged'], sum(c['call']['input_tokens'] + c['call']['output_tokens']
                                                         for c in called))
+        self.assertIn('suppressed_intervention_cap', summary['outcomes'])
+
+    def test_contract_violating_actions_are_retained_charged_and_counted(self):
+        actions = ({'action_id': 6, 'action_data': {}}, {'action_id': 6, 'action_data': {'x': True, 'y': 1}},
+                   {'action_id': 1, 'action_data': {'x': 2, 'y': 3}})
+        bad = [ok(text=json.dumps({'observed_pattern': 'The same click repeats.', 'evidence_refs': [0, 1],
+                                   'assumption_to_reconsider': 'That the click responds.',
+                                   'distinguishing_test': {'description': 'Probe once.', 'actions': [action]}}))
+               for action in actions]
+        policy = {**SV.POLICY, 'max_interventions_per_episode': 3}
+        s = SV.rehearse(loop(30), 'triggered', SPEC, bad, policy=policy, available_actions=[1, 6])
+        called = [e for e in s.events if e['outcome'] == 'called']
+        self.assertEqual([c['call']['raw_output'] for c in called], [b['text'] for b in bad])
+        self.assertTrue(all(c['delivered'] is None and not c['call']['parsed']['valid'] for c in called))
+        self.assertTrue(all(any('arc_action_v12' in p for p in c['call']['parsed']['problems']) for c in called))
+        summary = s.summary()
+        self.assertEqual((summary['calls'], summary['invalid_outputs'], summary['tokens_charged']), (3, 3, 3 * 150))
         self.assertIn('suppressed_intervention_cap', summary['outcomes'])
 
     def test_failed_dispatches_alone_never_trigger(self):

@@ -45,14 +45,17 @@ environment and source strings into the raw evidence and checks that they never 
 | `observed_pattern` | What repeats or stalls in the shown evidence (≤ 300 characters) |
 | `evidence_refs` | Shown action indices only |
 | `assumption_to_reconsider` | Which belief the behaviour seems to rest on (≤ 300 characters) |
-| `distinguishing_test` | A `description` plus 1–3 `actions`, each an available action id with in-frame coordinates |
+| `distinguishing_test` | A `description` plus 1–3 `actions`, each valid under the frozen control contract `arc_action_v12` (ACTION6 needs integer `x` and `y`; every other action has empty `action_data`), using an available id in 1–7, with clicks inside the observed frame |
 
 **Validation** rejects:
 - non-JSON, extra or missing keys, and outputs longer than 2,000 characters;
 - citations of unshown or future indices;
 - references to source code, environment files or game identifiers;
 - solution claims ("solution", "will complete …");
-- test plans longer than 3 actions.
+- test plans longer than 3 actions;
+- test actions that violate `arc_action_v12`. This rule is checked by the repo's own validator
+  (`certification.phase4_transient_v2.action_contract.validate_action`, imported read-only, the same one
+  `grounded_action_v1` uses). Booleans are not accepted as integers.
 
 An invalid output is retained exactly as received, is charged, counts toward the cap, and is never delivered. The
 agent sees only `render()`: the four validated fields in a fixed template, labelled as a hypothesis.
