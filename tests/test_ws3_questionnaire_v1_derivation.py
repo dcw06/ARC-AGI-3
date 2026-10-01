@@ -180,6 +180,25 @@ class CommittedStateRecovery(unittest.TestCase):
         self.assertFalse(run['evidence_recovery']['index_committed'])
         self.assertEqual((run['status'], run['calls_recorded'], len(run['calls'])), ('incomplete', 3, 3))
 
+    def test_an_interrupted_first_append_recovers_an_empty_committed_log(self):
+        """Review of 95aef4f: the kill lands after calls.jsonl is created but before the manifest records any call."""
+        from research.evidence_comprehension_v2.evidence import encode
+        line = encode({'index': 0, 'status': 'answered'}) + b'\n'
+        for label, written in (('partial first line', line[:7]), ('whole first line', line)):
+            with self.subTest(label):
+                self.tearDown()
+                self.tmp = __import__('tempfile').TemporaryDirectory()
+                self.folder = Path(self.tmp.name) / 'run'
+                writer = self.E.RunEvidence(self.folder, 1 << 20)
+                writer(self.folder / 'run.json', {'calls_recorded': 0, 'status': 'running', 'stop_reason': None})
+                (self.folder / 'calls.jsonl').write_bytes(written)
+                (self.folder / 'manifest.json.tmp').write_bytes(b'{"partial')
+                run = self.E.load_verified(self.folder)
+                self.assertEqual((run['status'], run['stop_reason'], run['calls_recorded'], run['calls']),
+                                 ('incomplete', 'interrupted_evidence', 0, []))
+                self.assertEqual(run['evidence_recovery']['ignored_uncommitted_log_bytes'], len(written))
+                self.assertTrue(run['evidence_recovery']['index_committed'])
+
     def test_tampering_or_unexpected_files_are_still_refused(self):
         raw = (self.folder / 'calls.jsonl').read_bytes()
         (self.folder / 'calls.jsonl').write_bytes(raw.replace(b'answered', b'timed_out', 1))

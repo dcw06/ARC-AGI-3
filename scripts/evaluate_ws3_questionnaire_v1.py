@@ -261,7 +261,7 @@ def evaluate_output(output, *, mode='live', rehearsal_seconds=None):
     timing = frozen_timing(mode, frozen_internal)
     lifecycle = lifecycle_errors(output, mode, frozen_internal)
     lifecycle += model_errors(output, mode, probe_set_sha256, timing)
-    evidence, analysis, run_summary, calls_errors = {'verified': False}, None, None, []
+    evidence, analysis, run_summary, calls_errors, recovered = {'verified': False}, None, None, [], None
     try:
         run = load_verified(output / 'worker/run')
         cancellations = []
@@ -274,7 +274,10 @@ def evaluate_output(output, *, mode='live', rehearsal_seconds=None):
         except Exception:
             pass
         calls_errors, counts = call_errors(run, frozen, probe_set_sha256, cancellations, timing, canary_total)
-        evidence = {'verified': True}
+        recovered = run.get('evidence_recovery')
+        evidence = {'verified': True, 'recovered': bool(recovered)}
+        if recovered:
+            evidence['evidence_recovery'] = recovered
         passes = {'pass_1': {}, 'pass_2': {}}
         probes = {p['probe_id']: p for p in frozen['probes']}
         if not calls_errors:
@@ -287,14 +290,15 @@ def evaluate_output(output, *, mode='live', rehearsal_seconds=None):
                        'phase_reached': run['calls'][-1]['phase'] if run['calls'] else None}
     except Exception as exc:
         evidence = {'verified': False, 'error': type(exc).__name__ + ': ' + str(exc)[:200]}
-    gate_status = ('complete' if analysis and analysis['completeness']['withheld'] == 'complete'
+    gate_status = ('complete' if analysis and analysis['completeness']['withheld'] == 'complete' and not recovered
                    else 'incomplete')  # WS3: every withheld answer; the verdict applies its own policy
     return {'mode': mode, 'frozen_internal_seconds': frozen_internal, 'lifecycle_passed': not lifecycle,
             'lifecycle_errors': lifecycle, 'run_evidence': evidence, 'call_errors': calls_errors[:20],
             'run': run_summary, 'gate_status': gate_status,
-            'gate': {'questionnaire': analysis['verdict']} if analysis else None, 'analysis': analysis,
-            'technically_complete': (not lifecycle and evidence['verified'] and not calls_errors
-                                     and gate_status == 'complete'),
+            'gate': ({'questionnaire': 'incomplete' if recovered else analysis['verdict']}
+                     if analysis else None), 'analysis': analysis,
+            'technically_complete': (not lifecycle and evidence['verified'] and not calls_errors and not recovered
+                                     and run_summary['status'] == 'complete' and gate_status == 'complete'),
             'exact_provider_billed_seconds': None, 'phase4_complete': False}
 
 

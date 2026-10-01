@@ -124,6 +124,21 @@ class Rehearsals(unittest.TestCase):
             rewrite(copy, f'calls/{flip["index"]:05d}.json', lambda v: v.update(response=json.dumps({'answer': wrong})))
             changed = evaluate_output(copy, mode='rehearsal', rehearsal_seconds=REHEARSAL_SECONDS)
             self.assertEqual(changed['analysis']['families']['withheld']['raw_evidence']['progress_status']['correct'], baseline - 1)
+            # 1b. Review of 95aef4f: a write interrupted after the last commit leaves recovered evidence. Its
+            # answers are still scored descriptively, but it is never technically complete or promotable.
+            interrupted = work / 'interrupted'
+            shutil.copytree(output, interrupted)
+            (interrupted / 'worker/run/manifest.json.tmp').write_bytes(b'{"partial')
+            result = evaluate_output(interrupted, mode='rehearsal', rehearsal_seconds=REHEARSAL_SECONDS)
+            self.assertTrue(result['run_evidence']['recovered'])
+            self.assertEqual(result['run_evidence']['evidence_recovery']['ignored_temporary_files'],
+                             ['manifest.json.tmp'])
+            self.assertEqual((result['run']['status'], result['run']['stop_reason'], result['run']['calls_recorded']),
+                             ('incomplete', 'interrupted_evidence', 5616))
+            self.assertEqual(result['analysis']['families']['withheld']['raw_evidence']['progress_status']['correct'],
+                             baseline)
+            self.assertEqual((result['technically_complete'], result['gate_status'], result['gate']),
+                             (False, 'incomplete', {'questionnaire': 'incomplete'}))
             # 2. A forged request hash, an out-of-order call and broken token parity are rejected.
             for name, mutate, reason in (
                     ('hash', lambda v: v.update(request_sha256='0' * 64), 'request hash'),

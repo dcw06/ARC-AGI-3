@@ -24,6 +24,26 @@ runtime hash matched, so this was a reproducibility defect, not evidence corrupt
    the R8 trajectory is absent.
 2. The notebook review and the approval-path rehearsal also ran from a fresh clone of the r2 commit.
 
+**Evidence recovery (found by the first fresh-checkout check).** When the monitor is lost, the supervisor stops the
+worker with SIGTERM, which can land in the middle of an atomic evidence write. In the first fresh-clone check the
+worker was killed while writing `manifest.json.tmp`. The committed state was consistent, but v2's strict loader
+refused the whole run. The same race is latent in the v1–v3 stacks. The r2 loader recovers the last committed state:
+- the manifest and every file it lists must verify;
+- the committed prefix of the call log must match the manifest; later bytes are reported as ignored. This includes
+  an interrupted first append, where the manifest still records zero calls;
+- the only other files allowed are interrupted temporary files;
+- the run index may be one write ahead of its manifest record, and is then used for metadata only.
+
+A recovered run is always `incomplete` (`interrupted_evidence`). Tampering and unexpected files are still refused.
+
+**Review of 95aef4f: two recovery gaps, fixed.**
+- **P1.** A recovered run whose answers were all present was reported `technically_complete: true`. The evaluator now
+  denies technical completion and promotion to any recovered run (see the substitutions in §1). The end-to-end
+  regression adds an interrupted manifest write to a full 5,616-call rehearsal.
+- **P2.** A kill during the first call-log append (log created, manifest still at zero calls) was refused as an
+  unexpected file. It now recovers as an empty committed log, with the uncommitted bytes reported. It is tested with
+  both a partial and a whole first line.
+
 **Status.** GPU-disabled review snapshot. Authorized seconds are zero. There has been no reservation, upload or
 model call. Source approval and a separately sized compute authorization would follow only after independent review.
 
@@ -40,7 +60,8 @@ v3's runner and package files ran live as attempt `ecv3-089bf11f` and are reused
 | Kind | Files | Relation |
 |---|---|---|
 | **Derived** | `research/ws3_questionnaire_v1/{authority,host,worker,runner,resources,monitor,supervisor}.py`; the launch, package, review-build, notebook-review, rehearse, evaluate and check scripts; the connected, schedule, snapshot and diagnostics suites and fixtures | Exactly the v3 file, with v3's banner line dropped, the global v3 → WS3 renames, and counted per-file substitutions (`scripts/derive_ws3_questionnaire_v1.py`). A test fails on drift. |
-| **Re-exported unchanged** | `schedule.py` (v2's call order; v1's admission rules), `evidence.py` (v2's append-only call log), `transport.py` (v1's), `score.py` (the WS3 scorer) | The same objects, checked by identity. |
+| **Re-exported unchanged** | `schedule.py` (v2's call order; v1's admission rules), `transport.py` (v1's), `score.py` (the WS3 scorer) | The same objects, checked by identity. |
+| **Re-exported writer, new loader** | `evidence.py`: v2's append-only call-log writer, unchanged (checked by identity); `load_verified` tries v2's strict check first and otherwise recovers the last committed state (see *Evidence recovery*) | Hand-written in r2. |
 | **Adapters** | `probes.py` (loads the frozen set and builds each request from the frozen evidence), `service.py` (v1's service with the WS3 allow-list and a 5,616-call ceiling), `fake_server.py` (scripted answers; wrong answers are another valid enum value) | Hand-written. None loads the v2 or v3 question sets. |
 
 **Substitutions of substance:**
@@ -48,6 +69,9 @@ v3's runner and package files ran live as attempt `ecv3-089bf11f` and are reused
   code, and the reused v1 and v2 modules;
 - the evaluator's `gate_status` requires both primary and over-claim-gate completeness, and the verdict is reported
   under the key `questionnaire`;
+- a run with recovered evidence is never technically complete: the evaluator reports `evidence_recovery`, sets
+  `gate_status` to `incomplete` and the gate verdict to `incomplete`, and keeps the analysis for descriptive use only.
+  Technical completeness now also requires the run's own status to be `complete`;
 - rehearsal slow-latency faults (0.13 s and 0.06 s per call) are sized for a 2,500-call withheld pass;
 - test numbers and report paths are updated.
 
@@ -77,6 +101,8 @@ This is the import closure of the entry points, as in v2 and v3.
 | Every response retained and independently rescored; interruptions reported incomplete; fault handling | Connected suite (derived) |
 
 ## 4. Local results
+
+**Pending.** The r2 fresh-checkout check has not yet completed on the fixed commit. The figures below are r1's.
 
 Full local check (`reports/ws3_questionnaire_v1_rehearsal_results.json`, run `package-r1-check-2`, with per-test
 diagnostics under `reports/ws3_questionnaire_v1_diagnostics/`): **all seven suites passed, 92 tests, 0 failures,

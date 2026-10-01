@@ -4,7 +4,9 @@ The writer (`RunEvidence`) is v2's, unchanged. The loader first applies v2's str
 because a write was interrupted, it recovers the **last committed state** instead of discarding the partial run:
 - the manifest (always replaced atomically, so it is the last committed version) must parse and match its version;
 - every manifest-listed file must still verify byte-for-byte;
-- the call log's first `bytes` bytes must match the manifest's hash (anything after them was never committed);
+- the call log's first `bytes` bytes must match the manifest's hash (anything after them was never committed). This
+  includes a manifest that still records zero calls while `calls.jsonl` already exists: a kill during the first append
+  leaves a log whose bytes (a partial or even a whole first line) were never committed, so the committed log is empty;
 - the only other files allowed are interrupted temporary files (`manifest.json.tmp`, `run.json.tmp`), which are
   ignored because they were never committed;
 - the run index may be one step ahead of its manifest record: the writer replaces `run.json` (atomically, so it is a
@@ -14,7 +16,8 @@ because a write was interrupted, it recovers the **last committed state** instea
 
 A recovered run is always `incomplete`, with `stop_reason` kept if the committed index had one and otherwise
 `interrupted_evidence`, and `evidence_recovery` describing what was ignored. So partial evidence stays usable and can
-never be mistaken for complete evidence.
+never be mistaken for complete evidence. The evaluator reports `evidence_recovery`, scores the recovered answers for
+descriptive analysis only, and never grants a recovered run technical completion or a promotable verdict.
 
 Why this exists: when the monitor is lost, the supervisor tears the worker down with SIGTERM, which can land in the
 middle of an atomic write. In a fresh-checkout rehearsal (package r2 review) the worker was killed while writing
@@ -50,18 +53,21 @@ def load_committed(folder, strict_error):
             or not isinstance(manifest.get('calls'), dict) or set(manifest['files']) != {'run.json'}:
         raise EvidenceError('manifest version')
     on_disk = {p.relative_to(folder).as_posix() for p in folder.rglob('*') if p.is_file()} - {MANIFEST}
-    expected = {'run.json'} | ({CALLS} if manifest['calls'].get('lines') else set())
+    lines = manifest['calls'].get('lines')
+    expected = {'run.json'} | ({CALLS} if lines else set())
+    # With no committed calls, a call log on disk holds only uncommitted bytes of the first append.
+    ignorable = INTERRUPTED_TEMPORARY | (set() if lines else {CALLS})
     extra = on_disk - expected
-    if expected - on_disk or extra - INTERRUPTED_TEMPORARY:
+    if expected - on_disk or extra - ignorable:
         raise EvidenceError(f'file inventory mismatch: missing {sorted(expected - on_disk)[:3]}, '
-                            f'extra {sorted(extra - INTERRUPTED_TEMPORARY)[:3]}')
+                            f'extra {sorted(extra - ignorable)[:3]}')
     if (folder / 'run.json').is_symlink():
         raise EvidenceError('symlinked evidence: run.json')
     run_raw = (folder / 'run.json').read_bytes()
     row = manifest['files']['run.json']
     index_committed = len(run_raw) == row['bytes'] and hashlib.sha256(run_raw).hexdigest() == row['sha256']
     calls, trailing = [], 0
-    if manifest['calls'].get('lines'):
+    if CALLS in on_disk:
         path = folder / CALLS
         if path.is_symlink():
             raise EvidenceError('symlinked evidence: ' + CALLS)
@@ -70,10 +76,10 @@ def load_committed(folder, strict_error):
         if len(committed) != manifest['calls']['bytes'] or hashlib.sha256(committed).hexdigest() != manifest['calls']['sha256']:
             raise EvidenceError('committed call log does not verify')
         trailing = len(raw) - len(committed)
-        if not committed.endswith(b'\n'):
+        if committed and not committed.endswith(b'\n'):
             raise EvidenceError('committed call log ends inside a line')
-        calls = [json.loads(line) for line in committed[:-1].split(b'\n')]
-        if len(calls) != manifest['calls']['lines']:
+        calls = [json.loads(line) for line in committed[:-1].split(b'\n')] if committed else []
+        if len(calls) != (lines or 0):
             raise EvidenceError('committed call count differs from the manifest')
     for n, call in enumerate(calls):
         if not isinstance(call, dict) or call.get('index') != n:
@@ -84,7 +90,7 @@ def load_committed(folder, strict_error):
         raise EvidenceError('run index unreadable') from exc
     if not isinstance(index, dict):
         raise EvidenceError('run index is not an object')
-    recovery = {'index_committed': index_committed,'strict_error': strict_error[:200], 'ignored_temporary_files': sorted(extra),
+    recovery = {'index_committed': index_committed, 'strict_error': strict_error[:200], 'ignored_temporary_files': sorted(extra),
                 'ignored_uncommitted_log_bytes': trailing,
                 'index_calls_recorded': index.get('calls_recorded'), 'committed_calls': len(calls)}
     return {**index, 'status': 'incomplete', 'stop_reason': index.get('stop_reason') or 'interrupted_evidence',

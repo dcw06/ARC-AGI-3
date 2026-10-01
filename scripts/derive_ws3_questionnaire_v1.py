@@ -108,7 +108,23 @@ DERIVED = {
          "    gate_status = ('complete' if analysis and analysis['completeness']['withheld'] == 'complete'\n"
          "                   else 'incomplete')  # WS3: every withheld answer; the verdict applies its own policy", 1),
         ("            'gate': analysis['verdicts'] if analysis else None,",
-         "            'gate': {'questionnaire': analysis['verdict']} if analysis else None,", 1),
+         "            'gate': ({'questionnaire': 'incomplete' if recovered else analysis['verdict']}\n"
+         "                     if analysis else None),", 1),
+        # Review of 95aef4f: recovered (interrupted) evidence keeps its answers for descriptive analysis, but it is
+        # never technically complete and never carries a promotable verdict.
+        ("        evidence = {'verified': True}\n",
+         "        recovered = run.get('evidence_recovery')\n"
+         "        evidence = {'verified': True, 'recovered': bool(recovered)}\n"
+         "        if recovered:\n"
+         "            evidence['evidence_recovery'] = recovered\n", 1),
+        ("    evidence, analysis, run_summary, calls_errors = {'verified': False}, None, None, []\n",
+         "    evidence, analysis, run_summary, calls_errors, recovered = {'verified': False}, None, None, [], None\n", 1),
+        ("    gate_status = ('complete' if analysis and analysis['completeness']['withheld'] == 'complete'\n",
+         "    gate_status = ('complete' if analysis and analysis['completeness']['withheld'] == 'complete' and not recovered\n", 1),
+        ("            'technically_complete': (not lifecycle and evidence['verified'] and not calls_errors\n"
+         "                                     and gate_status == 'complete'),",
+         "            'technically_complete': (not lifecycle and evidence['verified'] and not calls_errors and not recovered\n"
+         "                                     and run_summary['status'] == 'complete' and gate_status == 'complete'),", 1),
     ),
     'scripts/check_ws3_questionnaire_v1.py': (
         ("SUITES = {'probe_set_keys_scoring_and_analysis': 'tests.test_ws3_questionnaire_v1',",
@@ -124,6 +140,23 @@ DERIVED = {
          "probes[c['probe_id']]['condition'] == 'raw_evidence'", 1),
         ("            wrong = 'not_shown' if probes[flip['probe_id']]['key'] != 'not_shown' else 'dispatch_failed'",
          "            wrong = 'unknown' if probes[flip['probe_id']]['key'] == 'confirmed' else 'confirmed'", 1),
+        ("            # 2. A forged request hash, an out-of-order call and broken token parity are rejected.\n",
+         "            # 1b. Review of 95aef4f: a write interrupted after the last commit leaves recovered evidence. Its\n"
+         "            # answers are still scored descriptively, but it is never technically complete or promotable.\n"
+         "            interrupted = work / 'interrupted'\n"
+         "            shutil.copytree(output, interrupted)\n"
+         "            (interrupted / 'worker/run/manifest.json.tmp').write_bytes(b'{\"partial')\n"
+         "            result = evaluate_output(interrupted, mode='rehearsal', rehearsal_seconds=REHEARSAL_SECONDS)\n"
+         "            self.assertTrue(result['run_evidence']['recovered'])\n"
+         "            self.assertEqual(result['run_evidence']['evidence_recovery']['ignored_temporary_files'],\n"
+         "                             ['manifest.json.tmp'])\n"
+         "            self.assertEqual((result['run']['status'], result['run']['stop_reason'], result['run']['calls_recorded']),\n"
+         "                             ('incomplete', 'interrupted_evidence', 5616))\n"
+         "            self.assertEqual(result['analysis']['families']['withheld']['raw_evidence']['progress_status']['correct'],\n"
+         "                             baseline)\n"
+         "            self.assertEqual((result['technically_complete'], result['gate_status'], result['gate']),\n"
+         "                             (False, 'incomplete', {'questionnaire': 'incomplete'}))\n"
+         "            # 2. A forged request hash, an out-of-order call and broken token parity are rejected.\n", 1),
         ("truncate(truncated / 'worker/run', 2664)", "truncate(truncated / 'worker/run', 2500)", 1),
         ("calls_recorded=2664", "calls_recorded=2500", 1),
         # WS3 policy: a missing regression-check answer withholds promotion; it makes the verdict incomplete only when
