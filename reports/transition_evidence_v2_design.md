@@ -1,113 +1,117 @@
-# Transition evidence v2: design draft r0 (not frozen; no compute)
+# Transition evidence v2: design r1 (record format draft; declared mask table frozen; no compute)
 
-**Status.** Draft for review, on branch `transition-evidence-v2` (from `5ff575b`). Code is in
-`research/transition_evidence_v2/` and tests are in `tests/test_transition_evidence_v2.py`. Version 1 is not edited.
-WS3 questionnaire v1 stays on version 1.
+**Status.**
+- **Where it lives.** Branch `transition-evidence-v2`. Code is in `research/transition_evidence_v2/` and tests are in
+  `tests/test_transition_evidence_v2.py`.
+- **What is frozen.** The declared mask table (`declared_masks.json`, declared_masks_v1) is frozen. The record format
+  is still a draft until the validation fixes below are reviewed.
+- **What is unchanged.** Version 1 and WS3 questionnaire v1 are untouched. This decision includes no GPU launch and no
+  compute authorization.
 
-**Why.** Three of the four research tracks independently asked for the same additions:
+**The decision applied in r1.** Use declared masks, under these conditions:
+- validation is fixed first, with regressions;
+- the initial declared mask covers s5i5 only;
+- both views are preserved, and a mask never suppresses anything else;
+- migration is kept separate from intervention;
+- the mask is tested in a controlled comparison;
+- online detection is a separate question.
 
-| Need | Asked by | Why version 1 falls short |
-|---|---|---|
-| Set aside a region that changes on every action (a step bar or counter) | Tracks 1, 2 and 3 | On s5i5 every action changes the frame, so "same state" never repeats and "no observed change" never occurs. Track 3's detector misses every loop under a counter. |
-| A stable record identifier | Track 2 | Each track built its own `episode_id#action_index`. |
-| The level a failed or unknown action started from | Track 2 | Version 1 records no environment observation for these, so the level had to be carried forward by each consumer. |
-| The available actions at each step | Track 3 | The producer receives them, but version 1 drops them. Proposed tests fall back to actions already seen. |
+## Changes in r1
+
+| Condition | What was done |
+|---|---|
+| **Fix validation first** | r0's `validate` accepted 15 of 16 probed contradictions and crashed on the 16th. It now refuses all of them. 31 regression cases (19 context and action, 12 masked view) cover: malformed or untyped context fields; malformed, duplicated, unsorted or bool action lists; levels that contradict the environment's report; `reported` after an unobserved action; masked counts that do not add up to the full-frame count; `differs_outside` against its count; summaries that contradict the masked frames; a mask for another frame shape; truncated or shifted frames; and extra fields. |
+| A record alone cannot reveal a consistent forgery | For example, two changed cells moved from outside to inside with the summary recomputed. New `verify(record, raw, mask)` and `verify_history(records, raws, masks)` rebuild from raw evidence and require an exact match. A test shows such a forgery passes `validate` and fails `verify`. |
+| **Initial mask: s5i5 only, frozen** | `declared_masks.json` is pinned by its SHA-256 in `masks.py` and refused if edited (tested). Its contents: game `s5i5-18d95033`; frame 64×64; one rectangle, row 63, x 49–63; source archive `evidence/action-effect-history-v1-complete.zip` with its locked hash (cross-checked against the lock); provenance `declared`. It is described as **a region selected from development evidence, not established as irrelevant to the task**. Games are matched on their full id. **ar25 is unmasked:** nothing changed there. **wa30 is unmasked:** its bottom-edge changes are ambiguous. |
+| **Both views preserved** | Every record keeps the full-frame measurements, the outside-region measurements and the inside-region counts. |
+| **Never suppress** | A test shows that with and without the mask, the record's dispatch, environment events, progress, context, available actions, full measurements and observations are identical. This holds even when the only visible change is inside the region while a level completes, the state becomes WIN and the available actions change. Failed and unknown dispatches have no masked view. |
+| Available-action changes | New `environment.reported.available_actions_changed` is measured when both sides were retained, so an action-set change is a reported fact of its own. |
+| **Wording** | The masked reason reads "no observed change outside the declared region; changes inside it are set aside, not denied, and this does not establish that the action had no effect" (tested). The record never names a cause for the region. |
+
+**Checks.**
+- 25 v2 tests and v1's 16 pass.
+- All 144 archived development transitions validate and match exactly what their raw evidence rebuilds.
+- Two deliberate faults in the mask test (ignore the rectangles; swap x and y) each fail 8 of the 25 tests.
 
 ## 1. What the real development transitions show
 
 These figures come from the 144 archived transitions of action-effect-history v1: 3 development games, 4 episodes
 each, 1 returned frame per step.
 
-| Game | Transitions | Unmasked visual effect | Where the changes are |
+| Game | Unmasked visual effect | Where the changes are | Declared region |
 |---|---|---|---|
-| ar25 | 48 | 48 `no_observed_change` | nothing changed at all |
-| s5i5 | 48 | 48 `final_frame_differs` | **every** changed cell is in row 63, x 49–63. It is a bar that loses 1–2 cells per action and refills at each new episode. The playfield never changed. |
-| wa30 | 48 | 45 differ, 3 unchanged | a moving block of 24–33 cells. 4 cells at row 63, x 60–63 also changed 16 times. Whether that is a second bar is not established. |
+| ar25 | 48 `no_observed_change` | none | none |
+| s5i5 | 48 `final_frame_differs` | every changed cell is in row 63, x 49–63: 1–2 cells per action, restored at each new episode | row 63, x 49–63 |
+| wa30 | 45 differ, 3 unchanged | a moving block of 24–33 cells; 4 cells at row 63, x 60–63 also changed 16 times | none (ambiguous) |
 
-**What this means.** On s5i5, version 1 correctly reports that every frame differed. But a consumer asking "did my
-click do anything to the playfield?" gets "yes" 48 times, when the answer was "nothing observed" every time.
+**What the s5i5 region shows.** With the region declared, all 48 s5i5 transitions read "no observed change outside the
+declared region", and the region changed in all 48.
 
-**What it cannot show.** No cell changed on every action, so "set aside cells that always change" would not find the
-s5i5 bar. It is a region whose cells change once each, in order.
+**Not an independent validation.** The region was selected from these same 48 transitions. They are development
+evidence for the declaration, not a test of it.
 
 ## 2. The record
 
-A version 2 record is version 1's record, **extended, never altered**.
-- **How it is built.** `build` calls version 1's `build`, and `history` calls version 1's `history`, then each adds
-  fields.
-- **The guarantee.** `to_v1(record)` returns exactly version 1's record. This is tested on all 90 frozen v1 fixtures,
-  with and without a mask.
-- **Version 1's checks still apply.** `validate` runs them unchanged on the contained record.
+A version 2 record is version 1's record, **extended, never altered**. `to_v1(record)` returns exactly version 1's
+record on all 90 frozen v1 fixtures, with and without a mask. Version 1's checks run unchanged on the contained
+record.
 
 | Addition | Content |
 |---|---|
 | `identity.record_id` | `<episode_id>#<action_index>` |
-| `context` | `levels_completed_before`, `state_before`, `available_actions_before`. These are taken from the observation **before** the action, so they exist for failed and unknown dispatches too. |
-| `environment.reported.available_actions_after` | For acknowledged actions only. Nothing after a failed or unknown action was observed, so `reported` stays null, as in version 1. |
-| `masked` | The masked view (§3). It is `unavailable` with a reason when no mask is supplied, the result was not observed, or the mask is for another frame shape. |
+| `context` | `levels_completed_before`, `state_before`, `available_actions_before`, from the observation **before** the action, so they exist for failed and unknown dispatches too |
+| `environment.reported.available_actions_after`, `available_actions_changed` | For acknowledged actions only. Nothing after a failed or unknown action was observed, so `reported` stays null. |
+| `masked` | Present only when a mask is supplied and applies; otherwise `unavailable` with a reason. It holds the mask itself, per-frame `changed_outside`/`changed_inside`/`differs_outside`, the outside summaries, and `mask_region_changed`. |
 
 **Available actions are never assumed.** If an observation omits them, the field is `absent` with a reason.
 
-**Model statements.** `model_statement` additionally carries `about_record_id`.
+## 3. Migration is separate from intervention
 
-## 3. The masked view
-
-A mask is a list of inclusive rectangles for one frame shape, plus its provenance (`kind`, `source`, `basis`). The
-masked view repeats version 1's rules on the cells **outside** the mask:
-- per-frame outside and inside changed-cell counts;
-- `any_returned_frame_differs_outside`, `final_frame_equals_pre_outside` and `visual_effect_outside`;
-- `mask_region_changed`.
-
-| Rule | Why |
+| A track may | Without a new experiment version? |
 |---|---|
-| The unmasked measurements stay the record's primary measurements. | A mask is an interpretation of where to look. The full observation is never replaced. |
-| Changes inside the mask are counted, not dropped. `no_observed_change` outside the mask says the inside changes are *set aside, not denied*. | A consumer can always see that the masked region moved. |
-| A mask cannot create a change. If the unmasked effect is `no_observed_change`, the masked one must be too (validated). | The masked view can only ever say less changed. |
-| A frame of another shape still *differs*. Its outside/inside counts are unavailable. | This is version 1's dimension-change rule. |
-| Invalid frames leave the outside result undecided, as in version 1. | A missing observation never becomes a zero count. |
-| The record never says *why* a region is masked. A test forbids "counter", "timer", "HUD", "score" and "budget" in it. | The record describes observations, not causes. |
+| Adopt `record_id`, `context` (including the level for failed and unknown actions) and the available actions | **Yes.** These are reported facts the producer already had; using them changes no treatment. |
+| Compute the masked view and **report** it alongside full-frame metrics | **Yes**, as long as it does not reach the model or the policy. |
+| Put masked measurements into a **prompt, a memory or a stagnation detector** | **No.** That changes what the agent sees or does. It is a new experiment version, with the mask named in its frozen protocol and labelled as declared. |
 
-**Checks.**
-- Outside/inside counts agree with an independent brute-force count on 300 random frames and masks.
-- Two deliberate faults in the mask test (ignore the rectangles; swap x and y) each fail 5 of the 16 tests.
-- On the archive with a declared s5i5 mask, all 48 s5i5 transitions read `no_observed_change` outside the mask, and
-  `mask_region_changed` is true in all 48. That mask was declared from the same transitions, so this describes what
-  the view reports; it does not validate the mask.
+## 4. Controlled comparison (protocol outline; nothing scheduled or authorized)
 
-## 4. The open decision: where masks come from
+**The question.** Does declared-mask assistance change behaviour on s5i5, with everything else fixed?
 
-The record accepts a mask; it does not choose one. There are two sources, and they serve different purposes:
+- **Arms.**
+  - **Unmasked:** the full-frame view only.
+  - **Declared-mask-assisted:** the same, plus the masked view where the track's experiment uses evidence (prompt,
+    memory or detector).
+  - Same model, decoding, prompts apart from the masked fields, games, seeds, horizons and budgets.
+- **Games.** s5i5 is the only game where the arms differ. ar25 and wa30 are run in both arms as controls where the
+  arms must behave identically: any difference there is variance or a defect, not a mask effect.
+- **Reported separately, never combined into one score:**
+  - **repetition:** exact repeats after no observed change in the same state, full-frame and outside-region,
+    reported side by side;
+  - **detector errors:** Track 3's false triggers and misses, under each fingerprint;
+  - **reliability:** invalid outputs, dispatch failures, unknown outcomes and interruptions;
+  - **levels completed.**
+- **Evidence limits.** The 48 archived transitions are development evidence, not a validation set. Run-to-run variance
+  must be measured, for example with a repeated unmasked episode. Any claim is limited to s5i5 under this declared
+  region.
 
-| | Declared mask | Online-detected mask |
-|---|---|---|
-| What it is | Rectangles a person or producer writes for a game, from stated development evidence | A detector proposes rectangles from **earlier transitions of the same episode only** |
-| Works on an unseen game | No | Yes, if the detector does |
-| Risk | It is game-specific knowledge. Used in an experiment, it must be declared before results, and its use labelled. | False masks hide real effects. Detector errors need their own benchmark, with hard negatives such as a block moving along the bottom edge (wa30). |
-| Cost | Nothing to build | A small detector, with benchmark and evaluation as for Track 3's |
+## 5. Online detection is a separate question
 
-**Recommendation.**
-- **For the research tracks on development games now:** use declared masks, frozen in each experiment's protocol
-  before any results and labelled as declared.
-- **For anything meant to run on unseen games:** an online detector is required. It would be a separate, versioned
-  component; the provenance kind `detected_online` is reserved for it.
-- Neither choice changes this record format.
+**The question.** Can an agent identify regions worth tracking separately, from earlier observations only, without
+excluding task-relevant changes?
 
-## 5. What this draft does not include
+- **Status.** It is not built here. The provenance kind `detected_online` is reserved for it.
+- **Benchmark requirements.**
+  - **Hard cases:** moving objects near borders (wa30's block is the archived example); stationary objects that later
+    become interactive; transient animation; and resource indicators.
+  - **Abstention** is a permitted answer. When the detector is uncertain, the consumer uses the full-frame view.
+  - **Errors** are scored asymmetrically: excluding a task-relevant change is the costly error.
+- **Relation to the format.** Neither declared nor detected masks change this record format.
 
-- **Changed-cell lists.** Tracks 1 and 4 recompute them from raw frames. Version 1 records the count, bounding box and
-  mask hash, and version 2 keeps that. Adding full lists is easy, but it can add up to 4,096 cells per frame to every
-  record. Deferred until a track needs them in the record rather than recomputed.
-- **Object identities** (Track 2's object-instance scope). They belong to perception, not to this record.
-- **Masked continuity.** Version 1's continuity compares whole frames. A masked continuity is not added until a
-  consumer needs it.
-- **An online mask detector** (§4).
+## 6. Not included
 
-## 6. Migration
-
-| Consumer | Change |
+| Item | Reason |
 |---|---|
-| WS3 questionnaire v1 | none: it stays on version 1 |
-| Track 1 | use `record_id`. Read `visual_effect_outside` where its protocol declares a mask, and report the s5i5 repeat metric with the mask declared. |
-| Track 2 | replace its own record id and carried-forward level with `record_id` and `context.levels_completed_before` |
-| Track 3 | take legal test actions from `available_actions_before`, and re-run the detector benchmark with a masked state fingerprint for the step-counter families |
-| Track 4 | none required. A masked variant would be a new question family, not a change to existing keys. |
+| Changed-cell lists | Tracks 1 and 4 recompute them. They can add up to 4,096 cells per frame to every record. |
+| Object identities | They belong to perception. |
+| Masked continuity | Not needed by any consumer yet. |
+| An online detector | See §5. |

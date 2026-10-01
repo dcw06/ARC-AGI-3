@@ -2,13 +2,16 @@
 masked view checked against an independent brute-force count and the archived real development transitions."""
 import copy
 import json
+from pathlib import Path
 import random
+import tempfile
 import unittest
 
 from research.transition_evidence_v1 import fixtures as F1, transition as T1, vocabulary as V1
-from research.transition_evidence_v2 import transition as T, vocabulary as V
+from research.transition_evidence_v2 import masks as MASKS, transition as T, vocabulary as V
 
 FROZEN = json.loads(F1.OUTPUT.read_bytes())
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def mask(rects, shape=(8, 10), kind=V.DECLARED):
@@ -166,14 +169,131 @@ class MaskedView(unittest.TestCase):
             self.assertNotIn(word, text)
 
 
+class ValidationRegressions(unittest.TestCase):
+    """Contradictions the first draft's validate() accepted (probed before this fix); each must now be refused."""
+
+    def setUp(self):
+        pre = [[0] * 10 for _ in range(8)]
+        frame = copy.deepcopy(pre)
+        frame[7][9] = 1  # inside the region
+        frame[1][1] = 1  # outside it
+        self.mask = mask([[5, 7, 9, 7]])
+        self.raw = raw(pre, [frame], available=[1, 6])
+        self.base = T.build(self.raw, self.mask)
+        self.assertEqual(T.validate(self.base), [])
+
+    def refused(self, mutate, base=None):
+        record = copy.deepcopy(base or self.base)
+        mutate(record)
+        return T.validate(record)
+
+    def test_malformed_context_and_available_actions(self):
+        def context(key, value):
+            return lambda r: r['context'].__setitem__(key, value)
+        cases = {
+            'level as bool': context('levels_completed_before', V.measured(True)),
+            'level as string': context('levels_completed_before', V.measured('2')),
+            'negative level': context('levels_completed_before', V.measured(-1)),
+            'level not measured': context('levels_completed_before', V.absent('x')),
+            'state not a string': context('state_before', V.measured(3)),
+            'actions not a list': context('available_actions_before', V.measured('1,6')),
+            'actions with a float': context('available_actions_before', V.measured([1, 6.0])),
+            'actions with a bool': context('available_actions_before', V.measured([True, 6])),
+            'actions duplicated': context('available_actions_before', V.measured([1, 1])),
+            'actions unsorted': context('available_actions_before', V.measured([6, 1])),
+            'absent without reason': context('available_actions_before', {'status': 'absent'}),
+            'measured with a stray reason': context('available_actions_before',
+                                                    {'status': 'measured', 'value': [1], 'reason': 'x'}),
+            'context removed': lambda r: r.pop('context'),
+            'context with an extra field': context('why', 'counter'),
+            'level contradicts the reported level': context('levels_completed_before', V.measured(5)),
+            'actions after malformed': lambda r: r['environment']['reported'].__setitem__(
+                'available_actions_after', V.measured([1.0])),
+            'actions-changed contradicts the actions': lambda r: r['environment']['reported'].__setitem__(
+                'available_actions_changed', V.measured(True)),
+            'actions-changed removed': lambda r: r['environment']['reported'].pop('available_actions_changed'),
+        }
+        for name, mutate in cases.items():
+            self.assertNotEqual(self.refused(mutate), [], name)
+        failed = T.build({**self.raw, 'outcome': {'status': 'failed', 'reason': 'test'}})
+        self.assertEqual(T.validate(failed), [])
+        self.assertNotEqual(self.refused(lambda r: r['environment'].__setitem__(
+            'reported', {'available_actions_after': V.measured([1])}), failed), [], 'reported after a failed dispatch')
+
+    def test_contradictory_masked_counts_and_summaries(self):
+        def frame(key, value):
+            return lambda r: r['masked']['frames'][0].__setitem__(key, value)
+        cases = {
+            'outside count inflated': frame('changed_outside', V.measured(5)),
+            'inside count zeroed': frame('changed_inside', V.measured(0)),
+            'count as bool': frame('changed_inside', V.measured(True)),
+            'differs_outside contradicts the count': frame('differs_outside', V.measured(False)),
+            'summary claims no change outside': lambda r: r['masked'].update(
+                any_returned_frame_differs_outside=V.measured(False), final_frame_equals_pre_outside=V.measured(True),
+                visual_effect_outside={'status': V.NO_OBSERVED_CHANGE, 'reason': 'x'}),
+            'region change denied': lambda r: r['masked'].__setitem__('mask_region_changed', V.measured(False)),
+            'mask for another shape': lambda r: r['masked']['mask'].__setitem__('frame_shape', [64, 64]),
+            'frames truncated': lambda r: r['masked'].__setitem__('frames', []),
+            'frame index shifted': frame('index', 3),
+            'extra summary field': lambda r: r['masked'].__setitem__('no_effect', True),
+            'unavailable with measurements': lambda r: r['masked'].__setitem__('status', 'unavailable'),
+            'malformed mask': lambda r: r['masked']['mask'].__setitem__('rects_xyxy', [[0, 0, 99, 0]]),
+        }
+        for name, mutate in cases.items():
+            self.assertNotEqual(self.refused(mutate), [], name)
+
+    def test_a_consistent_forgery_passes_validate_but_not_verify(self):
+        forged = copy.deepcopy(self.base)
+        f = forged['masked']['frames'][0]
+        f['changed_outside'], f['changed_inside'] = V.measured(0), V.measured(2)  # same total, moved inside
+        f['differs_outside'] = V.measured(False)
+        forged['masked'].update(T._summary(forged['masked']['frames'], V.COMPLETE))
+        self.assertEqual(T.validate(forged), [])  # internally consistent: a record alone cannot reveal it
+        self.assertEqual(T.verify(self.base, self.raw, self.mask), [])
+        self.assertNotEqual(T.verify(forged, self.raw, self.mask), [])
+
+
+class MaskNeverSuppresses(unittest.TestCase):
+    def setUp(self):
+        self.pre = [[0] * 10 for _ in range(8)]
+        self.region = mask([[5, 7, 9, 7]])
+        self.counter_only = copy.deepcopy(self.pre)
+        self.counter_only[7][9] = 3
+
+    def assert_same_outside_masked(self, r):
+        with_mask, without = T.build(r, self.region), T.build(r)
+        for key in ('dispatch', 'environment', 'progress', 'context', 'measurements', 'observations'):
+            self.assertEqual(with_mask[key], without[key], key)
+        return with_mask
+
+    def test_level_completion_terminal_state_and_action_changes_are_reported_regardless(self):
+        r = raw(self.pre, [self.counter_only], available=[1, 6], levels_completed=3, state='WIN')
+        r['outcome']['after']['available_actions'] = [1]
+        record = self.assert_same_outside_masked(r)
+        self.assertEqual(record['masked']['visual_effect_outside']['status'], V.NO_OBSERVED_CHANGE)
+        self.assertIn(V.LEVEL_COMPLETED, record['environment']['events'])
+        self.assertIn(V.TERMINAL_STATE, record['environment']['events'])
+        self.assertEqual(record['progress']['status'], V.CONFIRMED)
+        self.assertEqual(record['environment']['reported']['available_actions_changed'], V.measured(True))
+
+    def test_dispatch_uncertainty_is_never_masked(self):
+        for status in ('failed', 'outcome_unknown'):
+            record = self.assert_same_outside_masked(raw(self.pre, status=status))
+            self.assertEqual(record['masked']['status'], 'unavailable')
+            self.assertEqual(record['measurements']['visual_effect']['status'], V.INDETERMINATE)
+
+    def test_wording_is_no_observed_change_outside_the_declared_region(self):
+        record = T.build(raw(self.pre, [self.counter_only]), self.region)
+        reason = record['masked']['visual_effect_outside']['reason']
+        self.assertTrue(reason.startswith('no observed change outside the declared region'))
+        self.assertIn('does not establish that the action had no effect', reason)
+
+
 class ArchivedDevelopmentTransitions(unittest.TestCase):
     """The 144 real development transitions of action-effect-history v1, read after the archive lock verifies.
 
-    The s5i5 mask was declared from these same transitions, so this is a description of what the masked view
-    reports there, not a validation of the mask."""
-    S5I5_BAR = {'id': 's5i5-bottom-row-x49-63', 'frame_shape': [64, 64], 'rects_xyxy': [[49, 63, 63, 63]],
-                'provenance': {'kind': V.DECLARED, 'source': 'action_effect_history_v1 development archive',
-                               'basis': 'in all 48 s5i5 transitions every changed cell lay in row 63, x 49..63'}}
+    The s5i5 region was declared from these same transitions: this describes what the masked view reports there.
+    It is development evidence, not an independent validation of the region."""
 
     @classmethod
     def setUpClass(cls):
@@ -184,30 +304,73 @@ class ArchivedDevelopmentTransitions(unittest.TestCase):
             episode = json.loads(bundle.read(name))
             raws = [raw_step(episode['episode_id'], s, parse_action(episode['calls'][s['call_index']]['response']),
                              'offline_development_engine') for s in episode['steps']]
-            cls.games.setdefault(episode['game_id'].split('-')[0], []).append(raws)
+            cls.games.setdefault(episode['game_id'], []).append(raws)
 
-    def records(self, game, masks=None):
-        return [r for raws in self.games[game] for r in T.history(raws, masks)]
+    def records(self, game_id, use_mask):
+        mask = MASKS.declared_mask(game_id) if use_mask else None
+        out = []
+        for raws in self.games[game_id]:
+            records = T.history(raws, mask)
+            self.assertEqual(T.verify_history(records, raws, mask), [])
+            out += records
+        return out
 
-    def test_every_record_validates_and_reports_available_actions(self):
-        records = [r for game in self.games for r in self.records(game)]
+    def game(self, prefix):
+        return next(g for g in self.games if g.startswith(prefix))
+
+    def test_every_record_validates_verifies_and_reports_available_actions(self):
+        records = [r for g in self.games for r in self.records(g, use_mask=True)]
         self.assertEqual(len(records), 144)
         for r in records:
             self.assertEqual(T.validate(r), [])
             self.assertEqual(r['context']['available_actions_before']['status'], 'measured')
             self.assertEqual(r['environment']['reported']['available_actions_after']['status'], 'measured')
 
-    def test_s5i5_every_change_is_inside_the_declared_bar(self):
-        records = self.records('s5i5', self.S5I5_BAR)
+    def test_s5i5_every_change_is_inside_the_declared_region(self):
+        records = self.records(self.game('s5i5'), use_mask=True)
         self.assertEqual(len(records), 48)
         self.assertEqual({r['measurements']['visual_effect']['status'] for r in records}, {V.FINAL_FRAME_DIFFERS})
         self.assertEqual({r['masked']['visual_effect_outside']['status'] for r in records}, {V.NO_OBSERVED_CHANGE})
         self.assertTrue(all(r['masked']['mask_region_changed'] == V.measured(True) for r in records))
 
-    def test_other_games_are_unchanged_without_a_mask(self):
-        for game in ('ar25', 'wa30'):
-            for r in self.records(game):
-                self.assertEqual(r['masked']['status'], 'unavailable')
+    def test_ar25_and_wa30_stay_unmasked(self):
+        for prefix in ('ar25', 'wa30'):
+            self.assertIsNone(MASKS.declared_mask(self.game(prefix)))
+            for r in self.records(self.game(prefix), use_mask=True):
+                self.assertEqual(r['masked'], {'status': 'unavailable', 'reason': 'no mask was supplied'})
+
+
+class FrozenDeclaredMasks(unittest.TestCase):
+    def test_only_s5i5_is_declared_with_its_exact_region_and_source(self):
+        table = MASKS.load()
+        self.assertEqual(table['status'], 'frozen')
+        self.assertEqual(set(table['masks']), {'s5i5'})
+        self.assertEqual(set(table['unmasked']), {'ar25', 'wa30'})
+        mask = MASKS.declared_mask('s5i5-18d95033')
+        self.assertEqual(mask['frame_shape'], [64, 64])
+        self.assertEqual(mask['rects_xyxy'], [[49, 63, 63, 63]])
+        self.assertEqual(mask['provenance']['kind'], V.DECLARED)
+        self.assertIn('selected from development evidence', mask['provenance']['basis'])
+        self.assertIn('not established as irrelevant', mask['provenance']['basis'])
+        lock = json.loads((ROOT / table['source_archive']['lock']).read_bytes())
+        self.assertEqual(table['source_archive']['sha256'], lock['archive_sha256'])
+        self.assertIn(lock['archive_sha256'], mask['provenance']['source'])
+
+    def test_games_are_matched_on_their_full_id(self):
+        for game_id in ('s5i5', 's5i5-00000000', 'ar25-0c556536', 'wa30-ee6fef47'):
+            self.assertIsNone(MASKS.declared_mask(game_id), game_id)
+
+    def test_an_edited_table_is_refused(self):
+        original = MASKS.PATH
+        try:
+            edited = Path(tempfile.mkdtemp()) / 'declared_masks.json'
+            edited.write_bytes(original.read_bytes().replace(b'[49, 63, 63, 63]', b'[48, 63, 63, 63]'))
+            MASKS.PATH = edited
+            with self.assertRaises(ValueError):
+                MASKS.load()
+        finally:
+            MASKS.PATH = original
+            edited.unlink(missing_ok=True)
 
 
 if __name__ == '__main__':
