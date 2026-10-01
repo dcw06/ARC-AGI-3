@@ -162,24 +162,34 @@ def shape_problems(entry):
     if entry['kind'] not in KINDS or entry['status'] not in STATUSES:
         problems.append('vocabulary: kind or status')
     claim, scope = entry['claim'], entry['scope']
+    action = claim.get('action') if isinstance(claim, dict) else None
     if (not isinstance(claim, dict) or sorted(claim) != ['action', 'predicate', 'value'] or
             claim['predicate'] not in PREDICATES or claim['value'] not in PREDICATES[claim['predicate']] or
-            not isinstance(claim['action'], dict) or sorted(claim['action']) != ['action_data', 'action_id'] or
-            type(claim['action']['action_id']) is not int or
-            not (claim['action']['action_data'] == ANY or isinstance(claim['action']['action_data'], dict))):
+            not isinstance(action, dict) or sorted(action) != ['action_data', 'action_id'] or
+            type(action['action_id']) is not int or
+            not (action['action_data'] == ANY or isinstance(action['action_data'], dict) and all(
+                isinstance(k, str) and type(v) is int for k, v in action['action_data'].items()))):
         problems.append('vocabulary: claim')
-    if (not isinstance(scope, dict) or scope.get('kind') not in SCOPES or
-            tuple(sorted(scope)) != tuple(sorted(SCOPE_FIELDS[scope['kind']]))):
+    kind = scope.get('kind') if isinstance(scope, dict) else None
+    if kind not in SCOPES or tuple(sorted(scope)) != tuple(sorted(SCOPE_FIELDS[kind])):
         problems.append('vocabulary: scope')
+    elif (any(type(scope[f]) is not int for f in ('level', 'segment') if f in scope) or
+          ('state_sha256' in scope and not (isinstance(scope['state_sha256'], str) and scope['state_sha256'])) or
+          ('cells' in scope and not (isinstance(scope['cells'], list) and all(
+              isinstance(c, list) and len(c) == 2 and all(type(v) is int for v in c) for c in scope['cells'])))):
+        problems.append('vocabulary: scope field types')
     for name in ('evidence', 'counterevidence'):
         refs = entry[name]
         if not isinstance(refs, list) or any(not isinstance(r, dict) or sorted(r) != ['action_index', 'episode_id']
-                                             for r in refs):
+                                             or type(r['action_index']) is not int
+                                             or not isinstance(r['episode_id'], str) for r in refs):
             problems.append(f'shape: {name} must be a list of record identities')
         elif len({key(r) for r in refs}) != len(refs):
             problems.append(f'shape: duplicate {name} reference')
-    if not isinstance(entry['reason'], str) or not entry['reason']:
-        problems.append('shape: a reason is required')
+    if not isinstance(entry['id'], str) or not entry['id'] or not isinstance(entry['reason'], str) or not entry['reason']:
+        problems.append('shape: a non-empty id and reason are required')
+    if entry['supersedes'] is not None and not (isinstance(entry['supersedes'], str) and entry['supersedes']):
+        problems.append('shape: supersedes is null or an entry id')
     if type(entry['last_reviewed_step']) is not int or type(entry['revision']) is not int:
         problems.append('shape: last_reviewed_step and revision are integers')
     return problems

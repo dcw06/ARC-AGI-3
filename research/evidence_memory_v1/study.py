@@ -9,7 +9,7 @@ scripted outputs on development-partition synthetic trajectories: it validates t
 import collections
 import json
 
-from research.evidence_memory_v1 import fidelity as F, readers as RD, trajectories as TR, writers as W
+from research.evidence_memory_v1 import fidelity as F, mutations as M, readers as RD, schema as S, trajectories as TR, writers as W
 
 DELAYS = (0, 3, 8)
 PRESSURE_DELAYS = (0, 2, 4, 6, 8, 12, 16)
@@ -78,6 +78,39 @@ def composite_table(trajectories):
     return rows
 
 
+def agreement_table(trajectories):
+    """Checker agreement: scripted writer runs, and targeted mutations of faithful memories."""
+    runs = disagree = 0
+    for t in trajectories:
+        idx = S.index(t['records'])
+        for cls in W.WRITERS.values():
+            for gate in (False, True):
+                memory = W.run_writer(cls(), t, gate=gate)['memory']
+                runs += 1
+                disagree += M.schema_faulty(memory['entries'], idx) != F.faulty(
+                    F.evaluate(t['records'], memory, t['evaluator_only']['expected']))
+    rows = [{'case': 'scripted writer runs', 'applied': runs, 'schema_flags_target': '-', 'checker_flags_target': '-',
+             'faulty_sets_equal': runs - disagree}]
+    for name, mutate in M.MUTATIONS.items():
+        c = collections.Counter()
+        for t in trajectories:
+            idx = S.index(t['records'])
+            base = W.run_writer(W.Faithful(), t)['memory']
+            entry = mutate(idx, base['entries'])
+            if not entry:
+                continue
+            memory = M.apply(base, entry)
+            schema_ids = M.schema_faulty(memory['entries'], idx)
+            checker_ids = F.faulty(F.evaluate(t['records'], memory, t['evaluator_only']['expected']))
+            c['applied'] += 1
+            c['schema_flags_target'] += entry['id'] in schema_ids
+            c['checker_flags_target'] += entry['id'] in checker_ids
+            c['faulty_sets_equal'] += schema_ids == checker_ids
+        rows.append({'case': name, **{k: c[k] for k in ('applied', 'schema_flags_target', 'checker_flags_target',
+                                                        'faulty_sets_equal')}})
+    return rows
+
+
 def pressure_table(rows):
     by = collections.defaultdict(list)
     for r in rows:
@@ -103,7 +136,8 @@ def main():
     pressure_rows = RD.pressure(delays=PRESSURE_DELAYS, count=2)
     early = [r for r in pressure_rows if r['family'] == 'early_crucial']
     print('trajectory digest:', TR.digest(trajectories), f'({len(trajectories)} trajectories)')
-    for title, rows in (('Writers', writer_table(trajectories)), ('Readers (known-correct memory)', reader_table(trajectories)),
+    for title, rows in (('Writers', writer_table(trajectories)), ('Checker agreement', agreement_table(trajectories)),
+                        ('Readers (known-correct memory)', reader_table(trajectories)),
                         ('Writer to oracle reader', composite_table(trajectories)),
                         ('Context pressure, all families', pressure_table(pressure_rows)),
                         ('Context pressure, early_crucial', pressure_table(early))):

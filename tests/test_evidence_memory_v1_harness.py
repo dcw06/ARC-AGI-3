@@ -84,6 +84,50 @@ class Readers(unittest.TestCase):
         self.assertLess(scores['status_blind'], 1.0)
         self.assertEqual(scores['invalid'], 0.0)
 
+    def test_response_schema_is_validated_before_correctness(self):
+        click = {'action_id': 6, 'action_data': {'x': 3, 'y': 4}}
+        decision = {'kind': 'decision', 'candidates': [{'action_id': 1, 'action_data': {}}, click]}
+        recall = {'kind': 'recall'}
+        accepted = [('{"choice": {"action_id": 6, "action_data": {"x": 3, "y": 4}}}', decision, [click]),
+                    ('{"values": ["final_frame_differs"]}', recall, ['final_frame_differs'])]
+        for output, question, gold in accepted:
+            self.assertEqual(RD.score(output, question, gold), {'valid': True, 'correct': True})
+        rejected = {
+            'float action id': ('{"choice": {"action_id": 6.0, "action_data": {"x": 3, "y": 4}}}', decision),
+            'float argument': ('{"choice": {"action_id": 6, "action_data": {"x": 3.0, "y": 4}}}', decision),
+            'bool action id': ('{"choice": {"action_id": true, "action_data": {}}}', decision),
+            'bool argument': ('{"choice": {"action_id": 6, "action_data": {"x": true, "y": 4}}}', decision),
+            'extra top-level field': ('{"choice": {"action_id": 6, "action_data": {"x": 3, "y": 4}}, "why": "x"}',
+                                      decision),
+            'extra action field': ('{"choice": {"action_id": 6, "action_data": {"x": 3, "y": 4}, "note": 1}}', decision),
+            'missing action field': ('{"choice": {"action_id": 6}}', decision),
+            'missing top-level field': ('{}', decision),
+            'choice not a dict': ('{"choice": [6, {"x": 3, "y": 4}]}', decision),
+            'action_data not a dict': ('{"choice": {"action_id": 6, "action_data": [3, 4]}}', decision),
+            'top level a list': ('[{"action_id": 6, "action_data": {"x": 3, "y": 4}}]', decision),
+            'not a candidate': ('{"choice": {"action_id": 2, "action_data": {}}}', decision),
+            'null choice': ('{"choice": null}', decision),
+            'repeated key': ('{"choice": {"action_id": 1, "action_data": {}}, "choice": '
+                             '{"action_id": 6, "action_data": {"x": 3, "y": 4}}}', decision),
+            'values not a list': ('{"values": "final_frame_differs"}', recall),
+            'values empty': ('{"values": []}', recall),
+            'value outside vocabulary': ('{"values": ["moved"]}', recall),
+            'value not text': ('{"values": [1]}', recall),
+            'duplicate values': ('{"values": ["final_frame_differs", "final_frame_differs"]}', recall),
+            'no_evidence with a value': ('{"values": ["no_evidence", "final_frame_differs"]}', recall),
+            'extra recall field': ('{"values": ["final_frame_differs"], "confidence": 0.9}', recall),
+            'missing recall field': ('{"value": ["final_frame_differs"]}', recall),
+            'NaN constant': ('{"values": NaN}', recall),
+            'prose': ('Probably ACTION6.', recall),
+            'not text': (None, recall),
+        }
+        for label, (output, question) in rejected.items():
+            with self.subTest(label):
+                result = RD.score(output, question, [click] if question is decision else ['final_frame_differs'])
+                self.assertEqual((result['valid'], result['correct']), (False, False))
+                self.assertEqual(result['output'], output)  # the invalid output is retained
+                self.assertTrue(result['error'])
+
     def test_reader_never_sees_the_answer(self):
         seen = []
         RD.ask(TRAJECTORIES[0], lambda q: seen.append(q) or '{}')

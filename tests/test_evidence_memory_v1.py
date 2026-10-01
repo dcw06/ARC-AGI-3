@@ -1,11 +1,12 @@
 """Evidence-linked memory v1 (Track 2): schema, update rules, trajectories and the independent checker."""
 import ast
+import collections
 import copy
 import json
 from pathlib import Path
 import unittest
 
-from research.evidence_memory_v1 import fidelity as F, schema as S, trajectories as TR, writers as W
+from research.evidence_memory_v1 import fidelity as F, mutations as M, schema as S, trajectories as TR, writers as W
 from research.transition_evidence_v1 import transition as T
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -185,14 +186,44 @@ class IndependentChecker(unittest.TestCase):
         for t in TR.generate(delays=(0, 8), count=1):
             idx = S.index(t['records'])
             for cls in W.WRITERS.values():
-                memory = W.run_writer(cls(), t)['memory']
+                for gate in (False, True):
+                    memory = W.run_writer(cls(), t, gate=gate)['memory']
+                    report = F.evaluate(t['records'], memory, t['evaluator_only']['expected'])
+                    self.assertEqual(M.schema_faulty(memory['entries'], idx), F.faulty(report), (t['id'], cls.name))
+
+    def test_reviewer_case_observation_citing_its_own_support_as_counterevidence(self):
+        t = trajectory('early_crucial')
+        idx = S.index(t['records'])
+        memory = W.run_writer(W.Faithful(), t)['memory']
+        target = next(e for e in memory['entries'] if e['kind'] == S.OBSERVATION and e['status'] == S.SUPPORTED)
+        mutated = M.apply(memory, {**copy.deepcopy(target), 'counterevidence': copy.deepcopy(target['evidence'][:1])})
+        report = F.evaluate(t['records'], mutated, t['evaluator_only']['expected'])
+        self.assertTrue(report['audit_consistent'])
+        self.assertFalse(report['faithful'])
+        self.assertEqual({x['id'] for x in report['invalid_counterevidence']}, {target['id']})
+        self.assertEqual({x['id'] for x in report['status_rules']}, {target['id']})
+        entry = next(e for e in mutated['entries'] if e['id'] == target['id'])
+        self.assertTrue({'counterevidence_mismatch', 'status_rule'} <= codes(S.check(entry, idx, len(idx) - 1)))
+
+    def test_every_targeted_mutation_is_flagged_by_both_checkers(self):
+        applied = collections.Counter()
+        for t in TR.generate(delays=(0, 3, 8), count=1):
+            idx = S.index(t['records'])
+            base = W.run_writer(W.Faithful(), t)['memory']
+            self.assertEqual(M.schema_faulty(base['entries'], idx), set())
+            for name, mutate in M.MUTATIONS.items():
+                entry = mutate(idx, base['entries'])
+                if not entry:
+                    continue
+                applied[name] += 1
+                memory = M.apply(base, entry)
                 report = F.evaluate(t['records'], memory, t['evaluator_only']['expected'])
-                by_schema = {e['id'] for e in memory['entries']
-                             if e['status'] != S.RETIRED and S.check(e, idx, len(idx) - 1)}
-                by_checker = {x['id'] if isinstance(x, dict) else x for k in (
-                    'unsupported', 'scope_violations', 'overclaims', 'ignored_counterexamples', 'stale_state_dependent')
-                    for x in report[k]}
-                self.assertEqual(by_schema, by_checker, (t['id'], cls.name))
+                with self.subTest(trajectory=t['id'], mutation=name):
+                    self.assertTrue(report['audit_consistent'])
+                    self.assertFalse(report['faithful'])
+                    self.assertEqual(F.faulty(report), {entry['id']})
+                    self.assertEqual(M.schema_faulty(memory['entries'], idx), {entry['id']})
+        self.assertEqual(set(applied), set(M.MUTATIONS))  # every mutation was exercised at least once
 
     def test_audit_tampering_is_detected(self):
         t = trajectory('early_crucial')

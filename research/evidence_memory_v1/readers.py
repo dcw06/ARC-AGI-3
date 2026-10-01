@@ -115,14 +115,75 @@ def invalid(entries):
 READERS = {'faithful': oracle_memory, 'status_blind': status_blind, 'invalid': invalid}
 
 
-def score(output, question, gold):
+RECALL_VALUES = ('no_observed_change', 'changed_then_returned', 'final_frame_differs', 'no_evidence')
+
+
+class ResponseError(ValueError):
+    pass
+
+
+def _object(pairs):
+    keys = [k for k, _ in pairs]
+    if len(set(keys)) != len(keys):
+        raise ResponseError('a key is repeated')
+    return dict(pairs)
+
+
+def _reject_constant(name):
+    raise ResponseError(f'{name} is not allowed')
+
+
+def _action(value):
+    """Strict action: exactly {action_id: int, action_data: {str: int}}; bool and float are not integers."""
+    if not isinstance(value, dict) or set(value) != {'action_id', 'action_data'}:
+        raise ResponseError('an action has exactly action_id and action_data')
+    if type(value['action_id']) is not int:
+        raise ResponseError('action_id must be an integer')
+    data = value['action_data']
+    if not isinstance(data, dict) or not all(isinstance(k, str) and type(v) is int for k, v in data.items()):
+        raise ResponseError('action_data maps names to integers')
+    return value
+
+
+def validate_response(output, question):
+    """The parsed answer when `output` matches the response schema exactly; raises ResponseError otherwise.
+    recall: {"values": [one or more distinct allowed values]}, with "no_evidence" only on its own.
+    decision: {"choice": one of the question's candidate actions}."""
+    if not isinstance(output, str):
+        raise ResponseError('the output is not text')
     try:
-        answer = json.loads(output)
-        if question['kind'] == 'recall':
-            return {'valid': True, 'correct': sorted(answer['values']) == sorted(gold)}
-        return {'valid': True, 'correct': answer['choice'] in gold}
-    except (ValueError, KeyError, TypeError) as exc:
-        return {'valid': False, 'correct': False, 'output': output, 'error': f'{type(exc).__name__}: {exc}'}
+        answer = json.loads(output, object_pairs_hook=_object, parse_constant=_reject_constant)
+    except ResponseError:
+        raise
+    except ValueError as exc:
+        raise ResponseError(f'not JSON: {exc}') from None
+    if question['kind'] == 'recall':
+        if not isinstance(answer, dict) or set(answer) != {'values'}:
+            raise ResponseError('a recall answer is exactly {"values": [...]}')
+        values = answer['values']
+        if not isinstance(values, list) or not values:
+            raise ResponseError('values is a non-empty list')
+        if not all(isinstance(v, str) and v in RECALL_VALUES for v in values) or len(set(values)) != len(values):
+            raise ResponseError('values are distinct allowed values')
+        if 'no_evidence' in values and len(values) > 1:
+            raise ResponseError('no_evidence stands alone')
+        return answer
+    if not isinstance(answer, dict) or set(answer) != {'choice'}:
+        raise ResponseError('a decision answer is exactly {"choice": action}')
+    if _action(answer['choice']) not in question['candidates']:
+        raise ResponseError('the choice is not one of the candidates')
+    return answer
+
+
+def score(output, question, gold):
+    """Schema first: a response that does not match exactly is invalid (retained, never scored correct)."""
+    try:
+        answer = validate_response(output, question)
+    except ResponseError as exc:
+        return {'valid': False, 'correct': False, 'output': output, 'error': str(exc)}
+    if question['kind'] == 'recall':
+        return {'valid': True, 'correct': sorted(answer['values']) == sorted(gold)}
+    return {'valid': True, 'correct': answer['choice'] in gold}
 
 
 def ask(trajectory, read):

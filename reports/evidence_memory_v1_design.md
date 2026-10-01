@@ -11,7 +11,8 @@ no model was called. Every number below checks that the instruments work. None e
 | Scripted writers and the writer harness | `research/evidence_memory_v1/writers.py` |
 | Packages, readers and context pressure | `research/evidence_memory_v1/readers.py`, `render.py` |
 | Tables in §8 | `python -m research.evidence_memory_v1.study` |
-| Tests | `tests/test_evidence_memory_v1.py` (16), `tests/test_evidence_memory_v1_harness.py` (12) |
+| Targeted mutations of faithful memories (test inputs, not a checker) | `research/evidence_memory_v1/mutations.py` |
+| Tests | `tests/test_evidence_memory_v1.py` (18), `tests/test_evidence_memory_v1_harness.py` (13) |
 | Draft protocol | `reports/evidence_memory_v1_protocol_draft.md` |
 
 The transition-evidence contract (`research/transition_evidence_v1/`) is used read-only. Records come from
@@ -89,7 +90,9 @@ It is an open question for review (see the protocol, §7).
 | `overgeneralization` | A hypothesis is `supported` beyond its exact state only from at least two distinct states. With 'any' arguments, it also needs at least two distinct argument values. **Three failed clicks in one state can never become a supported "clicking never works".** |
 | `counterexample_ignored`, `contradiction_unaddressed` | An in-scope conflicting record, or one that is listed, while the status is still live. |
 | `stale_state_dependent` | A live `segment` entry after its segment ended. |
-| `dangling_reference`, `counterevidence_mismatch`, `status_rule`, `numeric_confidence`, `shape`, `vocabulary` | Structural rules. |
+| `counterevidence_mismatch` | For every entry kind, each counterevidence reference must be an observed, in-scope record of the same action (arguments per the claim) that contradicts the claim. |
+| `status_rule` | Allowed kind/status combinations: an observation is `supported` (or retired) and lists no counterevidence; a `contradicted` hypothesis lists counterevidence; every entry cites evidence. |
+| `dangling_reference`, `numeric_confidence`, `shape`, `vocabulary` | Structural rules. Exact fields; vocabulary; strict integers with bool excluded (ids, levels, segments, steps, revisions, action ids and arguments, cells); no non-integer number anywhere; non-empty id and reason; no repeated reference. |
 
 **When the check runs.** It uses the records seen by the entry's `last_reviewed_step`, which is how the write gate
 uses it. An end-of-trajectory audit passes the final step instead.
@@ -127,9 +130,52 @@ and stay withheld.
 
 ## 6. Independent fidelity checker (`fidelity.evaluate`)
 
-**It is independent.** It imports only `json` and re-derives every record fact itself. On every scripted writer
-and trajectory tested, it agrees with `schema.check` on which entries are faulty: 0 disagreements over 420 writer
-runs in development, and the agreement is also a test.
+**It is independent.** It imports only `json` and re-derives every record fact itself.
+
+**How it checks each entry.**
+1. **Structure first.** Every entry is validated with its own strict rules. A malformed entry is reported and not
+   interpreted further.
+2. **Then every non-retired entry, whatever its kind**, is checked for:
+   - **evidence:** exists, was observed, shows the same action and value, and is in scope;
+   - **counterevidence:** exists, was observed, concerns the same action, is in scope, and actually contradicts
+     the claim;
+   - **allowed kind/status combinations;**
+   - scope violations, overclaims, ignored counterexamples and stale entries.
+
+A fact counts as retained only if the observation holding it has no fault at all.
+
+**Revision 2 (review finding P1).** Revision 1 validated counterevidence only for hypotheses, and never enforced
+kind/status rules or strict types. So:
+- **What a reviewer showed.** An observation citing its own supporting record as counterevidence, with the audit
+  trail kept consistent, passed as faithful.
+- **What the new mutation test found.** Revision 1 missed 285 of the 886 targeted mutations below, for example
+  42/42 self-cited counterevidence, 42/42 duplicated evidence, 42/42 empty reasons and 23/42 boolean action ids.
+- **How "0 disagreements" overstated independence.** It held only on the scripted writers, which never produce
+  these faults.
+
+**Agreement, recomputed** (`python -m research.evidence_memory_v1.study`, 42 development trajectories). "Faulty"
+means: structural problems for retired entries; every check, at the final step, for the others.
+
+| Case | Applied | Target entry flagged by schema.py | Target entry flagged by fidelity.py | Identical faulty-entry sets |
+|---|---|---|---|---|
+| Scripted writer runs (5 writers × gate on/off) | 420 | – | – | 420 |
+| Targeted mutations of faithful memories (27 types) | 886 | 886 | 886 | 886 |
+
+**The 27 mutation types:**
+- **counterevidence** (6): self-cited, nonexistent, out-of-scope, different action, agreeing, unobserved;
+- **kind/status** (6): tentative or contradicted observation; contradicted without counterevidence; live
+  despite counterevidence; supported from one state; cross-level supported;
+- **vocabulary** (2): kind, status;
+- **evidence** (8): flipped value, widened scope, another state, nonexistent, empty, unobserved, duplicated, revived
+  stale segment entry;
+- **types** (5): `confidence` field, float step, boolean action id, float argument, empty reason.
+
+**Coverage.** Each type is applied wherever the faithful memory has a suitable target. A few types have few
+targets: 4 unobserved counterevidence, 6 out-of-scope counterevidence, 6 unobserved evidence and 12 float
+arguments.
+
+**What the agreement is about.** It concerns *which entries* are faulty, not the fault class: the two checkers
+name classes differently.
 
 **What it reports:**
 - **Supported facts retained:** required exact-state observations, held by a non-retired observation whose cited
@@ -139,8 +185,8 @@ runs in development, and the agreement is also a test.
 - **Contradicted claims:** still live, revised, or never held. "Never held" is reported apart, so a writer
   cannot score by never forming hypotheses.
 - **Required mechanisms lost:** after a reset or a level change.
-- **Faults:** scope violations, overclaims, ignored counterexamples, stale state-dependent entries, numeric
-  confidence.
+- **Faults:** malformed entries, numeric confidence, unsupported claims, invalid counterevidence, kind/status rule
+  violations, scope violations, overclaims, ignored counterexamples, stale state-dependent entries.
 - **Memory size:** entries and characters.
 - **Update cost:** operations by type.
 - **Audit consistency.**
@@ -159,6 +205,18 @@ runs in development, and the agreement is also a test.
 - **Inputs.** A reader gets a known-correct memory (the faithful writer's, verified faithful) and a question.
   It returns text: `{"values": [...]}` or `{"choice": action}`.
 - **What it never sees.** The answer. A test checks this.
+- **Response schema first (revision 2, review finding P2).** A response is scored only if it matches the schema
+  exactly. Anything else is invalid, never correct, and retained with its error.
+  - **recall:** exactly `{"values": [...]}`: one or more distinct values from the vocabulary, with `no_evidence`
+    only on its own.
+  - **decision:** exactly `{"choice": action}`. The action is exactly `{action_id, action_data}`. `action_id` and
+    every argument are strict integers (`6.0` and `true` are rejected). The choice must be one of the question's
+    candidates.
+  - **JSON:** repeated keys and `NaN` / `Infinity` are rejected.
+
+  Revision 1 compared parsed JSON with Python equality, so `6.0` and an answer with an extra field scored as
+  correct. 25 regression cases now cover floats, booleans, extra and missing fields, wrong container types,
+  vocabulary, duplicates, repeated keys, `NaN`, prose and non-text output.
 
 **Scripted writers:** faithful, lossy, overclaiming, scope_violating and invalid.
 
@@ -168,6 +226,10 @@ runs in development, and the agreement is also a test.
 availability**, not reading ability.
 
 ## 8. Local instrument results (scripted; 42 development trajectories, delays 0/3/8, digest `0d0fff86…d174`)
+
+**These tables were recomputed with the revision 2 checker and scorer, and are unchanged.** The stricter checks
+find nothing new in the scripted writers' memories: no scripted writer produces the newly covered faults. The
+scripted readers emit only schema-valid answers or prose.
 
 ### 8.1 Writers (fidelity checker, end of trajectory)
 
