@@ -7,7 +7,10 @@ order). `audit(tokenizer)` applies the tokenizer's chat template exactly as the 
 reviewed limits (prompt <= 60,000 tokens; prompt + max_tokens <= 65,536) and every family's longest valid answer
 against max_tokens.
 
-Usage (pinned transformers environment): python -m research.progress_subgoal_v1.token_audit --tokenizer PATH --out FILE
+The default request set is the frozen research/progress_subgoal_v1/probes.json (5,852 scheduled calls).
+
+Usage (pinned transformers environment):
+    python -m research.progress_subgoal_v1.token_audit --tokenizer PATH [--out reports/progress_subgoal_v1_token_audit.json]
 """
 import argparse
 import json
@@ -52,7 +55,8 @@ def audit(tokenizer, frozen=None):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--tokenizer', type=Path, required=True)
-    parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--out', type=Path,
+                        default=Path(__file__).resolve().parents[2] / 'reports/progress_subgoal_v1_token_audit.json')
     args = parser.parse_args()
     from transformers import AutoTokenizer
     tokenizer = AutoTokenizer.from_pretrained(str(args.tokenizer), local_files_only=True, trust_remote_code=False)
