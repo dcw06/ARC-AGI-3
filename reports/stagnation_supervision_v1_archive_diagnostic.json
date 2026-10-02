@@ -1,0 +1,5170 @@
+{
+ "archive": "evidence/action-effect-history-v1-complete.zip",
+ "archive_sha256": "a67b69557d835f8076e3b80674c29c0032b95ec2dbd9a70f032ed85af54654cb",
+ "attempt_id": "aeh1-4c75150a156640fcad105a770ce81119",
+ "cooldown_actions": 6,
+ "definitions": "CPU-only archive diagnostic: the FROZEN detector as an observer over archived real development play (Track 3).\n\nSource: the 144 transitions of action-effect-history v1 (12 episodes x 12 steps; development games ar25, s5i5,\nwa30), opened only after the archive's SHA-256 matches its lock (reports/action_effect_history_v1_archive.json),\nand each episode member only after its own locked hash matches. Raw transitions are rebuilt with the replay\nscript's own `verified_zip`/`raw_step` (scripts/replay_transition_evidence_v1.py), imported, not copied.\n\nThe detector runs unchanged: trigger_spec.json parameters and cooldown, detector.py, full-frame (unmasked)\nfingerprints. No threshold is chosen or changed here, and these traces have no independent stagnation labels:\neverything below is descriptive, never a validation.\n\nCandidate categories, defined mechanically before the detector was run on these traces. \"Segment\" is the\ntransition_evidence segment (a reset, level change or terminal state starts a new one); only acknowledged steps\ncount; a failed dispatch is skipped and an unknown outcome or missing observation is never counted as no change.\n\nRepeated-action patterns (each is checked per segment):\n  M1 exact_repeat_no_change      the same (pre-frame fingerprint, exact dispatched action) acknowledged at least twice\n                                 with visual effect no_observed_change;\n  M2 same_action_no_change       the same exact dispatched action (id and coordinates) acknowledged at least twice\n                                 with no_observed_change, whatever the pre-frame;\n  M3 action_id_no_change_streak  at least 3 consecutive acknowledged steps with the same action id (coordinates may\n                                 differ), each no_observed_change;\n  M4 repeated_tiny_effect        at least 3 consecutive acknowledged steps with the identical action, each changing\n                                 1..4 cells of the final frame (a small, ongoing visible change).\n  A pattern \"qualifies\" at the step where its count first reaches the stated minimum. A candidate missed\n  repeated-action episode is an episode in which some pattern qualifies and the detector fires (trigger or\n  cooldown-suppressed firing) at no step from that qualifying step to the end of its segment.\n\nPotential false interruption: a trigger at step t such that at least one of the last 3 acknowledged steps of the\nsegment up to and including t reached a final frame not seen earlier in the segment (ongoing observed change into new\nstates). This is a proxy: a new frame is not progress, and an unchanged frame is not stagnation.\n\nThe result file is written once; a second run refuses to overwrite it. Run:\n  python -m research.stagnation_supervision_v1.archive_diagnostic\n",
+ "episodes": [
+  {
+   "arm": "baseline",
+   "block": 1,
+   "candidate_missed_patterns": [],
+   "dispatch_status": {
+    "acknowledged": 12
+   },
+   "distinct_pre_frames": 1,
+   "environment_events": [
+    "none_reported"
+   ],
+   "episode": "b1-ar25-baseline",
+   "firing_steps": [
+    1,
+    2,
+    4,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+   ],
+   "game": "ar25-0c556536",
+   "patterns": [
+    {
+     "category": "M1_exact_repeat_no_change",
+     "qualifies_at": 1,
+     "segment": 0,
+     "steps": [
+      0,
+      1
+     ]
+    },
+    {
+     "category": "M2_same_action_no_change",
+     "qualifies_at": 1,
+     "segment": 0,
+     "steps": [
+      0,
+      1
+     ]
+    },
+    {
+     "category": "M1_exact_repeat_no_change",
+     "qualifies_at": 4,
+     "segment": 0,
+     "steps": [
+      3,
+      4
+     ]
+    },
+    {
+     "category": "M2_same_action_no_change",
+     "qualifies_at": 4,
+     "segment": 0,
+     "steps": [
+      3,
+      4
+     ]
+    },
+    {
+     "category": "M1_exact_repeat_no_change",
+     "qualifies_at": 8,
+     "segment": 0,
+     "steps": [
+      5,
+      8
+     ]
+    },
+    {
+     "category": "M2_same_action_no_change",
+     "qualifies_at": 8,
+     "segment": 0,
+     "steps": [
+      5,
+      8
+     ]
+    },
+    {
+     "category": "M3_action_id_no_change_streak",
+     "qualifies_at": 2,
+     "segment": 0,
+     "steps": [
+      0,
+      1,
+      2
+     ]
+    }
+   ],
+   "segments": 1,
+   "steps": 12,
+   "steps_detail": [
+    {
+     "action": {
+      "action_data": {
+       "x": 17,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 0,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "first_in_segment",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 17,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 1,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 17,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 2,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 16,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 3,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 16,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 4,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 16,
+       "y": 15
+      },
+      "action_id": 6
+     },
+     "action_index": 5,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 16,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 6,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 17,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 7,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 16,
+       "y": 15
+      },
+      "action_id": 6
+     },
+     "action_index": 8,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 17,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 9,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 16,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 10,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 17,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 11,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    }
+   ],
+   "triggers": [
+    {
+     "cited_evidence": [
+      0,
+      1
+     ],
+     "episode": "b1-ar25-baseline",
+     "game": "ar25-0c556536",
+     "potential_false_interruption": false,
+     "signals": [
+      {
+       "evidence": [
+        0,
+        1
+       ],
+       "signal": "state_action_recurrence",
+       "threshold": 2,
+       "value": 2
+      }
+     ],
+     "step": 1,
+     "timing": {
+      "actions_into_episode": 2,
+      "segment": 0,
+      "steps_into_segment": 2
+     },
+     "trace": [
+      {
+       "action": {
+        "action_data": {
+         "x": 17,
+         "y": 16
+        },
+        "action_id": 6
+       },
+       "action_index": 0,
+       "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "availability": "complete",
+       "changed_cells": 0,
+       "continuity": "first_in_segment",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "no_observed_change"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 17,
+         "y": 16
+        },
+        "action_id": 6
+       },
+       "action_index": 1,
+       "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "availability": "complete",
+       "changed_cells": 0,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "no_observed_change"
+      }
+     ]
+    },
+    {
+     "cited_evidence": [
+      2,
+      7
+     ],
+     "episode": "b1-ar25-baseline",
+     "game": "ar25-0c556536",
+     "potential_false_interruption": false,
+     "signals": [
+      {
+       "evidence": [
+        2,
+        7
+       ],
+       "signal": "state_action_recurrence",
+       "threshold": 2,
+       "value": 4
+      }
+     ],
+     "step": 7,
+     "timing": {
+      "actions_into_episode": 8,
+      "segment": 0,
+      "steps_into_segment": 8
+     },
+     "trace": [
+      {
+       "action": {
+        "action_data": {
+         "x": 17,
+         "y": 16
+        },
+        "action_id": 6
+       },
+       "action_index": 2,
+       "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "availability": "complete",
+       "changed_cells": 0,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "no_observed_change"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 17,
+         "y": 16
+        },
+        "action_id": 6
+       },
+       "action_index": 7,
+       "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "availability": "complete",
+       "changed_cells": 0,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "no_observed_change"
+      }
+     ]
+    }
+   ],
+   "visual_effects": [
+    "no_observed_change"
+   ]
+  },
+  {
+   "arm": "history",
+   "block": 1,
+   "candidate_missed_patterns": [],
+   "dispatch_status": {
+    "acknowledged": 12
+   },
+   "distinct_pre_frames": 1,
+   "environment_events": [
+    "none_reported"
+   ],
+   "episode": "b1-ar25-history",
+   "firing_steps": [
+    1,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "game": "ar25-0c556536",
+   "patterns": [
+    {
+     "category": "M1_exact_repeat_no_change",
+     "qualifies_at": 1,
+     "segment": 0,
+     "steps": [
+      0,
+      1
+     ]
+    },
+    {
+     "category": "M2_same_action_no_change",
+     "qualifies_at": 1,
+     "segment": 0,
+     "steps": [
+      0,
+      1
+     ]
+    },
+    {
+     "category": "M1_exact_repeat_no_change",
+     "qualifies_at": 4,
+     "segment": 0,
+     "steps": [
+      2,
+      4
+     ]
+    },
+    {
+     "category": "M2_same_action_no_change",
+     "qualifies_at": 4,
+     "segment": 0,
+     "steps": [
+      2,
+      4
+     ]
+    }
+   ],
+   "segments": 1,
+   "steps": 12,
+   "steps_detail": [
+    {
+     "action": {
+      "action_data": {
+       "x": 18,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 0,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "first_in_segment",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 18,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 1,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 7
+     },
+     "action_index": 2,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 18,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 3,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 7
+     },
+     "action_index": 4,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 18,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 5,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 18,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 6,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 7
+     },
+     "action_index": 7,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 18,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 8,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 7
+     },
+     "action_index": 9,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 7
+     },
+     "action_index": 10,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 19,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 11,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    }
+   ],
+   "triggers": [
+    {
+     "cited_evidence": [
+      0,
+      1
+     ],
+     "episode": "b1-ar25-history",
+     "game": "ar25-0c556536",
+     "potential_false_interruption": false,
+     "signals": [
+      {
+       "evidence": [
+        0,
+        1
+       ],
+       "signal": "state_action_recurrence",
+       "threshold": 2,
+       "value": 2
+      }
+     ],
+     "step": 1,
+     "timing": {
+      "actions_into_episode": 2,
+      "segment": 0,
+      "steps_into_segment": 2
+     },
+     "trace": [
+      {
+       "action": {
+        "action_data": {
+         "x": 18,
+         "y": 16
+        },
+        "action_id": 6
+       },
+       "action_index": 0,
+       "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "availability": "complete",
+       "changed_cells": 0,
+       "continuity": "first_in_segment",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "no_observed_change"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 18,
+         "y": 16
+        },
+        "action_id": 6
+       },
+       "action_index": 1,
+       "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "availability": "complete",
+       "changed_cells": 0,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "no_observed_change"
+      }
+     ]
+    },
+    {
+     "cited_evidence": [
+      4,
+      7
+     ],
+     "episode": "b1-ar25-history",
+     "game": "ar25-0c556536",
+     "potential_false_interruption": false,
+     "signals": [
+      {
+       "evidence": [
+        4,
+        7
+       ],
+       "signal": "state_action_recurrence",
+       "threshold": 2,
+       "value": 3
+      }
+     ],
+     "step": 7,
+     "timing": {
+      "actions_into_episode": 8,
+      "segment": 0,
+      "steps_into_segment": 8
+     },
+     "trace": [
+      {
+       "action": {
+        "action_data": {},
+        "action_id": 7
+       },
+       "action_index": 4,
+       "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "availability": "complete",
+       "changed_cells": 0,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "no_observed_change"
+      },
+      {
+       "action": {
+        "action_data": {},
+        "action_id": 7
+       },
+       "action_index": 7,
+       "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "availability": "complete",
+       "changed_cells": 0,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "no_observed_change"
+      }
+     ]
+    }
+   ],
+   "visual_effects": [
+    "no_observed_change"
+   ]
+  },
+  {
+   "arm": "baseline",
+   "block": 1,
+   "candidate_missed_patterns": [
+    {
+     "category": "M4_repeated_tiny_effect",
+     "qualifies_at": 5,
+     "segment": 0,
+     "steps": [
+      3,
+      4,
+      5
+     ],
+     "trace": [
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 3,
+       "after_frame": "688769cfa64608cf4b913e5e27b5a7b9aebdf7f6f2eff2a07ed314de6c4158f7",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "6920f043d02b4d0211afe0868eefc632a6a904efa03fc21f1abbf65fbcdebdd5",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 4,
+       "after_frame": "9e1b407fa7a1616103eab1e55ec920cd3ecc531a5f512eb019a1365af59e1286",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "688769cfa64608cf4b913e5e27b5a7b9aebdf7f6f2eff2a07ed314de6c4158f7",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 5,
+       "after_frame": "deaa66c169de240423d60d20b12165e72c4d0dd57444ac285ac2d462cfabb571",
+       "availability": "complete",
+       "changed_cells": 2,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "9e1b407fa7a1616103eab1e55ec920cd3ecc531a5f512eb019a1365af59e1286",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      }
+     ]
+    },
+    {
+     "category": "M4_repeated_tiny_effect",
+     "qualifies_at": 11,
+     "segment": 0,
+     "steps": [
+      9,
+      10,
+      11
+     ],
+     "trace": [
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 9,
+       "after_frame": "d70ed1f3b39b2c680ef428117906a404715bb62aecd37f8d8ae032745a420592",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "015a1c0fe504239b48f144622823a2bce318ec0ca661a29ddccdacabff9fadaa",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 10,
+       "after_frame": "b345de3f73b806679c76636ba06cbb881b76c1f02a5a484cc9371170af126c16",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "d70ed1f3b39b2c680ef428117906a404715bb62aecd37f8d8ae032745a420592",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 11,
+       "after_frame": "f79993441c3a7f7aa0d52496f9447fce827a685fd53d05eca2daee7a28c36e0c",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "b345de3f73b806679c76636ba06cbb881b76c1f02a5a484cc9371170af126c16",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      }
+     ]
+    }
+   ],
+   "dispatch_status": {
+    "acknowledged": 12
+   },
+   "distinct_pre_frames": 12,
+   "environment_events": [
+    "none_reported"
+   ],
+   "episode": "b1-s5i5-baseline",
+   "firing_steps": [],
+   "game": "s5i5-18d95033",
+   "patterns": [
+    {
+     "category": "M4_repeated_tiny_effect",
+     "qualifies_at": 5,
+     "segment": 0,
+     "steps": [
+      3,
+      4,
+      5
+     ]
+    },
+    {
+     "category": "M4_repeated_tiny_effect",
+     "qualifies_at": 11,
+     "segment": 0,
+     "steps": [
+      9,
+      10,
+      11
+     ]
+    }
+   ],
+   "segments": 1,
+   "steps": 12,
+   "steps_detail": [
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 0,
+     "after_frame": "c0042c386418b88425d34c8a51ab516b30b90d044baa1a169efc0c14d9077ac1",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "first_in_segment",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "0de899ef426dee32a5ae69f04d75484537ada1c8a01db97fc25b240227139335",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 3,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 1,
+     "after_frame": "4856f1d266d14a68b4a82964e82beb94259d47cdf89e94a3f5f43eef48a3d059",
+     "availability": "complete",
+     "changed_cells": 2,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "c0042c386418b88425d34c8a51ab516b30b90d044baa1a169efc0c14d9077ac1",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 13,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 2,
+     "after_frame": "6920f043d02b4d0211afe0868eefc632a6a904efa03fc21f1abbf65fbcdebdd5",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "4856f1d266d14a68b4a82964e82beb94259d47cdf89e94a3f5f43eef48a3d059",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 3,
+     "after_frame": "688769cfa64608cf4b913e5e27b5a7b9aebdf7f6f2eff2a07ed314de6c4158f7",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "6920f043d02b4d0211afe0868eefc632a6a904efa03fc21f1abbf65fbcdebdd5",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 4,
+     "after_frame": "9e1b407fa7a1616103eab1e55ec920cd3ecc531a5f512eb019a1365af59e1286",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "688769cfa64608cf4b913e5e27b5a7b9aebdf7f6f2eff2a07ed314de6c4158f7",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 5,
+     "after_frame": "deaa66c169de240423d60d20b12165e72c4d0dd57444ac285ac2d462cfabb571",
+     "availability": "complete",
+     "changed_cells": 2,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "9e1b407fa7a1616103eab1e55ec920cd3ecc531a5f512eb019a1365af59e1286",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 6,
+     "after_frame": "199fe4b3419fe87468ae3f9f6df1d21ebcc5457efe8ace7bb6aa68372c3fa41a",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "deaa66c169de240423d60d20b12165e72c4d0dd57444ac285ac2d462cfabb571",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 7,
+     "after_frame": "82738bb588336d77791e234bd8d1a72de240c12081f6ff560b54879374e20b08",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "199fe4b3419fe87468ae3f9f6df1d21ebcc5457efe8ace7bb6aa68372c3fa41a",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 10,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 8,
+     "after_frame": "015a1c0fe504239b48f144622823a2bce318ec0ca661a29ddccdacabff9fadaa",
+     "availability": "complete",
+     "changed_cells": 2,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "82738bb588336d77791e234bd8d1a72de240c12081f6ff560b54879374e20b08",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 9,
+     "after_frame": "d70ed1f3b39b2c680ef428117906a404715bb62aecd37f8d8ae032745a420592",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "015a1c0fe504239b48f144622823a2bce318ec0ca661a29ddccdacabff9fadaa",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 10,
+     "after_frame": "b345de3f73b806679c76636ba06cbb881b76c1f02a5a484cc9371170af126c16",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "d70ed1f3b39b2c680ef428117906a404715bb62aecd37f8d8ae032745a420592",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 11,
+     "after_frame": "f79993441c3a7f7aa0d52496f9447fce827a685fd53d05eca2daee7a28c36e0c",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "b345de3f73b806679c76636ba06cbb881b76c1f02a5a484cc9371170af126c16",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    }
+   ],
+   "triggers": [],
+   "visual_effects": [
+    "final_frame_differs"
+   ]
+  },
+  {
+   "arm": "history",
+   "block": 1,
+   "candidate_missed_patterns": [],
+   "dispatch_status": {
+    "acknowledged": 12
+   },
+   "distinct_pre_frames": 12,
+   "environment_events": [
+    "none_reported"
+   ],
+   "episode": "b1-s5i5-history",
+   "firing_steps": [
+    9,
+    10,
+    11
+   ],
+   "game": "s5i5-18d95033",
+   "patterns": [
+    {
+     "category": "M4_repeated_tiny_effect",
+     "qualifies_at": 2,
+     "segment": 0,
+     "steps": [
+      0,
+      1,
+      2
+     ]
+    }
+   ],
+   "segments": 1,
+   "steps": 12,
+   "steps_detail": [
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 0,
+     "after_frame": "c0042c386418b88425d34c8a51ab516b30b90d044baa1a169efc0c14d9077ac1",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "first_in_segment",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "0de899ef426dee32a5ae69f04d75484537ada1c8a01db97fc25b240227139335",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 1,
+     "after_frame": "4856f1d266d14a68b4a82964e82beb94259d47cdf89e94a3f5f43eef48a3d059",
+     "availability": "complete",
+     "changed_cells": 2,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "c0042c386418b88425d34c8a51ab516b30b90d044baa1a169efc0c14d9077ac1",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 2,
+     "after_frame": "6920f043d02b4d0211afe0868eefc632a6a904efa03fc21f1abbf65fbcdebdd5",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "4856f1d266d14a68b4a82964e82beb94259d47cdf89e94a3f5f43eef48a3d059",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 3,
+     "after_frame": "688769cfa64608cf4b913e5e27b5a7b9aebdf7f6f2eff2a07ed314de6c4158f7",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "6920f043d02b4d0211afe0868eefc632a6a904efa03fc21f1abbf65fbcdebdd5",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 4,
+     "after_frame": "9e1b407fa7a1616103eab1e55ec920cd3ecc531a5f512eb019a1365af59e1286",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "688769cfa64608cf4b913e5e27b5a7b9aebdf7f6f2eff2a07ed314de6c4158f7",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 5,
+     "after_frame": "deaa66c169de240423d60d20b12165e72c4d0dd57444ac285ac2d462cfabb571",
+     "availability": "complete",
+     "changed_cells": 2,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "9e1b407fa7a1616103eab1e55ec920cd3ecc531a5f512eb019a1365af59e1286",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 6,
+     "after_frame": "199fe4b3419fe87468ae3f9f6df1d21ebcc5457efe8ace7bb6aa68372c3fa41a",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "deaa66c169de240423d60d20b12165e72c4d0dd57444ac285ac2d462cfabb571",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 7,
+     "after_frame": "82738bb588336d77791e234bd8d1a72de240c12081f6ff560b54879374e20b08",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "199fe4b3419fe87468ae3f9f6df1d21ebcc5457efe8ace7bb6aa68372c3fa41a",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 8,
+     "after_frame": "015a1c0fe504239b48f144622823a2bce318ec0ca661a29ddccdacabff9fadaa",
+     "availability": "complete",
+     "changed_cells": 2,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "82738bb588336d77791e234bd8d1a72de240c12081f6ff560b54879374e20b08",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 9,
+     "after_frame": "d70ed1f3b39b2c680ef428117906a404715bb62aecd37f8d8ae032745a420592",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "015a1c0fe504239b48f144622823a2bce318ec0ca661a29ddccdacabff9fadaa",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 10,
+     "after_frame": "b345de3f73b806679c76636ba06cbb881b76c1f02a5a484cc9371170af126c16",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "d70ed1f3b39b2c680ef428117906a404715bb62aecd37f8d8ae032745a420592",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 11,
+     "after_frame": "f79993441c3a7f7aa0d52496f9447fce827a685fd53d05eca2daee7a28c36e0c",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "b345de3f73b806679c76636ba06cbb881b76c1f02a5a484cc9371170af126c16",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    }
+   ],
+   "triggers": [
+    {
+     "cited_evidence": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "episode": "b1-s5i5-history",
+     "game": "s5i5-18d95033",
+     "potential_false_interruption": true,
+     "signals": [
+      {
+       "evidence": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "signal": "tiny_effect_repeat",
+       "threshold": 10,
+       "value": 10
+      }
+     ],
+     "step": 9,
+     "timing": {
+      "actions_into_episode": 10,
+      "segment": 0,
+      "steps_into_segment": 10
+     },
+     "trace": [
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 0,
+       "after_frame": "c0042c386418b88425d34c8a51ab516b30b90d044baa1a169efc0c14d9077ac1",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "first_in_segment",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "0de899ef426dee32a5ae69f04d75484537ada1c8a01db97fc25b240227139335",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 1,
+       "after_frame": "4856f1d266d14a68b4a82964e82beb94259d47cdf89e94a3f5f43eef48a3d059",
+       "availability": "complete",
+       "changed_cells": 2,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "c0042c386418b88425d34c8a51ab516b30b90d044baa1a169efc0c14d9077ac1",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 2,
+       "after_frame": "6920f043d02b4d0211afe0868eefc632a6a904efa03fc21f1abbf65fbcdebdd5",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "4856f1d266d14a68b4a82964e82beb94259d47cdf89e94a3f5f43eef48a3d059",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 3,
+       "after_frame": "688769cfa64608cf4b913e5e27b5a7b9aebdf7f6f2eff2a07ed314de6c4158f7",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "6920f043d02b4d0211afe0868eefc632a6a904efa03fc21f1abbf65fbcdebdd5",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 4,
+       "after_frame": "9e1b407fa7a1616103eab1e55ec920cd3ecc531a5f512eb019a1365af59e1286",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "688769cfa64608cf4b913e5e27b5a7b9aebdf7f6f2eff2a07ed314de6c4158f7",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 5,
+       "after_frame": "deaa66c169de240423d60d20b12165e72c4d0dd57444ac285ac2d462cfabb571",
+       "availability": "complete",
+       "changed_cells": 2,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "9e1b407fa7a1616103eab1e55ec920cd3ecc531a5f512eb019a1365af59e1286",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 6,
+       "after_frame": "199fe4b3419fe87468ae3f9f6df1d21ebcc5457efe8ace7bb6aa68372c3fa41a",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "deaa66c169de240423d60d20b12165e72c4d0dd57444ac285ac2d462cfabb571",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 7,
+       "after_frame": "82738bb588336d77791e234bd8d1a72de240c12081f6ff560b54879374e20b08",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "199fe4b3419fe87468ae3f9f6df1d21ebcc5457efe8ace7bb6aa68372c3fa41a",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 8,
+       "after_frame": "015a1c0fe504239b48f144622823a2bce318ec0ca661a29ddccdacabff9fadaa",
+       "availability": "complete",
+       "changed_cells": 2,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "82738bb588336d77791e234bd8d1a72de240c12081f6ff560b54879374e20b08",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 9,
+       "after_frame": "d70ed1f3b39b2c680ef428117906a404715bb62aecd37f8d8ae032745a420592",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "015a1c0fe504239b48f144622823a2bce318ec0ca661a29ddccdacabff9fadaa",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      }
+     ]
+    }
+   ],
+   "visual_effects": [
+    "final_frame_differs"
+   ]
+  },
+  {
+   "arm": "baseline",
+   "block": 1,
+   "candidate_missed_patterns": [],
+   "dispatch_status": {
+    "acknowledged": 12
+   },
+   "distinct_pre_frames": 11,
+   "environment_events": [
+    "none_reported"
+   ],
+   "episode": "b1-wa30-baseline",
+   "firing_steps": [],
+   "game": "wa30-ee6fef47",
+   "patterns": [],
+   "segments": 1,
+   "steps": 12,
+   "steps_detail": [
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 1
+     },
+     "action_index": 0,
+     "after_frame": "7b51378789bb5854f806722c7f87955425cb9ffd53a7d29a612cd1e9c1218042",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "first_in_segment",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "22f3ccd4739a85cebbd807dc32cee300c3e43630d38a8422ccf48e81fba53e82",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 2
+     },
+     "action_index": 1,
+     "after_frame": "cffd5ba143e27949fca3dfae359465a211443ddef69905cd3cee0d799a843318",
+     "availability": "complete",
+     "changed_cells": 33,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "7b51378789bb5854f806722c7f87955425cb9ffd53a7d29a612cd1e9c1218042",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 3
+     },
+     "action_index": 2,
+     "after_frame": "f80ef57c92ec7ab278bfc0202ef2739944458d75533d57a70004903b5257631c",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "cffd5ba143e27949fca3dfae359465a211443ddef69905cd3cee0d799a843318",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 2
+     },
+     "action_index": 3,
+     "after_frame": "ac7160a8acb32f498e17f4c8ee93a80c8e2a8a63e03e2c722b74cb0b631ce651",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "f80ef57c92ec7ab278bfc0202ef2739944458d75533d57a70004903b5257631c",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 3
+     },
+     "action_index": 4,
+     "after_frame": "b61b5ab6d9c11482fe158f105573c7834bf45b61d88d96dfb1311d1633accd48",
+     "availability": "complete",
+     "changed_cells": 33,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "ac7160a8acb32f498e17f4c8ee93a80c8e2a8a63e03e2c722b74cb0b631ce651",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 2
+     },
+     "action_index": 5,
+     "after_frame": "a977aca6f931c10cae8920b4af7caf12fd50d42451d2b5de7f73d2972b2a7701",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "b61b5ab6d9c11482fe158f105573c7834bf45b61d88d96dfb1311d1633accd48",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 3
+     },
+     "action_index": 6,
+     "after_frame": "a27b8e22ff2911275e5d5fbc7ff7e950501c2059e66e31d213430c41d85e874e",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "a977aca6f931c10cae8920b4af7caf12fd50d42451d2b5de7f73d2972b2a7701",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 2
+     },
+     "action_index": 7,
+     "after_frame": "c9e8c04f8e6c5a0e552602290c18dc54d728af7023dca857a5549422f6457812",
+     "availability": "complete",
+     "changed_cells": 29,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "a27b8e22ff2911275e5d5fbc7ff7e950501c2059e66e31d213430c41d85e874e",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 1
+     },
+     "action_index": 8,
+     "after_frame": "7be573b6c1c71672df74d9a7331cf2aa50e5e23c11f1b8c7565fe1a7d337eeaf",
+     "availability": "complete",
+     "changed_cells": 28,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "c9e8c04f8e6c5a0e552602290c18dc54d728af7023dca857a5549422f6457812",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 2
+     },
+     "action_index": 9,
+     "after_frame": "c9e8c04f8e6c5a0e552602290c18dc54d728af7023dca857a5549422f6457812",
+     "availability": "complete",
+     "changed_cells": 28,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "7be573b6c1c71672df74d9a7331cf2aa50e5e23c11f1b8c7565fe1a7d337eeaf",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 3
+     },
+     "action_index": 10,
+     "after_frame": "148bbd17dacd18a5436d257385f0fc6635a844ba3e4ba314a40570307ad40235",
+     "availability": "complete",
+     "changed_cells": 25,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "c9e8c04f8e6c5a0e552602290c18dc54d728af7023dca857a5549422f6457812",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 1
+     },
+     "action_index": 11,
+     "after_frame": "62c6a53654342bc2fb7b0c2278eed7a235495e6c124d789f2b668ef06fee11f4",
+     "availability": "complete",
+     "changed_cells": 28,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "148bbd17dacd18a5436d257385f0fc6635a844ba3e4ba314a40570307ad40235",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    }
+   ],
+   "triggers": [],
+   "visual_effects": [
+    "final_frame_differs"
+   ]
+  },
+  {
+   "arm": "history",
+   "block": 1,
+   "candidate_missed_patterns": [],
+   "dispatch_status": {
+    "acknowledged": 12
+   },
+   "distinct_pre_frames": 11,
+   "environment_events": [
+    "none_reported"
+   ],
+   "episode": "b1-wa30-history",
+   "firing_steps": [],
+   "game": "wa30-ee6fef47",
+   "patterns": [],
+   "segments": 1,
+   "steps": 12,
+   "steps_detail": [
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 1
+     },
+     "action_index": 0,
+     "after_frame": "7b51378789bb5854f806722c7f87955425cb9ffd53a7d29a612cd1e9c1218042",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "first_in_segment",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "22f3ccd4739a85cebbd807dc32cee300c3e43630d38a8422ccf48e81fba53e82",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 2
+     },
+     "action_index": 1,
+     "after_frame": "cffd5ba143e27949fca3dfae359465a211443ddef69905cd3cee0d799a843318",
+     "availability": "complete",
+     "changed_cells": 33,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "7b51378789bb5854f806722c7f87955425cb9ffd53a7d29a612cd1e9c1218042",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 3
+     },
+     "action_index": 2,
+     "after_frame": "f80ef57c92ec7ab278bfc0202ef2739944458d75533d57a70004903b5257631c",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "cffd5ba143e27949fca3dfae359465a211443ddef69905cd3cee0d799a843318",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 4
+     },
+     "action_index": 3,
+     "after_frame": "4a0d0c1fbd28039812a06b390f346e763de47f73346abc6369147f0c6bb26b8f",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "f80ef57c92ec7ab278bfc0202ef2739944458d75533d57a70004903b5257631c",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 5
+     },
+     "action_index": 4,
+     "after_frame": "ae67762a4935ca7470d82f63946fc2c421b8f69304b9b900bf270ff4bb636b1b",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "4a0d0c1fbd28039812a06b390f346e763de47f73346abc6369147f0c6bb26b8f",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 1
+     },
+     "action_index": 5,
+     "after_frame": "f294bc618d8a00b83fc9d6f98c5894b939fd13e2978356bb84b5a7c4ccfd34c0",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "ae67762a4935ca7470d82f63946fc2c421b8f69304b9b900bf270ff4bb636b1b",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 2
+     },
+     "action_index": 6,
+     "after_frame": "47ccc71b25d5b5dea9ee0cb61de89b3be28e42be39bcab4263cd249f9600223a",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "f294bc618d8a00b83fc9d6f98c5894b939fd13e2978356bb84b5a7c4ccfd34c0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 3
+     },
+     "action_index": 7,
+     "after_frame": "f5faccf0802154d3c029888710dc4f658ffd4411ace383f6aba2acff92ee64c8",
+     "availability": "complete",
+     "changed_cells": 33,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "47ccc71b25d5b5dea9ee0cb61de89b3be28e42be39bcab4263cd249f9600223a",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 4
+     },
+     "action_index": 8,
+     "after_frame": "358af0e0078f0e04a00525bce4ab6280a2210f559869c38fda6679a1879d98d1",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "f5faccf0802154d3c029888710dc4f658ffd4411ace383f6aba2acff92ee64c8",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 5
+     },
+     "action_index": 9,
+     "after_frame": "358af0e0078f0e04a00525bce4ab6280a2210f559869c38fda6679a1879d98d1",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "358af0e0078f0e04a00525bce4ab6280a2210f559869c38fda6679a1879d98d1",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 1
+     },
+     "action_index": 10,
+     "after_frame": "209922d16191c7dc5aeecc8092b8e3dabd5d03924759e36b1c5f82ee8b799e29",
+     "availability": "complete",
+     "changed_cells": 33,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "358af0e0078f0e04a00525bce4ab6280a2210f559869c38fda6679a1879d98d1",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 2
+     },
+     "action_index": 11,
+     "after_frame": "f5c7915780282105b2b314d4b4c85a42e0fde3912a5942c62657d1a4db08cc47",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "209922d16191c7dc5aeecc8092b8e3dabd5d03924759e36b1c5f82ee8b799e29",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    }
+   ],
+   "triggers": [],
+   "visual_effects": [
+    "final_frame_differs",
+    "no_observed_change"
+   ]
+  },
+  {
+   "arm": "baseline",
+   "block": 2,
+   "candidate_missed_patterns": [],
+   "dispatch_status": {
+    "acknowledged": 12
+   },
+   "distinct_pre_frames": 1,
+   "environment_events": [
+    "none_reported"
+   ],
+   "episode": "b2-ar25-baseline",
+   "firing_steps": [
+    1,
+    2,
+    4,
+    5,
+    7,
+    8,
+    9,
+    10,
+    11
+   ],
+   "game": "ar25-0c556536",
+   "patterns": [
+    {
+     "category": "M1_exact_repeat_no_change",
+     "qualifies_at": 1,
+     "segment": 0,
+     "steps": [
+      0,
+      1
+     ]
+    },
+    {
+     "category": "M2_same_action_no_change",
+     "qualifies_at": 1,
+     "segment": 0,
+     "steps": [
+      0,
+      1
+     ]
+    },
+    {
+     "category": "M1_exact_repeat_no_change",
+     "qualifies_at": 5,
+     "segment": 0,
+     "steps": [
+      3,
+      5
+     ]
+    },
+    {
+     "category": "M2_same_action_no_change",
+     "qualifies_at": 5,
+     "segment": 0,
+     "steps": [
+      3,
+      5
+     ]
+    },
+    {
+     "category": "M1_exact_repeat_no_change",
+     "qualifies_at": 8,
+     "segment": 0,
+     "steps": [
+      6,
+      8
+     ]
+    },
+    {
+     "category": "M2_same_action_no_change",
+     "qualifies_at": 8,
+     "segment": 0,
+     "steps": [
+      6,
+      8
+     ]
+    },
+    {
+     "category": "M3_action_id_no_change_streak",
+     "qualifies_at": 2,
+     "segment": 0,
+     "steps": [
+      0,
+      1,
+      2
+     ]
+    }
+   ],
+   "segments": 1,
+   "steps": 12,
+   "steps_detail": [
+    {
+     "action": {
+      "action_data": {
+       "x": 17,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 0,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "first_in_segment",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 17,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 1,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 17,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 2,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 16,
+       "y": 15
+      },
+      "action_id": 6
+     },
+     "action_index": 3,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 17,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 4,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 16,
+       "y": 15
+      },
+      "action_id": 6
+     },
+     "action_index": 5,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 16,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 6,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 17,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 7,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 16,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 8,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 16,
+       "y": 15
+      },
+      "action_id": 6
+     },
+     "action_index": 9,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 17,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 10,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 17,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 11,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    }
+   ],
+   "triggers": [
+    {
+     "cited_evidence": [
+      0,
+      1
+     ],
+     "episode": "b2-ar25-baseline",
+     "game": "ar25-0c556536",
+     "potential_false_interruption": false,
+     "signals": [
+      {
+       "evidence": [
+        0,
+        1
+       ],
+       "signal": "state_action_recurrence",
+       "threshold": 2,
+       "value": 2
+      }
+     ],
+     "step": 1,
+     "timing": {
+      "actions_into_episode": 2,
+      "segment": 0,
+      "steps_into_segment": 2
+     },
+     "trace": [
+      {
+       "action": {
+        "action_data": {
+         "x": 17,
+         "y": 16
+        },
+        "action_id": 6
+       },
+       "action_index": 0,
+       "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "availability": "complete",
+       "changed_cells": 0,
+       "continuity": "first_in_segment",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "no_observed_change"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 17,
+         "y": 16
+        },
+        "action_id": 6
+       },
+       "action_index": 1,
+       "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "availability": "complete",
+       "changed_cells": 0,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "no_observed_change"
+      }
+     ]
+    },
+    {
+     "cited_evidence": [
+      4,
+      7
+     ],
+     "episode": "b2-ar25-baseline",
+     "game": "ar25-0c556536",
+     "potential_false_interruption": false,
+     "signals": [
+      {
+       "evidence": [
+        4,
+        7
+       ],
+       "signal": "state_action_recurrence",
+       "threshold": 2,
+       "value": 5
+      }
+     ],
+     "step": 7,
+     "timing": {
+      "actions_into_episode": 8,
+      "segment": 0,
+      "steps_into_segment": 8
+     },
+     "trace": [
+      {
+       "action": {
+        "action_data": {
+         "x": 17,
+         "y": 16
+        },
+        "action_id": 6
+       },
+       "action_index": 4,
+       "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "availability": "complete",
+       "changed_cells": 0,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "no_observed_change"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 17,
+         "y": 16
+        },
+        "action_id": 6
+       },
+       "action_index": 7,
+       "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "availability": "complete",
+       "changed_cells": 0,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "no_observed_change"
+      }
+     ]
+    }
+   ],
+   "visual_effects": [
+    "no_observed_change"
+   ]
+  },
+  {
+   "arm": "history",
+   "block": 2,
+   "candidate_missed_patterns": [],
+   "dispatch_status": {
+    "acknowledged": 12
+   },
+   "distinct_pre_frames": 1,
+   "environment_events": [
+    "none_reported"
+   ],
+   "episode": "b2-ar25-history",
+   "firing_steps": [
+    1,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ],
+   "game": "ar25-0c556536",
+   "patterns": [
+    {
+     "category": "M1_exact_repeat_no_change",
+     "qualifies_at": 1,
+     "segment": 0,
+     "steps": [
+      0,
+      1
+     ]
+    },
+    {
+     "category": "M2_same_action_no_change",
+     "qualifies_at": 1,
+     "segment": 0,
+     "steps": [
+      0,
+      1
+     ]
+    },
+    {
+     "category": "M1_exact_repeat_no_change",
+     "qualifies_at": 4,
+     "segment": 0,
+     "steps": [
+      2,
+      4
+     ]
+    },
+    {
+     "category": "M2_same_action_no_change",
+     "qualifies_at": 4,
+     "segment": 0,
+     "steps": [
+      2,
+      4
+     ]
+    }
+   ],
+   "segments": 1,
+   "steps": 12,
+   "steps_detail": [
+    {
+     "action": {
+      "action_data": {
+       "x": 18,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 0,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "first_in_segment",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 18,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 1,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 7
+     },
+     "action_index": 2,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 18,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 3,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 7
+     },
+     "action_index": 4,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 18,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 5,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 18,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 6,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 7
+     },
+     "action_index": 7,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 18,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 8,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 7
+     },
+     "action_index": 9,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 7
+     },
+     "action_index": 10,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 19,
+       "y": 16
+      },
+      "action_id": 6
+     },
+     "action_index": 11,
+     "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    }
+   ],
+   "triggers": [
+    {
+     "cited_evidence": [
+      0,
+      1
+     ],
+     "episode": "b2-ar25-history",
+     "game": "ar25-0c556536",
+     "potential_false_interruption": false,
+     "signals": [
+      {
+       "evidence": [
+        0,
+        1
+       ],
+       "signal": "state_action_recurrence",
+       "threshold": 2,
+       "value": 2
+      }
+     ],
+     "step": 1,
+     "timing": {
+      "actions_into_episode": 2,
+      "segment": 0,
+      "steps_into_segment": 2
+     },
+     "trace": [
+      {
+       "action": {
+        "action_data": {
+         "x": 18,
+         "y": 16
+        },
+        "action_id": 6
+       },
+       "action_index": 0,
+       "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "availability": "complete",
+       "changed_cells": 0,
+       "continuity": "first_in_segment",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "no_observed_change"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 18,
+         "y": 16
+        },
+        "action_id": 6
+       },
+       "action_index": 1,
+       "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "availability": "complete",
+       "changed_cells": 0,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "no_observed_change"
+      }
+     ]
+    },
+    {
+     "cited_evidence": [
+      4,
+      7
+     ],
+     "episode": "b2-ar25-history",
+     "game": "ar25-0c556536",
+     "potential_false_interruption": false,
+     "signals": [
+      {
+       "evidence": [
+        4,
+        7
+       ],
+       "signal": "state_action_recurrence",
+       "threshold": 2,
+       "value": 3
+      }
+     ],
+     "step": 7,
+     "timing": {
+      "actions_into_episode": 8,
+      "segment": 0,
+      "steps_into_segment": 8
+     },
+     "trace": [
+      {
+       "action": {
+        "action_data": {},
+        "action_id": 7
+       },
+       "action_index": 4,
+       "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "availability": "complete",
+       "changed_cells": 0,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "no_observed_change"
+      },
+      {
+       "action": {
+        "action_data": {},
+        "action_id": 7
+       },
+       "action_index": 7,
+       "after_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "availability": "complete",
+       "changed_cells": 0,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "dcb73927160522c26e2655d31ead221e6da6aab818037d20388bbf46e9afa1b0",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "no_observed_change"
+      }
+     ]
+    }
+   ],
+   "visual_effects": [
+    "no_observed_change"
+   ]
+  },
+  {
+   "arm": "baseline",
+   "block": 2,
+   "candidate_missed_patterns": [
+    {
+     "category": "M4_repeated_tiny_effect",
+     "qualifies_at": 5,
+     "segment": 0,
+     "steps": [
+      3,
+      4,
+      5
+     ],
+     "trace": [
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 3,
+       "after_frame": "688769cfa64608cf4b913e5e27b5a7b9aebdf7f6f2eff2a07ed314de6c4158f7",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "6920f043d02b4d0211afe0868eefc632a6a904efa03fc21f1abbf65fbcdebdd5",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 4,
+       "after_frame": "9e1b407fa7a1616103eab1e55ec920cd3ecc531a5f512eb019a1365af59e1286",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "688769cfa64608cf4b913e5e27b5a7b9aebdf7f6f2eff2a07ed314de6c4158f7",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 5,
+       "after_frame": "deaa66c169de240423d60d20b12165e72c4d0dd57444ac285ac2d462cfabb571",
+       "availability": "complete",
+       "changed_cells": 2,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "9e1b407fa7a1616103eab1e55ec920cd3ecc531a5f512eb019a1365af59e1286",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      }
+     ]
+    },
+    {
+     "category": "M4_repeated_tiny_effect",
+     "qualifies_at": 11,
+     "segment": 0,
+     "steps": [
+      9,
+      10,
+      11
+     ],
+     "trace": [
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 9,
+       "after_frame": "d70ed1f3b39b2c680ef428117906a404715bb62aecd37f8d8ae032745a420592",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "015a1c0fe504239b48f144622823a2bce318ec0ca661a29ddccdacabff9fadaa",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 10,
+       "after_frame": "b345de3f73b806679c76636ba06cbb881b76c1f02a5a484cc9371170af126c16",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "d70ed1f3b39b2c680ef428117906a404715bb62aecd37f8d8ae032745a420592",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 11,
+       "after_frame": "f79993441c3a7f7aa0d52496f9447fce827a685fd53d05eca2daee7a28c36e0c",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "b345de3f73b806679c76636ba06cbb881b76c1f02a5a484cc9371170af126c16",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      }
+     ]
+    }
+   ],
+   "dispatch_status": {
+    "acknowledged": 12
+   },
+   "distinct_pre_frames": 12,
+   "environment_events": [
+    "none_reported"
+   ],
+   "episode": "b2-s5i5-baseline",
+   "firing_steps": [],
+   "game": "s5i5-18d95033",
+   "patterns": [
+    {
+     "category": "M4_repeated_tiny_effect",
+     "qualifies_at": 5,
+     "segment": 0,
+     "steps": [
+      3,
+      4,
+      5
+     ]
+    },
+    {
+     "category": "M4_repeated_tiny_effect",
+     "qualifies_at": 11,
+     "segment": 0,
+     "steps": [
+      9,
+      10,
+      11
+     ]
+    }
+   ],
+   "segments": 1,
+   "steps": 12,
+   "steps_detail": [
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 0,
+     "after_frame": "c0042c386418b88425d34c8a51ab516b30b90d044baa1a169efc0c14d9077ac1",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "first_in_segment",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "0de899ef426dee32a5ae69f04d75484537ada1c8a01db97fc25b240227139335",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 3,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 1,
+     "after_frame": "4856f1d266d14a68b4a82964e82beb94259d47cdf89e94a3f5f43eef48a3d059",
+     "availability": "complete",
+     "changed_cells": 2,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "c0042c386418b88425d34c8a51ab516b30b90d044baa1a169efc0c14d9077ac1",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 13,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 2,
+     "after_frame": "6920f043d02b4d0211afe0868eefc632a6a904efa03fc21f1abbf65fbcdebdd5",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "4856f1d266d14a68b4a82964e82beb94259d47cdf89e94a3f5f43eef48a3d059",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 3,
+     "after_frame": "688769cfa64608cf4b913e5e27b5a7b9aebdf7f6f2eff2a07ed314de6c4158f7",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "6920f043d02b4d0211afe0868eefc632a6a904efa03fc21f1abbf65fbcdebdd5",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 4,
+     "after_frame": "9e1b407fa7a1616103eab1e55ec920cd3ecc531a5f512eb019a1365af59e1286",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "688769cfa64608cf4b913e5e27b5a7b9aebdf7f6f2eff2a07ed314de6c4158f7",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 5,
+     "after_frame": "deaa66c169de240423d60d20b12165e72c4d0dd57444ac285ac2d462cfabb571",
+     "availability": "complete",
+     "changed_cells": 2,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "9e1b407fa7a1616103eab1e55ec920cd3ecc531a5f512eb019a1365af59e1286",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 6,
+     "after_frame": "199fe4b3419fe87468ae3f9f6df1d21ebcc5457efe8ace7bb6aa68372c3fa41a",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "deaa66c169de240423d60d20b12165e72c4d0dd57444ac285ac2d462cfabb571",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 7,
+     "after_frame": "82738bb588336d77791e234bd8d1a72de240c12081f6ff560b54879374e20b08",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "199fe4b3419fe87468ae3f9f6df1d21ebcc5457efe8ace7bb6aa68372c3fa41a",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 10,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 8,
+     "after_frame": "015a1c0fe504239b48f144622823a2bce318ec0ca661a29ddccdacabff9fadaa",
+     "availability": "complete",
+     "changed_cells": 2,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "82738bb588336d77791e234bd8d1a72de240c12081f6ff560b54879374e20b08",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 9,
+     "after_frame": "d70ed1f3b39b2c680ef428117906a404715bb62aecd37f8d8ae032745a420592",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "015a1c0fe504239b48f144622823a2bce318ec0ca661a29ddccdacabff9fadaa",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 10,
+     "after_frame": "b345de3f73b806679c76636ba06cbb881b76c1f02a5a484cc9371170af126c16",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "d70ed1f3b39b2c680ef428117906a404715bb62aecd37f8d8ae032745a420592",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 11,
+     "after_frame": "f79993441c3a7f7aa0d52496f9447fce827a685fd53d05eca2daee7a28c36e0c",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "b345de3f73b806679c76636ba06cbb881b76c1f02a5a484cc9371170af126c16",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    }
+   ],
+   "triggers": [],
+   "visual_effects": [
+    "final_frame_differs"
+   ]
+  },
+  {
+   "arm": "history",
+   "block": 2,
+   "candidate_missed_patterns": [],
+   "dispatch_status": {
+    "acknowledged": 12
+   },
+   "distinct_pre_frames": 12,
+   "environment_events": [
+    "none_reported"
+   ],
+   "episode": "b2-s5i5-history",
+   "firing_steps": [
+    9,
+    10,
+    11
+   ],
+   "game": "s5i5-18d95033",
+   "patterns": [
+    {
+     "category": "M4_repeated_tiny_effect",
+     "qualifies_at": 2,
+     "segment": 0,
+     "steps": [
+      0,
+      1,
+      2
+     ]
+    }
+   ],
+   "segments": 1,
+   "steps": 12,
+   "steps_detail": [
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 0,
+     "after_frame": "c0042c386418b88425d34c8a51ab516b30b90d044baa1a169efc0c14d9077ac1",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "first_in_segment",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "0de899ef426dee32a5ae69f04d75484537ada1c8a01db97fc25b240227139335",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 1,
+     "after_frame": "4856f1d266d14a68b4a82964e82beb94259d47cdf89e94a3f5f43eef48a3d059",
+     "availability": "complete",
+     "changed_cells": 2,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "c0042c386418b88425d34c8a51ab516b30b90d044baa1a169efc0c14d9077ac1",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 2,
+     "after_frame": "6920f043d02b4d0211afe0868eefc632a6a904efa03fc21f1abbf65fbcdebdd5",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "4856f1d266d14a68b4a82964e82beb94259d47cdf89e94a3f5f43eef48a3d059",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 3,
+     "after_frame": "688769cfa64608cf4b913e5e27b5a7b9aebdf7f6f2eff2a07ed314de6c4158f7",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "6920f043d02b4d0211afe0868eefc632a6a904efa03fc21f1abbf65fbcdebdd5",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 4,
+     "after_frame": "9e1b407fa7a1616103eab1e55ec920cd3ecc531a5f512eb019a1365af59e1286",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "688769cfa64608cf4b913e5e27b5a7b9aebdf7f6f2eff2a07ed314de6c4158f7",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 5,
+     "after_frame": "deaa66c169de240423d60d20b12165e72c4d0dd57444ac285ac2d462cfabb571",
+     "availability": "complete",
+     "changed_cells": 2,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "9e1b407fa7a1616103eab1e55ec920cd3ecc531a5f512eb019a1365af59e1286",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 6,
+     "after_frame": "199fe4b3419fe87468ae3f9f6df1d21ebcc5457efe8ace7bb6aa68372c3fa41a",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "deaa66c169de240423d60d20b12165e72c4d0dd57444ac285ac2d462cfabb571",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 7,
+     "after_frame": "82738bb588336d77791e234bd8d1a72de240c12081f6ff560b54879374e20b08",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "199fe4b3419fe87468ae3f9f6df1d21ebcc5457efe8ace7bb6aa68372c3fa41a",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 8,
+     "after_frame": "015a1c0fe504239b48f144622823a2bce318ec0ca661a29ddccdacabff9fadaa",
+     "availability": "complete",
+     "changed_cells": 2,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "82738bb588336d77791e234bd8d1a72de240c12081f6ff560b54879374e20b08",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 9,
+     "after_frame": "d70ed1f3b39b2c680ef428117906a404715bb62aecd37f8d8ae032745a420592",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "015a1c0fe504239b48f144622823a2bce318ec0ca661a29ddccdacabff9fadaa",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 10,
+     "after_frame": "b345de3f73b806679c76636ba06cbb881b76c1f02a5a484cc9371170af126c16",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "d70ed1f3b39b2c680ef428117906a404715bb62aecd37f8d8ae032745a420592",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {
+       "x": 11,
+       "y": 10
+      },
+      "action_id": 6
+     },
+     "action_index": 11,
+     "after_frame": "f79993441c3a7f7aa0d52496f9447fce827a685fd53d05eca2daee7a28c36e0c",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "b345de3f73b806679c76636ba06cbb881b76c1f02a5a484cc9371170af126c16",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    }
+   ],
+   "triggers": [
+    {
+     "cited_evidence": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+     ],
+     "episode": "b2-s5i5-history",
+     "game": "s5i5-18d95033",
+     "potential_false_interruption": true,
+     "signals": [
+      {
+       "evidence": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+       ],
+       "signal": "tiny_effect_repeat",
+       "threshold": 10,
+       "value": 10
+      }
+     ],
+     "step": 9,
+     "timing": {
+      "actions_into_episode": 10,
+      "segment": 0,
+      "steps_into_segment": 10
+     },
+     "trace": [
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 0,
+       "after_frame": "c0042c386418b88425d34c8a51ab516b30b90d044baa1a169efc0c14d9077ac1",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "first_in_segment",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "0de899ef426dee32a5ae69f04d75484537ada1c8a01db97fc25b240227139335",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 1,
+       "after_frame": "4856f1d266d14a68b4a82964e82beb94259d47cdf89e94a3f5f43eef48a3d059",
+       "availability": "complete",
+       "changed_cells": 2,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "c0042c386418b88425d34c8a51ab516b30b90d044baa1a169efc0c14d9077ac1",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 2,
+       "after_frame": "6920f043d02b4d0211afe0868eefc632a6a904efa03fc21f1abbf65fbcdebdd5",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "4856f1d266d14a68b4a82964e82beb94259d47cdf89e94a3f5f43eef48a3d059",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 3,
+       "after_frame": "688769cfa64608cf4b913e5e27b5a7b9aebdf7f6f2eff2a07ed314de6c4158f7",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "6920f043d02b4d0211afe0868eefc632a6a904efa03fc21f1abbf65fbcdebdd5",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 4,
+       "after_frame": "9e1b407fa7a1616103eab1e55ec920cd3ecc531a5f512eb019a1365af59e1286",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "688769cfa64608cf4b913e5e27b5a7b9aebdf7f6f2eff2a07ed314de6c4158f7",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 5,
+       "after_frame": "deaa66c169de240423d60d20b12165e72c4d0dd57444ac285ac2d462cfabb571",
+       "availability": "complete",
+       "changed_cells": 2,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "9e1b407fa7a1616103eab1e55ec920cd3ecc531a5f512eb019a1365af59e1286",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 6,
+       "after_frame": "199fe4b3419fe87468ae3f9f6df1d21ebcc5457efe8ace7bb6aa68372c3fa41a",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "deaa66c169de240423d60d20b12165e72c4d0dd57444ac285ac2d462cfabb571",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 7,
+       "after_frame": "82738bb588336d77791e234bd8d1a72de240c12081f6ff560b54879374e20b08",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "199fe4b3419fe87468ae3f9f6df1d21ebcc5457efe8ace7bb6aa68372c3fa41a",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 8,
+       "after_frame": "015a1c0fe504239b48f144622823a2bce318ec0ca661a29ddccdacabff9fadaa",
+       "availability": "complete",
+       "changed_cells": 2,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "82738bb588336d77791e234bd8d1a72de240c12081f6ff560b54879374e20b08",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      },
+      {
+       "action": {
+        "action_data": {
+         "x": 11,
+         "y": 10
+        },
+        "action_id": 6
+       },
+       "action_index": 9,
+       "after_frame": "d70ed1f3b39b2c680ef428117906a404715bb62aecd37f8d8ae032745a420592",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "015a1c0fe504239b48f144622823a2bce318ec0ca661a29ddccdacabff9fadaa",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      }
+     ]
+    }
+   ],
+   "visual_effects": [
+    "final_frame_differs"
+   ]
+  },
+  {
+   "arm": "baseline",
+   "block": 2,
+   "candidate_missed_patterns": [],
+   "dispatch_status": {
+    "acknowledged": 12
+   },
+   "distinct_pre_frames": 11,
+   "environment_events": [
+    "none_reported"
+   ],
+   "episode": "b2-wa30-baseline",
+   "firing_steps": [
+    7
+   ],
+   "game": "wa30-ee6fef47",
+   "patterns": [],
+   "segments": 1,
+   "steps": 12,
+   "steps_detail": [
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 3
+     },
+     "action_index": 0,
+     "after_frame": "2e4e2d35e80d592f6b412ca4c9d183b6d15dd4336589b211c801676e7c5fe57a",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "first_in_segment",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "22f3ccd4739a85cebbd807dc32cee300c3e43630d38a8422ccf48e81fba53e82",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 2
+     },
+     "action_index": 1,
+     "after_frame": "ac7160a8acb32f498e17f4c8ee93a80c8e2a8a63e03e2c722b74cb0b631ce651",
+     "availability": "complete",
+     "changed_cells": 33,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "2e4e2d35e80d592f6b412ca4c9d183b6d15dd4336589b211c801676e7c5fe57a",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 3
+     },
+     "action_index": 2,
+     "after_frame": "d7be7c215aef2c336393b3637143927e53bc2942acba281764177330d05bab6f",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "ac7160a8acb32f498e17f4c8ee93a80c8e2a8a63e03e2c722b74cb0b631ce651",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 2
+     },
+     "action_index": 3,
+     "after_frame": "5f2ad0d9c47bee9d98c3f11fcd402cc75d74afe20e555fc1fefef4951460aeff",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "d7be7c215aef2c336393b3637143927e53bc2942acba281764177330d05bab6f",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 3
+     },
+     "action_index": 4,
+     "after_frame": "a27b8e22ff2911275e5d5fbc7ff7e950501c2059e66e31d213430c41d85e874e",
+     "availability": "complete",
+     "changed_cells": 33,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "5f2ad0d9c47bee9d98c3f11fcd402cc75d74afe20e555fc1fefef4951460aeff",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 2
+     },
+     "action_index": 5,
+     "after_frame": "28c0d0d9918be7becfa6c3c828fcf99600f67654b91760f4893fc80cfe896b6d",
+     "availability": "complete",
+     "changed_cells": 28,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "a27b8e22ff2911275e5d5fbc7ff7e950501c2059e66e31d213430c41d85e874e",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 2
+     },
+     "action_index": 6,
+     "after_frame": "28c0d0d9918be7becfa6c3c828fcf99600f67654b91760f4893fc80cfe896b6d",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "28c0d0d9918be7becfa6c3c828fcf99600f67654b91760f4893fc80cfe896b6d",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 2
+     },
+     "action_index": 7,
+     "after_frame": "c9e8c04f8e6c5a0e552602290c18dc54d728af7023dca857a5549422f6457812",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "28c0d0d9918be7becfa6c3c828fcf99600f67654b91760f4893fc80cfe896b6d",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 3
+     },
+     "action_index": 8,
+     "after_frame": "1b8df61536aa9442005428dd419d6294f45d95faae4d73dd04234ac7a300239d",
+     "availability": "complete",
+     "changed_cells": 24,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "c9e8c04f8e6c5a0e552602290c18dc54d728af7023dca857a5549422f6457812",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 1
+     },
+     "action_index": 9,
+     "after_frame": "149dd5ba3029ac917292178061c3b4fe193619228b5e3cc708309fc0d92c5005",
+     "availability": "complete",
+     "changed_cells": 28,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "1b8df61536aa9442005428dd419d6294f45d95faae4d73dd04234ac7a300239d",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 2
+     },
+     "action_index": 10,
+     "after_frame": "6b36198d11cada93e58b1c00ae0cddf35270bb16ced20f881ddbedf5b4d9976e",
+     "availability": "complete",
+     "changed_cells": 29,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "149dd5ba3029ac917292178061c3b4fe193619228b5e3cc708309fc0d92c5005",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 3
+     },
+     "action_index": 11,
+     "after_frame": "83f0d6b899be3473968e0364992f61b9455d1aaac5b48fdab012ecee897d1b48",
+     "availability": "complete",
+     "changed_cells": 24,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "6b36198d11cada93e58b1c00ae0cddf35270bb16ced20f881ddbedf5b4d9976e",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    }
+   ],
+   "triggers": [
+    {
+     "cited_evidence": [
+      6,
+      7
+     ],
+     "episode": "b2-wa30-baseline",
+     "game": "wa30-ee6fef47",
+     "potential_false_interruption": true,
+     "signals": [
+      {
+       "evidence": [
+        6,
+        7
+       ],
+       "signal": "state_action_recurrence",
+       "threshold": 2,
+       "value": 2
+      }
+     ],
+     "step": 7,
+     "timing": {
+      "actions_into_episode": 8,
+      "segment": 0,
+      "steps_into_segment": 8
+     },
+     "trace": [
+      {
+       "action": {
+        "action_data": {},
+        "action_id": 2
+       },
+       "action_index": 6,
+       "after_frame": "28c0d0d9918be7becfa6c3c828fcf99600f67654b91760f4893fc80cfe896b6d",
+       "availability": "complete",
+       "changed_cells": 0,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "28c0d0d9918be7becfa6c3c828fcf99600f67654b91760f4893fc80cfe896b6d",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "no_observed_change"
+      },
+      {
+       "action": {
+        "action_data": {},
+        "action_id": 2
+       },
+       "action_index": 7,
+       "after_frame": "c9e8c04f8e6c5a0e552602290c18dc54d728af7023dca857a5549422f6457812",
+       "availability": "complete",
+       "changed_cells": 1,
+       "continuity": "matches_previous_final",
+       "dispatch": "acknowledged",
+       "events": [
+        "none_reported"
+       ],
+       "pre_frame": "28c0d0d9918be7becfa6c3c828fcf99600f67654b91760f4893fc80cfe896b6d",
+       "progress": "unknown",
+       "segment": 0,
+       "visual_effect": "final_frame_differs"
+      }
+     ]
+    }
+   ],
+   "visual_effects": [
+    "final_frame_differs",
+    "no_observed_change"
+   ]
+  },
+  {
+   "arm": "history",
+   "block": 2,
+   "candidate_missed_patterns": [],
+   "dispatch_status": {
+    "acknowledged": 12
+   },
+   "distinct_pre_frames": 11,
+   "environment_events": [
+    "none_reported"
+   ],
+   "episode": "b2-wa30-history",
+   "firing_steps": [],
+   "game": "wa30-ee6fef47",
+   "patterns": [],
+   "segments": 1,
+   "steps": 12,
+   "steps_detail": [
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 1
+     },
+     "action_index": 0,
+     "after_frame": "7b51378789bb5854f806722c7f87955425cb9ffd53a7d29a612cd1e9c1218042",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "first_in_segment",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "22f3ccd4739a85cebbd807dc32cee300c3e43630d38a8422ccf48e81fba53e82",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 2
+     },
+     "action_index": 1,
+     "after_frame": "cffd5ba143e27949fca3dfae359465a211443ddef69905cd3cee0d799a843318",
+     "availability": "complete",
+     "changed_cells": 33,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "7b51378789bb5854f806722c7f87955425cb9ffd53a7d29a612cd1e9c1218042",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 3
+     },
+     "action_index": 2,
+     "after_frame": "f80ef57c92ec7ab278bfc0202ef2739944458d75533d57a70004903b5257631c",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "cffd5ba143e27949fca3dfae359465a211443ddef69905cd3cee0d799a843318",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 4
+     },
+     "action_index": 3,
+     "after_frame": "4a0d0c1fbd28039812a06b390f346e763de47f73346abc6369147f0c6bb26b8f",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "f80ef57c92ec7ab278bfc0202ef2739944458d75533d57a70004903b5257631c",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 5
+     },
+     "action_index": 4,
+     "after_frame": "ae67762a4935ca7470d82f63946fc2c421b8f69304b9b900bf270ff4bb636b1b",
+     "availability": "complete",
+     "changed_cells": 1,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "4a0d0c1fbd28039812a06b390f346e763de47f73346abc6369147f0c6bb26b8f",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 1
+     },
+     "action_index": 5,
+     "after_frame": "f294bc618d8a00b83fc9d6f98c5894b939fd13e2978356bb84b5a7c4ccfd34c0",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "ae67762a4935ca7470d82f63946fc2c421b8f69304b9b900bf270ff4bb636b1b",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 2
+     },
+     "action_index": 6,
+     "after_frame": "47ccc71b25d5b5dea9ee0cb61de89b3be28e42be39bcab4263cd249f9600223a",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "f294bc618d8a00b83fc9d6f98c5894b939fd13e2978356bb84b5a7c4ccfd34c0",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 3
+     },
+     "action_index": 7,
+     "after_frame": "f5faccf0802154d3c029888710dc4f658ffd4411ace383f6aba2acff92ee64c8",
+     "availability": "complete",
+     "changed_cells": 33,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "47ccc71b25d5b5dea9ee0cb61de89b3be28e42be39bcab4263cd249f9600223a",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 4
+     },
+     "action_index": 8,
+     "after_frame": "358af0e0078f0e04a00525bce4ab6280a2210f559869c38fda6679a1879d98d1",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "f5faccf0802154d3c029888710dc4f658ffd4411ace383f6aba2acff92ee64c8",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 5
+     },
+     "action_index": 9,
+     "after_frame": "358af0e0078f0e04a00525bce4ab6280a2210f559869c38fda6679a1879d98d1",
+     "availability": "complete",
+     "changed_cells": 0,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "358af0e0078f0e04a00525bce4ab6280a2210f559869c38fda6679a1879d98d1",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "no_observed_change"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 1
+     },
+     "action_index": 10,
+     "after_frame": "209922d16191c7dc5aeecc8092b8e3dabd5d03924759e36b1c5f82ee8b799e29",
+     "availability": "complete",
+     "changed_cells": 33,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "358af0e0078f0e04a00525bce4ab6280a2210f559869c38fda6679a1879d98d1",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 2
+     },
+     "action_index": 11,
+     "after_frame": "f5c7915780282105b2b314d4b4c85a42e0fde3912a5942c62657d1a4db08cc47",
+     "availability": "complete",
+     "changed_cells": 32,
+     "continuity": "matches_previous_final",
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "pre_frame": "209922d16191c7dc5aeecc8092b8e3dabd5d03924759e36b1c5f82ee8b799e29",
+     "progress": "unknown",
+     "segment": 0,
+     "visual_effect": "final_frame_differs"
+    }
+   ],
+   "triggers": [],
+   "visual_effects": [
+    "final_frame_differs",
+    "no_observed_change"
+   ]
+  }
+ ],
+ "frozen_files_sha256": {
+  "detector.py": "ee8b340cf69cd092e37508b86152da4b33073bbb9ab5caf833cef6ec6e931d62",
+  "thresholds.py": "0a88196a13f74fd3ccb9a89441926ea54b5e3209b9589641b96461ffbfee3985",
+  "trigger_spec.json": "8dc8d9097d4764a3ecbe5185b3c8ec021d2ab15316e81f0515a67c3d9f6cd7d9"
+ },
+ "labels": "none: these transitions have no independent stagnation labels; all categories are descriptive",
+ "params": {
+  "no_progress_horizon": null,
+  "novelty_stall": null,
+  "prediction_failures": null,
+  "repeat_no_effect": null,
+  "state_action_recurrence": 2,
+  "tiny_effect_repeat": 10
+ },
+ "per_game": {
+  "ar25": {
+   "candidate_missed_patterns": 0,
+   "candidate_missed_repeated_action_episodes": 0,
+   "dispatch_status": {
+    "acknowledged": 48
+   },
+   "distinct_pre_frames": 4,
+   "environment_events": [
+    "none_reported"
+   ],
+   "episodes": 4,
+   "episodes_with_trigger": 4,
+   "firing_steps": 36,
+   "patterns_by_category": {
+    "M1_exact_repeat_no_change": 10,
+    "M2_same_action_no_change": 10,
+    "M3_action_id_no_change_streak": 2
+   },
+   "potential_false_interruptions": 0,
+   "steps": 48,
+   "triggers": 8
+  },
+  "s5i5": {
+   "candidate_missed_patterns": 4,
+   "candidate_missed_repeated_action_episodes": 2,
+   "dispatch_status": {
+    "acknowledged": 48
+   },
+   "distinct_pre_frames": 48,
+   "environment_events": [
+    "none_reported"
+   ],
+   "episodes": 4,
+   "episodes_with_trigger": 2,
+   "firing_steps": 6,
+   "patterns_by_category": {
+    "M4_repeated_tiny_effect": 6
+   },
+   "potential_false_interruptions": 2,
+   "steps": 48,
+   "triggers": 2
+  },
+  "wa30": {
+   "candidate_missed_patterns": 0,
+   "candidate_missed_repeated_action_episodes": 0,
+   "dispatch_status": {
+    "acknowledged": 48
+   },
+   "distinct_pre_frames": 44,
+   "environment_events": [
+    "none_reported"
+   ],
+   "episodes": 4,
+   "episodes_with_trigger": 1,
+   "firing_steps": 1,
+   "patterns_by_category": {},
+   "potential_false_interruptions": 1,
+   "steps": 48,
+   "triggers": 1
+  }
+ },
+ "transitions": 144,
+ "version": "stagnation_supervision_v1_archive_diagnostic",
+ "view": "full_frame_unmasked"
+}
