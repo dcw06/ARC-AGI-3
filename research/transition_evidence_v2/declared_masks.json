@@ -1,0 +1,30 @@
+{
+  "version": "declared_masks_v1",
+  "status": "frozen",
+  "meaning": "A declared region is selected from development evidence for separate reporting. It is not established as irrelevant to the task, and changes inside it are counted, not discarded.",
+  "masks": {
+    "s5i5": {
+      "game_id": "s5i5-18d95033",
+      "mask": {
+        "id": "s5i5-declared-region-r63-x49-63",
+        "frame_shape": [64, 64],
+        "rects_xyxy": [[49, 63, 63, 63]],
+        "provenance": {
+          "kind": "declared",
+          "source": "evidence/action-effect-history-v1-complete.zip (sha256 a67b69557d835f8076e3b80674c29c0032b95ec2dbd9a70f032ed85af54654cb, lock reports/action_effect_history_v1_archive.json), episodes b1/b2 s5i5 baseline and history, 48 transitions",
+          "basis": "a region selected from development evidence: in all 48 archived s5i5 transitions every changed cell lay in row 63, x 49..63, with 1 or 2 cells changing per action; not established as irrelevant to the task"
+        }
+      }
+    }
+  },
+  "unmasked": {
+    "ar25": "no cell changed in any of its 48 archived transitions; there is nothing to declare",
+    "wa30": "4 bottom-edge cells (row 63, x 60..63) changed 16 times alongside a moving block; whether they form a separate region is ambiguous, so no region is declared"
+  },
+  "source_archive": {
+    "path": "evidence/action-effect-history-v1-complete.zip",
+    "sha256": "a67b69557d835f8076e3b80674c29c0032b95ec2dbd9a70f032ed85af54654cb",
+    "lock": "reports/action_effect_history_v1_archive.json",
+    "partition": "development"
+  }
+}
