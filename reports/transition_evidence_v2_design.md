@@ -1,10 +1,11 @@
-# Transition evidence v2: design r2 (record format draft; declared mask table frozen; no compute)
+# Transition evidence v2: design r2 (format frozen at 6b0a4ff; declared mask table frozen; no compute)
 
 **Status.**
 - **Where it lives.** Branch `transition-evidence-v2`. Code is in `research/transition_evidence_v2/` and tests are in
   `tests/test_transition_evidence_v2.py`.
-- **What is frozen.** The declared mask table (`declared_masks.json`, declared_masks_v1) is frozen. The record format
-  is still a draft until the validation fixes below are reviewed.
+- **What is frozen.** The record format and the declared mask table (`declared_masks.json`, declared_masks_v1) are
+  frozen at the reviewed revision `6b0a4ff`. `freeze.json` pins every module by SHA-256, and a test fails on any
+  change or any unlisted module. A change to the format is a new version, not an edit.
 - **What is unchanged.** Version 1 and WS3 questionnaire v1 are untouched. This decision includes no GPU launch and no
   compute authorization.
 

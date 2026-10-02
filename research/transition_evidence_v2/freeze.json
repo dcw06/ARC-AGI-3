@@ -1,0 +1,14 @@
+{
+  "format": "transition_evidence_v2",
+  "status": "frozen",
+  "reviewed_commit": "6b0a4ff",
+  "review": "independent review of 6b0a4ff: all previous findings fixed, no new blocking issue; 47 tests pass including the 144 archived-transition checks",
+  "scope": "the record format, its validation and verification, and declared_masks_v1. This freeze does not approve any GPU launch, and adopting masked evidence in a prompt, memory or detector still requires a separately versioned experiment.",
+  "files": {
+    "research/transition_evidence_v2/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "research/transition_evidence_v2/vocabulary.py": "afbd5325ff3fe8efe08a54aafa990eca626bce19748461cd965cf5fd7e2673fb",
+    "research/transition_evidence_v2/transition.py": "dce1b19b35ed0d6bc6b627eafebe26f7b459ea7d0a4fd0843a00d035d63cd305",
+    "research/transition_evidence_v2/masks.py": "b459bcd24437a21177568d8d736bf58a22c8e2f6f52c7325838b0fc1ba39420c",
+    "research/transition_evidence_v2/declared_masks.json": "670dab4ce86daf4b74ad1a4c8fe38bf754fe38cd18d91c608e23eb4aac0a5b35"
+  }
+}

@@ -460,5 +460,18 @@ class FrozenDeclaredMasks(unittest.TestCase):
             edited.unlink(missing_ok=True)
 
 
+class Freeze(unittest.TestCase):
+    def test_the_frozen_files_are_byte_identical_to_the_reviewed_revision(self):
+        import hashlib
+        freeze = json.loads((ROOT / 'research/transition_evidence_v2/freeze.json').read_bytes())
+        self.assertEqual(freeze['status'], 'frozen')
+        for path, digest in freeze['files'].items():
+            self.assertEqual(hashlib.sha256((ROOT / path).read_bytes()).hexdigest(), digest, path)
+        listed = {Path(p).name for p in freeze['files']}
+        present = {f.name for f in (ROOT / 'research/transition_evidence_v2').iterdir()
+                   if f.suffix in ('.py', '.json') and f.name != 'freeze.json'}
+        self.assertEqual(present, listed)  # no unfrozen module may join the format
+
+
 if __name__ == '__main__':
     unittest.main()
