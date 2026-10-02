@@ -1,0 +1,11 @@
+{
+ "sha256": "ca1e518ccbfded860c80c481ca188e25fd3009a9c15db7413c69907db7ad02aa",
+ "hashed": "the 32-character lowercase hex string (UTF-8), without a trailing newline",
+ "bits": 128,
+ "source": "secrets.token_bytes(16) (operating-system CSPRNG), hex-encoded",
+ "drawn_at": "2026-10-02T07:04:18.822065+00:00",
+ "drawn_after_commits": {"decision_rules_freeze": "07308e3", "third_arm_decision": "991a277"},
+ "rules_sha256": "38c8de63a875e54949fc0ecede9c0dd2b0b603901aad4a3f8348fd6b92089af2",
+ "retention": "The seed itself is never committed. It was written once (exclusive create) to a git-ignored file outside the repository on the drawing machine; the human arranges two-holder retention of that value. The repository holds only this hash. Anyone holding the seed can rebuild probes.json byte-identically: python scripts/build_progress_subgoal_v1.py --check --seed-file <file>.",
+ "use": "questions.build('evaluation', seed=<hex>) with fixtures.EVALUATION_COUNT (30) per family"
+}

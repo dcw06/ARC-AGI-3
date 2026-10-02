@@ -1,0 +1,153 @@
+{
+ "arms": [
+  "raw_plus_computed_record",
+  "raw_plus_computed_record_plus_safeguard"
+ ],
+ "bytes": 9354405,
+ "calls_by_phase": {
+  "development/pass_1": 272,
+  "withheld/pass_1": 2790,
+  "withheld/pass_2": 2790
+ },
+ "contexts": 1154,
+ "evaluation_coverage": {
+  "abandonment_questions": 30,
+  "critical_classes": {
+   "change_between_observations": 60,
+   "confirmed_progress": 104,
+   "hypothesis_strengthened": 48,
+   "progress_without_visible_change": 30,
+   "simultaneous_changes": 79,
+   "subgoal_achieved_with_confirmed_progress": 30,
+   "subgoal_achieved_without_progress": 30,
+   "subgoal_budget_exhausted": 30,
+   "subgoal_disconfirmed": 30,
+   "subgoal_unobserved": 60,
+   "transient_change": 45,
+   "unobserved_last_outcome": 99,
+   "visible_change_without_progress": 304
+  },
+  "failures": [],
+  "families": {
+   "claim_causal": {
+    "best_shortcut_accuracy": 0.7,
+    "keys": {
+     "contradicted": 48,
+     "not_established": 72
+    },
+    "level": "causal_restraint",
+    "n": 120,
+    "role": "primary",
+    "shortcut_disagreement_n": 36
+   },
+   "claim_progress": {
+    "best_shortcut_accuracy": 0.7143,
+    "keys": {
+     "contradicted": 45,
+     "not_established": 225,
+     "supported": 45
+    },
+    "level": "confirmed_progress",
+    "n": 315,
+    "role": "primary",
+    "shortcut_disagreement_n": 90
+   },
+   "claim_usefulness": {
+    "best_shortcut_accuracy": 1.0,
+    "keys": {
+     "not_established": 120
+    },
+    "level": "hypothesized_usefulness",
+    "n": 120,
+    "role": "gate_only",
+    "shortcut_disagreement_n": 0
+   },
+   "effect_hypothesis": {
+    "best_shortcut_accuracy": 0.7083,
+    "keys": {
+     "insufficient_evidence": 40,
+     "strengthened": 40,
+     "weakened": 40
+    },
+    "level": "causal_restraint",
+    "n": 120,
+    "role": "primary",
+    "shortcut_disagreement_n": 35
+   },
+   "progress_status": {
+    "best_shortcut_accuracy": 0.75,
+    "keys": {
+     "confirmed": 90,
+     "unknown": 90
+    },
+    "level": "confirmed_progress",
+    "n": 180,
+    "role": "primary",
+    "shortcut_disagreement_n": 45
+   },
+   "region_changed": {
+    "best_shortcut_accuracy": 0.6667,
+    "keys": {
+     "cannot_tell": 40,
+     "no": 40,
+     "yes": 40
+    },
+    "level": "observed_change",
+    "n": 120,
+    "role": "primary",
+    "shortcut_disagreement_n": 40
+   },
+   "subgoal_decision": {
+    "best_shortcut_accuracy": 0.75,
+    "keys": {
+     "abandon_budget_exhausted": 30,
+     "abandon_invalidated": 30,
+     "continue": 30,
+     "stop_achieved": 30
+    },
+    "level": "subgoal_verification",
+    "n": 120,
+    "role": "primary",
+    "shortcut_disagreement_n": 30
+   },
+   "subgoal_status": {
+    "best_shortcut_accuracy": 0.7778,
+    "keys": {
+     "achieved": 60,
+     "cannot_tell": 60,
+     "not_achieved": 60
+    },
+    "level": "subgoal_verification",
+    "n": 180,
+    "role": "primary",
+    "shortcut_disagreement_n": 40
+   },
+   "visual_effect": {
+    "best_shortcut_accuracy": 0.75,
+    "keys": {
+     "changed_then_returned": 30,
+     "final_frame_differs": 30,
+     "indeterminate": 30,
+     "no_observed_change": 30
+    },
+    "level": "observed_change",
+    "n": 120,
+    "role": "primary",
+    "shortcut_disagreement_n": 30
+   }
+  },
+  "over_claim_denominators": {
+   "false_no_progress": 180,
+   "false_progress": 125,
+   "false_subgoal_success": 120,
+   "unsupported_causal_claim": 169,
+   "unsupported_usefulness_claim": 115
+  },
+  "uncertain_keyed_questions": 677
+ },
+ "evaluation_seed_sha256": "ca1e518ccbfded860c80c481ca188e25fd3009a9c15db7413c69907db7ad02aa",
+ "probe_set_sha256": "f93ec44bab00453147e8e7e555704b60edc8220e6b5677b89d199ce8fca5e02c",
+ "probes": 3062,
+ "scheduled_calls": 5852,
+ "version": "progress_subgoal_v1_questions_draft"
+}

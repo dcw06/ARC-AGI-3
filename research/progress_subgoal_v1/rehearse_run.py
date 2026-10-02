@@ -18,9 +18,10 @@ OUTPUT_NAME = 'progress-subgoal-v1'
 def rehearse(fault='none', seconds=900, workdir=None, root=ROOT):
     workdir = Path(workdir or tempfile.mkdtemp(prefix='ecv-rehearsal-'))
     os.environ.update(PSV1_REHEARSAL='1', CUDA_VISIBLE_DEVICES='')
-    from research.progress_subgoal_v1.probes import REHEARSAL_ENV, write_rehearsal_set
-    if not (os.environ.get(REHEARSAL_ENV) and Path(os.environ[REHEARSAL_ENV]).is_file()):
-        # Pre-freeze stand-in question set (the dry run plus development); never evaluation evidence.
+    from research.progress_subgoal_v1.probes import FROZEN_PATH, REHEARSAL_ENV, write_rehearsal_set
+    if not FROZEN_PATH.is_file() and not (os.environ.get(REHEARSAL_ENV)
+                                          and Path(os.environ[REHEARSAL_ENV]).is_file()):
+        # Before the freeze only: a stand-in question set (the dry run plus development).
         os.environ[REHEARSAL_ENV] = str(workdir / 'rehearsal-probes.json')
         write_rehearsal_set(os.environ[REHEARSAL_ENV])
     from research.progress_subgoal_v1.launch import run

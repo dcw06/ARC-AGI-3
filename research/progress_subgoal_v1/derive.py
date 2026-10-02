@@ -57,9 +57,10 @@ REQUIRED_SOURCE |= {'research/transition_evidence_v1/' + name for name in  # the
 SCRIPT_ROOT = ('ROOT = Path(__file__).resolve().parents[1]', 'ROOT = Path(__file__).resolve().parents[2]', 1)
 REHEARSAL_SET_OLD = "    os.environ.update(PSV1_REHEARSAL='1', CUDA_VISIBLE_DEVICES='')\n"
 REHEARSAL_SET_NEW = (REHEARSAL_SET_OLD +
-                     "    from research.progress_subgoal_v1.probes import REHEARSAL_ENV, write_rehearsal_set\n"
-                     "    if not (os.environ.get(REHEARSAL_ENV) and Path(os.environ[REHEARSAL_ENV]).is_file()):\n"
-                     "        # Pre-freeze stand-in question set (the dry run plus development); never evaluation evidence.\n"
+                     "    from research.progress_subgoal_v1.probes import FROZEN_PATH, REHEARSAL_ENV, write_rehearsal_set\n"
+                     "    if not FROZEN_PATH.is_file() and not (os.environ.get(REHEARSAL_ENV)\n"
+                     "                                          and Path(os.environ[REHEARSAL_ENV]).is_file()):\n"
+                     "        # Before the freeze only: a stand-in question set (the dry run plus development).\n"
                      "        os.environ[REHEARSAL_ENV] = str(workdir / 'rehearsal-probes.json')\n"
                      "        write_rehearsal_set(os.environ[REHEARSAL_ENV])\n")
 

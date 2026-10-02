@@ -81,7 +81,55 @@ class Adapters(unittest.TestCase):
                                           'CUDA_VISIBLE_DEVICES': '0'}):
             with self.assertRaises(PermissionError):
                 P.load_frozen()
-        self.assertFalse(P.FROZEN_PATH.exists())  # nothing is frozen
+        # with no override, the runtime reads the frozen question set
+        with mock.patch.dict(os.environ, {P.REHEARSAL_ENV: ''}):
+            frozen, digest = P.load_frozen()
+        summary = json.loads((ROOT / 'reports/progress_subgoal_v1_probe_summary.json').read_bytes())
+        self.assertEqual(digest, summary['probe_set_sha256'])
+
+
+class FrozenQuestionSet(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.raw = P.FROZEN_PATH.read_bytes()
+        cls.frozen = json.loads(cls.raw)
+
+    def test_summary_seed_hash_and_floors(self):
+        summary = json.loads((ROOT / 'reports/progress_subgoal_v1_probe_summary.json').read_bytes())
+        seed = json.loads((ROOT / 'research/progress_subgoal_v1/evaluation_seed.json').read_bytes())
+        self.assertEqual(summary['probe_set_sha256'], hashlib.sha256(self.raw).hexdigest())
+        self.assertEqual(summary['evaluation_seed_sha256'], seed['sha256'])
+        self.assertEqual(summary['evaluation_coverage']['failures'], [])
+        self.assertEqual(summary['scheduled_calls'], 5852)
+        self.assertEqual(self.frozen['decision_source_partition'], 'evaluation')
+        self.assertEqual(self.frozen['conditions'], list(Q.PRIMARY_CONDITIONS))
+
+    def test_evaluation_partition_is_new_and_disjoint_from_development_material(self):
+        ids = {p['source_context'] for p in self.frozen['probes'] if p['partition'] == 'withheld'}
+        dev_ids = {f['id'] for f in __import__('research.progress_subgoal_v1.fixtures', fromlist=['x']).generate(
+            'coverage_dryrun')} | {p['source_context'] for p in self.frozen['probes'] if p['partition'] == 'development'}
+        self.assertTrue(ids)
+        self.assertFalse(ids & dev_ids)
+        self.assertTrue(all(p['probe_id'].startswith('evaluation:') for p in self.frozen['probes']
+                            if p['partition'] == 'withheld'))
+
+    def test_no_evaluator_data_reaches_a_frozen_request(self):
+        from research.progress_subgoal_v1 import fixtures as F
+        answers = {a for options in Q.ANSWERS.values() for a in options}
+        words = [f for f in F.FAMILIES if f not in answers] + ['evaluator_only', 'unobservable', '"key"', 'fixture']
+        for r in list(P.scheduled_requests(self.frozen))[::53]:
+            text = json.dumps(r['request'])
+            for word in words:
+                self.assertNotIn(word, text)
+
+    @unittest.skipUnless(os.environ.get('PSV1_EVALUATION_SEED_FILE'), 'needs the evaluation seed (held outside the repo)')
+    def test_fresh_build_is_byte_identical(self):
+        import sys
+        sys.path.insert(0, str(ROOT))
+        from scripts import build_progress_subgoal_v1 as B
+        files = B.outputs(B.read_seed(os.environ['PSV1_EVALUATION_SEED_FILE']))
+        for path, raw in files.items():
+            self.assertEqual(raw, path.read_bytes(), path.name)
 
     def test_live_mode_is_refused_without_review_approvals_and_reservation(self):
         from research.progress_subgoal_v1 import authority
