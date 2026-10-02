@@ -361,8 +361,11 @@ These are estimates, not authorization ceilings.
    `scripts/audit_stagnation_supervision_v1_tokens.py`, in the pinned tokenizer environment. It counts every
    request from `research.stagnation_supervision_v1.closed_loop.requests.enumerate_requests()` plus
    `maximal_reflection_request()`.
-4. **Live evaluator.** An independent evaluator that rebuilds transition_evidence_v2 records from run evidence and
-   computes §8 with `outcomes.py`, with a replay test. It also needs the audit sampling script.
+4. **Live evaluator.** Implemented as `closed_loop/evaluate.py`; the r2 successor checks the exact scheduled
+   inventory, evidence-justified episode completion and closure, reconstructed policy requests, response/action
+   bindings, token/finish checks, and exact reflection evidence requests. Manifest-valid negative regressions and
+   connected CPU replay are recorded in `reports/stagnation_supervision_v1_evaluator_r2_review.md`.
+   This is not a package freeze. The audit sampling script is still needed.
 5. **Pre-run timing check** on the target CPU for per-step overhead at 40 actions. If it exceeds 6.1 s per step, the
    reservations above are recomputed before freezing. The horizon is not cut.
 6. **Review of placement and limits.** The suggestion-block placement, label and lifetime, the reflection request
