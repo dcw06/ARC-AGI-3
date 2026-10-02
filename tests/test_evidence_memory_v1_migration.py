@@ -1,7 +1,8 @@
 """Evidence-linked memory v1 (Track 2): the transition_evidence_v2 format migration changes no byte.
 
 PRE_MIGRATION_SHA256 was computed by `snapshot()` at commit a77d0d3 (records from transition_evidence_v1,
-before the migration). It covers, for the study's 42 trajectories: every writer prompt of every scripted writer
+before the migration). This file reproduces it unmodified at a77d0d3: `_record_key` falls back to
+`schema.key(schema.ref_of(record))` there, because `schema.record_key` does not exist yet. It covers, for the study's 42 trajectories: every writer prompt of every scripted writer
 (gate on and off), the final memory text, memory JSON, log and charges; the per-record level; the rendered
 recent_raw / state_keyed_raw / memory / full-history packages of the 98 context-pressure trajectories; and the full
 study output (writer, agreement incl. 886 mutations, reader, composite and pressure tables, trajectory digest).
@@ -19,12 +20,20 @@ from research.evidence_memory_v1 import readers as RD, render as R, schema as S,
 PRE_MIGRATION_SHA256 = '35c8a848462b6c15e4dd2bc68fa7e83969082ff2a24c9a18220e4b3b4720607b'
 
 
+def _record_key(record):
+    """A record's index key. schema.record_key exists only after the migration; at a77d0d3 the same key is
+    schema.key(schema.ref_of(record)), so this file reproduces the pinned hash at either commit."""
+    if hasattr(S, 'record_key'):
+        return S.record_key(record)
+    return S.key(S.ref_of(record))
+
+
 def _prompts(cls, t, gate):
     idx = S.index(t['records'])
     inner, seen_prompts = cls(), []
 
     def writer(seen, view):
-        seen_prompts.append(R.record_line(seen[-1], idx[S.record_key(seen[-1])]) + '\n' + R.memory_text(view['entries']))
+        seen_prompts.append(R.record_line(seen[-1], idx[_record_key(seen[-1])]) + '\n' + R.memory_text(view['entries']))
         return inner(seen, view)
     writer.name = inner.name
     return seen_prompts, W.run_writer(writer, t, gate=gate)
@@ -34,7 +43,7 @@ def snapshot():
     out = {'writer_prompts': [], 'memory_text': [], 'packages': [], 'levels': []}
     for t in TR.generate(delays=study.DELAYS, count=2):
         idx = S.index(t['records'])
-        out['levels'].append([[S.record_key(r), idx[S.record_key(r)]['level']] for r in t['records']])
+        out['levels'].append([[_record_key(r), idx[_record_key(r)]['level']] for r in t['records']])
         for name, cls in W.WRITERS.items():
             for gate in (False, True):
                 prompts, run = _prompts(cls, t, gate)
