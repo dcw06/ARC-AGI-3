@@ -1,7 +1,8 @@
-"""Stage 1 instruments for reports/evidence_memory_v1_protocol_v1.md (Track 2). No model is called; CPU only.
+"""Stage 1 instruments for reports/evidence_memory_v1_protocol_v2.md (Track 2). No model is called; CPU only.
 
 The model is the reader only. Memory is written by the deterministic faithful writer (writers.Faithful), so Stage 1
 tests memory access and representation, not the model's ability to write faithful memory or to complete levels.
+The phenomenon measured is loss of access under a restricted context, not necessarily forgetting inside the model.
 
 Contents:
 - the reader prompt frame, identical for every arm (one system message describing both package formats);
@@ -9,10 +10,14 @@ Contents:
 - recent-control questions: the latest fact in each trajectory whose evidence lies entirely inside the window;
 - package-relative truth and per-answer scoring flags (truth-relative and package-relative correctness, unsupported
   assertions, abstentions);
-- metrics with exact denominators, aggregated per (family, seed index) group, the unit of analysis;
+- metrics with exact denominators, aggregated per (family, group), the unit of analysis;
+- the primary endpoint (old-evidence factual accuracy under the common token budget), the two predeclared paired
+  contrasts, the availability-restricted representation contrast, diagnostics, and a stratified cluster bootstrap;
 - token measurement with the pinned tokenizer (tokens.Tokenizer) and the runtime estimate from the measured v3 fit.
 """
+import hashlib
 import json
+import random
 import statistics
 
 from research.evidence_memory_v1 import fidelity as F, readers as RD, render as R, schema as S, trajectories as TR, \
@@ -32,6 +37,13 @@ FIT = {'per_call': 0.039443079084717836, 'per_prompt_token': 1.4210487578923021e
 OVERHEAD_ALLOWANCE = {'installation': 282, 'model_startup': 1228, 'other_pre_question': 30,
                       'post_question_finalization': 30}  # the same report's allowance (worse of v2/v3, with factors)
 ADMISSION_CUTOFF_SECONDS = 3000
+
+# Decision constants (provisional, protocol v2 §9). None is a model-quality claim.
+COMPREHENSION_FLOOR = 0.80  # pilot interpretability floor, not proof of a cause when failed
+FORGETTING_DIAGNOSTIC = 0.15  # diagnostic threshold only, never the advancement gate
+UNSUPPORTED_MARGIN_POINT, UNSUPPORTED_MARGIN_UPPER = 0.02, 0.05
+BOOTSTRAP_SEED, BOOTSTRAP_RESAMPLES = 'evidence-memory-v1-stage1-bootstrap', 10000
+CONTRASTS = (('memory', 'recent_raw'), ('memory', 'state_keyed_raw'))  # the two predeclared contrasts
 
 SYSTEM = (
     'You answer questions about evidence from one episode of a grid game. Use only the supplied evidence; do not '
@@ -133,8 +145,9 @@ def score(output, question, truth, package):
     flags = {'valid': result['valid'], 'correct_truth': result['correct'], 'correct_package': False,
              'unsupported': False, 'abstained': False}
     if not result['valid']:
-        return {**flags, 'output': output, 'error': result['error']}
+        return {**flags, 'answer': 'invalid:' + str(output), 'output': output, 'error': result['error']}
     answer = json.loads(output)
+    flags['answer'] = json.dumps(answer, sort_keys=True, separators=(',', ':'))
     if question['kind'] == 'recall':
         values = answer['values']
         flags['correct_package'] = sorted(values) == sorted(package)
@@ -214,17 +227,23 @@ def forgetting_effect(rows_):
             sum(len(recent[k]) + len(old[k]) for k in both))
 
 
+def is_old(r):
+    """A primary-endpoint question: factual family recall with old evidence, at an old delay."""
+    return _factual(r) and r['control'] == 'family' and r['evidence'] == 'old' and r['delay'] in OLD_DELAYS
+
+
+def is_recent(r):
+    return _factual(r) and r['control'] == 'family' and r['evidence'] == 'recent' and r['delay'] == RECENT_DELAY
+
+
 def metrics(rows_):
-    """The Stage 1 metrics for one arm's rows. Each value is (macro mean, groups, questions)."""
+    """The Stage 1 metrics for one arm's rows. Each value is (macro mean, groups, questions).
+    `old_evidence_accuracy` is the primary endpoint; every other entry is a diagnostic or a reported rate."""
     factual = _factual
     return {
+        'old_evidence_accuracy': _group_mean(rows_, is_old, lambda r: r['correct_truth']),
         'forgetting_effect': forgetting_effect(rows_),
-        'factual_accuracy_recent_family': _group_mean(rows_, lambda r: factual(r) and r['control'] == 'family'
-                                                      and r['evidence'] == 'recent' and r['delay'] == RECENT_DELAY,
-                                                      lambda r: r['correct_truth']),
-        'factual_accuracy_old_family': _group_mean(rows_, lambda r: factual(r) and r['control'] == 'family'
-                                                   and r['evidence'] == 'old' and r['delay'] in OLD_DELAYS,
-                                                   lambda r: r['correct_truth']),
+        'factual_accuracy_recent_family': _group_mean(rows_, is_recent, lambda r: r['correct_truth']),
         'factual_accuracy_recent_control_at_old_delays': _group_mean(
             rows_, lambda r: factual(r) and r['control'] == 'recent' and r['delay'] in OLD_DELAYS,
             lambda r: r['correct_truth']),
@@ -266,3 +285,153 @@ def estimate_seconds(calls, completion='key_x2'):
 def key_completion(question, truth):
     answer = {'values': truth} if question['kind'] == 'recall' else {'choice': truth[0]}
     return json.dumps(answer, separators=(',', ':'))
+
+
+# ---- the primary endpoint, the predeclared contrasts and the bootstrap (protocol v2 §8-§9)
+
+def _macro(values):
+    """Macro mean over families of the mean over that family's groups."""
+    return statistics.mean(statistics.mean(v) for v in values.values())
+
+
+def bootstrap_ci(values, resamples=BOOTSTRAP_RESAMPLES, seed=BOOTSTRAP_SEED, level=0.95):
+    """Percentile interval of the macro mean: groups are resampled with replacement within each family (stratified
+    cluster bootstrap). `values` is {family: [one value per group]}."""
+    rng = random.Random(hashlib.sha256(seed.encode()).hexdigest())
+    families = sorted(values)
+    stats = sorted(statistics.mean(statistics.mean(rng.choices(values[f], k=len(values[f]))) for f in families)
+                   for _ in range(resamples))
+    tail = int((1 - level) / 2 * resamples)
+    return [round(stats[tail], 4), round(stats[-tail - 1], 4)]
+
+
+def _summary(values, questions, resamples):
+    if not values:
+        return {'estimate': None, 'ci95': None, 'groups': 0, 'questions': 0}
+    return {'estimate': round(_macro(values), 4), 'ci95': bootstrap_ci(values, resamples),
+            'groups': sum(len(v) for v in values.values()), 'questions': questions}
+
+
+def arm_estimate(rows_, keep, hit=lambda r: r['correct_truth'], resamples=BOOTSTRAP_RESAMPLES):
+    groups = {}
+    for r in rows_:
+        if keep(r):
+            groups.setdefault((r['family'], r['group']), []).append(hit(r))
+    values = {}
+    for (family, _), hits in sorted(groups.items()):
+        values.setdefault(family, []).append(sum(hits) / len(hits))
+    return _summary(values, sum(len(h) for h in groups.values()), resamples)
+
+
+def available(row):
+    """The package supports the full-history answer: the relevant evidence is in the package."""
+    return sorted(map(json.dumps, row['package'])) == sorted(map(json.dumps, row['truth']))
+
+
+def paired_contrast(rows_a, rows_b, keep, hit=lambda r: r['correct_truth'], eligible=None,
+                    resamples=BOOTSTRAP_RESAMPLES):
+    """Arm A minus arm B on the same questions: per group, the mean difference over its paired questions; then the
+    macro mean over families. `eligible(row_a, row_b)` restricts the pairs (reported as eligible / excluded)."""
+    other = {(r['trajectory'], r['question']): r for r in rows_b}
+    groups, considered = {}, 0
+    for r in rows_a:
+        b = other.get((r['trajectory'], r['question']))
+        if not keep(r) or b is None:
+            continue
+        considered += 1
+        if eligible is None or eligible(r, b):
+            groups.setdefault((r['family'], r['group']), []).append(int(hit(r)) - int(hit(b)))
+    values = {}
+    for (family, _), diffs in sorted(groups.items()):
+        values.setdefault(family, []).append(sum(diffs) / len(diffs))
+    used = sum(len(d) for d in groups.values())
+    return {**_summary(values, used, resamples), 'eligible_questions': used, 'excluded_questions': considered - used}
+
+
+def _direction(summary, positive, negative):
+    if summary['ci95'] is None:
+        return 'not_estimable'
+    if summary['ci95'][0] > 0:
+        return positive
+    if summary['ci95'][1] < 0:
+        return negative
+    return 'no_difference_detected'
+
+
+def analyze_rows(rows_by_arm, resamples=BOOTSTRAP_RESAMPLES):
+    """Endpoints, contrasts, diagnostics and conclusions from scored rows ({arm: rows}); every arm is required."""
+    recall = lambda r: r['kind'] == 'recall'
+    primary = {arm: arm_estimate(rows_by_arm[arm], is_old, resamples=resamples) for arm in ARMS}
+    reference = arm_estimate(rows_by_arm[REFERENCE], is_old, resamples=resamples)
+    memory = rows_by_arm['memory']
+    contrasts = {
+        'memory_vs_recent_raw': paired_contrast(memory, rows_by_arm['recent_raw'], is_old, resamples=resamples),
+        'memory_vs_state_keyed_raw': paired_contrast(memory, rows_by_arm['state_keyed_raw'], is_old,
+                                                     resamples=resamples),
+        'memory_vs_state_keyed_raw_evidence_in_both': paired_contrast(
+            memory, rows_by_arm['state_keyed_raw'], is_old, eligible=lambda a, b: available(a) and available(b),
+            resamples=resamples),
+    }
+    unsupported = paired_contrast(memory, rows_by_arm['recent_raw'], recall, hit=lambda r: r['unsupported'],
+                                  resamples=resamples)
+    diagnostics = {arm: metrics(rows_by_arm[arm]) for arm in ARMS + (REFERENCE,)}
+    result = {'primary_endpoint': primary, 'reference_full_history': reference, 'contrasts': contrasts,
+              'unsupported_difference_memory_minus_recent_raw': unsupported, 'diagnostics': diagnostics}
+    result['conclusions'] = conclusions(result)
+    return result
+
+
+def conclusions(result):
+    """The predeclared reading of an analysis. Each conclusion stands alone: beating recent history does not show
+    an advantage over retrieval, and a failed comprehension floor makes the experiment uninterpretable."""
+    d = result['diagnostics']
+    reading = {arm: d[arm]['reading_accuracy_package_has_evidence'][0] for arm in ARMS}
+    recent = d['recent_raw']['factual_accuracy_recent_family'][0]
+    interpretable = (all(v is not None and v >= COMPREHENSION_FLOOR for v in reading.values())
+                     and recent is not None and recent >= COMPREHENSION_FLOOR)
+    c = result['contrasts']
+    u = result['unsupported_difference_memory_minus_recent_raw']
+    safety = ('not_estimable' if u['ci95'] is None else
+              'within_margin' if u['estimate'] <= UNSUPPORTED_MARGIN_POINT and u['ci95'][1] <= UNSUPPORTED_MARGIN_UPPER
+              else 'outside_margin')
+    forgetting = d['recent_raw']['forgetting_effect'][0]
+    out = {
+        'interpretable': interpretable,
+        'comprehension': {'reading_accuracy': reading, 'recent_raw_recent_evidence_accuracy': recent,
+                          'floor': COMPREHENSION_FLOOR},
+        'access_vs_recent_history': _direction(c['memory_vs_recent_raw'], 'memory_preserves_access',
+                                               'memory_loses_access'),
+        'improvement_over_retrieval': _direction(c['memory_vs_state_keyed_raw'], 'memory_improves_over_retrieval',
+                                                 'memory_worse_than_retrieval'),
+        'representation_with_evidence_in_both': _direction(c['memory_vs_state_keyed_raw_evidence_in_both'],
+                                                           'representation_helps', 'representation_hurts'),
+        'unsupported_claims': safety,
+        'loss_of_access_in_recent_history_diagnostic': None if forgetting is None else forgetting >= FORGETTING_DIAGNOSTIC,
+    }
+    if not interpretable:
+        out['verdict'] = 'not_interpretable_cannot_isolate_retention_from_comprehension'
+    elif out['access_vs_recent_history'] == 'memory_preserves_access' and safety == 'within_margin':
+        out['verdict'] = ('memory_preserves_access_and_improves_over_retrieval'
+                          if out['improvement_over_retrieval'] == 'memory_improves_over_retrieval'
+                          else 'memory_preserves_access_not_shown_over_retrieval')
+    elif out['access_vs_recent_history'] == 'memory_preserves_access':
+        out['verdict'] = 'memory_preserves_access_unsupported_claims_outside_margin'
+    else:
+        out['verdict'] = 'access_preservation_not_shown'
+    return out
+
+
+def stability(pass_1_rows, pass_2_rows):
+    """Response stability on the preselected repeat: the share of repeated questions answered identically. It
+    measures repeatability of one deterministic configuration, not additional independent samples."""
+    first = {(r['arm'], r['trajectory'], r['question']): r for r in pass_1_rows}
+    by_arm = {}
+    for r in pass_2_rows:
+        a = first.get((r['arm'], r['trajectory'], r['question']))
+        if a is not None:
+            row = by_arm.setdefault(r['arm'], [0, 0])
+            row[0] += a['answer'] == r['answer']
+            row[1] += 1
+    return {'repeated_questions': sum(v[1] for v in by_arm.values()),
+            'identical': sum(v[0] for v in by_arm.values()),
+            'by_arm': {arm: {'identical': v[0], 'repeated': v[1]} for arm, v in sorted(by_arm.items())}}

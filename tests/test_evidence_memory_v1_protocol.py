@@ -103,7 +103,7 @@ class Stage1Instruments(unittest.TestCase):
             _, contents = P.arm_contents(t, memory, len)
             for arm in rows:
                 rows[arm] += P.rows(t, arm, P.oracle_read(arm, contents[arm][1]), memory=memory)
-        old = {arm: P.metrics(r)['factual_accuracy_old_family'][0] for arm, r in rows.items()}
+        old = {arm: P.metrics(r)['old_evidence_accuracy'][0] for arm, r in rows.items()}
         self.assertEqual(old['recent_raw'], 0.0)
         self.assertEqual(old[P.REFERENCE], 1.0)
         self.assertGreater(old['memory'], old['recent_raw'])
@@ -121,6 +121,93 @@ class Stage1Instruments(unittest.TestCase):
         self.assertAlmostEqual(P.estimate_seconds([(1000, 10)]),
                                P.FIT['per_call'] + 1000 * P.FIT['per_prompt_token'] + 20 * P.FIT['per_completion_token'])
         self.assertAlmostEqual(P.estimate_seconds([(0, 10)], 'cap'), P.FIT['per_call'] + P.MAX_TOKENS * P.FIT['per_completion_token'])
+
+
+def row(arm, family, group, delay, evidence, correct, question=0, kind='recall', control='family', truth=None,
+        package=None, unsupported=False, answer=None):
+    truth = truth or ['final_frame_differs']
+    return {'arm': arm, 'family': family, 'group': group, 'delay': delay, 'evidence': evidence, 'kind': kind,
+            'control': control, 'trajectory': f'{family}-{group}-d{delay}', 'question': question, 'truth': truth,
+            'package': package or truth, 'correct_truth': correct, 'correct_package': True, 'valid': True,
+            'unsupported': unsupported, 'abstained': False, 'answer': answer or str(correct)}
+
+
+def arms(spec):
+    """{arm: rows} from {arm: (recent accuracy, old accuracy)} over 4 families x 6 groups."""
+    out = {}
+    for arm, (recent, old) in spec.items():
+        rows = []
+        for f in range(4):
+            for g in range(6):
+                rows.append(row(arm, f'f{f}', g, 0, 'recent', g < recent * 6))
+                rows.append(row(arm, f'f{f}', g, 8, 'old', g < old * 6))
+        out[arm] = rows
+    return out
+
+
+class PrimaryEndpointAndContrasts(unittest.TestCase):
+    def test_bootstrap_is_seeded_stratified_and_brackets_the_estimate(self):
+        values = {'a': [0.0, 1.0, 0.5, 1.0], 'b': [1.0], 'c': [0.2, 0.4]}
+        ci = P.bootstrap_ci(values, resamples=2000)
+        self.assertEqual(ci, P.bootstrap_ci(values, resamples=2000))
+        self.assertLessEqual(ci[0], P._macro(values))
+        self.assertGreaterEqual(ci[1], P._macro(values))
+        self.assertEqual(P.bootstrap_ci({'a': [0.3, 0.3], 'b': [0.7]}, resamples=500), [0.5, 0.5])
+
+    def test_old_evidence_accuracy_is_primary_and_a_smaller_forgetting_gap_is_not_rewarded(self):
+        # Memory loses recent information (recent 0.5) while matching recent_raw on old evidence (0.5): its
+        # recent-minus-old gap is smaller, yet it gains no access. The primary contrast must say so.
+        rows = arms({'recent_raw': (1.0, 0.5), 'state_keyed_raw': (1.0, 0.5), 'memory': (0.5, 0.5),
+                     P.REFERENCE: (1.0, 1.0)})
+        gap = {arm: P.forgetting_effect(rows[arm])[0] for arm in ('recent_raw', 'memory')}
+        self.assertLess(gap['memory'], gap['recent_raw'])
+        result = P.analyze_rows(rows, resamples=500)
+        self.assertEqual(result['contrasts']['memory_vs_recent_raw']['estimate'], 0.0)
+        self.assertEqual(result['conclusions']['access_vs_recent_history'], 'no_difference_detected')
+        self.assertEqual(result['conclusions']['verdict'], 'access_preservation_not_shown')
+        self.assertEqual(result['primary_endpoint']['memory']['estimate'], 0.5)
+
+    def test_the_two_contrasts_support_different_conclusions(self):
+        rows = arms({'recent_raw': (1.0, 0.0), 'state_keyed_raw': (1.0, 1.0), 'memory': (1.0, 1.0),
+                     P.REFERENCE: (1.0, 1.0)})
+        c = P.analyze_rows(rows, resamples=500)['conclusions']
+        self.assertEqual(c['access_vs_recent_history'], 'memory_preserves_access')
+        self.assertEqual(c['improvement_over_retrieval'], 'no_difference_detected')
+        self.assertEqual(c['verdict'], 'memory_preserves_access_not_shown_over_retrieval')
+        rows = arms({'recent_raw': (1.0, 0.0), 'state_keyed_raw': (1.0, 0.0), 'memory': (1.0, 1.0),
+                     P.REFERENCE: (1.0, 1.0)})
+        self.assertEqual(P.analyze_rows(rows, resamples=500)['conclusions']['verdict'],
+                         'memory_preserves_access_and_improves_over_retrieval')
+
+    def test_representation_contrast_is_restricted_to_evidence_available_in_both(self):
+        rows = arms({'recent_raw': (1.0, 0.0), 'state_keyed_raw': (1.0, 0.0), 'memory': (1.0, 1.0),
+                     P.REFERENCE: (1.0, 1.0)})
+        for r in rows['state_keyed_raw']:
+            if r['evidence'] == 'old' and r['group'] < 3:
+                r['package'] = ['no_evidence']  # the retrieval package lacks the evidence for half the groups
+        c = P.analyze_rows(rows, resamples=500)['contrasts']['memory_vs_state_keyed_raw_evidence_in_both']
+        self.assertEqual((c['eligible_questions'], c['excluded_questions']), (12, 12))
+        self.assertEqual(c['groups'], 12)
+
+    def test_comprehension_floor_and_unsupported_margin(self):
+        rows = arms({'recent_raw': (0.5, 0.0), 'state_keyed_raw': (1.0, 1.0), 'memory': (1.0, 1.0),
+                     P.REFERENCE: (1.0, 1.0)})
+        c = P.analyze_rows(rows, resamples=500)['conclusions']
+        self.assertFalse(c['interpretable'])
+        self.assertEqual(c['verdict'], 'not_interpretable_cannot_isolate_retention_from_comprehension')
+        rows = arms({'recent_raw': (1.0, 0.0), 'state_keyed_raw': (1.0, 0.0), 'memory': (1.0, 1.0),
+                     P.REFERENCE: (1.0, 1.0)})
+        for r in rows['memory']:
+            r['unsupported'] = r['group'] == 0  # one group in six asserts unsupported values
+        c = P.analyze_rows(rows, resamples=500)['conclusions']
+        self.assertEqual(c['unsupported_claims'], 'outside_margin')
+        self.assertEqual(c['verdict'], 'memory_preserves_access_unsupported_claims_outside_margin')
+
+    def test_stability_counts_identical_repeated_answers(self):
+        first = [row('memory', 'f0', 0, 8, 'old', True, question=q, answer=str(q)) for q in range(4)]
+        second = [dict(r, answer=r['answer'] if r['question'] else 'changed') for r in first]
+        s = P.stability(first, second)
+        self.assertEqual((s['repeated_questions'], s['identical']), (4, 3))
 
 
 if __name__ == '__main__':
