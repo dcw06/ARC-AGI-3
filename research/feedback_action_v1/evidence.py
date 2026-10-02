@@ -1,7 +1,10 @@
 """The action-effect evidence both arms see (identical in baseline and candidate).
 
-Built only from `research.transition_evidence_v1` records (consumed read-only). Nothing here interprets an effect,
-assigns a cause or judges an action: every field is copied or mechanically derived from a transition record.
+Built only from `research.transition_evidence_v2` records (frozen format, consumed read-only, built with default
+arguments only; version 2's optional region-restricted view is never supplied or read anywhere in this track, which
+a migration test enforces). Nothing here interprets an effect, assigns a cause or judges an action: every
+field is copied or mechanically derived from a transition record. Every field read is one version 2 carries
+unchanged from version 1, so the view is byte-identical to the version 1 view (tested).
 
 Window rule (the evaluator re-derives it independently): the transitions of the current segment only, at most
 WINDOW of them, oldest first. A segment ends after a reported reset, level-count change or terminal state, so the
@@ -11,9 +14,10 @@ index the transition record carries; they are stable across decisions.
 States are observed states only: `S-` plus the first 12 hex digits of the frame's SHA-256. Two transitions "start
 in the same state" when their pre-action frames are identical; hidden game state may still differ.
 """
-from research.transition_evidence_v1 import transition as T, vocabulary as V
+from research.transition_evidence_v2 import transition as T, vocabulary as V
 
 VERSION = 'feedback_action_v1_evidence'
+FORMAT = V.VERSION  # transition_evidence_v2
 FIELD = 'action_effect_history'
 WINDOW = 8
 BOUNDARY_EVENTS = {V.RESET_ACKNOWLEDGED, V.LEVEL_COMPLETED, V.LEVEL_COUNT_DECREASED, V.TERMINAL_STATE}
@@ -36,7 +40,7 @@ def state_id_from_sha(sha):
 
 
 def state_id(grid):
-    return state_id_from_sha(T.frame_sha256(grid))
+    return state_id_from_sha(T.T1.frame_sha256(grid))  # version 2 reuses version 1's frame hash
 
 
 def entry(record):
@@ -77,7 +81,7 @@ def current_records(records):
 
 def view(raws, current_frame):
     """The evidence field for the next decision, from the raw transitions dispatched so far in this episode."""
-    records = T.history(raws)
+    records = T.history(raws)  # default arguments only
     current = current_records(records)
     shown = current[-WINDOW:]
     return {**DESCRIPTION, 'current_state': state_id(current_frame), 'omitted_entries': len(current) - len(shown),

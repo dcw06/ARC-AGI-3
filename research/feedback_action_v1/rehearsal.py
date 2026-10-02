@@ -1,6 +1,6 @@
 """CPU rehearsals of the closed loop with scripted model outputs (no model inference of any kind).
 
-The loop is: observe -> evidence view (shared, from transition_evidence_v1) -> adapter request -> scripted model ->
+The loop is: observe -> evidence view (shared, from transition_evidence_v2) -> adapter request -> scripted model ->
 adapter parse -> dispatch if and only if the action is valid -> raw transition. Only the adapter differs between
 arms. Scripted outputs exercise plumbing and the evaluator; they say nothing about how a model would behave.
 
@@ -12,7 +12,7 @@ Budgets (all retained in the trajectory, with the stop reason):
 import json
 
 from research.feedback_action_v1 import adapter as AD, environments as ENV, evaluate as EV, evidence as E
-from research.transition_evidence_v1 import transition as T
+from research.transition_evidence_v2 import transition as T
 
 VERSION = 'feedback_action_v1_rehearsal'
 A = ENV.action
@@ -27,9 +27,13 @@ def observation(obs, legal):
 
 def run(env_name, arm, model, budget, env_kwargs=None):
     """One episode. The candidate's carried statement is computed by the adapter's rules from the previous decision
-    and the transition it produced; the exact user message sent is retained per step, and every valid
-    hypothesis_test is kept as a separate model-statement record (never inside a transition record)."""
+    and the transition it produced; the exact user message sent is retained per step, with the record_id of the
+    transition it produced. Every valid hypothesis_test whose action was dispatched is kept as a separate
+    transition_evidence_v2 model-statement record citing that transition by `about_record_id` (never inside a
+    transition record). A valid block whose action was not dispatched is about no transition: it is retained in its
+    step (`adapter_decision`) only."""
     env = ENV.ENVIRONMENTS[env_name](**(env_kwargs or {}))
+    env.report_actions = True  # observations carry available_actions for the version 2 context
     raws, steps, statements, spent, stop = [], [], [], 0, None
     previous = None  # (adapter decision, events of the transition it produced or None, its ref or None)
     while stop is None:
@@ -58,15 +62,17 @@ def run(env_name, arm, model, budget, env_kwargs=None):
                 'treatment_chars': sum(size.values()) - sum(base.values()), 'adapter_decision': decision,
                 'request_user_content': request['messages'][1]['content'], 'dispatched_index': None}
         events = ref = None
+        step['record_id'] = None
         if decision['action'] is not None:
             raw = env.dispatch(decision['action'], proposal=decision['action'])
             raws.append(raw)
             step['dispatched_index'] = len(raws) - 1
-            events, ref = T.build(raw)['environment']['events'], f"T{raw['identity']['action_index']}"
-        if decision['procedure'] is not None:
-            about = (raws[-1]['identity'] if ref is not None else
-                     {'episode_id': env_name, 'decision_index': len(steps), 'dispatched': False})
-            statements.append(T.model_statement(about, 'hypothesis_test', decision['procedure'], 'candidate_policy'))
+            record = T.build(raw)
+            step['record_id'] = record['identity']['record_id']
+            events, ref = record['environment']['events'], f"T{raw['identity']['action_index']}"
+            if decision['procedure'] is not None:
+                statements.append(T.model_statement(raw['identity'], 'hypothesis_test', decision['procedure'],
+                                                    'candidate_policy'))
         previous = (decision, events, ref)
         steps.append(step)
     return {'version': VERSION, 'arm': arm, 'environment': env_name, 'budget': budget, 'raws': raws,

@@ -4,6 +4,10 @@ Each environment emits raw transitions in the `transition_evidence_v1` input for
 evidence view and the evaluator run unchanged on them. Mechanisms are known so that rehearsals can be scored; the
 mechanism is never shown to a policy. Action numbers have no game meaning outside this module.
 
+Available actions: with `report_actions` set, every observation also carries `available_actions`, so version 2
+records have a measured `context.available_actions_before` and `available_actions_after`. It is off by default so
+the frozen decision-boundary fixtures stay byte-identical (their context reports the field as `absent`).
+
 Fault injection: `faults` maps a dispatch index to 'failed' (rejected before execution; nothing happens) or
 'outcome_unknown' (the action executes, but its result is never returned).
 """
@@ -32,9 +36,14 @@ class Environment:
         self.dispatches = 0
         self.frame = self.level_frame()
 
+    report_actions = False  # when True, observations carry `available_actions` (transition_evidence_v2 context)
+
     def observe(self):
-        return {'frames': [copy.deepcopy(self.frame)], 'levels_completed': self.levels, 'state': self.state,
-                'full_reset': self.full_reset}
+        obs = {'frames': [copy.deepcopy(self.frame)], 'levels_completed': self.levels, 'state': self.state,
+               'full_reset': self.full_reset}
+        if self.report_actions:
+            obs['available_actions'] = list(self.legal_actions)
+        return obs
 
     def complete_level(self):
         self.levels += 1

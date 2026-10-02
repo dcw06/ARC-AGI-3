@@ -1,0 +1,2536 @@
+{
+ "generated_at_commit": "638b85e",
+ "scenarios": {
+  "action_budget_exhausted/baseline": {
+   "decisions": [
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "previous_statement_in_request": false,
+     "shown_refs": []
+    },
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "tested_other_state",
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "previous_statement_in_request": false,
+     "shown_refs": [
+      "T0"
+     ]
+    }
+   ],
+   "metrics": {
+    "chosen_status": {
+     "tested_other_state": 1,
+     "untested": 1
+    },
+    "citations": {},
+    "completion_tokens": 24,
+    "decisions": 2,
+    "dispatch_outcomes": {
+     "acknowledged": 2
+    },
+    "dispatched": 2,
+    "exact_repeats_after_no_change_same_state": 0,
+    "invalid_actions": {},
+    "invalid_procedures": {},
+    "levels_completed": 0,
+    "of_which_followed_by_visible_change_or_level": 0,
+    "predictions": {},
+    "prompt_chars": 4223,
+    "revision_after_contradiction": {},
+    "stop_reason": "action_budget",
+    "wins": 0
+   },
+   "requests": [
+    "e2c5805c45ba7caee0055f08a82a9a8f3ee85cf4bf88bc3c16f213aada1dfb68",
+    "8371e31e415c8e22bf66efc11832198b7370239836aa25df24cc36adff80190c"
+   ]
+  },
+  "action_budget_exhausted/candidate": {
+   "decisions": [
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "citations": {
+      "conflicting": [],
+      "supporting": []
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": true
+      },
+      "observed": "final_frame_differs",
+      "result": "correct"
+     },
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "shown_refs": []
+    },
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "tested_other_state",
+     "citations": {
+      "conflicting": [],
+      "supporting": []
+     },
+     "cites_nothing_with_evidence_shown": true,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": true
+      },
+      "observed": "final_frame_differs",
+      "result": "correct"
+     },
+     "previous_statement_in_request": true,
+     "procedure_problem": null,
+     "shown_refs": [
+      "T0"
+     ]
+    }
+   ],
+   "metrics": {
+    "chosen_status": {
+     "tested_other_state": 1,
+     "untested": 1
+    },
+    "citations": {},
+    "completion_tokens": 180,
+    "decisions": 2,
+    "dispatch_outcomes": {
+     "acknowledged": 2
+    },
+    "dispatched": 2,
+    "exact_repeats_after_no_change_same_state": 0,
+    "invalid_actions": {},
+    "invalid_procedures": {},
+    "levels_completed": 0,
+    "of_which_followed_by_visible_change_or_level": 0,
+    "predictions": {
+     "correct": 2
+    },
+    "prompt_chars": 7400,
+    "revision_after_contradiction": {},
+    "stop_reason": "action_budget",
+    "wins": 0
+   },
+   "requests": [
+    "0950b698e57e3e0e79522b08a04d5c40a87d9225928cf87ebe24d3f7ef88d535",
+    "4a94c643b591bf94161cc34eea2ccc64edd01e4f9c7e972e03dbb2a92bf8375b"
+   ]
+  },
+  "completion_budget_exhausted/candidate": {
+   "decisions": [
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "citations": {
+      "conflicting": [],
+      "supporting": []
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": true
+      },
+      "observed": "final_frame_differs",
+      "result": "correct"
+     },
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "shown_refs": []
+    },
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "tested_other_state",
+     "citations": {
+      "conflicting": [],
+      "supporting": []
+     },
+     "cites_nothing_with_evidence_shown": true,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": true
+      },
+      "observed": "final_frame_differs",
+      "result": "correct"
+     },
+     "previous_statement_in_request": true,
+     "procedure_problem": null,
+     "shown_refs": [
+      "T0"
+     ]
+    },
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "tested_other_state",
+     "citations": {
+      "conflicting": [],
+      "supporting": []
+     },
+     "cites_nothing_with_evidence_shown": true,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": true
+      },
+      "observed": "final_frame_differs",
+      "result": "correct"
+     },
+     "previous_statement_in_request": true,
+     "procedure_problem": null,
+     "shown_refs": [
+      "T0",
+      "T1"
+     ]
+    }
+   ],
+   "metrics": {
+    "chosen_status": {
+     "tested_other_state": 2,
+     "untested": 1
+    },
+    "citations": {},
+    "completion_tokens": 900,
+    "decisions": 3,
+    "dispatch_outcomes": {
+     "acknowledged": 3
+    },
+    "dispatched": 3,
+    "exact_repeats_after_no_change_same_state": 0,
+    "invalid_actions": {},
+    "invalid_procedures": {},
+    "levels_completed": 0,
+    "of_which_followed_by_visible_change_or_level": 0,
+    "predictions": {
+     "correct": 3
+    },
+    "prompt_chars": 11755,
+    "revision_after_contradiction": {},
+    "stop_reason": "completion_budget",
+    "wins": 0
+   },
+   "requests": [
+    "0950b698e57e3e0e79522b08a04d5c40a87d9225928cf87ebe24d3f7ef88d535",
+    "4a94c643b591bf94161cc34eea2ccc64edd01e4f9c7e972e03dbb2a92bf8375b",
+    "27ca74cde71e7781528a0f401e1aad39c57924c8f71f5e137300c9d632aed9e8"
+   ]
+  },
+  "contradiction_at_reset/candidate": {
+   "decisions": [
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "citations": {
+      "conflicting": [],
+      "supporting": []
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "reset_acknowledged"
+      ],
+      "visual": "no_observed_change"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": false
+      },
+      "observed": "no_observed_change",
+      "result": "incorrect"
+     },
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "shown_refs": []
+    },
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "citations": {
+      "conflicting": [
+       "earlier_not_shown",
+       "earlier_not_shown"
+      ],
+      "supporting": []
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "reset_acknowledged"
+      ],
+      "visual": "no_observed_change"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": false
+      },
+      "observed": "no_observed_change",
+      "result": "incorrect"
+     },
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "revision": "previous_statement_absent",
+     "shown_refs": []
+    }
+   ],
+   "metrics": {
+    "chosen_status": {
+     "untested": 2
+    },
+    "citations": {
+     "earlier_not_shown": 2
+    },
+    "completion_tokens": 207,
+    "decisions": 2,
+    "dispatch_outcomes": {
+     "acknowledged": 2
+    },
+    "dispatched": 2,
+    "exact_repeats_after_no_change_same_state": 0,
+    "invalid_actions": {},
+    "invalid_procedures": {},
+    "levels_completed": 0,
+    "of_which_followed_by_visible_change_or_level": 0,
+    "predictions": {
+     "incorrect": 2
+    },
+    "prompt_chars": 6805,
+    "revision_after_contradiction": {
+     "previous_statement_absent": 1
+    },
+    "stop_reason": "action_budget",
+    "wins": 0
+   },
+   "requests": [
+    "0950b698e57e3e0e79522b08a04d5c40a87d9225928cf87ebe24d3f7ef88d535",
+    "279de9fa7b4cc0febae61f024bcf0bf507dffb650d6283c140033cbfc8965a1d"
+   ]
+  },
+  "contradiction_ignored/candidate": {
+   "decisions": [
+    {
+     "action_key": [
+      1
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "citations": {
+      "conflicting": [],
+      "supporting": []
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "no_observed_change"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": false
+      },
+      "observed": "no_observed_change",
+      "result": "incorrect"
+     },
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "shown_refs": []
+    },
+    {
+     "action_key": [
+      1
+     ],
+     "action_problem": null,
+     "chosen_status": "no_change_same_state",
+     "citations": {
+      "conflicting": [],
+      "supporting": []
+     },
+     "cites_nothing_with_evidence_shown": true,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "no_observed_change"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": false
+      },
+      "observed": "no_observed_change",
+      "result": "incorrect"
+     },
+     "previous_statement_in_request": true,
+     "procedure_problem": null,
+     "repeat_cites_its_no_change": false,
+     "revision": "not_recognized",
+     "shown_refs": [
+      "T0"
+     ]
+    }
+   ],
+   "metrics": {
+    "chosen_status": {
+     "no_change_same_state": 1,
+     "untested": 1
+    },
+    "citations": {},
+    "completion_tokens": 179,
+    "decisions": 2,
+    "dispatch_outcomes": {
+     "acknowledged": 2
+    },
+    "dispatched": 2,
+    "exact_repeats_after_no_change_same_state": 1,
+    "invalid_actions": {},
+    "invalid_procedures": {},
+    "levels_completed": 0,
+    "of_which_followed_by_visible_change_or_level": 0,
+    "predictions": {
+     "incorrect": 2
+    },
+    "prompt_chars": 7397,
+    "revision_after_contradiction": {
+     "not_recognized": 1
+    },
+    "stop_reason": "action_budget",
+    "wins": 0
+   },
+   "requests": [
+    "0950b698e57e3e0e79522b08a04d5c40a87d9225928cf87ebe24d3f7ef88d535",
+    "08ca35868a681cafe8aae4d300787924d135ab03d31a3b79c8e1b6db7472e40a"
+   ]
+  },
+  "contradiction_revised/candidate": {
+   "decisions": [
+    {
+     "action_key": [
+      1
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "citations": {
+      "conflicting": [],
+      "supporting": []
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "no_observed_change"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": false
+      },
+      "observed": "no_observed_change",
+      "result": "incorrect"
+     },
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "shown_refs": []
+    },
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "citations": {
+      "conflicting": [
+       "supported",
+       "supported"
+      ],
+      "supporting": []
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": true
+      },
+      "observed": "final_frame_differs",
+      "result": "correct"
+     },
+     "previous_statement_in_request": true,
+     "procedure_problem": null,
+     "revision": "recognized",
+     "shown_refs": [
+      "T0"
+     ]
+    }
+   ],
+   "metrics": {
+    "chosen_status": {
+     "untested": 2
+    },
+    "citations": {
+     "supported": 2
+    },
+    "completion_tokens": 207,
+    "decisions": 2,
+    "dispatch_outcomes": {
+     "acknowledged": 2
+    },
+    "dispatched": 2,
+    "exact_repeats_after_no_change_same_state": 0,
+    "invalid_actions": {},
+    "invalid_procedures": {},
+    "levels_completed": 0,
+    "of_which_followed_by_visible_change_or_level": 0,
+    "predictions": {
+     "correct": 1,
+     "incorrect": 1
+    },
+    "prompt_chars": 7397,
+    "revision_after_contradiction": {
+     "recognized": 1
+    },
+    "stop_reason": "action_budget",
+    "wins": 0
+   },
+   "requests": [
+    "0950b698e57e3e0e79522b08a04d5c40a87d9225928cf87ebe24d3f7ef88d535",
+    "08ca35868a681cafe8aae4d300787924d135ab03d31a3b79c8e1b6db7472e40a"
+   ]
+  },
+  "coordinate_actions/baseline": {
+   "decisions": [
+    {
+     "action_key": [
+      6,
+      1,
+      1
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "no_observed_change"
+     },
+     "output_problem": null,
+     "previous_statement_in_request": false,
+     "shown_refs": []
+    },
+    {
+     "action_key": [
+      6,
+      1,
+      1
+     ],
+     "action_problem": null,
+     "chosen_status": "no_change_same_state",
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "no_observed_change"
+     },
+     "output_problem": null,
+     "previous_statement_in_request": false,
+     "shown_refs": [
+      "T0"
+     ]
+    },
+    {
+     "action_key": [
+      6,
+      2,
+      5
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "changed_then_returned"
+     },
+     "output_problem": null,
+     "previous_statement_in_request": false,
+     "shown_refs": [
+      "T0",
+      "T1"
+     ]
+    },
+    {
+     "action_key": [
+      6,
+      5,
+      5
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "level_completed",
+       "terminal_state"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "previous_statement_in_request": false,
+     "shown_refs": [
+      "T0",
+      "T1",
+      "T2"
+     ]
+    }
+   ],
+   "metrics": {
+    "chosen_status": {
+     "no_change_same_state": 1,
+     "untested": 3
+    },
+    "citations": {},
+    "completion_tokens": 64,
+    "decisions": 4,
+    "dispatch_outcomes": {
+     "acknowledged": 4
+    },
+    "dispatched": 4,
+    "exact_repeats_after_no_change_same_state": 1,
+    "invalid_actions": {},
+    "invalid_procedures": {},
+    "levels_completed": 1,
+    "of_which_followed_by_visible_change_or_level": 0,
+    "predictions": {},
+    "prompt_chars": 9790,
+    "revision_after_contradiction": {},
+    "stop_reason": "terminal_WIN",
+    "wins": 1
+   },
+   "requests": [
+    "68bc42ef97ff7d890e6ac187226c8f8c61faedb39917e3be88cd642d7284ebc8",
+    "4448a262108f3de62a71676168d5ed59e022b6be5469b49b5b958a2399e58927",
+    "327c57a8a34e7affdd4d8961e61fa47291a92e6bde463951ed6de0650d2f8b27",
+    "5c929ecb5655e7449f4f226df6e4d075e2e305a251b994376649958d7532431f"
+   ]
+  },
+  "coordinate_actions/candidate": {
+   "decisions": [
+    {
+     "action_key": [
+      6,
+      1,
+      1
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "citations": {
+      "conflicting": [],
+      "supporting": []
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "no_observed_change"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": [
+       1,
+       1,
+       1,
+       1
+      ],
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "changed_region_xyxy": true,
+       "level_completed": true,
+       "visual_effect": false
+      },
+      "observed": "no_observed_change",
+      "result": "incorrect"
+     },
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "shown_refs": []
+    },
+    {
+     "action_key": [
+      6,
+      1,
+      1
+     ],
+     "action_problem": null,
+     "chosen_status": "no_change_same_state",
+     "citations": {
+      "conflicting": [],
+      "supporting": [
+       "supported"
+      ]
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "no_observed_change"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": false
+      },
+      "observed": "no_observed_change",
+      "result": "incorrect"
+     },
+     "previous_statement_in_request": true,
+     "procedure_problem": null,
+     "repeat_cites_its_no_change": true,
+     "revision": "not_recognized",
+     "shown_refs": [
+      "T0"
+     ]
+    },
+    {
+     "action_key": [
+      6,
+      2,
+      5
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "citations": {
+      "conflicting": [
+       "supported"
+      ],
+      "supporting": []
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "changed_then_returned"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": [
+       2,
+       5,
+       2,
+       5
+      ],
+      "level_completed": false,
+      "visual_effect": "changed_then_returned"
+     },
+     "prediction_result": {
+      "fields": {
+       "changed_region_xyxy": true,
+       "level_completed": true,
+       "visual_effect": true
+      },
+      "observed": "changed_then_returned",
+      "result": "correct"
+     },
+     "previous_statement_in_request": true,
+     "procedure_problem": null,
+     "revision": "revised_not_cited",
+     "shown_refs": [
+      "T0",
+      "T1"
+     ]
+    },
+    {
+     "action_key": [
+      6,
+      5,
+      5
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "citations": {
+      "conflicting": [],
+      "supporting": [
+       "supported"
+      ]
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "level_completed",
+       "terminal_state"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": true,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": true
+      },
+      "observed": "final_frame_differs",
+      "result": "correct"
+     },
+     "previous_statement_in_request": true,
+     "procedure_problem": null,
+     "shown_refs": [
+      "T0",
+      "T1",
+      "T2"
+     ]
+    }
+   ],
+   "metrics": {
+    "chosen_status": {
+     "no_change_same_state": 1,
+     "untested": 3
+    },
+    "citations": {
+     "supported": 3
+    },
+    "completion_tokens": 410,
+    "decisions": 4,
+    "dispatch_outcomes": {
+     "acknowledged": 4
+    },
+    "dispatched": 4,
+    "exact_repeats_after_no_change_same_state": 1,
+    "invalid_actions": {},
+    "invalid_procedures": {},
+    "levels_completed": 1,
+    "of_which_followed_by_visible_change_or_level": 0,
+    "predictions": {
+     "correct": 2,
+     "incorrect": 2
+    },
+    "prompt_chars": 16478,
+    "revision_after_contradiction": {
+     "not_recognized": 1,
+     "revised_not_cited": 1
+    },
+    "stop_reason": "terminal_WIN",
+    "wins": 1
+   },
+   "requests": [
+    "71b20332472394d5832d5318aca365b27c15bac5656515da788d6f8235401d08",
+    "9fc4f198201eed61c1c1aee6e55b1ab3f1528f2255e1a0629f14292a19be0caa",
+    "f39a36d1bb0295016c3226704e83b9a8ddd9b715e6978a83bcdfe3d5255cd87b",
+    "44c0e2bb02f605ac3d28acf21d2b587bfd62dec9ff4f84ed6877d621102e1d51"
+   ]
+  },
+  "decision_budget_exhausted_all_invalid/baseline": {
+   "decisions": [
+    {
+     "action_problem": "not_json",
+     "dispatched": false,
+     "output_problem": "not_json",
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "shown_refs": []
+    },
+    {
+     "action_problem": "not_json",
+     "dispatched": false,
+     "output_problem": "not_json",
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "shown_refs": []
+    },
+    {
+     "action_problem": "not_json",
+     "dispatched": false,
+     "output_problem": "not_json",
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "shown_refs": []
+    }
+   ],
+   "metrics": {
+    "chosen_status": {},
+    "citations": {},
+    "completion_tokens": 9,
+    "decisions": 3,
+    "dispatch_outcomes": {},
+    "dispatched": 0,
+    "exact_repeats_after_no_change_same_state": 0,
+    "invalid_actions": {
+     "not_json": 3
+    },
+    "invalid_procedures": {},
+    "levels_completed": 0,
+    "of_which_followed_by_visible_change_or_level": 0,
+    "predictions": {},
+    "prompt_chars": 5853,
+    "revision_after_contradiction": {},
+    "stop_reason": "decision_budget",
+    "wins": 0
+   },
+   "requests": [
+    "e2c5805c45ba7caee0055f08a82a9a8f3ee85cf4bf88bc3c16f213aada1dfb68",
+    "e2c5805c45ba7caee0055f08a82a9a8f3ee85cf4bf88bc3c16f213aada1dfb68",
+    "e2c5805c45ba7caee0055f08a82a9a8f3ee85cf4bf88bc3c16f213aada1dfb68"
+   ]
+  },
+  "decision_budget_exhausted_all_invalid/candidate": {
+   "decisions": [
+    {
+     "action_problem": "not_json",
+     "dispatched": false,
+     "output_problem": "not_json",
+     "previous_statement_in_request": false,
+     "procedure_problem": "not_json",
+     "shown_refs": []
+    },
+    {
+     "action_problem": "not_json",
+     "dispatched": false,
+     "output_problem": "not_json",
+     "previous_statement_in_request": false,
+     "procedure_problem": "not_json",
+     "shown_refs": []
+    },
+    {
+     "action_problem": "not_json",
+     "dispatched": false,
+     "output_problem": "not_json",
+     "previous_statement_in_request": false,
+     "procedure_problem": "not_json",
+     "shown_refs": []
+    }
+   ],
+   "metrics": {
+    "chosen_status": {},
+    "citations": {},
+    "completion_tokens": 9,
+    "decisions": 3,
+    "dispatch_outcomes": {},
+    "dispatched": 0,
+    "exact_repeats_after_no_change_same_state": 0,
+    "invalid_actions": {
+     "not_json": 3
+    },
+    "invalid_procedures": {
+     "not_json": 3
+    },
+    "levels_completed": 0,
+    "of_which_followed_by_visible_change_or_level": 0,
+    "predictions": {},
+    "prompt_chars": 10222,
+    "revision_after_contradiction": {},
+    "stop_reason": "decision_budget",
+    "wins": 0
+   },
+   "requests": [
+    "0950b698e57e3e0e79522b08a04d5c40a87d9225928cf87ebe24d3f7ef88d535",
+    "5533e0a7ea0253f38327c3a7d797288355d3af484dbbdb29c57f1d091b1172f5",
+    "5533e0a7ea0253f38327c3a7d797288355d3af484dbbdb29c57f1d091b1172f5"
+   ]
+  },
+  "delayed_effect/baseline": {
+   "decisions": [
+    {
+     "action_key": [
+      5
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "no_observed_change"
+     },
+     "output_problem": null,
+     "previous_statement_in_request": false,
+     "shown_refs": []
+    },
+    {
+     "action_key": [
+      5
+     ],
+     "action_problem": null,
+     "chosen_status": "no_change_same_state",
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "no_observed_change"
+     },
+     "output_problem": null,
+     "previous_statement_in_request": false,
+     "shown_refs": [
+      "T0"
+     ]
+    },
+    {
+     "action_key": [
+      5
+     ],
+     "action_problem": null,
+     "chosen_status": "no_change_same_state",
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "level_completed"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "previous_statement_in_request": false,
+     "shown_refs": [
+      "T0",
+      "T1"
+     ]
+    },
+    {
+     "action_key": [
+      5
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "no_observed_change"
+     },
+     "output_problem": null,
+     "previous_statement_in_request": false,
+     "shown_refs": []
+    },
+    {
+     "action_key": [
+      5
+     ],
+     "action_problem": null,
+     "chosen_status": "no_change_same_state",
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "no_observed_change"
+     },
+     "output_problem": null,
+     "previous_statement_in_request": false,
+     "shown_refs": [
+      "T3"
+     ]
+    },
+    {
+     "action_key": [
+      5
+     ],
+     "action_problem": null,
+     "chosen_status": "no_change_same_state",
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "level_completed",
+       "terminal_state"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "previous_statement_in_request": false,
+     "shown_refs": [
+      "T3",
+      "T4"
+     ]
+    }
+   ],
+   "metrics": {
+    "chosen_status": {
+     "no_change_same_state": 4,
+     "untested": 2
+    },
+    "citations": {},
+    "completion_tokens": 72,
+    "decisions": 6,
+    "dispatch_outcomes": {
+     "acknowledged": 6
+    },
+    "dispatched": 6,
+    "exact_repeats_after_no_change_same_state": 4,
+    "invalid_actions": {},
+    "invalid_procedures": {},
+    "levels_completed": 2,
+    "of_which_followed_by_visible_change_or_level": 2,
+    "predictions": {},
+    "prompt_chars": 13616,
+    "revision_after_contradiction": {},
+    "stop_reason": "terminal_WIN",
+    "wins": 1
+   },
+   "requests": [
+    "27ef2b4fb29be41183379b6a664bc07c4e2c9fe38716adb08b9f1ad34b4e8218",
+    "66aad7de34dabd13edda5b8a0db953a7292db94db846553c3cbd63d64838509d",
+    "f29eae44dfc284a701595ca49f30ebd1f5a5371f60d9be36f6de4be5041447ca",
+    "3df5e5f72b730159be824e61217ff7b2f5daf347b3f563bbe9ae8b1f8fc9d49d",
+    "577a1cee275c91c66612297df67b4674ed2b5da613e407399a31ef4eaeabf9fe",
+    "be4bb176720c7cf08e7da0d131690f19298f1d8a65a9d04aa6d7eba7bc3e6e0e"
+   ]
+  },
+  "delayed_effect/candidate": {
+   "decisions": [
+    {
+     "action_key": [
+      5
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "citations": {
+      "conflicting": [],
+      "supporting": []
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "no_observed_change"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": false
+      },
+      "observed": "no_observed_change",
+      "result": "incorrect"
+     },
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "shown_refs": []
+    },
+    {
+     "action_key": [
+      5
+     ],
+     "action_problem": null,
+     "chosen_status": "no_change_same_state",
+     "citations": {
+      "conflicting": [],
+      "supporting": [
+       "supported",
+       "supported"
+      ]
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "no_observed_change"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": true,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": false,
+       "visual_effect": false
+      },
+      "observed": "no_observed_change",
+      "result": "incorrect"
+     },
+     "previous_statement_in_request": true,
+     "procedure_problem": null,
+     "repeat_cites_its_no_change": true,
+     "revision": "not_recognized",
+     "shown_refs": [
+      "T0"
+     ]
+    },
+    {
+     "action_key": [
+      5
+     ],
+     "action_problem": null,
+     "chosen_status": "no_change_same_state",
+     "citations": {
+      "conflicting": [],
+      "supporting": [
+       "supported",
+       "supported"
+      ]
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "level_completed"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": true,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": true
+      },
+      "observed": "final_frame_differs",
+      "result": "correct"
+     },
+     "previous_statement_in_request": true,
+     "procedure_problem": null,
+     "repeat_cites_its_no_change": true,
+     "revision": "not_recognized",
+     "shown_refs": [
+      "T0",
+      "T1"
+     ]
+    },
+    {
+     "action_key": [
+      5
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "citations": {
+      "conflicting": [],
+      "supporting": []
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "no_observed_change"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": false
+      },
+      "observed": "no_observed_change",
+      "result": "incorrect"
+     },
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "shown_refs": []
+    },
+    {
+     "action_key": [
+      5
+     ],
+     "action_problem": null,
+     "chosen_status": "no_change_same_state",
+     "citations": {
+      "conflicting": [],
+      "supporting": [
+       "supported",
+       "supported"
+      ]
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "no_observed_change"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": true,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": false,
+       "visual_effect": false
+      },
+      "observed": "no_observed_change",
+      "result": "incorrect"
+     },
+     "previous_statement_in_request": true,
+     "procedure_problem": null,
+     "repeat_cites_its_no_change": true,
+     "revision": "not_recognized",
+     "shown_refs": [
+      "T3"
+     ]
+    },
+    {
+     "action_key": [
+      5
+     ],
+     "action_problem": null,
+     "chosen_status": "no_change_same_state",
+     "citations": {
+      "conflicting": [],
+      "supporting": [
+       "supported",
+       "supported"
+      ]
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "level_completed",
+       "terminal_state"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": true,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": true
+      },
+      "observed": "final_frame_differs",
+      "result": "correct"
+     },
+     "previous_statement_in_request": true,
+     "procedure_problem": null,
+     "repeat_cites_its_no_change": true,
+     "revision": "not_recognized",
+     "shown_refs": [
+      "T3",
+      "T4"
+     ]
+    }
+   ],
+   "metrics": {
+    "chosen_status": {
+     "no_change_same_state": 4,
+     "untested": 2
+    },
+    "citations": {
+     "supported": 8
+    },
+    "completion_tokens": 634,
+    "decisions": 6,
+    "dispatch_outcomes": {
+     "acknowledged": 6
+    },
+    "dispatched": 6,
+    "exact_repeats_after_no_change_same_state": 4,
+    "invalid_actions": {},
+    "invalid_procedures": {},
+    "levels_completed": 2,
+    "of_which_followed_by_visible_change_or_level": 2,
+    "predictions": {
+     "correct": 2,
+     "incorrect": 4
+    },
+    "prompt_chars": 23531,
+    "revision_after_contradiction": {
+     "not_recognized": 4
+    },
+    "stop_reason": "terminal_WIN",
+    "wins": 1
+   },
+   "requests": [
+    "922f96c077056696ba36fa58c58f0ce0a4b22ddb9d8e600f28392db8f5f350d1",
+    "e8dd1fd970a7dbc37e67af2d9de4cf76a6f11fec67e18fc69f000ad01d5c836f",
+    "c8b2e02562c021b5f9c1f30041d04514f64ee56adcb9e99da5684e07c46f27ac",
+    "b4f855b5826408dc302218500861ff4d360446c56dc14c83796a7fd23e08f0f1",
+    "872b0eef40d5ad38ea32bc21815c7160d7de91c15519126f938845c42cf9691d",
+    "e20a440f56df42a2dcbdf1244119b25a565a44a3fc7b5870bdcf70f72a472ecd"
+   ]
+  },
+  "invalid_structured_output/baseline": {
+   "decisions": [
+    {
+     "action_problem": "not_json",
+     "dispatched": false,
+     "output_problem": "not_json",
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "shown_refs": []
+    },
+    {
+     "action_problem": "illegal_action",
+     "dispatched": false,
+     "output_problem": null,
+     "previous_statement_in_request": false,
+     "shown_refs": []
+    },
+    {
+     "action_problem": "truncated",
+     "dispatched": false,
+     "output_problem": "truncated",
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "shown_refs": []
+    },
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "previous_statement_in_request": false,
+     "shown_refs": []
+    },
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "tested_other_state",
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "previous_statement_in_request": false,
+     "shown_refs": [
+      "T0"
+     ]
+    }
+   ],
+   "metrics": {
+    "chosen_status": {
+     "tested_other_state": 1,
+     "untested": 1
+    },
+    "citations": {},
+    "completion_tokens": 45,
+    "decisions": 5,
+    "dispatch_outcomes": {
+     "acknowledged": 2
+    },
+    "dispatched": 2,
+    "exact_repeats_after_no_change_same_state": 0,
+    "invalid_actions": {
+     "illegal_action": 1,
+     "not_json": 1,
+     "truncated": 1
+    },
+    "invalid_procedures": {},
+    "levels_completed": 0,
+    "of_which_followed_by_visible_change_or_level": 0,
+    "predictions": {},
+    "prompt_chars": 10076,
+    "revision_after_contradiction": {},
+    "stop_reason": "decision_budget",
+    "wins": 0
+   },
+   "requests": [
+    "e2c5805c45ba7caee0055f08a82a9a8f3ee85cf4bf88bc3c16f213aada1dfb68",
+    "e2c5805c45ba7caee0055f08a82a9a8f3ee85cf4bf88bc3c16f213aada1dfb68",
+    "e2c5805c45ba7caee0055f08a82a9a8f3ee85cf4bf88bc3c16f213aada1dfb68",
+    "e2c5805c45ba7caee0055f08a82a9a8f3ee85cf4bf88bc3c16f213aada1dfb68",
+    "8371e31e415c8e22bf66efc11832198b7370239836aa25df24cc36adff80190c"
+   ]
+  },
+  "invalid_structured_output/candidate": {
+   "decisions": [
+    {
+     "action_problem": "not_json",
+     "dispatched": false,
+     "output_problem": "not_json",
+     "previous_statement_in_request": false,
+     "procedure_problem": "not_json",
+     "shown_refs": []
+    },
+    {
+     "action_problem": "illegal_action",
+     "citations": {
+      "conflicting": [],
+      "supporting": []
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": false,
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "shown_refs": []
+    },
+    {
+     "action_problem": "truncated",
+     "dispatched": false,
+     "output_problem": "truncated",
+     "previous_statement_in_request": true,
+     "procedure_problem": "truncated",
+     "shown_refs": []
+    },
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "previous_statement_in_request": false,
+     "procedure_problem": "unobservable_prediction",
+     "shown_refs": []
+    },
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "tested_other_state",
+     "citations": {
+      "conflicting": [],
+      "supporting": []
+     },
+     "cites_nothing_with_evidence_shown": true,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": true
+      },
+      "observed": "final_frame_differs",
+      "result": "correct"
+     },
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "shown_refs": [
+      "T0"
+     ]
+    }
+   ],
+   "metrics": {
+    "chosen_status": {
+     "tested_other_state": 1,
+     "untested": 1
+    },
+    "citations": {},
+    "completion_tokens": 256,
+    "decisions": 5,
+    "dispatch_outcomes": {
+     "acknowledged": 2
+    },
+    "dispatched": 2,
+    "exact_repeats_after_no_change_same_state": 0,
+    "invalid_actions": {
+     "illegal_action": 1,
+     "not_json": 1,
+     "truncated": 1
+    },
+    "invalid_procedures": {
+     "not_json": 1,
+     "truncated": 1,
+     "unobservable_prediction": 1
+    },
+    "levels_completed": 0,
+    "of_which_followed_by_visible_change_or_level": 0,
+    "predictions": {
+     "correct": 1
+    },
+    "prompt_chars": 17661,
+    "revision_after_contradiction": {},
+    "stop_reason": "decision_budget",
+    "wins": 0
+   },
+   "requests": [
+    "0950b698e57e3e0e79522b08a04d5c40a87d9225928cf87ebe24d3f7ef88d535",
+    "5533e0a7ea0253f38327c3a7d797288355d3af484dbbdb29c57f1d091b1172f5",
+    "bfb01f7f0e61571a1972a4705b7100925564199776a3b2d75121dd46ff8bab3c",
+    "5533e0a7ea0253f38327c3a7d797288355d3af484dbbdb29c57f1d091b1172f5",
+    "ae21302e03a4d9a58468516baec9e90ca52e4a7140b997a5f6df310b93b8402d"
+   ]
+  },
+  "missing_and_invented_references/candidate": {
+   "decisions": [
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "citations": {
+      "conflicting": [],
+      "supporting": [
+       "not_earlier"
+      ]
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": true
+      },
+      "observed": "final_frame_differs",
+      "result": "correct"
+     },
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "shown_refs": []
+    },
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "tested_other_state",
+     "citations": {
+      "conflicting": [],
+      "supporting": [
+       "not_earlier"
+      ]
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": true
+      },
+      "observed": "final_frame_differs",
+      "result": "correct"
+     },
+     "previous_statement_in_request": true,
+     "procedure_problem": null,
+     "shown_refs": [
+      "T0"
+     ]
+    },
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "tested_other_state",
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "previous_statement_in_request": true,
+     "procedure_problem": "missing_reference",
+     "shown_refs": [
+      "T0",
+      "T1"
+     ]
+    },
+    {
+     "action_key": [
+      4
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "citations": {
+      "conflicting": [],
+      "supporting": [
+       "supported",
+       "wrong_claim"
+      ]
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": true
+      },
+      "observed": "final_frame_differs",
+      "result": "correct"
+     },
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "shown_refs": [
+      "T0",
+      "T1",
+      "T2"
+     ]
+    }
+   ],
+   "metrics": {
+    "chosen_status": {
+     "tested_other_state": 2,
+     "untested": 2
+    },
+    "citations": {
+     "not_earlier": 2,
+     "supported": 1,
+     "wrong_claim": 1
+    },
+    "completion_tokens": 415,
+    "decisions": 4,
+    "dispatch_outcomes": {
+     "acknowledged": 4
+    },
+    "dispatched": 4,
+    "exact_repeats_after_no_change_same_state": 0,
+    "invalid_actions": {},
+    "invalid_procedures": {
+     "missing_reference": 1
+    },
+    "levels_completed": 0,
+    "of_which_followed_by_visible_change_or_level": 0,
+    "predictions": {
+     "correct": 3
+    },
+    "prompt_chars": 16154,
+    "revision_after_contradiction": {},
+    "stop_reason": "action_budget",
+    "wins": 0
+   },
+   "requests": [
+    "0950b698e57e3e0e79522b08a04d5c40a87d9225928cf87ebe24d3f7ef88d535",
+    "4a94c643b591bf94161cc34eea2ccc64edd01e4f9c7e972e03dbb2a92bf8375b",
+    "27ca74cde71e7781528a0f401e1aad39c57924c8f71f5e137300c9d632aed9e8",
+    "61009b919af3b7dfa8ef879be7744337aa5b80f252e099e2589ad7384fb9c4b1"
+   ]
+  },
+  "reset_and_level_boundaries/candidate": {
+   "decisions": [
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "citations": {
+      "conflicting": [],
+      "supporting": []
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": true
+      },
+      "observed": "final_frame_differs",
+      "result": "correct"
+     },
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "shown_refs": []
+    },
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "tested_other_state",
+     "citations": {
+      "conflicting": [],
+      "supporting": [
+       "supported"
+      ]
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": true
+      },
+      "observed": "final_frame_differs",
+      "result": "correct"
+     },
+     "previous_statement_in_request": true,
+     "procedure_problem": null,
+     "shown_refs": [
+      "T0"
+     ]
+    },
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "tested_other_state",
+     "citations": {
+      "conflicting": [],
+      "supporting": [
+       "supported"
+      ]
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "reset_acknowledged"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": true
+      },
+      "observed": "final_frame_differs",
+      "result": "correct"
+     },
+     "previous_statement_in_request": true,
+     "procedure_problem": null,
+     "shown_refs": [
+      "T0",
+      "T1"
+     ]
+    },
+    {
+     "action_key": [
+      4
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "citations": {
+      "conflicting": [],
+      "supporting": [
+       "earlier_not_shown"
+      ]
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": true
+      },
+      "observed": "final_frame_differs",
+      "result": "correct"
+     },
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "shown_refs": []
+    },
+    {
+     "action_key": [
+      4
+     ],
+     "action_problem": null,
+     "chosen_status": "tested_other_state",
+     "citations": {
+      "conflicting": [],
+      "supporting": [
+       "supported"
+      ]
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "level_completed"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": false,
+       "visual_effect": true
+      },
+      "observed": "final_frame_differs",
+      "result": "incorrect"
+     },
+     "previous_statement_in_request": true,
+     "procedure_problem": null,
+     "shown_refs": [
+      "T3"
+     ]
+    },
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "citations": {
+      "conflicting": [],
+      "supporting": [
+       "earlier_not_shown"
+      ]
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": true
+      },
+      "observed": "final_frame_differs",
+      "result": "correct"
+     },
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "revision": "previous_statement_absent",
+     "shown_refs": []
+    }
+   ],
+   "metrics": {
+    "chosen_status": {
+     "tested_other_state": 3,
+     "untested": 3
+    },
+    "citations": {
+     "earlier_not_shown": 2,
+     "supported": 3
+    },
+    "completion_tokens": 605,
+    "decisions": 6,
+    "dispatch_outcomes": {
+     "acknowledged": 6
+    },
+    "dispatched": 6,
+    "exact_repeats_after_no_change_same_state": 0,
+    "invalid_actions": {},
+    "invalid_procedures": {},
+    "levels_completed": 1,
+    "of_which_followed_by_visible_change_or_level": 0,
+    "predictions": {
+     "correct": 5,
+     "incorrect": 1
+    },
+    "prompt_chars": 22654,
+    "revision_after_contradiction": {
+     "previous_statement_absent": 1
+    },
+    "stop_reason": "action_budget",
+    "wins": 0
+   },
+   "requests": [
+    "0950b698e57e3e0e79522b08a04d5c40a87d9225928cf87ebe24d3f7ef88d535",
+    "396ae3fb18c83344907dcb09764253c2209e315793a69d4328a91213e8038dc3",
+    "74829bd8632cce099fb53866feb55b7b44ccefb559dd3f044d1c731d0c3d1027",
+    "279de9fa7b4cc0febae61f024bcf0bf507dffb650d6283c140033cbfc8965a1d",
+    "d4ad019adbe8a9b1e6bb6a9fe56a2c68fbd01ad960f08a5f20113003eeea4e58",
+    "729deef196f917082aa4fbc790bbb6f79a5f06f3da9e21505477cea5d48a2ec9"
+   ]
+  },
+  "unknown_dispatch_outcome/candidate": {
+   "decisions": [
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "citations": {
+      "conflicting": [],
+      "supporting": []
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": true
+      },
+      "observed": "final_frame_differs",
+      "result": "correct"
+     },
+     "previous_statement_in_request": false,
+     "procedure_problem": null,
+     "shown_refs": []
+    },
+    {
+     "action_key": [
+      2
+     ],
+     "action_problem": null,
+     "chosen_status": "tested_other_state",
+     "citations": {
+      "conflicting": [],
+      "supporting": [
+       "supported"
+      ]
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "outcome_unknown",
+      "events": [
+       "not_observed"
+      ],
+      "visual": "indeterminate"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "reason": "dispatch outcome_unknown, visual indeterminate",
+      "result": "unscoreable"
+     },
+     "previous_statement_in_request": true,
+     "procedure_problem": null,
+     "shown_refs": [
+      "T0"
+     ]
+    },
+    {
+     "action_key": [
+      3
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "citations": {
+      "conflicting": [
+       "failure_read_as_no_change"
+      ],
+      "supporting": []
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "no_observed_change"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": false
+      },
+      "observed": "no_observed_change",
+      "result": "incorrect"
+     },
+     "previous_statement_in_request": true,
+     "procedure_problem": null,
+     "shown_refs": [
+      "T0",
+      "T1"
+     ]
+    },
+    {
+     "action_key": [
+      4
+     ],
+     "action_problem": null,
+     "chosen_status": "untested",
+     "citations": {
+      "conflicting": [],
+      "supporting": [
+       "supported"
+      ]
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "failed",
+      "events": [
+       "not_observed"
+      ],
+      "visual": "indeterminate"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "reason": "dispatch failed, visual indeterminate",
+      "result": "unscoreable"
+     },
+     "previous_statement_in_request": true,
+     "procedure_problem": null,
+     "revision": "not_recognized",
+     "shown_refs": [
+      "T0",
+      "T1",
+      "T2"
+     ]
+    },
+    {
+     "action_key": [
+      4
+     ],
+     "action_problem": null,
+     "chosen_status": "failed_only",
+     "citations": {
+      "conflicting": [],
+      "supporting": [
+       "supported"
+      ]
+     },
+     "cites_nothing_with_evidence_shown": false,
+     "dispatched": true,
+     "outcome": {
+      "dispatch": "acknowledged",
+      "events": [
+       "none_reported"
+      ],
+      "visual": "final_frame_differs"
+     },
+     "output_problem": null,
+     "prediction": {
+      "changed_region_xyxy": null,
+      "level_completed": false,
+      "visual_effect": "final_frame_differs"
+     },
+     "prediction_result": {
+      "fields": {
+       "level_completed": true,
+       "visual_effect": true
+      },
+      "observed": "final_frame_differs",
+      "result": "correct"
+     },
+     "previous_statement_in_request": true,
+     "procedure_problem": null,
+     "shown_refs": [
+      "T0",
+      "T1",
+      "T2",
+      "T3"
+     ]
+    }
+   ],
+   "metrics": {
+    "chosen_status": {
+     "failed_only": 1,
+     "tested_other_state": 1,
+     "untested": 3
+    },
+    "citations": {
+     "failure_read_as_no_change": 1,
+     "supported": 3
+    },
+    "completion_tokens": 495,
+    "decisions": 5,
+    "dispatch_outcomes": {
+     "acknowledged": 3,
+     "failed": 1,
+     "outcome_unknown": 1
+    },
+    "dispatched": 5,
+    "exact_repeats_after_no_change_same_state": 0,
+    "invalid_actions": {},
+    "invalid_procedures": {},
+    "levels_completed": 0,
+    "of_which_followed_by_visible_change_or_level": 0,
+    "predictions": {
+     "correct": 2,
+     "incorrect": 1,
+     "unscoreable": 2
+    },
+    "prompt_chars": 21564,
+    "revision_after_contradiction": {
+     "not_recognized": 1
+    },
+    "stop_reason": "action_budget",
+    "wins": 0
+   },
+   "requests": [
+    "0950b698e57e3e0e79522b08a04d5c40a87d9225928cf87ebe24d3f7ef88d535",
+    "4a94c643b591bf94161cc34eea2ccc64edd01e4f9c7e972e03dbb2a92bf8375b",
+    "6a196d944165a2527009aa739c05f349e6bd026a534c8d509d6f1092f4e35f39",
+    "5407251e373f0f052737821dcc489ce6075c118922591bc31a990b79a3037942",
+    "ae75f1734c6c1b9a067e10e5871036094d1042260cace30de2f4d4f43eaa2c05"
+   ]
+  }
+ }
+}

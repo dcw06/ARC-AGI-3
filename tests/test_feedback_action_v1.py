@@ -7,7 +7,7 @@ import unittest
 
 from research.feedback_action_v1 import (adapter as AD, environments as ENV, evaluate as EV, evidence as E,
                                          fixtures as F, rehearsal as R)
-from research.transition_evidence_v1 import transition as T
+from research.transition_evidence_v2 import transition as T
 
 ROOT = Path(__file__).resolve().parents[1]
 FROZEN = json.loads(F.OUTPUT.read_bytes())
@@ -351,10 +351,13 @@ class CarriedStatement(unittest.TestCase):
             self.assertNotIn('hypothesis', json.dumps(trajectory['raws']), name)
             for record in T.history(trajectory['raws']):
                 self.assertEqual(T.validate(record), [])
-            expected = sum(s['adapter_decision']['procedure'] is not None for s in trajectory['steps'])
-            self.assertEqual(len(trajectory['model_statements']), expected)
+            # one statement record per valid block whose action was dispatched, citing that transition's record_id
+            about = [s['record_id'] for s in trajectory['steps']
+                     if s['adapter_decision']['procedure'] is not None and s['dispatched_index'] is not None]
+            self.assertEqual([s['about_record_id'] for s in trajectory['model_statements']], about)
             for statement in trajectory['model_statements']:
-                self.assertEqual((statement['record'], statement['status']), ('model_statement', 'hypothesis'))
+                self.assertEqual((statement['record'], statement['status'], statement['version']),
+                                 ('model_statement', 'hypothesis', 'transition_evidence_v2'))
             if arm == 'baseline':
                 self.assertEqual(trajectory['model_statements'], [])
                 self.assertTrue(all(AD.PREVIOUS_FIELD not in s['request_user_content'] for s in trajectory['steps']))

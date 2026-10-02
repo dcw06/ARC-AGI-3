@@ -3,6 +3,15 @@
 r1 applies review finding P1: the candidate's previous statement is now carried explicitly and is part of the
 treatment.
 
+**Format version: `transition_evidence_v2`** (frozen at `eeb11ba`), without masks. The migration changed no
+model-facing request byte and no evaluator result apart from the added record ids (design report, format note). The
+evidence named "`transition_evidence_v1` evidence view" below is built from version 2 records. Its bytes are
+identical.
+
+A live run must retain:
+- records as version 2, verified with `verify_history` against their raws;
+- statements as version 2 `model_statement` records, cited by `about_record_id`.
+
 **Status: draft for review.** It is not frozen and not authorized. There is no reservation, notebook, package or
 model call. Nothing here approves compute. Every number below is a proposal.
 

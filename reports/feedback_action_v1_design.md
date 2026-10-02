@@ -4,6 +4,25 @@
 approval. Every result below comes from scripted model outputs in synthetic environments. Scripted outputs test
 the plumbing and the evaluator. They say nothing about how a model behaves.
 
+**Format version: `transition_evidence_v2`** (frozen at `eeb11ba`). Earlier drafts of this report were written
+against `transition_evidence_v1`. This was a format migration, not an intervention:
+- **Records:** the evidence view and the rehearsal runner build v2 records, without a mask. The masked view is never
+  supplied or read.
+- **Statement records:** they are v2 `model_statement` records, citing the transition by `about_record_id`.
+- **Evaluator:** it also reports each cited and dispatched transition's `record_id`. It still recomputes facts with
+  version 1's independent `reference.py`.
+- **Rehearsal observations:** they now carry available actions, so the v2 context is measured.
+
+**What did not change**, checked against a golden captured at `638b85e` by `tests/test_feedback_action_v1_migration.py`:
+- every model-facing request, byte for byte, at all 64 decision points;
+- every evaluator result and metric, apart from the added record ids;
+- the fixtures, byte for byte.
+
+**The one difference.** A valid block whose action was not dispatched is now retained only in its step, not as a
+statement record, because v2 statements cite a transition. This affects one rehearsal decision.
+
+Where §§2–8 say `transition_evidence_v1`, read version 2. Version 2 contains version 1's record unchanged.
+
 ## 1. Question and hypothesis
 
 **Question.** When the agent has accurate action-effect evidence, does an explicit procedure for testing and

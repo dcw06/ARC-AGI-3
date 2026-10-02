@@ -16,6 +16,10 @@ things:
 - predictions: closed-vocabulary fields compared with the next transition.
 
 Free text (`hypothesis`, `if_different`) is retained and length-checked, never scored for plausibility.
+
+Record identity (transition_evidence_v2 format): every cited and every dispatched transition is also reported by its
+`record_id`, `<episode_id>#<action_index>`, derived here from the raw identity (the evaluator does not import version
+2 code; a test checks agreement with `transition_evidence_v2.transition.record_id`). Model-facing refs stay `T<n>`.
 """
 import hashlib
 import json
@@ -41,6 +45,22 @@ FAILED_ONLY = 'failed_only'                        # every dispatch failed: unte
 UNTESTED = 'untested'
 STATUSES = (NO_CHANGE_SAME_STATE, TRANSIENT_SAME_STATE, CHANGED_SAME_STATE, INDETERMINATE_SAME_STATE,
             TESTED_OTHER_STATE, OUTCOME_UNKNOWN_ONLY, FAILED_ONLY, UNTESTED)
+
+
+def record_id(raw):
+    identity = raw['identity']
+    return f"{identity['episode_id']}#{identity['action_index']}"
+
+
+def cited_record_id(cite, raws):
+    """The record_id an in-range ref resolves to (shown or not), else None (malformed, future or invented)."""
+    ref = cite.get('ref') if isinstance(cite, dict) else None
+    if not isinstance(ref, str) or ref[:1] != 'T' or not ref[1:].isdigit():
+        return None
+    for raw in raws:
+        if raw['identity']['action_index'] == int(ref[1:]):
+            return record_id(raw)
+    return None
 
 
 def grid_key(grid):
@@ -253,6 +273,8 @@ def evaluate_decision(raws, decision, prior=None):
         return result
     result['citations'] = {name: [citation_category(c, raws, shown, decision['current_frame']) for c in block[name]]
                            for name in ('supporting', 'conflicting')}
+    result['cited_record_ids'] = {name: [cited_record_id(c, raws) for c in block[name]]
+                                  for name in ('supporting', 'conflicting')}
     result['cites_nothing_with_evidence_shown'] = bool(shown) and not (block['supporting'] or block['conflicting'])
     result['prediction'] = block['prediction']
     if result['action_problem'] is None and result['chosen_status'] == NO_CHANGE_SAME_STATE:
@@ -282,6 +304,7 @@ def evaluate_trajectory(trajectory):
             raw = raws[step['dispatched_index']]
             f = REF.facts(raw)
             row['outcome'] = {'dispatch': f['dispatch'], 'visual': f['visual'], 'events': f['events']}
+            row['record_id'] = record_id(raw)
             if row.get('prediction') is not None:
                 row['prediction_result'] = score_prediction(row['prediction'], raw)
                 if row['prediction_result']['result'] == 'incorrect':
