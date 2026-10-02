@@ -34,5 +34,17 @@ class TierBProbe(unittest.TestCase):
             runpy.run_module('research.stagnation_supervision_v1.tier_b_probe', run_name='__main__')
 
 
+class PostHocInspection(unittest.TestCase):
+    def test_inspection_reproduces_and_leaves_the_probe_result_unchanged(self):
+        from research.stagnation_supervision_v1 import tier_b_inspection as INS
+        stored = json.loads(INS.RESULTS.read_text(encoding='utf-8'))
+        self.assertTrue(stored['post_hoc'])
+        self.assertEqual(json.loads(json.dumps(INS.run())), stored)
+        self.assertEqual(stored['game_id'], STORED['selected'])
+        self.assertEqual(json.loads(P.RESULTS.read_text(encoding='utf-8')), STORED)
+        with self.assertRaises(SystemExit):
+            runpy.run_module('research.stagnation_supervision_v1.tier_b_inspection', run_name='__main__')
+
+
 if __name__ == '__main__':
     unittest.main()
