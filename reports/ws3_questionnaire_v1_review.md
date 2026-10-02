@@ -19,13 +19,13 @@ runtime hash matched, so this was a reproducibility defect, not evidence corrupt
 - Packaging is identical with and without the incidental file.
 - Every packaged file is tracked.
 
-**Fresh-checkout procedure (r2, planned; no results retained yet).**
-1. The full local check is to run in a **fresh clone** of the committed branch (`.cache/ws3_fresh_check.sh`), in
-   which the R8 trajectory is absent.
-2. After r2 is built and frozen, the notebook review and the approval-path rehearsal are to run from a fresh clone of
-   the r2 commit.
+**Fresh-checkout procedure (r2).**
+1. **Done.** The full local check ran in a **fresh clone** of `32d8b3b` (`.cache/ws3_fresh_check.sh`), in which the
+   R8 trajectory is absent. All 100 tests passed (§4).
+2. **Planned.** After r2 is frozen, the notebook review and the approval-path rehearsal are to run from a fresh clone
+   of the freeze commit. Their results are recorded outside the lock (§4).
 
-Until both results are retained here, this package is not ready for approval or launch.
+Until step 2's results are retained, this package is not ready for approval or launch.
 
 **Evidence recovery (found by the first fresh-checkout check).** When the monitor is lost, the supervisor stops the
 worker with SIGTERM, which can land in the middle of an atomic evidence write. In the first fresh-clone check the
@@ -105,11 +105,9 @@ This is the import closure of the entry points, as in v2 and v3.
 
 ## 4. Local results
 
-**Pending.** The r2 fresh-checkout check has not yet completed on the fixed commit. The figures below are r1's.
-
-Full local check (`reports/ws3_questionnaire_v1_rehearsal_results.json`, run `package-r1-check-2`, with per-test
-diagnostics under `reports/ws3_questionnaire_v1_diagnostics/`): **all seven suites passed, 92 tests, 0 failures,
-0 errors.**
+**Fresh-checkout check (r2).** Run `package-r2-fresh-checkout-3` ran in a fresh clone of `32d8b3b` with the R8
+trajectory absent (`reports/ws3_questionnaire_v1_rehearsal_results.json`; per-test diagnostics under
+`reports/ws3_questionnaire_v1_diagnostics/`). **All seven suites passed: 100 tests, 0 failures, 0 errors.**
 
 | Suite | Tests | Result |
 |---|---|---|
@@ -118,8 +116,20 @@ diagnostics under `reports/ws3_questionnaire_v1_diagnostics/`): **all seven suit
 | Schedule, admission and interrupted withheld partition (derived) | 16 | passed |
 | Transport, cancellation and cache metrics (v1's suite, reused unchanged) | 14 | passed |
 | Diagnostics recorder (derived) | 6 | passed |
-| Connected-path rehearsals (derived) | 10 | passed |
-| Runtime derivation, inventory and allow-list | 8 | passed |
+| Connected-path rehearsals (derived), including the recovered-evidence regression on a full rehearsal | 10 | passed |
+| Runtime derivation, inventory, allow-list and committed-state recovery | 16 | passed |
+
+**Earlier fresh-clone attempts, retained in the record.**
+- `package-r2-fresh-checkout` exposed the interrupted-write race (see *Evidence recovery*).
+- `package-r2-fresh-checkout-2` was interrupted by a WSL restart, and then stopped because the 95aef4f review
+  superseded its commit. Neither produced a retained result.
+
+**Notebook review and approval path (planned).** These run after r2 is frozen, from a fresh clone of the freeze
+commit. They verify this lock, so their results cannot be bound by it: they are recorded outside the lock in
+`reports/ws3_questionnaire_v1_package_review.json` and `reports/ws3_questionnaire_v1_readiness.md`. r1's receipt
+is kept as `reports/ws3_questionnaire_v1_package_review_r1.json`.
+
+**r1's check, superseded.** Run `package-r1-check-2` passed 92 tests in the author's workspace.
 
 **The earlier run, retained.** Run `package-r1-check` failed one connected rehearsal. A timed-out regression-check
 question left the evaluator's `gate_status` at `complete`, although the scorer correctly withheld promotion. The
@@ -160,5 +170,5 @@ measured calls, with overheads taken as the worse of v2 and v3 per component.
 python -m scripts.derive_ws3_questionnaire_v1 --check
 python -m scripts.build_ws3_questionnaire_v1 --check
 python -m scripts.check_ws3_questionnaire_v1
-python -m scripts.review_ws3_questionnaire_v1_notebook --folder notebooks/ws3-questionnaire-v1-review-r1
+python -m scripts.review_ws3_questionnaire_v1_notebook --folder notebooks/ws3-questionnaire-v1-review-r2
 ```
