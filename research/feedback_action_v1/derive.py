@@ -84,6 +84,90 @@ RUNNER = (
      "                episode['stop_reason'] = {'WIN': 'win', 'GAME_OVER': 'game_over'}.get(obs.state.value, 'action_cap')\n",
      "                obs = post\n"
      "                step_index += 1  # terminal states are checked before the caps at the top of the loop\n", 1),
+    # ---- online session-abort rules (protocol v2 §10 F2a and F5; review finding P1 on e887e78)
+    ('import hashlib\nimport json\n', 'from fractions import Fraction\nimport hashlib\nimport json\n', 1),
+    ('class DispatchRejected(Exception):\n'
+     '    """The request was refused before reaching the game (definitely not applied)."""\n',
+     'class DispatchRejected(Exception):\n'
+     '    """The request was refused before reaching the game (definitely not applied)."""\n'
+     '\n\n'
+     'class SessionAbort(Exception):\n'
+     '    """A session-abort rule fired (protocol v2 §10: F2a invalid outputs, F5 dispatch failures). The session stops\n'
+     '    at once: no further call, dispatch or episode; partial evidence is kept; the run is never complete."""\n'
+     '\n'
+     '    def __init__(self, rule, counts):\n'
+     '        super().__init__(rule)\n'
+     "        self.rule, self.record = rule, {'rule': rule, **counts}\n", 1),
+    ("              'pairs': [], 'episodes': [], 'calls': 0, 'dispatches': 0, 'prompt_tokens': 0, 'completion_tokens': 0}\n",
+     "              'pairs': [], 'episodes': [], 'calls': 0, 'dispatches': 0, 'prompt_tokens': 0, 'completion_tokens': 0,\n"
+     "              'abort': None}\n"
+     "    online = {'arm_calls': {}, 'arm_invalid': {}, 'dispatched': 0, 'dispatch_failures': 0}  # session-abort counters\n",
+     1),
+    ('    def call(episode, request, obs):\n',
+     '    def abort_check_call(episode, invalid):\n'
+     '        """F2a, online after every policy call: per arm, over that arm\'s first `invalid_output_calls` calls in this\n'
+     '        session; abort at the call that makes invalid outputs exceed `invalid_output_rate` of that window (then the\n'
+     '        window\'s rate is certain to exceed it). Calls after the window never count."""\n'
+     "        rule = limits['session_abort']\n"
+     "        arm, window = episode['arm'], rule['invalid_output_calls']\n"
+     "        n = online['arm_calls'][arm] = online['arm_calls'].get(arm, 0) + 1\n"
+     '        if invalid and n <= window:\n'
+     "            online['arm_invalid'][arm] = online['arm_invalid'].get(arm, 0) + 1\n"
+     "        bad = online['arm_invalid'].get(arm, 0)\n"
+     "        if bad > Fraction(rule['invalid_output_rate']) * window:\n"
+     "            raise SessionAbort('F2a_invalid_outputs', {\n"
+     "                'arm': arm, 'invalid_outputs_in_window': bad, 'arm_calls': n, 'window_calls': window,\n"
+     "                'threshold_rate': rule['invalid_output_rate'], 'episode_id': episode['episode_id']})\n"
+     '\n'
+     '    def abort_check_dispatch(episode, outcome):\n'
+     '        """F5, online after every dispatch: the whole session (both arms); abort when failed plus unknown dispatches\n'
+     '        exceed `dispatch_failure_rate` of the dispatches so far."""\n'
+     "        rule = limits['session_abort']\n"
+     "        online['dispatched'] += 1\n"
+     "        if outcome['status'] != 'acknowledged':\n"
+     "            online['dispatch_failures'] += 1\n"
+     "        if online['dispatch_failures'] > Fraction(rule['dispatch_failure_rate']) * online['dispatched']:\n"
+     "            raise SessionAbort('F5_dispatch_failures', {\n"
+     "                'dispatch_failures': online['dispatch_failures'], 'dispatched': online['dispatched'],\n"
+     "                'threshold_rate': rule['dispatch_failure_rate'], 'episode_id': episode['episode_id']})\n"
+     '\n'
+     '    def call(episode, request, obs):\n', 1),
+    ("            row.update(status='invalid_output', error=str(exc)[:200])\n"
+     "            persist(episode)\n"
+     "            return None\n",
+     "            row.update(status='invalid_output', error=str(exc)[:200])\n"
+     "            persist(episode)\n"
+     "            abort_check_call(episode, True)\n"
+     "            return None\n", 1),
+    ("        row['status'] = 'valid'\n"
+     "        persist(episode)\n"
+     "        return action\n",
+     "        row['status'] = 'valid'\n"
+     "        persist(episode)\n"
+     "        abort_check_call(episode, False)\n"
+     "        return action\n", 1),
+    ("                persist(episode)\n"
+     "                if outcome['status'] != 'acknowledged':\n",
+     "                persist(episode)\n"
+     "                abort_check_dispatch(episode, outcome)\n"
+     "                if outcome['status'] != 'acknowledged':\n", 1),
+    ("        except TechnicalFailure as exc:\n"
+     "            episode.update(status='technical_failure', stop_reason='technical_failure', error=str(exc)[:200])\n"
+     "            raise\n",
+     "        except SessionAbort as exc:\n"
+     "            episode.update(status='aborted', stop_reason='session_abort', abort=exc.record)\n"
+     "            raise\n"
+     "        except TechnicalFailure as exc:\n"
+     "            episode.update(status='technical_failure', stop_reason='technical_failure', error=str(exc)[:200])\n"
+     "            raise\n", 1),
+    ("    except TechnicalFailure as exc:\n"
+     "        report.update(status='technical_failure', error=str(exc)[:200])\n",
+     "    except SessionAbort as exc:  # never complete; later pairs are recorded as not started\n"
+     "        report.update(status='aborted', error='session abort: ' + exc.rule, abort=exc.record)\n"
+     "        if report['pairs'] and report['pairs'][-1].get('status') == 'running':\n"
+     "            report['pairs'][-1]['status'] = 'interrupted'\n"
+     "    except TechnicalFailure as exc:\n"
+     "        report.update(status='technical_failure', error=str(exc)[:200])\n", 1),
 )
 
 SERVICE_VALIDATE = (

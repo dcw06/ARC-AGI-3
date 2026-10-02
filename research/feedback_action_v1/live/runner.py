@@ -6,6 +6,7 @@ bytes are durable before validation. Differences from Stage B: six isolated epis
 stop reasons, pair admission against a frozen allowance, a run deadline enforced even mid-pair, and
 accounting for every attempted episode.
 """
+from fractions import Fraction
 import hashlib
 import json
 import os
@@ -30,6 +31,15 @@ class TechnicalFailure(Exception):
 
 class DispatchRejected(Exception):
     """The request was refused before reaching the game (definitely not applied)."""
+
+
+class SessionAbort(Exception):
+    """A session-abort rule fired (protocol v2 §10: F2a invalid outputs, F5 dispatch failures). The session stops
+    at once: no further call, dispatch or episode; partial evidence is kept; the run is never complete."""
+
+    def __init__(self, rule, counts):
+        super().__init__(rule)
+        self.rule, self.record = rule, {'rule': rule, **counts}
 
 
 def protocol():
@@ -87,7 +97,9 @@ def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted
     deadline = started + deadline_seconds
     report = {'version': VERSION, 'kind': kind, 'status': 'running', 'error': None,
               'protocol_sha256': digest(spec), 'deadline_seconds': deadline_seconds,
-              'pairs': [], 'episodes': [], 'calls': 0, 'dispatches': 0, 'prompt_tokens': 0, 'completion_tokens': 0}
+              'pairs': [], 'episodes': [], 'calls': 0, 'dispatches': 0, 'prompt_tokens': 0, 'completion_tokens': 0,
+              'abort': None}
+    online = {'arm_calls': {}, 'arm_invalid': {}, 'dispatched': 0, 'dispatch_failures': 0}  # session-abort counters
 
     folder = Path(path)
     if writer is None:
@@ -108,6 +120,33 @@ def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted
             raise DeadlineExceeded('run deadline')
         if cancel is not None and Path(cancel).exists():
             raise DeadlineExceeded('supervisor cancellation')
+
+    def abort_check_call(episode, invalid):
+        """F2a, online after every policy call: per arm, over that arm's first `invalid_output_calls` calls in this
+        session; abort at the call that makes invalid outputs exceed `invalid_output_rate` of that window (then the
+        window's rate is certain to exceed it). Calls after the window never count."""
+        rule = limits['session_abort']
+        arm, window = episode['arm'], rule['invalid_output_calls']
+        n = online['arm_calls'][arm] = online['arm_calls'].get(arm, 0) + 1
+        if invalid and n <= window:
+            online['arm_invalid'][arm] = online['arm_invalid'].get(arm, 0) + 1
+        bad = online['arm_invalid'].get(arm, 0)
+        if bad > Fraction(rule['invalid_output_rate']) * window:
+            raise SessionAbort('F2a_invalid_outputs', {
+                'arm': arm, 'invalid_outputs_in_window': bad, 'arm_calls': n, 'window_calls': window,
+                'threshold_rate': rule['invalid_output_rate'], 'episode_id': episode['episode_id']})
+
+    def abort_check_dispatch(episode, outcome):
+        """F5, online after every dispatch: the whole session (both arms); abort when failed plus unknown dispatches
+        exceed `dispatch_failure_rate` of the dispatches so far."""
+        rule = limits['session_abort']
+        online['dispatched'] += 1
+        if outcome['status'] != 'acknowledged':
+            online['dispatch_failures'] += 1
+        if online['dispatch_failures'] > Fraction(rule['dispatch_failure_rate']) * online['dispatched']:
+            raise SessionAbort('F5_dispatch_failures', {
+                'dispatch_failures': online['dispatch_failures'], 'dispatched': online['dispatched'],
+                'threshold_rate': rule['dispatch_failure_rate'], 'episode_id': episode['episode_id']})
 
     def call(episode, request, obs):
         check()
@@ -154,9 +193,11 @@ def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted
         except (ValueError, KeyError, TypeError) as exc:
             row.update(status='invalid_output', error=str(exc)[:200])
             persist(episode)
+            abort_check_call(episode, True)
             return None
         row['status'] = 'valid'
         persist(episode)
+        abort_check_call(episode, False)
         return action
 
     def episode_run(pair, arm, index):
@@ -227,6 +268,7 @@ def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted
                 step.update(status=outcome['status'], raw_transition=raw, record_id=record['identity']['record_id'],
                             returned_at=now(), after=outcome.get('post'))
                 persist(episode)
+                abort_check_dispatch(episode, outcome)
                 if outcome['status'] != 'acknowledged':
                     episode['stop_reason'] = 'dispatch_failure'
                     break
@@ -239,6 +281,9 @@ def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted
             episode['final'] = pack(obs)
         except DeadlineExceeded:
             episode.update(status='interrupted', stop_reason='interrupted')
+            raise
+        except SessionAbort as exc:
+            episode.update(status='aborted', stop_reason='session_abort', abort=exc.record)
             raise
         except TechnicalFailure as exc:
             episode.update(status='technical_failure', stop_reason='technical_failure', error=str(exc)[:200])
@@ -286,6 +331,10 @@ def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted
         canceled = 'cancellation' in str(exc)
         report.update(status='canceled' if canceled else 'deadline_exceeded',
                       error='supervisor cancellation' if canceled else 'run deadline enforced')
+        if report['pairs'] and report['pairs'][-1].get('status') == 'running':
+            report['pairs'][-1]['status'] = 'interrupted'
+    except SessionAbort as exc:  # never complete; later pairs are recorded as not started
+        report.update(status='aborted', error='session abort: ' + exc.rule, abort=exc.record)
         if report['pairs'] and report['pairs'][-1].get('status') == 'running':
             report['pairs'][-1]['status'] = 'interrupted'
     except TechnicalFailure as exc:

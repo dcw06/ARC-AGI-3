@@ -105,7 +105,7 @@ Session restart is part of the measured variance.
 | Completion tokens per call | baseline 128, candidate 640 | a truncated response (`finish_reason` other than stop) is an invalid output in both arms |
 | Policy calls per session | 192 (6 episodes × 32) | technical failure: a call ceiling, enforced by the runner and the service |
 | Terminal state | WIN or GAME_OVER | the episode stops: `win` or `game_over`. Nothing is called or dispatched after it. Terminal states are checked before the caps |
-| Dispatch failure or unknown outcome | — | retained as a `failed` or `outcome_unknown` v2 raw transition. The episode stops with `dispatch_failure`; the schedule continues; §10 F5 applies |
+| Dispatch failure or unknown outcome | — | retained as a `failed` or `outcome_unknown` v2 raw transition. The episode stops with `dispatch_failure`. The schedule continues unless F5 aborts the session (§10, checked online after every dispatch) |
 
 **Invalid outputs.** An invalid output consumes a call and never an action. It never ends an episode on its own.
 
@@ -210,14 +210,55 @@ Unchanged from v1 §10, except where noted.
 | Rule | Trigger | Action |
 |---|---|---|
 | F1 technical incompleteness | an episode missing, a lifecycle or cleanup failure, or a replay mismatch | `technically_incomplete`; no claims; no rerun |
-| F2a invalid-output rate | either arm's invalid-action rate exceeds 0.25 over its first 24 calls in a session | stop that session (technical abort); retain everything |
+| F2a invalid-output rate | either arm's invalid-action rate exceeds 0.25 over its first 24 calls in a session (exact definition below) | **abort the session at once** (`status: aborted`, never complete); retain everything; start no further call or episode |
 | F2b decision-cap hits | 2 or more episodes of one arm end at `decision_cap`, across both sessions | **continue the schedule**; report the arm comparison as `inconclusive_reliability` |
 | F3 holdout identifier | any H1, H2 or non-development id in a request, an environment open or a tag | stop immediately; quarantine; report; record the consumption event |
 | F4 integrity | canary failure, lock mismatch, a v2 `verify_history` failure, the isolation check, or prefix-cache hits > 0 | stop the session; `technically_invalid` |
-| F5 dispatch reliability | failed plus unknown dispatches exceed 0.10 of dispatched actions in a session | stop the session (technical abort) |
+| F5 dispatch reliability | failed plus unknown dispatches exceed 0.10 of dispatched actions in a session (exact definition below) | **abort the session at once** (`status: aborted`, never complete); retain everything; start no further call or episode |
 | F6 deadline | the internal deadline is reached | stop scheduling, finalize and clean up; F1 applies |
 
 Session 2 does not start after a session-1 stop under F2a or F3–F6.
+
+**Exact online definitions of F2a and F5.** These are clarifications added after review finding P1 on `e887e78`.
+That version's runner did not enforce either rule. The runner now evaluates both **online**, as each call or dispatch
+completes, never after the fact. The thresholds come from `live/protocol.json` `limits.session_abort` and are
+computed with exact fractions.
+
+**F2a (invalid outputs).**
+- **What counts:** each arm's first 24 policy calls in the session, across that arm's episodes in schedule order. A
+  call is invalid if the runner recorded it as `invalid_output`, which includes truncated responses.
+- **When it is checked:** after every call. It is counted per arm, never pooled across arms.
+- **When it aborts:** when the invalid outputs among the arm's first 24 calls exceed 1/4 × 24 = 6. The session aborts
+  **at the call that produces the 7th**: from then on the 24-call rate is certain to exceed 25%. Exactly 6 of 24 does
+  not abort.
+- **Calls after an arm's 24th** never count.
+
+*This clarifies v2 as first written.* "Over its first 24 calls" is decided as soon as the outcome is certain, not at
+call 24. An arm that is invalid every time therefore aborts at its 7th call.
+
+**F5 (dispatch failures).**
+- **What counts:** the whole session, both arms. The numerator is dispatches whose outcome was `failed` or
+  `outcome_unknown`; the denominator is all dispatches so far, including the failing one.
+- **When it is checked:** after every dispatch.
+- **When it aborts:** when failures × 10 > dispatches.
+
+*This also clarifies v2, and is stricter early in a session than a reading over the whole session.* Every dispatch
+failure already ends its episode. So a rate taken over the session's planned 144 dispatches could never exceed 10%,
+because a 6-episode session can fail at most 6 times. The running rate can. As a result:
+- a failure among a session's first 9 dispatches aborts (1 of 9 is over 10%);
+- 1 of 10 is exactly 10% and does not;
+- a second failure aborts if it comes before the 20th dispatch.
+
+Whether this early strictness is wanted is an open question for review.
+
+**On abort, the run records:**
+- `status: aborted`;
+- `abort`: the rule and its triggering counts;
+- for the aborted episode: `status: aborted`, `stop_reason: session_abort`, with its cleanup still performed;
+- the running pair as `interrupted`, and every later pair as `not_started`.
+
+All evidence written so far verifies and reassembles. Tests are in `tests/test_feedback_action_v1_dispatch.py`
+(`F2aInvalidOutputAbort`, `F5DispatchFailureAbort`) and `tests/test_feedback_action_v1_live.py`.
 
 ## 11. CPU implementation status (this pass; no model, no GPU)
 

@@ -12,7 +12,7 @@ from research.feedback_action_v1 import adapter as AD, evidence as E
 
 LATTICE = [(16, 16), (24, 16), (40, 20), (8, 40), (56, 8), (32, 48), (48, 32), (4, 4), (60, 60), (20, 50), (50, 20),
            (12, 28)]
-MODES = ('normal', 'invalid_every_third', 'always_invalid', 'truncated_candidate', 'repeat')
+MODES = ('normal', 'always_invalid', 'truncated_candidate', 'repeat')
 
 
 def count(messages):
@@ -24,16 +24,17 @@ class FixtureTokenizer:
         return [1] * count(messages)
 
 
-def scripted_content(request, call, mode, truncate=False):
+def scripted_content(request, call, mode, truncate=False, invalid=False):
     """(content, finish_reason) for one request. `call` counts policy calls from 1 (the canary is call 0).
-    `truncate`: in mode truncated_candidate, the transport allows one truncation (at the candidate's second decision)."""
+    `truncate`: in mode truncated_candidate, the transport allows one truncation (at the candidate's second decision).
+    `invalid`: this call returns unparseable output (the transport's `invalid_calls`)."""
     from research.feedback_action_v1.live.policy import arm_of
     content = request['messages'][1]['content']
     if not content.startswith('{'):  # the startup canary's user message is plain text
         return json.dumps({'action': {'action_id': 6, 'action_data': {'x': 5, 'y': 5}}}), 'stop'
     payload = json.loads(content)
     observation, arm = payload['observation'], arm_of(request)
-    if mode == 'always_invalid' or (mode == 'invalid_every_third' and call % 3 == 0):
+    if mode == 'always_invalid' or invalid:
         return '{"action":', 'stop'
     if truncate and arm == 'candidate' and len(observation[E.FIELD]['entries']) == 1:
         return '{"hypothesis_test": {"hypothesis": "', 'length'
@@ -66,15 +67,17 @@ def scripted_content(request, call, mode, truncate=False):
 
 
 class ScriptedTransport:
-    def __init__(self, mode='normal'):
+    def __init__(self, mode='normal', invalid_calls=()):
         if mode not in MODES:
             raise ValueError('rehearsal mode')
         self.mode, self.calls, self.truncated = mode, -1, False  # the canary is call 0
+        self.invalid_calls = frozenset(invalid_calls)  # policy-call numbers (from 1) that return invalid output
 
     def __call__(self, request):
         self.calls += 1
         content, finish = scripted_content(request, self.calls, self.mode,
-                                           truncate=self.mode == 'truncated_candidate' and not self.truncated)
+                                           truncate=self.mode == 'truncated_candidate' and not self.truncated,
+                                           invalid=self.calls in self.invalid_calls)
         self.truncated = self.truncated or finish == 'length'
         completion = request['max_tokens'] if finish == 'length' else min(request['max_tokens'],
                                                                            max(1, len(content) // 4))
@@ -85,9 +88,9 @@ class ScriptedTransport:
 class FakeServer:
     """The runner-facing service: the derived contract, a passed canary, scripted completions."""
 
-    def __init__(self, mode='normal'):
+    def __init__(self, mode='normal', invalid_calls=()):
         from research.feedback_action_v1.live.service import HistoryModelService
-        self.transport = ScriptedTransport(mode)
+        self.transport = ScriptedTransport(mode, invalid_calls)
         self.service = HistoryModelService(None, self.transport, tokenizer=FixtureTokenizer(), check_versions=False)
         self.service.startup_canary()
 

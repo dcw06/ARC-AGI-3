@@ -30,7 +30,8 @@
     "pair_admission_seconds": 600,
     "internal_seconds": 3300,
     "provider_timeout_seconds": 3600,
-    "cleanup_reserve_seconds": 300
+    "cleanup_reserve_seconds": 300,
+    "session_abort": {"invalid_output_calls": 24, "invalid_output_rate": "1/4", "dispatch_failure_rate": "1/10"}
   },
   "stop_reasons": ["action_cap", "decision_cap", "win", "game_over", "dispatch_failure", "technical_failure",
                    "interrupted"]

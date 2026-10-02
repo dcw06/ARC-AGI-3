@@ -63,11 +63,11 @@ class LiveRuns(unittest.TestCase):
         cls.tmp.cleanup()
 
     @classmethod
-    def run_spec(cls, spec, mode):
+    def run_spec(cls, spec, mode, server=None):
         folder = Path(tempfile.mkdtemp(dir=cls.tmp.name))
-        report = R.run(folder / 'run', FakeServer(mode),
+        report = R.run(folder / 'run', server or FakeServer(mode),
                        lambda g, a, e: DevelopmentAdapter(g, a, e, cls.games, folder / 'rec'), spec=spec)
-        assert R.load(folder / 'run') == report  # durable evidence reassembles to the returned report
+        assert R.load(folder / 'run') == report  # durable evidence (partial too) reassembles to the returned report
         return report
 
     def test_session_completes_on_the_real_engine(self):
@@ -136,23 +136,35 @@ class LiveRuns(unittest.TestCase):
                 self.assertEqual(rates['repeat_after_no_change']['status'], 'undefined')
 
     def test_invalid_outputs_never_end_an_episode_and_the_call_cap_does(self):
-        report = self.run_spec(one_pair(1, 'b1-ls20'), 'invalid_every_third')
-        self.assertEqual(report['status'], 'complete')
-        for e in report['episodes']:
-            invalid = [c for c in e['calls'] if c['status'] == 'invalid_output']
-            self.assertEqual(e['stop_reason'], 'decision_cap')
-            self.assertEqual(len(e['calls']), 32)
-            self.assertEqual(len(e['steps']), 32 - len(invalid))
-            self.assertGreater(len(invalid), 0)
-            evaluation = EV.evaluate_trajectory(P.trajectory(e))
-            self.assertEqual(evaluation['metrics']['rates']['invalid_action']['numerator'], len(invalid))
-            self.assertEqual(evaluation['metrics']['rates']['invalid_action']['denominator'], 32)
+        """6 invalid outputs inside the arm's first 24 calls (exactly 25%: no abort) and 3 after them: the episode
+        reaches its 32-call cap with 23 actions, everything is retained, and the schedule continues."""
+        invalid = set(range(1, 7)) | {25, 26, 27}  # the first episode (candidate) owns policy calls 1-32
+        report = self.run_spec(one_pair(1, 'b1-ls20'), None, FakeServer(invalid_calls=invalid))
+        self.assertEqual((report['status'], report['abort']), ('complete', None))
+        first, second = report['episodes']
+        self.assertEqual((first['arm'], first['stop_reason'], len(first['calls']), len(first['steps'])),
+                         ('candidate', 'decision_cap', 32, 23))
+        self.assertEqual([n + 1 for n, c in enumerate(first['calls']) if c['status'] == 'invalid_output'], sorted(invalid))
+        self.assertEqual((second['arm'], second['stop_reason'], len(second['steps'])), ('baseline', 'action_cap', 24))
+        evaluation = EV.evaluate_trajectory(P.trajectory(first))
+        self.assertEqual((evaluation['metrics']['rates']['invalid_action']['numerator'],
+                          evaluation['metrics']['rates']['invalid_action']['denominator']), (9, 32))
 
-    def test_always_invalid_stops_at_the_cap_and_the_schedule_continues(self):
-        report = self.run_spec(one_pair(2, 'b2-sk48'), 'always_invalid')
-        self.assertEqual(report['status'], 'complete')
-        self.assertEqual([(e['arm'], e['stop_reason'], len(e['calls']), len(e['steps'])) for e in report['episodes']],
-                         [('candidate', 'decision_cap', 32, 0), ('baseline', 'decision_cap', 32, 0)])
+    def test_always_invalid_aborts_the_session_under_f2a(self):
+        """Review finding P1: an arm whose outputs are all invalid must abort the session (F2a), not run to the cap
+        and start the next arm. The 7th invalid output among the arm's first 24 calls makes the window's rate certain
+        to exceed 25%, so the abort fires at call 7; nothing is called or started after it."""
+        server = FakeServer('always_invalid')
+        report = self.run_spec(one_pair(2, 'b2-sk48'), None, server)
+        self.assertEqual(report['status'], 'aborted')
+        self.assertEqual(report['abort'], {'rule': 'F2a_invalid_outputs', 'arm': 'candidate',
+                                           'invalid_outputs_in_window': 7, 'arm_calls': 7, 'window_calls': 24,
+                                           'threshold_rate': '1/4', 'episode_id': 'b2-sk48-candidate'})
+        self.assertEqual([(e['arm'], e['status'], e['stop_reason'], len(e['calls']), len(e['steps']))
+                          for e in report['episodes']], [('candidate', 'aborted', 'session_abort', 7, 0)])
+        self.assertEqual(server.transport.calls, 7)  # canary is call 0: no call after the abort
+        self.assertEqual([p['status'] for p in report['pairs']], ['interrupted'])
+        self.assertTrue(report['episodes'][0]['cleanup']['closed'])
 
     def test_truncation_is_an_invalid_output_in_both_parsers(self):
         report = self.run_spec(one_pair(1, 'b1-sk48'), 'truncated_candidate')
