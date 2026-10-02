@@ -194,14 +194,17 @@ class OfflineEngineRehearsal(unittest.TestCase):
             self.assertEqual([p for r in records for p in T2.validate(r)], [])
 
 
+SIZE = 16  # small frames keep scripted rehearsals fast; the runner and records accept any valid shape
+
+
 class ScriptedAdapter:
-    """A 64x64 scripted game: the stuck ACTION6 changes nothing; any other action paints a new cell. `event` fires
+    """A 16x16 scripted game: the stuck ACTION6 changes nothing; any other action paints a new cell. `event` fires
     after the given action index: 'level' (levels_completed + 1), 'reset' (full_reset) or 'game_over'."""
 
     def __init__(self, game_id, event=None, at=None):
         self.game_id, self.event, self.at, self.n = game_id, event, at, 0
         self.levels, self.state = 0, 'NOT_FINISHED'
-        self.frame = np.zeros((64, 64), dtype=np.uint8)
+        self.frame = np.zeros((SIZE, SIZE), dtype=np.uint8)
 
     def obs(self, full_reset=False):
         from agent.state import Observation
@@ -215,7 +218,7 @@ class ScriptedAdapter:
     def dispatch(self, action, before):
         reset = False
         if action != {'action_id': 6, 'action_data': F.STUCK_CELL}:
-            self.frame[self.n % 64, (self.n * 7) % 64:(self.n * 7) % 64 + 3] = 1 + self.n % 9
+            self.frame[self.n % SIZE, (self.n * 5) % (SIZE - 3):(self.n * 5) % (SIZE - 3) + 3] = 1 + self.n % 9
         if self.n == self.at:
             if self.event == 'level':
                 self.levels += 1
@@ -281,6 +284,88 @@ class ScriptedRehearsals(unittest.TestCase):
                 if event == 'game_over':
                     self.assertEqual(body['stop_reason'], 'game_over')
                     self.assertEqual(len(body['steps']), 5)
+
+    def call_points(self, arm):
+        _, [body] = scripted_run([arm])
+        return [e['action_index'] for e in body['supervision']['events'] if e['outcome'] == 'called']
+
+    def test_no_reflection_when_termination_or_a_boundary_coincides_with_a_due_reflection(self):
+        """Review of 463cea3: GAME_OVER on the 10th action in the periodic arm used to get a reflection. Each
+        reflection arm, at each of its own call points (a scheduled periodic call, a trigger firing), with each
+        boundary: the transition and the detector output are recorded, no reflection is made and nothing is
+        delivered."""
+        expected = {'game_over': 'suppressed_terminal_state', 'level': 'suppressed_segment_boundary',
+                    'reset': 'suppressed_segment_boundary'}
+        for arm in ('periodic', 'triggered'):
+            points = self.call_points(arm)
+            self.assertGreaterEqual(len(points), 2, arm)
+            for at in points[:2]:
+                for event, outcome in expected.items():
+                    with self.subTest(arm=arm, at=at, event=event):
+                        report, [body] = scripted_run([arm], event=event, at=at)
+                        events = body['supervision']['events']
+                        e = events[at]
+                        self.assertTrue(e['due'])
+                        self.assertEqual(e['outcome'], outcome)
+                        if arm == 'triggered':
+                            self.assertTrue(e['detector_signals'])  # the detector output is still recorded
+                        self.assertNotIn('call', e)
+                        self.assertIsNone(e.get('delivered'))
+                        before = [x for x in events if x['outcome'] == 'called' and x['action_index'] < at]
+                        self.assertEqual(len(before), points.index(at))
+                        self.assertEqual(body['steps'][at]['status'], 'acknowledged')
+                        if event == 'game_over':  # play ended: nothing after it
+                            self.assertEqual((body['stop_reason'], len(body['steps'])), ('game_over', at + 1))
+                            self.assertEqual(e['remaining_actions'], 0)
+                            self.assertEqual(len(body['reflections']), points.index(at))
+                        else:  # play continues in a new segment; the next policy request carries no old block
+                            self.assertIsNone(body['steps'][at + 1]['suggestion_shown'])
+
+    def test_reflections_that_did_not_finish_with_stop_are_invalid_charged_and_retained(self):
+        for fault, finish in (('reflection_length', 'length'), ('reflection_missing_finish', None),
+                              ('reflection_unknown_finish', 'tool_calls')):
+            with self.subTest(fault=fault):
+                report, [body] = scripted_run(['periodic'], faults=(fault,))
+                self.assertEqual(report['status'], 'complete')
+                called = [e for e in body['supervision']['events'] if e['outcome'] == 'called']
+                self.assertEqual(len(called), 3)
+                for e, row in zip(called, body['reflections']):
+                    self.assertIsNone(e['delivered'])
+                    self.assertFalse(e['call']['parsed']['valid'])
+                    self.assertEqual(e['call']['parsed']['problems'], [f'reflection did not finish with stop: {finish!r}'])
+                    self.assertEqual(e['call']['raw_output'], row['response'])  # retained
+                    self.assertEqual(row['finish_reason'], finish)
+                self.assertFalse(any(s['suggestion_shown'] for s in body['steps']))
+                summary = body['supervision']['summary']
+                self.assertEqual((summary['invalid_outputs'], summary['valid_calls']), (3, 0))
+                self.assertEqual(summary['tokens_charged'], sum(r['server_prompt_tokens'] + r['server_completion_tokens']
+                                                                for r in body['reflections']))
+
+    def test_an_invalid_completion_leaves_the_current_suggestion_lifetime_unchanged(self):
+        responses = iter(['stop', 'length'])
+
+        def call(text):
+            content = json.loads(text.split('Evidence:\n', 1)[1])
+            legal = [a for a in content['available_actions'] if 1 <= a <= 7]
+            answer = {'observed_pattern': 'Repeats.', 'evidence_refs': [content['evidence'][-1]['action_index']],
+                      'assumption_to_reconsider': 'That it responds.',
+                      'distinguishing_test': {'description': 'Probe once.',
+                                              'actions': [{'action_id': legal[0], 'action_data': {}}]}}
+            return {'text': json.dumps(answer), 'input_tokens': 10, 'output_tokens': 5, 'finish_reason': next(responses)}
+        s = SV.Supervisor('periodic', TRIGGER, call, {**B.EXPERIMENT_POLICY, 'period_actions': 6}, clock=lambda: 0.0,
+                          episode_actions=40)
+        frame = [[0] * 4 for _ in range(4)]
+        for i in range(12):
+            s.observe({'identity': {'episode_id': 'f', 'action_index': i},
+                       'before': {'frames': [frame], 'levels_completed': 0, 'state': 'NOT_FINISHED', 'full_reset': False,
+                                  'available_actions': [1, 2]},
+                       'proposal': None, 'dispatched': {'action_id': 1, 'action_data': {}}, 'environment_source': 't',
+                       'outcome': {'status': 'acknowledged', 'after': {
+                           'frames': [frame], 'levels_completed': 0, 'state': 'NOT_FINISHED', 'full_reset': False,
+                           'available_actions': [1, 2]}}})
+        called = [e for e in s.events if e['outcome'] == 'called']
+        self.assertEqual([e['delivered'] is not None for e in called], [True, False])
+        self.assertEqual((s.suggestion['issued_after_action'], s.suggestion_for(15)['expires_after_action']), (5, 15))
 
     def test_no_reflection_in_the_last_window_and_none_in_continuation(self):
         report, bodies = scripted_run(['continuation', 'triggered'])

@@ -13,7 +13,9 @@ import re
 from research.stagnation_supervision_v1.closed_loop import bridge as B
 from research.stagnation_supervision_v1.closed_loop.service import kind
 
-FAULTS = ('reflection_invalid', 'reflection_exception', 'reflection_audit_mismatch')
+FAULTS = ('reflection_invalid', 'reflection_exception', 'reflection_audit_mismatch', 'reflection_length',
+          'reflection_missing_finish', 'reflection_unknown_finish')
+FINISH = {'reflection_length': 'length', 'reflection_missing_finish': None, 'reflection_unknown_finish': 'tool_calls'}
 STUCK_CELL = {'x': 32, 'y': 32}
 
 
@@ -39,9 +41,14 @@ class FakeModelServer:
             self.policy_calls += 1
             content = self._policy(request)
         prompt = count(request['messages'])
-        server = prompt + 1 if 'reflection_audit_mismatch' in self.faults and kind(request) == 'reflection' else prompt
+        reflection = kind(request) == 'reflection'
+        server = prompt + 1 if 'reflection_audit_mismatch' in self.faults and reflection else prompt
+        finish = 'stop'
+        for fault in self.faults & set(FINISH):
+            if reflection:
+                finish = FINISH[fault]
         return {'content': content, 'tokenizer_prompt_tokens': prompt, 'server_prompt_tokens': server,
-                'server_completion_tokens': max(1, len(content) // 4), 'finish_reason': 'stop'}
+                'server_completion_tokens': max(1, len(content) // 4), 'finish_reason': finish}
 
     def _policy(self, request):
         payload = json.loads(request['messages'][1]['content'])

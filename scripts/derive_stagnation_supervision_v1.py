@@ -139,7 +139,10 @@ REFLECT_NEW = REFLECT_ANCHOR + '''
             raise TechnicalFailure('reflection response/token audit')
         report['reflection_prompt_tokens'] += p
         report['reflection_completion_tokens'] += c
-        return {'text': raw, 'input_tokens': p, 'output_tokens': c, 'latency_s': row['latency_s']}
+        # finish_reason is passed on as reported; the supervisor accepts only 'stop' (anything else is an invalid,
+        # charged, retained reflection that delivers nothing)
+        return {'text': raw, 'input_tokens': p, 'output_tokens': c, 'latency_s': row['latency_s'],
+                'finish_reason': row['finish_reason']}
 '''
 OBSERVE_ANCHOR = '''                step.update(status=outcome['status'], effect_record=record, history_entry=entry, returned_at=now(),
                             after=outcome.get('post'))
@@ -147,7 +150,9 @@ OBSERVE_ANCHOR = '''                step.update(status=outcome['status'], effect
 '''
 OBSERVE_NEW = OBSERVE_ANCHOR + '''                if supervisor is not None:  # the detector observes every step in every arm
                     raws.append(raw_transition(episode_id, step))
-                    supervisor.observe(raws[-1])
+                    ended = outcome['status'] != 'acknowledged' or outcome['post']['state'] in ('WIN', 'GAME_OVER')
+                    supervisor.observe(raws[-1], remaining_actions=(
+                        0 if ended else limits['actions_per_episode'] - (step_index + 1)))  # actual play
                     episode['supervision'] = supervisor_view(supervisor)
                     persist(episode)
                     if any(r['status'] == 'audit_failure' for r in episode['reflections']):

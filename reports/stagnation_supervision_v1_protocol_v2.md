@@ -87,6 +87,27 @@ window. Every reflection can therefore be evaluated over a full window (tested: 
 
 **Continuation** never carries a block. A request that tries is refused.
 
+**No reflection at a terminal state or segment boundary.** This follows the review of 463cea3.
+- **At a terminal state** (WIN or GAME_OVER), play has ended and no recovery window can follow. The terminal
+  transition and the detector output are still recorded. The decision is logged as `suppressed_terminal_state`, with
+  0 remaining actions.
+- **At a reset or level change,** the detector's evidence belongs to the segment that just ended. The decision is
+  logged as `suppressed_segment_boundary`.
+- **Remaining actions** are computed from actual play, not the nominal horizon. The runner passes 0 after a terminal
+  state, or after a non-acknowledged dispatch, which also stops the episode.
+- **Tests.** Termination, reset and level change are tested at a scheduled periodic call and at a trigger firing in
+  both reflection arms.
+- **Effect on rehearsal.** On the synthetic rehearsal, exactly 8 of 3,384 decisions changed, each at a level
+  completion or reset. The other 3,376 are byte-identical to before.
+
+**Reflection completion semantics.**
+- **Validity.** A reflection is valid only if the service reports `finish_reason` exactly `stop`.
+- **Anything else** (`length`, missing or null, or any other value) makes it an invalid reflection. It is charged,
+  its request and raw output are retained, it counts toward the cap, and it delivers no new suggestion. An existing
+  suggestion keeps its lifetime unchanged.
+- **Token audit.** A token-count mismatch remains a technical failure.
+- **Tests** cover `length`, a missing value and an unknown value.
+
 ## 3. Cases (development partition only)
 
 **Eligible games.** The development partition of `config/holdout_ledger.yaml` (15 games), verified in code. H1 and
@@ -266,7 +287,8 @@ Otherwise the result is **inconclusive**, which is the expected default.
 - **Dispatch failures.** Failed plus unknown dispatches above 10% stop the run.
 - **Nothing to intervene on.** Zero detector firings in the stagnation case's block-1 continuation episode stop the
   run.
-- **Token audit.** A reflection or policy token-audit mismatch is a technical failure (tested).
+- **Token audit.** A reflection or policy token-audit mismatch is a technical failure (tested). A reflection that
+  did not finish with `stop` is an invalid reflection, not a technical failure (§2.1).
 - **Admission and wall time.** The admission cutoff and internal wall time are enforced, with the cleanup reserve
   kept.
 - **Charging.** Every call is charged; no automatic retries.

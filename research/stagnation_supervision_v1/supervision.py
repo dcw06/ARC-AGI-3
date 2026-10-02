@@ -9,12 +9,19 @@ Policy limits apply to every call in every arm:
   - at most `max_interventions_per_episode` calls, counting valid, invalid and failed calls alike;
   - a per-episode token ceiling: a call is made only if spent + estimated input + reserved output fits;
   - no call when the current state was not observed (unknown outcome or missing frames): it is deferred;
-  - no call when fewer than `min_remaining_actions` actions (the recovery window) remain in the episode, so every
-    reflection can be evaluated (active only when the episode length is given).
+  - no call when fewer than `min_remaining_actions` actions (the recovery window) remain in actual play, so every
+    reflection can be evaluated. Remaining actions come from the caller when it knows play has ended (the runner
+    passes 0 after a terminal state or a stopping dispatch failure), otherwise from the episode length;
+  - no call at a terminal state (play has ended: there is no recovery window), and none at a reset or level change
+    (the detector's evidence belongs to the segment that just ended). The transition and the detector output are
+    still recorded.
 Delivery (identical in both reflection arms): a valid reflection becomes a clearly labelled model-generated suggestion
 block, kept apart from the factual observation, shown with the next `suggestion_lifetime_actions` policy requests,
 at most `max_suggestion_chars` long, replaced only by a later valid reflection, and cleared at a reset, a level
 change or a terminal state. An invalid or failed reflection delivers nothing.
+Completion semantics: when the service reports a completion status (`finish_reason`, as the runner always does), a
+reflection is valid only if it is exactly 'stop'. 'length', a missing (None) or any other value makes it an invalid
+reflection: charged, its raw output retained, no new suggestion delivered; an existing suggestion keeps its lifetime.
 Every call is charged, including invalid outputs and exceptions. Every decision is retained as an event with its
 reason, including suppressed and deferred ones. Records are transition_evidence_v2, unmasked (the masked view is
 never requested or read); the detector consumes the v1 fields they contain, and events cite evidence by record_id. Here `call` is scripted; nothing in this module runs a model.
@@ -32,6 +39,7 @@ POLICY = {'cooldown_actions': 6, 'period_actions': 6, 'max_interventions_per_epi
           'min_remaining_actions': 10, 'suggestion_lifetime_actions': 10, 'max_suggestion_chars': 1600}
 SUGGESTION_LABEL = 'MODEL-GENERATED SUGGESTION (a hypothesis from a reviewer model, not an observation)'
 CLEARING_EVENTS = (V.RESET_ACKNOWLEDGED, V.LEVEL_COMPLETED, V.LEVEL_COUNT_DECREASED, V.TERMINAL_STATE)
+BOUNDARY_EVENTS = (V.RESET_ACKNOWLEDGED, V.LEVEL_COMPLETED, V.LEVEL_COUNT_DECREASED)
 
 
 def estimate_tokens(text):
@@ -53,7 +61,7 @@ class Supervisor:
         self.policy = {**POLICY, **self.policy}
         self.episode_actions, self.suggestion = episode_actions, None
 
-    def observe(self, raw, prediction=None):
+    def observe(self, raw, prediction=None, remaining_actions=None):
         self.raws.append(raw)
         record = self._next_record(raw)
         self.records.append(record)
@@ -69,9 +77,21 @@ class Supervisor:
         if cleared and self.suggestion is not None:
             event['suggestion_cleared'] = cleared
             self.suggestion = None
-        remaining = None if self.episode_actions is None else self.episode_actions - (index + 1)
+        events = record['environment']['events']
+        terminal = V.TERMINAL_STATE in events
+        if terminal:
+            remaining = 0  # play has ended, whatever the nominal horizon says
+        elif remaining_actions is not None:
+            remaining = remaining_actions
+        else:
+            remaining = None if self.episode_actions is None else self.episode_actions - (index + 1)
+        event['remaining_actions'] = remaining
         if not due:
             event['outcome'] = 'not_due'
+        elif terminal:
+            event['outcome'] = 'suppressed_terminal_state'
+        elif any(e in BOUNDARY_EVENTS for e in events):
+            event['outcome'] = 'suppressed_segment_boundary'
         elif remaining is not None and remaining < self.policy['min_remaining_actions']:
             event['outcome'] = 'suppressed_insufficient_remaining_actions'
         elif I.unobserved_state(record):
@@ -132,9 +152,16 @@ class Supervisor:
         charged_in = response.get('input_tokens', estimate_tokens(request['text']))
         charged_out = response.get('output_tokens', estimate_tokens(text) if isinstance(text, str) else 0)
         self.tokens += charged_in + charged_out
-        parsed = I.parse(text, request) if error is None else {
-            'valid': False, 'problems': ['call failed: ' + error], 'intervention': None, 'raw': None}
+        finish = response.get('finish_reason', 'stop') if 'finish_reason' in response else None
+        if error is not None:
+            parsed = {'valid': False, 'problems': ['call failed: ' + error], 'intervention': None, 'raw': None}
+        elif 'finish_reason' in response and finish != 'stop':
+            parsed = {'valid': False, 'problems': [f'reflection did not finish with stop: {finish!r}'],
+                      'intervention': None, 'raw': text}
+        else:
+            parsed = I.parse(text, request)
         return {'request_sha256': request['sha256'], 'request_text': request['text'], 'error': error,
+                'finish_reason': finish,
                 'available_actions_field': request['available_actions_field'],
                 'raw_output': text, 'parsed': parsed, 'input_tokens': charged_in, 'output_tokens': charged_out,
                 'latency_s': latency}

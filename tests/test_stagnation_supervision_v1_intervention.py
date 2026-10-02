@@ -315,10 +315,18 @@ class PolicyRehearsal(unittest.TestCase):
             by_index = {p['action_index']: p for p in fixture['predictions'] or ()}
             for r in fixture['raws']:
                 s.observe(r, by_index.get(r['identity']['action_index']))
-            stream = D.triggers(D.statistics(T.history(fixture['raws']), fixture['predictions']), SPEC['params'],
+            records = T.history(fixture['raws'])
+            stream = D.triggers(D.statistics(records, fixture['predictions']), SPEC['params'],
                                 SPEC['cooldown_actions'])
+            # the supervisor never reflects at a reset, level change or terminal state (review of 463cea3); the
+            # evaluated detector stream still counts those triggers
+            boundary = {r['identity']['action_index'] for r in records
+                        if set(r['environment']['events']) & set(SV.CLEARING_EVENTS)}
             self.assertEqual([e['action_index'] for e in s.events if e['outcome'] == 'called'],
-                             [d['action_index'] for d in stream if d['trigger']], fixture['id'])
+                             [d['action_index'] for d in stream if d['trigger'] and d['action_index'] not in boundary],
+                             fixture['id'])
+            self.assertTrue(all(e['outcome'] == 'suppressed_segment_boundary' for e in s.events
+                                if e['due'] and e['action_index'] in boundary))
             self.assertTrue(all(e['delivered'] for e in s.events if e['outcome'] == 'called'))
 
 

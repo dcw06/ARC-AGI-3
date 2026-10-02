@@ -32,6 +32,22 @@ FROZEN = {
 # over all development and evaluation fixtures in the periodic and triggered arms, computed with the v1-record code
 # at 316573d. The fixtures retain no available actions, so the migrated code must reproduce it exactly.
 PRE_MIGRATION_REHEARSAL = ('618f209ab4d4c3ee8928d2f9b7ed3d1d3e7f98a20a5f48e54bb172fe93eb7282', 3384)
+# Review fix (after 463cea3): no reflection at a reset, level change or terminal state. Exactly these 8 of the 3,384
+# decisions changed, each at the step whose transition reported a level completion or reset (no fixture reaches a
+# terminal state); everything else is byte-identical to the pre-migration rehearsal. The digest is re-pinned.
+BOUNDARY_REHEARSAL = ('7eebb858c6e0c096644c4d5fe748133828fbe0dbbaf395846f52788900b18b87', 3384)
+# Digest of the 3,376 other rows computed from the pre-fix code; equal to the same rows after the fix.
+PRE_MIGRATION_UNCHANGED_ROWS = 'd724e614163eee4005fdc5eeabcbe1d5c1b89d39ed5342a8adb3f02c3949e3b3'
+BOUNDARY_CHANGES = {  # (fixture, arm, action index): outcome before the fix
+    ('dev-delayed_effect-0', 'triggered', 6): 'suppressed_cooldown',
+    ('dev-delayed_effect-2', 'triggered', 7): 'called',
+    ('dev-counter_with_static_playfield-1', 'periodic', 5): 'called',
+    ('dev-reset_then_replay-0', 'periodic', 5): 'called',
+    ('dev-reset_then_replay-2', 'periodic', 5): 'called',
+    ('eva-move_to_destination-0', 'periodic', 5): 'called',
+    ('eva-delayed_effect-3', 'triggered', 7): 'called',
+    ('eva-reset_then_replay-3', 'periodic', 5): 'called',
+}
 GRID = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
 CLICK = {'action_id': 6, 'action_data': {'x': 1, 'y': 1}}
 
@@ -48,7 +64,7 @@ def responder(text):
             'input_tokens': 100, 'output_tokens': 50, 'latency_s': 0.5}
 
 
-def rehearsal_digest():
+def rehearsal_rows():
     rows = []
     for partition in ('development', 'evaluation'):
         for fixture in GENERATED[partition]['fixtures']:
@@ -64,6 +80,11 @@ def rehearsal_digest():
                                  call and call['request_sha256'], call and call['parsed']['valid'],
                                  call and call['parsed']['problems'], call and call['input_tokens'],
                                  e.get('delivered')])
+    return rows
+
+
+def rehearsal_digest(rows=None):
+    rows = rehearsal_rows() if rows is None else rows
     return hashlib.sha256(json.dumps(rows, sort_keys=True).encode()).hexdigest(), len(rows)
 
 
@@ -129,7 +150,15 @@ class RecordsAreValidV2(unittest.TestCase):
 
 class RequestsAfterMigration(unittest.TestCase):
     def test_requests_and_results_are_byte_identical_where_available_actions_are_absent(self):
-        self.assertEqual(rehearsal_digest(), PRE_MIGRATION_REHEARSAL)
+        rows = rehearsal_rows()
+        self.assertEqual(rehearsal_digest(rows), BOUNDARY_REHEARSAL)
+        boundary = {(r[0], r[1], r[2]) for r in rows if r[3] == 'suppressed_segment_boundary'}
+        self.assertEqual(boundary, set(BOUNDARY_CHANGES))
+        # every other row is byte-identical to the pre-migration rehearsal (whose full digest is 618f209a...)
+        unchanged = [r for r in rows if (r[0], r[1], r[2]) not in BOUNDARY_CHANGES]
+        self.assertEqual(len(unchanged), PRE_MIGRATION_REHEARSAL[1] - len(BOUNDARY_CHANGES))
+        self.assertEqual(hashlib.sha256(json.dumps(unchanged, sort_keys=True).encode()).hexdigest(),
+                         PRE_MIGRATION_UNCHANGED_ROWS)
 
     def test_absent_available_actions_fall_back_and_say_so(self):
         records = T2.history([raw(i) for i in range(3)])
