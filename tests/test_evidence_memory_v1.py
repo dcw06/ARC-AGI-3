@@ -6,8 +6,10 @@ import json
 from pathlib import Path
 import unittest
 
-from research.evidence_memory_v1 import fidelity as F, mutations as M, schema as S, trajectories as TR, writers as W
-from research.transition_evidence_v1 import transition as T
+from research.evidence_memory_v1 import fidelity as F, mutations as M, readers as RD, schema as S, \
+    trajectories as TR, writers as W
+from research.transition_evidence_v1 import transition as T1
+from research.transition_evidence_v2 import transition as T2
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE = ROOT / 'research/evidence_memory_v1'
@@ -143,6 +145,100 @@ class Checks(unittest.TestCase):
         self.assertTrue(retired and all(r['before']['scope']['kind'] == S.SEGMENT for r in retired))
 
 
+def carried_forward_levels(records):
+    """The level rule used before the v2 migration (kept here only as the reference for the migration test):
+    the last reported levels_completed, carried over transitions without an environment observation."""
+    out, level = [], 0
+    for record in records:
+        reported = record['environment'].get('reported')
+        if reported:
+            level = reported['levels_completed_before']
+        out.append(level)
+        if reported:
+            level = reported['levels_completed_after']
+    return out
+
+
+class NoMasked(dict):
+    """A record that fails the test if anything reads its masked view."""
+
+    def __getitem__(self, name):
+        if name == 'masked':
+            raise AssertionError('the masked view was read')
+        return super().__getitem__(name)
+
+    def get(self, name, default=None):
+        if name == 'masked':
+            raise AssertionError('the masked view was read')
+        return super().get(name, default)
+
+    def __contains__(self, name):
+        if name == 'masked':
+            raise AssertionError('the masked view was probed')
+        return super().__contains__(name)
+
+
+class TransitionEvidenceV2(unittest.TestCase):
+    """Track 2 consumes the frozen transition_evidence_v2 format (format migration only, no masks)."""
+
+    TRAJECTORIES = TR.generate(delays=(0, 3, 8), count=2)  # the 42 trajectories of the study
+
+    def test_every_record_is_v2_and_verifies_against_its_raw_evidence(self):
+        self.assertEqual(len(self.TRAJECTORIES), 42)
+        for t in self.TRAJECTORIES:
+            self.assertEqual(T2.verify_history(t['records'], t['raws']), [], t['id'])
+            v1 = T1.history(t['raws'])
+            for record, old in zip(t['records'], v1):
+                self.assertEqual(record['version'], 'transition_evidence_v2')
+                self.assertEqual(T2.validate(record), [])
+                self.assertTrue(T2.same(T2.to_v1(record), old))  # the v1 record is contained unaltered
+
+    def test_references_resolve_through_the_contract_record_id(self):
+        for t in self.TRAJECTORIES:
+            idx = S.index(t['records'])
+            self.assertEqual(list(idx), [r['identity']['record_id'] for r in t['records']])
+            for record in t['records']:
+                self.assertEqual(S.key(S.ref_of(record)), record['identity']['record_id'])
+            self.assertLessEqual(set(t['evaluator_only']['expected']['required_counterexamples']), set(idx))
+
+    def test_level_comes_from_context_and_equals_the_old_carry_forward(self):
+        unobserved = 0
+        for t in self.TRAJECTORIES:
+            idx = S.index(t['records'])
+            known = F.facts(t['records'])
+            for record, old in zip(t['records'], carried_forward_levels(t['records'])):
+                context = record['context']['levels_completed_before']
+                self.assertEqual(context['status'], 'measured')
+                info = idx[record['identity']['record_id']]
+                self.assertEqual((info['level'], context['value']), (old, old))
+                ident = record['identity']
+                self.assertEqual(known[(ident['episode_id'], ident['action_index'])]['level'], old)
+                self.assertNotIn('level_derived', info)
+                unobserved += record['dispatch']['status'] != 'acknowledged'
+        self.assertGreater(unobserved, 0)  # failed and unknown dispatches are covered
+
+    def test_track_never_touches_the_masked_view_or_the_masks_module(self):
+        for path in PACKAGE.glob('*.py'):
+            tree = ast.parse(path.read_text(encoding='utf-8'))
+            imported = {a.name for n in ast.walk(tree) if isinstance(n, ast.Import) for a in n.names}
+            imported |= {f'{n.module}.{a.name}' for n in ast.walk(tree) if isinstance(n, ast.ImportFrom)
+                         for a in n.names}
+            self.assertFalse({m for m in imported if 'mask' in m}, path.name)
+            constants = {n.value for n in ast.walk(tree) if isinstance(n, ast.Constant) and isinstance(n.value, str)}
+            self.assertFalse(constants & {'masked', 'masks', 'mask'}, path.name)
+            self.assertFalse({n.attr for n in ast.walk(tree) if isinstance(n, ast.Attribute)} & {'masked', 'masks'})
+        for t in self.TRAJECTORIES[:14]:
+            guarded = {**t, 'records': [NoMasked(r) for r in t['records']]}
+            for cls in W.WRITERS.values():
+                memory = W.run_writer(cls(), guarded, gate=True)['memory']
+                F.evaluate(guarded['records'], memory, t['evaluator_only']['expected'])
+            memory = W.run_writer(W.Faithful(), guarded)['memory']
+            RD.packages(guarded, memory)
+            RD.ask(guarded, RD.oracle_memory(memory['entries']))
+            for mutate in M.MUTATIONS.values():
+                mutate(S.index(guarded['records']), memory['entries'])
+
+
 class Trajectories(unittest.TestCase):
     def test_deterministic_valid_and_construction_agrees_with_gold(self):
         first, second = TR.generate(), TR.generate()
@@ -150,8 +246,7 @@ class Trajectories(unittest.TestCase):
         self.assertEqual({t['family'] for t in first}, set(TR.FAMILIES))
         for t in first:
             self.assertEqual({t['partition']}, {'development'})
-            for record in t['records']:
-                self.assertEqual(T.validate(record), [])
+            self.assertEqual(T2.verify_history(t['records'], t['raws']), [])
             for q in t['evaluator_only']['expected']['questions']:
                 self.assertEqual(F.gold(t['records'], q), q['expected_answer'], (t['id'], q['kind']))
 

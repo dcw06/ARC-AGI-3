@@ -20,7 +20,7 @@ def record_line(record, info):
 
 
 def records_text(records, idx):
-    return '\n'.join(record_line(r, idx[S.key(S.ref_of(r))]) for r in records)
+    return '\n'.join(record_line(r, idx[S.record_key(r)]) for r in records)
 
 
 def entry_line(entry):

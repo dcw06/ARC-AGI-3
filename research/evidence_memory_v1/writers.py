@@ -53,7 +53,7 @@ class Faithful:
 
     def operations(self, records, view):
         idx = S.index(records)
-        info = idx[S.key(S.ref_of(records[-1]))]
+        info = idx[S.record_key(records[-1])]
         entries = {e['id']: e for e in view['entries'] if e['status'] != S.RETIRED}
         ops = self.on_boundary(entries, info)
         for op in ops:
@@ -232,7 +232,7 @@ def run_writer(writer, trajectory, gate=False):
     for step in range(len(records)):
         seen = records[:step + 1]
         view = memory.view()
-        prompt = R.record_line(seen[-1], idx[S.key(S.ref_of(seen[-1]))]) + '\n' + R.memory_text(view['entries'])
+        prompt = R.record_line(seen[-1], idx[S.record_key(seen[-1])]) + '\n' + R.memory_text(view['entries'])
         output = writer(seen, view)
         charge['writer_calls'] += 1
         charge['input_chars'] += len(prompt)

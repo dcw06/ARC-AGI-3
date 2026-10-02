@@ -1,8 +1,10 @@
 """Continuous synthetic diagnostic trajectories for evidence-linked memory (Track 2, evidence_memory_v1).
 
-Each trajectory is one continuous episode of raw transitions in the input format of
-`research.transition_evidence_v1.transition.build` (consumed read-only), so `transition.history` turns it into
-records with segments and continuity. Nothing here is real-game data, and no action id has a game meaning.
+Each trajectory is one continuous episode of raw transitions in the contract's raw input format, turned into
+records by `research.transition_evidence_v2.transition.history` (frozen format, consumed read-only, no masks):
+version 1 records plus `identity.record_id` and `context`. The construction hashes frames with the contract's
+`transition_evidence_v1.transition.frame_sha256`. Nothing here is real-game data, and no action id has a game
+meaning. The raws do not report available actions, so those v2 fields are `absent`.
 
 Families (each takes `delay`, the number of distractor transitions placed between the relevant evidence and the
 question or the decisive later evidence):
@@ -24,7 +26,8 @@ import hashlib
 import json
 import random
 
-from research.transition_evidence_v1 import transition as T
+from research.transition_evidence_v1 import transition as T1
+from research.transition_evidence_v2 import transition as T2
 
 VERSION = 'evidence_memory_v1_trajectories'
 PARTITION, SEED = 'development', 'evidence-memory-v1-development'
@@ -60,7 +63,7 @@ class Builder:
                 return out
 
     def state(self):
-        return T.frame_sha256(self.frame)
+        return T1.frame_sha256(self.frame)
 
     def observation(self, frame=None, **changes):
         value = {'frames': [copy.deepcopy(frame if frame is not None else self.frame)],
@@ -250,7 +253,8 @@ DEFAULTS = {'required_facts': [], 'required_counterexamples': [], 'required_live
 
 
 def build(family, index, delay):
-    """One trajectory: raw transitions, records (via transition.history) and evaluator-only expectations."""
+    """One trajectory: raw transitions, records (transition_evidence_v2 history, no masks) and evaluator-only
+    expectations. Counterexamples are named by the records' own record_id."""
     tid = f'{PARTITION[:3]}-{family}-d{delay}-{index}'
     rng = random.Random(hashlib.sha256(f'{SEED}/{family}/{index}'.encode()).hexdigest())
     b = Builder(rng)
@@ -258,10 +262,12 @@ def build(family, index, delay):
     episode = 'em-' + hashlib.sha256(tid.encode()).hexdigest()[:12]  # no family label in the evidence
     for raw in b.raws:
         raw['identity']['episode_id'] = episode
-    expected['required_counterexamples'] = [f'{episode}#{i}' for i in expected['required_counterexamples']]
+    records = T2.history(b.raws)
+    expected['required_counterexamples'] = [records[i]['identity']['record_id']
+                                            for i in expected['required_counterexamples']]
     expected['final_step'] = len(b.raws) - 1
     return {'id': tid, 'family': family, 'partition': PARTITION, 'delay': delay, 'raws': b.raws,
-            'records': T.history(b.raws), 'evaluator_only': {'expected': expected, 'construction': b.construction}}
+            'records': records, 'evaluator_only': {'expected': expected, 'construction': b.construction}}
 
 
 def generate(delays=(0, 3), count=2):

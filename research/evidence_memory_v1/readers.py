@@ -17,14 +17,17 @@ ability. Scripted readers (faithful, status-blind, invalid) validate the reader 
 import json
 
 from research.evidence_memory_v1 import fidelity as F, render as R, schema as S, trajectories as TR, writers as W
-from research.transition_evidence_v1 import transition as T
 
 WINDOW = 6  # frozen: the recent-raw-history baseline window, in transitions
 
 
 def current_state(trajectory):
-    after = trajectory['raws'][-1]['outcome']['after']
-    return after['levels_completed'], T.frame_sha256(after['frames'][-1])
+    """(level, frame SHA-256) after the last transition, as its record reports them."""
+    last = trajectory['records'][-1]
+    frames = last['measurements']['frames']
+    if last['dispatch']['status'] != 'acknowledged' or not frames or not frames[-1]['valid']:
+        raise ValueError('the current state is unobserved after the last transition')
+    return last['environment']['reported']['levels_completed_after'], frames[-1]['sha256']
 
 
 def _fit(lines, budget):
@@ -57,9 +60,9 @@ def packages(trajectory, memory_view, window=WINDOW):
         'reset_acknowledged', 'level_completed', 'level_count_decreased', 'terminal_state'})
     recent = records[-window:]
     budget = len(R.records_text(recent, idx))
-    line = lambda r: R.record_line(r, idx[S.key(S.ref_of(r))])
-    order = sorted(records, key=lambda r: (not (idx[S.key(S.ref_of(r))]['level'] == level and
-                                                idx[S.key(S.ref_of(r))]['state'] == state), -r['identity']['action_index']))
+    line = lambda r: R.record_line(r, idx[S.record_key(r)])
+    order = sorted(records, key=lambda r: (not (idx[S.record_key(r)]['level'] == level and
+                                                idx[S.record_key(r)]['state'] == state), -r['identity']['action_index']))
     keyed = sorted((r for r, _ in _fit([(r, line(r)) for r in order], budget)), key=lambda r: r['identity']['action_index'])
     entries = sorted((e for e in memory_view['entries'] if e['status'] != S.RETIRED),
                      key=lambda e: (rank(e, level, state, segment), -e['last_reviewed_step'], e['id']))

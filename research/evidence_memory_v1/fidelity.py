@@ -38,21 +38,21 @@ ENDING = ('reset_acknowledged', 'level_completed', 'level_count_decreased', 'ter
 
 
 def facts(records):
-    """{'episode#index': facts} re-derived from records; level carried over unobserved transitions."""
-    out, level = {}, 0
+    """{(episode_id, action_index): facts} re-derived from transition_evidence_v2 records, keyed by the identity
+    pair each record reports and naming it by its own record_id. The level is context.levels_completed_before.
+    The masked view is never read."""
+    out = {}
     for r in records:
         rep = r['environment'].get('reported')
-        if rep is not None:
-            level = rep['levels_completed_before']
+        level = r['context']['levels_completed_before']
         visual = r['measurements']['visual_effect']['status']
         ident = r['identity']
-        out[f"{ident['episode_id']}#{ident['action_index']}"] = {
-            'step': ident['action_index'], 'level': level, 'segment': r['segment'],
+        out[(ident['episode_id'], ident['action_index'])] = {
+            'record_id': ident['record_id'], 'step': ident['action_index'],
+            'level': level['value'] if level.get('status') == 'measured' else None, 'segment': r['segment'],
             'state': r['observations']['before_frames_sha256'][-1], 'action': r['action']['dispatched'],
             'visual': visual if visual in VISUAL else None,
             'events': list(r['environment']['events']) if rep is not None else None}
-        if rep is not None:
-            level = rep['levels_completed_after']
     return out
 
 
@@ -65,7 +65,8 @@ def _text(value):
 
 
 def _ref(ref):
-    return f"{ref['episode_id']}#{ref['action_index']}"
+    """The lookup key of a stored reference: its identity pair, compared with the pair each record reports."""
+    return ref['episode_id'], ref['action_index']
 
 
 def structure(entry):
@@ -245,7 +246,8 @@ def entry_faults(entry, known, ended):
         conflicts = {k for k, f in known.items() if _same_action(claim['action'], f['action'])
                      and _within(f, scope) and _shows(f, claim) is False}
         if listed or conflicts - listed:
-            out.append(('ignored_counterexamples', f'live with conflicting records {sorted(conflicts | listed)}'))
+            names = sorted(known[k]['record_id'] if k in known else repr(k) for k in conflicts | listed)
+            out.append(('ignored_counterexamples', f'live with conflicting records {names}'))
     if status in LIVE and scope['kind'] == 'segment' and scope['segment'] in ended:
         out.append(('stale_state_dependent', 'the segment ended'))
     return out
@@ -273,7 +275,8 @@ def evaluate(records, memory, expected):
                    and e['scope']['level'] == fact['level'] and e['scope']['state_sha256'] == fact['state']
                    and e['claim'] == {'action': fact['action'], 'predicate': fact['predicate'], 'value': fact['value']}
                    for e in current)
-    cited = {_ref(r) for e in current for r in e['evidence'] + e['counterevidence']}
+    cited = {known[_ref(r)]['record_id'] for e in current for r in e['evidence'] + e['counterevidence']
+             if _ref(r) in known}
 
     def holds(pattern, entry):
         return (entry['claim']['action'] == pattern['action'] and entry['claim']['predicate'] == pattern['predicate']

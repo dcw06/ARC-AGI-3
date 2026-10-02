@@ -12,11 +12,20 @@ no model was called. Every number below checks that the instruments work. None e
 | Packages, readers and context pressure | `research/evidence_memory_v1/readers.py`, `render.py` |
 | Tables in §8 | `python -m research.evidence_memory_v1.study` |
 | Targeted mutations of faithful memories (test inputs, not a checker) | `research/evidence_memory_v1/mutations.py` |
-| Tests | `tests/test_evidence_memory_v1.py` (18), `tests/test_evidence_memory_v1_harness.py` (13) |
+| Tests | `tests/test_evidence_memory_v1.py` (22), `tests/test_evidence_memory_v1_harness.py` (13), `tests/test_evidence_memory_v1_migration.py` (1) |
 | Draft protocol | `reports/evidence_memory_v1_protocol_draft.md` |
 
-The transition-evidence contract (`research/transition_evidence_v1/`) is used read-only. Records come from
-`transition.history`. Memory evidence references are record identities (`episode_id`, `action_index`).
+**Format version: `transition_evidence_v2`.** This is the frozen format, `origin/transition-evidence-v2` at
+`eeb11ba`, reviewed at `6b0a4ff`.
+- **Read-only.** The contract is used read-only; records come from `research.transition_evidence_v2.transition.history`
+  with no masks.
+- **The masked view is never read.** Neither `masked` nor `masks.py` is used; masked evidence in memory would be a
+  separately versioned experiment. A test checks this.
+- **References.** Memory evidence references stay the record's identity pair (`episode_id`, `action_index`), and
+  are resolved through the contract's `identity.record_id`.
+- **Migrated in two commits:** a merge, then the adoption.
+- **Nothing changed.** The migration changed no byte of any writer prompt, memory text, reader package or table.
+  `tests/test_evidence_memory_v1_migration.py` pins the pre-migration digest.
 
 ## 1. Question and treatment
 
@@ -302,10 +311,10 @@ In `early_crucial` alone, `recent_raw` falls from 1.00 (delay ≤ 2) to 0.667 (d
 
 ## 9. Dependencies on the transition contract (requests, not edits)
 
-| Need | Current contract | What v1 does |
+| Need | Contract (`transition_evidence_v2`) | What v1 does |
 |---|---|---|
-| A stable record identifier | `identity` = `episode_id` + `action_index` | Uses the pair as the reference. A string `record_id` would be cleaner. |
-| The level of a failed or unknown transition | `environment.reported` is `None`, so `levels_completed_before` is not kept | Carries the level forward and marks it `level_derived`. Request: keep the before-observation's `levels_completed` in every record. |
+| A stable record identifier | **Resolved:** `identity.record_id` | The index is keyed by each record's `record_id`. A stored reference (the identity pair) is resolved by the contract's own `record_id()`. The independent checker matches references against the pair each record reports. |
+| The level of a failed or unknown transition | **Resolved:** `context.levels_completed_before`, present for every dispatch | The level comes from context. The local carry-forward and `level_derived` are removed. Context equals the old carry-forward on every record of the 42 study trajectories, including the failed and unknown ones (tested). |
 | Object identity for the `object_instance` scope | None (frames only) | Uses a cell set of action coordinates. Real object instances need perception output (another track). |
 | Exact-state identity | `before_frames_sha256` | Uses the last before-frame hash. It is brittle when animations or counters change pixels; see the protocol's open questions. |
 
@@ -313,6 +322,10 @@ In `early_crucial` alone, `recent_raw` falls from 1.00 (delay ≤ 2) to 0.667 (d
 
 - **Interpreter.** Tests ran with Windows CPython 3.11.9, not WSL. The worktree's isolation guard refused WSL
   invocations, and the package and its tests use only the standard library plus the read-only contract.
-  `tests.test_transition_evidence_v1` also passes unchanged under this interpreter (16 tests).
+  `tests.test_transition_evidence_v1` (16 tests) and `tests.test_transition_evidence_v2` (32 tests) also pass
+  unchanged under this interpreter.
+- **The construction side still uses v1's frame hash.** `trajectories.py` hashes constructed frames with
+  `transition_evidence_v1.transition.frame_sha256`, the contract's helper; v2 does not export one. The synthetic
+  raws report no available actions, so the v2 available-action fields are `absent`, and Track 2 does not use them.
 - **Base commit.** The worktree started at `f4ee307` and was fast-forwarded to the stated base `c8f4c42` before
   any work.

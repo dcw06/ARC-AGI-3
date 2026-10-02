@@ -160,7 +160,7 @@ class ContextPressure(unittest.TestCase):
 class Boundaries(unittest.TestCase):
     def test_no_model_network_or_process_imports(self):
         allowed = {'copy', 'json', 'hashlib', 'random', 'collections', 'research.evidence_memory_v1',
-                   'research.transition_evidence_v1', 'research.transition_evidence_v1.transition'}
+                   'research.transition_evidence_v1', 'research.transition_evidence_v2'}
         for path in PACKAGE.glob('*.py'):
             tree = ast.parse(path.read_text(encoding='utf-8'))
             modules = {a.name for n in ast.walk(tree) if isinstance(n, ast.Import) for a in n.names}

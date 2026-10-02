@@ -35,7 +35,7 @@ changes (retire and add a new entry with `supersedes`); a retired entry is never
 """
 import copy
 
-from research.transition_evidence_v1 import vocabulary as V
+from research.transition_evidence_v2 import transition as T2, vocabulary as V
 
 VERSION = 'evidence_memory_v1'
 OBSERVATION, HYPOTHESIS = 'observation', 'hypothesis'
@@ -57,36 +57,41 @@ ENTRY_FIELDS = ('id', 'kind', 'claim', 'scope', 'status', 'evidence', 'counterev
 REVISABLE = ('claim', 'scope', 'status', 'evidence', 'counterevidence', 'last_reviewed_step', 'reason')
 
 
-# ---- evidence index over transition records (transition_evidence_v1, consumed read-only)
+# ---- evidence index over transition records (transition_evidence_v2, consumed read-only). The masked view is
+# never read: masked evidence in memory would be a separately versioned experiment.
 
 def ref_of(record):
+    """The reference an entry stores: the record's identity pair, as the contract reports it."""
     return {'episode_id': record['identity']['episode_id'], 'action_index': record['identity']['action_index']}
 
 
 def key(ref):
-    return f"{ref['episode_id']}#{ref['action_index']}"
+    """The contract's record_id for a stored reference (computed by the contract's own function)."""
+    return T2.record_id(ref)
+
+
+def record_key(record):
+    return record['identity']['record_id']
 
 
 def index(records):
-    """{ref key: facts} for records from transition.history. The level of a transition without an environment
-    observation (failed, unknown) is carried forward from the last report and marked as derived."""
-    out, level = {}, 0
+    """{record_id: facts} for records from transition_evidence_v2 history. The level is the contract's
+    context.levels_completed_before, which exists for failed and unknown dispatches too."""
+    out = {}
     for record in records:
-        reported = record['environment'].get('reported')
-        if reported:
-            level = reported['levels_completed_before']
+        level = record['context']['levels_completed_before']
+        if level.get('status') != 'measured':
+            raise ValueError(f'{record_key(record)}: levels_completed_before is not measured')
         visual = record['measurements']['visual_effect']['status']
+        reported = record['environment'].get('reported')
         acknowledged = record['dispatch']['status'] == V.ACKNOWLEDGED
-        out[key(ref_of(record))] = {
-            'ref': ref_of(record), 'step': record['identity']['action_index'], 'level': level,
-            'level_derived': not reported, 'segment': record['segment'],
-            'state': record['observations']['before_frames_sha256'][-1],
+        out[record_key(record)] = {
+            'ref': ref_of(record), 'step': record['identity']['action_index'], 'level': level['value'],
+            'segment': record['segment'], 'state': record['observations']['before_frames_sha256'][-1],
             'action': record['action']['dispatched'], 'dispatch': record['dispatch']['status'],
             'visual': None if visual == V.INDETERMINATE else visual,
             'events': record['environment']['events'] if acknowledged and reported else None,
             'ends_segment': bool(set(record['environment']['events']) & set(SEGMENT_ENDING))}
-        if reported:
-            level = reported['levels_completed_after']
     return out
 
 
