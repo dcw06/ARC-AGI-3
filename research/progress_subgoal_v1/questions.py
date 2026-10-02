@@ -232,14 +232,25 @@ def present(ctx, records, condition):
     return view
 
 
-def build_request(value, probe):
-    user = {'evidence': value['contexts'][probe['context_id']], 'question': probe['question']}
-    return {'model': None,  # fixed at the protocol freeze
-            'messages': [{'role': 'system', 'content': value['system_prompts'][probe['condition']]},
+# The reviewed runner stack (WS3 questionnaire v1, from evidence comprehension v1-v3) serves this pinned model with
+# thinking disabled; requests use its exact shape so the reviewed service, host and tokenizer admission apply.
+MODEL = 'Qwen/Qwen3-VL-30B-A3B-Instruct-FP8'
+MAX_TOKENS = 32
+
+
+def make_request(evidence, probe):
+    """The request for one question: the arm's system prompt, the context's evidence and the question."""
+    user = {'evidence': evidence, 'question': probe['question']}
+    return {'model': MODEL,
+            'messages': [{'role': 'system', 'content': SYSTEM_PROMPTS[probe['condition']]},
                          {'role': 'user', 'content': json.dumps(user, sort_keys=True, separators=(',', ':'))}],
-            'temperature': 0, 'seed': 0, 'max_tokens': 32,
+            'temperature': 0, 'seed': 0, 'max_tokens': MAX_TOKENS, 'chat_template_kwargs': {'enable_thinking': False},
             'response_format': {'type': 'json_schema', 'json_schema': {
                 'name': f"{VERSION}_{probe['family']}", 'strict': True, 'schema': response_schema(probe['family'])}}}
+
+
+def build_request(value, probe):
+    return make_request(value['contexts'][probe['context_id']], probe)
 
 
 # ------------------------------------------------------------------ facts: three independent sources
