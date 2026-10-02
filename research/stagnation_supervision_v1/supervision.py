@@ -55,7 +55,7 @@ class Supervisor:
 
     def observe(self, raw, prediction=None):
         self.raws.append(raw)
-        record = T.history(self.raws)[-1]  # continuity and segment need the whole history
+        record = self._next_record(raw)
         self.records.append(record)
         index = record['identity']['action_index']
         fired = D.signals(self.stats.update(record, prediction), self.params)
@@ -101,6 +101,15 @@ class Supervisor:
                                        'record_id': record['identity']['record_id']}
         self.events.append(event)
         return event
+
+    def _next_record(self, raw):
+        """The record `transition.history(self.raws)[-1]` would give, in constant time: continuity depends only on
+        the previous transition, and the segment number only on the previous record's segment and events."""
+        if len(self.raws) == 1:
+            return T.history([raw])[0]
+        pair = T.history([self.raws[-2], raw])
+        pair[1]['segment'] = self.records[-1]['segment'] + pair[1]['segment']
+        return pair[1]
 
     def suggestion_for(self, action_index):
         """The suggestion block to show with the policy request for `action_index`, or None (expired or cleared)."""
