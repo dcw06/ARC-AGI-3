@@ -1,0 +1,20 @@
+{
+  "version": "stagnation_supervision_v1_derivation_sources_r1",
+  "historical_review_lock": "notebooks/action-effect-history-v1-review-r3/review-source-lock.json",
+  "historical_review_lock_sha256": "0f870a1a73e6ffc8a4a8ba740df3576083d0d8690798805399072b27c451e386",
+  "sources": {
+    "research/action_effect_history_v1/authority.py": {"sha256": "c70b50fdf72e86deb86e1a3d10028dfc0f3b74454f5bcad01930735566981eb4", "provenance": "historical_review_lock"},
+    "research/action_effect_history_v1/contract.py": {"sha256": "078160596c567bc8fdf8afe49db830fa53d8045b780742c94df52b15f7c890de", "provenance": "historical_review_lock"},
+    "research/action_effect_history_v1/engine.py": {"sha256": "de3441282ac5249d1eae888f0b02ce236d077d46273236efc62a682703f381f4", "provenance": "historical_review_lock"},
+    "research/action_effect_history_v1/evidence.py": {"sha256": "96a1e8c05cfc01702d2430a1d77878f9616bb1fa58d1931e2ff1874aba1b3a8e", "provenance": "historical_review_lock"},
+    "research/action_effect_history_v1/host.py": {"sha256": "a7d73f6e60bd0236faca76bbeae4969aa78fb4a0c1d92fd4f38cf218406172ff", "provenance": "historical_review_lock"},
+    "research/action_effect_history_v1/monitor.py": {"sha256": "a41e05dee3669553ece063e7ad8c822ea956d611db7c88d168140a04d299cb01", "provenance": "historical_review_lock"},
+    "research/action_effect_history_v1/resources.py": {"sha256": "96bf66ec80481926356d8f092682490ccd426aebc256e8e99f050676fc6726c6", "provenance": "historical_review_lock"},
+    "research/action_effect_history_v1/runner.py": {"sha256": "0d286637d39f54faf23c6e623f964aef60386b42050f0dd73f53ed822b39a320", "provenance": "historical_review_lock"},
+    "research/action_effect_history_v1/service.py": {"sha256": "6639c231d1414f2ecea1381972c1ba49bacdcc0f70e13d01a8b2acfc02435495", "provenance": "historical_review_lock"},
+    "research/action_effect_history_v1/supervisor.py": {"sha256": "be2f8a632ccf6e5a2695be5e5b94b961261b3c0de2ca38d1025aa3a40cc5a4c1", "provenance": "historical_review_lock"},
+    "research/action_effect_history_v1/worker.py": {"sha256": "ad98463c31262b0f233a2fbb1a9d10b0cce89657780c924a960b0991c485fd76", "provenance": "historical_review_lock"},
+    "scripts/action_effect_history_v1_launch.py": {"sha256": "d3e91192d6a19bb87aa263d1bf35f4e3d59f33037497edaa23d553c941926277", "provenance": "historical_review_lock"},
+    "scripts/rehearse_action_effect_history_v1.py": {"sha256": "3acaf75aa5216828e6cc3d0b4626af1b05f9ef5f3897d33cb5e65074554720fc", "provenance": "supplementary_source_review"}
+  }
+}

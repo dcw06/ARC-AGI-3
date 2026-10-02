@@ -62,6 +62,34 @@ def session_spec(spec, session):
     return {**spec, 'schedule': [s for s in spec['schedule'] if s['pair_id'] in keep]}
 
 
+def session_run_spec(session, mode):
+    """The worker's run spec for one session. Rehearsal only: SSV_REHEARSAL_GROUPS (comma-separated group ids) and
+    SSV_REHEARSAL_ACTIONS may shorten the CPU rehearsal; live mode ignores both."""
+    import os
+    from research.stagnation_supervision_v1.closed_loop.runner import protocol
+    spec = session_spec(protocol(), session)
+    if mode == 'rehearsal':
+        groups = os.environ.get('SSV_REHEARSAL_GROUPS')
+        if groups:
+            keep = set(groups.split(','))
+            spec = {**spec, 'schedule': [s for s in spec['schedule'] if s['pair_id'] in keep]}
+        actions = os.environ.get('SSV_REHEARSAL_ACTIONS')
+        if actions:
+            spec = {**spec, 'limits': {**spec['limits'], 'actions_per_episode': int(actions)}}
+    elif mode != 'live':
+        raise ValueError('mode')
+    return spec
+
+
+def worker_token_counter(mode):
+    """Exact reflection admission in the game interpreter. Rehearsal: the fixture tokenizer the rehearsal model host
+    also counts with. Live: not available in this source revision; the shared bridge has no count operation, so the
+    pinned tokenizer would have to be loaded in the game interpreter (to be decided before a package lock)."""
+    if mode == 'rehearsal':
+        return fixture_token_counter()
+    raise NotImplementedError('live reflection admission needs the pinned tokenizer in the game interpreter')
+
+
 def chat_token_counter(tokenizer):
     """Exact prompt tokens of the reflection chat request built from `text`, with the same chat-template call the
     model service uses for admission (action-effect-history v1 `_admit`)."""

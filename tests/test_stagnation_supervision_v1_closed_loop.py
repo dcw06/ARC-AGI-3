@@ -40,16 +40,37 @@ class Derivation(unittest.TestCase):
 
     def test_sources_are_the_reviewed_action_effect_history_files(self):
         bound = json.loads(LOCK.read_bytes())['bindings']
+        manifest = DERIVE.verify_source_bindings()
+        self.assertEqual(hashlib.sha256(LOCK.read_bytes()).hexdigest(),
+                         manifest['historical_review_lock_sha256'])
+        self.assertEqual(set(manifest['sources']), {DERIVE.src(target) for target in DERIVE.DERIVED})
         for target in DERIVE.DERIVED:
             source = DERIVE.src(target)
-            self.assertEqual(hashlib.sha256((ROOT / source).read_bytes()).hexdigest(), bound[source], source)
+            entry = manifest['sources'][source]
+            self.assertEqual(hashlib.sha256((ROOT / source).read_bytes()).hexdigest(), entry['sha256'], source)
+            if source == 'scripts/rehearse_action_effect_history_v1.py':
+                self.assertNotIn(source, bound)
+                self.assertEqual(entry['provenance'], 'supplementary_source_review')
+            else:
+                self.assertEqual(entry['sha256'], bound[source], source)
+                self.assertEqual(entry['provenance'], 'historical_review_lock')
 
     def test_counted_substitutions(self):
+        base = 'research/stagnation_supervision_v1/closed_loop/'
         self.assertEqual(DERIVE.substitution_counts(), {
-            'research/stagnation_supervision_v1/closed_loop/contract.py': 6,
-            'research/stagnation_supervision_v1/closed_loop/runner.py': 10,
-            'research/stagnation_supervision_v1/closed_loop/engine.py': 0,
-            'research/stagnation_supervision_v1/closed_loop/evidence.py': 0})
+            base + 'contract.py': 6, base + 'runner.py': 10, base + 'engine.py': 0, base + 'evidence.py': 0,
+            base + 'model_service.py': 5, base + 'host.py': 4, base + 'worker.py': 7, base + 'resources.py': 1,
+            base + 'monitor.py': 1, base + 'supervisor.py': 10, base + 'authority.py': 8,
+            'scripts/stagnation_supervision_v1_launch.py': 12, 'scripts/rehearse_stagnation_supervision_v1.py': 6})
+
+    def test_live_mode_is_disabled_in_this_source_revision(self):
+        from research.stagnation_supervision_v1.closed_loop import authority as A
+        self.assertIs(A.LIVE_DISABLED, True)
+        with self.assertRaises(PermissionError):
+            A.require()
+        self.assertEqual(set(A.SESSION_LIMITS), {'1', '2'})
+        for limits in A.SESSION_LIMITS.values():
+            self.assertEqual((limits['automatic_retries'], limits['holdout_runs'], limits['maximum_attempts']), (0, 0, 1))
 
     def test_runner_raw_transitions_match_the_replay_mapping(self):
         spec = importlib.util.spec_from_file_location('replay', ROOT / 'scripts/replay_transition_evidence_v1.py')

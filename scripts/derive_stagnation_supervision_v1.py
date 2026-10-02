@@ -1,15 +1,22 @@
 """Derive the GPU-disabled stagnation-supervision closed-loop runner from action-effect-history v1's reviewed files.
 
-Sources: research/action_effect_history_v1/{runner,contract,engine,evidence}.py, each bound by action-effect-history
-v1's review lock (notebooks/action-effect-history-v1-review-r3/review-source-lock.json) and run live as attempt
-aeh1-4c75150a. They are reused, not edited. Each derived file is its source with the global renames below and that
-file's own substitutions, each required to match an exact number of times.
+Sources: action-effect-history v1's files, bound by the separately versioned derivation-source manifest
+(reports/stagnation_supervision_v1_derivation_sources_r1.json). All but the supplementary rehearsal script are
+also bound by the unchanged historical review lock
+(notebooks/action-effect-history-v1-review-r3/review-source-lock.json) and run live as attempt aeh1-4c75150a:
+research/action_effect_history_v1/{runner,contract,engine,evidence,service,host,worker,supervisor,monitor,resources,
+authority}.py and scripts/{action_effect_history_v1_launch,rehearse_action_effect_history_v1}.py. They are reused, not
+edited. Each derived file is its source with the global renames below and that file's own substitutions, each
+required to match an exact number of times. A span substitution (('span', start, end), new, 1) replaces the text from
+`start` through `end`; each marker must occur exactly once.
 
-Hand-written (not derived): research/stagnation_supervision_v1/closed_loop/{bridge,service,fake_server,authority}.py
-and protocol.json. Not yet derived (needed before an exact package lock): host, worker, supervisor, monitor,
-resources, launch, package and review scripts.
+Hand-written (not derived): research/stagnation_supervision_v1/closed_loop/{bridge,service,fake_server,rehearsal,
+requests,evaluate}.py and protocol.json. Not yet derived (needed before an exact package lock): the package, review
+and notebook scripts and the notebook.
 """
 import argparse
+import hashlib
+import json
 from pathlib import Path
 import sys
 
@@ -17,11 +24,19 @@ ROOT = Path(__file__).resolve().parents[1]
 TARGET_DIR = 'research/stagnation_supervision_v1/closed_loop/'
 SOURCE_DIR = 'research/action_effect_history_v1/'
 BANNER = '# Derived from {source} by scripts/derive_stagnation_supervision_v1.py; edit the derivation, not this file.\n'
-GLOBAL = (('research.action_effect_history_v1', 'research.stagnation_supervision_v1.closed_loop'),
+GLOBAL = (('research.action_effect_history_v1.service', 'research.stagnation_supervision_v1.closed_loop.model_service'),
+          ('research.action_effect_history_v1', 'research.stagnation_supervision_v1.closed_loop'),
+          ('research/action_effect_history_v1/', 'research/stagnation_supervision_v1/closed_loop/'),
           ('action_effect_history_run_v1', 'stagnation_supervision_run_v1'),
           ('action_effect_history_evidence_v1', 'stagnation_supervision_evidence_v1'),
           ('action-effect-history-v1', 'stagnation-supervision-v1'),
-          ('action_effect_history_v1', 'stagnation_supervision_v1'))
+          ('action_effect_history_v1', 'stagnation_supervision_v1'),
+          ('from .service import', 'from .model_service import'),
+          ('HistoryModelService', 'SupervisionModelService'),
+          ('AEH_', 'SSV_'),
+          ('aeh1-', 'ssv1-'),
+          # closed_loop/ is one directory deeper than research/action_effect_history_v1/ (scripts use parents[1])
+          ('ROOT = Path(__file__).resolve().parents[2]', 'ROOT = Path(__file__).resolve().parents[3]'))
 
 CONTRACT_DOC_OLD = '''"""Common corrected baseline and the action-effect-history candidate (request construction only).
 
@@ -207,8 +222,242 @@ DERIVED = {
 }
 
 
+# ---- process stack (host, worker, supervisor, monitor, resources, authority, model service, launch, rehearse)
+
+MODEL_COMPLETE_OLD = """        if self.calls >= MAX_POLICY_CALLS:
+            raise ValueError('policy call ceiling (144)')
+        self.calls += 1  # a failed call still consumes the allowance
+        validate_policy_request(request)
+"""
+MODEL_COMPLETE_NEW = """        from research.stagnation_supervision_v1.closed_loop.service import kind as request_kind
+        if request_kind(request) == 'reflection':
+            if self.reflection_calls >= MAX_REFLECTION_CALLS:
+                raise ValueError('reflection call ceiling')
+            self.reflection_calls += 1  # a failed call still consumes the allowance
+        else:
+            if self.calls >= MAX_POLICY_CALLS:
+                raise ValueError('policy call ceiling')
+            self.calls += 1  # a failed call still consumes the allowance
+        validate_policy_request(request)
+"""
+VALIDATE_NEW = '''def validate_policy_request(request):
+    """Exact frozen request contracts (policy or reflection); raises ValueError before any transport."""
+    from research.stagnation_supervision_v1.closed_loop.service import (
+        kind, validate_policy_request as policy, validate_reflection_request as reflection)
+    return reflection(request) if kind(request) == 'reflection' else policy(request)
+'''
+SESSION_LIMITS = """LIVE_DISABLED = True  # this source revision cannot launch; a reviewed revision must remove this line explicitly
+SESSION_LIMITS = {  # protocol v2 section 11 (proposal; nothing is authorized)
+    '1': {'authorized_seconds': 5400, 'internal_seconds': 5100, 'maximum_attempts': 1, 'maximum_policy_calls': 600,
+          'maximum_reflection_calls': 32, 'maximum_canaries': 1, 'maximum_episodes': 15,
+          'maximum_actions_per_episode': 40, 'automatic_retries': 0, 'scored_submissions': 0, 'holdout_runs': 0},
+    '2': {'authorized_seconds': 4800, 'internal_seconds': 4500, 'maximum_attempts': 1, 'maximum_policy_calls': 480,
+          'maximum_reflection_calls': 32, 'maximum_canaries': 1, 'maximum_episodes': 12,
+          'maximum_actions_per_episode': 40, 'automatic_retries': 0, 'scored_submissions': 0, 'holdout_runs': 0}}
+"""
+REQUIRED_NEW = """REQUIRED_SOURCE = {'research/stagnation_supervision_v1/closed_loop/' + name for name in
+                   ('authority.py', 'contract.py', 'protocol.json', 'runner.py', 'evaluate.py', 'engine.py',
+                    'model_service.py', 'service.py', 'bridge.py', 'host.py', 'worker.py', 'monitor.py',
+                    'resources.py', 'supervisor.py', 'evidence.py', 'rehearsal.py', 'fake_server.py')}
+REQUIRED_SOURCE |= {'research/stagnation_supervision_v1/' + name for name in
+                    ('detector.py', 'supervision.py', 'intervention.py', 'outcomes.py', 'thresholds.py',
+                     'trigger_spec.json')}
+REQUIRED_SOURCE |= {'research/transition_evidence_v2/' + name for name in ('transition.py', 'vocabulary.py')}
+REQUIRED_SOURCE |= {'research/transition_evidence_v1/' + name for name in ('transition.py', 'vocabulary.py')}
+REQUIRED_SOURCE |= {'research/action_effect_v1/records.py', 'scripts/stagnation_supervision_v1_launch.py',
+                    'reports/m0_profiles/m0-q3vl30-instruct.json', 'config/operational_primary.yaml'}
+"""
+
+DERIVED.update({
+    'model_service.py': (
+        ('MAX_POLICY_CALLS = 144\n',
+         'MAX_POLICY_CALLS = 1080  # the whole protocol (closed_loop/protocol.json); each session runs fewer\n'
+         'MAX_REFLECTION_CALLS = 64\n', 1),
+        (('span', 'def validate_policy_request(request):\n',
+          "    return 'history' if HISTORY_FIELD in observation else 'baseline'\n"), VALIDATE_NEW, 1),
+        ('    """One canary, then at most 144 contract-checked policy calls; raw evidence returned for retention."""',
+         '    """One canary, then contract-checked policy and reflection calls within separate ceilings; raw evidence\n'
+         '    returned for retention."""', 1),
+        ('        self.calls = 0\n', '        self.calls = 0\n        self.reflection_calls = 0\n', 1),
+        (MODEL_COMPLETE_OLD, MODEL_COMPLETE_NEW, 1),
+    ),
+    'host.py': (
+        ("'action_effect_history_model_readiness'", "'stagnation_supervision_model_readiness'", 1),
+        ('hard_seconds=3300, finalization_reserve_seconds=300)',
+         'hard_seconds=5100, finalization_reserve_seconds=300)  # the longer session', 1),
+        ("'scope': 'action_effect_history_model_host'", "'scope': 'stagnation_supervision_model_host'", 1),
+        ('policy_calls=service.calls)', 'policy_calls=service.calls, reflection_calls=service.reflection_calls)', 1),
+    ),
+    'worker.py': (
+        ("FAULTS = ('none', 'model_startup', 'transport', 'slow', 'invalid_history', 'storage', 'surviving_child')",
+         "FAULTS = ('none', 'model_startup', 'transport', 'slow', 'reflection_invalid', 'reflection_length', 'storage',\n"
+         "          'surviving_child')", 1),
+        ("def run_worker(output, scratch, environments, model_python, *, deadline, mode, fault='none'):",
+         "def run_worker(output, scratch, environments, model_python, *, deadline, mode, fault='none', session=None):", 1),
+        ("    host_fault = fault if fault in ('model_startup', 'transport', 'slow', 'invalid_history') else 'none'",
+         "    host_fault = fault if fault in ('model_startup', 'transport', 'slow', 'reflection_invalid',\n"
+         "                                    'reflection_length') else 'none'", 1),
+        ('        from .runner import run\n',
+         '        from .runner import run\n'
+         '        from .bridge import session_run_spec, supervision_factory, worker_token_counter\n'
+         '        from research.stagnation_supervision_v1 import thresholds\n'
+         '        spec = session_run_spec(session, mode)\n', 1),
+        ('                     deadline_seconds=max(.01, deadline - time.monotonic()), cancel=cancel,\n',
+         '                     deadline_seconds=max(.01, deadline - time.monotonic()), cancel=cancel, spec=spec,\n'
+         '                     supervision_factory=supervision_factory(spec, thresholds.load(),\n'
+         '                                                             token_counter=worker_token_counter(mode)),\n', 1),
+        ("    parser.add_argument('--fault', default='none')\n",
+         "    parser.add_argument('--fault', default='none')\n"
+         "    parser.add_argument('--session', choices=('1', '2'), required=True)\n", 1),
+        ('               mode=args.mode, fault=args.fault)', '               mode=args.mode, fault=args.fault, session=args.session)', 1),
+    ),
+    'resources.py': (
+        ("'scope': 'action_effect_history_independent_gpu_cleanup'", "'scope': 'stagnation_supervision_independent_gpu_cleanup'", 1),
+    ),
+    'monitor.py': (
+        ("SCOPES = {'live': 'action_effect_history_live_resource_monitor',\n"
+         "          'rehearsal': 'action_effect_history_rehearsal_monitor_injected_gpu'}",
+         "SCOPES = {'live': 'stagnation_supervision_live_resource_monitor',\n"
+         "          'rehearsal': 'stagnation_supervision_rehearsal_monitor_injected_gpu'}", 1),
+    ),
+    'supervisor.py': (
+        ('LIVE_INTERNAL_SECONDS = 3300\n',
+         "LIVE_INTERNAL_SECONDS = {'1': 5100, '2': 4500}  # per session: proposed reservation minus 300 s (protocol v2)\n", 1),
+        ("        internal_seconds=LIVE_INTERNAL_SECONDS, fault='none', claimed=False, prepared=False, spawn=subprocess.Popen):",
+         "        internal_seconds=None, fault='none', claimed=False, prepared=False, spawn=subprocess.Popen, session=None):", 1),
+        ('    gate(mode)  # before output, subprocess or GPU query\n',
+         '    gate(mode)  # before output, subprocess or GPU query\n'
+         '    if str(session) not in LIVE_INTERNAL_SECONDS:\n'
+         "        raise ValueError('unknown session')\n"
+         '    live_seconds = LIVE_INTERNAL_SECONDS[str(session)]\n'
+         '    internal_seconds = live_seconds if internal_seconds is None else internal_seconds\n', 1),
+        ("internal_seconds != LIVE_INTERNAL_SECONDS):", 'internal_seconds != live_seconds):', 1),
+        ('not 60 <= internal_seconds <= LIVE_INTERNAL_SECONDS:', 'not 60 <= internal_seconds <= live_seconds:', 1),
+        ("    report = {'scope': 'action_effect_history_' + mode, 'mode': mode,",
+         "    report = {'scope': 'stagnation_supervision_' + mode, 'mode': mode, 'session': str(session),", 1),
+        ("prefix='action-effect-history-'", "prefix='stagnation-supervision-'", 1),
+        ("'--mode', mode, '--fault', worker_fault],", "'--mode', mode, '--fault', worker_fault,\n"
+         "                             '--session', str(session)],", 1),
+        ("    parser.add_argument('--internal-seconds', type=int, default=LIVE_INTERNAL_SECONDS)",
+         "    parser.add_argument('--internal-seconds', type=int, default=None)\n"
+         "    parser.add_argument('--session', choices=('1', '2'), required=True)", 1),
+        ("claimed=args.mode == 'live', prepared=True)", "claimed=args.mode == 'live', prepared=True, session=args.session)", 1),
+    ),
+    'authority.py': (
+        ('"""Action-effect-history-only source, compute and one-attempt reservation gate.',
+         '"""Stagnation-supervision-only source, compute and one-attempt-per-session reservation gate.\n\n'
+         'Live mode is disabled in this source revision (LIVE_DISABLED); no review lock, approval, authorization or\n'
+         'reservation exists.', 1),
+        ("REVIEW = 'notebooks/stagnation-supervision-v1-review-r3/review-source-lock.json'",
+         "REVIEW = 'notebooks/stagnation-supervision-v1-review-r1/review-source-lock.json'", 1),
+        (('span', 'LIMITS = {', "'holdout_runs': 0}\n"), SESSION_LIMITS, 1),
+        (('span', 'REQUIRED_SOURCE = {', "'config/operational_primary.yaml'}\n"), REQUIRED_NEW, 1),
+        ('    """Fail before installation, subprocess creation, GPU query or model import."""\n',
+         '    """Fail before installation, subprocess creation, GPU query or model import."""\n'
+         '    if LIVE_DISABLED:\n'
+         "        raise PermissionError('stagnation-supervision-v1 live mode is disabled in this source revision')\n", 1),
+        ("        for name, expected in LIMITS.items():\n"
+         "            if type(compute.get(name)) is not int or compute[name] != expected:\n"
+         "                raise ValueError('compute limit: ' + name)",
+         "        for session, limits in SESSION_LIMITS.items():\n"
+         "            granted = (compute.get('sessions') or {}).get(session) or {}\n"
+         "            for name, expected in limits.items():\n"
+         "                if type(granted.get(name)) is not int or granted[name] != expected:\n"
+         "                    raise ValueError(f'compute limit: session {session} {name}')", 1),
+        ("reservation.get('seconds') != LIMITS['authorized_seconds'] or",
+         "reservation.get('seconds') != SESSION_LIMITS.get(str(execution.get('session')), {}).get('authorized_seconds') or", 1),
+        ("        raise PermissionError('action-effect-history v1 requires reviewed source, separate compute '\n"
+         "                              'approval and one fresh reservation') from exc",
+         "        raise PermissionError('stagnation-supervision v1 requires reviewed source, separate compute '\n"
+         "                              'approval and one fresh reservation per session') from exc", 1),
+    ),
+    'scripts/stagnation_supervision_v1_launch.py': (
+        ('"""First-cell lifecycle for the action-effect-history comparison (live needs separate reviewed authority)."""',
+         '"""First-cell lifecycle for one stagnation-supervision session (live needs separate reviewed authority)."""', 1),
+        ("def run_supervisor(output, working, game_python, model_python, games, *, started, mode, internal_seconds,\n"
+         "                   fault='none', root=ROOT, spawn=subprocess.Popen):",
+         "def run_supervisor(output, working, game_python, model_python, games, *, started, mode, internal_seconds,\n"
+         "                   fault='none', root=ROOT, spawn=subprocess.Popen, session=None):", 1),
+        ("'--internal-seconds', str(internal_seconds), '--fault', fault]",
+         "'--internal-seconds', str(internal_seconds), '--fault', fault,\n"
+         "               '--session', str(session)]", 1),
+        ("def run(output, working, *, started, root=ROOT, mode='live', internal_seconds=3300, fault='none'):\n"
+         '    """Installation, supervisor, evidence and cleanup all charged to `started`."""\n',
+         "def run(output, working, *, started, root=ROOT, mode='live', internal_seconds=None, fault='none', session=None):\n"
+         '    """Installation, supervisor, evidence and cleanup all charged to `started`."""\n'
+         '    from research.stagnation_supervision_v1.closed_loop.supervisor import LIVE_INTERNAL_SECONDS\n'
+         '    if str(session) not in LIVE_INTERNAL_SECONDS:\n'
+         "        raise ValueError('unknown session')\n"
+         '    internal_seconds = LIVE_INTERNAL_SECONDS[str(session)] if internal_seconds is None else internal_seconds\n', 1),
+        ("        if fault != 'none' or internal_seconds != 3300:",
+         "        if fault != 'none' or internal_seconds != LIVE_INTERNAL_SECONDS[str(session)]:", 1),
+        ("prefix='action-effect-history-dependencies-'", "prefix='stagnation-supervision-dependencies-'", 1),
+        ('mode=mode, internal_seconds=internal_seconds, root=root)',
+         'mode=mode, internal_seconds=internal_seconds, root=root, session=session)', 1),
+        ('started=started, mode=mode, internal_seconds=internal_seconds, fault=fault, root=root)',
+         'started=started, mode=mode, internal_seconds=internal_seconds, fault=fault, root=root,\n'
+         '                                    session=session)', 1),
+        ("    receipt = {'scope': 'action_effect_history_first_cell', 'mode': mode,",
+         "    receipt = {'scope': 'stagnation_supervision_first_cell', 'mode': mode, 'session': str(session),", 1),
+        ('def notebook_entry(source, started, mode):', 'def notebook_entry(source, started, mode, session):', 1),
+        ("started=started, root=source, mode='live')", "started=started, root=source, mode='live', session=session)", 1),
+        ("started=started, root=source, mode='rehearsal',\n",
+         "started=started, root=source, mode='rehearsal', session=session,\n", 1),
+    ),
+    'scripts/rehearse_stagnation_supervision_v1.py': (
+        ("def rehearse(fault='none', seconds=2400, workdir=None, root=ROOT):",
+         "def rehearse(fault='none', seconds=2400, workdir=None, root=ROOT, session='1'):", 1),
+        ("prefix='aeh-rehearsal-'", "prefix='ssv-rehearsal-'", 1),
+        ("mode='rehearsal', internal_seconds=seconds, fault=fault)",
+         "mode='rehearsal', internal_seconds=seconds, fault=fault, session=session)", 1),
+        ("    parser.add_argument('--seconds', type=int, default=2400)\n",
+         "    parser.add_argument('--seconds', type=int, default=2400)\n"
+         "    parser.add_argument('--session', choices=('1', '2'), default='1')\n", 1),
+        ("Path.home() / 'aeh-rehearsal'", "Path.home() / 'ssv-rehearsal'", 1),
+        ('rehearse(args.fault, args.seconds, tempfile.mkdtemp(dir=base))',
+         'rehearse(args.fault, args.seconds, tempfile.mkdtemp(dir=base), session=args.session)', 1),
+    ),
+})
+
+
+RENAMED_SOURCE = {'model_service.py': 'service.py'}
+SCRIPT_SOURCES = {'scripts/stagnation_supervision_v1_launch.py': 'scripts/action_effect_history_v1_launch.py',
+                  'scripts/rehearse_stagnation_supervision_v1.py': 'scripts/rehearse_action_effect_history_v1.py'}
+SOURCE_MANIFEST = 'reports/stagnation_supervision_v1_derivation_sources_r1.json'
+
+
 def src(target):
-    return SOURCE_DIR + target
+    return SCRIPT_SOURCES.get(target) or SOURCE_DIR + RENAMED_SOURCE.get(target, target)
+
+
+def target_path(target):
+    return target if target in SCRIPT_SOURCES else TARGET_DIR + target
+
+
+def verify_source_bindings():
+    """Require every derivation source and its stated provenance; never extend the historical lock in place."""
+    manifest = json.loads((ROOT / SOURCE_MANIFEST).read_bytes())
+    lock_path = manifest['historical_review_lock']
+    lock_raw = (ROOT / lock_path).read_bytes()
+    if hashlib.sha256(lock_raw).hexdigest() != manifest['historical_review_lock_sha256']:
+        raise ValueError('historical source review lock drift')
+    historical = json.loads(lock_raw)['bindings']
+    expected_sources = {src(target) for target in DERIVED}
+    if set(manifest['sources']) != expected_sources:
+        raise ValueError('derivation source inventory drift')
+    supplementary = {'scripts/rehearse_action_effect_history_v1.py'}
+    if expected_sources - set(historical) != supplementary:
+        raise ValueError('supplementary source inventory drift')
+    for source in sorted(expected_sources):
+        entry = manifest['sources'][source]
+        expected_provenance = 'supplementary_source_review' if source in supplementary else 'historical_review_lock'
+        if set(entry) != {'sha256', 'provenance'} or entry['provenance'] != expected_provenance:
+            raise ValueError('source provenance drift: ' + source)
+        if source in historical and entry['sha256'] != historical[source]:
+            raise ValueError('historical source binding drift: ' + source)
+        if hashlib.sha256((ROOT / source).read_bytes()).hexdigest() != entry['sha256']:
+            raise ValueError('derivation source bytes drift: ' + source)
+    return manifest
 
 
 def derive_one(target):
@@ -217,6 +466,13 @@ def derive_one(target):
     for old, new in GLOBAL:
         text = text.replace(old, new)
     for old, new, count in DERIVED[target]:
+        if isinstance(old, tuple):  # ('span', start, end)
+            _, start, end = old
+            if text.count(start) != 1 or text.count(end) != 1 or text.index(end) < text.index(start):
+                raise ValueError(f'{target}: span markers {start[:50]!r} .. {end[:50]!r} not unique and ordered')
+            i, j = text.index(start), text.index(end) + len(end)
+            text = text[:i] + new + text[j:]
+            continue
         found = text.count(old)
         if found != count:
             raise ValueError(f'{target}: expected {count} of {old[:70]!r}, found {found}')
@@ -227,11 +483,12 @@ def derive_one(target):
 
 
 def derive():
-    return {TARGET_DIR + target: derive_one(target) for target in DERIVED}
+    verify_source_bindings()
+    return {target_path(target): derive_one(target) for target in DERIVED}
 
 
 def substitution_counts():
-    return {TARGET_DIR + t: len(subs) for t, subs in DERIVED.items()}
+    return {target_path(t): len(subs) for t, subs in DERIVED.items()}
 
 
 def stale():

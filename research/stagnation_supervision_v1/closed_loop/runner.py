@@ -18,7 +18,7 @@ from research.action_effect_v1.records import effect_record, EffectHistory
 from research.stagnation_supervision_v1.closed_loop.contract import policy_request
 from research.stagnation_supervision_v1.closed_loop.bridge import raw_transition, reflection_request, supervisor_view
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 PROTOCOL = Path(__file__).with_name('protocol.json')
 VERSION = 'stagnation_supervision_run_v1'
 TERMINAL_EPISODE = ('action_cap', 'win', 'game_over', 'invalid_output', 'dispatch_failure')

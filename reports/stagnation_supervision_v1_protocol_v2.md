@@ -120,7 +120,7 @@ H2 are never opened. The offline game archive contains only development games (c
 | A | stagnation case | ar25 | Archive: 100% `no_observed_change`; fired in 4/4 episodes. Design-informed. |
 | A | continuation-appropriate case | wa30 | Archive: 92% new final frames; median 32 changed cells. |
 | A | declared blind-spot case | s5i5 | Archive: every step changes 1–2 step-bar cells. Run and reported separately. |
-| B | continuation-appropriate case | **ls20, pending review** | CPU probe (below) |
+| B | continuation-appropriate case | **ls20, retained with limitation** | CPU probe and explicit user decision (below) |
 
 **Tier B probe** (approved; CPU only; offline engine; no model).
 - **Provenance.** The definition was committed (0a8ef61) before the run, and the result is write-once (ce2beb2).
@@ -141,8 +141,10 @@ H2 are never opened. The offline game archive contains only development games (c
 - **What it means.** Under this probe, ls20's qualification rests on the same kind of moving-display novelty the
   review warned about.
 - **The rule result stands as recorded.** No second policy or candidate was run.
-- **Decision needed (§13, question 1):** keep ls20 as written, or adopt an amended criterion and probe tr87, then
-  g50t. An amended criterion would be a new, separately committed definition, not a reinterpretation.
+- **Decision (2026-10-02):** the user selected "Keep ls20 with the stated limitation".
+  `reports/stagnation_supervision_v1_ls20_decision.json` retains the response and limitations.
+  The original criterion, case, initial state and schedule are unchanged; the display-driven novelty and
+  oscillation must be reported. No replacement probe, source approval or compute authorization follows from this decision.
 - **If ls20 is excluded** and no replacement is approved, the false-interruption gate is "not certifiable" by
   construction, because it needs at least 2 continuation games.
 
@@ -350,7 +352,7 @@ These are estimates, not authorization ceilings.
 
 ## 12. What remains before an exact source and package lock
 
-1. **Tier B decision.** Keep ls20, or approve an amended criterion and a new probe of tr87, then g50t.
+1. **Tier B decision.** Resolved: retain ls20 with the documented limitation and explicit user response.
 2. **Live host and process stack.** Derive the host, worker, supervisor, monitor, resources, launch, package, review
    and notebook files from action-effect-history v1 by the same counted-substitution pattern.
    - The model host must serve and audit reflection requests (`max_tokens` 400, no response format) beside policy
@@ -375,9 +377,8 @@ These are estimates, not authorization ceilings.
 
 ## 13. Open questions
 
-1. **Tier B.** Accept ls20 despite the post-hoc finding, or approve an amended, separately committed criterion? For
-   example, "novelty must persist when the cells changed on every step are ignored". Such a criterion uses a
-   per-episode description, not a detector mask.
+1. **Tier B.** Resolved on 2026-10-02: keep ls20 with the stated limitation. An amended criterion remains a
+   separate future study, not a reinterpretation of this selection.
 2. **Two sessions.** Is the split with the stated reservations acceptable, or should one longer session be
    requested?
 3. **Window lengths.** Are 10 actions (window) and 5 (quiet period) acceptable for behavioural recovery, given the
