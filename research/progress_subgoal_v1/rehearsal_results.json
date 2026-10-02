@@ -1,0 +1,1797 @@
+{
+ "coverage": {
+  "abandonment_questions": 30,
+  "critical_classes": {
+   "change_between_observations": 48,
+   "confirmed_progress": 104,
+   "hypothesis_strengthened": 48,
+   "progress_without_visible_change": 30,
+   "simultaneous_changes": 74,
+   "subgoal_achieved_with_confirmed_progress": 30,
+   "subgoal_achieved_without_progress": 30,
+   "subgoal_budget_exhausted": 30,
+   "subgoal_disconfirmed": 30,
+   "subgoal_unobserved": 60,
+   "transient_change": 43,
+   "unobserved_last_outcome": 102,
+   "visible_change_without_progress": 285
+  },
+  "failures": [],
+  "families": {
+   "claim_causal": {
+    "best_shortcut_accuracy": 0.7,
+    "keys": {
+     "contradicted": 48,
+     "not_established": 72
+    },
+    "level": "causal_restraint",
+    "n": 120,
+    "role": "primary",
+    "shortcut_disagreement_n": 36
+   },
+   "claim_progress": {
+    "best_shortcut_accuracy": 0.5,
+    "keys": {
+     "contradicted": 45,
+     "not_established": 90,
+     "supported": 45
+    },
+    "level": "confirmed_progress",
+    "n": 180,
+    "role": "primary",
+    "shortcut_disagreement_n": 90
+   },
+   "claim_usefulness": {
+    "best_shortcut_accuracy": 1.0,
+    "keys": {
+     "not_established": 120
+    },
+    "level": "hypothesized_usefulness",
+    "n": 120,
+    "role": "gate_only",
+    "shortcut_disagreement_n": 0
+   },
+   "effect_hypothesis": {
+    "best_shortcut_accuracy": 0.7083,
+    "keys": {
+     "insufficient_evidence": 40,
+     "strengthened": 40,
+     "weakened": 40
+    },
+    "level": "causal_restraint",
+    "n": 120,
+    "role": "primary",
+    "shortcut_disagreement_n": 35
+   },
+   "progress_status": {
+    "best_shortcut_accuracy": 0.75,
+    "keys": {
+     "confirmed": 90,
+     "unknown": 90
+    },
+    "level": "confirmed_progress",
+    "n": 180,
+    "role": "primary",
+    "shortcut_disagreement_n": 45
+   },
+   "region_changed": {
+    "best_shortcut_accuracy": 0.6667,
+    "keys": {
+     "cannot_tell": 40,
+     "no": 40,
+     "yes": 40
+    },
+    "level": "observed_change",
+    "n": 120,
+    "role": "primary",
+    "shortcut_disagreement_n": 40
+   },
+   "subgoal_decision": {
+    "best_shortcut_accuracy": 0.75,
+    "keys": {
+     "abandon_budget_exhausted": 30,
+     "abandon_invalidated": 30,
+     "continue": 30,
+     "stop_achieved": 30
+    },
+    "level": "subgoal_verification",
+    "n": 120,
+    "role": "primary",
+    "shortcut_disagreement_n": 30
+   },
+   "subgoal_status": {
+    "best_shortcut_accuracy": 0.7778,
+    "keys": {
+     "achieved": 60,
+     "cannot_tell": 60,
+     "not_achieved": 60
+    },
+    "level": "subgoal_verification",
+    "n": 180,
+    "role": "primary",
+    "shortcut_disagreement_n": 40
+   },
+   "visual_effect": {
+    "best_shortcut_accuracy": 0.75,
+    "keys": {
+     "changed_then_returned": 30,
+     "final_frame_differs": 30,
+     "indeterminate": 30,
+     "no_observed_change": 30
+    },
+    "level": "observed_change",
+    "n": 120,
+    "role": "primary",
+    "shortcut_disagreement_n": 30
+   }
+  },
+  "over_claim_denominators": {
+   "false_progress": 126,
+   "false_subgoal_success": 120,
+   "unsupported_causal_claim": 176,
+   "unsupported_usefulness_claim": 116
+  },
+  "uncertain_keyed_questions": 542
+ },
+ "note": "scripted answers only; no model was called",
+ "partition": "coverage_dryrun",
+ "retained_invalid_examples": {
+  "invalid_text": [
+   {
+    "content": "I think the answer is probably yes.",
+    "error": "Expecting value: line 1 column 1 (char 0)",
+    "pass": "pass_1",
+    "probe_id": "coverage_dryrun:raw_evidence:ps-31185a646c69:visual_effect"
+   },
+   {
+    "content": "I think the answer is probably yes.",
+    "error": "Expecting value: line 1 column 1 (char 0)",
+    "pass": "pass_2",
+    "probe_id": "coverage_dryrun:raw_evidence:ps-31185a646c69:visual_effect"
+   },
+   {
+    "content": "I think the answer is probably yes.",
+    "error": "Expecting value: line 1 column 1 (char 0)",
+    "pass": "pass_1",
+    "probe_id": "coverage_dryrun:raw_evidence:ps-16894596edd8:visual_effect"
+   },
+   {
+    "content": "I think the answer is probably yes.",
+    "error": "Expecting value: line 1 column 1 (char 0)",
+    "pass": "pass_2",
+    "probe_id": "coverage_dryrun:raw_evidence:ps-16894596edd8:visual_effect"
+   },
+   {
+    "content": "I think the answer is probably yes.",
+    "error": "Expecting value: line 1 column 1 (char 0)",
+    "pass": "pass_1",
+    "probe_id": "coverage_dryrun:raw_evidence:ps-335398b5511f:visual_effect"
+   }
+  ],
+  "oracle_3pct_invalid_pass2": [
+   {
+    "content": "```json",
+    "error": "Expecting value: line 1 column 1 (char 0)",
+    "pass": "pass_2",
+    "probe_id": "coverage_dryrun:raw_evidence:ps-16894596edd8:visual_effect"
+   },
+   {
+    "content": "```json",
+    "error": "Expecting value: line 1 column 1 (char 0)",
+    "pass": "pass_2",
+    "probe_id": "coverage_dryrun:raw_evidence:ps-2413abda966a:visual_effect"
+   },
+   {
+    "content": "```json",
+    "error": "Expecting value: line 1 column 1 (char 0)",
+    "pass": "pass_2",
+    "probe_id": "coverage_dryrun:raw_evidence:ps-741cdda0e1c8:visual_effect"
+   },
+   {
+    "content": "```json",
+    "error": "Expecting value: line 1 column 1 (char 0)",
+    "pass": "pass_2",
+    "probe_id": "coverage_dryrun:raw_evidence:ps-d4a0075f86dd:visual_effect"
+   },
+   {
+    "content": "```json",
+    "error": "Expecting value: line 1 column 1 (char 0)",
+    "pass": "pass_2",
+    "probe_id": "coverage_dryrun:raw_evidence:ps-7f6b63a87860:visual_effect"
+   }
+  ],
+  "schema_faults": [
+   {
+    "content": "{\"answer\":\"maybe\"}",
+    "error": "schema: 'maybe' is not one of ['no_observed_change', 'changed_then_returned', 'final_frame_differs', 'indete",
+    "pass": "pass_1",
+    "probe_id": "coverage_dryrun:raw_evidence:ps-31185a646c69:visual_effect"
+   },
+   {
+    "content": "{\"answer\":\"maybe\"}",
+    "error": "schema: 'maybe' is not one of ['no_observed_change', 'changed_then_returned', 'final_frame_differs', 'indete",
+    "pass": "pass_2",
+    "probe_id": "coverage_dryrun:raw_evidence:ps-31185a646c69:visual_effect"
+   },
+   {
+    "content": "[\"supported\"]",
+    "error": "schema: ['supported'] is not of type 'object'",
+    "pass": "pass_1",
+    "probe_id": "coverage_dryrun:raw_evidence:ps-16894596edd8:visual_effect"
+   },
+   {
+    "content": "[\"supported\"]",
+    "error": "schema: ['supported'] is not of type 'object'",
+    "pass": "pass_2",
+    "probe_id": "coverage_dryrun:raw_evidence:ps-16894596edd8:visual_effect"
+   },
+   {
+    "content": "{\"answer\": \"changed_then_returned\", \"why\": \"x\"}",
+    "error": "schema: Additional properties are not allowed ('why' was unexpected)",
+    "pass": "pass_1",
+    "probe_id": "coverage_dryrun:raw_evidence:ps-335398b5511f:visual_effect"
+   }
+  ]
+ },
+ "runs": {
+  "always_uncertain": {
+   "completeness": {
+    "all": "complete",
+    "over_claim_gates": "complete",
+    "primary": "complete"
+   },
+   "findings": {
+    "computed_vs_raw": {
+     "improved": [],
+     "regressed": []
+    },
+    "safeguard_vs_computed": {
+     "improved": [],
+     "regressed": []
+    }
+   },
+   "gates": {
+    "raw_evidence": {
+     "false_progress": [
+      "passes",
+      0,
+      126
+     ],
+     "false_subgoal_success": [
+      "passes",
+      0,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "passes",
+      0,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "passes",
+      0,
+      116
+     ]
+    },
+    "raw_plus_computed_record": {
+     "false_progress": [
+      "passes",
+      0,
+      126
+     ],
+     "false_subgoal_success": [
+      "passes",
+      0,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "passes",
+      0,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "passes",
+      0,
+      116
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "false_progress": [
+      "passes",
+      0,
+      126
+     ],
+     "false_subgoal_success": [
+      "passes",
+      0,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "passes",
+      0,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "passes",
+      0,
+      116
+     ]
+    }
+   },
+   "invalid_counts": {
+    "raw_evidence": 0,
+    "raw_plus_computed_record": 0,
+    "raw_plus_computed_record_plus_safeguard": 0
+   },
+   "labels": {
+    "raw_evidence": {
+     "claim_causal": "below_accuracy_floor",
+     "claim_progress": "below_accuracy_floor",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "below_accuracy_floor",
+     "progress_status": "below_accuracy_floor",
+     "region_changed": "below_accuracy_floor",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "below_accuracy_floor",
+     "visual_effect": "below_accuracy_floor"
+    },
+    "raw_plus_computed_record": {
+     "claim_causal": "below_accuracy_floor",
+     "claim_progress": "below_accuracy_floor",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "below_accuracy_floor",
+     "progress_status": "below_accuracy_floor",
+     "region_changed": "below_accuracy_floor",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "below_accuracy_floor",
+     "visual_effect": "below_accuracy_floor"
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "claim_causal": "below_accuracy_floor",
+     "claim_progress": "below_accuracy_floor",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "below_accuracy_floor",
+     "progress_status": "below_accuracy_floor",
+     "region_changed": "below_accuracy_floor",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "below_accuracy_floor",
+     "visual_effect": "below_accuracy_floor"
+    }
+   },
+   "log": {
+    "ignored_tail_bytes": 0,
+    "lines": 7560,
+    "recovered": false
+   },
+   "log_sha256": "d8a07061c6038036d9f0ce04fbdb47d49fd9af5c89583e44c60bc98ccbb49155",
+   "readiness": {
+    "raw_evidence": "not_eligible",
+    "raw_plus_computed_record": "not_eligible",
+    "raw_plus_computed_record_plus_safeguard": "not_eligible"
+   },
+   "subgoal": {
+    "raw_evidence": [
+     0.3333,
+     1.0,
+     0
+    ],
+    "raw_plus_computed_record": [
+     0.3333,
+     1.0,
+     0
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     0.3333,
+     1.0,
+     0
+    ]
+   },
+   "uncertainty": {
+    "raw_evidence": [
+     1.0,
+     1.0,
+     0.0
+    ],
+    "raw_plus_computed_record": [
+     1.0,
+     1.0,
+     0.0
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     1.0,
+     1.0,
+     0.0
+    ]
+   }
+  },
+  "condition_contrast": {
+   "completeness": {
+    "all": "complete",
+    "over_claim_gates": "complete",
+    "primary": "complete"
+   },
+   "findings": {
+    "computed_vs_raw": {
+     "improved": [
+      "claim_causal",
+      "claim_progress",
+      "claim_usefulness",
+      "effect_hypothesis",
+      "progress_status",
+      "region_changed",
+      "subgoal_status",
+      "visual_effect"
+     ],
+     "regressed": []
+    },
+    "safeguard_vs_computed": {
+     "improved": [],
+     "regressed": [
+      "claim_causal",
+      "claim_progress",
+      "effect_hypothesis",
+      "progress_status",
+      "region_changed",
+      "subgoal_status",
+      "visual_effect"
+     ]
+    }
+   },
+   "gates": {
+    "raw_evidence": {
+     "false_progress": [
+      "fails",
+      66,
+      126
+     ],
+     "false_subgoal_success": [
+      "fails",
+      40,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "fails",
+      68,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "fails",
+      59,
+      116
+     ]
+    },
+    "raw_plus_computed_record": {
+     "false_progress": [
+      "passes",
+      0,
+      126
+     ],
+     "false_subgoal_success": [
+      "passes",
+      0,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "passes",
+      0,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "passes",
+      0,
+      116
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "false_progress": [
+      "passes",
+      0,
+      126
+     ],
+     "false_subgoal_success": [
+      "passes",
+      0,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "passes",
+      0,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "passes",
+      0,
+      116
+     ]
+    }
+   },
+   "invalid_counts": {
+    "raw_evidence": 0,
+    "raw_plus_computed_record": 0,
+    "raw_plus_computed_record_plus_safeguard": 0
+   },
+   "labels": {
+    "raw_evidence": {
+     "claim_causal": "inconclusive",
+     "claim_progress": "below_accuracy_floor",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "below_accuracy_floor",
+     "progress_status": "inconclusive",
+     "region_changed": "below_accuracy_floor",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "inconclusive",
+     "visual_effect": "inconclusive"
+    },
+    "raw_plus_computed_record": {
+     "claim_causal": "criterion_met",
+     "claim_progress": "criterion_met",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "criterion_met",
+     "progress_status": "criterion_met",
+     "region_changed": "criterion_met",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "criterion_met",
+     "visual_effect": "criterion_met"
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "claim_causal": "below_accuracy_floor",
+     "claim_progress": "below_accuracy_floor",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "below_accuracy_floor",
+     "progress_status": "below_accuracy_floor",
+     "region_changed": "below_accuracy_floor",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "below_accuracy_floor",
+     "visual_effect": "below_accuracy_floor"
+    }
+   },
+   "log": {
+    "ignored_tail_bytes": 0,
+    "lines": 7560,
+    "recovered": false
+   },
+   "log_sha256": "242a5f3277f1ca480822387ce9c23e45f130fc7766097aa421b082d15d916b02",
+   "readiness": {
+    "raw_evidence": "not_eligible",
+    "raw_plus_computed_record": "eligible_for_memory_or_supervision",
+    "raw_plus_computed_record_plus_safeguard": "not_eligible"
+   },
+   "subgoal": {
+    "raw_evidence": [
+     0.7778,
+     1.0,
+     0
+    ],
+    "raw_plus_computed_record": [
+     1.0,
+     1.0,
+     0
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     0.3333,
+     1.0,
+     0
+    ]
+   },
+   "uncertainty": {
+    "raw_evidence": [
+     0.4041,
+     0.0,
+     1.0
+    ],
+    "raw_plus_computed_record": [
+     1.0,
+     0.0,
+     0.0
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     1.0,
+     1.0,
+     0.0
+    ]
+   }
+  },
+  "corrupt_middle_line": "refused: line 5: not JSON (Unterminated string starting at: line 1 column 75 (char 74))",
+  "invalid_text": {
+   "completeness": {
+    "all": "complete",
+    "over_claim_gates": "complete",
+    "primary": "complete"
+   },
+   "findings": {
+    "computed_vs_raw": {
+     "improved": [],
+     "regressed": []
+    },
+    "safeguard_vs_computed": {
+     "improved": [],
+     "regressed": []
+    }
+   },
+   "gates": {
+    "raw_evidence": {
+     "false_progress": [
+      "fails",
+      126,
+      126
+     ],
+     "false_subgoal_success": [
+      "fails",
+      120,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "fails",
+      176,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "fails",
+      116,
+      116
+     ]
+    },
+    "raw_plus_computed_record": {
+     "false_progress": [
+      "fails",
+      126,
+      126
+     ],
+     "false_subgoal_success": [
+      "fails",
+      120,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "fails",
+      176,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "fails",
+      116,
+      116
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "false_progress": [
+      "fails",
+      126,
+      126
+     ],
+     "false_subgoal_success": [
+      "fails",
+      120,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "fails",
+      176,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "fails",
+      116,
+      116
+     ]
+    }
+   },
+   "invalid_counts": {
+    "raw_evidence": 2520,
+    "raw_plus_computed_record": 2520,
+    "raw_plus_computed_record_plus_safeguard": 2520
+   },
+   "labels": {
+    "raw_evidence": {
+     "claim_causal": "below_accuracy_floor",
+     "claim_progress": "below_accuracy_floor",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "below_accuracy_floor",
+     "progress_status": "below_accuracy_floor",
+     "region_changed": "below_accuracy_floor",
+     "subgoal_decision": "below_accuracy_floor",
+     "subgoal_status": "below_accuracy_floor",
+     "visual_effect": "below_accuracy_floor"
+    },
+    "raw_plus_computed_record": {
+     "claim_causal": "below_accuracy_floor",
+     "claim_progress": "below_accuracy_floor",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "below_accuracy_floor",
+     "progress_status": "below_accuracy_floor",
+     "region_changed": "below_accuracy_floor",
+     "subgoal_decision": "below_accuracy_floor",
+     "subgoal_status": "below_accuracy_floor",
+     "visual_effect": "below_accuracy_floor"
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "claim_causal": "below_accuracy_floor",
+     "claim_progress": "below_accuracy_floor",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "below_accuracy_floor",
+     "progress_status": "below_accuracy_floor",
+     "region_changed": "below_accuracy_floor",
+     "subgoal_decision": "below_accuracy_floor",
+     "subgoal_status": "below_accuracy_floor",
+     "visual_effect": "below_accuracy_floor"
+    }
+   },
+   "log": {
+    "ignored_tail_bytes": 0,
+    "lines": 7560,
+    "recovered": false
+   },
+   "log_sha256": "eef79546a594d501db0415b0247f2f7a6cf81862027998f011e81c05e9cd44b6",
+   "readiness": {
+    "raw_evidence": "not_eligible",
+    "raw_plus_computed_record": "not_eligible",
+    "raw_plus_computed_record_plus_safeguard": "not_eligible"
+   },
+   "subgoal": {
+    "raw_evidence": [
+     0.0,
+     0.0,
+     0
+    ],
+    "raw_plus_computed_record": [
+     0.0,
+     0.0,
+     0
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     0.0,
+     0.0,
+     0
+    ]
+   },
+   "uncertainty": {
+    "raw_evidence": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "raw_plus_computed_record": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   }
+  },
+  "oracle": {
+   "completeness": {
+    "all": "complete",
+    "over_claim_gates": "complete",
+    "primary": "complete"
+   },
+   "findings": {
+    "computed_vs_raw": {
+     "improved": [],
+     "regressed": []
+    },
+    "safeguard_vs_computed": {
+     "improved": [],
+     "regressed": []
+    }
+   },
+   "gates": {
+    "raw_evidence": {
+     "false_progress": [
+      "passes",
+      0,
+      126
+     ],
+     "false_subgoal_success": [
+      "passes",
+      0,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "passes",
+      0,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "passes",
+      0,
+      116
+     ]
+    },
+    "raw_plus_computed_record": {
+     "false_progress": [
+      "passes",
+      0,
+      126
+     ],
+     "false_subgoal_success": [
+      "passes",
+      0,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "passes",
+      0,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "passes",
+      0,
+      116
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "false_progress": [
+      "passes",
+      0,
+      126
+     ],
+     "false_subgoal_success": [
+      "passes",
+      0,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "passes",
+      0,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "passes",
+      0,
+      116
+     ]
+    }
+   },
+   "invalid_counts": {
+    "raw_evidence": 0,
+    "raw_plus_computed_record": 0,
+    "raw_plus_computed_record_plus_safeguard": 0
+   },
+   "labels": {
+    "raw_evidence": {
+     "claim_causal": "criterion_met",
+     "claim_progress": "criterion_met",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "criterion_met",
+     "progress_status": "criterion_met",
+     "region_changed": "criterion_met",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "criterion_met",
+     "visual_effect": "criterion_met"
+    },
+    "raw_plus_computed_record": {
+     "claim_causal": "criterion_met",
+     "claim_progress": "criterion_met",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "criterion_met",
+     "progress_status": "criterion_met",
+     "region_changed": "criterion_met",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "criterion_met",
+     "visual_effect": "criterion_met"
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "claim_causal": "criterion_met",
+     "claim_progress": "criterion_met",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "criterion_met",
+     "progress_status": "criterion_met",
+     "region_changed": "criterion_met",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "criterion_met",
+     "visual_effect": "criterion_met"
+    }
+   },
+   "log": {
+    "ignored_tail_bytes": 0,
+    "lines": 7560,
+    "recovered": false
+   },
+   "log_sha256": "95e783688a196ca08c7bc1385c4777e23f56cb8e55989ac166e03803a9e3f4e8",
+   "readiness": {
+    "raw_evidence": "eligible_for_memory_or_supervision",
+    "raw_plus_computed_record": "eligible_for_memory_or_supervision",
+    "raw_plus_computed_record_plus_safeguard": "eligible_for_memory_or_supervision"
+   },
+   "rescore_identical": true,
+   "subgoal": {
+    "raw_evidence": [
+     1.0,
+     1.0,
+     0
+    ],
+    "raw_plus_computed_record": [
+     1.0,
+     1.0,
+     0
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     1.0,
+     1.0,
+     0
+    ]
+   },
+   "uncertainty": {
+    "raw_evidence": [
+     1.0,
+     0.0,
+     0.0
+    ],
+    "raw_plus_computed_record": [
+     1.0,
+     0.0,
+     0.0
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     1.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "oracle_3pct_invalid_pass2": {
+   "completeness": {
+    "all": "complete",
+    "over_claim_gates": "complete",
+    "primary": "complete"
+   },
+   "findings": {
+    "computed_vs_raw": {
+     "improved": [],
+     "regressed": []
+    },
+    "safeguard_vs_computed": {
+     "improved": [],
+     "regressed": []
+    }
+   },
+   "gates": {
+    "raw_evidence": {
+     "false_progress": [
+      "fails",
+      6,
+      126
+     ],
+     "false_subgoal_success": [
+      "fails",
+      5,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "fails",
+      7,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "passes",
+      2,
+      116
+     ]
+    },
+    "raw_plus_computed_record": {
+     "false_progress": [
+      "fails",
+      7,
+      126
+     ],
+     "false_subgoal_success": [
+      "passes",
+      1,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "fails",
+      11,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "fails",
+      3,
+      116
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "false_progress": [
+      "fails",
+      3,
+      126
+     ],
+     "false_subgoal_success": [
+      "fails",
+      6,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "fails",
+      5,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "passes",
+      2,
+      116
+     ]
+    }
+   },
+   "invalid_counts": {
+    "raw_evidence": 43,
+    "raw_plus_computed_record": 46,
+    "raw_plus_computed_record_plus_safeguard": 35
+   },
+   "labels": {
+    "raw_evidence": {
+     "claim_causal": "criterion_met",
+     "claim_progress": "criterion_met",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "criterion_met",
+     "progress_status": "criterion_met",
+     "region_changed": "criterion_met",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "criterion_met",
+     "visual_effect": "criterion_met"
+    },
+    "raw_plus_computed_record": {
+     "claim_causal": "criterion_met",
+     "claim_progress": "criterion_met",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "criterion_met",
+     "progress_status": "criterion_met",
+     "region_changed": "criterion_met",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "criterion_met",
+     "visual_effect": "criterion_met"
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "claim_causal": "criterion_met",
+     "claim_progress": "criterion_met",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "criterion_met",
+     "progress_status": "criterion_met",
+     "region_changed": "criterion_met",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "criterion_met",
+     "visual_effect": "criterion_met"
+    }
+   },
+   "log": {
+    "ignored_tail_bytes": 0,
+    "lines": 7560,
+    "recovered": false
+   },
+   "log_sha256": "e84f3fd45ef44596fae6ec4db9dd6cf2be5c8086262078cf8d58a978f47b6184",
+   "readiness": {
+    "raw_evidence": "not_eligible",
+    "raw_plus_computed_record": "not_eligible",
+    "raw_plus_computed_record_plus_safeguard": "not_eligible"
+   },
+   "subgoal": {
+    "raw_evidence": [
+     0.9667,
+     0.9667,
+     0
+    ],
+    "raw_plus_computed_record": [
+     0.9778,
+     0.9667,
+     0
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     0.9667,
+     0.9333,
+     0
+    ]
+   },
+   "uncertainty": {
+    "raw_evidence": [
+     0.9631,
+     0.0,
+     0.0222
+    ],
+    "raw_plus_computed_record": [
+     0.9576,
+     0.0,
+     0.0667
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     0.9797,
+     0.0,
+     0.0222
+    ]
+   }
+  },
+  "oracle_interrupted_append": {
+   "completeness": {
+    "all": "incomplete",
+    "over_claim_gates": "incomplete",
+    "primary": "incomplete"
+   },
+   "findings": {
+    "computed_vs_raw": {
+     "improved": [],
+     "regressed": []
+    },
+    "safeguard_vs_computed": {
+     "improved": [],
+     "regressed": []
+    }
+   },
+   "gates": {
+    "raw_evidence": {
+     "false_progress": [
+      "passes",
+      0,
+      126
+     ],
+     "false_subgoal_success": [
+      "passes",
+      0,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "incomplete",
+      0,
+      175
+     ],
+     "unsupported_usefulness_claim": [
+      "passes",
+      0,
+      116
+     ]
+    },
+    "raw_plus_computed_record": {
+     "false_progress": [
+      "passes",
+      0,
+      126
+     ],
+     "false_subgoal_success": [
+      "passes",
+      0,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "passes",
+      0,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "passes",
+      0,
+      116
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "false_progress": [
+      "passes",
+      0,
+      126
+     ],
+     "false_subgoal_success": [
+      "passes",
+      0,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "passes",
+      0,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "passes",
+      0,
+      116
+     ]
+    }
+   },
+   "invalid_counts": {
+    "raw_evidence": 0,
+    "raw_plus_computed_record": 0,
+    "raw_plus_computed_record_plus_safeguard": 0
+   },
+   "labels": {
+    "raw_evidence": {
+     "claim_causal": "criterion_met",
+     "claim_progress": "criterion_met",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "incomplete",
+     "progress_status": "criterion_met",
+     "region_changed": "criterion_met",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "criterion_met",
+     "visual_effect": "criterion_met"
+    },
+    "raw_plus_computed_record": {
+     "claim_causal": "criterion_met",
+     "claim_progress": "criterion_met",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "criterion_met",
+     "progress_status": "criterion_met",
+     "region_changed": "criterion_met",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "criterion_met",
+     "visual_effect": "criterion_met"
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "claim_causal": "criterion_met",
+     "claim_progress": "criterion_met",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "criterion_met",
+     "progress_status": "criterion_met",
+     "region_changed": "criterion_met",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "criterion_met",
+     "visual_effect": "criterion_met"
+    }
+   },
+   "log": {
+    "ignored_tail_bytes": 115,
+    "lines": 7559,
+    "recovered": true
+   },
+   "readiness": {
+    "raw_evidence": "incomplete",
+    "raw_plus_computed_record": "incomplete",
+    "raw_plus_computed_record_plus_safeguard": "incomplete"
+   },
+   "subgoal": {
+    "raw_evidence": [
+     1.0,
+     1.0,
+     0
+    ],
+    "raw_plus_computed_record": [
+     1.0,
+     1.0,
+     0
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     1.0,
+     1.0,
+     0
+    ]
+   },
+   "uncertainty": {
+    "raw_evidence": [
+     0.9982,
+     0.0,
+     0.0
+    ],
+    "raw_plus_computed_record": [
+     1.0,
+     0.0,
+     0.0
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     1.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "oracle_missing_one_gate_answer": {
+   "completeness": {
+    "all": "incomplete",
+    "over_claim_gates": "incomplete",
+    "primary": "incomplete"
+   },
+   "findings": {
+    "computed_vs_raw": {
+     "improved": [],
+     "regressed": []
+    },
+    "safeguard_vs_computed": {
+     "improved": [],
+     "regressed": []
+    }
+   },
+   "gates": {
+    "raw_evidence": {
+     "false_progress": [
+      "incomplete",
+      0,
+      125
+     ],
+     "false_subgoal_success": [
+      "passes",
+      0,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "passes",
+      0,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "passes",
+      0,
+      116
+     ]
+    },
+    "raw_plus_computed_record": {
+     "false_progress": [
+      "passes",
+      0,
+      126
+     ],
+     "false_subgoal_success": [
+      "passes",
+      0,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "passes",
+      0,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "passes",
+      0,
+      116
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "false_progress": [
+      "passes",
+      0,
+      126
+     ],
+     "false_subgoal_success": [
+      "passes",
+      0,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "passes",
+      0,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "passes",
+      0,
+      116
+     ]
+    }
+   },
+   "invalid_counts": {
+    "raw_evidence": 0,
+    "raw_plus_computed_record": 0,
+    "raw_plus_computed_record_plus_safeguard": 0
+   },
+   "labels": {
+    "raw_evidence": {
+     "claim_causal": "criterion_met",
+     "claim_progress": "criterion_met",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "criterion_met",
+     "progress_status": "incomplete",
+     "region_changed": "criterion_met",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "criterion_met",
+     "visual_effect": "criterion_met"
+    },
+    "raw_plus_computed_record": {
+     "claim_causal": "criterion_met",
+     "claim_progress": "criterion_met",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "criterion_met",
+     "progress_status": "criterion_met",
+     "region_changed": "criterion_met",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "criterion_met",
+     "visual_effect": "criterion_met"
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "claim_causal": "criterion_met",
+     "claim_progress": "criterion_met",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "criterion_met",
+     "progress_status": "criterion_met",
+     "region_changed": "criterion_met",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "criterion_met",
+     "visual_effect": "criterion_met"
+    }
+   },
+   "readiness": {
+    "raw_evidence": "incomplete",
+    "raw_plus_computed_record": "incomplete",
+    "raw_plus_computed_record_plus_safeguard": "incomplete"
+   },
+   "subgoal": {
+    "raw_evidence": [
+     1.0,
+     1.0,
+     0
+    ],
+    "raw_plus_computed_record": [
+     1.0,
+     1.0,
+     0
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     1.0,
+     1.0,
+     0
+    ]
+   },
+   "uncertainty": {
+    "raw_evidence": [
+     0.9982,
+     0.0,
+     0.0
+    ],
+    "raw_plus_computed_record": [
+     1.0,
+     0.0,
+     0.0
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     1.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "over_claimer": {
+   "completeness": {
+    "all": "complete",
+    "over_claim_gates": "complete",
+    "primary": "complete"
+   },
+   "findings": {
+    "computed_vs_raw": {
+     "improved": [],
+     "regressed": []
+    },
+    "safeguard_vs_computed": {
+     "improved": [],
+     "regressed": []
+    }
+   },
+   "gates": {
+    "raw_evidence": {
+     "false_progress": [
+      "fails",
+      66,
+      126
+     ],
+     "false_subgoal_success": [
+      "fails",
+      40,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "fails",
+      68,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "fails",
+      59,
+      116
+     ]
+    },
+    "raw_plus_computed_record": {
+     "false_progress": [
+      "fails",
+      66,
+      126
+     ],
+     "false_subgoal_success": [
+      "fails",
+      40,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "fails",
+      68,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "fails",
+      59,
+      116
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "false_progress": [
+      "fails",
+      66,
+      126
+     ],
+     "false_subgoal_success": [
+      "fails",
+      40,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "fails",
+      68,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "fails",
+      59,
+      116
+     ]
+    }
+   },
+   "invalid_counts": {
+    "raw_evidence": 0,
+    "raw_plus_computed_record": 0,
+    "raw_plus_computed_record_plus_safeguard": 0
+   },
+   "labels": {
+    "raw_evidence": {
+     "claim_causal": "inconclusive",
+     "claim_progress": "below_accuracy_floor",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "below_accuracy_floor",
+     "progress_status": "inconclusive",
+     "region_changed": "below_accuracy_floor",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "inconclusive",
+     "visual_effect": "inconclusive"
+    },
+    "raw_plus_computed_record": {
+     "claim_causal": "inconclusive",
+     "claim_progress": "below_accuracy_floor",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "below_accuracy_floor",
+     "progress_status": "inconclusive",
+     "region_changed": "below_accuracy_floor",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "inconclusive",
+     "visual_effect": "inconclusive"
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "claim_causal": "inconclusive",
+     "claim_progress": "below_accuracy_floor",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "below_accuracy_floor",
+     "progress_status": "inconclusive",
+     "region_changed": "below_accuracy_floor",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "inconclusive",
+     "visual_effect": "inconclusive"
+    }
+   },
+   "log": {
+    "ignored_tail_bytes": 0,
+    "lines": 7560,
+    "recovered": false
+   },
+   "log_sha256": "f7ab652cae0e27400c35062f45dd8ff67c177179055ae5185074b85a18ae63d9",
+   "readiness": {
+    "raw_evidence": "not_eligible",
+    "raw_plus_computed_record": "not_eligible",
+    "raw_plus_computed_record_plus_safeguard": "not_eligible"
+   },
+   "subgoal": {
+    "raw_evidence": [
+     0.7778,
+     1.0,
+     0
+    ],
+    "raw_plus_computed_record": [
+     0.7778,
+     1.0,
+     0
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     0.7778,
+     1.0,
+     0
+    ]
+   },
+   "uncertainty": {
+    "raw_evidence": [
+     0.4041,
+     0.0,
+     1.0
+    ],
+    "raw_plus_computed_record": [
+     0.4041,
+     0.0,
+     1.0
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     0.4041,
+     0.0,
+     1.0
+    ]
+   }
+  },
+  "schema_faults": {
+   "completeness": {
+    "all": "complete",
+    "over_claim_gates": "complete",
+    "primary": "complete"
+   },
+   "findings": {
+    "computed_vs_raw": {
+     "improved": [],
+     "regressed": []
+    },
+    "safeguard_vs_computed": {
+     "improved": [],
+     "regressed": []
+    }
+   },
+   "gates": {
+    "raw_evidence": {
+     "false_progress": [
+      "fails",
+      126,
+      126
+     ],
+     "false_subgoal_success": [
+      "fails",
+      120,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "fails",
+      176,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "fails",
+      116,
+      116
+     ]
+    },
+    "raw_plus_computed_record": {
+     "false_progress": [
+      "fails",
+      126,
+      126
+     ],
+     "false_subgoal_success": [
+      "fails",
+      120,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "fails",
+      176,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "fails",
+      116,
+      116
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "false_progress": [
+      "fails",
+      126,
+      126
+     ],
+     "false_subgoal_success": [
+      "fails",
+      120,
+      120
+     ],
+     "unsupported_causal_claim": [
+      "fails",
+      176,
+      176
+     ],
+     "unsupported_usefulness_claim": [
+      "fails",
+      116,
+      116
+     ]
+    }
+   },
+   "invalid_counts": {
+    "raw_evidence": 2520,
+    "raw_plus_computed_record": 2520,
+    "raw_plus_computed_record_plus_safeguard": 2520
+   },
+   "labels": {
+    "raw_evidence": {
+     "claim_causal": "below_accuracy_floor",
+     "claim_progress": "below_accuracy_floor",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "below_accuracy_floor",
+     "progress_status": "below_accuracy_floor",
+     "region_changed": "below_accuracy_floor",
+     "subgoal_decision": "below_accuracy_floor",
+     "subgoal_status": "below_accuracy_floor",
+     "visual_effect": "below_accuracy_floor"
+    },
+    "raw_plus_computed_record": {
+     "claim_causal": "below_accuracy_floor",
+     "claim_progress": "below_accuracy_floor",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "below_accuracy_floor",
+     "progress_status": "below_accuracy_floor",
+     "region_changed": "below_accuracy_floor",
+     "subgoal_decision": "below_accuracy_floor",
+     "subgoal_status": "below_accuracy_floor",
+     "visual_effect": "below_accuracy_floor"
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "claim_causal": "below_accuracy_floor",
+     "claim_progress": "below_accuracy_floor",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "below_accuracy_floor",
+     "progress_status": "below_accuracy_floor",
+     "region_changed": "below_accuracy_floor",
+     "subgoal_decision": "below_accuracy_floor",
+     "subgoal_status": "below_accuracy_floor",
+     "visual_effect": "below_accuracy_floor"
+    }
+   },
+   "log": {
+    "ignored_tail_bytes": 0,
+    "lines": 7560,
+    "recovered": false
+   },
+   "log_sha256": "c665396586a271c157274e6795cf8018d7ff361a4167f6683a32d464f098be81",
+   "readiness": {
+    "raw_evidence": "not_eligible",
+    "raw_plus_computed_record": "not_eligible",
+    "raw_plus_computed_record_plus_safeguard": "not_eligible"
+   },
+   "subgoal": {
+    "raw_evidence": [
+     0.0,
+     0.0,
+     0
+    ],
+    "raw_plus_computed_record": [
+     0.0,
+     0.0,
+     0
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     0.0,
+     0.0,
+     0
+    ]
+   },
+   "uncertainty": {
+    "raw_evidence": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "raw_plus_computed_record": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     0.0,
+     0.0,
+     1.0
+    ]
+   }
+  }
+ },
+ "version": "progress_subgoal_v1_questions_draft",
+ "workload_estimate": {
+  "chars_per_token_calibration": 2.3675,
+  "development": {
+   "calls": 369,
+   "estimated_largest_prompt_tokens": 4993,
+   "estimated_prompt_tokens": 899174,
+   "questions_per_condition": 123
+  },
+  "evaluation_shaped": {
+   "calls": 7560,
+   "estimated_largest_prompt_tokens": 5604,
+   "estimated_prompt_tokens": 18479011,
+   "questions_per_condition": 1260
+  },
+  "note": "estimate: characters / (characters per token measured on WS3 development requests with the pinned tokenizer). The exact tokenizer audit is required before freeze."
+ }
+}
