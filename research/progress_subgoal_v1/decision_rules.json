@@ -1,0 +1,347 @@
+{
+ "arms": {
+  "all": [
+   "raw_evidence",
+   "raw_plus_computed_record",
+   "raw_plus_computed_record_plus_safeguard"
+  ],
+  "comparisons": {
+   "computed_vs_raw": [
+    "raw_evidence",
+    "raw_plus_computed_record"
+   ],
+   "safeguard_vs_computed": [
+    "raw_plus_computed_record",
+    "raw_plus_computed_record_plus_safeguard"
+   ]
+  },
+  "primary": [
+   "raw_plus_computed_record",
+   "raw_plus_computed_record_plus_safeguard"
+  ],
+  "system_prompts": {
+   "raw_evidence": "This is a retrospective questionnaire about a short sequence of actions in a grid game. It is not a decision: do not choose an action. Answer using only the supplied evidence. Return only one compact JSON object matching the supplied answer schema, with no rationale or Markdown.\nEvidence: 'transitions' are in order; in each, 'dispatched_action' is the action that was sent, 'frame_before' is the frame before it, and 'returned_frames' are the frames the game returned after it, in order. A frame is a list of rows (grid[y][x]; x is the column, y the row); a valid frame is a non-empty rectangle of integers 0 to 15. A dispatch that failed was not delivered; an outcome that is unknown may have been delivered but its result was not observed. Environment fields are what the game reported. 'subgoal_record', when present, is a plan statement written before these transitions.",
+   "raw_plus_computed_record": "This is a retrospective questionnaire about a short sequence of actions in a grid game. It is not a decision: do not choose an action. Answer using only the supplied evidence. Return only one compact JSON object matching the supplied answer schema, with no rationale or Markdown.\nEvidence: 'transitions' are in order; in each, 'dispatched_action' is the action that was sent, 'frame_before' is the frame before it, and 'returned_frames' are the frames the game returned after it, in order. A frame is a list of rows (grid[y][x]; x is the column, y the row); a valid frame is a non-empty rectangle of integers 0 to 15. A dispatch that failed was not delivered; an outcome that is unknown may have been delivered but its result was not observed. Environment fields are what the game reported. 'subgoal_record', when present, is a plan statement written before these transitions.",
+   "raw_plus_computed_record_plus_safeguard": "This is a retrospective questionnaire about a short sequence of actions in a grid game. It is not a decision: do not choose an action. Answer using only the supplied evidence. Return only one compact JSON object matching the supplied answer schema, with no rationale or Markdown.\nEvidence: 'transitions' are in order; in each, 'dispatched_action' is the action that was sent, 'frame_before' is the frame before it, and 'returned_frames' are the frames the game returned after it, in order. A frame is a list of rows (grid[y][x]; x is the column, y the row); a valid frame is a non-empty rectangle of integers 0 to 15. A dispatch that failed was not delivered; an outcome that is unknown may have been delivered but its result was not observed. Environment fields are what the game reported. 'subgoal_record', when present, is a plan statement written before these transitions.\nKeep three levels separate. (1) Observed change: what differs between frames. (2) Confirmed progress: only a reported increase in completed levels, or a WIN state; a visible change is not progress, and the absence of a report does not show that no progress occurred. (3) Usefulness: whether a change or a subgoal helps complete the level is a hypothesis this evidence cannot establish; achieving a subgoal is neither progress nor proof that it helps. A change that follows an action may have happened on its own; repeated consistent results strengthen an effect hypothesis but do not establish a cause or its mechanism. When the evidence cannot decide, give the answer that says so; when it can, give the definite answer."
+  }
+ },
+ "coverage": {
+  "critical_classes": [
+   "visible_change_without_progress",
+   "transient_change",
+   "change_between_observations",
+   "confirmed_progress",
+   "progress_without_visible_change",
+   "unobserved_last_outcome",
+   "simultaneous_changes",
+   "hypothesis_strengthened",
+   "subgoal_achieved_without_progress",
+   "subgoal_achieved_with_confirmed_progress",
+   "subgoal_disconfirmed",
+   "subgoal_budget_exhausted",
+   "subgoal_unobserved"
+  ],
+  "evaluation_count_per_family": 30,
+  "family_weights": {
+   "animation_and_reversion": 2,
+   "explicit_completion": 2,
+   "repeated_intervention": 2,
+   "subgoal_unobserved": 2
+  },
+  "floors": {
+   "abandonment_questions": 20,
+   "critical_class_contexts": 20,
+   "over_claim_denominator_contexts": 100,
+   "primary_questions": 100,
+   "shortcut_disagreement": 20,
+   "uncertain_keyed_questions": 100
+  },
+  "gate_floors": {
+   "false_no_progress": 150,
+   "false_progress": 100,
+   "false_subgoal_success": 100,
+   "unsupported_causal_claim": 100,
+   "unsupported_usefulness_claim": 100
+  },
+  "group_target": {
+   "no_progress:not_established": 180
+  },
+  "target_factor": {
+   "claim_progress": 1.5,
+   "progress_status": 1.5,
+   "subgoal_status": 1.5
+  },
+  "targets": {
+   "coverage_dryrun": 120,
+   "development": 12,
+   "evaluation": 120
+  }
+ },
+ "evaluation_seed_rule": {
+  "committed": "only its SHA-256 (of the hex string) and the retention arrangement; the seed itself is never committed and is kept outside the repository",
+  "drawn": "after the freeze commit and after the third-arm decision commit",
+  "source": "secrets.token_bytes(16) (operating-system CSPRNG), hex-encoded: a fresh 128-bit value",
+  "use": "questions.build('evaluation', seed=<hex>) and fixtures.generate('evaluation', seed=<hex>, count=30)"
+ },
+ "families": {
+  "claim_causal": {
+   "answers": [
+    "supported",
+    "contradicted",
+    "not_established"
+   ],
+   "level": "causal_restraint",
+   "role": "primary",
+   "uncertain_answer": "not_established"
+  },
+  "claim_progress": {
+   "answers": [
+    "supported",
+    "contradicted",
+    "not_established"
+   ],
+   "level": "confirmed_progress",
+   "role": "primary",
+   "uncertain_answer": "not_established"
+  },
+  "claim_usefulness": {
+   "answers": [
+    "supported",
+    "contradicted",
+    "not_established"
+   ],
+   "level": "hypothesized_usefulness",
+   "role": "gate_only",
+   "uncertain_answer": "not_established"
+  },
+  "effect_hypothesis": {
+   "answers": [
+    "strengthened",
+    "weakened",
+    "insufficient_evidence"
+   ],
+   "level": "causal_restraint",
+   "role": "primary",
+   "uncertain_answer": "insufficient_evidence"
+  },
+  "progress_status": {
+   "answers": [
+    "confirmed",
+    "unknown"
+   ],
+   "level": "confirmed_progress",
+   "role": "primary",
+   "uncertain_answer": "unknown"
+  },
+  "region_changed": {
+   "answers": [
+    "yes",
+    "no",
+    "cannot_tell"
+   ],
+   "level": "observed_change",
+   "role": "primary",
+   "uncertain_answer": "cannot_tell"
+  },
+  "subgoal_decision": {
+   "answers": [
+    "stop_achieved",
+    "abandon_invalidated",
+    "abandon_budget_exhausted",
+    "continue"
+   ],
+   "level": "subgoal_verification",
+   "role": "primary",
+   "uncertain_answer": null
+  },
+  "subgoal_status": {
+   "answers": [
+    "achieved",
+    "not_achieved",
+    "cannot_tell"
+   ],
+   "level": "subgoal_verification",
+   "role": "primary",
+   "uncertain_answer": "cannot_tell"
+  },
+  "visual_effect": {
+   "answers": [
+    "no_observed_change",
+    "changed_then_returned",
+    "final_frame_differs",
+    "indeterminate"
+   ],
+   "level": "observed_change",
+   "role": "primary",
+   "uncertain_answer": "indeterminate"
+  }
+ },
+ "family_label": {
+  "accuracy_floor": 0.7,
+  "criterion_accuracy": 0.9,
+  "min_shortcut_disagreement": 10,
+  "non_diagnostic_best_shortcut": 0.9,
+  "scoring_unit": "correct in both passes on the decision partition; invalid is incorrect"
+ },
+ "over_claim_gates": {
+  "false_no_progress": {
+   "affirmative": {
+    "claim_progress": "supported"
+   },
+   "members": [
+    [
+     "claim_progress",
+     "no_progress",
+     [
+      "not_established"
+     ]
+    ]
+   ],
+   "valid_opportunity_floor": 150
+  },
+  "false_progress": {
+   "affirmative": {
+    "claim_progress": "supported",
+    "progress_status": "confirmed"
+   },
+   "members": [
+    [
+     "progress_status",
+     null,
+     [
+      "unknown"
+     ]
+    ],
+    [
+     "claim_progress",
+     "progress_confirmed",
+     [
+      "not_established"
+     ]
+    ]
+   ],
+   "valid_opportunity_floor": 100
+  },
+  "false_subgoal_success": {
+   "affirmative": {
+    "subgoal_status": "achieved"
+   },
+   "members": [
+    [
+     "subgoal_status",
+     null,
+     [
+      "not_achieved",
+      "cannot_tell"
+     ]
+    ]
+   ],
+   "valid_opportunity_floor": 100
+  },
+  "unsupported_causal_claim": {
+   "affirmative": {
+    "claim_causal": "supported",
+    "effect_hypothesis": "strengthened"
+   },
+   "members": [
+    [
+     "claim_causal",
+     null,
+     [
+      "not_established",
+      "contradicted"
+     ]
+    ],
+    [
+     "effect_hypothesis",
+     null,
+     [
+      "weakened",
+      "insufficient_evidence"
+     ]
+    ]
+   ],
+   "valid_opportunity_floor": 100
+  },
+  "unsupported_usefulness_claim": {
+   "affirmative": {
+    "claim_usefulness": "supported"
+   },
+   "members": [
+    [
+     "claim_usefulness",
+     null,
+     [
+      "not_established"
+     ]
+    ]
+   ],
+   "valid_opportunity_floor": 100
+  }
+ },
+ "over_claim_rule": {
+  "below_floor_status": "insufficient_valid_opportunities (never a pass)",
+  "cap": 0.02,
+  "invalid_answers": "never over-claims; incorrect and counted against validity",
+  "opportunity": "a context with a member question that has at least one valid answer",
+  "over_claim": "a valid affirmative answer to a member question in either pass",
+  "unit": "contexts"
+ },
+ "package_limits": {
+  "admission_cutoff_seconds": 3000,
+  "automatic_retries": 0,
+  "cleanup_reserve_seconds": 300,
+  "internal_seconds": 3300,
+  "maximum_attempts": 1,
+  "maximum_reservation_seconds_per_session": 3600,
+  "note": "estimated runtime is not an authorization ceiling",
+  "retry_allowance_approved": false,
+  "sessions": 1
+ },
+ "readiness": {
+  "eligible_requires": [
+   "every decision-partition primary and over-claim-gate answer present in both passes",
+   "run evidence not recovered from an interrupted write",
+   "both validity caps met",
+   "every primary family criterion_met",
+   "every over-claim gate passes (floor of valid opportunities and rate <= cap)",
+   "uncertainty recall >= floor and over-hedging <= cap"
+  ],
+  "incomplete_if": [
+   "a required answer is missing",
+   "recovered evidence"
+  ],
+  "use": "only an eligible arm may feed memory or supervision; gameplay connection is outside this protocol"
+ },
+ "third_arm_rule": {
+  "add_raw_evidence_arm_only_if": {
+   "all_of": [
+    "WS3 v1 evaluator output exists and reports technically_complete == true"
+   ],
+   "and_any_of": [
+    "family claim_progress or claim_causal: candidate-minus-reference paired 95% upper bound < 0",
+    "family claim_progress or claim_causal: candidate both-pass accuracy more than 0.05 below the reference",
+    "gate false_progress or unsupported_causal_claim: status differs between the two WS3 arms"
+   ]
+  },
+  "decided": "after this file is committed, by reading only the WS3 v1 frozen evaluator output (withheld partition), and recorded in its own commit before the evaluation seed is drawn",
+  "if_added": "two sessions, each a paired two-arm comparison (raw_evidence vs raw_plus_computed_record; raw_plus_computed_record vs raw_plus_computed_record_plus_safeguard); arm A repeated",
+  "limitation_when_not_added": "the computed-vs-raw comparison is not made on these cases; WS3 v1 (if it runs) remains the only evidence on it",
+  "otherwise": "keep_two_arms",
+  "otherwise_explicitly_includes": [
+   "WS3 v1 has not run or its result is unavailable",
+   "WS3 v1 result incomplete",
+   "WS3 v1 evidence recovered from an interrupted write",
+   "WS3 v1 not technically complete"
+  ]
+ },
+ "uncertainty": {
+  "over_hedge_cap": 0.1,
+  "recall_floor": 0.9
+ },
+ "validity": {
+  "all_responses_invalid_rate_cap": 0.01,
+  "gate_member_responses_invalid_rate_cap": 0.005
+ },
+ "version": "progress_subgoal_v1_decision_rules_r1"
+}

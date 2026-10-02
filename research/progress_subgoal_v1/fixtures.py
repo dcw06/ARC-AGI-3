@@ -361,9 +361,13 @@ FAMILIES = {
 WEIGHT = {'repeated_intervention': 2, 'animation_and_reversion': 2, 'explicit_completion': 2, 'subgoal_unobserved': 2}
 
 
+EVALUATION_COUNT = 30  # per family (weights apply), as in the coverage dry run; the seed is drawn at the freeze
+
+
 def generate(partition, seed=None, count=None):
-    """Fixtures of one partition. `seed`/`count` override the table (used only for the evaluation build at freeze)."""
-    default_seed, default_count = PARTITIONS.get(partition, (None, None))
+    """Fixtures of one partition. `seed`/`count` override the table (the evaluation build passes its recorded seed)."""
+    default_seed, default_count = PARTITIONS.get(partition, (None, EVALUATION_COUNT if partition == 'evaluation'
+                                                             else None))
     seed, count = seed or default_seed, count or default_count
     rng = random.Random(hashlib.sha256(seed.encode()).hexdigest())
     out = []
