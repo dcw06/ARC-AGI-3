@@ -1,0 +1,302 @@
+{
+ "candidates_in_order": [
+  "ls20-9607627b",
+  "tr87-cd924810",
+  "g50t-5849a774"
+ ],
+ "criterion": {
+  "median_changed_cells_greater_than": 4,
+  "min_new_frame_fraction": 0.75,
+  "min_observed_steps": 6
+ },
+ "policy": "action-effect-history v1 environment-check scripted(step, legal), 12 steps, game seed 0, stop at WIN/GAME_OVER, no reset",
+ "probed": [
+  {
+   "changed_cells_per_step": [
+    52,
+    52,
+    52,
+    52,
+    52,
+    52,
+    52,
+    52,
+    52,
+    52,
+    52,
+    52
+   ],
+   "closed": true,
+   "dispatches": 12,
+   "error": null,
+   "game_id": "ls20-9607627b",
+   "median_changed_cells": 52.0,
+   "new_frame_fraction": 1.0,
+   "new_frame_steps": 12,
+   "observed_steps": 12,
+   "qualifies": true,
+   "record_problems": [],
+   "steps": [
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 1
+     },
+     "available_actions_before": {
+      "status": "measured",
+      "value": [
+       1,
+       2,
+       3,
+       4
+      ]
+     },
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "step": 0,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 2
+     },
+     "available_actions_before": {
+      "status": "measured",
+      "value": [
+       1,
+       2,
+       3,
+       4
+      ]
+     },
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "step": 1,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 3
+     },
+     "available_actions_before": {
+      "status": "measured",
+      "value": [
+       1,
+       2,
+       3,
+       4
+      ]
+     },
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "step": 2,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 4
+     },
+     "available_actions_before": {
+      "status": "measured",
+      "value": [
+       1,
+       2,
+       3,
+       4
+      ]
+     },
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "step": 3,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 1
+     },
+     "available_actions_before": {
+      "status": "measured",
+      "value": [
+       1,
+       2,
+       3,
+       4
+      ]
+     },
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "step": 4,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 2
+     },
+     "available_actions_before": {
+      "status": "measured",
+      "value": [
+       1,
+       2,
+       3,
+       4
+      ]
+     },
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "step": 5,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 3
+     },
+     "available_actions_before": {
+      "status": "measured",
+      "value": [
+       1,
+       2,
+       3,
+       4
+      ]
+     },
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "step": 6,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 4
+     },
+     "available_actions_before": {
+      "status": "measured",
+      "value": [
+       1,
+       2,
+       3,
+       4
+      ]
+     },
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "step": 7,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 1
+     },
+     "available_actions_before": {
+      "status": "measured",
+      "value": [
+       1,
+       2,
+       3,
+       4
+      ]
+     },
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "step": 8,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 2
+     },
+     "available_actions_before": {
+      "status": "measured",
+      "value": [
+       1,
+       2,
+       3,
+       4
+      ]
+     },
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "step": 9,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 3
+     },
+     "available_actions_before": {
+      "status": "measured",
+      "value": [
+       1,
+       2,
+       3,
+       4
+      ]
+     },
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "step": 10,
+     "visual_effect": "final_frame_differs"
+    },
+    {
+     "action": {
+      "action_data": {},
+      "action_id": 4
+     },
+     "available_actions_before": {
+      "status": "measured",
+      "value": [
+       1,
+       2,
+       3,
+       4
+      ]
+     },
+     "dispatch": "acknowledged",
+     "events": [
+      "none_reported"
+     ],
+     "step": 11,
+     "visual_effect": "final_frame_differs"
+    }
+   ],
+   "terminal_state": null
+  }
+ ],
+ "selected": "ls20-9607627b",
+ "unprobed": [
+  "tr87-cd924810",
+  "g50t-5849a774"
+ ],
+ "version": "stagnation_supervision_v1_tier_b_probe"
+}
