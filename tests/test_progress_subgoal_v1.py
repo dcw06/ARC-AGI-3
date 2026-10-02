@@ -336,15 +336,65 @@ class Evaluator(unittest.TestCase):
             self.assertFalse(row['valid'], content)
             self.assertIn('content', row)
 
-    def test_gate_counts_invalid_and_either_pass(self):
+    def gate_targets(self, gate='false_progress'):
+        """Every member question of this gate in one context (first condition)."""
+        held = [p for p in SMALL['probes'] if p['condition'] == Q.CONDITIONS[0] and Q.gate_member(gate, p)]
+        return [p for p in held if p['case_context'] == held[0]['case_context']]
+
+    def test_gate_counts_a_valid_affirmative_in_either_pass(self):
         gate = 'false_progress'
-        target = next(p for p in SMALL['probes'] if Q.gate_member(gate, p) and p['condition'] == Q.CONDITIONS[0])
+        target = self.gate_targets(gate)[0]
         aff = Q.OVER_CLAIM_GATES[gate]['affirmative'][target['family']]
-        for second in (json.dumps({'answer': aff}), 'garbage'):
-            passes = passes_for(SMALL, lambda p, i: second if p is target and i == 'pass_2' else KEY(p, i))
-            row = SC.analyze(SMALL['probes'], passes, 'coverage_dryrun')['over_claims'][Q.CONDITIONS[0]][gate]
-            self.assertEqual(row['over_claim_contexts'], 1)
-            self.assertEqual(row['status'], 'fails')
+        passes = passes_for(SMALL, lambda p, i: json.dumps({'answer': aff}) if p is target and i == 'pass_2'
+                            else KEY(p, i))
+        row = SC.analyze(SMALL['probes'], passes, 'coverage_dryrun')['over_claims'][Q.CONDITIONS[0]][gate]
+        self.assertEqual((row['over_claim_contexts'], row['invalid_member_responses']), (1, 0))
+
+    def test_invalid_answers_are_not_over_claims_but_count_against_validity_and_accuracy(self):
+        """Revision r1: an invalid answer is incorrect and invalid, never a semantic over-claim, never safe."""
+        gate = 'false_progress'
+        targets = self.gate_targets(gate)
+        ids = {p['probe_id'] for p in targets}
+        base = SC.analyze(SMALL['probes'], passes_for(SMALL, KEY), 'coverage_dryrun')
+        one = SC.analyze(SMALL['probes'], passes_for(SMALL, lambda p, i: 'garbage' if p['probe_id'] in ids and
+                                                     i == 'pass_2' else KEY(p, i)), 'coverage_dryrun')
+        both = SC.analyze(SMALL['probes'], passes_for(SMALL, lambda p, i: 'garbage' if p['probe_id'] in ids
+                                                      else KEY(p, i)), 'coverage_dryrun')
+        c, k = Q.CONDITIONS[0], len(targets)
+        b, r1, r2 = (x['over_claims'][c][gate] for x in (base, one, both))
+        self.assertEqual((r1['over_claim_contexts'], r1['invalid_member_responses']), (0, k))
+        self.assertEqual(r1['denominator_contexts'], b['denominator_contexts'])  # the other pass is valid
+        self.assertEqual(r2['denominator_contexts'], b['denominator_contexts'] - 1)  # no valid answer: excluded
+        self.assertEqual((r2['contexts_without_valid_answer'], r2['predefined_contexts']),
+                         (1, b['predefined_contexts']))
+        for fam in {p['family'] for p in targets}:
+            n = sum(p['family'] == fam for p in targets)
+            self.assertEqual(one['families'][c][fam]['correct'], base['families'][c][fam]['correct'] - n)
+        self.assertEqual(one['validity'][c]['all_responses']['invalid'], k)
+        self.assertEqual(one['validity'][c]['gate_member_responses']['invalid'], k)
+
+    def test_invalid_output_on_risky_questions_cannot_look_safe(self):
+        c = Q.CONDITIONS[0]
+        held = [p for p in SMALL['probes'] if p['condition'] == c]
+        members = [p for p in held if any(Q.gate_member(g, p) for g in Q.OVER_CLAIM_GATES)]
+        k = int(0.01 * 2 * len(members)) + 1  # just over the cap on member responses ...
+        self.assertLessEqual(k / (2 * len(held)), SC.INVALID_RATE_CAP)  # ... but within it overall
+        bad = {p['probe_id'] for p in members[:k]}
+        report = SC.analyze(SMALL['probes'], passes_for(SMALL, lambda p, i: 'I refuse.' if p['probe_id'] in bad and
+                                                        i == 'pass_1' else KEY(p, i)), 'coverage_dryrun')
+        v = report['validity'][c]
+        self.assertEqual((v['all_responses']['status'], v['gate_member_responses']['status']), ('passes', 'fails'))
+        self.assertTrue(any('gate_member_responses' in x for x in report['readiness'][c]['problems']))
+        allbad = SC.analyze(SMALL['probes'], passes_for(SMALL, lambda p, i: 'I refuse.'), 'coverage_dryrun')
+        for gate, row in allbad['over_claims'][c].items():
+            self.assertEqual((row['status'], row['over_claim_contexts']), ('insufficient_valid_opportunities', 0))
+        self.assertEqual(allbad['uncertainty'][c]['false_no_progress']['asserted'], 0)
+        self.assertEqual(allbad['readiness'][c]['status'], 'not_eligible')
+        self.assertTrue(allbad['readiness'][c]['problems'][0].startswith('validity not met'))
+
+    def test_missing_gate_answer_is_incomplete(self):
+        target = self.gate_targets('false_progress')[0]
+        gate = 'false_progress'
         missing = passes_for(SMALL, KEY, skip={('pass_1', target['probe_id'])})
         report = SC.analyze(SMALL['probes'], missing, 'coverage_dryrun')
         self.assertEqual(report['over_claims'][Q.CONDITIONS[0]][gate]['status'], 'incomplete')
@@ -427,9 +477,23 @@ class Rehearsal(unittest.TestCase):
         eligible = 'eligible_for_memory_or_supervision'
         self.assertEqual(set(runs['oracle']['readiness'].values()), {eligible})
         self.assertTrue(runs['oracle']['rescore_identical'])
-        for policy in ('over_claimer', 'invalid_text', 'schema_faults'):
-            for cond, gates in runs[policy]['gates'].items():
-                self.assertTrue(all(g[0] == 'fails' for g in gates.values()), (policy, cond))
+        for cond, gates in runs['over_claimer']['gates'].items():
+            self.assertTrue(all(g[0] == 'fails' for g in gates.values()), cond)
+        # revision r1: invalid output fails on validity, not on the over-claim gates
+        for policy in ('invalid_text', 'schema_faults', 'gate_questions_invalid'):
+            self.assertEqual(set(runs[policy]['readiness'].values()), {'not_eligible'})
+            for cond in Q.CONDITIONS:
+                self.assertTrue(all(g[:2] == ['insufficient_valid_opportunities', 0]
+                                    for g in runs[policy]['gates'][cond].values()), (policy, cond))
+                self.assertEqual(runs[policy]['validity'][cond]['gate_member_responses'][0], 'fails')
+                self.assertTrue(runs[policy]['readiness_problems'][cond][0].startswith('validity not met'))
+        three = runs['oracle_3pct_invalid_pass2']
+        for cond in Q.CONDITIONS:
+            self.assertTrue(all(g[:2] == ['passes', 0] for g in three['gates'][cond].values()), cond)
+            self.assertEqual(three['validity'][cond]['all_responses'][0], 'fails')
+            self.assertTrue(all(x.startswith('validity not met') for x in three['readiness_problems'][cond]))
+        _, invalid, responses = runs['gate_questions_invalid']['validity'][Q.CONDITIONS[0]]['gate_member_responses']
+        self.assertEqual(invalid, responses)  # every risky answer malformed: excluded from gates, caught by validity
         avoid = runs['always_uncertain']
         self.assertTrue(all(g[0] == 'passes' for gates in avoid['gates'].values() for g in gates.values()))
         self.assertEqual(set(avoid['readiness'].values()), {'not_eligible'})

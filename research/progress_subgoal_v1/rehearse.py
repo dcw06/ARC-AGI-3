@@ -47,6 +47,10 @@ POLICIES = {
                                    '["supported"]'][int(hashlib.sha256(p['probe_id'].encode()).hexdigest(), 16) % 4],
     # the key, with 3% of responses invalid (deterministically chosen) in pass 2 only
     'oracle_3pct_invalid_pass2': lambda p, i: '```json' if i == 'pass_2' and _hit(p, 'inv', 0.03) else answer(p['key']),
+    # malformed output on exactly the over-claim gates' member questions, the key elsewhere (revision r1): must not
+    # look safe; it fails the gate-member validity criterion
+    'gate_questions_invalid': lambda p, i: ('I cannot determine that.' if any(Q.gate_member(g, p) for g in
+                                                                              Q.OVER_CLAIM_GATES) else answer(p['key'])),
     # the treatment-difference rehearsal: raw over-claims, computed answers the key, safeguard hedges
     'condition_contrast': lambda p, i: POLICIES[{'raw_evidence': 'over_claimer', 'raw_plus_computed_record': 'oracle',
                                                  'raw_plus_computed_record_plus_safeguard': 'always_uncertain'}[
@@ -72,6 +76,9 @@ def summary(report):
     out = {'readiness': {c: r['status'] for c, r in report['readiness'].items()}, 'completeness': report['completeness'],
            'gates': {c: {g: [row['status'], row['over_claim_contexts'], row['denominator_contexts']]
                          for g, row in gates.items()} for c, gates in report['over_claims'].items()},
+           'validity': {c: {k: [v[k]['status'], v[k]['invalid'], v[k]['responses']]
+                            for k in ('all_responses', 'gate_member_responses')} for c, v in report['validity'].items()},
+           'readiness_problems': {c: r.get('problems', [r.get('reason')])[:4] for c, r in report['readiness'].items()},
            'uncertainty': {c: [u['uncertain_keyed']['recall'], u['definite_keyed']['over_hedge_rate'],
                                u['false_no_progress']['rate']] for c, u in report['uncertainty'].items()},
            'labels': {c: {f: m['label'] for f, m in fams.items()} for c, fams in report['families'].items()},
@@ -88,6 +95,9 @@ def run():
     value = Q.build(PARTITION)
     probes = value['probes']
     results = {'version': Q.VERSION, 'partition': PARTITION, 'note': 'scripted answers only; no model was called',
+               'scoring_revision': 'r1: over-claim gates read valid answers only; invalid output counts as incorrect '
+                                   'and against the validity criterion (overall and gate-member invalid rate <= '
+                                   f'{SC.INVALID_RATE_CAP})',
                'coverage': Q.coverage(probes, PARTITION, strict=False), 'runs': {}}
     retained = {}
     for policy in POLICIES:
@@ -96,7 +106,7 @@ def run():
         report = SC.analyze(probes, passes, PARTITION, recovered=log['recovered'])
         results['runs'][policy] = {'log_sha256': hashlib.sha256(text.encode()).hexdigest(), 'log': log,
                                    **summary(report)}
-        if policy in ('invalid_text', 'schema_faults', 'oracle_3pct_invalid_pass2'):
+        if policy in ('invalid_text', 'schema_faults', 'oracle_3pct_invalid_pass2', 'gate_questions_invalid'):
             retained[policy] = report['invalid'][Q.CONDITIONS[0]]['retained'][:5]
         if policy == 'oracle':
             # rescoring the retained log reproduces the report exactly

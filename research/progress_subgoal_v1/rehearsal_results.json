@@ -136,6 +136,38 @@
  "note": "scripted answers only; no model was called",
  "partition": "coverage_dryrun",
  "retained_invalid_examples": {
+  "gate_questions_invalid": [
+   {
+    "content": "I cannot determine that.",
+    "error": "Expecting value: line 1 column 1 (char 0)",
+    "pass": "pass_1",
+    "probe_id": "coverage_dryrun:raw_evidence:ps-baa4c61e7bc8:progress_status"
+   },
+   {
+    "content": "I cannot determine that.",
+    "error": "Expecting value: line 1 column 1 (char 0)",
+    "pass": "pass_2",
+    "probe_id": "coverage_dryrun:raw_evidence:ps-baa4c61e7bc8:progress_status"
+   },
+   {
+    "content": "I cannot determine that.",
+    "error": "Expecting value: line 1 column 1 (char 0)",
+    "pass": "pass_1",
+    "probe_id": "coverage_dryrun:raw_evidence:ps-1464fc2cae74:progress_status"
+   },
+   {
+    "content": "I cannot determine that.",
+    "error": "Expecting value: line 1 column 1 (char 0)",
+    "pass": "pass_2",
+    "probe_id": "coverage_dryrun:raw_evidence:ps-1464fc2cae74:progress_status"
+   },
+   {
+    "content": "I cannot determine that.",
+    "error": "Expecting value: line 1 column 1 (char 0)",
+    "pass": "pass_1",
+    "probe_id": "coverage_dryrun:raw_evidence:ps-6753c436878a:progress_status"
+   }
+  ],
   "invalid_text": [
    {
     "content": "I think the answer is probably yes.",
@@ -369,6 +401,26 @@
     "raw_plus_computed_record": "not_eligible",
     "raw_plus_computed_record_plus_safeguard": "not_eligible"
    },
+   "readiness_problems": {
+    "raw_evidence": [
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress",
+     "family below criterion: effect_hypothesis",
+     "family below criterion: progress_status"
+    ],
+    "raw_plus_computed_record": [
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress",
+     "family below criterion: effect_hypothesis",
+     "family below criterion: progress_status"
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress",
+     "family below criterion: effect_hypothesis",
+     "family below criterion: progress_status"
+    ]
+   },
    "subgoal": {
     "raw_evidence": [
      0.3333,
@@ -402,6 +454,44 @@
      1.0,
      0.0
     ]
+   },
+   "validity": {
+    "raw_evidence": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    },
+    "raw_plus_computed_record": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    }
    }
   },
   "condition_contrast": {
@@ -556,6 +646,21 @@
     "raw_plus_computed_record": "eligible_for_memory_or_supervision",
     "raw_plus_computed_record_plus_safeguard": "not_eligible"
    },
+   "readiness_problems": {
+    "raw_evidence": [
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress",
+     "family below criterion: effect_hypothesis",
+     "family below criterion: progress_status"
+    ],
+    "raw_plus_computed_record": [],
+    "raw_plus_computed_record_plus_safeguard": [
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress",
+     "family below criterion: effect_hypothesis",
+     "family below criterion: progress_status"
+    ]
+   },
    "subgoal": {
     "raw_evidence": [
      0.7778,
@@ -589,9 +694,275 @@
      1.0,
      0.0
     ]
+   },
+   "validity": {
+    "raw_evidence": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    },
+    "raw_plus_computed_record": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    }
    }
   },
   "corrupt_middle_line": "refused: line 5: not JSON (Unterminated string starting at: line 1 column 75 (char 74))",
+  "gate_questions_invalid": {
+   "completeness": {
+    "all": "complete",
+    "over_claim_gates": "complete",
+    "primary": "complete"
+   },
+   "findings": {
+    "computed_vs_raw": {
+     "improved": [],
+     "regressed": []
+    },
+    "safeguard_vs_computed": {
+     "improved": [],
+     "regressed": []
+    }
+   },
+   "gates": {
+    "raw_evidence": {
+     "false_progress": [
+      "insufficient_valid_opportunities",
+      0,
+      0
+     ],
+     "false_subgoal_success": [
+      "insufficient_valid_opportunities",
+      0,
+      0
+     ],
+     "unsupported_causal_claim": [
+      "insufficient_valid_opportunities",
+      0,
+      0
+     ],
+     "unsupported_usefulness_claim": [
+      "insufficient_valid_opportunities",
+      0,
+      0
+     ]
+    },
+    "raw_plus_computed_record": {
+     "false_progress": [
+      "insufficient_valid_opportunities",
+      0,
+      0
+     ],
+     "false_subgoal_success": [
+      "insufficient_valid_opportunities",
+      0,
+      0
+     ],
+     "unsupported_causal_claim": [
+      "insufficient_valid_opportunities",
+      0,
+      0
+     ],
+     "unsupported_usefulness_claim": [
+      "insufficient_valid_opportunities",
+      0,
+      0
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "false_progress": [
+      "insufficient_valid_opportunities",
+      0,
+      0
+     ],
+     "false_subgoal_success": [
+      "insufficient_valid_opportunities",
+      0,
+      0
+     ],
+     "unsupported_causal_claim": [
+      "insufficient_valid_opportunities",
+      0,
+      0
+     ],
+     "unsupported_usefulness_claim": [
+      "insufficient_valid_opportunities",
+      0,
+      0
+     ]
+    }
+   },
+   "invalid_counts": {
+    "raw_evidence": 1150,
+    "raw_plus_computed_record": 1150,
+    "raw_plus_computed_record_plus_safeguard": 1150
+   },
+   "labels": {
+    "raw_evidence": {
+     "claim_causal": "below_accuracy_floor",
+     "claim_progress": "inconclusive",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "below_accuracy_floor",
+     "progress_status": "below_accuracy_floor",
+     "region_changed": "criterion_met",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "below_accuracy_floor",
+     "visual_effect": "criterion_met"
+    },
+    "raw_plus_computed_record": {
+     "claim_causal": "below_accuracy_floor",
+     "claim_progress": "inconclusive",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "below_accuracy_floor",
+     "progress_status": "below_accuracy_floor",
+     "region_changed": "criterion_met",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "below_accuracy_floor",
+     "visual_effect": "criterion_met"
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "claim_causal": "below_accuracy_floor",
+     "claim_progress": "inconclusive",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "below_accuracy_floor",
+     "progress_status": "below_accuracy_floor",
+     "region_changed": "criterion_met",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "below_accuracy_floor",
+     "visual_effect": "criterion_met"
+    }
+   },
+   "log": {
+    "ignored_tail_bytes": 0,
+    "lines": 7560,
+    "recovered": false
+   },
+   "log_sha256": "cb51729b258f24f716ab036c50e9d878b59540255d552be6e52db8389d64be7b",
+   "readiness": {
+    "raw_evidence": "not_eligible",
+    "raw_plus_computed_record": "not_eligible",
+    "raw_plus_computed_record_plus_safeguard": "not_eligible"
+   },
+   "readiness_problems": {
+    "raw_evidence": [
+     "validity not met: all_responses invalid rate 0.4563 > 0.01",
+     "validity not met: gate_member_responses invalid rate 1.0 > 0.01",
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress"
+    ],
+    "raw_plus_computed_record": [
+     "validity not met: all_responses invalid rate 0.4563 > 0.01",
+     "validity not met: gate_member_responses invalid rate 1.0 > 0.01",
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress"
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     "validity not met: all_responses invalid rate 0.4563 > 0.01",
+     "validity not met: gate_member_responses invalid rate 1.0 > 0.01",
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress"
+    ]
+   },
+   "subgoal": {
+    "raw_evidence": [
+     0.3333,
+     1.0,
+     0
+    ],
+    "raw_plus_computed_record": [
+     0.3333,
+     1.0,
+     0
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     0.3333,
+     1.0,
+     0
+    ]
+   },
+   "uncertainty": {
+    "raw_evidence": [
+     0.2122,
+     0.0,
+     0.0
+    ],
+    "raw_plus_computed_record": [
+     0.2122,
+     0.0,
+     0.0
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     0.2122,
+     0.0,
+     0.0
+    ]
+   },
+   "validity": {
+    "raw_evidence": {
+     "all_responses": [
+      "fails",
+      1150,
+      2520
+     ],
+     "gate_member_responses": [
+      "fails",
+      1150,
+      1150
+     ]
+    },
+    "raw_plus_computed_record": {
+     "all_responses": [
+      "fails",
+      1150,
+      2520
+     ],
+     "gate_member_responses": [
+      "fails",
+      1150,
+      1150
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "all_responses": [
+      "fails",
+      1150,
+      2520
+     ],
+     "gate_member_responses": [
+      "fails",
+      1150,
+      1150
+     ]
+    }
+   }
+  },
   "invalid_text": {
    "completeness": {
     "all": "complete",
@@ -611,68 +982,68 @@
    "gates": {
     "raw_evidence": {
      "false_progress": [
-      "fails",
-      126,
-      126
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "false_subgoal_success": [
-      "fails",
-      120,
-      120
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "unsupported_causal_claim": [
-      "fails",
-      176,
-      176
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "unsupported_usefulness_claim": [
-      "fails",
-      116,
-      116
+      "insufficient_valid_opportunities",
+      0,
+      0
      ]
     },
     "raw_plus_computed_record": {
      "false_progress": [
-      "fails",
-      126,
-      126
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "false_subgoal_success": [
-      "fails",
-      120,
-      120
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "unsupported_causal_claim": [
-      "fails",
-      176,
-      176
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "unsupported_usefulness_claim": [
-      "fails",
-      116,
-      116
+      "insufficient_valid_opportunities",
+      0,
+      0
      ]
     },
     "raw_plus_computed_record_plus_safeguard": {
      "false_progress": [
-      "fails",
-      126,
-      126
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "false_subgoal_success": [
-      "fails",
-      120,
-      120
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "unsupported_causal_claim": [
-      "fails",
-      176,
-      176
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "unsupported_usefulness_claim": [
-      "fails",
-      116,
-      116
+      "insufficient_valid_opportunities",
+      0,
+      0
      ]
     }
    },
@@ -727,6 +1098,26 @@
     "raw_plus_computed_record": "not_eligible",
     "raw_plus_computed_record_plus_safeguard": "not_eligible"
    },
+   "readiness_problems": {
+    "raw_evidence": [
+     "validity not met: all_responses invalid rate 1.0 > 0.01",
+     "validity not met: gate_member_responses invalid rate 1.0 > 0.01",
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress"
+    ],
+    "raw_plus_computed_record": [
+     "validity not met: all_responses invalid rate 1.0 > 0.01",
+     "validity not met: gate_member_responses invalid rate 1.0 > 0.01",
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress"
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     "validity not met: all_responses invalid rate 1.0 > 0.01",
+     "validity not met: gate_member_responses invalid rate 1.0 > 0.01",
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress"
+    ]
+   },
    "subgoal": {
     "raw_evidence": [
      0.0,
@@ -748,18 +1139,56 @@
     "raw_evidence": [
      0.0,
      0.0,
-     1.0
+     0.0
     ],
     "raw_plus_computed_record": [
      0.0,
      0.0,
-     1.0
+     0.0
     ],
     "raw_plus_computed_record_plus_safeguard": [
      0.0,
      0.0,
-     1.0
+     0.0
     ]
+   },
+   "validity": {
+    "raw_evidence": {
+     "all_responses": [
+      "fails",
+      2520,
+      2520
+     ],
+     "gate_member_responses": [
+      "fails",
+      1150,
+      1150
+     ]
+    },
+    "raw_plus_computed_record": {
+     "all_responses": [
+      "fails",
+      2520,
+      2520
+     ],
+     "gate_member_responses": [
+      "fails",
+      1150,
+      1150
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "all_responses": [
+      "fails",
+      2520,
+      2520
+     ],
+     "gate_member_responses": [
+      "fails",
+      1150,
+      1150
+     ]
+    }
    }
   },
   "oracle": {
@@ -897,6 +1326,11 @@
     "raw_plus_computed_record": "eligible_for_memory_or_supervision",
     "raw_plus_computed_record_plus_safeguard": "eligible_for_memory_or_supervision"
    },
+   "readiness_problems": {
+    "raw_evidence": [],
+    "raw_plus_computed_record": [],
+    "raw_plus_computed_record_plus_safeguard": []
+   },
    "rescore_identical": true,
    "subgoal": {
     "raw_evidence": [
@@ -931,6 +1365,44 @@
      0.0,
      0.0
     ]
+   },
+   "validity": {
+    "raw_evidence": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    },
+    "raw_plus_computed_record": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    }
    }
   },
   "oracle_3pct_invalid_pass2": {
@@ -952,67 +1424,67 @@
    "gates": {
     "raw_evidence": {
      "false_progress": [
-      "fails",
-      6,
+      "passes",
+      0,
       126
      ],
      "false_subgoal_success": [
-      "fails",
-      5,
+      "passes",
+      0,
       120
      ],
      "unsupported_causal_claim": [
-      "fails",
-      7,
+      "passes",
+      0,
       176
      ],
      "unsupported_usefulness_claim": [
       "passes",
-      2,
+      0,
       116
      ]
     },
     "raw_plus_computed_record": {
      "false_progress": [
-      "fails",
-      7,
+      "passes",
+      0,
       126
      ],
      "false_subgoal_success": [
       "passes",
-      1,
+      0,
       120
      ],
      "unsupported_causal_claim": [
-      "fails",
-      11,
+      "passes",
+      0,
       176
      ],
      "unsupported_usefulness_claim": [
-      "fails",
-      3,
+      "passes",
+      0,
       116
      ]
     },
     "raw_plus_computed_record_plus_safeguard": {
      "false_progress": [
-      "fails",
-      3,
+      "passes",
+      0,
       126
      ],
      "false_subgoal_success": [
-      "fails",
-      6,
+      "passes",
+      0,
       120
      ],
      "unsupported_causal_claim": [
-      "fails",
-      5,
+      "passes",
+      0,
       176
      ],
      "unsupported_usefulness_claim": [
       "passes",
-      2,
+      0,
       116
      ]
     }
@@ -1068,6 +1540,20 @@
     "raw_plus_computed_record": "not_eligible",
     "raw_plus_computed_record_plus_safeguard": "not_eligible"
    },
+   "readiness_problems": {
+    "raw_evidence": [
+     "validity not met: all_responses invalid rate 0.0171 > 0.01",
+     "validity not met: gate_member_responses invalid rate 0.0174 > 0.01"
+    ],
+    "raw_plus_computed_record": [
+     "validity not met: all_responses invalid rate 0.0183 > 0.01",
+     "validity not met: gate_member_responses invalid rate 0.0191 > 0.01"
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     "validity not met: all_responses invalid rate 0.0139 > 0.01",
+     "validity not met: gate_member_responses invalid rate 0.0139 > 0.01"
+    ]
+   },
    "subgoal": {
     "raw_evidence": [
      0.9667,
@@ -1089,18 +1575,56 @@
     "raw_evidence": [
      0.9631,
      0.0,
-     0.0222
+     0.0
     ],
     "raw_plus_computed_record": [
      0.9576,
      0.0,
-     0.0667
+     0.0
     ],
     "raw_plus_computed_record_plus_safeguard": [
      0.9797,
      0.0,
-     0.0222
+     0.0
     ]
+   },
+   "validity": {
+    "raw_evidence": {
+     "all_responses": [
+      "fails",
+      43,
+      2520
+     ],
+     "gate_member_responses": [
+      "fails",
+      20,
+      1150
+     ]
+    },
+    "raw_plus_computed_record": {
+     "all_responses": [
+      "fails",
+      46,
+      2520
+     ],
+     "gate_member_responses": [
+      "fails",
+      22,
+      1150
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "all_responses": [
+      "fails",
+      35,
+      2520
+     ],
+     "gate_member_responses": [
+      "fails",
+      16,
+      1150
+     ]
+    }
    }
   },
   "oracle_interrupted_append": {
@@ -1237,6 +1761,17 @@
     "raw_plus_computed_record": "incomplete",
     "raw_plus_computed_record_plus_safeguard": "incomplete"
    },
+   "readiness_problems": {
+    "raw_evidence": [
+     "recovered evidence is never eligible"
+    ],
+    "raw_plus_computed_record": [
+     "recovered evidence is never eligible"
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     "recovered evidence is never eligible"
+    ]
+   },
    "subgoal": {
     "raw_evidence": [
      1.0,
@@ -1270,6 +1805,44 @@
      0.0,
      0.0
     ]
+   },
+   "validity": {
+    "raw_evidence": {
+     "all_responses": [
+      "passes",
+      0,
+      2519
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1149
+     ]
+    },
+    "raw_plus_computed_record": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    }
    }
   },
   "oracle_missing_one_gate_answer": {
@@ -1401,6 +1974,17 @@
     "raw_plus_computed_record": "incomplete",
     "raw_plus_computed_record_plus_safeguard": "incomplete"
    },
+   "readiness_problems": {
+    "raw_evidence": [
+     "a primary or over-claim-gate answer is missing"
+    ],
+    "raw_plus_computed_record": [
+     "a primary or over-claim-gate answer is missing"
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     "a primary or over-claim-gate answer is missing"
+    ]
+   },
    "subgoal": {
     "raw_evidence": [
      1.0,
@@ -1434,6 +2018,44 @@
      0.0,
      0.0
     ]
+   },
+   "validity": {
+    "raw_evidence": {
+     "all_responses": [
+      "passes",
+      0,
+      2519
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1149
+     ]
+    },
+    "raw_plus_computed_record": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    }
    }
   },
   "over_claimer": {
@@ -1571,6 +2193,26 @@
     "raw_plus_computed_record": "not_eligible",
     "raw_plus_computed_record_plus_safeguard": "not_eligible"
    },
+   "readiness_problems": {
+    "raw_evidence": [
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress",
+     "family below criterion: effect_hypothesis",
+     "family below criterion: progress_status"
+    ],
+    "raw_plus_computed_record": [
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress",
+     "family below criterion: effect_hypothesis",
+     "family below criterion: progress_status"
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress",
+     "family below criterion: effect_hypothesis",
+     "family below criterion: progress_status"
+    ]
+   },
    "subgoal": {
     "raw_evidence": [
      0.7778,
@@ -1604,6 +2246,44 @@
      0.0,
      1.0
     ]
+   },
+   "validity": {
+    "raw_evidence": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    },
+    "raw_plus_computed_record": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    }
    }
   },
   "schema_faults": {
@@ -1625,68 +2305,68 @@
    "gates": {
     "raw_evidence": {
      "false_progress": [
-      "fails",
-      126,
-      126
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "false_subgoal_success": [
-      "fails",
-      120,
-      120
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "unsupported_causal_claim": [
-      "fails",
-      176,
-      176
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "unsupported_usefulness_claim": [
-      "fails",
-      116,
-      116
+      "insufficient_valid_opportunities",
+      0,
+      0
      ]
     },
     "raw_plus_computed_record": {
      "false_progress": [
-      "fails",
-      126,
-      126
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "false_subgoal_success": [
-      "fails",
-      120,
-      120
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "unsupported_causal_claim": [
-      "fails",
-      176,
-      176
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "unsupported_usefulness_claim": [
-      "fails",
-      116,
-      116
+      "insufficient_valid_opportunities",
+      0,
+      0
      ]
     },
     "raw_plus_computed_record_plus_safeguard": {
      "false_progress": [
-      "fails",
-      126,
-      126
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "false_subgoal_success": [
-      "fails",
-      120,
-      120
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "unsupported_causal_claim": [
-      "fails",
-      176,
-      176
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "unsupported_usefulness_claim": [
-      "fails",
-      116,
-      116
+      "insufficient_valid_opportunities",
+      0,
+      0
      ]
     }
    },
@@ -1741,6 +2421,26 @@
     "raw_plus_computed_record": "not_eligible",
     "raw_plus_computed_record_plus_safeguard": "not_eligible"
    },
+   "readiness_problems": {
+    "raw_evidence": [
+     "validity not met: all_responses invalid rate 1.0 > 0.01",
+     "validity not met: gate_member_responses invalid rate 1.0 > 0.01",
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress"
+    ],
+    "raw_plus_computed_record": [
+     "validity not met: all_responses invalid rate 1.0 > 0.01",
+     "validity not met: gate_member_responses invalid rate 1.0 > 0.01",
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress"
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     "validity not met: all_responses invalid rate 1.0 > 0.01",
+     "validity not met: gate_member_responses invalid rate 1.0 > 0.01",
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress"
+    ]
+   },
    "subgoal": {
     "raw_evidence": [
      0.0,
@@ -1762,21 +2462,60 @@
     "raw_evidence": [
      0.0,
      0.0,
-     1.0
+     0.0
     ],
     "raw_plus_computed_record": [
      0.0,
      0.0,
-     1.0
+     0.0
     ],
     "raw_plus_computed_record_plus_safeguard": [
      0.0,
      0.0,
-     1.0
+     0.0
     ]
+   },
+   "validity": {
+    "raw_evidence": {
+     "all_responses": [
+      "fails",
+      2520,
+      2520
+     ],
+     "gate_member_responses": [
+      "fails",
+      1150,
+      1150
+     ]
+    },
+    "raw_plus_computed_record": {
+     "all_responses": [
+      "fails",
+      2520,
+      2520
+     ],
+     "gate_member_responses": [
+      "fails",
+      1150,
+      1150
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "all_responses": [
+      "fails",
+      2520,
+      2520
+     ],
+     "gate_member_responses": [
+      "fails",
+      1150,
+      1150
+     ]
+    }
    }
   }
  },
+ "scoring_revision": "r1: over-claim gates read valid answers only; invalid output counts as incorrect and against the validity criterion (overall and gate-member invalid rate <= 0.01)",
  "version": "progress_subgoal_v1_questions_draft",
  "workload_estimate": {
   "chars_per_token_calibration": 2.3675,
