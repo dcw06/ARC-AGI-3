@@ -1,7 +1,7 @@
 {
   "scope": "local CPU rehearsals only; CPU fake of the model server with scripted answers; no model calls or GPU runs",
-  "run_id": "package-r1-check-2",
-  "diagnostics": "reports/ws3_questionnaire_v1_diagnostics/package-r1-check-2.json",
+  "run_id": "package-r2-fresh-checkout-3",
+  "diagnostics": "reports/ws3_questionnaire_v1_diagnostics/package-r2-fresh-checkout-3.json",
   "requested_suites": [
     "probe_set_keys_scoring_and_analysis",
     "transition_records_and_fixtures",
@@ -19,7 +19,7 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 330.5
+      "seconds": 381.7
     },
     "transition_records_and_fixtures": {
       "module": "tests.test_transition_evidence_v1",
@@ -28,7 +28,7 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 0.1
+      "seconds": 0.2
     },
     "schedule_admission_and_interrupted_gate": {
       "module": "tests.test_ws3_questionnaire_v1_schedule",
@@ -37,7 +37,7 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 12.0
+      "seconds": 15.1
     },
     "transport_cancellation_and_cache_metrics": {
       "module": "tests.test_evidence_comprehension_v1_transport",
@@ -46,7 +46,7 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 19.4
+      "seconds": 20.2
     },
     "diagnostics_recorder": {
       "module": "tests.test_ws3_questionnaire_v1_diagnostics",
@@ -55,7 +55,7 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 14.4
+      "seconds": 0.1
     },
     "connected_path_rehearsals": {
       "module": "tests.test_ws3_questionnaire_v1_connected",
@@ -64,16 +64,16 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 1424.7
+      "seconds": 1776.4
     },
     "runtime_derivation_and_inventory": {
       "module": "tests.test_ws3_questionnaire_v1_derivation",
       "completed": true,
-      "tests_run": 8,
+      "tests_run": 16,
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 15.5
+      "seconds": 5.0
     }
   },
   "all_passed": true,
