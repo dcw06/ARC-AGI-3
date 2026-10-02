@@ -6,6 +6,7 @@ sockets) and are skipped elsewhere. This file checks the derivation, the live re
 order and admission, and an in-process dry rehearsal of scoring and analysis through the fake server's answers.
 """
 import json
+import time
 from pathlib import Path
 import unittest
 
@@ -125,6 +126,82 @@ class DryRehearsal(unittest.TestCase):
         probe = FROZEN['probes'][0]
         row = score_call(probe, {'finish_reason': 'length', 'response': json.dumps(probe['key'])})
         self.assertEqual((row['valid'], row['correct']), (False, False))
+
+
+def _post(base_url, request, timeout):
+    """(status, body) for one completion request; ('timeout', None) when no reply arrives in time. The connection
+    is always closed, so a hung server-side request sees the client disconnect."""
+    import http.client
+    import socket
+    from urllib.parse import urlparse
+    url = urlparse(base_url)
+    connection = http.client.HTTPConnection(url.hostname, url.port, timeout=timeout)
+    try:
+        body = json.dumps(request).encode()
+        connection.request('POST', '/v1/chat/completions', body, {'Content-Type': 'application/json'})
+        response = connection.getresponse()
+        return response.status, response.read()
+    except (socket.timeout, TimeoutError):
+        return 'timeout', None
+    finally:
+        connection.close()
+
+
+class FaultPlacement(unittest.TestCase):
+    """Every rehearsal server fault is keyed to the HANG_AT-th questionnaire call after the canary. It must be reached
+    by the Stage 1 schedule and fire there (review of cee5b3f: with v1's canary rule it never fired)."""
+
+    @classmethod
+    def setUpClass(cls):
+        from research.action_effect_history_v1.service import canary_request
+        contexts = {c['context_id']: c for c in FROZEN['contexts']}
+        probes = {p['probe_id']: p for p in FROZEN['probes']}
+        cls.order = S.call_order(FROZEN)
+        cls.requests = [PR.build_request(contexts[probes[i]['context_id']], probes[i]) for _, _, i in cls.order]
+        cls.canary = canary_request()
+
+    def test_the_fault_call_is_inside_pass_one_of_the_schedule(self):
+        from research.evidence_memory_v1.run.fake_server import HANG_AT
+        self.assertLessEqual(HANG_AT, len(FROZEN['schedule'][0]['probe_ids']))
+        self.assertEqual(self.order[HANG_AT - 1][0], 'withheld_pass_1')
+
+    def test_the_canary_and_every_stage1_question_are_told_apart(self):
+        from research.evidence_memory_v1.run import fake_vllm
+        from research.evidence_memory_v1.run.fake_server import FakeVLLM
+        server = FakeVLLM()
+        try:
+            self.assertTrue(server.is_canary(self.canary))
+            self.assertFalse(any(server.is_canary(r) for r in self.requests))
+            # The root cause: v1's rule calls a Stage 1 question the canary.
+            self.assertTrue(fake_vllm.FakeVLLM.is_canary(server, self.requests[0]))
+        finally:
+            server.server.server_close()
+
+    def test_each_server_fault_fires_at_its_call(self):
+        from research.evidence_memory_v1.run.fake_server import ABORT_DELAY, HANG_AT, HANG_FAULTS, FakeVLLM
+        for fault in ('http_error',) + HANG_FAULTS:
+            with self.subTest(fault=fault):
+                server = FakeVLLM(fault=fault).start()
+                try:
+                    self.assertEqual(_post(server.base_url, self.canary, 10)[0], 200)
+                    for request in self.requests[:HANG_AT - 1]:
+                        self.assertEqual(_post(server.base_url, request, 10)[0], 200)
+                    self.assertEqual(server.completions, HANG_AT - 1)  # the canary is not counted
+                    status, _ = _post(server.base_url, self.requests[HANG_AT - 1], 1.5)
+                    self.assertEqual(server.completions, HANG_AT)
+                    if fault == 'http_error':
+                        self.assertEqual(status, 500)
+                        continue
+                    self.assertEqual(status, 'timeout')  # the HANG_AT-th call hangs
+                    if fault == 'trickle_metrics':
+                        self.assertTrue(server.trickling)
+                    expected = ('disconnect_ignored' if fault == 'no_abort' else 'aborted', HANG_AT)
+                    until = time.monotonic() + ABORT_DELAY.get(fault, 0) + 5
+                    while expected not in server.log and time.monotonic() < until:
+                        time.sleep(0.05)
+                    self.assertIn(expected, server.log)
+                finally:
+                    server.close()
 
 
 if __name__ == '__main__':

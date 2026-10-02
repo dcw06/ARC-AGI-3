@@ -49,7 +49,7 @@ REQUIRED_SOURCE |= {'research/transition_evidence_v1/' + name for name in  # the
 REQUIRED_NEW = """REQUIRED_SOURCE = {'research/evidence_memory_v1/run/' + name for name in
                    ('__init__.py', 'authority.py', 'probes.py', 'probes.json', 'score.py', 'schedule.py',
                     'transport.py', 'service.py', 'host.py', 'worker.py', 'runner.py', 'monitor.py', 'resources.py',
-                    'supervisor.py', 'evidence.py', 'fake_server.py', 'evaluate.py')}
+                    'supervisor.py', 'evidence.py', 'fake_server.py', 'fake_vllm.py', 'evaluate.py')}
 REQUIRED_SOURCE |= {'research/evidence_memory_v1/' + name for name in  # the Stage 1 question set and its scorer
                     ('__init__.py', 'stage1.py', 'protocol.py', 'readers.py', 'render.py', 'schema.py', 'fidelity.py',
                      'trajectories.py', 'writers.py', 'tokens.py')}
@@ -91,6 +91,19 @@ DERIVED = {
         (GATE_OLD, GATE_NEW, 1),
     )),
     'research/evidence_memory_v1/run/host.py': ('research/ws3_questionnaire_v1/host.py', (DEPTH_2,)),
+    # v1's fake vLLM server decides "canary" by a user message not starting with '{' (true of every v1-WS3 question,
+    # false for Stage 1's 'Evidence:' prose). Unchanged, it counted every Stage 1 question as the canary, so the
+    # questionnaire call counter never advanced and no fault keyed to HANG_AT ever fired. The canary test becomes an
+    # overridable method with v1's rule as its default; run/fake_server.py identifies the canary by request hash.
+    'research/evidence_memory_v1/run/fake_vllm.py': ('research/evidence_comprehension_v1/fake_server.py', (
+        ("        is_canary = not request['messages'][1]['content'].startswith('{')\n",
+         "        is_canary = self.is_canary(request)\n", 1),
+        ("    def handle(self, handler, request):\n",
+         "    def is_canary(self, request):\n"
+         "        \"\"\"v1's rule; a question set whose user messages are not JSON overrides it.\"\"\"\n"
+         "        return not request['messages'][1]['content'].startswith('{')\n\n"
+         "    def handle(self, handler, request):\n", 1),
+    )),
     'research/evidence_memory_v1/run/worker.py': ('research/ws3_questionnaire_v1/worker.py', (
         DEPTH_2,
         # Rehearsal only: chosen so the admission cutoff falls inside pass 1 (2,592 calls) or inside the short

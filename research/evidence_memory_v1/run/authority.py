@@ -26,7 +26,7 @@ LIVE_ENABLED = False  # Track 2 Stage 1: GPU-disabled; no live run is approved
 REQUIRED_SOURCE = {'research/evidence_memory_v1/run/' + name for name in
                    ('__init__.py', 'authority.py', 'probes.py', 'probes.json', 'score.py', 'schedule.py',
                     'transport.py', 'service.py', 'host.py', 'worker.py', 'runner.py', 'monitor.py', 'resources.py',
-                    'supervisor.py', 'evidence.py', 'fake_server.py', 'evaluate.py')}
+                    'supervisor.py', 'evidence.py', 'fake_server.py', 'fake_vllm.py', 'evaluate.py')}
 REQUIRED_SOURCE |= {'research/evidence_memory_v1/' + name for name in  # the Stage 1 question set and its scorer
                     ('__init__.py', 'stage1.py', 'protocol.py', 'readers.py', 'render.py', 'schema.py', 'fidelity.py',
                      'trajectories.py', 'writers.py', 'tokens.py')}
