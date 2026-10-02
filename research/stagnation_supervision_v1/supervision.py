@@ -7,7 +7,9 @@ Three arms share one policy and one request template (intervention.py):
 Policy limits apply to every call in every arm:
   - cooldown: no call within `cooldown_actions` actions of the previous call;
   - at most `max_interventions_per_episode` calls, counting valid, invalid and failed calls alike;
-  - a per-episode token ceiling: a call is made only if spent + estimated input + reserved output fits;
+  - a per-episode token ceiling: a call is made only if spent + input + reserved output fits. The input count is
+    exact when a `token_counter` is supplied (the closed loop always supplies the serving tokenizer's chat-template
+    count); the 4-characters-per-token estimate remains only for synthetic rehearsals without one;
   - no call when the current state was not observed (unknown outcome or missing frames): it is deferred;
   - no call when fewer than `min_remaining_actions` actions (the recovery window) remain in actual play, so every
     reflection can be evaluated. Remaining actions come from the caller when it knows play has ended (the runner
@@ -50,7 +52,7 @@ def estimate_tokens(text):
 
 class Supervisor:
     def __init__(self, arm, spec, call, policy=POLICY, available_actions=None, clock=time.perf_counter,
-                 episode_actions=None):
+                 episode_actions=None, token_counter=None):
         if arm not in ARMS:
             raise ValueError('unknown arm')
         self.arm, self.params, self.call, self.policy = arm, spec['params'], call, dict(policy)
@@ -60,6 +62,7 @@ class Supervisor:
         self.calls, self.tokens, self.last_call = 0, 0, None
         self.policy = {**POLICY, **self.policy}
         self.episode_actions, self.suggestion = episode_actions, None
+        self.token_counter = token_counter
 
     def observe(self, raw, prediction=None, remaining_actions=None):
         self.raws.append(raw)
@@ -102,7 +105,12 @@ class Supervisor:
             event['outcome'] = 'suppressed_intervention_cap'
         else:
             request = I.build_request(self.records, index, self.arm, fired, self.available_actions)
-            needed = estimate_tokens(request['text']) + self.policy['reserved_output_tokens']
+            prompt_tokens = self._input_tokens(request['text'])
+            event['admission'] = {'input_tokens': prompt_tokens,
+                                  'counter': 'tokenizer' if self.token_counter else 'estimate_4_chars_per_token',
+                                  'reserved_output_tokens': self.policy['reserved_output_tokens'],
+                                  'spent_before': self.tokens}
+            needed = prompt_tokens + self.policy['reserved_output_tokens']
             if self.tokens + needed > self.policy['max_supervisor_tokens_per_episode']:
                 event['outcome'] = 'suppressed_token_budget'
             else:
@@ -138,6 +146,9 @@ class Supervisor:
             return None
         return dict(s)
 
+    def _input_tokens(self, text):
+        return self.token_counter(text) if self.token_counter is not None else estimate_tokens(text)
+
     def _call(self, request):
         self.calls += 1
         self.last_call = request['content']['decision_index']
@@ -149,7 +160,7 @@ class Supervisor:
             response, error = {}, f'{type(exc).__name__}: {exc}'
         latency = response.get('latency_s', self.clock() - start)
         text = response.get('text')
-        charged_in = response.get('input_tokens', estimate_tokens(request['text']))
+        charged_in = response.get('input_tokens', self._input_tokens(request['text']))
         charged_out = response.get('output_tokens', estimate_tokens(text) if isinstance(text, str) else 0)
         self.tokens += charged_in + charged_out
         finish = response.get('finish_reason', 'stop') if 'finish_reason' in response else None

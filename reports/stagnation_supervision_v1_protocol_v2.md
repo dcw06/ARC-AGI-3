@@ -356,8 +356,11 @@ These are estimates, not authorization ceilings.
    - The model host must serve and audit reflection requests (`max_tokens` 400, no response format) beside policy
      requests.
    - Its call ceilings come from `closed_loop/protocol.json` (1,080 policy, 64 reflection).
-3. **Tokenizer counts.** Replace the 4-characters-per-token admission estimate with serving-tokenizer counts for
-   reflection admission in live mode.
+3. **Tokenizer counts.** *Implemented.* The closed loop now admits reflections with an exact chat-template token
+   count, `bridge.chat_token_counter(tokenizer)`, and refuses to run without one. Still to do: run the token audit,
+   `scripts/audit_stagnation_supervision_v1_tokens.py`, in the pinned tokenizer environment. It counts every
+   request from `research.stagnation_supervision_v1.closed_loop.requests.enumerate_requests()` plus
+   `maximal_reflection_request()`.
 4. **Live evaluator.** An independent evaluator that rebuilds transition_evidence_v2 records from run evidence and
    computes §8 with `outcomes.py`, with a replay test. It also needs the audit sampling script.
 5. **Pre-run timing check** on the target CPU for per-step overhead at 40 actions. If it exceeds 6.1 s per step, the

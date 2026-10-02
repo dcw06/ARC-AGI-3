@@ -62,12 +62,33 @@ def session_spec(spec, session):
     return {**spec, 'schedule': [s for s in spec['schedule'] if s['pair_id'] in keep]}
 
 
-def supervision_factory(spec, trigger_spec, policy=EXPERIMENT_POLICY, clock=None):
+def chat_token_counter(tokenizer):
+    """Exact prompt tokens of the reflection chat request built from `text`, with the same chat-template call the
+    model service uses for admission (action-effect-history v1 `_admit`)."""
+    def count(text):
+        request = reflection_request(text)
+        tokens = tokenizer.apply_chat_template(request['messages'], tokenize=True, add_generation_prompt=True,
+                                               truncation=False, **request['chat_template_kwargs'])
+        if type(tokens) is not list or not tokens:
+            raise ValueError('tokenizer returned no tokens')
+        return len(tokens)
+    return count
+
+
+def fixture_token_counter():
+    """Rehearsal only: the fixture tokenizer the fake server also counts with, so admission equals the charge."""
+    from research.action_effect_history_v1.rehearsal import FixtureTokenizer
+    return chat_token_counter(FixtureTokenizer())
+
+
+def supervision_factory(spec, trigger_spec, policy=EXPERIMENT_POLICY, clock=None, *, token_counter):
     """`factory(arm, call)` for the runner: the frozen detector observes in every arm; reflection only in its two
-    arms."""
+    arms. Reflection admission always uses an exact `token_counter` here (never the character estimate)."""
     import time
+    if token_counter is None:
+        raise ValueError('the closed loop requires an exact reflection token counter')
 
     def factory(arm, call):
         return SV.Supervisor(arm, trigger_spec, call, policy, clock=clock or time.perf_counter,
-                             episode_actions=spec['limits']['actions_per_episode'])
+                             episode_actions=spec['limits']['actions_per_episode'], token_counter=token_counter)
     return factory

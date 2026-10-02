@@ -138,7 +138,8 @@ class OfflineEngineRehearsal(unittest.TestCase):
         cls.service = SVC.LocalService(F.FakeModelServer())
         cls.report = R.run(folder / 'run', cls.service,
                            lambda g, arm, eid: DevelopmentAdapter(g, arm, eid, games, folder / 'rec'),
-                           spec=cls.spec, supervision_factory=B.supervision_factory(cls.spec, TRIGGER),
+                           spec=cls.spec, supervision_factory=B.supervision_factory(
+                               cls.spec, TRIGGER, token_counter=B.fixture_token_counter()),
                            deadline_seconds=3000)
         cls.bodies = {b['arm']: b for b in episode_bodies(folder / 'run', cls.report)}
 
@@ -197,6 +198,42 @@ class OfflineEngineRehearsal(unittest.TestCase):
 SIZE = 16  # small frames keep scripted rehearsals fast; the runner and records accept any valid shape
 
 
+class TokenAdmission(unittest.TestCase):
+    def test_the_closed_loop_requires_an_exact_counter_and_admits_with_it(self):
+        with self.assertRaises(TypeError):
+            B.supervision_factory(SPEC, TRIGGER)
+        with self.assertRaises(ValueError):
+            B.supervision_factory(SPEC, TRIGGER, token_counter=None)
+        _, [body] = scripted_run(['periodic'])
+        called = [e for e in body['supervision']['events'] if e['outcome'] == 'called']
+        self.assertTrue(called)
+        for e, row in zip(called, body['reflections']):
+            self.assertEqual(e['admission']['counter'], 'tokenizer')
+            self.assertEqual(e['admission']['input_tokens'], row['tokenizer_prompt_tokens'])  # exact, not estimated
+
+    def test_enumeration_covers_policy_and_reflection_requests(self):
+        from research.stagnation_supervision_v1.closed_loop.requests import enumerate_requests, maximal_reflection_request
+        rows = enumerate_requests(groups=['b1-ar25'], actions_per_episode=12)
+        kinds = {}
+        for r in rows:
+            kinds[r['kind']] = kinds.get(r['kind'], 0) + 1
+            (SVC.validate_reflection_request if r['kind'] == 'reflection' else SVC.validate_policy_request)(r['request'])
+            self.assertEqual(r['pair_id'], 'b1-ar25')
+        self.assertEqual(kinds['policy'], 36)
+        self.assertGreaterEqual(kinds['reflection'], 1)
+        maximal = maximal_reflection_request()
+        self.assertEqual(SVC.validate_reflection_request(maximal), 'reflection')
+        longest = max(len(json.dumps(r['request'])) for r in rows if r['kind'] == 'reflection')
+        self.assertGreater(len(json.dumps(maximal)), longest)
+        from research.action_effect_history_v1.rehearsal import FixtureTokenizer
+        audit_module = importlib.util.spec_from_file_location('audit', ROOT / 'scripts/audit_stagnation_supervision_v1_tokens.py')
+        audit = importlib.util.module_from_spec(audit_module)
+        audit_module.loader.exec_module(audit)
+        report = audit.audit(FixtureTokenizer(), rows, maximal)
+        self.assertEqual(report['by_kind']['policy']['requests'], 36)
+        self.assertTrue(report['all_checks_pass'], report['checks'])
+
+
 class ScriptedAdapter:
     """A 16x16 scripted game: the stuck ACTION6 changes nothing; any other action paints a new cell. `event` fires
     after the given action index: 'level' (levels_completed + 1), 'reset' (full_reset) or 'game_over'."""
@@ -243,7 +280,8 @@ def scripted_run(order, faults=(), event=None, at=None, policy=None):
     tmp = tempfile.TemporaryDirectory()
     report = R.run(Path(tmp.name) / 'run', SVC.LocalService(F.FakeModelServer(faults)),
                    lambda g, arm, eid: ScriptedAdapter(g, event, at), spec=spec,
-                   supervision_factory=B.supervision_factory(spec, TRIGGER, policy or B.EXPERIMENT_POLICY),
+                   supervision_factory=B.supervision_factory(spec, TRIGGER, policy or B.EXPERIMENT_POLICY,
+                                                             token_counter=B.fixture_token_counter()),
                    deadline_seconds=3000)
     bodies = episode_bodies(Path(tmp.name) / 'run', report)
     tmp.cleanup()
