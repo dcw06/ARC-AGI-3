@@ -191,6 +191,11 @@ DERIVED = {
     ),
     'runner.py': (
         (RUNNER_DOC_OLD, RUNNER_DOC_NEW, 1),
+        ("VERSION = 'stagnation_supervision_run_v1'", "VERSION = 'stagnation_supervision_run_v2'", 1),
+        ("class TechnicalFailure(Exception):\n    pass\n",
+         "class TechnicalFailure(Exception):\n    pass\n\n\n"
+         "class FailureRuleStop(Exception):\n    \"\"\"A predeclared scientific/reliability rule stopped the session.\"\"\"\n"
+         "    pass\n", 1),
         ('from research.stagnation_supervision_v1.closed_loop.contract import policy_request\n',
          'from research.stagnation_supervision_v1.closed_loop.contract import policy_request\n'
          'from research.stagnation_supervision_v1.closed_loop.bridge import raw_transition, reflection_request, '
@@ -198,7 +203,9 @@ DERIVED = {
         ('        evidence_lock_root=None):', '        evidence_lock_root=None, supervision_factory=None):', 1),
         ("'pairs': [], 'episodes': [], 'calls': 0, 'dispatches': 0, 'prompt_tokens': 0, 'completion_tokens': 0}",
          "'pairs': [], 'episodes': [], 'calls': 0, 'dispatches': 0, 'prompt_tokens': 0, 'completion_tokens': 0,\n"
-         "              'reflection_calls': 0, 'reflection_prompt_tokens': 0, 'reflection_completion_tokens': 0}", 1),
+         "              'reflection_calls': 0, 'reflection_prompt_tokens': 0, 'reflection_completion_tokens': 0,\n"
+         "              'dispatch_failures': 0, 'reflection_arms_stopped': False, 'failure_rule': None,\n"
+         "              'full_protocol_proof': limits['actions_per_episode'] == 40}", 1),
         (REFLECT_ANCHOR, REFLECT_NEW, 1),
         ("'calls': [], 'steps': [], 'cleanup': None, 'started_at': now()}",
          "'calls': [], 'steps': [], 'reflections': [], 'supervision': None, 'cleanup': None,\n"
@@ -216,6 +223,82 @@ DERIVED = {
          "                step = {'index': step_index, 'call_index': len(episode['calls']) - 1, 'before': pack(obs),\n"
          "                        'suggestion_shown': suggestion,\n", 1),
         (OBSERVE_ANCHOR, OBSERVE_NEW, 1),
+        ("                persist(episode)\n                if supervisor is not None:  # the detector observes every step in every arm\n",
+         "                persist(episode)\n"
+         "                if outcome['status'] != 'acknowledged':\n"
+         "                    report['dispatch_failures'] += 1\n"
+         "                    if report['dispatch_failures'] * 10 > report['dispatches']:\n"
+         "                        report['failure_rule'] = {'rule': 'dispatch_reliability',\n"
+         "                                                  'failed_or_unknown': report['dispatch_failures'],\n"
+         "                                                  'dispatches': report['dispatches']}\n"
+         "                        persist(episode)\n"
+         "                if supervisor is not None:  # the detector observes every step in every arm\n", 1),
+        ("                    if any(r['status'] == 'audit_failure' for r in episode['reflections']):\n"
+         "                        raise TechnicalFailure('reflection response/token audit')\n"
+         "                    check()\n",
+         "                    if any(r['status'] == 'audit_failure' for r in episode['reflections']):\n"
+         "                        raise TechnicalFailure('reflection response/token audit')\n"
+         "                    attempted = [e['call'] for ep in report['episodes'] for e in\n"
+         "                                 (ep.get('supervision') or {}).get('events', []) if e['outcome'] == 'called']\n"
+         "                    invalid = sum(c['error'] is None and not c['parsed']['valid'] for c in attempted)\n"
+         "                    if (episode['arm'] in ('periodic', 'triggered') and not report['reflection_arms_stopped']\n"
+         "                            and len(attempted) >= 10 and invalid * 2 > len(attempted)):\n"
+         "                        report['reflection_arms_stopped'] = True\n"
+         "                        report['failure_rule'] = {'rule': 'reflection_interface', 'attempted': len(attempted),\n"
+         "                                                  'invalid_outputs': invalid}\n"
+         "                        episode['stop_reason'] = 'reflection_interface_stop'\n"
+         "                        persist(episode)\n"
+         "                    check()\n", 1),
+        ("                if outcome['status'] != 'acknowledged':\n"
+         "                    episode['stop_reason'] = 'dispatch_failure'\n",
+         "                if report['failure_rule'] is not None and report['failure_rule']['rule'] == 'dispatch_reliability':\n"
+         "                    raise FailureRuleStop('dispatch_reliability')\n"
+         "                if outcome['status'] != 'acknowledged':\n"
+         "                    episode['stop_reason'] = 'dispatch_failure'\n", 1),
+        ("                obs = post\n            else:\n",
+         "                obs = post\n"
+         "                if episode['stop_reason'] == 'reflection_interface_stop':\n"
+         "                    break\n"
+         "            else:\n", 1),
+        ("            episode['status'] = 'complete'\n            episode['final'] = pack(obs)\n",
+         "            episode['status'] = ('failure_rule_stopped' if episode['stop_reason'] ==\n"
+         "                                 'reflection_interface_stop' else 'complete')\n"
+         "            episode['final'] = pack(obs)\n", 1),
+        ("        except DeadlineExceeded:\n            episode.update(status='interrupted', stop_reason='interrupted')\n",
+         "        except FailureRuleStop:\n"
+         "            episode.update(status='failure_rule_stopped', stop_reason='dispatch_reliability_stop')\n"
+         "            raise\n"
+         "        except DeadlineExceeded:\n            episode.update(status='interrupted', stop_reason='interrupted')\n", 1),
+        ("            for index, arm in enumerate(pair['order']):\n"
+         "                episode_run(pair, arm, index)\n"
+         "            entry['status'] = 'complete'\n",
+         "            for index, arm in enumerate(pair['order']):\n"
+         "                if report['reflection_arms_stopped'] and arm in ('periodic', 'triggered'):\n"
+         "                    entry.setdefault('skipped_arms', []).append({'arm': arm,\n"
+         "                                                                'reason': 'reflection_interface_stop'})\n"
+         "                    persist()\n"
+         "                    continue\n"
+         "                episode = episode_run(pair, arm, index)\n"
+         "                if (limits['actions_per_episode'] == 40 and pair['pair_id'] == 'b1-ar25'\n"
+         "                        and arm == 'continuation' and episode['status'] == 'complete'\n"
+         "                        and episode['stop_reason'] in ('action_cap', 'win', 'game_over')\n"
+         "                        and episode['supervision']['summary']['detector_firings'] == 0):\n"
+         "                    report['failure_rule'] = {'rule': 'zero_detector_firings',\n"
+         "                                              'episode_id': episode['episode_id']}\n"
+         "                    persist()\n"
+         "                    raise FailureRuleStop('zero_detector_firings')\n"
+         "            entry['status'] = ('partial' if entry.get('skipped_arms') or\n"
+         "                               any(e['pair_id'] == pair['pair_id'] and e['status'] == 'failure_rule_stopped'\n"
+         "                                   for e in report['episodes']) else 'complete')\n", 1),
+        ("        report['status'] = 'complete' if all(p['status'] == 'complete' for p in report['pairs']) else 'incomplete'",
+         "        report['status'] = ('failure_rule_stopped' if report['reflection_arms_stopped'] else\n"
+         "                            'complete' if all(p['status'] == 'complete' for p in report['pairs']) else 'incomplete')", 1),
+        ("    except DeadlineExceeded as exc:\n        canceled = 'cancellation' in str(exc)\n",
+         "    except FailureRuleStop as exc:\n"
+         "        report.update(status='failure_rule_stopped', error=str(exc))\n"
+         "        if report['pairs'] and report['pairs'][-1].get('status') == 'running':\n"
+         "            report['pairs'][-1]['status'] = 'interrupted'\n"
+         "    except DeadlineExceeded as exc:\n        canceled = 'cancellation' in str(exc)\n", 1),
     ),
     'engine.py': (),
     'evidence.py': (),
@@ -258,7 +341,8 @@ SESSION_LIMITS = {  # protocol v2 section 11 (proposal; nothing is authorized)
 REQUIRED_NEW = """REQUIRED_SOURCE = {'research/stagnation_supervision_v1/closed_loop/' + name for name in
                    ('authority.py', 'contract.py', 'protocol.json', 'runner.py', 'evaluate.py', 'engine.py',
                     'model_service.py', 'service.py', 'bridge.py', 'host.py', 'worker.py', 'monitor.py',
-                    'resources.py', 'supervisor.py', 'evidence.py', 'rehearsal.py', 'fake_server.py')}
+                    'resources.py', 'supervisor.py', 'evidence.py', 'rehearsal.py', 'fake_server.py',
+                    'token_bridge.py')}
 REQUIRED_SOURCE |= {'research/stagnation_supervision_v1/' + name for name in
                     ('detector.py', 'supervision.py', 'intervention.py', 'outcomes.py', 'thresholds.py',
                      'trigger_spec.json')}
@@ -280,8 +364,20 @@ DERIVED.update({
          '    returned for retention."""', 1),
         ('        self.calls = 0\n', '        self.calls = 0\n        self.reflection_calls = 0\n', 1),
         (MODEL_COMPLETE_OLD, MODEL_COMPLETE_NEW, 1),
+        ("            or type(audit.get('server_prompt_tokens')) is not int\n"
+         "            or audit.get('server_prompt_tokens') != audit.get('tokenizer_prompt_tokens')\n"
+         "            or audit.get('finish_reason') != 'stop'):" ,
+         "            or type(audit.get('server_prompt_tokens')) is not int\n"
+         "            or type(audit.get('tokenizer_prompt_tokens')) is not int\n"
+         "            or not 0 < audit['server_prompt_tokens'] <= MAX_PROMPT_TOKENS\n"
+         "            or audit.get('server_prompt_tokens') != audit.get('tokenizer_prompt_tokens')\n"
+         "            or type(audit.get('server_completion_tokens')) is not int\n"
+         "            or not 0 < audit['server_completion_tokens'] <= MAX_COMPLETION_TOKENS\n"
+         "            or audit.get('finish_reason') != 'stop'):", 1),
     ),
     'host.py': (
+        ('from certification.phase4_integrated_v2.bridge import BridgeServer\n',
+         'from research.stagnation_supervision_v1.closed_loop.token_bridge import TokenBridgeServer as BridgeServer\n', 1),
         ("'action_effect_history_model_readiness'", "'stagnation_supervision_model_readiness'", 1),
         ('hard_seconds=3300, finalization_reserve_seconds=300)',
          'hard_seconds=5100, finalization_reserve_seconds=300)  # the longer session', 1),
@@ -289,6 +385,10 @@ DERIVED.update({
         ('policy_calls=service.calls)', 'policy_calls=service.calls, reflection_calls=service.reflection_calls)', 1),
     ),
     'worker.py': (
+        ('    gate(mode)  # before model subprocess, game import or GPU access\n',
+         "    execution = gate(mode)  # before model subprocess, game import or GPU access\n"
+         "    if mode == 'live' and str(execution.get('session')) != str(session):\n"
+         "        raise PermissionError('worker session differs from the approved execution')\n", 1),
         ("FAULTS = ('none', 'model_startup', 'transport', 'slow', 'invalid_history', 'storage', 'surviving_child')",
          "FAULTS = ('none', 'model_startup', 'transport', 'slow', 'reflection_invalid', 'reflection_length', 'storage',\n"
          "          'surviving_child')", 1),
@@ -305,7 +405,7 @@ DERIVED.update({
         ('                     deadline_seconds=max(.01, deadline - time.monotonic()), cancel=cancel,\n',
          '                     deadline_seconds=max(.01, deadline - time.monotonic()), cancel=cancel, spec=spec,\n'
          '                     supervision_factory=supervision_factory(spec, thresholds.load(),\n'
-         '                                                             token_counter=worker_token_counter(mode)),\n', 1),
+         '                                                             token_counter=worker_token_counter(mode, proxy)),\n', 1),
         ("    parser.add_argument('--fault', default='none')\n",
          "    parser.add_argument('--fault', default='none')\n"
          "    parser.add_argument('--session', choices=('1', '2'), required=True)\n", 1),
@@ -326,7 +426,9 @@ DERIVED.update({
         ("        internal_seconds=LIVE_INTERNAL_SECONDS, fault='none', claimed=False, prepared=False, spawn=subprocess.Popen):",
          "        internal_seconds=None, fault='none', claimed=False, prepared=False, spawn=subprocess.Popen, session=None):", 1),
         ('    gate(mode)  # before output, subprocess or GPU query\n',
-         '    gate(mode)  # before output, subprocess or GPU query\n'
+         "    execution = gate(mode)  # before output, subprocess or GPU query\n"
+         "    if mode == 'live' and str(execution.get('session')) != str(session):\n"
+         "        raise PermissionError('supervisor session differs from the approved execution')\n"
          '    if str(session) not in LIVE_INTERNAL_SECONDS:\n'
          "        raise ValueError('unknown session')\n"
          '    live_seconds = LIVE_INTERNAL_SECONDS[str(session)]\n'
@@ -359,11 +461,18 @@ DERIVED.update({
         ("        for name, expected in LIMITS.items():\n"
          "            if type(compute.get(name)) is not int or compute[name] != expected:\n"
          "                raise ValueError('compute limit: ' + name)",
-         "        for session, limits in SESSION_LIMITS.items():\n"
-         "            granted = (compute.get('sessions') or {}).get(session) or {}\n"
-         "            for name, expected in limits.items():\n"
-         "                if type(granted.get(name)) is not int or granted[name] != expected:\n"
-         "                    raise ValueError(f'compute limit: session {session} {name}')", 1),
+         "        execution = _read(root, EXECUTION)\n"
+         "        session = execution.get('session')\n"
+         "        granted_sessions = compute.get('sessions')\n"
+         "        if (type(session) is not str or session not in SESSION_LIMITS or\n"
+         "                type(granted_sessions) is not dict or set(granted_sessions) != {session}):\n"
+         "            raise ValueError('compute must authorize exactly the execution session')\n"
+         "        for name, expected in SESSION_LIMITS[session].items():\n"
+         "            if (type(granted_sessions[session].get(name)) is not int or\n"
+         "                    granted_sessions[session][name] != expected):\n"
+         "                raise ValueError(f'compute limit: session {session} {name}')", 1),
+        ('        execution, reservation = _read(root, EXECUTION), _read(root, RESERVATION)\n',
+         '        reservation = _read(root, RESERVATION)\n', 1),
         ("reservation.get('seconds') != LIMITS['authorized_seconds'] or",
          "reservation.get('seconds') != SESSION_LIMITS.get(str(execution.get('session')), {}).get('authorized_seconds') or", 1),
         ("        raise PermissionError('action-effect-history v1 requires reviewed source, separate compute '\n"
@@ -372,6 +481,11 @@ DERIVED.update({
          "                              'approval and one fresh reservation per session') from exc", 1),
     ),
     'scripts/stagnation_supervision_v1_launch.py': (
+        ('        require(root)\n        if fault !=',
+         "        execution = require(root)\n"
+         "        if str(execution.get('session')) != str(session):\n"
+         "            raise PermissionError('launch session differs from the approved execution')\n"
+         "        if fault !=", 1),
         ('"""First-cell lifecycle for the action-effect-history comparison (live needs separate reviewed authority)."""',
          '"""First-cell lifecycle for one stagnation-supervision session (live needs separate reviewed authority)."""', 1),
         ("def run_supervisor(output, working, game_python, model_python, games, *, started, mode, internal_seconds,\n"

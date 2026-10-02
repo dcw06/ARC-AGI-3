@@ -131,7 +131,9 @@ def run(output, working, *, started, root=ROOT, mode='live', internal_seconds=No
     root, output = Path(root), Path(output)
     if mode == 'live':
         from research.stagnation_supervision_v1.closed_loop.authority import consume_runtime, require
-        require(root)
+        execution = require(root)
+        if str(execution.get('session')) != str(session):
+            raise PermissionError('launch session differs from the approved execution')
         if fault != 'none' or internal_seconds != LIVE_INTERNAL_SECONDS[str(session)]:
             raise PermissionError('live mode uses the frozen lifecycle and no faults')
         if not 0 <= time.monotonic() - started < 450:

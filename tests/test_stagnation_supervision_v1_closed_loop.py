@@ -58,10 +58,10 @@ class Derivation(unittest.TestCase):
     def test_counted_substitutions(self):
         base = 'research/stagnation_supervision_v1/closed_loop/'
         self.assertEqual(DERIVE.substitution_counts(), {
-            base + 'contract.py': 6, base + 'runner.py': 10, base + 'engine.py': 0, base + 'evidence.py': 0,
-            base + 'model_service.py': 5, base + 'host.py': 4, base + 'worker.py': 7, base + 'resources.py': 1,
-            base + 'monitor.py': 1, base + 'supervisor.py': 10, base + 'authority.py': 8,
-            'scripts/stagnation_supervision_v1_launch.py': 12, 'scripts/rehearse_stagnation_supervision_v1.py': 6})
+            base + 'contract.py': 6, base + 'runner.py': 21, base + 'engine.py': 0, base + 'evidence.py': 0,
+            base + 'model_service.py': 6, base + 'host.py': 5, base + 'worker.py': 8, base + 'resources.py': 1,
+            base + 'monitor.py': 1, base + 'supervisor.py': 10, base + 'authority.py': 9,
+            'scripts/stagnation_supervision_v1_launch.py': 13, 'scripts/rehearse_stagnation_supervision_v1.py': 6})
 
     def test_live_mode_is_disabled_in_this_source_revision(self):
         from research.stagnation_supervision_v1.closed_loop import authority as A

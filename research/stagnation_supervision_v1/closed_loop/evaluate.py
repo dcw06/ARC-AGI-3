@@ -30,7 +30,7 @@ from research.stagnation_supervision_v1.closed_loop import bridge as B, contract
 from research.transition_evidence_v2 import transition as T2
 
 ROOT = Path(__file__).resolve().parents[3]
-VERSION = 'stagnation_supervision_v1_evaluation_r2'
+VERSION = 'stagnation_supervision_v1_evaluation_r3'
 COMPARED = ('action_index', 'outcome', 'due', 'detector_signals', 'delivered', 'suggestion_cleared', 'remaining_actions',
             'admission')
 
@@ -257,10 +257,11 @@ def evaluate_episode(episode, spec, trigger_spec, replay):
             problems += ['final policy call: ' + p for p in invalid_problems]
         elif episode['status'] == 'complete':
             problems.append('completed episode has an unaccounted policy call')
-    if episode['status'] == 'complete':
+    if episode['status'] in ('complete', 'failure_rule_stopped'):
         cleanup = episode.get('cleanup')
         if not isinstance(cleanup, dict) or cleanup.get('closed') is not True or cleanup.get('errors'):
             problems.append('episode closure receipt is not successful')
+    if episode['status'] == 'complete':
         if not _same(episode.get('final'), pack(runtime.observation)):
             problems.append('final observation differs from retained trajectory')
         state = runtime.observation.state.value
@@ -326,7 +327,7 @@ def evaluate_report(report, spec, trigger_spec=None):
     schedule = spec['schedule']
     if not schedule or report.get('protocol_sha256') != _sha(spec):
         inventory_problems.append('run protocol binding/required schedule')
-    if report.get('version') != 'stagnation_supervision_run_v1':
+    if report.get('version') not in ('stagnation_supervision_run_v1', 'stagnation_supervision_run_v2'):
         inventory_problems.append('run record version')
     pair_keys = ('pair_id', 'block', 'game_id', 'order')
     expected_pairs = [{k: s[k] for k in pair_keys} for s in schedule]
@@ -341,8 +342,11 @@ def evaluate_report(report, spec, trigger_spec=None):
     if report.get('status') == 'complete' and not _same(actual_episodes, expected_episodes):
         inventory_problems.append('scheduled episode inventory/order differs from protocol')
     elif report.get('status') != 'complete':
-        admitted_ids = {p['pair_id'] for p in report['pairs'] if p.get('status') in ('complete', 'interrupted', 'running')}
-        expected_partial = [e for e in expected_episodes if e['pair_id'] in admitted_ids]
+        admitted_ids = {p['pair_id'] for p in report['pairs'] if p.get('status') in
+                        ('complete', 'partial', 'interrupted', 'running')}
+        skipped = {(p['pair_id'], r['arm']) for p in report['pairs'] for r in p.get('skipped_arms', [])}
+        expected_partial = [e for e in expected_episodes if e['pair_id'] in admitted_ids
+                            and (e['pair_id'], e['arm']) not in skipped]
         if not _same(actual_episodes, expected_partial[:len(actual_episodes)]):
             inventory_problems.append('partial episode inventory/order differs from admitted schedule')
     for s, p in zip(schedule, report['pairs']):
@@ -384,6 +388,69 @@ def evaluate_report(report, spec, trigger_spec=None):
             problems.append(f'run {field} count differs from the episode rows')
     if totals['calls'] > spec['limits']['maximum_policy_calls'] or totals['reflection_calls'] > spec['limits']['maximum_reflection_calls']:
         problems.append('run exceeds protocol call ceilings')
+    # Recompute the predeclared online stops from chronological retained events, independent of labels.
+    failed_dispatches = dispatches = attempted_reflections = invalid_reflections = 0
+    dispatch_stop = reflection_stop = None
+    try:
+        for episode_index, episode in enumerate(report['episodes']):
+            events = (episode.get('supervision') or {}).get('events', [])
+            for step_index, step in enumerate(episode['steps']):
+                if dispatch_stop is not None:
+                    problems.append('action continued after dispatch reliability stop')
+                    break
+                dispatches += 1
+                if step['status'] in ('dispatch_failed', 'outcome_unknown'):
+                    failed_dispatches += 1
+                if failed_dispatches * 10 > dispatches:
+                    dispatch_stop = (episode_index, step_index, failed_dispatches, dispatches)
+                if step_index < len(events) and events[step_index]['outcome'] == 'called':
+                    attempted_reflections += 1
+                    call = events[step_index]['call']
+                    invalid_reflections += call['error'] is None and not call['parsed']['valid']
+                    if reflection_stop is None and attempted_reflections >= 10 and invalid_reflections * 2 > attempted_reflections:
+                        reflection_stop = (episode_index, step_index, attempted_reflections, invalid_reflections)
+            if (reflection_stop is not None and episode_index > reflection_stop[0]
+                    and episode['arm'] in ('periodic', 'triggered')):
+                problems.append('reflection arm resumed after interface stop')
+    except (KeyError, TypeError, ValueError, IndexError, AttributeError) as exc:
+        problems.append(f'malformed failure-rule evidence: {type(exc).__name__}: {exc}')
+    if report.get('version') == 'stagnation_supervision_run_v2':
+        if (report.get('dispatch_failures') != failed_dispatches
+                or report.get('full_protocol_proof') is not (spec['limits']['actions_per_episode'] == 40)
+                or report.get('reflection_arms_stopped') is not (reflection_stop is not None)):
+            problems.append('failure-rule counters/proof differ from retained evidence')
+    if dispatch_stop is not None:
+        i, j, bad, total = dispatch_stop
+        stopped = report['episodes'][i]
+        if (j != len(stopped['steps']) - 1 or i != len(report['episodes']) - 1
+                or stopped['status'] != 'failure_rule_stopped'
+                or stopped['stop_reason'] != 'dispatch_reliability_stop'
+                or report.get('status') != 'failure_rule_stopped'):
+            problems.append('dispatch reliability stop not enforced')
+        if report.get('version') == 'stagnation_supervision_run_v2' and report.get('failure_rule') != {
+                'rule': 'dispatch_reliability', 'failed_or_unknown': bad, 'dispatches': total}:
+            problems.append('dispatch reliability stop record differs')
+    if reflection_stop is not None:
+        i, j, total, bad = reflection_stop
+        stopped = report['episodes'][i]
+        if (j != len(stopped['steps']) - 1 or stopped['status'] != 'failure_rule_stopped'
+                or stopped['stop_reason'] != 'reflection_interface_stop'
+                or report.get('status') == 'complete'):
+            problems.append('reflection interface stop not enforced')
+        if (dispatch_stop is None and report.get('version') == 'stagnation_supervision_run_v2'
+                and report.get('failure_rule') != {'rule': 'reflection_interface', 'attempted': total,
+                                                   'invalid_outputs': bad}):
+            problems.append('reflection interface stop record differs')
+    if spec['limits']['actions_per_episode'] == 40:
+        first = next((e for e in report['episodes'] if e['episode_id'] == 'b1-ar25-continuation'), None)
+        if (first is not None and first.get('status') == 'complete'
+                and first.get('stop_reason') in ('action_cap', 'win', 'game_over')
+                and (first.get('supervision') or {}).get('summary', {}).get('detector_firings') == 0):
+            pos = report['episodes'].index(first)
+            if (pos != len(report['episodes']) - 1 or report.get('status') != 'failure_rule_stopped'
+                    or report.get('version') == 'stagnation_supervision_run_v2' and report.get('failure_rule') != {
+                        'rule': 'zero_detector_firings', 'episode_id': first['episode_id']}):
+                problems.append('zero detector firings stop not enforced')
     complete_groups = {p['pair_id'] for p in report['pairs'] if p.get('status') == 'complete'}
     if report.get('status') == 'complete' and (report.get('error') is not None
             or any(e['status'] != 'complete' for e in episodes)):

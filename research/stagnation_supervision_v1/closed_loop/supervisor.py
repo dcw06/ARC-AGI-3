@@ -31,7 +31,9 @@ def gate(mode):
 def run(output, working, game_python, model_python, environments, *, started, mode='live',
         internal_seconds=None, fault='none', claimed=False, prepared=False, spawn=subprocess.Popen, session=None):
     """One supervised attempt. Installation, startup, episodes, evidence and cleanup share `started`."""
-    gate(mode)  # before output, subprocess or GPU query
+    execution = gate(mode)  # before output, subprocess or GPU query
+    if mode == 'live' and str(execution.get('session')) != str(session):
+        raise PermissionError('supervisor session differs from the approved execution')
     if str(session) not in LIVE_INTERNAL_SECONDS:
         raise ValueError('unknown session')
     live_seconds = LIVE_INTERNAL_SECONDS[str(session)]

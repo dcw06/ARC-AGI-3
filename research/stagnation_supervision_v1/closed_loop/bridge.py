@@ -76,18 +76,30 @@ def session_run_spec(session, mode):
         actions = os.environ.get('SSV_REHEARSAL_ACTIONS')
         if actions:
             spec = {**spec, 'limits': {**spec['limits'], 'actions_per_episode': int(actions)}}
+        admission = os.environ.get('SSV_REHEARSAL_GROUP_ADMISSION_SECONDS')
+        if admission:
+            seconds = int(admission)
+            if not 1 <= seconds <= spec['limits']['pair_admission_seconds']:
+                raise ValueError('rehearsal group admission seconds')
+            spec = {**spec, 'limits': {**spec['limits'], 'pair_admission_seconds': seconds}}
     elif mode != 'live':
         raise ValueError('mode')
     return spec
 
 
-def worker_token_counter(mode):
-    """Exact reflection admission in the game interpreter. Rehearsal: the fixture tokenizer the rehearsal model host
-    also counts with. Live: not available in this source revision; the shared bridge has no count operation, so the
-    pinned tokenizer would have to be loaded in the game interpreter (to be decided before a package lock)."""
-    if mode == 'rehearsal':
-        return fixture_token_counter()
-    raise NotImplementedError('live reflection admission needs the pinned tokenizer in the game interpreter')
+def worker_token_counter(mode, proxy):
+    """Exact admission through the ready model process, in both rehearsal and live modes.
+
+    The game interpreter constructs the frozen reflection request but never loads the tokenizer.
+    A hash-bound, deadline-bounded count operation uses the model process's serving tokenizer.
+    """
+    if mode not in ('rehearsal', 'live'):
+        raise ValueError('mode')
+    from .token_bridge import worker_count
+
+    def count(text):
+        return worker_count(proxy, reflection_request(text))
+    return count
 
 
 def chat_token_counter(tokenizer):

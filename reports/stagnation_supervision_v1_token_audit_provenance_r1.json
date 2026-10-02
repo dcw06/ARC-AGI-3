@@ -1,0 +1,17 @@
+{
+  "version": "stagnation_supervision_v1_token_audit_provenance_r1",
+  "scope": "offline CPU request enumeration and pinned tokenizer audit; no model inference",
+  "audit": "reports/stagnation_supervision_v1_token_audit.json",
+  "audit_sha256": "b5033e8a177692371632466671e46ef48c70e4aef55ec6f559564d61a6272636",
+  "tokenizer_manifest": "certification/phase4_integrated_v2/tokenizer_manifest.json",
+  "tokenizer_manifest_sha256": "9b23b48f0615f43aee0d6b344982cbd17d36841cd92b3ebaf52c5e0c7a60db72",
+  "tokenizer_files_verified": 6,
+  "versions": {"transformers": "4.57.6", "tokenizers": "0.22.2", "jinja2": "3.1.6"},
+  "offline_game_packages": {"arcengine": "0.9.3", "arc_agi": "0.9.9"},
+  "environment_note": "Pinned tokenizer environment lacked arcengine. Existing development environment site-packages were exposed via PYTHONPATH for offline enumeration; the pinned tokenizer interpreter retained and rechecked its exact package versions. No packages were installed or downloaded.",
+  "enumeration": {"policy_requests": 1080, "reflection_requests": 42, "games": ["ar25", "wa30", "ls20", "s5i5"], "policy_prompt_max": 26010, "reflection_prompt_max": 1483, "constructed_reflection_tokens": 1533},
+  "limitations": ["Enumerated policy requests follow the scripted server's trajectories, not all possible future model actions.", "The constructed reflection request is a declared size stress case. Runtime admission still enforces exact prompt, context and per-episode supervisor bounds for every actual request.", "No model response correctness, target startup timing or solving benefit is established."],
+  "gpu_runs": 0,
+  "model_calls": 0,
+  "network_calls": 0
+}

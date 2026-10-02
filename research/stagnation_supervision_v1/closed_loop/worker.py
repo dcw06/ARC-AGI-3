@@ -41,7 +41,9 @@ def stage_games(mode, environments, scratch):
 
 
 def run_worker(output, scratch, environments, model_python, *, deadline, mode, fault='none', session=None):
-    gate(mode)  # before model subprocess, game import or GPU access
+    execution = gate(mode)  # before model subprocess, game import or GPU access
+    if mode == 'live' and str(execution.get('session')) != str(session):
+        raise PermissionError('worker session differs from the approved execution')
     if fault not in FAULTS or (mode == 'live' and fault != 'none'):
         raise PermissionError('faults are rehearsal-only')
     output, scratch = Path(output), Path(scratch)
@@ -94,7 +96,7 @@ def run_worker(output, scratch, environments, model_python, *, deadline, mode, f
                                                                          scratch / 'recordings'),
                      deadline_seconds=max(.01, deadline - time.monotonic()), cancel=cancel, spec=spec,
                      supervision_factory=supervision_factory(spec, thresholds.load(),
-                                                             token_counter=worker_token_counter(mode)),
+                                                             token_counter=worker_token_counter(mode, proxy)),
                      kind='offline_development_engine' if mode == 'live' else 'rehearsal_scripted_model_offline_engine',
                      evidence_budget_bytes=200_000 if fault == 'storage' else 64 * 1024**2,
                      evidence_lock_root=output)

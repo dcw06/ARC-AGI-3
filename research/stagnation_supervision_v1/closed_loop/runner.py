@@ -20,7 +20,7 @@ from research.stagnation_supervision_v1.closed_loop.bridge import raw_transition
 
 ROOT = Path(__file__).resolve().parents[3]
 PROTOCOL = Path(__file__).with_name('protocol.json')
-VERSION = 'stagnation_supervision_run_v1'
+VERSION = 'stagnation_supervision_run_v2'
 TERMINAL_EPISODE = ('action_cap', 'win', 'game_over', 'invalid_output', 'dispatch_failure')
 
 
@@ -29,6 +29,11 @@ class DeadlineExceeded(Exception):
 
 
 class TechnicalFailure(Exception):
+    pass
+
+
+class FailureRuleStop(Exception):
+    """A predeclared scientific/reliability rule stopped the session."""
     pass
 
 
@@ -91,7 +96,9 @@ def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted
     report = {'version': VERSION, 'kind': kind, 'status': 'running', 'error': None,
               'protocol_sha256': digest(spec), 'deadline_seconds': deadline_seconds,
               'pairs': [], 'episodes': [], 'calls': 0, 'dispatches': 0, 'prompt_tokens': 0, 'completion_tokens': 0,
-              'reflection_calls': 0, 'reflection_prompt_tokens': 0, 'reflection_completion_tokens': 0}
+              'reflection_calls': 0, 'reflection_prompt_tokens': 0, 'reflection_completion_tokens': 0,
+              'dispatch_failures': 0, 'reflection_arms_stopped': False, 'failure_rule': None,
+              'full_protocol_proof': limits['actions_per_episode'] == 40}
 
     folder = Path(path)
     if writer is None:
@@ -269,6 +276,13 @@ def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted
                 step.update(status=outcome['status'], effect_record=record, history_entry=entry, returned_at=now(),
                             after=outcome.get('post'))
                 persist(episode)
+                if outcome['status'] != 'acknowledged':
+                    report['dispatch_failures'] += 1
+                    if report['dispatch_failures'] * 10 > report['dispatches']:
+                        report['failure_rule'] = {'rule': 'dispatch_reliability',
+                                                  'failed_or_unknown': report['dispatch_failures'],
+                                                  'dispatches': report['dispatches']}
+                        persist(episode)
                 if supervisor is not None:  # the detector observes every step in every arm
                     raws.append(raw_transition(episode_id, step))
                     ended = outcome['status'] != 'acknowledged' or outcome['post']['state'] in ('WIN', 'GAME_OVER')
@@ -278,7 +292,19 @@ def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted
                     persist(episode)
                     if any(r['status'] == 'audit_failure' for r in episode['reflections']):
                         raise TechnicalFailure('reflection response/token audit')
+                    attempted = [e['call'] for ep in report['episodes'] for e in
+                                 (ep.get('supervision') or {}).get('events', []) if e['outcome'] == 'called']
+                    invalid = sum(c['error'] is None and not c['parsed']['valid'] for c in attempted)
+                    if (episode['arm'] in ('periodic', 'triggered') and not report['reflection_arms_stopped']
+                            and len(attempted) >= 10 and invalid * 2 > len(attempted)):
+                        report['reflection_arms_stopped'] = True
+                        report['failure_rule'] = {'rule': 'reflection_interface', 'attempted': len(attempted),
+                                                  'invalid_outputs': invalid}
+                        episode['stop_reason'] = 'reflection_interface_stop'
+                        persist(episode)
                     check()
+                if report['failure_rule'] is not None and report['failure_rule']['rule'] == 'dispatch_reliability':
+                    raise FailureRuleStop('dispatch_reliability')
                 if outcome['status'] != 'acknowledged':
                     episode['stop_reason'] = 'dispatch_failure'
                     break
@@ -286,11 +312,17 @@ def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted
                 runtime.replace_observation(post, action_id=action['action_id'], action_data=action['action_data'],
                                             transition_id=f'{episode_id}-{step_index}')
                 obs = post
+                if episode['stop_reason'] == 'reflection_interface_stop':
+                    break
             else:
                 # The cap was reached; a terminal state produced by the last action takes precedence.
                 episode['stop_reason'] = {'WIN': 'win', 'GAME_OVER': 'game_over'}.get(obs.state.value, 'action_cap')
-            episode['status'] = 'complete'
+            episode['status'] = ('failure_rule_stopped' if episode['stop_reason'] ==
+                                 'reflection_interface_stop' else 'complete')
             episode['final'] = pack(obs)
+        except FailureRuleStop:
+            episode.update(status='failure_rule_stopped', stop_reason='dispatch_reliability_stop')
+            raise
         except DeadlineExceeded:
             episode.update(status='interrupted', stop_reason='interrupted')
             raise
@@ -331,11 +363,31 @@ def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted
             entry['status'] = 'running'
             persist()
             for index, arm in enumerate(pair['order']):
-                episode_run(pair, arm, index)
-            entry['status'] = 'complete'
+                if report['reflection_arms_stopped'] and arm in ('periodic', 'triggered'):
+                    entry.setdefault('skipped_arms', []).append({'arm': arm,
+                                                                'reason': 'reflection_interface_stop'})
+                    persist()
+                    continue
+                episode = episode_run(pair, arm, index)
+                if (limits['actions_per_episode'] == 40 and pair['pair_id'] == 'b1-ar25'
+                        and arm == 'continuation' and episode['status'] == 'complete'
+                        and episode['stop_reason'] in ('action_cap', 'win', 'game_over')
+                        and episode['supervision']['summary']['detector_firings'] == 0):
+                    report['failure_rule'] = {'rule': 'zero_detector_firings',
+                                              'episode_id': episode['episode_id']}
+                    persist()
+                    raise FailureRuleStop('zero_detector_firings')
+            entry['status'] = ('partial' if entry.get('skipped_arms') or
+                               any(e['pair_id'] == pair['pair_id'] and e['status'] == 'failure_rule_stopped'
+                                   for e in report['episodes']) else 'complete')
             persist()
         # Complete only when every scheduled pair ran to completion; unadmitted pairs make the run incomplete.
-        report['status'] = 'complete' if all(p['status'] == 'complete' for p in report['pairs']) else 'incomplete'
+        report['status'] = ('failure_rule_stopped' if report['reflection_arms_stopped'] else
+                            'complete' if all(p['status'] == 'complete' for p in report['pairs']) else 'incomplete')
+    except FailureRuleStop as exc:
+        report.update(status='failure_rule_stopped', error=str(exc))
+        if report['pairs'] and report['pairs'][-1].get('status') == 'running':
+            report['pairs'][-1]['status'] = 'interrupted'
     except DeadlineExceeded as exc:
         canceled = 'cancellation' in str(exc)
         report.update(status='canceled' if canceled else 'deadline_exceeded',

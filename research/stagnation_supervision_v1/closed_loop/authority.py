@@ -32,7 +32,8 @@ SESSION_LIMITS = {  # protocol v2 section 11 (proposal; nothing is authorized)
 REQUIRED_SOURCE = {'research/stagnation_supervision_v1/closed_loop/' + name for name in
                    ('authority.py', 'contract.py', 'protocol.json', 'runner.py', 'evaluate.py', 'engine.py',
                     'model_service.py', 'service.py', 'bridge.py', 'host.py', 'worker.py', 'monitor.py',
-                    'resources.py', 'supervisor.py', 'evidence.py', 'rehearsal.py', 'fake_server.py')}
+                    'resources.py', 'supervisor.py', 'evidence.py', 'rehearsal.py', 'fake_server.py',
+                    'token_bridge.py')}
 REQUIRED_SOURCE |= {'research/stagnation_supervision_v1/' + name for name in
                     ('detector.py', 'supervision.py', 'intervention.py', 'outcomes.py', 'thresholds.py',
                      'trigger_spec.json')}
@@ -87,12 +88,17 @@ def require(root=ROOT):
         source_hash = _sha(_path(root, SOURCE))
         if compute.get('source_approval_sha256') != source_hash:
             raise ValueError('compute/source binding')
-        for session, limits in SESSION_LIMITS.items():
-            granted = (compute.get('sessions') or {}).get(session) or {}
-            for name, expected in limits.items():
-                if type(granted.get(name)) is not int or granted[name] != expected:
-                    raise ValueError(f'compute limit: session {session} {name}')
-        execution, reservation = _read(root, EXECUTION), _read(root, RESERVATION)
+        execution = _read(root, EXECUTION)
+        session = execution.get('session')
+        granted_sessions = compute.get('sessions')
+        if (type(session) is not str or session not in SESSION_LIMITS or
+                type(granted_sessions) is not dict or set(granted_sessions) != {session}):
+            raise ValueError('compute must authorize exactly the execution session')
+        for name, expected in SESSION_LIMITS[session].items():
+            if (type(granted_sessions[session].get(name)) is not int or
+                    granted_sessions[session][name] != expected):
+                raise ValueError(f'compute limit: session {session} {name}')
+        reservation = _read(root, RESERVATION)
         if (execution.get('scope') != SCOPE or execution.get('review_lock_sha256') != lock_hash or
                 execution.get('source_approval_sha256') != source_hash or
                 execution.get('compute_authorization_sha256') != _sha(_path(root, COMPUTE)) or

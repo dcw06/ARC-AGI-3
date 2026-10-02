@@ -1,7 +1,7 @@
-# Stagnation supervision v1: comparison protocol v2 (REVIEWABLE DRAFT, not frozen)
+# Stagnation supervision v1: comparison protocol v2 (GPU-disabled review candidate)
 
 **Status.**
-- **Draft.** This is a draft for review. It authorises nothing: no GPU time, no Kaggle run, no model inference, no
+- **Review candidate.** This is for source review. It authorises nothing: no GPU time, no Kaggle run, no model inference, no
   upload, no reservation, and no holdout or withheld-partition access.
 - **Earlier versions.** v1 (`reports/stagnation_supervision_v1_protocol_v1.md`) and the earlier draft stay as history.
 - **This revision** applies the review of v1 (b1df75c).
@@ -285,10 +285,17 @@ Otherwise the result is **inconclusive**, which is the expected default.
 
 ## 9. Failure rules (fixed before any run)
 
-- **Interface failure.** Invalid reflections above 50% after the first 10 reflection calls stop the reflection arms.
+- **Interface failure.** After at least 10 attempted reflection calls across the session, check the running
+  invalid-output fraction after every reflection. If it exceeds 50%, end the active reflection episode and
+  skip every later periodic/triggered episode; continuation episodes may still run. An invalid output has
+  no transport error and `parsed.valid=false`; transport failures are reported separately. All attempted
+  reflections are in the denominator. The session remains incomplete for outcome comparison.
 - **Dispatch failures.** Failed plus unknown dispatches above 10% stop the run.
+  Check the running fraction after every dispatch, including the first; equality does not cross the threshold.
 - **Nothing to intervene on.** Zero detector firings in the stagnation case's block-1 continuation episode stop the
   run.
+  Evaluate this only after normal completion of that episode at the frozen 40-action horizon (including an
+  environment terminal state). Shortened CPU rehearsals do not establish this full-study precondition.
 - **Token audit.** A reflection or policy token-audit mismatch is a technical failure (tested). A reflection that
   did not finish with `stop` is an invalid reflection, not a technical failure (§2.1).
 - **Admission and wall time.** The admission cutoff and internal wall time are enforced, with the cleanup reserve
@@ -340,8 +347,10 @@ These are estimates, not authorization ceilings.
 | Content | block 1 (4 game groups × 3 arms) plus 3 continuation repeats | block 2 (4 game groups × 3 arms) |
 | Session count | 1 of 2 | 2 of 2 |
 | Maximum reservation (proposal) | 5,400 s | 4,800 s |
+| Startup-inclusive internal limit | 5,100 s | 4,500 s |
+| Stop admitting/performing study work | 4,800 s from the first cell | 4,200 s from the first cell |
 | Admission cutoff | A game group (up to 3 episodes) is admitted only if at least 800 s remain before the internal deadline; otherwise it and all later groups are recorded "not admitted" | same, 800 s |
-| Cleanup reserve | 300 s, kept after the internal deadline for client, scorecard and process cleanup | 300 s |
+| Cleanup reserve | Final 300 s **inside** the internal limit for client, scorecard and process cleanup; the provider proposal retains a further 300 s buffer | same |
 | Retry policy | **No retry allowance is approved.** No automatic retries of calls, episodes, groups or sessions. A failed or interrupted session is reported as such and is not rerun without a new, separate approval. | same |
 
 **Totals.**
@@ -353,16 +362,20 @@ These are estimates, not authorization ceilings.
 ## 12. What remains before an exact source and package lock
 
 1. **Tier B decision.** Resolved: retain ls20 with the documented limitation and explicit user response.
-2. **Live host and process stack.** Derive the host, worker, supervisor, monitor, resources, launch, package, review
-   and notebook files from action-effect-history v1 by the same counted-substitution pattern.
+2. **Target host and process stack.** The connected stack is committed at `82f1d0c`; its successors add exact
+   model-side token counting and online protocol stops. Historical derivation sources and review locks are unchanged.
+   Fresh package/review scripts produce a GPU-disabled candidate whose live gate deliberately rejects execution.
    - The model host must serve and audit reflection requests (`max_tokens` 400, no response format) beside policy
      requests.
    - Its call ceilings come from `closed_loop/protocol.json` (1,080 policy, 64 reflection).
-3. **Tokenizer counts.** *Implemented.* The closed loop now admits reflections with an exact chat-template token
-   count, `bridge.chat_token_counter(tokenizer)`, and refuses to run without one. Still to do: run the token audit,
-   `scripts/audit_stagnation_supervision_v1_tokens.py`, in the pinned tokenizer environment. It counts every
+3. **Tokenizer counts.** Completed on CPU with pinned versions and verified tokenizer files. The live game
+   interpreter asks the ready model process for a hash-bound exact reflection count; it never loads tokenizer
+   dependencies. `scripts/audit_stagnation_supervision_v1_tokens.py` counts every
    request from `research.stagnation_supervision_v1.closed_loop.requests.enumerate_requests()` plus
    `maximal_reflection_request()`.
+   The audit counted 1,080 policy requests (maximum 26,010 tokens), 42 reflections (maximum 1,483), and the
+   constructed reflection case (1,533). All four checks pass. See the separately recorded provenance and
+   limitations; scripted trajectories do not enumerate every possible future policy observation.
 4. **Live evaluator.** Implemented as `closed_loop/evaluate.py`; the r2 successor checks the exact scheduled
    inventory, evidence-justified episode completion and closure, reconstructed policy requests, response/action
    bindings, token/finish checks, and exact reflection evidence requests. Manifest-valid negative regressions and
@@ -373,7 +386,8 @@ These are estimates, not authorization ceilings.
 6. **Review of placement and limits.** The suggestion-block placement, label and lifetime, the reflection request
    settings, and the window and quiet lengths (10/5).
 7. **Governance.** A named auditor, then source approval, compute authorization and reservation records, by humans.
-8. **Package build.** A fresh-checkout package build and the review lock.
+8. **Package build.** Inspect the new R1 target candidate and its source lock. A separately reviewed authorization
+   revision must explicitly replace the closed live gate before any approval/reservation can enable submission.
 
 ## 13. Open questions
 

@@ -7,7 +7,7 @@ import math
 from pathlib import Path
 import time
 
-from certification.phase4_integrated_v2.bridge import BridgeServer
+from research.stagnation_supervision_v1.closed_loop.token_bridge import TokenBridgeServer as BridgeServer
 from certification.phase4_integrated_v2.evidence import EvidenceStore
 from .model_service import SupervisionModelService
 
