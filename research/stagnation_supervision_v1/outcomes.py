@@ -228,7 +228,7 @@ def cluster_bootstrap(per_episode, resamples=BOOTSTRAP_RESAMPLES, seed=BOOTSTRAP
     return [rates[int(0.025 * resamples)], rates[int(0.975 * resamples) - 1]]
 
 
-def interruptions(episodes, arm, *, what='detector_triggers'):
+def _interruptions_all(episodes, arm, *, what='detector_triggers'):
     """False-interruption rate in one arm: interruptions at LC points over LC points.
     episodes: [{'arm', 'game', 'records', 'triggers': [step...], 'calls': [step...]}]. `what` selects detector
     triggers (cooldown applied, as evaluated) or reflection calls actually made."""
@@ -258,6 +258,33 @@ def interruptions(episodes, arm, *, what='detector_triggers'):
             'lc_games': len(games), 'episodes_with_lc': episodes_with_lc, 'status': status,
             'limitation': 'mechanical novelty labels and a few correlated episodes do not establish that an '
                           'interruption is genuinely harmful; a provisional benchmark gate, not certification'}
+
+
+GATE_ELIGIBLE_CONTROLS = frozenset({'wa30'})
+EXPLORATORY_ONLY = frozenset({'ls20'})
+
+
+def interruptions(episodes, arm, *, what='detector_triggers'):
+    """R2: descriptive labels never qualify exploratory cases as continuation controls.
+
+Only the reviewed wa30 control is currently eligible. A second validated control
+requires a separately reviewed reference decision; this study cannot meet that
+minimum merely by producing mechanically novel frames in ls20.
+"""
+    eligible, excluded = [], set()
+    for episode in episodes:
+        game = episode['game'].split('-', 1)[0]
+        if game in GATE_ELIGIBLE_CONTROLS and game not in EXPLORATORY_ONLY:
+            eligible.append({**episode, 'game': game})
+        elif episode['arm'] == arm:
+            excluded.add(game)
+    result = _interruptions_all(eligible, arm, what=what)
+    descriptive = _interruptions_all(episodes, arm, what=what)
+    descriptive['status'] = 'descriptive_only'
+    return {**result, 'gate_policy': 'reviewed_continuation_controls_r2',
+            'eligible_controls': sorted(GATE_ELIGIBLE_CONTROLS - EXPLORATORY_ONLY),
+            'excluded_exploratory_or_unvalidated_games': sorted(excluded),
+            'descriptive_all_cases': descriptive}
 
 
 def realised_cost(episodes):

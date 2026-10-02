@@ -152,6 +152,7 @@ def run(output, working, game_python, model_python, environments, *, started, mo
             wfd = None
             report['worker_released'] = True
             released = time.monotonic()
+            report['worker_released_seconds'] = released - started
             while worker.poll() is None:
                 check()
                 if fault == 'cancel' and time.monotonic() - released >= 12:
@@ -161,11 +162,12 @@ def run(output, working, game_python, model_python, environments, *, started, mo
                 if not (output / 'worker/model-ready.json').exists() and time.monotonic() - released >= 900:
                     raise TimeoutError('model startup ceiling')
                 time.sleep(.05)
+            report['worker_completed_seconds'] = time.monotonic() - started
             if worker.returncode != 0:
                 raise RuntimeError('game worker failed')
             from scripts.run_grounded_action_v1_engine_local import terminate_group
             terminate_group(worker, grace=.5, verification_seconds=3)
-            control.save('stop-monitor.json', {'worker_group_exited': True})
+            control.save('stop-monitor.json', {'worker_group_exited': True, 'elapsed_seconds': time.monotonic() - started})
             monitor.wait(timeout=max(.01, min(10, started + internal_seconds - 4 - time.monotonic())))
             if monitor.returncode != 0:
                 raise RuntimeError('resource monitor failed')

@@ -40,11 +40,8 @@ def pinned_model_factory(retain, deadline, _fault='none'):
     if artifact != expected_artifact(ROOT):
         raise ValueError('verified model artifact differs from the frozen profile')
 
-    class ServerWithoutLegacyCanary(ModelService):
-        def _completion_canary(self):
-            pass  # the single retained canary runs through SupervisionModelService
-
-    owner = ServerWithoutLegacyCanary(primary)
+    from .server_config import model_owner
+    owner = model_owner(primary, retain)
     try:
         owner.start()
         client = OpenAICompatibleCompletionClient(primary.base_url, timeout_seconds=120)
@@ -66,6 +63,8 @@ def rehearsal_factory(retain, deadline, fault='none'):
     service = SupervisionModelService('rehearsal', ScriptedTransport(fault, slow_seconds=2.0),
                                   tokenizer=FixtureTokenizer(), retain_canary=retain, check_versions=False)
     service.artifact = {'rehearsal': 'scripted_model_not_target_evidence'}
+    from .server_config import rehearsal_record
+    retain(rehearsal_record())
     class Owner:
         def close(self):
             return None
@@ -80,7 +79,7 @@ def serve_host(socket_path, evidence_root, cancel_path, *, deadline, service_fac
     socket_path, cancel_path = Path(socket_path), Path(cancel_path)
     store = EvidenceStore(evidence_root, 'worker')
     begun = clock()
-    status = {'scope': 'stagnation_supervision_model_host', 'status': 'starting', 'startup_seconds': None, 'error': None}
+    status = {'scope': 'stagnation_supervision_model_host', 'status': 'starting', 'startup_seconds': None, 'error': None, 'started_monotonic': begun}
     service = owner = None
     used = 0
 
@@ -89,7 +88,9 @@ def serve_host(socket_path, evidence_root, cancel_path, *, deadline, service_fac
         raw = json.dumps(record, sort_keys=True, allow_nan=False).encode()
         if len(raw) > evidence_limit or used + len(raw) > evidence_limit:
             raise ValueError('host canary evidence exhausted')
-        store.save('canary.json', record)
+        from .server_config import KIND
+        name = 'server-configuration.json' if record.get('kind') == KIND else 'canary.json'
+        store.save(name, record)
         used += len(raw)
 
     try:

@@ -96,7 +96,10 @@ def independent_cleanup(probes, *, expected_uuid, groups_absent, deadline, clock
         pids = probes.gpu_pids()
         if sample['uuid'] != expected_uuid or not groups_absent or pids:
             raise RuntimeError('process group or GPU process remains')
-        result.update(gpu_uuid=sample['uuid'], remaining_gpu_pids=0, gpu_cleanup_verified=True)
+        if clock() >= deadline:
+            raise TimeoutError('GPU cleanup deadline after query')
+        result.update(gpu_uuid=sample['uuid'], remaining_gpu_pids=0, gpu_cleanup_verified=True,
+                      checked_monotonic=clock())
     except Exception as exc:
         result['error'] = type(exc).__name__ + ': ' + str(exc)[:256]
     return result

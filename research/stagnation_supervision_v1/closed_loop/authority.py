@@ -33,7 +33,7 @@ REQUIRED_SOURCE = {'research/stagnation_supervision_v1/closed_loop/' + name for 
                    ('authority.py', 'contract.py', 'protocol.json', 'runner.py', 'evaluate.py', 'engine.py',
                     'model_service.py', 'service.py', 'bridge.py', 'host.py', 'worker.py', 'monitor.py',
                     'resources.py', 'supervisor.py', 'evidence.py', 'rehearsal.py', 'fake_server.py',
-                    'token_bridge.py')}
+                    'token_bridge.py', 'server_config.py', 'target_evaluate.py')}
 REQUIRED_SOURCE |= {'research/stagnation_supervision_v1/' + name for name in
                     ('detector.py', 'supervision.py', 'intervention.py', 'outcomes.py', 'thresholds.py',
                      'trigger_spec.json')}

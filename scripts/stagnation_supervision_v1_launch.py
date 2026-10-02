@@ -113,7 +113,8 @@ def run_supervisor(output, working, game_python, model_python, games, *, started
             errors.append('supervisor reap: ' + type(exc).__name__)
         thread.join(timeout=3)
         control.save('first-cell-supervisor-cleanup.json', {'groups': cleanup, 'drain_finished': not thread.is_alive(),
-                                                            'returncode': process.returncode, 'errors': errors})
+                                                            'returncode': process.returncode, 'errors': errors,
+                                                            'checked_monotonic': time.monotonic()})
     report_path = output / 'control/outer.json'
     if report_path.is_symlink() or not report_path.is_file() or report_path.stat().st_size > 65536:
         raise RuntimeError('missing or oversized supervisor report')
@@ -176,6 +177,7 @@ def run(output, working, *, started, root=ROOT, mode='live', internal_seconds=No
     if elapsed >= internal_seconds:
         error = error or 'first-cell hard deadline exceeded'
     receipt = {'scope': 'stagnation_supervision_first_cell', 'mode': mode, 'session': str(session), 'elapsed_seconds': elapsed, 'error': error,
+               'first_cell_monotonic': started, 'internal_seconds': internal_seconds,
                'dependency_trees_removed': (not Path(folder).exists()) if folder else None,
                'study_status': report['status'] if report else None,
                'first_cell_cleanup_verified': report.get('first_cell_cleanup_verified') if report else None,

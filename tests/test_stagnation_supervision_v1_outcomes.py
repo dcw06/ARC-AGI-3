@@ -4,6 +4,7 @@ import copy
 import json
 import random
 import unittest
+from unittest import mock
 
 from research.stagnation_supervision_v1 import outcomes as O, supervision as SV, thresholds as S
 from research.transition_evidence_v2 import transition as T2
@@ -165,11 +166,34 @@ class FalseInterruptionGate(unittest.TestCase):
         self.assertIn('not establish that an interruption is genuinely harmful', r['limitation'])
 
     def test_within_and_exceeding_the_provisional_cap(self):
+        # Test the statistical rule on synthetic, explicitly qualified controls.
+        with mock.patch.object(O, 'GATE_ELIGIBLE_CONTROLS', frozenset({'g1', 'g2'})):
+            self.check_cap()
+
+    def check_cap(self):
         ok = O.interruptions(self.episodes(6, ['g1', 'g2'], 0), 'triggered')
         self.assertEqual((ok['lc_points'], ok['interruptions_at_lc'], ok['status']), (120, 0, 'within_provisional_cap'))
         bad = O.interruptions(self.episodes(6, ['g1', 'g2'], 3), 'triggered')
         self.assertEqual(bad['status'], 'exceeds_provisional_cap')
         self.assertGreaterEqual(bad['upper_bound_used'], bad['wilson_95'][1])
+
+    def test_ls20_remains_descriptive_and_cannot_supply_second_control(self):
+        rows = self.episodes(6, ['wa30', 'ls20'], 0)
+        for what in ('detector_triggers', 'calls'):
+            result = O.interruptions(rows, 'triggered', what=what)
+            self.assertEqual(result['status'], 'not_certifiable_minimum_not_met')
+            self.assertEqual(result['lc_games'], 1)
+            self.assertEqual(result['descriptive_all_cases']['lc_games'], 2)
+            self.assertEqual(result['descriptive_all_cases']['lc_points'], 120)
+            self.assertIn('ls20', result['excluded_exploratory_or_unvalidated_games'])
+            only = O.interruptions([r for r in rows if r['game'] != 'ls20'], 'triggered', what=what)
+            self.assertEqual((result['lc_points'], result['status']), (only['lc_points'], only['status']))
+
+    def test_full_game_ids_cannot_bypass_exclusion_or_double_count_aliases(self):
+        rows = self.episodes(6, ['wa30', 'wa30-ee6fef47', 'ls20-9607627b'], 0)
+        result = O.interruptions(rows, 'triggered')
+        self.assertEqual(result['lc_games'], 1)
+        self.assertEqual(result['status'], 'not_certifiable_minimum_not_met')
 
 
 class RealisedCost(unittest.TestCase):

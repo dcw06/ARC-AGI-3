@@ -85,7 +85,8 @@ def run_worker(output, scratch, environments, model_python, *, deadline, mode, f
             'research.stagnation_supervision_v1.closed_loop.host', fromlist=['expected_artifact']).expected_artifact()
         ready = ProxyService(proxy).connect_ready(expected_artifact=expected)
         store.save('model-ready.json', {'artifact': ready['artifact'], 'startup_seconds': ready['startup_seconds'],
-                                        'canary_sha256': ready['canary_audit']['response_sha256'], 'mode': mode})
+                                        'canary_sha256': ready['canary_audit']['response_sha256'], 'mode': mode,
+                                        'ready_monotonic': time.monotonic()})
         from .engine import DevelopmentAdapter
         from .runner import run
         from .bridge import session_run_spec, supervision_factory, worker_token_counter

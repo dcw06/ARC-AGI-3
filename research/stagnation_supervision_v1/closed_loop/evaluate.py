@@ -30,7 +30,7 @@ from research.stagnation_supervision_v1.closed_loop import bridge as B, contract
 from research.transition_evidence_v2 import transition as T2
 
 ROOT = Path(__file__).resolve().parents[3]
-VERSION = 'stagnation_supervision_v1_evaluation_r3'
+VERSION = 'stagnation_supervision_v1_trajectory_evaluation_r4'
 COMPARED = ('action_index', 'outcome', 'due', 'detector_signals', 'delivered', 'suggestion_cleared', 'remaining_actions',
             'admission')
 
@@ -479,6 +479,7 @@ def evaluate_report(report, spec, trigger_spec=None):
 
 
 def evaluate_output(folder, spec, trigger_spec=None):
+    """Trajectory-only verdict; target completion requires target_evaluate.evaluate_target."""
     from research.stagnation_supervision_v1.closed_loop.evidence import EvidenceError, load_verified
     try:
         report = load_verified(folder)
@@ -490,4 +491,5 @@ def evaluate_output(folder, spec, trigger_spec=None):
     except (KeyError, TypeError, ValueError, IndexError, AttributeError, OverflowError) as exc:
         result = {'version': VERSION, 'technically_complete': False,
                   'problems': [f'malformed run evidence: {type(exc).__name__}: {exc}']}
-    return {**result, 'evidence_verified': True}
+    return {**result, 'evidence_verified': True, 'evaluation_scope': 'trajectory_only',
+            'target_lifecycle_evaluated': False}

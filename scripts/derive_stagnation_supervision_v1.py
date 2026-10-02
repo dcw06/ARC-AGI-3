@@ -534,6 +534,57 @@ DERIVED.update({
 })
 
 
+# R3 launch-review repairs. Historical sources and embedded R1/R2 notebooks stay intact.
+DERIVED['host.py'] += (
+    (("span", '    class ServerWithoutLegacyCanary(ModelService):',
+      '    owner = ServerWithoutLegacyCanary(primary)\n'),
+     '    from .server_config import model_owner\n'
+     '    owner = model_owner(primary, retain)\n', 1),
+    ("    service.artifact = {'rehearsal': 'scripted_model_not_target_evidence'}\n",
+     "    service.artifact = {'rehearsal': 'scripted_model_not_target_evidence'}\n"
+     "    from .server_config import rehearsal_record\n"
+     "    retain(rehearsal_record())\n", 1),
+    ("'startup_seconds': None, 'error': None}",
+     "'startup_seconds': None, 'error': None, 'started_monotonic': begun}", 1),
+    ("        store.save('canary.json', record)\n",
+     "        from .server_config import KIND\n"
+     "        name = 'server-configuration.json' if record.get('kind') == KIND else 'canary.json'\n"
+     "        store.save(name, record)\n", 1),
+)
+DERIVED['worker.py'] += (
+    ("'canary_sha256': ready['canary_audit']['response_sha256'], 'mode': mode}",
+     "'canary_sha256': ready['canary_audit']['response_sha256'], 'mode': mode,\n"
+     "                                        'ready_monotonic': time.monotonic()}", 1),
+)
+DERIVED['supervisor.py'] += (
+    ("            released = time.monotonic()\n",
+     "            released = time.monotonic()\n"
+     "            report['worker_released_seconds'] = released - started\n", 1),
+    ("            if worker.returncode != 0:\n",
+     "            report['worker_completed_seconds'] = time.monotonic() - started\n"
+     "            if worker.returncode != 0:\n", 1),
+    ("control.save('stop-monitor.json', {'worker_group_exited': True})",
+     "control.save('stop-monitor.json', {'worker_group_exited': True, 'elapsed_seconds': time.monotonic() - started})", 1),
+)
+DERIVED['resources.py'] += (
+    ("        result.update(gpu_uuid=sample['uuid'], remaining_gpu_pids=0, gpu_cleanup_verified=True)",
+     "        if clock() >= deadline:\n"
+     "            raise TimeoutError('GPU cleanup deadline after query')\n"
+     "        result.update(gpu_uuid=sample['uuid'], remaining_gpu_pids=0, gpu_cleanup_verified=True,\n"
+     "                      checked_monotonic=clock())", 1),
+)
+DERIVED['scripts/stagnation_supervision_v1_launch.py'] += (
+    ("'returncode': process.returncode, 'errors': errors}",
+     "'returncode': process.returncode, 'errors': errors,\n"
+     "                                                            'checked_monotonic': time.monotonic()}", 1),
+    ("'dependency_trees_removed': (not Path(folder).exists()) if folder else None,",
+     "'first_cell_monotonic': started, 'internal_seconds': internal_seconds,\n"
+     "               'dependency_trees_removed': (not Path(folder).exists()) if folder else None,", 1),
+)
+DERIVED['authority.py'] += (
+    ("'token_bridge.py')}", "'token_bridge.py', 'server_config.py', 'target_evaluate.py')}", 1),
+)
+
 RENAMED_SOURCE = {'model_service.py': 'service.py'}
 SCRIPT_SOURCES = {'scripts/stagnation_supervision_v1_launch.py': 'scripts/action_effect_history_v1_launch.py',
                   'scripts/rehearse_stagnation_supervision_v1.py': 'scripts/rehearse_action_effect_history_v1.py'}

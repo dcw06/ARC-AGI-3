@@ -12,6 +12,7 @@ from unittest import mock
 
 from research.stagnation_supervision_v1.closed_loop import bridge as B, evaluate as EV
 from research.stagnation_supervision_v1.closed_loop.resources import independent_cleanup
+from research.stagnation_supervision_v1.closed_loop.target_evaluate import evaluate_target
 
 SHORT = {'SSV_REHEARSAL_GROUPS': 'b1-ar25', 'SSV_REHEARSAL_ACTIONS': '12'}
 
@@ -25,6 +26,7 @@ def connected(fault='none', *, seconds=1500, actions=12, admission_seconds=None,
         receipt, output = rehearse(fault, seconds, tempfile.mkdtemp(prefix='ssv-connected-'), session='1')
         spec = B.session_run_spec('1', 'rehearsal')
         evaluation = EV.evaluate_output(output / 'worker/run', spec)
+        evaluation['target_evaluation'] = evaluate_target(output, spec, mode='rehearsal', session='1', internal_seconds=seconds)
     outer = json.loads((output / 'control/outer.json').read_bytes())
     host_path = output / 'worker/host-status.json'
     host = json.loads(host_path.read_bytes()) if host_path.is_file() else None
@@ -36,6 +38,7 @@ def connected(fault='none', *, seconds=1500, actions=12, admission_seconds=None,
         return json.loads(path.read_bytes()) if path.is_file() else None
 
     return receipt, outer, host, evaluation, {
+        'output': str(output),
         'files': {p.relative_to(output).as_posix() for p in output.rglob('*') if p.is_file()},
         'gpu_cleanup': record('control/gpu-cleanup.json'),
         'first_cell_cleanup': record('control/first-cell-supervisor-cleanup.json'),
@@ -67,6 +70,7 @@ class Connected(unittest.TestCase):
         self.assertEqual(outer['run_evidence']['episodes'], 3)
         self.assertEqual(evaluation['problems'], [])
         self.assertTrue(evaluation['technically_complete'])
+        self.assertTrue(evaluation['target_evaluation']['technically_complete'], evaluation['target_evaluation']['problems'])
         reflections = sum(a['calls'] for a in evaluation['realised_cost']['by_arm'].values())
         self.assertEqual((host['policy_calls'], host['reflection_calls']), (36, reflections))
         self.assertEqual(evaluation['realised_cost']['by_arm']['continuation']['calls'], 0)
@@ -103,11 +107,13 @@ class Connected(unittest.TestCase):
                     # escalate, remove it, and leave a usable completed run.
                     self.assertEqual(receipt['study_status'], 'study_complete_pending_independent_evaluation')
                     self.assertTrue(evaluation['technically_complete'], evaluation['problems'])
+                    self.assertTrue(evaluation['target_evaluation']['technically_complete'], evaluation['target_evaluation']['problems'])
                     self.assertIsNotNone(detail['model_process'])
                     continue
                 self.assertNotEqual(receipt['study_status'], 'study_complete_pending_independent_evaluation')
                 self.assertNotEqual(outer['status'], 'study_complete_pending_independent_evaluation')
                 self.assertFalse(evaluation['technically_complete'])
+                self.assertFalse(evaluation['target_evaluation']['technically_complete'])
                 self.assertIn('control/outer.json', detail['files'])
                 self.assertIn('control/gpu-cleanup.json', detail['files'])
                 if fault not in ('monitor_exit',):
