@@ -30,13 +30,13 @@ def current_state(trajectory):
     return last['environment']['reported']['levels_completed_after'], frames[-1]['sha256']
 
 
-def _fit(lines, budget):
-    kept, used = [], 0
-    for item, line in lines:
-        if used + len(line) + 1 > budget + 1:
+def _fit(items, budget, size):
+    """The longest priority-order prefix of `items` whose rendering `size(kept)` stays within the budget."""
+    kept = []
+    for item in items:
+        if size(kept + [item]) > budget:
             break
-        kept.append((item, line))
-        used += len(line) + 1
+        kept.append(item)
     return kept
 
 
@@ -52,26 +52,31 @@ def rank(entry, level, state, segment):
             S.SEGMENT: 1 if scope.get('segment') == segment else 5, S.OBJECT_INSTANCE: 2, S.LEVEL: 3}[scope['kind']]
 
 
-def packages(trajectory, memory_view, window=WINDOW):
+def packages(trajectory, memory_view, window=WINDOW, measure=len):
+    """The three packages under one budget: `measure(text)` of the frozen recent window's rendering. The default
+    measure is characters; Stage 1 passes the pinned tokenizer's token count (tokens.Tokenizer)."""
     records = trajectory['records']
     idx = S.index(records)
     level, state = current_state(trajectory)
     segment = records[-1]['segment'] + bool(set(records[-1]['environment']['events']) & {
         'reset_acknowledged', 'level_completed', 'level_count_decreased', 'terminal_state'})
     recent = records[-window:]
-    budget = len(R.records_text(recent, idx))
-    line = lambda r: R.record_line(r, idx[S.record_key(r)])
+    chronological = lambda rs: sorted(rs, key=lambda r: r['identity']['action_index'])
+    budget = measure(R.records_text(recent, idx))
     order = sorted(records, key=lambda r: (not (idx[S.record_key(r)]['level'] == level and
                                                 idx[S.record_key(r)]['state'] == state), -r['identity']['action_index']))
-    keyed = sorted((r for r, _ in _fit([(r, line(r)) for r in order], budget)), key=lambda r: r['identity']['action_index'])
+    keyed = chronological(_fit(order, budget, lambda rs: measure(R.records_text(chronological(rs), idx))))
     entries = sorted((e for e in memory_view['entries'] if e['status'] != S.RETIRED),
                      key=lambda e: (rank(e, level, state, segment), -e['last_reviewed_step'], e['id']))
-    kept = [e for e, _ in _fit([(e, R.entry_line(e)) for e in entries], budget)]
-    return {'budget_chars': budget, 'current': {'level': level, 'state': state},
-            'recent_raw': {'records': recent, 'chars': budget},
-            'state_keyed_raw': {'records': keyed, 'chars': len(R.records_text(keyed, idx))},
+    kept = _fit(entries, budget, lambda es: measure(R.memory_text(es)))
+    return {'budget_chars': len(R.records_text(recent, idx)), 'budget': budget,
+            'current': {'level': level, 'state': state},
+            'recent_raw': {'records': recent, 'chars': len(R.records_text(recent, idx)), 'size': budget},
+            'state_keyed_raw': {'records': keyed, 'chars': len(R.records_text(keyed, idx)),
+                                'size': measure(R.records_text(keyed, idx))},
             'memory': {'entries': kept, 'chars': len(R.memory_text(kept)), 'dropped': len(entries) - len(kept),
-                       'unbounded_chars': len(R.memory_text(entries))}}
+                       'unbounded_chars': len(R.memory_text(entries)), 'size': measure(R.memory_text(kept)),
+                       'unbounded_size': measure(R.memory_text(entries))}}
 
 
 def _memory_values(entries, question, action):
