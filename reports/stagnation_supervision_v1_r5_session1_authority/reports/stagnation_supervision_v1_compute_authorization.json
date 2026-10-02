@@ -1,0 +1,27 @@
+{
+  "approval_kind": "compute",
+  "authorization_scope": "reserve_one_attempt_only",
+  "package_lock_sha256": "6cb4b854d94197fb4a1a138fbe2756f9a5a8d0e8fac8707c07b333858f37ee00",
+  "recorded_at_utc": "2026-10-02T23:23:05.635923+00:00",
+  "review_lock_sha256": "a6091bc20401cc280c818b932ac9a351fd7e4998c337525f611c76f2c3756571",
+  "scope": "stagnation-supervision-v1",
+  "sessions": {
+    "1": {
+      "authorized_seconds": 5400,
+      "automatic_retries": 0,
+      "holdout_runs": 0,
+      "internal_seconds": 5100,
+      "maximum_actions_per_episode": 40,
+      "maximum_attempts": 1,
+      "maximum_canaries": 1,
+      "maximum_episodes": 15,
+      "maximum_policy_calls": 600,
+      "maximum_reflection_calls": 32,
+      "scored_submissions": 0
+    }
+  },
+  "source_approval_sha256": "34e5961405f97804ce6dc63d5dcfed2a7c2cc88bdcf6c5b49c7f11bdd8d9ca64",
+  "status": "approved",
+  "submission_authorized": false,
+  "user_response": "Authorize session 1 reservation"
+}

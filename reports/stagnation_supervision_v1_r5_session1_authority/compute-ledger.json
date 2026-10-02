@@ -1,0 +1,26 @@
+{
+  "attempt_id": "ssv1-r5-session1-reservation-001",
+  "authority_sidecars": {
+    "reports/stagnation_supervision_v1_compute_authorization.json": "0d97c067a04fbaf0008e0fda74023a0f9bb613327cf5a530c83fd09a20cb3c96",
+    "reports/stagnation_supervision_v1_source_approval.json": "34e5961405f97804ce6dc63d5dcfed2a7c2cc88bdcf6c5b49c7f11bdd8d9ca64",
+    "research/stagnation_supervision_v1/closed_loop/execution_lock.json": "881e83bd166e8f9c884e1fe4a4f1b55dd563923ea0f2871b992e429a279a438c",
+    "research/stagnation_supervision_v1/closed_loop/reservation.json": "f55ccb0770d7b26a31fd8b8135cf622a4e2188589d97cee0f932f1f3baa3c70e"
+  },
+  "authorized_seconds": 5400,
+  "automatic_retries": 0,
+  "consumed": false,
+  "events": [
+    {
+      "kind": "reserve",
+      "recorded_at_utc": "2026-10-02T23:23:05.635923+00:00",
+      "seconds": 5400
+    }
+  ],
+  "internal_seconds": 5100,
+  "maximum_attempts": 1,
+  "provider_submission_started": false,
+  "session": "1",
+  "session2_authorized": false,
+  "source_review_sha256": "a6091bc20401cc280c818b932ac9a351fd7e4998c337525f611c76f2c3756571",
+  "submission_authorized": false
+}
