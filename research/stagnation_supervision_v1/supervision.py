@@ -8,7 +8,13 @@ Policy limits apply to every call in every arm:
   - cooldown: no call within `cooldown_actions` actions of the previous call;
   - at most `max_interventions_per_episode` calls, counting valid, invalid and failed calls alike;
   - a per-episode token ceiling: a call is made only if spent + estimated input + reserved output fits;
-  - no call when the current state was not observed (unknown outcome or missing frames): it is deferred.
+  - no call when the current state was not observed (unknown outcome or missing frames): it is deferred;
+  - no call when fewer than `min_remaining_actions` actions (the recovery window) remain in the episode, so every
+    reflection can be evaluated (active only when the episode length is given).
+Delivery (identical in both reflection arms): a valid reflection becomes a clearly labelled model-generated suggestion
+block, kept apart from the factual observation, shown with the next `suggestion_lifetime_actions` policy requests,
+at most `max_suggestion_chars` long, replaced only by a later valid reflection, and cleared at a reset, a level
+change or a terminal state. An invalid or failed reflection delivers nothing.
 Every call is charged, including invalid outputs and exceptions. Every decision is retained as an event with its
 reason, including suppressed and deferred ones. Records are transition_evidence_v2, unmasked (the masked view is
 never requested or read); the detector consumes the v1 fields they contain, and events cite evidence by record_id. Here `call` is scripted; nothing in this module runs a model.
@@ -22,7 +28,10 @@ from research.transition_evidence_v2 import transition as T, vocabulary as V
 VERSION = 'stagnation_supervision_v1_policy'
 ARMS = ('continuation', 'periodic', 'triggered')
 POLICY = {'cooldown_actions': 6, 'period_actions': 6, 'max_interventions_per_episode': 4,
-          'max_supervisor_tokens_per_episode': 8000, 'reserved_output_tokens': 400}
+          'max_supervisor_tokens_per_episode': 8000, 'reserved_output_tokens': 400,
+          'min_remaining_actions': 10, 'suggestion_lifetime_actions': 10, 'max_suggestion_chars': 1600}
+SUGGESTION_LABEL = 'MODEL-GENERATED SUGGESTION (a hypothesis from a reviewer model, not an observation)'
+CLEARING_EVENTS = (V.RESET_ACKNOWLEDGED, V.LEVEL_COMPLETED, V.LEVEL_COUNT_DECREASED, V.TERMINAL_STATE)
 
 
 def estimate_tokens(text):
@@ -32,7 +41,8 @@ def estimate_tokens(text):
 
 
 class Supervisor:
-    def __init__(self, arm, spec, call, policy=POLICY, available_actions=None, clock=time.perf_counter):
+    def __init__(self, arm, spec, call, policy=POLICY, available_actions=None, clock=time.perf_counter,
+                 episode_actions=None):
         if arm not in ARMS:
             raise ValueError('unknown arm')
         self.arm, self.params, self.call, self.policy = arm, spec['params'], call, dict(policy)
@@ -40,6 +50,8 @@ class Supervisor:
         self.raws, self.records, self.events = [], [], []
         self.stats = D.Statistics()
         self.calls, self.tokens, self.last_call = 0, 0, None
+        self.policy = {**POLICY, **self.policy}
+        self.episode_actions, self.suggestion = episode_actions, None
 
     def observe(self, raw, prediction=None):
         self.raws.append(raw)
@@ -53,8 +65,15 @@ class Supervisor:
         event = {'action_index': index, 'record_id': record['identity']['record_id'], 'arm': self.arm,
                  'detector_signals': fired, 'due': due,
                  'detector_evidence_record_ids': sorted({ids[i] for s in fired for i in s['evidence']})}
+        cleared = [e for e in record['environment']['events'] if e in CLEARING_EVENTS]
+        if cleared and self.suggestion is not None:
+            event['suggestion_cleared'] = cleared
+            self.suggestion = None
+        remaining = None if self.episode_actions is None else self.episode_actions - (index + 1)
         if not due:
             event['outcome'] = 'not_due'
+        elif remaining is not None and remaining < self.policy['min_remaining_actions']:
+            event['outcome'] = 'suppressed_insufficient_remaining_actions'
         elif I.unobserved_state(record):
             event['outcome'] = 'deferred_unobserved_state'
         elif self.last_call is not None and index - self.last_call < self.policy['cooldown_actions']:
@@ -71,8 +90,24 @@ class Supervisor:
                 event['call'] = self._call(request)
                 event['delivered'] = (I.render(event['call']['parsed']['intervention'])
                                       if event['call']['parsed']['valid'] else None)
+                if event['delivered'] is not None and len(event['delivered']) > self.policy['max_suggestion_chars']:
+                    event['call']['parsed']['problems'].append('rendered suggestion longer than the block limit')
+                    event['call']['parsed']['valid'] = False
+                    event['delivered'] = None
+                if event['delivered'] is not None:
+                    self.suggestion = {'label': SUGGESTION_LABEL, 'text': event['delivered'],
+                                       'issued_after_action': index,
+                                       'expires_after_action': index + self.policy['suggestion_lifetime_actions'],
+                                       'record_id': record['identity']['record_id']}
         self.events.append(event)
         return event
+
+    def suggestion_for(self, action_index):
+        """The suggestion block to show with the policy request for `action_index`, or None (expired or cleared)."""
+        s = self.suggestion
+        if s is None or not s['issued_after_action'] < action_index <= s['expires_after_action']:
+            return None
+        return dict(s)
 
     def _call(self, request):
         self.calls += 1
