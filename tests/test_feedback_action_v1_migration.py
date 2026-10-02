@@ -139,9 +139,18 @@ class Migration(unittest.TestCase):
             self.assertEqual([E.entry(r) for r in T2.history(raws)], [E.entry(r) for r in T1.history(raws)], name)
 
     def test_d_track_never_touches_the_region_restricted_view_or_its_module(self):
-        for path in sorted(TRACK.glob('*.py')) + sorted(TRACK.glob('*.json')):
+        """Every Track 1 source, including the derived live runner: no identifier, attribute, string or import
+        mentions a mask (comments are not code: the derived runner keeps AEH's comment 'never mask the first
+        error'), and no JSON file does."""
+        for path in sorted(TRACK.rglob('*.json')):
             self.assertNotIn('mask', path.read_text().lower(), path.name)
-        for path in sorted(TRACK.glob('*.py')):
+        for path in sorted(TRACK.rglob('*.py')):
+            for node in ast.walk(ast.parse(path.read_text())):
+                words = ([node.id] if isinstance(node, ast.Name) else [node.attr] if isinstance(node, ast.Attribute)
+                         else [node.value] if isinstance(node, ast.Constant) and isinstance(node.value, str)
+                         else [a.name for a in node.names] if isinstance(node, (ast.Import, ast.ImportFrom)) else [])
+                self.assertFalse(any('mask' in w.lower() for w in words), f'{path.name}: {words}')
+        for path in sorted(TRACK.rglob('*.py')):
             for node in ast.walk(ast.parse(path.read_text())):
                 if isinstance(node, (ast.Import, ast.ImportFrom)):
                     names = [a.name for a in node.names] + [getattr(node, 'module', '') or '']
@@ -160,7 +169,9 @@ class Migration(unittest.TestCase):
     def test_d_the_module_is_never_imported_by_this_track(self):
         code = ('import sys\n'
                 'from research.feedback_action_v1 import adapter, environments, evaluate, evidence, fixtures, rehearsal\n'
-                'rehearsal.rehearse(); fixtures.generate()\n'
+                'from research.feedback_action_v1 import derive, token_audit\n'
+                'from research.feedback_action_v1.live import policy, runner, service, engine, evidence as ev, fake_server\n'
+                'rehearsal.rehearse(); fixtures.generate(); fake_server.FakeServer()\n'
                 'print("research.transition_evidence_v2.masks" in sys.modules)\n')
         out = subprocess.run([sys.executable, '-c', code], cwd=ROOT, capture_output=True, text=True, check=True)
         self.assertEqual(out.stdout.strip(), 'False')
