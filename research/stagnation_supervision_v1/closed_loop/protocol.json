@@ -70,14 +70,14 @@
   "max_response_bytes": 32768,
   "maximum_policy_calls": 1080,
   "maximum_reflection_calls": 64,
-  "pair_admission_seconds": 700,
+  "pair_admission_seconds": 800,
   "policy_calls_per_action": 1,
   "reflections_per_episode": 4,
   "request_seed": 0
  },
  "notes": [
   "draft: nothing here authorizes compute; internal_seconds is set only by a future reviewed package",
-  "pair_admission_seconds: a game group (up to 3 episodes x 40 actions at ~5.1 s/step, estimated) must fit before it is admitted; an estimate, not an authorization ceiling",
+  "pair_admission_seconds: a game group (up to 3 episodes x 40 actions at an estimated 5.1-6.1 s per step, plus reflections) must fit before it is admitted; an estimate, not an authorization ceiling",
   "ls20 qualified under the frozen Tier B criterion; a post-hoc inspection found the novelty came from a per-step display while the playfield oscillated; its inclusion awaits review"
  ],
  "schedule": [
