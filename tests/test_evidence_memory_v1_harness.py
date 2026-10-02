@@ -159,8 +159,9 @@ class ContextPressure(unittest.TestCase):
 
 class Boundaries(unittest.TestCase):
     def test_no_model_network_or_process_imports(self):
+        """The research modules (not the derived run package in run/, which is the reviewed runtime stack)."""
         allowed = {'copy', 'json', 'hashlib', 'random', 'collections', 're', 'pathlib', 'os', 'statistics',
-                   'research.evidence_memory_v1',
+                   'argparse', 'sys', 'research.evidence_memory_v1',
                    'research.transition_evidence_v1', 'research.transition_evidence_v2'}
         for path in PACKAGE.glob('*.py'):
             tree = ast.parse(path.read_text(encoding='utf-8'))
@@ -169,11 +170,21 @@ class Boundaries(unittest.TestCase):
             self.assertLessEqual(modules, allowed, path.name)
 
     def test_transition_contract_is_used_read_only(self):
+        # Only two modules write, and only Track 2's own files: stage1.py its frozen run/probes.json, and
+        # derive_run.py the derived run package and its connected test.
+        writers = {'stage1.py', 'derive_run.py'}
         for path in PACKAGE.glob('*.py'):
             text = path.read_text(encoding='utf-8')
             self.assertNotIn('fixtures.json', text)
-            self.assertNotIn('write_bytes', text)
-            self.assertNotIn("open(", text)
+            if path.name not in writers:
+                self.assertNotIn('write_bytes', text, path.name)
+                self.assertNotIn('write_text', text, path.name)
+                self.assertNotIn("open(", text, path.name)
+        from research.evidence_memory_v1 import derive_run, stage1
+        self.assertEqual(stage1.RUN_PROBES, PACKAGE / 'run' / 'probes.json')
+        for target in derive_run.DERIVED:
+            self.assertTrue(target.startswith(('research/evidence_memory_v1/run/', 'tests/test_evidence_memory_v1_run')),
+                            target)
 
 
 if __name__ == '__main__':
