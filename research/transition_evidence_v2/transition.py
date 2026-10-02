@@ -34,6 +34,17 @@ def _int(value):
     return type(value) is int
 
 
+def same(a, b):
+    """Type-sensitive structural equality: True is not 1 and 6 is not 6.0, at any depth."""
+    if type(a) is not type(b):
+        return False
+    if isinstance(a, dict):
+        return a.keys() == b.keys() and all(same(a[k], b[k]) for k in a)
+    if isinstance(a, list):
+        return len(a) == len(b) and all(same(x, y) for x, y in zip(a, b))
+    return a == b
+
+
 def mask_problems(mask):
     """[] for a well-formed mask, else the reasons it is malformed."""
     if not isinstance(mask, dict) or set(mask) != {'id', 'frame_shape', 'rects_xyxy', 'provenance'}:
@@ -140,7 +151,10 @@ def _actions(observation):
     actions = observation.get('available_actions')
     if actions is None:
         return V.absent('the producer did not retain available actions')
-    return V.measured(sorted(copy.deepcopy(actions)))
+    actions = copy.deepcopy(actions)  # retained as reported; validate() refuses ids outside the vocabulary
+    if isinstance(actions, list) and all(_int(a) for a in actions):
+        actions = sorted(actions)
+    return V.measured(actions)
 
 
 def extend(raw, record, mask=None):
@@ -211,7 +225,42 @@ def _typed(value, check, name):
 
 
 def _action_list(value):
-    return (isinstance(value, list) and all(_int(a) and a >= 0 for a in value) and value == sorted(set(value)))
+    return (isinstance(value, list) and all(_int(a) and a in V.ACTION_VOCABULARY for a in value)
+            and value == sorted(set(value)))
+
+
+def _bool_measure(value):
+    return isinstance(value, dict) and (value.get('status') != 'measured' or type(value.get('value')) is bool)
+
+
+def _count_measure(value):
+    return isinstance(value, dict) and (value.get('status') != 'measured' or _count(value.get('value')))
+
+
+def _strict_types(record):
+    """Booleans and counts in the measurements must have exactly their types (version 1's checks use ==)."""
+    problems = []
+    dispatched = (record.get('action') or {}).get('dispatched')
+    if not (isinstance(dispatched, dict) and set(dispatched) == {'action_id', 'action_data'}
+            and _int(dispatched['action_id']) and dispatched['action_id'] in V.ACTION_VOCABULARY
+            and isinstance(dispatched['action_data'], dict) and set(dispatched['action_data']) <= {'x', 'y'}
+            and all(_int(v) for v in dispatched['action_data'].values())):
+        problems.append('action.dispatched: not an action id in the vocabulary with integer coordinates')
+    m = record.get('measurements')
+    if not isinstance(m, dict) or not isinstance(m.get('frames'), list):
+        return problems + ['measurements: missing or malformed']
+    problems += [f'measurements.{k}: not a boolean' for k in ('any_returned_frame_differs', 'final_frame_equals_pre')
+                if not _bool_measure(m.get(k))]
+    if not _count_measure(m.get('returned_frame_count')):
+        problems.append('measurements.returned_frame_count: not a count')
+    for f in m['frames']:
+        if not isinstance(f, dict) or type(f.get('valid')) is not bool or not _int(f.get('index')):
+            problems.append('a returned frame has a non-boolean validity or a non-integer index')
+            continue
+        for ref in ('vs_pre', 'vs_previous'):
+            if f['valid'] and not (_bool_measure(f[ref].get('differs')) and _count_measure(f[ref].get('changed_cells'))):
+                problems.append(f'frame {f["index"]} {ref}: differs or changed_cells has the wrong type')
+    return problems
 
 
 def _count(value):
@@ -240,12 +289,14 @@ def _context_problems(record):
     problems += _typed(reported['available_actions_changed'], lambda v: type(v) is bool, 'available_actions_changed')
     before = context['available_actions_before']
     if not problems and after['status'] == before['status'] == 'measured':
-        if reported['available_actions_changed'] != V.measured(after['value'] != before['value']):
+        if not same(reported['available_actions_changed'], V.measured(after['value'] != before['value'])):
             problems.append('available_actions_changed contradicts the reported actions')
     elif not problems and reported['available_actions_changed']['status'] == 'measured':
         problems.append('available_actions_changed measured without actions on both sides')
-    if not problems and reported.get('levels_completed_before') != context['levels_completed_before']['value']:
+    if not problems and not same(reported.get('levels_completed_before'), context['levels_completed_before']['value']):
         problems.append('context level contradicts the reported level before the action')
+    if not problems and not same(reported.get('state_before'), context['state_before']['value']):
+        problems.append('context state contradicts the reported state before the action')
     return problems
 
 
@@ -275,7 +326,8 @@ def _masked_problems(record):
         return problems + ['masked frames do not correspond one-to-one to the returned frames']
     for mine, full in zip(m['frames'], v1_frames):
         where = f'masked frame {full["index"]}'
-        if not isinstance(mine, dict) or mine.get('index') != full['index'] or mine.get('valid') != full['valid']:
+        if not isinstance(mine, dict) or not same(mine.get('index'), full['index']) or not same(
+                mine.get('valid'), full['valid']):
             problems.append(f'{where}: index or validity differs from the returned frame')
             continue
         if not full['valid']:
@@ -294,16 +346,17 @@ def _masked_problems(record):
                 continue
             if out['value'] + ins['value'] != full_count['value']:
                 problems.append(f'{where}: outside plus inside differs from the full-frame changed count')
-            if mine['differs_outside'] != V.measured(out['value'] > 0):
+            if not same(mine['differs_outside'], V.measured(out['value'] > 0)):
                 problems.append(f'{where}: differs_outside contradicts the outside count')
         else:
-            if out['status'] != 'unavailable' or ins['status'] != 'unavailable' or mine['differs_outside'] != V.measured(True):
+            if out['status'] != 'unavailable' or ins['status'] != 'unavailable' or not same(
+                    mine['differs_outside'], V.measured(True)):
                 problems.append(f'{where}: a frame of another shape differs, with undefined counts')
     if problems:
         return problems
     summary = _summary(m['frames'], record['observations']['availability']['status'])
     for key, value in summary.items():
-        if m[key] != value:
+        if not same(m[key], value):
             problems.append(f'{key} contradicts the masked frames')
     if (record['measurements']['visual_effect']['status'] == V.NO_OBSERVED_CHANGE
             and m['visual_effect_outside']['status'] != V.NO_OBSERVED_CHANGE):
@@ -320,18 +373,28 @@ def validate(record):
         problems.append('not a version 2 record')
     if record['identity'].get('record_id') != record_id(record['identity']):
         problems.append('record_id does not match episode_id and action_index')
-    return problems + _context_problems(record) + _masked_problems(record)
+    return problems + _strict_types(record) + _context_problems(record) + _masked_problems(record)
 
 
 def verify(record, raw, mask=None):
-    """Problems unless a single `record` (built by `build`, without history fields) is exactly what `raw` builds."""
-    return [] if build(raw, mask) == record else ['the record differs from what its raw evidence builds']
+    """Problems unless a single `record` (built by `build`, without history fields) is valid and exactly, type for
+    type, what `raw` builds. A record built from malformed raw evidence fails here through validate()."""
+    problems = validate(record)
+    if not same(build(raw, mask), record):
+        problems.append('the record differs from what its raw evidence builds')
+    return problems
 
 
 def verify_history(records, raws, masks=None):
-    """Problems unless `records` are exactly what `history(raws, masks)` builds, segments and continuity included."""
+    """Problems unless every record is valid and `records` are exactly, type for type, what `history(raws, masks)`
+    builds, segments and continuity included."""
     rebuilt = history(raws, masks)
     if len(rebuilt) != len(records):
         return ['the number of records differs from the raw transitions']
-    return [f'record {r["identity"].get("record_id")}: differs from what its raw evidence builds'
-            for r, expected in zip(records, rebuilt) if r != expected]
+    problems = []
+    for r, expected in zip(records, rebuilt):
+        name = r.get('identity', {}).get('record_id') if isinstance(r, dict) else None
+        problems += [f'record {name}: {p}' for p in validate(r)]
+        if not same(r, expected):
+            problems.append(f'record {name}: differs from what its raw evidence builds')
+    return problems

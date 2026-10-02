@@ -1,4 +1,4 @@
-# Transition evidence v2: design r1 (record format draft; declared mask table frozen; no compute)
+# Transition evidence v2: design r2 (record format draft; declared mask table frozen; no compute)
 
 **Status.**
 - **Where it lives.** Branch `transition-evidence-v2`. Code is in `research/transition_evidence_v2/` and tests are in
@@ -15,6 +15,23 @@
 - migration is kept separate from intervention;
 - the mask is tested in a controlled comparison;
 - online detection is a separate question.
+
+## Changes in r2 (review of 19c211b)
+
+| Finding | Fix | Regression |
+|---|---|---|
+| **P2: "exact" verification accepted type-changing edits.** Python equality treats `True == 1` and `6 == 6.0`. Masked flags edited to 0/1 passed both checks; a float action id failed `validate` but passed `verify`. | New type-sensitive `same()` is used for every reconstruction and consistency comparison. Boolean fields and counts must have exactly their types: masked flags, full-frame `differs`/`any`/`final`, frame validity, `available_actions_changed`. The dispatched action must be an integer id in the vocabulary, with integer coordinates only. `verify` and `verify_history` now also run `validate`, so a structurally invalid record never verifies. | 0/1 for each boolean group; float action ids, dispatched and available; type changes in `verify_history` |
+| **P2: available-action lists accepted nonexistent ids** (`[8]`, `[999]`). | `ACTION_VOCABULARY = 0..7`, from the repository's ARC diagnostic action schema. Whether a policy may *choose* RESET is a separate rule, enforced by the action validator. Reported lists are retained as reported and refused by `validate`/`verify`, never silently repaired. | `[8]`, `[999]`, `[-1]`, `[1, 8]` and `['1']`, before and after the action; the full `0..7` list passes |
+| **P2: the starting state could contradict the environment report.** | For acknowledged transitions, `context.state_before` must equal `environment.reported.state_before`, as the level already had to. | `GAME_OVER` against a reported `NOT_FINISHED` is refused by `validate` and `verify`. A failed dispatch has no report to disagree with. |
+
+**Found while adding the regressions.** A dispatched action id of `1.0` also passed `validate`: neither version 1 nor
+r1 checked the dispatched action's types. It is now checked as above. The model's own proposal is retained as produced
+and is not type-checked.
+
+**Checks.**
+- 31 v2 tests and v1's 16 pass.
+- All 144 archived development transitions validate and verify.
+- The two deliberate mask faults each fail 8 of the 31 tests.
 
 ## Changes in r1
 

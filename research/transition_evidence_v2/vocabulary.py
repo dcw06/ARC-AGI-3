@@ -21,3 +21,9 @@ V1_VERSION = _V1.VERSION
 # is part of this draft).
 DECLARED, DETECTED_ONLINE = 'declared', 'detected_online'
 MASK_PROVENANCE = (DECLARED, DETECTED_ONLINE)
+
+# Action ids that can appear in a reported available-action list: the ARC interface's vocabulary, RESET (0) and
+# ACTION1..ACTION7, as bounded by the repository's ARC diagnostic action schema (evidence_comprehension_v1
+# ACTION_SCHEMA, action_id 0..7). Whether a policy may *choose* RESET is a separate rule (the arc_action_v12
+# action validator); this vocabulary only says which reported ids exist.
+ACTION_VOCABULARY = tuple(range(8))

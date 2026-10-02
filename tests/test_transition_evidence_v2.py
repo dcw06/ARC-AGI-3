@@ -289,6 +289,93 @@ class MaskNeverSuppresses(unittest.TestCase):
         self.assertIn('does not establish that the action had no effect', reason)
 
 
+class ReviewOf19c211b(unittest.TestCase):
+    """Review of 19c211b: type-changing edits, nonexistent action ids, and a contradictory starting state."""
+
+    def setUp(self):
+        pre = [[0] * 10 for _ in range(8)]
+        frame = copy.deepcopy(pre)
+        frame[7][9] = 1
+        frame[1][1] = 1
+        self.mask = mask([[5, 7, 9, 7]])
+        self.raw = raw(pre, [frame], available=[1, 6])
+        self.base = T.build(self.raw, self.mask)
+
+    def both_refuse(self, record, name):
+        self.assertNotEqual(T.validate(record), [], f'validate: {name}')
+        self.assertNotEqual(T.verify(record, self.raw, self.mask), [], f'verify: {name}')
+
+    def test_equality_is_type_sensitive(self):
+        self.assertFalse(T.same(True, 1))
+        self.assertFalse(T.same(6, 6.0))
+        self.assertFalse(T.same({'a': [1, False]}, {'a': [1, 0]}))
+        self.assertTrue(T.same(self.base, copy.deepcopy(self.base)))
+
+    def test_boolean_flags_replaced_by_integers_are_refused(self):
+        def masked_frame(r):
+            r['masked']['frames'][0]['differs_outside'] = V.measured(1)
+
+        def masked_summary(r):
+            r['masked']['any_returned_frame_differs_outside'] = V.measured(1)
+            r['masked']['final_frame_equals_pre_outside'] = V.measured(0)
+            r['masked']['mask_region_changed'] = V.measured(1)
+
+        def full_frame(r):
+            r['measurements']['any_returned_frame_differs'] = V.measured(1)
+            r['measurements']['frames'][0]['vs_pre']['differs'] = V.measured(1)
+
+        def validity(r):
+            r['measurements']['frames'][0]['valid'] = 1
+            r['masked']['frames'][0]['valid'] = 1
+
+        def actions_changed(r):
+            r['environment']['reported']['available_actions_changed'] = V.measured(0)
+
+        for mutate in (masked_frame, masked_summary, full_frame, validity, actions_changed):
+            record = copy.deepcopy(self.base)
+            mutate(record)
+            self.both_refuse(record, mutate.__name__)
+
+    def test_a_float_action_id_is_refused_by_verify_too(self):
+        record = copy.deepcopy(self.base)
+        record['action']['dispatched']['action_id'] = 1.0
+        self.both_refuse(record, 'dispatched action id as float')
+        record = copy.deepcopy(self.base)
+        record['context']['available_actions_before'] = V.measured([1, 6.0])
+        self.both_refuse(record, 'available action as float')
+
+    def test_available_actions_must_exist_in_the_action_vocabulary(self):
+        self.assertEqual(V.ACTION_VOCABULARY, (0, 1, 2, 3, 4, 5, 6, 7))
+        pre = [[0] * 10 for _ in range(8)]
+        ok = T.build(raw(pre, [pre], available=[0, 1, 2, 3, 4, 5, 6, 7]))
+        self.assertEqual(T.validate(ok), [])
+        for bad in ([8], [999], [-1], [1, 8], ['1']):
+            r = raw(pre, [pre], available=bad)
+            record = T.build(r)  # retained as reported, never silently repaired
+            self.assertNotEqual(T.validate(record), [], bad)
+            self.assertNotEqual(T.verify(record, r), [], bad)
+            after_only = raw(pre, [pre], available=[1])
+            after_only['outcome']['after']['available_actions'] = bad
+            self.assertNotEqual(T.validate(T.build(after_only)), [], f'after: {bad}')
+
+    def test_starting_state_must_agree_with_the_environment_report(self):
+        record = copy.deepcopy(self.base)
+        record['context']['state_before'] = V.measured('GAME_OVER')
+        self.assertIn('context state contradicts the reported state before the action', T.validate(record))
+        self.assertNotEqual(T.verify(record, self.raw, self.mask), [])
+        failed = T.build({**self.raw, 'outcome': {'status': 'failed', 'reason': 'test'}})
+        self.assertEqual(T.validate(failed), [])  # nothing was reported after a failed dispatch to disagree with
+
+    def test_verify_history_rejects_type_changes_and_invalid_records(self):
+        raws = [raw([[0] * 10 for _ in range(8)], [[[0] * 10 for _ in range(8)]], index=i, available=[1])
+                for i in range(2)]
+        records = T.history(raws)
+        self.assertEqual(T.verify_history(records, raws), [])
+        changed = copy.deepcopy(records)
+        changed[1]['measurements']['final_frame_equals_pre'] = V.measured(1)
+        self.assertNotEqual(T.verify_history(changed, raws), [])
+
+
 class ArchivedDevelopmentTransitions(unittest.TestCase):
     """The 144 real development transitions of action-effect-history v1, read after the archive lock verifies.
 
