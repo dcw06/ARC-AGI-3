@@ -73,7 +73,12 @@ DERIVED = {
         (REQUIRED_OLD, REQUIRED_NEW, 1),
     ),
     PACKAGE + 'host.py': (),
-    PACKAGE + 'worker.py': (),
+    PACKAGE + 'worker.py': (
+        # Re-sized for 2,790 calls per pass (WS3: 2,500): the cutoff (300 s in the cutoff rehearsal) must fall inside
+        # pass 1 for the first fault and inside pass 2 for the second, with ~0.035 s of per-call overhead on top.
+        ("SLOW_LATENCY = {'slow_withheld_pass_1': 0.13, 'slow_withheld_pass_2': 0.06}",
+         "SLOW_LATENCY = {'slow_withheld_pass_1': 0.12, 'slow_withheld_pass_2': 0.05}", 1),
+    ),
     PACKAGE + 'runner.py': (),
     PACKAGE + 'resources.py': (),
     PACKAGE + 'monitor.py': (),

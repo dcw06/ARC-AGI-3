@@ -28,7 +28,7 @@ HOST_FAULTS = ('model_startup', 'prefix_cache_enabled', 'hang_once', 'no_abort',
 FAULTS = ('none', 'storage', 'surviving_child', 'log_flood', 'slow_withheld_pass_1', 'slow_withheld_pass_2') + HOST_FAULTS
 REHEARSAL_ARTIFACT = {'rehearsal': 'scripted_model_not_target_evidence'}
 # Rehearsal per-call latencies chosen so the admission cutoff falls inside withheld pass 1 or pass 2.
-SLOW_LATENCY = {'slow_withheld_pass_1': 0.13, 'slow_withheld_pass_2': 0.06}
+SLOW_LATENCY = {'slow_withheld_pass_1': 0.12, 'slow_withheld_pass_2': 0.05}
 
 
 def gate(mode):
