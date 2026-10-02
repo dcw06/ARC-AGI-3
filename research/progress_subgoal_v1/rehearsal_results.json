@@ -136,36 +136,68 @@
  "note": "scripted answers only; no model was called",
  "partition": "coverage_dryrun",
  "retained_invalid_examples": {
+  "gate_questions_invalid": [
+   {
+    "content": "I cannot determine that.",
+    "error": "Expecting value: line 1 column 1 (char 0)",
+    "pass": "pass_1",
+    "probe_id": "coverage_dryrun:raw_plus_computed_record:ps-baa4c61e7bc8:progress_status"
+   },
+   {
+    "content": "I cannot determine that.",
+    "error": "Expecting value: line 1 column 1 (char 0)",
+    "pass": "pass_2",
+    "probe_id": "coverage_dryrun:raw_plus_computed_record:ps-baa4c61e7bc8:progress_status"
+   },
+   {
+    "content": "I cannot determine that.",
+    "error": "Expecting value: line 1 column 1 (char 0)",
+    "pass": "pass_1",
+    "probe_id": "coverage_dryrun:raw_plus_computed_record:ps-1464fc2cae74:progress_status"
+   },
+   {
+    "content": "I cannot determine that.",
+    "error": "Expecting value: line 1 column 1 (char 0)",
+    "pass": "pass_2",
+    "probe_id": "coverage_dryrun:raw_plus_computed_record:ps-1464fc2cae74:progress_status"
+   },
+   {
+    "content": "I cannot determine that.",
+    "error": "Expecting value: line 1 column 1 (char 0)",
+    "pass": "pass_1",
+    "probe_id": "coverage_dryrun:raw_plus_computed_record:ps-6753c436878a:progress_status"
+   }
+  ],
   "invalid_text": [
    {
     "content": "I think the answer is probably yes.",
     "error": "Expecting value: line 1 column 1 (char 0)",
     "pass": "pass_1",
-    "probe_id": "coverage_dryrun:raw_evidence:ps-31185a646c69:visual_effect"
+    "probe_id": "coverage_dryrun:raw_plus_computed_record:ps-31185a646c69:visual_effect"
    },
    {
     "content": "I think the answer is probably yes.",
     "error": "Expecting value: line 1 column 1 (char 0)",
     "pass": "pass_2",
-    "probe_id": "coverage_dryrun:raw_evidence:ps-31185a646c69:visual_effect"
+    "probe_id": "coverage_dryrun:raw_plus_computed_record:ps-31185a646c69:visual_effect"
    },
    {
     "content": "I think the answer is probably yes.",
     "error": "Expecting value: line 1 column 1 (char 0)",
     "pass": "pass_1",
-    "probe_id": "coverage_dryrun:raw_evidence:ps-16894596edd8:visual_effect"
+    "probe_id": "coverage_dryrun:raw_plus_computed_record:ps-16894596edd8:visual_effect"
    },
    {
     "content": "I think the answer is probably yes.",
     "error": "Expecting value: line 1 column 1 (char 0)",
     "pass": "pass_2",
-    "probe_id": "coverage_dryrun:raw_evidence:ps-16894596edd8:visual_effect"
+    "probe_id": "coverage_dryrun:raw_plus_computed_record:ps-16894596edd8:visual_effect"
    },
    {
     "content": "I think the answer is probably yes.",
     "error": "Expecting value: line 1 column 1 (char 0)",
     "pass": "pass_1",
-    "probe_id": "coverage_dryrun:raw_evidence:ps-335398b5511f:visual_effect"
+    "probe_id": "coverage_dryrun:raw_plus_computed_record:ps-335398b5511f:visual_effect"
    }
   ],
   "oracle_3pct_invalid_pass2": [
@@ -173,63 +205,63 @@
     "content": "```json",
     "error": "Expecting value: line 1 column 1 (char 0)",
     "pass": "pass_2",
-    "probe_id": "coverage_dryrun:raw_evidence:ps-16894596edd8:visual_effect"
+    "probe_id": "coverage_dryrun:raw_plus_computed_record:ps-f5ba290bcd1b:visual_effect"
    },
    {
     "content": "```json",
     "error": "Expecting value: line 1 column 1 (char 0)",
     "pass": "pass_2",
-    "probe_id": "coverage_dryrun:raw_evidence:ps-2413abda966a:visual_effect"
+    "probe_id": "coverage_dryrun:raw_plus_computed_record:ps-77084c18702c:visual_effect"
    },
    {
     "content": "```json",
     "error": "Expecting value: line 1 column 1 (char 0)",
     "pass": "pass_2",
-    "probe_id": "coverage_dryrun:raw_evidence:ps-741cdda0e1c8:visual_effect"
+    "probe_id": "coverage_dryrun:raw_plus_computed_record:ps-9fa4d6d13ea6:visual_effect"
    },
    {
     "content": "```json",
     "error": "Expecting value: line 1 column 1 (char 0)",
     "pass": "pass_2",
-    "probe_id": "coverage_dryrun:raw_evidence:ps-d4a0075f86dd:visual_effect"
+    "probe_id": "coverage_dryrun:raw_plus_computed_record:ps-57e720b50dfa:region_changed:R2"
    },
    {
     "content": "```json",
     "error": "Expecting value: line 1 column 1 (char 0)",
     "pass": "pass_2",
-    "probe_id": "coverage_dryrun:raw_evidence:ps-7f6b63a87860:visual_effect"
+    "probe_id": "coverage_dryrun:raw_plus_computed_record:ps-935e91da6259:region_changed:R3"
    }
   ],
   "schema_faults": [
    {
-    "content": "{\"answer\":\"maybe\"}",
-    "error": "schema: 'maybe' is not one of ['no_observed_change', 'changed_then_returned', 'final_frame_differs', 'indete",
+    "content": "{\"answer\": \"changed_then_returned\", \"why\": \"x\"}",
+    "error": "schema: Additional properties are not allowed ('why' was unexpected)",
     "pass": "pass_1",
-    "probe_id": "coverage_dryrun:raw_evidence:ps-31185a646c69:visual_effect"
-   },
-   {
-    "content": "{\"answer\":\"maybe\"}",
-    "error": "schema: 'maybe' is not one of ['no_observed_change', 'changed_then_returned', 'final_frame_differs', 'indete",
-    "pass": "pass_2",
-    "probe_id": "coverage_dryrun:raw_evidence:ps-31185a646c69:visual_effect"
-   },
-   {
-    "content": "[\"supported\"]",
-    "error": "schema: ['supported'] is not of type 'object'",
-    "pass": "pass_1",
-    "probe_id": "coverage_dryrun:raw_evidence:ps-16894596edd8:visual_effect"
-   },
-   {
-    "content": "[\"supported\"]",
-    "error": "schema: ['supported'] is not of type 'object'",
-    "pass": "pass_2",
-    "probe_id": "coverage_dryrun:raw_evidence:ps-16894596edd8:visual_effect"
+    "probe_id": "coverage_dryrun:raw_plus_computed_record:ps-31185a646c69:visual_effect"
    },
    {
     "content": "{\"answer\": \"changed_then_returned\", \"why\": \"x\"}",
     "error": "schema: Additional properties are not allowed ('why' was unexpected)",
+    "pass": "pass_2",
+    "probe_id": "coverage_dryrun:raw_plus_computed_record:ps-31185a646c69:visual_effect"
+   },
+   {
+    "content": "[\"supported\"]",
+    "error": "schema: ['supported'] is not of type 'object'",
     "pass": "pass_1",
-    "probe_id": "coverage_dryrun:raw_evidence:ps-335398b5511f:visual_effect"
+    "probe_id": "coverage_dryrun:raw_plus_computed_record:ps-16894596edd8:visual_effect"
+   },
+   {
+    "content": "[\"supported\"]",
+    "error": "schema: ['supported'] is not of type 'object'",
+    "pass": "pass_2",
+    "probe_id": "coverage_dryrun:raw_plus_computed_record:ps-16894596edd8:visual_effect"
+   },
+   {
+    "content": "{\"answer\": NaN}",
+    "error": "non-finite number NaN",
+    "pass": "pass_1",
+    "probe_id": "coverage_dryrun:raw_plus_computed_record:ps-335398b5511f:visual_effect"
    }
   ]
  },
@@ -241,38 +273,12 @@
     "primary": "complete"
    },
    "findings": {
-    "computed_vs_raw": {
-     "improved": [],
-     "regressed": []
-    },
     "safeguard_vs_computed": {
      "improved": [],
      "regressed": []
     }
    },
    "gates": {
-    "raw_evidence": {
-     "false_progress": [
-      "passes",
-      0,
-      126
-     ],
-     "false_subgoal_success": [
-      "passes",
-      0,
-      120
-     ],
-     "unsupported_causal_claim": [
-      "passes",
-      0,
-      176
-     ],
-     "unsupported_usefulness_claim": [
-      "passes",
-      0,
-      116
-     ]
-    },
     "raw_plus_computed_record": {
      "false_progress": [
       "passes",
@@ -319,22 +325,10 @@
     }
    },
    "invalid_counts": {
-    "raw_evidence": 0,
     "raw_plus_computed_record": 0,
     "raw_plus_computed_record_plus_safeguard": 0
    },
    "labels": {
-    "raw_evidence": {
-     "claim_causal": "below_accuracy_floor",
-     "claim_progress": "below_accuracy_floor",
-     "claim_usefulness": "not_diagnostic",
-     "effect_hypothesis": "below_accuracy_floor",
-     "progress_status": "below_accuracy_floor",
-     "region_changed": "below_accuracy_floor",
-     "subgoal_decision": "criterion_met",
-     "subgoal_status": "below_accuracy_floor",
-     "visual_effect": "below_accuracy_floor"
-    },
     "raw_plus_computed_record": {
      "claim_causal": "below_accuracy_floor",
      "claim_progress": "below_accuracy_floor",
@@ -360,21 +354,29 @@
    },
    "log": {
     "ignored_tail_bytes": 0,
-    "lines": 7560,
+    "lines": 5040,
     "recovered": false
    },
-   "log_sha256": "d8a07061c6038036d9f0ce04fbdb47d49fd9af5c89583e44c60bc98ccbb49155",
+   "log_sha256": "db7cadc85ffc987d0543a4d4609dffd04d9bc3be59df17a3a5841564bfb398f1",
    "readiness": {
-    "raw_evidence": "not_eligible",
     "raw_plus_computed_record": "not_eligible",
     "raw_plus_computed_record_plus_safeguard": "not_eligible"
    },
-   "subgoal": {
-    "raw_evidence": [
-     0.3333,
-     1.0,
-     0
+   "readiness_problems": {
+    "raw_plus_computed_record": [
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress",
+     "family below criterion: effect_hypothesis",
+     "family below criterion: progress_status"
     ],
+    "raw_plus_computed_record_plus_safeguard": [
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress",
+     "family below criterion: effect_hypothesis",
+     "family below criterion: progress_status"
+    ]
+   },
+   "subgoal": {
     "raw_plus_computed_record": [
      0.3333,
      1.0,
@@ -387,11 +389,6 @@
     ]
    },
    "uncertainty": {
-    "raw_evidence": [
-     1.0,
-     1.0,
-     0.0
-    ],
     "raw_plus_computed_record": [
      1.0,
      1.0,
@@ -402,6 +399,32 @@
      1.0,
      0.0
     ]
+   },
+   "validity": {
+    "raw_plus_computed_record": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    }
    }
   },
   "condition_contrast": {
@@ -411,19 +434,6 @@
     "primary": "complete"
    },
    "findings": {
-    "computed_vs_raw": {
-     "improved": [
-      "claim_causal",
-      "claim_progress",
-      "claim_usefulness",
-      "effect_hypothesis",
-      "progress_status",
-      "region_changed",
-      "subgoal_status",
-      "visual_effect"
-     ],
-     "regressed": []
-    },
     "safeguard_vs_computed": {
      "improved": [],
      "regressed": [
@@ -438,28 +448,6 @@
     }
    },
    "gates": {
-    "raw_evidence": {
-     "false_progress": [
-      "fails",
-      66,
-      126
-     ],
-     "false_subgoal_success": [
-      "fails",
-      40,
-      120
-     ],
-     "unsupported_causal_claim": [
-      "fails",
-      68,
-      176
-     ],
-     "unsupported_usefulness_claim": [
-      "fails",
-      59,
-      116
-     ]
-    },
     "raw_plus_computed_record": {
      "false_progress": [
       "passes",
@@ -506,22 +494,10 @@
     }
    },
    "invalid_counts": {
-    "raw_evidence": 0,
     "raw_plus_computed_record": 0,
     "raw_plus_computed_record_plus_safeguard": 0
    },
    "labels": {
-    "raw_evidence": {
-     "claim_causal": "inconclusive",
-     "claim_progress": "below_accuracy_floor",
-     "claim_usefulness": "not_diagnostic",
-     "effect_hypothesis": "below_accuracy_floor",
-     "progress_status": "inconclusive",
-     "region_changed": "below_accuracy_floor",
-     "subgoal_decision": "criterion_met",
-     "subgoal_status": "inconclusive",
-     "visual_effect": "inconclusive"
-    },
     "raw_plus_computed_record": {
      "claim_causal": "criterion_met",
      "claim_progress": "criterion_met",
@@ -547,21 +523,24 @@
    },
    "log": {
     "ignored_tail_bytes": 0,
-    "lines": 7560,
+    "lines": 5040,
     "recovered": false
    },
-   "log_sha256": "242a5f3277f1ca480822387ce9c23e45f130fc7766097aa421b082d15d916b02",
+   "log_sha256": "8c4283ab302903d267cd755ea4b5962fb830f649031574e736ea57fe95fa6563",
    "readiness": {
-    "raw_evidence": "not_eligible",
     "raw_plus_computed_record": "eligible_for_memory_or_supervision",
     "raw_plus_computed_record_plus_safeguard": "not_eligible"
    },
+   "readiness_problems": {
+    "raw_plus_computed_record": [],
+    "raw_plus_computed_record_plus_safeguard": [
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress",
+     "family below criterion: effect_hypothesis",
+     "family below criterion: progress_status"
+    ]
+   },
    "subgoal": {
-    "raw_evidence": [
-     0.7778,
-     1.0,
-     0
-    ],
     "raw_plus_computed_record": [
      1.0,
      1.0,
@@ -574,11 +553,6 @@
     ]
    },
    "uncertainty": {
-    "raw_evidence": [
-     0.4041,
-     0.0,
-     1.0
-    ],
     "raw_plus_computed_record": [
      1.0,
      0.0,
@@ -589,9 +563,196 @@
      1.0,
      0.0
     ]
+   },
+   "validity": {
+    "raw_plus_computed_record": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    }
    }
   },
   "corrupt_middle_line": "refused: line 5: not JSON (Unterminated string starting at: line 1 column 75 (char 74))",
+  "gate_questions_invalid": {
+   "completeness": {
+    "all": "complete",
+    "over_claim_gates": "complete",
+    "primary": "complete"
+   },
+   "findings": {
+    "safeguard_vs_computed": {
+     "improved": [],
+     "regressed": []
+    }
+   },
+   "gates": {
+    "raw_plus_computed_record": {
+     "false_progress": [
+      "insufficient_valid_opportunities",
+      0,
+      0
+     ],
+     "false_subgoal_success": [
+      "insufficient_valid_opportunities",
+      0,
+      0
+     ],
+     "unsupported_causal_claim": [
+      "insufficient_valid_opportunities",
+      0,
+      0
+     ],
+     "unsupported_usefulness_claim": [
+      "insufficient_valid_opportunities",
+      0,
+      0
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "false_progress": [
+      "insufficient_valid_opportunities",
+      0,
+      0
+     ],
+     "false_subgoal_success": [
+      "insufficient_valid_opportunities",
+      0,
+      0
+     ],
+     "unsupported_causal_claim": [
+      "insufficient_valid_opportunities",
+      0,
+      0
+     ],
+     "unsupported_usefulness_claim": [
+      "insufficient_valid_opportunities",
+      0,
+      0
+     ]
+    }
+   },
+   "invalid_counts": {
+    "raw_plus_computed_record": 1150,
+    "raw_plus_computed_record_plus_safeguard": 1150
+   },
+   "labels": {
+    "raw_plus_computed_record": {
+     "claim_causal": "below_accuracy_floor",
+     "claim_progress": "inconclusive",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "below_accuracy_floor",
+     "progress_status": "below_accuracy_floor",
+     "region_changed": "criterion_met",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "below_accuracy_floor",
+     "visual_effect": "criterion_met"
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "claim_causal": "below_accuracy_floor",
+     "claim_progress": "inconclusive",
+     "claim_usefulness": "not_diagnostic",
+     "effect_hypothesis": "below_accuracy_floor",
+     "progress_status": "below_accuracy_floor",
+     "region_changed": "criterion_met",
+     "subgoal_decision": "criterion_met",
+     "subgoal_status": "below_accuracy_floor",
+     "visual_effect": "criterion_met"
+    }
+   },
+   "log": {
+    "ignored_tail_bytes": 0,
+    "lines": 5040,
+    "recovered": false
+   },
+   "log_sha256": "0d52706fdd1c64b4d91badd2165997d2be40aa299d8df4c949f8c7240ba55386",
+   "readiness": {
+    "raw_plus_computed_record": "not_eligible",
+    "raw_plus_computed_record_plus_safeguard": "not_eligible"
+   },
+   "readiness_problems": {
+    "raw_plus_computed_record": [
+     "validity not met: all_responses invalid rate 0.4563 > 0.01",
+     "validity not met: gate_member_responses invalid rate 1.0 > 0.01",
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress"
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     "validity not met: all_responses invalid rate 0.4563 > 0.01",
+     "validity not met: gate_member_responses invalid rate 1.0 > 0.01",
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress"
+    ]
+   },
+   "subgoal": {
+    "raw_plus_computed_record": [
+     0.3333,
+     1.0,
+     0
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     0.3333,
+     1.0,
+     0
+    ]
+   },
+   "uncertainty": {
+    "raw_plus_computed_record": [
+     0.2122,
+     0.0,
+     0.0
+    ],
+    "raw_plus_computed_record_plus_safeguard": [
+     0.2122,
+     0.0,
+     0.0
+    ]
+   },
+   "validity": {
+    "raw_plus_computed_record": {
+     "all_responses": [
+      "fails",
+      1150,
+      2520
+     ],
+     "gate_member_responses": [
+      "fails",
+      1150,
+      1150
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "all_responses": [
+      "fails",
+      1150,
+      2520
+     ],
+     "gate_member_responses": [
+      "fails",
+      1150,
+      1150
+     ]
+    }
+   }
+  },
   "invalid_text": {
    "completeness": {
     "all": "complete",
@@ -599,100 +760,62 @@
     "primary": "complete"
    },
    "findings": {
-    "computed_vs_raw": {
-     "improved": [],
-     "regressed": []
-    },
     "safeguard_vs_computed": {
      "improved": [],
      "regressed": []
     }
    },
    "gates": {
-    "raw_evidence": {
-     "false_progress": [
-      "fails",
-      126,
-      126
-     ],
-     "false_subgoal_success": [
-      "fails",
-      120,
-      120
-     ],
-     "unsupported_causal_claim": [
-      "fails",
-      176,
-      176
-     ],
-     "unsupported_usefulness_claim": [
-      "fails",
-      116,
-      116
-     ]
-    },
     "raw_plus_computed_record": {
      "false_progress": [
-      "fails",
-      126,
-      126
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "false_subgoal_success": [
-      "fails",
-      120,
-      120
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "unsupported_causal_claim": [
-      "fails",
-      176,
-      176
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "unsupported_usefulness_claim": [
-      "fails",
-      116,
-      116
+      "insufficient_valid_opportunities",
+      0,
+      0
      ]
     },
     "raw_plus_computed_record_plus_safeguard": {
      "false_progress": [
-      "fails",
-      126,
-      126
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "false_subgoal_success": [
-      "fails",
-      120,
-      120
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "unsupported_causal_claim": [
-      "fails",
-      176,
-      176
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "unsupported_usefulness_claim": [
-      "fails",
-      116,
-      116
+      "insufficient_valid_opportunities",
+      0,
+      0
      ]
     }
    },
    "invalid_counts": {
-    "raw_evidence": 2520,
     "raw_plus_computed_record": 2520,
     "raw_plus_computed_record_plus_safeguard": 2520
    },
    "labels": {
-    "raw_evidence": {
-     "claim_causal": "below_accuracy_floor",
-     "claim_progress": "below_accuracy_floor",
-     "claim_usefulness": "not_diagnostic",
-     "effect_hypothesis": "below_accuracy_floor",
-     "progress_status": "below_accuracy_floor",
-     "region_changed": "below_accuracy_floor",
-     "subgoal_decision": "below_accuracy_floor",
-     "subgoal_status": "below_accuracy_floor",
-     "visual_effect": "below_accuracy_floor"
-    },
     "raw_plus_computed_record": {
      "claim_causal": "below_accuracy_floor",
      "claim_progress": "below_accuracy_floor",
@@ -718,21 +841,29 @@
    },
    "log": {
     "ignored_tail_bytes": 0,
-    "lines": 7560,
+    "lines": 5040,
     "recovered": false
    },
-   "log_sha256": "eef79546a594d501db0415b0247f2f7a6cf81862027998f011e81c05e9cd44b6",
+   "log_sha256": "ec436d8007da75d7593b7fa2d1a3f1a9f031711989bb51e4e9e74adbec2ef9fe",
    "readiness": {
-    "raw_evidence": "not_eligible",
     "raw_plus_computed_record": "not_eligible",
     "raw_plus_computed_record_plus_safeguard": "not_eligible"
    },
-   "subgoal": {
-    "raw_evidence": [
-     0.0,
-     0.0,
-     0
+   "readiness_problems": {
+    "raw_plus_computed_record": [
+     "validity not met: all_responses invalid rate 1.0 > 0.01",
+     "validity not met: gate_member_responses invalid rate 1.0 > 0.01",
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress"
     ],
+    "raw_plus_computed_record_plus_safeguard": [
+     "validity not met: all_responses invalid rate 1.0 > 0.01",
+     "validity not met: gate_member_responses invalid rate 1.0 > 0.01",
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress"
+    ]
+   },
+   "subgoal": {
     "raw_plus_computed_record": [
      0.0,
      0.0,
@@ -745,21 +876,42 @@
     ]
    },
    "uncertainty": {
-    "raw_evidence": [
-     0.0,
-     0.0,
-     1.0
-    ],
     "raw_plus_computed_record": [
      0.0,
      0.0,
-     1.0
+     0.0
     ],
     "raw_plus_computed_record_plus_safeguard": [
      0.0,
      0.0,
-     1.0
+     0.0
     ]
+   },
+   "validity": {
+    "raw_plus_computed_record": {
+     "all_responses": [
+      "fails",
+      2520,
+      2520
+     ],
+     "gate_member_responses": [
+      "fails",
+      1150,
+      1150
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "all_responses": [
+      "fails",
+      2520,
+      2520
+     ],
+     "gate_member_responses": [
+      "fails",
+      1150,
+      1150
+     ]
+    }
    }
   },
   "oracle": {
@@ -769,38 +921,12 @@
     "primary": "complete"
    },
    "findings": {
-    "computed_vs_raw": {
-     "improved": [],
-     "regressed": []
-    },
     "safeguard_vs_computed": {
      "improved": [],
      "regressed": []
     }
    },
    "gates": {
-    "raw_evidence": {
-     "false_progress": [
-      "passes",
-      0,
-      126
-     ],
-     "false_subgoal_success": [
-      "passes",
-      0,
-      120
-     ],
-     "unsupported_causal_claim": [
-      "passes",
-      0,
-      176
-     ],
-     "unsupported_usefulness_claim": [
-      "passes",
-      0,
-      116
-     ]
-    },
     "raw_plus_computed_record": {
      "false_progress": [
       "passes",
@@ -847,22 +973,10 @@
     }
    },
    "invalid_counts": {
-    "raw_evidence": 0,
     "raw_plus_computed_record": 0,
     "raw_plus_computed_record_plus_safeguard": 0
    },
    "labels": {
-    "raw_evidence": {
-     "claim_causal": "criterion_met",
-     "claim_progress": "criterion_met",
-     "claim_usefulness": "not_diagnostic",
-     "effect_hypothesis": "criterion_met",
-     "progress_status": "criterion_met",
-     "region_changed": "criterion_met",
-     "subgoal_decision": "criterion_met",
-     "subgoal_status": "criterion_met",
-     "visual_effect": "criterion_met"
-    },
     "raw_plus_computed_record": {
      "claim_causal": "criterion_met",
      "claim_progress": "criterion_met",
@@ -888,22 +1002,20 @@
    },
    "log": {
     "ignored_tail_bytes": 0,
-    "lines": 7560,
+    "lines": 5040,
     "recovered": false
    },
-   "log_sha256": "95e783688a196ca08c7bc1385c4777e23f56cb8e55989ac166e03803a9e3f4e8",
+   "log_sha256": "88ae83abc9a5cfa5566d063d9849e0d07e983d6dceb867dbdc8edb97b819bf8d",
    "readiness": {
-    "raw_evidence": "eligible_for_memory_or_supervision",
     "raw_plus_computed_record": "eligible_for_memory_or_supervision",
     "raw_plus_computed_record_plus_safeguard": "eligible_for_memory_or_supervision"
    },
+   "readiness_problems": {
+    "raw_plus_computed_record": [],
+    "raw_plus_computed_record_plus_safeguard": []
+   },
    "rescore_identical": true,
    "subgoal": {
-    "raw_evidence": [
-     1.0,
-     1.0,
-     0
-    ],
     "raw_plus_computed_record": [
      1.0,
      1.0,
@@ -916,11 +1028,6 @@
     ]
    },
    "uncertainty": {
-    "raw_evidence": [
-     1.0,
-     0.0,
-     0.0
-    ],
     "raw_plus_computed_record": [
      1.0,
      0.0,
@@ -931,6 +1038,32 @@
      0.0,
      0.0
     ]
+   },
+   "validity": {
+    "raw_plus_computed_record": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    }
    }
   },
   "oracle_3pct_invalid_pass2": {
@@ -940,100 +1073,62 @@
     "primary": "complete"
    },
    "findings": {
-    "computed_vs_raw": {
-     "improved": [],
-     "regressed": []
-    },
     "safeguard_vs_computed": {
      "improved": [],
      "regressed": []
     }
    },
    "gates": {
-    "raw_evidence": {
-     "false_progress": [
-      "fails",
-      6,
-      126
-     ],
-     "false_subgoal_success": [
-      "fails",
-      5,
-      120
-     ],
-     "unsupported_causal_claim": [
-      "fails",
-      7,
-      176
-     ],
-     "unsupported_usefulness_claim": [
-      "passes",
-      2,
-      116
-     ]
-    },
     "raw_plus_computed_record": {
      "false_progress": [
-      "fails",
-      7,
+      "passes",
+      0,
       126
      ],
      "false_subgoal_success": [
       "passes",
-      1,
+      0,
       120
      ],
      "unsupported_causal_claim": [
-      "fails",
-      11,
+      "passes",
+      0,
       176
      ],
      "unsupported_usefulness_claim": [
-      "fails",
-      3,
+      "passes",
+      0,
       116
      ]
     },
     "raw_plus_computed_record_plus_safeguard": {
      "false_progress": [
-      "fails",
-      3,
+      "passes",
+      0,
       126
      ],
      "false_subgoal_success": [
-      "fails",
-      6,
+      "passes",
+      0,
       120
      ],
      "unsupported_causal_claim": [
-      "fails",
-      5,
+      "passes",
+      0,
       176
      ],
      "unsupported_usefulness_claim": [
       "passes",
-      2,
+      0,
       116
      ]
     }
    },
    "invalid_counts": {
-    "raw_evidence": 43,
     "raw_plus_computed_record": 46,
     "raw_plus_computed_record_plus_safeguard": 35
    },
    "labels": {
-    "raw_evidence": {
-     "claim_causal": "criterion_met",
-     "claim_progress": "criterion_met",
-     "claim_usefulness": "not_diagnostic",
-     "effect_hypothesis": "criterion_met",
-     "progress_status": "criterion_met",
-     "region_changed": "criterion_met",
-     "subgoal_decision": "criterion_met",
-     "subgoal_status": "criterion_met",
-     "visual_effect": "criterion_met"
-    },
     "raw_plus_computed_record": {
      "claim_causal": "criterion_met",
      "claim_progress": "criterion_met",
@@ -1059,21 +1154,25 @@
    },
    "log": {
     "ignored_tail_bytes": 0,
-    "lines": 7560,
+    "lines": 5040,
     "recovered": false
    },
-   "log_sha256": "e84f3fd45ef44596fae6ec4db9dd6cf2be5c8086262078cf8d58a978f47b6184",
+   "log_sha256": "b7d47ed7fcd1c8a9d08af3b5b5f783b1b67e2fac4eab0dc3f42978e7fa68214b",
    "readiness": {
-    "raw_evidence": "not_eligible",
     "raw_plus_computed_record": "not_eligible",
     "raw_plus_computed_record_plus_safeguard": "not_eligible"
    },
-   "subgoal": {
-    "raw_evidence": [
-     0.9667,
-     0.9667,
-     0
+   "readiness_problems": {
+    "raw_plus_computed_record": [
+     "validity not met: all_responses invalid rate 0.0183 > 0.01",
+     "validity not met: gate_member_responses invalid rate 0.0191 > 0.01"
     ],
+    "raw_plus_computed_record_plus_safeguard": [
+     "validity not met: all_responses invalid rate 0.0139 > 0.01",
+     "validity not met: gate_member_responses invalid rate 0.0139 > 0.01"
+    ]
+   },
+   "subgoal": {
     "raw_plus_computed_record": [
      0.9778,
      0.9667,
@@ -1086,21 +1185,42 @@
     ]
    },
    "uncertainty": {
-    "raw_evidence": [
-     0.9631,
-     0.0,
-     0.0222
-    ],
     "raw_plus_computed_record": [
      0.9576,
      0.0,
-     0.0667
+     0.0
     ],
     "raw_plus_computed_record_plus_safeguard": [
      0.9797,
      0.0,
-     0.0222
+     0.0
     ]
+   },
+   "validity": {
+    "raw_plus_computed_record": {
+     "all_responses": [
+      "fails",
+      46,
+      2520
+     ],
+     "gate_member_responses": [
+      "fails",
+      22,
+      1150
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "all_responses": [
+      "fails",
+      35,
+      2520
+     ],
+     "gate_member_responses": [
+      "fails",
+      16,
+      1150
+     ]
+    }
    }
   },
   "oracle_interrupted_append": {
@@ -1110,17 +1230,13 @@
     "primary": "incomplete"
    },
    "findings": {
-    "computed_vs_raw": {
-     "improved": [],
-     "regressed": []
-    },
     "safeguard_vs_computed": {
      "improved": [],
      "regressed": []
     }
    },
    "gates": {
-    "raw_evidence": {
+    "raw_plus_computed_record": {
      "false_progress": [
       "passes",
       0,
@@ -1142,28 +1258,6 @@
       116
      ]
     },
-    "raw_plus_computed_record": {
-     "false_progress": [
-      "passes",
-      0,
-      126
-     ],
-     "false_subgoal_success": [
-      "passes",
-      0,
-      120
-     ],
-     "unsupported_causal_claim": [
-      "passes",
-      0,
-      176
-     ],
-     "unsupported_usefulness_claim": [
-      "passes",
-      0,
-      116
-     ]
-    },
     "raw_plus_computed_record_plus_safeguard": {
      "false_progress": [
       "passes",
@@ -1188,27 +1282,15 @@
     }
    },
    "invalid_counts": {
-    "raw_evidence": 0,
     "raw_plus_computed_record": 0,
     "raw_plus_computed_record_plus_safeguard": 0
    },
    "labels": {
-    "raw_evidence": {
-     "claim_causal": "criterion_met",
-     "claim_progress": "criterion_met",
-     "claim_usefulness": "not_diagnostic",
-     "effect_hypothesis": "incomplete",
-     "progress_status": "criterion_met",
-     "region_changed": "criterion_met",
-     "subgoal_decision": "criterion_met",
-     "subgoal_status": "criterion_met",
-     "visual_effect": "criterion_met"
-    },
     "raw_plus_computed_record": {
      "claim_causal": "criterion_met",
      "claim_progress": "criterion_met",
      "claim_usefulness": "not_diagnostic",
-     "effect_hypothesis": "criterion_met",
+     "effect_hypothesis": "incomplete",
      "progress_status": "criterion_met",
      "region_changed": "criterion_met",
      "subgoal_decision": "criterion_met",
@@ -1228,21 +1310,23 @@
     }
    },
    "log": {
-    "ignored_tail_bytes": 115,
-    "lines": 7559,
+    "ignored_tail_bytes": 127,
+    "lines": 5039,
     "recovered": true
    },
    "readiness": {
-    "raw_evidence": "incomplete",
     "raw_plus_computed_record": "incomplete",
     "raw_plus_computed_record_plus_safeguard": "incomplete"
    },
-   "subgoal": {
-    "raw_evidence": [
-     1.0,
-     1.0,
-     0
+   "readiness_problems": {
+    "raw_plus_computed_record": [
+     "recovered evidence is never eligible"
     ],
+    "raw_plus_computed_record_plus_safeguard": [
+     "recovered evidence is never eligible"
+    ]
+   },
+   "subgoal": {
     "raw_plus_computed_record": [
      1.0,
      1.0,
@@ -1255,13 +1339,8 @@
     ]
    },
    "uncertainty": {
-    "raw_evidence": [
-     0.9982,
-     0.0,
-     0.0
-    ],
     "raw_plus_computed_record": [
-     1.0,
+     0.9982,
      0.0,
      0.0
     ],
@@ -1270,6 +1349,32 @@
      0.0,
      0.0
     ]
+   },
+   "validity": {
+    "raw_plus_computed_record": {
+     "all_responses": [
+      "passes",
+      0,
+      2519
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1149
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    }
    }
   },
   "oracle_missing_one_gate_answer": {
@@ -1279,17 +1384,13 @@
     "primary": "incomplete"
    },
    "findings": {
-    "computed_vs_raw": {
-     "improved": [],
-     "regressed": []
-    },
     "safeguard_vs_computed": {
      "improved": [],
      "regressed": []
     }
    },
    "gates": {
-    "raw_evidence": {
+    "raw_plus_computed_record": {
      "false_progress": [
       "incomplete",
       0,
@@ -1311,28 +1412,6 @@
       116
      ]
     },
-    "raw_plus_computed_record": {
-     "false_progress": [
-      "passes",
-      0,
-      126
-     ],
-     "false_subgoal_success": [
-      "passes",
-      0,
-      120
-     ],
-     "unsupported_causal_claim": [
-      "passes",
-      0,
-      176
-     ],
-     "unsupported_usefulness_claim": [
-      "passes",
-      0,
-      116
-     ]
-    },
     "raw_plus_computed_record_plus_safeguard": {
      "false_progress": [
       "passes",
@@ -1357,12 +1436,11 @@
     }
    },
    "invalid_counts": {
-    "raw_evidence": 0,
     "raw_plus_computed_record": 0,
     "raw_plus_computed_record_plus_safeguard": 0
    },
    "labels": {
-    "raw_evidence": {
+    "raw_plus_computed_record": {
      "claim_causal": "criterion_met",
      "claim_progress": "criterion_met",
      "claim_usefulness": "not_diagnostic",
@@ -1373,17 +1451,6 @@
      "subgoal_status": "criterion_met",
      "visual_effect": "criterion_met"
     },
-    "raw_plus_computed_record": {
-     "claim_causal": "criterion_met",
-     "claim_progress": "criterion_met",
-     "claim_usefulness": "not_diagnostic",
-     "effect_hypothesis": "criterion_met",
-     "progress_status": "criterion_met",
-     "region_changed": "criterion_met",
-     "subgoal_decision": "criterion_met",
-     "subgoal_status": "criterion_met",
-     "visual_effect": "criterion_met"
-    },
     "raw_plus_computed_record_plus_safeguard": {
      "claim_causal": "criterion_met",
      "claim_progress": "criterion_met",
@@ -1397,16 +1464,18 @@
     }
    },
    "readiness": {
-    "raw_evidence": "incomplete",
     "raw_plus_computed_record": "incomplete",
     "raw_plus_computed_record_plus_safeguard": "incomplete"
    },
-   "subgoal": {
-    "raw_evidence": [
-     1.0,
-     1.0,
-     0
+   "readiness_problems": {
+    "raw_plus_computed_record": [
+     "a primary or over-claim-gate answer is missing"
     ],
+    "raw_plus_computed_record_plus_safeguard": [
+     "a primary or over-claim-gate answer is missing"
+    ]
+   },
+   "subgoal": {
     "raw_plus_computed_record": [
      1.0,
      1.0,
@@ -1419,13 +1488,8 @@
     ]
    },
    "uncertainty": {
-    "raw_evidence": [
-     0.9982,
-     0.0,
-     0.0
-    ],
     "raw_plus_computed_record": [
-     1.0,
+     0.9982,
      0.0,
      0.0
     ],
@@ -1434,6 +1498,32 @@
      0.0,
      0.0
     ]
+   },
+   "validity": {
+    "raw_plus_computed_record": {
+     "all_responses": [
+      "passes",
+      0,
+      2519
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1149
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    }
    }
   },
   "over_claimer": {
@@ -1443,38 +1533,12 @@
     "primary": "complete"
    },
    "findings": {
-    "computed_vs_raw": {
-     "improved": [],
-     "regressed": []
-    },
     "safeguard_vs_computed": {
      "improved": [],
      "regressed": []
     }
    },
    "gates": {
-    "raw_evidence": {
-     "false_progress": [
-      "fails",
-      66,
-      126
-     ],
-     "false_subgoal_success": [
-      "fails",
-      40,
-      120
-     ],
-     "unsupported_causal_claim": [
-      "fails",
-      68,
-      176
-     ],
-     "unsupported_usefulness_claim": [
-      "fails",
-      59,
-      116
-     ]
-    },
     "raw_plus_computed_record": {
      "false_progress": [
       "fails",
@@ -1521,22 +1585,10 @@
     }
    },
    "invalid_counts": {
-    "raw_evidence": 0,
     "raw_plus_computed_record": 0,
     "raw_plus_computed_record_plus_safeguard": 0
    },
    "labels": {
-    "raw_evidence": {
-     "claim_causal": "inconclusive",
-     "claim_progress": "below_accuracy_floor",
-     "claim_usefulness": "not_diagnostic",
-     "effect_hypothesis": "below_accuracy_floor",
-     "progress_status": "inconclusive",
-     "region_changed": "below_accuracy_floor",
-     "subgoal_decision": "criterion_met",
-     "subgoal_status": "inconclusive",
-     "visual_effect": "inconclusive"
-    },
     "raw_plus_computed_record": {
      "claim_causal": "inconclusive",
      "claim_progress": "below_accuracy_floor",
@@ -1562,21 +1614,29 @@
    },
    "log": {
     "ignored_tail_bytes": 0,
-    "lines": 7560,
+    "lines": 5040,
     "recovered": false
    },
-   "log_sha256": "f7ab652cae0e27400c35062f45dd8ff67c177179055ae5185074b85a18ae63d9",
+   "log_sha256": "1ca31918896f951a2adcf89c11ee11893612e2b86097fbc4e2e3bb78c56160a0",
    "readiness": {
-    "raw_evidence": "not_eligible",
     "raw_plus_computed_record": "not_eligible",
     "raw_plus_computed_record_plus_safeguard": "not_eligible"
    },
-   "subgoal": {
-    "raw_evidence": [
-     0.7778,
-     1.0,
-     0
+   "readiness_problems": {
+    "raw_plus_computed_record": [
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress",
+     "family below criterion: effect_hypothesis",
+     "family below criterion: progress_status"
     ],
+    "raw_plus_computed_record_plus_safeguard": [
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress",
+     "family below criterion: effect_hypothesis",
+     "family below criterion: progress_status"
+    ]
+   },
+   "subgoal": {
     "raw_plus_computed_record": [
      0.7778,
      1.0,
@@ -1589,11 +1649,6 @@
     ]
    },
    "uncertainty": {
-    "raw_evidence": [
-     0.4041,
-     0.0,
-     1.0
-    ],
     "raw_plus_computed_record": [
      0.4041,
      0.0,
@@ -1604,6 +1659,32 @@
      0.0,
      1.0
     ]
+   },
+   "validity": {
+    "raw_plus_computed_record": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "all_responses": [
+      "passes",
+      0,
+      2520
+     ],
+     "gate_member_responses": [
+      "passes",
+      0,
+      1150
+     ]
+    }
    }
   },
   "schema_faults": {
@@ -1613,100 +1694,62 @@
     "primary": "complete"
    },
    "findings": {
-    "computed_vs_raw": {
-     "improved": [],
-     "regressed": []
-    },
     "safeguard_vs_computed": {
      "improved": [],
      "regressed": []
     }
    },
    "gates": {
-    "raw_evidence": {
-     "false_progress": [
-      "fails",
-      126,
-      126
-     ],
-     "false_subgoal_success": [
-      "fails",
-      120,
-      120
-     ],
-     "unsupported_causal_claim": [
-      "fails",
-      176,
-      176
-     ],
-     "unsupported_usefulness_claim": [
-      "fails",
-      116,
-      116
-     ]
-    },
     "raw_plus_computed_record": {
      "false_progress": [
-      "fails",
-      126,
-      126
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "false_subgoal_success": [
-      "fails",
-      120,
-      120
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "unsupported_causal_claim": [
-      "fails",
-      176,
-      176
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "unsupported_usefulness_claim": [
-      "fails",
-      116,
-      116
+      "insufficient_valid_opportunities",
+      0,
+      0
      ]
     },
     "raw_plus_computed_record_plus_safeguard": {
      "false_progress": [
-      "fails",
-      126,
-      126
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "false_subgoal_success": [
-      "fails",
-      120,
-      120
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "unsupported_causal_claim": [
-      "fails",
-      176,
-      176
+      "insufficient_valid_opportunities",
+      0,
+      0
      ],
      "unsupported_usefulness_claim": [
-      "fails",
-      116,
-      116
+      "insufficient_valid_opportunities",
+      0,
+      0
      ]
     }
    },
    "invalid_counts": {
-    "raw_evidence": 2520,
     "raw_plus_computed_record": 2520,
     "raw_plus_computed_record_plus_safeguard": 2520
    },
    "labels": {
-    "raw_evidence": {
-     "claim_causal": "below_accuracy_floor",
-     "claim_progress": "below_accuracy_floor",
-     "claim_usefulness": "not_diagnostic",
-     "effect_hypothesis": "below_accuracy_floor",
-     "progress_status": "below_accuracy_floor",
-     "region_changed": "below_accuracy_floor",
-     "subgoal_decision": "below_accuracy_floor",
-     "subgoal_status": "below_accuracy_floor",
-     "visual_effect": "below_accuracy_floor"
-    },
     "raw_plus_computed_record": {
      "claim_causal": "below_accuracy_floor",
      "claim_progress": "below_accuracy_floor",
@@ -1732,21 +1775,29 @@
    },
    "log": {
     "ignored_tail_bytes": 0,
-    "lines": 7560,
+    "lines": 5040,
     "recovered": false
    },
-   "log_sha256": "c665396586a271c157274e6795cf8018d7ff361a4167f6683a32d464f098be81",
+   "log_sha256": "d998d2c43204e5e9ddf6b798ab1bca2099f62250662be300ba9d456df7551c97",
    "readiness": {
-    "raw_evidence": "not_eligible",
     "raw_plus_computed_record": "not_eligible",
     "raw_plus_computed_record_plus_safeguard": "not_eligible"
    },
-   "subgoal": {
-    "raw_evidence": [
-     0.0,
-     0.0,
-     0
+   "readiness_problems": {
+    "raw_plus_computed_record": [
+     "validity not met: all_responses invalid rate 1.0 > 0.01",
+     "validity not met: gate_member_responses invalid rate 1.0 > 0.01",
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress"
     ],
+    "raw_plus_computed_record_plus_safeguard": [
+     "validity not met: all_responses invalid rate 1.0 > 0.01",
+     "validity not met: gate_member_responses invalid rate 1.0 > 0.01",
+     "family below criterion: claim_causal",
+     "family below criterion: claim_progress"
+    ]
+   },
+   "subgoal": {
     "raw_plus_computed_record": [
      0.0,
      0.0,
@@ -1759,39 +1810,134 @@
     ]
    },
    "uncertainty": {
-    "raw_evidence": [
-     0.0,
-     0.0,
-     1.0
-    ],
     "raw_plus_computed_record": [
      0.0,
      0.0,
-     1.0
+     0.0
     ],
     "raw_plus_computed_record_plus_safeguard": [
      0.0,
      0.0,
-     1.0
+     0.0
     ]
+   },
+   "validity": {
+    "raw_plus_computed_record": {
+     "all_responses": [
+      "fails",
+      2520,
+      2520
+     ],
+     "gate_member_responses": [
+      "fails",
+      1150,
+      1150
+     ]
+    },
+    "raw_plus_computed_record_plus_safeguard": {
+     "all_responses": [
+      "fails",
+      2520,
+      2520
+     ],
+     "gate_member_responses": [
+      "fails",
+      1150,
+      1150
+     ]
+    }
    }
   }
  },
+ "scoring_revision": "r1: over-claim gates read valid answers only; invalid output counts as incorrect and against the validity criterion (overall and gate-member invalid rate <= 0.01)",
  "version": "progress_subgoal_v1_questions_draft",
  "workload_estimate": {
+  "admission_cutoff_seconds": 3000,
   "chars_per_token_calibration": 2.3675,
-  "development": {
-   "calls": 369,
-   "estimated_largest_prompt_tokens": 4993,
-   "estimated_prompt_tokens": 899174,
-   "questions_per_condition": 123
+  "completion_tokens_assumed": 20,
+  "designs": {
+   "development_two_arms": {
+    "calls": 246,
+    "estimated_largest_prompt_tokens": 4993,
+    "estimated_mean_prompt_tokens": 2858,
+    "estimated_prompt_tokens": 702991,
+    "question_seconds_at_fit": 51,
+    "scenarios": {}
+   },
+   "optional_three_arms": {
+    "calls": 7560,
+    "estimated_largest_prompt_tokens": 5604,
+    "estimated_mean_prompt_tokens": 2444,
+    "estimated_prompt_tokens": 18479011,
+    "question_seconds_at_fit": 1531,
+    "scenarios": {
+     "allowance_overhead_fit_rates": {
+      "coverage_dryrun/pass_1_ends_at_seconds": 2306,
+      "coverage_dryrun/pass_2_ends_at_seconds": 3071,
+      "decision_fits_admission_cutoff": false,
+      "questions_start_seconds": 1540
+     },
+     "allowance_overhead_two_times_slower": {
+      "coverage_dryrun/pass_1_ends_at_seconds": 3071,
+      "coverage_dryrun/pass_2_ends_at_seconds": 4602,
+      "decision_fits_admission_cutoff": false,
+      "questions_start_seconds": 1540
+     },
+     "measured_overhead_fit_rates": {
+      "coverage_dryrun/pass_1_ends_at_seconds": 1727,
+      "coverage_dryrun/pass_2_ends_at_seconds": 2492,
+      "decision_fits_admission_cutoff": true,
+      "questions_start_seconds": 961
+     }
+    }
+   },
+   "primary_two_arms": {
+    "calls": 5040,
+    "estimated_largest_prompt_tokens": 5604,
+    "estimated_mean_prompt_tokens": 2860,
+    "estimated_prompt_tokens": 14412999,
+    "question_seconds_at_fit": 1051,
+    "scenarios": {
+     "allowance_overhead_fit_rates": {
+      "coverage_dryrun/pass_1_ends_at_seconds": 2065,
+      "coverage_dryrun/pass_2_ends_at_seconds": 2591,
+      "decision_fits_admission_cutoff": true,
+      "questions_start_seconds": 1540
+     },
+     "allowance_overhead_two_times_slower": {
+      "coverage_dryrun/pass_1_ends_at_seconds": 2591,
+      "coverage_dryrun/pass_2_ends_at_seconds": 3641,
+      "decision_fits_admission_cutoff": false,
+      "questions_start_seconds": 1540
+     },
+     "measured_overhead_fit_rates": {
+      "coverage_dryrun/pass_1_ends_at_seconds": 1486,
+      "coverage_dryrun/pass_2_ends_at_seconds": 2012,
+      "decision_fits_admission_cutoff": true,
+      "questions_start_seconds": 961
+     }
+    }
+   }
   },
-  "evaluation_shaped": {
-   "calls": 7560,
-   "estimated_largest_prompt_tokens": 5604,
-   "estimated_prompt_tokens": 18479011,
-   "questions_per_condition": 1260
+  "fit": {
+   "fit_seconds_per_call": 0.039443079084717836,
+   "fit_seconds_per_completion_token": 0.006418344384022718,
+   "fit_seconds_per_prompt_token": 1.4210487578923021e-05
   },
-  "note": "estimate: characters / (characters per token measured on WS3 development requests with the pinned tokenizer). The exact tokenizer audit is required before freeze."
+  "fit_calls": 6054,
+  "fit_source": "evidence/evidence-comprehension-v3-live.tar.xz",
+  "note": "estimate: prompt tokens = characters / (characters per token measured on WS3 development requests with the pinned tokenizer); runtime = v3 fit, measured on shorter prompts (mean about 740 tokens), so per-token cost is extrapolated. The exact tokenizer audit is required before freeze.",
+  "overhead_allowance_seconds": {
+   "installation": 282,
+   "model_startup": 1228,
+   "other_pre_question": 30,
+   "post_question_finalization": 30
+  },
+  "overhead_measured_seconds": {
+   "installation": 140.9,
+   "model_startup": 818.5,
+   "other_pre_question": 1.8,
+   "post_question_finalization": 3.8
+  }
  }
 }

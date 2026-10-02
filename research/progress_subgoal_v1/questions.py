@@ -19,8 +19,9 @@ Conditions (one isolated difference per comparison):
   transition_evidence_v1 record (the WS3 treatment, here applied to sequences);
 - `raw_plus_computed_record_plus_safeguard`: byte-identical evidence to the previous condition; only the system
   prompt adds a constant, case-independent three-level safeguard (SAFEGUARD).
-Comparisons: computed vs raw (does the computed record help?) and safeguard vs computed (does an explicit level rule
-reduce over-claims at a cost in over-hedging?).
+Primary comparison (protocol v1, the two default arms): safeguard vs computed (does an explicit level rule reduce
+over-claims, and at what cost in over-hedging?). Optional, only under the protocol's predeclared WS3-v1 rule:
+computed vs raw (with `raw_evidence` as a third arm).
 
 Every key is derived three ways and must agree, or the build fails:
 1. contract: transition_evidence_v1 records (transition.history) plus subgoal.py;
@@ -30,6 +31,7 @@ A single key policy (`rule`) maps those facts to answers; the facts themselves c
 """
 import copy
 import hashlib
+import itertools
 import json
 import random
 
@@ -37,9 +39,14 @@ from research.progress_subgoal_v1 import fixtures as F, reference as REF, subgoa
 from research.transition_evidence_v1 import transition as T, vocabulary as V
 
 VERSION = 'progress_subgoal_v1_questions_draft'
-CONDITIONS = ('raw_evidence', 'raw_plus_computed_record', 'raw_plus_computed_record_plus_safeguard')
-COMPARISONS = {'computed_vs_raw': ('raw_evidence', 'raw_plus_computed_record'),
-               'safeguard_vs_computed': ('raw_plus_computed_record', 'raw_plus_computed_record_plus_safeguard')}
+ALL_CONDITIONS = ('raw_evidence', 'raw_plus_computed_record', 'raw_plus_computed_record_plus_safeguard')
+# Protocol v1: two primary arms that differ in one thing only (the constant safeguard text in the system prompt;
+# the evidence is byte-identical). `raw_evidence` is an optional third arm, added only by the predeclared WS3-v1
+# decision rule in reports/progress_subgoal_v1_protocol_v1.md; `build(..., conditions=ALL_CONDITIONS)` supports it.
+PRIMARY_CONDITIONS = ('raw_plus_computed_record', 'raw_plus_computed_record_plus_safeguard')
+CONDITIONS = PRIMARY_CONDITIONS
+COMPARISONS = {'safeguard_vs_computed': ('raw_plus_computed_record', 'raw_plus_computed_record_plus_safeguard'),
+               'computed_vs_raw': ('raw_evidence', 'raw_plus_computed_record')}  # the second only with the third arm
 DECISION_PARTITION = 'evaluation'
 SUPPORT = ['supported', 'contradicted', 'not_established']
 ANSWERS = {
@@ -566,10 +573,14 @@ def _select(pool, family, target, rng, errors):
     return chosen_all
 
 
-def build(partition, seed=None, count=None):
-    """Contexts, probes and schedule for one partition. The evaluation partition needs the seed drawn at freeze."""
+def build(partition, seed=None, count=None, conditions=PRIMARY_CONDITIONS):
+    """Contexts, probes and schedule for one partition. The evaluation partition needs the seed drawn at freeze.
+    `conditions` defaults to the two primary arms; the questions and keys do not depend on it."""
     if partition == DECISION_PARTITION and not seed:
         raise ValueError('the evaluation partition is built only at the freeze, with its recorded seed')
+    if not conditions or set(conditions) - set(ALL_CONDITIONS) or len(set(conditions)) != len(conditions):
+        raise ValueError('conditions must be distinct members of ALL_CONDITIONS')
+    conditions = tuple(c for c in ALL_CONDITIONS if c in conditions)
     pool = [(ctx, ContractFacts(ctx)) for ctx in F.generate(partition, seed, count)]
     rng = random.Random(hashlib.sha256(f'{VERSION}:{partition}:{seed}:select'.encode()).hexdigest())
     probes, contexts, errors = [], {}, []
@@ -579,7 +590,7 @@ def build(partition, seed=None, count=None):
             answers = shortcuts(f, family, arg, key)
             right = sorted(n for n, v in answers.items() if v == key)
             suffix = ':'.join((family,) + tuple(arg))
-            for condition in CONDITIONS:
+            for condition in conditions:
                 cid = f"{partition}:{condition}:{ctx['id']}"
                 if cid not in contexts:
                     contexts[cid] = present(ctx, f.records, condition)
@@ -594,18 +605,31 @@ def build(partition, seed=None, count=None):
                                'shortcuts_correct': right, 'shortcut_answers': answers})
     if errors:
         raise ValueError(f'key derivations disagree: {errors[:5]}')
-    value = {'version': VERSION, 'partition': partition, 'system_prompts': SYSTEM_PROMPTS, 'contexts': contexts,
-             'probes': probes, 'schedule': schedule(probes, partition)}
+    value = {'version': VERSION, 'partition': partition, 'conditions': list(conditions),
+             'system_prompts': {c: SYSTEM_PROMPTS[c] for c in conditions}, 'contexts': contexts,
+             'probes': probes, 'schedule': schedule(probes, partition, conditions)}
     return value
 
 
 SCHEDULE_SEED = 'progress-subgoal-v1-schedule'
-ORDERS = ((0, 1, 2), (1, 2, 0), (2, 0, 1), (0, 2, 1), (2, 1, 0), (1, 0, 2))
 
 
-def schedule(probes, partition):
-    """Decision partitions: two passes; each question's three conditions adjacent, their order cycling through all six
-    permutations in seeded question order; pass 2 is pass 1 exactly reversed. Development: one pass."""
+def conditions_of(probes):
+    """The arms present in a probe set, in canonical order."""
+    present_ = {p['condition'] for p in probes}
+    return tuple(c for c in ALL_CONDITIONS if c in present_)
+
+
+def comparisons_of(conditions):
+    return {name: pair for name, pair in COMPARISONS.items() if set(pair) <= set(conditions)}
+
+
+def schedule(probes, partition, conditions=None):
+    """Decision partitions: two passes; each question's conditions adjacent, their order cycling through every
+    permutation (two arms: alternating) in seeded question order; pass 2 is pass 1 exactly reversed. Development: one
+    pass."""
+    conditions = conditions or conditions_of(probes)
+    orders = list(itertools.permutations(range(len(conditions))))
     rng = random.Random(hashlib.sha256(f'{SCHEDULE_SEED}:{partition}'.encode()).hexdigest())
     groups = {}
     for p in probes:
@@ -615,7 +639,7 @@ def schedule(probes, partition):
     rng.shuffle(cases)
     for case in cases:
         for pair in sorted(groups[case]):
-            ids += [groups[case][pair][CONDITIONS[i]] for i in ORDERS[k % len(ORDERS)]]
+            ids += [groups[case][pair][conditions[i]] for i in orders[k % len(orders)]]
             k += 1
     order = [{'partition': partition, 'pass': 'pass_1', 'probe_ids': ids}]
     if partition != 'development':
@@ -625,7 +649,8 @@ def schedule(probes, partition):
 
 def coverage(probes, partition, strict=True):
     """Coverage floors on a decision-shaped partition (first condition; the others ask the same questions)."""
-    held = [p for p in probes if p['partition'] == partition and p['condition'] == CONDITIONS[0]]
+    first = conditions_of(probes)[0]
+    held = [p for p in probes if p['partition'] == partition and p['condition'] == first]
     report, failures = {'families': {}, 'critical_classes': {}, 'over_claim_denominators': {}}, []
     for family in FAMILIES:
         group = [p for p in held if p['family'] == family]

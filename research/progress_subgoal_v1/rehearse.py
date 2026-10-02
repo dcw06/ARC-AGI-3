@@ -4,9 +4,11 @@ The decision-shaped `coverage_dryrun` build stands in for the evaluation partiti
 freeze). Every scripted response passes through the same text path a model response would: it is written to an
 append-only JSON-lines log, read back by score.load_log, and scored. Invalid outputs are retained in the report.
 
-Also: an estimate of the eventual workload in prompt tokens, calibrated on the WS3 exact token audit
-(reports/ws3_questionnaire_token_audit.json, read-only) as characters per token. It is an estimate only: the exact
-tokenizer audit is a freeze requirement.
+Rehearsals use the two primary arms (protocol v1). Also: workload and runtime estimates for the two-arm design, the
+optional three-arm design and development. Prompt tokens are calibrated on the WS3 exact token audit
+(reports/ws3_questionnaire_token_audit.json, read-only) as characters per token; runtime uses the per-call fit to
+evidence_comprehension_v3's measured calls recorded in that audit. Estimates only: the exact tokenizer audit is a
+freeze requirement.
 
 Usage: python -m research.progress_subgoal_v1.rehearse [--write]
 """
@@ -47,7 +49,11 @@ POLICIES = {
                                    '["supported"]'][int(hashlib.sha256(p['probe_id'].encode()).hexdigest(), 16) % 4],
     # the key, with 3% of responses invalid (deterministically chosen) in pass 2 only
     'oracle_3pct_invalid_pass2': lambda p, i: '```json' if i == 'pass_2' and _hit(p, 'inv', 0.03) else answer(p['key']),
-    # the treatment-difference rehearsal: raw over-claims, computed answers the key, safeguard hedges
+    # malformed output on exactly the over-claim gates' member questions, the key elsewhere (revision r1): must not
+    # look safe; it fails the gate-member validity criterion
+    'gate_questions_invalid': lambda p, i: ('I cannot determine that.' if any(Q.gate_member(g, p) for g in
+                                                                              Q.OVER_CLAIM_GATES) else answer(p['key'])),
+    # the treatment-difference rehearsal: computed answers the key, safeguard hedges (raw over-claims, if built)
     'condition_contrast': lambda p, i: POLICIES[{'raw_evidence': 'over_claimer', 'raw_plus_computed_record': 'oracle',
                                                  'raw_plus_computed_record_plus_safeguard': 'always_uncertain'}[
                                                      p['condition']]](p, i),
@@ -72,6 +78,9 @@ def summary(report):
     out = {'readiness': {c: r['status'] for c, r in report['readiness'].items()}, 'completeness': report['completeness'],
            'gates': {c: {g: [row['status'], row['over_claim_contexts'], row['denominator_contexts']]
                          for g, row in gates.items()} for c, gates in report['over_claims'].items()},
+           'validity': {c: {k: [v[k]['status'], v[k]['invalid'], v[k]['responses']]
+                            for k in ('all_responses', 'gate_member_responses')} for c, v in report['validity'].items()},
+           'readiness_problems': {c: r.get('problems', [r.get('reason')])[:4] for c, r in report['readiness'].items()},
            'uncertainty': {c: [u['uncertain_keyed']['recall'], u['definite_keyed']['over_hedge_rate'],
                                u['false_no_progress']['rate']] for c, u in report['uncertainty'].items()},
            'labels': {c: {f: m['label'] for f, m in fams.items()} for c, fams in report['families'].items()},
@@ -88,6 +97,9 @@ def run():
     value = Q.build(PARTITION)
     probes = value['probes']
     results = {'version': Q.VERSION, 'partition': PARTITION, 'note': 'scripted answers only; no model was called',
+               'scoring_revision': 'r1: over-claim gates read valid answers only; invalid output counts as incorrect '
+                                   'and against the validity criterion (overall and gate-member invalid rate <= '
+                                   f'{SC.INVALID_RATE_CAP})',
                'coverage': Q.coverage(probes, PARTITION, strict=False), 'runs': {}}
     retained = {}
     for policy in POLICIES:
@@ -96,7 +108,7 @@ def run():
         report = SC.analyze(probes, passes, PARTITION, recovered=log['recovered'])
         results['runs'][policy] = {'log_sha256': hashlib.sha256(text.encode()).hexdigest(), 'log': log,
                                    **summary(report)}
-        if policy in ('invalid_text', 'schema_faults', 'oracle_3pct_invalid_pass2'):
+        if policy in ('invalid_text', 'schema_faults', 'oracle_3pct_invalid_pass2', 'gate_questions_invalid'):
             retained[policy] = report['invalid'][Q.CONDITIONS[0]]['retained'][:5]
         if policy == 'oracle':
             # rescoring the retained log reproduces the report exactly
@@ -124,25 +136,64 @@ def run():
     return results
 
 
+def _phases(v, ratio):
+    """[(phase, [estimated prompt tokens per scheduled call])] in schedule order."""
+    by_id = {p['probe_id']: p for p in v['probes']}
+    size = {}
+    out = []
+    for block in v['schedule']:
+        tokens = []
+        for pid in block['probe_ids']:
+            if pid not in size:
+                size[pid] = len(json.dumps(Q.build_request(v, by_id[pid])['messages'])) / ratio
+            tokens.append(size[pid])
+        out.append((f"{block['partition']}/{block['pass']}", tokens))
+    return out
+
+
 def workload(value):
-    """Calls and an estimated prompt-token total for an evaluation build of this size plus development."""
+    """Calls, estimated prompt tokens and runtime scenarios for the evaluation-shaped design (two primary arms), the
+    optional three-arm design, and development (two arms, one pass). Runtime uses the per-call least-squares fit to
+    evidence_comprehension_v3's measured cache-disabled calls and WS3's overhead method (worse of v2 and v3 per
+    component; allowances), both read from reports/ws3_questionnaire_token_audit.json. Estimates, not guarantees."""
     ratio = chars_per_token()
-    dev = Q.build('development')
-    est = {}
-    for name, v in (('evaluation_shaped', value), ('development', dev)):
-        by_id = {p['probe_id']: p for p in v['probes']}
-        calls = [pid for block in v['schedule'] for pid in block['probe_ids']]
-        sizes = {}
-        for pid in set(calls):
-            req = Q.build_request(v, by_id[pid])
-            sizes[pid] = len(json.dumps(req['messages']))
-        total = sum(sizes[pid] for pid in calls)
-        est[name] = {'calls': len(calls), 'questions_per_condition': len(v['probes']) // len(Q.CONDITIONS),
-                     'estimated_prompt_tokens': round(total / ratio),
-                     'estimated_largest_prompt_tokens': round(max(sizes.values()) / ratio)}
-    est['chars_per_token_calibration'] = ratio
-    est['note'] = ('estimate: characters / (characters per token measured on WS3 development requests with the '
-                   'pinned tokenizer). The exact tokenizer audit is required before freeze.')
+    audit = json.loads((ROOT / 'reports/ws3_questionnaire_token_audit.json').read_text(encoding='utf-8'))
+    fit, scen = audit['measurements'], audit['runtime_scenarios']
+    completion = min(32, 2 * max(r['key_completion_tokens'] for r in audit['requests']))  # WS3's key x 2 slack
+    per_call = lambda t: (fit['fit_seconds_per_call'] + fit['fit_seconds_per_prompt_token'] * t  # noqa: E731
+                          + fit['fit_seconds_per_completion_token'] * completion)
+    designs = {'primary_two_arms': (value, _phases(value, ratio)),
+               'optional_three_arms': (None, _phases(Q.build(PARTITION, conditions=Q.ALL_CONDITIONS), ratio)),
+               'development_two_arms': (None, _phases(Q.build('development'), ratio))}
+    est = {'chars_per_token_calibration': ratio, 'completion_tokens_assumed': completion,
+           'fit_source': fit['source'], 'fit_calls': fit['calls'],
+           'fit': {k: fit[k] for k in ('fit_seconds_per_call', 'fit_seconds_per_prompt_token',
+                                       'fit_seconds_per_completion_token')},
+           'overhead_measured_seconds': scen['first_cell_overhead_measured_seconds'],
+           'overhead_allowance_seconds': scen['first_cell_overhead_allowance_seconds'],
+           'admission_cutoff_seconds': scen['admission_cutoff_seconds'], 'designs': {}}
+    for name, (_, phases) in designs.items():
+        tokens = [t for _, ts in phases for t in ts]
+        row = {'calls': len(tokens), 'estimated_prompt_tokens': round(sum(tokens)),
+               'estimated_mean_prompt_tokens': round(sum(tokens) / len(tokens)),
+               'estimated_largest_prompt_tokens': round(max(tokens)),
+               'question_seconds_at_fit': round(sum(per_call(t) for t in tokens)), 'scenarios': {}}
+        if name != 'development_two_arms':
+            for label, overhead, factor in (('measured_overhead_fit_rates', 'overhead_measured_seconds', 1.0),
+                                            ('allowance_overhead_fit_rates', 'overhead_allowance_seconds', 1.0),
+                                            ('allowance_overhead_two_times_slower', 'overhead_allowance_seconds', 2.0)):
+                o = est[overhead]
+                elapsed = o['installation'] + o['model_startup'] + o['other_pre_question']
+                s = {'questions_start_seconds': round(elapsed)}
+                for phase, ts in phases:
+                    elapsed += factor * sum(per_call(t) for t in ts)
+                    s[phase + '_ends_at_seconds'] = round(elapsed)
+                s['decision_fits_admission_cutoff'] = elapsed <= est['admission_cutoff_seconds']
+                row['scenarios'][label] = s
+        est['designs'][name] = row
+    est['note'] = ('estimate: prompt tokens = characters / (characters per token measured on WS3 development requests '
+                   'with the pinned tokenizer); runtime = v3 fit, measured on shorter prompts (mean about 740 tokens), '
+                   'so per-token cost is extrapolated. The exact tokenizer audit is required before freeze.')
     return est
 
 
