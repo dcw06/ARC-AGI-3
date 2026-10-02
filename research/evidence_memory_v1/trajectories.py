@@ -252,11 +252,12 @@ FAMILIES = {'early_crucial': early_crucial, 'supported_then_contradicted': suppo
 DEFAULTS = {'required_facts': [], 'required_counterexamples': [], 'required_live': [], 'must_not_hold': []}
 
 
-def build(family, index, delay):
+def build(family, index, delay, seed=SEED, partition=PARTITION):
     """One trajectory: raw transitions, records (transition_evidence_v2 history, no masks) and evaluator-only
-    expectations. Counterexamples are named by the records' own record_id."""
-    tid = f'{PARTITION[:3]}-{family}-d{delay}-{index}'
-    rng = random.Random(hashlib.sha256(f'{SEED}/{family}/{index}'.encode()).hexdigest())
+    expectations. Counterexamples are named by the records' own record_id. The defaults are the development
+    partition; a withheld partition passes its own seed and name (see reports/evidence_memory_v1_protocol_v1.md)."""
+    tid = f'{partition[:3]}-{family}-d{delay}-{index}'
+    rng = random.Random(hashlib.sha256(f'{seed}/{family}/{index}'.encode()).hexdigest())
     b = Builder(rng)
     expected = {**copy.deepcopy(DEFAULTS), **FAMILIES[family](b, delay)}
     episode = 'em-' + hashlib.sha256(tid.encode()).hexdigest()[:12]  # no family label in the evidence
@@ -266,7 +267,7 @@ def build(family, index, delay):
     expected['required_counterexamples'] = [records[i]['identity']['record_id']
                                             for i in expected['required_counterexamples']]
     expected['final_step'] = len(b.raws) - 1
-    return {'id': tid, 'family': family, 'partition': PARTITION, 'delay': delay, 'raws': b.raws,
+    return {'id': tid, 'family': family, 'partition': partition, 'delay': delay, 'raws': b.raws,
             'records': records, 'evaluator_only': {'expected': expected, 'construction': b.construction}}
 
 
