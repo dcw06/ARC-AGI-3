@@ -1,7 +1,7 @@
 """Bounded intervention interface (Track 3, stagnation_supervision_v1).
 
-A reflection request is built only from transition_evidence_v1 records the agent already holds, plus the detector's
-signals at the decision point and the available actions the agent observed. It has no parameter through which game
+A reflection request is built only from transition records the agent already holds (transition_evidence_v2, which
+contains the v1 record unaltered; v1 records are still accepted), plus the detector's signals at the decision point. It has no parameter through which game
 source, rules, environment files or solutions could enter. The same template and fields serve the periodic and the
 triggered arm; the arm label is metadata and never reaches the prompt text, so timing is the treatment difference.
 
@@ -15,13 +15,20 @@ The supervisor must answer with exactly four fields:
 `parse` validates an output against its own request; an invalid output is retained with its problems and is never
 delivered. The lexical checks for source references and solution claims are a second line of defence only: the
 first is that the request never contains such material.
+
+Available actions (the legal ids for a distinguishing test) come from the observation the agent currently holds, as
+the environment reported it: after an acknowledged action, `environment.reported.available_actions_after` of the
+latest record (the same observation the next action will record as `context.available_actions_before`); after a
+failed dispatch, that record's `context.available_actions_before`. Only when the record has them `absent` (or is a v1
+record) does the request fall back to a caller-supplied list, then to the action ids in the shown evidence. The field
+used is recorded in `available_actions_field`. The masked view is never read.
 """
 import hashlib
 import json
 import re
 
 from certification.phase4_transient_v2.action_contract import CONTRACT_ID as ACTION_CONTRACT_ID, validate_action
-from research.transition_evidence_v1 import vocabulary as V
+from research.transition_evidence_v2 import transition as T2, vocabulary as V
 
 VERSION = 'stagnation_supervision_v1_intervention'
 WINDOW = 12
@@ -67,22 +74,46 @@ def _summary(record):
             'environment_events': record['environment']['events'], 'progress': record['progress']['status']}
 
 
+def reported_actions(record):
+    """(ids, field) of the available actions reported for the observation the agent holds after `record`, or
+    (None, None) when they were not retained (`absent`), not observed, or the record is version 1."""
+    if record['dispatch']['status'] == V.ACKNOWLEDGED:
+        field = 'environment.reported.available_actions_after'
+        value = (record['environment'].get('reported') or {}).get('available_actions_after')
+    elif record['dispatch']['status'] == V.FAILED:  # nothing was delivered: the pre-action observation still holds
+        field = 'context.available_actions_before'
+        value = (record.get('context') or {}).get('available_actions_before')
+    else:
+        return None, None
+    if isinstance(value, dict) and value.get('status') == 'measured':
+        return list(value['value']), field
+    return None, None
+
+
 def build_request(records, decision_index, arm, detector_signals, available_actions=None):
-    """A request from records 0..decision_index only. `available_actions` is what the agent observed the
-    environment offering; without it, only action ids already in the shown evidence may be proposed."""
+    """A request from records 0..decision_index only. Legal test actions: the reported available actions of the
+    current observation when measured; otherwise the caller's `available_actions` (what the agent observed);
+    otherwise only action ids already in the shown evidence."""
     shown = [r for r in records if r['identity']['action_index'] <= decision_index][-WINDOW:]
     if not shown:
         raise ValueError('a request needs at least one record')
-    observed_ids = sorted({r['action']['dispatched']['action_id'] for r in shown})
+    reported, field = reported_actions(shown[-1])
+    if reported is not None:
+        actions, source = sorted(reported), 'observation'
+    elif available_actions is not None:
+        actions, source, field = sorted(available_actions), 'observation', 'caller'
+    else:
+        actions = sorted({r['action']['dispatched']['action_id'] for r in shown})
+        source, field = 'shown_evidence', 'shown_evidence'
     content = {'decision_index': decision_index, 'evidence': [_summary(r) for r in shown],
                'frame_shape': shown[-1]['observations']['pre_frame_shape'],
-               'available_actions': sorted(available_actions) if available_actions is not None else observed_ids,
-               'available_actions_source': 'observation' if available_actions is not None else 'shown_evidence',
+               'available_actions': actions, 'available_actions_source': source,
                'detector_signals': [{k: s[k] for k in ('signal', 'value', 'threshold', 'evidence')}
                                     for s in detector_signals]}
     text = PROMPT + '\n\nEvidence:\n' + json.dumps(content, sort_keys=True, separators=(',', ':'))
     return {'version': VERSION, 'arm': arm, 'episode_id': shown[-1]['identity']['episode_id'], 'content': content,
-            'text': text, 'sha256': hashlib.sha256(text.encode()).hexdigest()}
+            'text': text, 'sha256': hashlib.sha256(text.encode()).hexdigest(), 'available_actions_field': field,
+            'record_ids': {r['identity']['action_index']: T2.record_id(r['identity']) for r in shown}}
 
 
 def _text_problems(name, value):
@@ -155,6 +186,7 @@ def parse(text, request):
     if not problems:
         out['valid'] = True
         out['intervention'] = value
+        out['evidence_record_ids'] = [request['record_ids'][r] for r in refs]  # internal references
     return out
 
 

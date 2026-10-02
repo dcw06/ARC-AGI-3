@@ -4,6 +4,12 @@ Synthetic, CPU only. No model ran, nothing ran on a GPU, and no real-game or hol
 `research/stagnation_supervision_v1/`. Tests: `tests/test_stagnation_supervision_v1*.py`.
 Transition evidence comes from `research/transition_evidence_v1`, which this work reads and does not modify.
 
+**Format version.** The supervisor and the intervention interface now use the frozen `transition_evidence_v2`
+records (merged from `transition-evidence-v2` at eeb11ba; unmasked, and the masked view is never read). The detector
+consumes the v1 fields that v2 contains unaltered. The frozen trigger, the fixtures and the held-out results above
+are byte-identical after the migration, and the detector's outputs are identical on every trajectory (tested in
+`tests/test_stagnation_supervision_v1_migration.py`).
+
 **Question.** Does an intervention triggered by evidence of stagnation help more than ordinary continuation, or
 more than reflection at fixed intervals under the same budget? This report covers only the first step: a
 mechanical detector, its frozen trigger, and its held-out precision and recall on labelled synthetic

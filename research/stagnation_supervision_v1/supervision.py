@@ -10,13 +10,14 @@ Policy limits apply to every call in every arm:
   - a per-episode token ceiling: a call is made only if spent + estimated input + reserved output fits;
   - no call when the current state was not observed (unknown outcome or missing frames): it is deferred.
 Every call is charged, including invalid outputs and exceptions. Every decision is retained as an event with its
-reason, including suppressed and deferred ones. Here `call` is scripted; nothing in this module runs a model.
+reason, including suppressed and deferred ones. Records are transition_evidence_v2, unmasked (the masked view is
+never requested or read); the detector consumes the v1 fields they contain, and events cite evidence by record_id. Here `call` is scripted; nothing in this module runs a model.
 """
 import math
 import time
 
 from research.stagnation_supervision_v1 import detector as D, intervention as I
-from research.transition_evidence_v1 import transition as T, vocabulary as V
+from research.transition_evidence_v2 import transition as T, vocabulary as V
 
 VERSION = 'stagnation_supervision_v1_policy'
 ARMS = ('continuation', 'periodic', 'triggered')
@@ -48,7 +49,10 @@ class Supervisor:
         fired = D.signals(self.stats.update(record, prediction), self.params)
         due = {'continuation': False, 'periodic': (index + 1) % self.policy['period_actions'] == 0,
                'triggered': bool(fired)}[self.arm]
-        event = {'action_index': index, 'arm': self.arm, 'detector_signals': fired, 'due': due}
+        ids = {r['identity']['action_index']: r['identity']['record_id'] for r in self.records}
+        event = {'action_index': index, 'record_id': record['identity']['record_id'], 'arm': self.arm,
+                 'detector_signals': fired, 'due': due,
+                 'detector_evidence_record_ids': sorted({ids[i] for s in fired for i in s['evidence']})}
         if not due:
             event['outcome'] = 'not_due'
         elif I.unobserved_state(record):
@@ -87,6 +91,7 @@ class Supervisor:
         parsed = I.parse(text, request) if error is None else {
             'valid': False, 'problems': ['call failed: ' + error], 'intervention': None, 'raw': None}
         return {'request_sha256': request['sha256'], 'request_text': request['text'], 'error': error,
+                'available_actions_field': request['available_actions_field'],
                 'raw_output': text, 'parsed': parsed, 'input_tokens': charged_in, 'output_tokens': charged_out,
                 'latency_s': latency}
 

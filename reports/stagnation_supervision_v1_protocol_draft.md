@@ -174,11 +174,15 @@ of which model startup was 403 s.
 
 ## 10. Dependencies and open items
 
-- **Transition contract (Workstream 3), read-only here.** Two fields are needed and are missing from the contract:
-  - **available actions** per observation, for validating proposed test actions (currently the request falls
-    back to action ids already shown);
+- **Transition contract (Workstream 3), read-only here; now `transition_evidence_v2`.** Two fields were requested:
+  - **available actions** per observation: *resolved* by `transition_evidence_v2`. Legal test actions are now
+    taken from the reported available actions of the observation the agent holds
+    (`environment.reported.available_actions_after`, or `context.available_actions_before` after a failed
+    dispatch). Only when those are `absent` does the request fall back to action ids already shown. The source
+    used is recorded with each request;
   - **a HUD or counter region marker** (or an action-independent-change field), to close the step-counter blind
-    spot without the detector guessing from pixels.
+    spot without the detector guessing from pixels. Still open here: v2 provides a declared masked view, but a
+    masked fingerprint in the detector is a separately versioned experiment, and this track does not read it.
 - **Track 1's prediction schema.** The detector accepts a provisional `{action_index, expects_change}` stream.
   The `prediction_failures` signal was not selected on development, but it should be re-evaluated once Track 1's
   schema is final.
