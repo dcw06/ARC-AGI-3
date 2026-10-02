@@ -1,0 +1,14 @@
+{
+ "decision": "keep_two_arms",
+ "arms": ["raw_plus_computed_record", "raw_plus_computed_record_plus_safeguard"],
+ "rules_file": "research/progress_subgoal_v1/decision_rules.json",
+ "rules_sha256": "38c8de63a875e54949fc0ecede9c0dd2b0b603901aad4a3f8348fd6b92089af2",
+ "rules_commit": "07308e3",
+ "ws3_v1_result": "unavailable: WS3 questionnaire v1 has not run (it has no compute authorization), so no WS3 v1 evaluator output exists. No reports/ws3_questionnaire_v1_live_evaluation.json, launch receipt, compute authorization or reservation is present on this branch.",
+ "applied_clause": "third_arm_rule.otherwise_explicitly_includes: 'WS3 v1 has not run or its result is unavailable' -> third_arm_rule.otherwise: keep_two_arms",
+ "trigger_conditions_evaluated": false,
+ "trigger_conditions_not_evaluated_because": "the rule adds the third arm only if WS3 v1 evaluator output exists and reports technically_complete == true; neither holds",
+ "results_examined": "none (no WS3 v1 result exists); no progress_subgoal_v1 model result exists",
+ "limitation": "the computed-vs-raw comparison is not made on these cases; WS3 v1 (if it runs) remains the only evidence on it",
+ "decided_before_evaluation_seed": true
+}

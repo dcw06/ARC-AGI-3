@@ -18,6 +18,15 @@ class FrozenRules(unittest.TestCase):
         self.assertEqual(rule['otherwise'], 'keep_two_arms')
         self.assertIn('WS3 v1 has not run or its result is unavailable', rule['otherwise_explicitly_includes'])
 
+    def test_third_arm_decision_applies_the_frozen_rule(self):
+        decision = json.loads(R.FROZEN.with_name('third_arm_decision.json').read_bytes())
+        rule = json.loads(R.FROZEN.read_bytes())['third_arm_rule']
+        self.assertEqual(decision['rules_sha256'], R.RULES_SHA256)
+        self.assertEqual(decision['decision'], rule['otherwise'])
+        self.assertIn(rule['otherwise_explicitly_includes'][0], decision['applied_clause'])
+        from research.progress_subgoal_v1 import questions as Q
+        self.assertEqual(decision['arms'], list(Q.PRIMARY_CONDITIONS))
+
     def test_package_limits_match_the_runtime_authority(self):
         from research.progress_subgoal_v1 import authority, schedule
         limits = json.loads(R.FROZEN.read_bytes())['package_limits']
