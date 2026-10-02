@@ -1,0 +1,6355 @@
+{
+ "cooldown_actions": 6,
+ "detectors": {
+  "no_progress_horizon_only_10": {
+   "by_family": {
+    "backtracking_required": {
+     "detected": 0,
+     "false_triggers": 3,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 3
+    },
+    "counter_only_repeat": {
+     "detected": 2,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "counter_with_static_playfield": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "delayed_effect": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "dispatch_retry_productive": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "incremental_click_effect": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "loop_escape_into_loop": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "loop_then_escape": {
+     "detected": 0,
+     "false_triggers": 4,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 4
+    },
+    "loop_under_step_counter": {
+     "detected": 3,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "move_square_cycle": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "move_to_destination": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "no_effect_with_dispatch_gaps": {
+     "detected": 3,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "productive_exploration_no_completion": {
+     "detected": 0,
+     "false_triggers": 11,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 4
+    },
+    "repeated_click_no_effect": {
+     "detected": 2,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "reset_then_replay": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "rotating_clicks_no_effect": {
+     "detected": 3,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "toggle_two_cycle": {
+     "detected": 2,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "varied_click_painting": {
+     "detected": 0,
+     "false_triggers": 4,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 4
+    },
+    "walk_into_wall": {
+     "detected": 1,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    }
+   },
+   "definition": {
+    "params": {
+     "no_progress_horizon": 10,
+     "novelty_stall": null,
+     "prediction_failures": null,
+     "repeat_no_effect": null,
+     "state_action_recurrence": null,
+     "tiny_effect_repeat": null
+    }
+   },
+   "errors": [
+    {
+     "family": "repeated_click_no_effect",
+     "first_stagnant": 1,
+     "id": "eva-repeated_click_no_effect-0",
+     "kind": "missed_positive",
+     "length": 8
+    },
+    {
+     "family": "repeated_click_no_effect",
+     "first_stagnant": 2,
+     "id": "eva-repeated_click_no_effect-1",
+     "kind": "missed_positive",
+     "length": 9
+    },
+    {
+     "family": "rotating_clicks_no_effect",
+     "first_stagnant": 3,
+     "id": "eva-rotating_clicks_no_effect-1",
+     "kind": "missed_positive",
+     "length": 9
+    },
+    {
+     "family": "toggle_two_cycle",
+     "first_stagnant": 2,
+     "id": "eva-toggle_two_cycle-1",
+     "kind": "missed_positive",
+     "length": 9
+    },
+    {
+     "family": "toggle_two_cycle",
+     "first_stagnant": 2,
+     "id": "eva-toggle_two_cycle-3",
+     "kind": "missed_positive",
+     "length": 8
+    },
+    {
+     "family": "counter_only_repeat",
+     "first_stagnant": 1,
+     "id": "eva-counter_only_repeat-2",
+     "kind": "missed_positive",
+     "length": 7
+    },
+    {
+     "family": "counter_only_repeat",
+     "first_stagnant": 1,
+     "id": "eva-counter_only_repeat-3",
+     "kind": "missed_positive",
+     "length": 9
+    },
+    {
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-1",
+     "kind": "missed_positive",
+     "length": 9
+    },
+    {
+     "family": "walk_into_wall",
+     "first_stagnant": 4,
+     "id": "eva-walk_into_wall-0",
+     "kind": "missed_positive",
+     "length": 9
+    },
+    {
+     "family": "walk_into_wall",
+     "first_stagnant": 4,
+     "id": "eva-walk_into_wall-2",
+     "kind": "missed_positive",
+     "length": 7
+    },
+    {
+     "family": "walk_into_wall",
+     "first_stagnant": 3,
+     "id": "eva-walk_into_wall-3",
+     "kind": "missed_positive",
+     "length": 8
+    },
+    {
+     "family": "no_effect_with_dispatch_gaps",
+     "first_stagnant": 2,
+     "id": "eva-no_effect_with_dispatch_gaps-2",
+     "kind": "missed_positive",
+     "length": 11
+    },
+    {
+     "action_index": 9,
+     "family": "loop_then_escape",
+     "id": "eva-loop_then_escape-0",
+     "kind": "false_intervention"
+    },
+    {
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-0",
+     "kind": "missed_positive",
+     "length": 12
+    },
+    {
+     "action_index": 9,
+     "family": "loop_then_escape",
+     "id": "eva-loop_then_escape-1",
+     "kind": "false_intervention"
+    },
+    {
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-1",
+     "kind": "missed_positive",
+     "length": 11
+    },
+    {
+     "action_index": 9,
+     "family": "loop_then_escape",
+     "id": "eva-loop_then_escape-2",
+     "kind": "false_intervention"
+    },
+    {
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-2",
+     "kind": "missed_positive",
+     "length": 14
+    },
+    {
+     "action_index": 9,
+     "family": "loop_then_escape",
+     "id": "eva-loop_then_escape-3",
+     "kind": "false_intervention"
+    },
+    {
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-3",
+     "kind": "missed_positive",
+     "length": 13
+    },
+    {
+     "action_index": 9,
+     "family": "varied_click_painting",
+     "id": "eva-varied_click_painting-0",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 9,
+     "family": "varied_click_painting",
+     "id": "eva-varied_click_painting-1",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 9,
+     "family": "varied_click_painting",
+     "id": "eva-varied_click_painting-2",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 9,
+     "family": "varied_click_painting",
+     "id": "eva-varied_click_painting-3",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 9,
+     "family": "backtracking_required",
+     "id": "eva-backtracking_required-0",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 9,
+     "family": "backtracking_required",
+     "id": "eva-backtracking_required-1",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 9,
+     "family": "backtracking_required",
+     "id": "eva-backtracking_required-3",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 9,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-0",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 15,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-0",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 9,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-1",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 15,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-1",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 21,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-1",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 9,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-2",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 15,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-2",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 21,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-2",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 9,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-3",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 15,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-3",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 21,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-3",
+     "kind": "false_intervention"
+    }
+   ],
+   "metrics": {
+    "correct_triggers": 33,
+    "detected_positive_trajectories": 24,
+    "false_intervention_rate": 0.19736842105263158,
+    "false_intervention_trajectories": 15,
+    "false_triggers": 22,
+    "hard_negative_trajectories": 36,
+    "hard_negatives_with_false_intervention": 11,
+    "mean_latency_actions": 5.958333333333333,
+    "positive_trajectories": 40,
+    "precision": 0.6,
+    "premature_triggers_in_positive_trajectories": 4,
+    "recall": 0.6,
+    "trajectories": 76,
+    "triggers": 55
+   },
+   "trajectories": [
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "repeated_click_no_effect",
+     "first_stagnant": 1,
+     "id": "eva-repeated_click_no_effect-0",
+     "latency": null,
+     "length": 8,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "repeated_click_no_effect",
+     "first_stagnant": 2,
+     "id": "eva-repeated_click_no_effect-1",
+     "latency": null,
+     "length": 9,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [
+      9
+     ],
+     "false_triggers": [],
+     "family": "repeated_click_no_effect",
+     "first_stagnant": 3,
+     "id": "eva-repeated_click_no_effect-2",
+     "latency": 6,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [
+      9
+     ],
+     "false_triggers": [],
+     "family": "repeated_click_no_effect",
+     "first_stagnant": 4,
+     "id": "eva-repeated_click_no_effect-3",
+     "latency": 5,
+     "length": 10,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [
+      9
+     ],
+     "false_triggers": [],
+     "family": "rotating_clicks_no_effect",
+     "first_stagnant": 3,
+     "id": "eva-rotating_clicks_no_effect-0",
+     "latency": 6,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "rotating_clicks_no_effect",
+     "first_stagnant": 3,
+     "id": "eva-rotating_clicks_no_effect-1",
+     "latency": null,
+     "length": 9,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [
+      9,
+      15
+     ],
+     "false_triggers": [],
+     "family": "rotating_clicks_no_effect",
+     "first_stagnant": 4,
+     "id": "eva-rotating_clicks_no_effect-2",
+     "latency": 5,
+     "length": 16,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9,
+      15
+     ]
+    },
+    {
+     "correct_triggers": [
+      9
+     ],
+     "false_triggers": [],
+     "family": "rotating_clicks_no_effect",
+     "first_stagnant": 3,
+     "id": "eva-rotating_clicks_no_effect-3",
+     "latency": 6,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [
+      9
+     ],
+     "false_triggers": [],
+     "family": "toggle_two_cycle",
+     "first_stagnant": 4,
+     "id": "eva-toggle_two_cycle-0",
+     "latency": 5,
+     "length": 10,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "toggle_two_cycle",
+     "first_stagnant": 2,
+     "id": "eva-toggle_two_cycle-1",
+     "latency": null,
+     "length": 9,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [
+      9
+     ],
+     "false_triggers": [],
+     "family": "toggle_two_cycle",
+     "first_stagnant": 4,
+     "id": "eva-toggle_two_cycle-2",
+     "latency": 5,
+     "length": 13,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "toggle_two_cycle",
+     "first_stagnant": 2,
+     "id": "eva-toggle_two_cycle-3",
+     "latency": null,
+     "length": 8,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [
+      9,
+      15,
+      21,
+      27
+     ],
+     "false_triggers": [],
+     "family": "move_square_cycle",
+     "first_stagnant": 8,
+     "id": "eva-move_square_cycle-0",
+     "latency": 1,
+     "length": 32,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9,
+      15,
+      21,
+      27
+     ]
+    },
+    {
+     "correct_triggers": [
+      9
+     ],
+     "false_triggers": [],
+     "family": "move_square_cycle",
+     "first_stagnant": 4,
+     "id": "eva-move_square_cycle-1",
+     "latency": 5,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [
+      9,
+      15,
+      21,
+      27
+     ],
+     "false_triggers": [],
+     "family": "move_square_cycle",
+     "first_stagnant": 8,
+     "id": "eva-move_square_cycle-2",
+     "latency": 1,
+     "length": 32,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9,
+      15,
+      21,
+      27
+     ]
+    },
+    {
+     "correct_triggers": [
+      9,
+      15,
+      21
+     ],
+     "false_triggers": [],
+     "family": "move_square_cycle",
+     "first_stagnant": 8,
+     "id": "eva-move_square_cycle-3",
+     "latency": 1,
+     "length": 24,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9,
+      15,
+      21
+     ]
+    },
+    {
+     "correct_triggers": [
+      9
+     ],
+     "false_triggers": [],
+     "family": "counter_only_repeat",
+     "first_stagnant": 3,
+     "id": "eva-counter_only_repeat-0",
+     "latency": 6,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [
+      9
+     ],
+     "false_triggers": [],
+     "family": "counter_only_repeat",
+     "first_stagnant": 1,
+     "id": "eva-counter_only_repeat-1",
+     "latency": 8,
+     "length": 10,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "counter_only_repeat",
+     "first_stagnant": 1,
+     "id": "eva-counter_only_repeat-2",
+     "latency": null,
+     "length": 7,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "counter_only_repeat",
+     "first_stagnant": 1,
+     "id": "eva-counter_only_repeat-3",
+     "latency": null,
+     "length": 9,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [
+      9
+     ],
+     "false_triggers": [],
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-0",
+     "latency": 7,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-1",
+     "latency": null,
+     "length": 9,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [
+      9
+     ],
+     "false_triggers": [],
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-2",
+     "latency": 7,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [
+      9
+     ],
+     "false_triggers": [],
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-3",
+     "latency": 7,
+     "length": 10,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "walk_into_wall",
+     "first_stagnant": 4,
+     "id": "eva-walk_into_wall-0",
+     "latency": null,
+     "length": 9,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [
+      9
+     ],
+     "false_triggers": [],
+     "family": "walk_into_wall",
+     "first_stagnant": 5,
+     "id": "eva-walk_into_wall-1",
+     "latency": 4,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "walk_into_wall",
+     "first_stagnant": 4,
+     "id": "eva-walk_into_wall-2",
+     "latency": null,
+     "length": 7,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "walk_into_wall",
+     "first_stagnant": 3,
+     "id": "eva-walk_into_wall-3",
+     "latency": null,
+     "length": 8,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [
+      12
+     ],
+     "false_triggers": [],
+     "family": "no_effect_with_dispatch_gaps",
+     "first_stagnant": 3,
+     "id": "eva-no_effect_with_dispatch_gaps-0",
+     "latency": 9,
+     "length": 13,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      12
+     ]
+    },
+    {
+     "correct_triggers": [
+      12
+     ],
+     "false_triggers": [],
+     "family": "no_effect_with_dispatch_gaps",
+     "first_stagnant": 2,
+     "id": "eva-no_effect_with_dispatch_gaps-1",
+     "latency": 10,
+     "length": 14,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      12
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "no_effect_with_dispatch_gaps",
+     "first_stagnant": 2,
+     "id": "eva-no_effect_with_dispatch_gaps-2",
+     "latency": null,
+     "length": 11,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [
+      12
+     ],
+     "false_triggers": [],
+     "family": "no_effect_with_dispatch_gaps",
+     "first_stagnant": 1,
+     "id": "eva-no_effect_with_dispatch_gaps-3",
+     "latency": 11,
+     "length": 14,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      12
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      9
+     ],
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-0",
+     "latency": null,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      9
+     ],
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-1",
+     "latency": null,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      9
+     ],
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-2",
+     "latency": null,
+     "length": 14,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      9
+     ],
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-3",
+     "latency": null,
+     "length": 13,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [
+      9
+     ],
+     "false_triggers": [],
+     "family": "loop_escape_into_loop",
+     "first_stagnant": 2,
+     "id": "eva-loop_escape_into_loop-0",
+     "latency": 7,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [
+      9
+     ],
+     "false_triggers": [],
+     "family": "loop_escape_into_loop",
+     "first_stagnant": 2,
+     "id": "eva-loop_escape_into_loop-1",
+     "latency": 7,
+     "length": 13,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [
+      9
+     ],
+     "false_triggers": [],
+     "family": "loop_escape_into_loop",
+     "first_stagnant": 2,
+     "id": "eva-loop_escape_into_loop-2",
+     "latency": 7,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [
+      9
+     ],
+     "false_triggers": [],
+     "family": "loop_escape_into_loop",
+     "first_stagnant": 2,
+     "id": "eva-loop_escape_into_loop-3",
+     "latency": 7,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "move_to_destination",
+     "first_stagnant": null,
+     "id": "eva-move_to_destination-0",
+     "latency": null,
+     "length": 6,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "move_to_destination",
+     "first_stagnant": null,
+     "id": "eva-move_to_destination-1",
+     "latency": null,
+     "length": 5,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "move_to_destination",
+     "first_stagnant": null,
+     "id": "eva-move_to_destination-2",
+     "latency": null,
+     "length": 6,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "move_to_destination",
+     "first_stagnant": null,
+     "id": "eva-move_to_destination-3",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "incremental_click_effect",
+     "first_stagnant": null,
+     "id": "eva-incremental_click_effect-0",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "incremental_click_effect",
+     "first_stagnant": null,
+     "id": "eva-incremental_click_effect-1",
+     "latency": null,
+     "length": 5,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "incremental_click_effect",
+     "first_stagnant": null,
+     "id": "eva-incremental_click_effect-2",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "incremental_click_effect",
+     "first_stagnant": null,
+     "id": "eva-incremental_click_effect-3",
+     "latency": null,
+     "length": 5,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      9
+     ],
+     "family": "varied_click_painting",
+     "first_stagnant": null,
+     "id": "eva-varied_click_painting-0",
+     "latency": null,
+     "length": 10,
+     "positive": false,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      9
+     ],
+     "family": "varied_click_painting",
+     "first_stagnant": null,
+     "id": "eva-varied_click_painting-1",
+     "latency": null,
+     "length": 10,
+     "positive": false,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      9
+     ],
+     "family": "varied_click_painting",
+     "first_stagnant": null,
+     "id": "eva-varied_click_painting-2",
+     "latency": null,
+     "length": 13,
+     "positive": false,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      9
+     ],
+     "family": "varied_click_painting",
+     "first_stagnant": null,
+     "id": "eva-varied_click_painting-3",
+     "latency": null,
+     "length": 12,
+     "positive": false,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      9
+     ],
+     "family": "backtracking_required",
+     "first_stagnant": null,
+     "id": "eva-backtracking_required-0",
+     "latency": null,
+     "length": 12,
+     "positive": false,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      9
+     ],
+     "family": "backtracking_required",
+     "first_stagnant": null,
+     "id": "eva-backtracking_required-1",
+     "latency": null,
+     "length": 10,
+     "positive": false,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "backtracking_required",
+     "first_stagnant": null,
+     "id": "eva-backtracking_required-2",
+     "latency": null,
+     "length": 9,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      9
+     ],
+     "family": "backtracking_required",
+     "first_stagnant": null,
+     "id": "eva-backtracking_required-3",
+     "latency": null,
+     "length": 12,
+     "positive": false,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "delayed_effect",
+     "first_stagnant": null,
+     "id": "eva-delayed_effect-0",
+     "latency": null,
+     "length": 6,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "delayed_effect",
+     "first_stagnant": null,
+     "id": "eva-delayed_effect-1",
+     "latency": null,
+     "length": 7,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "delayed_effect",
+     "first_stagnant": null,
+     "id": "eva-delayed_effect-2",
+     "latency": null,
+     "length": 6,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "delayed_effect",
+     "first_stagnant": null,
+     "id": "eva-delayed_effect-3",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "counter_with_static_playfield",
+     "first_stagnant": null,
+     "id": "eva-counter_with_static_playfield-0",
+     "latency": null,
+     "length": 7,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "counter_with_static_playfield",
+     "first_stagnant": null,
+     "id": "eva-counter_with_static_playfield-1",
+     "latency": null,
+     "length": 9,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "counter_with_static_playfield",
+     "first_stagnant": null,
+     "id": "eva-counter_with_static_playfield-2",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "counter_with_static_playfield",
+     "first_stagnant": null,
+     "id": "eva-counter_with_static_playfield-3",
+     "latency": null,
+     "length": 5,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      9,
+      15
+     ],
+     "family": "productive_exploration_no_completion",
+     "first_stagnant": null,
+     "id": "eva-productive_exploration_no_completion-0",
+     "latency": null,
+     "length": 19,
+     "positive": false,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9,
+      15
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      9,
+      15,
+      21
+     ],
+     "family": "productive_exploration_no_completion",
+     "first_stagnant": null,
+     "id": "eva-productive_exploration_no_completion-1",
+     "latency": null,
+     "length": 22,
+     "positive": false,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9,
+      15,
+      21
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      9,
+      15,
+      21
+     ],
+     "family": "productive_exploration_no_completion",
+     "first_stagnant": null,
+     "id": "eva-productive_exploration_no_completion-2",
+     "latency": null,
+     "length": 26,
+     "positive": false,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9,
+      15,
+      21
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      9,
+      15,
+      21
+     ],
+     "family": "productive_exploration_no_completion",
+     "first_stagnant": null,
+     "id": "eva-productive_exploration_no_completion-3",
+     "latency": null,
+     "length": 25,
+     "positive": false,
+     "signals": [
+      "no_progress_horizon"
+     ],
+     "triggers": [
+      9,
+      15,
+      21
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "dispatch_retry_productive",
+     "first_stagnant": null,
+     "id": "eva-dispatch_retry_productive-0",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "dispatch_retry_productive",
+     "first_stagnant": null,
+     "id": "eva-dispatch_retry_productive-1",
+     "latency": null,
+     "length": 10,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "dispatch_retry_productive",
+     "first_stagnant": null,
+     "id": "eva-dispatch_retry_productive-2",
+     "latency": null,
+     "length": 7,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "dispatch_retry_productive",
+     "first_stagnant": null,
+     "id": "eva-dispatch_retry_productive-3",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "reset_then_replay",
+     "first_stagnant": null,
+     "id": "eva-reset_then_replay-0",
+     "latency": null,
+     "length": 9,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "reset_then_replay",
+     "first_stagnant": null,
+     "id": "eva-reset_then_replay-1",
+     "latency": null,
+     "length": 9,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "reset_then_replay",
+     "first_stagnant": null,
+     "id": "eva-reset_then_replay-2",
+     "latency": null,
+     "length": 7,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "reset_then_replay",
+     "first_stagnant": null,
+     "id": "eva-reset_then_replay-3",
+     "latency": null,
+     "length": 11,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    }
+   ]
+  },
+  "periodic_every_6": {
+   "by_family": {
+    "backtracking_required": {
+     "detected": 0,
+     "false_triggers": 6,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 4
+    },
+    "counter_only_repeat": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "counter_with_static_playfield": {
+     "detected": 0,
+     "false_triggers": 3,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 3
+    },
+    "delayed_effect": {
+     "detected": 0,
+     "false_triggers": 4,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 4
+    },
+    "dispatch_retry_productive": {
+     "detected": 0,
+     "false_triggers": 4,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 4
+    },
+    "incremental_click_effect": {
+     "detected": 0,
+     "false_triggers": 2,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 2
+    },
+    "loop_escape_into_loop": {
+     "detected": 3,
+     "false_triggers": 2,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 2
+    },
+    "loop_then_escape": {
+     "detected": 4,
+     "false_triggers": 3,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 3
+    },
+    "loop_under_step_counter": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "move_square_cycle": {
+     "detected": 4,
+     "false_triggers": 3,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 3
+    },
+    "move_to_destination": {
+     "detected": 0,
+     "false_triggers": 3,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 3
+    },
+    "no_effect_with_dispatch_gaps": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "productive_exploration_no_completion": {
+     "detected": 0,
+     "false_triggers": 14,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 4
+    },
+    "repeated_click_no_effect": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "reset_then_replay": {
+     "detected": 0,
+     "false_triggers": 4,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 4
+    },
+    "rotating_clicks_no_effect": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "toggle_two_cycle": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "varied_click_painting": {
+     "detected": 0,
+     "false_triggers": 6,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 4
+    },
+    "walk_into_wall": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    }
+   },
+   "definition": {
+    "period": 6
+   },
+   "errors": [
+    {
+     "action_index": 5,
+     "family": "move_square_cycle",
+     "id": "eva-move_square_cycle-0",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "move_square_cycle",
+     "id": "eva-move_square_cycle-2",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "move_square_cycle",
+     "id": "eva-move_square_cycle-3",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 11,
+     "family": "loop_then_escape",
+     "id": "eva-loop_then_escape-0",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 11,
+     "family": "loop_then_escape",
+     "id": "eva-loop_then_escape-2",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 11,
+     "family": "loop_then_escape",
+     "id": "eva-loop_then_escape-3",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "loop_escape_into_loop",
+     "id": "eva-loop_escape_into_loop-1",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "loop_escape_into_loop",
+     "id": "eva-loop_escape_into_loop-2",
+     "kind": "false_intervention"
+    },
+    {
+     "family": "loop_escape_into_loop",
+     "first_stagnant": 2,
+     "id": "eva-loop_escape_into_loop-2",
+     "kind": "missed_positive",
+     "length": 11
+    },
+    {
+     "action_index": 5,
+     "family": "move_to_destination",
+     "id": "eva-move_to_destination-0",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "move_to_destination",
+     "id": "eva-move_to_destination-2",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "move_to_destination",
+     "id": "eva-move_to_destination-3",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "incremental_click_effect",
+     "id": "eva-incremental_click_effect-0",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "incremental_click_effect",
+     "id": "eva-incremental_click_effect-2",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "varied_click_painting",
+     "id": "eva-varied_click_painting-0",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "varied_click_painting",
+     "id": "eva-varied_click_painting-1",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "varied_click_painting",
+     "id": "eva-varied_click_painting-2",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 11,
+     "family": "varied_click_painting",
+     "id": "eva-varied_click_painting-2",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "varied_click_painting",
+     "id": "eva-varied_click_painting-3",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 11,
+     "family": "varied_click_painting",
+     "id": "eva-varied_click_painting-3",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "backtracking_required",
+     "id": "eva-backtracking_required-0",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 11,
+     "family": "backtracking_required",
+     "id": "eva-backtracking_required-0",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "backtracking_required",
+     "id": "eva-backtracking_required-1",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "backtracking_required",
+     "id": "eva-backtracking_required-2",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "backtracking_required",
+     "id": "eva-backtracking_required-3",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 11,
+     "family": "backtracking_required",
+     "id": "eva-backtracking_required-3",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "delayed_effect",
+     "id": "eva-delayed_effect-0",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "delayed_effect",
+     "id": "eva-delayed_effect-1",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "delayed_effect",
+     "id": "eva-delayed_effect-2",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "delayed_effect",
+     "id": "eva-delayed_effect-3",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "counter_with_static_playfield",
+     "id": "eva-counter_with_static_playfield-0",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "counter_with_static_playfield",
+     "id": "eva-counter_with_static_playfield-1",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "counter_with_static_playfield",
+     "id": "eva-counter_with_static_playfield-2",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-0",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 11,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-0",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 17,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-0",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-1",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 11,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-1",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 17,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-1",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-2",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 11,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-2",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 17,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-2",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 23,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-2",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-3",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 11,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-3",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 17,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-3",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 23,
+     "family": "productive_exploration_no_completion",
+     "id": "eva-productive_exploration_no_completion-3",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "dispatch_retry_productive",
+     "id": "eva-dispatch_retry_productive-0",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "dispatch_retry_productive",
+     "id": "eva-dispatch_retry_productive-1",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "dispatch_retry_productive",
+     "id": "eva-dispatch_retry_productive-2",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "dispatch_retry_productive",
+     "id": "eva-dispatch_retry_productive-3",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "reset_then_replay",
+     "id": "eva-reset_then_replay-0",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "reset_then_replay",
+     "id": "eva-reset_then_replay-1",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "reset_then_replay",
+     "id": "eva-reset_then_replay-2",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 5,
+     "family": "reset_then_replay",
+     "id": "eva-reset_then_replay-3",
+     "kind": "false_intervention"
+    }
+   ],
+   "metrics": {
+    "correct_triggers": 58,
+    "detected_positive_trajectories": 39,
+    "false_intervention_rate": 0.5263157894736842,
+    "false_intervention_trajectories": 40,
+    "false_triggers": 54,
+    "hard_negative_trajectories": 36,
+    "hard_negatives_with_false_intervention": 32,
+    "mean_latency_actions": 2.6666666666666665,
+    "positive_trajectories": 40,
+    "precision": 0.5178571428571429,
+    "premature_triggers_in_positive_trajectories": 8,
+    "recall": 0.975,
+    "trajectories": 76,
+    "triggers": 112
+   },
+   "trajectories": [
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "repeated_click_no_effect",
+     "first_stagnant": 1,
+     "id": "eva-repeated_click_no_effect-0",
+     "latency": 4,
+     "length": 8,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "repeated_click_no_effect",
+     "first_stagnant": 2,
+     "id": "eva-repeated_click_no_effect-1",
+     "latency": 3,
+     "length": 9,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "repeated_click_no_effect",
+     "first_stagnant": 3,
+     "id": "eva-repeated_click_no_effect-2",
+     "latency": 2,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "repeated_click_no_effect",
+     "first_stagnant": 4,
+     "id": "eva-repeated_click_no_effect-3",
+     "latency": 1,
+     "length": 10,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      5,
+      11
+     ],
+     "false_triggers": [],
+     "family": "rotating_clicks_no_effect",
+     "first_stagnant": 3,
+     "id": "eva-rotating_clicks_no_effect-0",
+     "latency": 2,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "rotating_clicks_no_effect",
+     "first_stagnant": 3,
+     "id": "eva-rotating_clicks_no_effect-1",
+     "latency": 2,
+     "length": 9,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      5,
+      11
+     ],
+     "false_triggers": [],
+     "family": "rotating_clicks_no_effect",
+     "first_stagnant": 4,
+     "id": "eva-rotating_clicks_no_effect-2",
+     "latency": 1,
+     "length": 16,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11
+     ]
+    },
+    {
+     "correct_triggers": [
+      5,
+      11
+     ],
+     "false_triggers": [],
+     "family": "rotating_clicks_no_effect",
+     "first_stagnant": 3,
+     "id": "eva-rotating_clicks_no_effect-3",
+     "latency": 2,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "toggle_two_cycle",
+     "first_stagnant": 4,
+     "id": "eva-toggle_two_cycle-0",
+     "latency": 1,
+     "length": 10,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "toggle_two_cycle",
+     "first_stagnant": 2,
+     "id": "eva-toggle_two_cycle-1",
+     "latency": 3,
+     "length": 9,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      5,
+      11
+     ],
+     "false_triggers": [],
+     "family": "toggle_two_cycle",
+     "first_stagnant": 4,
+     "id": "eva-toggle_two_cycle-2",
+     "latency": 1,
+     "length": 13,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "toggle_two_cycle",
+     "first_stagnant": 2,
+     "id": "eva-toggle_two_cycle-3",
+     "latency": 3,
+     "length": 8,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      11,
+      17,
+      23,
+      29
+     ],
+     "false_triggers": [
+      5
+     ],
+     "family": "move_square_cycle",
+     "first_stagnant": 8,
+     "id": "eva-move_square_cycle-0",
+     "latency": 3,
+     "length": 32,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11,
+      17,
+      23,
+      29
+     ]
+    },
+    {
+     "correct_triggers": [
+      5,
+      11
+     ],
+     "false_triggers": [],
+     "family": "move_square_cycle",
+     "first_stagnant": 4,
+     "id": "eva-move_square_cycle-1",
+     "latency": 1,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11
+     ]
+    },
+    {
+     "correct_triggers": [
+      11,
+      17,
+      23,
+      29
+     ],
+     "false_triggers": [
+      5
+     ],
+     "family": "move_square_cycle",
+     "first_stagnant": 8,
+     "id": "eva-move_square_cycle-2",
+     "latency": 3,
+     "length": 32,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11,
+      17,
+      23,
+      29
+     ]
+    },
+    {
+     "correct_triggers": [
+      11,
+      17,
+      23
+     ],
+     "false_triggers": [
+      5
+     ],
+     "family": "move_square_cycle",
+     "first_stagnant": 8,
+     "id": "eva-move_square_cycle-3",
+     "latency": 3,
+     "length": 24,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11,
+      17,
+      23
+     ]
+    },
+    {
+     "correct_triggers": [
+      5,
+      11
+     ],
+     "false_triggers": [],
+     "family": "counter_only_repeat",
+     "first_stagnant": 3,
+     "id": "eva-counter_only_repeat-0",
+     "latency": 2,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "counter_only_repeat",
+     "first_stagnant": 1,
+     "id": "eva-counter_only_repeat-1",
+     "latency": 4,
+     "length": 10,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "counter_only_repeat",
+     "first_stagnant": 1,
+     "id": "eva-counter_only_repeat-2",
+     "latency": 4,
+     "length": 7,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "counter_only_repeat",
+     "first_stagnant": 1,
+     "id": "eva-counter_only_repeat-3",
+     "latency": 4,
+     "length": 9,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-0",
+     "latency": 3,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-1",
+     "latency": 3,
+     "length": 9,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-2",
+     "latency": 3,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-3",
+     "latency": 3,
+     "length": 10,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "walk_into_wall",
+     "first_stagnant": 4,
+     "id": "eva-walk_into_wall-0",
+     "latency": 1,
+     "length": 9,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "walk_into_wall",
+     "first_stagnant": 5,
+     "id": "eva-walk_into_wall-1",
+     "latency": 0,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "walk_into_wall",
+     "first_stagnant": 4,
+     "id": "eva-walk_into_wall-2",
+     "latency": 1,
+     "length": 7,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "walk_into_wall",
+     "first_stagnant": 3,
+     "id": "eva-walk_into_wall-3",
+     "latency": 2,
+     "length": 8,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      5,
+      11
+     ],
+     "false_triggers": [],
+     "family": "no_effect_with_dispatch_gaps",
+     "first_stagnant": 3,
+     "id": "eva-no_effect_with_dispatch_gaps-0",
+     "latency": 2,
+     "length": 13,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11
+     ]
+    },
+    {
+     "correct_triggers": [
+      5,
+      11
+     ],
+     "false_triggers": [],
+     "family": "no_effect_with_dispatch_gaps",
+     "first_stagnant": 2,
+     "id": "eva-no_effect_with_dispatch_gaps-1",
+     "latency": 3,
+     "length": 14,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "no_effect_with_dispatch_gaps",
+     "first_stagnant": 2,
+     "id": "eva-no_effect_with_dispatch_gaps-2",
+     "latency": 3,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      5,
+      11
+     ],
+     "false_triggers": [],
+     "family": "no_effect_with_dispatch_gaps",
+     "first_stagnant": 1,
+     "id": "eva-no_effect_with_dispatch_gaps-3",
+     "latency": 4,
+     "length": 14,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [
+      11
+     ],
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-0",
+     "latency": 3,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-1",
+     "latency": 3,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [
+      11
+     ],
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-2",
+     "latency": 3,
+     "length": 14,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [
+      11
+     ],
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-3",
+     "latency": 3,
+     "length": 13,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11
+     ]
+    },
+    {
+     "correct_triggers": [
+      5,
+      11
+     ],
+     "false_triggers": [],
+     "family": "loop_escape_into_loop",
+     "first_stagnant": 2,
+     "id": "eva-loop_escape_into_loop-0",
+     "latency": 3,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11
+     ]
+    },
+    {
+     "correct_triggers": [
+      11
+     ],
+     "false_triggers": [
+      5
+     ],
+     "family": "loop_escape_into_loop",
+     "first_stagnant": 2,
+     "id": "eva-loop_escape_into_loop-1",
+     "latency": 9,
+     "length": 13,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "loop_escape_into_loop",
+     "first_stagnant": 2,
+     "id": "eva-loop_escape_into_loop-2",
+     "latency": null,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      5,
+      11
+     ],
+     "false_triggers": [],
+     "family": "loop_escape_into_loop",
+     "first_stagnant": 2,
+     "id": "eva-loop_escape_into_loop-3",
+     "latency": 3,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "move_to_destination",
+     "first_stagnant": null,
+     "id": "eva-move_to_destination-0",
+     "latency": null,
+     "length": 6,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "move_to_destination",
+     "first_stagnant": null,
+     "id": "eva-move_to_destination-1",
+     "latency": null,
+     "length": 5,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "move_to_destination",
+     "first_stagnant": null,
+     "id": "eva-move_to_destination-2",
+     "latency": null,
+     "length": 6,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "move_to_destination",
+     "first_stagnant": null,
+     "id": "eva-move_to_destination-3",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "incremental_click_effect",
+     "first_stagnant": null,
+     "id": "eva-incremental_click_effect-0",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "incremental_click_effect",
+     "first_stagnant": null,
+     "id": "eva-incremental_click_effect-1",
+     "latency": null,
+     "length": 5,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "incremental_click_effect",
+     "first_stagnant": null,
+     "id": "eva-incremental_click_effect-2",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "incremental_click_effect",
+     "first_stagnant": null,
+     "id": "eva-incremental_click_effect-3",
+     "latency": null,
+     "length": 5,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "varied_click_painting",
+     "first_stagnant": null,
+     "id": "eva-varied_click_painting-0",
+     "latency": null,
+     "length": 10,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "varied_click_painting",
+     "first_stagnant": null,
+     "id": "eva-varied_click_painting-1",
+     "latency": null,
+     "length": 10,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5,
+      11
+     ],
+     "family": "varied_click_painting",
+     "first_stagnant": null,
+     "id": "eva-varied_click_painting-2",
+     "latency": null,
+     "length": 13,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5,
+      11
+     ],
+     "family": "varied_click_painting",
+     "first_stagnant": null,
+     "id": "eva-varied_click_painting-3",
+     "latency": null,
+     "length": 12,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5,
+      11
+     ],
+     "family": "backtracking_required",
+     "first_stagnant": null,
+     "id": "eva-backtracking_required-0",
+     "latency": null,
+     "length": 12,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "backtracking_required",
+     "first_stagnant": null,
+     "id": "eva-backtracking_required-1",
+     "latency": null,
+     "length": 10,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "backtracking_required",
+     "first_stagnant": null,
+     "id": "eva-backtracking_required-2",
+     "latency": null,
+     "length": 9,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5,
+      11
+     ],
+     "family": "backtracking_required",
+     "first_stagnant": null,
+     "id": "eva-backtracking_required-3",
+     "latency": null,
+     "length": 12,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "delayed_effect",
+     "first_stagnant": null,
+     "id": "eva-delayed_effect-0",
+     "latency": null,
+     "length": 6,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "delayed_effect",
+     "first_stagnant": null,
+     "id": "eva-delayed_effect-1",
+     "latency": null,
+     "length": 7,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "delayed_effect",
+     "first_stagnant": null,
+     "id": "eva-delayed_effect-2",
+     "latency": null,
+     "length": 6,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "delayed_effect",
+     "first_stagnant": null,
+     "id": "eva-delayed_effect-3",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "counter_with_static_playfield",
+     "first_stagnant": null,
+     "id": "eva-counter_with_static_playfield-0",
+     "latency": null,
+     "length": 7,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "counter_with_static_playfield",
+     "first_stagnant": null,
+     "id": "eva-counter_with_static_playfield-1",
+     "latency": null,
+     "length": 9,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "counter_with_static_playfield",
+     "first_stagnant": null,
+     "id": "eva-counter_with_static_playfield-2",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "counter_with_static_playfield",
+     "first_stagnant": null,
+     "id": "eva-counter_with_static_playfield-3",
+     "latency": null,
+     "length": 5,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5,
+      11,
+      17
+     ],
+     "family": "productive_exploration_no_completion",
+     "first_stagnant": null,
+     "id": "eva-productive_exploration_no_completion-0",
+     "latency": null,
+     "length": 19,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11,
+      17
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5,
+      11,
+      17
+     ],
+     "family": "productive_exploration_no_completion",
+     "first_stagnant": null,
+     "id": "eva-productive_exploration_no_completion-1",
+     "latency": null,
+     "length": 22,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11,
+      17
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5,
+      11,
+      17,
+      23
+     ],
+     "family": "productive_exploration_no_completion",
+     "first_stagnant": null,
+     "id": "eva-productive_exploration_no_completion-2",
+     "latency": null,
+     "length": 26,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11,
+      17,
+      23
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5,
+      11,
+      17,
+      23
+     ],
+     "family": "productive_exploration_no_completion",
+     "first_stagnant": null,
+     "id": "eva-productive_exploration_no_completion-3",
+     "latency": null,
+     "length": 25,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5,
+      11,
+      17,
+      23
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "dispatch_retry_productive",
+     "first_stagnant": null,
+     "id": "eva-dispatch_retry_productive-0",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "dispatch_retry_productive",
+     "first_stagnant": null,
+     "id": "eva-dispatch_retry_productive-1",
+     "latency": null,
+     "length": 10,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "dispatch_retry_productive",
+     "first_stagnant": null,
+     "id": "eva-dispatch_retry_productive-2",
+     "latency": null,
+     "length": 7,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "dispatch_retry_productive",
+     "first_stagnant": null,
+     "id": "eva-dispatch_retry_productive-3",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "reset_then_replay",
+     "first_stagnant": null,
+     "id": "eva-reset_then_replay-0",
+     "latency": null,
+     "length": 9,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "reset_then_replay",
+     "first_stagnant": null,
+     "id": "eva-reset_then_replay-1",
+     "latency": null,
+     "length": 9,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "reset_then_replay",
+     "first_stagnant": null,
+     "id": "eva-reset_then_replay-2",
+     "latency": null,
+     "length": 7,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      5
+     ],
+     "family": "reset_then_replay",
+     "first_stagnant": null,
+     "id": "eva-reset_then_replay-3",
+     "latency": null,
+     "length": 11,
+     "positive": false,
+     "signals": [
+      "periodic"
+     ],
+     "triggers": [
+      5
+     ]
+    }
+   ]
+  },
+  "repeat_no_effect_only_k3": {
+   "by_family": {
+    "backtracking_required": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "counter_only_repeat": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "counter_with_static_playfield": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "delayed_effect": {
+     "detected": 0,
+     "false_triggers": 4,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 4
+    },
+    "dispatch_retry_productive": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "incremental_click_effect": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "loop_escape_into_loop": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "loop_then_escape": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "loop_under_step_counter": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "move_square_cycle": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "move_to_destination": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "no_effect_with_dispatch_gaps": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "productive_exploration_no_completion": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "repeated_click_no_effect": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "reset_then_replay": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "rotating_clicks_no_effect": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "toggle_two_cycle": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "varied_click_painting": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "walk_into_wall": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    }
+   },
+   "definition": {
+    "params": {
+     "no_progress_horizon": null,
+     "novelty_stall": null,
+     "prediction_failures": null,
+     "repeat_no_effect": 3,
+     "state_action_recurrence": null,
+     "tiny_effect_repeat": null
+    }
+   },
+   "errors": [
+    {
+     "family": "toggle_two_cycle",
+     "first_stagnant": 4,
+     "id": "eva-toggle_two_cycle-0",
+     "kind": "missed_positive",
+     "length": 10
+    },
+    {
+     "family": "toggle_two_cycle",
+     "first_stagnant": 2,
+     "id": "eva-toggle_two_cycle-1",
+     "kind": "missed_positive",
+     "length": 9
+    },
+    {
+     "family": "toggle_two_cycle",
+     "first_stagnant": 4,
+     "id": "eva-toggle_two_cycle-2",
+     "kind": "missed_positive",
+     "length": 13
+    },
+    {
+     "family": "toggle_two_cycle",
+     "first_stagnant": 2,
+     "id": "eva-toggle_two_cycle-3",
+     "kind": "missed_positive",
+     "length": 8
+    },
+    {
+     "family": "move_square_cycle",
+     "first_stagnant": 8,
+     "id": "eva-move_square_cycle-0",
+     "kind": "missed_positive",
+     "length": 32
+    },
+    {
+     "family": "move_square_cycle",
+     "first_stagnant": 4,
+     "id": "eva-move_square_cycle-1",
+     "kind": "missed_positive",
+     "length": 12
+    },
+    {
+     "family": "move_square_cycle",
+     "first_stagnant": 8,
+     "id": "eva-move_square_cycle-2",
+     "kind": "missed_positive",
+     "length": 32
+    },
+    {
+     "family": "move_square_cycle",
+     "first_stagnant": 8,
+     "id": "eva-move_square_cycle-3",
+     "kind": "missed_positive",
+     "length": 24
+    },
+    {
+     "family": "counter_only_repeat",
+     "first_stagnant": 3,
+     "id": "eva-counter_only_repeat-0",
+     "kind": "missed_positive",
+     "length": 12
+    },
+    {
+     "family": "counter_only_repeat",
+     "first_stagnant": 1,
+     "id": "eva-counter_only_repeat-1",
+     "kind": "missed_positive",
+     "length": 10
+    },
+    {
+     "family": "counter_only_repeat",
+     "first_stagnant": 1,
+     "id": "eva-counter_only_repeat-2",
+     "kind": "missed_positive",
+     "length": 7
+    },
+    {
+     "family": "counter_only_repeat",
+     "first_stagnant": 1,
+     "id": "eva-counter_only_repeat-3",
+     "kind": "missed_positive",
+     "length": 9
+    },
+    {
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-0",
+     "kind": "missed_positive",
+     "length": 11
+    },
+    {
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-1",
+     "kind": "missed_positive",
+     "length": 9
+    },
+    {
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-2",
+     "kind": "missed_positive",
+     "length": 11
+    },
+    {
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-3",
+     "kind": "missed_positive",
+     "length": 10
+    },
+    {
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-0",
+     "kind": "missed_positive",
+     "length": 12
+    },
+    {
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-1",
+     "kind": "missed_positive",
+     "length": 11
+    },
+    {
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-2",
+     "kind": "missed_positive",
+     "length": 14
+    },
+    {
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-3",
+     "kind": "missed_positive",
+     "length": 13
+    },
+    {
+     "action_index": 2,
+     "family": "delayed_effect",
+     "id": "eva-delayed_effect-0",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 2,
+     "family": "delayed_effect",
+     "id": "eva-delayed_effect-1",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 2,
+     "family": "delayed_effect",
+     "id": "eva-delayed_effect-2",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 2,
+     "family": "delayed_effect",
+     "id": "eva-delayed_effect-3",
+     "kind": "false_intervention"
+    }
+   ],
+   "metrics": {
+    "correct_triggers": 26,
+    "detected_positive_trajectories": 20,
+    "false_intervention_rate": 0.05263157894736842,
+    "false_intervention_trajectories": 4,
+    "false_triggers": 4,
+    "hard_negative_trajectories": 36,
+    "hard_negatives_with_false_intervention": 4,
+    "mean_latency_actions": 2.6,
+    "positive_trajectories": 40,
+    "precision": 0.8666666666666667,
+    "premature_triggers_in_positive_trajectories": 0,
+    "recall": 0.5,
+    "trajectories": 76,
+    "triggers": 30
+   },
+   "trajectories": [
+    {
+     "correct_triggers": [
+      2
+     ],
+     "false_triggers": [],
+     "family": "repeated_click_no_effect",
+     "first_stagnant": 1,
+     "id": "eva-repeated_click_no_effect-0",
+     "latency": 1,
+     "length": 8,
+     "positive": true,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      2
+     ]
+    },
+    {
+     "correct_triggers": [
+      3
+     ],
+     "false_triggers": [],
+     "family": "repeated_click_no_effect",
+     "first_stagnant": 2,
+     "id": "eva-repeated_click_no_effect-1",
+     "latency": 1,
+     "length": 9,
+     "positive": true,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      3
+     ]
+    },
+    {
+     "correct_triggers": [
+      4,
+      10
+     ],
+     "false_triggers": [],
+     "family": "repeated_click_no_effect",
+     "first_stagnant": 3,
+     "id": "eva-repeated_click_no_effect-2",
+     "latency": 1,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      4,
+      10
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "repeated_click_no_effect",
+     "first_stagnant": 4,
+     "id": "eva-repeated_click_no_effect-3",
+     "latency": 1,
+     "length": 10,
+     "positive": true,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      6
+     ],
+     "false_triggers": [],
+     "family": "rotating_clicks_no_effect",
+     "first_stagnant": 3,
+     "id": "eva-rotating_clicks_no_effect-0",
+     "latency": 3,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      6
+     ]
+    },
+    {
+     "correct_triggers": [
+      6
+     ],
+     "false_triggers": [],
+     "family": "rotating_clicks_no_effect",
+     "first_stagnant": 3,
+     "id": "eva-rotating_clicks_no_effect-1",
+     "latency": 3,
+     "length": 9,
+     "positive": true,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      6
+     ]
+    },
+    {
+     "correct_triggers": [
+      8,
+      14
+     ],
+     "false_triggers": [],
+     "family": "rotating_clicks_no_effect",
+     "first_stagnant": 4,
+     "id": "eva-rotating_clicks_no_effect-2",
+     "latency": 4,
+     "length": 16,
+     "positive": true,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      8,
+      14
+     ]
+    },
+    {
+     "correct_triggers": [
+      6
+     ],
+     "false_triggers": [],
+     "family": "rotating_clicks_no_effect",
+     "first_stagnant": 3,
+     "id": "eva-rotating_clicks_no_effect-3",
+     "latency": 3,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      6
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "toggle_two_cycle",
+     "first_stagnant": 4,
+     "id": "eva-toggle_two_cycle-0",
+     "latency": null,
+     "length": 10,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "toggle_two_cycle",
+     "first_stagnant": 2,
+     "id": "eva-toggle_two_cycle-1",
+     "latency": null,
+     "length": 9,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "toggle_two_cycle",
+     "first_stagnant": 4,
+     "id": "eva-toggle_two_cycle-2",
+     "latency": null,
+     "length": 13,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "toggle_two_cycle",
+     "first_stagnant": 2,
+     "id": "eva-toggle_two_cycle-3",
+     "latency": null,
+     "length": 8,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "move_square_cycle",
+     "first_stagnant": 8,
+     "id": "eva-move_square_cycle-0",
+     "latency": null,
+     "length": 32,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "move_square_cycle",
+     "first_stagnant": 4,
+     "id": "eva-move_square_cycle-1",
+     "latency": null,
+     "length": 12,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "move_square_cycle",
+     "first_stagnant": 8,
+     "id": "eva-move_square_cycle-2",
+     "latency": null,
+     "length": 32,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "move_square_cycle",
+     "first_stagnant": 8,
+     "id": "eva-move_square_cycle-3",
+     "latency": null,
+     "length": 24,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "counter_only_repeat",
+     "first_stagnant": 3,
+     "id": "eva-counter_only_repeat-0",
+     "latency": null,
+     "length": 12,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "counter_only_repeat",
+     "first_stagnant": 1,
+     "id": "eva-counter_only_repeat-1",
+     "latency": null,
+     "length": 10,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "counter_only_repeat",
+     "first_stagnant": 1,
+     "id": "eva-counter_only_repeat-2",
+     "latency": null,
+     "length": 7,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "counter_only_repeat",
+     "first_stagnant": 1,
+     "id": "eva-counter_only_repeat-3",
+     "latency": null,
+     "length": 9,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-0",
+     "latency": null,
+     "length": 11,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-1",
+     "latency": null,
+     "length": 9,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-2",
+     "latency": null,
+     "length": 11,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-3",
+     "latency": null,
+     "length": 10,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "walk_into_wall",
+     "first_stagnant": 4,
+     "id": "eva-walk_into_wall-0",
+     "latency": 1,
+     "length": 9,
+     "positive": true,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      6
+     ],
+     "false_triggers": [],
+     "family": "walk_into_wall",
+     "first_stagnant": 5,
+     "id": "eva-walk_into_wall-1",
+     "latency": 1,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      6
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "walk_into_wall",
+     "first_stagnant": 4,
+     "id": "eva-walk_into_wall-2",
+     "latency": 1,
+     "length": 7,
+     "positive": true,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      4
+     ],
+     "false_triggers": [],
+     "family": "walk_into_wall",
+     "first_stagnant": 3,
+     "id": "eva-walk_into_wall-3",
+     "latency": 1,
+     "length": 8,
+     "positive": true,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      4
+     ]
+    },
+    {
+     "correct_triggers": [
+      6,
+      12
+     ],
+     "false_triggers": [],
+     "family": "no_effect_with_dispatch_gaps",
+     "first_stagnant": 3,
+     "id": "eva-no_effect_with_dispatch_gaps-0",
+     "latency": 3,
+     "length": 13,
+     "positive": true,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      6,
+      12
+     ]
+    },
+    {
+     "correct_triggers": [
+      4,
+      10
+     ],
+     "false_triggers": [],
+     "family": "no_effect_with_dispatch_gaps",
+     "first_stagnant": 2,
+     "id": "eva-no_effect_with_dispatch_gaps-1",
+     "latency": 2,
+     "length": 14,
+     "positive": true,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      4,
+      10
+     ]
+    },
+    {
+     "correct_triggers": [
+      4,
+      10
+     ],
+     "false_triggers": [],
+     "family": "no_effect_with_dispatch_gaps",
+     "first_stagnant": 2,
+     "id": "eva-no_effect_with_dispatch_gaps-2",
+     "latency": 2,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      4,
+      10
+     ]
+    },
+    {
+     "correct_triggers": [
+      3,
+      9
+     ],
+     "false_triggers": [],
+     "family": "no_effect_with_dispatch_gaps",
+     "first_stagnant": 1,
+     "id": "eva-no_effect_with_dispatch_gaps-3",
+     "latency": 2,
+     "length": 14,
+     "positive": true,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      3,
+      9
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-0",
+     "latency": null,
+     "length": 12,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-1",
+     "latency": null,
+     "length": 11,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-2",
+     "latency": null,
+     "length": 14,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-3",
+     "latency": null,
+     "length": 13,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [
+      8
+     ],
+     "false_triggers": [],
+     "family": "loop_escape_into_loop",
+     "first_stagnant": 2,
+     "id": "eva-loop_escape_into_loop-0",
+     "latency": 6,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      8
+     ]
+    },
+    {
+     "correct_triggers": [
+      7
+     ],
+     "false_triggers": [],
+     "family": "loop_escape_into_loop",
+     "first_stagnant": 2,
+     "id": "eva-loop_escape_into_loop-1",
+     "latency": 5,
+     "length": 13,
+     "positive": true,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      7
+     ]
+    },
+    {
+     "correct_triggers": [
+      7
+     ],
+     "false_triggers": [],
+     "family": "loop_escape_into_loop",
+     "first_stagnant": 2,
+     "id": "eva-loop_escape_into_loop-2",
+     "latency": 5,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      7
+     ]
+    },
+    {
+     "correct_triggers": [
+      8
+     ],
+     "false_triggers": [],
+     "family": "loop_escape_into_loop",
+     "first_stagnant": 2,
+     "id": "eva-loop_escape_into_loop-3",
+     "latency": 6,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      8
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "move_to_destination",
+     "first_stagnant": null,
+     "id": "eva-move_to_destination-0",
+     "latency": null,
+     "length": 6,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "move_to_destination",
+     "first_stagnant": null,
+     "id": "eva-move_to_destination-1",
+     "latency": null,
+     "length": 5,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "move_to_destination",
+     "first_stagnant": null,
+     "id": "eva-move_to_destination-2",
+     "latency": null,
+     "length": 6,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "move_to_destination",
+     "first_stagnant": null,
+     "id": "eva-move_to_destination-3",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "incremental_click_effect",
+     "first_stagnant": null,
+     "id": "eva-incremental_click_effect-0",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "incremental_click_effect",
+     "first_stagnant": null,
+     "id": "eva-incremental_click_effect-1",
+     "latency": null,
+     "length": 5,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "incremental_click_effect",
+     "first_stagnant": null,
+     "id": "eva-incremental_click_effect-2",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "incremental_click_effect",
+     "first_stagnant": null,
+     "id": "eva-incremental_click_effect-3",
+     "latency": null,
+     "length": 5,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "varied_click_painting",
+     "first_stagnant": null,
+     "id": "eva-varied_click_painting-0",
+     "latency": null,
+     "length": 10,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "varied_click_painting",
+     "first_stagnant": null,
+     "id": "eva-varied_click_painting-1",
+     "latency": null,
+     "length": 10,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "varied_click_painting",
+     "first_stagnant": null,
+     "id": "eva-varied_click_painting-2",
+     "latency": null,
+     "length": 13,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "varied_click_painting",
+     "first_stagnant": null,
+     "id": "eva-varied_click_painting-3",
+     "latency": null,
+     "length": 12,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "backtracking_required",
+     "first_stagnant": null,
+     "id": "eva-backtracking_required-0",
+     "latency": null,
+     "length": 12,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "backtracking_required",
+     "first_stagnant": null,
+     "id": "eva-backtracking_required-1",
+     "latency": null,
+     "length": 10,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "backtracking_required",
+     "first_stagnant": null,
+     "id": "eva-backtracking_required-2",
+     "latency": null,
+     "length": 9,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "backtracking_required",
+     "first_stagnant": null,
+     "id": "eva-backtracking_required-3",
+     "latency": null,
+     "length": 12,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      2
+     ],
+     "family": "delayed_effect",
+     "first_stagnant": null,
+     "id": "eva-delayed_effect-0",
+     "latency": null,
+     "length": 6,
+     "positive": false,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      2
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      2
+     ],
+     "family": "delayed_effect",
+     "first_stagnant": null,
+     "id": "eva-delayed_effect-1",
+     "latency": null,
+     "length": 7,
+     "positive": false,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      2
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      2
+     ],
+     "family": "delayed_effect",
+     "first_stagnant": null,
+     "id": "eva-delayed_effect-2",
+     "latency": null,
+     "length": 6,
+     "positive": false,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      2
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      2
+     ],
+     "family": "delayed_effect",
+     "first_stagnant": null,
+     "id": "eva-delayed_effect-3",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [
+      "repeat_no_effect"
+     ],
+     "triggers": [
+      2
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "counter_with_static_playfield",
+     "first_stagnant": null,
+     "id": "eva-counter_with_static_playfield-0",
+     "latency": null,
+     "length": 7,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "counter_with_static_playfield",
+     "first_stagnant": null,
+     "id": "eva-counter_with_static_playfield-1",
+     "latency": null,
+     "length": 9,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "counter_with_static_playfield",
+     "first_stagnant": null,
+     "id": "eva-counter_with_static_playfield-2",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "counter_with_static_playfield",
+     "first_stagnant": null,
+     "id": "eva-counter_with_static_playfield-3",
+     "latency": null,
+     "length": 5,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "productive_exploration_no_completion",
+     "first_stagnant": null,
+     "id": "eva-productive_exploration_no_completion-0",
+     "latency": null,
+     "length": 19,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "productive_exploration_no_completion",
+     "first_stagnant": null,
+     "id": "eva-productive_exploration_no_completion-1",
+     "latency": null,
+     "length": 22,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "productive_exploration_no_completion",
+     "first_stagnant": null,
+     "id": "eva-productive_exploration_no_completion-2",
+     "latency": null,
+     "length": 26,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "productive_exploration_no_completion",
+     "first_stagnant": null,
+     "id": "eva-productive_exploration_no_completion-3",
+     "latency": null,
+     "length": 25,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "dispatch_retry_productive",
+     "first_stagnant": null,
+     "id": "eva-dispatch_retry_productive-0",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "dispatch_retry_productive",
+     "first_stagnant": null,
+     "id": "eva-dispatch_retry_productive-1",
+     "latency": null,
+     "length": 10,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "dispatch_retry_productive",
+     "first_stagnant": null,
+     "id": "eva-dispatch_retry_productive-2",
+     "latency": null,
+     "length": 7,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "dispatch_retry_productive",
+     "first_stagnant": null,
+     "id": "eva-dispatch_retry_productive-3",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "reset_then_replay",
+     "first_stagnant": null,
+     "id": "eva-reset_then_replay-0",
+     "latency": null,
+     "length": 9,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "reset_then_replay",
+     "first_stagnant": null,
+     "id": "eva-reset_then_replay-1",
+     "latency": null,
+     "length": 9,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "reset_then_replay",
+     "first_stagnant": null,
+     "id": "eva-reset_then_replay-2",
+     "latency": null,
+     "length": 7,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "reset_then_replay",
+     "first_stagnant": null,
+     "id": "eva-reset_then_replay-3",
+     "latency": null,
+     "length": 11,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    }
+   ]
+  },
+  "selected": {
+   "by_family": {
+    "backtracking_required": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "counter_only_repeat": {
+     "detected": 2,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "counter_with_static_playfield": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "delayed_effect": {
+     "detected": 0,
+     "false_triggers": 5,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 4
+    },
+    "dispatch_retry_productive": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "incremental_click_effect": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "loop_escape_into_loop": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "loop_then_escape": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "loop_under_step_counter": {
+     "detected": 2,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "move_square_cycle": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "move_to_destination": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "no_effect_with_dispatch_gaps": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "productive_exploration_no_completion": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "repeated_click_no_effect": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "reset_then_replay": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "rotating_clicks_no_effect": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "toggle_two_cycle": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "varied_click_painting": {
+     "detected": 0,
+     "false_triggers": 0,
+     "positive": false,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    },
+    "walk_into_wall": {
+     "detected": 4,
+     "false_triggers": 0,
+     "positive": true,
+     "trajectories": 4,
+     "with_false_intervention": 0
+    }
+   },
+   "definition": {
+    "params": {
+     "no_progress_horizon": null,
+     "novelty_stall": null,
+     "prediction_failures": null,
+     "repeat_no_effect": null,
+     "state_action_recurrence": 2,
+     "tiny_effect_repeat": 10
+    }
+   },
+   "errors": [
+    {
+     "family": "counter_only_repeat",
+     "first_stagnant": 1,
+     "id": "eva-counter_only_repeat-2",
+     "kind": "missed_positive",
+     "length": 7
+    },
+    {
+     "family": "counter_only_repeat",
+     "first_stagnant": 1,
+     "id": "eva-counter_only_repeat-3",
+     "kind": "missed_positive",
+     "length": 9
+    },
+    {
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-1",
+     "kind": "missed_positive",
+     "length": 9
+    },
+    {
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-3",
+     "kind": "missed_positive",
+     "length": 10
+    },
+    {
+     "action_index": 1,
+     "family": "delayed_effect",
+     "id": "eva-delayed_effect-0",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 1,
+     "family": "delayed_effect",
+     "id": "eva-delayed_effect-1",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 1,
+     "family": "delayed_effect",
+     "id": "eva-delayed_effect-2",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 1,
+     "family": "delayed_effect",
+     "id": "eva-delayed_effect-3",
+     "kind": "false_intervention"
+    },
+    {
+     "action_index": 7,
+     "family": "delayed_effect",
+     "id": "eva-delayed_effect-3",
+     "kind": "false_intervention"
+    }
+   ],
+   "metrics": {
+    "correct_triggers": 61,
+    "detected_positive_trajectories": 36,
+    "false_intervention_rate": 0.05263157894736842,
+    "false_intervention_trajectories": 4,
+    "false_triggers": 5,
+    "hard_negative_trajectories": 36,
+    "hard_negatives_with_false_intervention": 4,
+    "mean_latency_actions": 0.9166666666666666,
+    "positive_trajectories": 40,
+    "precision": 0.9242424242424242,
+    "premature_triggers_in_positive_trajectories": 0,
+    "recall": 0.9,
+    "trajectories": 76,
+    "triggers": 66
+   },
+   "trajectories": [
+    {
+     "correct_triggers": [
+      1,
+      7
+     ],
+     "false_triggers": [],
+     "family": "repeated_click_no_effect",
+     "first_stagnant": 1,
+     "id": "eva-repeated_click_no_effect-0",
+     "latency": 0,
+     "length": 8,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      1,
+      7
+     ]
+    },
+    {
+     "correct_triggers": [
+      2,
+      8
+     ],
+     "false_triggers": [],
+     "family": "repeated_click_no_effect",
+     "first_stagnant": 2,
+     "id": "eva-repeated_click_no_effect-1",
+     "latency": 0,
+     "length": 9,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      2,
+      8
+     ]
+    },
+    {
+     "correct_triggers": [
+      3,
+      9
+     ],
+     "false_triggers": [],
+     "family": "repeated_click_no_effect",
+     "first_stagnant": 3,
+     "id": "eva-repeated_click_no_effect-2",
+     "latency": 0,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      3,
+      9
+     ]
+    },
+    {
+     "correct_triggers": [
+      4
+     ],
+     "false_triggers": [],
+     "family": "repeated_click_no_effect",
+     "first_stagnant": 4,
+     "id": "eva-repeated_click_no_effect-3",
+     "latency": 0,
+     "length": 10,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      4
+     ]
+    },
+    {
+     "correct_triggers": [
+      3,
+      9
+     ],
+     "false_triggers": [],
+     "family": "rotating_clicks_no_effect",
+     "first_stagnant": 3,
+     "id": "eva-rotating_clicks_no_effect-0",
+     "latency": 0,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      3,
+      9
+     ]
+    },
+    {
+     "correct_triggers": [
+      3
+     ],
+     "false_triggers": [],
+     "family": "rotating_clicks_no_effect",
+     "first_stagnant": 3,
+     "id": "eva-rotating_clicks_no_effect-1",
+     "latency": 0,
+     "length": 9,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      3
+     ]
+    },
+    {
+     "correct_triggers": [
+      4,
+      10
+     ],
+     "false_triggers": [],
+     "family": "rotating_clicks_no_effect",
+     "first_stagnant": 4,
+     "id": "eva-rotating_clicks_no_effect-2",
+     "latency": 0,
+     "length": 16,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      4,
+      10
+     ]
+    },
+    {
+     "correct_triggers": [
+      3,
+      9
+     ],
+     "false_triggers": [],
+     "family": "rotating_clicks_no_effect",
+     "first_stagnant": 3,
+     "id": "eva-rotating_clicks_no_effect-3",
+     "latency": 0,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      3,
+      9
+     ]
+    },
+    {
+     "correct_triggers": [
+      4
+     ],
+     "false_triggers": [],
+     "family": "toggle_two_cycle",
+     "first_stagnant": 4,
+     "id": "eva-toggle_two_cycle-0",
+     "latency": 0,
+     "length": 10,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      4
+     ]
+    },
+    {
+     "correct_triggers": [
+      2,
+      8
+     ],
+     "false_triggers": [],
+     "family": "toggle_two_cycle",
+     "first_stagnant": 2,
+     "id": "eva-toggle_two_cycle-1",
+     "latency": 0,
+     "length": 9,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      2,
+      8
+     ]
+    },
+    {
+     "correct_triggers": [
+      4,
+      10
+     ],
+     "false_triggers": [],
+     "family": "toggle_two_cycle",
+     "first_stagnant": 4,
+     "id": "eva-toggle_two_cycle-2",
+     "latency": 0,
+     "length": 13,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      4,
+      10
+     ]
+    },
+    {
+     "correct_triggers": [
+      2
+     ],
+     "false_triggers": [],
+     "family": "toggle_two_cycle",
+     "first_stagnant": 2,
+     "id": "eva-toggle_two_cycle-3",
+     "latency": 0,
+     "length": 8,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      2
+     ]
+    },
+    {
+     "correct_triggers": [
+      8,
+      14,
+      20,
+      26
+     ],
+     "false_triggers": [],
+     "family": "move_square_cycle",
+     "first_stagnant": 8,
+     "id": "eva-move_square_cycle-0",
+     "latency": 0,
+     "length": 32,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      8,
+      14,
+      20,
+      26
+     ]
+    },
+    {
+     "correct_triggers": [
+      4,
+      10
+     ],
+     "false_triggers": [],
+     "family": "move_square_cycle",
+     "first_stagnant": 4,
+     "id": "eva-move_square_cycle-1",
+     "latency": 0,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      4,
+      10
+     ]
+    },
+    {
+     "correct_triggers": [
+      8,
+      14,
+      20,
+      26
+     ],
+     "false_triggers": [],
+     "family": "move_square_cycle",
+     "first_stagnant": 8,
+     "id": "eva-move_square_cycle-2",
+     "latency": 0,
+     "length": 32,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      8,
+      14,
+      20,
+      26
+     ]
+    },
+    {
+     "correct_triggers": [
+      8,
+      14,
+      20
+     ],
+     "false_triggers": [],
+     "family": "move_square_cycle",
+     "first_stagnant": 8,
+     "id": "eva-move_square_cycle-3",
+     "latency": 0,
+     "length": 24,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      8,
+      14,
+      20
+     ]
+    },
+    {
+     "correct_triggers": [
+      11
+     ],
+     "false_triggers": [],
+     "family": "counter_only_repeat",
+     "first_stagnant": 3,
+     "id": "eva-counter_only_repeat-0",
+     "latency": 8,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "tiny_effect_repeat"
+     ],
+     "triggers": [
+      11
+     ]
+    },
+    {
+     "correct_triggers": [
+      9
+     ],
+     "false_triggers": [],
+     "family": "counter_only_repeat",
+     "first_stagnant": 1,
+     "id": "eva-counter_only_repeat-1",
+     "latency": 8,
+     "length": 10,
+     "positive": true,
+     "signals": [
+      "tiny_effect_repeat"
+     ],
+     "triggers": [
+      9
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "counter_only_repeat",
+     "first_stagnant": 1,
+     "id": "eva-counter_only_repeat-2",
+     "latency": null,
+     "length": 7,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "counter_only_repeat",
+     "first_stagnant": 1,
+     "id": "eva-counter_only_repeat-3",
+     "latency": null,
+     "length": 9,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [
+      10
+     ],
+     "false_triggers": [],
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-0",
+     "latency": 8,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      10
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-1",
+     "latency": null,
+     "length": 9,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [
+      10
+     ],
+     "false_triggers": [],
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-2",
+     "latency": 8,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      10
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "loop_under_step_counter",
+     "first_stagnant": 2,
+     "id": "eva-loop_under_step_counter-3",
+     "latency": null,
+     "length": 10,
+     "positive": true,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [
+      4
+     ],
+     "false_triggers": [],
+     "family": "walk_into_wall",
+     "first_stagnant": 4,
+     "id": "eva-walk_into_wall-0",
+     "latency": 0,
+     "length": 9,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      4
+     ]
+    },
+    {
+     "correct_triggers": [
+      5
+     ],
+     "false_triggers": [],
+     "family": "walk_into_wall",
+     "first_stagnant": 5,
+     "id": "eva-walk_into_wall-1",
+     "latency": 0,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      5
+     ]
+    },
+    {
+     "correct_triggers": [
+      4
+     ],
+     "false_triggers": [],
+     "family": "walk_into_wall",
+     "first_stagnant": 4,
+     "id": "eva-walk_into_wall-2",
+     "latency": 0,
+     "length": 7,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      4
+     ]
+    },
+    {
+     "correct_triggers": [
+      3
+     ],
+     "false_triggers": [],
+     "family": "walk_into_wall",
+     "first_stagnant": 3,
+     "id": "eva-walk_into_wall-3",
+     "latency": 0,
+     "length": 8,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      3
+     ]
+    },
+    {
+     "correct_triggers": [
+      4,
+      10
+     ],
+     "false_triggers": [],
+     "family": "no_effect_with_dispatch_gaps",
+     "first_stagnant": 3,
+     "id": "eva-no_effect_with_dispatch_gaps-0",
+     "latency": 1,
+     "length": 13,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      4,
+      10
+     ]
+    },
+    {
+     "correct_triggers": [
+      2,
+      8
+     ],
+     "false_triggers": [],
+     "family": "no_effect_with_dispatch_gaps",
+     "first_stagnant": 2,
+     "id": "eva-no_effect_with_dispatch_gaps-1",
+     "latency": 0,
+     "length": 14,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      2,
+      8
+     ]
+    },
+    {
+     "correct_triggers": [
+      2,
+      8
+     ],
+     "false_triggers": [],
+     "family": "no_effect_with_dispatch_gaps",
+     "first_stagnant": 2,
+     "id": "eva-no_effect_with_dispatch_gaps-2",
+     "latency": 0,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      2,
+      8
+     ]
+    },
+    {
+     "correct_triggers": [
+      1,
+      8
+     ],
+     "false_triggers": [],
+     "family": "no_effect_with_dispatch_gaps",
+     "first_stagnant": 1,
+     "id": "eva-no_effect_with_dispatch_gaps-3",
+     "latency": 0,
+     "length": 14,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      1,
+      8
+     ]
+    },
+    {
+     "correct_triggers": [
+      2
+     ],
+     "false_triggers": [],
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-0",
+     "latency": 0,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      2
+     ]
+    },
+    {
+     "correct_triggers": [
+      2
+     ],
+     "false_triggers": [],
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-1",
+     "latency": 0,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      2
+     ]
+    },
+    {
+     "correct_triggers": [
+      2
+     ],
+     "false_triggers": [],
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-2",
+     "latency": 0,
+     "length": 14,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      2
+     ]
+    },
+    {
+     "correct_triggers": [
+      2
+     ],
+     "false_triggers": [],
+     "family": "loop_then_escape",
+     "first_stagnant": 2,
+     "id": "eva-loop_then_escape-3",
+     "latency": 0,
+     "length": 13,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      2
+     ]
+    },
+    {
+     "correct_triggers": [
+      2,
+      8
+     ],
+     "false_triggers": [],
+     "family": "loop_escape_into_loop",
+     "first_stagnant": 2,
+     "id": "eva-loop_escape_into_loop-0",
+     "latency": 0,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      2,
+      8
+     ]
+    },
+    {
+     "correct_triggers": [
+      2,
+      8
+     ],
+     "false_triggers": [],
+     "family": "loop_escape_into_loop",
+     "first_stagnant": 2,
+     "id": "eva-loop_escape_into_loop-1",
+     "latency": 0,
+     "length": 13,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      2,
+      8
+     ]
+    },
+    {
+     "correct_triggers": [
+      2,
+      8
+     ],
+     "false_triggers": [],
+     "family": "loop_escape_into_loop",
+     "first_stagnant": 2,
+     "id": "eva-loop_escape_into_loop-2",
+     "latency": 0,
+     "length": 11,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      2,
+      8
+     ]
+    },
+    {
+     "correct_triggers": [
+      2,
+      8
+     ],
+     "false_triggers": [],
+     "family": "loop_escape_into_loop",
+     "first_stagnant": 2,
+     "id": "eva-loop_escape_into_loop-3",
+     "latency": 0,
+     "length": 12,
+     "positive": true,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      2,
+      8
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "move_to_destination",
+     "first_stagnant": null,
+     "id": "eva-move_to_destination-0",
+     "latency": null,
+     "length": 6,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "move_to_destination",
+     "first_stagnant": null,
+     "id": "eva-move_to_destination-1",
+     "latency": null,
+     "length": 5,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "move_to_destination",
+     "first_stagnant": null,
+     "id": "eva-move_to_destination-2",
+     "latency": null,
+     "length": 6,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "move_to_destination",
+     "first_stagnant": null,
+     "id": "eva-move_to_destination-3",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "incremental_click_effect",
+     "first_stagnant": null,
+     "id": "eva-incremental_click_effect-0",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "incremental_click_effect",
+     "first_stagnant": null,
+     "id": "eva-incremental_click_effect-1",
+     "latency": null,
+     "length": 5,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "incremental_click_effect",
+     "first_stagnant": null,
+     "id": "eva-incremental_click_effect-2",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "incremental_click_effect",
+     "first_stagnant": null,
+     "id": "eva-incremental_click_effect-3",
+     "latency": null,
+     "length": 5,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "varied_click_painting",
+     "first_stagnant": null,
+     "id": "eva-varied_click_painting-0",
+     "latency": null,
+     "length": 10,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "varied_click_painting",
+     "first_stagnant": null,
+     "id": "eva-varied_click_painting-1",
+     "latency": null,
+     "length": 10,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "varied_click_painting",
+     "first_stagnant": null,
+     "id": "eva-varied_click_painting-2",
+     "latency": null,
+     "length": 13,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "varied_click_painting",
+     "first_stagnant": null,
+     "id": "eva-varied_click_painting-3",
+     "latency": null,
+     "length": 12,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "backtracking_required",
+     "first_stagnant": null,
+     "id": "eva-backtracking_required-0",
+     "latency": null,
+     "length": 12,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "backtracking_required",
+     "first_stagnant": null,
+     "id": "eva-backtracking_required-1",
+     "latency": null,
+     "length": 10,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "backtracking_required",
+     "first_stagnant": null,
+     "id": "eva-backtracking_required-2",
+     "latency": null,
+     "length": 9,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "backtracking_required",
+     "first_stagnant": null,
+     "id": "eva-backtracking_required-3",
+     "latency": null,
+     "length": 12,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      1
+     ],
+     "family": "delayed_effect",
+     "first_stagnant": null,
+     "id": "eva-delayed_effect-0",
+     "latency": null,
+     "length": 6,
+     "positive": false,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      1
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      1
+     ],
+     "family": "delayed_effect",
+     "first_stagnant": null,
+     "id": "eva-delayed_effect-1",
+     "latency": null,
+     "length": 7,
+     "positive": false,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      1
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      1
+     ],
+     "family": "delayed_effect",
+     "first_stagnant": null,
+     "id": "eva-delayed_effect-2",
+     "latency": null,
+     "length": 6,
+     "positive": false,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      1
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [
+      1,
+      7
+     ],
+     "family": "delayed_effect",
+     "first_stagnant": null,
+     "id": "eva-delayed_effect-3",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [
+      "state_action_recurrence"
+     ],
+     "triggers": [
+      1,
+      7
+     ]
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "counter_with_static_playfield",
+     "first_stagnant": null,
+     "id": "eva-counter_with_static_playfield-0",
+     "latency": null,
+     "length": 7,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "counter_with_static_playfield",
+     "first_stagnant": null,
+     "id": "eva-counter_with_static_playfield-1",
+     "latency": null,
+     "length": 9,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "counter_with_static_playfield",
+     "first_stagnant": null,
+     "id": "eva-counter_with_static_playfield-2",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "counter_with_static_playfield",
+     "first_stagnant": null,
+     "id": "eva-counter_with_static_playfield-3",
+     "latency": null,
+     "length": 5,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "productive_exploration_no_completion",
+     "first_stagnant": null,
+     "id": "eva-productive_exploration_no_completion-0",
+     "latency": null,
+     "length": 19,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "productive_exploration_no_completion",
+     "first_stagnant": null,
+     "id": "eva-productive_exploration_no_completion-1",
+     "latency": null,
+     "length": 22,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "productive_exploration_no_completion",
+     "first_stagnant": null,
+     "id": "eva-productive_exploration_no_completion-2",
+     "latency": null,
+     "length": 26,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "productive_exploration_no_completion",
+     "first_stagnant": null,
+     "id": "eva-productive_exploration_no_completion-3",
+     "latency": null,
+     "length": 25,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "dispatch_retry_productive",
+     "first_stagnant": null,
+     "id": "eva-dispatch_retry_productive-0",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "dispatch_retry_productive",
+     "first_stagnant": null,
+     "id": "eva-dispatch_retry_productive-1",
+     "latency": null,
+     "length": 10,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "dispatch_retry_productive",
+     "first_stagnant": null,
+     "id": "eva-dispatch_retry_productive-2",
+     "latency": null,
+     "length": 7,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "dispatch_retry_productive",
+     "first_stagnant": null,
+     "id": "eva-dispatch_retry_productive-3",
+     "latency": null,
+     "length": 8,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "reset_then_replay",
+     "first_stagnant": null,
+     "id": "eva-reset_then_replay-0",
+     "latency": null,
+     "length": 9,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "reset_then_replay",
+     "first_stagnant": null,
+     "id": "eva-reset_then_replay-1",
+     "latency": null,
+     "length": 9,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "reset_then_replay",
+     "first_stagnant": null,
+     "id": "eva-reset_then_replay-2",
+     "latency": null,
+     "length": 7,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    },
+    {
+     "correct_triggers": [],
+     "false_triggers": [],
+     "family": "reset_then_replay",
+     "first_stagnant": null,
+     "id": "eva-reset_then_replay-3",
+     "latency": null,
+     "length": 11,
+     "positive": false,
+     "signals": [],
+     "triggers": []
+    }
+   ]
+  }
+ },
+ "evaluation_fixtures_sha256": "52a0c92b4d71d12be357e1c28f662fef765ae5565c8a90d7f2801e9a2c389eb1",
+ "spec_development_fixtures_sha256": "f49d298371cb5e59f5e11014d8e49277dd2a8c8c99159d717ae8a66ad0eb49a4",
+ "spec_params": {
+  "no_progress_horizon": null,
+  "novelty_stall": null,
+  "prediction_failures": null,
+  "repeat_no_effect": null,
+  "state_action_recurrence": 2,
+  "tiny_effect_repeat": 10
+ },
+ "version": "stagnation_supervision_v1_evaluation"
+}

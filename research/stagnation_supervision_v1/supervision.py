@@ -1,0 +1,164 @@
+"""Supervision policy, CPU rehearsal and escape metrics (Track 3, stagnation_supervision_v1).
+
+Three arms share one policy and one request template (intervention.py):
+  continuation  never calls; the detector still runs as an observer, so loops are measured in every arm;
+  periodic      due after every `period_actions`-th action;
+  triggered     due when the frozen detector fires.
+Policy limits apply to every call in every arm:
+  - cooldown: no call within `cooldown_actions` actions of the previous call;
+  - at most `max_interventions_per_episode` calls, counting valid, invalid and failed calls alike;
+  - a per-episode token ceiling: a call is made only if spent + estimated input + reserved output fits;
+  - no call when the current state was not observed (unknown outcome or missing frames): it is deferred.
+Every call is charged, including invalid outputs and exceptions. Every decision is retained as an event with its
+reason, including suppressed and deferred ones. Records are transition_evidence_v2, unmasked (the masked view is
+never requested or read); the detector consumes the v1 fields they contain, and events cite evidence by record_id. Here `call` is scripted; nothing in this module runs a model.
+"""
+import math
+import time
+
+from research.stagnation_supervision_v1 import detector as D, intervention as I
+from research.transition_evidence_v2 import transition as T, vocabulary as V
+
+VERSION = 'stagnation_supervision_v1_policy'
+ARMS = ('continuation', 'periodic', 'triggered')
+POLICY = {'cooldown_actions': 6, 'period_actions': 6, 'max_interventions_per_episode': 4,
+          'max_supervisor_tokens_per_episode': 8000, 'reserved_output_tokens': 400}
+
+
+def estimate_tokens(text):
+    """A declared approximation (4 characters per token) used for admission only; a live run must use the
+    serving tokenizer's counts for charging."""
+    return math.ceil(len(text) / 4)
+
+
+class Supervisor:
+    def __init__(self, arm, spec, call, policy=POLICY, available_actions=None, clock=time.perf_counter):
+        if arm not in ARMS:
+            raise ValueError('unknown arm')
+        self.arm, self.params, self.call, self.policy = arm, spec['params'], call, dict(policy)
+        self.available_actions, self.clock = available_actions, clock
+        self.raws, self.records, self.events = [], [], []
+        self.stats = D.Statistics()
+        self.calls, self.tokens, self.last_call = 0, 0, None
+
+    def observe(self, raw, prediction=None):
+        self.raws.append(raw)
+        record = T.history(self.raws)[-1]  # continuity and segment need the whole history
+        self.records.append(record)
+        index = record['identity']['action_index']
+        fired = D.signals(self.stats.update(record, prediction), self.params)
+        due = {'continuation': False, 'periodic': (index + 1) % self.policy['period_actions'] == 0,
+               'triggered': bool(fired)}[self.arm]
+        ids = {r['identity']['action_index']: r['identity']['record_id'] for r in self.records}
+        event = {'action_index': index, 'record_id': record['identity']['record_id'], 'arm': self.arm,
+                 'detector_signals': fired, 'due': due,
+                 'detector_evidence_record_ids': sorted({ids[i] for s in fired for i in s['evidence']})}
+        if not due:
+            event['outcome'] = 'not_due'
+        elif I.unobserved_state(record):
+            event['outcome'] = 'deferred_unobserved_state'
+        elif self.last_call is not None and index - self.last_call < self.policy['cooldown_actions']:
+            event['outcome'] = 'suppressed_cooldown'
+        elif self.calls >= self.policy['max_interventions_per_episode']:
+            event['outcome'] = 'suppressed_intervention_cap'
+        else:
+            request = I.build_request(self.records, index, self.arm, fired, self.available_actions)
+            needed = estimate_tokens(request['text']) + self.policy['reserved_output_tokens']
+            if self.tokens + needed > self.policy['max_supervisor_tokens_per_episode']:
+                event['outcome'] = 'suppressed_token_budget'
+            else:
+                event['outcome'] = 'called'
+                event['call'] = self._call(request)
+                event['delivered'] = (I.render(event['call']['parsed']['intervention'])
+                                      if event['call']['parsed']['valid'] else None)
+        self.events.append(event)
+        return event
+
+    def _call(self, request):
+        self.calls += 1
+        self.last_call = request['content']['decision_index']
+        start = self.clock()
+        try:
+            response = self.call(request['text'])
+            error = None
+        except Exception as exc:  # retained and charged, never retried here
+            response, error = {}, f'{type(exc).__name__}: {exc}'
+        latency = response.get('latency_s', self.clock() - start)
+        text = response.get('text')
+        charged_in = response.get('input_tokens', estimate_tokens(request['text']))
+        charged_out = response.get('output_tokens', estimate_tokens(text) if isinstance(text, str) else 0)
+        self.tokens += charged_in + charged_out
+        parsed = I.parse(text, request) if error is None else {
+            'valid': False, 'problems': ['call failed: ' + error], 'intervention': None, 'raw': None}
+        return {'request_sha256': request['sha256'], 'request_text': request['text'], 'error': error,
+                'available_actions_field': request['available_actions_field'],
+                'raw_output': text, 'parsed': parsed, 'input_tokens': charged_in, 'output_tokens': charged_out,
+                'latency_s': latency}
+
+    def summary(self):
+        calls = [e['call'] for e in self.events if e['outcome'] == 'called']
+        outcomes = {}
+        for e in self.events:
+            outcomes[e['outcome']] = outcomes.get(e['outcome'], 0) + 1
+        return {'arm': self.arm, 'actions': len(self.events), 'outcomes': outcomes, 'calls': len(calls),
+                'valid_calls': sum(c['parsed']['valid'] for c in calls),
+                'invalid_outputs': sum(c['error'] is None and not c['parsed']['valid'] for c in calls),
+                'failed_calls': sum(c['error'] is not None for c in calls),
+                'tokens_charged': self.tokens, 'latency_s': sum(c['latency_s'] for c in calls),
+                'detector_firings': sum(bool(e['detector_signals']) for e in self.events)}
+
+
+def scripted(outputs):
+    """A scripted supervisor: each item is a response dict or an exception to raise. Running out raises."""
+    queue = list(outputs)
+
+    def call(_text):
+        if not queue:
+            raise RuntimeError('scripted outputs exhausted')
+        item = queue.pop(0)
+        if isinstance(item, Exception):
+            raise item
+        return item
+    return call
+
+
+def rehearse(raws, arm, spec, outputs, policy=POLICY, predictions=None, available_actions=None):
+    by_index = {p['action_index']: p for p in predictions or ()}
+    supervisor = Supervisor(arm, spec, scripted(outputs), policy, available_actions, clock=lambda: 0.0)
+    for raw in raws:
+        supervisor.observe(raw, by_index.get(raw['identity']['action_index']))
+    return supervisor
+
+
+def escapes(events, records):
+    """For each attempted intervention at step t: actions until the agent first takes a (state, action) pair it has
+    not tried in this segment (leaving the loop), and what came next: 'progress' (a confirmed progress signal
+    before the detector fires again after leaving), 'another_detected_loop' (escaping into another loop is not
+    success), 'no_progress_before_end', or 'did_not_leave'."""
+    out = []
+    stats = D.Statistics()
+    new_pair = {}
+    for record in records:
+        s = stats.update(record)
+        new_pair[record['identity']['action_index']] = s['evidence_step'] and len(s['state_action_recurrence']) == 1
+    firing = {e['action_index'] for e in events if e['detector_signals']}
+    for e in events:
+        if e['outcome'] != 'called':
+            continue
+        t = e['action_index']
+        later = [r['identity']['action_index'] for r in records if r['identity']['action_index'] > t]
+        left = next((i for i in later if new_pair[i]), None)
+        result = 'did_not_leave' if left is None else 'no_progress_before_end'
+        if left is not None:
+            for r in records:
+                i = r['identity']['action_index']
+                if i < left:
+                    continue
+                if r['progress']['status'] == V.CONFIRMED:
+                    result = 'progress'
+                    break
+                if i in firing:
+                    result = 'another_detected_loop'
+                    break
+        out.append({'intervention_at': t, 'actions_to_leave': None if left is None else left - t, 'result': result})
+    return out

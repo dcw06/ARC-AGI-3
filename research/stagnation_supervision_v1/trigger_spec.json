@@ -1,0 +1,116 @@
+{
+ "candidates_evaluated": 9600,
+ "cooldown_actions": 6,
+ "detector": "stagnation_supervision_v1_detector",
+ "development_fixtures_sha256": "f49d298371cb5e59f5e11014d8e49277dd2a8c8c99159d717ae8a66ad0eb49a4",
+ "development_metrics": {
+  "correct_triggers": 60,
+  "detected_positive_trajectories": 36,
+  "false_intervention_rate": 0.05263157894736842,
+  "false_intervention_trajectories": 4,
+  "false_triggers": 5,
+  "hard_negative_trajectories": 36,
+  "hard_negatives_with_false_intervention": 4,
+  "mean_latency_actions": 0.9166666666666666,
+  "positive_trajectories": 40,
+  "precision": 0.9230769230769231,
+  "premature_triggers_in_positive_trajectories": 0,
+  "recall": 0.9,
+  "trajectories": 76,
+  "triggers": 65
+ },
+ "grid": {
+  "no_progress_horizon": [
+   null,
+   10,
+   15,
+   20
+  ],
+  "novelty_stall": [
+   null,
+   [
+    6,
+    0
+   ],
+   [
+    8,
+    0
+   ],
+   [
+    8,
+    1
+   ],
+   [
+    10,
+    1
+   ],
+   [
+    12,
+    2
+   ]
+  ],
+  "prediction_failures": [
+   null,
+   3,
+   4,
+   6
+  ],
+  "repeat_no_effect": [
+   null,
+   2,
+   3,
+   4,
+   5
+  ],
+  "state_action_recurrence": [
+   null,
+   2,
+   3,
+   4
+  ],
+  "tiny_effect_repeat": [
+   null,
+   4,
+   6,
+   8,
+   10
+  ]
+ },
+ "objective": "constraint: false-intervention trajectory rate <= 0.10 on development; maximise recall; then fewest false-intervention trajectories, highest precision, lowest mean latency, fewest enabled signals, largest thresholds; no_progress_horizon counts observed transitions",
+ "params": {
+  "no_progress_horizon": null,
+  "novelty_stall": null,
+  "prediction_failures": null,
+  "repeat_no_effect": null,
+  "state_action_recurrence": 2,
+  "tiny_effect_repeat": 10
+ },
+ "references": {
+  "no_progress_horizon_only_10": {
+   "params": {
+    "no_progress_horizon": 10,
+    "novelty_stall": null,
+    "prediction_failures": null,
+    "repeat_no_effect": null,
+    "state_action_recurrence": null,
+    "tiny_effect_repeat": null
+   }
+  },
+  "periodic_every_6": {
+   "period": 6
+  },
+  "repeat_no_effect_only_k3": {
+   "params": {
+    "no_progress_horizon": null,
+    "novelty_stall": null,
+    "prediction_failures": null,
+    "repeat_no_effect": 3,
+    "state_action_recurrence": null,
+    "tiny_effect_repeat": null
+   }
+  }
+ },
+ "selected_on": "development partition only",
+ "tiny_cells": 4,
+ "version": "stagnation_supervision_v1_trigger_spec"
+}
