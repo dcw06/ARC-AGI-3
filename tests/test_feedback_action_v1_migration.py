@@ -47,11 +47,17 @@ def digest():
     return out
 
 
-ADDED_ROW_KEYS = ('record_id', 'cited_record_ids')  # the only evaluator output the migration adds
+ADDED_ROW_KEYS = ('record_id', 'cited_record_ids',  # added by the v2 migration
+                  'opportunities')  # added later by the denominator pass (protocol v2 §8); new output, not a change
+ADDED_METRIC_KEYS = ('rates',)  # added by the denominator pass
 
 
 def without_added(row):
     return {k: v for k, v in row.items() if k not in ADDED_ROW_KEYS}
+
+
+def metrics_without_added(metrics):
+    return {k: v for k, v in metrics.items() if k not in ADDED_METRIC_KEYS}
 
 
 class Migration(unittest.TestCase):
@@ -73,7 +79,7 @@ class Migration(unittest.TestCase):
     def test_b_evaluator_results_and_rehearsal_outcomes_unchanged(self):
         """Unchanged except the added record ids, which must equal version 2's record_id."""
         for key, old in self.golden['scenarios'].items():
-            self.assertEqual(self.now[key]['metrics'], old['metrics'], key)
+            self.assertEqual(metrics_without_added(self.now[key]['metrics']), old['metrics'], key)
             self.assertEqual([without_added(r) for r in self.now[key]['decisions']], old['decisions'], key)
         for (name, arm), (trajectory, evaluation) in self.results.items():
             for step, row in zip(trajectory['steps'], evaluation['decisions']):

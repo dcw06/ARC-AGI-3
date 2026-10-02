@@ -235,6 +235,19 @@ def statement_matches(statement, prior):
             and statement.get('prediction') == prior['prediction'])
 
 
+def opportunities(raws, shown, current_frame, legal, arm):
+    """What this decision could have done, from the evidence shown and the legal actions alone (computed for every
+    decision, whether or not the output turns out valid, so an invalid output never removes an opportunity)."""
+    keys = {action_key(raws[i]['dispatched']) for i in shown}
+    repeatable = sorted(k for k in keys if k[0] in legal
+                        and evidence_status(raws, shown, current_frame, k) == NO_CHANGE_SAME_STATE)
+    tried = {raws[i]['dispatched']['action_id'] for i in shown if REF.facts(raws[i])['dispatch'] == 'acknowledged'}
+    untested = sorted(a for a in legal if a not in tried)
+    return {'repeat': bool(repeatable), 'repeatable_keys': [list(k) for k in repeatable],
+            'untested_type': bool(untested), 'untested_types': untested,
+            'citation': arm == 'candidate' and bool(shown)}
+
+
 def evaluate_decision(raws, decision, prior=None):
     """One decision against the raw transitions dispatched before it.
 
@@ -245,7 +258,9 @@ def evaluate_decision(raws, decision, prior=None):
     if prior is not None and not statement_matches(decision.get('previous_statement'), prior):
         prior = dict(prior, absent=True)
     shown = shown_window(raws)
-    result = {'shown_refs': [f"T{raws[i]['identity']['action_index']}" for i in shown]}
+    result = {'shown_refs': [f"T{raws[i]['identity']['action_index']}" for i in shown],
+              'opportunities': opportunities(raws, shown, decision['current_frame'], decision['legal_actions'],
+                                             decision['arm'])}
     value, problem = parse_output(decision['response'].get('content'), decision['response'].get('finish_reason'),
                                   decision['arm'])
     result['output_problem'] = problem
@@ -263,6 +278,7 @@ def evaluate_decision(raws, decision, prior=None):
         key = action_key(action)
         result['action_key'] = list(key)
         result['chosen_status'] = evidence_status(raws, shown, decision['current_frame'], key)
+        result['opportunities']['untested_type_chosen'] = key[0] in result['opportunities']['untested_types']
     if decision['arm'] != 'candidate':
         return result
     block = value.get('hypothesis_test')
@@ -347,4 +363,91 @@ def metrics(trajectory, rows):
         'stop_reason': trajectory['stop_reason'],
         'prompt_chars': sum(s['prompt_chars'] for s in trajectory['steps']),
         'completion_tokens': sum(s['response'].get('completion_tokens') or 0 for s in trajectory['steps']),
+        'rates': rates(trajectory['arm'], rows),
     }
+
+
+# ---- rates with explicit denominators (protocol v2 §8)
+#
+# Every rate is {'numerator', 'denominator', 'status', 'value', 'minimum'}:
+# - status 'undefined' when the denominator is 0 (value None): never reported as 0;
+# - status 'insufficient' when 0 < denominator < minimum (value None; 'observed' kept for description);
+# - status 'not_applicable' for a candidate-only rate in the baseline arm.
+# Failure-inclusive: every decision (model call) is in the denominator of each rate whose opportunity it had, and an
+# invalid output or invalid procedure block counts as the unfavourable outcome. A run that fails more can therefore
+# never obtain a better rate, and an episode stopped at the decision-call cap keeps every call it made.
+
+MINIMUMS = {  # per (game, arm), pooled over the two blocks; per episode the minimum is 1 (defined iff denominator > 0)
+    'repeat_after_no_change': 5, 'repeat_after_no_change_valid_only': 5, 'untested_type_chosen': 5,
+    'citation_supply': 10, 'unsupported_citation': 10, 'prediction_accuracy': 10, 'revision_recognized': 3,
+    'invalid_action': 1, 'invalid_procedure': 1}
+CANDIDATE_ONLY = ('citation_supply', 'unsupported_citation', 'prediction_accuracy', 'revision_recognized',
+                  'invalid_procedure')
+UNFAVOURABLE = ('repeat_after_no_change', 'repeat_after_no_change_valid_only', 'unsupported_citation',
+                'invalid_action', 'invalid_procedure')
+# Descriptive only, never used for advancement: dropping invalid decisions from the denominator means an invalid
+# output in place of a repeat would *lower* this rate (tested), so failing could look like improvement.
+DESCRIPTIVE_ONLY = ('repeat_after_no_change_valid_only',)
+
+
+def rate(numerator, denominator, minimum=1, applicable=True):
+    out = {'numerator': numerator, 'denominator': denominator, 'minimum': minimum}
+    if not applicable:
+        return {**out, 'status': 'not_applicable', 'value': None}
+    if denominator == 0:
+        return {**out, 'status': 'undefined', 'value': None}
+    if denominator < minimum:
+        return {**out, 'status': 'insufficient', 'value': None, 'observed': numerator / denominator}
+    return {**out, 'status': 'defined', 'value': numerator / denominator}
+
+
+def counts(arm, rows):
+    """(numerator, denominator) per rate for one episode."""
+    valid = [r for r in rows if r['action_problem'] is None]
+    at_repeat = [r for r in rows if r['opportunities']['repeat']]
+    at_untested = [r for r in rows if r['opportunities']['untested_type']]
+    at_citation = [r for r in rows if r['opportunities']['citation']]
+    cites = [c for r in rows for name in ('supporting', 'conflicting') for c in r.get('citations', {}).get(name, [])]
+    scored = [r for r in rows if 'prediction_result' in r and r['prediction_result']['result'] != 'unscoreable']
+    failed_blocks = [r for r in rows if r.get('procedure_problem') is not None]
+    revisions = [r['revision'] for r in rows if r.get('revision') not in (None, 'previous_statement_absent')]
+    is_repeat = lambda r: r['action_problem'] is None and r.get('chosen_status') == NO_CHANGE_SAME_STATE
+    return {
+        'repeat_after_no_change': (sum(is_repeat(r) or r['action_problem'] is not None for r in at_repeat),
+                                   len(at_repeat)),
+        'repeat_after_no_change_valid_only': (sum(is_repeat(r) for r in at_repeat if r in valid),
+                                              sum(r in valid for r in at_repeat)),
+        'untested_type_chosen': (sum(r['opportunities'].get('untested_type_chosen') is True for r in at_untested),
+                                 len(at_untested)),
+        'citation_supply': (sum(r.get('procedure_problem') is None and 'citations' in r and
+                                bool(r['citations']['supporting'] or r['citations']['conflicting'])
+                                for r in at_citation), len(at_citation)),
+        'unsupported_citation': (sum(c != 'supported' for c in cites), len(cites)),
+        'prediction_accuracy': (sum(r['prediction_result']['result'] == 'correct' for r in scored),
+                                len(scored) + len(failed_blocks)),
+        'revision_recognized': (revisions.count('recognized'), len(revisions)),
+        'invalid_action': (len(rows) - len(valid), len(rows)),
+        'invalid_procedure': (len(failed_blocks), len(rows)),
+    }
+
+
+def rates(arm, rows, minimums=None):
+    minimums = minimums or {name: 1 for name in MINIMUMS}
+    return {name: rate(n, d, minimums[name], arm == 'candidate' or name not in CANDIDATE_ONLY)
+            for name, (n, d) in counts(arm, rows).items()}
+
+
+def aggregate(evaluations):
+    """Pool episodes of one (game, arm) descriptively, applying the protocol minimums. Episodes stay the unit of
+    analysis: pooled values are descriptions, never step-level samples."""
+    arms = {e['arm'] for e in evaluations}
+    if len(arms) != 1:
+        raise ValueError('aggregate one arm at a time')
+    arm = arms.pop()
+    totals = {}
+    for e in evaluations:
+        for name, (n, d) in counts(arm, e['decisions']).items():
+            a, b = totals.get(name, (0, 0))
+            totals[name] = (a + n, b + d)
+    return {name: rate(n, d, MINIMUMS[name], arm == 'candidate' or name not in CANDIDATE_ONLY)
+            for name, (n, d) in totals.items()}
