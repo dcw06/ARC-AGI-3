@@ -543,7 +543,12 @@ class Rehearsal(unittest.TestCase):
         self.assertTrue(self.results['retained_invalid_examples']['invalid_text'])
         w = self.results['workload_estimate']['designs']
         self.assertEqual(w['primary_two_arms']['calls'], 2 * len(DRY['probes']))  # two passes
-        self.assertEqual(w['optional_three_arms']['calls'] * 2, w['primary_two_arms']['calls'] * 3)
+        # the third-arm branch is two paired two-arm cells (A repeated): twice the two-arm evaluation calls
+        self.assertEqual(self.results['workload_estimate']['third_arm_branch_evaluation_calls'],
+                         2 * w['primary_two_arms']['calls'])
+        for cell in ('third_arm_branch_cell_1_raw_vs_computed', 'third_arm_branch_cell_2_computed_vs_safeguard'):
+            self.assertEqual(w[cell]['calls'], w['primary_two_arms']['calls'])
+            self.assertTrue(w[cell]['scenarios']['allowance_overhead_fit_rates']['decision_fits_admission_cutoff'])
         self.assertTrue(w['primary_two_arms']['scenarios']['allowance_overhead_fit_rates']['decision_fits_admission_cutoff'])
 
 

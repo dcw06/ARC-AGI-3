@@ -1945,34 +1945,61 @@
     "question_seconds_at_fit": 57,
     "scenarios": {}
    },
-   "optional_three_arms": {
-    "calls": 8370,
+   "primary_two_arms": {
+    "calls": 5580,
     "estimated_largest_prompt_tokens": 5604,
-    "estimated_mean_prompt_tokens": 2440,
-    "estimated_prompt_tokens": 20422609,
-    "question_seconds_at_fit": 1695,
+    "estimated_mean_prompt_tokens": 2858,
+    "estimated_prompt_tokens": 15948052,
+    "question_seconds_at_fit": 1163,
     "scenarios": {
      "allowance_overhead_fit_rates": {
-      "coverage_dryrun/pass_1_ends_at_seconds": 2387,
-      "coverage_dryrun/pass_2_ends_at_seconds": 3235,
-      "decision_fits_admission_cutoff": false,
+      "coverage_dryrun/pass_1_ends_at_seconds": 2122,
+      "coverage_dryrun/pass_2_ends_at_seconds": 2703,
+      "decision_fits_admission_cutoff": true,
       "questions_start_seconds": 1540
      },
      "allowance_overhead_two_times_slower": {
-      "coverage_dryrun/pass_1_ends_at_seconds": 3235,
-      "coverage_dryrun/pass_2_ends_at_seconds": 4930,
+      "coverage_dryrun/pass_1_ends_at_seconds": 2703,
+      "coverage_dryrun/pass_2_ends_at_seconds": 3866,
       "decision_fits_admission_cutoff": false,
       "questions_start_seconds": 1540
      },
      "measured_overhead_fit_rates": {
-      "coverage_dryrun/pass_1_ends_at_seconds": 1809,
-      "coverage_dryrun/pass_2_ends_at_seconds": 2656,
+      "coverage_dryrun/pass_1_ends_at_seconds": 1543,
+      "coverage_dryrun/pass_2_ends_at_seconds": 2124,
       "decision_fits_admission_cutoff": true,
       "questions_start_seconds": 961
      }
     }
    },
-   "primary_two_arms": {
+   "third_arm_branch_cell_1_raw_vs_computed": {
+    "calls": 5580,
+    "estimated_largest_prompt_tokens": 5298,
+    "estimated_mean_prompt_tokens": 2155,
+    "estimated_prompt_tokens": 12022570,
+    "question_seconds_at_fit": 1107,
+    "scenarios": {
+     "allowance_overhead_fit_rates": {
+      "coverage_dryrun/pass_1_ends_at_seconds": 2094,
+      "coverage_dryrun/pass_2_ends_at_seconds": 2647,
+      "decision_fits_admission_cutoff": true,
+      "questions_start_seconds": 1540
+     },
+     "allowance_overhead_two_times_slower": {
+      "coverage_dryrun/pass_1_ends_at_seconds": 2647,
+      "coverage_dryrun/pass_2_ends_at_seconds": 3754,
+      "decision_fits_admission_cutoff": false,
+      "questions_start_seconds": 1540
+     },
+     "measured_overhead_fit_rates": {
+      "coverage_dryrun/pass_1_ends_at_seconds": 1515,
+      "coverage_dryrun/pass_2_ends_at_seconds": 2068,
+      "decision_fits_admission_cutoff": true,
+      "questions_start_seconds": 961
+     }
+    }
+   },
+   "third_arm_branch_cell_2_computed_vs_safeguard": {
     "calls": 5580,
     "estimated_largest_prompt_tokens": 5604,
     "estimated_mean_prompt_tokens": 2858,
@@ -2019,6 +2046,7 @@
    "model_startup": 818.5,
    "other_pre_question": 1.8,
    "post_question_finalization": 3.8
-  }
+  },
+  "third_arm_branch_evaluation_calls": 11160
  }
 }

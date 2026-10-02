@@ -5,7 +5,7 @@ freeze). Every scripted response passes through the same text path a model respo
 append-only JSON-lines log, read back by score.load_log, and scored. Invalid outputs are retained in the report.
 
 Rehearsals use the two primary arms (protocol v1). Also: workload and runtime estimates for the two-arm design, the
-optional three-arm design and development. Prompt tokens are calibrated on the WS3 exact token audit
+two cells of the conditional third-arm branch, and development. Prompt tokens are calibrated on the WS3 exact token audit
 (reports/ws3_questionnaire_token_audit.json, read-only) as characters per token; runtime uses the per-call fit to
 evidence_comprehension_v3's measured calls recorded in that audit. Estimates only: the exact tokenizer audit is a
 freeze requirement.
@@ -153,8 +153,8 @@ def _phases(v, ratio):
 
 
 def workload(value):
-    """Calls, estimated prompt tokens and runtime scenarios for the evaluation-shaped design (two primary arms), the
-    optional three-arm design, and development (two arms, one pass). Runtime uses the per-call least-squares fit to
+    """Calls, estimated prompt tokens and runtime scenarios for the evaluation-shaped design (two primary arms), each
+    cell of the conditional third-arm branch (two cells of two arms; A repeated), and development (two arms, one pass). Runtime uses the per-call least-squares fit to
     evidence_comprehension_v3's measured cache-disabled calls and WS3's overhead method (worse of v2 and v3 per
     component; allowances), both read from reports/ws3_questionnaire_token_audit.json. Estimates, not guarantees."""
     ratio = chars_per_token()
@@ -163,8 +163,12 @@ def workload(value):
     completion = min(32, 2 * max(r['key_completion_tokens'] for r in audit['requests']))  # WS3's key x 2 slack
     per_call = lambda t: (fit['fit_seconds_per_call'] + fit['fit_seconds_per_prompt_token'] * t  # noqa: E731
                           + fit['fit_seconds_per_completion_token'] * completion)
+    # The conditional third-arm branch is two cells, each a paired two-arm comparison: A is asked in both cells, so
+    # the branch has twice the two-arm evaluation calls (never one three-arm cell, which would not fit).
+    raw_cell = ('raw_evidence', 'raw_plus_computed_record')
     designs = {'primary_two_arms': (value, _phases(value, ratio)),
-               'optional_three_arms': (None, _phases(Q.build(PARTITION, conditions=Q.ALL_CONDITIONS), ratio)),
+               'third_arm_branch_cell_1_raw_vs_computed': (None, _phases(Q.build(PARTITION, conditions=raw_cell), ratio)),
+               'third_arm_branch_cell_2_computed_vs_safeguard': (None, _phases(value, ratio)),
                'development_two_arms': (None, _phases(Q.build('development'), ratio))}
     est = {'chars_per_token_calibration': ratio, 'completion_tokens_assumed': completion,
            'fit_source': fit['source'], 'fit_calls': fit['calls'],
@@ -192,6 +196,8 @@ def workload(value):
                 s['decision_fits_admission_cutoff'] = elapsed <= est['admission_cutoff_seconds']
                 row['scenarios'][label] = s
         est['designs'][name] = row
+    est['third_arm_branch_evaluation_calls'] = sum(est['designs'][k]['calls'] for k in est['designs']
+                                                   if k.startswith('third_arm_branch_'))
     est['note'] = ('estimate: prompt tokens = characters / (characters per token measured on WS3 development requests '
                    'with the pinned tokenizer); runtime = v3 fit, measured on shorter prompts (mean about 740 tokens), '
                    'so per-token cost is extrapolated. The exact tokenizer audit is required before freeze.')
