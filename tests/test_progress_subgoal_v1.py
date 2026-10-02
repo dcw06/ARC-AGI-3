@@ -13,7 +13,9 @@ from research.transition_evidence_v1 import transition as T
 ROOT = Path(__file__).resolve().parents[1]
 DEV = Q.build('development')
 DRY = Q.build('coverage_dryrun')
-SMALL = Q.build('coverage_dryrun', count=2)  # decision-shaped, small: evaluator logic
+SMALL = Q.build('coverage_dryrun', count=2)  # decision-shaped, small: evaluator logic (two primary arms)
+DEV3 = Q.build('development', conditions=Q.ALL_CONDITIONS)  # the optional third arm
+SMALL3 = Q.build('coverage_dryrun', count=2, conditions=Q.ALL_CONDITIONS)
 
 
 def frame(h=4, w=4, c=0):
@@ -238,14 +240,20 @@ class Presentation(unittest.TestCase):
     def test_conditions_differ_only_as_declared(self):
         self.assertTrue(Q.SYSTEM_PROMPTS['raw_plus_computed_record_plus_safeguard'].startswith(Q.BASE_PROMPT))
         self.assertEqual(Q.SYSTEM_PROMPTS['raw_evidence'], Q.SYSTEM_PROMPTS['raw_plus_computed_record'])
-        for cid, view in DEV['contexts'].items():
+        self.assertNotIn('visible change is not progress', Q.BASE_PROMPT)
+        self.assertEqual(Q.conditions_of(DEV['probes']), Q.PRIMARY_CONDITIONS)  # the default build: two arms
+        self.assertEqual(set(DEV['system_prompts']), set(Q.PRIMARY_CONDITIONS))
+        for cid, view in DEV3['contexts'].items():
             part, cond, case = cid.split(':')
             if cond == 'raw_plus_computed_record':
-                self.assertEqual(view, DEV['contexts'][f'{part}:raw_plus_computed_record_plus_safeguard:{case}'])
+                self.assertEqual(view, DEV3['contexts'][f'{part}:raw_plus_computed_record_plus_safeguard:{case}'])
+                self.assertEqual(view, DEV['contexts'][cid])  # adding the third arm changes no primary context
                 raw_ = copy.deepcopy(view)
                 for step in raw_['transitions']:
                     step.pop('computed_measurements')
-                self.assertEqual(raw_, DEV['contexts'][f'{part}:raw_evidence:{case}'])
+                self.assertEqual(raw_, DEV3['contexts'][f'{part}:raw_evidence:{case}'])
+        primary = [p for p in DEV3['probes'] if p['condition'] in Q.PRIMARY_CONDITIONS]
+        self.assertEqual(json.dumps(primary, sort_keys=True), json.dumps(DEV['probes'], sort_keys=True))
 
     def test_computed_record_is_recomputable_from_the_raw_view_alone(self):
         for cid, view in DEV['contexts'].items():
@@ -296,20 +304,32 @@ class Coverage(unittest.TestCase):
 
 class Schedule(unittest.TestCase):
     def test_passes_and_balance(self):
-        sched = {b['pass']: b['probe_ids'] for b in DRY['schedule']}
-        self.assertEqual(sched['pass_2'], sched['pass_1'][::-1])
-        ids = [p['probe_id'] for p in DRY['probes']]
-        self.assertEqual(sorted(sched['pass_1']), sorted(ids))
-        by_id = {p['probe_id']: p for p in DRY['probes']}
-        orders = {}
-        for i in range(0, len(sched['pass_1']), 3):
-            triple = [by_id[x] for x in sched['pass_1'][i:i + 3]]
-            self.assertEqual(len({p['pair_id'] for p in triple}), 1)
-            order = tuple(p['condition'] for p in triple)
-            orders[order] = orders.get(order, 0) + 1
-        self.assertEqual(set(orders), set(itertools.permutations(Q.CONDITIONS)))
-        self.assertLessEqual(max(orders.values()) - min(orders.values()), 1)
+        for value in (DRY, SMALL3):
+            arms = Q.conditions_of(value['probes'])
+            sched = {b['pass']: b['probe_ids'] for b in value['schedule']}
+            self.assertEqual(sched['pass_2'], sched['pass_1'][::-1])
+            ids = [p['probe_id'] for p in value['probes']]
+            self.assertEqual(sorted(sched['pass_1']), sorted(ids))
+            by_id = {p['probe_id']: p for p in value['probes']}
+            orders, n = {}, len(arms)
+            for i in range(0, len(sched['pass_1']), n):
+                group = [by_id[x] for x in sched['pass_1'][i:i + n]]
+                self.assertEqual(len({p['pair_id'] for p in group}), 1)
+                order = tuple(p['condition'] for p in group)
+                orders[order] = orders.get(order, 0) + 1
+            self.assertEqual(set(orders), set(itertools.permutations(arms)))
+            self.assertLessEqual(max(orders.values()) - min(orders.values()), 1)
         self.assertEqual([b['pass'] for b in DEV['schedule']], ['pass_1'])
+
+    def test_comparisons_follow_the_arms(self):
+        two = SC.analyze(SMALL['probes'], passes_for(SMALL, KEY), 'coverage_dryrun')
+        three = SC.analyze(SMALL3['probes'], passes_for(SMALL3, KEY), 'coverage_dryrun')
+        self.assertEqual(list(two['paired']), ['safeguard_vs_computed'])
+        self.assertEqual(set(three['paired']), {'safeguard_vs_computed', 'computed_vs_raw'})
+        self.assertEqual(set(two['readiness']), set(Q.PRIMARY_CONDITIONS))
+        self.assertEqual(set(three['readiness']), set(Q.ALL_CONDITIONS))
+        with self.assertRaises(ValueError):
+            Q.build('development', conditions=('raw_evidence', 'raw_evidence'))
 
 
 def passes_for(value, answer_of, skip=()):
@@ -323,7 +343,7 @@ def passes_for(value, answer_of, skip=()):
     return out
 
 
-BY_ID = {p['probe_id']: p for v in (DEV, SMALL) for p in v['probes']}
+BY_ID = {p['probe_id']: p for v in (DEV, SMALL, SMALL3) for p in v['probes']}
 KEY = lambda p, i: json.dumps({'answer': p['key']})  # noqa: E731
 
 
@@ -345,8 +365,8 @@ class Evaluator(unittest.TestCase):
         gate = 'false_progress'
         target = self.gate_targets(gate)[0]
         aff = Q.OVER_CLAIM_GATES[gate]['affirmative'][target['family']]
-        passes = passes_for(SMALL, lambda p, i: json.dumps({'answer': aff}) if p is target and i == 'pass_2'
-                            else KEY(p, i))
+        passes = passes_for(SMALL, lambda p, i: json.dumps({'answer': aff})
+                            if p['probe_id'] == target['probe_id'] and i == 'pass_2' else KEY(p, i))
         row = SC.analyze(SMALL['probes'], passes, 'coverage_dryrun')['over_claims'][Q.CONDITIONS[0]][gate]
         self.assertEqual((row['over_claim_contexts'], row['invalid_member_responses']), (1, 0))
 
@@ -501,12 +521,16 @@ class Rehearsal(unittest.TestCase):
         self.assertEqual(set(runs['oracle_missing_one_gate_answer']['readiness'].values()), {'incomplete'})
         self.assertTrue(runs['corrupt_middle_line'].startswith('refused'))
         contrast = runs['condition_contrast']
-        self.assertEqual(contrast['readiness'], {'raw_evidence': 'not_eligible', 'raw_plus_computed_record': eligible,
+        self.assertEqual(contrast['readiness'], {'raw_plus_computed_record': eligible,
                                                  'raw_plus_computed_record_plus_safeguard': 'not_eligible'})
-        self.assertIn('claim_causal', contrast['findings']['computed_vs_raw']['improved'])
+        self.assertEqual(list(contrast['findings']), ['safeguard_vs_computed'])
         self.assertIn('region_changed', contrast['findings']['safeguard_vs_computed']['regressed'])
         self.assertEqual(self.results['coverage']['failures'], [])
         self.assertTrue(self.results['retained_invalid_examples']['invalid_text'])
+        w = self.results['workload_estimate']['designs']
+        self.assertEqual(w['primary_two_arms']['calls'], 2 * len(DRY['probes']))  # two passes
+        self.assertEqual(w['optional_three_arms']['calls'] * 2, w['primary_two_arms']['calls'] * 3)
+        self.assertTrue(w['primary_two_arms']['scenarios']['allowance_overhead_fit_rates']['decision_fits_admission_cutoff'])
 
 
 if __name__ == '__main__':

@@ -26,7 +26,8 @@ Reported, per condition (decision partition):
 - abandonment after disconfirming evidence: `subgoal_decision` questions keyed `abandon_invalidated`: both-pass
   correct, and how often the answer persisted (`continue`) instead;
 - invalid responses, every one retained with its error (never dropped, never rescored as wrong-but-valid);
-- paired differences for the two isolated comparisons (questions.COMPARISONS).
+- paired differences for every comparison whose two arms are present (questions.COMPARISONS): the primary
+  safeguard-vs-computed comparison, and computed-vs-raw only when the optional third arm was built.
 
 Readiness (per condition): `eligible_for_memory_or_supervision` only if the decision partition is complete, every
 primary family is `criterion_met`, every gate passes, uncertainty recall >= 0.90, over-hedging <= 0.10, and both
@@ -252,13 +253,15 @@ def analyze(probes, passes, partition, recovered=False):
         raise ValueError('passes must be identified as pass_1 and pass_2')
     required = PASS_IDS[:1] if partition == 'development' else PASS_IDS
     held = [p for p in probes if p['partition'] == partition]
+    conditions = Q.conditions_of(held)
+    comparisons = Q.comparisons_of(conditions)
     outcome = outcome_fn(passes, required)
     report = {'partition': partition, 'passes_required': list(required), 'evidence_recovered': recovered,
               'families': {}, 'levels': {}, 'over_claims': {}, 'validity': {}, 'uncertainty': {}, 'subgoal': {},
               'invalid': {},
               'paired': {}, 'completeness': {}, 'readiness': {},
               'gameplay_connection': 'not_permitted_by_this_protocol'}
-    for condition in Q.CONDITIONS:
+    for condition in conditions:
         mine = [p for p in held if p['condition'] == condition]
         groups = {}
         for p in mine:
@@ -275,7 +278,7 @@ def analyze(probes, passes, partition, recovered=False):
         report['uncertainty'][condition] = uncertainty(mine, passes, condition, required)
         report['subgoal'][condition] = subgoal_metrics(mine, passes, condition, required)
         report['invalid'][condition] = invalid_responses(mine, passes, condition, required)
-    for name, (base, cand) in Q.COMPARISONS.items():
+    for name, (base, cand) in comparisons.items():
         pairs = {}
         for p in held:
             if p['condition'] in (base, cand):
@@ -291,7 +294,7 @@ def analyze(probes, passes, partition, recovered=False):
         return 'incomplete' if not group or any(outcome(p) == 'missing' for p in group) else 'complete'
     report['completeness'] = {'primary': status([p for p in held if p['role'] == 'primary']),
                               'over_claim_gates': status(gate_qs), 'all': status(held)}
-    for condition in Q.CONDITIONS:
+    for condition in conditions:
         report['readiness'][condition] = readiness(report, condition)
     report['findings'] = findings(report)
     return report
@@ -322,7 +325,8 @@ def findings(report):
     """Descriptive per comparison: families whose paired lower bound is > 0 (improved) or upper bound < 0 (regressed),
     and gate statuses side by side. Not a promotion rule: promotion follows only from readiness."""
     out = {}
-    for name, (base, cand) in Q.COMPARISONS.items():
+    for name in report['paired']:
+        base, cand = Q.COMPARISONS[name]
         rows = report['paired'][name]
         bounded = {f: r['difference_bootstrap_95'] for f, r in rows.items() if r['difference_bootstrap_95']}
         out[name] = {'improved': sorted(f for f, b in bounded.items() if b[0] > 0),
