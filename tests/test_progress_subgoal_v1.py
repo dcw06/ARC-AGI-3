@@ -397,8 +397,8 @@ class Evaluator(unittest.TestCase):
         c = Q.CONDITIONS[0]
         held = [p for p in SMALL['probes'] if p['condition'] == c]
         members = [p for p in held if any(Q.gate_member(g, p) for g in Q.OVER_CLAIM_GATES)]
-        k = int(0.01 * 2 * len(members)) + 1  # just over the cap on member responses ...
-        self.assertLessEqual(k / (2 * len(held)), SC.INVALID_RATE_CAP)  # ... but within it overall
+        k = int(SC.GATE_MEMBER_INVALID_RATE_CAP * 2 * len(members)) + 1  # just over the cap on member responses ...
+        self.assertLessEqual(k / (2 * len(held)), SC.INVALID_RATE_CAP)  # ... but within the overall cap
         bad = {p['probe_id'] for p in members[:k]}
         report = SC.analyze(SMALL['probes'], passes_for(SMALL, lambda p, i: 'I refuse.' if p['probe_id'] in bad and
                                                         i == 'pass_1' else KEY(p, i)), 'coverage_dryrun')
@@ -408,9 +408,24 @@ class Evaluator(unittest.TestCase):
         allbad = SC.analyze(SMALL['probes'], passes_for(SMALL, lambda p, i: 'I refuse.'), 'coverage_dryrun')
         for gate, row in allbad['over_claims'][c].items():
             self.assertEqual((row['status'], row['over_claim_contexts']), ('insufficient_valid_opportunities', 0))
-        self.assertEqual(allbad['uncertainty'][c]['false_no_progress']['asserted'], 0)
         self.assertEqual(allbad['readiness'][c]['status'], 'not_eligible')
         self.assertTrue(allbad['readiness'][c]['problems'][0].startswith('validity not met'))
+
+    def test_false_no_progress_is_a_readiness_gate(self):
+        """Revision r2: "no progress" asserted where only the absence of a report exists blocks readiness."""
+        c = Q.CONDITIONS[0]
+        targets = self.gate_targets('false_no_progress')
+        self.assertTrue(all(p['claim'] == 'no_progress' and p['key'] == 'not_established' for p in targets))
+        ids = {p['probe_id'] for p in targets}
+        report = SC.analyze(SMALL['probes'], passes_for(SMALL, lambda p, i: json.dumps({'answer': 'supported'})
+                                                        if p['probe_id'] in ids else KEY(p, i)), 'coverage_dryrun')
+        row = report['over_claims'][c]['false_no_progress']
+        self.assertEqual(row['over_claim_contexts'], 1)
+        self.assertTrue(any('false_no_progress' in x for x in report['readiness'][c]['problems']))
+        self.assertNotIn('false_no_progress', report['uncertainty'][c])  # no longer a reported-only metric
+        self.assertEqual(Q.GATE_FLOORS['false_no_progress'], 150)
+        dry = Q.coverage(DRY['probes'], 'coverage_dryrun')['over_claim_denominators']['false_no_progress']
+        self.assertGreaterEqual(dry, 150)
 
     def test_missing_gate_answer_is_incomplete(self):
         target = self.gate_targets('false_progress')[0]
@@ -435,7 +450,6 @@ class Evaluator(unittest.TestCase):
         u = report['uncertainty'][Q.CONDITIONS[0]]
         self.assertEqual(u['uncertain_keyed']['recall'], 1.0)
         self.assertEqual(u['definite_keyed']['over_hedge_rate'], 1.0)
-        self.assertEqual(u['false_no_progress']['rate'], 0.0)
         for gate, row in report['over_claims'][Q.CONDITIONS[0]].items():
             self.assertEqual(row['over_claim_contexts'], 0, gate)
 

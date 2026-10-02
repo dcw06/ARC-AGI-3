@@ -20,8 +20,8 @@ Reported, per condition (decision partition):
 - validity (revision r1): the invalid-output rate over all scheduled responses, and separately over the over-claim
   gates' member responses, so that refusing or malformed output on exactly the risky questions cannot look safe;
 - uncertainty: recall on questions keyed with the family's uncertain answer (both passes; an invalid answer is
-  incorrect), over-hedging (a valid uncertain answer, in either pass, to a question with a definite key), and false
-  "no progress" assertions (valid answers only);
+  incorrect) and over-hedging (a valid uncertain answer, in either pass, to a question with a definite key). False
+  "no progress" assertions are a readiness gate since revision r2 (`false_no_progress`, floor 150 contexts);
 - subgoal success detection: accuracy and the key-by-answer confusion of `subgoal_status`, per pass;
 - abandonment after disconfirming evidence: `subgoal_decision` questions keyed `abandon_invalidated`: both-pass
   correct, and how often the answer persisted (`continue`) instead;
@@ -30,8 +30,9 @@ Reported, per condition (decision partition):
   safeguard-vs-computed comparison, and computed-vs-raw only when the optional third arm was built.
 
 Readiness (per condition): `eligible_for_memory_or_supervision` only if the decision partition is complete, every
-primary family is `criterion_met`, every gate passes, uncertainty recall >= 0.90, over-hedging <= 0.10, and both
-validity rates are <= 0.01 (accuracy and validity are both required). Anything
+primary family is `criterion_met`, every gate (five, including false "no progress") passes, uncertainty recall
+>= 0.90, over-hedging <= 0.10, the overall invalid rate is <= 0.01 and the gate-member invalid rate is <= 0.005
+(revision r2; accuracy and validity are both required). Anything
 else is `not_eligible` (or `incomplete`). A recovered (truncated) run log is never eligible. Gameplay connection is
 outside this protocol in every case.
 """
@@ -45,10 +46,11 @@ from research.evidence_comprehension_v2.score import family_metrics, paired_metr
 from research.progress_subgoal_v1 import questions as Q
 
 OVER_CLAIM_CAP = 0.02
-INVALID_RATE_CAP = 0.01  # validity criterion, overall and on gate-member responses (proposal until the freeze)
+# Validity criteria (provisional benchmark criteria until the freeze): overall, and on gate-member responses.
+INVALID_RATE_CAP = 0.01
+GATE_MEMBER_INVALID_RATE_CAP = 0.005
 UNCERTAINTY_RECALL_FLOOR = 0.90
 OVER_HEDGE_CAP = 0.10
-FALSE_NO_PROGRESS_CAP = 0.02
 PASS_IDS = ('pass_1', 'pass_2')
 LEVELS = ('observed_change', 'confirmed_progress', 'hypothesized_usefulness', 'causal_restraint',
           'subgoal_verification')
@@ -155,7 +157,7 @@ def over_claims(probes, passes, condition, required):
         hits = sum(c['claim'] for c in per_context.values())
         upper = _bootstrap_upper({k: [int(c['claim'])] for k, c in per_context.items()},
                                  f'overclaim:{condition}:{gate}') if n and not missing else None
-        floor = Q.FLOORS['over_claim_denominator_contexts']
+        floor = Q.GATE_FLOORS[gate]
         out[gate] = {'predefined_contexts': len(predefined), 'denominator_contexts': n,
                      'contexts_without_valid_answer': len(predefined - set(per_context)),
                      'over_claim_contexts': hits, 'member_responses': member_responses,
@@ -169,22 +171,21 @@ def over_claims(probes, passes, condition, required):
 def validity(probes, passes, condition, required):
     """Invalid-output rates: over every answered response of the condition, and over over-claim-gate member
     responses. Missing responses are excluded here (completeness reports them)."""
-    def rate(group):
+    def rate(group, cap):
         rows = [r for p in group for r in _rows(passes, p, required) if r is not None]
         bad = sum(not r['valid'] for r in rows)
         return {'responses': len(rows), 'invalid': bad, 'rate': round(bad / len(rows), 4) if rows else None,
-                'status': 'no_responses' if not rows else 'passes' if bad / len(rows) <= INVALID_RATE_CAP else 'fails'}
+                'cap': cap, 'status': 'no_responses' if not rows else 'passes' if bad / len(rows) <= cap else 'fails'}
     mine = [p for p in probes if p['condition'] == condition]
     members = [p for p in mine if any(Q.gate_member(g, p) for g in Q.OVER_CLAIM_GATES)]
-    return {'all_responses': rate(mine), 'gate_member_responses': rate(members), 'cap': INVALID_RATE_CAP}
+    return {'all_responses': rate(mine, INVALID_RATE_CAP),
+            'gate_member_responses': rate(members, GATE_MEMBER_INVALID_RATE_CAP)}
 
 
 def uncertainty(probes, passes, condition, required):
     held = [p for p in probes if p['condition'] == condition and p['family'] in Q.UNCERTAIN]
     rec = {'n': 0, 'correct': 0, 'missing': 0}
     hedge = {'n': 0, 'hedged': 0, 'missing': 0}
-    false_no = {'n': 0, 'asserted': 0, 'missing': 0}
-    fam, claim, key, wrong = Q.FALSE_NO_PROGRESS
     for p in held:
         rows = _rows(passes, p, required)
         absent = any(r is None for r in rows)
@@ -196,14 +197,9 @@ def uncertainty(probes, passes, condition, required):
             hedge['n'] += 1
             hedge['missing'] += absent
             hedge['hedged'] += not absent and any(r.get('answer') == Q.UNCERTAIN[p['family']] for r in rows)
-        if (p['family'], p['claim'], p['key']) == (fam, claim, key):
-            false_no['n'] += 1
-            false_no['missing'] += absent
-            false_no['asserted'] += not absent and any(r['valid'] and r['answer'] == wrong for r in rows)
     rate = lambda k, d: round(d[k] / d['n'], 4) if d['n'] else None  # noqa: E731
     return {'uncertain_keyed': {**rec, 'recall': rate('correct', rec)},
-            'definite_keyed': {**hedge, 'over_hedge_rate': rate('hedged', hedge)},
-            'false_no_progress': {**false_no, 'rate': rate('asserted', false_no)}}
+            'definite_keyed': {**hedge, 'over_hedge_rate': rate('hedged', hedge)}}
 
 
 def subgoal_metrics(probes, passes, condition, required):
@@ -312,7 +308,7 @@ def readiness(report, condition):
     u = report['uncertainty'][condition]
     recall, hedge = u['uncertain_keyed']['recall'], u['definite_keyed']['over_hedge_rate']
     v = report['validity'][condition]
-    invalid = [f"validity not met: {k} invalid rate {v[k]['rate']} > {INVALID_RATE_CAP}"
+    invalid = [f"validity not met: {k} invalid rate {v[k]['rate']} > {v[k]['cap']}"
                for k in ('all_responses', 'gate_member_responses') if v[k]['status'] != 'passes']
     problems = (invalid + [f'family below criterion: {f}' for f in short] + [f'gate not passed: {g}' for g in gates] +
                 ([f'uncertainty recall {recall} < {UNCERTAINTY_RECALL_FLOOR}'] if recall is None or

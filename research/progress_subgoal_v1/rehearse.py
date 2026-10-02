@@ -81,8 +81,8 @@ def summary(report):
            'validity': {c: {k: [v[k]['status'], v[k]['invalid'], v[k]['responses']]
                             for k in ('all_responses', 'gate_member_responses')} for c, v in report['validity'].items()},
            'readiness_problems': {c: r.get('problems', [r.get('reason')])[:4] for c, r in report['readiness'].items()},
-           'uncertainty': {c: [u['uncertain_keyed']['recall'], u['definite_keyed']['over_hedge_rate'],
-                               u['false_no_progress']['rate']] for c, u in report['uncertainty'].items()},
+           'uncertainty': {c: [u['uncertain_keyed']['recall'], u['definite_keyed']['over_hedge_rate']]
+                           for c, u in report['uncertainty'].items()},
            'labels': {c: {f: m['label'] for f, m in fams.items()} for c, fams in report['families'].items()},
            'subgoal': {c: [s['success_detection']['accuracy'], s['abandonment_after_disconfirmation']['accuracy'],
                            s['abandonment_after_disconfirmation']['persisted_with_continue']]
@@ -97,9 +97,10 @@ def run():
     value = Q.build(PARTITION)
     probes = value['probes']
     results = {'version': Q.VERSION, 'partition': PARTITION, 'note': 'scripted answers only; no model was called',
-               'scoring_revision': 'r1: over-claim gates read valid answers only; invalid output counts as incorrect '
-                                   'and against the validity criterion (overall and gate-member invalid rate <= '
-                                   f'{SC.INVALID_RATE_CAP})',
+               'scoring_revision': 'r2: over-claim gates read valid answers only; invalid output counts as incorrect '
+                                   f'and against validity (overall <= {SC.INVALID_RATE_CAP}, gate-member <= '
+                                   f'{SC.GATE_MEMBER_INVALID_RATE_CAP}); false "no progress" is a readiness gate '
+                                   f"(floor {Q.GATE_FLOORS['false_no_progress']} contexts)",
                'coverage': Q.coverage(probes, PARTITION, strict=False), 'runs': {}}
     retained = {}
     for policy in POLICIES:

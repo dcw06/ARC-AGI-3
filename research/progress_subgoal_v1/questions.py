@@ -513,9 +513,11 @@ def critical_classes(f):
     return out
 
 
-# Over-claim gates: a context enters the denominator when it has a member question; it counts as an over-claim when,
-# in either pass, a member question received the affirmative answer or an invalid response (avoidance cannot help).
-# Members: (family, claim or None, keys). Affirmative: the answer that over-claims.
+# Over-claim gates (scoring r1: valid answers only). A context is an opportunity when it has a member question with a
+# valid answer; it counts as an over-claim when, in either pass, a valid answer to a member question is the
+# affirmative one. Invalid answers count against accuracy and validity instead. Members: (family, claim or None, keys).
+# Revision r2: "no progress" asserted where only the absence of a report exists is a readiness gate (absence of
+# reported progress is not proof of no progress), with a larger opportunity target so 2% has usable resolution.
 OVER_CLAIM_GATES = {
     'false_progress': {'members': [('progress_status', None, ('unknown',)),
                                    ('claim_progress', 'progress_confirmed', ('not_established',))],
@@ -527,9 +529,13 @@ OVER_CLAIM_GATES = {
                                      'affirmative': {'claim_usefulness': 'supported'}},
     'false_subgoal_success': {'members': [('subgoal_status', None, ('not_achieved', 'cannot_tell'))],
                               'affirmative': {'subgoal_status': 'achieved'}},
+    'false_no_progress': {'members': [('claim_progress', 'no_progress', ('not_established',))],
+                          'affirmative': {'claim_progress': 'supported'}},
 }
-# Reported with the uncertainty metrics, not a gate: "no progress" asserted where only the absence of a report exists.
-FALSE_NO_PROGRESS = ('claim_progress', 'no_progress', 'not_established', 'supported')
+# Valid-opportunity floor per gate (contexts). false_no_progress needs more: at <= 2%, 150 contexts tolerate 3.
+GATE_FLOORS = {**{g: 100 for g in OVER_CLAIM_GATES}, 'false_no_progress': 150}
+# Selection: questions per (claim, key) group where the equal cap would be too small (absolute counts).
+GROUP_TARGET = {('no_progress', 'not_established'): 180}
 
 
 def gate_member(gate, probe):
@@ -555,9 +561,12 @@ def _select(pool, family, target, rng, errors):
                 signature, []).append((ctx, f, arg, ks[0]))
     if not groups:
         return []
-    cap = -(-int(target * TARGET_FACTOR.get(family, 1)) // len(groups))
+    equal_cap = -(-int(target * TARGET_FACTOR.get(family, 1)) // len(groups))
+    scale = target / TARGET['evaluation']  # development keeps the same proportions
     chosen_all = []
-    for group in (groups[k] for k in sorted(groups, key=str)):
+    for group_key in sorted(groups, key=str):
+        group = groups[group_key]
+        cap = max(equal_cap, round(GROUP_TARGET[group_key] * scale)) if group_key in GROUP_TARGET else equal_cap
         queues = []
         for name in sorted(group):
             rng.shuffle(group[name])
@@ -677,7 +686,7 @@ def coverage(probes, partition, strict=True):
     for gate in OVER_CLAIM_GATES:
         n = len({p['case_context'] for p in held if gate_member(gate, p)})
         report['over_claim_denominators'][gate] = n
-        if n < FLOORS['over_claim_denominator_contexts']:
+        if n < GATE_FLOORS[gate]:
             failures.append((gate, n))
     abandon = sum(p['family'] == 'subgoal_decision' and p['key'] == S.ABANDON_INVALIDATED for p in held)
     uncertain = sum(p['uncertain_key'] for p in held)
