@@ -1,0 +1,37 @@
+{
+  "id": "feedback-action-v1",
+  "status": "draft_protocol_v2_no_authority",
+  "arms": ["baseline", "candidate"],
+  "cases": [
+    {"game_id": "s5i5-18d95033", "environment_seed": 0, "initial_available_actions": [6],
+     "initial_canonical_hash": "aad6365085dc11d298db825d0f0c9600f6f2d154f5360c7b33e598a66d960efc", "win_levels": 8},
+    {"game_id": "ls20-9607627b", "environment_seed": 0, "initial_available_actions": [1, 2, 3, 4],
+     "initial_canonical_hash": "1eacfd1b2aab1cd52cbe5f2a9d18280eec465aca889f540961dc8c430ab9d9e6", "win_levels": 7},
+    {"game_id": "sk48-d8078629", "environment_seed": 0, "initial_available_actions": [1, 2, 3, 4, 6, 7],
+     "initial_canonical_hash": "17c4fc735665125c4142426c57aca953f17e498c5ff03f40f936bcd7e1a1481f", "win_levels": 8}
+  ],
+  "schedule": [
+    {"block": 1, "pair_id": "b1-s5i5", "game_id": "s5i5-18d95033", "order": ["baseline", "candidate"]},
+    {"block": 1, "pair_id": "b1-ls20", "game_id": "ls20-9607627b", "order": ["candidate", "baseline"]},
+    {"block": 1, "pair_id": "b1-sk48", "game_id": "sk48-d8078629", "order": ["baseline", "candidate"]},
+    {"block": 2, "pair_id": "b2-s5i5", "game_id": "s5i5-18d95033", "order": ["candidate", "baseline"]},
+    {"block": 2, "pair_id": "b2-ls20", "game_id": "ls20-9607627b", "order": ["baseline", "candidate"]},
+    {"block": 2, "pair_id": "b2-sk48", "game_id": "sk48-d8078629", "order": ["candidate", "baseline"]}
+  ],
+  "sessions": {"1": {"block": 1}, "2": {"block": 2}},
+  "limits": {
+    "actions_per_episode": 24,
+    "decision_calls_per_episode": 32,
+    "maximum_policy_calls": 192,
+    "request_seed": 0,
+    "live_prompt_token_ceiling": 60000,
+    "max_completion_tokens": {"baseline": 128, "candidate": 640},
+    "max_response_bytes": 32768,
+    "pair_admission_seconds": 600,
+    "internal_seconds": 3300,
+    "provider_timeout_seconds": 3600,
+    "cleanup_reserve_seconds": 300
+  },
+  "stop_reasons": ["action_cap", "decision_cap", "win", "game_over", "dispatch_failure", "technical_failure",
+                   "interrupted"]
+}
