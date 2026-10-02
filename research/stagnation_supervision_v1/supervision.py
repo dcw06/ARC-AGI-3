@@ -160,7 +160,8 @@ class Supervisor:
             response, error = {}, f'{type(exc).__name__}: {exc}'
         latency = response.get('latency_s', self.clock() - start)
         text = response.get('text')
-        charged_in = response.get('input_tokens', self._input_tokens(request['text']))
+        # counted only when the service did not report it (dict.get would evaluate the count eagerly)
+        charged_in = response['input_tokens'] if 'input_tokens' in response else self._input_tokens(request['text'])
         charged_out = response.get('output_tokens', estimate_tokens(text) if isinstance(text, str) else 0)
         self.tokens += charged_in + charged_out
         finish = response.get('finish_reason', 'stop') if 'finish_reason' in response else None
