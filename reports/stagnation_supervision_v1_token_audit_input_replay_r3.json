@@ -1,0 +1,30 @@
+{
+  "audit_sha256": "b5033e8a177692371632466671e46ef48c70e4aef55ec6f559564d61a6272636",
+  "by_kind": {
+    "policy": 1080,
+    "reflection": 42
+  },
+  "gpu_runs": 0,
+  "maximal_reflection_limit": "The historical token audit records this constructed request count but not its hash; the hash here binds the present constructed request only.",
+  "maximal_reflection_request_sha256": "f583a91416af5f10edf2f539233e22a4ff82f7aae6be8017964ba452d4ec16f1",
+  "model_calls": 0,
+  "ordered_request_rows_sha256": "d2333c229756cc4be7d1903dc123ff38a86c8de696a3b6a715167321f542e06c",
+  "request_count": 1122,
+  "source_bindings": {
+    "research/stagnation_supervision_v1/closed_loop/bridge.py": "fdc2d9c37ab50638e528e760131b1e84e16b216fbaaf96ab26a93f17497734d6",
+    "research/stagnation_supervision_v1/closed_loop/contract.py": "1dbc5845e2885d1d3e39aebb01b052fd8737ed95a3eecfb6c8ba0932bdfab499",
+    "research/stagnation_supervision_v1/closed_loop/engine.py": "68acf71ba4ffb807b933c79c989b501fa6bd562b8bb7f32bb1ad29d5cea4c8eb",
+    "research/stagnation_supervision_v1/closed_loop/fake_server.py": "a0dc229302b2b06c5d031606250fbef14bbc9d1c62aca6bbd373cdbf0066d3b2",
+    "research/stagnation_supervision_v1/closed_loop/protocol.json": "dee4faa8a1651b25d8ca0271523124f138b55314f6647a453d0feb9b7df75669",
+    "research/stagnation_supervision_v1/closed_loop/requests.py": "30031d476f01405a6c238abfb314a4aeca48fa461e5c6fa1bc3d9d66ac394cf2",
+    "research/stagnation_supervision_v1/closed_loop/runner.py": "169038eef6a77867c4bb4416aa2bc615328f726126c961a8c39d75d08157e520",
+    "research/stagnation_supervision_v1/closed_loop/service.py": "1bcf6075b4e2042117fe1c0970052f75bde591dce287a7816b86758982bc2720",
+    "research/stagnation_supervision_v1/intervention.py": "ce76c3d66ec7969b11673aa8d497c84d7c40590d93fb546d0540593e5518975b",
+    "research/stagnation_supervision_v1/supervision.py": "7251b1d398caa83334cb9945114e229bebcf0749e982708b5c04bc5a28032945",
+    "research/stagnation_supervision_v1/thresholds.py": "0a88196a13f74fd3ccb9a89441926ea54b5e3209b9589641b96461ffbfee3985",
+    "research/stagnation_supervision_v1/trigger_spec.json": "8dc8d9097d4764a3ecbe5185b3c8ec021d2ab15316e81f0515a67c3d9f6cd7d9",
+    "scripts/derive_stagnation_supervision_v1.py": "8cb8fd52129854d8f01a3263a676ce48416b863158441618cdf558b635f449ee"
+  },
+  "status": "exact_ordered_requests_replayed",
+  "version": "stagnation_supervision_v1_token_audit_input_replay_r3"
+}

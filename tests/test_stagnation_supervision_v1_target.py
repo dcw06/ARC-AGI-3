@@ -82,6 +82,7 @@ class TargetLifecycle(unittest.TestCase):
     def test_valid_trajectories_do_not_mask_failed_lifecycle_receipts(self):
         mutations = (
             ('monitor/monitor-result.json', 'status', 'failed'),
+            ('monitor/monitor-result.json', 'sampling_interval_seconds', .25),
             ('monitor/monitor-result.json', 'error', 'monitor failed'),
             ('control/gpu-cleanup.json', 'gpu_cleanup_verified', False),
             ('control/gpu-cleanup.json', 'remaining_gpu_pids', 1),

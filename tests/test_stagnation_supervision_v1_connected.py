@@ -146,7 +146,14 @@ class Connected(unittest.TestCase):
         self.assertFalse(evaluation['technically_complete'])
         self.assert_owned_cleanup(receipt, outer, detail)
         self.assertIsNotNone(detail['run'])
-        self.assertGreater(host['policy_calls'], 0)
+        # Forced cutoff need not let the host write final counters.
+        from research.stagnation_supervision_v1.closed_loop.evidence import load_verified
+        retained = load_verified(Path(detail['output']) / 'worker/run')
+        self.assertEqual(retained['calls'], detail['run']['calls'])
+        self.assertGreater(sum(len(e['steps']) for e in retained['episodes']), 0)
+        # host may still say ready: final counters are not a cancellation receipt.
+        self.assertTrue(evaluation['evidence_verified'])
+        self.assertGreater(retained['calls'], 0)
         self.assertIn('admission cutoff reserves cleanup', outer['error'])
         self.assertIn((detail['run']['status'], detail['run']['error']),
                       (('deadline_exceeded', 'run deadline enforced'),

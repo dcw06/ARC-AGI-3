@@ -415,6 +415,9 @@ DERIVED.update({
         ("'scope': 'action_effect_history_independent_gpu_cleanup'", "'scope': 'stagnation_supervision_independent_gpu_cleanup'", 1),
     ),
     'monitor.py': (
+        ('interval=.25, clock=time.monotonic', 'interval=.5, clock=time.monotonic', 1),
+        ('not 0 < interval <= 1', 'interval != .5 or not 0 < deadline - started <= 5100', 1),
+        ("'first_cell_monotonic': started, 'samples': []", "'first_cell_monotonic': started, 'sampling_interval_seconds': .5, 'samples': []", 1),
         ("SCOPES = {'live': 'action_effect_history_live_resource_monitor',\n"
          "          'rehearsal': 'action_effect_history_rehearsal_monitor_injected_gpu'}",
          "SCOPES = {'live': 'stagnation_supervision_live_resource_monitor',\n"

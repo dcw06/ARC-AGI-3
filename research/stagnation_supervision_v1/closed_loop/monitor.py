@@ -15,14 +15,14 @@ SCOPES = {'live': 'stagnation_supervision_live_resource_monitor',
 
 
 def observe(worker_pid, scratch, output, *, started, deadline, stop, nonce, mode='live',
-            interval=.25, clock=time.monotonic, sleep=time.sleep):
+            interval=.5, clock=time.monotonic, sleep=time.sleep):
     """Retain each measured sample; publish readiness after a durable first sample."""
-    if type(worker_pid) is not int or worker_pid <= 0 or not 0 < interval <= 1:
+    if type(worker_pid) is not int or worker_pid <= 0 or interval != .5 or not 0 < deadline - started <= 5100:
         raise ValueError('monitor limits')
     output, stop = Path(output), Path(stop)
     store = EvidenceStore(output, 'monitor')
     state = {'scope': SCOPES[mode], 'status': 'running', 'error': None, 'worker_pid': worker_pid,
-             'first_cell_monotonic': started, 'samples': []}
+             'first_cell_monotonic': started, 'sampling_interval_seconds': .5, 'samples': []}
     context = {'phase': 'binding'}
     try:
         probes = probes_for(mode)(worker_pid, scratch)  # live: authority checked before any GPU probe

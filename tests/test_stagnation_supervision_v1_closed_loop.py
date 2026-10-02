@@ -60,7 +60,7 @@ class Derivation(unittest.TestCase):
         self.assertEqual(DERIVE.substitution_counts(), {
             base + 'contract.py': 6, base + 'runner.py': 21, base + 'engine.py': 0, base + 'evidence.py': 0,
             base + 'model_service.py': 6, base + 'host.py': 9, base + 'worker.py': 9, base + 'resources.py': 2,
-            base + 'monitor.py': 1, base + 'supervisor.py': 13, base + 'authority.py': 10,
+            base + 'monitor.py': 4, base + 'supervisor.py': 13, base + 'authority.py': 10,
             'scripts/stagnation_supervision_v1_launch.py': 15, 'scripts/rehearse_stagnation_supervision_v1.py': 6})
 
     def test_live_mode_is_disabled_in_this_source_revision(self):

@@ -118,6 +118,8 @@ def lifecycle(root, spec, *, mode, session, internal_seconds):
     require(monitor['gpu_binding'] == telemetry['gpu_binding'] == ready['gpu_binding'], 'monitor GPU binding')
     if mode == 'live':
         require('REHEARSAL' not in uuid, 'injected GPU cannot certify live lifecycle')
+    require(monitor.get('sampling_interval_seconds') == telemetry.get('sampling_interval_seconds') == .5,
+            'frozen telemetry sampling interval')
     samples = telemetry['samples']
     require(bool(samples) and ready['sample'] == samples[0], 'monitor readiness sample')
     previous = number(monitor['monitor_started_seconds'])
