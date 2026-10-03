@@ -1,0 +1,23 @@
+{
+  "status": "submitted_once_running_with_invalid_required_attachment",
+  "recorded_at_utc": "2026-10-03T01:38:03.096901+00:00",
+  "attempt_id": "ssv1-r5-session1-reservation-001",
+  "session": "1",
+  "provider_url": "https://www.kaggle.com/code/daichongwei06/arc3-stagnation-supervision-v1-authorization-r6",
+  "provider_version": 1,
+  "provider_kernel_id": 136847605,
+  "latest_observed_status": "RUNNING",
+  "save_kernel_http_attempts": 1,
+  "invalid_dataset_sources": [
+    "driessmit1/arc3-vllm-h100-wheelhouse-v3"
+  ],
+  "wheelhouse_absent_from_pulled_metadata": true,
+  "submission_claim_consumed": true,
+  "new_reservations": 0,
+  "automatic_retry_authorized": false,
+  "cancel_requested": false,
+  "cancellation_limitation": "Provider responses expose no kernel session ID required by CancelKernelSession; not guessed.",
+  "exact_billing_seconds": null,
+  "gpu_runtime_readiness_verified": false,
+  "phase4_complete": false
+}

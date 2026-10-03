@@ -1,0 +1,15 @@
+{
+  "status": "provider_cancellation_acknowledged",
+  "attempt_id": "ssv1-r5-session1-reservation-001",
+  "user_report": "Stopped",
+  "observed_at_utc": "2026-10-03T01:46:55.308114+00:00",
+  "provider_status": "CANCEL_ACKNOWLEDGED",
+  "provider_observation_sha256": "9050de1fe08cfa36f252a22ff9e66a3e41e7af6a19b4ae33a9292fac88693cf6",
+  "submission_claim_consumed": true,
+  "automatic_retry_authorized": false,
+  "new_reservations": 0,
+  "valid_study_result": false,
+  "gpu_process_cleanup_independently_verified": false,
+  "exact_billing_seconds": null,
+  "remaining_blocker": "Required frozen wheelhouse dataset rejected and absent from provider metadata."
+}

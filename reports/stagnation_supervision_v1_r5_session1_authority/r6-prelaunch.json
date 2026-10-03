@@ -1,0 +1,37 @@
+{
+  "adapter_source_bindings": {
+    "scripts/kaggle_stagnation_supervision_v1_r6_no_retry.py": "3bf4f05453d8a483c8a5eaf0b3fa71451ab7a52406d9a25f1f6651ee89edefb8",
+    "scripts/launch_stagnation_supervision_v1_r6_session1.py": "6095a2c6c2de4896d23dd44f95df974a54e2cae36d94347b4aaa29070b097ec2",
+    "tests/test_ssv_kaggle_no_retry.py": "95c429c645e5b024685d54e46f34302b0baac0b04abc5b64a2ef148020797a35"
+  },
+  "adapter_test_cases": [
+    "success",
+    "redirect",
+    "429",
+    "503",
+    "disconnect",
+    "duplicate_send",
+    "missing_claim",
+    "request_drift"
+  ],
+  "adapter_tests_passed": 2,
+  "canonical_ledger": "/mnt/c/Users/jjzzw/Desktop/AGI/.claude/worktrees/agent-ad85269782539a5c8/reports/stagnation_supervision_v1_r5_session1_authority",
+  "follow_redirects": false,
+  "http_retries": 0,
+  "live_entrypoint_executed": false,
+  "new_reservations": 0,
+  "operator": "Codex primary agent in this session",
+  "package_binding_sha256": "e4d994ff37585f8f6156ea50a4ab51469b20d45864c3e073819f8e94fde6f5d7",
+  "package_lock_sha256": "297f8aecd484464ffa9cdd309a2eb1dc0b31b2ec5ebd3edd63a1c8cedf8f221a",
+  "request_body_sha256": "b1f216f1ae99ce0c54786b1c67334905ce26469ac5a3fef9cc7cde85c4ab8517",
+  "request_bytes": 798611,
+  "reservation_reused": "ssv1-r5-session1-reservation-001",
+  "sdk_versions": {
+    "kaggle": "2.2.4",
+    "kagglesdk": "0.1.37",
+    "requests": "2.34.2",
+    "urllib3": "2.8.0"
+  },
+  "source_review_sha256": "365572597cc972268dc0cb7b52d5b10ea2b5f4f31ea22bbbaf77285d2272bd03",
+  "status": "verified_for_single_submission"
+}
