@@ -204,5 +204,72 @@ class FaultPlacement(unittest.TestCase):
                     server.close()
 
 
+class SlowFaultPlacement(unittest.TestCase):
+    """The deadline rehearsal's slow faults are derived from the frozen schedule so the admission cutoff provably
+    falls inside the chosen pass (review of e80e01a: a fixed 0.075 s put the pass-2 cutoff inside pass 1)."""
+
+    def test_margins_hold_with_stated_bounds(self):
+        from research.evidence_memory_v1.run import rehearsal_timing as RT
+        m = RT.margins(FROZEN)
+        self.assertEqual((m['pass_1_calls'], m['repeat_calls'], m['cutoff'], m['last_admissible_start']),
+                         (2592, 304, 300, 290.0))
+        self.assertTrue(all(m['holds'].values()), m)
+        # pass-1 time < last admissible start < cutoff < pass-1 time + repeat time, with margins on both sides
+        self.assertGreaterEqual(m['pass_2_fault']['low_side_margin'], RT.LOW_MARGIN_SECONDS)
+        self.assertGreater(m['pass_2_fault']['high_side_margin'], 0)
+        self.assertGreater(m['pass_1_fault']['high_side_margin'], 0)
+        self.assertGreaterEqual(m['timeout_margin'], RT.TIMEOUT_MARGIN_SECONDS)
+
+    def test_the_derived_worker_uses_the_derived_values_and_forwards_the_repeat_fault(self):
+        import ast
+        from research.evidence_memory_v1.run import fake_server, rehearsal_timing as RT
+        tree = ast.parse((ROOT / 'research/evidence_memory_v1/run/worker.py').read_text(encoding='utf-8'))
+        values = {t.id: ast.literal_eval(n.value) for n in tree.body if isinstance(n, ast.Assign)
+                  for t in n.targets if isinstance(t, ast.Name) and t.id in ('SLOW_LATENCY', 'HOST_FAULTS')}
+        self.assertEqual(values['SLOW_LATENCY'], RT.slow_latencies(FROZEN))
+        self.assertIn(RT.REPEAT_FAULT, values['HOST_FAULTS'])  # worker -> host
+        self.assertIn(RT.REPEAT_FAULT, fake_server.FAULTS)  # host -> fake server
+
+    def test_the_repeat_fault_slows_only_repeat_calls(self):
+        from research.evidence_memory_v1.run import rehearsal_timing as RT
+        from research.evidence_memory_v1.run.fake_server import FakeVLLM
+        latency = RT.slow_latencies(FROZEN)
+        n1 = len(FROZEN['schedule'][0]['probe_ids'])
+        for fault, expected in ((RT.REPEAT_FAULT, (0.0, 0.0, latency[RT.REPEAT_FAULT])),
+                                ('slow_withheld_pass_1', (latency['slow_withheld_pass_1'],) * 3)):
+            server = FakeVLLM(fault=RT.REPEAT_FAULT if fault == RT.REPEAT_FAULT else 'none',
+                              latency_seconds=latency[fault])
+            try:
+                self.assertEqual((server.latency_for(1), server.latency_for(n1), server.latency_for(n1 + 1)), expected)
+            finally:
+                server.server.server_close()
+
+    def test_simulated_admission_stops_inside_the_chosen_pass(self):
+        """The reviewed admission rule over the frozen order, with the server's per-call latency, across startup and
+        per-call overhead from zero to the stated bounds."""
+        from research.evidence_memory_v1.run import rehearsal_timing as RT
+        from research.evidence_memory_v1.run.fake_server import FakeVLLM
+        latency = RT.slow_latencies(FROZEN)
+        order = S.call_order(FROZEN)
+        for fault, phase in (('slow_withheld_pass_1', 'withheld_pass_1'), (RT.REPEAT_FAULT, 'withheld_pass_2')):
+            server = FakeVLLM(fault=RT.REPEAT_FAULT if fault == RT.REPEAT_FAULT else 'none',
+                              latency_seconds=latency[fault])
+            try:
+                for startup in (0.0, RT.STARTUP_MAX_SECONDS):
+                    for overhead in (0.0, 0.04, RT.OVERHEAD_MAX_SECONDS):
+                        clock, reached = startup, None
+                        for n, (call_phase, _, _) in enumerate(order, 1):
+                            if not S.admit(clock, RT.cutoff(), RT.bound()):
+                                break
+                            reached = call_phase
+                            clock += overhead + server.latency_for(n)
+                        else:
+                            self.fail('the whole schedule finished before the cutoff')
+                        with self.subTest(fault=fault, startup=startup, overhead=overhead):
+                            self.assertEqual(reached, phase)
+            finally:
+                server.server.server_close()
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -39,6 +39,14 @@ DEPTH_1 = ('ROOT = Path(__file__).resolve().parents[1]', 'ROOT = Path(__file__).
 
 SESSION_A_CALLS, SESSION_A_PASS_1, MAX_SESSION_CALLS = 2896, 2592, 2896
 
+
+def _slow_latencies():
+    from research.evidence_memory_v1.run import rehearsal_timing
+    return rehearsal_timing.slow_latencies()
+
+
+SLOW = _slow_latencies()
+
 REQUIRED_OLD = """REQUIRED_SOURCE = {'research/evidence_memory_v1/run/' + name for name in
                    ('authority.py', 'probes.py', 'probes.json', 'score.py', 'schedule.py', 'transport.py',
                     'service.py', 'host.py', 'worker.py', 'runner.py', 'monitor.py', 'resources.py', 'supervisor.py',
@@ -49,7 +57,8 @@ REQUIRED_SOURCE |= {'research/transition_evidence_v1/' + name for name in  # the
 REQUIRED_NEW = """REQUIRED_SOURCE = {'research/evidence_memory_v1/run/' + name for name in
                    ('__init__.py', 'authority.py', 'probes.py', 'probes.json', 'score.py', 'schedule.py',
                     'transport.py', 'service.py', 'host.py', 'worker.py', 'runner.py', 'monitor.py', 'resources.py',
-                    'supervisor.py', 'evidence.py', 'fake_server.py', 'fake_vllm.py', 'evaluate.py')}
+                    'supervisor.py', 'evidence.py', 'fake_server.py', 'fake_vllm.py', 'rehearsal_timing.py',
+                    'evaluate.py')}
 REQUIRED_SOURCE |= {'research/evidence_memory_v1/' + name for name in  # the Stage 1 question set and its scorer
                     ('__init__.py', 'stage1.py', 'protocol.py', 'readers.py', 'render.py', 'schema.py', 'fidelity.py',
                      'trajectories.py', 'writers.py', 'tokens.py')}
@@ -102,14 +111,24 @@ DERIVED = {
          "    def is_canary(self, request):\n"
          "        \"\"\"v1's rule; a question set whose user messages are not JSON overrides it.\"\"\"\n"
          "        return not request['messages'][1]['content'].startswith('{')\n\n"
+         "    def latency_for(self, number):\n"
+         "        \"\"\"v1's rule: the same injected latency for every questionnaire call.\"\"\"\n"
+         "        return self.latency\n\n"
          "    def handle(self, handler, request):\n", 1),
+        # The injected latency may depend on the questionnaire call number (run/rehearsal_timing.py).
+        ("        until = time.monotonic() + (STUCK_SECONDS if hang else self.latency)\n",
+         "        until = time.monotonic() + (STUCK_SECONDS if hang else self.latency_for(number))\n", 1),
     )),
     'research/evidence_memory_v1/run/worker.py': ('research/ws3_questionnaire_v1/worker.py', (
         DEPTH_2,
-        # Rehearsal only: chosen so the admission cutoff falls inside pass 1 (2,592 calls) or inside the short
-        # repeat pass (304 calls). The pass-2 value is an estimate to be tuned by the first POSIX rehearsal.
+        # Rehearsal only, derived from the frozen schedule (run/rehearsal_timing.py): pass 1 alone, or the repeat
+        # pass alone, outlasts the cutoff even with zero overhead. The repeat fault slows only the repeat calls, so
+        # it must reach the fake server: it joins the faults the worker forwards to the host.
         ("SLOW_LATENCY = {'slow_withheld_pass_1': 0.13, 'slow_withheld_pass_2': 0.06}",
-         "SLOW_LATENCY = {'slow_withheld_pass_1': 0.13, 'slow_withheld_pass_2': 0.075}", 1),
+         "SLOW_LATENCY = {{'slow_withheld_pass_1': {slow_withheld_pass_1}, 'slow_withheld_pass_2': "
+         "{slow_withheld_pass_2}}}  # derived: run/rehearsal_timing.py".format(**SLOW), 1),
+        ("               'trickle_metrics', 'http_error', 'late_reply')\n",
+         "               'trickle_metrics', 'http_error', 'late_reply', 'slow_withheld_pass_2')\n", 1),
     )),
     'research/evidence_memory_v1/run/runner.py': ('research/ws3_questionnaire_v1/runner.py', ()),
     'research/evidence_memory_v1/run/resources.py': ('research/ws3_questionnaire_v1/resources.py', ()),

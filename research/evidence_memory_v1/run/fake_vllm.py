@@ -172,6 +172,10 @@ class FakeVLLM:
         """v1's rule; a question set whose user messages are not JSON overrides it."""
         return not request['messages'][1]['content'].startswith('{')
 
+    def latency_for(self, number):
+        """v1's rule: the same injected latency for every questionnaire call."""
+        return self.latency
+
     def handle(self, handler, request):
         is_canary = self.is_canary(request)
         with self.lock:
@@ -187,7 +191,7 @@ class FakeVLLM:
             with self.lock:
                 self.running -= 1
             return handler.reply(500, b'{"error":"rehearsal server failure"}')
-        until = time.monotonic() + (STUCK_SECONDS if hang else self.latency)
+        until = time.monotonic() + (STUCK_SECONDS if hang else self.latency_for(number))
         while time.monotonic() < until:
             if self.disconnected(handler.connection):
                 if self.fault == 'no_abort' and hang:

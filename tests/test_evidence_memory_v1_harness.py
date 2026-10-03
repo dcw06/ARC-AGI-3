@@ -161,7 +161,7 @@ class Boundaries(unittest.TestCase):
     def test_no_model_network_or_process_imports(self):
         """The research modules (not the derived run package in run/, which is the reviewed runtime stack)."""
         allowed = {'copy', 'json', 'hashlib', 'random', 'collections', 're', 'pathlib', 'os', 'statistics',
-                   'argparse', 'sys', 'research.evidence_memory_v1',
+                   'argparse', 'sys', 'research.evidence_memory_v1', 'research.evidence_memory_v1.run',
                    'research.transition_evidence_v1', 'research.transition_evidence_v2'}
         for path in PACKAGE.glob('*.py'):
             tree = ast.parse(path.read_text(encoding='utf-8'))

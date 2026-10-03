@@ -13,8 +13,12 @@ import json
 
 from research.evidence_memory_v1.run import fake_vllm as _base
 from research.evidence_memory_v1.run.fake_vllm import (  # noqa: F401  (re-exported, unchanged)
-    ABORT_DELAY, FAULTS, HANG_AT, HANG_FAULTS, TRUNCATED, count_tokens, request_sha)
+    ABORT_DELAY, HANG_AT, HANG_FAULTS, TRUNCATED, count_tokens, request_sha)
+from research.evidence_memory_v1.run.rehearsal_timing import REPEAT_FAULT
 
+# v1's server faults plus the repeat-pass slowdown (rehearsal only): the host forwards a fault to the server only
+# if it is listed here.
+FAULTS = _base.FAULTS + (REPEAT_FAULT,)
 CANARY_ANSWER = json.dumps({'action': {'action_id': 6, 'action_data': {'x': 5, 'y': 5}}})  # v1's canary reply
 
 
@@ -24,6 +28,7 @@ class ScriptedAnswers(_base.ScriptedAnswers):
         frozen, _ = load_frozen()
         contexts = {c['context_id']: c for c in frozen['contexts']}
         self.by_sha = {request_sha(build_request(contexts[p['context_id']], p)): p for p in frozen['probes']}
+        self.pass_1_calls = len(frozen['schedule'][0]['probe_ids'])
         self.seen = {}
 
     def is_question(self, request):
@@ -55,7 +60,18 @@ class ScriptedAnswers(_base.ScriptedAnswers):
 
 class FakeVLLM(_base.FakeVLLM):
     def __init__(self, *, fault='none', latency_seconds=0.0, answers=None):
-        super().__init__(fault=fault, latency_seconds=latency_seconds, answers=answers or ScriptedAnswers())
+        if fault not in FAULTS:
+            raise ValueError('fake server fault')
+        answers = answers or ScriptedAnswers()
+        super().__init__(fault='none' if fault == REPEAT_FAULT else fault, latency_seconds=latency_seconds,
+                         answers=answers)
+        # The repeat fault adds latency only from the first repeat call (questionnaire call pass_1 + 1).
+        self.slow_from = answers.pass_1_calls + 1 if fault == REPEAT_FAULT else None
+
+    def latency_for(self, number):
+        if self.slow_from is None:
+            return self.latency
+        return self.latency if number >= self.slow_from else 0.0
 
     def is_canary(self, request):
         """The canary is the one request outside the frozen Stage 1 set; every Stage 1 question counts."""
