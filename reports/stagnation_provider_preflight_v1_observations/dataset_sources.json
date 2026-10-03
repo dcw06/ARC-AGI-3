@@ -1,0 +1,31 @@
+{
+  "kind": "dataset_sources",
+  "reference": "driessmit1/arc3-vllm-h100-wheelhouse-v3",
+  "calls": [
+    {
+      "endpoint": "datasets.DatasetApiService/GetDataset",
+      "request": {
+        "ownerSlug": "driessmit1",
+        "datasetSlug": "arc3-vllm-h100-wheelhouse-v3"
+      },
+      "http_status": 403,
+      "observed_at_utc": "2026-10-03T03:49:29.975527+00:00",
+      "response_base64": "eyJlcnJvciI6eyJjb2RlIjo0MDMsIm1lc3NhZ2UiOiJQZXJtaXNzaW9uIFx1MDAyN2RhdGFzZXRzLmdldFx1MDAyNyB3YXMgZGVuaWVkIiwic3RhdHVzIjoiUEVSTUlTU0lPTl9ERU5JRUQifX0=",
+      "response_sha256": "df43bfe05a4a415be217adf87eb635e14f08c0d9f7ab1dcd9378c240161e732b",
+      "truncated": false
+    },
+    {
+      "endpoint": "datasets.DatasetApiService/ListDatasetFiles",
+      "request": {
+        "ownerSlug": "driessmit1",
+        "datasetSlug": "arc3-vllm-h100-wheelhouse-v3",
+        "pageSize": 20
+      },
+      "http_status": 403,
+      "observed_at_utc": "2026-10-03T03:49:30.131601+00:00",
+      "response_base64": "eyJlcnJvciI6eyJjb2RlIjo0MDMsIm1lc3NhZ2UiOiJQZXJtaXNzaW9uIFx1MDAyN2RhdGFzZXRzLmdldFx1MDAyNyB3YXMgZGVuaWVkIiwic3RhdHVzIjoiUEVSTUlTU0lPTl9ERU5JRUQifX0=",
+      "response_sha256": "df43bfe05a4a415be217adf87eb635e14f08c0d9f7ab1dcd9378c240161e732b",
+      "truncated": false
+    }
+  ]
+}

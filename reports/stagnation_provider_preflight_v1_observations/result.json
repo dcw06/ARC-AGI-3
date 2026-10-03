@@ -1,0 +1,17 @@
+{
+  "status": "blocked",
+  "failures": [
+    {
+      "kind": "dataset_sources",
+      "error_type": "PermissionError",
+      "error": "source inaccessible: driessmit1/arc3-vllm-h100-wheelhouse-v3"
+    },
+    {
+      "kind": "model_sources",
+      "error_type": "ValueError",
+      "error": "model instance identity"
+    }
+  ],
+  "gpu_runs": 0,
+  "new_reservations": 0
+}
