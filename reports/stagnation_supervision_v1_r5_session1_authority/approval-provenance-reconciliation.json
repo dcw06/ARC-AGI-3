@@ -1,0 +1,15 @@
+{
+  "status": "approval_provenance_not_independently_established",
+  "recorded_at_utc": "2026-10-03T02:56:42.063133+00:00",
+  "attempt_id": "ssv1-r5-session1-reservation-001",
+  "historical_records_preserved": true,
+  "actual_available_context": "Next: implement and review the explicitly no-retry Kaggle adapter, record your R6 source and launch approvals, then verify the final package before submitting session 1 once. Do not create another reservation or submit the superseded R5 notebook. The submission guard is local, not distributed: use one canonical ledger and one designated operator. Real GPU timing remains unmeasured, and this run still cannot certify the false-interruption gate or complete Phase 4.",
+  "context_reference": "User message immediately after review of commit 9de3a83; begins Next: implement and review the explicitly no-retry Kaggle adapter",
+  "platform_message_id_available": false,
+  "separate_r6_confirmation_found": false,
+  "agent_interpretation": "The agent interpreted the next-steps message as approval of R6 source and launch and generated both records. Those records do not independently establish two explicit confirmation decisions.",
+  "correction": "Do not treat the generated records as independent approval proof or replacement-run authority. Preserve them as historical evidence; future preparation must consume actual separately recorded confirmations.",
+  "submission_claim_consumed": true,
+  "replacement_run_authorized": false,
+  "new_reservations": 0
+}

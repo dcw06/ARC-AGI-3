@@ -1,0 +1,30 @@
+{
+  "status": "attempt_consumed_exact_accounting_unresolved",
+  "attempt_id": "ssv1-r5-session1-reservation-001",
+  "provider_cancellation_status": "CANCEL_ACKNOWLEDGED",
+  "account_quota_snapshot": {
+    "quotaRefreshTime": "2026-10-10T00:00:00Z",
+    "gpuQuota": {
+      "timeUsed": "0s",
+      "timeReserved": "0s",
+      "totalTimeAllowed": "108000s",
+      "minimumTimeAllowed": "108000s",
+      "hasEverRun": true
+    },
+    "tpuQuota": {
+      "timeUsed": "0s",
+      "timeReserved": "0s",
+      "totalTimeAllowed": "72000s",
+      "minimumTimeAllowed": "72000s"
+    }
+  },
+  "quota_is_account_wide": true,
+  "comparable_prelaunch_quota_snapshot_available": false,
+  "exact_attempt_gpu_seconds": null,
+  "exact_provider_billed_seconds": null,
+  "independent_gpu_cleanup_verified": false,
+  "inference": "Zero used/reserved in this account snapshot does not establish zero usage for this historical attempt; quota may have refreshed.",
+  "local_authorization_seconds": 5400,
+  "local_authorization_reusable": false,
+  "submission_claim_consumed": true
+}
