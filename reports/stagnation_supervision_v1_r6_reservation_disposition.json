@@ -1,0 +1,15 @@
+{
+  "status": "reservation_preserved_r5_execution_package_superseded",
+  "attempt_id": "ssv1-r5-session1-reservation-001",
+  "reservation_records_unchanged": true,
+  "historical_files_byte_verified_against_head": 13,
+  "new_reservations": 0,
+  "submitted": false,
+  "reservation_consumed": false,
+  "r6_source_review_sha256": "365572597cc972268dc0cb7b52d5b10ea2b5f4f31ea22bbbaf77285d2272bd03",
+  "r6_package_lock_sha256": "297f8aecd484464ffa9cdd309a2eb1dc0b31b2ec5ebd3edd63a1c8cedf8f221a",
+  "r6_source_approval_recorded": false,
+  "explicit_launch_approval_recorded": false,
+  "superseded_package": "notebooks/stagnation-supervision-v1-r5-session1-reserved",
+  "required_next_step": "Review R6; explicitly approve successor source and separately authorize launch against the existing reservation. A reviewed no-retry provider adapter is required before submission."
+}
