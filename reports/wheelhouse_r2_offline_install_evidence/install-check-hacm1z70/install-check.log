@@ -1,0 +1,411 @@
+
+$ /usr/bin/python3.12 -m venv /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/venv
+[exit 0 in 2.8 s]
+
+$ /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/venv/bin/python -I -m pip --version
+pip 24.0 from /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/venv/lib/python3.12/site-packages/pip (python 3.12)
+[exit 0 in 0.3 s]
+
+$ /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/venv/bin/python -I -m pip install --no-index --no-cache-dir --require-hashes --only-binary=:all: --find-links /home/jingjing/.local/share/agi/wheelhouse-r2 -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock
+Looking in links: /home/jingjing/.local/share/agi/wheelhouse-r2
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/aiohappyeyeballs-2.6.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 1))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/aiohttp-3.13.5-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 2))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/aiosignal-1.4.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 3))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/annotated_doc-0.0.4-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 4))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/annotated_types-0.7.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 5))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/anthropic-0.97.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 6))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/anyio-4.13.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 7))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/apache_tvm_ffi-0.1.10-cp312-abi3-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 8))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/astor-0.8.1-py2.py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 9))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/attrs-26.1.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 10))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/blake3-1.0.8-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 11))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/cachetools-7.0.6-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 12))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/cbor2-6.0.1-cp312-cp312-manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 13))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/certifi-2026.4.22-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 14))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/cffi-2.0.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 15))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/charset_normalizer-3.4.7-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 16))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/click-8.3.3-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 17))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/cloudpickle-3.1.2-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 18))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/compressed_tensors-0.14.0.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 19))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/cryptography-47.0.0-cp311-abi3-manylinux_2_34_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 20))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/cuda_bindings-12.9.4-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 21))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/cuda_pathfinder-1.5.4-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 22))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/cuda_python-12.9.4-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 23))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/depyf-0.20.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 24))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/dill-0.4.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 25))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/diskcache-5.6.3-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 26))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/distro-1.9.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 27))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/dnspython-2.8.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 28))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/docstring_parser-0.18.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 29))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/einops-0.8.2-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 30))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/email_validator-2.3.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 31))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/fastapi-0.136.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 32))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/fastapi_cli-0.0.24-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 33))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/fastapi_cloud_cli-0.17.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 34))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/fastar-0.11.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 35))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/filelock-3.29.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 36))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/flashinfer_cubin-0.6.6-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 37))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/flashinfer_python-0.6.6-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 38))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/frozenlist-1.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 39))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/fsspec-2026.4.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 40))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/gguf-0.18.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 41))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/googleapis_common_protos-1.74.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 42))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/grpcio-1.80.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 43))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/h11-0.16.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 44))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/hf_xet-1.4.3-cp37-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 45))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/httpcore-1.0.9-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 46))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/httptools-0.7.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 47))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/httpx-0.28.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 48))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/httpx_sse-0.4.3-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 49))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/huggingface_hub-0.36.2-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 50))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/idna-3.13-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 51))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/ijson-3.5.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 52))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/importlib_metadata-8.7.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 53))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/interegular-0.3.3-py37-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 54))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/jinja2-3.1.6-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 55))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/jiter-0.14.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 56))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/jmespath-1.1.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 57))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/jsonschema-4.26.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 58))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/jsonschema_specifications-2025.9.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 59))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/lark-1.2.2-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 60))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/llguidance-1.3.0-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 61))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/llvmlite-0.44.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 62))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/lm_format_enforcer-0.11.3-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 63))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/loguru-0.7.3-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 64))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/markdown_it_py-4.0.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 65))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 66))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/mcp-1.27.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 67))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/mdurl-0.1.2-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 68))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/mistral_common-1.11.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 69))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/model_hosting_container_standards-0.1.14-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 70))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/mpmath-1.3.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 71))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/msgspec-0.21.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 72))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/multidict-6.7.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 73))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/networkx-3.6.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 74))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/ninja-1.13.0-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 75))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/numba-0.61.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 76))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/numpy-2.2.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 77))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/nvidia_cublas_cu12-12.8.4.1-py3-none-manylinux_2_27_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 78))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/nvidia_cuda_cupti_cu12-12.8.90-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 79))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/nvidia_cuda_nvrtc_cu12-12.8.93-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 80))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/nvidia_cuda_runtime_cu12-12.8.90-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 81))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/nvidia_cudnn_cu12-9.10.2.21-py3-none-manylinux_2_27_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 82))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/nvidia_cudnn_frontend-1.18.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 83))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/nvidia_cufft_cu12-11.3.3.83-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 84))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/nvidia_cufile_cu12-1.13.1.3-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 85))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/nvidia_curand_cu12-10.3.9.90-py3-none-manylinux_2_27_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 86))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/nvidia_cusolver_cu12-11.7.3.90-py3-none-manylinux_2_27_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 87))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/nvidia_cusparse_cu12-12.5.8.93-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 88))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/nvidia_cusparselt_cu12-0.7.1-py3-none-manylinux2014_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 89))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/nvidia_cutlass_dsl-4.5.0.dev0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 90))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/nvidia_cutlass_dsl_libs_base-4.5.0.dev0-cp312-cp312-manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 91))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/nvidia_ml_py-13.595.45-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 92))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/nvidia_nccl_cu12-2.27.5-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 93))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/nvidia_nvjitlink_cu12-12.8.93-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 94))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/nvidia_nvshmem_cu12-3.4.5-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 95))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/nvidia_nvtx_cu12-12.8.90-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 96))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/openai-2.33.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 97))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/openai_harmony-0.0.8-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 98))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/opencv_python_headless-4.13.0.92-cp37-abi3-manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 99))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/opentelemetry_api-1.41.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 100))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/opentelemetry_exporter_otlp-1.41.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 101))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/opentelemetry_exporter_otlp_proto_common-1.41.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 102))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/opentelemetry_exporter_otlp_proto_grpc-1.41.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 103))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/opentelemetry_exporter_otlp_proto_http-1.41.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 104))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/opentelemetry_proto-1.41.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 105))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/opentelemetry_sdk-1.41.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 106))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/opentelemetry_semantic_conventions-0.62b1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 107))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/opentelemetry_semantic_conventions_ai-0.5.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 108))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/outlines_core-0.2.11-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 109))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/packaging-26.2-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 110))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/partial_json_parser-0.2.1.1.post7-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 111))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/pillow-12.2.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 112))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/prometheus_client-0.25.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 113))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/prometheus_fastapi_instrumentator-7.1.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 114))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/propcache-0.4.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 115))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/protobuf-6.33.6-cp39-abi3-manylinux2014_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 116))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/psutil-7.2.2-cp36-abi3-manylinux2010_x86_64.manylinux_2_12_x86_64.manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 117))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/py_cpuinfo-9.0.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 118))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/pybase64-1.4.3-cp312-cp312-manylinux1_x86_64.manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_5_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 119))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/pycountry-26.2.16-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 120))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/pycparser-3.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 121))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/pydantic-2.13.3-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 122))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/pydantic_core-2.46.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 123))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/pydantic_extra_types-2.11.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 124))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/pydantic_settings-2.14.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 125))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/pygments-2.20.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 126))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/pyjwt-2.12.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 127))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/python_dotenv-1.2.2-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 128))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/python_json_logger-4.1.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 129))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/python_multipart-0.0.27-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 130))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 131))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/pyzmq-27.1.0-cp312-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 132))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/quack_kernels-0.4.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 133))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/referencing-0.37.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 134))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/regex-2026.4.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 135))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/requests-2.33.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 136))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/rich-15.0.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 137))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/rich_toolkit-0.19.7-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 138))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/rignore-0.7.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 139))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/rpds_py-0.30.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 140))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/safetensors-0.7.0-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 141))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/sentencepiece-0.2.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 142))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/sentry_sdk-2.58.0-py2.py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 143))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/setproctitle-1.3.7-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 144))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/setuptools-80.10.2-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 145))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/shellingham-1.5.4-py2.py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 146))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/six-1.17.0-py2.py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 147))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/sniffio-1.3.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 148))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/sse_starlette-3.4.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 149))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/starlette-0.52.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 150))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/supervisor-4.3.0-py2.py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 151))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/sympy-1.14.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 152))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/tabulate-0.10.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 153))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/tiktoken-0.12.0-cp312-cp312-manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 154))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/tokenizers-0.22.2-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 155))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/torch-2.10.0-3-cp312-cp312-manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 156))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/torch_c_dlpack_ext-0.1.5-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 157))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/torchaudio-2.10.0-cp312-cp312-manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 158))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/torchvision-0.25.0-cp312-cp312-manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 159))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/tqdm-4.67.3-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 160))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/transformers-4.57.6-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 161))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/triton-3.6.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 162))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/typer-0.25.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 163))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/typing_extensions-4.15.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 164))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/typing_inspection-0.4.2-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 165))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/urllib3-2.6.3-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 166))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/uvicorn-0.46.0-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 167))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/uvloop-0.22.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 168))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/vllm-0.19.0-cp38-abi3-manylinux_2_31_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 169))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/watchfiles-1.1.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 170))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/websockets-16.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 171))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/xgrammar-0.1.34-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 172))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/yarl-1.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 173))
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2/zipp-3.23.1-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/requirements.lock (line 174))
+Installing collected packages: supervisor, py_cpuinfo, nvidia_ml_py, nvidia_cusparselt_cu12, mpmath, zipp, websockets, uvloop, urllib3, typing_extensions, triton, tqdm, tabulate, sympy, sniffio, six, shellingham, setuptools, setproctitle, sentencepiece, safetensors, rpds_py, rignore, regex, pyzmq, pyyaml, python_multipart, python_json_logger, python_dotenv, pyjwt, pygments, pycparser, pycountry, pybase64, psutil, protobuf, propcache, prometheus_client, pillow, partial_json_parser, packaging, outlines_core, nvidia_nvtx_cu12, nvidia_nvshmem_cu12, nvidia_nvjitlink_cu12, nvidia_nccl_cu12, nvidia_curand_cu12, nvidia_cufile_cu12, nvidia_cudnn_frontend, nvidia_cuda_runtime_cu12, nvidia_cuda_nvrtc_cu12, nvidia_cuda_cupti_cu12, nvidia_cublas_cu12, numpy, ninja, networkx, multidict, msgspec, mdurl, markupsafe, loguru, llvmlite, llguidance, lark, jmespath, jiter, interegular, ijson, idna, httpx_sse, httptools, hf_xet, h11, fsspec, frozenlist, flashinfer_cubin, filelock, fastar, einops, docstring_parser, dnspython, distro, diskcache, dill, cuda_pathfinder, cloudpickle, click, charset_normalizer, certifi, cbor2, cachetools, blake3, attrs, astor, annotated_types, annotated_doc, aiohappyeyeballs, yarl, uvicorn, typing_inspection, sentry_sdk, requests, referencing, pydantic_core, opentelemetry_proto, opencv_python_headless, nvidia_cusparse_cu12, nvidia_cufft_cu12, nvidia_cudnn_cu12, numba, markdown_it_py, jinja2, importlib_metadata, httpcore, grpcio, googleapis_common_protos, email_validator, depyf, cuda_bindings, cffi, apache_tvm_ffi, anyio, aiosignal, watchfiles, tiktoken, starlette, rich, pydantic, opentelemetry_exporter_otlp_proto_common, opentelemetry_api, nvidia_cusolver_cu12, jsonschema_specifications, huggingface_hub, httpx, gguf, cuda_python, cryptography, aiohttp, typer, torch, tokenizers, sse_starlette, rich_toolkit, pydantic_settings, pydantic_extra_types, prometheus_fastapi_instrumentator, opentelemetry_semantic_conventions, openai_harmony, openai, nvidia_cutlass_dsl_libs_base, lm_format_enforcer, jsonschema, fastapi, anthropic, transformers, torchvision, torchaudio, torch_c_dlpack_ext, opentelemetry_sdk, nvidia_cutlass_dsl, model_hosting_container_standards, mcp, fastapi_cloud_cli, fastapi_cli, xgrammar, quack_kernels, opentelemetry_semantic_conventions_ai, opentelemetry_exporter_otlp_proto_http, opentelemetry_exporter_otlp_proto_grpc, mistral_common, flashinfer_python, compressed_tensors, opentelemetry_exporter_otlp, vllm
+Successfully installed aiohappyeyeballs-2.6.1 aiohttp-3.13.5 aiosignal-1.4.0 annotated_doc-0.0.4 annotated_types-0.7.0 anthropic-0.97.0 anyio-4.13.0 apache_tvm_ffi-0.1.10 astor-0.8.1 attrs-26.1.0 blake3-1.0.8 cachetools-7.0.6 cbor2-6.0.1 certifi-2026.4.22 cffi-2.0.0 charset_normalizer-3.4.7 click-8.3.3 cloudpickle-3.1.2 compressed_tensors-0.14.0.1 cryptography-47.0.0 cuda_bindings-12.9.4 cuda_pathfinder-1.5.4 cuda_python-12.9.4 depyf-0.20.0 dill-0.4.1 diskcache-5.6.3 distro-1.9.0 dnspython-2.8.0 docstring_parser-0.18.0 einops-0.8.2 email_validator-2.3.0 fastapi-0.136.1 fastapi_cli-0.0.24 fastapi_cloud_cli-0.17.1 fastar-0.11.0 filelock-3.29.0 flashinfer_cubin-0.6.6 flashinfer_python-0.6.6 frozenlist-1.8.0 fsspec-2026.4.0 gguf-0.18.0 googleapis_common_protos-1.74.0 grpcio-1.80.0 h11-0.16.0 hf_xet-1.4.3 httpcore-1.0.9 httptools-0.7.1 httpx-0.28.1 httpx_sse-0.4.3 huggingface_hub-0.36.2 idna-3.13 ijson-3.5.0 importlib_metadata-8.7.1 interegular-0.3.3 jinja2-3.1.6 jiter-0.14.0 jmespath-1.1.0 jsonschema-4.26.0 jsonschema_specifications-2025.9.1 lark-1.2.2 llguidance-1.3.0 llvmlite-0.44.0 lm_format_enforcer-0.11.3 loguru-0.7.3 markdown_it_py-4.0.0 markupsafe-3.0.3 mcp-1.27.0 mdurl-0.1.2 mistral_common-1.11.1 model_hosting_container_standards-0.1.14 mpmath-1.3.0 msgspec-0.21.1 multidict-6.7.1 networkx-3.6.1 ninja-1.13.0 numba-0.61.2 numpy-2.2.6 nvidia_cublas_cu12-12.8.4.1 nvidia_cuda_cupti_cu12-12.8.90 nvidia_cuda_nvrtc_cu12-12.8.93 nvidia_cuda_runtime_cu12-12.8.90 nvidia_cudnn_cu12-9.10.2.21 nvidia_cudnn_frontend-1.18.0 nvidia_cufft_cu12-11.3.3.83 nvidia_cufile_cu12-1.13.1.3 nvidia_curand_cu12-10.3.9.90 nvidia_cusolver_cu12-11.7.3.90 nvidia_cusparse_cu12-12.5.8.93 nvidia_cusparselt_cu12-0.7.1 nvidia_cutlass_dsl-4.5.0.dev0 nvidia_cutlass_dsl_libs_base-4.5.0.dev0 nvidia_ml_py-13.595.45 nvidia_nccl_cu12-2.27.5 nvidia_nvjitlink_cu12-12.8.93 nvidia_nvshmem_cu12-3.4.5 nvidia_nvtx_cu12-12.8.90 openai-2.33.0 openai_harmony-0.0.8 opencv_python_headless-4.13.0.92 opentelemetry_api-1.41.1 opentelemetry_exporter_otlp-1.41.1 opentelemetry_exporter_otlp_proto_common-1.41.1 opentelemetry_exporter_otlp_proto_grpc-1.41.1 opentelemetry_exporter_otlp_proto_http-1.41.1 opentelemetry_proto-1.41.1 opentelemetry_sdk-1.41.1 opentelemetry_semantic_conventions-0.62b1 opentelemetry_semantic_conventions_ai-0.5.1 outlines_core-0.2.11 packaging-26.2 partial_json_parser-0.2.1.1.post7 pillow-12.2.0 prometheus_client-0.25.0 prometheus_fastapi_instrumentator-7.1.0 propcache-0.4.1 protobuf-6.33.6 psutil-7.2.2 py_cpuinfo-9.0.0 pybase64-1.4.3 pycountry-26.2.16 pycparser-3.0 pydantic-2.13.3 pydantic_core-2.46.3 pydantic_extra_types-2.11.1 pydantic_settings-2.14.0 pygments-2.20.0 pyjwt-2.12.1 python_dotenv-1.2.2 python_json_logger-4.1.0 python_multipart-0.0.27 pyyaml-6.0.3 pyzmq-27.1.0 quack_kernels-0.4.1 referencing-0.37.0 regex-2026.4.4 requests-2.33.1 rich-15.0.0 rich_toolkit-0.19.7 rignore-0.7.6 rpds_py-0.30.0 safetensors-0.7.0 sentencepiece-0.2.1 sentry_sdk-2.58.0 setproctitle-1.3.7 setuptools-80.10.2 shellingham-1.5.4 six-1.17.0 sniffio-1.3.1 sse_starlette-3.4.1 starlette-0.52.1 supervisor-4.3.0 sympy-1.14.0 tabulate-0.10.0 tiktoken-0.12.0 tokenizers-0.22.2 torch-2.10.0 torch_c_dlpack_ext-0.1.5 torchaudio-2.10.0 torchvision-0.25.0 tqdm-4.67.3 transformers-4.57.6 triton-3.6.0 typer-0.25.1 typing_extensions-4.15.0 typing_inspection-0.4.2 urllib3-2.6.3 uvicorn-0.46.0 uvloop-0.22.1 vllm-0.19.0 watchfiles-1.1.1 websockets-16.0 xgrammar-0.1.34 yarl-1.23.0 zipp-3.23.1
+[exit 0 in 110.7 s]
+
+$ /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/venv/bin/python -I -m pip check
+No broken requirements found.
+[exit 0 in 1.4 s]
+
+$ /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/venv/bin/python -I -m pip freeze --all
+aiohappyeyeballs==2.6.1
+aiohttp==3.13.5
+aiosignal==1.4.0
+annotated-doc==0.0.4
+annotated-types==0.7.0
+anthropic==0.97.0
+anyio==4.13.0
+apache-tvm-ffi==0.1.10
+astor==0.8.1
+attrs==26.1.0
+blake3==1.0.8
+cachetools==7.0.6
+cbor2==6.0.1
+certifi==2026.4.22
+cffi==2.0.0
+charset-normalizer==3.4.7
+click==8.3.3
+cloudpickle==3.1.2
+compressed-tensors==0.14.0.1
+cryptography==47.0.0
+cuda-bindings==12.9.4
+cuda-pathfinder==1.5.4
+cuda-python==12.9.4
+depyf==0.20.0
+dill==0.4.1
+diskcache==5.6.3
+distro==1.9.0
+dnspython==2.8.0
+docstring_parser==0.18.0
+einops==0.8.2
+email-validator==2.3.0
+fastapi==0.136.1
+fastapi-cli==0.0.24
+fastapi-cloud-cli==0.17.1
+fastar==0.11.0
+filelock==3.29.0
+flashinfer-cubin==0.6.6
+flashinfer-python==0.6.6
+frozenlist==1.8.0
+fsspec==2026.4.0
+gguf==0.18.0
+googleapis-common-protos==1.74.0
+grpcio==1.80.0
+h11==0.16.0
+hf-xet==1.4.3
+httpcore==1.0.9
+httptools==0.7.1
+httpx==0.28.1
+httpx-sse==0.4.3
+huggingface_hub==0.36.2
+idna==3.13
+ijson==3.5.0
+importlib_metadata==8.7.1
+interegular==0.3.3
+Jinja2==3.1.6
+jiter==0.14.0
+jmespath==1.1.0
+jsonschema==4.26.0
+jsonschema-specifications==2025.9.1
+lark==1.2.2
+llguidance==1.3.0
+llvmlite==0.44.0
+lm-format-enforcer==0.11.3
+loguru==0.7.3
+markdown-it-py==4.0.0
+MarkupSafe==3.0.3
+mcp==1.27.0
+mdurl==0.1.2
+mistral_common==1.11.1
+model-hosting-container-standards==0.1.14
+mpmath==1.3.0
+msgspec==0.21.1
+multidict==6.7.1
+networkx==3.6.1
+ninja==1.13.0
+numba==0.61.2
+numpy==2.2.6
+nvidia-cublas-cu12==12.8.4.1
+nvidia-cuda-cupti-cu12==12.8.90
+nvidia-cuda-nvrtc-cu12==12.8.93
+nvidia-cuda-runtime-cu12==12.8.90
+nvidia-cudnn-cu12==9.10.2.21
+nvidia-cudnn-frontend==1.18.0
+nvidia-cufft-cu12==11.3.3.83
+nvidia-cufile-cu12==1.13.1.3
+nvidia-curand-cu12==10.3.9.90
+nvidia-cusolver-cu12==11.7.3.90
+nvidia-cusparse-cu12==12.5.8.93
+nvidia-cusparselt-cu12==0.7.1
+nvidia-cutlass-dsl==4.5.0.dev0
+nvidia-cutlass-dsl-libs-base==4.5.0.dev0
+nvidia-ml-py==13.595.45
+nvidia-nccl-cu12==2.27.5
+nvidia-nvjitlink-cu12==12.8.93
+nvidia-nvshmem-cu12==3.4.5
+nvidia-nvtx-cu12==12.8.90
+openai==2.33.0
+openai-harmony==0.0.8
+opencv-python-headless==4.13.0.92
+opentelemetry-api==1.41.1
+opentelemetry-exporter-otlp==1.41.1
+opentelemetry-exporter-otlp-proto-common==1.41.1
+opentelemetry-exporter-otlp-proto-grpc==1.41.1
+opentelemetry-exporter-otlp-proto-http==1.41.1
+opentelemetry-proto==1.41.1
+opentelemetry-sdk==1.41.1
+opentelemetry-semantic-conventions==0.62b1
+opentelemetry-semantic-conventions-ai==0.5.1
+outlines_core==0.2.11
+packaging==26.2
+partial-json-parser==0.2.1.1.post7
+pillow==12.2.0
+pip==24.0
+prometheus-fastapi-instrumentator==7.1.0
+prometheus_client==0.25.0
+propcache==0.4.1
+protobuf==6.33.6
+psutil==7.2.2
+py-cpuinfo==9.0.0
+pybase64==1.4.3
+pycountry==26.2.16
+pycparser==3.0
+pydantic==2.13.3
+pydantic-extra-types==2.11.1
+pydantic-settings==2.14.0
+pydantic_core==2.46.3
+Pygments==2.20.0
+PyJWT==2.12.1
+python-dotenv==1.2.2
+python-json-logger==4.1.0
+python-multipart==0.0.27
+PyYAML==6.0.3
+pyzmq==27.1.0
+quack-kernels==0.4.1
+referencing==0.37.0
+regex==2026.4.4
+requests==2.33.1
+rich==15.0.0
+rich-toolkit==0.19.7
+rignore==0.7.6
+rpds-py==0.30.0
+safetensors==0.7.0
+sentencepiece==0.2.1
+sentry-sdk==2.58.0
+setproctitle==1.3.7
+setuptools==80.10.2
+shellingham==1.5.4
+six==1.17.0
+sniffio==1.3.1
+sse-starlette==3.4.1
+starlette==0.52.1
+supervisor==4.3.0
+sympy==1.14.0
+tabulate==0.10.0
+tiktoken==0.12.0
+tokenizers==0.22.2
+torch==2.10.0
+torch_c_dlpack_ext==0.1.5
+torchaudio==2.10.0
+torchvision==0.25.0
+tqdm==4.67.3
+transformers==4.57.6
+triton==3.6.0
+typer==0.25.1
+typing-inspection==0.4.2
+typing_extensions==4.15.0
+urllib3==2.6.3
+uvicorn==0.46.0
+uvloop==0.22.1
+vllm==0.19.0
+watchfiles==1.1.1
+websockets==16.0
+xgrammar==0.1.34
+yarl==1.23.0
+zipp==3.23.1
+[exit 0 in 0.5 s]
+
+$ /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/venv/bin/python -I -c 
+import importlib, json, sys
+out = {'python': sys.version.split()[0], 'prefix': sys.prefix, 'modules': {}}
+for name in ('numpy', 'torch', 'transformers', 'vllm'):
+    try:
+        m = importlib.import_module(name)
+        out['modules'][name] = {'version': getattr(m, '__version__', None), 'file': getattr(m, '__file__', None)}
+    except Exception as e:
+        out['modules'][name] = {'error': f'{type(e).__name__}: {e}'}
+try:
+    import torch
+    out['torch_cuda_build'] = torch.version.cuda
+    out['torch_cuda_available'] = bool(torch.cuda.is_available())
+except Exception as e:
+    out['torch_cuda_build'] = f'error: {e}'
+print('IMPORT_CHECK ' + json.dumps(out, sort_keys=True))
+
+IMPORT_CHECK {"modules": {"numpy": {"file": "/home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/venv/lib/python3.12/site-packages/numpy/__init__.py", "version": "2.2.6"}, "torch": {"file": "/home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/venv/lib/python3.12/site-packages/torch/__init__.py", "version": "2.10.0+cu128"}, "transformers": {"file": "/home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/venv/lib/python3.12/site-packages/transformers/__init__.py", "version": "4.57.6"}, "vllm": {"file": "/home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/venv/lib/python3.12/site-packages/vllm/__init__.py", "version": "0.19.0"}}, "prefix": "/home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/venv", "python": "3.12.3", "torch_cuda_available": false, "torch_cuda_build": "12.8"}
+[exit 0 in 6.4 s]
+
+$ /usr/bin/python3.12 -m venv /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/fault-corrupted/venv
+[exit 0 in 3.0 s]
+
+$ /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/fault-corrupted/venv/bin/python -I -m pip install --no-index --no-cache-dir --require-hashes --only-binary=:all: --find-links /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/fault-corrupted/wheels -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/fault-corrupted/lock.txt
+Looking in links: /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/fault-corrupted/wheels
+Processing /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/fault-corrupted/wheels/annotated_doc-0.0.4-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/fault-corrupted/lock.txt (line 1))
+ERROR: THESE PACKAGES DO NOT MATCH THE HASHES FROM THE REQUIREMENTS FILE. If you have updated the package versions, please update the hashes. Otherwise, examine the package contents carefully; someone may have tampered with them.
+    annotated_doc==0.0.4 from file:///home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/fault-corrupted/wheels/annotated_doc-0.0.4-py3-none-any.whl (from -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/fault-corrupted/lock.txt (line 1)):
+        Expected sha256 571ac1dc6991c450b25a9c2d84a3705e2ae7a53467b5d111c24fa8baabbed320
+             Got        fc264cd9c4f501ef259f2c14db3dd9d6b1f0f82cc677a5fd31fd3c202f3d4bc3
+
+[exit 1 in 0.3 s]
+
+$ /usr/bin/python3.12 -m venv /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/fault-missing/venv
+[exit 0 in 2.7 s]
+
+$ /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/fault-missing/venv/bin/python -I -m pip install --no-index --no-cache-dir --require-hashes --only-binary=:all: --find-links /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/fault-missing/wheels -r /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/fault-missing/lock.txt
+Looking in links: /home/jingjing/.local/share/agi/wheelhouse-r2-install-checks/install-check-hacm1z70/fault-missing/wheels
+ERROR: Could not find a version that satisfies the requirement annotated_doc==0.0.4 (from versions: none)
+ERROR: No matching distribution found for annotated_doc==0.0.4
+[exit 1 in 0.3 s]
