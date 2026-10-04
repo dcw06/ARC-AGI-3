@@ -33,7 +33,7 @@ REQUIRED_SOURCE |= {'research/evidence_memory_v1/' + name for name in  # the Sta
                      'trajectories.py', 'writers.py', 'tokens.py')}
 REQUIRED_SOURCE |= {'research/transition_evidence_v2/' + name for name in ('transition.py', 'vocabulary.py')}
 REQUIRED_SOURCE |= {'research/transition_evidence_v1/' + name for name in ('transition.py', 'vocabulary.py')}
-REQUIRED_SOURCE |= {'research/ws3_questionnaire_v1/evidence.py'}  # WS3's committed-state recovery, re-exported
+REQUIRED_SOURCE |= {'research/ws3_questionnaire_v1/evidence.py'}  # WS3's recovery, wrapped by run/evidence.py
 REQUIRED_SOURCE |= {'research/evidence_comprehension_v2/' + name for name in  # v2's modules, reused unchanged
                     ('score.py', 'evidence.py', 'schedule.py', 'fake_server.py')}
 REQUIRED_SOURCE |= {'research/evidence_comprehension_v1/' + name for name in  # v1's modules, reused unchanged
