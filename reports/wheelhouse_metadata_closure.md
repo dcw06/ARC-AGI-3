@@ -15,6 +15,10 @@ Generated offline by `scripts/check_wheelhouse_metadata.py analyze` from the ret
 | Non-wheel bundle files missing (new bundle identity required) | 5: `README.md`, `dataset-metadata.json`, `pip-resolve-report.json`, `requirements.in`, `requirements.lock` |
 | Requests made / wheel URLs requested | 348 / 0 |
 
+## Evidence validation (before analysis)
+
+Retained acquisition bound to the verified inventory: **yes**. Entries checked: 174; recomputed as verified: 174; validation problems: 0. Stored located/verified flags are not trusted: exact upstream hashes, artifact URLs, metadata hashes, metadata URLs and metadata identity are recomputed. Offline validation checks the retained evidence for internal consistency and against the verified inventory. It cannot independently prove what network activity took place; request counters are checked only for consistency with the retained entries.
+
 ## Established versus not established
 
 | Level | Status |
@@ -26,7 +30,7 @@ Generated offline by `scripts/check_wheelhouse_metadata.py analyze` from the ret
 
 ## Target (declared, not the host)
 
-Python 3.12, Linux x86-64, glibc ≥ 2.34, 933 compatible tags. Install pins: `vllm==0.19.0`, `torch==2.10.0`, `transformers==4.57.6`, `numpy==2.2.6`. Marker values: `implementation_name=cpython`, `implementation_version=3.12.13`, `os_name=posix`, `platform_machine=x86_64`, `platform_python_implementation=CPython`, `platform_release=6.12.90+`, `platform_system=Linux`, `platform_version=#1 SMP Sat May 30 15:40:53 UTC 2026`, `python_full_version=3.12.13`, `python_version=3.12`, `sys_platform=linux`.
+Python 3.12 (ABI `cp312`, set explicitly), Linux x86-64, glibc ≥ 2.34, 933 compatible tags. Install pins: `vllm==0.19.0`, `torch==2.10.0`, `transformers==4.57.6`, `numpy==2.2.6`. Marker values: `implementation_name=cpython`, `implementation_version=3.12.13`, `os_name=posix`, `platform_machine=x86_64`, `platform_python_implementation=CPython`, `platform_release=6.12.90+`, `platform_system=Linux`, `platform_version=#1 SMP Sat May 30 15:40:53 UTC 2026`, `python_full_version=3.12.13`, `python_version=3.12`, `sys_platform=linux`.
 
 ## Unresolved and diagnostics
 

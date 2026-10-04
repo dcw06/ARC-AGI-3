@@ -16,6 +16,13 @@
   "wheel_urls_requested": []
  },
  "conflicts": [],
+ "evidence_validation": {
+  "bound_to_inventory": true,
+  "checked_entries": 174,
+  "limitation": "Offline validation checks the retained evidence for internal consistency and against the verified inventory. It cannot independently prove what network activity took place; request counters are checked only for consistency with the retained entries.",
+  "problems": 0,
+  "verified_entries": 174
+ },
  "extra_warnings": [],
  "inventory": {
   "archive": "evidence/phase4-torch-version-repair.zip",
@@ -1137,6 +1144,7 @@
   "verdict": "metadata_closure_complete"
  },
  "target": {
+  "abi": "cp312",
   "compatible_tag_count": 933,
   "environment": {
    "implementation_name": "cpython",

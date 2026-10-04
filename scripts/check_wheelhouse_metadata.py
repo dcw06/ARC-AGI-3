@@ -69,6 +69,9 @@ TARGET_ENVIRONMENT = {
 # is not retained; this lower bound is what the tag set is generated from.
 TARGET_GLIBC = (2, 34)
 TARGET_PYTHON = (3, 12)
+# The declared interpreter ABI: standard (non-debug, GIL) CPython 3.12. Passed explicitly so that host build
+# settings (debug, free-threaded) can never change the target tag set.
+TARGET_ABI = 'cp312'
 # The current install path's pins (certification/phase4_v6/target_install_probe_r5.py MODEL_PINS; a test checks this).
 ROOT_PINS = ('vllm==0.19.0', 'torch==2.10.0', 'transformers==4.57.6', 'numpy==2.2.6')
 
@@ -78,7 +81,9 @@ ALLOWED_HOSTS = {INDEX_HOST, FILES_HOST}
 SIMPLE_JSON = 'application/vnd.pypi.simple.v1+json'
 INDEX_CAP = 64 * 1024 ** 2        # bytes; the largest project indexes (e.g. torch) are tens of MB
 METADATA_CAP = 4 * 1024 ** 2      # bytes; core metadata is normally tens of KB
-CONNECT_READ_TIMEOUT = 30          # seconds per request
+TOTAL_DEADLINE = 120.0             # seconds for one logical fetch: every redirect, retry, backoff and read included
+OPERATION_TIMEOUT = 30.0           # seconds for any single connect or read, further capped by the time remaining
+READ_CHUNK = 64 * 1024             # bytes per bounded read
 ATTEMPTS_PER_REQUEST = 3
 MAX_REDIRECTS = 2
 
@@ -91,6 +96,10 @@ class WheelRequestRefused(FetchError):
     pass
 
 
+class DeadlineExceeded(FetchError):
+    pass
+
+
 def is_wheel_url(url):
     path = urllib.parse.urlsplit(url).path.lower()
     return path.endswith('.whl') or '.whl/' in path
@@ -100,8 +109,7 @@ def check_url(url):
     parts = urllib.parse.urlsplit(url)
     if is_wheel_url(url):
         raise WheelRequestRefused(f'refused: the URL names a wheel ({url})')
-    if parts.scheme != 'https' or parts.hostname not in ALLOWED_HOSTS or parts.port not in (None, 443) \
-            or parts.username or parts.password:
+    if parts.scheme != 'https' or parts.hostname not in ALLOWED_HOSTS or parts.port not in (None, 443)             or parts.username or parts.password:
         raise FetchError(f'refused: unexpected destination {url}')
 
 
@@ -110,19 +118,42 @@ class _NoRedirect(urllib.request.HTTPRedirectHandler):
         return None  # surface 3xx to the caller, which validates the destination itself
 
 
-class Client:
-    """Bounded HTTPS GETs to the allow-listed PyPI hosts only."""
+def _set_read_timeout(response, seconds):
+    """Bound the next socket operation of a live urllib response (no-op for test doubles)."""
+    sock = getattr(getattr(getattr(response, 'fp', None), 'raw', None), '_sock', None)
+    if sock is not None:
+        sock.settimeout(max(seconds, 0.001))
 
-    def __init__(self, budget, opener=None, sleep=time.sleep):
+
+class Client:
+    """Bounded HTTPS GETs to the allow-listed PyPI hosts only.
+
+    One logical fetch (`get`) has a single absolute monotonic deadline, started before the first attempt and shared
+    by redirects, retries, backoff and every body read. Before each blocking operation the remaining time is computed,
+    the operation is refused if none is left, and it is bounded by min(OPERATION_TIMEOUT, remaining); the deadline is
+    rechecked after it returns. Bodies are read in chunks with read1(), which returns after at most one socket receive,
+    so a trickling response cannot hold a read open past the deadline.
+    """
+
+    def __init__(self, budget, opener=None, sleep=time.sleep, clock=time.monotonic,
+                 total_deadline=TOTAL_DEADLINE, operation_timeout=OPERATION_TIMEOUT):
         self.budget = budget
         self.requests = []          # every URL actually requested, for the record and for tests
         self._opener = opener or urllib.request.build_opener(_NoRedirect)
-        self._sleep = sleep
+        self._sleep, self._clock = sleep, clock
+        self.total_deadline, self.operation_timeout = total_deadline, operation_timeout
+
+    def _remaining(self, deadline, what):
+        left = deadline - self._clock()
+        if left <= 0:
+            raise DeadlineExceeded(f'total deadline of {self.total_deadline:g} s exhausted before {what}')
+        return left
 
     def get(self, url, cap, accept=None):
+        deadline = self._clock() + self.total_deadline
         for _ in range(MAX_REDIRECTS + 1):
             check_url(url)
-            status, headers, body = self._attempts(url, cap, accept)
+            status, headers, body = self._attempts(url, cap, accept, deadline)
             if status in (301, 302, 303, 307, 308):
                 location = headers.get('Location')
                 if not location:
@@ -134,9 +165,32 @@ class Client:
             return body, url
         raise FetchError(f'too many redirects from {url}')
 
-    def _attempts(self, url, cap, accept):
+    def _read_body(self, response, cap, url, deadline):
+        declared = response.headers.get('Content-Length')
+        if declared is not None and declared.isdigit() and int(declared) > cap:
+            raise FetchError(f'declared size {declared} exceeds the {cap}-byte cap for {url}')
+        reader = getattr(response, 'read1', None) or response.read
+        chunks, size = [], 0
+        while True:
+            left = self._remaining(deadline, f'reading {url}')
+            _set_read_timeout(response, min(self.operation_timeout, left))
+            chunk = reader(min(READ_CHUNK, cap + 1 - size))
+            self._remaining(deadline, f'completing a read of {url}')
+            if not chunk:
+                break
+            chunks.append(chunk)
+            size += len(chunk)
+            if size > cap:
+                raise FetchError(f'response exceeds the {cap}-byte cap for {url}')
+        body = b''.join(chunks)
+        if declared is not None and declared.isdigit() and len(body) != int(declared):
+            raise FetchError(f'truncated response for {url} ({len(body)} of {declared} bytes)')
+        return body
+
+    def _attempts(self, url, cap, accept, deadline):
         last = None
         for attempt in range(ATTEMPTS_PER_REQUEST):
+            left = self._remaining(deadline, f'requesting {url}')
             if self.budget <= 0:
                 raise FetchError('request budget exhausted')
             self.budget -= 1
@@ -145,23 +199,24 @@ class Client:
             if accept:
                 request.add_header('Accept', accept)
             try:
-                with self._opener.open(request, timeout=CONNECT_READ_TIMEOUT) as response:
-                    declared = response.headers.get('Content-Length')
-                    if declared is not None and declared.isdigit() and int(declared) > cap:
-                        raise FetchError(f'declared size {declared} exceeds the {cap}-byte cap for {url}')
-                    body = response.read(cap + 1)
-                    if len(body) > cap:
-                        raise FetchError(f'response exceeds the {cap}-byte cap for {url}')
-                    if declared is not None and declared.isdigit() and len(body) != int(declared):
-                        raise FetchError(f'truncated response for {url} ({len(body)} of {declared} bytes)')
-                    return response.status, response.headers, body
+                with self._opener.open(request, timeout=min(self.operation_timeout, left)) as response:
+                    self._remaining(deadline, f'reading the response headers of {url}')
+                    return response.status, response.headers, self._read_body(response, cap, url, deadline)
+            except DeadlineExceeded:
+                raise
             except urllib.error.HTTPError as error:
+                self._remaining(deadline, f'handling HTTP {error.code} from {url}')
                 if error.code in (301, 302, 303, 307, 308, 404, 410):
                     return error.code, error.headers, b''
                 last = FetchError(f'HTTP {error.code} for {url}')
             except (urllib.error.URLError, socket.timeout, TimeoutError, ConnectionError) as error:
                 last = FetchError(f'{type(error).__name__} for {url}: {error}')
-            self._sleep(2 ** attempt)
+            if attempt + 1 < ATTEMPTS_PER_REQUEST:
+                backoff = 2 ** attempt
+                left = self._remaining(deadline, f'backing off before retrying {url}')
+                if backoff >= left:
+                    raise DeadlineExceeded(f'backoff of {backoff} s would exhaust the total deadline for {url}')
+                self._sleep(backoff)
         raise last
 
 
@@ -273,7 +328,8 @@ def acquire(inv, client):
     return {'acquired_at': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),
             'index': f'https://{INDEX_HOST}/simple/ (PEP 691 JSON)',
             'bounds': {'index_cap_bytes': INDEX_CAP, 'metadata_cap_bytes': METADATA_CAP,
-                       'timeout_seconds': CONNECT_READ_TIMEOUT, 'attempts_per_request': ATTEMPTS_PER_REQUEST,
+                       'total_deadline_seconds': TOTAL_DEADLINE, 'operation_timeout_seconds': OPERATION_TIMEOUT,
+                       'attempts_per_request': ATTEMPTS_PER_REQUEST,
                        'max_redirects': MAX_REDIRECTS, 'allowed_hosts': sorted(ALLOWED_HOSTS)},
             'requests_made': len(client.requests),
             'wheel_urls_requested': [u for u in client.requests if is_wheel_url(u)],
@@ -293,13 +349,14 @@ def read_acquisition(path=ACQUISITION):
 
 
 # --- stage 3: offline analysis --------------------------------------------------------------------------------
-def target_tags(python=TARGET_PYTHON, glibc=TARGET_GLIBC):
+def target_tags(python=TARGET_PYTHON, glibc=TARGET_GLIBC, abi=TARGET_ABI):
     major, minor = glibc
     platforms = [f'manylinux_{major}_{m}_x86_64' for m in range(minor, 4, -1)]
     legacy = {(2, 17): 'manylinux2014_x86_64', (2, 12): 'manylinux2010_x86_64', (2, 5): 'manylinux1_x86_64'}
     platforms += [alias for floor, alias in legacy.items() if (major, minor) >= floor]
     platforms.append('linux_x86_64')
-    tags = list(cpython_tags(python_version=python, platforms=platforms))
+    # cpython_tags adds the abi3 tags (this and older CPython versions) and the 'none' ABI itself.
+    tags = list(cpython_tags(python_version=python, abis=[abi], platforms=platforms))
     tags += list(compatible_tags(python_version=python, interpreter=f'cp{python[0]}{python[1]}', platforms=platforms))
     return set(tags)
 
@@ -335,6 +392,131 @@ def parse_metadata(text):
             'license_classifiers': classifiers}
 
 
+ACQUISITION_STATUSES = {'verified', 'missing', 'conflicting', 'unknown'}
+VALIDATION_LIMITATION = ('Offline validation checks the retained evidence for internal consistency and against the '
+                         'verified inventory. It cannot independently prove what network activity took place; '
+                         'request counters are checked only for consistency with the retained entries.')
+
+
+def _artifact_url_ok(url, filename):
+    """An https URL on the files host whose path names exactly this artifact."""
+    if not isinstance(url, str):
+        return False
+    parts = urllib.parse.urlsplit(url)
+    return (parts.scheme == 'https' and parts.hostname == FILES_HOST and parts.port in (None, 443)
+            and not parts.username and not parts.password and not parts.query
+            and urllib.parse.unquote(parts.path).endswith('/' + filename))
+
+
+def _source_url_ok(url):
+    try:
+        check_url(url)
+        return True
+    except FetchError:
+        return False
+
+
+def validate_evidence(inv, acq):
+    """Validate the retained acquisition against the verified inventory before any analysis.
+
+    Stored booleans and statuses are not trusted: location and metadata verification are recomputed from the
+    retained hashes, URLs and metadata text. Returns global problems and an effective status per inventory wheel.
+    """
+    problems = []
+    expected = {w['filename']: w for w in inv['wheels']}
+    bound = acq.get('inventory_archive_sha256') == inv['archive_sha256']
+    if not bound:
+        problems.append({'kind': 'archive_binding', 'expected': inv['archive_sha256'],
+                         'recorded': acq.get('inventory_archive_sha256')})
+    rows = acq.get('wheels')
+    if not isinstance(rows, list) or not all(isinstance(r, dict) for r in rows):
+        problems.append({'kind': 'malformed_acquisition', 'reason': 'wheels is not a list of records'})
+        rows = []
+    seen = {}
+    for row in rows:
+        seen.setdefault(row.get('filename'), []).append(row)
+    for name, group in sorted(seen.items(), key=lambda kv: str(kv[0])):
+        if len(group) > 1:
+            problems.append({'kind': 'duplicate_acquisition_entry', 'filename': name, 'count': len(group)})
+        if name not in expected:
+            problems.append({'kind': 'unexpected_acquisition_entry', 'filename': name})
+    entries = {}
+    for filename, wheel in expected.items():
+        group = seen.get(filename, [])
+        if not group:
+            problems.append({'kind': 'missing_acquisition_entry', 'filename': filename})
+            entries[filename] = {'status': 'unresolved', 'reason': 'no acquisition entry', 'located': False,
+                                 'metadata': None, 'upstream_url': None, 'metadata_url': None,
+                                 'metadata_sha256': None}
+            continue
+        row = group[0]
+        reasons = []
+        if not bound:
+            reasons.append('acquisition is not bound to the verified inventory')
+        if len(group) > 1:
+            reasons.append('duplicate acquisition entries')
+        status = row.get('status')
+        if status not in ACQUISITION_STATUSES:
+            reasons.append(f'status {status!r} is not a recognised acquisition status')
+        claims_located = bool(row.get('located')) or status == 'verified'
+        located = False
+        if claims_located:
+            if row.get('upstream_sha256') != wheel['sha256']:
+                reasons.append('recorded upstream SHA-256 differs from the inventory')
+            elif not _artifact_url_ok(row.get('upstream_url'), filename):
+                reasons.append('upstream URL is not an allowed source for this exact artifact')
+            else:
+                located = not reasons
+        text = None
+        if status == 'verified' and located:
+            meta = row.get('metadata')
+            final = row.get('metadata_final_url')
+            if not isinstance(meta, str) or not meta:
+                reasons.append('verified entry without metadata text')
+            elif hashlib.sha256(meta.encode('utf-8')).hexdigest() != row.get('metadata_sha256'):
+                reasons.append('metadata text does not reproduce the recorded metadata SHA-256')
+            elif row.get('metadata_url') != row['upstream_url'] + '.metadata' or not _source_url_ok(row['metadata_url']):
+                reasons.append('metadata URL is not the artifact core-metadata URL on an allowed host')
+            elif final is not None and (not _source_url_ok(final) or urllib.parse.urlsplit(final).hostname != FILES_HOST):
+                reasons.append('recorded final metadata URL violates the source restrictions')
+            else:
+                parsed = parse_metadata(meta)
+                try:
+                    same = (canonicalize_name(parsed['name'] or '') == canonicalize_name(wheel['distribution'])
+                            and Version(parsed['version'] or '') == Version(wheel['version']))
+                except InvalidVersion:
+                    same = False
+                if same:
+                    text = meta
+                else:
+                    reasons.append('metadata name/version does not match the wheel')
+        elif status == 'verified':
+            reasons.append('verified status without a valid exact-artifact location')
+        if reasons:
+            effective = 'invalid'
+            problems.append({'kind': 'invalid_acquisition_entry', 'filename': filename, 'reasons': reasons})
+        else:
+            effective = status
+        entries[filename] = {'status': effective, 'reason': '; '.join(reasons) or row.get('reason'),
+                             'located': located and not reasons,
+                             'metadata': text if not reasons else None,
+                             'upstream_url': row.get('upstream_url') if located and not reasons else None,
+                             'metadata_url': row.get('metadata_url') if text and not reasons else None,
+                             'metadata_sha256': row.get('metadata_sha256') if text and not reasons else None}
+    requests_made, wheel_urls = acq.get('requests_made'), acq.get('wheel_urls_requested')
+    index_urls = {r.get('index_url') for r in rows if r.get('index_url')}
+    verified = sum(1 for e in entries.values() if e['status'] == 'verified')
+    if wheel_urls != []:
+        problems.append({'kind': 'accounting', 'reason': 'wheel_urls_requested is not an empty list'})
+    if not isinstance(requests_made, int) or isinstance(requests_made, bool) or requests_made < 0:
+        problems.append({'kind': 'accounting', 'reason': 'requests_made is not a non-negative integer'})
+    elif requests_made < len(index_urls) + verified:
+        problems.append({'kind': 'accounting', 'reason': f'requests_made {requests_made} is fewer than the '
+                         f'{len(index_urls)} index and {verified} metadata fetches the entries imply'})
+    return {'bound': bound, 'problems': problems, 'entries': entries, 'checked_entries': len(rows),
+            'verified_entries': verified, 'limitation': VALIDATION_LIMITATION}
+
+
 def applies(requirement, extras):
     if requirement.marker is None:
         return True
@@ -343,11 +525,12 @@ def applies(requirement, extras):
 
 def analyze(inv, acq, tags=None):
     tags = tags or target_tags()
-    by_file = {row['filename']: row for row in acq['wheels']}
-    wheels, problems = [], []
+    validation = validate_evidence(inv, acq)  # always before any analysis; stored statuses are not trusted
+    by_file = validation['entries']
+    wheels, problems = [], list(validation['problems'])
     by_name = {}
     for wheel in sorted(inv['wheels'], key=lambda w: w['filename']):  # order-independent report
-        a = by_file.get(wheel['filename'], {'status': 'unknown', 'reason': 'not in the acquisition record'})
+        a = by_file[wheel['filename']]
         row = {k: wheel[k] for k in ('filename', 'distribution', 'version', 'build', 'size', 'sha256', 'tags')}
         row.update(status=a['status'], reason=a.get('reason'), located=bool(a.get('located')),
                    upstream_url=a.get('upstream_url'),
@@ -358,7 +541,7 @@ def analyze(inv, acq, tags=None):
         row['min_glibc'] = f'{glibc[0]}.{glibc[1]}' if glibc else None
         if not row['tag_compatible']:
             problems.append({'kind': 'incompatible_tags', 'filename': wheel['filename']})
-        if a['status'] == 'verified':
+        if a['status'] == 'verified' and a['metadata']:
             meta = parse_metadata(a['metadata'])
             row['metadata'] = {k: meta[k] for k in ('requires_python', 'license', 'license_classifiers')}
             if canonicalize_name(meta['name'] or '') != canonicalize_name(wheel['distribution']) or \
@@ -437,12 +620,16 @@ def analyze(inv, acq, tags=None):
     return {
         'scope': 'metadata only: no wheel requested, downloaded, installed or executed; no GPU',
         'target': {'environment': TARGET_ENVIRONMENT, 'glibc_lower_bound': '.'.join(map(str, TARGET_GLIBC)),
-                   'python': '.'.join(map(str, TARGET_PYTHON)), 'install_pins': list(ROOT_PINS),
+                   'python': '.'.join(map(str, TARGET_PYTHON)), 'abi': TARGET_ABI, 'install_pins': list(ROOT_PINS),
                    'compatible_tag_count': len(tags)},
         'inventory': {'archive': inv['archive'], 'archive_sha256': inv['archive_sha256'],
                       'manifest_hashes': inv['manifest_hashes'], 'wheel_count': len(inv['wheels']),
                       'wheel_bytes': sum(w['size'] for w in inv['wheels']),
                       'non_wheel_files_missing': [f['filename'] for f in inv['non_wheel_files']]},
+        'evidence_validation': {'bound_to_inventory': validation['bound'],
+                                'checked_entries': validation['checked_entries'],
+                                'verified_entries': validation['verified_entries'],
+                                'problems': len(validation['problems']), 'limitation': validation['limitation']},
         'acquisition': {'acquired_at': acq.get('acquired_at'), 'requests_made': acq.get('requests_made'),
                         'wheel_urls_requested': acq.get('wheel_urls_requested'), 'bounds': acq.get('bounds')},
         'summary': {'located_exact': sum(1 for r in wheels if r['located']),
@@ -484,13 +671,21 @@ def render_markdown(report):
         f"{', '.join('`%s`' % f for f in inv['non_wheel_files_missing'])} |",
         f"| Requests made / wheel URLs requested | {report['acquisition']['requests_made']} / "
         f"{len(report['acquisition']['wheel_urls_requested'] or [])} |", '',
+        '## Evidence validation (before analysis)', '',
+        f"Retained acquisition bound to the verified inventory: **{'yes' if report['evidence_validation']['bound_to_inventory'] else 'NO'}**. "
+        f"Entries checked: {report['evidence_validation']['checked_entries']}; recomputed as verified: "
+        f"{report['evidence_validation']['verified_entries']}; validation problems: "
+        f"{report['evidence_validation']['problems']}. Stored located/verified flags are not trusted: exact upstream "
+        'hashes, artifact URLs, metadata hashes, metadata URLs and metadata identity are recomputed. '
+        + report['evidence_validation']['limitation'], '',
         '## Established versus not established', '',
         '| Level | Status |', '|---|---|',
         f"| Metadata verified | {'established for all wheels' if s['metadata_verified'] == inv['wheel_count'] else 'partial'} |",
         '| Wheel bytes verified after download | not established (no download) |',
         '| Offline installation passed | not established |', '| GPU runtime passed | not established |', '',
         '## Target (declared, not the host)', '',
-        f"Python {t['python']}, Linux x86-64, glibc ≥ {t['glibc_lower_bound']}, {t['compatible_tag_count']} compatible "
+        f"Python {t['python']} (ABI `{t['abi']}`, set explicitly), Linux x86-64, glibc ≥ {t['glibc_lower_bound']}, "
+        f"{t['compatible_tag_count']} compatible "
         f"tags. Install pins: {', '.join('`%s`' % p for p in t['install_pins'])}. Marker values: "
         + ', '.join(f'`{k}={v}`' for k, v in sorted(t['environment'].items())) + '.', '',
         '## Unresolved and diagnostics', '',
@@ -523,6 +718,64 @@ def render_markdown(report):
     return '\n'.join(lines) + '\n'
 
 
+DOWNLOAD_MANIFEST = ROOT / 'reports/wheelhouse_download_manifest.json'
+LICENSE_TABLE = ROOT / 'reports/wheelhouse_license_review.csv'
+LICENSE_OWNER = 'dcw06 (project owner; responsible for licence and redistribution review)'
+
+
+def checker_identity():
+    data = Path(__file__).read_bytes()
+    return {'path': 'scripts/check_wheelhouse_metadata.py', 'sha256': hashlib.sha256(data).hexdigest()}
+
+
+def download_manifest(inv, report):
+    """The exact artifacts a separately approved download may fetch. Refused unless the closure is complete."""
+    if report['summary']['verdict'] != 'metadata_closure_complete':
+        raise SystemExit('refusing to freeze a download manifest: the metadata closure is not complete')
+    artifacts = sorted(({'filename': w['filename'], 'url': w['upstream_url'], 'size': w['size'],
+                         'sha256': w['sha256']} for w in report['wheels']), key=lambda a: a['filename'])
+    for a in artifacts:
+        if not _artifact_url_ok(a['url'], a['filename']):
+            raise SystemExit(f"refusing: {a['filename']} has no allowed exact-artifact URL")
+    canonical = json.dumps(artifacts, sort_keys=True, separators=(',', ':')).encode('utf-8')
+    return {
+        'schema': 'wheelhouse_download_manifest_v1',
+        'purpose': 'download only: no install, no upload, no GPU. A download requires approval naming manifest_sha256.',
+        'bundle': 'wheelhouse replacement R2 (new bundle identity; same wheels as the retained original inventory)',
+        'artifact_count': len(artifacts), 'total_bytes': sum(a['size'] for a in artifacts),
+        'manifest_sha256': hashlib.sha256(canonical).hexdigest(),
+        'manifest_sha256_covers': 'canonical JSON of the artifacts list (sorted keys, no whitespace)',
+        'source_inventory': {'archive': inv['archive'], 'archive_sha256': inv['archive_sha256'],
+                             'manifest_hashes': inv['manifest_hashes']},
+        'metadata_closure': {'report': 'reports/wheelhouse_metadata_closure.json',
+                             'verdict': report['summary']['verdict']},
+        'checker': checker_identity(),
+        'artifacts': artifacts,
+    }
+
+
+def license_rows(acq_entries, report):
+    import csv  # noqa: F401  (rows are written by the caller)
+    rows = []
+    for w in report['wheels']:
+        meta = parse_metadata(acq_entries[w['filename']]['metadata']) if acq_entries[w['filename']]['metadata'] else {}
+        message = email.parser.Parser().parsestr(acq_entries[w['filename']]['metadata'] or '', headersonly=True)
+        urls = [u for u in (message.get_all('Project-URL') or [])] + ([message.get('Home-page')]
+                                                                     if message.get('Home-page') else [])
+        rows.append({
+            'artifact': w['filename'], 'distribution': w['distribution'], 'version': w['version'],
+            'build': w['build'] or '',
+            'metadata_license': meta.get('license') or '',
+            'metadata_license_classifiers': '; '.join(meta.get('license_classifiers') or []),
+            'upstream_reference': ' | '.join(urls[:3]),
+            'notices': 'to inspect in the downloaded wheel (LICENSE/NOTICE files)',
+            'redistribution_status': 'unresolved',
+            'owner': LICENSE_OWNER,
+            'note': 'metadata declarations are leads, not legal conclusions',
+        })
+    return rows
+
+
 def dumps(report):
     return json.dumps(report, indent=1, sort_keys=True, default=sorted) + '\n'
 
@@ -535,6 +788,8 @@ def main(argv=None):
     a.add_argument('--force', action='store_true')
     z = sub.add_parser('analyze')
     z.add_argument('--check', action='store_true')
+    sub.add_parser('download-manifest')
+    sub.add_parser('license-table')
     args = parser.parse_args(argv)
     inv = inventory()
     if args.command == 'inventory':
@@ -554,7 +809,22 @@ def main(argv=None):
                           'statuses': {s: sum(1 for r in record['wheels'] if r['status'] == s)
                                        for s in sorted({r['status'] for r in record['wheels']})}}))
         return 0
-    report = analyze(inv, read_acquisition())
+    acq = read_acquisition()
+    report = analyze(inv, acq)
+    if args.command == 'download-manifest':
+        manifest = download_manifest(inv, report)
+        DOWNLOAD_MANIFEST.write_text(json.dumps(manifest, indent=1, sort_keys=True) + '\n', encoding='utf-8')
+        print(json.dumps({k: manifest[k] for k in ('artifact_count', 'total_bytes', 'manifest_sha256')}))
+        return 0
+    if args.command == 'license-table':
+        import csv
+        rows = license_rows(validate_evidence(inv, acq)['entries'], report)
+        with LICENSE_TABLE.open('w', encoding='utf-8', newline='') as stream:
+            writer = csv.DictWriter(stream, fieldnames=list(rows[0]), lineterminator='\n')
+            writer.writeheader()
+            writer.writerows(rows)
+        print(f'{len(rows)} rows written to {LICENSE_TABLE.relative_to(ROOT)}')
+        return 0
     text, markdown = dumps(report), render_markdown(report)
     if args.check:
         same = REPORT_JSON.read_text(encoding='utf-8') == text and REPORT_MD.read_text(encoding='utf-8') == markdown
