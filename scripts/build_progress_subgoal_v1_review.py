@@ -70,7 +70,10 @@ def _sidecar(name):
     dependencies, whether or not they are tracked. Without this, committing a review lock added it to its own
     inventory. (Other stacks' files reached through reused modules, e.g. the phase4 authority's review lock, are
     unchanged, so shared files stay identical to what earlier launches packaged.)"""
-    from research.progress_subgoal_v1 import authority
+    import importlib.util  # by file path: the builder also runs as a plain script (repository not on sys.path)
+    spec = importlib.util.spec_from_file_location('_psv1_authority', ROOT / 'research/progress_subgoal_v1/authority.py')
+    authority = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(authority)
     records = {authority.REVIEW, authority.SOURCE, authority.COMPUTE, authority.EXECUTION, authority.RESERVATION,
                'reports/progress_subgoal_v1_launch_claim.json', 'reports/progress_subgoal_v1_launch.json',
                'reports/progress_subgoal_v1_prelaunch.json', 'reports/progress_subgoal_v1_package_review.json'}
