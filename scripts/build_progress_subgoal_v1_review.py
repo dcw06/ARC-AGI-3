@@ -65,6 +65,18 @@ def _tracked():
     return _TRACKED[0]
 
 
+def _sidecar(name):
+    """This protocol's approval, reservation, review and launch records, and its own notebook folders: never runtime
+    dependencies, whether or not they are tracked. Without this, committing a review lock added it to its own
+    inventory. (Other stacks' files reached through reused modules, e.g. the phase4 authority's review lock, are
+    unchanged, so shared files stay identical to what earlier launches packaged.)"""
+    from research.progress_subgoal_v1 import authority
+    records = {authority.REVIEW, authority.SOURCE, authority.COMPUTE, authority.EXECUTION, authority.RESERVATION,
+               'reports/progress_subgoal_v1_launch_claim.json', 'reports/progress_subgoal_v1_launch.json',
+               'reports/progress_subgoal_v1_prelaunch.json', 'reports/progress_subgoal_v1_package_review.json'}
+    return name in records or name.startswith('notebooks/progress-subgoal-v1-')
+
+
 def _module_file(name):
     parts = name.split('.')
     if parts[0] not in PACKAGES:
@@ -95,7 +107,8 @@ def _dependencies(name):
             text = node.value
             if text.split('.')[0] in PACKAGES and all(p.isidentifier() for p in text.split('.')):
                 modules.add(text)
-            elif text.endswith(('.py', '.json', '.yaml')) and '/' in text and text in _tracked():
+            elif (text.endswith(('.py', '.json', '.yaml')) and '/' in text and text in _tracked()
+                  and not _sidecar(text)):
                 files.add(text)
     for module in modules:
         parts = module.split('.')

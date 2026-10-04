@@ -116,6 +116,20 @@ LAUNCH_NEW = """        response = backend.push(path(root, PACKAGE))
                            error='provider response without a kernel url')
 """
 
+SIDECAR_HELPER = '''def _sidecar(name):
+    """This protocol's approval, reservation, review and launch records, and its own notebook folders: never runtime
+    dependencies, whether or not they are tracked. Without this, committing a review lock added it to its own
+    inventory. (Other stacks' files reached through reused modules, e.g. the phase4 authority's review lock, are
+    unchanged, so shared files stay identical to what earlier launches packaged.)"""
+    from research.progress_subgoal_v1 import authority
+    records = {authority.REVIEW, authority.SOURCE, authority.COMPUTE, authority.EXECUTION, authority.RESERVATION,
+               'reports/progress_subgoal_v1_launch_claim.json', 'reports/progress_subgoal_v1_launch.json',
+               'reports/progress_subgoal_v1_prelaunch.json', 'reports/progress_subgoal_v1_package_review.json'}
+    return name in records or name.startswith('notebooks/progress-subgoal-v1-')
+
+
+'''
+
 TARGETS = {
     'scripts/build_progress_subgoal_v1_review.py': ('scripts/build_ws3_questionnaire_v1_review.py', (
         ("REVISION = 'r2'", "REVISION = 'r1'", 1),
@@ -125,6 +139,13 @@ TARGETS = {
          "BUILD_ONLY = ('rehearse.py', 'derive.py', 'token_audit.py', 'rules.py')", 1),
         ("                                        if p.relative_to(ROOT).as_posix() in _tracked())",
          "                                        if p.relative_to(ROOT).as_posix() in _tracked() and p.name not in BUILD_ONLY)", 1),
+        # Review of bc0c1b9 [P1]: once the review lock is committed it is a tracked JSON path named in authority.py,
+        # so the scanner pulled the lock into its own inventory (277 files instead of the frozen 276). Approval and
+        # review sidecars are never runtime dependencies: exclude them explicitly.
+        ("            elif text.endswith(('.py', '.json', '.yaml')) and '/' in text and text in _tracked():",
+         "            elif (text.endswith(('.py', '.json', '.yaml')) and '/' in text and text in _tracked()\n"
+         "                  and not _sidecar(text)):", 1),
+        ("def _module_file(name):", SIDECAR_HELPER + "def _module_file(name):", 1),
         ("'compute authorization and one fresh reservation. 3,116 frozen questions in '\n"
          "                                     '5,616 scheduled calls and one canary; no game actions.'",
          "'compute authorization and one fresh reservation. 3,062 frozen questions in '\n"

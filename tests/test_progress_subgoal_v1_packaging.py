@@ -56,6 +56,24 @@ class Inventory(unittest.TestCase):
         self.assertEqual((metadata['enable_gpu'], metadata['enable_internet'], metadata['is_private']),
                          (False, False, True))
 
+    def test_committed_review_and_approval_records_never_enter_the_inventory(self):
+        """Review of bc0c1b9 [P1]: committing the lock added it to its own inventory (277 instead of 276)."""
+        from scripts import progress_subgoal_v1_package as package
+        records = {authority.REVIEW, authority.SOURCE, authority.COMPUTE, authority.EXECUTION, authority.RESERVATION,
+                   package.CLAIM, package.RECEIPT, package.PRELAUNCH, 'reports/progress_subgoal_v1_package_review.json',
+                   'notebooks/progress-subgoal-v1-review-r1/review-source-lock.json'}
+        for name in records:
+            self.assertTrue(self.R._sidecar(name), name)
+        tracked = self.R._tracked()
+        saved = list(self.R._TRACKED)
+        try:  # as if every record (approvals, reservation, receipts, every lock revision) were committed
+            self.R._TRACKED[:] = [frozenset(tracked | records)]
+            again = self.R.inventory()
+        finally:
+            self.R._TRACKED[:] = saved
+        self.assertEqual(again, self.names)
+        self.assertFalse([n for n in again if n in records or n.startswith('notebooks/progress-subgoal-v1-')])
+
     def test_frozen_rules_and_decisions_are_bound_as_review_documents(self):
         documents = json.loads(LOCK.read_bytes())['review_documents']
         for name in ('research/progress_subgoal_v1/decision_rules.json',
