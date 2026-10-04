@@ -37,11 +37,23 @@ from research.evidence_comprehension_v2.evidence import (  # noqa: F401  (re-exp
 INTERRUPTED_TEMPORARY = frozenset({MANIFEST + '.tmp', 'run.json.tmp'})
 
 
+FINAL_STATUSES = frozenset({'complete', 'incomplete'})  # the runner's only finalized index states
+
+
 def load_verified(folder):
     try:
-        return _v2.load_verified(folder)
+        run = _v2.load_verified(folder)
     except EvidenceError as strict:
         return load_committed(folder, str(strict))
+    if run.get('status') in FINAL_STATUSES:
+        return run
+    # Consistent evidence whose index was never finalized: the writer stopped after a per-call commit (status
+    # 'running') and before the final index write. Never accept it as is: recover it as an interrupted run.
+    recovery = {'index_committed': True, 'index_finalized': False, 'index_status': run.get('status'),
+                'strict_error': None, 'ignored_temporary_files': [], 'ignored_uncommitted_log_bytes': 0,
+                'index_calls_recorded': run.get('calls_recorded'), 'committed_calls': len(run['calls'])}
+    return {**run, 'status': 'incomplete', 'stop_reason': run.get('stop_reason') or 'interrupted_evidence',
+            'calls_recorded': len(run['calls']), 'evidence_recovery': recovery}
 
 
 def load_committed(folder, strict_error):

@@ -65,6 +65,31 @@ REHEARSAL_SET_NEW = (REHEARSAL_SET_OLD +
                      "        os.environ[REHEARSAL_ENV] = str(workdir / 'rehearsal-probes.json')\n"
                      "        write_rehearsal_set(os.environ[REHEARSAL_ENV])\n")
 
+LOAD_VERIFIED_OLD = """def load_verified(folder):
+    try:
+        return _v2.load_verified(folder)
+    except EvidenceError as strict:
+        return load_committed(folder, str(strict))
+"""
+LOAD_VERIFIED_NEW = """FINAL_STATUSES = frozenset({'complete', 'incomplete'})  # the runner's only finalized index states
+
+
+def load_verified(folder):
+    try:
+        run = _v2.load_verified(folder)
+    except EvidenceError as strict:
+        return load_committed(folder, str(strict))
+    if run.get('status') in FINAL_STATUSES:
+        return run
+    # Consistent evidence whose index was never finalized: the writer stopped after a per-call commit (status
+    # 'running') and before the final index write. Never accept it as is: recover it as an interrupted run.
+    recovery = {'index_committed': True, 'index_finalized': False, 'index_status': run.get('status'),
+                'strict_error': None, 'ignored_temporary_files': [], 'ignored_uncommitted_log_bytes': 0,
+                'index_calls_recorded': run.get('calls_recorded'), 'committed_calls': len(run['calls'])}
+    return {**run, 'status': 'incomplete', 'stop_reason': run.get('stop_reason') or 'interrupted_evidence',
+            'calls_recorded': len(run['calls']), 'evidence_recovery': recovery}
+"""
+
 DERIVED = {
     PACKAGE + 'authority.py': (
         # the two-arm schedule: 2 x 2 x 1,395 decision calls + 272 development calls
@@ -89,7 +114,14 @@ DERIVED = {
     PACKAGE + 'resources.py': (),
     PACKAGE + 'monitor.py': (),
     PACKAGE + 'supervisor.py': (),
-    PACKAGE + 'evidence.py': (),
+    PACKAGE + 'evidence.py': (
+        # Review of fb0a85f (r3 check, monitor_exit): the runner commits its index after every call with status
+        # 'running' and finalizes it only after its loop. A worker killed between those writes (the lost-monitor
+        # teardown) leaves fully consistent evidence, so v2's strict loader accepts it and the recovery path above never
+        # runs: the evaluator saw status 'running' with stop_reason None. A verified but never-finalized index is now
+        # recovered exactly like an interrupted write. (WS3 r2's loader, from which this derives, has the same gap.)
+        (LOAD_VERIFIED_OLD, LOAD_VERIFIED_NEW, 1),
+    ),
     PACKAGE + 'launch.py': (SCRIPT_ROOT,),
     PACKAGE + 'rehearse_run.py': (SCRIPT_ROOT, (REHEARSAL_SET_OLD, REHEARSAL_SET_NEW, 1)),
     PACKAGE + 'evaluate_run.py': (

@@ -30,6 +30,7 @@ REVIEW_DOCUMENTS = ('reports/progress_subgoal_v1_protocol_v2.md', 'reports/progr
                     'tests/test_progress_subgoal_v1_connected.py', 'tests/test_progress_subgoal_v1_snapshot.py',
                     'tests/test_progress_subgoal_v1_diagnostics.py', 'tests/test_progress_subgoal_v1_packaging.py',
                     'tests/test_progress_subgoal_v1_launch.py', 'tests/test_progress_subgoal_v1_timing.py',
+                    'tests/test_progress_subgoal_v1_evidence.py',
                     'tests/psv1_diagnostics_fixtures.py',
                     'tests/psv1_diagnostics_module_fixture.py')
 
