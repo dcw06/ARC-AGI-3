@@ -16,6 +16,22 @@ from research.evidence_memory_v1.run.evaluate import score_call
 
 ROOT = Path(__file__).resolve().parents[1]
 FROZEN, DIGEST = PR.load_frozen()
+OUTCOME_WORDS = ('correct', 'accuracy', 'contrast', 'primary_endpoint', 'forgetting', 'abstention', 'abstained',
+                 'unsupported', 'stability', 'conclusions', 'memory_preserves', 'truth')
+
+
+def assert_no_outcomes(case, value):
+    """No outcome-bearing key or value: technical counts only."""
+    text = json.dumps(value).lower()
+    for word in OUTCOME_WORDS:
+        case.assertNotIn(word, text)
+
+
+def keyed_passes(frozen=FROZEN):
+    """Every scheduled probe answered with its key (a technically valid session)."""
+    probes = {p['probe_id']: p for p in frozen['probes']}
+    return {block['pass']: {i: SC.score(probes[i], json.dumps(probes[i]['key'])) for i in block['probe_ids']}
+            for block in frozen['schedule']}
 
 
 class Derivation(unittest.TestCase):
@@ -97,30 +113,33 @@ class DryRehearsal(unittest.TestCase):
         self.assertIn('action', json.loads(self.answers({'messages': [{'role': 'user', 'content': 'canary'}]})))
         self.assertIn('not_in_probe_set', self.answers({'messages': [{'role': 'user', 'content': 'Evidence:\nx'}]}))
 
-    def test_complete_run_gives_endpoint_contrasts_stability_and_retains_invalid_answers(self):
-        result = SC.analyze(FROZEN['probes'], self.passes, resamples=500)
+    def test_the_session_report_is_technical_only(self):
+        result = SC.analyze(FROZEN['probes'], self.passes)
         self.assertEqual(result['completeness'], {'withheld': 'complete'})
-        self.assertEqual(result['answers']['pass_1']['scored'], len(FROZEN['schedule'][0]['probe_ids']))
-        self.assertLess(result['answers']['pass_1']['valid'], result['answers']['pass_1']['scored'])  # invalid kept
-        analysis = result['analysis']
-        self.assertEqual(set(analysis['primary_endpoint']), {'recent_raw', 'state_keyed_raw', 'memory'})
-        self.assertEqual(set(analysis['contrasts']), {'memory_vs_recent_raw', 'memory_vs_state_keyed_raw',
-                                                      'memory_vs_state_keyed_raw_evidence_in_both'})
-        self.assertIsInstance(result['verdict'], str)
-        s = result['stability']
-        self.assertEqual(s['repeated_questions'], len(FROZEN['schedule'][1]['probe_ids']))
-        self.assertLess(s['identical'], s['repeated_questions'])  # the scripted pass-2 divergence is detected
+        self.assertEqual(result['answers']['pass_1']['answered'], len(FROZEN['schedule'][0]['probe_ids']))
+        self.assertLess(result['answers']['pass_1']['schema_valid'], result['answers']['pass_1']['answered'])
+        # The scripted server answers about 4% invalidly: above the 2% per-arm rule, so the session is not valid.
+        self.assertFalse(result['invalid_rule_met'])
+        self.assertEqual(result['verdict'], 'session_technically_invalid_outputs')
+        assert_no_outcomes(self, result)
 
-    def test_a_missing_repeat_answer_makes_the_run_incomplete(self):
+    def test_a_valid_session_and_a_changed_response(self):
+        passes = keyed_passes()
+        result = SC.analyze(FROZEN['probes'], passes)
+        self.assertEqual((result['invalid_rule_met'], result['verdict']), (True, 'session_technically_valid'))
+        assert_no_outcomes(self, result)
+        probe_id = FROZEN['schedule'][0]['probe_ids'][0]
+        passes['pass_1'][probe_id] = SC.score({p['probe_id']: p for p in FROZEN['probes']}[probe_id], '{"values":["x"]}')
+        changed = SC.analyze(FROZEN['probes'], passes)
+        self.assertNotEqual(changed['answers']['pass_1']['responses_sha256'],
+                            result['answers']['pass_1']['responses_sha256'])
+
+    def test_a_missing_answer_makes_the_session_incomplete(self):
         passes = {k: dict(v) for k, v in self.passes.items()}
         passes['pass_2'].pop(next(iter(passes['pass_2'])))
-        result = SC.analyze(FROZEN['probes'], passes, resamples=200)
+        result = SC.analyze(FROZEN['probes'], passes)
         self.assertEqual((result['completeness']['withheld'], result['verdict']), ('incomplete', 'incomplete'))
-        self.assertNotIn('analysis', result)
-        passes['pass_1'].pop(FROZEN['schedule'][0]['probe_ids'][-1])
-        result = SC.analyze(FROZEN['probes'], passes, resamples=200)
-        self.assertEqual(result['descriptive_complete_groups']['groups'], len({(p['family'], p['group'])
-                                                                               for p in FROZEN['probes']}) - 1)
+        assert_no_outcomes(self, result)
 
     def test_truncated_answers_are_invalid_never_parsed(self):
         probe = FROZEN['probes'][0]

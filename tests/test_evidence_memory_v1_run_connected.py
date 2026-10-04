@@ -108,7 +108,7 @@ class Rehearsals(unittest.TestCase):
         self.assertEqual(value['run']['counts'], {'answered': 2896})
         config = json.loads((output / 'worker/server-config.json').read_bytes())
         self.assertTrue(config['after_canary']['prefix_caching_disabled_verified'])
-        baseline = value['analysis']['answers']['pass_1']['correct']
+        baseline = value['analysis']['answers']['pass_1']['responses_sha256']
         retained = calls(output)
         work = Path(tempfile.mkdtemp(dir=BASE))
         try:
@@ -127,7 +127,8 @@ class Rehearsals(unittest.TestCase):
                      else {'values': ['no_observed_change']})
             rewrite(copy, f'calls/{flip["index"]:05d}.json', lambda v: v.update(response=json.dumps(wrong)))
             changed = evaluate_output(copy, mode='rehearsal', rehearsal_seconds=REHEARSAL_SECONDS)
-            self.assertEqual(changed['analysis']['answers']['pass_1']['correct'], baseline - 1)
+            self.assertNotEqual(changed['analysis']['answers']['pass_1']['responses_sha256'], baseline)
+            self.assertNotIn('correct', json.dumps(changed['analysis']['answers']))  # technical only
             # 1b. Review of 95aef4f: a write interrupted after the last commit leaves recovered evidence. Its
             # answers are still scored descriptively, but it is never technically complete or promotable.
             interrupted = work / 'interrupted'
@@ -139,7 +140,7 @@ class Rehearsals(unittest.TestCase):
                              ['manifest.json.tmp'])
             self.assertEqual((result['run']['status'], result['run']['stop_reason'], result['run']['calls_recorded']),
                              ('incomplete', 'interrupted_evidence', 2896))
-            self.assertEqual(result['analysis']['answers']['pass_1']['correct'],
+            self.assertEqual(result['analysis']['answers']['pass_1']['responses_sha256'],
                              baseline)
             self.assertEqual((result['technically_complete'], result['gate_status'], result['gate']),
                              (False, 'incomplete', {'questionnaire': 'incomplete'}))

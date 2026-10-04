@@ -86,7 +86,12 @@ POSIX_IMPORTS_NEW = """if os.name == 'posix':  # the reviewed run stack is POSIX
     from research.evidence_memory_v1.run.rehearse import rehearse
 """
 CORRECT_OLD = "['families']['withheld']['raw_evidence']['progress_status']['correct']"
-CORRECT_NEW = "['answers']['pass_1']['correct']"
+# Session-level evaluation is technical only (no correctness is reported before both sessions are pooled), so the
+# connected test detects a changed retained response through the hash of the retained answers.
+CORRECT_NEW = "['answers']['pass_1']['responses_sha256']"
+FLIP_OLD = "            self.assertEqual(changed['analysis']['answers']['pass_1']['responses_sha256'], baseline - 1)\n"
+FLIP_NEW = ("            self.assertNotEqual(changed['analysis']['answers']['pass_1']['responses_sha256'], baseline)\n"
+            "            self.assertNotIn('correct', json.dumps(changed['analysis']['answers']))  # technical only\n")
 
 DERIVED = {
     'research/evidence_memory_v1/run/authority.py': ('research/ws3_questionnaire_v1/authority.py', (
@@ -144,6 +149,7 @@ DERIVED = {
          "class Rehearsals(unittest.TestCase):", 1),
         ("{'answered': 5616}", f"{{'answered': {SESSION_A_CALLS}}}", 1),
         (CORRECT_OLD, CORRECT_NEW, 3),
+        (FLIP_OLD, FLIP_NEW, 1),
         ("probes[c['probe_id']]['family'] == 'progress_status'", "probes[c['probe_id']]['kind'] == 'recall'", 1),
         ("probes[c['probe_id']]['condition'] == 'raw_evidence'", "probes[c['probe_id']]['arm'] == 'recent_raw'", 1),
         ("json.loads(c['response']) == {'answer': probes[c['probe_id']]['key']})",
