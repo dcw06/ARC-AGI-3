@@ -1,0 +1,80 @@
+{
+ "faults": {
+  "artifact": "annotated_doc-0.0.4-py3-none-any.whl",
+  "corrupted": {
+   "pip_exit": 1,
+   "reason": "hash mismatch",
+   "rejected": true
+  },
+  "missing": {
+   "pip_exit": 1,
+   "reason": "no matching distribution",
+   "rejected": true
+  }
+ },
+ "finished": "2026-10-04T14:35:50-04:00",
+ "freeze": {
+  "expected": 174,
+  "extra": [],
+  "installed": 175,
+  "missing": [],
+  "pip": "24.0",
+  "version_mismatch": []
+ },
+ "host_python": "/usr/bin/python3.12",
+ "imports": {
+  "modules": {
+   "numpy": {
+    "file": "/home/jingjing/.local/share/agi/wheelhouse-r2-install-check/venv/lib/python3.12/site-packages/numpy/__init__.py",
+    "version": "2.2.6"
+   },
+   "torch": {
+    "file": "/home/jingjing/.local/share/agi/wheelhouse-r2-install-check/venv/lib/python3.12/site-packages/torch/__init__.py",
+    "version": "2.10.0+cu128"
+   },
+   "transformers": {
+    "file": "/home/jingjing/.local/share/agi/wheelhouse-r2-install-check/venv/lib/python3.12/site-packages/transformers/__init__.py",
+    "version": "4.57.6"
+   },
+   "vllm": {
+    "file": "/home/jingjing/.local/share/agi/wheelhouse-r2-install-check/venv/lib/python3.12/site-packages/vllm/__init__.py",
+    "version": "0.19.0"
+   }
+  },
+  "prefix": "/home/jingjing/.local/share/agi/wheelhouse-r2-install-check/venv",
+  "python": "3.12.3",
+  "torch_cuda_available": false,
+  "torch_cuda_build": "12.8"
+ },
+ "install": {
+  "exit": 0,
+  "seconds": 117.2
+ },
+ "lock": {
+  "lines": 174,
+  "sha256": "ba80d35062245421daf1cae65474281952cc0c44fb46e11cf7f68d0ece496406"
+ },
+ "log": "/home/jingjing/.local/share/agi/wheelhouse-r2-install-check/install-check.log",
+ "manifest_sha256": "3691cb8854df4d8ff10e42ca9957fddb9a8ae0362064e7b31b3205891af0d546",
+ "network_isolated": true,
+ "not_established": [
+  "GPU runtime (CUDA initialisation, model startup, inference, cancellation, cleanup)",
+  "licence and redistribution review",
+  "team-owned upload",
+  "exact target image (this host: WSL Ubuntu 24.04, CPython 3.12.3; target CPython 3.12.13)"
+ ],
+ "passed": true,
+ "pip_check": {
+  "exit": 0,
+  "output": "No broken requirements found."
+ },
+ "pip_version": "pip 24.0 from /home/jingjing/.local/share/agi/wheelhouse-r2-install-check/venv/lib/python3.12/site-packages/pip (python 3.12)",
+ "schema": "wheelhouse_offline_install_check_v1",
+ "scope": "CPU-only offline installation; GPU startup, inference and cleanup are not verified here",
+ "started": "2026-10-04T14:33:26-04:00",
+ "wheels_verified": {
+  "bad": [],
+  "count": 174,
+  "of": 174
+ }
+}
