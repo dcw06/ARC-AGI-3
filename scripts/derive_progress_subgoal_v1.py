@@ -42,7 +42,8 @@ DOCS_NEW = """REVIEW_DOCUMENTS = ('reports/progress_subgoal_v1_protocol_v2.md', 
                     'tests/test_progress_subgoal_v1_runner.py', 'tests/test_transition_evidence_v1.py',
                     'tests/test_progress_subgoal_v1_schedule.py', 'tests/test_evidence_comprehension_v1_transport.py',
                     'tests/test_progress_subgoal_v1_connected.py', 'tests/test_progress_subgoal_v1_snapshot.py',
-                    'tests/test_progress_subgoal_v1_diagnostics.py', 'tests/psv1_diagnostics_fixtures.py',
+                    'tests/test_progress_subgoal_v1_diagnostics.py', 'tests/test_progress_subgoal_v1_packaging.py',
+                    'tests/test_progress_subgoal_v1_launch.py', 'tests/psv1_diagnostics_fixtures.py',
                     'tests/psv1_diagnostics_module_fixture.py')
 """
 SUITES_OLD = """SUITES = {'probe_set_keys_scoring_and_analysis': 'tests.test_ws3_questionnaire_draft',
@@ -60,7 +61,60 @@ SUITES_NEW = """SUITES = {'probe_set_keys_scoring_and_analysis': 'tests.test_pro
           'transport_cancellation_and_cache_metrics': 'tests.test_evidence_comprehension_v1_transport',  # reused
           'diagnostics_recorder': 'tests.test_progress_subgoal_v1_diagnostics',
           'connected_path_rehearsals': 'tests.test_progress_subgoal_v1_connected',
-          'packaging_derivation_and_inventory': 'tests.test_progress_subgoal_v1_packaging'}"""
+          'packaging_derivation_and_inventory': 'tests.test_progress_subgoal_v1_packaging',
+          'launcher_attachment_rejection': 'tests.test_progress_subgoal_v1_launch'}"""
+
+# Review of bc0c1b9 [P1]: the launcher must reject invalid provider attachments even with HTTP 200 (the failure that
+# affected Track 3 R6; rule adapted from Track 3's validate_response in 7063a11). Every invalid* field is retained,
+# including unknown ones and model sources; any present field that is non-empty or not a list fails the launch; the
+# attempt stays consumed (never retried) and the CLI exits non-zero because the receipt carries an error.
+ATTACHMENT_HELPER_ANCHOR = "def launch(root, backend):\n"
+ATTACHMENT_HELPER = '''KNOWN_ATTACHMENT_ERRORS = ('invalid_dataset_sources', 'invalid_model_sources', 'invalid_competition_sources',
+                           'invalid_kernel_sources', 'invalidDatasetSources', 'invalidModelSources',
+                           'invalidCompetitionSources', 'invalidKernelSources')
+
+
+def attachment_errors(response):
+    """{name: value} for every invalid* field the provider response carries (known names and any other key whose name
+    starts with 'invalid'), and the sorted names that reject the launch (present and non-empty, or not a list)."""
+    if isinstance(response, dict):
+        fields, read = set(response), response.get
+    else:
+        fields, read = set(getattr(response, '__dict__', {})) | set(dir(response)), lambda n: getattr(response, n, None)
+    names = {n for n in fields if isinstance(n, str) and n.lstrip('_').lower().startswith('invalid')}
+    names = {n.lstrip('_') for n in names} | set(KNOWN_ATTACHMENT_ERRORS)
+    present = {}
+    for name in sorted(names):
+        value = read(name)
+        if value is None and not isinstance(response, dict):
+            value = getattr(response, '_' + name, None)
+        if value is not None and not callable(value):
+            present[name] = value if isinstance(value, (list, str, int, float, bool, dict)) else repr(value)
+    rejected = sorted(n for n, v in present.items() if not isinstance(v, list) or v)
+    return present, rejected
+
+
+'''
+LAUNCH_OLD = """        response = backend.push(path(root, PACKAGE))
+        receipt.update(status='provider_response_received', url=response.url,
+                       provider_version=response.version_number, error=response.error)
+        for name in ('invalid_dataset_sources', 'invalid_competition_sources',
+                     'invalid_kernel_sources'):
+            receipt[name] = getattr(response, name, None)
+"""
+LAUNCH_NEW = """        response = backend.push(path(root, PACKAGE))
+        read = response.get if isinstance(response, dict) else lambda n: getattr(response, n, None)
+        receipt.update(status='provider_response_received', url=read('url'),
+                       provider_version=read('version_number'), error=read('error'))
+        present, rejected = attachment_errors(response)
+        receipt['provider_attachment_errors'] = present  # every invalid* field, kept as returned
+        if rejected:  # HTTP 200 is not acceptance: a rejected attachment fails this (consumed) attempt
+            receipt.update(status='provider_rejected_attachments_no_retry',
+                           error='provider rejected attachments: ' + ', '.join(rejected))
+        elif not receipt['error'] and not receipt['url']:
+            receipt.update(status='provider_result_requires_reconciliation_no_retry',
+                           error='provider response without a kernel url')
+"""
 
 TARGETS = {
     'scripts/build_progress_subgoal_v1_review.py': ('scripts/build_ws3_questionnaire_v1_review.py', (
@@ -81,6 +135,8 @@ TARGETS = {
         ("'A retrospective transition questionnaire: 3,116 frozen questions in 5,616 scheduled calls (the withheld partition '",
          "'A retrospective questionnaire on change, progress and subgoal completion: 3,062 frozen questions in 5,852 '\n"
          "        'scheduled calls (the evaluation partition '", 1),
+        (ATTACHMENT_HELPER_ANCHOR, ATTACHMENT_HELPER + ATTACHMENT_HELPER_ANCHOR, 1),
+        (LAUNCH_OLD, LAUNCH_NEW, 1),
     )),
     'scripts/review_progress_subgoal_v1_notebook.py': ('scripts/review_ws3_questionnaire_v1_notebook.py', ()),
     'scripts/check_progress_subgoal_v1.py': ('scripts/check_ws3_questionnaire_v1.py', (

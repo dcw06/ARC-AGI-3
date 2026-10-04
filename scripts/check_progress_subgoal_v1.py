@@ -35,7 +35,8 @@ SUITES = {'probe_set_keys_scoring_and_analysis': 'tests.test_progress_subgoal_v1
           'transport_cancellation_and_cache_metrics': 'tests.test_evidence_comprehension_v1_transport',  # reused
           'diagnostics_recorder': 'tests.test_progress_subgoal_v1_diagnostics',
           'connected_path_rehearsals': 'tests.test_progress_subgoal_v1_connected',
-          'packaging_derivation_and_inventory': 'tests.test_progress_subgoal_v1_packaging'}
+          'packaging_derivation_and_inventory': 'tests.test_progress_subgoal_v1_packaging',
+          'launcher_attachment_rejection': 'tests.test_progress_subgoal_v1_launch'}
 CLOCK_STEP_SECONDS = 2.0  # wall-clock minus monotonic drift above this, within one test, is flagged
 
 

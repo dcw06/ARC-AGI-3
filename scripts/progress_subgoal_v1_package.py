@@ -225,6 +225,31 @@ def verify(root):
     return json.loads(artifacts['launch-package-lock.json'])
 
 
+KNOWN_ATTACHMENT_ERRORS = ('invalid_dataset_sources', 'invalid_model_sources', 'invalid_competition_sources',
+                           'invalid_kernel_sources', 'invalidDatasetSources', 'invalidModelSources',
+                           'invalidCompetitionSources', 'invalidKernelSources')
+
+
+def attachment_errors(response):
+    """{name: value} for every invalid* field the provider response carries (known names and any other key whose name
+    starts with 'invalid'), and the sorted names that reject the launch (present and non-empty, or not a list)."""
+    if isinstance(response, dict):
+        fields, read = set(response), response.get
+    else:
+        fields, read = set(getattr(response, '__dict__', {})) | set(dir(response)), lambda n: getattr(response, n, None)
+    names = {n for n in fields if isinstance(n, str) and n.lstrip('_').lower().startswith('invalid')}
+    names = {n.lstrip('_') for n in names} | set(KNOWN_ATTACHMENT_ERRORS)
+    present = {}
+    for name in sorted(names):
+        value = read(name)
+        if value is None and not isinstance(response, dict):
+            value = getattr(response, '_' + name, None)
+        if value is not None and not callable(value):
+            present[name] = value if isinstance(value, (list, str, int, float, bool, dict)) else repr(value)
+    rejected = sorted(n for n, v in present.items() if not isinstance(v, list) or v)
+    return present, rejected
+
+
 def launch(root, backend):
     lock = verify(root)  # All local checks before provider authentication or quota query.
     quota = backend.quota()
@@ -251,11 +276,17 @@ def launch(root, backend):
                'recorded_at': now()}
     try:
         response = backend.push(path(root, PACKAGE))
-        receipt.update(status='provider_response_received', url=response.url,
-                       provider_version=response.version_number, error=response.error)
-        for name in ('invalid_dataset_sources', 'invalid_competition_sources',
-                     'invalid_kernel_sources'):
-            receipt[name] = getattr(response, name, None)
+        read = response.get if isinstance(response, dict) else lambda n: getattr(response, n, None)
+        receipt.update(status='provider_response_received', url=read('url'),
+                       provider_version=read('version_number'), error=read('error'))
+        present, rejected = attachment_errors(response)
+        receipt['provider_attachment_errors'] = present  # every invalid* field, kept as returned
+        if rejected:  # HTTP 200 is not acceptance: a rejected attachment fails this (consumed) attempt
+            receipt.update(status='provider_rejected_attachments_no_retry',
+                           error='provider rejected attachments: ' + ', '.join(rejected))
+        elif not receipt['error'] and not receipt['url']:
+            receipt.update(status='provider_result_requires_reconciliation_no_retry',
+                           error='provider response without a kernel url')
     except Exception as exc:
         receipt.update(status='launch_outcome_unknown_no_retry', error=type(exc).__name__)
     receipt['response_received_at'] = now()
