@@ -6,8 +6,9 @@ flags of protocol.score. The independent evaluator calls it per answer and keeps
 `analyze(probes, passes)` is what the evaluator reports for ONE session. It is technical only:
 - completeness: `complete` only if every scheduled pass-1 probe and every scheduled repeat probe was answered (a
   timed-out or missing call leaves it `incomplete`; a truncated answer counts as answered and invalid);
-- counts: scheduled, answered and schema-valid answers per pass, and invalid answers per arm with the invalid-output
-  rule (at most 2% per arm);
+- counts: scheduled, answered and schema-valid answers per pass, and, for EVERY pass (pass 1 and the repeat), the
+  invalid answers per arm with their denominators, rates and the invalid-output rule (at most 2% per arm); a session
+  is valid only if every pass meets it;
 - a SHA-256 over the retained answers (probe id and canonical answer or invalid marker), so any change to a retained
   response is visible without exposing whether it was right;
 - a technical status: `incomplete`, `session_technically_invalid_outputs` or `session_technically_valid`.
@@ -56,15 +57,28 @@ def technical(frozen, passes):
                                            separators=(',', ':')).encode()).hexdigest()
         answers[pass_id] = {'scheduled': scheduled[pass_id], 'answered': len(rs),
                             'schema_valid': sum(r['valid'] for r in rs), 'responses_sha256': digest}
-    first = rows.get('pass_1', [])
-    invalid = {arm: {'answered': sum(r['arm'] == arm for r in first),
-                     'invalid': sum(r['arm'] == arm and not r['valid'] for r in first)} for arm in ARMS}
-    invalid_ok = all(v['answered'] and v['invalid'] <= INVALID_RATE_MAX * v['answered'] for v in invalid.values())
+    by_id = {p['probe_id']: p for p in frozen['probes']}
+    invalid = {}
+    for block in frozen['schedule']:  # the registered rule applies to every pass, the repeat included
+        pass_rows = rows.get(block['pass'], [])
+        arms = {}
+        for arm in ARMS:
+            scheduled_arm = sum(by_id[i]['arm'] == arm for i in block['probe_ids'])
+            if not scheduled_arm:
+                continue
+            answered_arm = sum(r['arm'] == arm for r in pass_rows)
+            bad = sum(r['arm'] == arm and not r['valid'] for r in pass_rows)
+            arms[arm] = {'scheduled': scheduled_arm, 'answered': answered_arm, 'invalid': bad,
+                         'invalid_rate': round(bad / answered_arm, 4) if answered_arm else None,
+                         'rule_met': bool(answered_arm) and bad <= INVALID_RATE_MAX * answered_arm}
+        invalid[block['pass']] = {'by_arm': arms, 'rule_met': all(a['rule_met'] for a in arms.values())}
+    invalid_ok = all(p['rule_met'] for p in invalid.values())
     complete = all(a['answered'] == a['scheduled'] for a in answers.values())
     status = ('incomplete' if not complete else
               'session_technically_valid' if invalid_ok else 'session_technically_invalid_outputs')
     return {'completeness': {'withheld': 'complete' if complete else 'incomplete'}, 'answers': answers,
-            'invalid_by_arm': invalid, 'invalid_rule_met': invalid_ok, 'technical_status': status,
+            'invalid_by_pass': invalid, 'invalid_rule': f'at most {INVALID_RATE_MAX:.0%} invalid per arm in every pass',
+            'invalid_rule_met': invalid_ok, 'technical_status': status,
             'session': frozen['session'], 'case_source': frozen['case_source'],
             'seed_sha256': frozen['seed_sha256'],
             'outcomes': 'withheld: scientific results only from run/final.py on both technically valid sessions'}

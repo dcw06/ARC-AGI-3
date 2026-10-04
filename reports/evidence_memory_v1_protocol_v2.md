@@ -246,7 +246,10 @@ advantage over retrieval requires contrast 2 as well. Concision or readability n
   every request hash is re-derived, and token parity, timing and cancellation records all check out.
 - **Recovered evidence.** Evidence recovered from an interrupted run is never complete.
 - **Prefix caching off.** Verified from the server's own counters at the canary and at every call.
-- **Invalid outputs.** At most 2% per arm (all retained).
+- **Invalid outputs.** At most 2% per arm **in every pass**: in pass 1, and separately in the repeat pass. Each is
+  measured against that pass's own answered calls for that arm. For example, session A's repeat has about 76 answers
+  per arm, so at most 1 invalid answer per arm. All invalid answers are retained, and both passes' counts, rates and
+  verdicts are reported.
 - **Timeouts.** At most 1% of calls. The reviewed runner also stops after its consecutive-timeout limit.
 - **Model startup** within the reviewed ceiling.
 
@@ -255,7 +258,8 @@ advantage over retrieval requires contrast 2 as well. Concision or readability n
 1. **Per session: technical only** (`run/score.analyze`, reported by the independent evaluator). It reports:
    - completeness;
    - answered and schema-valid counts per pass;
-   - invalid answers per arm, against the 2% rule;
+   - invalid answers per arm **for each pass** (pass 1 and the repeat), with their denominators, rates and the 2%
+     rule; a session is valid only if every pass meets it;
    - a SHA-256 over the retained answers;
    - a technical status: `incomplete`, `session_technically_invalid_outputs` or `session_technically_valid`.
 
@@ -370,7 +374,8 @@ only the technical `run/score.analyze`. Scientific results come only from `run/f
 - **In-process, platform-independent.** The fake server's scripted answers go through the evaluator's scoring and
   the technical session report:
   - the report carries no outcome-bearing word;
-  - invalid answers are retained and counted against the 2% rule;
+  - invalid answers are retained and counted against the 2% rule in each pass;
+  - a fully valid pass 1 with an invalid repeat pass leaves the session not valid;
   - a changed response changes the answer hash;
   - a missing answer makes the session incomplete;
   - truncated answers are invalid, never parsed.

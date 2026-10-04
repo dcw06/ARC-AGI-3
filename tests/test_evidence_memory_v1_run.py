@@ -134,6 +134,29 @@ class DryRehearsal(unittest.TestCase):
         self.assertNotEqual(changed['answers']['pass_1']['responses_sha256'],
                             result['answers']['pass_1']['responses_sha256'])
 
+    def test_the_invalid_output_rule_applies_to_the_repeat_pass(self):
+        """Pass 1 fully valid, every repeat answer invalid: the session must not be technically valid."""
+        passes = keyed_passes()
+        probes = {p['probe_id']: p for p in FROZEN['probes']}
+        for probe_id in passes['pass_2']:
+            passes['pass_2'][probe_id] = SC.score(probes[probe_id], 'not json')
+        result = SC.analyze(FROZEN['probes'], passes)
+        self.assertEqual(result['completeness'], {'withheld': 'complete'})  # fully answered
+        self.assertTrue(result['invalid_by_pass']['pass_1']['rule_met'])
+        repeat = result['invalid_by_pass']['pass_2']
+        self.assertFalse(repeat['rule_met'])
+        for arm, row in repeat['by_arm'].items():
+            self.assertEqual((row['answered'], row['invalid'], row['invalid_rate']), (row['scheduled'], row['scheduled'], 1.0))
+        self.assertEqual(sum(r['scheduled'] for r in repeat['by_arm'].values()), len(FROZEN['schedule'][1]['probe_ids']))
+        self.assertEqual(result['verdict'], 'session_technically_invalid_outputs')
+        # A single invalid repeat answer in an arm stays within 2% only if that arm has at least 50 repeat answers.
+        one = keyed_passes()
+        first = FROZEN['schedule'][1]['probe_ids'][0]
+        one['pass_2'][first] = SC.score(probes[first], 'not json')
+        arm = probes[first]['arm']
+        row = SC.analyze(FROZEN['probes'], one)['invalid_by_pass']['pass_2']['by_arm'][arm]
+        self.assertEqual(row['rule_met'], 1 <= SC.INVALID_RATE_MAX * row['answered'])
+
     def test_a_missing_answer_makes_the_session_incomplete(self):
         passes = {k: dict(v) for k, v in self.passes.items()}
         passes['pass_2'].pop(next(iter(passes['pass_2'])))
