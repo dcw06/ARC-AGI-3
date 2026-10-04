@@ -9,7 +9,8 @@ ecv3-089bf11f.
 Derived (exact copies plus counted substitutions): authority, host, worker, runner, resources, monitor, supervisor,
 evidence (WS3's r2 recovery loader), and the WS3 launch, rehearse and evaluate scripts as modules of this package
 (`launch`, `rehearse_run`, `evaluate_run`; scripts/ is outside this track's files).
-Hand-written adapters (not derived): probes, service, fake_server, schedule, transport (and score, the evaluator).
+Hand-written adapters (not derived): probes, service, fake_server, schedule, transport, rehearsal_timing (and score,
+the evaluator).
 
 Usage: python -m research.progress_subgoal_v1.derive [--check]
 """
@@ -72,10 +73,14 @@ DERIVED = {
     ),
     PACKAGE + 'host.py': (),
     PACKAGE + 'worker.py': (
-        # Re-sized for 2,790 calls per pass (WS3: 2,500): the cutoff (300 s in the cutoff rehearsal) must fall inside
-        # pass 1 for the first fault and inside pass 2 for the second, with ~0.035 s of per-call overhead on top.
+        # Derived from the frozen schedule and the rehearsal cutoff (rehearsal_timing.py, after Track 2's b1b7681):
+        # the pass-1 fault slows every call; the pass-2 fault slows only pass-2 calls, so it is forwarded to the host
+        # (and from there to the fake server). WS3's fixed 0.13/0.06 s were sized for 2,500 calls per pass.
         ("SLOW_LATENCY = {'slow_withheld_pass_1': 0.13, 'slow_withheld_pass_2': 0.06}",
-         "SLOW_LATENCY = {'slow_withheld_pass_1': 0.12, 'slow_withheld_pass_2': 0.05}", 1),
+         "SLOW_LATENCY = {{'slow_withheld_pass_1': {slow_withheld_pass_1}, 'slow_withheld_pass_2': "
+         "{slow_withheld_pass_2}}}  # derived: rehearsal_timing.py", 1),
+        ("               'trickle_metrics', 'http_error', 'late_reply')",
+         "               'trickle_metrics', 'http_error', 'late_reply', 'slow_withheld_pass_2')", 1),
     ),
     PACKAGE + 'runner.py': (),
     PACKAGE + 'resources.py': (),
@@ -126,6 +131,9 @@ def derive_one(target):
     for old, new in GLOBAL:
         text = text.replace(old, new)
     for old, new, count in DERIVED[target]:
+        if '{slow_withheld_pass_1}' in new:
+            from research.progress_subgoal_v1.rehearsal_timing import slow_latencies
+            new = new.format(**slow_latencies())
         found = text.count(old)
         if found != count:
             raise ValueError(f'{target}: expected {count} of {old[:70]!r}, found {found}')

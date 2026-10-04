@@ -43,7 +43,8 @@ DOCS_NEW = """REVIEW_DOCUMENTS = ('reports/progress_subgoal_v1_protocol_v2.md', 
                     'tests/test_progress_subgoal_v1_schedule.py', 'tests/test_evidence_comprehension_v1_transport.py',
                     'tests/test_progress_subgoal_v1_connected.py', 'tests/test_progress_subgoal_v1_snapshot.py',
                     'tests/test_progress_subgoal_v1_diagnostics.py', 'tests/test_progress_subgoal_v1_packaging.py',
-                    'tests/test_progress_subgoal_v1_launch.py', 'tests/psv1_diagnostics_fixtures.py',
+                    'tests/test_progress_subgoal_v1_launch.py', 'tests/test_progress_subgoal_v1_timing.py',
+                    'tests/psv1_diagnostics_fixtures.py',
                     'tests/psv1_diagnostics_module_fixture.py')
 """
 SUITES_OLD = """SUITES = {'probe_set_keys_scoring_and_analysis': 'tests.test_ws3_questionnaire_draft',
@@ -62,7 +63,8 @@ SUITES_NEW = """SUITES = {'probe_set_keys_scoring_and_analysis': 'tests.test_pro
           'diagnostics_recorder': 'tests.test_progress_subgoal_v1_diagnostics',
           'connected_path_rehearsals': 'tests.test_progress_subgoal_v1_connected',
           'packaging_derivation_and_inventory': 'tests.test_progress_subgoal_v1_packaging',
-          'launcher_attachment_rejection': 'tests.test_progress_subgoal_v1_launch'}"""
+          'launcher_attachment_rejection': 'tests.test_progress_subgoal_v1_launch',
+          'rehearsal_fault_placement': 'tests.test_progress_subgoal_v1_timing'}"""
 
 # Review of bc0c1b9 [P1]: the launcher must reject invalid provider attachments even with HTTP 200 (the failure that
 # affected Track 3 R6; rule adapted from Track 3's validate_response in 7063a11). Every invalid* field is retained,

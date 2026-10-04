@@ -24,11 +24,11 @@ from .service import ProxyService, validate_server_config
 
 ROOT = Path(__file__).resolve().parents[2]
 HOST_FAULTS = ('model_startup', 'prefix_cache_enabled', 'hang_once', 'no_abort', 'slow_abort', 'late_abort',
-               'trickle_metrics', 'http_error', 'late_reply')
+               'trickle_metrics', 'http_error', 'late_reply', 'slow_withheld_pass_2')
 FAULTS = ('none', 'storage', 'surviving_child', 'log_flood', 'slow_withheld_pass_1', 'slow_withheld_pass_2') + HOST_FAULTS
 REHEARSAL_ARTIFACT = {'rehearsal': 'scripted_model_not_target_evidence'}
 # Rehearsal per-call latencies chosen so the admission cutoff falls inside withheld pass 1 or pass 2.
-SLOW_LATENCY = {'slow_withheld_pass_1': 0.12, 'slow_withheld_pass_2': 0.05}
+SLOW_LATENCY = {'slow_withheld_pass_1': 0.14, 'slow_withheld_pass_2': 0.14}  # derived: rehearsal_timing.py
 
 
 def gate(mode):
