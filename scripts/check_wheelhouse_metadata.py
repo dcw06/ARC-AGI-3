@@ -27,10 +27,12 @@ import http.client
 import io
 import json
 import os
+import pickle
 import re
+import shutil
 import socket
 import sys
-import threading
+import tempfile
 import time
 import urllib.error
 import urllib.parse
@@ -159,8 +161,29 @@ def read_bounded(response, cap, url, remaining, operation_timeout):
     return body
 
 
-def _process_fetch(conn, url, accept, timeout, cap, seconds_left, operation_timeout):
-    """Worker process: one GET, no redirects followed, bounded body; the result is sent over `conn`."""
+RESULT_CAP = INDEX_CAP + 1024 ** 2  # bytes: the largest result file the supervisor will read
+
+
+class WorkerFailed(FetchError):
+    """The worker exited without a complete result (crash, non-zero exit, missing or oversized result)."""
+
+
+class WorkerNotTerminated(FetchError):
+    """A worker could not be confirmed terminated; the caller must treat this as a hard failure."""
+
+
+def deliver(result_path, message):
+    """Write the worker's complete result to a private temporary file and rename it into place atomically."""
+    partial = result_path + '.partial'
+    with open(partial, 'wb') as stream:
+        pickle.dump(message, stream, protocol=pickle.HIGHEST_PROTOCOL)
+        stream.flush()
+        os.fsync(stream.fileno())
+    os.replace(partial, result_path)
+
+
+def _process_fetch(result_path, url, accept, timeout, cap, seconds_left, operation_timeout):
+    """Worker process: one GET, no redirects followed, bounded body; the complete result is delivered to a file."""
     deadline = time.monotonic() + seconds_left
 
     def remaining(what):
@@ -178,51 +201,69 @@ def _process_fetch(conn, url, accept, timeout, cap, seconds_left, operation_time
         try:
             with urllib.request.build_opener(_NoRedirect).open(request, timeout=timeout) as response:
                 body = read_bounded(response, cap, url, remaining, operation_timeout)
-                conn.send(('ok', response.status, list(response.headers.items()), body))
+                deliver(result_path, ('ok', response.status, list(response.headers.items()), body))
         except urllib.error.HTTPError as error:
-            conn.send(('http', error.code, list((error.headers or {}).items())))
+            deliver(result_path, ('http', error.code, list((error.headers or {}).items())))
     except DeadlineExceeded as error:
-        conn.send(('deadline', str(error)))
+        deliver(result_path, ('deadline', str(error)))
     except FetchError as error:
-        conn.send(('fetch', str(error)))
+        deliver(result_path, ('fetch', str(error)))
     except (urllib.error.URLError, OSError) as error:
-        conn.send(('network', f'{type(error).__name__} for {url}: {error}'))
-    finally:
-        conn.close()
+        deliver(result_path, ('network', f'{type(error).__name__} for {url}: {error}'))
 
 
-def run_worker(target, args, deadline, clock, what):
-    """Run target(conn, *args) in a spawned worker process and return its message, never waiting past `deadline`.
+def run_worker(target, args, deadline, clock, what, observer=None):
+    """Run target(result_path, *args) in a spawned worker process and return its delivered result.
 
-    On expiry the process is killed (so it cannot open a connection afterwards, even if it was stalled before
-    connecting) and reaped, and DeadlineExceeded reports whether termination was confirmed. Spawned processes keep
-    this portable (no fork of a multi-threaded parent).
+    Completion is signalled by the worker process exiting; the supervisor waits for that with a timeout bounded by
+    the absolute deadline and never performs an unbounded receive. A result is accepted only if the worker exited
+    with status 0 before the deadline and the atomically renamed result file exists (size-capped); a late, partial
+    or missing result is rejected. Whatever happens (normal completion, deadline, KeyboardInterrupt, a crash, or an
+    error while reading the result), the outer cleanup kills and reaps a surviving worker and raises
+    WorkerNotTerminated if its termination cannot be confirmed; the private result directory is removed only after
+    the worker is gone. `observer`, if given, receives the worker's pid (for tests).
     """
     import multiprocessing
     ctx = multiprocessing.get_context('spawn')
-    receiver, sender = ctx.Pipe(duplex=False)
-    process = ctx.Process(target=target, args=(sender,) + tuple(args), daemon=True, name=f'worker {what}')
-    process.start()
-    sender.close()
-    message = None
+    workdir = tempfile.mkdtemp(prefix='wheelhouse-worker-')
+    result_path = os.path.join(workdir, 'result.pkl')
+    process = None
     try:
-        if receiver.poll(max(0.0, deadline - clock())):
-            message = receiver.recv()
-    except EOFError:
-        message = ('network', f'worker exited without a result while {what}')
+        process = ctx.Process(target=target, args=(result_path,) + tuple(args), daemon=True, name=f'worker {what}')
+        process.start()
+        if observer is not None:
+            observer.append(process.pid)
+        process.join(max(0.0, deadline - clock()))
+        if process.is_alive():
+            process.kill()
+            process.join(CANCEL_GRACE)
+            if process.exitcode is None:
+                raise WorkerNotTerminated(f'worker for {what} did not terminate after being killed')
+            raise DeadlineExceeded(f'absolute deadline reached while {what}; worker process killed (terminated: True)')
+        if clock() > deadline:
+            raise DeadlineExceeded(f'result for {what} arrived after the deadline; rejected (terminated: True)')
+        if process.exitcode != 0:
+            raise WorkerFailed(f'worker for {what} exited with code {process.exitcode}; no result accepted')
+        if not os.path.isfile(result_path):
+            raise WorkerFailed(f'worker for {what} exited without a complete result')
+        if os.path.getsize(result_path) > RESULT_CAP:
+            raise WorkerFailed(f'worker result for {what} exceeds {RESULT_CAP} bytes')
+        with open(result_path, 'rb') as stream:
+            return pickle.load(stream)
     finally:
-        receiver.close()
-    if message is None:
-        process.kill()
-        process.join(CANCEL_GRACE)
-        terminated = process.exitcode is not None
-        raise DeadlineExceeded(f'absolute deadline reached while {what}; worker process killed '
-                               f'(terminated: {terminated})')
-    process.join(CANCEL_GRACE)
-    if process.is_alive():
-        process.kill()
-        process.join(CANCEL_GRACE)
-    return message
+        confirmed = True
+        if process is not None:
+            if process.exitcode is None and process.pid is not None:
+                process.kill()
+                process.join(CANCEL_GRACE)
+            confirmed = process.exitcode is not None or process.pid is None
+            if confirmed:
+                process.close()
+        if confirmed:
+            shutil.rmtree(workdir, ignore_errors=True)
+        else:
+            raise WorkerNotTerminated(f'worker for {what} could not be confirmed terminated; '
+                                      f'its directory {workdir} was left in place')
 
 
 def _headers(items):

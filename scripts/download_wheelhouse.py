@@ -28,7 +28,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from scripts.check_wheelhouse_metadata import (  # noqa: E402
-    STALL_ENV, DeadlineExceeded, _artifact_url_ok, _NoRedirect, _set_read_timeout, run_worker)
+    STALL_ENV, DeadlineExceeded, FetchError, _artifact_url_ok, _NoRedirect, _set_read_timeout, deliver,
+    run_worker)
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / 'reports/wheelhouse_download_manifest.json'
@@ -98,6 +99,7 @@ class Downloader:
         self._opener = opener  # None: each attempt runs in a killable worker process (real network)
         self._clock, self._sleep = clock, sleep
         self.requests = []
+        self.worker_pids = []
 
     def _remaining(self, deadline, what):
         left = deadline - self._clock()
@@ -143,13 +145,14 @@ class Downloader:
             self._stream(self._opener, request, timeout, artifact, final, temp, deadline)
             return
         try:
-            message = run_worker(_process_download, (url, str(temp), artifact['size'], timeout,
-                                                     deadline - self._clock()), deadline, self._clock,
-                                 f'downloading {url}')
-        except DeadlineExceeded as error:
-            temp.unlink(missing_ok=True)  # the worker process has been killed and reaped
-            raise DownloadError(f'deadline: {error}') from error
-        try:
+            try:
+                message = run_worker(_process_download, (url, str(temp), artifact['size'], timeout,
+                                                         deadline - self._clock()), deadline, self._clock,
+                                     f'downloading {url}', observer=self.worker_pids)
+            except DeadlineExceeded as error:
+                raise DownloadError(f'deadline: {error}') from error
+            except FetchError as error:
+                raise DownloadError(str(error)) from error
             if message[0] != 'ok':
                 raise DownloadError(message[1])
             size, digest = file_digest(temp)  # verified again in this process before completion
@@ -159,6 +162,7 @@ class Downloader:
                 raise DownloadError(f'hash mismatch for {artifact["filename"]}')
             os.replace(temp, final)
         finally:
+            # run_worker has already killed and reaped its worker on every path, so nothing can still write here.
             temp.unlink(missing_ok=True)
 
     def _stream(self, opener, request, timeout, artifact, final, temp, deadline):
@@ -195,7 +199,7 @@ class Downloader:
             temp.unlink(missing_ok=True)
 
 
-def _process_download(conn, url, temp, size_limit, timeout, seconds_left):
+def _process_download(result_path, url, temp, size_limit, timeout, seconds_left):
     """Worker process: stream one artifact into `temp`, bounded by size and by its own copy of the deadline."""
     deadline = time.monotonic() + seconds_left
 
@@ -226,13 +230,11 @@ def _process_download(conn, url, temp, size_limit, timeout, seconds_left):
                     if size > size_limit:
                         raise DownloadError(f'size exceeds the expected {size_limit} bytes for {url}')
                     out.write(chunk)
-        conn.send(('ok', size))
+        deliver(result_path, ('ok', size))
     except urllib.error.HTTPError as error:
-        conn.send(('error', f'HTTP {error.code} for {url} (redirects are not followed)'))
+        deliver(result_path, ('error', f'HTTP {error.code} for {url} (redirects are not followed)'))
     except (DownloadError, urllib.error.URLError, OSError) as error:
-        conn.send(('error', f'{type(error).__name__}: {error}'))
-    finally:
-        conn.close()
+        deliver(result_path, ('error', f'{type(error).__name__}: {error}'))
 
 
 def run(manifest, dest, workers=MAX_WORKERS, downloader=None):
