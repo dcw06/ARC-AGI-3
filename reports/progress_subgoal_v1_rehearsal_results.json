@@ -1,7 +1,7 @@
 {
   "scope": "local CPU rehearsals only; CPU fake of the model server with scripted answers; no model calls or GPU runs",
-  "run_id": "package-r1-check-2",
-  "diagnostics": "reports/progress_subgoal_v1_diagnostics/package-r1-check-2.json",
+  "run_id": "package-r3-check-1",
+  "diagnostics": "reports/progress_subgoal_v1_diagnostics/package-r3-check-1.json",
   "requested_suites": [
     "probe_set_keys_scoring_and_analysis",
     "frozen_decision_rules",
@@ -11,7 +11,9 @@
     "transport_cancellation_and_cache_metrics",
     "diagnostics_recorder",
     "connected_path_rehearsals",
-    "packaging_derivation_and_inventory"
+    "packaging_derivation_and_inventory",
+    "launcher_attachment_rejection",
+    "rehearsal_fault_placement"
   ],
   "suites": {
     "probe_set_keys_scoring_and_analysis": {
@@ -21,7 +23,7 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 95.8
+      "seconds": 91.6
     },
     "frozen_decision_rules": {
       "module": "tests.test_progress_subgoal_v1_rules",
@@ -30,7 +32,7 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 0.1
+      "seconds": 0.0
     },
     "runtime_derivation_adapters_and_frozen_set": {
       "module": "tests.test_progress_subgoal_v1_runner",
@@ -39,7 +41,7 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 16.0
+      "seconds": 16.6
     },
     "transition_records_and_fixtures": {
       "module": "tests.test_transition_evidence_v1",
@@ -48,7 +50,7 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 0.3
+      "seconds": 0.1
     },
     "schedule_admission_and_interrupted_gate": {
       "module": "tests.test_progress_subgoal_v1_schedule",
@@ -57,7 +59,7 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 6.7
+      "seconds": 7.3
     },
     "transport_cancellation_and_cache_metrics": {
       "module": "tests.test_evidence_comprehension_v1_transport",
@@ -66,7 +68,7 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 20.4
+      "seconds": 20.1
     },
     "diagnostics_recorder": {
       "module": "tests.test_progress_subgoal_v1_diagnostics",
@@ -75,25 +77,43 @@
       "failures": 0,
       "errors": 0,
       "passed": true,
-      "seconds": 20.1
+      "seconds": 0.2
     },
     "connected_path_rehearsals": {
       "module": "tests.test_progress_subgoal_v1_connected",
       "completed": true,
       "tests_run": 10,
-      "failures": 0,
+      "failures": 1,
       "errors": 0,
-      "passed": true,
-      "seconds": 2205.1
+      "passed": false,
+      "seconds": 1360.2
     },
     "packaging_derivation_and_inventory": {
       "module": "tests.test_progress_subgoal_v1_packaging",
       "completed": true,
-      "tests_run": 7,
-      "failures": 1,
+      "tests_run": 8,
+      "failures": 0,
       "errors": 0,
-      "passed": false,
-      "seconds": 14.1
+      "passed": true,
+      "seconds": 1.6
+    },
+    "launcher_attachment_rejection": {
+      "module": "tests.test_progress_subgoal_v1_launch",
+      "completed": true,
+      "tests_run": 5,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 5.1
+    },
+    "rehearsal_fault_placement": {
+      "module": "tests.test_progress_subgoal_v1_timing",
+      "completed": true,
+      "tests_run": 5,
+      "failures": 0,
+      "errors": 0,
+      "passed": true,
+      "seconds": 2.3
     }
   },
   "all_passed": false,
