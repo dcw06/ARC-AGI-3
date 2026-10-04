@@ -19,12 +19,14 @@ Usage (from the repository root, in an environment with `packaging`):
   python scripts/check_wheelhouse_metadata.py analyze --check  # offline; fails if the committed reports differ
 """
 import argparse
+import email.message
 import email.parser
 import gzip
 import hashlib
 import http.client
 import io
 import json
+import os
 import re
 import socket
 import sys
@@ -127,88 +129,107 @@ def _set_read_timeout(response, seconds):
         sock.settimeout(max(seconds, 0.001))
 
 
-CANCEL_GRACE = 5.0  # seconds allowed for a cancelled worker to stop after its sockets are shut down
+CANCEL_GRACE = 5.0  # seconds allowed for a killed worker process to be reaped
+# Test hook only: seconds a worker process sleeps before connecting (simulates a stalled host-name lookup).
+STALL_ENV = 'WHEELHOUSE_TEST_STALL_BEFORE_CONNECT'
+USER_AGENT = 'arc-agi-3-wheelhouse-metadata-check'
 
 
-class SocketRegistry:
-    """Sockets opened by one attempt, so that an expired deadline can shut them down from outside."""
+def read_bounded(response, cap, url, remaining, operation_timeout):
+    """Read a body in chunks: refuse once `remaining(what)` is exhausted, cap the size, detect truncation."""
+    declared = response.headers.get('Content-Length')
+    if declared is not None and declared.isdigit() and int(declared) > cap:
+        raise FetchError(f'declared size {declared} exceeds the {cap}-byte cap for {url}')
+    reader = getattr(response, 'read1', None) or response.read
+    chunks, size = [], 0
+    while True:
+        left = remaining(f'reading {url}')
+        _set_read_timeout(response, min(operation_timeout, left))
+        chunk = reader(min(READ_CHUNK, cap + 1 - size))
+        remaining(f'completing a read of {url}')
+        if not chunk:
+            break
+        chunks.append(chunk)
+        size += len(chunk)
+        if size > cap:
+            raise FetchError(f'response exceeds the {cap}-byte cap for {url}')
+    body = b''.join(chunks)
+    if declared is not None and declared.isdigit() and len(body) != int(declared):
+        raise FetchError(f'truncated response for {url} ({len(body)} of {declared} bytes)')
+    return body
 
-    def __init__(self):
-        self._lock, self._socks, self.cancelled = threading.Lock(), [], False
 
-    def add(self, sock):
-        with self._lock:
-            self._socks.append(sock)
-            cancelled = self.cancelled
-        if cancelled:
-            _shutdown(sock)
+def _process_fetch(conn, url, accept, timeout, cap, seconds_left, operation_timeout):
+    """Worker process: one GET, no redirects followed, bounded body; the result is sent over `conn`."""
+    deadline = time.monotonic() + seconds_left
 
-    def cancel(self):
-        with self._lock:
-            self.cancelled = True
-            socks = list(self._socks)
-        for sock in socks:
-            _shutdown(sock)
-
-
-def _shutdown(sock):
-    for action in (lambda: sock.shutdown(socket.SHUT_RDWR), sock.close):
+    def remaining(what):
+        left = deadline - time.monotonic()
+        if left <= 0:
+            raise DeadlineExceeded(f'deadline exhausted in the worker before {what}')
+        return left
+    try:
+        stall = float(os.environ.get(STALL_ENV) or 0)
+        if stall:
+            time.sleep(stall)
+        request = urllib.request.Request(url, headers={'User-Agent': USER_AGENT})
+        if accept:
+            request.add_header('Accept', accept)
         try:
-            action()
-        except OSError:
-            pass
+            with urllib.request.build_opener(_NoRedirect).open(request, timeout=timeout) as response:
+                body = read_bounded(response, cap, url, remaining, operation_timeout)
+                conn.send(('ok', response.status, list(response.headers.items()), body))
+        except urllib.error.HTTPError as error:
+            conn.send(('http', error.code, list((error.headers or {}).items())))
+    except DeadlineExceeded as error:
+        conn.send(('deadline', str(error)))
+    except FetchError as error:
+        conn.send(('fetch', str(error)))
+    except (urllib.error.URLError, OSError) as error:
+        conn.send(('network', f'{type(error).__name__} for {url}: {error}'))
+    finally:
+        conn.close()
 
 
-def tracked_opener(registry, redirect_handler):
-    """A urllib opener whose HTTP(S) connections register their socket as soon as it is connected."""
+def run_worker(target, args, deadline, clock, what):
+    """Run target(conn, *args) in a spawned worker process and return its message, never waiting past `deadline`.
 
-    class _HTTPConnection(http.client.HTTPConnection):
-        def connect(self):
-            super().connect()
-            registry.add(self.sock)
-
-    class _HTTPSConnection(http.client.HTTPSConnection):
-        def connect(self):
-            super().connect()
-            registry.add(self.sock)
-
-    class _HTTPHandler(urllib.request.HTTPHandler):
-        def http_open(self, req):
-            return self.do_open(_HTTPConnection, req)
-
-    class _HTTPSHandler(urllib.request.HTTPSHandler):
-        def https_open(self, req):
-            return self.do_open(_HTTPSConnection, req, context=self._context)
-
-    return urllib.request.build_opener(redirect_handler, _HTTPHandler, _HTTPSHandler)
-
-
-def bounded_call(fn, deadline, clock, registry, what):
-    """Run fn() in a worker thread and return its result, but never wait past the absolute deadline.
-
-    On expiry the attempt's sockets are shut down (interrupting a blocked connect, header or body read), the worker
-    is given CANCEL_GRACE seconds to stop, and DeadlineExceeded is raised. A worker still resolving a host name
-    cannot be interrupted; it is a daemon thread whose result is discarded, and the caller still returns on time.
+    On expiry the process is killed (so it cannot open a connection afterwards, even if it was stalled before
+    connecting) and reaped, and DeadlineExceeded reports whether termination was confirmed. Spawned processes keep
+    this portable (no fork of a multi-threaded parent).
     """
-    outcome = {}
+    import multiprocessing
+    ctx = multiprocessing.get_context('spawn')
+    receiver, sender = ctx.Pipe(duplex=False)
+    process = ctx.Process(target=target, args=(sender,) + tuple(args), daemon=True, name=f'worker {what}')
+    process.start()
+    sender.close()
+    message = None
+    try:
+        if receiver.poll(max(0.0, deadline - clock())):
+            message = receiver.recv()
+    except EOFError:
+        message = ('network', f'worker exited without a result while {what}')
+    finally:
+        receiver.close()
+    if message is None:
+        process.kill()
+        process.join(CANCEL_GRACE)
+        terminated = process.exitcode is not None
+        raise DeadlineExceeded(f'absolute deadline reached while {what}; worker process killed '
+                               f'(terminated: {terminated})')
+    process.join(CANCEL_GRACE)
+    if process.is_alive():
+        process.kill()
+        process.join(CANCEL_GRACE)
+    return message
 
-    def worker():
-        try:
-            outcome['value'] = fn()
-        except BaseException as error:  # re-raised in the caller's thread
-            outcome['error'] = error
 
-    thread = threading.Thread(target=worker, daemon=True, name=f'bounded {what}')
-    thread.start()
-    thread.join(max(0.0, deadline - clock()))
-    if thread.is_alive():
-        registry.cancel()
-        thread.join(CANCEL_GRACE)
-        raise DeadlineExceeded(f'absolute deadline reached while {what}; attempt cancelled '
-                               f'(worker stopped: {not thread.is_alive()})')
-    if 'error' in outcome:
-        raise outcome['error']
-    return outcome['value']
+def _headers(items):
+    message = email.message.Message()
+    for key, value in items:
+        message[key] = value
+    return message
 
 
 class Client:
@@ -225,7 +246,7 @@ class Client:
                  total_deadline=TOTAL_DEADLINE, operation_timeout=OPERATION_TIMEOUT):
         self.budget = budget
         self.requests = []          # every URL actually requested, for the record and for tests
-        self._opener = opener  # None: a socket-tracking opener is built per attempt
+        self._opener = opener  # None: each attempt runs in a killable worker process (real network)
         self._sleep, self._clock = sleep, clock
         self.total_deadline, self.operation_timeout = total_deadline, operation_timeout
 
@@ -252,26 +273,29 @@ class Client:
         raise FetchError(f'too many redirects from {url}')
 
     def _read_body(self, response, cap, url, deadline):
-        declared = response.headers.get('Content-Length')
-        if declared is not None and declared.isdigit() and int(declared) > cap:
-            raise FetchError(f'declared size {declared} exceeds the {cap}-byte cap for {url}')
-        reader = getattr(response, 'read1', None) or response.read
-        chunks, size = [], 0
-        while True:
-            left = self._remaining(deadline, f'reading {url}')
-            _set_read_timeout(response, min(self.operation_timeout, left))
-            chunk = reader(min(READ_CHUNK, cap + 1 - size))
-            self._remaining(deadline, f'completing a read of {url}')
-            if not chunk:
-                break
-            chunks.append(chunk)
-            size += len(chunk)
-            if size > cap:
-                raise FetchError(f'response exceeds the {cap}-byte cap for {url}')
-        body = b''.join(chunks)
-        if declared is not None and declared.isdigit() and len(body) != int(declared):
-            raise FetchError(f'truncated response for {url} ({len(body)} of {declared} bytes)')
-        return body
+        return read_bounded(response, cap, url, lambda what: self._remaining(deadline, what), self.operation_timeout)
+
+    def _one_attempt(self, url, cap, accept, deadline, timeout):
+        if self._opener is None:  # real network: a killable worker process
+            message = run_worker(_process_fetch, (url, accept, timeout, cap, deadline - self._clock(),
+                                                  self.operation_timeout), deadline, self._clock, f'fetching {url}')
+            self._remaining(deadline, f'handling the response from {url}')
+            kind = message[0]
+            if kind == 'ok':
+                return message[1], _headers(message[2]), message[3]
+            if kind == 'http':
+                raise urllib.error.HTTPError(url, message[1], 'HTTP error', _headers(message[2]), None)
+            if kind == 'deadline':
+                raise DeadlineExceeded(message[1])
+            if kind == 'fetch':
+                raise FetchError(message[1])
+            raise urllib.error.URLError(message[1])
+        request = urllib.request.Request(url, headers={'User-Agent': USER_AGENT})  # injected opener (tests)
+        if accept:
+            request.add_header('Accept', accept)
+        with self._opener.open(request, timeout=timeout) as response:
+            self._remaining(deadline, f'reading the response headers of {url}')
+            return response.status, response.headers, self._read_body(response, cap, url, deadline)
 
     def _attempts(self, url, cap, accept, deadline):
         last = None
@@ -281,19 +305,8 @@ class Client:
                 raise FetchError('request budget exhausted')
             self.budget -= 1
             self.requests.append(url)
-            request = urllib.request.Request(url, headers={'User-Agent': 'arc-agi-3-wheelhouse-metadata-check'})
-            if accept:
-                request.add_header('Accept', accept)
-            registry = SocketRegistry()
-            opener = self._opener or tracked_opener(registry, _NoRedirect)
-            timeout = min(self.operation_timeout, left)
-
-            def one():
-                with opener.open(request, timeout=timeout) as response:
-                    self._remaining(deadline, f'reading the response headers of {url}')
-                    return response.status, response.headers, self._read_body(response, cap, url, deadline)
             try:
-                return bounded_call(one, deadline, self._clock, registry, f'fetching {url}')
+                return self._one_attempt(url, cap, accept, deadline, min(self.operation_timeout, left))
             except DeadlineExceeded:
                 raise
             except urllib.error.HTTPError as error:

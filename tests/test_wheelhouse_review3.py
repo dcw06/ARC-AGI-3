@@ -1,6 +1,7 @@
 """Regressions for the review of c239f26: unsafe work directories, unbound manifests, slow response headers."""
 import hashlib
 import json
+import os
 import shutil
 import socket
 import tempfile
@@ -16,6 +17,10 @@ from scripts import download_wheelhouse as D
 from scripts import extract_wheelhouse_licenses as X
 
 ROOT = Path(__file__).resolve().parents[1]
+SPAWN_ALLOWANCE = 1.0  # seconds: a killed worker is reaped promptly; this bounds kill and join
+# Long enough for a spawned worker to connect and start receiving the trickling headers (the 200-byte header
+# line alone takes about 10 s at one byte per 50 ms), so the deadline really lands mid-header.
+HEADER_DEADLINE = 2.0
 
 
 def tampered_manifest(folder):
@@ -70,7 +75,7 @@ class UnsafeWorkDirectory(unittest.TestCase):
         self.assertTrue(children[0].name.startswith('install-check-'))
         self.assertEqual(keep.read_text(), 'must survive')
         result = json.loads((self.tmp / 'result.json').read_text())
-        self.assertEqual(result['work_directory'], str(children[0]))
+        self.assertEqual(Path(result['work_directory']).resolve(), children[0].resolve())
 
     def test_removal_is_confined_to_the_exclusive_directory(self):
         work = self.tmp / 'work'
@@ -123,7 +128,7 @@ class ManifestBinding(unittest.TestCase):
 class SlowHeaderServer:
     """A real local HTTP server that trickles its status line and headers one byte at a time."""
 
-    def __init__(self, delay=0.05, total=4.0):
+    def __init__(self, delay=0.05, total=8.0):
         self.sock = socket.socket()
         self.sock.bind(('127.0.0.1', 0))
         self.sock.listen(1)
@@ -157,17 +162,17 @@ class SlowHeaders(unittest.TestCase):
     def test_metadata_client_returns_at_the_deadline_and_cancels_the_socket(self):
         server = SlowHeaderServer()
         url = f'http://127.0.0.1:{server.port}/simple/demo/'
-        client = W.Client(budget=5, total_deadline=0.15, operation_timeout=5.0)
+        client = W.Client(budget=5, total_deadline=HEADER_DEADLINE, operation_timeout=5.0)
         start = time.monotonic()
         with mock.patch.object(W, 'check_url', lambda u: None):
             with self.assertRaises(W.DeadlineExceeded) as raised:
                 client.get(url, 10_000)
         elapsed = time.monotonic() - start
-        self.assertLess(elapsed, 0.15 + 0.35, elapsed)
-        self.assertIn('worker stopped: True', str(raised.exception))
+        self.assertLess(elapsed, HEADER_DEADLINE + SPAWN_ALLOWANCE, elapsed)
+        self.assertIn('terminated: True', str(raised.exception))
         server.thread.join(3)
         self.assertIsNotNone(server.client_gone_at, 'the server never saw the connection closed')
-        self.assertLess(server.client_gone_at - start, 1.5)
+        self.assertLess(server.client_gone_at - start, HEADER_DEADLINE + SPAWN_ALLOWANCE)
 
     def test_downloader_returns_at_the_deadline_and_leaves_no_partial_file(self):
         server = SlowHeaderServer()
@@ -178,12 +183,13 @@ class SlowHeaders(unittest.TestCase):
             dl = D.Downloader(tmp, sleep=lambda s: None)
             start = time.monotonic()
             with mock.patch.object(D, '_artifact_url_ok', lambda url, name: True), \
-                    mock.patch.object(D, 'BASE_DEADLINE', 0.15), mock.patch.object(D, 'MIN_RATE', 10 ** 12):
+                    mock.patch.object(D, 'BASE_DEADLINE', HEADER_DEADLINE), mock.patch.object(D, 'MIN_RATE', 10 ** 12):
                 result = dl.fetch(artifact)
             elapsed = time.monotonic() - start
             self.assertEqual(result['status'], 'failed')
             self.assertIn('deadline', result['reason'])
-            self.assertLess(elapsed, 0.15 + 0.35, elapsed)
+            self.assertIn('terminated: True', result['reason'])
+            self.assertLess(elapsed, HEADER_DEADLINE + SPAWN_ALLOWANCE, elapsed)
             server.thread.join(3)
             self.assertIsNotNone(server.client_gone_at)
             time.sleep(0.2)
@@ -209,6 +215,78 @@ class SlowHeaders(unittest.TestCase):
         with mock.patch.object(W, 'check_url', lambda u: None):
             body, _ = client.get(f'http://127.0.0.1:{port}/x', 100)
         self.assertEqual(body, b'ok')
+
+
+class CountingServer:
+    """A real local server that records every connection it accepts, for a fixed observation window."""
+
+    def __init__(self, window=3.0):
+        self.sock = socket.socket()
+        self.sock.bind(('127.0.0.1', 0))
+        self.sock.listen(5)
+        self.sock.settimeout(0.1)
+        self.port = self.sock.getsockname()[1]
+        self.accepted, self.window = [], window
+        self.thread = threading.Thread(target=self.serve, daemon=True)
+        self.thread.start()
+
+    def serve(self):
+        end = time.monotonic() + self.window
+        while time.monotonic() < end:
+            try:
+                conn, _ = self.sock.accept()
+            except OSError:
+                continue
+            self.accepted.append(time.monotonic())
+            conn.sendall(b'HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\nok')
+            conn.close()
+        self.sock.close()
+
+
+class StalledBeforeConnect(unittest.TestCase):
+    """Review of f979bb6 [P2]: a worker stalled before connecting (e.g. in a host-name lookup) is killed at the
+    deadline, its termination is confirmed, and it never connects afterwards."""
+
+    STALL = '1.5'
+
+    def test_metadata_worker_is_killed_and_never_connects(self):
+        server = CountingServer()
+        client = W.Client(budget=5, total_deadline=0.1, operation_timeout=5.0)
+        start = time.monotonic()
+        with mock.patch.object(W, 'check_url', lambda u: None), mock.patch.dict(os.environ, {W.STALL_ENV: self.STALL}):
+            with self.assertRaises(W.DeadlineExceeded) as raised:
+                client.get(f'http://127.0.0.1:{server.port}/x', 100)
+        self.assertLess(time.monotonic() - start, 0.1 + SPAWN_ALLOWANCE)
+        self.assertIn('terminated: True', str(raised.exception))
+        server.thread.join(5)
+        self.assertEqual(server.accepted, [], 'a cancelled worker connected after the deadline')
+
+    def test_download_worker_is_killed_and_never_connects(self):
+        server = CountingServer()
+        tmp = Path(tempfile.mkdtemp())
+        try:
+            artifact = {'filename': 'demo-1.0-py3-none-any.whl', 'size': 2, 'sha256': hashlib.sha256(b'ok').hexdigest(),
+                        'url': f'http://127.0.0.1:{server.port}/demo-1.0-py3-none-any.whl'}
+            dl = D.Downloader(tmp, sleep=lambda s: None)
+            with mock.patch.object(D, '_artifact_url_ok', lambda url, name: True), \
+                    mock.patch.object(D, 'BASE_DEADLINE', 0.1), mock.patch.object(D, 'MIN_RATE', 10 ** 12), \
+                    mock.patch.dict(os.environ, {W.STALL_ENV: self.STALL}):
+                result = dl.fetch(artifact)
+            self.assertEqual(result['status'], 'failed')
+            self.assertIn('terminated: True', result['reason'])
+            server.thread.join(5)
+            self.assertEqual(server.accepted, [], 'a cancelled download worker connected after the deadline')
+            self.assertEqual(list((tmp / '.partial').glob('*')), [])
+        finally:
+            shutil.rmtree(tmp, ignore_errors=True)
+
+    def test_an_unstalled_worker_process_completes_normally(self):
+        server = CountingServer(window=2.0)
+        client = W.Client(budget=5, total_deadline=10.0, operation_timeout=5.0)
+        with mock.patch.object(W, 'check_url', lambda u: None):
+            body, _ = client.get(f'http://127.0.0.1:{server.port}/x', 100)
+        self.assertEqual(body, b'ok')
+        self.assertEqual(len(server.accepted), 1)
 
 
 if __name__ == '__main__':

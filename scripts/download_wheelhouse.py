@@ -28,7 +28,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from scripts.check_wheelhouse_metadata import (  # noqa: E402
-    DeadlineExceeded, SocketRegistry, _artifact_url_ok, _set_read_timeout, bounded_call, tracked_opener)
+    STALL_ENV, DeadlineExceeded, _artifact_url_ok, _NoRedirect, _set_read_timeout, run_worker)
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / 'reports/wheelhouse_download_manifest.json'
@@ -95,7 +95,7 @@ class Downloader:
     def __init__(self, dest, opener=None, clock=time.monotonic, sleep=time.sleep):
         self.dest = dest
         self.partial = dest / '.partial'
-        self._opener = opener  # None: a socket-tracking opener is built per attempt
+        self._opener = opener  # None: each attempt runs in a killable worker process (real network)
         self._clock, self._sleep = clock, sleep
         self.requests = []
 
@@ -138,16 +138,28 @@ class Downloader:
         left = self._remaining(deadline, f'requesting {url}')
         self.requests.append(url)
         request = urllib.request.Request(url, headers={'User-Agent': 'arc-agi-3-wheelhouse-r2-download'})
-        registry = SocketRegistry()
-        opener = self._opener or tracked_opener(registry, _NoRedirect)
+        timeout = min(OPERATION_TIMEOUT, left)
+        if self._opener is not None:  # injected opener (tests): in-process
+            self._stream(self._opener, request, timeout, artifact, final, temp, deadline)
+            return
         try:
-            bounded_call(lambda: self._stream(opener, request, min(OPERATION_TIMEOUT, left), artifact, final,
-                                              temp, deadline), deadline, self._clock, registry, f'downloading {url}')
+            message = run_worker(_process_download, (url, str(temp), artifact['size'], timeout,
+                                                     deadline - self._clock()), deadline, self._clock,
+                                 f'downloading {url}')
         except DeadlineExceeded as error:
+            temp.unlink(missing_ok=True)  # the worker process has been killed and reaped
             raise DownloadError(f'deadline: {error}') from error
+        try:
+            if message[0] != 'ok':
+                raise DownloadError(message[1])
+            size, digest = file_digest(temp)  # verified again in this process before completion
+            if size != artifact['size']:
+                raise DownloadError(f'size {size} differs from the expected {artifact["size"]}')
+            if digest != artifact['sha256']:
+                raise DownloadError(f'hash mismatch for {artifact["filename"]}')
+            os.replace(temp, final)
         finally:
-            if not registry.cancelled:
-                temp.unlink(missing_ok=True)
+            temp.unlink(missing_ok=True)
 
     def _stream(self, opener, request, timeout, artifact, final, temp, deadline):
         url = artifact['url']
@@ -181,6 +193,46 @@ class Downloader:
             raise DownloadError(f'{type(error).__name__} for {url}: {error}') from error
         finally:
             temp.unlink(missing_ok=True)
+
+
+def _process_download(conn, url, temp, size_limit, timeout, seconds_left):
+    """Worker process: stream one artifact into `temp`, bounded by size and by its own copy of the deadline."""
+    deadline = time.monotonic() + seconds_left
+
+    def remaining(what):
+        left = deadline - time.monotonic()
+        if left <= 0:
+            raise DownloadError(f'deadline exhausted in the worker before {what}')
+        return left
+    try:
+        stall = float(os.environ.get(STALL_ENV) or 0)
+        if stall:
+            time.sleep(stall)
+        request = urllib.request.Request(url, headers={'User-Agent': 'arc-agi-3-wheelhouse-r2-download'})
+        with urllib.request.build_opener(_NoRedirect).open(request, timeout=timeout) as response:
+            if response.status != 200:
+                raise DownloadError(f'HTTP {response.status} for {url}')
+            reader = getattr(response, 'read1', None) or response.read
+            size = 0
+            with open(temp, 'wb') as out:
+                while True:
+                    left = remaining(f'reading {url}')
+                    _set_read_timeout(response, min(OPERATION_TIMEOUT, left))
+                    chunk = reader(min(CHUNK, size_limit + 1 - size))
+                    remaining(f'completing a read of {url}')
+                    if not chunk:
+                        break
+                    size += len(chunk)
+                    if size > size_limit:
+                        raise DownloadError(f'size exceeds the expected {size_limit} bytes for {url}')
+                    out.write(chunk)
+        conn.send(('ok', size))
+    except urllib.error.HTTPError as error:
+        conn.send(('error', f'HTTP {error.code} for {url} (redirects are not followed)'))
+    except (DownloadError, urllib.error.URLError, OSError) as error:
+        conn.send(('error', f'{type(error).__name__}: {error}'))
+    finally:
+        conn.close()
 
 
 def run(manifest, dest, workers=MAX_WORKERS, downloader=None):
