@@ -21,6 +21,8 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from scripts.download_wheelhouse import APPROVED_MANIFEST_SHA256, load_manifest  # noqa: E402
 MANIFEST = ROOT / 'reports/wheelhouse_download_manifest.json'
 INDEX_JSON = ROOT / 'reports/wheelhouse_license_evidence.json'
 INDEX_MD = ROOT / 'reports/wheelhouse_license_evidence.md'
@@ -183,7 +185,9 @@ def main(argv=None):
     wheels, texts = Path(args.wheels).resolve(), Path(args.texts).resolve()
     if texts == ROOT.resolve() or ROOT.resolve() in texts.parents:
         raise SystemExit('refused: licence texts must be kept outside the repository')
-    manifest = json.loads(MANIFEST.read_text(encoding='utf-8'))
+    manifest = load_manifest(MANIFEST, APPROVED_MANIFEST_SHA256)  # recomputed digest and structure
+    if wheels == texts or wheels in texts.parents or texts in wheels.parents:
+        raise SystemExit('refused: the licence text directory overlaps the wheel directory')
     rows = extract(manifest, wheels, texts)
     INDEX_JSON.write_text(json.dumps({'manifest_sha256': manifest['manifest_sha256'], 'wheels': rows},
                                      indent=1, sort_keys=True) + '\n', encoding='utf-8')

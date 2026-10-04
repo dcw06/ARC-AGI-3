@@ -29,16 +29,20 @@ import shutil
 import socket
 import subprocess
 import sys
+import tempfile
 import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from scripts.download_wheelhouse import APPROVED_MANIFEST_SHA256, load_manifest  # noqa: E402
 MANIFEST = ROOT / 'reports/wheelhouse_download_manifest.json'
 RESULT = ROOT / 'reports/wheelhouse_r2_offline_install_check.json'
 SYSTEM_PYTHON = '/usr/bin/python3.12'
 INSTALL_TIMEOUT = 3600
 STEP_TIMEOUT = 900
-EXPECTED_MANIFEST = '3691cb8854df4d8ff10e42ca9957fddb9a8ae0362064e7b31b3205891af0d546'
+EXPECTED_MANIFEST = APPROVED_MANIFEST_SHA256
+EVIDENCE = ROOT / 'reports/wheelhouse_r2_offline_install_evidence'
 IMPORT_CHECK = r'''
 import importlib, json, sys
 out = {'python': sys.version.split()[0], 'prefix': sys.prefix, 'modules': {}}
@@ -160,8 +164,7 @@ def fault_checks(manifest, wheels, work, env, log):
     results = {'artifact': small['filename']}
     for case in ('corrupted', 'missing'):
         folder = work / f'fault-{case}'
-        shutil.rmtree(folder, ignore_errors=True)
-        (folder / 'wheels').mkdir(parents=True)
+        (folder / 'wheels').mkdir(parents=True)  # folder is new: work is a fresh exclusive directory
         if case == 'corrupted':
             data = bytearray((wheels / small['filename']).read_bytes())
             data[len(data) // 2] ^= 0xFF
@@ -176,28 +179,65 @@ def fault_checks(manifest, wheels, work, env, log):
         results[case] = {'pip_exit': code, 'rejected': code != 0,
                          'reason': 'hash mismatch' if 'HASHES' in out.upper() or 'hash' in out.lower()
                          else ('no matching distribution' if 'No matching distribution' in out else 'other')}
-        shutil.rmtree(folder / 'venv', ignore_errors=True)
+        remove_inside(work, folder / 'venv')
     return results
+
+
+def check_paths(wheels, parent):
+    """Refuse unsafe parents: the filesystem root, the home directory, the repository and its ancestors, or any
+    directory overlapping the wheels."""
+    repo = ROOT.resolve()
+    if not parent.is_dir():
+        raise SystemExit(f'refused: {parent} is not an existing directory')
+    if parent == Path(parent.anchor) or parent == Path.home().resolve():
+        raise SystemExit(f'refused: {parent} is the filesystem root or the home directory')
+    if parent == repo or repo in parent.parents or parent in repo.parents:
+        raise SystemExit(f'refused: {parent} is the repository, inside it, or one of its ancestors')
+    if parent == wheels or wheels in parent.parents or parent in wheels.parents:
+        raise SystemExit(f'refused: {parent} overlaps the wheel directory {wheels}')
+    if wheels == repo or repo in wheels.parents:
+        raise SystemExit(f'refused: the wheel directory {wheels} is inside the repository')
+
+
+def remove_inside(work, target):
+    """Recursively remove target only if it lies strictly inside the exclusive work directory."""
+    work, target = work.resolve(), target.resolve()
+    if work not in target.parents:
+        raise CheckError(f'refused to remove {target}: not inside {work}')
+    shutil.rmtree(target, ignore_errors=True)
+
+
+def retain_evidence(work, result):
+    """Copy the log and lock into the repository and bind them by SHA-256 in the result."""
+    folder = EVIDENCE / work.name
+    folder.mkdir(parents=True, exist_ok=False)
+    files = {}
+    for name in ('install-check.log', 'requirements.lock'):
+        source = work / name
+        if source.is_file():
+            data = source.read_bytes()
+            (folder / name).write_bytes(data)
+            files[name] = hashlib.sha256(data).hexdigest()
+    shown = folder.relative_to(ROOT) if folder.is_relative_to(ROOT) else folder
+    return {'folder': str(shown), 'files_sha256': files}
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--wheels', required=True)
-    parser.add_argument('--workdir', required=True)
+    parser.add_argument('--workdir-parent', required=True,
+                        help='an existing directory; a fresh exclusive child is created in it and only that child '
+                             'is ever written or cleaned')
     parser.add_argument('--keep-venv', action='store_true')
     parser.add_argument('--allow-network', action='store_true', help='tests only')
     args = parser.parse_args(argv)
-    wheels, work = Path(args.wheels).resolve(), Path(args.workdir).resolve()
-    for path in (wheels, work):
-        if path == ROOT.resolve() or ROOT.resolve() in path.parents:
-            raise SystemExit(f'refused: {path} is inside the git repository')
+    wheels, parent = Path(args.wheels).resolve(), Path(args.workdir_parent).resolve()
+    # All validation happens before any filesystem change.
+    manifest = load_manifest(MANIFEST, EXPECTED_MANIFEST)  # recomputed digest, counts, totals, names, duplicates
+    check_paths(wheels, parent)
     if network_reachable() and not args.allow_network:
         raise SystemExit('refused: the network is reachable; run inside an isolated network namespace')
-    manifest = json.loads(MANIFEST.read_text(encoding='utf-8'))
-    if manifest['manifest_sha256'] != EXPECTED_MANIFEST:
-        raise SystemExit('refused: not the approved manifest')
-    shutil.rmtree(work, ignore_errors=True)
-    work.mkdir(parents=True)
+    work = Path(tempfile.mkdtemp(prefix='install-check-', dir=parent))  # fresh, exclusively ours
     log = work / 'install-check.log'
     env = clean_env(work)
     result = {'schema': 'wheelhouse_offline_install_check_v1', 'manifest_sha256': manifest['manifest_sha256'],
@@ -244,13 +284,15 @@ def main(argv=None):
         result['error'] = str(error)
     finally:
         if not args.keep_venv:
-            shutil.rmtree(work / 'venv', ignore_errors=True)
+            remove_inside(work, work / 'venv')
         result['finished'] = datetime.datetime.now().astimezone().isoformat(timespec='seconds')
         result['log'] = str(log)
         result['not_established'] = ['GPU runtime (CUDA initialisation, model startup, inference, cancellation, '
                                      'cleanup)', 'licence and redistribution review', 'team-owned upload',
                                      'exact target image (this host: WSL Ubuntu 24.04, CPython 3.12.3; target '
                                      'CPython 3.12.13)']
+        result['work_directory'] = str(work)
+        result['evidence'] = retain_evidence(work, result)
         RESULT.write_text(json.dumps(result, indent=1, sort_keys=True) + '\n', encoding='utf-8')
         print(json.dumps({k: result.get(k) for k in ('passed', 'network_isolated', 'install', 'error')}))
     return 0 if result.get('passed') else 1

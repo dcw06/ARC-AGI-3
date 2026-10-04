@@ -22,11 +22,13 @@ import argparse
 import email.parser
 import gzip
 import hashlib
+import http.client
 import io
 import json
 import re
 import socket
 import sys
+import threading
 import time
 import urllib.error
 import urllib.parse
@@ -125,6 +127,90 @@ def _set_read_timeout(response, seconds):
         sock.settimeout(max(seconds, 0.001))
 
 
+CANCEL_GRACE = 5.0  # seconds allowed for a cancelled worker to stop after its sockets are shut down
+
+
+class SocketRegistry:
+    """Sockets opened by one attempt, so that an expired deadline can shut them down from outside."""
+
+    def __init__(self):
+        self._lock, self._socks, self.cancelled = threading.Lock(), [], False
+
+    def add(self, sock):
+        with self._lock:
+            self._socks.append(sock)
+            cancelled = self.cancelled
+        if cancelled:
+            _shutdown(sock)
+
+    def cancel(self):
+        with self._lock:
+            self.cancelled = True
+            socks = list(self._socks)
+        for sock in socks:
+            _shutdown(sock)
+
+
+def _shutdown(sock):
+    for action in (lambda: sock.shutdown(socket.SHUT_RDWR), sock.close):
+        try:
+            action()
+        except OSError:
+            pass
+
+
+def tracked_opener(registry, redirect_handler):
+    """A urllib opener whose HTTP(S) connections register their socket as soon as it is connected."""
+
+    class _HTTPConnection(http.client.HTTPConnection):
+        def connect(self):
+            super().connect()
+            registry.add(self.sock)
+
+    class _HTTPSConnection(http.client.HTTPSConnection):
+        def connect(self):
+            super().connect()
+            registry.add(self.sock)
+
+    class _HTTPHandler(urllib.request.HTTPHandler):
+        def http_open(self, req):
+            return self.do_open(_HTTPConnection, req)
+
+    class _HTTPSHandler(urllib.request.HTTPSHandler):
+        def https_open(self, req):
+            return self.do_open(_HTTPSConnection, req, context=self._context)
+
+    return urllib.request.build_opener(redirect_handler, _HTTPHandler, _HTTPSHandler)
+
+
+def bounded_call(fn, deadline, clock, registry, what):
+    """Run fn() in a worker thread and return its result, but never wait past the absolute deadline.
+
+    On expiry the attempt's sockets are shut down (interrupting a blocked connect, header or body read), the worker
+    is given CANCEL_GRACE seconds to stop, and DeadlineExceeded is raised. A worker still resolving a host name
+    cannot be interrupted; it is a daemon thread whose result is discarded, and the caller still returns on time.
+    """
+    outcome = {}
+
+    def worker():
+        try:
+            outcome['value'] = fn()
+        except BaseException as error:  # re-raised in the caller's thread
+            outcome['error'] = error
+
+    thread = threading.Thread(target=worker, daemon=True, name=f'bounded {what}')
+    thread.start()
+    thread.join(max(0.0, deadline - clock()))
+    if thread.is_alive():
+        registry.cancel()
+        thread.join(CANCEL_GRACE)
+        raise DeadlineExceeded(f'absolute deadline reached while {what}; attempt cancelled '
+                               f'(worker stopped: {not thread.is_alive()})')
+    if 'error' in outcome:
+        raise outcome['error']
+    return outcome['value']
+
+
 class Client:
     """Bounded HTTPS GETs to the allow-listed PyPI hosts only.
 
@@ -139,7 +225,7 @@ class Client:
                  total_deadline=TOTAL_DEADLINE, operation_timeout=OPERATION_TIMEOUT):
         self.budget = budget
         self.requests = []          # every URL actually requested, for the record and for tests
-        self._opener = opener or urllib.request.build_opener(_NoRedirect)
+        self._opener = opener  # None: a socket-tracking opener is built per attempt
         self._sleep, self._clock = sleep, clock
         self.total_deadline, self.operation_timeout = total_deadline, operation_timeout
 
@@ -198,10 +284,16 @@ class Client:
             request = urllib.request.Request(url, headers={'User-Agent': 'arc-agi-3-wheelhouse-metadata-check'})
             if accept:
                 request.add_header('Accept', accept)
-            try:
-                with self._opener.open(request, timeout=min(self.operation_timeout, left)) as response:
+            registry = SocketRegistry()
+            opener = self._opener or tracked_opener(registry, _NoRedirect)
+            timeout = min(self.operation_timeout, left)
+
+            def one():
+                with opener.open(request, timeout=timeout) as response:
                     self._remaining(deadline, f'reading the response headers of {url}')
                     return response.status, response.headers, self._read_body(response, cap, url, deadline)
+            try:
+                return bounded_call(one, deadline, self._clock, registry, f'fetching {url}')
             except DeadlineExceeded:
                 raise
             except urllib.error.HTTPError as error:

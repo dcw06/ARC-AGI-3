@@ -27,7 +27,8 @@ import urllib.request
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from scripts.check_wheelhouse_metadata import FILES_HOST, _artifact_url_ok, _set_read_timeout  # noqa: E402
+from scripts.check_wheelhouse_metadata import (  # noqa: E402
+    DeadlineExceeded, SocketRegistry, _artifact_url_ok, _set_read_timeout, bounded_call, tracked_opener)
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / 'reports/wheelhouse_download_manifest.json'
@@ -38,6 +39,8 @@ BASE_DEADLINE = 300.0         # seconds per file, plus the size-proportional all
 MIN_RATE = 1024 ** 2          # bytes/second assumed for the size-proportional allowance (1 MiB/s)
 CHUNK = 1024 ** 2
 MAX_WORKERS = 4
+# The user's recorded approval (download only), named by digest. Other tools bind to it via load_manifest().
+APPROVED_MANIFEST_SHA256 = '3691cb8854df4d8ff10e42ca9957fddb9a8ae0362064e7b31b3205891af0d546'
 
 
 class DownloadError(Exception):
@@ -92,7 +95,7 @@ class Downloader:
     def __init__(self, dest, opener=None, clock=time.monotonic, sleep=time.sleep):
         self.dest = dest
         self.partial = dest / '.partial'
-        self._opener = opener or urllib.request.build_opener(_NoRedirect)
+        self._opener = opener  # None: a socket-tracking opener is built per attempt
         self._clock, self._sleep = clock, sleep
         self.requests = []
 
@@ -135,8 +138,21 @@ class Downloader:
         left = self._remaining(deadline, f'requesting {url}')
         self.requests.append(url)
         request = urllib.request.Request(url, headers={'User-Agent': 'arc-agi-3-wheelhouse-r2-download'})
+        registry = SocketRegistry()
+        opener = self._opener or tracked_opener(registry, _NoRedirect)
         try:
-            with self._opener.open(request, timeout=min(OPERATION_TIMEOUT, left)) as response:
+            bounded_call(lambda: self._stream(opener, request, min(OPERATION_TIMEOUT, left), artifact, final,
+                                              temp, deadline), deadline, self._clock, registry, f'downloading {url}')
+        except DeadlineExceeded as error:
+            raise DownloadError(f'deadline: {error}') from error
+        finally:
+            if not registry.cancelled:
+                temp.unlink(missing_ok=True)
+
+    def _stream(self, opener, request, timeout, artifact, final, temp, deadline):
+        url = artifact['url']
+        try:
+            with opener.open(request, timeout=timeout) as response:
                 if response.status != 200:
                     raise DownloadError(f'HTTP {response.status} for {url}')
                 h, size = hashlib.sha256(), 0
@@ -164,8 +180,7 @@ class Downloader:
         except (urllib.error.URLError, socket.timeout, TimeoutError, ConnectionError) as error:
             raise DownloadError(f'{type(error).__name__} for {url}: {error}') from error
         finally:
-            if temp.exists():
-                temp.unlink()
+            temp.unlink(missing_ok=True)
 
 
 def run(manifest, dest, workers=MAX_WORKERS, downloader=None):

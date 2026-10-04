@@ -45,12 +45,12 @@ class Lock(unittest.TestCase):
 class Refusals(unittest.TestCase):
     def test_refuses_paths_inside_the_repository(self):
         with self.assertRaises(SystemExit):
-            O.main(['--wheels', str(ROOT / 'reports'), '--workdir', '/tmp/x', '--allow-network'])
+            O.main(['--wheels', str(ROOT / 'reports'), '--workdir-parent', '/tmp', '--allow-network'])
 
     def test_refuses_when_the_network_is_reachable(self):
         with mock.patch.object(O, 'network_reachable', return_value=True):
             with self.assertRaises(SystemExit):
-                O.main(['--wheels', '/tmp/w', '--workdir', '/tmp/x'])
+                O.main(['--wheels', '/tmp/w', '--workdir-parent', '/tmp'])
 
     def test_wheel_verification_detects_bad_files(self):
         with tempfile.TemporaryDirectory() as tmp:
