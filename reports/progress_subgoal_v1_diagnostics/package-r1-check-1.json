@@ -1,0 +1,412 @@
+{
+ "run_id": "package-r1-check-1",
+ "label": "full local check of review r1 (906d4a0), worktree in WSL",
+ "command": [
+  "/home/jingjing/.local/share/agi/dev-env/bin/python",
+  "scripts/check_progress_subgoal_v1.py",
+  "--run-id",
+  "package-r1-check-1",
+  "--label",
+  "full local check of review r1 (906d4a0), worktree in WSL"
+ ],
+ "cwd": "/mnt/c/Users/jjzzw/Desktop/AGI/.claude/worktrees/agent-a4f7bba37c003c145",
+ "git": {
+  "commit": "bc0c1b9ed3dabcc2680b5c58619e7c99c5b30abe",
+  "dirty_paths": ""
+ },
+ "host_at_start": {
+  "hostname": "Jingjing",
+  "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "cpus": 8,
+  "loadavg": [
+   3.33,
+   3.22,
+   1.95
+  ],
+  "memory_kib": {
+   "MemTotal": 8006012,
+   "MemAvailable": 7205224
+  }
+ },
+ "started": {
+  "wall": 1790925578.0016637,
+  "monotonic": 1005.189542931
+ },
+ "suites": {
+  "probe_set_keys_scoring_and_analysis": {
+   "module": "tests.test_progress_subgoal_v1",
+   "completed": true,
+   "tests_run": 1,
+   "failures": 0,
+   "errors": 1,
+   "passed": false,
+   "seconds": 0.0,
+   "tests": [
+    {
+     "test": "unittest.loader._FailedTest.tests",
+     "start": {
+      "wall": 1790925578.0052497,
+      "monotonic": 1005.193128508,
+      "loadavg": [
+       3.33,
+       3.22,
+       1.95
+      ]
+     },
+     "outcome": "error",
+     "subtests": [],
+     "detail": "Traceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/case.py\", line 58, in testPartExecutor\n    yield\n  File \"/usr/lib/python3.12/unittest/case.py\", line 634, in run\n    self._callTestMethod(testMethod)\n  File \"/usr/lib/python3.12/unittest/case.py\", line 589, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/usr/lib/python3.12/unittest/loader.py\", line 33, in testFailure\n    raise self._exception\nImportError: Failed to import test module: tests\nTraceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'tests'\n\n",
+     "end": {
+      "wall": 1790925578.00727,
+      "monotonic": 1005.195148269,
+      "loadavg": [
+       3.33,
+       3.22,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.002,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    }
+   ]
+  },
+  "frozen_decision_rules": {
+   "module": "tests.test_progress_subgoal_v1_rules",
+   "completed": true,
+   "tests_run": 1,
+   "failures": 0,
+   "errors": 1,
+   "passed": false,
+   "seconds": 0.0,
+   "tests": [
+    {
+     "test": "unittest.loader._FailedTest.tests",
+     "start": {
+      "wall": 1790925578.0100124,
+      "monotonic": 1005.197891173,
+      "loadavg": [
+       3.33,
+       3.22,
+       1.95
+      ]
+     },
+     "outcome": "error",
+     "subtests": [],
+     "detail": "Traceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/case.py\", line 58, in testPartExecutor\n    yield\n  File \"/usr/lib/python3.12/unittest/case.py\", line 634, in run\n    self._callTestMethod(testMethod)\n  File \"/usr/lib/python3.12/unittest/case.py\", line 589, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/usr/lib/python3.12/unittest/loader.py\", line 33, in testFailure\n    raise self._exception\nImportError: Failed to import test module: tests\nTraceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'tests'\n\n",
+     "end": {
+      "wall": 1790925578.0103776,
+      "monotonic": 1005.198255553,
+      "loadavg": [
+       3.33,
+       3.22,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    }
+   ]
+  },
+  "runtime_derivation_adapters_and_frozen_set": {
+   "module": "tests.test_progress_subgoal_v1_runner",
+   "completed": true,
+   "tests_run": 1,
+   "failures": 0,
+   "errors": 1,
+   "passed": false,
+   "seconds": 0.0,
+   "tests": [
+    {
+     "test": "unittest.loader._FailedTest.tests",
+     "start": {
+      "wall": 1790925578.0132554,
+      "monotonic": 1005.201133899,
+      "loadavg": [
+       3.33,
+       3.22,
+       1.95
+      ]
+     },
+     "outcome": "error",
+     "subtests": [],
+     "detail": "Traceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/case.py\", line 58, in testPartExecutor\n    yield\n  File \"/usr/lib/python3.12/unittest/case.py\", line 634, in run\n    self._callTestMethod(testMethod)\n  File \"/usr/lib/python3.12/unittest/case.py\", line 589, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/usr/lib/python3.12/unittest/loader.py\", line 33, in testFailure\n    raise self._exception\nImportError: Failed to import test module: tests\nTraceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'tests'\n\n",
+     "end": {
+      "wall": 1790925578.0136013,
+      "monotonic": 1005.20147931,
+      "loadavg": [
+       3.33,
+       3.22,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    }
+   ]
+  },
+  "transition_records_and_fixtures": {
+   "module": "tests.test_transition_evidence_v1",
+   "completed": true,
+   "tests_run": 1,
+   "failures": 0,
+   "errors": 1,
+   "passed": false,
+   "seconds": 0.0,
+   "tests": [
+    {
+     "test": "unittest.loader._FailedTest.tests",
+     "start": {
+      "wall": 1790925578.0166621,
+      "monotonic": 1005.204540688,
+      "loadavg": [
+       3.33,
+       3.22,
+       1.95
+      ]
+     },
+     "outcome": "error",
+     "subtests": [],
+     "detail": "Traceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/case.py\", line 58, in testPartExecutor\n    yield\n  File \"/usr/lib/python3.12/unittest/case.py\", line 634, in run\n    self._callTestMethod(testMethod)\n  File \"/usr/lib/python3.12/unittest/case.py\", line 589, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/usr/lib/python3.12/unittest/loader.py\", line 33, in testFailure\n    raise self._exception\nImportError: Failed to import test module: tests\nTraceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'tests'\n\n",
+     "end": {
+      "wall": 1790925578.0169675,
+      "monotonic": 1005.20484541,
+      "loadavg": [
+       3.33,
+       3.22,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    }
+   ]
+  },
+  "schedule_admission_and_interrupted_gate": {
+   "module": "tests.test_progress_subgoal_v1_schedule",
+   "completed": true,
+   "tests_run": 1,
+   "failures": 0,
+   "errors": 1,
+   "passed": false,
+   "seconds": 0.0,
+   "tests": [
+    {
+     "test": "unittest.loader._FailedTest.tests",
+     "start": {
+      "wall": 1790925578.0204778,
+      "monotonic": 1005.208356365,
+      "loadavg": [
+       3.33,
+       3.22,
+       1.95
+      ]
+     },
+     "outcome": "error",
+     "subtests": [],
+     "detail": "Traceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/case.py\", line 58, in testPartExecutor\n    yield\n  File \"/usr/lib/python3.12/unittest/case.py\", line 634, in run\n    self._callTestMethod(testMethod)\n  File \"/usr/lib/python3.12/unittest/case.py\", line 589, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/usr/lib/python3.12/unittest/loader.py\", line 33, in testFailure\n    raise self._exception\nImportError: Failed to import test module: tests\nTraceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'tests'\n\n",
+     "end": {
+      "wall": 1790925578.0209615,
+      "monotonic": 1005.20883959,
+      "loadavg": [
+       3.33,
+       3.22,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    }
+   ]
+  },
+  "transport_cancellation_and_cache_metrics": {
+   "module": "tests.test_evidence_comprehension_v1_transport",
+   "completed": true,
+   "tests_run": 1,
+   "failures": 0,
+   "errors": 1,
+   "passed": false,
+   "seconds": 0.0,
+   "tests": [
+    {
+     "test": "unittest.loader._FailedTest.tests",
+     "start": {
+      "wall": 1790925578.0245366,
+      "monotonic": 1005.212415028,
+      "loadavg": [
+       3.33,
+       3.22,
+       1.95
+      ]
+     },
+     "outcome": "error",
+     "subtests": [],
+     "detail": "Traceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/case.py\", line 58, in testPartExecutor\n    yield\n  File \"/usr/lib/python3.12/unittest/case.py\", line 634, in run\n    self._callTestMethod(testMethod)\n  File \"/usr/lib/python3.12/unittest/case.py\", line 589, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/usr/lib/python3.12/unittest/loader.py\", line 33, in testFailure\n    raise self._exception\nImportError: Failed to import test module: tests\nTraceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'tests'\n\n",
+     "end": {
+      "wall": 1790925578.0249448,
+      "monotonic": 1005.212823017,
+      "loadavg": [
+       3.33,
+       3.22,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    }
+   ]
+  },
+  "diagnostics_recorder": {
+   "module": "tests.test_progress_subgoal_v1_diagnostics",
+   "completed": true,
+   "tests_run": 1,
+   "failures": 0,
+   "errors": 1,
+   "passed": false,
+   "seconds": 0.0,
+   "tests": [
+    {
+     "test": "unittest.loader._FailedTest.tests",
+     "start": {
+      "wall": 1790925578.027838,
+      "monotonic": 1005.215716199,
+      "loadavg": [
+       3.33,
+       3.22,
+       1.95
+      ]
+     },
+     "outcome": "error",
+     "subtests": [],
+     "detail": "Traceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/case.py\", line 58, in testPartExecutor\n    yield\n  File \"/usr/lib/python3.12/unittest/case.py\", line 634, in run\n    self._callTestMethod(testMethod)\n  File \"/usr/lib/python3.12/unittest/case.py\", line 589, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/usr/lib/python3.12/unittest/loader.py\", line 33, in testFailure\n    raise self._exception\nImportError: Failed to import test module: tests\nTraceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'tests'\n\n",
+     "end": {
+      "wall": 1790925578.0282843,
+      "monotonic": 1005.216162396,
+      "loadavg": [
+       3.33,
+       3.22,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    }
+   ]
+  },
+  "connected_path_rehearsals": {
+   "module": "tests.test_progress_subgoal_v1_connected",
+   "completed": true,
+   "tests_run": 1,
+   "failures": 0,
+   "errors": 1,
+   "passed": false,
+   "seconds": 0.0,
+   "tests": [
+    {
+     "test": "unittest.loader._FailedTest.tests",
+     "start": {
+      "wall": 1790925578.0310435,
+      "monotonic": 1005.218922095,
+      "loadavg": [
+       3.33,
+       3.22,
+       1.95
+      ]
+     },
+     "outcome": "error",
+     "subtests": [],
+     "detail": "Traceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/case.py\", line 58, in testPartExecutor\n    yield\n  File \"/usr/lib/python3.12/unittest/case.py\", line 634, in run\n    self._callTestMethod(testMethod)\n  File \"/usr/lib/python3.12/unittest/case.py\", line 589, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/usr/lib/python3.12/unittest/loader.py\", line 33, in testFailure\n    raise self._exception\nImportError: Failed to import test module: tests\nTraceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'tests'\n\n",
+     "end": {
+      "wall": 1790925578.0313802,
+      "monotonic": 1005.219258264,
+      "loadavg": [
+       3.33,
+       3.22,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    }
+   ]
+  },
+  "packaging_derivation_and_inventory": {
+   "module": "tests.test_progress_subgoal_v1_packaging",
+   "completed": true,
+   "tests_run": 1,
+   "failures": 0,
+   "errors": 1,
+   "passed": false,
+   "seconds": 0.0,
+   "tests": [
+    {
+     "test": "unittest.loader._FailedTest.tests",
+     "start": {
+      "wall": 1790925578.0344007,
+      "monotonic": 1005.222279378,
+      "loadavg": [
+       3.33,
+       3.22,
+       1.95
+      ]
+     },
+     "outcome": "error",
+     "subtests": [],
+     "detail": "Traceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/case.py\", line 58, in testPartExecutor\n    yield\n  File \"/usr/lib/python3.12/unittest/case.py\", line 634, in run\n    self._callTestMethod(testMethod)\n  File \"/usr/lib/python3.12/unittest/case.py\", line 589, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/usr/lib/python3.12/unittest/loader.py\", line 33, in testFailure\n    raise self._exception\nImportError: Failed to import test module: tests\nTraceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/loader.py\", line 137, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'tests'\n\n",
+     "end": {
+      "wall": 1790925578.034801,
+      "monotonic": 1005.222678828,
+      "loadavg": [
+       3.33,
+       3.22,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    }
+   ]
+  }
+ },
+ "requested_suites": [
+  "probe_set_keys_scoring_and_analysis",
+  "frozen_decision_rules",
+  "runtime_derivation_adapters_and_frozen_set",
+  "transition_records_and_fixtures",
+  "schedule_admission_and_interrupted_gate",
+  "transport_cancellation_and_cache_metrics",
+  "diagnostics_recorder",
+  "connected_path_rehearsals",
+  "packaging_derivation_and_inventory"
+ ],
+ "ended": {
+  "wall": 1790925578.035029,
+  "monotonic": 1005.222907467
+ },
+ "host_at_end": {
+  "hostname": "Jingjing",
+  "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "cpus": 8,
+  "loadavg": [
+   3.33,
+   3.22,
+   1.95
+  ],
+  "memory_kib": {
+   "MemTotal": 8006012,
+   "MemAvailable": 7205028
+  }
+ },
+ "rehearsals": [],
+ "all_passed": false
+}

@@ -1,0 +1,6729 @@
+{
+ "run_id": "package-r1-check-2",
+ "label": "full local check of review r1 (bc0c1b9), worktree in WSL, module invocation",
+ "command": [
+  "/home/jingjing/.local/share/agi/dev-env/bin/python",
+  "/mnt/c/Users/jjzzw/Desktop/AGI/.claude/worktrees/agent-a4f7bba37c003c145/scripts/check_progress_subgoal_v1.py",
+  "--run-id",
+  "package-r1-check-2",
+  "--label",
+  "full local check of review r1 (bc0c1b9), worktree in WSL, module invocation"
+ ],
+ "cwd": "/mnt/c/Users/jjzzw/Desktop/AGI/.claude/worktrees/agent-a4f7bba37c003c145",
+ "git": {
+  "commit": "bc0c1b9ed3dabcc2680b5c58619e7c99c5b30abe",
+  "dirty_paths": [
+   "?? reports/progress_subgoal_v1_diagnostics/",
+   "?? reports/progress_subgoal_v1_rehearsal_results.json"
+  ]
+ },
+ "host_at_start": {
+  "hostname": "Jingjing",
+  "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "cpus": 8,
+  "loadavg": [
+   2.81,
+   3.1,
+   1.96
+  ],
+  "memory_kib": {
+   "MemTotal": 8006012,
+   "MemAvailable": 7242904
+  }
+ },
+ "started": {
+  "wall": 1790925611.2206905,
+  "monotonic": 1039.052407293
+ },
+ "suites": {
+  "probe_set_keys_scoring_and_analysis": {
+   "module": "tests.test_progress_subgoal_v1",
+   "completed": true,
+   "tests_run": 42,
+   "failures": 0,
+   "errors": 0,
+   "passed": true,
+   "seconds": 95.8,
+   "tests": [
+    {
+     "test": "tests.test_progress_subgoal_v1.Coverage.test_dryrun_meets_every_floor",
+     "start": {
+      "wall": 1790925620.677107,
+      "monotonic": 1048.508824188,
+      "loadavg": [
+       2.61,
+       3.04,
+       1.96
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925620.6946156,
+      "monotonic": 1048.52633194,
+      "loadavg": [
+       2.61,
+       3.04,
+       1.96
+      ]
+     },
+     "duration_seconds": 0.018,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Coverage.test_selection_is_deterministic",
+     "start": {
+      "wall": 1790925620.6947231,
+      "monotonic": 1048.526438607,
+      "loadavg": [
+       2.61,
+       3.04,
+       1.96
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925621.333509,
+      "monotonic": 1049.165225182,
+      "loadavg": [
+       2.61,
+       3.04,
+       1.96
+      ]
+     },
+     "duration_seconds": 0.639,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.EffectHypothesis.test_rules",
+     "start": {
+      "wall": 1790925621.3336542,
+      "monotonic": 1049.165369948,
+      "loadavg": [
+       2.61,
+       3.04,
+       1.96
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925621.337062,
+      "monotonic": 1049.168777927,
+      "loadavg": [
+       2.61,
+       3.04,
+       1.96
+      ]
+     },
+     "duration_seconds": 0.003,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Evaluator.test_abandonment_and_success_detection",
+     "start": {
+      "wall": 1790925621.3371956,
+      "monotonic": 1049.168911423,
+      "loadavg": [
+       2.61,
+       3.04,
+       1.96
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925623.6928356,
+      "monotonic": 1051.524551876,
+      "loadavg": [
+       2.56,
+       3.03,
+       1.96
+      ]
+     },
+     "duration_seconds": 2.356,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Evaluator.test_development_is_one_pass",
+     "start": {
+      "wall": 1790925623.6929097,
+      "monotonic": 1051.52462536,
+      "loadavg": [
+       2.56,
+       3.03,
+       1.96
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925624.5722196,
+      "monotonic": 1052.403936201,
+      "loadavg": [
+       2.56,
+       3.03,
+       1.96
+      ]
+     },
+     "duration_seconds": 0.879,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Evaluator.test_false_no_progress_is_a_readiness_gate",
+     "start": {
+      "wall": 1790925624.5723057,
+      "monotonic": 1052.404021232,
+      "loadavg": [
+       2.56,
+       3.03,
+       1.96
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925627.1359668,
+      "monotonic": 1054.967683047,
+      "loadavg": [
+       2.56,
+       3.03,
+       1.96
+      ]
+     },
+     "duration_seconds": 2.564,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Evaluator.test_gate_counts_a_valid_affirmative_in_either_pass",
+     "start": {
+      "wall": 1790925627.1360726,
+      "monotonic": 1054.967788324,
+      "loadavg": [
+       2.56,
+       3.03,
+       1.96
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925629.9019797,
+      "monotonic": 1057.733695927,
+      "loadavg": [
+       2.51,
+       3.01,
+       1.96
+      ]
+     },
+     "duration_seconds": 2.766,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Evaluator.test_invalid_answers_are_not_over_claims_but_count_against_validity_and_accuracy",
+     "start": {
+      "wall": 1790925629.902056,
+      "monotonic": 1057.733771594,
+      "loadavg": [
+       2.51,
+       3.01,
+       1.96
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925636.5888355,
+      "monotonic": 1065.005604491,
+      "loadavg": [
+       2.47,
+       2.99,
+       1.96
+      ]
+     },
+     "duration_seconds": 7.272,
+     "wall_minus_monotonic_seconds": -0.585,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Evaluator.test_invalid_output_on_risky_questions_cannot_look_safe",
+     "start": {
+      "wall": 1790925636.5888956,
+      "monotonic": 1065.005663635,
+      "loadavg": [
+       2.47,
+       2.99,
+       1.96
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925639.050018,
+      "monotonic": 1067.466787001,
+      "loadavg": [
+       2.35,
+       2.96,
+       1.95
+      ]
+     },
+     "duration_seconds": 2.461,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Evaluator.test_invalid_responses_are_invalid_and_retained",
+     "start": {
+      "wall": 1790925639.050075,
+      "monotonic": 1067.466843362,
+      "loadavg": [
+       2.35,
+       2.96,
+       1.95
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925639.050349,
+      "monotonic": 1067.467117442,
+      "loadavg": [
+       2.35,
+       2.96,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Evaluator.test_missing_gate_answer_is_incomplete",
+     "start": {
+      "wall": 1790925639.050368,
+      "monotonic": 1067.467136303,
+      "loadavg": [
+       2.35,
+       2.96,
+       1.95
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925640.1738932,
+      "monotonic": 1068.590662058,
+      "loadavg": [
+       2.35,
+       2.96,
+       1.95
+      ]
+     },
+     "duration_seconds": 1.124,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Evaluator.test_small_oracle_is_not_eligible_below_denominator_floors",
+     "start": {
+      "wall": 1790925640.1739516,
+      "monotonic": 1068.590720028,
+      "loadavg": [
+       2.35,
+       2.96,
+       1.95
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925641.4727697,
+      "monotonic": 1069.889538597,
+      "loadavg": [
+       2.35,
+       2.96,
+       1.95
+      ]
+     },
+     "duration_seconds": 1.299,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Evaluator.test_uncertainty_metrics",
+     "start": {
+      "wall": 1790925641.4728446,
+      "monotonic": 1069.889612748,
+      "loadavg": [
+       2.35,
+       2.96,
+       1.95
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925643.2682672,
+      "monotonic": 1071.685036264,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "duration_seconds": 1.795,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Fixtures.test_evaluation_partition_is_not_built_before_the_freeze",
+     "start": {
+      "wall": 1790925643.2683532,
+      "monotonic": 1071.685121628,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925643.2684278,
+      "monotonic": 1071.685195957,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Fixtures.test_every_record_is_valid_under_the_contract",
+     "start": {
+      "wall": 1790925643.268444,
+      "monotonic": 1071.685212296,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925644.200831,
+      "monotonic": 1072.617600062,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.932,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Fixtures.test_generation_is_deterministic_and_partitions_are_disjoint",
+     "start": {
+      "wall": 1790925644.2009304,
+      "monotonic": 1072.617698739,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925644.8749013,
+      "monotonic": 1073.291670622,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.674,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Fixtures.test_no_ws3_seed_is_reused",
+     "start": {
+      "wall": 1790925644.8749878,
+      "monotonic": 1073.291756185,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925644.8799162,
+      "monotonic": 1073.296685158,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.005,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Keys.test_construction_key_reads_no_frames",
+     "start": {
+      "wall": 1790925644.8800008,
+      "monotonic": 1073.296768977,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925644.898798,
+      "monotonic": 1073.315567103,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.019,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Keys.test_contract_facts_use_only_the_transition_contract",
+     "start": {
+      "wall": 1790925644.8988664,
+      "monotonic": 1073.315634659,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925644.9083853,
+      "monotonic": 1073.325154424,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.01,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Keys.test_reference_imports_nothing",
+     "start": {
+      "wall": 1790925644.9084558,
+      "monotonic": 1073.325224277,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925644.9170632,
+      "monotonic": 1073.333832414,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.009,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Keys.test_three_derivations_agree_on_every_candidate",
+     "start": {
+      "wall": 1790925644.917129,
+      "monotonic": 1073.333897155,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925647.1724918,
+      "monotonic": 1075.589261113,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "duration_seconds": 2.255,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Keys.test_unobservable_construction_never_changes_a_key",
+     "start": {
+      "wall": 1790925647.172554,
+      "monotonic": 1075.589322236,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925647.3382547,
+      "monotonic": 1075.755023748,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.166,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Keys.test_usefulness_is_never_established_and_causes_never_supported",
+     "start": {
+      "wall": 1790925647.3383458,
+      "monotonic": 1075.755113971,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925647.3389435,
+      "monotonic": 1075.7557119,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.001,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Presentation.test_computed_record_is_recomputable_from_the_raw_view_alone",
+     "start": {
+      "wall": 1790925647.3389924,
+      "monotonic": 1075.755760573,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925647.3473217,
+      "monotonic": 1075.764090294,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.008,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Presentation.test_conditions_differ_only_as_declared",
+     "start": {
+      "wall": 1790925647.347374,
+      "monotonic": 1075.7641422,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925647.3603668,
+      "monotonic": 1075.777135312,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.013,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Presentation.test_no_evaluator_data_reaches_a_request",
+     "start": {
+      "wall": 1790925647.3604152,
+      "monotonic": 1075.777183355,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925647.405235,
+      "monotonic": 1075.822003799,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.045,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Presentation.test_question_wording_names_coordinates_not_labels",
+     "start": {
+      "wall": 1790925647.405294,
+      "monotonic": 1075.822061934,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925647.405337,
+      "monotonic": 1075.822105291,
+      "loadavg": [
+       2.24,
+       2.93,
+       1.95
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Rehearsal.test_committed_results_reproduce",
+     "start": {
+      "wall": 1790925700.645381,
+      "monotonic": 1130.440807059,
+      "loadavg": [
+       1.49,
+       2.6,
+       1.89
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925700.65049,
+      "monotonic": 1130.445915721,
+      "loadavg": [
+       1.49,
+       2.6,
+       1.89
+      ]
+     },
+     "duration_seconds": 0.005,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Rehearsal.test_outcomes",
+     "start": {
+      "wall": 1790925700.6505632,
+      "monotonic": 1130.445988396,
+      "loadavg": [
+       1.49,
+       2.6,
+       1.89
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925700.6508558,
+      "monotonic": 1130.446281135,
+      "loadavg": [
+       1.49,
+       2.6,
+       1.89
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.RunLog.test_interrupted_append_is_recovered_and_never_eligible",
+     "start": {
+      "wall": 1790925700.6510262,
+      "monotonic": 1130.446451648,
+      "loadavg": [
+       1.49,
+       2.6,
+       1.89
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925701.7023206,
+      "monotonic": 1131.497746168,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "duration_seconds": 1.051,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.RunLog.test_refusals",
+     "start": {
+      "wall": 1790925701.7023723,
+      "monotonic": 1131.497797322,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925701.7165442,
+      "monotonic": 1131.511969802,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "duration_seconds": 0.014,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.RunLog.test_round_trip",
+     "start": {
+      "wall": 1790925701.7166152,
+      "monotonic": 1131.512040312,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925701.7740679,
+      "monotonic": 1131.56949364,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "duration_seconds": 0.057,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Schedule.test_comparisons_follow_the_arms",
+     "start": {
+      "wall": 1790925701.7741404,
+      "monotonic": 1131.569565543,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925704.9948728,
+      "monotonic": 1134.790298536,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "duration_seconds": 3.221,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.Schedule.test_passes_and_balance",
+     "start": {
+      "wall": 1790925704.99493,
+      "monotonic": 1134.790355155,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925705.00019,
+      "monotonic": 1134.795615655,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "duration_seconds": 0.005,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.SubgoalRecord.test_achievement_counts_final_and_before_frames_only",
+     "start": {
+      "wall": 1790925705.0002544,
+      "monotonic": 1134.795679589,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925705.0006971,
+      "monotonic": 1134.796122085,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.SubgoalRecord.test_achievement_never_implies_progress_or_usefulness",
+     "start": {
+      "wall": 1790925705.000714,
+      "monotonic": 1134.796139154,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925705.085163,
+      "monotonic": 1134.880588855,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "duration_seconds": 0.084,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.SubgoalRecord.test_decision_precedence",
+     "start": {
+      "wall": 1790925705.0852194,
+      "monotonic": 1134.880644503,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925705.0861092,
+      "monotonic": 1134.881534299,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "duration_seconds": 0.001,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.SubgoalRecord.test_invalid_records_are_rejected",
+     "start": {
+      "wall": 1790925705.0861266,
+      "monotonic": 1134.88155166,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925705.086374,
+      "monotonic": 1134.881799275,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.SubgoalRecord.test_reference_agrees_on_hand_cases",
+     "start": {
+      "wall": 1790925705.0863874,
+      "monotonic": 1134.881812518,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925705.0871453,
+      "monotonic": 1134.882570285,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "duration_seconds": 0.001,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.SubgoalRecord.test_target_already_met_at_adoption_is_refused",
+     "start": {
+      "wall": 1790925705.0871603,
+      "monotonic": 1134.88258532,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925705.087269,
+      "monotonic": 1134.882694143,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.SubgoalRecord.test_unobserved_outcomes_make_status_cannot_tell",
+     "start": {
+      "wall": 1790925705.0872812,
+      "monotonic": 1134.882706319,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925705.0876143,
+      "monotonic": 1134.883039303,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1.SubgoalRecord.test_valid_record",
+     "start": {
+      "wall": 1790925705.087627,
+      "monotonic": 1134.88305194,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925705.0876663,
+      "monotonic": 1134.883091251,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    }
+   ]
+  },
+  "frozen_decision_rules": {
+   "module": "tests.test_progress_subgoal_v1_rules",
+   "completed": true,
+   "tests_run": 5,
+   "failures": 0,
+   "errors": 0,
+   "passed": true,
+   "seconds": 0.1,
+   "tests": [
+    {
+     "test": "tests.test_progress_subgoal_v1_rules.FrozenRules.test_code_applies_exactly_the_frozen_rules",
+     "start": {
+      "wall": 1790925705.1026132,
+      "monotonic": 1134.898038753,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925705.1054356,
+      "monotonic": 1134.900861731,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "duration_seconds": 0.003,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_rules.FrozenRules.test_file_has_its_pinned_hash",
+     "start": {
+      "wall": 1790925705.1054838,
+      "monotonic": 1134.900908913,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925705.1077874,
+      "monotonic": 1134.903212636,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "duration_seconds": 0.002,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_rules.FrozenRules.test_package_limits_match_the_runtime_authority",
+     "start": {
+      "wall": 1790925705.1078465,
+      "monotonic": 1134.903271575,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925705.1404192,
+      "monotonic": 1134.935844964,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "duration_seconds": 0.033,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_rules.FrozenRules.test_third_arm_decision_applies_the_frozen_rule",
+     "start": {
+      "wall": 1790925705.140471,
+      "monotonic": 1134.935896012,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925705.1457586,
+      "monotonic": 1134.94118443,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "duration_seconds": 0.005,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_rules.FrozenRules.test_third_arm_rule_covers_an_unavailable_ws3_result",
+     "start": {
+      "wall": 1790925705.1458035,
+      "monotonic": 1134.941228572,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925705.1482983,
+      "monotonic": 1134.943723837,
+      "loadavg": [
+       1.45,
+       2.57,
+       1.88
+      ]
+     },
+     "duration_seconds": 0.002,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    }
+   ]
+  },
+  "runtime_derivation_adapters_and_frozen_set": {
+   "module": "tests.test_progress_subgoal_v1_runner",
+   "completed": true,
+   "tests_run": 16,
+   "failures": 0,
+   "errors": 0,
+   "passed": true,
+   "seconds": 16.0,
+   "tests": [
+    {
+     "test": "tests.test_progress_subgoal_v1_runner.Adapters.test_call_ceiling_and_allow_list_match_the_schedule",
+     "start": {
+      "wall": 1790925710.3520234,
+      "monotonic": 1140.147448677,
+      "loadavg": [
+       1.42,
+       2.55,
+       1.88
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925716.027641,
+      "monotonic": 1145.823066617,
+      "loadavg": [
+       1.38,
+       2.52,
+       1.87
+      ]
+     },
+     "duration_seconds": 5.676,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_runner.Adapters.test_rehearsal_probe_set_never_reaches_live",
+     "start": {
+      "wall": 1790925716.0276935,
+      "monotonic": 1145.823118711,
+      "loadavg": [
+       1.38,
+       2.52,
+       1.87
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925716.1819105,
+      "monotonic": 1145.977336149,
+      "loadavg": [
+       1.38,
+       2.52,
+       1.87
+      ]
+     },
+     "duration_seconds": 0.154,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_runner.Adapters.test_requests_have_the_reviewed_stack_shape",
+     "start": {
+      "wall": 1790925716.181964,
+      "monotonic": 1145.977389019,
+      "loadavg": [
+       1.38,
+       2.52,
+       1.87
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925716.1829844,
+      "monotonic": 1145.97840985,
+      "loadavg": [
+       1.38,
+       2.52,
+       1.87
+      ]
+     },
+     "duration_seconds": 0.001,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_runner.Adapters.test_runner_shape_and_reviewed_schedule_phases",
+     "start": {
+      "wall": 1790925716.1830173,
+      "monotonic": 1145.978442397,
+      "loadavg": [
+       1.38,
+       2.52,
+       1.87
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925716.1844966,
+      "monotonic": 1145.979921919,
+      "loadavg": [
+       1.38,
+       2.52,
+       1.87
+      ]
+     },
+     "duration_seconds": 0.001,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_runner.ConnectedRehearsal.test_normal_run_scores_only_retained_responses",
+     "start": {
+      "wall": 1790925716.184571,
+      "monotonic": 1145.979996178,
+      "loadavg": [
+       1.38,
+       2.52,
+       1.87
+      ]
+     },
+     "outcome": "skipped",
+     "subtests": [],
+     "detail": "connected rehearsal: set PSV1_CONNECTED=1 (~4 min)",
+     "end": {
+      "wall": 1790925716.1845925,
+      "monotonic": 1145.980017442,
+      "loadavg": [
+       1.38,
+       2.52,
+       1.87
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_runner.Derivation.test_derived_files_match_the_derivation",
+     "start": {
+      "wall": 1790925716.1846108,
+      "monotonic": 1145.980035841,
+      "loadavg": [
+       1.38,
+       2.52,
+       1.87
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925716.2514606,
+      "monotonic": 1146.046886083,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "duration_seconds": 0.067,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_runner.Derivation.test_every_substitution_is_counted_and_no_ws3_runtime_reference_remains",
+     "start": {
+      "wall": 1790925716.251507,
+      "monotonic": 1146.046931997,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925716.2772162,
+      "monotonic": 1146.072641703,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "duration_seconds": 0.026,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_runner.Derivation.test_reused_objects_are_the_reviewed_ones",
+     "start": {
+      "wall": 1790925716.2772634,
+      "monotonic": 1146.072688544,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925716.3096657,
+      "monotonic": 1146.105091536,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "duration_seconds": 0.032,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_runner.Derivation.test_ws3_sources_are_unchanged_since_the_derivation",
+     "start": {
+      "wall": 1790925716.3097122,
+      "monotonic": 1146.105137086,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925716.3342764,
+      "monotonic": 1146.129701915,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "duration_seconds": 0.025,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_runner.FrozenQuestionSet.test_evaluation_partition_is_new_and_disjoint_from_development_material",
+     "start": {
+      "wall": 1790925716.452458,
+      "monotonic": 1146.247884038,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925716.832916,
+      "monotonic": 1146.628341731,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "duration_seconds": 0.38,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_runner.FrozenQuestionSet.test_fresh_build_is_byte_identical",
+     "start": {
+      "wall": 1790925716.8329659,
+      "monotonic": 1146.628390905,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "outcome": "skipped",
+     "subtests": [],
+     "detail": "needs the evaluation seed (held outside the repo)",
+     "end": {
+      "wall": 1790925716.8329897,
+      "monotonic": 1146.628414811,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_runner.FrozenQuestionSet.test_live_mode_is_refused_without_review_approvals_and_reservation",
+     "start": {
+      "wall": 1790925716.8329997,
+      "monotonic": 1146.628424785,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925719.0364163,
+      "monotonic": 1148.831841805,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "duration_seconds": 2.203,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_runner.FrozenQuestionSet.test_no_evaluator_data_reaches_a_frozen_request",
+     "start": {
+      "wall": 1790925719.0364547,
+      "monotonic": 1148.831879816,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925719.647941,
+      "monotonic": 1149.443366875,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "duration_seconds": 0.611,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_runner.FrozenQuestionSet.test_summary_seed_hash_and_floors",
+     "start": {
+      "wall": 1790925719.6480129,
+      "monotonic": 1149.443437828,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925719.662516,
+      "monotonic": 1149.457941855,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "duration_seconds": 0.015,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_runner.TokenAuditEnumeration.test_every_scheduled_request_once_in_call_order",
+     "start": {
+      "wall": 1790925719.6625934,
+      "monotonic": 1149.458018497,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925720.4299529,
+      "monotonic": 1150.225378567,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "duration_seconds": 0.767,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_runner.TokenAuditFunction.test_audit_runs_with_a_tokenizer_interface",
+     "start": {
+      "wall": 1790925720.4300256,
+      "monotonic": 1150.225450686,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925721.100425,
+      "monotonic": 1150.895850465,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "duration_seconds": 0.67,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    }
+   ]
+  },
+  "transition_records_and_fixtures": {
+   "module": "tests.test_transition_evidence_v1",
+   "completed": true,
+   "tests_run": 16,
+   "failures": 0,
+   "errors": 0,
+   "passed": true,
+   "seconds": 0.3,
+   "tests": [
+    {
+     "test": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition",
+     "start": {
+      "wall": 1790925721.1410434,
+      "monotonic": 1150.936468952,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "outcome": "success",
+     "subtests": [
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-identical_frames-0', index=0)",
+       "at_monotonic": 1150.936928452,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-identical_frames-1', index=0)",
+       "at_monotonic": 1150.937138878,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-transient_change-0', index=0)",
+       "at_monotonic": 1150.937362375,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-transient_change-1', index=0)",
+       "at_monotonic": 1150.937634089,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-final_frame_differs-0', index=0)",
+       "at_monotonic": 1150.937805638,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-final_frame_differs-1', index=0)",
+       "at_monotonic": 1150.937990964,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-counter_only_change-0', index=0)",
+       "at_monotonic": 1150.93818416,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-counter_only_change-1', index=0)",
+       "at_monotonic": 1150.938361867,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-board_move_without_completion-0', index=0)",
+       "at_monotonic": 1150.938542253,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-board_move_without_completion-1', index=0)",
+       "at_monotonic": 1150.938696348,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-level_completion_receipt-0', index=0)",
+       "at_monotonic": 1150.938949995,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-level_completion_receipt-1', index=0)",
+       "at_monotonic": 1150.939280281,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-failed_dispatch-0', index=0)",
+       "at_monotonic": 1150.939534603,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-failed_dispatch-0', index=1)",
+       "at_monotonic": 1150.939605779,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-failed_dispatch-1', index=0)",
+       "at_monotonic": 1150.939815914,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-failed_dispatch-1', index=1)",
+       "at_monotonic": 1150.939876541,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-unknown_outcome-0', index=0)",
+       "at_monotonic": 1150.940034316,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-unknown_outcome-0', index=1)",
+       "at_monotonic": 1150.940159226,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-unknown_outcome-1', index=0)",
+       "at_monotonic": 1150.940349759,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-unknown_outcome-1', index=1)",
+       "at_monotonic": 1150.940405419,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-acknowledged_without_frames-0', index=0)",
+       "at_monotonic": 1150.940604822,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-acknowledged_without_frames-0', index=1)",
+       "at_monotonic": 1150.940660096,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-acknowledged_without_frames-1', index=0)",
+       "at_monotonic": 1150.940830483,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-acknowledged_without_frames-1', index=1)",
+       "at_monotonic": 1150.940882859,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-dimensions_differ-0', index=0)",
+       "at_monotonic": 1150.940999958,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-dimensions_differ-1', index=0)",
+       "at_monotonic": 1150.941150583,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-partial_observation-0', index=0)",
+       "at_monotonic": 1150.941810998,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-partial_observation-0', index=1)",
+       "at_monotonic": 1150.941917104,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-partial_observation-1', index=0)",
+       "at_monotonic": 1150.942647604,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-partial_observation-1', index=1)",
+       "at_monotonic": 1150.942758978,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-reset_boundary-0', index=0)",
+       "at_monotonic": 1150.943905278,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-reset_boundary-0', index=1)",
+       "at_monotonic": 1150.944001152,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-reset_boundary-0', index=2)",
+       "at_monotonic": 1150.944187147,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-reset_boundary-0', index=3)",
+       "at_monotonic": 1150.944331688,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-reset_boundary-1', index=0)",
+       "at_monotonic": 1150.946026473,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-reset_boundary-1', index=1)",
+       "at_monotonic": 1150.946153511,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-reset_boundary-1', index=2)",
+       "at_monotonic": 1150.946264832,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-reset_boundary-1', index=3)",
+       "at_monotonic": 1150.946380593,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-delayed_visible_event-0', index=0)",
+       "at_monotonic": 1150.947477777,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-delayed_visible_event-0', index=1)",
+       "at_monotonic": 1150.947573451,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-delayed_visible_event-0', index=2)",
+       "at_monotonic": 1150.947661645,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-delayed_visible_event-0', index=3)",
+       "at_monotonic": 1150.947751382,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-delayed_visible_event-1', index=0)",
+       "at_monotonic": 1150.948868009,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-delayed_visible_event-1', index=1)",
+       "at_monotonic": 1150.948980285,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-delayed_visible_event-1', index=2)",
+       "at_monotonic": 1150.949117543,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-delayed_visible_event-1', index=3)",
+       "at_monotonic": 1150.949269357,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-automatic_animation-0', index=0)",
+       "at_monotonic": 1150.95042226,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-automatic_animation-0', index=1)",
+       "at_monotonic": 1150.950720439,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-automatic_animation-0', index=2)",
+       "at_monotonic": 1150.950883719,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-automatic_animation-1', index=0)",
+       "at_monotonic": 1150.952248658,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-automatic_animation-1', index=1)",
+       "at_monotonic": 1150.95241956,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-automatic_animation-1', index=2)",
+       "at_monotonic": 1150.95259373,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-terminal_game_over-0', index=0)",
+       "at_monotonic": 1150.952984645,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-terminal_game_over-1', index=0)",
+       "at_monotonic": 1150.953354265,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-terminal_win-0', index=0)",
+       "at_monotonic": 1150.953677724,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-terminal_win-1', index=0)",
+       "at_monotonic": 1150.954068669,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-proposal_differs_from_dispatch-0', index=0)",
+       "at_monotonic": 1150.954411048,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-proposal_differs_from_dispatch-1', index=0)",
+       "at_monotonic": 1150.954697981,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-mixed_history-0', index=0)",
+       "at_monotonic": 1150.956426554,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-mixed_history-0', index=1)",
+       "at_monotonic": 1150.956478006,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-mixed_history-0', index=2)",
+       "at_monotonic": 1150.956554208,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-mixed_history-0', index=3)",
+       "at_monotonic": 1150.956603483,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-mixed_history-0', index=4)",
+       "at_monotonic": 1150.956696333,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-mixed_history-0', index=5)",
+       "at_monotonic": 1150.956747515,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-mixed_history-0', index=6)",
+       "at_monotonic": 1150.956821773,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-mixed_history-0', index=7)",
+       "at_monotonic": 1150.956917314,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-mixed_history-0', index=8)",
+       "at_monotonic": 1150.957003215,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-mixed_history-1', index=0)",
+       "at_monotonic": 1150.959254877,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-mixed_history-1', index=1)",
+       "at_monotonic": 1150.959342887,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-mixed_history-1', index=2)",
+       "at_monotonic": 1150.959459288,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-mixed_history-1', index=3)",
+       "at_monotonic": 1150.959537077,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-mixed_history-1', index=4)",
+       "at_monotonic": 1150.959656714,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-mixed_history-1', index=5)",
+       "at_monotonic": 1150.959757973,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-mixed_history-1', index=6)",
+       "at_monotonic": 1150.959863365,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-mixed_history-1', index=7)",
+       "at_monotonic": 1150.959966661,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='dev-mixed_history-1', index=8)",
+       "at_monotonic": 1150.960064596,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-identical_frames-0', index=0)",
+       "at_monotonic": 1150.960874003,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-identical_frames-1', index=0)",
+       "at_monotonic": 1150.961327117,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-identical_frames-2', index=0)",
+       "at_monotonic": 1150.961911952,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-transient_change-0', index=0)",
+       "at_monotonic": 1150.962687559,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-transient_change-1', index=0)",
+       "at_monotonic": 1150.963378669,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-transient_change-2', index=0)",
+       "at_monotonic": 1150.964169797,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-final_frame_differs-0', index=0)",
+       "at_monotonic": 1150.964754231,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-final_frame_differs-1', index=0)",
+       "at_monotonic": 1150.965292301,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-final_frame_differs-2', index=0)",
+       "at_monotonic": 1150.965760799,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-counter_only_change-0', index=0)",
+       "at_monotonic": 1150.966434386,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-counter_only_change-1', index=0)",
+       "at_monotonic": 1150.966995162,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-counter_only_change-2', index=0)",
+       "at_monotonic": 1150.967518095,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-board_move_without_completion-0', index=0)",
+       "at_monotonic": 1150.968226769,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-board_move_without_completion-1', index=0)",
+       "at_monotonic": 1150.970062235,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-board_move_without_completion-2', index=0)",
+       "at_monotonic": 1150.970773068,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-level_completion_receipt-0', index=0)",
+       "at_monotonic": 1150.971664179,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-level_completion_receipt-1', index=0)",
+       "at_monotonic": 1150.97236831,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-level_completion_receipt-2', index=0)",
+       "at_monotonic": 1150.972724038,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-failed_dispatch-0', index=0)",
+       "at_monotonic": 1150.973063526,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-failed_dispatch-0', index=1)",
+       "at_monotonic": 1150.973151157,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-failed_dispatch-1', index=0)",
+       "at_monotonic": 1150.973456456,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-failed_dispatch-1', index=1)",
+       "at_monotonic": 1150.973548034,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-failed_dispatch-2', index=0)",
+       "at_monotonic": 1150.973915559,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-failed_dispatch-2', index=1)",
+       "at_monotonic": 1150.974019391,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-unknown_outcome-0', index=0)",
+       "at_monotonic": 1150.974329716,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-unknown_outcome-0', index=1)",
+       "at_monotonic": 1150.974422893,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-unknown_outcome-1', index=0)",
+       "at_monotonic": 1150.974680856,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-unknown_outcome-1', index=1)",
+       "at_monotonic": 1150.974764258,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-unknown_outcome-2', index=0)",
+       "at_monotonic": 1150.975055292,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-unknown_outcome-2', index=1)",
+       "at_monotonic": 1150.975150402,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-acknowledged_without_frames-0', index=0)",
+       "at_monotonic": 1150.975536255,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-acknowledged_without_frames-0', index=1)",
+       "at_monotonic": 1150.975686423,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-acknowledged_without_frames-1', index=0)",
+       "at_monotonic": 1150.976164195,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-acknowledged_without_frames-1', index=1)",
+       "at_monotonic": 1150.976311236,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-acknowledged_without_frames-2', index=0)",
+       "at_monotonic": 1150.976778993,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-acknowledged_without_frames-2', index=1)",
+       "at_monotonic": 1150.976987992,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-dimensions_differ-0', index=0)",
+       "at_monotonic": 1150.977308093,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-dimensions_differ-1', index=0)",
+       "at_monotonic": 1150.977618339,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-dimensions_differ-2', index=0)",
+       "at_monotonic": 1150.977930368,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-partial_observation-0', index=0)",
+       "at_monotonic": 1150.97926119,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-partial_observation-0', index=1)",
+       "at_monotonic": 1150.979428255,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-partial_observation-1', index=0)",
+       "at_monotonic": 1150.980364876,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-partial_observation-1', index=1)",
+       "at_monotonic": 1150.980483721,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-partial_observation-2', index=0)",
+       "at_monotonic": 1150.980968408,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-partial_observation-2', index=1)",
+       "at_monotonic": 1150.981061186,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-reset_boundary-0', index=0)",
+       "at_monotonic": 1150.98161172,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-reset_boundary-0', index=1)",
+       "at_monotonic": 1150.9816716,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-reset_boundary-0', index=2)",
+       "at_monotonic": 1150.981725473,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-reset_boundary-0', index=3)",
+       "at_monotonic": 1150.981779326,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-reset_boundary-1', index=0)",
+       "at_monotonic": 1150.982477194,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-reset_boundary-1', index=1)",
+       "at_monotonic": 1150.982620349,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-reset_boundary-1', index=2)",
+       "at_monotonic": 1150.982741722,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-reset_boundary-1', index=3)",
+       "at_monotonic": 1150.98306776,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-reset_boundary-2', index=0)",
+       "at_monotonic": 1150.985105459,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-reset_boundary-2', index=1)",
+       "at_monotonic": 1150.985288862,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-reset_boundary-2', index=2)",
+       "at_monotonic": 1150.985467222,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-reset_boundary-2', index=3)",
+       "at_monotonic": 1150.985634544,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-delayed_visible_event-0', index=0)",
+       "at_monotonic": 1150.988219358,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-delayed_visible_event-0', index=1)",
+       "at_monotonic": 1150.988337859,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-delayed_visible_event-0', index=2)",
+       "at_monotonic": 1150.988477915,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-delayed_visible_event-0', index=3)",
+       "at_monotonic": 1150.989107888,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-delayed_visible_event-1', index=0)",
+       "at_monotonic": 1150.99139742,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-delayed_visible_event-1', index=1)",
+       "at_monotonic": 1150.991554854,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-delayed_visible_event-1', index=2)",
+       "at_monotonic": 1150.991703306,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-delayed_visible_event-1', index=3)",
+       "at_monotonic": 1150.991818784,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-delayed_visible_event-2', index=0)",
+       "at_monotonic": 1150.994736498,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-delayed_visible_event-2', index=1)",
+       "at_monotonic": 1150.994962537,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-delayed_visible_event-2', index=2)",
+       "at_monotonic": 1150.995127424,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-delayed_visible_event-2', index=3)",
+       "at_monotonic": 1150.995294423,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-automatic_animation-0', index=0)",
+       "at_monotonic": 1150.997030418,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-automatic_animation-0', index=1)",
+       "at_monotonic": 1150.99717016,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-automatic_animation-0', index=2)",
+       "at_monotonic": 1150.997299513,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-automatic_animation-1', index=0)",
+       "at_monotonic": 1150.99837167,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-automatic_animation-1', index=1)",
+       "at_monotonic": 1150.998525075,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-automatic_animation-1', index=2)",
+       "at_monotonic": 1150.998668906,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-automatic_animation-2', index=0)",
+       "at_monotonic": 1150.999838763,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-automatic_animation-2', index=1)",
+       "at_monotonic": 1150.999921999,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-automatic_animation-2', index=2)",
+       "at_monotonic": 1150.999997649,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-terminal_game_over-0', index=0)",
+       "at_monotonic": 1151.000334701,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-terminal_game_over-1', index=0)",
+       "at_monotonic": 1151.000906158,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-terminal_game_over-2', index=0)",
+       "at_monotonic": 1151.001262118,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-terminal_win-0', index=0)",
+       "at_monotonic": 1151.001839999,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-terminal_win-1', index=0)",
+       "at_monotonic": 1151.00236398,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-terminal_win-2', index=0)",
+       "at_monotonic": 1151.002711225,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-proposal_differs_from_dispatch-0', index=0)",
+       "at_monotonic": 1151.003004933,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-proposal_differs_from_dispatch-1', index=0)",
+       "at_monotonic": 1151.003297554,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-proposal_differs_from_dispatch-2', index=0)",
+       "at_monotonic": 1151.003728434,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-0', index=0)",
+       "at_monotonic": 1151.006681019,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-0', index=1)",
+       "at_monotonic": 1151.006796689,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-0', index=2)",
+       "at_monotonic": 1151.006936381,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-0', index=3)",
+       "at_monotonic": 1151.007026231,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-0', index=4)",
+       "at_monotonic": 1151.007159323,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-0', index=5)",
+       "at_monotonic": 1151.007264387,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-0', index=6)",
+       "at_monotonic": 1151.007442382,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-0', index=7)",
+       "at_monotonic": 1151.008343168,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-0', index=8)",
+       "at_monotonic": 1151.008474173,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-1', index=0)",
+       "at_monotonic": 1151.012474171,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-1', index=1)",
+       "at_monotonic": 1151.012694852,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-1', index=2)",
+       "at_monotonic": 1151.012904439,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-1', index=3)",
+       "at_monotonic": 1151.013031067,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-1', index=4)",
+       "at_monotonic": 1151.01319086,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-1', index=5)",
+       "at_monotonic": 1151.013304273,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-1', index=6)",
+       "at_monotonic": 1151.013493024,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-1', index=7)",
+       "at_monotonic": 1151.013706265,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-1', index=8)",
+       "at_monotonic": 1151.013906685,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-2', index=0)",
+       "at_monotonic": 1151.017426756,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-2', index=1)",
+       "at_monotonic": 1151.017519339,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-2', index=2)",
+       "at_monotonic": 1151.017668086,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-2', index=3)",
+       "at_monotonic": 1151.017760212,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-2', index=4)",
+       "at_monotonic": 1151.01791013,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-2', index=5)",
+       "at_monotonic": 1151.018008009,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-2', index=6)",
+       "at_monotonic": 1151.018153828,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-2', index=7)",
+       "at_monotonic": 1151.018314091,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition (fixture='eva-mixed_history-2', index=8)",
+       "at_monotonic": 1151.018445396,
+       "outcome": "success"
+      }
+     ],
+     "detail": null,
+     "end": {
+      "wall": 1790925721.2231007,
+      "monotonic": 1151.018526161,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "duration_seconds": 0.082,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_reference_imports_nothing",
+     "start": {
+      "wall": 1790925721.223195,
+      "monotonic": 1151.018620303,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925721.2326076,
+      "monotonic": 1151.028033378,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "duration_seconds": 0.009,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_transition_evidence_v1.Fixtures.test_coverage_and_partitions",
+     "start": {
+      "wall": 1790925721.232843,
+      "monotonic": 1151.028268473,
+      "loadavg": [
+       1.35,
+       2.49,
+       1.87
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925721.2526436,
+      "monotonic": 1151.048069489,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.02,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_transition_evidence_v1.Fixtures.test_frozen_fixtures_match_a_fresh_generation",
+     "start": {
+      "wall": 1790925721.2527492,
+      "monotonic": 1151.048174348,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925721.3408864,
+      "monotonic": 1151.136312618,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.088,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_transition_evidence_v1.Fixtures.test_no_evaluator_data_or_game_rules_in_raw_evidence",
+     "start": {
+      "wall": 1790925721.3409781,
+      "monotonic": 1151.136403299,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925721.3511298,
+      "monotonic": 1151.146555775,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.01,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_transition_evidence_v1.Properties.test_consistent_colour_relabelling_preserves_equality_and_counts",
+     "start": {
+      "wall": 1790925721.3513453,
+      "monotonic": 1151.146770741,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925721.3521433,
+      "monotonic": 1151.147568922,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.001,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_transition_evidence_v1.Properties.test_dimension_change_has_no_cell_count_but_differs",
+     "start": {
+      "wall": 1790925721.3522036,
+      "monotonic": 1151.147628765,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925721.3525372,
+      "monotonic": 1151.147962395,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_transition_evidence_v1.Properties.test_failed_dispatch_is_never_a_no_op",
+     "start": {
+      "wall": 1790925721.3525774,
+      "monotonic": 1151.148002534,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925721.352939,
+      "monotonic": 1151.148364292,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_transition_evidence_v1.Properties.test_intermediate_change_then_original_stays_transient",
+     "start": {
+      "wall": 1790925721.3529642,
+      "monotonic": 1151.148389164,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925721.3532474,
+      "monotonic": 1151.148672634,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_transition_evidence_v1.Properties.test_missing_observations_never_produce_a_zero_count",
+     "start": {
+      "wall": 1790925721.353267,
+      "monotonic": 1151.14869209,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925721.3534238,
+      "monotonic": 1151.148849081,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_transition_evidence_v1.Properties.test_model_statements_stay_separate_from_measurements",
+     "start": {
+      "wall": 1790925721.35345,
+      "monotonic": 1151.14887508,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925721.3537996,
+      "monotonic": 1151.149224742,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_transition_evidence_v1.Properties.test_reordering_intermediate_frames_changes_chronology_not_the_final_comparison",
+     "start": {
+      "wall": 1790925721.3538237,
+      "monotonic": 1151.149248869,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925721.3542588,
+      "monotonic": 1151.149683798,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_transition_evidence_v1.Properties.test_repeating_an_identical_frame_adds_no_change",
+     "start": {
+      "wall": 1790925721.3542795,
+      "monotonic": 1151.149704523,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925721.3547475,
+      "monotonic": 1151.15017283,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_transition_evidence_v1.Properties.test_unknown_outcome_breaks_unsupported_continuity",
+     "start": {
+      "wall": 1790925721.3547785,
+      "monotonic": 1151.150203866,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925721.3551388,
+      "monotonic": 1151.150563985,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_transition_evidence_v1.Properties.test_validation_catches_collapsed_semantics",
+     "start": {
+      "wall": 1790925721.355173,
+      "monotonic": 1151.150598137,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925721.3555071,
+      "monotonic": 1151.150932473,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_transition_evidence_v1.Properties.test_visual_change_is_not_progress_and_progress_needs_an_allowed_signal",
+     "start": {
+      "wall": 1790925721.3555353,
+      "monotonic": 1151.150960395,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925721.3559022,
+      "monotonic": 1151.151327472,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    }
+   ]
+  },
+  "schedule_admission_and_interrupted_gate": {
+   "module": "tests.test_progress_subgoal_v1_schedule",
+   "completed": true,
+   "tests_run": 16,
+   "failures": 0,
+   "errors": 0,
+   "passed": true,
+   "seconds": 6.7,
+   "tests": [
+    {
+     "test": "tests.test_progress_subgoal_v1_schedule.Admission.test_a_cancelled_call_stops_admission_with_its_cause",
+     "start": {
+      "wall": 1790925721.665649,
+      "monotonic": 1151.461074624,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925721.665798,
+      "monotonic": 1151.461223094,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_schedule.Admission.test_consecutive_timeouts_stop_admission",
+     "start": {
+      "wall": 1790925721.665839,
+      "monotonic": 1151.46126414,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925721.665896,
+      "monotonic": 1151.461321086,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_schedule.Admission.test_invalid_timing_values_are_rejected",
+     "start": {
+      "wall": 1790925721.665918,
+      "monotonic": 1151.461343272,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [
+      {
+       "subtest": "tests.test_progress_subgoal_v1_schedule.Admission.test_invalid_timing_values_are_rejected (args=(-1,))",
+       "at_monotonic": 1151.461442883,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_schedule.Admission.test_invalid_timing_values_are_rejected (args=(-inf,))",
+       "at_monotonic": 1151.461486217,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_schedule.Admission.test_invalid_timing_values_are_rejected (args=(inf,))",
+       "at_monotonic": 1151.461517057,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_schedule.Admission.test_invalid_timing_values_are_rejected (args=(nan,))",
+       "at_monotonic": 1151.461543094,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_schedule.Admission.test_invalid_timing_values_are_rejected (args=(True,))",
+       "at_monotonic": 1151.461569323,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_schedule.Admission.test_invalid_timing_values_are_rejected (args=(False,))",
+       "at_monotonic": 1151.461597774,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_schedule.Admission.test_invalid_timing_values_are_rejected (args=('10',))",
+       "at_monotonic": 1151.461621257,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_schedule.Admission.test_invalid_timing_values_are_rejected (args=(None,))",
+       "at_monotonic": 1151.461643976,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_schedule.Admission.test_invalid_timing_values_are_rejected (args=(0, 3000, -1))",
+       "at_monotonic": 1151.461670229,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_schedule.Admission.test_invalid_timing_values_are_rejected (args=(3100, 3000, -200))",
+       "at_monotonic": 1151.461697038,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_schedule.Admission.test_invalid_timing_values_are_rejected (args=(0, 3000, 0))",
+       "at_monotonic": 1151.461731082,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_schedule.Admission.test_invalid_timing_values_are_rejected (args=(0, 3000, inf))",
+       "at_monotonic": 1151.461756118,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_schedule.Admission.test_invalid_timing_values_are_rejected (args=(0, 3000, True))",
+       "at_monotonic": 1151.461779759,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_schedule.Admission.test_invalid_timing_values_are_rejected (args=(0, -inf))",
+       "at_monotonic": 1151.461802743,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_schedule.Admission.test_invalid_timing_values_are_rejected (args=(0, 0))",
+       "at_monotonic": 1151.461826662,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_schedule.Admission.test_invalid_timing_values_are_rejected (args=(0, 3300))",
+       "at_monotonic": 1151.461855947,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_schedule.Admission.test_invalid_timing_values_are_rejected (args=(0, nan))",
+       "at_monotonic": 1151.461881373,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_schedule.Admission.test_invalid_timing_values_are_rejected (settings=(3000, -5))",
+       "at_monotonic": 1151.461912062,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_schedule.Admission.test_invalid_timing_values_are_rejected (settings=(0, 0))",
+       "at_monotonic": 1151.461937639,
+       "outcome": "success"
+      }
+     ],
+     "detail": null,
+     "end": {
+      "wall": 1790925721.666539,
+      "monotonic": 1151.461964242,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.001,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_schedule.Admission.test_no_admitted_call_can_reach_the_cleanup_reserve",
+     "start": {
+      "wall": 1790925721.6665788,
+      "monotonic": 1151.462003874,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925721.666637,
+      "monotonic": 1151.462062175,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_schedule.CancelledInFlight.test_a_real_transport_failure_is_still_a_transport_failure",
+     "start": {
+      "wall": 1790925721.6666784,
+      "monotonic": 1151.462103677,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925722.086922,
+      "monotonic": 1151.882347547,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.42,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_schedule.CancelledInFlight.test_in_flight_call_during_cancellation_is_recorded_as_canceled",
+     "start": {
+      "wall": 1790925722.0869703,
+      "monotonic": 1151.882395331,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925722.4677112,
+      "monotonic": 1152.26313899,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.381,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_schedule.DeadlineExpired.test_cancellation_takes_precedence",
+     "start": {
+      "wall": 1790925722.467869,
+      "monotonic": 1152.26329433,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925722.819412,
+      "monotonic": 1152.614837722,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.352,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_schedule.DeadlineExpired.test_evaluator_rejects_a_deadline_expired_label_that_is_not_true",
+     "start": {
+      "wall": 1790925722.819459,
+      "monotonic": 1152.614884119,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925723.1311085,
+      "monotonic": 1152.926534106,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.312,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_schedule.DeadlineExpired.test_failure_after_the_call_bound_is_deadline_expired",
+     "start": {
+      "wall": 1790925723.1311753,
+      "monotonic": 1152.926600204,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925723.572604,
+      "monotonic": 1153.368029294,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.441,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_schedule.DeadlineExpired.test_failure_within_the_bound_stays_a_transport_failure",
+     "start": {
+      "wall": 1790925723.572645,
+      "monotonic": 1153.368069918,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925723.793592,
+      "monotonic": 1153.589017359,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.221,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_schedule.InterruptedGate.test_fast_run_completes_the_gate",
+     "start": {
+      "wall": 1790925723.7936504,
+      "monotonic": 1153.589075472,
+      "loadavg": [
+       1.32,
+       2.47,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925727.003062,
+      "monotonic": 1157.487310571,
+      "loadavg": [
+       1.3,
+       2.44,
+       1.86
+      ]
+     },
+     "duration_seconds": 3.898,
+     "wall_minus_monotonic_seconds": -0.689,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_schedule.InterruptedGate.test_interruption_during_gate_pass_one",
+     "start": {
+      "wall": 1790925727.0031233,
+      "monotonic": 1157.48737121,
+      "loadavg": [
+       1.3,
+       2.44,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925727.0447457,
+      "monotonic": 1157.528994579,
+      "loadavg": [
+       1.3,
+       2.44,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.042,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_schedule.InterruptedGate.test_interruption_during_gate_pass_two",
+     "start": {
+      "wall": 1790925727.044829,
+      "monotonic": 1157.529077084,
+      "loadavg": [
+       1.3,
+       2.44,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925727.218306,
+      "monotonic": 1157.70255501,
+      "loadavg": [
+       1.3,
+       2.44,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.173,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_schedule.InterruptedGate.test_slow_startup_interrupts_the_gate",
+     "start": {
+      "wall": 1790925727.2184067,
+      "monotonic": 1157.702654763,
+      "loadavg": [
+       1.3,
+       2.44,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925727.2644157,
+      "monotonic": 1157.748664295,
+      "loadavg": [
+       1.3,
+       2.44,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.046,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_schedule.InterruptedGate.test_timeouts_leave_missing_answers_never_scored",
+     "start": {
+      "wall": 1790925727.2644708,
+      "monotonic": 1157.748718869,
+      "loadavg": [
+       1.3,
+       2.44,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925727.4037735,
+      "monotonic": 1157.888022293,
+      "loadavg": [
+       1.3,
+       2.44,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.139,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_schedule.Order.test_gate_passes_come_first_and_pass_two_is_reversed",
+     "start": {
+      "wall": 1790925727.4039724,
+      "monotonic": 1157.888220538,
+      "loadavg": [
+       1.3,
+       2.44,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925727.4069724,
+      "monotonic": 1157.891220749,
+      "loadavg": [
+       1.3,
+       2.44,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.003,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    }
+   ]
+  },
+  "transport_cancellation_and_cache_metrics": {
+   "module": "tests.test_evidence_comprehension_v1_transport",
+   "completed": true,
+   "tests_run": 14,
+   "failures": 0,
+   "errors": 0,
+   "passed": true,
+   "seconds": 20.4,
+   "tests": [
+    {
+     "test": "tests.test_evidence_comprehension_v1_transport.Transport.test_answers_and_positive_prefix_cache_evidence",
+     "start": {
+      "wall": 1790925727.4732876,
+      "monotonic": 1157.957536197,
+      "loadavg": [
+       1.3,
+       2.44,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925728.078535,
+      "monotonic": 1158.562783742,
+      "loadavg": [
+       1.3,
+       2.44,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.605,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_evidence_comprehension_v1_transport.Transport.test_caller_deadline_overrides_the_timeout",
+     "start": {
+      "wall": 1790925728.0785856,
+      "monotonic": 1158.562833732,
+      "loadavg": [
+       1.3,
+       2.44,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925729.1898973,
+      "monotonic": 1159.674145876,
+      "loadavg": [
+       1.3,
+       2.44,
+       1.86
+      ]
+     },
+     "duration_seconds": 1.111,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_evidence_comprehension_v1_transport.Transport.test_enabled_prefix_cache_is_detected",
+     "start": {
+      "wall": 1790925729.189978,
+      "monotonic": 1159.67422617,
+      "loadavg": [
+       1.3,
+       2.44,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925729.804227,
+      "monotonic": 1160.288475548,
+      "loadavg": [
+       1.3,
+       2.44,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.614,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_evidence_comprehension_v1_transport.Transport.test_http_error_and_invalid_settings",
+     "start": {
+      "wall": 1790925729.8042808,
+      "monotonic": 1160.288529022,
+      "loadavg": [
+       1.3,
+       2.44,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925730.4239805,
+      "monotonic": 1160.908229377,
+      "loadavg": [
+       1.3,
+       2.44,
+       1.86
+      ]
+     },
+     "duration_seconds": 0.62,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_evidence_comprehension_v1_transport.Transport.test_idle_observed_after_the_deadline_is_rejected",
+     "start": {
+      "wall": 1790925730.4240851,
+      "monotonic": 1160.908333558,
+      "loadavg": [
+       1.3,
+       2.44,
+       1.86
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925731.9033895,
+      "monotonic": 1162.387637853,
+      "loadavg": [
+       1.19,
+       2.4,
+       1.85
+      ]
+     },
+     "duration_seconds": 1.479,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_evidence_comprehension_v1_transport.Transport.test_ignored_disconnect_fails_idle_verification",
+     "start": {
+      "wall": 1790925731.9034905,
+      "monotonic": 1162.387738744,
+      "loadavg": [
+       1.19,
+       2.4,
+       1.85
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925735.3062518,
+      "monotonic": 1165.790500636,
+      "loadavg": [
+       1.19,
+       2.4,
+       1.85
+      ]
+     },
+     "duration_seconds": 3.403,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_evidence_comprehension_v1_transport.Transport.test_late_abort_fails_by_the_deadline",
+     "start": {
+      "wall": 1790925735.306339,
+      "monotonic": 1165.790587266,
+      "loadavg": [
+       1.19,
+       2.4,
+       1.85
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925738.7283022,
+      "monotonic": 1169.212550966,
+      "loadavg": [
+       1.1,
+       2.36,
+       1.84
+      ]
+     },
+     "duration_seconds": 3.422,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_evidence_comprehension_v1_transport.Transport.test_no_prompt_yet_is_not_verification",
+     "start": {
+      "wall": 1790925738.728359,
+      "monotonic": 1169.212607092,
+      "loadavg": [
+       1.1,
+       2.36,
+       1.84
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925739.3429523,
+      "monotonic": 1169.827201195,
+      "loadavg": [
+       1.1,
+       2.36,
+       1.84
+      ]
+     },
+     "duration_seconds": 0.615,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_evidence_comprehension_v1_transport.Transport.test_slow_abort_within_the_window_is_verified",
+     "start": {
+      "wall": 1790925739.3430703,
+      "monotonic": 1169.827318466,
+      "loadavg": [
+       1.1,
+       2.36,
+       1.84
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925741.9650805,
+      "monotonic": 1172.44932922,
+      "loadavg": [
+       1.01,
+       2.32,
+       1.83
+      ]
+     },
+     "duration_seconds": 2.622,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_evidence_comprehension_v1_transport.Transport.test_timeout_closes_the_connection_and_the_server_aborts",
+     "start": {
+      "wall": 1790925741.9651515,
+      "monotonic": 1172.449399541,
+      "loadavg": [
+       1.01,
+       2.32,
+       1.83
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925743.8763185,
+      "monotonic": 1174.360567142,
+      "loadavg": [
+       1.01,
+       2.32,
+       1.83
+      ]
+     },
+     "duration_seconds": 1.911,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_evidence_comprehension_v1_transport.Transport.test_trickling_metrics_are_cut_off_at_the_deadline",
+     "start": {
+      "wall": 1790925743.8764122,
+      "monotonic": 1174.36066056,
+      "loadavg": [
+       1.01,
+       2.32,
+       1.83
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925747.5120077,
+      "monotonic": 1177.996256159,
+      "loadavg": [
+       1.01,
+       2.3,
+       1.82
+      ]
+     },
+     "duration_seconds": 3.636,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_evidence_comprehension_v1_transport.Verdicts.test_cache_verdict_is_recomputed_from_counters",
+     "start": {
+      "wall": 1790925747.5120962,
+      "monotonic": 1177.996344435,
+      "loadavg": [
+       1.01,
+       2.3,
+       1.82
+      ]
+     },
+     "outcome": "success",
+     "subtests": [
+      {
+       "subtest": "tests.test_evidence_comprehension_v1_transport.Verdicts.test_cache_verdict_is_recomputed_from_counters (bad={'prompt_tokens_total': 120, 'prefix_cache_queries_total': 999, 'prefix_cache_hits_total': 999, 'prefix_caching_disabled_verified': True})",
+       "at_monotonic": 1177.996453112,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_evidence_comprehension_v1_transport.Verdicts.test_cache_verdict_is_recomputed_from_counters (bad={'prompt_tokens_total': 0, 'prefix_cache_queries_total': 0, 'prefix_cache_hits_total': 0})",
+       "at_monotonic": 1177.996475079,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_evidence_comprehension_v1_transport.Verdicts.test_cache_verdict_is_recomputed_from_counters (bad={'prompt_tokens_total': -5, 'prefix_cache_queries_total': 0, 'prefix_cache_hits_total': 0})",
+       "at_monotonic": 1177.99648739,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_evidence_comprehension_v1_transport.Verdicts.test_cache_verdict_is_recomputed_from_counters (bad={'prompt_tokens_total': nan, 'prefix_cache_queries_total': 0, 'prefix_cache_hits_total': 0})",
+       "at_monotonic": 1177.996499729,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_evidence_comprehension_v1_transport.Verdicts.test_cache_verdict_is_recomputed_from_counters (bad={'prompt_tokens_total': 120, 'prefix_cache_queries_total': None, 'prefix_cache_hits_total': 0})",
+       "at_monotonic": 1177.996509985,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_evidence_comprehension_v1_transport.Verdicts.test_cache_verdict_is_recomputed_from_counters (bad={'prompt_tokens_total': 120, 'prefix_cache_queries_total': True, 'prefix_cache_hits_total': 0})",
+       "at_monotonic": 1177.996520208,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_evidence_comprehension_v1_transport.Verdicts.test_cache_verdict_is_recomputed_from_counters (bad={'prompt_tokens_total': 120, 'prefix_cache_queries_total': 0, 'prefix_cache_hits_total': 3})",
+       "at_monotonic": 1177.996530062,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_evidence_comprehension_v1_transport.Verdicts.test_cache_verdict_is_recomputed_from_counters (bad={'prefix_caching_disabled_verified': True})",
+       "at_monotonic": 1177.996539056,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_evidence_comprehension_v1_transport.Verdicts.test_cache_verdict_is_recomputed_from_counters (bad=None)",
+       "at_monotonic": 1177.996548735,
+       "outcome": "success"
+      }
+     ],
+     "detail": null,
+     "end": {
+      "wall": 1790925747.5123127,
+      "monotonic": 1177.996560634,
+      "loadavg": [
+       1.01,
+       2.3,
+       1.82
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_evidence_comprehension_v1_transport.Verdicts.test_idle_verdict_is_recomputed_from_measurements",
+     "start": {
+      "wall": 1790925747.5123322,
+      "monotonic": 1177.996580472,
+      "loadavg": [
+       1.01,
+       2.3,
+       1.82
+      ]
+     },
+     "outcome": "success",
+     "subtests": [
+      {
+       "subtest": "tests.test_evidence_comprehension_v1_transport.Verdicts.test_idle_verdict_is_recomputed_from_measurements (bad={'idle': True, 'running': 1.0, 'waiting': 0.0, 'waited_seconds': 1.2})",
+       "at_monotonic": 1177.996617451,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_evidence_comprehension_v1_transport.Verdicts.test_idle_verdict_is_recomputed_from_measurements (bad={'idle': True, 'running': 0.0, 'waiting': None, 'waited_seconds': 1.2})",
+       "at_monotonic": 1177.996630984,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_evidence_comprehension_v1_transport.Verdicts.test_idle_verdict_is_recomputed_from_measurements (bad={'idle': True, 'running': 0.0, 'waiting': 0.0, 'waited_seconds': 20.0})",
+       "at_monotonic": 1177.996642184,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_evidence_comprehension_v1_transport.Verdicts.test_idle_verdict_is_recomputed_from_measurements (bad={'idle': True, 'running': 0.0, 'waiting': 0.0, 'waited_seconds': nan})",
+       "at_monotonic": 1177.996654715,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_evidence_comprehension_v1_transport.Verdicts.test_idle_verdict_is_recomputed_from_measurements (bad={'idle': True, 'running': 0.0, 'waiting': 0.0, 'waited_seconds': -1})",
+       "at_monotonic": 1177.996665926,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_evidence_comprehension_v1_transport.Verdicts.test_idle_verdict_is_recomputed_from_measurements (bad={'idle': True, 'running': True, 'waiting': 0.0, 'waited_seconds': 1.2})",
+       "at_monotonic": 1177.996676207,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_evidence_comprehension_v1_transport.Verdicts.test_idle_verdict_is_recomputed_from_measurements (bad={'idle': True})",
+       "at_monotonic": 1177.996686583,
+       "outcome": "success"
+      }
+     ],
+     "detail": null,
+     "end": {
+      "wall": 1790925747.5124462,
+      "monotonic": 1177.996694229,
+      "loadavg": [
+       1.01,
+       2.3,
+       1.82
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_evidence_comprehension_v1_transport.Verdicts.test_metric_parsing",
+     "start": {
+      "wall": 1790925747.5124588,
+      "monotonic": 1177.996706792,
+      "loadavg": [
+       1.01,
+       2.3,
+       1.82
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925747.8142376,
+      "monotonic": 1178.298485787,
+      "loadavg": [
+       1.01,
+       2.3,
+       1.82
+      ]
+     },
+     "duration_seconds": 0.302,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    }
+   ]
+  },
+  "diagnostics_recorder": {
+   "module": "tests.test_progress_subgoal_v1_diagnostics",
+   "completed": true,
+   "tests_run": 6,
+   "failures": 0,
+   "errors": 0,
+   "passed": true,
+   "seconds": 20.1,
+   "tests": [
+    {
+     "test": "tests.test_progress_subgoal_v1_diagnostics.Recorder.test_all_requested_suites_passing_is_success",
+     "start": {
+      "wall": 1790925747.8473878,
+      "monotonic": 1178.331636549,
+      "loadavg": [
+       1.01,
+       2.3,
+       1.82
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925750.1846294,
+      "monotonic": 1180.668877718,
+      "loadavg": [
+       1.01,
+       2.3,
+       1.82
+      ]
+     },
+     "duration_seconds": 2.337,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_diagnostics.Recorder.test_interrupted_run_saves_an_incomplete_record_then_reraises",
+     "start": {
+      "wall": 1790925750.184656,
+      "monotonic": 1180.668903811,
+      "loadavg": [
+       1.01,
+       2.3,
+       1.82
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925752.549143,
+      "monotonic": 1183.033391257,
+      "loadavg": [
+       1.49,
+       2.38,
+       1.85
+      ]
+     },
+     "duration_seconds": 2.364,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_diagnostics.Recorder.test_nested_runs_do_not_disable_the_outer_rehearsal_log",
+     "start": {
+      "wall": 1790925752.5491784,
+      "monotonic": 1183.033426497,
+      "loadavg": [
+       1.49,
+       2.38,
+       1.85
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925757.5318613,
+      "monotonic": 1188.685832652,
+      "loadavg": [
+       1.93,
+       2.46,
+       1.88
+      ]
+     },
+     "duration_seconds": 5.652,
+     "wall_minus_monotonic_seconds": -0.67,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_diagnostics.Recorder.test_reviewer_case_setupclass_error_after_a_passing_suite",
+     "start": {
+      "wall": 1790925757.5318868,
+      "monotonic": 1188.685858287,
+      "loadavg": [
+       1.93,
+       2.46,
+       1.88
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925759.1339831,
+      "monotonic": 1190.287954711,
+      "loadavg": [
+       1.93,
+       2.46,
+       1.88
+      ]
+     },
+     "duration_seconds": 1.602,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_diagnostics.Recorder.test_runner_exception_is_retained_and_later_suites_still_run",
+     "start": {
+      "wall": 1790925759.1340091,
+      "monotonic": 1190.287980435,
+      "loadavg": [
+       1.93,
+       2.46,
+       1.88
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790925761.023408,
+      "monotonic": 1192.177379435,
+      "loadavg": [
+       2.34,
+       2.53,
+       1.91
+      ]
+     },
+     "duration_seconds": 1.889,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_diagnostics.Recorder.test_setupmodule_and_teardownclass_errors_are_retained",
+     "start": {
+      "wall": 1790925761.023503,
+      "monotonic": 1192.177474578,
+      "loadavg": [
+       2.34,
+       2.53,
+       1.91
+      ]
+     },
+     "outcome": "success",
+     "subtests": [
+      {
+       "subtest": "tests.test_progress_subgoal_v1_diagnostics.Recorder.test_setupmodule_and_teardownclass_errors_are_retained (message='deliberate setUpModule failure')",
+       "at_monotonic": 1194.767374672,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_diagnostics.Recorder.test_setupmodule_and_teardownclass_errors_are_retained (message='deliberate tearDownClass failure')",
+       "at_monotonic": 1196.546019544,
+       "outcome": "success"
+      }
+     ],
+     "detail": null,
+     "end": {
+      "wall": 1790925767.2018855,
+      "monotonic": 1198.355857208,
+      "loadavg": [
+       2.23,
+       2.51,
+       1.9
+      ]
+     },
+     "duration_seconds": 6.178,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    }
+   ]
+  },
+  "connected_path_rehearsals": {
+   "module": "tests.test_progress_subgoal_v1_connected",
+   "completed": true,
+   "tests_run": 10,
+   "failures": 0,
+   "errors": 0,
+   "passed": true,
+   "seconds": 2205.1,
+   "tests": [
+    {
+     "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_deadline_interruption_in_each_gate_pass",
+     "start": {
+      "wall": 1790925767.2022815,
+      "monotonic": 1198.356253021,
+      "loadavg": [
+       2.23,
+       2.51,
+       1.9
+      ]
+     },
+     "outcome": "success",
+     "subtests": [
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_deadline_interruption_in_each_gate_pass (fault='slow_withheld_pass_1')",
+       "at_monotonic": 1491.298904215,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_deadline_interruption_in_each_gate_pass (fault='slow_withheld_pass_2')",
+       "at_monotonic": 1783.938095707,
+       "outcome": "success"
+      }
+     ],
+     "detail": null,
+     "end": {
+      "wall": 1790960135.1687207,
+      "monotonic": 1783.93964399,
+      "loadavg": [
+       3.76,
+       3.7,
+       2.8
+      ]
+     },
+     "duration_seconds": 585.583,
+     "wall_minus_monotonic_seconds": 33782.383,
+     "wall_clock_step": true
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_failures_are_bounded_cleaned_and_keep_honest_evidence",
+     "start": {
+      "wall": 1790960135.1689725,
+      "monotonic": 1783.939895353,
+      "loadavg": [
+       3.76,
+       3.7,
+       2.8
+      ]
+     },
+     "outcome": "success",
+     "subtests": [
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_failures_are_bounded_cleaned_and_keep_honest_evidence (fault='http_error')",
+       "at_monotonic": 1792.379773016,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_failures_are_bounded_cleaned_and_keep_honest_evidence (fault='storage')",
+       "at_monotonic": 1806.054622312,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_failures_are_bounded_cleaned_and_keep_honest_evidence (fault='cancel')",
+       "at_monotonic": 1821.859967996,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_failures_are_bounded_cleaned_and_keep_honest_evidence (fault='monitor_exit')",
+       "at_monotonic": 1828.937327826,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_failures_are_bounded_cleaned_and_keep_honest_evidence (fault='monitor_exit_before_ready')",
+       "at_monotonic": 1832.7968379,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_failures_are_bounded_cleaned_and_keep_honest_evidence (fault='model_startup')",
+       "at_monotonic": 1837.220137416,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_failures_are_bounded_cleaned_and_keep_honest_evidence (fault='log_flood')",
+       "at_monotonic": 1850.770892059,
+       "outcome": "success"
+      }
+     ],
+     "detail": null,
+     "end": {
+      "wall": 1790960199.1530473,
+      "monotonic": 1850.770936099,
+      "loadavg": [
+       3.3,
+       3.56,
+       2.82
+      ]
+     },
+     "duration_seconds": 66.831,
+     "wall_minus_monotonic_seconds": -2.847,
+     "wall_clock_step": true
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_instrumentation_leaves_requests_and_answers_unchanged",
+     "start": {
+      "wall": 1790960199.1531134,
+      "monotonic": 1850.77100223,
+      "loadavg": [
+       3.3,
+       3.56,
+       2.82
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790961330.5160573,
+      "monotonic": 2202.880831308,
+      "loadavg": [
+       1.86,
+       2.67,
+       2.71
+      ]
+     },
+     "duration_seconds": 352.11,
+     "wall_minus_monotonic_seconds": 779.253,
+     "wall_clock_step": true
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_late_abort_trickling_metrics_and_late_replies_stop_within_the_bound",
+     "start": {
+      "wall": 1790961330.516168,
+      "monotonic": 2202.880941461,
+      "loadavg": [
+       1.86,
+       2.67,
+       2.71
+      ]
+     },
+     "outcome": "success",
+     "subtests": [
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_late_abort_trickling_metrics_and_late_replies_stop_within_the_bound (fault='late_abort')",
+       "at_monotonic": 2214.584746888,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_late_abort_trickling_metrics_and_late_replies_stop_within_the_bound (fault='trickle_metrics')",
+       "at_monotonic": 2225.747825389,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_late_abort_trickling_metrics_and_late_replies_stop_within_the_bound (fault='late_reply')",
+       "at_monotonic": 2240.636708063,
+       "outcome": "success"
+      }
+     ],
+     "detail": null,
+     "end": {
+      "wall": 1790961368.2719967,
+      "monotonic": 2240.636769744,
+      "loadavg": [
+       1.33,
+       2.45,
+       2.63
+      ]
+     },
+     "duration_seconds": 37.756,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_normal_run_and_scores_come_only_from_retained_responses",
+     "start": {
+      "wall": 1790961368.2720504,
+      "monotonic": 2240.636823574,
+      "loadavg": [
+       1.33,
+       2.45,
+       2.63
+      ]
+     },
+     "outcome": "success",
+     "subtests": [
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_normal_run_and_scores_come_only_from_retained_responses (mutation='negative prompt')",
+       "at_monotonic": 2405.067461756,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_normal_run_and_scores_come_only_from_retained_responses (mutation='negative completion')",
+       "at_monotonic": 2406.432949083,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_normal_run_and_scores_come_only_from_retained_responses (mutation='missing completion and finish')",
+       "at_monotonic": 2407.52953047,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_normal_run_and_scores_come_only_from_retained_responses (mutation='length below the cap')",
+       "at_monotonic": 2408.800046379,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_normal_run_and_scores_come_only_from_retained_responses (mutation='unknown finish')",
+       "at_monotonic": 2409.833170128,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_normal_run_and_scores_come_only_from_retained_responses (mutation='after the deadline')",
+       "at_monotonic": 2411.212696458,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_normal_run_and_scores_come_only_from_retained_responses (mutation='reversed timestamps')",
+       "at_monotonic": 2412.250145846,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_normal_run_and_scores_come_only_from_retained_responses (mutation='non-finite timestamp')",
+       "at_monotonic": 2413.280192353,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_normal_run_and_scores_come_only_from_retained_responses (mutation='forged cache counters')",
+       "at_monotonic": 2414.476580036,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_normal_run_and_scores_come_only_from_retained_responses (mutation='missing cache check')",
+       "at_monotonic": 2415.480810783,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_normal_run_and_scores_come_only_from_retained_responses (mutation='stale prompt counter')",
+       "at_monotonic": 2416.883433178,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_normal_run_and_scores_come_only_from_retained_responses (mutation='late host answer')",
+       "at_monotonic": 2417.997520988,
+       "outcome": "success"
+      }
+     ],
+     "detail": null,
+     "end": {
+      "wall": 1790961547.2980497,
+      "monotonic": 2427.675944143,
+      "loadavg": [
+       2.27,
+       2.53,
+       2.63
+      ]
+     },
+     "duration_seconds": 187.039,
+     "wall_minus_monotonic_seconds": -8.013,
+     "wall_clock_step": true
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_prefix_caching_enabled_is_refused_before_any_question",
+     "start": {
+      "wall": 1790961547.2981448,
+      "monotonic": 2427.676038701,
+      "loadavg": [
+       2.27,
+       2.53,
+       2.63
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790961554.4623346,
+      "monotonic": 2434.840229161,
+      "loadavg": [
+       2.33,
+       2.54,
+       2.64
+      ]
+     },
+     "duration_seconds": 7.164,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_server_that_ignores_cancellation_stops_the_run",
+     "start": {
+      "wall": 1790961554.462405,
+      "monotonic": 2434.840298958,
+      "loadavg": [
+       2.33,
+       2.54,
+       2.64
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790961566.9700916,
+      "monotonic": 2449.099735605,
+      "loadavg": [
+       2.32,
+       2.53,
+       2.63
+      ]
+     },
+     "duration_seconds": 14.259,
+     "wall_minus_monotonic_seconds": -1.752,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_slow_abort_within_the_window_is_verified",
+     "start": {
+      "wall": 1790961566.9701538,
+      "monotonic": 2449.099797387,
+      "loadavg": [
+       2.32,
+       2.53,
+       2.63
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790961818.720239,
+      "monotonic": 2713.669002828,
+      "loadavg": [
+       2.87,
+       2.73,
+       2.69
+      ]
+     },
+     "duration_seconds": 264.569,
+     "wall_minus_monotonic_seconds": -12.819,
+     "wall_clock_step": true
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_surviving_child_is_cleaned_up",
+     "start": {
+      "wall": 1790961818.720375,
+      "monotonic": 2713.66913851,
+      "loadavg": [
+       2.87,
+       2.73,
+       2.69
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790962009.3706205,
+      "monotonic": 2913.988795425,
+      "loadavg": [
+       2.78,
+       2.7,
+       2.68
+      ]
+     },
+     "duration_seconds": 200.32,
+     "wall_minus_monotonic_seconds": -9.669,
+     "wall_clock_step": true
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_timeout_cancels_server_side_work",
+     "start": {
+      "wall": 1790962009.370799,
+      "monotonic": 2913.988973481,
+      "loadavg": [
+       2.78,
+       2.7,
+       2.68
+      ]
+     },
+     "outcome": "success",
+     "subtests": [
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_timeout_cancels_server_side_work (cancellation='still running')",
+       "at_monotonic": 3400.334756259,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_timeout_cancels_server_side_work (cancellation='waited past the window')",
+       "at_monotonic": 3401.973395219,
+       "outcome": "success"
+      },
+      {
+       "subtest": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_timeout_cancels_server_side_work (cancellation='ended after the deadline')",
+       "at_monotonic": 3403.476532338,
+       "outcome": "success"
+      }
+     ],
+     "detail": null,
+     "end": {
+      "wall": 1790962533.2975793,
+      "monotonic": 3403.479505581,
+      "loadavg": [
+       4.14,
+       3.33,
+       2.97
+      ]
+     },
+     "duration_seconds": 489.491,
+     "wall_minus_monotonic_seconds": 34.436,
+     "wall_clock_step": true
+    }
+   ]
+  },
+  "packaging_derivation_and_inventory": {
+   "module": "tests.test_progress_subgoal_v1_packaging",
+   "completed": true,
+   "tests_run": 7,
+   "failures": 1,
+   "errors": 0,
+   "passed": false,
+   "seconds": 14.1,
+   "tests": [
+    {
+     "test": "tests.test_progress_subgoal_v1_packaging.Derivation.test_no_existing_ws3_file_is_a_target",
+     "start": {
+      "wall": 1790962533.3464813,
+      "monotonic": 3403.528407824,
+      "loadavg": [
+       4.14,
+       3.33,
+       2.97
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790962533.3465924,
+      "monotonic": 3403.528518641,
+      "loadavg": [
+       4.14,
+       3.33,
+       2.97
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_packaging.Derivation.test_packaging_and_runtime_files_match_their_derivations",
+     "start": {
+      "wall": 1790962533.3466206,
+      "monotonic": 3403.528546744,
+      "loadavg": [
+       4.14,
+       3.33,
+       2.97
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790962534.527067,
+      "monotonic": 3404.708993452,
+      "loadavg": [
+       4.14,
+       3.33,
+       2.97
+      ]
+     },
+     "duration_seconds": 1.18,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_packaging.Derivation.test_ws3_sources_are_unchanged_since_the_derivation",
+     "start": {
+      "wall": 1790962534.5271335,
+      "monotonic": 3404.709059321,
+      "loadavg": [
+       4.14,
+       3.33,
+       2.97
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790962534.6009786,
+      "monotonic": 3404.782905135,
+      "loadavg": [
+       4.14,
+       3.33,
+       2.97
+      ]
+     },
+     "duration_seconds": 0.074,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_packaging.Inventory.test_build_only_modules_and_other_question_sets_are_not_packaged",
+     "start": {
+      "wall": 1790962547.3228421,
+      "monotonic": 3417.504768669,
+      "loadavg": [
+       4.35,
+       3.4,
+       3.0
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790962547.3229837,
+      "monotonic": 3417.504909739,
+      "loadavg": [
+       4.35,
+       3.4,
+       3.0
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_packaging.Inventory.test_frozen_rules_and_decisions_are_bound_as_review_documents",
+     "start": {
+      "wall": 1790962547.3230135,
+      "monotonic": 3417.504939709,
+      "loadavg": [
+       4.35,
+       3.4,
+       3.0
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790962547.3426344,
+      "monotonic": 3417.524560863,
+      "loadavg": [
+       4.35,
+       3.4,
+       3.0
+      ]
+     },
+     "duration_seconds": 0.02,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_packaging.Inventory.test_inventory_binds_the_runtime_and_the_frozen_question_set",
+     "start": {
+      "wall": 1790962547.342699,
+      "monotonic": 3417.52462504,
+      "loadavg": [
+       4.35,
+       3.4,
+       3.0
+      ]
+     },
+     "outcome": "success",
+     "subtests": [],
+     "detail": null,
+     "end": {
+      "wall": 1790962547.3427894,
+      "monotonic": 3417.524715329,
+      "loadavg": [
+       4.35,
+       3.4,
+       3.0
+      ]
+     },
+     "duration_seconds": 0.0,
+     "wall_minus_monotonic_seconds": 0.0,
+     "wall_clock_step": false
+    },
+    {
+     "test": "tests.test_progress_subgoal_v1_packaging.Inventory.test_review_lock_matches_the_inventory_and_the_working_tree",
+     "start": {
+      "wall": 1790962547.3428085,
+      "monotonic": 3417.524734586,
+      "loadavg": [
+       4.35,
+       3.4,
+       3.0
+      ]
+     },
+     "outcome": "failure",
+     "subtests": [],
+     "detail": "Traceback (most recent call last):\n  File \"/usr/lib/python3.12/unittest/case.py\", line 58, in testPartExecutor\n    yield\n  File \"/usr/lib/python3.12/unittest/case.py\", line 634, in run\n    self._callTestMethod(testMethod)\n  File \"/usr/lib/python3.12/unittest/case.py\", line 589, in _callTestMethod\n    if method() is not None:\n       ^^^^^^^^\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.claude/worktrees/agent-a4f7bba37c003c145/tests/test_progress_subgoal_v1_packaging.py\", line 47, in test_review_lock_matches_the_inventory_and_the_working_tree\n    self.assertEqual(sorted(lock['bindings']), self.names)\nAssertionError: Lists differ: ['age[8461 chars]n', 'reports/integrated_case_v1/geometry_refer[3578 chars].py'] != ['age[8461 chars]n', 'notebooks/progress-subgoal-v1-review-r1/r[3645 chars].py']\n\nFirst differing element 196:\n'reports/integrated_case_v1/geometry_reference.json'\n'notebooks/progress-subgoal-v1-review-r1/review-source-lock.json'\n\nSecond list contains 1 additional elements.\nFirst extra element 276:\n'scripts/run_phase4_target.py'\n\nDiff is 12993 characters long. Set self.maxDiff to None to see it.\n",
+     "end": {
+      "wall": 1790962547.37882,
+      "monotonic": 3417.560746343,
+      "loadavg": [
+       4.35,
+       3.4,
+       3.0
+      ]
+     },
+     "duration_seconds": 0.036,
+     "wall_minus_monotonic_seconds": -0.0,
+     "wall_clock_step": false
+    }
+   ]
+  }
+ },
+ "requested_suites": [
+  "probe_set_keys_scoring_and_analysis",
+  "frozen_decision_rules",
+  "runtime_derivation_adapters_and_frozen_set",
+  "transition_records_and_fixtures",
+  "schedule_admission_and_interrupted_gate",
+  "transport_cancellation_and_cache_metrics",
+  "diagnostics_recorder",
+  "connected_path_rehearsals",
+  "packaging_derivation_and_inventory"
+ ],
+ "ended": {
+  "wall": 1790962547.3790352,
+  "monotonic": 3417.560961929
+ },
+ "host_at_end": {
+  "hostname": "Jingjing",
+  "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "cpus": 8,
+  "loadavg": [
+   4.35,
+   3.4,
+   3.0
+  ],
+  "memory_kib": {
+   "MemTotal": 8006012,
+   "MemAvailable": 6655020
+  }
+ },
+ "rehearsals": [
+  {
+   "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_deadline_interruption_in_each_gate_pass",
+   "fault": "slow_withheld_pass_1",
+   "rehearsal_seconds": 600,
+   "evidence_directory": "/home/jingjing/ecv-rehearsal-tests/tmpq30x0olb/working/progress-subgoal-v1",
+   "started": {
+    "wall": 1790925767.2046793,
+    "monotonic": 1198.358651238
+   },
+   "ended": {
+    "wall": 1790959856.5762768,
+    "monotonic": 1491.276622134
+   },
+   "harness_error": null,
+   "receipt": {
+    "scope": "evidence_comprehension_first_cell",
+    "mode": "rehearsal",
+    "elapsed_seconds": 291.489720949,
+    "error": null,
+    "dependency_trees_removed": null,
+    "study_status": "study_ended_pending_independent_evaluation",
+    "first_cell_cleanup_verified": true,
+    "provider_reconciliation_required": false,
+    "phase4_complete": false
+   },
+   "supervisor_returncode": 0,
+   "first_cell_cleanup": {
+    "groups": {
+     "31528": true,
+     "31537": true,
+     "31539": true
+    },
+    "errors": [],
+    "drain_finished": true
+   },
+   "outer": {
+    "status": "study_ended_pending_independent_evaluation",
+    "error": null,
+    "elapsed_seconds": 291.36688409299995,
+    "process_groups_exited": true,
+    "independent_gpu_cleanup_verified": true,
+    "scratch_removed": true,
+    "run_evidence": {
+     "calls_recorded": 1752,
+     "run_status": "incomplete",
+     "stop_reason": "admission_cutoff",
+     "verified": true
+    }
+   },
+   "host_status": {
+    "cancellations": 0,
+    "ended_seconds": 287.96212401800017,
+    "error": "canceled",
+    "questionnaire_calls": 1752,
+    "scope": "evidence_comprehension_model_host",
+    "service_stopped": null,
+    "startup_seconds": 1.4540265709999858,
+    "status": "stopped"
+   },
+   "worker_result": {
+    "calls_recorded": 1752,
+    "counts": {
+     "answered": 1752
+    },
+    "host_pid": 31554,
+    "mode": "rehearsal",
+    "run_status": "incomplete",
+    "stop_reason": "admission_cutoff"
+   },
+   "worker_failure": null,
+   "evaluation": {
+    "lifecycle_errors": [],
+    "run_evidence": {
+     "verified": true,
+     "recovered": false
+    },
+    "run": {
+     "status": "incomplete",
+     "stop_reason": "admission_cutoff",
+     "calls_recorded": 1752,
+     "scheduled_calls": 5852,
+     "counts": {
+      "answered": 1752
+     },
+     "phase_reached": "withheld_pass_1"
+    },
+    "gate_status": "incomplete",
+    "call_errors": []
+   }
+  },
+  {
+   "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_deadline_interruption_in_each_gate_pass",
+   "fault": "slow_withheld_pass_2",
+   "rehearsal_seconds": 600,
+   "evidence_directory": "/home/jingjing/ecv-rehearsal-tests/tmpuk2hbffr/working/progress-subgoal-v1",
+   "started": {
+    "wall": 1790959856.599038,
+    "monotonic": 1491.299382974
+   },
+   "ended": {
+    "wall": 1790960135.1178696,
+    "monotonic": 1783.88879303
+   },
+   "harness_error": null,
+   "receipt": {
+    "scope": "evidence_comprehension_first_cell",
+    "mode": "rehearsal",
+    "elapsed_seconds": 291.33149610299984,
+    "error": null,
+    "dependency_trees_removed": null,
+    "study_status": "study_ended_pending_independent_evaluation",
+    "first_cell_cleanup_verified": true,
+    "provider_reconciliation_required": false,
+    "phase4_complete": false
+   },
+   "supervisor_returncode": 0,
+   "first_cell_cleanup": {
+    "groups": {
+     "64129": true,
+     "64254": true,
+     "64256": true
+    },
+    "errors": [],
+    "drain_finished": true
+   },
+   "outer": {
+    "status": "study_ended_pending_independent_evaluation",
+    "error": null,
+    "elapsed_seconds": 291.22830502399984,
+    "process_groups_exited": true,
+    "independent_gpu_cleanup_verified": true,
+    "scratch_removed": true,
+    "run_evidence": {
+     "calls_recorded": 3009,
+     "run_status": "incomplete",
+     "stop_reason": "admission_cutoff",
+     "verified": true
+    }
+   },
+   "host_status": {
+    "cancellations": 0,
+    "ended_seconds": 287.8795936459999,
+    "error": "canceled",
+    "questionnaire_calls": 3009,
+    "scope": "evidence_comprehension_model_host",
+    "service_stopped": null,
+    "startup_seconds": 1.8434145100000023,
+    "status": "stopped"
+   },
+   "worker_result": {
+    "calls_recorded": 3009,
+    "counts": {
+     "answered": 3009
+    },
+    "host_pid": 64450,
+    "mode": "rehearsal",
+    "run_status": "incomplete",
+    "stop_reason": "admission_cutoff"
+   },
+   "worker_failure": null,
+   "evaluation": {
+    "lifecycle_errors": [],
+    "run_evidence": {
+     "verified": true,
+     "recovered": false
+    },
+    "run": {
+     "status": "incomplete",
+     "stop_reason": "admission_cutoff",
+     "calls_recorded": 3009,
+     "scheduled_calls": 5852,
+     "counts": {
+      "answered": 3009
+     },
+     "phase_reached": "withheld_pass_2"
+    },
+    "gate_status": "incomplete",
+    "call_errors": []
+   }
+  },
+  {
+   "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_failures_are_bounded_cleaned_and_keep_honest_evidence",
+   "fault": "http_error",
+   "rehearsal_seconds": 900,
+   "evidence_directory": "/home/jingjing/ecv-rehearsal-tests/tmpx6hrlxwo/working/progress-subgoal-v1",
+   "started": {
+    "wall": 1790960135.1696799,
+    "monotonic": 1783.940602949
+   },
+   "ended": {
+    "wall": 1790960143.6036468,
+    "monotonic": 1792.374569789
+   },
+   "harness_error": null,
+   "receipt": {
+    "scope": "evidence_comprehension_first_cell",
+    "mode": "rehearsal",
+    "elapsed_seconds": 8.142112567999902,
+    "error": null,
+    "dependency_trees_removed": null,
+    "study_status": "failed",
+    "first_cell_cleanup_verified": true,
+    "provider_reconciliation_required": false,
+    "phase4_complete": false
+   },
+   "supervisor_returncode": 1,
+   "first_cell_cleanup": {
+    "groups": {
+     "121788": true,
+     "122044": true,
+     "122046": true
+    },
+    "errors": [],
+    "drain_finished": true
+   },
+   "outer": {
+    "status": "failed",
+    "error": "RuntimeError: game worker failed",
+    "elapsed_seconds": 8.013944524999943,
+    "process_groups_exited": true,
+    "independent_gpu_cleanup_verified": true,
+    "scratch_removed": true,
+    "run_evidence": {
+     "calls_recorded": 7,
+     "run_status": "incomplete",
+     "stop_reason": "transport_failure",
+     "verified": true
+    }
+   },
+   "host_status": {
+    "cancellations": 0,
+    "ended_seconds": 3.15199893099998,
+    "error": "canceled",
+    "questionnaire_calls": 7,
+    "scope": "evidence_comprehension_model_host",
+    "service_stopped": null,
+    "startup_seconds": 1.54916925800012,
+    "status": "stopped"
+   },
+   "worker_result": {
+    "calls_recorded": 7,
+    "counts": {
+     "answered": 6,
+     "transport_failure": 1
+    },
+    "host_pid": 122315,
+    "mode": "rehearsal",
+    "run_status": "incomplete",
+    "stop_reason": "transport_failure"
+   },
+   "worker_failure": {
+    "error": "RuntimeError: questionnaire run stopped: transport_failure"
+   },
+   "evaluation": {
+    "lifecycle_errors": [
+     "supervisor: RuntimeError: game worker failed",
+     "first-cell group cleanup, log drain or supervisor return code",
+     "notebook finalization receipt"
+    ],
+    "run_evidence": {
+     "verified": true,
+     "recovered": false
+    },
+    "run": {
+     "status": "incomplete",
+     "stop_reason": "transport_failure",
+     "calls_recorded": 7,
+     "scheduled_calls": 5852,
+     "counts": {
+      "answered": 6,
+      "transport_failure": 1
+     },
+     "phase_reached": "withheld_pass_1"
+    },
+    "gate_status": "incomplete",
+    "call_errors": []
+   }
+  },
+  {
+   "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_failures_are_bounded_cleaned_and_keep_honest_evidence",
+   "fault": "storage",
+   "rehearsal_seconds": 900,
+   "evidence_directory": "/home/jingjing/ecv-rehearsal-tests/tmpiz1zcbwm/working/progress-subgoal-v1",
+   "started": {
+    "wall": 1790960143.6097999,
+    "monotonic": 1792.380723304
+   },
+   "ended": {
+    "wall": 1790960157.2777681,
+    "monotonic": 1806.048691494
+   },
+   "harness_error": null,
+   "receipt": {
+    "scope": "evidence_comprehension_first_cell",
+    "mode": "rehearsal",
+    "elapsed_seconds": 13.269887228000016,
+    "error": null,
+    "dependency_trees_removed": null,
+    "study_status": "failed",
+    "first_cell_cleanup_verified": true,
+    "provider_reconciliation_required": false,
+    "phase4_complete": false
+   },
+   "supervisor_returncode": 1,
+   "first_cell_cleanup": {
+    "groups": {
+     "123133": true,
+     "123314": true,
+     "123316": true
+    },
+    "errors": [],
+    "drain_finished": true
+   },
+   "outer": {
+    "status": "failed",
+    "error": "RuntimeError: game worker failed",
+    "elapsed_seconds": 13.130428972000118,
+    "process_groups_exited": true,
+    "independent_gpu_cleanup_verified": true,
+    "scratch_removed": true,
+    "run_evidence": {
+     "calls_recorded": 143,
+     "run_status": "incomplete",
+     "stop_reason": "storage_exhausted",
+     "verified": true
+    }
+   },
+   "host_status": {
+    "cancellations": 0,
+    "ended_seconds": 9.229063440000118,
+    "error": "canceled",
+    "questionnaire_calls": 144,
+    "scope": "evidence_comprehension_model_host",
+    "service_stopped": null,
+    "startup_seconds": 1.7047886489999655,
+    "status": "stopped"
+   },
+   "worker_result": {
+    "calls_recorded": 143,
+    "counts": {
+     "answered": 143
+    },
+    "host_pid": 123601,
+    "mode": "rehearsal",
+    "run_status": "incomplete",
+    "stop_reason": "storage_exhausted"
+   },
+   "worker_failure": {
+    "error": "RuntimeError: questionnaire run stopped: storage_exhausted"
+   },
+   "evaluation": {
+    "lifecycle_errors": [
+     "supervisor: RuntimeError: game worker failed",
+     "first-cell group cleanup, log drain or supervisor return code",
+     "notebook finalization receipt",
+     "monitor evidence: ValueError"
+    ],
+    "run_evidence": {
+     "verified": true,
+     "recovered": false
+    },
+    "run": {
+     "status": "incomplete",
+     "stop_reason": "storage_exhausted",
+     "calls_recorded": 143,
+     "scheduled_calls": 5852,
+     "counts": {
+      "answered": 143
+     },
+     "phase_reached": "withheld_pass_1"
+    },
+    "gate_status": "incomplete",
+    "call_errors": []
+   }
+  },
+  {
+   "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_failures_are_bounded_cleaned_and_keep_honest_evidence",
+   "fault": "cancel",
+   "rehearsal_seconds": 900,
+   "evidence_directory": "/home/jingjing/ecv-rehearsal-tests/tmpgvb39dam/working/progress-subgoal-v1",
+   "started": {
+    "wall": 1790960157.2844424,
+    "monotonic": 1806.0553656
+   },
+   "ended": {
+    "wall": 1790960171.6445155,
+    "monotonic": 1821.853439297
+   },
+   "harness_error": null,
+   "receipt": {
+    "scope": "evidence_comprehension_first_cell",
+    "mode": "rehearsal",
+    "elapsed_seconds": 15.46450156800006,
+    "error": null,
+    "dependency_trees_removed": null,
+    "study_status": "failed",
+    "first_cell_cleanup_verified": true,
+    "provider_reconciliation_required": false,
+    "phase4_complete": false
+   },
+   "supervisor_returncode": 1,
+   "first_cell_cleanup": {
+    "groups": {
+     "125929": true,
+     "126133": true,
+     "126135": true
+    },
+    "errors": [],
+    "drain_finished": true
+   },
+   "outer": {
+    "status": "failed",
+    "error": "RuntimeError: game worker failed",
+    "elapsed_seconds": 15.364953657999877,
+    "process_groups_exited": true,
+    "independent_gpu_cleanup_verified": true,
+    "scratch_removed": true,
+    "run_evidence": {
+     "calls_recorded": 154,
+     "run_status": "incomplete",
+     "stop_reason": "canceled",
+     "verified": true
+    }
+   },
+   "host_status": {
+    "cancellations": 0,
+    "ended_seconds": 11.197674464000102,
+    "error": "canceled",
+    "questionnaire_calls": 154,
+    "scope": "evidence_comprehension_model_host",
+    "service_stopped": null,
+    "startup_seconds": 2.6248955660000775,
+    "status": "stopped"
+   },
+   "worker_result": {
+    "calls_recorded": 154,
+    "counts": {
+     "answered": 154
+    },
+    "host_pid": 126394,
+    "mode": "rehearsal",
+    "run_status": "incomplete",
+    "stop_reason": "canceled"
+   },
+   "worker_failure": {
+    "error": "RuntimeError: questionnaire run stopped: canceled"
+   },
+   "evaluation": {
+    "lifecycle_errors": [
+     "supervisor: RuntimeError: game worker failed",
+     "first-cell group cleanup, log drain or supervisor return code",
+     "notebook finalization receipt"
+    ],
+    "run_evidence": {
+     "verified": true,
+     "recovered": false
+    },
+    "run": {
+     "status": "incomplete",
+     "stop_reason": "canceled",
+     "calls_recorded": 154,
+     "scheduled_calls": 5852,
+     "counts": {
+      "answered": 154
+     },
+     "phase_reached": "withheld_pass_1"
+    },
+    "gate_status": "incomplete",
+    "call_errors": []
+   }
+  },
+  {
+   "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_failures_are_bounded_cleaned_and_keep_honest_evidence",
+   "fault": "monitor_exit",
+   "rehearsal_seconds": 900,
+   "evidence_directory": "/home/jingjing/ecv-rehearsal-tests/tmp2q0bphak/working/progress-subgoal-v1",
+   "started": {
+    "wall": 1790960171.6527176,
+    "monotonic": 1821.861641644
+   },
+   "ended": {
+    "wall": 1790960178.719581,
+    "monotonic": 1828.928505492
+   },
+   "harness_error": null,
+   "receipt": {
+    "scope": "evidence_comprehension_first_cell",
+    "mode": "rehearsal",
+    "elapsed_seconds": 6.673113367000042,
+    "error": null,
+    "dependency_trees_removed": null,
+    "study_status": "failed",
+    "first_cell_cleanup_verified": true,
+    "provider_reconciliation_required": false,
+    "phase4_complete": false
+   },
+   "supervisor_returncode": 1,
+   "first_cell_cleanup": {
+    "groups": {
+     "128925": true,
+     "129118": true,
+     "129120": true
+    },
+    "errors": [],
+    "drain_finished": true
+   },
+   "outer": {
+    "status": "failed",
+    "error": "RuntimeError: monitor stopped before worker",
+    "elapsed_seconds": 6.5306045349998385,
+    "process_groups_exited": true,
+    "independent_gpu_cleanup_verified": true,
+    "scratch_removed": true,
+    "run_evidence": {
+     "calls_recorded": 2,
+     "run_status": "incomplete",
+     "stop_reason": "canceled",
+     "verified": true
+    }
+   },
+   "host_status": {
+    "error": null,
+    "scope": "evidence_comprehension_model_host",
+    "startup_seconds": 1.798947435999935,
+    "status": "ready"
+   },
+   "worker_result": {
+    "calls_recorded": 2,
+    "counts": {
+     "answered": 2
+    },
+    "host_pid": 129398,
+    "mode": "rehearsal",
+    "run_status": "incomplete",
+    "stop_reason": "canceled"
+   },
+   "worker_failure": {
+    "error": "RuntimeError: questionnaire run stopped: canceled"
+   },
+   "evaluation": {
+    "lifecycle_errors": [
+     "supervisor: RuntimeError: monitor stopped before worker",
+     "first-cell group cleanup, log drain or supervisor return code",
+     "notebook finalization receipt"
+    ],
+    "run_evidence": {
+     "verified": true,
+     "recovered": false
+    },
+    "run": {
+     "status": "incomplete",
+     "stop_reason": "canceled",
+     "calls_recorded": 2,
+     "scheduled_calls": 5852,
+     "counts": {
+      "answered": 2
+     },
+     "phase_reached": "withheld_pass_1"
+    },
+    "gate_status": "incomplete",
+    "call_errors": []
+   }
+  },
+  {
+   "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_failures_are_bounded_cleaned_and_keep_honest_evidence",
+   "fault": "monitor_exit_before_ready",
+   "rehearsal_seconds": 900,
+   "evidence_directory": "/home/jingjing/ecv-rehearsal-tests/tmp230n_1t9/working/progress-subgoal-v1",
+   "started": {
+    "wall": 1790960178.7292867,
+    "monotonic": 1828.938210139
+   },
+   "ended": {
+    "wall": 1790960182.5817473,
+    "monotonic": 1832.790670645
+   },
+   "harness_error": null,
+   "receipt": {
+    "scope": "evidence_comprehension_first_cell",
+    "mode": "rehearsal",
+    "elapsed_seconds": 3.6159128449999116,
+    "error": null,
+    "dependency_trees_removed": null,
+    "study_status": "failed",
+    "first_cell_cleanup_verified": true,
+    "provider_reconciliation_required": false,
+    "phase4_complete": false
+   },
+   "supervisor_returncode": 1,
+   "first_cell_cleanup": {
+    "groups": {
+     "130094": true,
+     "130325": true,
+     "130327": true
+    },
+    "errors": [],
+    "drain_finished": true
+   },
+   "outer": {
+    "status": "failed",
+    "error": "RuntimeError: worker/monitor exited before readiness",
+    "elapsed_seconds": 3.4762347939999927,
+    "process_groups_exited": true,
+    "independent_gpu_cleanup_verified": true,
+    "scratch_removed": true,
+    "run_evidence": {
+     "error": "EvidenceError: manifest missing or unreadable",
+     "verified": false
+    }
+   },
+   "host_status": {
+    "unreadable": "FileNotFoundError"
+   },
+   "worker_result": {
+    "unreadable": "FileNotFoundError"
+   },
+   "worker_failure": null,
+   "evaluation": {
+    "lifecycle_errors": [
+     "supervisor: RuntimeError: worker/monitor exited before readiness",
+     "supervisor release/run-evidence verification",
+     "first-cell group cleanup, log drain or supervisor return code",
+     "notebook finalization receipt",
+     "monitor evidence: FileNotFoundError",
+     "model readiness/canary: ValueError: missing or oversized evidence: worker/model-ready.json",
+     "server configuration: ValueError: missing or oversized evidence: worker/server-config.json"
+    ],
+    "run_evidence": {
+     "verified": false,
+     "error": "EvidenceError: manifest missing or unreadable"
+    },
+    "run": null,
+    "gate_status": "incomplete",
+    "call_errors": []
+   }
+  },
+  {
+   "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_failures_are_bounded_cleaned_and_keep_honest_evidence",
+   "fault": "model_startup",
+   "rehearsal_seconds": 900,
+   "evidence_directory": "/home/jingjing/ecv-rehearsal-tests/tmpu4mnd8p8/working/progress-subgoal-v1",
+   "started": {
+    "wall": 1790960182.5884178,
+    "monotonic": 1832.797341307
+   },
+   "ended": {
+    "wall": 1790960187.0007524,
+    "monotonic": 1837.209676197
+   },
+   "harness_error": null,
+   "receipt": {
+    "scope": "evidence_comprehension_first_cell",
+    "mode": "rehearsal",
+    "elapsed_seconds": 4.166393953000124,
+    "error": null,
+    "dependency_trees_removed": null,
+    "study_status": "failed",
+    "first_cell_cleanup_verified": true,
+    "provider_reconciliation_required": false,
+    "phase4_complete": false
+   },
+   "supervisor_returncode": 1,
+   "first_cell_cleanup": {
+    "groups": {
+     "130639": true,
+     "130855": true,
+     "130857": true
+    },
+    "errors": [],
+    "drain_finished": true
+   },
+   "outer": {
+    "status": "failed",
+    "error": "RuntimeError: game worker failed",
+    "elapsed_seconds": 3.971626737999941,
+    "process_groups_exited": true,
+    "independent_gpu_cleanup_verified": true,
+    "scratch_removed": true,
+    "run_evidence": {
+     "error": "EvidenceError: manifest missing or unreadable",
+     "verified": false
+    }
+   },
+   "host_status": {
+    "ended_seconds": 0.11625436999997873,
+    "error": "TimeoutError: rehearsal model startup failure",
+    "scope": "evidence_comprehension_model_host",
+    "startup_seconds": null,
+    "status": "failed"
+   },
+   "worker_result": {
+    "unreadable": "FileNotFoundError"
+   },
+   "worker_failure": {
+    "error": "RuntimeError: model host exited before bridge readiness"
+   },
+   "evaluation": {
+    "lifecycle_errors": [
+     "supervisor: RuntimeError: game worker failed",
+     "supervisor release/run-evidence verification",
+     "first-cell group cleanup, log drain or supervisor return code",
+     "notebook finalization receipt",
+     "model readiness/canary: ValueError: missing or oversized evidence: worker/model-ready.json",
+     "server configuration: ValueError: missing or oversized evidence: worker/server-config.json"
+    ],
+    "run_evidence": {
+     "verified": false,
+     "error": "EvidenceError: manifest missing or unreadable"
+    },
+    "run": null,
+    "gate_status": "incomplete",
+    "call_errors": []
+   }
+  },
+  {
+   "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_failures_are_bounded_cleaned_and_keep_honest_evidence",
+   "fault": "log_flood",
+   "rehearsal_seconds": 900,
+   "evidence_directory": "/home/jingjing/ecv-rehearsal-tests/tmpsfv80cgp/working/progress-subgoal-v1",
+   "started": {
+    "wall": 1790960187.0118608,
+    "monotonic": 1837.220784273
+   },
+   "ended": {
+    "wall": 1790960199.146255,
+    "monotonic": 1850.764144514
+   },
+   "harness_error": null,
+   "receipt": {
+    "scope": "evidence_comprehension_first_cell",
+    "mode": "rehearsal",
+    "elapsed_seconds": 13.360241223999992,
+    "error": null,
+    "dependency_trees_removed": null,
+    "study_status": "failed",
+    "first_cell_cleanup_verified": true,
+    "provider_reconciliation_required": false,
+    "phase4_complete": false
+   },
+   "supervisor_returncode": 1,
+   "first_cell_cleanup": {
+    "groups": {
+     "131221": true,
+     "131257": true,
+     "131259": true
+    },
+    "errors": [],
+    "drain_finished": true
+   },
+   "outer": {
+    "status": "failed",
+    "error": "RuntimeError: game worker failed",
+    "elapsed_seconds": 13.249545616999967,
+    "process_groups_exited": true,
+    "independent_gpu_cleanup_verified": true,
+    "scratch_removed": true,
+    "run_evidence": {
+     "error": "EvidenceError: manifest missing or unreadable",
+     "verified": false
+    }
+   },
+   "host_status": {
+    "error": null,
+    "scope": "evidence_comprehension_model_host",
+    "startup_seconds": 2.8219930090001526,
+    "status": "ready"
+   },
+   "worker_result": {
+    "unreadable": "FileNotFoundError"
+   },
+   "worker_failure": null,
+   "evaluation": {
+    "lifecycle_errors": [
+     "supervisor: RuntimeError: game worker failed",
+     "supervisor release/run-evidence verification",
+     "first-cell group cleanup, log drain or supervisor return code",
+     "notebook finalization receipt",
+     "model readiness/canary: ValueError: missing or oversized evidence: worker/model-ready.json"
+    ],
+    "run_evidence": {
+     "verified": false,
+     "error": "EvidenceError: manifest missing or unreadable"
+    },
+    "run": null,
+    "gate_status": "incomplete",
+    "call_errors": []
+   }
+  },
+  {
+   "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_instrumentation_leaves_requests_and_answers_unchanged",
+   "fault": "none",
+   "rehearsal_seconds": 900,
+   "evidence_directory": "/home/jingjing/ecv-rehearsal-tests/tmpjzs9lgwg/working/progress-subgoal-v1",
+   "started": {
+    "wall": 1790960199.153617,
+    "monotonic": 1850.771506091
+   },
+   "ended": {
+    "wall": 1790960849.2735384,
+    "monotonic": 2068.206199531
+   },
+   "harness_error": null,
+   "receipt": {
+    "scope": "evidence_comprehension_first_cell",
+    "mode": "rehearsal",
+    "elapsed_seconds": 212.5117207730002,
+    "error": null,
+    "dependency_trees_removed": null,
+    "study_status": "study_ended_pending_independent_evaluation",
+    "first_cell_cleanup_verified": true,
+    "provider_reconciliation_required": false,
+    "phase4_complete": false
+   },
+   "supervisor_returncode": 0,
+   "first_cell_cleanup": {
+    "groups": {
+     "131554": true,
+     "131738": true,
+     "131740": true
+    },
+    "errors": [],
+    "drain_finished": true
+   },
+   "outer": {
+    "status": "study_ended_pending_independent_evaluation",
+    "error": null,
+    "elapsed_seconds": 212.40534078199994,
+    "process_groups_exited": true,
+    "independent_gpu_cleanup_verified": true,
+    "scratch_removed": true,
+    "run_evidence": {
+     "calls_recorded": 5852,
+     "run_status": "complete",
+     "stop_reason": null,
+     "verified": true
+    }
+   },
+   "host_status": {
+    "cancellations": 0,
+    "ended_seconds": 208.18090467000002,
+    "error": "canceled",
+    "questionnaire_calls": 5852,
+    "scope": "evidence_comprehension_model_host",
+    "service_stopped": null,
+    "startup_seconds": 2.3615452290000576,
+    "status": "stopped"
+   },
+   "worker_result": {
+    "calls_recorded": 5852,
+    "counts": {
+     "answered": 5852
+    },
+    "host_pid": 132015,
+    "mode": "rehearsal",
+    "run_status": "complete",
+    "stop_reason": null
+   },
+   "worker_failure": null,
+   "evaluation": {
+    "lifecycle_errors": [],
+    "run_evidence": {
+     "verified": true,
+     "recovered": false
+    },
+    "run": {
+     "status": "complete",
+     "stop_reason": null,
+     "calls_recorded": 5852,
+     "scheduled_calls": 5852,
+     "counts": {
+      "answered": 5852
+     },
+     "phase_reached": "development_pass_1"
+    },
+    "gate_status": "complete",
+    "call_errors": []
+   }
+  },
+  {
+   "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_late_abort_trickling_metrics_and_late_replies_stop_within_the_bound",
+   "fault": "late_abort",
+   "rehearsal_seconds": 900,
+   "evidence_directory": "/home/jingjing/ecv-rehearsal-tests/tmpkov1jtnp/working/progress-subgoal-v1",
+   "started": {
+    "wall": 1790961330.5169106,
+    "monotonic": 2202.88168399
+   },
+   "ended": {
+    "wall": 1790961342.205882,
+    "monotonic": 2214.57065596
+   },
+   "harness_error": null,
+   "receipt": {
+    "scope": "evidence_comprehension_first_cell",
+    "mode": "rehearsal",
+    "elapsed_seconds": 11.425379426999825,
+    "error": null,
+    "dependency_trees_removed": null,
+    "study_status": "failed",
+    "first_cell_cleanup_verified": true,
+    "provider_reconciliation_required": false,
+    "phase4_complete": false
+   },
+   "supervisor_returncode": 1,
+   "first_cell_cleanup": {
+    "groups": {
+     "199925": true,
+     "199934": true,
+     "199936": true
+    },
+    "errors": [],
+    "drain_finished": true
+   },
+   "outer": {
+    "status": "failed",
+    "error": "RuntimeError: game worker failed",
+    "elapsed_seconds": 11.297294944999976,
+    "process_groups_exited": true,
+    "independent_gpu_cleanup_verified": true,
+    "scratch_removed": true,
+    "run_evidence": {
+     "calls_recorded": 7,
+     "run_status": "incomplete",
+     "stop_reason": "transport_failure",
+     "verified": true
+    }
+   },
+   "host_status": {
+    "cancellations": 1,
+    "ended_seconds": 8.264102431999618,
+    "error": "canceled",
+    "questionnaire_calls": 7,
+    "scope": "evidence_comprehension_model_host",
+    "service_stopped": "server not observed idle in time after a cancelled call",
+    "startup_seconds": 1.2830798489999324,
+    "status": "stopped"
+   },
+   "worker_result": {
+    "calls_recorded": 7,
+    "counts": {
+     "answered": 6,
+     "transport_failure": 1
+    },
+    "host_pid": 199948,
+    "mode": "rehearsal",
+    "run_status": "incomplete",
+    "stop_reason": "transport_failure"
+   },
+   "worker_failure": {
+    "error": "RuntimeError: questionnaire run stopped: transport_failure"
+   },
+   "evaluation": {
+    "lifecycle_errors": [
+     "supervisor: RuntimeError: game worker failed",
+     "first-cell group cleanup, log drain or supervisor return code",
+     "notebook finalization receipt"
+    ],
+    "run_evidence": {
+     "verified": true,
+     "recovered": false
+    },
+    "run": {
+     "status": "incomplete",
+     "stop_reason": "transport_failure",
+     "calls_recorded": 7,
+     "scheduled_calls": 5852,
+     "counts": {
+      "answered": 6,
+      "transport_failure": 1
+     },
+     "phase_reached": "withheld_pass_1"
+    },
+    "gate_status": "incomplete",
+    "call_errors": []
+   }
+  },
+  {
+   "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_late_abort_trickling_metrics_and_late_replies_stop_within_the_bound",
+   "fault": "trickle_metrics",
+   "rehearsal_seconds": 900,
+   "evidence_directory": "/home/jingjing/ecv-rehearsal-tests/tmpxsajga_1/working/progress-subgoal-v1",
+   "started": {
+    "wall": 1790961342.2203472,
+    "monotonic": 2214.585120325
+   },
+   "ended": {
+    "wall": 1790961353.376321,
+    "monotonic": 2225.74109461
+   },
+   "harness_error": null,
+   "receipt": {
+    "scope": "evidence_comprehension_first_cell",
+    "mode": "rehearsal",
+    "elapsed_seconds": 10.961154552000153,
+    "error": null,
+    "dependency_trees_removed": null,
+    "study_status": "failed",
+    "first_cell_cleanup_verified": true,
+    "provider_reconciliation_required": false,
+    "phase4_complete": false
+   },
+   "supervisor_returncode": 1,
+   "first_cell_cleanup": {
+    "groups": {
+     "200071": true,
+     "200080": true,
+     "200082": true
+    },
+    "errors": [],
+    "drain_finished": true
+   },
+   "outer": {
+    "status": "failed",
+    "error": "RuntimeError: game worker failed",
+    "elapsed_seconds": 10.898156029000347,
+    "process_groups_exited": true,
+    "independent_gpu_cleanup_verified": true,
+    "scratch_removed": true,
+    "run_evidence": {
+     "calls_recorded": 7,
+     "run_status": "incomplete",
+     "stop_reason": "transport_failure",
+     "verified": true
+    }
+   },
+   "host_status": {
+    "cancellations": 1,
+    "ended_seconds": 8.301911695999934,
+    "error": "canceled",
+    "questionnaire_calls": 7,
+    "scope": "evidence_comprehension_model_host",
+    "service_stopped": "server not observed idle in time after a cancelled call",
+    "startup_seconds": 1.1621232620000228,
+    "status": "stopped"
+   },
+   "worker_result": {
+    "calls_recorded": 7,
+    "counts": {
+     "answered": 6,
+     "transport_failure": 1
+    },
+    "host_pid": 200094,
+    "mode": "rehearsal",
+    "run_status": "incomplete",
+    "stop_reason": "transport_failure"
+   },
+   "worker_failure": {
+    "error": "RuntimeError: questionnaire run stopped: transport_failure"
+   },
+   "evaluation": {
+    "lifecycle_errors": [
+     "supervisor: RuntimeError: game worker failed",
+     "first-cell group cleanup, log drain or supervisor return code",
+     "notebook finalization receipt"
+    ],
+    "run_evidence": {
+     "verified": true,
+     "recovered": false
+    },
+    "run": {
+     "status": "incomplete",
+     "stop_reason": "transport_failure",
+     "calls_recorded": 7,
+     "scheduled_calls": 5852,
+     "counts": {
+      "answered": 6,
+      "transport_failure": 1
+     },
+     "phase_reached": "withheld_pass_1"
+    },
+    "gate_status": "incomplete",
+    "call_errors": []
+   }
+  },
+  {
+   "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_late_abort_trickling_metrics_and_late_replies_stop_within_the_bound",
+   "fault": "late_reply",
+   "rehearsal_seconds": 900,
+   "evidence_directory": "/home/jingjing/ecv-rehearsal-tests/tmpg25z2yv_/working/progress-subgoal-v1",
+   "started": {
+    "wall": 1790961353.3835452,
+    "monotonic": 2225.748318381
+   },
+   "ended": {
+    "wall": 1790961368.2677696,
+    "monotonic": 2240.632543824
+   },
+   "harness_error": null,
+   "receipt": {
+    "scope": "evidence_comprehension_first_cell",
+    "mode": "rehearsal",
+    "elapsed_seconds": 14.631741322999915,
+    "error": null,
+    "dependency_trees_removed": null,
+    "study_status": "failed",
+    "first_cell_cleanup_verified": true,
+    "provider_reconciliation_required": false,
+    "phase4_complete": false
+   },
+   "supervisor_returncode": 1,
+   "first_cell_cleanup": {
+    "groups": {
+     "200186": true,
+     "200195": true,
+     "200197": true
+    },
+    "errors": [],
+    "drain_finished": true
+   },
+   "outer": {
+    "status": "failed",
+    "error": "RuntimeError: game worker failed",
+    "elapsed_seconds": 14.551496977999705,
+    "process_groups_exited": true,
+    "independent_gpu_cleanup_verified": true,
+    "scratch_removed": true,
+    "run_evidence": {
+     "calls_recorded": 7,
+     "run_status": "incomplete",
+     "stop_reason": "deadline_expired",
+     "verified": true
+    }
+   },
+   "host_status": {
+    "cancellations": 0,
+    "ended_seconds": 12.389733120000074,
+    "error": "canceled",
+    "questionnaire_calls": 7,
+    "scope": "evidence_comprehension_model_host",
+    "service_stopped": null,
+    "startup_seconds": 1.2170128799998565,
+    "status": "stopped"
+   },
+   "worker_result": {
+    "calls_recorded": 7,
+    "counts": {
+     "answered": 6,
+     "deadline_expired": 1
+    },
+    "host_pid": 200209,
+    "mode": "rehearsal",
+    "run_status": "incomplete",
+    "stop_reason": "deadline_expired"
+   },
+   "worker_failure": {
+    "error": "RuntimeError: questionnaire run stopped: deadline_expired"
+   },
+   "evaluation": {
+    "lifecycle_errors": [
+     "supervisor: RuntimeError: game worker failed",
+     "first-cell group cleanup, log drain or supervisor return code",
+     "notebook finalization receipt"
+    ],
+    "run_evidence": {
+     "verified": true,
+     "recovered": false
+    },
+    "run": {
+     "status": "incomplete",
+     "stop_reason": "deadline_expired",
+     "calls_recorded": 7,
+     "scheduled_calls": 5852,
+     "counts": {
+      "answered": 6,
+      "deadline_expired": 1
+     },
+     "phase_reached": "withheld_pass_1"
+    },
+    "gate_status": "incomplete",
+    "call_errors": []
+   }
+  },
+  {
+   "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_normal_run_and_scores_come_only_from_retained_responses",
+   "fault": "none",
+   "rehearsal_seconds": 900,
+   "evidence_directory": "/home/jingjing/ecv-rehearsal-tests/tmpcsew8zhl/working/progress-subgoal-v1",
+   "started": {
+    "wall": 1790961368.2725568,
+    "monotonic": 2240.63733008
+   },
+   "ended": {
+    "wall": 1790961507.130014,
+    "monotonic": 2385.679931022
+   },
+   "harness_error": null,
+   "receipt": {
+    "scope": "evidence_comprehension_first_cell",
+    "mode": "rehearsal",
+    "elapsed_seconds": 139.8977801619999,
+    "error": null,
+    "dependency_trees_removed": null,
+    "study_status": "study_ended_pending_independent_evaluation",
+    "first_cell_cleanup_verified": true,
+    "provider_reconciliation_required": false,
+    "phase4_complete": false
+   },
+   "supervisor_returncode": 0,
+   "first_cell_cleanup": {
+    "groups": {
+     "200316": true,
+     "200325": true,
+     "200327": true
+    },
+    "errors": [],
+    "drain_finished": true
+   },
+   "outer": {
+    "status": "study_ended_pending_independent_evaluation",
+    "error": null,
+    "elapsed_seconds": 139.79813365500013,
+    "process_groups_exited": true,
+    "independent_gpu_cleanup_verified": true,
+    "scratch_removed": true,
+    "run_evidence": {
+     "calls_recorded": 5852,
+     "run_status": "complete",
+     "stop_reason": null,
+     "verified": true
+    }
+   },
+   "host_status": {
+    "cancellations": 0,
+    "ended_seconds": 136.74837268200008,
+    "error": "canceled",
+    "questionnaire_calls": 5852,
+    "scope": "evidence_comprehension_model_host",
+    "service_stopped": null,
+    "startup_seconds": 1.1252440550001666,
+    "status": "stopped"
+   },
+   "worker_result": {
+    "calls_recorded": 5852,
+    "counts": {
+     "answered": 5852
+    },
+    "host_pid": 200339,
+    "mode": "rehearsal",
+    "run_status": "complete",
+    "stop_reason": null
+   },
+   "worker_failure": null,
+   "evaluation": {
+    "lifecycle_errors": [],
+    "run_evidence": {
+     "verified": true,
+     "recovered": false
+    },
+    "run": {
+     "status": "complete",
+     "stop_reason": null,
+     "calls_recorded": 5852,
+     "scheduled_calls": 5852,
+     "counts": {
+      "answered": 5852
+     },
+     "phase_reached": "development_pass_1"
+    },
+    "gate_status": "complete",
+    "call_errors": []
+   }
+  },
+  {
+   "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_prefix_caching_enabled_is_refused_before_any_question",
+   "fault": "prefix_cache_enabled",
+   "rehearsal_seconds": 900,
+   "evidence_directory": "/home/jingjing/ecv-rehearsal-tests/tmpn6wb5xal/working/progress-subgoal-v1",
+   "started": {
+    "wall": 1790961547.2988846,
+    "monotonic": 2427.676779218
+   },
+   "ended": {
+    "wall": 1790961554.456204,
+    "monotonic": 2434.834098532
+   },
+   "harness_error": null,
+   "receipt": {
+    "scope": "evidence_comprehension_first_cell",
+    "mode": "rehearsal",
+    "elapsed_seconds": 6.9652951350003605,
+    "error": null,
+    "dependency_trees_removed": null,
+    "study_status": "failed",
+    "first_cell_cleanup_verified": true,
+    "provider_reconciliation_required": false,
+    "phase4_complete": false
+   },
+   "supervisor_returncode": 1,
+   "first_cell_cleanup": {
+    "groups": {
+     "234861": true,
+     "234924": true,
+     "234926": true
+    },
+    "errors": [],
+    "drain_finished": true
+   },
+   "outer": {
+    "status": "failed",
+    "error": "RuntimeError: game worker failed",
+    "elapsed_seconds": 6.859777240000312,
+    "process_groups_exited": true,
+    "independent_gpu_cleanup_verified": true,
+    "scratch_removed": true,
+    "run_evidence": {
+     "error": "EvidenceError: manifest missing or unreadable",
+     "verified": false
+    }
+   },
+   "host_status": {
+    "ended_seconds": 2.8098433929999374,
+    "error": "ServerConfigViolation: prefix caching not verified disabled at after_canary",
+    "scope": "evidence_comprehension_model_host",
+    "startup_seconds": null,
+    "status": "failed"
+   },
+   "worker_result": {
+    "unreadable": "FileNotFoundError"
+   },
+   "worker_failure": {
+    "error": "RuntimeError: model host exited before bridge readiness"
+   },
+   "evaluation": {
+    "lifecycle_errors": [
+     "supervisor: RuntimeError: game worker failed",
+     "supervisor release/run-evidence verification",
+     "first-cell group cleanup, log drain or supervisor return code",
+     "notebook finalization receipt",
+     "model readiness/canary: ValueError: missing or oversized evidence: worker/model-ready.json",
+     "server configuration: ValueError: server configuration violation"
+    ],
+    "run_evidence": {
+     "verified": false,
+     "error": "EvidenceError: manifest missing or unreadable"
+    },
+    "run": null,
+    "gate_status": "incomplete",
+    "call_errors": []
+   }
+  },
+  {
+   "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_server_that_ignores_cancellation_stops_the_run",
+   "fault": "no_abort",
+   "rehearsal_seconds": 900,
+   "evidence_directory": "/home/jingjing/ecv-rehearsal-tests/tmpizrhmzns/working/progress-subgoal-v1",
+   "started": {
+    "wall": 1790961554.462957,
+    "monotonic": 2434.840850975
+   },
+   "ended": {
+    "wall": 1790961566.964469,
+    "monotonic": 2449.094113298
+   },
+   "harness_error": null,
+   "receipt": {
+    "scope": "evidence_comprehension_first_cell",
+    "mode": "rehearsal",
+    "elapsed_seconds": 14.02744250800015,
+    "error": null,
+    "dependency_trees_removed": null,
+    "study_status": "failed",
+    "first_cell_cleanup_verified": true,
+    "provider_reconciliation_required": false,
+    "phase4_complete": false
+   },
+   "supervisor_returncode": 1,
+   "first_cell_cleanup": {
+    "groups": {
+     "235200": true,
+     "235249": true,
+     "235251": true
+    },
+    "errors": [],
+    "drain_finished": true
+   },
+   "outer": {
+    "status": "failed",
+    "error": "RuntimeError: game worker failed",
+    "elapsed_seconds": 13.946900947999893,
+    "process_groups_exited": true,
+    "independent_gpu_cleanup_verified": true,
+    "scratch_removed": true,
+    "run_evidence": {
+     "calls_recorded": 7,
+     "run_status": "incomplete",
+     "stop_reason": "transport_failure",
+     "verified": true
+    }
+   },
+   "host_status": {
+    "cancellations": 1,
+    "ended_seconds": 9.793846445999861,
+    "error": "canceled",
+    "questionnaire_calls": 7,
+    "scope": "evidence_comprehension_model_host",
+    "service_stopped": "server not observed idle in time after a cancelled call",
+    "startup_seconds": 2.3847299660001227,
+    "status": "stopped"
+   },
+   "worker_result": {
+    "calls_recorded": 7,
+    "counts": {
+     "answered": 6,
+     "transport_failure": 1
+    },
+    "host_pid": 235358,
+    "mode": "rehearsal",
+    "run_status": "incomplete",
+    "stop_reason": "transport_failure"
+   },
+   "worker_failure": {
+    "error": "RuntimeError: questionnaire run stopped: transport_failure"
+   },
+   "evaluation": {
+    "lifecycle_errors": [
+     "supervisor: RuntimeError: game worker failed",
+     "first-cell group cleanup, log drain or supervisor return code",
+     "notebook finalization receipt"
+    ],
+    "run_evidence": {
+     "verified": true,
+     "recovered": false
+    },
+    "run": {
+     "status": "incomplete",
+     "stop_reason": "transport_failure",
+     "calls_recorded": 7,
+     "scheduled_calls": 5852,
+     "counts": {
+      "answered": 6,
+      "transport_failure": 1
+     },
+     "phase_reached": "withheld_pass_1"
+    },
+    "gate_status": "incomplete",
+    "call_errors": []
+   }
+  },
+  {
+   "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_slow_abort_within_the_window_is_verified",
+   "fault": "slow_abort",
+   "rehearsal_seconds": 900,
+   "evidence_directory": "/home/jingjing/ecv-rehearsal-tests/tmpuscs4fzq/working/progress-subgoal-v1",
+   "started": {
+    "wall": 1790961566.970784,
+    "monotonic": 2449.100428215
+   },
+   "ended": {
+    "wall": 1790961818.7112799,
+    "monotonic": 2713.660043988
+   },
+   "harness_error": null,
+   "receipt": {
+    "scope": "evidence_comprehension_first_cell",
+    "mode": "rehearsal",
+    "elapsed_seconds": 255.2000282930003,
+    "error": null,
+    "dependency_trees_removed": null,
+    "study_status": "study_ended_pending_independent_evaluation",
+    "first_cell_cleanup_verified": true,
+    "provider_reconciliation_required": false,
+    "phase4_complete": false
+   },
+   "supervisor_returncode": 0,
+   "first_cell_cleanup": {
+    "groups": {
+     "235967": true,
+     "236009": true,
+     "236011": true
+    },
+    "errors": [],
+    "drain_finished": true
+   },
+   "outer": {
+    "status": "study_ended_pending_independent_evaluation",
+    "error": null,
+    "elapsed_seconds": 255.07387880600027,
+    "process_groups_exited": true,
+    "independent_gpu_cleanup_verified": true,
+    "scratch_removed": true,
+    "run_evidence": {
+     "calls_recorded": 5852,
+     "run_status": "complete",
+     "stop_reason": null,
+     "verified": true
+    }
+   },
+   "host_status": {
+    "cancellations": 1,
+    "ended_seconds": 251.272577833,
+    "error": "canceled",
+    "questionnaire_calls": 5852,
+    "scope": "evidence_comprehension_model_host",
+    "service_stopped": null,
+    "startup_seconds": 1.7984199560000889,
+    "status": "stopped"
+   },
+   "worker_result": {
+    "calls_recorded": 5852,
+    "counts": {
+     "answered": 5851,
+     "timed_out": 1
+    },
+    "host_pid": 236093,
+    "mode": "rehearsal",
+    "run_status": "complete",
+    "stop_reason": null
+   },
+   "worker_failure": null,
+   "evaluation": {
+    "lifecycle_errors": [],
+    "run_evidence": {
+     "verified": true,
+     "recovered": false
+    },
+    "run": {
+     "status": "complete",
+     "stop_reason": null,
+     "calls_recorded": 5852,
+     "scheduled_calls": 5852,
+     "counts": {
+      "answered": 5851,
+      "timed_out": 1
+     },
+     "phase_reached": "development_pass_1"
+    },
+    "gate_status": "incomplete",
+    "call_errors": []
+   }
+  },
+  {
+   "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_surviving_child_is_cleaned_up",
+   "fault": "surviving_child",
+   "rehearsal_seconds": 900,
+   "evidence_directory": "/home/jingjing/ecv-rehearsal-tests/tmpsa9ltbil/working/progress-subgoal-v1",
+   "started": {
+    "wall": 1790961818.7209442,
+    "monotonic": 2713.669707934
+   },
+   "ended": {
+    "wall": 1790962009.3557727,
+    "monotonic": 2913.973948066
+   },
+   "harness_error": null,
+   "receipt": {
+    "scope": "evidence_comprehension_first_cell",
+    "mode": "rehearsal",
+    "elapsed_seconds": 192.78236462299992,
+    "error": null,
+    "dependency_trees_removed": null,
+    "study_status": "study_ended_pending_independent_evaluation",
+    "first_cell_cleanup_verified": true,
+    "provider_reconciliation_required": false,
+    "phase4_complete": false
+   },
+   "supervisor_returncode": 0,
+   "first_cell_cleanup": {
+    "groups": {
+     "275333": true,
+     "275407": true,
+     "275409": true
+    },
+    "errors": [],
+    "drain_finished": true
+   },
+   "outer": {
+    "status": "study_ended_pending_independent_evaluation",
+    "error": null,
+    "elapsed_seconds": 192.65155333199982,
+    "process_groups_exited": true,
+    "independent_gpu_cleanup_verified": true,
+    "scratch_removed": true,
+    "run_evidence": {
+     "calls_recorded": 5852,
+     "run_status": "complete",
+     "stop_reason": null,
+     "verified": true
+    }
+   },
+   "host_status": {
+    "cancellations": 0,
+    "ended_seconds": 186.77959311299992,
+    "error": "canceled",
+    "questionnaire_calls": 5852,
+    "scope": "evidence_comprehension_model_host",
+    "service_stopped": null,
+    "startup_seconds": 1.9529911230001744,
+    "status": "stopped"
+   },
+   "worker_result": {
+    "calls_recorded": 5852,
+    "counts": {
+     "answered": 5852
+    },
+    "host_pid": 275526,
+    "mode": "rehearsal",
+    "run_status": "complete",
+    "stop_reason": null
+   },
+   "worker_failure": null,
+   "evaluation": {
+    "lifecycle_errors": [],
+    "run_evidence": {
+     "verified": true,
+     "recovered": false
+    },
+    "run": {
+     "status": "complete",
+     "stop_reason": null,
+     "calls_recorded": 5852,
+     "scheduled_calls": 5852,
+     "counts": {
+      "answered": 5852
+     },
+     "phase_reached": "development_pass_1"
+    },
+    "gate_status": "complete",
+    "call_errors": []
+   }
+  },
+  {
+   "test": "tests.test_progress_subgoal_v1_connected.Rehearsals.test_timeout_cancels_server_side_work",
+   "fault": "hang_once",
+   "rehearsal_seconds": 900,
+   "evidence_directory": "/home/jingjing/ecv-rehearsal-tests/tmpzfc77twt/working/progress-subgoal-v1",
+   "started": {
+    "wall": 1790962009.3715775,
+    "monotonic": 2913.989752221
+   },
+   "ended": {
+    "wall": 1790962524.8989263,
+    "monotonic": 3395.080852713
+   },
+   "harness_error": null,
+   "receipt": {
+    "scope": "evidence_comprehension_first_cell",
+    "mode": "rehearsal",
+    "elapsed_seconds": 472.4470895960003,
+    "error": null,
+    "dependency_trees_removed": null,
+    "study_status": "study_ended_pending_independent_evaluation",
+    "first_cell_cleanup_verified": true,
+    "provider_reconciliation_required": false,
+    "phase4_complete": false
+   },
+   "supervisor_returncode": 0,
+   "first_cell_cleanup": {
+    "groups": {
+     "315324": true,
+     "315337": true,
+     "315339": true
+    },
+    "errors": [],
+    "drain_finished": true
+   },
+   "outer": {
+    "status": "study_ended_pending_independent_evaluation",
+    "error": null,
+    "elapsed_seconds": 472.252679663,
+    "process_groups_exited": true,
+    "independent_gpu_cleanup_verified": true,
+    "scratch_removed": true,
+    "run_evidence": {
+     "calls_recorded": 5852,
+     "run_status": "complete",
+     "stop_reason": null,
+     "verified": true
+    }
+   },
+   "host_status": {
+    "cancellations": 1,
+    "ended_seconds": 467.92573812499995,
+    "error": "canceled",
+    "questionnaire_calls": 5852,
+    "scope": "evidence_comprehension_model_host",
+    "service_stopped": null,
+    "startup_seconds": 1.6451543070002117,
+    "status": "stopped"
+   },
+   "worker_result": {
+    "calls_recorded": 5852,
+    "counts": {
+     "answered": 5851,
+     "timed_out": 1
+    },
+    "host_pid": 315356,
+    "mode": "rehearsal",
+    "run_status": "complete",
+    "stop_reason": null
+   },
+   "worker_failure": null,
+   "evaluation": {
+    "lifecycle_errors": [],
+    "run_evidence": {
+     "verified": true,
+     "recovered": false
+    },
+    "run": {
+     "status": "complete",
+     "stop_reason": null,
+     "calls_recorded": 5852,
+     "scheduled_calls": 5852,
+     "counts": {
+      "answered": 5851,
+      "timed_out": 1
+     },
+     "phase_reached": "development_pass_1"
+    },
+    "gate_status": "incomplete",
+    "call_errors": []
+   }
+  }
+ ],
+ "all_passed": false
+}
