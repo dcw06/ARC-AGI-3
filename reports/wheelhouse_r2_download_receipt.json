@@ -1,0 +1,18 @@
+{
+ "schema": "wheelhouse_download_receipt_v1",
+ "approval": "user approval naming manifest 3691cb88...d546 (download only; install, upload and GPU remain separate gates)",
+ "manifest": "reports/wheelhouse_download_manifest.json",
+ "manifest_sha256": "3691cb8854df4d8ff10e42ca9957fddb9a8ae0362064e7b31b3205891af0d546",
+ "source_commit": "2d304d3",
+ "downloader": "scripts/download_wheelhouse.py --workers 3",
+ "started": "2026-10-04T14:16:29-04:00",
+ "finished": "2026-10-04T14:20:02-04:00",
+ "destination": "WSL ~/.local/share/agi/wheelhouse-r2 (outside the repository; wheels are not committed)",
+ "downloader_record": {"complete": true, "downloaded_verified": 174},
+ "independent_verification": {"method": "main session re-hashed every file in the destination against the manifest",
+                              "verified": 174, "of": 174, "bytes": 5185992159, "manifest_total_bytes": 5185992159,
+                              "mismatched_or_absent": 0, "extra_wheels": 0, "leftover_partial_files": 0},
+ "established": ["wheel bytes verified after download"],
+ "not_established": ["offline installation", "licence and redistribution review", "team-owned upload",
+                     "GPU runtime"]
+}
