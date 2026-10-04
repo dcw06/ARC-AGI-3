@@ -271,7 +271,15 @@ advantage over retrieval requires contrast 2 as well. Concision or readability n
    - each is bound to its registered frozen-set hash and names itself;
    - both share one seed commitment and case source (`withheld`) and split groups 0–11;
    - each retained run names its frozen set;
-   - each evaluation is technically complete;
+   - each session is **independently evaluated by `run/final.py` itself**, on its exact retained output against its
+     own frozen set, using the derived evaluator: lifecycle receipts, server evidence, call order, request hashes,
+     timing, token parity, cancellations. No evaluation is accepted from outside;
+   - each evaluation is **bound to its inputs**: a digest taken before and after evaluation covers every file in
+     the output tree, the run manifest, call log and run index, the frozen set, and the evaluator's source. The
+     digest of the evaluated inputs must equal that of the inputs being pooled, so a stale or substituted
+     successful evaluation is refused;
+   - each evaluation is technically complete, with a complete run, in `live` mode (rehearsal evaluations count only
+     for the development stand-in);
    - each session's technical status, recomputed from its retained answers, is valid.
 
    It then pools both sessions' pass-1 answers into one analysis (§7–§9), and both repeats into one stability
