@@ -1,4 +1,4 @@
-# Wheelhouse replacement — Milestone A source audit and proposal
+# Wheelhouse replacement — Milestone A source audit and proposal (r1)
 
 Prepared: October 3, 2026. Plan: `docs/Wheelhouse_Replacement_and_Four_Track_Resume_Plan.md` §5.
 
@@ -89,15 +89,24 @@ The original inventory has 179 files. Each wheel is matched against PyPI by exac
 3. **Redistribution remains unresolved.** Runtime-use permission for the old public input does not allow repackaging. A license and redistribution review of all 174 wheels is a prerequisite for any team-owned upload, especially the NVIDIA CUDA wheels, which carry NVIDIA's license terms. Until then the bundle can be built and verified locally but not uploaded.
 4. **No scientific protocol changes.** The model, tokenizer, prompts, decoding and arms are untouched.
 
-**Smallest next validation step (proposed, not done).** Write the R2 lock (`name==version --hash=sha256:…` for the 174 wheels), then run a **metadata-only resolution check** on CPU:
+**Smallest next validation step (proposed, not done; revised in r1).** This is a **bounded metadata-only closure check** that never fetches a wheel:
 
-```
-pip install --dry-run --ignore-installed --report <file> --only-binary=:all: \
-    --python-version 3.12 --platform manylinux_2_34_x86_64 --implementation cp \
-    --require-hashes -r <lock> --target <scratch>
-```
+1. **Locate each wheel's metadata file.** For each of the 174 (filename, SHA-256) pairs, query PyPI's Simple JSON API (PEP 691, `https://pypi.org/simple/<project>/` with `Accept: application/vnd.pypi.simple.v1+json`). Find the file entry with that exact filename and wheel hash, and read its `core-metadata` hash (PEP 658/714).
+2. **Fetch only that metadata file.** Fetch `<wheel-url>.metadata`, with a per-file byte cap of 1 MiB enforced on the stream, and verify it against the declared hash.
+   - **No wheel fallback.** If a file declares no core metadata, or the cap or hash fails, it is recorded as `unknown`. The wheel URL itself is never requested.
+3. **Evaluate the closure offline with `packaging`.** The target is an explicit environment: CPython 3.12, Linux x86-64, and the full compatible tag set for the target glibc.
+   - **The tag set** is generated with `packaging.tags.cpython_tags(python_version=(3, 12), platforms=P)` plus `compatible_tags(...)`. `P` lists every `manylinux_2_<n>_x86_64` from the target glibc down to `manylinux_2_17`, plus `manylinux2014_x86_64` and `linux_x86_64`. It is not one platform tag, which would wrongly reject the recorded `manylinux_2_31` vLLM and `manylinux_2_28` torch wheels.
+   - **The pass condition** has three parts:
+     - every wheel's tags are compatible with that set;
+     - every `Requires-Dist` whose marker applies to the target (evaluated with the extras vLLM actually requests, e.g. `mistral_common[image]`) is satisfied by exactly one wheel in the 174-wheel set;
+     - the install pins (`vllm==0.19.0 torch==2.10.0 transformers==4.57.6 numpy==2.2.6`) are satisfied, and no wheel is left unrequired.
+   - **Reported:** every unsatisfied requirement, every orphan and every `unknown`.
 
-It runs against PyPI in an isolated scratch environment. pip uses PEP 658 metadata where available, so it downloads no or few large files. The check passes if the resolution is exactly the 174 (filename, SHA-256) pairs, the closure is complete, and the install pins (`vllm==0.19.0 torch==2.10.0 transformers==4.57.6 numpy==2.2.6`) resolve without conflict.
+**Why not `pip install --dry-run`.** That was the r0 proposal, and it was withdrawn on review. `--dry-run` prevents installation but not downloads, and `--require-hashes` disables pip's metadata-only fetching, so it could download full wheels and cross the large-download approval boundary. A single `--platform manylinux_2_34_x86_64` also made pip reject the compatible `manylinux_2_31` and `manylinux_2_28` wheels, which would wrongly suggest they are unavailable.
+
+**The alternative needs separate approval.** Resolving with pip inside the intended Linux/Python environment means downloading artifacts.
+
+**What this step does not cover.** It checks the dependency closure and tags only. It cannot show that the wheels install or run; that is Milestone C.
 
 Run in parallel: **ask the dataset owner and teammates for the 4 original non-wheel files** (Option R1).
 
@@ -106,4 +115,11 @@ The step after that is a hashed download of the 5.19 GB into an isolated directo
 **Open questions for review:**
 1. Should recovery of the original files (R1) be pursued before committing to a new bundle revision (R2)?
 2. Who performs the license and redistribution review of the 174 wheels, especially the NVIDIA CUDA wheels, and is a team-owned Kaggle dataset the intended host?
-3. Is the metadata-only resolution check approved as the next step?
+3. Is the bounded metadata-only closure check approved as the next step? It fetches at most 174 core-metadata files, capped at 1 MiB each, and no wheels.
+
+## Revision history
+
+- **r1 (review of 9ded6f1).**
+  - The proposed next step is replaced. The r0 `pip install --dry-run --require-hashes` command could download full wheels, and its single `--platform` tag rejected the compatible manylinux_2_31 and manylinux_2_28 wheels.
+  - It is replaced by the bounded metadata-only closure check above.
+  - The audit's findings (§1–§5) are unchanged.
