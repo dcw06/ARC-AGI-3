@@ -132,8 +132,10 @@ DERIVED = {
         ("SLOW_LATENCY = {'slow_withheld_pass_1': 0.13, 'slow_withheld_pass_2': 0.06}",
          "SLOW_LATENCY = {{'slow_withheld_pass_1': {slow_withheld_pass_1}, 'slow_withheld_pass_2': "
          "{slow_withheld_pass_2}}}  # derived: run/rehearsal_timing.py".format(**SLOW), 1),
+        # The repeat slowdown and the clean-answer rehearsal (every answer the key, for the end-to-end pooled
+        # analysis test) must reach the fake server, so the worker forwards them to the host.
         ("               'trickle_metrics', 'http_error', 'late_reply')\n",
-         "               'trickle_metrics', 'http_error', 'late_reply', 'slow_withheld_pass_2')\n", 1),
+         "               'trickle_metrics', 'http_error', 'late_reply', 'slow_withheld_pass_2', 'clean_answers')\n", 1),
     )),
     'research/evidence_memory_v1/run/runner.py': ('research/ws3_questionnaire_v1/runner.py', ()),
     'research/evidence_memory_v1/run/resources.py': ('research/ws3_questionnaire_v1/resources.py', ()),

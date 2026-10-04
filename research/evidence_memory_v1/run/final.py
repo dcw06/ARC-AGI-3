@@ -112,12 +112,14 @@ def evaluate_session(label, frozen_path, output, *, mode='live', rehearsal_secon
     digest = hashlib.sha256(raw).hexdigest()
     before = inputs_digest(output, raw)
     technical = evaluator(output, frozen, digest, mode, rehearsal_seconds)
-    run = loader(output)
-    passes = scored_passes(frozen, run)
-    after = inputs_digest(output, raw)
-    return {'label': label, 'frozen': frozen, 'frozen_sha256': digest,
-            'run_probe_set_sha256': run.get('probe_set_sha256'), 'passes': passes,
-            'technical': technical, 'evaluated_inputs': before, 'inputs': after}
+    session = {'label': label, 'frozen': frozen, 'frozen_sha256': digest, 'technical': technical}
+    try:
+        run = loader(output)
+        session.update(run_probe_set_sha256=run.get('probe_set_sha256'), passes=scored_passes(frozen, run))
+    except Exception as exc:  # evidence that does not verify yields no answers; the session is then refused
+        session.update(run_probe_set_sha256=None, passes={}, load_error=type(exc).__name__ + ': ' + str(exc)[:200])
+    session.update(evaluated_inputs=before, inputs=inputs_digest(output, raw))
+    return session
 
 
 def refusals(sessions, binding, require_withheld=True):

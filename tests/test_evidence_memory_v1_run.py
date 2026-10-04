@@ -246,6 +246,43 @@ class FaultPlacement(unittest.TestCase):
                     server.close()
 
 
+class RehearsalOnlyKnobs(unittest.TestCase):
+    """The end-to-end pooled test (tests/test_evidence_memory_v1_run_final_e2e.py) needs a second session's frozen
+    set and technically valid rehearsal sessions; both knobs are rehearsal-only."""
+
+    def test_the_frozen_set_override_is_honoured_only_in_cpu_rehearsal(self):
+        import os
+        from unittest import mock
+        with mock.patch.dict(os.environ, {PR.REHEARSAL_FROZEN_ENV: str(PR.FROZEN_PATH), 'EM1S_REHEARSAL': '1',
+                                          'CUDA_VISIBLE_DEVICES': ''}):
+            self.assertEqual(PR.load_frozen(), (FROZEN, DIGEST))
+        for env in ({'EM1S_REHEARSAL': '0', 'CUDA_VISIBLE_DEVICES': ''}, {'EM1S_REHEARSAL': '1', 'CUDA_VISIBLE_DEVICES': '0'}):
+            with mock.patch.dict(os.environ, {PR.REHEARSAL_FROZEN_ENV: str(PR.FROZEN_PATH), **env}):
+                with self.assertRaises(PermissionError):
+                    PR.load_frozen()
+        with mock.patch.dict(os.environ, {}, clear=False):
+            os.environ.pop(PR.REHEARSAL_FROZEN_ENV, None)
+            self.assertEqual(PR.frozen_path(), PR.FROZEN_PATH)
+
+    def test_clean_answers_reach_the_server_and_answer_every_question_with_its_key(self):
+        import ast
+        from research.evidence_memory_v1.run.fake_server import CLEAN_FAULT, FAULTS, FakeVLLM
+        tree = ast.parse((ROOT / 'research/evidence_memory_v1/run/worker.py').read_text(encoding='utf-8'))
+        host_faults = next(ast.literal_eval(n.value) for n in tree.body if isinstance(n, ast.Assign)
+                           and any(isinstance(t, ast.Name) and t.id == 'HOST_FAULTS' for t in n.targets))
+        self.assertIn(CLEAN_FAULT, host_faults)
+        self.assertIn(CLEAN_FAULT, FAULTS)
+        server = FakeVLLM(fault=CLEAN_FAULT)
+        try:
+            contexts = {c['context_id']: c for c in FROZEN['contexts']}
+            for probe in FROZEN['probes'][:300]:
+                request = PR.build_request(contexts[probe['context_id']], probe)
+                self.assertEqual(json.loads(server.answers(request)), probe['key'])
+            self.assertEqual(server.fault, 'none')  # no server fault is injected
+        finally:
+            server.server.server_close()
+
+
 class SlowFaultPlacement(unittest.TestCase):
     """The deadline rehearsal's slow faults are derived from the frozen schedule so the admission cutoff provably
     falls inside the chosen pass (review of e80e01a: a fixed 0.075 s put the pass-2 cutoff inside pass 1)."""

@@ -16,9 +16,11 @@ from research.evidence_memory_v1.run.fake_vllm import (  # noqa: F401  (re-expor
     ABORT_DELAY, HANG_AT, HANG_FAULTS, TRUNCATED, count_tokens, request_sha)
 from research.evidence_memory_v1.run.rehearsal_timing import REPEAT_FAULT
 
-# v1's server faults plus the repeat-pass slowdown (rehearsal only): the host forwards a fault to the server only
-# if it is listed here.
-FAULTS = _base.FAULTS + (REPEAT_FAULT,)
+# v1's server faults plus the repeat-pass slowdown and clean answers (rehearsal only): the host forwards a fault to
+# the server only if it is listed here. `clean_answers` answers every question with its key (no invalid, truncated
+# or wrong answer), so a rehearsal session can be technically valid for the end-to-end pooled analysis test.
+CLEAN_FAULT = 'clean_answers'
+FAULTS = _base.FAULTS + (REPEAT_FAULT, CLEAN_FAULT)
 CANARY_ANSWER = json.dumps({'action': {'action_id': 6, 'action_data': {'x': 5, 'y': 5}}})  # v1's canary reply
 
 
@@ -30,6 +32,7 @@ class ScriptedAnswers(_base.ScriptedAnswers):
         self.by_sha = {request_sha(build_request(contexts[p['context_id']], p)): p for p in frozen['probes']}
         self.pass_1_calls = len(frozen['schedule'][0]['probe_ids'])
         self.seen = {}
+        self.clean = False
 
     def is_question(self, request):
         return request_sha(request) in self.by_sha
@@ -40,6 +43,8 @@ class ScriptedAnswers(_base.ScriptedAnswers):
             user = request['messages'][-1]['content'] if request.get('messages') else ''
             return '{"values":["not_in_probe_set"]}' if str(user).startswith('Evidence:') else CANARY_ANSWER
         occurrence = self.seen[probe['probe_id']] = self.seen.get(probe['probe_id'], 0) + 1
+        if self.clean:
+            return json.dumps(probe['key'])
         bucket = int(hashlib.sha256(probe['probe_id'].encode()).hexdigest(), 16) % 100
         if bucket < 3:
             return 'not json'
@@ -63,8 +68,9 @@ class FakeVLLM(_base.FakeVLLM):
         if fault not in FAULTS:
             raise ValueError('fake server fault')
         answers = answers or ScriptedAnswers()
-        super().__init__(fault='none' if fault == REPEAT_FAULT else fault, latency_seconds=latency_seconds,
-                         answers=answers)
+        answers.clean = fault == CLEAN_FAULT
+        super().__init__(fault='none' if fault in (REPEAT_FAULT, CLEAN_FAULT) else fault,
+                         latency_seconds=latency_seconds, answers=answers)
         # The repeat fault adds latency only from the first repeat call (questionnaire call pass_1 + 1).
         self.slow_from = answers.pass_1_calls + 1 if fault == REPEAT_FAULT else None
 
