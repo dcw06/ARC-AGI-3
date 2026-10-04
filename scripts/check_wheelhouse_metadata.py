@@ -168,8 +168,9 @@ class WorkerFailed(FetchError):
     """The worker exited without a complete result (crash, non-zero exit, missing or oversized result)."""
 
 
-class WorkerNotTerminated(FetchError):
-    """A worker could not be confirmed terminated; the caller must treat this as a hard failure."""
+class WorkerNotTerminated(Exception):
+    """A worker could not be confirmed terminated. Deliberately NOT a FetchError: no caller may catch it as an
+    ordinary fetch failure, retry, or touch files the worker might still write; it aborts the whole operation."""
 
 
 def deliver(result_path, message):
@@ -964,6 +965,8 @@ def main(argv=None):
         return 0
     if args.command == 'license-table':
         import csv
+        if LICENSE_TABLE.exists():
+            raise SystemExit(f'{LICENSE_TABLE} exists and may hold human decisions; not overwritten')
         rows = license_rows(validate_evidence(inv, acq)['entries'], report)
         with LICENSE_TABLE.open('w', encoding='utf-8', newline='') as stream:
             writer = csv.DictWriter(stream, fieldnames=list(rows[0]), lineterminator='\n')

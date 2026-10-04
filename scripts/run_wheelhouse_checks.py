@@ -16,8 +16,10 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))  # so `python scripts/run_wheelhouse_checks.py` can import tests.*
 SUITES = ['tests.test_wheelhouse_metadata', 'tests.test_wheelhouse_offline_install', 'tests.test_wheelhouse_licenses',
-          'tests.test_wheelhouse_review3', 'tests.test_wheelhouse_review4']
+          'tests.test_wheelhouse_review3', 'tests.test_wheelhouse_review4', 'tests.test_wheelhouse_review5']
 
 
 class Recorder(unittest.TextTestResult):
@@ -51,14 +53,30 @@ class Recorder(unittest.TextTestResult):
         self._record(test, 'skip', reason)
 
 
+def iterate(suite):
+    for item in suite:
+        if isinstance(item, unittest.TestSuite):
+            yield from iterate(item)
+        else:
+            yield item
+
+
 def git(*args):
     return subprocess.run(['git', *args], cwd=ROOT, capture_output=True, text=True).stdout.strip()
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('--out', required=True)
+    parser.add_argument('--out')
+    parser.add_argument('--list', action='store_true', help='load the suites and print the test count only')
     args = parser.parse_args(argv)
+    if args.list:
+        suite = unittest.defaultTestLoader.loadTestsFromNames(SUITES)
+        broken = [t.id() for t in iterate(suite) if t.id().startswith('unittest.loader._FailedTest')]
+        print(json.dumps({'tests': suite.countTestCases(), 'import_failures': broken}))
+        return 1 if broken else 0
+    if not args.out:
+        parser.error('--out is required unless --list is given')
     started = datetime.datetime.now().astimezone().isoformat(timespec='seconds')
     t0 = time.monotonic()
     suite = unittest.defaultTestLoader.loadTestsFromNames(SUITES)

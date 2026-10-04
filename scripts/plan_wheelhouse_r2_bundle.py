@@ -3,9 +3,14 @@ proposed bundle contents. No download, installation, upload or GPU use; nothing 
 
 Inputs (all committed): the approved download manifest, the licence evidence index, the metadata closure report and
 the retained CPU installation evidence. Outputs:
-  reports/wheelhouse_redistribution_review.csv   one row per artifact; every decision 'unresolved'
-  reports/wheelhouse_r2_bundle_plan.json         every proposed bundle file with its source and (where known) hash
-  reports/wheelhouse_r2_bundle_plan.md           the same for review, with the README draft and open decisions
+  reports/wheelhouse_redistribution_inventory.csv  GENERATED, regenerated freely: one row per artifact (identity,
+                                                   licence documents, flags, proposed notices, open questions)
+  reports/wheelhouse_redistribution_decisions.csv  HUMAN-OWNED: created once (all 'unresolved') if absent and never
+                                                   written again by any tool; keyed by artifact and SHA-256
+  reports/wheelhouse_r2_bundle_plan.json           every proposed bundle file with its source and (where known) hash
+  reports/wheelhouse_r2_bundle_plan.md             the same for review, with the README draft and open decisions
+The generator validates the decisions file against the inventory and exits non-zero (without touching it) if any
+entry is missing, stale (different SHA-256), unexpected or not an allowed decision value.
 """
 import csv
 import hashlib
@@ -20,7 +25,12 @@ from scripts.download_wheelhouse import APPROVED_MANIFEST_SHA256, load_manifest 
 MANIFEST = ROOT / 'reports/wheelhouse_download_manifest.json'
 EVIDENCE = ROOT / 'reports/wheelhouse_license_evidence.json'
 INSTALL = ROOT / 'reports/wheelhouse_r2_offline_install_check.json'
-REVIEW_CSV = ROOT / 'reports/wheelhouse_redistribution_review.csv'
+INVENTORY_CSV = ROOT / 'reports/wheelhouse_redistribution_inventory.csv'
+DECISIONS_CSV = ROOT / 'reports/wheelhouse_redistribution_decisions.csv'
+EVIDENCE_DIR = ROOT / 'reports/wheelhouse_r2_offline_install_evidence'
+DECISION_FIELDS = ['artifact', 'sha256', 'redistribution_decision', 'rationale', 'required_notices',
+                   'resolved_questions', 'resolver', 'decided_on']
+ALLOWED_DECISIONS = {'unresolved', 'approved', 'approved_with_conditions', 'restricted', 'excluded'}
 PLAN_JSON = ROOT / 'reports/wheelhouse_r2_bundle_plan.json'
 PLAN_MD = ROOT / 'reports/wheelhouse_r2_bundle_plan.md'
 RESOLVER = 'dcw06'
@@ -69,10 +79,7 @@ def review_rows(manifest, evidence):
             'flags': ', '.join(e['flags']),
             'required_notices_proposed': (f"ship LICENSES/{a['filename']}/ with the {len(docs)} bundled document(s)"
                                           if docs else 'obtain and ship the upstream licence text'),
-            'redistribution_decision': 'unresolved',
-            'rationale': '',
             'open_questions': ' | '.join(questions),
-            'resolver': RESOLVER,
         })
     return rows
 
@@ -102,6 +109,45 @@ redistribution review of every artifact.
 '''
 
 
+def initial_decisions(rows):
+    return [{'artifact': r['artifact'], 'sha256': r['sha256'], 'redistribution_decision': 'unresolved',
+             'rationale': '', 'required_notices': '', 'resolved_questions': '', 'resolver': RESOLVER,
+             'decided_on': ''} for r in rows]
+
+
+def read_decisions(path):
+    with path.open(encoding='utf-8', newline='') as stream:
+        return list(csv.DictReader(stream))
+
+
+def check_decisions(rows, decisions):
+    """Problems with the human decisions file relative to the generated inventory (empty list if consistent)."""
+    expected = {r['artifact']: r['sha256'] for r in rows}
+    problems, seen = [], set()
+    for d in decisions:
+        name = d.get('artifact')
+        if name in seen:
+            problems.append(f'duplicate decision for {name}')
+        seen.add(name)
+        if name not in expected:
+            problems.append(f'decision for an artifact not in the inventory: {name}')
+        elif d.get('sha256') != expected[name]:
+            problems.append(f'stale decision for {name}: recorded SHA-256 differs from the inventory')
+        if d.get('redistribution_decision') not in ALLOWED_DECISIONS:
+            problems.append(f"{name}: decision {d.get('redistribution_decision')!r} is not one of "
+                            f"{sorted(ALLOWED_DECISIONS)}")
+        if d.get('redistribution_decision') not in (None, 'unresolved') and not (d.get('rationale') or '').strip():
+            problems.append(f'{name}: a decision without a rationale')
+    problems += [f'no decision row for {name}' for name in sorted(set(expected) - seen)]
+    return problems
+
+
+def file_entry(path, bundle_path, kind, source):
+    data = path.read_bytes()
+    return {'path': bundle_path, 'kind': kind, 'size': len(data), 'sha256': hashlib.sha256(data).hexdigest(),
+            'source': source}
+
+
 def plan(manifest, evidence, install):
     lock = '\n'.join(lock_lines(manifest)) + '\n'
     lock_sha = hashlib.sha256(lock.encode()).hexdigest()
@@ -119,13 +165,23 @@ def plan(manifest, evidence, install):
         {'path': 'README.md', 'kind': 'generated', 'size': len(readme), 'sha256': hashlib.sha256(readme).hexdigest(),
          'source': 'generated (draft in this plan)'},
         {'path': 'LICENSES/REVIEW.csv', 'kind': 'generated', 'size': None, 'sha256': None,
-         'source': 'reports/wheelhouse_redistribution_review.csv after the owner records every decision'},
-        {'path': 'EVIDENCE/offline_install_check.json', 'kind': 'evidence', 'size': None, 'sha256': None,
-         'source': 'reports/wheelhouse_r2_offline_install_check.json (retained CPU-only installation evidence)'},
-        {'path': 'bundle-manifest.json', 'kind': 'generated', 'size': None, 'sha256': None,
-         'source': 'generated at build: every other file with size and SHA-256'},
-        {'path': 'SHA256SUMS', 'kind': 'generated', 'size': None, 'sha256': None,
-         'source': 'generated at build: sha256sum-compatible list of every other file'},
+         'source': 'inventory joined with the owner decisions file, at build, once every row is decided'},
+        file_entry(INSTALL, 'EVIDENCE/offline_install_check.json', 'evidence',
+                   'reports/wheelhouse_r2_offline_install_check.json (retained CPU-only installation receipt)'),
+    ]
+    evidence_folder = ROOT / (install.get('evidence') or {}).get('folder', '')
+    for name, digest in sorted(((install.get('evidence') or {}).get('files_sha256') or {}).items()):
+        entry = file_entry(evidence_folder / name, f'EVIDENCE/{name}', 'evidence',
+                           f'{evidence_folder.relative_to(ROOT)}/{name} (referenced by the receipt)')
+        if entry['sha256'] != digest:
+            raise SystemExit(f'retained evidence {name} does not match the hash in the installation receipt')
+        files.append(entry)
+    files += [
+        {'path': 'bundle-manifest.json', 'kind': 'checksum', 'size': None, 'sha256': None,
+         'source': 'generated at build: size and SHA-256 of every payload file (excludes itself and SHA256SUMS)'},
+        {'path': 'SHA256SUMS', 'kind': 'checksum', 'size': None, 'sha256': None,
+         'source': 'generated at build: sha256sum lines for every payload file and bundle-manifest.json '
+                   '(excludes itself)'},
     ]
     proprietary = sum(1 for r in evidence['wheels'] if 'proprietary_terms_present' in r['flags'])
     return {
@@ -149,6 +205,14 @@ def plan(manifest, evidence, install):
         'cpu_installation_evidence': {'report': 'reports/wheelhouse_r2_offline_install_check.json',
                                       'passed': install.get('passed'),
                                       'limitations': install.get('not_established')},
+        'checksum_construction': {
+            'payload': 'every file except bundle-manifest.json and SHA256SUMS',
+            'bundle-manifest.json': 'covers the payload only (never SHA256SUMS, never itself)',
+            'SHA256SUMS': 'covers the payload plus the completed bundle-manifest.json (never itself)',
+            'approval_binds': 'the SHA-256 of the final SHA256SUMS file',
+            'order': ['write payload', 'write bundle-manifest.json over the payload',
+                      'write SHA256SUMS over the payload and bundle-manifest.json', 'record sha256(SHA256SUMS)'],
+        },
         'upload_blocked_until': [f'every one of the {manifest["artifact_count"]} artifacts has a recorded '
                                  f'redistribution decision ({proprietary} carry proprietary terms)',
                                  'required notices are prepared', 'the dataset name and access are chosen',
@@ -157,7 +221,7 @@ def plan(manifest, evidence, install):
     }
 
 
-def render(p, rows):
+def render(p, rows, decisions_status):
     from collections import Counter
     flags = Counter(f for r in rows for f in r['flags'].split(', ') if f)
     lines = ['# Wheelhouse R2 bundle plan (proposal; nothing built or uploaded)', '',
@@ -172,13 +236,22 @@ def render(p, rows):
              '| `README.md` | 1 | draft below |',
              '| `LICENSES/REVIEW.csv` | 1 | the redistribution review, once every decision is recorded |',
              '| `EVIDENCE/offline_install_check.json` | 1 | retained CPU-only installation evidence and its limits |',
-             '| `bundle-manifest.json`, `SHA256SUMS` | 2 | generated at build over every other file |', '',
+             '| `EVIDENCE/` | 3 | the installation receipt plus the log and lock it references, hash-checked |',
+             '| `bundle-manifest.json`, `SHA256SUMS` | 2 | checksum files, built in the order below |', '',
+             '## Checksum construction (non-circular)', '',
+             '1. `bundle-manifest.json` lists the size and SHA-256 of every payload file; it never covers itself or '
+             '`SHA256SUMS`.',
+             '2. `SHA256SUMS` covers every payload file plus the completed `bundle-manifest.json`; it never covers '
+             'itself.',
+             '3. The upload approval binds the SHA-256 of the final `SHA256SUMS`.', '',
              '## Earlier bundle files not reproduced', '']
     for name, replacement in p['non_wheel_files_of_earlier_bundle']['replaced_by'].items():
         lines.append(f'- `{name}`: {replacement}')
     lines += ['', '## Redistribution review status', '',
-              f'All {len(rows)} artifacts are `unresolved` in `reports/wheelhouse_redistribution_review.csv` '
-              f'(resolver: {RESOLVER}). Flags to decide:', '']
+              f"Decisions file `reports/wheelhouse_redistribution_decisions.csv` (owner-maintained, never overwritten "
+              f"by tools): {decisions_status}. Generated prompts are in "
+              '`reports/wheelhouse_redistribution_inventory.csv`; they are review prompts, not legal clearance. '
+              'Flags to decide:', '']
     lines += [f'- `{f}`: {n}' for f, n in sorted(flags.items())]
     lines += ['', '## Upload is blocked until', '']
     lines += [f'- {item}' for item in p['upload_blocked_until']]
@@ -193,16 +266,33 @@ def main():
         raise SystemExit('licence evidence is not bound to the approved manifest')
     install = json.loads(INSTALL.read_text(encoding='utf-8'))
     rows = review_rows(manifest, evidence)
-    with REVIEW_CSV.open('w', encoding='utf-8', newline='') as stream:
+    with INVENTORY_CSV.open('w', encoding='utf-8', newline='') as stream:  # generated: safe to regenerate
         writer = csv.DictWriter(stream, fieldnames=list(rows[0]), lineterminator='\n')
         writer.writeheader()
         writer.writerows(rows)
+    created = False
+    if not DECISIONS_CSV.exists():  # created once; never written again by any tool
+        with DECISIONS_CSV.open('x', encoding='utf-8', newline='') as stream:
+            writer = csv.DictWriter(stream, fieldnames=DECISION_FIELDS, lineterminator='\n')
+            writer.writeheader()
+            writer.writerows(initial_decisions(rows))
+        created = True
+    decisions = read_decisions(DECISIONS_CSV)
+    problems = check_decisions(rows, decisions)
+    counts = {}
+    for d in decisions:
+        counts[d.get('redistribution_decision')] = counts.get(d.get('redistribution_decision'), 0) + 1
+    status = ('INCONSISTENT: ' + '; '.join(problems[:5])) if problems else ', '.join(
+        f'{n} {k}' for k, n in sorted(counts.items()))
     p = plan(manifest, evidence, install)
+    p['decisions'] = {'file': str(DECISIONS_CSV.relative_to(ROOT)) if DECISIONS_CSV.is_relative_to(ROOT)
+                      else str(DECISIONS_CSV), 'created_now': created, 'counts': counts, 'problems': problems}
     PLAN_JSON.write_text(json.dumps(p, indent=1) + '\n', encoding='utf-8')
-    PLAN_MD.write_text(render(p, rows), encoding='utf-8')
-    print(json.dumps({'review_rows': len(rows), 'plan_files': len(p['files']),
+    PLAN_MD.write_text(render(p, rows, status), encoding='utf-8')
+    print(json.dumps({'inventory_rows': len(rows), 'plan_files': len(p['files']), 'decisions': counts,
+                      'decision_problems': len(problems),
                       'lock_matches_installed': p['requirements_lock']['matches_installed_lock']}))
-    return 0
+    return 1 if problems else 0
 
 
 if __name__ == '__main__':

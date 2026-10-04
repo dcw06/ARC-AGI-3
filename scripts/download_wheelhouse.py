@@ -28,8 +28,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from scripts.check_wheelhouse_metadata import (  # noqa: E402
-    STALL_ENV, DeadlineExceeded, FetchError, _artifact_url_ok, _NoRedirect, _set_read_timeout, deliver,
-    run_worker)
+    STALL_ENV, DeadlineExceeded, FetchError, WorkerNotTerminated, _artifact_url_ok, _NoRedirect,
+    _set_read_timeout, deliver, run_worker)
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / 'reports/wheelhouse_download_manifest.json'
@@ -144,11 +144,15 @@ class Downloader:
         if self._opener is not None:  # injected opener (tests): in-process
             self._stream(self._opener, request, timeout, artifact, final, temp, deadline)
             return
+        worker_confirmed_gone = True
         try:
             try:
                 message = run_worker(_process_download, (url, str(temp), artifact['size'], timeout,
                                                          deadline - self._clock()), deadline, self._clock,
                                      f'downloading {url}', observer=self.worker_pids)
+            except WorkerNotTerminated:
+                worker_confirmed_gone = False  # leave the partial file alone; abort without retrying
+                raise
             except DeadlineExceeded as error:
                 raise DownloadError(f'deadline: {error}') from error
             except FetchError as error:
@@ -162,8 +166,10 @@ class Downloader:
                 raise DownloadError(f'hash mismatch for {artifact["filename"]}')
             os.replace(temp, final)
         finally:
-            # run_worker has already killed and reaped its worker on every path, so nothing can still write here.
-            temp.unlink(missing_ok=True)
+            # run_worker has killed and reaped its worker on every path except WorkerNotTerminated; only then is it
+            # safe to remove the partial file.
+            if worker_confirmed_gone:
+                temp.unlink(missing_ok=True)
 
     def _stream(self, opener, request, timeout, artifact, final, temp, deadline):
         url = artifact['url']

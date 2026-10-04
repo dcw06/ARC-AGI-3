@@ -13,7 +13,14 @@ Identity: new bundle (R2); wheels byte-identical to official PyPI artifacts; not
 | `README.md` | 1 | draft below |
 | `LICENSES/REVIEW.csv` | 1 | the redistribution review, once every decision is recorded |
 | `EVIDENCE/offline_install_check.json` | 1 | retained CPU-only installation evidence and its limits |
-| `bundle-manifest.json`, `SHA256SUMS` | 2 | generated at build over every other file |
+| `EVIDENCE/` | 3 | the installation receipt plus the log and lock it references, hash-checked |
+| `bundle-manifest.json`, `SHA256SUMS` | 2 | checksum files, built in the order below |
+
+## Checksum construction (non-circular)
+
+1. `bundle-manifest.json` lists the size and SHA-256 of every payload file; it never covers itself or `SHA256SUMS`.
+2. `SHA256SUMS` covers every payload file plus the completed `bundle-manifest.json`; it never covers itself.
+3. The upload approval binds the SHA-256 of the final `SHA256SUMS`.
 
 ## Earlier bundle files not reproduced
 
@@ -25,7 +32,7 @@ Identity: new bundle (R2); wheels byte-identical to official PyPI artifacts; not
 
 ## Redistribution review status
 
-All 174 artifacts are `unresolved` in `reports/wheelhouse_redistribution_review.csv` (resolver: dcw06). Flags to decide:
+Decisions file `reports/wheelhouse_redistribution_decisions.csv` (owner-maintained, never overwritten by tools): 174 unresolved. Generated prompts are in `reports/wheelhouse_redistribution_inventory.csv`; they are review prompts, not legal clearance. Flags to decide:
 
 - `copyleft_terms_present`: 24
 - `declared_copyleft`: 3

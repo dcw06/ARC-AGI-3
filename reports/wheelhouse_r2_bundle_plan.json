@@ -39,6 +39,18 @@
    "exact target image (this host: WSL Ubuntu 24.04, CPython 3.12.3; target CPython 3.12.13)"
   ]
  },
+ "checksum_construction": {
+  "payload": "every file except bundle-manifest.json and SHA256SUMS",
+  "bundle-manifest.json": "covers the payload only (never SHA256SUMS, never itself)",
+  "SHA256SUMS": "covers the payload plus the completed bundle-manifest.json (never itself)",
+  "approval_binds": "the SHA-256 of the final SHA256SUMS file",
+  "order": [
+   "write payload",
+   "write bundle-manifest.json over the payload",
+   "write SHA256SUMS over the payload and bundle-manifest.json",
+   "record sha256(SHA256SUMS)"
+  ]
+ },
  "upload_blocked_until": [
   "every one of the 174 artifacts has a recorded redistribution decision (22 carry proprietary terms)",
   "required notices are prepared",
@@ -2858,28 +2870,50 @@
    "kind": "generated",
    "size": null,
    "sha256": null,
-   "source": "reports/wheelhouse_redistribution_review.csv after the owner records every decision"
+   "source": "inventory joined with the owner decisions file, at build, once every row is decided"
   },
   {
    "path": "EVIDENCE/offline_install_check.json",
    "kind": "evidence",
-   "size": null,
-   "sha256": null,
-   "source": "reports/wheelhouse_r2_offline_install_check.json (retained CPU-only installation evidence)"
+   "size": 3091,
+   "sha256": "b6bae91e6a28a3512b9e6b1418a3c9bfb74b8d74ff661c53465d4f50da234471",
+   "source": "reports/wheelhouse_r2_offline_install_check.json (retained CPU-only installation receipt)"
+  },
+  {
+   "path": "EVIDENCE/install-check.log",
+   "kind": "evidence",
+   "size": 55734,
+   "sha256": "b0048c8061fa2e9da7c8adffa00373bca11ca752331215b3987658ff9f0b36fc",
+   "source": "reports/wheelhouse_r2_offline_install_evidence/install-check-hacm1z70/install-check.log (referenced by the receipt)"
+  },
+  {
+   "path": "EVIDENCE/requirements.lock",
+   "kind": "evidence",
+   "size": 17382,
+   "sha256": "ba80d35062245421daf1cae65474281952cc0c44fb46e11cf7f68d0ece496406",
+   "source": "reports/wheelhouse_r2_offline_install_evidence/install-check-hacm1z70/requirements.lock (referenced by the receipt)"
   },
   {
    "path": "bundle-manifest.json",
-   "kind": "generated",
+   "kind": "checksum",
    "size": null,
    "sha256": null,
-   "source": "generated at build: every other file with size and SHA-256"
+   "source": "generated at build: size and SHA-256 of every payload file (excludes itself and SHA256SUMS)"
   },
   {
    "path": "SHA256SUMS",
-   "kind": "generated",
+   "kind": "checksum",
    "size": null,
    "sha256": null,
-   "source": "generated at build: sha256sum-compatible list of every other file"
+   "source": "generated at build: sha256sum lines for every payload file and bundle-manifest.json (excludes itself)"
   }
- ]
+ ],
+ "decisions": {
+  "file": "reports/wheelhouse_redistribution_decisions.csv",
+  "created_now": false,
+  "counts": {
+   "unresolved": 174
+  },
+  "problems": []
+ }
 }
