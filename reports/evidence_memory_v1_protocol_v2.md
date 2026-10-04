@@ -250,8 +250,29 @@ advantage over retrieval requires contrast 2 as well. Concision or readability n
 - **Timeouts.** At most 1% of calls. The reviewed runner also stops after its consecutive-timeout limit.
 - **Model startup** within the reviewed ceiling.
 
-**Analysis.** It runs only when both sessions are technically complete, on their pooled pass-1 answers. An
-incomplete session gets descriptive metrics over its complete groups only, and no verdict.
+**Technical validation and scientific analysis are separate steps.**
+
+1. **Per session: technical only** (`run/score.analyze`, reported by the independent evaluator). It reports:
+   - completeness;
+   - answered and schema-valid counts per pass;
+   - invalid answers per arm, against the 2% rule;
+   - a SHA-256 over the retained answers;
+   - a technical status: `incomplete`, `session_technically_invalid_outputs` or `session_technically_valid`.
+
+   It reports **no** accuracy, contrast, forgetting, abstention, unsupported claims, stability or scientific
+   verdict. This applies to any session, including session A before session B runs; no command or report produced
+   after session A carries an outcome-bearing number.
+2. **Once, on both sessions pooled** (`run/final.py`). It runs only if:
+   - exactly sessions A and B are present, once each;
+   - each is bound to its registered frozen-set hash and names itself;
+   - both share one seed commitment and case source (`withheld`) and split groups 0–11;
+   - each retained run names its frozen set;
+   - each evaluation is technically complete;
+   - each session's technical status, recomputed from its retained answers, is valid.
+
+   It then pools both sessions' pass-1 answers into one analysis (§7–§9), and both repeats into one stability
+   report. Otherwise it refuses and lists the reasons, with no outcome numbers. There is no per-session or
+   incomplete-session scientific result.
 
 ## 11. Runtime estimate (labelled estimates, not authorizations)
 
@@ -289,8 +310,10 @@ never overruns.
 1,500–2,100 s per session, which is an estimate. **The reservation, not the estimate, is the ceiling.**
 
 **Stop rules:**
-- **After session A, only technical rules may stop the experiment.** Outcome metrics are not inspected before B.
-- **The analysis runs once,** on A and B pooled, after both are technically complete.
+- **After session A, only technical rules may stop the experiment.** No outcome metric exists before B: the
+  session-level evaluation is technical only (§10).
+- **The analysis runs once,** on A and B pooled, by `run/final.py`, after both are technically valid. It refuses
+  anything less.
 
 ## 13. The GPU-disabled run package
 
@@ -302,9 +325,10 @@ pattern as `scripts/derive_ws3_questionnaire_v1.py`:
 - a residue check refuses leftover WS3 names;
 - a drift test enforces all of this (`tests/test_evidence_memory_v1_run.py`).
 
-**Derived (11 files):**
+**Derived (12 files):**
 - runtime: authority, host, worker, runner, resources, monitor, supervisor;
 - launcher, rehearsal and evaluator: `run/launch.py`, `run/rehearse.py`, `run/evaluate.py`;
+- the rehearsal fake vLLM: `run/fake_vllm.py`, from v1's fake server;
 - the connected rehearsal test: `tests/test_evidence_memory_v1_run_connected.py`.
 
 **Substitutions:**
@@ -313,14 +337,18 @@ pattern as `scripts/derive_ws3_questionnaire_v1.py`:
 - the call ceiling (2,896);
 - the required-source bindings;
 - **`LIVE_ENABLED = False`**, refusing live before any approval is read;
-- the rehearsal slow-fault latency;
-- the connected test's counts and answer shapes.
+- the rehearsal slow-fault latencies, derived from the frozen schedule (`run/rehearsal_timing.py`);
+- the fake vLLM's canary test and per-call latency, which become overridable methods with v1's rules as defaults;
+- the connected test's counts, answer shapes and technical-only evaluation check.
 
 **Hand-written adapters:**
 - `run/probes.py`: the frozen set and the request builder;
-- `run/score.py`: schema-first scoring, completeness, analysis and stability;
+- `run/score.py`: schema-first scoring and the **technical-only** session report (§10);
+- `run/final.py`: the registered two-session analysis, the only source of scientific results (§10);
 - `run/service.py`: the Stage 1 allow-list;
-- `run/fake_server.py`: the scripted answers, identified by request hash;
+- `run/fake_server.py`: the scripted answers. The canary is identified by request hash, and the repeat-pass
+  slowdown applies only after pass 1;
+- `run/rehearsal_timing.py`: the slow-fault latencies and their margins;
 - `run/schedule.py`, `run/evidence.py`, `run/transport.py`: reviewed modules, re-exported unchanged. Evidence keeps
   WS3's committed-state recovery.
 
@@ -335,30 +363,35 @@ pattern as `scripts/derive_ws3_questionnaire_v1.py`:
 server token counts, finish reason, cache check and host timing.
 
 **The evaluator** is derived from WS3's. It re-derives every request hash from the frozen set, checks the lifecycle
-receipts, timing, token parity and cancellations, and scores only the retained responses. The run then gets
-`run/score.analyze` (the primary endpoint, the contrasts, the restricted contrast, the bootstrap, conclusions and
-stability).
+receipts, timing, token parity and cancellations, and scores only the retained responses. Per session, it reports
+only the technical `run/score.analyze`. Scientific results come only from `run/final.py`, on both sessions.
 
 **Rehearsals:**
-- **In-process, platform-independent** (run here). The fake server's scripted answers go through the evaluator's
-  scoring and analysis:
-  - a complete run gives the endpoint, contrasts and verdict;
-  - invalid answers are retained;
-  - the scripted pass-2 divergence shows in stability;
-  - a missing repeat answer makes the run incomplete;
+- **In-process, platform-independent.** The fake server's scripted answers go through the evaluator's scoring and
+  the technical session report:
+  - the report carries no outcome-bearing word;
+  - invalid answers are retained and counted against the 2% rule;
+  - a changed response changes the answer hash;
+  - a missing answer makes the session incomplete;
   - truncated answers are invalid, never parsed.
-- **Connected, CPU fake server over HTTP** (derived from WS3's ten connected rehearsals). They need POSIX: the
-  reviewed evidence writer imports `fcntl`, and the lifecycle uses process groups and Unix sockets. **They were not
-  run in this pass:** this worktree has only Windows Python, and they are skipped there.
+
+  The two-session analysis refuses one session, an invalid or unbound session, swapped or duplicated sessions, and
+  the development stand-in. On two valid sessions it equals the analysis of the concatenated rows.
+- **Connected, CPU fake server over HTTP** (derived from WS3's ten connected rehearsals). They need POSIX. The main
+  session ran all ten in WSL at `b1b7681`, and all passed, after two fixes:
+  - the fake server had counted every Stage 1 question as the canary, so no fault fired;
+  - the slow-fault latency is now derived from the schedule.
+
+  Their technical-only check changed after that run.
 
 ## 14. Before an exact source and package lock
 
 1. **Tokenizer cross-check.** Run `research.evidence_memory_v1.stage1.enumerate_requests()` against pinned
    `transformers` 4.57.6 in the isolated WSL environment. Every one of the 5,728 requests' `apply_chat_template`
    counts must equal `pure_python_prompt_tokens`, and each context must fit its budget under `transformers` too.
-2. **Connected rehearsals in POSIX.** Run `tests/test_evidence_memory_v1_run_connected.py`. Tune
-   `slow_withheld_pass_2` (currently 0.075 s, an estimate) so the cutoff falls inside the short repeat pass. Retain
-   the rehearsal results.
+2. **Connected rehearsals in POSIX.** Rerun `tests/test_evidence_memory_v1_run_connected.py` on the current
+   revision, because its technical-only evaluation check changed after the passing run at `b1b7681`. Retain the
+   rehearsal results.
 3. **Fix the design decisions,** then draw the withheld nonce (§5) and commit its hash. Build both sessions' frozen
    sets with `case_source='withheld'`, and add a package check that refuses `development_stand_in` or a seed hash
    that does not match the commitment. The development stand-in currently sits where the frozen set will go.
