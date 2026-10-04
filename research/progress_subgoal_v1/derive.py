@@ -69,6 +69,9 @@ DERIVED = {
     PACKAGE + 'authority.py': (
         # the two-arm schedule: 2 x 2 x 1,395 decision calls + 272 development calls
         ("'maximum_questionnaire_calls': 5616,", "'maximum_questionnaire_calls': 5852,", 1),
+        # review revision r3 (r1: lock entered its own inventory; r2: superseded by the derived slow-fault latencies)
+        ("REVIEW = 'notebooks/progress-subgoal-v1-review-r2/review-source-lock.json'",
+         "REVIEW = 'notebooks/progress-subgoal-v1-review-r3/review-source-lock.json'", 1),
         (REQUIRED_OLD, REQUIRED_NEW, 1),
     ),
     PACKAGE + 'host.py': (),
