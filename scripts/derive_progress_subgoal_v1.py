@@ -139,9 +139,9 @@ SIDECAR_HELPER = '''def _sidecar(name):
 
 TARGETS = {
     'scripts/build_progress_subgoal_v1_review.py': ('scripts/build_ws3_questionnaire_v1_review.py', (
-        # Review revision r3; r1 and r2 are kept as history (r1's lock pulled itself into the inventory once
+        # Review revision r4 (r3: never-finalized run index accepted by the loader); r1-r3 are kept as history (r1's lock pulled itself into the inventory once
         # committed, review of bc0c1b9; r2 bound the fixed slow-fault latencies replaced by derived ones).
-        ("REVISION = 'r2'", "REVISION = 'r3'", 1),
+        ("REVISION = 'r2'", "REVISION = 'r4'", 1),
         ("PACKAGES = ('agent', 'certification', 'evaluation', 'research', 'scripts')",
          "PACKAGES = ('agent', 'certification', 'evaluation', 'research', 'scripts')\n"
          "# Build- and review-time modules of this package: hash-bound as review documents, never in the runtime inventory.\n"
