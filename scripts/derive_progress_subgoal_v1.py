@@ -132,7 +132,9 @@ SIDECAR_HELPER = '''def _sidecar(name):
 
 TARGETS = {
     'scripts/build_progress_subgoal_v1_review.py': ('scripts/build_ws3_questionnaire_v1_review.py', (
-        ("REVISION = 'r2'", "REVISION = 'r1'", 1),
+        # Review revision r2 (the WS3 source's own value); r1 is kept as history (its lock pulled itself into the
+        # inventory once committed; review of bc0c1b9).
+        ("REVISION = 'r2'", "REVISION = 'r2'", 1),
         ("PACKAGES = ('agent', 'certification', 'evaluation', 'research', 'scripts')",
          "PACKAGES = ('agent', 'certification', 'evaluation', 'research', 'scripts')\n"
          "# Build- and review-time modules of this package: hash-bound as review documents, never in the runtime inventory.\n"

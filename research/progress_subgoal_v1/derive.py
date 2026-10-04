@@ -68,8 +68,6 @@ DERIVED = {
     PACKAGE + 'authority.py': (
         # the two-arm schedule: 2 x 2 x 1,395 decision calls + 272 development calls
         ("'maximum_questionnaire_calls': 5616,", "'maximum_questionnaire_calls': 5852,", 1),
-        ("REVIEW = 'notebooks/progress-subgoal-v1-review-r2/review-source-lock.json'",
-         "REVIEW = 'notebooks/progress-subgoal-v1-review-r1/review-source-lock.json'", 1),
         (REQUIRED_OLD, REQUIRED_NEW, 1),
     ),
     PACKAGE + 'host.py': (),
