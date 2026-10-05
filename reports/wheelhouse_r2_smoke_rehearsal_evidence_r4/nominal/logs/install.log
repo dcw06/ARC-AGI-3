@@ -1,0 +1,13 @@
+
+$ /home/jingjing/.local/share/agi/dev-env/bin/python -m venv /tmp/wheelhouse-r2-smoke-rehearsal-ljxoynv_/nominal-nbt0oxca/work/venv
+
+$ /tmp/wheelhouse-r2-smoke-rehearsal-ljxoynv_/nominal-nbt0oxca/work/venv/bin/python -m pip install --no-index --no-cache-dir --require-hashes --only-binary=:all: --find-links /tmp/wheelhouse-r2-smoke-rehearsal-ljxoynv_/nominal-nbt0oxca/bundle/wheels -r /tmp/wheelhouse-r2-smoke-rehearsal-ljxoynv_/nominal-nbt0oxca/bundle/requirements.lock
+Looking in links: /tmp/wheelhouse-r2-smoke-rehearsal-ljxoynv_/nominal-nbt0oxca/bundle/wheels
+Processing /tmp/wheelhouse-r2-smoke-rehearsal-ljxoynv_/nominal-nbt0oxca/bundle/wheels/fixturea-1.0-py3-none-any.whl (from -r /tmp/wheelhouse-r2-smoke-rehearsal-ljxoynv_/nominal-nbt0oxca/bundle/requirements.lock (line 1))
+Processing /tmp/wheelhouse-r2-smoke-rehearsal-ljxoynv_/nominal-nbt0oxca/bundle/wheels/fixtureb-1.0-py3-none-any.whl (from -r /tmp/wheelhouse-r2-smoke-rehearsal-ljxoynv_/nominal-nbt0oxca/bundle/requirements.lock (line 2))
+Installing collected packages: fixtureb, fixturea
+Successfully installed fixturea-1.0 fixtureb-1.0
+
+$ /tmp/wheelhouse-r2-smoke-rehearsal-ljxoynv_/nominal-nbt0oxca/work/venv/bin/python -m pip check
+No broken requirements found.
+{"versions": {"fixturea": "1.0", "fixtureb": "1.0"}, "imports": {"fixturea": "/tmp/wheelhouse-r2-smoke-rehearsal-ljxoynv_/nominal-nbt0oxca/work/venv/lib/python3.12/site-packages/fixturea/__init__.py", "fixtureb": "/tmp/wheelhouse-r2-smoke-rehearsal-ljxoynv_/nominal-nbt0oxca/work/venv/lib/python3.12/site-packages/fixtureb/__init__.py"}}

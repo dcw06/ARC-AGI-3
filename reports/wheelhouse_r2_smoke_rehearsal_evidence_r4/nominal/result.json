@@ -1,0 +1,619 @@
+{
+ "attempt_id": null,
+ "cleanup": {
+  "environment": {
+   "details": null,
+   "removed": null,
+   "scope": "caller-retained rehearsal work directory"
+  },
+  "gpu": "not_exercised (no GPU in a CPU rehearsal)",
+  "server": {
+   "error": null,
+   "exit_code": -15,
+   "groups_absent": true,
+   "interrupted": [],
+   "ownership": "registered",
+   "pgid": 728,
+   "remaining_members": [],
+   "sigkill_sent": false,
+   "sigterm_sent": true
+  }
+ },
+ "cleanup_phase": {
+  "deadline_at": 600.0,
+  "entered_at": 7.482,
+  "transition": [
+   "entered"
+  ]
+ },
+ "cleanup_verified": true,
+ "completed_plan": true,
+ "elapsed_seconds": 7.595,
+ "error": null,
+ "evidence_class": "scripted_cpu_rehearsal",
+ "failed_stage": null,
+ "gpu_compatibility_evidence": false,
+ "gpu_telemetry": [],
+ "ledger": {
+  "by_kind": {
+   "cancellation_probe": 4,
+   "inference": 4,
+   "startup_probe": 3
+  },
+  "counting_rule": "every HTTP request to the model server, including startup and cancellation probes; readiness is detected by TCP connection only",
+  "entries": [
+   {
+    "id": "S1",
+    "issued_at": 4.469,
+    "kind": "startup_probe",
+    "method": "GET",
+    "outcome": "http_200",
+    "path": "/health",
+    "seconds": 0.002,
+    "sequence": 1
+   },
+   {
+    "id": "S2",
+    "issued_at": 4.471,
+    "kind": "startup_probe",
+    "method": "GET",
+    "outcome": "http_200",
+    "path": "/v1/models",
+    "seconds": 0.001,
+    "sequence": 2
+   },
+   {
+    "id": "S3",
+    "issued_at": 4.472,
+    "kind": "startup_probe",
+    "method": "POST",
+    "outcome": "http_200",
+    "path": "/v1/chat/completions",
+    "seconds": 0.001,
+    "sequence": 3
+   },
+   {
+    "id": "I1",
+    "issued_at": 4.473,
+    "kind": "inference",
+    "method": "POST",
+    "outcome": "http_200",
+    "path": "/v1/chat/completions",
+    "seconds": 0.001,
+    "sequence": 4
+   },
+   {
+    "id": "I2",
+    "issued_at": 4.474,
+    "kind": "inference",
+    "method": "POST",
+    "outcome": "http_200",
+    "path": "/v1/chat/completions",
+    "seconds": 0.001,
+    "sequence": 5
+   },
+   {
+    "id": "I3",
+    "issued_at": 4.475,
+    "kind": "inference",
+    "method": "POST",
+    "outcome": "http_200",
+    "path": "/v1/chat/completions",
+    "seconds": 0.001,
+    "sequence": 6
+   },
+   {
+    "id": "I4",
+    "issued_at": 4.476,
+    "kind": "inference",
+    "method": "POST",
+    "outcome": "http_200",
+    "path": "/v1/chat/completions",
+    "seconds": 0.001,
+    "sequence": 7
+   },
+   {
+    "first_content_seconds": 0.001,
+    "id": "C1",
+    "issued_at": 4.477,
+    "kind": "cancellation_probe",
+    "method": "POST",
+    "outcome": "cancelled_after_first_content",
+    "path": "/v1/chat/completions",
+    "seconds": 0.001,
+    "sequence": 8
+   },
+   {
+    "id": "C2",
+    "issued_at": 4.478,
+    "kind": "cancellation_probe",
+    "method": "GET",
+    "outcome": "http_200",
+    "path": "/metrics",
+    "seconds": 0.001,
+    "sequence": 9
+   },
+   {
+    "id": "C2",
+    "issued_at": 7.479,
+    "kind": "cancellation_probe",
+    "method": "GET",
+    "outcome": "http_200",
+    "path": "/metrics",
+    "seconds": 0.001,
+    "sequence": 10
+   },
+   {
+    "id": "C3",
+    "issued_at": 7.481,
+    "kind": "cancellation_probe",
+    "method": "POST",
+    "outcome": "http_200",
+    "path": "/v1/chat/completions",
+    "seconds": 0.001,
+    "sequence": 11
+   }
+  ],
+  "issued": 11,
+  "maximum_model_requests": 12,
+  "refusals": []
+ },
+ "lifecycle_deadline": {
+  "checked_after": "GPU cleanup, environment removal and evidence finalization",
+  "checked_at_seconds": 7.594855945000006,
+  "internal_seconds": 600,
+  "met": true
+ },
+ "limits": {
+  "admission_cutoff_seconds": 540,
+  "authorized_seconds": 3600,
+  "automatic_retries": 0,
+  "cleanup_reserve_seconds": 60,
+  "environment_actions": 0,
+  "installation_seconds": 180,
+  "internal_seconds": 600,
+  "maximum_attempts": 1,
+  "maximum_model_requests": 12,
+  "model_verification_seconds": 30,
+  "scorecards": 0,
+  "startup_ceiling_seconds": 8
+ },
+ "mode": "rehearsal",
+ "not_established": [
+  "solving ability or task performance",
+  "Phase 4 completion",
+  "throughput or capacity limits",
+  "behaviour beyond the frozen request plan"
+ ],
+ "observations": {
+  "I1_I2_identical": true,
+  "I4_answer": "Red",
+  "note": "observations are recorded, not pass criteria"
+ },
+ "passed": true,
+ "phases": [
+  {
+   "began_at": 0.0,
+   "outcome": "passed",
+   "phase": "host",
+   "seconds": 0.0
+  },
+  {
+   "began_at": 0.0,
+   "outcome": "passed",
+   "phase": "bundle_integrity",
+   "seconds": 0.001
+  },
+  {
+   "began_at": 0.001,
+   "outcome": "passed",
+   "phase": "installation",
+   "seconds": 3.465
+  },
+  {
+   "began_at": 3.466,
+   "outcome": "passed",
+   "phase": "model_artifact",
+   "seconds": 0.0
+  },
+  {
+   "began_at": 3.466,
+   "outcome": "passed",
+   "phase": "server_start",
+   "seconds": 0.001
+  },
+  {
+   "began_at": 3.467,
+   "outcome": "passed",
+   "phase": "server_ready",
+   "seconds": 1.002
+  },
+  {
+   "began_at": 4.469,
+   "outcome": "passed",
+   "phase": "startup_probe_S1",
+   "seconds": 0.002
+  },
+  {
+   "began_at": 4.471,
+   "outcome": "passed",
+   "phase": "startup_probe_S2",
+   "seconds": 0.001
+  },
+  {
+   "began_at": 4.472,
+   "outcome": "passed",
+   "phase": "startup_probe_S3",
+   "seconds": 0.001
+  },
+  {
+   "began_at": 4.473,
+   "outcome": "passed",
+   "phase": "inference_I1",
+   "seconds": 0.001
+  },
+  {
+   "began_at": 4.474,
+   "outcome": "passed",
+   "phase": "inference_I2",
+   "seconds": 0.001
+  },
+  {
+   "began_at": 4.475,
+   "outcome": "passed",
+   "phase": "inference_I3",
+   "seconds": 0.001
+  },
+  {
+   "began_at": 4.476,
+   "outcome": "passed",
+   "phase": "inference_I4",
+   "seconds": 0.001
+  },
+  {
+   "began_at": 4.477,
+   "outcome": "passed",
+   "phase": "cancellation_C1",
+   "seconds": 0.001
+  },
+  {
+   "began_at": 4.478,
+   "outcome": "passed",
+   "phase": "cancellation_C2_idle",
+   "seconds": 3.003
+  },
+  {
+   "began_at": 7.481,
+   "outcome": "passed",
+   "phase": "cancellation_C3_responsive",
+   "seconds": 0.001
+  },
+  {
+   "began_at": 7.482,
+   "outcome": "passed",
+   "phase": "server_cleanup",
+   "seconds": 0.103
+  },
+  {
+   "began_at": 7.585,
+   "outcome": "passed",
+   "phase": "log_retention",
+   "seconds": 0.005
+  },
+  {
+   "began_at": 7.59,
+   "outcome": "not_applicable",
+   "phase": "environment_cleanup",
+   "seconds": 0.0
+  },
+  {
+   "began_at": 7.59,
+   "outcome": "passed",
+   "phase": "evidence_finalization",
+   "seconds": 0.005
+  }
+ ],
+ "rehearsal_limits": [
+  "no GPU, CUDA, vLLM engine or model weights were used: the model server is a scripted stub",
+  "installation was exercised on fixture wheels, not the R2 bundle",
+  "establishes only that the control code (gate, clock, request ledger, timeouts, cancellation handling, process cleanup, evidence retention) behaves as specified against scripted behaviour"
+ ],
+ "requests": {
+  "C1": {
+   "cancelled": true,
+   "first_content_seconds": 0.001
+  },
+  "C2": {
+   "idle": true,
+   "readings": [
+    {
+     "running": 1,
+     "waiting": 0
+    },
+    {
+     "running": 0,
+     "waiting": 0
+    }
+   ]
+  },
+  "C3": {
+   "case": "exact_word",
+   "checks": {
+    "completion_within_limit": true,
+    "content_nonempty": true,
+    "finish_reason_valid": true,
+    "model_matches": true,
+    "prompt_tokens_positive": true
+   },
+   "content": "READY",
+   "finish_reason": "stop",
+   "passed": true,
+   "usage": {
+    "completion_tokens": 1,
+    "prompt_tokens": 57
+   }
+  },
+  "I1": {
+   "case": "exact_word",
+   "checks": {
+    "completion_within_limit": true,
+    "content_nonempty": true,
+    "finish_reason_valid": true,
+    "model_matches": true,
+    "prompt_tokens_positive": true
+   },
+   "content": "READY",
+   "finish_reason": "stop",
+   "passed": true,
+   "usage": {
+    "completion_tokens": 1,
+    "prompt_tokens": 57
+   }
+  },
+  "I2": {
+   "case": "exact_word",
+   "checks": {
+    "completion_within_limit": true,
+    "content_nonempty": true,
+    "finish_reason_valid": true,
+    "model_matches": true,
+    "prompt_tokens_positive": true
+   },
+   "content": "READY",
+   "finish_reason": "stop",
+   "passed": true,
+   "usage": {
+    "completion_tokens": 1,
+    "prompt_tokens": 57
+   }
+  },
+  "I3": {
+   "case": "long_context",
+   "checks": {
+    "completion_within_limit": true,
+    "content_nonempty": true,
+    "finish_reason_valid": true,
+    "model_matches": true,
+    "prompt_tokens_positive": true
+   },
+   "content": "120",
+   "finish_reason": "stop",
+   "passed": true,
+   "usage": {
+    "completion_tokens": 1,
+    "prompt_tokens": 1954
+   }
+  },
+  "I4": {
+   "case": "image",
+   "checks": {
+    "completion_within_limit": true,
+    "content_nonempty": true,
+    "finish_reason_valid": true,
+    "model_matches": true,
+    "prompt_tokens_positive": true
+   },
+   "content": "Red",
+   "finish_reason": "stop",
+   "passed": true,
+   "usage": {
+    "completion_tokens": 1,
+    "prompt_tokens": 132
+   }
+  },
+  "S1": {
+   "status": 200
+  },
+  "S2": {
+   "models": [
+    "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8"
+   ]
+  },
+  "S3": {
+   "case": "canary",
+   "checks": {
+    "completion_within_limit": true,
+    "content_nonempty": true,
+    "finish_reason_valid": true,
+    "model_matches": true,
+    "prompt_tokens_positive": true
+   },
+   "content": "ok",
+   "finish_reason": "stop",
+   "passed": true,
+   "usage": {
+    "completion_tokens": 1,
+    "prompt_tokens": 52
+   }
+  }
+ },
+ "stages": {
+  "bundle_integrity": {
+   "files_verified": 5,
+   "requirements_lock_sha256": "851f33674254c2b45882662939c207c0792fd9ae3e3d7b6935bc5e1266a07575",
+   "sha256sums_sha256": "77c11e26f3bb38d185b2b1faa4cdf3f5c8d575749299ebe7413cf2b0f072e4f9",
+   "wheels": 2
+  },
+  "cancellation_C1": {
+   "cancelled": true,
+   "first_content_seconds": 0.001
+  },
+  "cancellation_C2_idle": {
+   "idle": true,
+   "readings": [
+    {
+     "running": 1,
+     "waiting": 0
+    },
+    {
+     "running": 0,
+     "waiting": 0
+    }
+   ]
+  },
+  "cancellation_C3_responsive": {
+   "case": "exact_word",
+   "checks": {
+    "completion_within_limit": true,
+    "content_nonempty": true,
+    "finish_reason_valid": true,
+    "model_matches": true,
+    "prompt_tokens_positive": true
+   },
+   "content": "READY",
+   "finish_reason": "stop",
+   "passed": true,
+   "usage": {
+    "completion_tokens": 1,
+    "prompt_tokens": 57
+   }
+  },
+  "gpu": "not_exercised (no GPU in a CPU rehearsal)",
+  "host": {
+   "executable": "/home/jingjing/.local/share/agi/dev-env/bin/python",
+   "glibc": "2.39",
+   "kernel": "6.18.40.1-microsoft-standard-WSL2",
+   "libc": "glibc",
+   "machine": "x86_64",
+   "matches": true,
+   "problems": [],
+   "python": "3.12.3"
+  },
+  "inference_I1": {
+   "case": "exact_word",
+   "checks": {
+    "completion_within_limit": true,
+    "content_nonempty": true,
+    "finish_reason_valid": true,
+    "model_matches": true,
+    "prompt_tokens_positive": true
+   },
+   "content": "READY",
+   "finish_reason": "stop",
+   "passed": true,
+   "usage": {
+    "completion_tokens": 1,
+    "prompt_tokens": 57
+   }
+  },
+  "inference_I2": {
+   "case": "exact_word",
+   "checks": {
+    "completion_within_limit": true,
+    "content_nonempty": true,
+    "finish_reason_valid": true,
+    "model_matches": true,
+    "prompt_tokens_positive": true
+   },
+   "content": "READY",
+   "finish_reason": "stop",
+   "passed": true,
+   "usage": {
+    "completion_tokens": 1,
+    "prompt_tokens": 57
+   }
+  },
+  "inference_I3": {
+   "case": "long_context",
+   "checks": {
+    "completion_within_limit": true,
+    "content_nonempty": true,
+    "finish_reason_valid": true,
+    "model_matches": true,
+    "prompt_tokens_positive": true
+   },
+   "content": "120",
+   "finish_reason": "stop",
+   "passed": true,
+   "usage": {
+    "completion_tokens": 1,
+    "prompt_tokens": 1954
+   }
+  },
+  "inference_I4": {
+   "case": "image",
+   "checks": {
+    "completion_within_limit": true,
+    "content_nonempty": true,
+    "finish_reason_valid": true,
+    "model_matches": true,
+    "prompt_tokens_positive": true
+   },
+   "content": "Red",
+   "finish_reason": "stop",
+   "passed": true,
+   "usage": {
+    "completion_tokens": 1,
+    "prompt_tokens": 132
+   }
+  },
+  "installation": {
+   "imports": {
+    "fixturea": "/tmp/wheelhouse-r2-smoke-rehearsal-ljxoynv_/nominal-nbt0oxca/work/venv/lib/python3.12/site-packages/fixturea/__init__.py",
+    "fixtureb": "/tmp/wheelhouse-r2-smoke-rehearsal-ljxoynv_/nominal-nbt0oxca/work/venv/lib/python3.12/site-packages/fixtureb/__init__.py"
+   },
+   "install_seconds": 3.093,
+   "passed": true,
+   "python": "/tmp/wheelhouse-r2-smoke-rehearsal-ljxoynv_/nominal-nbt0oxca/work/venv/bin/python",
+   "versions": {
+    "fixturea": "1.0",
+    "fixtureb": "1.0"
+   }
+  },
+  "model_artifact": {
+   "bytes": 1042,
+   "files": 2,
+   "tree_sha256": "ccec944bc12c9c99c0a10eb0fe19ba7e16286fccc2c9ceb5d05198cb8b38e128"
+  },
+  "server_ready": {
+   "seconds": 1.002
+  },
+  "server_start": 728,
+  "startup_probe_S1": {
+   "status": 200
+  },
+  "startup_probe_S2": {
+   "models": [
+    "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8"
+   ]
+  },
+  "startup_probe_S3": {
+   "case": "canary",
+   "checks": {
+    "completion_within_limit": true,
+    "content_nonempty": true,
+    "finish_reason_valid": true,
+    "model_matches": true,
+    "prompt_tokens_positive": true
+   },
+   "content": "ok",
+   "finish_reason": "stop",
+   "passed": true,
+   "usage": {
+    "completion_tokens": 1,
+    "prompt_tokens": 52
+   }
+  }
+ },
+ "verdict_status": "passed"
+}

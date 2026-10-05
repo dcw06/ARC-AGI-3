@@ -1,0 +1,44 @@
+{
+ "source_revision": "e3b0871616b4f17ae7a052f2d8567aa90992198d",
+ "initial_checkout_clean": true,
+ "checkout_core_autocrlf": false,
+ "review_lock_sha256": "f829d98b55997f491945aaadac309dfefe2917a518e61801586139afdfcc7398",
+ "source_bindings_verified": 14,
+ "compiled_packaged_python": true,
+ "scope": "CPU-only scripted checks; no GPU, model, upload, reservation or provider request",
+ "commands": [
+  {
+   "args": [
+    "scripts/run_wheelhouse_checks.py",
+    "--out",
+    "reports/wheelhouse_tooling_checks_e3b0871.json"
+   ],
+   "exit_code": 0,
+   "seconds": 64.977,
+   "stdout": "{\"passed\": false, \"network_isolated\": true, \"install\": null, \"error\": \"wheel verification failed\"}\n{\"inventory_rows\": 174, \"plan_files\": 425, \"decisions\": {\"unresolved\": 174}, \"decision_problems\": 0, \"build_eligible\": false, \"lock_matches_installed\": true}\n{\"inventory_rows\": 174, \"plan_files\": 425, \"decisions\": {\"approved\": 1, \"unresolved\": 173}, \"decision_problems\": 0, \"build_eligible\": false, \"lock_matches_installed\": true}\n{\"inventory_rows\": 174, \"plan_files\": 425, \"decisions\": {\"unresolved\": 174}, \"decision_problems\": 0, \"build_eligible\": false, \"lock_matches_installed\": true}\n{\"inventory_rows\": 174, \"plan_files\": 425, \"decisions\": {\"unresolved\": 174}, \"decision_problems\": 0, \"build_eligible\": false, \"lock_matches_installed\": true}\n{\"inventory_rows\": 174, \"plan_files\": 425, \"decisions\": {\"unresolved\": 174}, \"decision_problems\": 1, \"build_eligible\": false, \"lock_matches_installed\": true}\n{\"inventory_rows\": 174, \"plan_files\": 425, \"decisions\": {\"unresolved\": 174}, \"decision_problems\": 0, \"build_eligible\": false, \"lock_matches_installed\": true}\n{\"inventory_rows\": 174, \"plan_files\": 425, \"decisions\": {\"unresolved\": 173, \"probably fine\": 1}, \"decision_problems\": 2, \"build_eligible\": false, \"lock_matches_installed\": true}\n{\"inventory_rows\": 174, \"plan_files\": 425, \"decisions\": {\"unresolved\": 174}, \"decision_problems\": 0, \"build_eligible\": false, \"lock_matches_installed\": true}\n{\"inventory_rows\": 174, \"plan_files\": 425, \"decisions\": {\"unresolved\": 173, \"approved\": 1}, \"decision_problems\": 1, \"build_eligible\": false, \"lock_matches_installed\": true}\n{\"inventory_rows\": 174, \"plan_files\": 425, \"decisions\": {\"unresolved\": 174}, \"decision_problems\": 0, \"build_eligible\": false, \"lock_matches_installed\": true}\n{\"inventory_rows\": 174, \"plan_files\": 425, \"decisions\": {\"unresolved\": 173}, \"decision_problems\": 1, \"build_eligible\": false, \"lock_matches_installed\": true}\n{\"inventory_rows\": 174, \"plan_files\": 425, \"decisions\": {\"unresolved\": 174}, \"decision_problems\": 0, \"build_eligible\": false, \"lock_matches_installed\": true}\n{\"inventory_rows\": 174, \"plan_files\": 425, \"decisions\": {\"unresolved\": 175}, \"decision_problems\": 1, \"build_eligible\": false, \"lock_matches_installed\": true}\n{\"inventory_rows\": 174, \"plan_files\": 425, \"decisions\": {\"unresolved\": 174}, \"decision_problems\": 0, \"build_eligible\": false, \"lock_matches_installed\": true}\n{\"source_revision\": \"e3b0871616b4f17ae7a052f2d8567aa90992198d\", \"run\": 181, \"failures\": 0, \"errors\": 0, \"skipped\": 0, \"passed\": true, \"reports_reproduce\": true}\n",
+   "stderr": ""
+  },
+  {
+   "args": [
+    "scripts/wheelhouse_r2_smoke_rehearsal.py"
+   ],
+   "exit_code": 0,
+   "seconds": 73.475,
+   "stdout": "nominal                      as expected  stage=None  requests=11\nbundle_file_tampered         as expected  stage=bundle_integrity  requests=0\nsha256sums_binding_mismatch  as expected  stage=bundle_integrity  requests=0\nversion_mismatch             as expected  stage=installation  requests=0\nmodel_tree_mismatch          as expected  stage=model_artifact  requests=0\nserver_exits_early           as expected  stage=server_ready  requests=0\nstartup_ceiling              as expected  stage=server_ready  requests=0\nwrong_served_model           as expected  stage=startup_probe_S2  requests=2\nrequest_timeout              as expected  stage=startup_probe_S3  requests=3\nnot_idle_after_cancel        as expected  stage=cancellation_C2_idle  requests=10\nserver_ignores_sigterm       as expected  stage=None  requests=11\nchild_ignores_sigterm        as expected  stage=None  requests=11\n",
+   "stderr": ""
+  },
+  {
+   "args": [
+    "scripts/wheelhouse_r2_smoke_package.py",
+    "review-check",
+    "--revision",
+    "4"
+   ],
+   "exit_code": 0,
+   "seconds": 0.084,
+   "stdout": "{\n \"passed\": true,\n \"exit_code\": 1,\n \"refused_at_live_gate\": true,\n \"nvidia_smi_called\": false,\n \"temporary_files_left\": [],\n \"refusal\": \"certification.wheelhouse_r2_smoke_v1.binding.LiveRefused: wheelhouse R2 smoke test live path refused: unresolved placeholders: dataset.ref, dataset.version, dataset.sha256sums_sha256, dataset.bundle_manifest_sha256; authorization: ValueError: no review source lock\"\n}\n",
+   "stderr": ""
+  }
+ ],
+ "passed": true
+}
