@@ -45,7 +45,7 @@ Decisions file `reports/wheelhouse_redistribution_decisions.csv` (owner-maintain
 
 ## Build eligibility (Record A rule)
 
-the builder writes nothing unless bundle_eligibility() is empty: every included artifact is approved, or approved_with_conditions with every condition documented as satisfied; each decision names the exact artifact SHA-256, rationale, reviewer and date; unresolved, restricted and excluded block; required dependencies are never silently omitted.
+the builder writes nothing unless bundle_eligibility() is empty: every included artifact is approved, or approved_with_conditions with every condition documented as satisfied; each decision names the exact artifact SHA-256, rationale, reviewer and date, and was made on the evidence of the latest worksheet revision (evidence_sha256); unresolved, restricted and excluded block; required dependencies are never silently omitted.
 
 Current state: NOT eligible (174 blocker(s)); expected while the decisions are a draft.
 

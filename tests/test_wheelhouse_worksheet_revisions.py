@@ -27,6 +27,10 @@ class Issued(unittest.TestCase):
     def lock(self, n):
         return json.loads(self.revisions[n]['lock'].read_text())
 
+    def test_decision_provenance_covers_exactly_the_compared_evidence(self):
+        self.assertEqual(P.WORKSHEET_EVIDENCE_FIELDS, W.CONTEXT + ['evidence_checks'])
+        self.assertEqual(P.WORKSHEET_EVIDENCE_FIELDS, R.COMPARED)
+
     def test_at_least_two_revisions_each_unchanged_under_its_own_lock(self):
         self.assertGreaterEqual(self.latest, 2)
         for n in self.revisions:
@@ -195,7 +199,49 @@ class Returned(unittest.TestCase):
                            decided_on='2026-10-01')
         W.DECISIONS_CSV.write_bytes(W.decisions_bytes(rows))
         (preview, _), _ = W.validate(self.filled(self.latest, {}))
-        self.assertTrue(any('changed since r1' in w and self.changed in w for w in preview['warnings']))
+        self.assertTrue(any('not made on the current evidence' in w and self.changed in w for w in preview['warnings']))
+        self.assertIn(self.changed, preview['stale_recorded_decisions'])
+
+    def legacy_approvals(self, artifacts):
+        rows = P.read_decisions(W.DECISIONS_CSV)
+        for row in rows:
+            if row['artifact'] in artifacts:
+                row.update(redistribution_decision='approved', rationale='legacy approval', resolver='r',
+                           decided_on='2026-10-01', required_notices='LICENSE')
+        W.DECISIONS_CSV.write_bytes(W.decisions_bytes(rows))
+
+    def test_legacy_approvals_without_provenance_never_count(self):
+        """The reviewer's fixture: approvals already recorded for every changed row (no provenance) -> blockers."""
+        changed = set(W.evidence_changes(1))
+        self.legacy_approvals(changed)
+        decisions = P.read_decisions(W.DECISIONS_CSV)
+        blockers = P.bundle_eligibility(W.read_csv(W.INVENTORY_CSV), decisions)
+        stale = [b for b in blockers if 'not made on the current evidence' in b]
+        self.assertEqual(len(stale), len(changed))
+        (preview, _), _ = W.validate(self.filled(self.latest, {}))
+        self.assertFalse(preview['build_eligible_after'])
+        self.assertEqual(sorted(preview['stale_recorded_decisions']), sorted(changed))
+
+    def test_import_records_provenance_from_the_issued_row(self):
+        rows = [dict(r) for r in W.read_csv(W.revision_files(self.latest)['csv'])]
+        for r in rows:
+            if r['artifact'] == self.changed:
+                r.update(self.entry(), additional_obligations='edited by the reviewer')
+        path = self.write(rows, W.columns(self.latest))
+        (preview, resulting), errors = W.validate(path)
+        self.assertEqual(errors, [])
+        after = next(c['after'] for c in preview['changes'] if c['artifact'] == self.changed)
+        self.assertEqual(after['worksheet_revision'], f'r{self.latest}')
+        self.assertEqual(after['evidence_sha256'], P.current_evidence()[1][self.changed])
+        blockers = P.bundle_eligibility(W.read_csv(W.INVENTORY_CSV), resulting)
+        self.assertFalse(any(self.changed in b and 'current evidence' in b for b in blockers))
+
+    def test_unchanged_rows_decided_on_r1_count_on_current_evidence(self):
+        (_, resulting), errors = W.validate(self.filled(1, {self.unchanged: self.entry()}))
+        self.assertEqual(errors, [])
+        row = next(r for r in resulting if r['artifact'] == self.unchanged)
+        self.assertEqual((row['worksheet_revision'], row['evidence_sha256']),
+                         ('r1', P.current_evidence()[1][self.unchanged]))
 
 
 if __name__ == '__main__':

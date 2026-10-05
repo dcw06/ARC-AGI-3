@@ -28,8 +28,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from scripts.plan_wheelhouse_r2_bundle import (ALLOWED_DECISIONS, DECISION_FIELDS, DECISIONS_CSV,  # noqa: E402
-                                               INVENTORY_CSV, bundle_eligibility, check_decisions, read_decisions,
-                                               split_conditions, valid_date)
+                                               INVENTORY_CSV, bundle_eligibility, check_decisions, current_evidence,
+                                               evidence_digest, read_decisions, split_conditions, valid_date)
 
 PROPOSALS_CSV = ROOT / 'reports/wheelhouse_redistribution_proposed_dispositions.csv'
 RECONCILIATION = ROOT / 'reports/wheelhouse_nvidia_licence_reconciliation.json'
@@ -297,14 +297,21 @@ def validate(path):
     latest = latest_revision()
     try:
         changed_evidence = evidence_changes(revision)  # changes after this worksheet's revision
-        changed_since_r1 = evidence_changes(1)
         carried_changes = {}
+        latest_seen, evidence_now = current_evidence()
+        if sha256(spec['csv']) != lock['worksheet_sha256']:
+            raise ValueError(f'the issued r{revision} worksheet differs from its lock')
+        issued = {r['artifact']: r for r in read_csv(spec['csv'])}
     except (OSError, ValueError, KeyError) as exc:
         return None, [f'cannot assess revision changes: {exc}']
+    stale = []
     for name, old in current.items():
-        if old.get('redistribution_decision') not in (None, 'unresolved') and name in changed_since_r1:
-            warnings.append(f"{name}: the recorded decision ({old['redistribution_decision']}) may predate evidence "
-                            f"changed since r1 ({', '.join(changed_since_r1[name])}); reconfirm it")
+        if old.get('redistribution_decision') not in (None, 'unresolved') and \
+                old.get('evidence_sha256') != evidence_now.get(name):
+            stale.append(name)
+            warnings.append(f"{name}: the recorded decision ({old['redistribution_decision']}) was not made on the "
+                            f"current evidence ({old.get('worksheet_revision') or 'no recorded worksheet revision'}); "
+                            f'it does not count toward eligibility until it is reconfirmed on r{latest_seen}')
     seen = Counter(r['artifact'] for r in returned)
     errors += [f'duplicate row for {a}' for a, n in seen.items() if n > 1]
     errors += [f'row for an artifact not in the inventory: {a}' for a in seen if a not in inventory]
@@ -328,7 +335,9 @@ def validate(path):
             errors.append(f'{name}: decision {decision!r} is not one of {sorted(ALLOWED_DECISIONS)}')
             continue
         row = {'artifact': name, 'sha256': inventory[name],
-               **{target: r[source].strip() for source, target in REVIEWER.items()}}
+               **{target: r[source].strip() for source, target in REVIEWER.items()},
+               # provenance from the issued worksheet row, never from the returned copy
+               'worksheet_revision': f'r{revision}', 'evidence_sha256': evidence_digest(issued[name])}
         affected = changed_evidence.get(name, [])
         if affected and decision != 'unresolved':
             # The decisions file keeps no revision or reconfirmation status, so an entry on a row whose evidence
@@ -372,10 +381,11 @@ def validate(path):
             warnings.append(f'{name}: {decision} blocks the bundle (a required dependency); an explicit alternative is '
                             "the owner's decision")
         old = current.get(name, {})
-        if old.get('redistribution_decision') not in (None, 'unresolved') and \
+        replaces_stale = name in stale and row['evidence_sha256'] == evidence_now.get(name)
+        if old.get('redistribution_decision') not in (None, 'unresolved') and not replaces_stale and \
                 any(old.get(k, '') != row[k] for k in DECISION_FIELDS):
-            errors.append(f"{name}: would replace a recorded decision ({old['redistribution_decision']}); "
-                          'not allowed by import')
+            errors.append(f"{name}: would replace a recorded decision ({old['redistribution_decision']}) made on the "
+                          'current evidence; not allowed by import')
             continue
         if any(old.get(k, '') != row[k] for k in DECISION_FIELDS):
             changes.append({'artifact': name, 'from': old.get('redistribution_decision'), 'to': decision,
@@ -386,13 +396,15 @@ def validate(path):
                             'after': {k: row[k] for k in DECISION_FIELDS},
                             'worksheet_revision': revision,
                             'affected_by_newer_evidence': affected,
-                            'carried_from': r.get('carried_from', '').strip() if revision >= 2 else ''})
+                            'carried_from': r.get('carried_from', '').strip() if revision >= 2 else '',
+                            'replaces_stale_decision': replaces_stale})
             proposed[name] = row
     resulting = [proposed[a] for a in inventory]
     errors += [f'resulting decisions: {p}' for p in check_decisions(read_csv(INVENTORY_CSV), resulting)]
-    blockers = bundle_eligibility(read_csv(INVENTORY_CSV), resulting)
+    blockers = bundle_eligibility(read_csv(INVENTORY_CSV), resulting, evidence_now)
     preview = {'schema': 'wheelhouse_decision_import_preview_v1', 'worksheet': str(path),
                'worksheet_revision': revision, 'worksheet_lock_sha256': sha256(spec['lock']),
+               'latest_revision': latest_seen, 'stale_recorded_decisions': stale,
                'worksheet_sha256': sha256(path), 'decisions_sha256_now': sha256(DECISIONS_CSV),
                'errors': errors, 'warnings': warnings, 'changes': changes,
                'counts_after': dict(Counter(d['redistribution_decision'] for d in resulting)),

@@ -146,16 +146,28 @@ class Returned(unittest.TestCase):
         (preview, _), errors = W.validate(self.returned({artifact: {'proposed_disposition': 'approved'}}))
         self.assertTrue(any('context columns were edited' in w for w in preview['warnings']))
 
-    def test_a_recorded_decision_is_never_replaced(self):
-        artifact = self.first()
+    def record(self, artifact, current):
         rows = P.read_decisions(W.DECISIONS_CSV)
+        digest = P.current_evidence()[1][artifact] if current else 'f' * 64
         for row in rows:
             if row['artifact'] == artifact:
                 row.update(redistribution_decision='excluded', rationale='earlier decision', resolver='r',
-                           decided_on='2026-10-01')
+                           decided_on='2026-10-01', worksheet_revision='r1', evidence_sha256=digest)
         W.DECISIONS_CSV.write_bytes(W.decisions_bytes(rows))
+
+    def test_a_recorded_decision_on_current_evidence_is_never_replaced(self):
+        artifact = self.first()
+        self.record(artifact, current=True)
         _, errors = W.validate(self.returned(self.decide(artifact)))
         self.assertTrue(any('would replace a recorded decision' in e for e in errors))
+
+    def test_a_stale_recorded_decision_may_be_replaced_on_current_evidence(self):
+        artifact = self.first()
+        self.record(artifact, current=False)
+        (preview, _), errors = W.validate(self.returned(self.decide(artifact)))
+        self.assertEqual(errors, [])
+        self.assertEqual(preview['stale_recorded_decisions'], [artifact])
+        self.assertTrue(preview['changes'][0]['replaces_stale_decision'])
 
     def test_import_only_through_the_confirmed_preview(self):
         artifact = self.first()

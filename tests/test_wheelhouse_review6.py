@@ -21,14 +21,18 @@ ROWS = [{'artifact': 'a-1.0-py3-none-any.whl', 'sha256': 'a' * 64}, {'artifact':
 def decision(row, **overrides):
     d = {'artifact': row['artifact'], 'sha256': row['sha256'], 'redistribution_decision': 'approved',
          'rationale': 'MIT; notices shipped', 'required_notices': 'LICENSE', 'conditions': '',
-         'conditions_satisfied': '', 'resolved_questions': '', 'resolver': 'reviewer', 'decided_on': '2026-10-04'}
+         'conditions_satisfied': '', 'resolved_questions': '', 'resolver': 'reviewer', 'decided_on': '2026-10-04',
+         'worksheet_revision': 'r3', 'evidence_sha256': 'e' * 64}
     d.update(overrides)
     return {k: d[k] for k in P.DECISION_FIELDS}
 
 
+CURRENT = {r['artifact']: 'e' * 64 for r in ROWS}  # the evidence digests of the latest worksheet (synthetic)
+
+
 class BuildEligibility(unittest.TestCase):
     def blockers(self, *overrides):
-        return P.bundle_eligibility(ROWS, [decision(r, **o) for r, o in zip(ROWS, overrides)])
+        return P.bundle_eligibility(ROWS, [decision(r, **o) for r, o in zip(ROWS, overrides)], CURRENT)
 
     def test_fully_approved_is_eligible(self):
         self.assertEqual(self.blockers({}, {}), [])
@@ -63,7 +67,16 @@ class BuildEligibility(unittest.TestCase):
 
     def test_stale_hash_and_missing_rows_block(self):
         self.assertTrue(self.blockers({}, {'sha256': 'c' * 64}))
-        self.assertTrue(P.bundle_eligibility(ROWS, [decision(ROWS[0])]))
+        self.assertTrue(P.bundle_eligibility(ROWS, [decision(ROWS[0])], CURRENT))
+
+    def test_a_decision_counts_only_on_the_current_evidence(self):
+        """Review gap on cca0551: approvals without provenance, or made on since-changed evidence, must block."""
+        for override in ({'evidence_sha256': ''}, {'evidence_sha256': 'f' * 64}, {'worksheet_revision': '',
+                                                                                  'evidence_sha256': ''}):
+            with self.subTest(override=override):
+                found = self.blockers({}, override)
+                self.assertEqual(len(found), 1)
+                self.assertIn('not made on the current evidence', found[0])
 
     def test_old_column_layout_is_a_decision_problem(self):
         old = [{k: v for k, v in decision(r).items() if k not in ('conditions', 'conditions_satisfied')}

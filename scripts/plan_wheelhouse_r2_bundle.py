@@ -32,7 +32,15 @@ INVENTORY_CSV = ROOT / 'reports/wheelhouse_redistribution_inventory.csv'
 DECISIONS_CSV = ROOT / 'reports/wheelhouse_redistribution_decisions.csv'
 EVIDENCE_DIR = ROOT / 'reports/wheelhouse_r2_offline_install_evidence'
 DECISION_FIELDS = ['artifact', 'sha256', 'redistribution_decision', 'rationale', 'required_notices', 'conditions',
-                   'conditions_satisfied', 'resolved_questions', 'resolver', 'decided_on']
+                   'conditions_satisfied', 'resolved_questions', 'resolver', 'decided_on',
+                   'worksheet_revision', 'evidence_sha256']  # provenance: the evidence the decision was made on
+# The worksheet fields that carry evidence (the context columns other than the revision label). A decision counts
+# toward eligibility only while the digest of these fields, as issued for its artifact, equals the digest in the
+# latest worksheet revision.
+WORKSHEET_EVIDENCE_FIELDS = ['priority', 'tier', 'artifact', 'sha256', 'distribution', 'version', 'flags',
+                             'proposed_disposition', 'proposed_conditions', 'additional_obligations', 'evidence',
+                             'proposal_rationale', 'unresolved_questions', 'alternative_if_not_cleared',
+                             'evidence_checks']
 ALLOWED_DECISIONS = {'unresolved', 'approved', 'approved_with_conditions', 'restricted', 'excluded'}
 INCLUDABLE_DECISIONS = {'approved', 'approved_with_conditions'}
 CONDITION_SEPARATOR = '|'  # conditions and conditions_satisfied are parallel '|'-separated lists, one per condition
@@ -126,7 +134,35 @@ of every wheel is recorded in bundle-manifest.json.
 def initial_decisions(rows):
     return [{'artifact': r['artifact'], 'sha256': r['sha256'], 'redistribution_decision': 'unresolved',
              'rationale': '', 'required_notices': '', 'conditions': '', 'conditions_satisfied': '',
-             'resolved_questions': '', 'resolver': RESOLVER, 'decided_on': ''} for r in rows]
+             'resolved_questions': '', 'resolver': RESOLVER, 'decided_on': '', 'worksheet_revision': '',
+             'evidence_sha256': ''} for r in rows]
+
+
+def evidence_digest(row):
+    """SHA-256 of a worksheet row's evidence fields (missing fields count as empty)."""
+    return hashlib.sha256(json.dumps([str(row.get(f, '')) for f in WORKSHEET_EVIDENCE_FIELDS],
+                                     ensure_ascii=False).encode()).hexdigest()
+
+
+def worksheet_files(n):
+    stem = 'reports/wheelhouse_redistribution_decision_worksheet' + ('' if n == 1 else f'_r{n}')
+    return ROOT / f'{stem}.csv', ROOT / f'{stem}.lock.json'
+
+
+def current_evidence():
+    """(latest worksheet revision, {artifact: evidence digest}) from the latest issued worksheet, checked against its
+    lock. Fails closed when no worksheet exists or the latest one differs from its lock."""
+    if not worksheet_files(1)[1].exists():
+        raise ValueError('no decision worksheet exists, so decisions cannot be tied to evidence')
+    n = 1
+    while worksheet_files(n + 1)[1].exists():
+        n += 1
+    path, lock_path = worksheet_files(n)
+    lock = json.loads(lock_path.read_text(encoding='utf-8'))
+    if hashlib.sha256(path.read_bytes()).hexdigest() != lock['worksheet_sha256']:
+        raise ValueError(f'worksheet r{n} differs from its lock')
+    with path.open(encoding='utf-8-sig', newline='') as stream:
+        return n, {r['artifact']: evidence_digest(r) for r in csv.DictReader(stream)}
 
 
 def read_decisions(path):
@@ -171,12 +207,17 @@ def valid_date(text):
         return False
 
 
-def bundle_eligibility(rows, decisions):
+def bundle_eligibility(rows, decisions, current=None):
     """Blockers for building the bundle (empty list = eligible); the builder must refuse to write anything unless it
     is empty. Every artifact of the approved manifest is a required dependency and is included, so each must be
     `approved`, or `approved_with_conditions` with every condition documented as satisfied, and each decision must
     name the exact artifact SHA-256 and carry a rationale, reviewer and ISO date. `unresolved`, `restricted` and
-    `excluded` block the bundle: nothing is silently omitted."""
+    `excluded` block the bundle: nothing is silently omitted. A decision counts only if it was made on the current
+    evidence: its evidence_sha256 must equal the digest of its artifact's row in the latest worksheet revision
+    (`current`, read from the issued worksheets when not given). A decision without that provenance, or made on
+    evidence that has since changed, blocks until it is reconfirmed on the latest revision."""
+    if current is None:
+        current = current_evidence()[1]
     blockers = list(check_decisions(rows, decisions))
     by_artifact = {d.get('artifact'): d for d in decisions}
     for r in rows:
@@ -202,6 +243,10 @@ def bundle_eligibility(rows, decisions):
             elif len(satisfied) != len(conditions) or not all(satisfied):
                 blockers.append(f'{name}: {len(conditions)} condition(s) but '
                                 f'{len([x for x in satisfied if x])} documented as satisfied')
+        if not d.get('evidence_sha256') or d.get('evidence_sha256') != current.get(name):
+            made_on = d.get('worksheet_revision') or 'no recorded worksheet revision'
+            blockers.append(f'{name}: not made on the current evidence ({made_on}); reconfirm it on the latest '
+                            'worksheet revision')
     return blockers
 
 
@@ -304,7 +349,8 @@ def plan(manifest, evidence, install, rows=(), upstream=()):
         },
         'build_rule': ('the builder writes nothing unless bundle_eligibility() is empty: every included artifact is '
                        'approved, or approved_with_conditions with every condition documented as satisfied; each '
-                       'decision names the exact artifact SHA-256, rationale, reviewer and date; unresolved, '
+                       'decision names the exact artifact SHA-256, rationale, reviewer and date, and was made on the '
+                       'evidence of the latest worksheet revision (evidence_sha256); unresolved, '
                        'restricted and excluded block; required dependencies are never silently omitted'),
         'upload_blocked_until': [f'every one of the {manifest["artifact_count"]} artifacts has a recorded '
                                  f'redistribution decision ({proprietary} carry proprietary terms)',

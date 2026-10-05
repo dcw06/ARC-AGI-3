@@ -21,8 +21,8 @@ Each record below is a template. The owner completes it at its gate, and it bind
 | Upstream licence texts | gathered for all 9 wheels that ship none, plus 2 upstream NOTICE files | `reports/wheelhouse_upstream_licenses/` (index `c2745968…e9`: 16 texts, each with source URL, source hash, member and SHA-256). Each of the 5 repository sources is pinned to a commit whose version file carries the exact release version. |
 | NVIDIA licence reconciliation | primary sources retained; applicability facts recorded; **qualified review open** | `reports/wheelhouse_nvidia_licence_reconciliation.{json,md}` (`497640af…c9`); sources in `reports/wheelhouse_primary_licence_sources/` (index `aef799e4…bc`) |
 | Proposed dispositions | prepared for all 174 artifacts | `reports/wheelhouse_redistribution_proposed_dispositions.{csv,md}` (csv `00d9f0b4…64`). Batch 1 (43 flagged): 25 conditional candidates, 17 needing qualified review, 1 likely not distributable. Batch 2 (131 unflagged): 126 conditional candidates, 5 needing review. |
-| Redistribution decisions | **open**: 174/174 unresolved | decisions file `b754d3ac…9e` |
-| Local bundle build | not started; needs record A | plan `reports/wheelhouse_r2_bundle_plan.json` (`d8da7cbe…24`, 425 files; build eligibility: not eligible, 174 blockers) |
+| Redistribution decisions | **open**: 174/174 unresolved | decisions file `4a073393…ce` (with decision provenance columns) |
+| Local bundle build | not started; needs record A | plan `reports/wheelhouse_r2_bundle_plan.json` (`fe0d32db…ed`, 425 files; build eligibility: not eligible, 174 blockers) |
 
 ### Correction: NVIDIA licensing sources
 
@@ -52,6 +52,10 @@ The openllmetry tag `v0.5.1` named earlier is an unrelated monorepo release; at 
 | GPU smoke test | not started; needs record C | — |
 
 ### Decisions-file schema change
+
+**Second change: decision provenance.** Two columns were added: `worksheet_revision` and `evidence_sha256`, a digest of that artifact's worksheet evidence row as issued. A decision counts toward eligibility only while its digest equals the digest of the artifact's row in the latest worksheet revision. A legacy approval without provenance, or one made on since-changed evidence, blocks the build until it is reconfirmed on the latest revision. This answers the review of `cca0551`.
+
+Before the change, the decisions file (`b754d3ac…9e`) was verified to be the untouched all-`unresolved` template. It was recreated with the new columns (`4a073393…ce`).
 
 The decisions file gained two columns, `conditions` and `conditions_satisfied`. These are parallel `|`-separated lists, one entry per condition. Before the change, the file (`43c7a769…88be`, committed only by the tool in `f1dd4c2`) was verified to be the untouched template: 174 rows, all `unresolved`, with no rationale, notices, questions or date. It was therefore recreated under the new columns (`b754d3ac…9e`), and no human input was lost. Tools still never overwrite an existing decisions file.
 
@@ -86,11 +90,11 @@ The sequence after that is fixed:
 |---|---|
 | Action approved | build the R2 bundle locally only (no upload) |
 | Download manifest | `reports/wheelhouse_download_manifest.json`, manifest_sha256 `3691cb8854df4d8ff10e42ca9957fddb9a8ae0362064e7b31b3205891af0d546` (file sha256 `91ad9ede…462b`) |
-| Bundle plan | `reports/wheelhouse_r2_bundle_plan.json`, sha256 `d8da7cbea5db811237cde675c5c7a7c11835e5598f9ac4b7db65148a97797624` (425 files, including the 16 upstream licence and NOTICE texts, `LICENSES/upstream-sources.json` and `NOTICES.md`). It is regenerated, and its hash re-recorded here, once decisions are complete. |
+| Bundle plan | `reports/wheelhouse_r2_bundle_plan.json`, sha256 `fe0d32db9cec0759be679ccbdf33b28e5b695c055db911b10062661320fa42ed` (425 files, including the 16 upstream licence and NOTICE texts, `LICENSES/upstream-sources.json` and `NOTICES.md`). It is regenerated, and its hash re-recorded here, once decisions are complete. |
 | Upstream licence index | `reports/wheelhouse_upstream_licenses/index.json`, sha256 `c274596833422d7b9d85e58c6ffb9e32019ab5f8e5b1f06b4730925f037860e9` |
 | NVIDIA reconciliation | `reports/wheelhouse_nvidia_licence_reconciliation.json`, sha256 `497640affe72bda71f962b459e247d34886206ed99dd82a25cad0f16add063c9` |
 | Decisions file | `reports/wheelhouse_redistribution_decisions.csv`, sha256 at approval: _to fill_ |
-| **Eligibility rule (enforced by the builder)** | Every included artifact must be `approved`, or `approved_with_conditions` with every condition documented as satisfied. Each decision must identify the exact artifact hash, rationale, reviewer and date. `unresolved`, `restricted` and `excluded` artifacts block this bundle. Required dependencies must not be silently omitted. The builder calls `bundle_eligibility()` (`scripts/plan_wheelhouse_r2_bundle.py`) and writes nothing unless it returns no blockers. The planning script reports an unresolved draft but does not treat it as an error. |
+| **Eligibility rule (enforced by the builder)** | Every included artifact must be `approved`, or `approved_with_conditions` with every condition documented as satisfied. Each decision must identify the exact artifact hash, rationale, reviewer and date, and must have been made on the evidence of the latest worksheet revision (`evidence_sha256`). `unresolved`, `restricted` and `excluded` artifacts block this bundle. Required dependencies must not be silently omitted. The builder calls `bundle_eligibility()` (`scripts/plan_wheelhouse_r2_bundle.py`) and writes nothing unless it returns no blockers. The planning script reports an unresolved draft but does not treat it as an error. |
 | Source revision | _to fill_: the reviewed commit |
 | Output location | outside the repository, e.g. `~/.local/share/agi/wheelhouse-r2-bundle/` |
 | Checksum construction | `bundle-manifest.json` covers the payload only (never itself, never `SHA256SUMS`); `SHA256SUMS` covers the payload plus the finished manifest (never itself) |

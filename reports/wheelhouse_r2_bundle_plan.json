@@ -52,7 +52,7 @@
    "record sha256(SHA256SUMS)"
   ]
  },
- "build_rule": "the builder writes nothing unless bundle_eligibility() is empty: every included artifact is approved, or approved_with_conditions with every condition documented as satisfied; each decision names the exact artifact SHA-256, rationale, reviewer and date; unresolved, restricted and excluded block; required dependencies are never silently omitted",
+ "build_rule": "the builder writes nothing unless bundle_eligibility() is empty: every included artifact is approved, or approved_with_conditions with every condition documented as satisfied; each decision names the exact artifact SHA-256, rationale, reviewer and date, and was made on the evidence of the latest worksheet revision (evidence_sha256); unresolved, restricted and excluded block; required dependencies are never silently omitted",
  "upload_blocked_until": [
   "every one of the 174 artifacts has a recorded redistribution decision (22 carry proprietary terms)",
   "required notices are prepared",
@@ -3049,7 +3049,7 @@
  },
  "decisions": {
   "file": "reports/wheelhouse_redistribution_decisions.csv",
-  "created_now": false,
+  "created_now": true,
   "counts": {
    "unresolved": 174
   },
