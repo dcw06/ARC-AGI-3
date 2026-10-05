@@ -32,6 +32,47 @@ class Reconciliation(unittest.TestCase):
         self.assertEqual(R.normalised('nvidia/cu12/lib/libnvJitLink.so.12'), 'libnvJitLink.so')
         self.assertEqual(R.attachment_a('no attachments here'), '')
 
+    def retained_copy(self):
+        """A temporary copy of the retained sources and an index of them, for tampering."""
+        import shutil
+        import tempfile
+        from pathlib import Path
+        folder = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, folder)
+        for path in R.SOURCES_DIR.iterdir():
+            shutil.copy(path, folder / path.name)
+        return folder, json.loads((folder / 'index.json').read_text(encoding='utf-8'))
+
+    def test_committed_extractions_reproduce_from_the_verified_html(self):
+        folder, index = self.retained_copy()
+        for sid, entry in index.items():
+            if entry['file'].endswith('.html'):
+                text = R.source_text(index, sid, folder)
+                self.assertEqual(text.encode('utf-8'), (folder / entry['text_file']).read_bytes())
+
+    def test_altered_extraction_is_refused(self):
+        folder, index = self.retained_copy()
+        entry = index['cuda-12.8.1-eula']
+        path = folder / entry['text_file']
+        forged = path.read_bytes().replace(b'Attachment A', b'Attachment A libinvented.so', 1)
+        path.write_bytes(forged)
+        with self.assertRaises(SystemExit):  # recorded hash no longer matches
+            R.source_text(index, 'cuda-12.8.1-eula', folder)
+        entry['text_sha256'] = hashlib.sha256(forged).hexdigest()
+        with self.assertRaises(SystemExit):  # hash updated too: still differs from a fresh extraction
+            R.source_text(index, 'cuda-12.8.1-eula', folder)
+
+    def test_altered_html_or_missing_extraction_hash_is_refused(self):
+        folder, index = self.retained_copy()
+        entry = dict(index['nvshmem-sla-latest'])
+        del entry['text_sha256']
+        with self.assertRaises(SystemExit):
+            R.source_text(dict(index, **{'nvshmem-sla-latest': entry}), 'nvshmem-sla-latest', folder)
+        page = folder / index['cuda-12.8.1-eula']['file']
+        page.write_bytes(page.read_bytes() + b'<p>libinvented.so</p>')
+        with self.assertRaises(SystemExit):
+            R.source_text(index, 'cuda-12.8.1-eula', folder)
+
     def test_retained_primary_sources_match_their_hashes(self):
         for sid, entry in self.report['sources'].items():
             with self.subTest(source=sid):

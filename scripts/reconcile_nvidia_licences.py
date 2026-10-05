@@ -88,13 +88,26 @@ def fetch_sources(get=None):
     return index
 
 
-def source_text(index, sid):
+def source_text(index, sid, folder=None):
+    """The text of a retained source, derived only from its hash-verified raw bytes. For HTML, the text is re-extracted
+    from the verified page; the retained extraction must match both its recorded hash and that fresh extraction
+    (so an altered extraction is refused even if its recorded hash was updated too), and the fresh one is used."""
+    folder = folder or SOURCES_DIR
     entry = index[sid]
-    path = SOURCES_DIR / entry.get('text_file', entry['file'])
-    raw = (SOURCES_DIR / entry['file']).read_bytes()
+    raw = (folder / entry['file']).read_bytes()
     if hashlib.sha256(raw).hexdigest() != entry['sha256']:
-        raise SystemExit(f'{entry["file"]} does not match its recorded SHA-256')
-    return path.read_text(encoding='utf-8', errors='replace')
+        raise SystemExit(f"{entry['file']} does not match its recorded SHA-256")
+    if not entry['file'].endswith('.html'):
+        return raw.decode('utf-8', 'replace')
+    fresh = html_text(raw).encode('utf-8')
+    if 'text_file' not in entry or 'text_sha256' not in entry:
+        raise SystemExit(f'{sid}: the retained extraction or its recorded SHA-256 is missing')
+    stored = (folder / entry['text_file']).read_bytes()
+    if hashlib.sha256(stored).hexdigest() != entry['text_sha256']:
+        raise SystemExit(f"{entry['text_file']} does not match its recorded SHA-256")
+    if stored != fresh:
+        raise SystemExit(f"{entry['text_file']} differs from a fresh extraction of the verified {entry['file']}")
+    return fresh.decode('utf-8')
 
 
 def attachment_a(text):
