@@ -22,14 +22,17 @@ outcome per wheel:
                    excepted); and no code reaching the wheel from a trimmed third-party copy in the sdist (a
                    third-party directory without any top-level licence file), unless that copy is a git submodule
                    whose pinned upstream tree at the version-verified release commit has no NOTICE-named file and
-                   matches every file of the copy.
+                   matches every file of the copy; AND (d) the release repository (named by the wheel METADATA)
+                   is listed at the release tag, a version file at that commit carries the exact version, and its
+                   complete (untruncated) tree has no NOTICE-named or notice-like file. Absence from the wheel and the
+                   sdist alone does not establish absence upstream (a repository-only NOTICE is possible).
   inconclusive     anything else, with the precise reason. A fetch failure, a missing sdist or a missing root-level
-                   file is never treated as absence. For these rows only, if the wheel METADATA names a GitHub
-                   repository, the repository tree is listed at the release tag (2 GitHub API calls per repository,
-                   plus 1 per git submodule that holds a trimmed third-party copy); a NOTICE there counts only if a
-                   version file at that commit carries the exact version (such a repository-only NOTICE is reported
-                   as found, with the note that the PyPI sdist and the wheel lack it), and a repository without a
-                   NOTICE never makes a row verified_absent by itself.
+                   file is never treated as absence. A row absent from the inspected wheel and sdist whose release
+                   repository could not be verified stays inconclusive, with the upstream NOTICE question open.
+Every row not already found in the wheel or sdist gets the repository check (2 GitHub API calls per repository, plus
+1 per git submodule that holds a trimmed third-party copy). A NOTICE there counts only if a version file at that
+commit carries the exact version; such a repository-only NOTICE is reported as found, with the note that the PyPI
+sdist and the wheel lack it.
 
 The check is limited to what is listed in the pack. It does not establish legal clearance, and a verified_absent
 outcome removes only the "confirm no upstream NOTICE" question: shipping the licence texts and keeping the other
@@ -292,11 +295,18 @@ def classify(e):
     if e.get('trimmed'):
         return 'inconclusive', 'the wheel carries code from third-party copies that the sdist holds in trimmed ' \
                                'form, so their upstream NOTICE status is unknown: ' + '; '.join(e['trimmed'].values())
-    return 'verified_absent', f"exact-version sdist {sdist.get('sdist')} verified against PyPI's SHA-256; its " \
-                              f"complete listing ({e.get('member_count')} members) has no NOTICE-named file at any " \
-                              'path; every wheel component is traced to the sdist' + \
-        ('; trimmed third-party copies cleared at their pinned upstream commits: ' + ', '.join(e['cleared'])
-         if e.get('cleared') else '')
+    package = (f"exact-version sdist {sdist.get('sdist')} verified against PyPI's SHA-256; its complete listing "
+               f"({e.get('member_count')} members) has no NOTICE-named file at any path; every wheel component is "
+               'traced to the sdist' + ('; trimmed third-party copies cleared at their pinned upstream commits: '
+                                        + ', '.join(e['cleared']) if e.get('cleared') else ''))
+    repository = e.get('repository') or {}
+    if not repository.get('verified_clean'):
+        return 'inconclusive', ('absent from the inspected wheel and sdist (' + package + '), but the release '
+                                'repository was not verified free of a NOTICE (' +
+                                repository.get('summary', 'not checked') + '), so the upstream NOTICE question stays '
+                                'open')
+    return 'verified_absent', package + '; the release repository at a version-verified commit has no NOTICE-named ' \
+                                        'or notice-like file: ' + repository['summary']
 
 
 def trimmed_copies(vendored, wheel_members, sdist_files):
@@ -645,7 +655,37 @@ def repository_summary(repo):
                f"no NOTICE-named file in {repo['tree_entries']} tree entries"
                f"{' (tree truncated)' if repo.get('tree_truncated') else ''}")
             + (f'; {subs}' if subs else '')
-            + '; a repository without a NOTICE does not establish absence for the release')
+            + '; a NOTICE-free repository is required for, but does not alone establish, verified_absent')
+
+
+def decide(evidence, notices, lookup_repository):
+    """(outcome, reason, repository record). Unless a NOTICE was already found in the wheel or the sdist, the release
+    repository is always consulted: absence from the wheel and sdist does not establish absence upstream, and only a
+    version-verified, complete, NOTICE-free repository tree lets a row be verified_absent."""
+    outcome, reason = classify(evidence)
+    if outcome == 'found':
+        return outcome, reason, {'performed': False,
+                                 'reason': 'not needed (a NOTICE was found in the wheel or sdist)'}
+    repo = lookup_repository()
+    subs = repo.get('submodule_checks', [])
+    counted = [n for n in repo.get('notices', []) + [n for s in subs for n in s.get('notices', [])]
+               if n.get('counts_for_outcome')]
+    for path in [s['path'] for s in subs if s.get('cleared')]:
+        evidence.setdefault('trimmed', {}).pop(path, None)
+    evidence['cleared'] = [f"{s['path']} ({s['repository'].split('github.com/')[1]}@{s['pinned_commit'][:12]}, "
+                           f"{s['sdist_copy_files']} files matching its blobs, no NOTICE-named file)"
+                           for s in subs if s.get('cleared')]
+    evidence['repository'] = {
+        'verified_clean': bool(repo.get('commit') and repo.get('version_check', {}).get('verified')
+                               and not repo.get('notices') and not repo.get('notice_like')
+                               and not repo.get('tree_truncated')),
+        'summary': repository_summary(repo)}
+    if counted:
+        evidence['notices'] = notices + counted
+    outcome, reason = classify(evidence)
+    if outcome == 'inconclusive' and 'release repository was not verified' not in reason:
+        reason += '. Repository: ' + repository_summary(repo)
+    return outcome, reason, repo
 
 
 def check(row, inventory):
@@ -716,25 +756,9 @@ def check(row, inventory):
                                        'third_party_dirs_total': len(vendored),
                                        'trimmed_third_party_copies': dict(evidence['trimmed'])}
             record['wheel_traced_to_sdist'] = coverage
-    outcome, reason = classify(evidence)
-    record['repository_check'] = {'performed': False, 'reason': f'not needed (outcome {outcome} from the sdist step)'}
-    if outcome == 'inconclusive':
-        repo = repository_check(distribution, version, repository_from_metadata(metadata), trimmed_blobs)
-        record['repository_check'] = repo
-        subs = repo.get('submodule_checks', [])
-        counted = [n for n in repo.get('notices', []) + [n for s in subs for n in s.get('notices', [])]
-                   if n.get('counts_for_outcome')]
-        cleared = [s['path'] for s in subs if s.get('cleared')]
-        for path in cleared:
-            evidence['trimmed'].pop(path, None)
-        evidence['cleared'] = [f"{s['path']} ({s['repository'].split('github.com/')[1]}@{s['pinned_commit'][:12]}, "
-                               f"{s['sdist_copy_files']} files matching its blobs, no NOTICE-named file)"
-                               for s in subs if s.get('cleared')]
-        if counted or cleared:
-            evidence['notices'] = notices + counted
-            outcome, reason = classify(evidence)
-        if outcome == 'inconclusive':
-            reason += '. Repository: ' + repository_summary(repo)
+    outcome, reason, record['repository_check'] = decide(
+        evidence, notices,
+        lambda: repository_check(distribution, version, repository_from_metadata(metadata), trimmed_blobs))
     record.update(outcome=outcome, reason=reason, notices=evidence['notices'], notice_like=notice_like,
                   remains=remains(outcome, record['licence_documents'], record['metadata_declared'], vendored,
                                   not any(n['source'].startswith(('sdist', 'wheel')) for n in evidence['notices'])))
@@ -765,7 +789,8 @@ def build():
                          'repository at a commit whose version file carries the exact version',
                 'verified_absent': 'exact-version sdist verified against PyPI; complete listing has no NOTICE-named '
                                    'or notice-like file; every wheel component traced to the sdist; no wheel code '
-                                   'from a trimmed third-party copy left unresolved',
+                                   'from a trimmed third-party copy left unresolved; AND the release repository at a '
+                                   'version-verified commit has no NOTICE-named or notice-like file',
                 'inconclusive': 'anything else; the reason is recorded'},
             'notice_name_pattern': NOTICE_NAME.pattern, 'counts': counts, 'rows': records,
             'limits': [
@@ -800,9 +825,10 @@ def markdown(p):
              'exact-version sdist whose complete listing has no NOTICE-named file and a wheel whose every component '
              'is traced to that sdist (third-party copies that the sdist carries in trimmed form must be resolved '
              'upstream); anything short of that is `inconclusive` with the reason. A fetch failure or a '
-             'missing root-level file is never read as absence. Repository trees were consulted only for inconclusive '
-             'rows; a NOTICE there would count only at a tag whose version file carries the exact version, and a '
-             'repository without one never makes a row `verified_absent`.', '',
+             'missing root-level file is never read as absence. Absence from the wheel and the sdist does not by '
+             'itself establish absence upstream: `verified_absent` also requires the release repository, at a commit '
+             'whose version file carries the exact version, to have no NOTICE-named or notice-like file. Where the '
+             'repository cannot be verified the row stays `inconclusive` and the upstream question stays open.', '',
              f"**Counts:** found {c['found']}, verified_absent {c['verified_absent']}, inconclusive "
              f"{c['inconclusive']}.", '',
              '| Artifact | Outcome | Exact-release source | NOTICE paths (SHA-256) | Reason | What remains |',

@@ -1,8 +1,8 @@
 {
  "counts": {
   "found": 1,
-  "inconclusive": 10,
-  "verified_absent": 26
+  "inconclusive": 21,
+  "verified_absent": 15
  },
  "limits": [
   "a NOTICE file is identified by its name only; contents of other files were not searched for notices",
@@ -17,7 +17,7 @@
  "outcome_definitions": {
   "found": "a NOTICE-named file is in the local wheel, the PyPI-verified exact-version sdist, or the repository at a commit whose version file carries the exact version",
   "inconclusive": "anything else; the reason is recorded",
-  "verified_absent": "exact-version sdist verified against PyPI; complete listing has no NOTICE-named or notice-like file; every wheel component traced to the sdist; no wheel code from a trimmed third-party copy left unresolved"
+  "verified_absent": "exact-version sdist verified against PyPI; complete listing has no NOTICE-named or notice-like file; every wheel component traced to the sdist; no wheel code from a trimmed third-party copy left unresolved; AND the release repository at a version-verified commit has no NOTICE-named or notice-like file"
  },
  "prepared_on": "2026-10-05",
  "question": "Does the exact upstream release include a NOTICE file that Apache-2.0 4(d) would require to accompany the redistributed wheel?",
@@ -30,7 +30,7 @@
    "notice_like": [],
    "notices": [],
    "outcome": "inconclusive",
-   "reason": "the wheel carries code from third-party copies that the sdist holds in trimmed form, so their upstream NOTICE status is unknown: ninja-upstream/src/third_party/emhash (2 files, no top-level licence file; it may be compiled into the native binaries); ninja-upstream/src/third_party/rapidhash (2 files, no top-level licence file; it may be compiled into the native binaries). Repository: scikit-build/ninja-python-distributions@8f6505ad465c (tag 1.13.0, version NOT verified at the commit): no NOTICE-named file in 37 tree entries; a repository without a NOTICE does not establish absence for the release",
+   "reason": "the wheel carries code from third-party copies that the sdist holds in trimmed form, so their upstream NOTICE status is unknown: ninja-upstream/src/third_party/emhash (2 files, no top-level licence file; it may be compiled into the native binaries); ninja-upstream/src/third_party/rapidhash (2 files, no top-level licence file; it may be compiled into the native binaries). Repository: scikit-build/ninja-python-distributions@8f6505ad465c (tag 1.13.0, version NOT verified at the commit): no NOTICE-named file in 37 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the NOTICE question stays open (see reason); in any case ship the licence texts bundled in the wheel (ninja-1.13.0.dist-info/licenses/AUTHORS.rst; ninja-1.13.0.dist-info/licenses/LICENSE_Apache_20) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: OSI Approved :: Apache Software License; OSI Approved :: BSD License; third-party directories carried in the sdist (ninja-upstream/src/third_party/emhash, ninja-upstream/src/third_party/rapidhash) have their own licence terms, not checked here, which may require their licence texts too",
    "repository_check": {
     "commit": "8f6505ad465c2f7b5c85c2644eaa412ed98f5909",
@@ -231,12 +231,12 @@
    "metadata_declared": "",
    "notice_like": [],
    "notices": [],
-   "outcome": "verified_absent",
-   "reason": "exact-version sdist quack_kernels-0.4.1.tar.gz verified against PyPI's SHA-256; its complete listing (95 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
-   "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (quack_kernels-0.4.1.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: n/a",
+   "outcome": "inconclusive",
+   "reason": "absent from the inspected wheel and sdist (exact-version sdist quack_kernels-0.4.1.tar.gz verified against PyPI's SHA-256; its complete listing (95 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist), but the release repository was not verified free of a NOTICE (not checked (the wheel METADATA names no GitHub repository)), so the upstream NOTICE question stays open",
+   "remains": "the NOTICE question stays open (see reason); in any case ship the licence texts bundled in the wheel (quack_kernels-0.4.1.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: n/a",
    "repository_check": {
     "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "reason": "the wheel METADATA names no GitHub repository"
    },
    "sdist": {
     "project": "quack_kernels",
@@ -291,11 +291,44 @@
    "notice_like": [],
    "notices": [],
    "outcome": "verified_absent",
-   "reason": "exact-version sdist regex-2026.4.4.tar.gz verified against PyPI's SHA-256; its complete listing (29 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
+   "reason": "exact-version sdist regex-2026.4.4.tar.gz verified against PyPI's SHA-256; its complete listing (29 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist; the release repository at a version-verified commit has no NOTICE-named or notice-like file: mrabarnett/mrab-regex@bc57b04b00de (tag 2026.4.4, version verified in pyproject.toml): no NOTICE-named file in 25 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (regex-2026.4.4.dist-info/licenses/LICENSE.txt) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0 AND CNRI-Python",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "bc57b04b00de68590345ac2eb621b9a8dd222d7d",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed at a commit whose version file carries the exact version",
+    "repository": "https://github.com/mrabarnett/mrab-regex",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "2026.4.4",
+    "tags_probed": [
+     "v2026.4.4",
+     "2026.4.4",
+     "regex-v2026.4.4",
+     "regex-2026.4.4"
+    ],
+    "tree_entries": 25,
+    "tree_response_sha256": "d228a9e5cfef592cc031dcb3fd0b79ef4fae63f1721f509a5063d64e909be60c",
+    "tree_sha": "bc57b04b00de68590345ac2eb621b9a8dd222d7d",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml"
+     ],
+     "line": "version = \"2026.4.4\"",
+     "path": "pyproject.toml",
+     "retained": {
+      "bytes": 1235,
+      "file": "sources/notice-regex-repo-bc57b04b00de-pyproject.toml",
+      "kind": "version-file",
+      "retrieved_on": "2026-10-05",
+      "sha256": "b607ea49ad945e62bc36fe7fd1df4eab03a24874f85b86a5c350295c7c38d698",
+      "url": "https://raw.githubusercontent.com/mrabarnett/mrab-regex/bc57b04b00de68590345ac2eb621b9a8dd222d7d/pyproject.toml"
+     },
+     "verified": true
+    }
    },
    "sdist": {
     "project": "regex",
@@ -358,11 +391,49 @@
    "notice_like": [],
    "notices": [],
    "outcome": "verified_absent",
-   "reason": "exact-version sdist aiohttp-3.13.5.tar.gz verified against PyPI's SHA-256; its complete listing (410 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
+   "reason": "exact-version sdist aiohttp-3.13.5.tar.gz verified against PyPI's SHA-256; its complete listing (410 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist; the release repository at a version-verified commit has no NOTICE-named or notice-like file: aio-libs/aiohttp@1c1dfb0bb24f (tag v3.13.5, version verified in aiohttp/__init__.py): no NOTICE-named file in 330 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (aiohttp-3.13.5.dist-info/licenses/LICENSE.txt; aiohttp-3.13.5.dist-info/licenses/vendor/llhttp/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0 AND MIT; third-party directories carried in the sdist (vendor/llhttp) have their own licence terms, not checked here, which may require their licence texts too",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "1c1dfb0bb24f26c98d479c33dad99b7aa3ee74a1",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed at a commit whose version file carries the exact version",
+    "repository": "https://github.com/aio-libs/aiohttp",
+    "submodule_checks": [],
+    "submodules": [
+     "vendor/llhttp"
+    ],
+    "tag": "v3.13.5",
+    "tags_probed": [
+     "v3.13.5",
+     "3.13.5",
+     "aiohttp-v3.13.5",
+     "aiohttp-3.13.5"
+    ],
+    "tree_entries": 330,
+    "tree_response_sha256": "44ad92f32041f97a589b7ed77f7bf2f5320f9bdab0c8b1e25866abd529ba7570",
+    "tree_sha": "1c1dfb0bb24f26c98d479c33dad99b7aa3ee74a1",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml",
+      "setup.cfg",
+      "setup.py",
+      "aiohttp/__init__.py"
+     ],
+     "line": "__version__ = \"3.13.5\"",
+     "path": "aiohttp/__init__.py",
+     "retained": {
+      "bytes": 8302,
+      "file": "sources/notice-aiohttp-repo-1c1dfb0bb24f-aiohttp+__init__.py",
+      "kind": "version-file",
+      "retrieved_on": "2026-10-05",
+      "sha256": "af56b7c26073e355c2358d1da929c27207eaac36120d80fefef28137705fcb76",
+      "url": "https://raw.githubusercontent.com/aio-libs/aiohttp/1c1dfb0bb24f26c98d479c33dad99b7aa3ee74a1/aiohttp/__init__.py"
+     },
+     "verified": true
+    }
    },
    "sdist": {
     "project": "aiohttp",
@@ -454,11 +525,47 @@
    "notice_like": [],
    "notices": [],
    "outcome": "verified_absent",
-   "reason": "exact-version sdist aiosignal-1.4.0.tar.gz verified against PyPI's SHA-256; its complete listing (42 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
+   "reason": "exact-version sdist aiosignal-1.4.0.tar.gz verified against PyPI's SHA-256; its complete listing (42 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist; the release repository at a version-verified commit has no NOTICE-named or notice-like file: aio-libs/aiosignal@1cf80149c869 (tag v1.4.0, version verified in aiosignal/__init__.py): no NOTICE-named file in 71 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (aiosignal-1.4.0.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache 2.0; OSI Approved :: Apache Software License",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "1cf80149c869d410c90a58e85e9c703be6ef8692",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed at a commit whose version file carries the exact version",
+    "repository": "https://github.com/aio-libs/aiosignal",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "v1.4.0",
+    "tags_probed": [
+     "v1.4.0",
+     "1.4.0",
+     "aiosignal-v1.4.0",
+     "aiosignal-1.4.0"
+    ],
+    "tree_entries": 71,
+    "tree_response_sha256": "b088c5066b6edd48faec664cbd025d5dfd47e84ae62117d715b8fba36488f736",
+    "tree_sha": "1cf80149c869d410c90a58e85e9c703be6ef8692",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml",
+      "setup.cfg",
+      "setup.py",
+      "aiosignal/__init__.py"
+     ],
+     "line": "__version__ = \"1.4.0\"",
+     "path": "aiosignal/__init__.py",
+     "retained": {
+      "bytes": 1537,
+      "file": "sources/notice-aiosignal-repo-1cf80149c869-aiosignal+__init__.py",
+      "kind": "version-file",
+      "retrieved_on": "2026-10-05",
+      "sha256": "4c8926506f474c1b7875fab69c8498062662441db1c2f16d119c9d2cfd073cbe",
+      "url": "https://raw.githubusercontent.com/aio-libs/aiosignal/1cf80149c869d410c90a58e85e9c703be6ef8692/aiosignal/__init__.py"
+     },
+     "verified": true
+    }
    },
    "sdist": {
     "project": "aiosignal",
@@ -513,7 +620,7 @@
    "notice_like": [],
    "notices": [],
    "outcome": "inconclusive",
-   "reason": "the wheel contains components not traced to the sdist, whose NOTICE status is unknown: 2 wheel file(s) present in the sdist by neither content nor path (e.g. blake3/__init__.py, blake3/py.typed); blake3/blake3.cpython-312-x86_64-linux-gnu.so: Rust build; 34 crates resolved from a registry/git per Cargo.lock are compiled in and are not vendored in the sdist. Repository: oconnor663/blake3-py@ff5b05c5dc42 (tag 1.0.8, version verified in Cargo.toml): no NOTICE-named file in 46 tree entries; a repository without a NOTICE does not establish absence for the release",
+   "reason": "the wheel contains components not traced to the sdist, whose NOTICE status is unknown: 2 wheel file(s) present in the sdist by neither content nor path (e.g. blake3/__init__.py, blake3/py.typed); blake3/blake3.cpython-312-x86_64-linux-gnu.so: Rust build; 34 crates resolved from a registry/git per Cargo.lock are compiled in and are not vendored in the sdist. Repository: oconnor663/blake3-py@ff5b05c5dc42 (tag 1.0.8, version verified in Cargo.toml): no NOTICE-named file in 46 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the NOTICE question stays open (see reason); in any case ship the licence texts bundled in the wheel (blake3-1.0.8.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: CC0-1.0 OR Apache-2.0",
    "repository_check": {
     "commit": "ff5b05c5dc42de9e7a444b910ebe762216815fa1",
@@ -634,12 +741,55 @@
    "metadata_declared": "Apache 2.0",
    "notice_like": [],
    "notices": [],
-   "outcome": "verified_absent",
-   "reason": "exact-version sdist compressed_tensors-0.14.0.1.tar.gz verified against PyPI's SHA-256; its complete listing (248 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
-   "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (compressed_tensors-0.14.0.1.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache 2.0",
+   "outcome": "inconclusive",
+   "reason": "absent from the inspected wheel and sdist (exact-version sdist compressed_tensors-0.14.0.1.tar.gz verified against PyPI's SHA-256; its complete listing (248 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist), but the release repository was not verified free of a NOTICE (vllm-project/compressed-tensors@6e5dcefb73bc (tag 0.14.0.1, version NOT verified at the commit): no NOTICE-named file in 239 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent), so the upstream NOTICE question stays open",
+   "remains": "the NOTICE question stays open (see reason); in any case ship the licence texts bundled in the wheel (compressed_tensors-0.14.0.1.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache 2.0",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "6e5dcefb73bc78d23bcbb820df2520c29adc0f09",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed, but no version file at the commit carries the exact version string; NOTICE files there (if any) are recorded but do not count",
+    "repository": "https://github.com/vllm-project/compressed-tensors",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "0.14.0.1",
+    "tags_probed": [
+     "v0.14.0.1",
+     "0.14.0.1",
+     "compressed-tensors-v0.14.0.1",
+     "compressed-tensors-0.14.0.1",
+     "compressed_tensors-v0.14.0.1",
+     "compressed_tensors-0.14.0.1"
+    ],
+    "tree_entries": 239,
+    "tree_response_sha256": "e694d014100c3f4750f42c3e6e44091b3448d021d277ab3b97822abdea6907d4",
+    "tree_sha": "6e5dcefb73bc78d23bcbb820df2520c29adc0f09",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml",
+      "setup.cfg",
+      "setup.py",
+      "src/compressed_tensors/__init__.py",
+      "src/compressed_tensors/compressors/__init__.py",
+      "src/compressed_tensors/config/__init__.py",
+      "src/compressed_tensors/linear/__init__.py",
+      "src/compressed_tensors/modeling/__init__.py",
+      "src/compressed_tensors/offload/__init__.py",
+      "src/compressed_tensors/quantization/__init__.py",
+      "src/compressed_tensors/registry/__init__.py",
+      "src/compressed_tensors/transform/__init__.py",
+      "src/compressed_tensors/utils/__init__.py",
+      "src/compressed_tensors/compressors/model_compressors/__init__.py",
+      "src/compressed_tensors/compressors/quantized_compressors/__init__.py",
+      "src/compressed_tensors/compressors/sparse_compressors/__init__.py",
+      "src/compressed_tensors/compressors/sparse_quantized_compressors/__init__.py",
+      "src/compressed_tensors/offload/cache/__init__.py",
+      "src/__init__.py"
+     ],
+     "verified": false
+    }
    },
    "sdist": {
     "project": "compressed_tensors",
@@ -694,7 +844,7 @@
    "notice_like": [],
    "notices": [],
    "outcome": "inconclusive",
-   "reason": "the wheel contains components not traced to the sdist, whose NOTICE status is unknown: cryptography/hazmat/bindings/_rust.abi3.so: Rust build; 32 crates resolved from a registry/git per Cargo.lock are compiled in and are not vendored in the sdist; cryptography/hazmat/bindings/_rust.abi3.so: embeds third-party library markers (OpenSSL 4.0.0). Repository: pyca/cryptography@59c5f5e4b939 (tag 47.0.0, version verified in pyproject.toml): no NOTICE-named file in 3217 tree entries; a repository without a NOTICE does not establish absence for the release",
+   "reason": "the wheel contains components not traced to the sdist, whose NOTICE status is unknown: cryptography/hazmat/bindings/_rust.abi3.so: Rust build; 32 crates resolved from a registry/git per Cargo.lock are compiled in and are not vendored in the sdist; cryptography/hazmat/bindings/_rust.abi3.so: embeds third-party library markers (OpenSSL 4.0.0). Repository: pyca/cryptography@59c5f5e4b939 (tag 47.0.0, version verified in pyproject.toml): no NOTICE-named file in 3217 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the NOTICE question stays open (see reason); in any case ship the licence texts bundled in the wheel (cryptography-47.0.0.dist-info/licenses/LICENSE; cryptography-47.0.0.dist-info/licenses/LICENSE.APACHE; cryptography-47.0.0.dist-info/licenses/LICENSE.BSD) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0 OR BSD-3-Clause",
    "repository_check": {
     "commit": "59c5f5e4b9395f32d407f66467d59ccea9f9829f",
@@ -817,7 +967,7 @@
    "notice_like": [],
    "notices": [],
    "outcome": "inconclusive",
-   "reason": "no sdist for this exact version on PyPI (no sdist on PyPI); absence cannot be verified. Repository: NVIDIA/cuda-python@7f97d90f0908 (tag cuda-pathfinder-v1.5.4, version NOT verified at the commit): no NOTICE-named file in 812 tree entries; a repository without a NOTICE does not establish absence for the release",
+   "reason": "no sdist for this exact version on PyPI (no sdist on PyPI); absence cannot be verified. Repository: NVIDIA/cuda-python@7f97d90f0908 (tag cuda-pathfinder-v1.5.4, version NOT verified at the commit): no NOTICE-named file in 812 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the NOTICE question stays open (see reason); in any case ship the licence texts bundled in the wheel (cuda_pathfinder-1.5.4.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0",
    "repository_check": {
     "commit": "7f97d90f09087f390e3a3ec720f99af40a8d0104",
@@ -881,11 +1031,45 @@
    "notice_like": [],
    "notices": [],
    "outcome": "verified_absent",
-   "reason": "exact-version sdist diskcache-5.6.3.tar.gz verified against PyPI's SHA-256; its complete listing (28 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
+   "reason": "exact-version sdist diskcache-5.6.3.tar.gz verified against PyPI's SHA-256; its complete listing (28 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist; the release repository at a version-verified commit has no NOTICE-named or notice-like file: grantjenks/python-diskcache@323787f507a6 (tag v5.6.3, version verified in diskcache/__init__.py): no NOTICE-named file in 88 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (diskcache-5.6.3.dist-info/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache 2.0; OSI Approved :: Apache Software License",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "323787f507a6456c56cce213156a78b17073fe00",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed at a commit whose version file carries the exact version",
+    "repository": "https://github.com/grantjenks/python-diskcache",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "v5.6.3",
+    "tags_probed": [
+     "v5.6.3",
+     "5.6.3",
+     "diskcache-v5.6.3",
+     "diskcache-5.6.3"
+    ],
+    "tree_entries": 88,
+    "tree_response_sha256": "23fda854267890f208efb3cdc1e4800180ff6e807636c16bd930a4a119198372",
+    "tree_sha": "323787f507a6456c56cce213156a78b17073fe00",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "setup.py",
+      "diskcache/__init__.py"
+     ],
+     "line": "__version__ = '5.6.3'",
+     "path": "diskcache/__init__.py",
+     "retained": {
+      "bytes": 1262,
+      "file": "sources/notice-diskcache-repo-323787f507a6-diskcache+__init__.py",
+      "kind": "version-file",
+      "retrieved_on": "2026-10-05",
+      "sha256": "25c12dcf6db81becac1e6832c5621ddbc034c107c22227f499dbf8b6a0be6719",
+      "url": "https://raw.githubusercontent.com/grantjenks/python-diskcache/323787f507a6456c56cce213156a78b17073fe00/diskcache/__init__.py"
+     },
+     "verified": true
+    }
    },
    "sdist": {
     "project": "diskcache",
@@ -939,12 +1123,37 @@
    "metadata_declared": "Apache License, Version 2.0; OSI Approved :: Apache Software License",
    "notice_like": [],
    "notices": [],
-   "outcome": "verified_absent",
-   "reason": "exact-version sdist distro-1.9.0.tar.gz verified against PyPI's SHA-256; its complete listing (350 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
-   "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (distro-1.9.0.dist-info/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache License, Version 2.0; OSI Approved :: Apache Software License",
+   "outcome": "inconclusive",
+   "reason": "absent from the inspected wheel and sdist (exact-version sdist distro-1.9.0.tar.gz verified against PyPI's SHA-256; its complete listing (350 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist), but the release repository was not verified free of a NOTICE (python-distro/distro@8d88a2d72a3d (tag v1.9.0, version NOT verified at the commit): no NOTICE-named file in 354 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent), so the upstream NOTICE question stays open",
+   "remains": "the NOTICE question stays open (see reason); in any case ship the licence texts bundled in the wheel (distro-1.9.0.dist-info/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache License, Version 2.0; OSI Approved :: Apache Software License",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "8d88a2d72a3dbdb1d1443788c2e0142658b2b0ba",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed, but no version file at the commit carries the exact version string; NOTICE files there (if any) are recorded but do not count",
+    "repository": "https://github.com/python-distro/distro",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "v1.9.0",
+    "tags_probed": [
+     "v1.9.0",
+     "1.9.0",
+     "distro-v1.9.0",
+     "distro-1.9.0"
+    ],
+    "tree_entries": 354,
+    "tree_response_sha256": "4f047e75b6528ed761221be8017917bfc081f996006a151136fe0d8a86316728",
+    "tree_sha": "8d88a2d72a3dbdb1d1443788c2e0142658b2b0ba",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml",
+      "setup.cfg",
+      "src/distro/__init__.py"
+     ],
+     "verified": false
+    }
    },
    "sdist": {
     "project": "distro",
@@ -1169,11 +1378,46 @@
    "notice_like": [],
    "notices": [],
    "outcome": "verified_absent",
-   "reason": "exact-version sdist frozenlist-1.8.0.tar.gz verified against PyPI's SHA-256; its complete listing (57 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
+   "reason": "exact-version sdist frozenlist-1.8.0.tar.gz verified against PyPI's SHA-256; its complete listing (57 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist; the release repository at a version-verified commit has no NOTICE-named or notice-like file: aio-libs/frozenlist@48324affeecc (tag v1.8.0, version verified in frozenlist/__init__.py): no NOTICE-named file in 84 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (frozenlist-1.8.0.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "48324affeecc2fff8f84f38368f720426c0354cf",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed at a commit whose version file carries the exact version",
+    "repository": "https://github.com/aio-libs/frozenlist",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "v1.8.0",
+    "tags_probed": [
+     "v1.8.0",
+     "1.8.0",
+     "frozenlist-v1.8.0",
+     "frozenlist-1.8.0"
+    ],
+    "tree_entries": 84,
+    "tree_response_sha256": "5472dbdb7bfd2caf8b341820796c9629ee3c23b8308e214e90621b359b91979a",
+    "tree_sha": "48324affeecc2fff8f84f38368f720426c0354cf",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml",
+      "setup.cfg",
+      "frozenlist/__init__.py"
+     ],
+     "line": "__version__ = \"1.8.0\"",
+     "path": "frozenlist/__init__.py",
+     "retained": {
+      "bytes": 2108,
+      "file": "sources/notice-frozenlist-repo-48324affeecc-frozenlist+__init__.py",
+      "kind": "version-file",
+      "retrieved_on": "2026-10-05",
+      "sha256": "c40204daef677006e30131883df9e8fce25f7bc010fb587bcffb9cef7758b040",
+      "url": "https://raw.githubusercontent.com/aio-libs/frozenlist/48324affeecc2fff8f84f38368f720426c0354cf/frozenlist/__init__.py"
+     },
+     "verified": true
+    }
    },
    "sdist": {
     "project": "frozenlist",
@@ -1235,12 +1479,66 @@
    "metadata_declared": "Apache 2.0; OSI Approved :: Apache Software License",
    "notice_like": [],
    "notices": [],
-   "outcome": "verified_absent",
-   "reason": "exact-version sdist googleapis_common_protos-1.74.0.tar.gz verified against PyPI's SHA-256; its complete listing (224 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
-   "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (googleapis_common_protos-1.74.0.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache 2.0; OSI Approved :: Apache Software License",
+   "outcome": "inconclusive",
+   "reason": "absent from the inspected wheel and sdist (exact-version sdist googleapis_common_protos-1.74.0.tar.gz verified against PyPI's SHA-256; its complete listing (224 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist), but the release repository was not verified free of a NOTICE (googleapis/google-cloud-python@79a06514c461 (tag googleapis-common-protos-v1.74.0, version NOT verified at the commit): no NOTICE-named file in 46240 tree entries (tree truncated); a NOTICE-free repository is required for, but does not alone establish, verified_absent), so the upstream NOTICE question stays open",
+   "remains": "the NOTICE question stays open (see reason); in any case ship the licence texts bundled in the wheel (googleapis_common_protos-1.74.0.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache 2.0; OSI Approved :: Apache Software License",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "79a06514c46129c4b3b303363ead0be592131596",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed, but no version file at the commit carries the exact version string; NOTICE files there (if any) are recorded but do not count",
+    "repository": "https://github.com/googleapis/google-cloud-python",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "googleapis-common-protos-v1.74.0",
+    "tags_probed": [
+     "v1.74.0",
+     "1.74.0",
+     "googleapis-common-protos-v1.74.0",
+     "googleapis-common-protos-1.74.0",
+     "googleapis_common_protos-v1.74.0",
+     "googleapis_common_protos-1.74.0"
+    ],
+    "tree_entries": 46240,
+    "tree_response_sha256": "5771237df0a701771bf72ebe69459ed1ae47aedd35ab60891f55150ca6676b72",
+    "tree_sha": "79a06514c46129c4b3b303363ead0be592131596",
+    "tree_truncated": true,
+    "version_check": {
+     "files_checked": [
+      "packages/google-cloud-common/setup.py",
+      "packages/google-cloud-common/google/cloud/common/__init__.py",
+      "packages/bigframes/bigframes/version.py",
+      "packages/bigquery-magics/bigquery_magics/version.py",
+      "packages/db-dtypes/db_dtypes/version.py",
+      "packages/django-google-spanner/django_spanner/version.py",
+      "packages/bigframes/third_party/bigframes_vendored/version.py",
+      "packages/google-api-core/google/api_core/version.py",
+      "packages/google-auth/google/auth/version.py",
+      "packages/google-cloud-core/google/cloud/version.py",
+      "packages/google-cloud-bigquery/google/cloud/bigquery/version.py",
+      "packages/google-cloud-datastore/google/cloud/datastore/version.py",
+      "packages/google-cloud-dns/google/cloud/dns/version.py",
+      "packages/google-cloud-documentai-toolbox/google/cloud/documentai_toolbox/version.py",
+      "packages/google-cloud-ndb/google/cloud/ndb/version.py",
+      "packages/bigframes/pyproject.toml",
+      "packages/django-google-spanner/pyproject.toml",
+      "packages/google-api-core/pyproject.toml",
+      "packages/google-cloud-bigquery/pyproject.toml",
+      "packages/bigframes/setup.cfg",
+      "packages/bigframes/setup.py",
+      "packages/bigquery-magics/setup.py",
+      "packages/db-dtypes/setup.py",
+      "packages/django-google-spanner/setup.cfg",
+      "packages/django-google-spanner/setup.py",
+      "packages/gapic-generator/setup.py",
+      "packages/gcp-sphinx-docfx-yaml/setup.py",
+      "packages/google-ads-admanager/setup.py",
+      "packages/google-ads-datamanager/setup.py",
+      "packages/google-ads-marketingplatform-admin/setup.py"
+     ],
+     "verified": false
+    }
    },
    "sdist": {
     "project": "googleapis_common_protos",
@@ -1295,7 +1593,7 @@
    "notice_like": [],
    "notices": [],
    "outcome": "inconclusive",
-   "reason": "the wheel contains components not traced to the sdist, whose NOTICE status is unknown: 1 wheel file(s) present in the sdist by neither content nor path (e.g. hf_xet/__init__.py); hf_xet/hf_xet.abi3.so: Rust build; 488 crates resolved from a registry/git per Cargo.lock are compiled in and are not vendored in the sdist; hf_xet/hf_xet.abi3.so: embeds third-party library markers (BoringSSL). Repository: huggingface/xet-core@b24e739036d6 (tag v1.4.3, version verified in hf_xet/Cargo.toml): no NOTICE-named file in 456 tree entries; a repository without a NOTICE does not establish absence for the release",
+   "reason": "the wheel contains components not traced to the sdist, whose NOTICE status is unknown: 1 wheel file(s) present in the sdist by neither content nor path (e.g. hf_xet/__init__.py); hf_xet/hf_xet.abi3.so: Rust build; 488 crates resolved from a registry/git per Cargo.lock are compiled in and are not vendored in the sdist; hf_xet/hf_xet.abi3.so: embeds third-party library markers (BoringSSL). Repository: huggingface/xet-core@b24e739036d6 (tag v1.4.3, version verified in hf_xet/Cargo.toml): no NOTICE-named file in 456 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the NOTICE question stays open (see reason); in any case ship the licence texts bundled in the wheel (hf_xet-1.4.3.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0; OSI Approved :: Apache Software License",
    "repository_check": {
     "commit": "b24e739036d609bfa7cd5ec6a8f6e70638ce6f5c",
@@ -1424,11 +1722,49 @@
    "notice_like": [],
    "notices": [],
    "outcome": "verified_absent",
-   "reason": "exact-version sdist huggingface_hub-0.36.2.tar.gz verified against PyPI's SHA-256; its complete listing (260 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
+   "reason": "exact-version sdist huggingface_hub-0.36.2.tar.gz verified against PyPI's SHA-256; its complete listing (260 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist; the release repository at a version-verified commit has no NOTICE-named or notice-like file: huggingface/huggingface_hub@664c484e2611 (tag v0.36.2, version verified in src/huggingface_hub/__init__.py): no NOTICE-named file in 501 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (huggingface_hub-0.36.2.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache; OSI Approved :: Apache Software License",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "664c484e261175deeb80c2aa3b525457a1f6fa5c",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed at a commit whose version file carries the exact version",
+    "repository": "https://github.com/huggingface/huggingface_hub",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "v0.36.2",
+    "tags_probed": [
+     "v0.36.2",
+     "0.36.2",
+     "huggingface-hub-v0.36.2",
+     "huggingface-hub-0.36.2",
+     "huggingface_hub-v0.36.2",
+     "huggingface_hub-0.36.2"
+    ],
+    "tree_entries": 501,
+    "tree_response_sha256": "47272cdbfb5a0328f1ee347e28f8bf71c03a0bbcdb375bae6fb020879d676c0e",
+    "tree_sha": "664c484e261175deeb80c2aa3b525457a1f6fa5c",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml",
+      "setup.py",
+      "src/huggingface_hub/commands/version.py",
+      "src/huggingface_hub/__init__.py"
+     ],
+     "line": "__version__ = \"0.36.2\"",
+     "path": "src/huggingface_hub/__init__.py",
+     "retained": {
+      "bytes": 52675,
+      "file": "sources/notice-huggingface_hub-repo-664c484e2611-src+huggingface_hub+__init__.py",
+      "kind": "version-file",
+      "retrieved_on": "2026-10-05",
+      "sha256": "e586b64612482128fd24119364bc4dc6dca938407134e454a5e876341b364e35",
+      "url": "https://raw.githubusercontent.com/huggingface/huggingface_hub/664c484e261175deeb80c2aa3b525457a1f6fa5c/src/huggingface_hub/__init__.py"
+     },
+     "verified": true
+    }
    },
    "sdist": {
     "project": "huggingface_hub",
@@ -1482,12 +1818,39 @@
    "metadata_declared": "Apache-2.0",
    "notice_like": [],
    "notices": [],
-   "outcome": "verified_absent",
-   "reason": "exact-version sdist importlib_metadata-8.7.1.tar.gz verified against PyPI's SHA-256; its complete listing (81 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
-   "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (importlib_metadata-8.7.1.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0",
+   "outcome": "inconclusive",
+   "reason": "absent from the inspected wheel and sdist (exact-version sdist importlib_metadata-8.7.1.tar.gz verified against PyPI's SHA-256; its complete listing (81 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist), but the release repository was not verified free of a NOTICE (python/importlib_metadata@84e9028d3906 (tag v8.7.1, version NOT verified at the commit): no NOTICE-named file in 71 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent), so the upstream NOTICE question stays open",
+   "remains": "the NOTICE question stays open (see reason); in any case ship the licence texts bundled in the wheel (importlib_metadata-8.7.1.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "84e9028d39062af975d0659c0e987c28bcc808a5",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed, but no version file at the commit carries the exact version string; NOTICE files there (if any) are recorded but do not count",
+    "repository": "https://github.com/python/importlib_metadata",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "v8.7.1",
+    "tags_probed": [
+     "v8.7.1",
+     "8.7.1",
+     "importlib-metadata-v8.7.1",
+     "importlib-metadata-8.7.1",
+     "importlib_metadata-v8.7.1",
+     "importlib_metadata-8.7.1"
+    ],
+    "tree_entries": 71,
+    "tree_response_sha256": "fcfabe1f56a0d0114401b29095ef7fefbb03713746713bc9c4cb840c71bba5b9",
+    "tree_sha": "84e9028d39062af975d0659c0e987c28bcc808a5",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml",
+      "importlib_metadata/__init__.py",
+      "importlib_metadata/compat/__init__.py"
+     ],
+     "verified": false
+    }
    },
    "sdist": {
     "project": "importlib_metadata",
@@ -1542,7 +1905,7 @@
    "notice_like": [],
    "notices": [],
    "outcome": "inconclusive",
-   "reason": "the wheel contains components not traced to the sdist, whose NOTICE status is unknown: llvmlite/binding/libllvmlite.so: no source file named libllvmlite/llvmlite.{c,cc,cpp,pyx,cu,...} in the sdist; provenance of the binary not established; llvmlite/binding/libllvmlite.so: embeds third-party library markers (LLVM 15.0.7). Repository: numba/llvmlite@2c67a6b8deaa (tag v0.44.0, version NOT verified at the commit): no NOTICE-named file in 225 tree entries; a repository without a NOTICE does not establish absence for the release",
+   "reason": "the wheel contains components not traced to the sdist, whose NOTICE status is unknown: llvmlite/binding/libllvmlite.so: no source file named libllvmlite/llvmlite.{c,cc,cpp,pyx,cu,...} in the sdist; provenance of the binary not established; llvmlite/binding/libllvmlite.so: embeds third-party library markers (LLVM 15.0.7). Repository: numba/llvmlite@2c67a6b8deaa (tag v0.44.0, version NOT verified at the commit): no NOTICE-named file in 225 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the NOTICE question stays open (see reason); in any case ship the licence texts bundled in the wheel (llvmlite-0.44.0.dist-info/LICENSE; llvmlite-0.44.0.dist-info/LICENSE.thirdparty) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: BSD",
    "repository_check": {
     "commit": "2c67a6b8deaaa21cf23e6cb59cf66905b63281ba",
@@ -1641,11 +2004,47 @@
    "notice_like": [],
    "notices": [],
    "outcome": "verified_absent",
-   "reason": "exact-version sdist multidict-6.7.1.tar.gz verified against PyPI's SHA-256; its complete listing (118 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
+   "reason": "exact-version sdist multidict-6.7.1.tar.gz verified against PyPI's SHA-256; its complete listing (118 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist; the release repository at a version-verified commit has no NOTICE-named or notice-like file: aio-libs/multidict@39d3c322f6a9 (tag v6.7.1, version verified in multidict/__init__.py): no NOTICE-named file in 139 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (multidict-6.7.1.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache License 2.0",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "39d3c322f6a9e824beee9b6f178e3166205f0f59",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed at a commit whose version file carries the exact version",
+    "repository": "https://github.com/aio-libs/multidict",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "v6.7.1",
+    "tags_probed": [
+     "v6.7.1",
+     "6.7.1",
+     "multidict-v6.7.1",
+     "multidict-6.7.1"
+    ],
+    "tree_entries": 139,
+    "tree_response_sha256": "abcf88f2644f89d0cd7c12feb8bfe0e4ff1e625132d6fad100d9afaacf170ec7",
+    "tree_sha": "39d3c322f6a9e824beee9b6f178e3166205f0f59",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml",
+      "setup.cfg",
+      "setup.py",
+      "multidict/__init__.py"
+     ],
+     "line": "__version__ = \"6.7.1\"",
+     "path": "multidict/__init__.py",
+     "retained": {
+      "bytes": 1228,
+      "file": "sources/notice-multidict-repo-39d3c322f6a9-multidict+__init__.py",
+      "kind": "version-file",
+      "retrieved_on": "2026-10-05",
+      "sha256": "0cce7a554a07132c7ba4ab0bad3f4411e2234e581698fc9042e0b98ee2f36e16",
+      "url": "https://raw.githubusercontent.com/aio-libs/multidict/39d3c322f6a9e824beee9b6f178e3166205f0f59/multidict/__init__.py"
+     },
+     "verified": true
+    }
    },
    "sdist": {
     "project": "multidict",
@@ -1708,11 +2107,44 @@
    "notice_like": [],
    "notices": [],
    "outcome": "verified_absent",
-   "reason": "exact-version sdist openai-2.33.0.tar.gz verified against PyPI's SHA-256; its complete listing (1249 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
+   "reason": "exact-version sdist openai-2.33.0.tar.gz verified against PyPI's SHA-256; its complete listing (1249 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist; the release repository at a version-verified commit has no NOTICE-named or notice-like file: openai/openai-python@94c88b80b981 (tag v2.33.0, version verified in pyproject.toml): no NOTICE-named file in 1401 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (openai-2.33.0.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0; OSI Approved :: Apache Software License",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "94c88b80b9811f23c4494c414758358243d7e2e6",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed at a commit whose version file carries the exact version",
+    "repository": "https://github.com/openai/openai-python",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "v2.33.0",
+    "tags_probed": [
+     "v2.33.0",
+     "2.33.0",
+     "openai-v2.33.0",
+     "openai-2.33.0"
+    ],
+    "tree_entries": 1401,
+    "tree_response_sha256": "d2962231aed0e74a552cc26fa858c50180861485c4647488961087ddce1051b4",
+    "tree_sha": "94c88b80b9811f23c4494c414758358243d7e2e6",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml"
+     ],
+     "line": "version = \"2.33.0\"",
+     "path": "pyproject.toml",
+     "retained": {
+      "bytes": 7415,
+      "file": "sources/notice-openai-repo-94c88b80b981-pyproject.toml",
+      "kind": "version-file",
+      "retrieved_on": "2026-10-05",
+      "sha256": "513e846becda5707d0791854f88375e72fae1120be24cd1e91ec2a1c09b793c9",
+      "url": "https://raw.githubusercontent.com/openai/openai-python/94c88b80b9811f23c4494c414758358243d7e2e6/pyproject.toml"
+     },
+     "verified": true
+    }
    },
    "sdist": {
     "project": "openai",
@@ -1766,11 +2198,57 @@
    "notice_like": [],
    "notices": [],
    "outcome": "verified_absent",
-   "reason": "exact-version sdist opentelemetry_api-1.41.1.tar.gz verified against PyPI's SHA-256; its complete listing (93 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
+   "reason": "exact-version sdist opentelemetry_api-1.41.1.tar.gz verified against PyPI's SHA-256; its complete listing (93 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist; the release repository at a version-verified commit has no NOTICE-named or notice-like file: open-telemetry/opentelemetry-python@760e0248edbd (tag v1.41.1, version verified in opentelemetry-api/src/opentelemetry/version/__init__.py): no NOTICE-named file in 1338 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (opentelemetry_api-1.41.1.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "760e0248edbd01ae817941c1dfa61c07241b0727",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed at a commit whose version file carries the exact version",
+    "repository": "https://github.com/open-telemetry/opentelemetry-python",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "v1.41.1",
+    "tags_probed": [
+     "v1.41.1",
+     "1.41.1",
+     "opentelemetry-api-v1.41.1",
+     "opentelemetry-api-1.41.1",
+     "opentelemetry_api-v1.41.1",
+     "opentelemetry_api-1.41.1"
+    ],
+    "tree_entries": 1338,
+    "tree_response_sha256": "8e6e3c59809af14bfcdbf4a7912a7a85bda8f66464d5e3e6c70c982388071047",
+    "tree_sha": "760e0248edbd01ae817941c1dfa61c07241b0727",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml",
+      "opentelemetry-api/pyproject.toml",
+      "opentelemetry-api/src/opentelemetry/_events/__init__.py",
+      "opentelemetry-api/src/opentelemetry/_logs/__init__.py",
+      "opentelemetry-api/src/opentelemetry/attributes/__init__.py",
+      "opentelemetry-api/src/opentelemetry/baggage/__init__.py",
+      "opentelemetry-api/src/opentelemetry/context/__init__.py",
+      "opentelemetry-api/src/opentelemetry/environment_variables/__init__.py",
+      "opentelemetry-api/src/opentelemetry/metrics/__init__.py",
+      "opentelemetry-api/src/opentelemetry/propagate/__init__.py",
+      "opentelemetry-api/src/opentelemetry/trace/__init__.py",
+      "opentelemetry-api/src/opentelemetry/version/__init__.py"
+     ],
+     "line": "__version__ = \"1.41.1\"",
+     "path": "opentelemetry-api/src/opentelemetry/version/__init__.py",
+     "retained": {
+      "bytes": 608,
+      "file": "sources/notice-opentelemetry_api-repo-760e0248edbd-opentelemetry-api+src+opentelemetry+version+__init__.py",
+      "kind": "version-file",
+      "retrieved_on": "2026-10-05",
+      "sha256": "ccee2a6870e9e0e10f7bb18a5a790ccd8c63a325eb42f8d8ca68e18446d9eaf7",
+      "url": "https://raw.githubusercontent.com/open-telemetry/opentelemetry-python/760e0248edbd01ae817941c1dfa61c07241b0727/opentelemetry-api/src/opentelemetry/version/__init__.py"
+     },
+     "verified": true
+    }
    },
    "sdist": {
     "project": "opentelemetry_api",
@@ -1823,12 +2301,52 @@
    "metadata_declared": "Apache-2.0",
    "notice_like": [],
    "notices": [],
-   "outcome": "verified_absent",
-   "reason": "exact-version sdist opentelemetry_exporter_otlp-1.41.1.tar.gz verified against PyPI's SHA-256; its complete listing (9 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
-   "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (opentelemetry_exporter_otlp-1.41.1.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0",
+   "outcome": "inconclusive",
+   "reason": "absent from the inspected wheel and sdist (exact-version sdist opentelemetry_exporter_otlp-1.41.1.tar.gz verified against PyPI's SHA-256; its complete listing (9 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist), but the release repository was not verified free of a NOTICE (open-telemetry/opentelemetry-python@760e0248edbd (tag v1.41.1, version NOT verified at the commit): no NOTICE-named file in 1338 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent), so the upstream NOTICE question stays open",
+   "remains": "the NOTICE question stays open (see reason); in any case ship the licence texts bundled in the wheel (opentelemetry_exporter_otlp-1.41.1.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "760e0248edbd01ae817941c1dfa61c07241b0727",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed, but no version file at the commit carries the exact version string; NOTICE files there (if any) are recorded but do not count",
+    "repository": "https://github.com/open-telemetry/opentelemetry-python",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "v1.41.1",
+    "tags_probed": [
+     "v1.41.1",
+     "1.41.1",
+     "opentelemetry-exporter-otlp-v1.41.1",
+     "opentelemetry-exporter-otlp-1.41.1",
+     "opentelemetry_exporter_otlp-v1.41.1",
+     "opentelemetry_exporter_otlp-1.41.1"
+    ],
+    "tree_entries": 1338,
+    "tree_response_sha256": "8e6e3c59809af14bfcdbf4a7912a7a85bda8f66464d5e3e6c70c982388071047",
+    "tree_sha": "760e0248edbd01ae817941c1dfa61c07241b0727",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml",
+      "exporter/opentelemetry-exporter-otlp-proto-common/pyproject.toml",
+      "exporter/opentelemetry-exporter-otlp-proto-grpc/pyproject.toml",
+      "exporter/opentelemetry-exporter-otlp-proto-http/pyproject.toml",
+      "exporter/opentelemetry-exporter-otlp/pyproject.toml",
+      "exporter/opentelemetry-exporter-opencensus/pyproject.toml",
+      "exporter/opentelemetry-exporter-prometheus/pyproject.toml",
+      "exporter/opentelemetry-exporter-zipkin-json/pyproject.toml",
+      "exporter/opentelemetry-exporter-zipkin-proto-http/pyproject.toml",
+      "exporter/opentelemetry-exporter-zipkin/pyproject.toml",
+      "opentelemetry-api/pyproject.toml",
+      "opentelemetry-proto-json/pyproject.toml",
+      "opentelemetry-proto/pyproject.toml",
+      "opentelemetry-sdk/pyproject.toml",
+      "opentelemetry-semantic-conventions/pyproject.toml",
+      "codegen/opentelemetry-codegen-json/pyproject.toml"
+     ],
+     "verified": false
+    }
    },
    "sdist": {
     "project": "opentelemetry_exporter_otlp",
@@ -1881,12 +2399,52 @@
    "metadata_declared": "Apache-2.0",
    "notice_like": [],
    "notices": [],
-   "outcome": "verified_absent",
-   "reason": "exact-version sdist opentelemetry_exporter_otlp_proto_common-1.41.1.tar.gz verified against PyPI's SHA-256; its complete listing (20 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
-   "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (opentelemetry_exporter_otlp_proto_common-1.41.1.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0",
+   "outcome": "inconclusive",
+   "reason": "absent from the inspected wheel and sdist (exact-version sdist opentelemetry_exporter_otlp_proto_common-1.41.1.tar.gz verified against PyPI's SHA-256; its complete listing (20 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist), but the release repository was not verified free of a NOTICE (open-telemetry/opentelemetry-python@760e0248edbd (tag v1.41.1, version NOT verified at the commit): no NOTICE-named file in 1338 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent), so the upstream NOTICE question stays open",
+   "remains": "the NOTICE question stays open (see reason); in any case ship the licence texts bundled in the wheel (opentelemetry_exporter_otlp_proto_common-1.41.1.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "760e0248edbd01ae817941c1dfa61c07241b0727",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed, but no version file at the commit carries the exact version string; NOTICE files there (if any) are recorded but do not count",
+    "repository": "https://github.com/open-telemetry/opentelemetry-python",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "v1.41.1",
+    "tags_probed": [
+     "v1.41.1",
+     "1.41.1",
+     "opentelemetry-exporter-otlp-proto-common-v1.41.1",
+     "opentelemetry-exporter-otlp-proto-common-1.41.1",
+     "opentelemetry_exporter_otlp_proto_common-v1.41.1",
+     "opentelemetry_exporter_otlp_proto_common-1.41.1"
+    ],
+    "tree_entries": 1338,
+    "tree_response_sha256": "8e6e3c59809af14bfcdbf4a7912a7a85bda8f66464d5e3e6c70c982388071047",
+    "tree_sha": "760e0248edbd01ae817941c1dfa61c07241b0727",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml",
+      "exporter/opentelemetry-exporter-otlp-proto-common/pyproject.toml",
+      "exporter/opentelemetry-exporter-otlp-proto-grpc/pyproject.toml",
+      "exporter/opentelemetry-exporter-otlp-proto-http/pyproject.toml",
+      "exporter/opentelemetry-exporter-otlp/pyproject.toml",
+      "exporter/opentelemetry-exporter-zipkin-proto-http/pyproject.toml",
+      "opentelemetry-proto-json/src/opentelemetry/proto_json/common/__init__.py",
+      "opentelemetry-proto/src/opentelemetry/proto/common/__init__.py",
+      "opentelemetry-proto-json/pyproject.toml",
+      "opentelemetry-proto/pyproject.toml",
+      "exporter/opentelemetry-exporter-opencensus/pyproject.toml",
+      "exporter/opentelemetry-exporter-prometheus/pyproject.toml",
+      "exporter/opentelemetry-exporter-zipkin-json/pyproject.toml",
+      "exporter/opentelemetry-exporter-zipkin/pyproject.toml",
+      "opentelemetry-proto-json/src/opentelemetry/proto_json/__init__.py",
+      "opentelemetry-proto/src/opentelemetry/proto/__init__.py"
+     ],
+     "verified": false
+    }
    },
    "sdist": {
     "project": "opentelemetry_exporter_otlp_proto_common",
@@ -1939,12 +2497,52 @@
    "metadata_declared": "Apache-2.0",
    "notice_like": [],
    "notices": [],
-   "outcome": "verified_absent",
-   "reason": "exact-version sdist opentelemetry_exporter_otlp_proto_grpc-1.41.1.tar.gz verified against PyPI's SHA-256; its complete listing (21 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
-   "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (opentelemetry_exporter_otlp_proto_grpc-1.41.1.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0",
+   "outcome": "inconclusive",
+   "reason": "absent from the inspected wheel and sdist (exact-version sdist opentelemetry_exporter_otlp_proto_grpc-1.41.1.tar.gz verified against PyPI's SHA-256; its complete listing (21 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist), but the release repository was not verified free of a NOTICE (open-telemetry/opentelemetry-python@760e0248edbd (tag v1.41.1, version NOT verified at the commit): no NOTICE-named file in 1338 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent), so the upstream NOTICE question stays open",
+   "remains": "the NOTICE question stays open (see reason); in any case ship the licence texts bundled in the wheel (opentelemetry_exporter_otlp_proto_grpc-1.41.1.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "760e0248edbd01ae817941c1dfa61c07241b0727",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed, but no version file at the commit carries the exact version string; NOTICE files there (if any) are recorded but do not count",
+    "repository": "https://github.com/open-telemetry/opentelemetry-python",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "v1.41.1",
+    "tags_probed": [
+     "v1.41.1",
+     "1.41.1",
+     "opentelemetry-exporter-otlp-proto-grpc-v1.41.1",
+     "opentelemetry-exporter-otlp-proto-grpc-1.41.1",
+     "opentelemetry_exporter_otlp_proto_grpc-v1.41.1",
+     "opentelemetry_exporter_otlp_proto_grpc-1.41.1"
+    ],
+    "tree_entries": 1338,
+    "tree_response_sha256": "8e6e3c59809af14bfcdbf4a7912a7a85bda8f66464d5e3e6c70c982388071047",
+    "tree_sha": "760e0248edbd01ae817941c1dfa61c07241b0727",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml",
+      "exporter/opentelemetry-exporter-otlp-proto-grpc/pyproject.toml",
+      "exporter/opentelemetry-exporter-otlp-proto-common/pyproject.toml",
+      "exporter/opentelemetry-exporter-otlp-proto-http/pyproject.toml",
+      "exporter/opentelemetry-exporter-otlp/pyproject.toml",
+      "exporter/opentelemetry-exporter-zipkin-proto-http/pyproject.toml",
+      "opentelemetry-proto-json/pyproject.toml",
+      "opentelemetry-proto/pyproject.toml",
+      "exporter/opentelemetry-exporter-opencensus/pyproject.toml",
+      "exporter/opentelemetry-exporter-prometheus/pyproject.toml",
+      "exporter/opentelemetry-exporter-zipkin-json/pyproject.toml",
+      "exporter/opentelemetry-exporter-zipkin/pyproject.toml",
+      "opentelemetry-proto-json/src/opentelemetry/proto_json/__init__.py",
+      "opentelemetry-proto/src/opentelemetry/proto/__init__.py",
+      "opentelemetry-proto-json/src/opentelemetry/proto_json/collector/__init__.py",
+      "opentelemetry-proto-json/src/opentelemetry/proto_json/common/__init__.py"
+     ],
+     "verified": false
+    }
    },
    "sdist": {
     "project": "opentelemetry_exporter_otlp_proto_grpc",
@@ -1997,12 +2595,52 @@
    "metadata_declared": "Apache-2.0",
    "notice_like": [],
    "notices": [],
-   "outcome": "verified_absent",
-   "reason": "exact-version sdist opentelemetry_exporter_otlp_proto_http-1.41.1.tar.gz verified against PyPI's SHA-256; its complete listing (18 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
-   "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (opentelemetry_exporter_otlp_proto_http-1.41.1.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0",
+   "outcome": "inconclusive",
+   "reason": "absent from the inspected wheel and sdist (exact-version sdist opentelemetry_exporter_otlp_proto_http-1.41.1.tar.gz verified against PyPI's SHA-256; its complete listing (18 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist), but the release repository was not verified free of a NOTICE (open-telemetry/opentelemetry-python@760e0248edbd (tag v1.41.1, version NOT verified at the commit): no NOTICE-named file in 1338 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent), so the upstream NOTICE question stays open",
+   "remains": "the NOTICE question stays open (see reason); in any case ship the licence texts bundled in the wheel (opentelemetry_exporter_otlp_proto_http-1.41.1.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "760e0248edbd01ae817941c1dfa61c07241b0727",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed, but no version file at the commit carries the exact version string; NOTICE files there (if any) are recorded but do not count",
+    "repository": "https://github.com/open-telemetry/opentelemetry-python",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "v1.41.1",
+    "tags_probed": [
+     "v1.41.1",
+     "1.41.1",
+     "opentelemetry-exporter-otlp-proto-http-v1.41.1",
+     "opentelemetry-exporter-otlp-proto-http-1.41.1",
+     "opentelemetry_exporter_otlp_proto_http-v1.41.1",
+     "opentelemetry_exporter_otlp_proto_http-1.41.1"
+    ],
+    "tree_entries": 1338,
+    "tree_response_sha256": "8e6e3c59809af14bfcdbf4a7912a7a85bda8f66464d5e3e6c70c982388071047",
+    "tree_sha": "760e0248edbd01ae817941c1dfa61c07241b0727",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml",
+      "exporter/opentelemetry-exporter-otlp-proto-http/pyproject.toml",
+      "exporter/opentelemetry-exporter-otlp-proto-common/pyproject.toml",
+      "exporter/opentelemetry-exporter-otlp-proto-grpc/pyproject.toml",
+      "exporter/opentelemetry-exporter-zipkin-proto-http/pyproject.toml",
+      "exporter/opentelemetry-exporter-otlp/pyproject.toml",
+      "opentelemetry-proto-json/pyproject.toml",
+      "opentelemetry-proto/pyproject.toml",
+      "exporter/opentelemetry-exporter-opencensus/pyproject.toml",
+      "exporter/opentelemetry-exporter-prometheus/pyproject.toml",
+      "exporter/opentelemetry-exporter-zipkin-json/pyproject.toml",
+      "exporter/opentelemetry-exporter-zipkin/pyproject.toml",
+      "opentelemetry-proto-json/src/opentelemetry/proto_json/__init__.py",
+      "opentelemetry-proto/src/opentelemetry/proto/__init__.py",
+      "opentelemetry-proto-json/src/opentelemetry/proto_json/collector/__init__.py",
+      "opentelemetry-proto-json/src/opentelemetry/proto_json/common/__init__.py"
+     ],
+     "verified": false
+    }
    },
    "sdist": {
     "project": "opentelemetry_exporter_otlp_proto_http",
@@ -2055,12 +2693,52 @@
    "metadata_declared": "Apache-2.0",
    "notice_like": [],
    "notices": [],
-   "outcome": "verified_absent",
-   "reason": "exact-version sdist opentelemetry_proto-1.41.1.tar.gz verified against PyPI's SHA-256; its complete listing (47 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
-   "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (opentelemetry_proto-1.41.1.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0",
+   "outcome": "inconclusive",
+   "reason": "absent from the inspected wheel and sdist (exact-version sdist opentelemetry_proto-1.41.1.tar.gz verified against PyPI's SHA-256; its complete listing (47 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist), but the release repository was not verified free of a NOTICE (open-telemetry/opentelemetry-python@760e0248edbd (tag v1.41.1, version NOT verified at the commit): no NOTICE-named file in 1338 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent), so the upstream NOTICE question stays open",
+   "remains": "the NOTICE question stays open (see reason); in any case ship the licence texts bundled in the wheel (opentelemetry_proto-1.41.1.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "760e0248edbd01ae817941c1dfa61c07241b0727",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed, but no version file at the commit carries the exact version string; NOTICE files there (if any) are recorded but do not count",
+    "repository": "https://github.com/open-telemetry/opentelemetry-python",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "v1.41.1",
+    "tags_probed": [
+     "v1.41.1",
+     "1.41.1",
+     "opentelemetry-proto-v1.41.1",
+     "opentelemetry-proto-1.41.1",
+     "opentelemetry_proto-v1.41.1",
+     "opentelemetry_proto-1.41.1"
+    ],
+    "tree_entries": 1338,
+    "tree_response_sha256": "8e6e3c59809af14bfcdbf4a7912a7a85bda8f66464d5e3e6c70c982388071047",
+    "tree_sha": "760e0248edbd01ae817941c1dfa61c07241b0727",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml",
+      "opentelemetry-proto-json/pyproject.toml",
+      "opentelemetry-proto/pyproject.toml",
+      "exporter/opentelemetry-exporter-otlp-proto-common/pyproject.toml",
+      "exporter/opentelemetry-exporter-otlp-proto-grpc/pyproject.toml",
+      "exporter/opentelemetry-exporter-otlp-proto-http/pyproject.toml",
+      "exporter/opentelemetry-exporter-zipkin-proto-http/pyproject.toml",
+      "opentelemetry-proto-json/src/opentelemetry/proto_json/__init__.py",
+      "opentelemetry-proto/src/opentelemetry/proto/__init__.py",
+      "opentelemetry-proto-json/src/opentelemetry/proto_json/collector/__init__.py",
+      "opentelemetry-proto-json/src/opentelemetry/proto_json/common/__init__.py",
+      "opentelemetry-proto-json/src/opentelemetry/proto_json/logs/__init__.py",
+      "opentelemetry-proto-json/src/opentelemetry/proto_json/metrics/__init__.py",
+      "opentelemetry-proto-json/src/opentelemetry/proto_json/profiles/__init__.py",
+      "opentelemetry-proto-json/src/opentelemetry/proto_json/resource/__init__.py",
+      "opentelemetry-proto-json/src/opentelemetry/proto_json/trace/__init__.py"
+     ],
+     "verified": false
+    }
    },
    "sdist": {
     "project": "opentelemetry_proto",
@@ -2114,11 +2792,58 @@
    "notice_like": [],
    "notices": [],
    "outcome": "verified_absent",
-   "reason": "exact-version sdist opentelemetry_sdk-1.41.1.tar.gz verified against PyPI's SHA-256; its complete listing (166 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
+   "reason": "exact-version sdist opentelemetry_sdk-1.41.1.tar.gz verified against PyPI's SHA-256; its complete listing (166 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist; the release repository at a version-verified commit has no NOTICE-named or notice-like file: open-telemetry/opentelemetry-python@760e0248edbd (tag v1.41.1, version verified in opentelemetry-sdk/src/opentelemetry/sdk/version/__init__.py): no NOTICE-named file in 1338 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (opentelemetry_sdk-1.41.1.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "760e0248edbd01ae817941c1dfa61c07241b0727",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed at a commit whose version file carries the exact version",
+    "repository": "https://github.com/open-telemetry/opentelemetry-python",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "v1.41.1",
+    "tags_probed": [
+     "v1.41.1",
+     "1.41.1",
+     "opentelemetry-sdk-v1.41.1",
+     "opentelemetry-sdk-1.41.1",
+     "opentelemetry_sdk-v1.41.1",
+     "opentelemetry_sdk-1.41.1"
+    ],
+    "tree_entries": 1338,
+    "tree_response_sha256": "8e6e3c59809af14bfcdbf4a7912a7a85bda8f66464d5e3e6c70c982388071047",
+    "tree_sha": "760e0248edbd01ae817941c1dfa61c07241b0727",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml",
+      "opentelemetry-sdk/pyproject.toml",
+      "opentelemetry-sdk/src/opentelemetry/sdk/_configuration/__init__.py",
+      "opentelemetry-sdk/src/opentelemetry/sdk/_events/__init__.py",
+      "opentelemetry-sdk/src/opentelemetry/sdk/_logs/__init__.py",
+      "opentelemetry-sdk/src/opentelemetry/sdk/_shared_internal/__init__.py",
+      "opentelemetry-sdk/src/opentelemetry/sdk/environment_variables/__init__.py",
+      "opentelemetry-sdk/src/opentelemetry/sdk/error_handler/__init__.py",
+      "opentelemetry-sdk/src/opentelemetry/sdk/metrics/__init__.py",
+      "opentelemetry-sdk/src/opentelemetry/sdk/resources/__init__.py",
+      "opentelemetry-sdk/src/opentelemetry/sdk/trace/__init__.py",
+      "opentelemetry-sdk/src/opentelemetry/sdk/util/__init__.py",
+      "opentelemetry-sdk/src/opentelemetry/sdk/version/__init__.py"
+     ],
+     "line": "__version__ = \"1.41.1\"",
+     "path": "opentelemetry-sdk/src/opentelemetry/sdk/version/__init__.py",
+     "retained": {
+      "bytes": 608,
+      "file": "sources/notice-opentelemetry_sdk-repo-760e0248edbd-opentelemetry-sdk+src+opentelemetry+sdk+version+__init__.py",
+      "kind": "version-file",
+      "retrieved_on": "2026-10-05",
+      "sha256": "ccee2a6870e9e0e10f7bb18a5a790ccd8c63a325eb42f8d8ca68e18446d9eaf7",
+      "url": "https://raw.githubusercontent.com/open-telemetry/opentelemetry-python/760e0248edbd01ae817941c1dfa61c07241b0727/opentelemetry-sdk/src/opentelemetry/sdk/version/__init__.py"
+     },
+     "verified": true
+    }
    },
    "sdist": {
     "project": "opentelemetry_sdk",
@@ -2171,12 +2896,21 @@
    "metadata_declared": "Apache-2.0",
    "notice_like": [],
    "notices": [],
-   "outcome": "verified_absent",
-   "reason": "exact-version sdist opentelemetry_semantic_conventions-0.62b1.tar.gz verified against PyPI's SHA-256; its complete listing (132 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
-   "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (opentelemetry_semantic_conventions-0.62b1.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0",
+   "outcome": "inconclusive",
+   "reason": "absent from the inspected wheel and sdist (exact-version sdist opentelemetry_semantic_conventions-0.62b1.tar.gz verified against PyPI's SHA-256; its complete listing (132 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist), but the release repository was not verified free of a NOTICE (not checked (no release tag among those probed resolved on raw.githubusercontent.com)), so the upstream NOTICE question stays open",
+   "remains": "the NOTICE question stays open (see reason); in any case ship the licence texts bundled in the wheel (opentelemetry_semantic_conventions-0.62b1.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "performed": true,
+    "reason": "no release tag among those probed resolved on raw.githubusercontent.com",
+    "repository": "https://github.com/open-telemetry/opentelemetry-python",
+    "tags_probed": [
+     "v0.62b1",
+     "0.62b1",
+     "opentelemetry-semantic-conventions-v0.62b1",
+     "opentelemetry-semantic-conventions-0.62b1",
+     "opentelemetry_semantic_conventions-v0.62b1",
+     "opentelemetry_semantic_conventions-0.62b1"
+    ]
    },
    "sdist": {
     "project": "opentelemetry_semantic_conventions",
@@ -2230,7 +2964,7 @@
    "notice_like": [],
    "notices": [],
    "outcome": "inconclusive",
-   "reason": "the wheel contains components not traced to the sdist, whose NOTICE status is unknown: outlines_core/outlines_core.cpython-312-x86_64-linux-gnu.so: Rust build; 270 crates resolved from a registry/git per Cargo.lock are compiled in and are not vendored in the sdist. Repository: dottxt-ai/outlines-core@ad8c7b7236e2 (tag 0.2.11, version NOT verified at the commit): no NOTICE-named file in 83 tree entries; a repository without a NOTICE does not establish absence for the release",
+   "reason": "the wheel contains components not traced to the sdist, whose NOTICE status is unknown: outlines_core/outlines_core.cpython-312-x86_64-linux-gnu.so: Rust build; 270 crates resolved from a registry/git per Cargo.lock are compiled in and are not vendored in the sdist. Repository: dottxt-ai/outlines-core@ad8c7b7236e2 (tag 0.2.11, version NOT verified at the commit): no NOTICE-named file in 83 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the NOTICE question stays open (see reason); in any case ship the licence texts bundled in the wheel (outlines_core-0.2.11.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0",
    "repository_check": {
     "commit": "ad8c7b7236e21a20470d61fdb5c0511359566d81",
@@ -2345,11 +3079,46 @@
    "notice_like": [],
    "notices": [],
    "outcome": "verified_absent",
-   "reason": "exact-version sdist packaging-26.2.tar.gz verified against PyPI's SHA-256; its complete listing (95 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
+   "reason": "exact-version sdist packaging-26.2.tar.gz verified against PyPI's SHA-256; its complete listing (95 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist; the release repository at a version-verified commit has no NOTICE-named or notice-like file: pypa/packaging@84a87ee42483 (tag 26.2, version verified in src/packaging/__init__.py): no NOTICE-named file in 146 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (packaging-26.2.dist-info/licenses/LICENSE; packaging-26.2.dist-info/licenses/LICENSE.APACHE; packaging-26.2.dist-info/licenses/LICENSE.BSD) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0 OR BSD-2-Clause",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "84a87ee42483d7352f9502d78a9553da8859aa7a",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed at a commit whose version file carries the exact version",
+    "repository": "https://github.com/pypa/packaging",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "26.2",
+    "tags_probed": [
+     "v26.2",
+     "26.2",
+     "packaging-v26.2",
+     "packaging-26.2"
+    ],
+    "tree_entries": 146,
+    "tree_response_sha256": "236952940f5d34599bd6a6c3e0f3fddbb39a0e21c4b90c8b27b3fd4a1dd6f2e3",
+    "tree_sha": "84a87ee42483d7352f9502d78a9553da8859aa7a",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml",
+      "src/packaging/version.py",
+      "src/packaging/__init__.py"
+     ],
+     "line": "__version__ = \"26.2\"",
+     "path": "src/packaging/__init__.py",
+     "retained": {
+      "bytes": 494,
+      "file": "sources/notice-packaging-repo-84a87ee42483-src+packaging+__init__.py",
+      "kind": "version-file",
+      "retrieved_on": "2026-10-05",
+      "sha256": "42130474fbb65e882b2735774b42964bab7b97423d93c11e0d1265e1f9f0f3bb",
+      "url": "https://raw.githubusercontent.com/pypa/packaging/84a87ee42483d7352f9502d78a9553da8859aa7a/src/packaging/__init__.py"
+     },
+     "verified": true
+    }
    },
    "sdist": {
     "project": "packaging",
@@ -2403,11 +3172,47 @@
    "notice_like": [],
    "notices": [],
    "outcome": "verified_absent",
-   "reason": "exact-version sdist python_multipart-0.0.27.tar.gz verified against PyPI's SHA-256; its complete listing (77 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
+   "reason": "exact-version sdist python_multipart-0.0.27.tar.gz verified against PyPI's SHA-256; its complete listing (77 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist; the release repository at a version-verified commit has no NOTICE-named or notice-like file: Kludex/python-multipart@6d1d6892a6b0 (tag 0.0.27, version verified in python_multipart/__init__.py): no NOTICE-named file in 126 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (python_multipart-0.0.27.dist-info/licenses/LICENSE.txt) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0; OSI Approved :: Apache Software License",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "6d1d6892a6b01b25da6f3e7b097e8e06c57fb250",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed at a commit whose version file carries the exact version",
+    "repository": "https://github.com/Kludex/python-multipart",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "0.0.27",
+    "tags_probed": [
+     "v0.0.27",
+     "0.0.27",
+     "python-multipart-v0.0.27",
+     "python-multipart-0.0.27",
+     "python_multipart-v0.0.27",
+     "python_multipart-0.0.27"
+    ],
+    "tree_entries": 126,
+    "tree_response_sha256": "ce67e1c0b24b7ea6b419c5f2e27a4498bb88dc3a8a8591bc54ef778c61380078",
+    "tree_sha": "6d1d6892a6b01b25da6f3e7b097e8e06c57fb250",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml",
+      "python_multipart/__init__.py"
+     ],
+     "line": "__version__ = \"0.0.27\"",
+     "path": "python_multipart/__init__.py",
+     "retained": {
+      "bytes": 937,
+      "file": "sources/notice-python_multipart-repo-6d1d6892a6b0-python_multipart+__init__.py",
+      "kind": "version-file",
+      "retrieved_on": "2026-10-05",
+      "sha256": "b857152ba71fb8c9fca3535c316f1ac84835b2abe017364b442fd764d19a2b37",
+      "url": "https://raw.githubusercontent.com/Kludex/python-multipart/6d1d6892a6b01b25da6f3e7b097e8e06c57fb250/python_multipart/__init__.py"
+     },
+     "verified": true
+    }
    },
    "sdist": {
     "project": "python_multipart",
@@ -2461,7 +3266,7 @@
    "notice_like": [],
    "notices": [],
    "outcome": "inconclusive",
-   "reason": "the wheel contains components not traced to the sdist, whose NOTICE status is unknown: safetensors/_safetensors_rust.abi3.so: Rust build; 31 crates resolved from a registry/git per Cargo.lock are compiled in and are not vendored in the sdist. Repository: huggingface/safetensors@fa27fa835a46 (tag v0.7.0, version verified in safetensors/Cargo.toml): no NOTICE-named file in 132 tree entries; a repository without a NOTICE does not establish absence for the release",
+   "reason": "the wheel contains components not traced to the sdist, whose NOTICE status is unknown: safetensors/_safetensors_rust.abi3.so: Rust build; 31 crates resolved from a registry/git per Cargo.lock are compiled in and are not vendored in the sdist. Repository: huggingface/safetensors@fa27fa835a46 (tag v0.7.0, version verified in safetensors/Cargo.toml): no NOTICE-named file in 132 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the NOTICE question stays open (see reason); in any case ship the licence texts bundled in the wheel (safetensors-0.7.0.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: OSI Approved :: Apache Software License",
    "repository_check": {
     "commit": "fa27fa835a466cb50d07696ec20b94f46aed0e31",
@@ -2580,11 +3385,45 @@
    "notice_like": [],
    "notices": [],
    "outcome": "verified_absent",
-   "reason": "exact-version sdist sniffio-1.3.1.tar.gz verified against PyPI's SHA-256; its complete listing (49 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
+   "reason": "exact-version sdist sniffio-1.3.1.tar.gz verified against PyPI's SHA-256; its complete listing (49 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist; the release repository at a version-verified commit has no NOTICE-named or notice-like file: python-trio/sniffio@ae020e13b98d (tag v1.3.1, version verified in sniffio/_version.py): no NOTICE-named file in 41 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (sniffio-1.3.1.dist-info/LICENSE; sniffio-1.3.1.dist-info/LICENSE.APACHE2; sniffio-1.3.1.dist-info/LICENSE.MIT) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: MIT OR Apache-2.0; OSI Approved :: MIT License; OSI Approved :: Apache Software License",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "ae020e13b98d276a6558ffc25e82509fd4c288f0",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed at a commit whose version file carries the exact version",
+    "repository": "https://github.com/python-trio/sniffio",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "v1.3.1",
+    "tags_probed": [
+     "v1.3.1",
+     "1.3.1",
+     "sniffio-v1.3.1",
+     "sniffio-1.3.1"
+    ],
+    "tree_entries": 41,
+    "tree_response_sha256": "7188bbd04e3e65fb5074aee742f11e1d45cab100b54af1c5690f816387874327",
+    "tree_sha": "ae020e13b98d276a6558ffc25e82509fd4c288f0",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml",
+      "sniffio/_version.py"
+     ],
+     "line": "__version__ = \"1.3.1\"",
+     "path": "sniffio/_version.py",
+     "retained": {
+      "bytes": 89,
+      "file": "sources/notice-sniffio-repo-ae020e13b98d-sniffio+_version.py",
+      "kind": "version-file",
+      "retrieved_on": "2026-10-05",
+      "sha256": "8957ace71c2c1de4734037b105a021cb1fed68db76b9c7c0ec2580a38403b7a4",
+      "url": "https://raw.githubusercontent.com/python-trio/sniffio/ae020e13b98d276a6558ffc25e82509fd4c288f0/sniffio/_version.py"
+     },
+     "verified": true
+    }
    },
    "sdist": {
     "project": "sniffio",
@@ -2639,11 +3478,46 @@
    "notice_like": [],
    "notices": [],
    "outcome": "verified_absent",
-   "reason": "exact-version sdist transformers-4.57.6.tar.gz verified against PyPI's SHA-256; its complete listing (2704 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
+   "reason": "exact-version sdist transformers-4.57.6.tar.gz verified against PyPI's SHA-256; its complete listing (2704 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist; the release repository at a version-verified commit has no NOTICE-named or notice-like file: huggingface/transformers@753d61104116 (tag v4.57.6, version verified in src/transformers/__init__.py): no NOTICE-named file in 6178 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (transformers-4.57.6.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache 2.0 License; OSI Approved :: Apache Software License",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "753d61104116eefc8ffc977327b441ee0c8d599f",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed at a commit whose version file carries the exact version",
+    "repository": "https://github.com/huggingface/transformers",
+    "submodule_checks": [],
+    "submodules": [],
+    "tag": "v4.57.6",
+    "tags_probed": [
+     "v4.57.6",
+     "4.57.6",
+     "transformers-v4.57.6",
+     "transformers-4.57.6"
+    ],
+    "tree_entries": 6178,
+    "tree_response_sha256": "9d4f08d27c1136ea4c6bba376df643a9c04dacab3a422e8665963a77ba4713a6",
+    "tree_sha": "753d61104116eefc8ffc977327b441ee0c8d599f",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml",
+      "setup.py",
+      "src/transformers/__init__.py"
+     ],
+     "line": "__version__ = \"4.57.6\"",
+     "path": "src/transformers/__init__.py",
+     "retained": {
+      "bytes": 47000,
+      "file": "sources/notice-transformers-repo-753d61104116-src+transformers+__init__.py",
+      "kind": "version-file",
+      "retrieved_on": "2026-10-05",
+      "sha256": "aa8cb54da488cf43ba37b9955bb6c0d84d2000db0306f6a5f1c20b6842482d04",
+      "url": "https://raw.githubusercontent.com/huggingface/transformers/753d61104116eefc8ffc977327b441ee0c8d599f/src/transformers/__init__.py"
+     },
+     "verified": true
+    }
    },
    "sdist": {
     "project": "transformers",
@@ -2698,11 +3572,48 @@
    "notice_like": [],
    "notices": [],
    "outcome": "verified_absent",
-   "reason": "exact-version sdist uvloop-0.22.1.tar.gz verified against PyPI's SHA-256; its complete listing (526 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist",
+   "reason": "exact-version sdist uvloop-0.22.1.tar.gz verified against PyPI's SHA-256; its complete listing (526 members) has no NOTICE-named file at any path; every wheel component is traced to the sdist; the release repository at a version-verified commit has no NOTICE-named or notice-like file: MagicStack/uvloop@74f4c96d3fc5 (tag v0.22.1, version verified in uvloop/_version.py): no NOTICE-named file in 126 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the \"confirm no upstream NOTICE\" question can be dropped for this exact release; still ship the licence texts bundled in the wheel (uvloop-0.22.1.dist-info/licenses/LICENSE-APACHE; uvloop-0.22.1.dist-info/licenses/LICENSE-MIT) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: MIT License; OSI Approved :: Apache Software License; OSI Approved :: MIT License; third-party directories carried in the sdist (vendor/libuv) have their own licence terms, not checked here, which may require their licence texts too",
    "repository_check": {
-    "performed": false,
-    "reason": "not needed (outcome verified_absent from the sdist step)"
+    "commit": "74f4c96d3fc5281b1820491d2568de771ea7851b",
+    "notice_like": [],
+    "notices": [],
+    "performed": true,
+    "reason": "tree listed at a commit whose version file carries the exact version",
+    "repository": "https://github.com/MagicStack/uvloop",
+    "submodule_checks": [],
+    "submodules": [
+     "vendor/libuv"
+    ],
+    "tag": "v0.22.1",
+    "tags_probed": [
+     "v0.22.1",
+     "0.22.1",
+     "uvloop-v0.22.1",
+     "uvloop-0.22.1"
+    ],
+    "tree_entries": 126,
+    "tree_response_sha256": "074905328d139337f6f16b8aa1a54ec69093e4792740d5d9cb7d60d1c0a56ad8",
+    "tree_sha": "74f4c96d3fc5281b1820491d2568de771ea7851b",
+    "tree_truncated": false,
+    "version_check": {
+     "files_checked": [
+      "pyproject.toml",
+      "setup.py",
+      "uvloop/_version.py"
+     ],
+     "line": "__version__ = '0.22.1'",
+     "path": "uvloop/_version.py",
+     "retained": {
+      "bytes": 576,
+      "file": "sources/notice-uvloop-repo-74f4c96d3fc5-uvloop+_version.py",
+      "kind": "version-file",
+      "retrieved_on": "2026-10-05",
+      "sha256": "883ca08b9ff23a16c9d34b1c3d4d88216a6b1d597d839210781edb7c15213d06",
+      "url": "https://raw.githubusercontent.com/MagicStack/uvloop/74f4c96d3fc5281b1820491d2568de771ea7851b/uvloop/_version.py"
+     },
+     "verified": true
+    }
    },
    "sdist": {
     "project": "uvloop",
@@ -2775,7 +3686,7 @@
    "notice_like": [],
    "notices": [],
    "outcome": "inconclusive",
-   "reason": "the wheel contains components not traced to the sdist, whose NOTICE status is unknown: 8 native binaries; the sdist's build scripts contain download directives (CMakeLists.txt:324 FetchContent_Declare; CMakeLists.txt:326 FetchContent_Declare; cmake/cpu_extension.cmake:250 FetchContent_Declare; cmake/cpu_extension.cmake:258 FetchContent_Declare +11 more); whether the shipped binaries include downloaded code was not established; 75 wheel file(s) present in the sdist by neither content nor path (e.g. vllm/third_party/flashmla/flash_mla_interface.py, vllm/third_party/triton_kernels/compaction.py, vllm/third_party/triton_kernels/distributed.py); vllm/_C.abi3.so: no source file named _C.{c,cc,cpp,pyx,cu,...} in the sdist; provenance of the binary not established; vllm/_C_stable_libtorch.abi3.so: no source file named _C_stable_libtorch.{c,cc,cpp,pyx,cu,...} in the sdist; provenance of the binary not established; vllm/_flashmla_C.abi3.so: no source file named _flashmla_C.{c,cc,cpp,pyx,cu,...} in the sdist; provenance of the binary not established; vllm/_flashmla_extension_C.abi3.so: no source file named _flashmla_extension_C.{c,cc,cpp,pyx,cu,...} in the sdist; provenance of the binary not established (+3 more). Repository: vllm-project/vllm@2a69949bdadf (tag v0.19.0, version NOT verified at the commit): no NOTICE-named file in 4950 tree entries; a repository without a NOTICE does not establish absence for the release",
+   "reason": "the wheel contains components not traced to the sdist, whose NOTICE status is unknown: 8 native binaries; the sdist's build scripts contain download directives (CMakeLists.txt:324 FetchContent_Declare; CMakeLists.txt:326 FetchContent_Declare; cmake/cpu_extension.cmake:250 FetchContent_Declare; cmake/cpu_extension.cmake:258 FetchContent_Declare +11 more); whether the shipped binaries include downloaded code was not established; 75 wheel file(s) present in the sdist by neither content nor path (e.g. vllm/third_party/flashmla/flash_mla_interface.py, vllm/third_party/triton_kernels/compaction.py, vllm/third_party/triton_kernels/distributed.py); vllm/_C.abi3.so: no source file named _C.{c,cc,cpp,pyx,cu,...} in the sdist; provenance of the binary not established; vllm/_C_stable_libtorch.abi3.so: no source file named _C_stable_libtorch.{c,cc,cpp,pyx,cu,...} in the sdist; provenance of the binary not established; vllm/_flashmla_C.abi3.so: no source file named _flashmla_C.{c,cc,cpp,pyx,cu,...} in the sdist; provenance of the binary not established; vllm/_flashmla_extension_C.abi3.so: no source file named _flashmla_extension_C.{c,cc,cpp,pyx,cu,...} in the sdist; provenance of the binary not established (+3 more). Repository: vllm-project/vllm@2a69949bdadf (tag v0.19.0, version NOT verified at the commit): no NOTICE-named file in 4950 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent",
    "remains": "the NOTICE question stays open (see reason); in any case ship the licence texts bundled in the wheel (vllm-0.19.0.dist-info/licenses/LICENSE) with the redistributed wheel (Apache-2.0 4(a)); keep the copyright and attribution notices in the files (4(c)); declared licence: Apache-2.0; third-party directories carried in the sdist (vllm/third_party/flashmla) have their own licence terms, not checked here, which may require their licence texts too",
    "repository_check": {
     "commit": "2a69949bdadf0e8942b7a1619b229cb475beef20",

@@ -21,11 +21,25 @@ SDIST = {'PKG-INFO': h('pkg-info'), 'LICENSE': h('licence'), 'pkg/__init__.py': 
          'pyproject.toml': h('pyproject')}
 
 
+CLEAN_REPOSITORY = {'verified_clean': True, 'summary': 'o/r@abc (tag v1.0, version verified in pkg/__init__.py): '
+                                                       'no NOTICE-named file in 40 tree entries'}
+
+
 def evidence(**changes):
+    """A wheel/sdist that meets every package condition, with a clean, version-verified release repository."""
     e = {'notices': [], 'sdist': VERIFIED, 'listing_complete': True, 'member_count': 5,
-         'pkg_info_version_matches': True, 'notice_like': [], 'outside': []}
+         'pkg_info_version_matches': True, 'notice_like': [], 'outside': [], 'repository': CLEAN_REPOSITORY}
     e.update(changes)
     return e
+
+
+def repository(notices=(), verified=True, notice_like=(), truncated=False, commit='c' * 40):
+    """A repository_check() record (as returned after listing the release tree)."""
+    return {'performed': True, 'repository': 'https://github.com/o/r', 'tag': 'v1.0', 'commit': commit,
+            'tree_entries': 40, 'tree_truncated': truncated, 'notice_like': list(notice_like),
+            'version_check': {'verified': verified, 'path': 'pkg/__init__.py'},
+            'notices': [{'source': 'repository o/r@cccccccccccc', 'path': n, 'counts_for_outcome': verified}
+                        for n in notices], 'submodule_checks': []}
 
 
 def member(path, content='', elf=False, **extra):
@@ -71,6 +85,39 @@ class Classify(unittest.TestCase):
         outcome, reason = N.classify(evidence())
         self.assertEqual(outcome, 'verified_absent')
         self.assertIn('pkg-1.0.tar.gz', reason)
+
+    def test_package_absence_alone_is_not_verified_absent(self):
+        """Review P2 on 42c2b4c: without a verified release repository, the upstream question stays open."""
+        outcome, reason = N.classify(evidence(repository=None))
+        self.assertEqual(outcome, 'inconclusive')
+        self.assertIn('absent from the inspected wheel and sdist', reason)
+        self.assertIn('upstream NOTICE question stays open', reason)
+
+    def test_repository_is_consulted_after_a_clean_package_and_its_notice_counts(self):
+        """The reviewer's synthetic case: byte-identical wheel/sdist, NOTICE only in the release repository."""
+        calls = []
+        outcome, reason, repo = N.decide(evidence(repository=None), [],
+                                         lambda: calls.append(1) or repository(notices=['NOTICE']))
+        self.assertEqual(calls, [1])
+        self.assertEqual(outcome, 'found')
+        self.assertIn('repository only', reason)
+
+    def test_repository_conditions_for_verified_absent(self):
+        cases = {'clean and version-verified': (repository(), 'verified_absent'),
+                 'version not verified': (repository(verified=False), 'inconclusive'),
+                 'notice-like file in the tree': (repository(notice_like=['THIRD_PARTY_NOTICES.txt']), 'inconclusive'),
+                 'tree truncated': (repository(truncated=True), 'inconclusive'),
+                 'not listed (no repository named)': ({'performed': False, 'reason': 'no repository'},
+                                                     'inconclusive')}
+        for label, (repo, expected) in cases.items():
+            with self.subTest(case=label):
+                outcome, reason, _ = N.decide(evidence(repository=None), [], lambda: repo)
+                self.assertEqual(outcome, expected, reason)
+
+    def test_a_notice_in_the_wheel_or_sdist_needs_no_repository(self):
+        outcome, _, repo = N.decide(evidence(notices=[{'source': 'sdist pkg-1.0.tar.gz', 'path': 'NOTICE'}]), [],
+                                    lambda: self.fail('repository consulted unnecessarily'))
+        self.assertEqual((outcome, repo['performed']), ('found', False))
 
     def test_no_sdist_is_inconclusive(self):
         outcome, reason = N.classify(evidence(sdist={'status': 'none', 'reason': 'no sdist on PyPI'}))
@@ -246,6 +293,10 @@ class CommittedPack(unittest.TestCase):
             self.assertEqual(set(listing['trimmed_third_party_copies']) - cleared, set(), r['artifact'])
             self.assertIn('can be dropped', r['remains'])
             self.assertIn('licence texts', r['remains'])
+            repo = r['repository_check']
+            self.assertTrue(repo.get('commit') and repo['version_check']['verified'], r['artifact'])
+            self.assertEqual((repo['notices'], repo['notice_like'], repo['tree_truncated']), ([], [], False),
+                             r['artifact'])
 
     def test_cleared_submodules_match_the_sdist_copy_and_have_no_notice(self):
         for r in self.rows:
