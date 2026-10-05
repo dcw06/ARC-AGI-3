@@ -1,0 +1,1180 @@
+{
+ "classifications": [
+  "explained",
+  "partially_explained",
+  "unexplained"
+ ],
+ "fetch_failures": [],
+ "prepared_on": "2026-10-05",
+ "retained_sources": [
+  {
+   "bytes": 829,
+   "file": "sources/metadata-ninja-github-submodule-at-1.13.0.json",
+   "kind": "raw",
+   "retrieved_on": "2026-10-05",
+   "sha256": "42a5921a46c5c67d702bd4af1b449c9fb1a62cb51918ee028d853b22ea548bec",
+   "url": "https://api.github.com/repos/scikit-build/ninja-python-distributions/contents/ninja-upstream?ref=1.13.0"
+  },
+  {
+   "bytes": 1784,
+   "file": "sources/metadata-ninja-kitware-d74efef9-src_version.cc",
+   "kind": "raw",
+   "retrieved_on": "2026-10-05",
+   "sha256": "4f82c00b2f3a1898b29c72ff839b8a21d30176b7087629cbb5b3a4da6ecff93e",
+   "url": "https://raw.githubusercontent.com/Kitware/ninja/d74efef9fa331d3ae60b62479d49254827c081fe/src/version.cc"
+  },
+  {
+   "bytes": 1404,
+   "file": "sources/metadata-ninja-kitware-d74efef9-src_hash_map.h",
+   "kind": "raw",
+   "retrieved_on": "2026-10-05",
+   "sha256": "c0ee50e8a9b1806961c6db2e7213cfaffb4afa3a16e91b6047715a55f4e36c45",
+   "url": "https://raw.githubusercontent.com/Kitware/ninja/d74efef9fa331d3ae60b62479d49254827c081fe/src/hash_map.h"
+  },
+  {
+   "bytes": 367,
+   "file": "sources/metadata-ninja-kitware-d74efef9-src_third_party_rapidhash_README.ninja",
+   "kind": "raw",
+   "retrieved_on": "2026-10-05",
+   "sha256": "55172435065167117f170d0312501aafc63e824c759c458e2ead05684e40bef9",
+   "url": "https://raw.githubusercontent.com/Kitware/ninja/d74efef9fa331d3ae60b62479d49254827c081fe/src/third_party/rapidhash/README.ninja"
+  },
+  {
+   "bytes": 11517,
+   "file": "sources/metadata-ninja-kitware-d74efef9-src_third_party_rapidhash_rapidhash.h",
+   "kind": "raw",
+   "retrieved_on": "2026-10-05",
+   "sha256": "263b42cbe8d4093ee0b1b8b6beaf3c24652babbbabddadb71103af2c814b40df",
+   "url": "https://raw.githubusercontent.com/Kitware/ninja/d74efef9fa331d3ae60b62479d49254827c081fe/src/third_party/rapidhash/rapidhash.h"
+  },
+  {
+   "bytes": 362,
+   "file": "sources/metadata-ninja-kitware-d74efef9-src_third_party_emhash_README.ninja",
+   "kind": "raw",
+   "retrieved_on": "2026-10-05",
+   "sha256": "871523bf3637a5ec3865239902e097982e69acf4a612f367f244319aeb9ca24e",
+   "url": "https://raw.githubusercontent.com/Kitware/ninja/d74efef9fa331d3ae60b62479d49254827c081fe/src/third_party/emhash/README.ninja"
+  },
+  {
+   "bytes": 22312,
+   "file": "sources/metadata-ninja-pypi-1.7.2.json",
+   "kind": "raw",
+   "retrieved_on": "2026-10-05",
+   "sha256": "194e68604269eecd19e9f0fc4308880f1a7d9246ee5dac1e78d8ddc9f7d052ef",
+   "url": "https://pypi.org/pypi/ninja/1.7.2/json"
+  },
+  {
+   "bytes": 1705,
+   "file": "sources/metadata-ninja-rapidhash-licence-header.txt",
+   "kind": "excerpt",
+   "lines": [
+    1,
+    34
+   ],
+   "member": "ninja-upstream/src/third_party/rapidhash/rapidhash.h",
+   "member_sha256": "263b42cbe8d4093ee0b1b8b6beaf3c24652babbbabddadb71103af2c814b40df",
+   "retrieved_on": "2026-10-05",
+   "sha256": "c22c67335c2b20162deaf91240106b3063cc0a5a60eedb83dcf2814db90bd12f",
+   "url": "https://files.pythonhosted.org/packages/43/73/79a0b22fc731989c708068427579e840a6cf4e937fe7ae5c5d0b7356ac22/ninja-1.13.0.tar.gz#ninja-upstream/src/third_party/rapidhash/rapidhash.h",
+   "what": "rapidhash BSD 2-Clause notice"
+  },
+  {
+   "bytes": 1361,
+   "file": "sources/metadata-ninja-emhash-licence-header.txt",
+   "kind": "excerpt",
+   "lines": [
+    1,
+    25
+   ],
+   "member": "ninja-upstream/src/third_party/emhash/hash_table8.hpp",
+   "member_sha256": "1d13b3e96ac5cf84a573e9727c4dc937fa5b4b70e4604761aa279ca5fe65607d",
+   "retrieved_on": "2026-10-05",
+   "sha256": "a0232916dc029407ab35bd4759b55491d1eca697da0851d38e7be801c2b1d853",
+   "url": "https://files.pythonhosted.org/packages/43/73/79a0b22fc731989c708068427579e840a6cf4e937fe7ae5c5d0b7356ac22/ninja-1.13.0.tar.gz#ninja-upstream/src/third_party/emhash/hash_table8.hpp",
+   "what": "emhash MIT notice"
+  },
+  {
+   "bytes": 502,
+   "file": "sources/metadata-regex-_main.py-licence-header.txt",
+   "kind": "excerpt",
+   "lines": [
+    1,
+    14
+   ],
+   "member": "regex/_main.py",
+   "member_sha256": "240a36c133d858f336ccff3b2c6dd4060e9da673f2f469e611a4807d0ce69e9b",
+   "retrieved_on": "2026-10-05",
+   "sha256": "98770cca405b0e5f83024aa11d4ec960fee4a634f8c9e362ae44bb404b266426",
+   "url": "https://files.pythonhosted.org/packages/11/0e/a9f6f81013e0deaf559b25711623864970fe6a098314e374ccb1540a4152/regex-2026.4.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl#regex/_main.py",
+   "what": "SRE copyright and CNRI statement as shipped in the wheel"
+  },
+  {
+   "bytes": 1615,
+   "file": "sources/metadata-regex-_regex.c-licence-header.txt",
+   "kind": "excerpt",
+   "lines": [
+    1,
+    36
+   ],
+   "member": "src/_regex.c",
+   "member_sha256": "054e031c05669cb88bae2c090696958129f9b8cf1fd0d18533655619df94a3f0",
+   "retrieved_on": "2026-10-05",
+   "sha256": "d84fdfa5c7f36848d81b81b168f087c378ba018bfc4bb5a3e6946a572a22d3f6",
+   "url": "https://files.pythonhosted.org/packages/cb/0e/3a246dbf05666918bd3664d9d787f84a9108f6f43cc953a077e4a7dfdb7e/regex-2026.4.4.tar.gz#src/_regex.c",
+   "what": "SRE copyright and CNRI statement in the C source of the compiled module"
+  },
+  {
+   "bytes": 3381,
+   "file": "sources/metadata-regex-spdx-v3.27.0-CNRI-Python.txt",
+   "kind": "raw",
+   "retrieved_on": "2026-10-05",
+   "sha256": "69b5d7d41a6ece3b20c6a77774f567948766d8643f7646e3f65474692cce5c15",
+   "url": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/text/CNRI-Python.txt"
+  },
+  {
+   "bytes": 1419,
+   "file": "sources/metadata-regex-cpython-v2.6-patchlevel.h",
+   "kind": "raw",
+   "retrieved_on": "2026-10-05",
+   "sha256": "1d4580050ecebbe63bf254ca329a6df85e1bfe29b82d64656a50717b7e25a7c0",
+   "url": "https://raw.githubusercontent.com/python/cpython/v2.6/Include/patchlevel.h"
+  },
+  {
+   "bytes": 13741,
+   "file": "sources/metadata-regex-cpython-v2.6-LICENSE.txt",
+   "kind": "raw",
+   "retrieved_on": "2026-10-05",
+   "sha256": "f7a0d9a43d04eade9ecb2f677a617b7c22794355ac49f0b141ab194fb030a64f",
+   "url": "https://raw.githubusercontent.com/python/cpython/v2.6/LICENSE"
+  },
+  {
+   "bytes": 1242,
+   "file": "sources/metadata-regex-cpython-v3.1-patchlevel.h",
+   "kind": "raw",
+   "retrieved_on": "2026-10-05",
+   "sha256": "d9bc4cd0be8b55f47b22edf8c4b4d0943908ee01c3c83d7298181625ceb9762f",
+   "url": "https://raw.githubusercontent.com/python/cpython/v3.1/Include/patchlevel.h"
+  },
+  {
+   "bytes": 13985,
+   "file": "sources/metadata-regex-cpython-v3.1-LICENSE.txt",
+   "kind": "raw",
+   "retrieved_on": "2026-10-05",
+   "sha256": "1524dab343bfa65c65f0450cebaf6472d98f668ecf615df1eadb149f88912fff",
+   "url": "https://raw.githubusercontent.com/python/cpython/v3.1/LICENSE"
+  },
+  {
+   "bytes": 1492,
+   "file": "sources/metadata-regex-cpython-v3.1-_sre.c-licence-header.txt",
+   "kind": "excerpt",
+   "lines": [
+    1,
+    35
+   ],
+   "member": null,
+   "member_sha256": "ab312b366a21d64e2bdab3ec7e64461ecc8ddef40417d5d808f6e5a5b60e6000",
+   "retrieved_on": "2026-10-05",
+   "sha256": "392f2606f13562f01bfc9f6e34fcd4fb697b5acbe9a0b76db567442b16c3cffc",
+   "url": "https://raw.githubusercontent.com/python/cpython/v3.1/Modules/_sre.c",
+   "what": "CPython 3.1 Modules/_sre.c header: the statement regex's headers repeat"
+  },
+  {
+   "bytes": 677,
+   "file": "sources/metadata-regex-cpython-tags-v1.6.json",
+   "kind": "raw",
+   "retrieved_on": "2026-10-05",
+   "sha256": "bf97bc46f86c747d146bd5fc36d9c07fabf20987078c44881451ac7cad53d037",
+   "url": "https://api.github.com/repos/python/cpython/git/matching-refs/tags/v1.6"
+  },
+  {
+   "bytes": 1431,
+   "file": "sources/metadata-prometheus_client-decorator-licence-header.txt",
+   "kind": "excerpt",
+   "lines": [
+    1,
+    28
+   ],
+   "member": "prometheus_client/decorator.py",
+   "member_sha256": "ecc754a245a6cd0d7b7e87add91e5070cb9b759d560cf198a34fc7a8bc40c369",
+   "retrieved_on": "2026-10-05",
+   "sha256": "d2687c072a1d51ffe6e013827baa59a4341da011e82b2a6787a9dc62925f20b9",
+   "url": "https://files.pythonhosted.org/packages/8d/9b/d4b1e644385499c8346fa9b622a3f030dce14cd6ef8a1871c221a17a67e7/prometheus_client-0.25.0-py3-none-any.whl#prometheus_client/decorator.py",
+   "what": "decorator BSD-style licence text as shipped in the wheel"
+  },
+  {
+   "bytes": 236,
+   "file": "sources/metadata-prometheus_client-NOTICE.txt",
+   "kind": "archive member",
+   "member": "prometheus_client-0.25.0.dist-info/licenses/NOTICE",
+   "member_sha256": "4efa1874aeaa60f365f5797e617f1ff933e15e508eaf751e9848ed4413d7a7ae",
+   "retrieved_on": "2026-10-05",
+   "sha256": "4efa1874aeaa60f365f5797e617f1ff933e15e508eaf751e9848ed4413d7a7ae",
+   "url": "https://files.pythonhosted.org/packages/8d/9b/d4b1e644385499c8346fa9b622a3f030dce14cd6ef8a1871c221a17a67e7/prometheus_client-0.25.0-py3-none-any.whl#prometheus_client-0.25.0.dist-info/licenses/NOTICE",
+   "what": "NOTICE bundled in the wheel"
+  },
+  {
+   "bytes": 1309,
+   "file": "sources/metadata-prometheus_client-decorator-4.0.10-LICENSE.txt",
+   "kind": "archive member",
+   "member": "LICENSE.txt",
+   "member_sha256": "fd065f714547e26f6c5773416ed6a6aa0dbc6730c19f9392aeeec3def6cc44d2",
+   "retrieved_on": "2026-10-05",
+   "sha256": "fd065f714547e26f6c5773416ed6a6aa0dbc6730c19f9392aeeec3def6cc44d2",
+   "url": "https://files.pythonhosted.org/packages/13/8a/4eed41e338e8dcc13ca41c94b142d4d20c0de684ee5065523fee406ce76f/decorator-4.0.10.tar.gz#LICENSE.txt",
+   "what": "decorator 4.0.10 LICENSE.txt (upstream sdist)"
+  }
+ ],
+ "schema": "wheelhouse_evidence_metadata_discrepancies_v1",
+ "scope": "three wheels whose declared licence metadata names a licence not found in the wheel's bundled licence documents (inventory flag \"declared licence not found in documents\")",
+ "status": "evidence for the designated reviewer; a proposal, not a decision",
+ "wheels": [
+  {
+   "binary_evidence": {
+    "embedded_licence_strings": [
+     "#     http://www.apache.org/licenses/LICENSE-2.0",
+     "# Copyright 2001 Google Inc. All Rights Reserved.",
+     "# Licensed under the Apache License, Version 2.0 (the \"License\");",
+     "# See the License for the specific language governing permissions and",
+     "# You may obtain a copy of the License at",
+     "# distributed under the License is distributed on an \"AS IS\" BASIS,",
+     "# limitations under the License.",
+     "# you may not use this file except in compliance with the License."
+    ],
+    "embedded_licence_strings_all_from_src_browse_py": true,
+    "files_mentioning_EMH_WYHASH_HASH_outside_emhash": [],
+    "kNinjaVersion_embedded_in_binary": true,
+    "path": "ninja-1.13.0.data/scripts/ninja",
+    "rapidhash_secret_occurrences": {
+     "0x2d358dccaa6c78a5": 22,
+     "0x4b33a62ed433d4a3": 27,
+     "0x8bb84b93962eacc9": 45
+    },
+    "rapidhash_secrets_also_in_emhash_header": true,
+    "sdist_kNinjaVersion": "1.13.0.git.kitware.jobserver-pipe-1",
+    "sha256": "696f9628a79d9ce50314cf9556d7cd1a1d1ec52b8fd52828f6f9db1719565b67",
+    "stripped_no_symbol_names": true,
+    "version_named_in_wheel_readme": "1.13.0.gd74ef.kitware.jobserver-pipe-1"
+   },
+   "classification": "explained",
+   "classifier_history": {
+    "error": null,
+    "licence_classifiers": [
+     "License :: OSI Approved :: Apache Software License",
+     "License :: OSI Approved :: BSD License"
+    ],
+    "retained": "sources/metadata-ninja-pypi-1.7.2.json",
+    "version": "1.7.2"
+   },
+   "component": {
+    "licence": "BSD-2-Clause (SPDX identifier in README.ninja; BSD 2-Clause wording in the rapidhash.h header)",
+    "linux_sources_including_it": [
+     "src/build.cc",
+     "src/build_log.cc",
+     "src/clean.cc",
+     "src/deps_log.cc",
+     "src/dyndep.cc",
+     "src/dyndep_parser.cc",
+     "src/graph.cc",
+     "src/manifest_parser.cc",
+     "src/missing_deps.cc",
+     "src/ninja.cc",
+     "src/state.cc"
+    ],
+    "linux_sources_of_the_binary": [
+     "src/browse.cc",
+     "src/build.cc",
+     "src/build_log.cc",
+     "src/clean.cc",
+     "src/clparser.cc",
+     "src/debug_flags.cc",
+     "src/depfile_parser.cc",
+     "src/deps_log.cc",
+     "src/disk_interface.cc",
+     "src/dyndep.cc",
+     "src/dyndep_parser.cc",
+     "src/edit_distance.cc",
+     "src/elide_middle.cc",
+     "src/eval_env.cc",
+     "src/graph.cc",
+     "src/graphviz.cc",
+     "src/jobserver-posix.cc",
+     "src/jobserver.cc",
+     "src/json.cc",
+     "src/lexer.cc",
+     "src/line_printer.cc",
+     "src/manifest_parser.cc",
+     "src/metrics.cc",
+     "src/missing_deps.cc",
+     "src/ninja.cc",
+     "src/parser.cc",
+     "src/real_command_runner.cc",
+     "src/state.cc",
+     "src/status_printer.cc",
+     "src/string_piece_util.cc",
+     "src/subprocess-posix.cc",
+     "src/util.cc",
+     "src/version.cc"
+    ],
+    "name": "rapidhash (Copyright (C) 2024 Nicolas De Carli; based on wyhash by Wang Yi), vendored by ninja at ninja-upstream/src/third_party/rapidhash/",
+    "shipped_as": {
+     "form": "compiled into the ninja executable (ELF, stripped)",
+     "path": "ninja-1.13.0.data/scripts/ninja",
+     "sha256": "696f9628a79d9ce50314cf9556d7cd1a1d1ec52b8fd52828f6f9db1719565b67"
+    },
+    "ships_in_wheel": true,
+    "source_members": {
+     "src/third_party/rapidhash/README.ninja": "55172435065167117f170d0312501aafc63e824c759c458e2ead05684e40bef9",
+     "src/third_party/rapidhash/rapidhash.h": "263b42cbe8d4093ee0b1b8b6beaf3c24652babbbabddadb71103af2c814b40df"
+    },
+    "sources_calling_rapidhash": [
+     "src/build_log.cc",
+     "src/hash_map.h"
+    ]
+   },
+   "distribution": "ninja",
+   "extra_declared_licence": "BSD (classifier \"License :: OSI Approved :: BSD License\", variant not named)",
+   "licence_text_location": {
+    "in_sdist": "yes: ninja-upstream/src/third_party/rapidhash/rapidhash.h lines 1-34 (licence header); README.ninja beside it names SPDX BSD-2-Clause",
+    "in_wheel": "no (the wheel carries only LICENSE_Apache_20 and AUTHORS.rst)",
+    "retained": [
+     "sources/metadata-ninja-rapidhash-licence-header.txt"
+    ],
+    "retained_text_signals": {
+     "reference": [
+      "BSD-2-Clause"
+     ],
+     "spdx": [],
+     "text": [
+      "BSD-2-Clause-style"
+     ]
+    },
+    "upstream": "Kitware/ninja@d74efef9fa33/src/third_party/rapidhash/rapidhash.h"
+   },
+   "other_observations": [
+    {
+     "component": "emhash8::HashMap 1.6.5 (Copyright (c) 2021-2024 Huang Yuanbing & bailuzhou), vendored at ninja-upstream/src/third_party/emhash/",
+     "licence": "MIT (SPDX identifier in README.ninja and the header; full MIT wording in the header)",
+     "linux_sources_including_it": [
+      "src/build.cc",
+      "src/build_log.cc",
+      "src/clean.cc",
+      "src/deps_log.cc",
+      "src/dyndep.cc",
+      "src/dyndep_parser.cc",
+      "src/graph.cc",
+      "src/manifest_parser.cc",
+      "src/missing_deps.cc",
+      "src/ninja.cc",
+      "src/state.cc"
+     ],
+     "note": "compiled into the binary per the Linux source set; licence not declared in the metadata; text retained at sources/metadata-ninja-emhash-licence-header.txt"
+    },
+    {
+     "component": "ninja-upstream/src/getopt.c (public domain)",
+     "in_linux_source_set": false,
+     "note": "not compiled on Linux: CMakeLists adds it only under WIN32 and OS400/AIX"
+    },
+    {
+     "component": "embedded browse.py text",
+     "note": "the licence strings in the binary all come from src/browse.py (Apache-2.0, Google)"
+    }
+   ],
+   "proposed_obligation": "Ship, alongside the wheel and its bundled LICENSE_Apache_20 and AUTHORS.rst, the rapidhash BSD-2-Clause notice (copyright line, both conditions and the disclaimer) from sources/metadata-ninja-rapidhash-licence-header.txt: rapidhash code is compiled into ninja-1.13.0.data/scripts/ninja, and the licence asks binary redistributions to reproduce the notice in the documentation or other materials; the wheel carries no copy. Because emhash (MIT) is compiled into the same binary and is not declared, also ship its MIT notice from sources/metadata-ninja-emhash-licence-header.txt.",
+   "sdist": {
+    "files": 159,
+    "licence_documents": [
+     {
+      "member": "AUTHORS.rst",
+      "sha256": "6c6135b7f2e19b68abf12ee7fe36cb0e884ff387e9279b0d0aec6f0d5b0a3508",
+      "signals": {
+       "reference": [],
+       "spdx": [],
+       "text": []
+      }
+     },
+     {
+      "member": "LICENSE_Apache_20",
+      "sha256": "73ba74dfaa520b49a401b5d21459a8523a146f3b7518a833eea5efa85130bf68",
+      "signals": {
+       "reference": [
+        "Apache-2.0"
+       ],
+       "spdx": [],
+       "text": [
+        "Apache-2.0"
+       ]
+      }
+     },
+     {
+      "member": "ninja-upstream/COPYING",
+      "sha256": "eb7e9ab9690124c5c9f42bdc81383d886a3dede26345b6ed15bbad7caf81f7ea",
+      "signals": {
+       "reference": [
+        "Apache-2.0"
+       ],
+       "spdx": [],
+       "text": [
+        "Apache-2.0"
+       ]
+      }
+     }
+    ],
+    "members_with_signals_other_than_wheel_family": [
+     {
+      "member": "PKG-INFO",
+      "sha256": "8d76fc4e382cedcd22bcaeaa748af39b3fa7931b72442396d15cb181659d0a4e",
+      "signals": {
+       "reference": [
+        "BSD (variant not named)"
+       ],
+       "spdx": [],
+       "text": []
+      }
+     },
+     {
+      "member": "ninja-upstream/src/getopt.c",
+      "sha256": "a0e40f26252d08a127b7c6fb16499447c543252f883154322207fa8b1d8d460a",
+      "signals": {
+       "reference": [
+        "public-domain"
+       ],
+       "spdx": [],
+       "text": []
+      }
+     },
+     {
+      "member": "ninja-upstream/src/third_party/emhash/README.ninja",
+      "sha256": "871523bf3637a5ec3865239902e097982e69acf4a612f367f244319aeb9ca24e",
+      "signals": {
+       "reference": [],
+       "spdx": [
+        "MIT"
+       ],
+       "text": []
+      }
+     },
+     {
+      "member": "ninja-upstream/src/third_party/emhash/hash_table8.hpp",
+      "sha256": "1d13b3e96ac5cf84a573e9727c4dc937fa5b4b70e4604761aa279ca5fe65607d",
+      "signals": {
+       "reference": [
+        "MIT"
+       ],
+       "spdx": [
+        "MIT"
+       ],
+       "text": [
+        "MIT"
+       ]
+      }
+     },
+     {
+      "member": "ninja-upstream/src/third_party/rapidhash/README.ninja",
+      "sha256": "55172435065167117f170d0312501aafc63e824c759c458e2ead05684e40bef9",
+      "signals": {
+       "reference": [
+        "BSD-2-Clause"
+       ],
+       "spdx": [
+        "BSD-2-Clause"
+       ],
+       "text": []
+      }
+     },
+     {
+      "member": "ninja-upstream/src/third_party/rapidhash/rapidhash.h",
+      "sha256": "263b42cbe8d4093ee0b1b8b6beaf3c24652babbbabddadb71103af2c814b40df",
+      "signals": {
+       "reference": [
+        "BSD-2-Clause"
+       ],
+       "spdx": [],
+       "text": [
+        "BSD-2-Clause-style"
+       ]
+      }
+     },
+     {
+      "member": "pyproject.toml",
+      "sha256": "bbe15436b5ae6a5c67479e81c608388a9cfa21f497b9a59d2e1b45ed4bda2c44",
+      "signals": {
+       "reference": [
+        "BSD (variant not named)"
+       ],
+       "spdx": [],
+       "text": []
+      }
+     }
+    ],
+    "project": "ninja",
+    "sdist": "ninja-1.13.0.tar.gz",
+    "sha256": "4a40ce995ded54d9dc24f8ea37ff3bf62ad192b547f6c7126e7e25045e76f978",
+    "text_files_scanned": 159,
+    "url": "https://files.pythonhosted.org/packages/43/73/79a0b22fc731989c708068427579e840a6cf4e937fe7ae5c5d0b7356ac22/ninja-1.13.0.tar.gz",
+    "verified_against_pypi": true,
+    "version": "1.13.0",
+    "wheel_family": "Apache-2.0"
+   },
+   "uncertainty": [
+    "The BSD classifier is already in the ninja 1.7.2 metadata (2016; retained PyPI JSON), long before ninja vendored rapidhash. The classifier names no variant and its original basis was not established: rapidhash accounts for a BSD-licensed component in this wheel, which may not be the reason the maintainers added the classifier.",
+    "The binary is stripped. That rapidhash ships rests on the Linux source set (files including hash_map.h, and build_log.cc, call rapidhash()) and on its three 64-bit secret constants occurring in the binary. The same constants also appear in the emhash header, but only under EMH_WYHASH_HASH, which no other ninja-upstream file mentions.",
+    "The wheel was not rebuilt from these sources. The link between the shipped binary and the sdist and submodule sources rests on the kNinjaVersion string (sdist, submodule commit and binary agree) and on the commit hash abbreviated in the wheel README.",
+    "emhash presence rests on source evidence only (header-only template code; no distinctive marker in the stripped binary).",
+    "Not examined: toolchain runtime code statically linked by the manylinux2014 toolchain (GCC 10.2.1 and 4.8.5 ident strings in the binary) and its terms."
+   ],
+   "upstream": {
+    "commit": "d74efef9fa331d3ae60b62479d49254827c081fe",
+    "commit_from_api_this_run": true,
+    "commit_matches_recorded": true,
+    "files": {
+     "src/hash_map.h": {
+      "error": null,
+      "identical_to_sdist": true,
+      "retained": "sources/metadata-ninja-kitware-d74efef9-src_hash_map.h",
+      "sha256": "c0ee50e8a9b1806961c6db2e7213cfaffb4afa3a16e91b6047715a55f4e36c45"
+     },
+     "src/third_party/emhash/README.ninja": {
+      "error": null,
+      "identical_to_sdist": true,
+      "retained": "sources/metadata-ninja-kitware-d74efef9-src_third_party_emhash_README.ninja",
+      "sha256": "871523bf3637a5ec3865239902e097982e69acf4a612f367f244319aeb9ca24e"
+     },
+     "src/third_party/rapidhash/README.ninja": {
+      "error": null,
+      "identical_to_sdist": true,
+      "retained": "sources/metadata-ninja-kitware-d74efef9-src_third_party_rapidhash_README.ninja",
+      "sha256": "55172435065167117f170d0312501aafc63e824c759c458e2ead05684e40bef9"
+     },
+     "src/third_party/rapidhash/rapidhash.h": {
+      "error": null,
+      "identical_to_sdist": true,
+      "retained": "sources/metadata-ninja-kitware-d74efef9-src_third_party_rapidhash_rapidhash.h",
+      "sha256": "263b42cbe8d4093ee0b1b8b6beaf3c24652babbbabddadb71103af2c814b40df"
+     },
+     "src/version.cc": {
+      "error": null,
+      "identical_to_sdist": true,
+      "retained": "sources/metadata-ninja-kitware-d74efef9-src_version.cc",
+      "sha256": "4f82c00b2f3a1898b29c72ff839b8a21d30176b7087629cbb5b3a4da6ecff93e"
+     }
+    },
+    "readme_short_hash_matches": true,
+    "submodule_lookup": "https://api.github.com/repos/scikit-build/ninja-python-distributions/contents/ninja-upstream?ref=1.13.0",
+    "version_file_contains_binary_version": true
+   },
+   "version": "1.13.0",
+   "wheel": {
+    "artifact": "ninja-1.13.0-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+    "compiled_files": [
+     {
+      "bytes": 372384,
+      "markers": [
+       "#     http://www.apache.org/licenses/LICENSE-2.0",
+       "# Copyright 2001 Google Inc. All Rights Reserved.",
+       "# Licensed under the Apache License, Version 2.0 (the \"License\");",
+       "# See the License for the specific language governing permissions and",
+       "# You may obtain a copy of the License at",
+       "# distributed under the License is distributed on an \"AS IS\" BASIS,",
+       "# limitations under the License.",
+       "# you may not use this file except in compliance with the License."
+      ],
+      "path": "ninja-1.13.0.data/scripts/ninja",
+      "sha256": "696f9628a79d9ce50314cf9556d7cd1a1d1ec52b8fd52828f6f9db1719565b67"
+     }
+    ],
+    "declared": [
+     "Classifier: License :: OSI Approved :: Apache Software License",
+     "Classifier: License :: OSI Approved :: BSD License"
+    ],
+    "files": 13,
+    "files_with_licence_signals": [
+     {
+      "bytes": 8148,
+      "leading_comment": [
+       3,
+       15
+      ],
+      "path": "ninja/ninja_syntax.py",
+      "sha256": "4425d9e91a1d6b79709db86d430e88e9b25ca44f7c997519f63a1c9ef0b82106",
+      "signals": {
+       "reference": [
+        "Apache-2.0"
+       ],
+       "spdx": [],
+       "text": []
+      }
+     }
+    ],
+    "inventory": {
+     "detected_families": "Apache-2.0",
+     "flags": "",
+     "licence_documents": "ninja-1.13.0.dist-info/licenses/AUTHORS.rst; ninja-1.13.0.dist-info/licenses/LICENSE_Apache_20",
+     "metadata_declared": "OSI Approved :: Apache Software License; OSI Approved :: BSD License"
+    },
+    "licence_documents": [
+     {
+      "bytes": 142,
+      "path": "ninja-1.13.0.dist-info/licenses/AUTHORS.rst",
+      "sha256": "6c6135b7f2e19b68abf12ee7fe36cb0e884ff387e9279b0d0aec6f0d5b0a3508",
+      "signals": {
+       "reference": [],
+       "spdx": [],
+       "text": []
+      }
+     },
+     {
+      "bytes": 10273,
+      "path": "ninja-1.13.0.dist-info/licenses/LICENSE_Apache_20",
+      "sha256": "73ba74dfaa520b49a401b5d21459a8523a146f3b7518a833eea5efa85130bf68",
+      "signals": {
+       "reference": [
+        "Apache-2.0"
+       ],
+       "spdx": [],
+       "text": [
+        "Apache-2.0"
+       ]
+      }
+     }
+    ],
+    "sha256": "fb46acf6b93b8dd0322adc3a4945452a4e774b75b91293bafcc7b7f8e6517dfa",
+    "text_files_scanned": 12,
+    "url": "https://files.pythonhosted.org/packages/ed/de/0e6edf44d6a04dabd0318a519125ed0415ce437ad5a1ec9b9be03d9048cf/ninja-1.13.0-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl"
+   },
+   "wheel_apache_text_identical_to_ninja_COPYING": false
+  },
+  {
+   "classification": "explained",
+   "component": {
+    "compiled_from": [
+     "src/_regex.c",
+     "src/_regex_unicode.c"
+    ],
+    "cpython_3_1_sre_header_carries_same_statement": true,
+    "files_in_wheel": [
+     {
+      "header_lines": [
+       1,
+       14
+      ],
+      "path": "regex/_main.py",
+      "sha256": "240a36c133d858f336ccff3b2c6dd4060e9da673f2f469e611a4807d0ce69e9b"
+     },
+     {
+      "header_lines": [
+       1,
+       14
+      ],
+      "path": "regex/_regex_core.py",
+      "sha256": "a8378b9e67b747e5490c898656a4ba23672afa3772d3ec3ce976a5f2348d0c7a"
+     },
+     {
+      "embedded_string": "RE 2.3.0 Copyright (c) 1997-2002 by Secret Labs AB",
+      "path": "regex/_regex.cpython-312-x86_64-linux-gnu.so",
+      "sha256": "34cacc9e637c15a55befb51f938312762b0955010b292e10413a9be068870a24",
+      "string_from_src__regex_c_present": true
+     }
+    ],
+    "licence": "CNRI's Python 1.6 license (source headers); declared as SPDX CNRI-Python",
+    "name": "SRE regular expression engine (Copyright (c) 1997-2001 Secret Labs AB), from CPython 2.6/3.1's re module, from which regex derives",
+    "ships_in_wheel": true,
+    "wheel_matches_sdist": {
+     "regex-2026.4.4.dist-info/licenses/LICENSE.txt": true,
+     "regex/_main.py": true,
+     "regex/_regex_core.py": true
+    }
+   },
+   "distribution": "regex",
+   "extra_declared_licence": "CNRI-Python (License-Expression \"Apache-2.0 AND CNRI-Python\")",
+   "licence_text_location": {
+    "in_sdist": "no (same LICENSE.txt)",
+    "in_wheel": "no: LICENSE.txt names \"CNRI's Python 1.6 license\" in its first paragraph but carries only the Apache-2.0 text",
+    "retained": [
+     "sources/metadata-regex-spdx-v3.27.0-CNRI-Python.txt",
+     "sources/metadata-regex-cpython-v3.1-LICENSE.txt",
+     "sources/metadata-regex-cpython-v2.6-LICENSE.txt"
+    ],
+    "spdx_clause_2": "2. Subject to the terms and conditions of this License Agreement, CNRI hereby grants Licensee a non-exclusive, royalty-free, world-wide license to reproduce, analyze, test, perform and/or display publicly, prepare derivative works, distribute, and otherwise use Python 1.6b1 alone or in any derivative version, provided, however, that CNRIs License Agreement is retained in Python 1.6b1, alone or in any derivative version prepared by Licensee. Alternately, in lieu of CNRIs License Agreement, Licensee may substitute the following text (omitting the quotes): \"Python 1.6, beta 1, is made available subject to the terms and conditions in CNRIs License Agreement. This Agreement may be located on the Internet using the following unique, persistent identifier (known as a handle): 1895.22/1011. This Agreement may also be obtained from a proxy server on the Internet using the URL:http://hdl.handle.net/1895.22/1011\".",
+    "upstream": {
+     "cpython": {
+      "v2.6": {
+       "cnri_1_6_1_agreement_present": true,
+       "licence": "sources/metadata-regex-cpython-v2.6-LICENSE.txt",
+       "licence_signals": {
+        "reference": [],
+        "spdx": [],
+        "text": [
+         "CNRI-Python",
+         "PSF-2.0"
+        ]
+       },
+       "patchlevel": "sources/metadata-regex-cpython-v2.6-patchlevel.h",
+       "tag_carries_version": true
+      },
+      "v3.1": {
+       "cnri_1_6_1_agreement_present": true,
+       "licence": "sources/metadata-regex-cpython-v3.1-LICENSE.txt",
+       "licence_signals": {
+        "reference": [],
+        "spdx": [],
+        "text": [
+         "CNRI-Python",
+         "PSF-2.0"
+        ]
+       },
+       "patchlevel": "sources/metadata-regex-cpython-v3.1-patchlevel.h",
+       "tag_carries_version": true
+      }
+     },
+     "cpython_v1.6_tags": [
+      "v1.6a1",
+      "v1.6a2"
+     ],
+     "cpython_v1.6_tags_error": null,
+     "spdx_CNRI-Python": "sources/metadata-regex-spdx-v3.27.0-CNRI-Python.txt"
+    }
+   },
+   "other_observations": [
+    {
+     "note": "src/_regex.h (sdist only, compiled in) carries the Secret Labs AB copyright line without the CNRI statement",
+     "retained": "sources/metadata-regex-_regex.c-licence-header.txt"
+    }
+   ],
+   "proposed_obligation": "Ship, alongside the wheel and its bundled LICENSE.txt, a copy of the CNRI licence text. Proposed: sources/metadata-regex-spdx-v3.27.0-CNRI-Python.txt (the text of the declared SPDX identifier, which in clause 2 asks that the CNRI agreement be retained in any derivative version). The reviewer may instead or also choose the CPython licence file (sources/metadata-regex-cpython-v3.1-LICENSE.txt), which carries the CNRI agreement for Python 1.6.1 within the PSF licence history. The Secret Labs AB copyright notices already ship in the headers of regex/_main.py and regex/_regex_core.py; keep those files unmodified.",
+   "sdist": {
+    "files": 22,
+    "licence_documents": [
+     {
+      "member": "LICENSE.txt",
+      "sha256": "bff55ef4cdcc8c14ce259f8e8ab60e264418440d6335f4dc138273fbd506144d",
+      "signals": {
+       "reference": [
+        "Apache-2.0",
+        "CNRI-Python"
+       ],
+       "spdx": [],
+       "text": [
+        "Apache-2.0"
+       ]
+      }
+     }
+    ],
+    "members_with_signals_other_than_wheel_family": [
+     {
+      "member": "LICENSE.txt",
+      "sha256": "bff55ef4cdcc8c14ce259f8e8ab60e264418440d6335f4dc138273fbd506144d",
+      "signals": {
+       "reference": [
+        "Apache-2.0",
+        "CNRI-Python"
+       ],
+       "spdx": [],
+       "text": [
+        "Apache-2.0"
+       ]
+      }
+     },
+     {
+      "member": "PKG-INFO",
+      "sha256": "46362865c3013446ed2bc93d803708e66cbfd42ef599fa73a45af80ce36683d1",
+      "signals": {
+       "reference": [
+        "Apache-2.0",
+        "CNRI-Python"
+       ],
+       "spdx": [],
+       "text": []
+      }
+     },
+     {
+      "member": "docs/Features.html",
+      "sha256": "8129f538e16ca6aa98e8754de36d82d411547bd548ef083271d056dfafcb19a5",
+      "signals": {
+       "reference": [
+        "public-domain"
+       ],
+       "spdx": [],
+       "text": []
+      }
+     },
+     {
+      "member": "pyproject.toml",
+      "sha256": "b607ea49ad945e62bc36fe7fd1df4eab03a24874f85b86a5c350295c7c38d698",
+      "signals": {
+       "reference": [
+        "Apache-2.0",
+        "CNRI-Python"
+       ],
+       "spdx": [],
+       "text": []
+      }
+     },
+     {
+      "member": "regex.egg-info/PKG-INFO",
+      "sha256": "46362865c3013446ed2bc93d803708e66cbfd42ef599fa73a45af80ce36683d1",
+      "signals": {
+       "reference": [
+        "Apache-2.0",
+        "CNRI-Python"
+       ],
+       "spdx": [],
+       "text": []
+      }
+     },
+     {
+      "member": "regex/_main.py",
+      "sha256": "240a36c133d858f336ccff3b2c6dd4060e9da673f2f469e611a4807d0ce69e9b",
+      "signals": {
+       "reference": [
+        "CNRI-Python"
+       ],
+       "spdx": [],
+       "text": []
+      }
+     },
+     {
+      "member": "regex/_regex_core.py",
+      "sha256": "a8378b9e67b747e5490c898656a4ba23672afa3772d3ec3ce976a5f2348d0c7a",
+      "signals": {
+       "reference": [
+        "CNRI-Python"
+       ],
+       "spdx": [],
+       "text": []
+      }
+     },
+     {
+      "member": "src/_regex.c",
+      "sha256": "054e031c05669cb88bae2c090696958129f9b8cf1fd0d18533655619df94a3f0",
+      "signals": {
+       "reference": [
+        "CNRI-Python"
+       ],
+       "spdx": [],
+       "text": []
+      }
+     }
+    ],
+    "project": "regex",
+    "sdist": "regex-2026.4.4.tar.gz",
+    "sha256": "e08270659717f6973523ce3afbafa53515c4dc5dcad637dc215b6fd50f689423",
+    "text_files_scanned": 22,
+    "url": "https://files.pythonhosted.org/packages/cb/0e/3a246dbf05666918bd3664d9d787f84a9108f6f43cc953a077e4a7dfdb7e/regex-2026.4.4.tar.gz",
+    "verified_against_pypi": true,
+    "version": "2026.4.4",
+    "wheel_family": "Apache-2.0"
+   },
+   "uncertainty": [
+    "\"CNRI's Python 1.6 license\" in the headers does not pin a text: SPDX CNRI-Python is worded for Python 1.6b1, CPython 2.6/3.1 carry the agreement for Python 1.6.1, and the Python 1.6 final text was not retrieved (the CPython repository has tags v1.6a1, v1.6a2 only, no v1.6 final). Which text satisfies the headers is for the reviewer.",
+    "regex derives from the re module of CPython 2.6 and 3.1. Changes made inside CPython between 2001 and 2009 may fall under the PSF licence history, which the declared expression does not name. Not resolved.",
+    "src/_regex_unicode.c, compiled into the module, holds tables generated from the Unicode Character Database 17.0.0 (tools/build_regex_unicode.py). Whether Unicode data licence terms apply was not examined."
+   ],
+   "version": "2026.4.4",
+   "wheel": {
+    "artifact": "regex-2026.4.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+    "compiled_files": [
+     {
+      "bytes": 2570776,
+      "markers": [
+       "RE 2.3.0 Copyright (c) 1997-2002 by Secret Labs AB",
+       "copyright"
+      ],
+      "path": "regex/_regex.cpython-312-x86_64-linux-gnu.so",
+      "sha256": "34cacc9e637c15a55befb51f938312762b0955010b292e10413a9be068870a24"
+     }
+    ],
+    "declared": [
+     "License-Expression: Apache-2.0 AND CNRI-Python",
+     "License-File: LICENSE.txt"
+    ],
+    "files": 10,
+    "files_with_licence_signals": [
+     {
+      "bytes": 33343,
+      "leading_comment": [
+       1,
+       14
+      ],
+      "path": "regex/_main.py",
+      "sha256": "240a36c133d858f336ccff3b2c6dd4060e9da673f2f469e611a4807d0ce69e9b",
+      "signals": {
+       "reference": [
+        "CNRI-Python"
+       ],
+       "spdx": [],
+       "text": []
+      }
+     },
+     {
+      "bytes": 147374,
+      "leading_comment": [
+       1,
+       14
+      ],
+      "path": "regex/_regex_core.py",
+      "sha256": "a8378b9e67b747e5490c898656a4ba23672afa3772d3ec3ce976a5f2348d0c7a",
+      "signals": {
+       "reference": [
+        "CNRI-Python"
+       ],
+       "spdx": [],
+       "text": []
+      }
+     }
+    ],
+    "inventory": {
+     "detected_families": "Apache-2.0",
+     "flags": "",
+     "licence_documents": "regex-2026.4.4.dist-info/licenses/LICENSE.txt",
+     "metadata_declared": "Apache-2.0 AND CNRI-Python"
+    },
+    "licence_documents": [
+     {
+      "bytes": 11584,
+      "path": "regex-2026.4.4.dist-info/licenses/LICENSE.txt",
+      "sha256": "bff55ef4cdcc8c14ce259f8e8ab60e264418440d6335f4dc138273fbd506144d",
+      "signals": {
+       "reference": [
+        "Apache-2.0",
+        "CNRI-Python"
+       ],
+       "spdx": [],
+       "text": [
+        "Apache-2.0"
+       ]
+      }
+     }
+    ],
+    "sha256": "993f657a7c1c6ec51b5e0ba97c9817d06b84ea5fa8d82e43b9405de0defdc2b9",
+    "text_files_scanned": 9,
+    "url": "https://files.pythonhosted.org/packages/11/0e/a9f6f81013e0deaf559b25711623864970fe6a098314e374ccb1540a4152/regex-2026.4.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+   }
+  },
+  {
+   "classification": "explained",
+   "component": {
+    "files_in_wheel": [
+     {
+      "licence_header_lines": [
+       1,
+       28
+      ],
+      "path": "prometheus_client/decorator.py",
+      "sha256": "ecc754a245a6cd0d7b7e87add91e5070cb9b759d560cf198a34fc7a8bc40c369"
+     }
+    ],
+    "imported_by": [
+     "prometheus_client/context_managers.py"
+    ],
+    "licence": "BSD-style 2-clause licence (header of the vendored file; \"bytecode form\" wording)",
+    "name": "decorator 4.0.10 (Copyright (c) 2005-2016, Michele Simionato), vendored as prometheus_client/decorator.py",
+    "notice_points_to_it": true,
+    "ships_in_wheel": true,
+    "upstream_release": {
+     "licence_header_differences_from_upstream_src": [],
+     "project": "decorator",
+     "sdist": "decorator-4.0.10.tar.gz",
+     "sha256": "9c6e98edcb33499881b86ede07d9968c81ab7c769e28e9af24075f0a5379f070",
+     "url": "https://files.pythonhosted.org/packages/13/8a/4eed41e338e8dcc13ca41c94b142d4d20c0de684ee5065523fee406ce76f/decorator-4.0.10.tar.gz",
+     "vendored_file_identical_to_upstream": false,
+     "verified_against_pypi": true,
+     "version": "4.0.10"
+    },
+    "wheel_matches_sdist": {
+     "prometheus_client-0.25.0.dist-info/licenses/LICENSE": true,
+     "prometheus_client-0.25.0.dist-info/licenses/NOTICE": true,
+     "prometheus_client/decorator.py": true
+    }
+   },
+   "distribution": "prometheus_client",
+   "extra_declared_licence": "BSD-2-Clause (License-Expression \"Apache-2.0 AND BSD-2-Clause\")",
+   "licence_text_location": {
+    "in_sdist": "yes (same file and NOTICE)",
+    "in_wheel": "yes: prometheus_client/decorator.py lines 1-28 (the licence text itself), pointed to by the bundled NOTICE; the inventory read only dist-info/licenses/ and so did not see it",
+    "retained": [
+     "sources/metadata-prometheus_client-decorator-licence-header.txt",
+     "sources/metadata-prometheus_client-NOTICE.txt",
+     "sources/metadata-prometheus_client-decorator-4.0.10-LICENSE.txt"
+    ],
+    "retained_text_signals": {
+     "reference": [],
+     "spdx": [],
+     "text": [
+      "BSD-2-Clause-style"
+     ]
+    },
+    "upstream": "decorator 4.0.10 LICENSE.txt"
+   },
+   "other_observations": [],
+   "proposed_obligation": "Ship the wheel unmodified: prometheus_client/decorator.py carries the licence text in its header and the bundled NOTICE points to it. Where licence documents are collected separately from the wheel, add the decorator notice from sources/metadata-prometheus_client-decorator-licence-header.txt beside LICENSE and NOTICE. If the module is ever redistributed only as bytecode, the licence asks for the notice in the accompanying documentation.",
+   "sdist": {
+    "files": 68,
+    "licence_documents": [
+     {
+      "member": "LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "signals": {
+       "reference": [
+        "Apache-2.0"
+       ],
+       "spdx": [],
+       "text": [
+        "Apache-2.0"
+       ]
+      }
+     },
+     {
+      "member": "NOTICE",
+      "sha256": "4efa1874aeaa60f365f5797e617f1ff933e15e508eaf751e9848ed4413d7a7ae",
+      "signals": {
+       "reference": [
+        "BSD-2-Clause"
+       ],
+       "spdx": [],
+       "text": []
+      }
+     }
+    ],
+    "members_with_signals_other_than_wheel_family": [
+     {
+      "member": "NOTICE",
+      "sha256": "4efa1874aeaa60f365f5797e617f1ff933e15e508eaf751e9848ed4413d7a7ae",
+      "signals": {
+       "reference": [
+        "BSD-2-Clause"
+       ],
+       "spdx": [],
+       "text": []
+      }
+     },
+     {
+      "member": "PKG-INFO",
+      "sha256": "64e15861c7ca8f559d2c7e01006b08e1cfe8b1ba0834578167f1f57e68b1869c",
+      "signals": {
+       "reference": [
+        "Apache-2.0",
+        "BSD-2-Clause"
+       ],
+       "spdx": [],
+       "text": []
+      }
+     },
+     {
+      "member": "prometheus_client.egg-info/PKG-INFO",
+      "sha256": "64e15861c7ca8f559d2c7e01006b08e1cfe8b1ba0834578167f1f57e68b1869c",
+      "signals": {
+       "reference": [
+        "Apache-2.0",
+        "BSD-2-Clause"
+       ],
+       "spdx": [],
+       "text": []
+      }
+     },
+     {
+      "member": "prometheus_client/decorator.py",
+      "sha256": "ecc754a245a6cd0d7b7e87add91e5070cb9b759d560cf198a34fc7a8bc40c369",
+      "signals": {
+       "reference": [],
+       "spdx": [],
+       "text": [
+        "BSD-2-Clause-style"
+       ]
+      }
+     },
+     {
+      "member": "pyproject.toml",
+      "sha256": "a1df0afc818451c317453b57865272262bf0a3ad5b5252ad8b91411a451c3bcf",
+      "signals": {
+       "reference": [
+        "Apache-2.0",
+        "BSD-2-Clause"
+       ],
+       "spdx": [],
+       "text": []
+      }
+     }
+    ],
+    "project": "prometheus_client",
+    "sdist": "prometheus_client-0.25.0.tar.gz",
+    "sha256": "5e373b75c31afb3c86f1a52fa1ad470c9aace18082d39ec0d2f918d11cc9ba28",
+    "text_files_scanned": 68,
+    "url": "https://files.pythonhosted.org/packages/1b/fb/d9aa83ffe43ce1f19e557c0971d04b90561b0cfd50762aafb01968285553/prometheus_client-0.25.0.tar.gz",
+    "verified_against_pypi": true,
+    "version": "0.25.0",
+    "wheel_family": "Apache-2.0"
+   },
+   "uncertainty": [
+    "The licence says \"Redistributions in bytecode form\" where SPDX BSD-2-Clause says \"binary form\". The declared identifier is close to the text but not verbatim. Whether SPDX matching treats it as BSD-2-Clause was not checked.",
+    "The vendored file differs from decorator 4.0.10 src/decorator.py (formatting and Python 3 changes). The file does not state the licence of the Prometheus authors' changes; presumably it is the project licence (Apache-2.0).",
+    "Licence header differences from upstream src/decorator.py: none. Upstream LICENSE.txt gives the years as 2005-2015."
+   ],
+   "version": "0.25.0",
+   "wheel": {
+    "artifact": "prometheus_client-0.25.0-py3-none-any.whl",
+    "compiled_files": [],
+    "declared": [
+     "License-Expression: Apache-2.0 AND BSD-2-Clause",
+     "License-File: LICENSE",
+     "License-File: NOTICE"
+    ],
+    "files": 37,
+    "files_with_licence_signals": [
+     {
+      "bytes": 15802,
+      "leading_comment": [
+       1,
+       28
+      ],
+      "path": "prometheus_client/decorator.py",
+      "sha256": "ecc754a245a6cd0d7b7e87add91e5070cb9b759d560cf198a34fc7a8bc40c369",
+      "signals": {
+       "reference": [],
+       "spdx": [],
+       "text": [
+        "BSD-2-Clause-style"
+       ]
+      }
+     }
+    ],
+    "inventory": {
+     "detected_families": "Apache-2.0",
+     "flags": "",
+     "licence_documents": "prometheus_client-0.25.0.dist-info/licenses/LICENSE; prometheus_client-0.25.0.dist-info/licenses/NOTICE",
+     "metadata_declared": "Apache-2.0 AND BSD-2-Clause"
+    },
+    "licence_documents": [
+     {
+      "bytes": 11357,
+      "path": "prometheus_client-0.25.0.dist-info/licenses/LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "signals": {
+       "reference": [
+        "Apache-2.0"
+       ],
+       "spdx": [],
+       "text": [
+        "Apache-2.0"
+       ]
+      }
+     },
+     {
+      "bytes": 236,
+      "path": "prometheus_client-0.25.0.dist-info/licenses/NOTICE",
+      "sha256": "4efa1874aeaa60f365f5797e617f1ff933e15e508eaf751e9848ed4413d7a7ae",
+      "signals": {
+       "reference": [
+        "BSD-2-Clause"
+       ],
+       "spdx": [],
+       "text": []
+      }
+     }
+    ],
+    "sha256": "d5aec89e349a6ec230805d0df882f3807f74fd6c1a2fa86864e3c2279059fed1",
+    "text_files_scanned": 37,
+    "url": "https://files.pythonhosted.org/packages/8d/9b/d4b1e644385499c8346fa9b622a3f030dce14cd6ef8a1871c221a17a67e7/prometheus_client-0.25.0-py3-none-any.whl"
+   }
+  }
+ ]
+}
