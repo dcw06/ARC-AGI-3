@@ -58,7 +58,12 @@ At the admission cutoff, a whole-run alarm hands control to cleanup.
 
 This section fixes review finding P1-2 on `77eb06f`. Once-only accounting lives on the launch side, in the repository (`certification/wheelhouse_r2_smoke_v1/launch.py`):
 - **Claim** (`config/wheelhouse_r2_smoke_v1_launch_claim.json`). Created exclusively, and never overwritten, once the approvals and the reservation are valid. It is immutable and embedded in the launch package, and the notebook gate requires it.
-- **Receipt** (`reports/wheelhouse_r2_smoke_v1_launch.json`). Created exclusively as `submitting` **before** the provider push. It is then replaced by `submitted` (with the provider's kernel ref and version) or `submission_uncertain` (the push raised, or its outcome is unknown).
+- **Receipt** (`reports/wheelhouse_r2_smoke_v1_launch.json`). Created exclusively as `submitting` **before** the provider push. It is then replaced by exactly one of:
+  - `submitted`: only when the provider's response names the authorized kernel reference, an integer version of at least 1, and no provider error or `invalid*` field;
+  - `submission_rejected`: the provider explicitly reported an error or invalid sources;
+  - `submission_uncertain`: the push raised, or the confirmation is missing, malformed or ambiguous (no mapping, another kernel reference, no or invalid version).
+
+  The raw provider response and the validation findings are kept in the receipt for reconciliation. Fixes review finding P2 on `d494f50`.
 - **Any receipt spends the attempt.** That includes `submitting`, which is left behind if the push was interrupted. The tooling then refuses to claim, package or submit that attempt again, from any session or working directory.
 - **An uncertain submission** is reconciled by hand against the provider's version history and is never relaunched. A new attempt needs a new authorization and reservation.
 
@@ -118,13 +123,14 @@ Regressions for the three review findings on `77eb06f`. The first three fail on 
 | claim | P1-2 | created once; refused without valid approvals |
 | a submitted attempt | P1-2 | refused from any later session (submit, package or claim); the backend is pushed exactly once |
 | uncertain or interrupted submission | P1-2 | the attempt is spent |
+| provider responses | P2 on `d494f50` | only a confirmed response with the authorized kernel and a valid version is `submitted`; no response, an empty or non-mapping response, another kernel, or a missing, zero, text or boolean version is `submission_uncertain`; invalid sources or a provider error is `submission_rejected`; every outcome spends the attempt with exactly one push |
 | tampered package | P1-2 | never submitted |
 
-The local review check executes the review notebook's exact code with no GPU and a decoy `nvidia-smi` (`reports/wheelhouse_r2_smoke_review_check_r2.json`). It stops at the live gate, `nvidia-smi` is never called, and no temporary files remain.
+The local review check executes the review notebook's exact code with no GPU and a decoy `nvidia-smi` (`reports/wheelhouse_r2_smoke_review_check_r3.json`). It stops at the live gate, `nvidia-smi` is never called, and no temporary files remain.
 
 ## Review snapshot
 
-`notebooks/wheelhouse-r2-smoke-v1-review-r2/` (r1 is preserved but stale, since its sources changed with these fixes):
+`notebooks/wheelhouse-r2-smoke-v1-review-r3/` (r1 and r2 are preserved but stale, since their sources changed):
 - GPU disabled;
 - no dataset source, because the binding is unresolved;
 - every package source embedded and hash-bound.
@@ -135,5 +141,5 @@ This is a review snapshot, not an approval.
 
 1. **Bind the dataset.** Replace the four placeholders in `protocol.json` with the actual Kaggle dataset ref and version, the `SHA256SUMS` hash and the `bundle-manifest.json` hash from Record A.
 2. **Verify attachment access** from the launch account. The account must be able to list the files and attach that version. A provider `invalid*Sources` result counts as a failure even with HTTP 200. Then re-verify `SHA256SUMS` against the attached files. Kaggle kernel metadata names the dataset but cannot pin a version, so the live path's bundle-integrity stage is the version guard: any other version fails before installation.
-3. **Rebuild and re-check the review snapshot** (r3). Rerun the tests and rehearsals from a fresh clone, and present the final package for review.
+3. **Rebuild and re-check the review snapshot** (r4). Rerun the tests and rehearsals from a fresh clone, and present the final package for review.
 4. **Bring Record C back for explicit confirmation**, with the review lock hash, the protocol hash, the dataset binding and the limits above. Only then record the source approval and compute authorization, reserve the single attempt, build the launch package (`launch-build`, which refuses until then) and launch.

@@ -1,0 +1,15 @@
+{
+ "schema": "wheelhouse_r2_smoke_review_check_v1",
+ "review_revision": 3,
+ "review_lock_sha256": "63da3513a96caa9e01fc219f335e12a86e8e5f1d6f2da54767c158c10b8eac87",
+ "evidence_class": "scripted_cpu_rehearsal",
+ "gpu_compatibility_evidence": false,
+ "exit_code": 1,
+ "refused_at_live_gate": true,
+ "refusal": "certification.wheelhouse_r2_smoke_v1.binding.LiveRefused: wheelhouse R2 smoke test live path refused: unresolved placeholders: dataset.ref, dataset.version, dataset.sha256sums_sha256, dataset.bundle_manifest_sha256; authorization: ValueError: no review source lock",
+ "nvidia_smi_called": false,
+ "temporary_files_left": [],
+ "kaggle_paths_touched": false,
+ "stderr_tail": "Traceback (most recent call last):\n  File \"<string>\", line 19, in <module>\n  File \"/tmp/wheelhouse-r2-smoke-review-check-3rf4io9k/tmp/wheelhouse-r2-smoke-source-wqvb9c9x/certification/wheelhouse_r2_smoke_v1/binding.py\", line 179, in consume\n  File \"/tmp/wheelhouse-r2-smoke-review-check-3rf4io9k/tmp/wheelhouse-r2-smoke-source-wqvb9c9x/certification/wheelhouse_r2_smoke_v1/binding.py\", line 170, in require_live\ncertification.wheelhouse_r2_smoke_v1.binding.LiveRefused: wheelhouse R2 smoke test live path refused: unresolved placeholders: dataset.ref, dataset.version, dataset.sha256sums_sha256, dataset.bundle_manifest_sha256; authorization: ValueError: no review source lock\n",
+ "passed": true
+}

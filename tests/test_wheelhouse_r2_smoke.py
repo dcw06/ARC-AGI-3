@@ -372,15 +372,20 @@ class CleanupInterruption(unittest.TestCase):
         self.assertTrue(result['passed'], result['error'])
 
 
+CONFIRMED = {'ref': '/code/' + N.KERNEL_ID, 'url': 'https://www.kaggle.com/code/' + N.KERNEL_ID, 'versionNumber': 1,
+             'error': None, 'invalidTags': [], 'invalidDatasetSources': [], 'invalidCompetitionSources': [],
+             'invalidKernelSources': [], 'invalidModelSources': []}
+
+
 class FakeBackend:
-    def __init__(self, fail=False):
-        self.fail, self.pushes = fail, 0
+    def __init__(self, fail=False, response=CONFIRMED):
+        self.fail, self.response, self.pushes = fail, response, 0
 
     def push(self, folder):
         self.pushes += 1
         if self.fail:
             raise ConnectionError('provider did not answer')
-        return {'kernel': 'team/arc3-wheelhouse-r2-smoke-v1', 'version': 1}
+        return self.response
 
 
 class DurableAccounting(unittest.TestCase):
@@ -446,6 +451,64 @@ class DurableAccounting(unittest.TestCase):
             L.submit(fixture.root, folder, backend)
         self.assertEqual(backend.pushes, 0)
         self.assertFalse((fixture.root / B.RECEIPT).exists())
+
+
+class ProviderResponses(unittest.TestCase):
+    """Review P2 on d494f50: only an unambiguous confirmation of the authorized kernel is recorded as submitted."""
+
+    def submit(self, response):
+        fixture = FixtureRoot(self)
+        folder = Path(tempfile.mkdtemp()) / 'launch'
+        self.addCleanup(shutil.rmtree, folder.parent)
+        L.write_package(fixture.root, folder)
+        backend = FakeBackend(response=response)
+        final = L.submit(fixture.root, folder, backend)
+        stored = json.loads((fixture.root / B.RECEIPT).read_text())
+        self.assertEqual(final['status'], stored['status'])
+        with self.assertRaises(L.LaunchRefused):  # every outcome spends the attempt; no automatic retry
+            L.submit(fixture.root, folder, backend)
+        self.assertEqual(backend.pushes, 1)
+        return stored
+
+    def test_confirmed_submission(self):
+        stored = self.submit(CONFIRMED)
+        self.assertEqual(stored['status'], 'submitted')
+        self.assertNotIn('reconciliation', stored)
+
+    def test_missing_or_ambiguous_confirmation_is_uncertain(self):
+        cases = {
+            'none': None,
+            'empty mapping': {},
+            'not a mapping': 'Kernel version 1 successfully pushed',
+            'other kernel': dict(CONFIRMED, ref='/code/someone-else/arc3-wheelhouse-r2-smoke-v1'),
+            'no reference': {k: v for k, v in CONFIRMED.items() if k != 'ref'},
+            'no version': {k: v for k, v in CONFIRMED.items() if k != 'versionNumber'},
+            'version zero': dict(CONFIRMED, versionNumber=0),
+            'version as text': dict(CONFIRMED, versionNumber='1'),
+            'version as bool': dict(CONFIRMED, versionNumber=True),
+        }
+        for label, response in cases.items():
+            with self.subTest(case=label):
+                stored = self.submit(response)
+                self.assertEqual(stored['status'], 'submission_uncertain', stored['findings'])
+                self.assertIn('never relaunch', stored['reconciliation'])
+
+    def test_explicit_provider_rejection_is_recorded_separately(self):
+        cases = {
+            'invalid dataset sources': {'invalidDatasetSources': ['team/missing']},
+            'invalid sources despite a reference': dict(CONFIRMED, invalidModelSources=['qwen-lm/absent']),
+            'provider error': dict(CONFIRMED, error='Notebook not found'),
+        }
+        for label, response in cases.items():
+            with self.subTest(case=label):
+                stored = self.submit(response)
+                self.assertEqual(stored['status'], 'submission_rejected', stored['findings'])
+
+    def test_reference_forms(self):
+        for ref in ('/code/' + N.KERNEL_ID, 'code/' + N.KERNEL_ID, N.KERNEL_ID,
+                    'https://www.kaggle.com/code/' + N.KERNEL_ID):
+            self.assertEqual(L.normalised_ref(ref), N.KERNEL_ID)
+        self.assertIsNone(L.normalised_ref('/code/'))
 
 
 class ScriptedSocketServer:

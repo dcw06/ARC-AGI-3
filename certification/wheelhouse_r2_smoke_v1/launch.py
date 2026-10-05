@@ -2,8 +2,12 @@
 
   claim    created exclusively (never overwritten) once every approval and the reservation are valid; immutable and
            embedded in the launch package, which the notebook gate requires
-  receipt  created exclusively as `submitting` BEFORE the provider push, then replaced by `submitted` (with the
-           provider's kernel ref and version) or `submission_uncertain` (the push raised or its outcome is unknown)
+  receipt  created exclusively as `submitting` BEFORE the provider push, then replaced by exactly one of:
+           `submitted`             the response names the authorized kernel, a valid version and no provider error
+                                   or invalid source;
+           `submission_rejected`   the provider explicitly reported an error or invalid sources;
+           `submission_uncertain`  the push raised, or the confirmation is missing, malformed or ambiguous (for
+                                   example another kernel reference or no version)
 
 Any receipt, whatever its status, means the attempt is spent: the tooling refuses every further launch of it.
 An uncertain submission is reconciled by hand against the provider's version history and is never relaunched; a
@@ -109,5 +113,62 @@ def submit(root, folder, backend):
                                      error=f'{type(exc).__name__}: {str(exc)[:300]}',
                                      reconciliation='check the provider version history by hand; never relaunch'))
         raise
-    _replace(root, RECEIPT, dict(record, status='submitted', finished_at=now(), provider=outcome))
-    return outcome
+    status, findings = classify_response(outcome, expected_kernel(folder))
+    final = dict(record, status=status, finished_at=now(), provider_response=_jsonable(outcome), findings=findings)
+    if status != 'submitted':
+        final['reconciliation'] = 'check the provider version history by hand; never relaunch'
+    _replace(root, RECEIPT, final)
+    return final
+
+
+def expected_kernel(folder):
+    return json.loads((Path(folder) / 'kernel-metadata.json').read_text(encoding='utf-8'))['id']
+
+
+def _jsonable(value):
+    try:
+        json.dumps(value)
+        return value
+    except (TypeError, ValueError):
+        return repr(value)[:1000]
+
+
+def normalised_ref(ref):
+    """'/code/owner/slug', 'code/owner/slug', a kernel URL or 'owner/slug' -> 'owner/slug'."""
+    if not isinstance(ref, str) or not ref.strip():
+        return None
+    ref = ref.strip().split('://', 1)[-1]
+    parts = [p for p in ref.split('/') if p]
+    if parts and '.' in parts[0]:  # a host name
+        parts = parts[1:]
+    if parts and parts[0] == 'code':
+        parts = parts[1:]
+    return '/'.join(parts[:2]) if len(parts) >= 2 else None
+
+
+def classify_response(outcome, expected):
+    """(status, findings) for a provider push response. Only an unambiguous confirmation of the authorized kernel
+    is `submitted`; explicit provider errors or invalid sources are `submission_rejected`; everything else is
+    `submission_uncertain`. No outcome permits an automatic retry."""
+    if not isinstance(outcome, dict):
+        return 'submission_uncertain', [f'no confirmation mapping (got {type(outcome).__name__})']
+    rejected = []
+    if outcome.get('error'):
+        rejected.append(f"provider error: {str(outcome['error'])[:200]}")
+    for key, value in sorted(outcome.items()):
+        if key.lower().startswith('invalid') and value:
+            rejected.append(f'{key}: {_jsonable(value)}')
+    if rejected:
+        return 'submission_rejected', rejected
+    findings = []
+    ref = normalised_ref(outcome.get('ref'))
+    if ref is None:
+        findings.append('no kernel reference in the response')
+    elif ref != expected:
+        findings.append(f'kernel reference {ref!r} is not the authorized {expected!r}')
+    version = outcome.get('versionNumber')
+    if type(version) is not int or version < 1:
+        findings.append(f'no valid version number (got {version!r})')
+    if findings:
+        return 'submission_uncertain', findings
+    return 'submitted', [f'confirmed {ref} version {version}']
