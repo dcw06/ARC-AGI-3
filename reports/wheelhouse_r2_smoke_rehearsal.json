@@ -7,18 +7,18 @@
   "installation was exercised on fixture wheels, not the R2 bundle",
   "establishes only that the control code (gate, clock, request ledger, timeouts, cancellation handling, process cleanup, evidence retention) behaves as specified against scripted behaviour"
  ],
- "source_revision": "d494f50d218425233752e0983be961b10020e1cd",
+ "source_revision": "d9212d737835b7de62364b7379eb06afd9be9b1e",
  "host": {
   "python": "3.12.3",
   "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
   "gpu": "none (CUDA_VISIBLE_DEVICES empty; no GPU query is made in rehearsal mode)"
  },
- "ran_at": "2026-10-04T23:21:02-04:00",
+ "ran_at": "2026-10-04T23:30:09-04:00",
  "live_gate_on_this_checkout": {
   "refused": true,
   "reasons": [
    "unresolved placeholders: dataset.ref, dataset.version, dataset.sha256sums_sha256, dataset.bundle_manifest_sha256",
-   "authorization: FileNotFoundError: [Errno 2] No such file or directory: '/home/jingjing/smoke-d494f50/reports/wheelhouse_r2_smoke_v1_source_approval.json'"
+   "authorization: FileNotFoundError: [Errno 2] No such file or directory: '/home/jingjing/smoke-d9212d7/reports/wheelhouse_r2_smoke_v1_source_approval.json'"
   ]
  },
  "scenarios": [
@@ -47,7 +47,7 @@
     "cancellation_probe": 4
    },
    "cleanup": {
-    "pgid": 707,
+    "pgid": 714,
     "sigterm_sent": true,
     "sigkill_sent": false,
     "groups_absent": true,
@@ -179,7 +179,7 @@
    "requests_issued": 0,
    "by_kind": {},
    "cleanup": {
-    "pgid": 845,
+    "pgid": 852,
     "sigterm_sent": false,
     "sigkill_sent": false,
     "groups_absent": true,
@@ -211,7 +211,7 @@
    "requests_issued": 0,
    "by_kind": {},
    "cleanup": {
-    "pgid": 884,
+    "pgid": 891,
     "sigterm_sent": true,
     "sigkill_sent": false,
     "groups_absent": true,
@@ -245,7 +245,7 @@
     "startup_probe": 2
    },
    "cleanup": {
-    "pgid": 923,
+    "pgid": 930,
     "sigterm_sent": true,
     "sigkill_sent": false,
     "groups_absent": true,
@@ -279,7 +279,7 @@
     "startup_probe": 3
    },
    "cleanup": {
-    "pgid": 967,
+    "pgid": 974,
     "sigterm_sent": true,
     "sigkill_sent": false,
     "groups_absent": true,
@@ -315,7 +315,7 @@
     "cancellation_probe": 3
    },
    "cleanup": {
-    "pgid": 1013,
+    "pgid": 1020,
     "sigterm_sent": true,
     "sigkill_sent": false,
     "groups_absent": true,
@@ -353,7 +353,7 @@
     "cancellation_probe": 4
    },
    "cleanup": {
-    "pgid": 1073,
+    "pgid": 1080,
     "sigterm_sent": true,
     "sigkill_sent": true,
     "groups_absent": true,
@@ -391,7 +391,7 @@
     "cancellation_probe": 4
    },
    "cleanup": {
-    "pgid": 1135,
+    "pgid": 1142,
     "sigterm_sent": true,
     "sigkill_sent": true,
     "groups_absent": true,
