@@ -254,7 +254,10 @@ def validate(path):
         if any(old.get(k, '') != row[k] for k in DECISION_FIELDS):
             changes.append({'artifact': name, 'from': old.get('redistribution_decision'), 'to': decision,
                             'reviewer': row['resolver'], 'date': row['decided_on'],
-                            'conditions': len(conditions), 'satisfied': len([s for s in satisfied if s])})
+                            'conditions': len(conditions), 'satisfied': len([s for s in satisfied if s]),
+                            # the complete decision rows, so the owner reviews exactly what would be imported
+                            'before': {k: old.get(k, '') for k in DECISION_FIELDS},
+                            'after': {k: row[k] for k in DECISION_FIELDS}})
             proposed[name] = row
     resulting = [proposed[a] for a in inventory]
     errors += [f'resulting decisions: {p}' for p in check_decisions(read_csv(INVENTORY_CSV), resulting)]
@@ -274,6 +277,12 @@ def decisions_bytes(rows):
     writer.writeheader()
     writer.writerows({k: r.get(k, '') for k in DECISION_FIELDS} for r in rows)
     return buffer.getvalue().encode('utf-8')
+
+
+def cell(value):
+    """A Markdown table cell showing the value exactly (pipes and newlines escaped; empty shown as an em dash)."""
+    text = str(value)
+    return text.replace('\\', '\\\\').replace('|', '\\|').replace('\r', '').replace('\n', '<br>') if text else '—'
 
 
 def write_preview(preview):
@@ -296,6 +305,20 @@ def write_preview(preview):
                   '|---|---|---|---|---|---|']
         lines += [f"| `{c['artifact']}` | {c['from']} | {c['to']} | {c['reviewer']} | {c['date']} | "
                   f"{c['satisfied']}/{c['conditions']} |" for c in preview['changes']]
+        lines += ['', '## Complete decision fields (every field that would be imported)', '']
+        for c in preview['changes']:
+            lines += [f"### `{c['artifact']}`", '', '| Field | Before | After |', '|---|---|---|']
+            for field in DECISION_FIELDS:
+                before, after = c['before'].get(field, ''), c['after'].get(field, '')
+                mark = ' **(changed)**' if before != after else ''
+                lines.append(f'| `{field}`{mark} | {cell(before)} | {cell(after)} |')
+            conditions = split_conditions(c['after'].get('conditions'))
+            satisfied = split_conditions(c['after'].get('conditions_satisfied'))
+            if conditions:
+                lines += ['', 'Conditions and how each was satisfied:', '']
+                lines += [f"{i}. {condition} — satisfied: {satisfied[i - 1] if i <= len(satisfied) and satisfied[i - 1] else '**not documented**'}"
+                          for i, condition in enumerate(conditions, 1)]
+            lines.append('')
     lines += ['', f"Import requires `--preview-sha256 {hashlib.sha256(data).hexdigest()}` and no errors.", '']
     PREVIEW_MD.write_text('\n'.join(lines), encoding='utf-8')
     return hashlib.sha256(data).hexdigest()

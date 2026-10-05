@@ -173,6 +173,58 @@ class Returned(unittest.TestCase):
         self.assertEqual(imported[artifact]['resolver'], 'reviewer')
         self.assertEqual(sum(d['redistribution_decision'] == 'unresolved' for d in imported.values()), 173)
 
+    SUBSTANTIVE = {'reviewer_rationale': 'Apache-2.0 text verified against the sdist; NOTICE reviewed',
+                   'reviewer_required_notices': 'LICENSE | NOTICE | README source pointer',
+                   'reviewer_conditions': 'ship NOTICE | state the source location in README',
+                   'reviewer_conditions_satisfied': 'LICENSES/x/NOTICE included | README line 14',
+                   'reviewer_resolved_questions': 'no upstream NOTICE beyond the bundled one'}
+
+    def conditional(self, artifact, **overrides):
+        fields = dict(self.SUBSTANTIVE, reviewer_decision='approved_with_conditions')
+        fields.update(overrides)
+        return self.decide(artifact, **fields)
+
+    def test_preview_shows_every_imported_field(self):
+        """Review P2 on abd08a9: the preview must show the complete decision, not only counts."""
+        artifact = self.first()
+        (preview, resulting), errors = W.validate(self.returned(self.conditional(artifact)))
+        self.assertEqual(errors, [])
+        change = preview['changes'][0]
+        imported = next(r for r in resulting if r['artifact'] == artifact)
+        self.assertEqual(change['after'], {k: imported[k] for k in W.DECISION_FIELDS})
+        self.assertEqual(change['before']['redistribution_decision'], 'unresolved')
+        W.write_preview(preview)
+        markdown = W.PREVIEW_MD.read_text(encoding='utf-8')
+        for source, target in W.REVIEWER.items():
+            value = imported[target]
+            self.assertIn(target, markdown)
+            for part in value.split(' | '):
+                self.assertIn(W.cell(part), markdown, f'{target} value not visible in the Markdown preview')
+        self.assertIn('state the source location in README — satisfied: README line 14', markdown)
+
+    def test_changing_any_imported_field_invalidates_the_confirmed_preview(self):
+        artifact = self.first()
+        (preview, _), _ = W.validate(self.returned(self.conditional(artifact)))
+        confirmed = W.write_preview(preview)
+        changes = dict(self.SUBSTANTIVE, reviewer_name='another reviewer', reviewer_date='2026-10-06',
+                       reviewer_decision='approved_with_conditions')
+        for field, value in changes.items():
+            with self.subTest(field=field):
+                altered = value + ' (edited)' if field not in ('reviewer_date', 'reviewer_decision') else value
+                if field == 'reviewer_decision':
+                    path = self.returned(self.decide(artifact, **{k: v for k, v in self.SUBSTANTIVE.items()
+                                                                  if k != 'reviewer_conditions'
+                                                                  and k != 'reviewer_conditions_satisfied'}))
+                else:
+                    path = self.returned(self.conditional(artifact, **{field: altered}))
+                (new_preview, _), errors = W.validate(path)
+                self.assertEqual(errors, [])
+                W.write_preview(new_preview)  # the preview on disk now reflects the edited worksheet
+                before = W.DECISIONS_CSV.read_bytes()
+                with self.assertRaises(SystemExit):
+                    W.do_import(path, confirmed)
+                self.assertEqual(W.DECISIONS_CSV.read_bytes(), before)
+
     def test_import_refuses_when_validation_fails(self):
         artifact = self.first()
         path = self.returned(self.decide(artifact, reviewer_rationale=''))
