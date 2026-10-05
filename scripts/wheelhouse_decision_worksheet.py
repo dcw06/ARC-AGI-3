@@ -5,7 +5,9 @@
       inventory, proposals and NVIDIA reconciliation; refuses to overwrite an existing worksheet. Reviewer columns
       are blank: nothing is prefilled.
   python scripts/wheelhouse_decision_worksheet.py validate RETURNED.csv
-      check the returned worksheet (artifact bindings, required fields, recorded conditions, conflicts with existing
+      accepts r1 or r2 (scripts/wheelhouse_worksheet_r2.py), each against its own lock and context; flags r1 entries
+      on rows whose evidence changed in r2, requires reconfirmation of carried entries on changed rows, and flags
+      recorded decisions on changed rows. Then: check the returned worksheet (artifact bindings, required fields, recorded conditions, conflicts with existing
       decisions) and write the proposed changes to reports/wheelhouse_decision_import_preview.{json,md}. Never
       writes the decisions file.
   python scripts/wheelhouse_decision_worksheet.py import RETURNED.csv --preview-sha256 SHA
@@ -46,6 +48,39 @@ CONTEXT = ['priority', 'tier', 'artifact', 'sha256', 'distribution', 'version', 
            'proposed_conditions', 'additional_obligations', 'evidence', 'proposal_rationale', 'unresolved_questions',
            'alternative_if_not_cleared']
 COLUMNS = CONTEXT + list(REVIEWER)
+# Revision 2: same reviewer fields, two more context columns, and carry-forward bookkeeping. r1 keeps its own files
+# and lock; each returned worksheet is validated against the lock and context of its own revision.
+WORKSHEET_R2 = ROOT / 'reports/wheelhouse_redistribution_decision_worksheet_r2.csv'
+LOCK_R2 = ROOT / 'reports/wheelhouse_redistribution_decision_worksheet_r2.lock.json'
+GUIDE_R2 = ROOT / 'reports/wheelhouse_redistribution_decision_worksheet_r2.md'
+COMPARISON_JSON = ROOT / 'reports/wheelhouse_redistribution_worksheet_r1_to_r2.json'
+COMPARISON_MD = ROOT / 'reports/wheelhouse_redistribution_worksheet_r1_to_r2.md'
+CONTEXT_R2 = CONTEXT + ['worksheet_revision', 'evidence_checks']
+CARRY = ['carried_from', 'reviewer_reconfirmed_for_r2']
+COLUMNS_R2 = CONTEXT_R2 + list(REVIEWER) + CARRY
+
+
+def revisions():
+    return {1: {'csv': WORKSHEET, 'lock': LOCK, 'context': CONTEXT, 'columns': COLUMNS},
+            2: {'csv': WORKSHEET_R2, 'lock': LOCK_R2, 'context': CONTEXT_R2, 'columns': COLUMNS_R2}}
+
+
+def revision_of(row):
+    """r1 worksheets have no worksheet_revision column; later revisions name themselves."""
+    if 'worksheet_revision' not in row:
+        return 1
+    value = row['worksheet_revision'].strip().lower()
+    if not value.startswith('r') or not value[1:].isdigit() or int(value[1:]) not in revisions():
+        raise ValueError(f'unknown worksheet revision {value!r}')
+    return int(value[1:])
+
+
+def evidence_changes():
+    """artifact -> changed context fields between r1 and r2 (empty if no comparison exists yet)."""
+    if not COMPARISON_JSON.exists():
+        return {}
+    return {c['artifact']: c['changed_fields'] for c in json.loads(COMPARISON_JSON.read_text(encoding='utf-8'))['rows']
+            if c['changed_fields']}
 
 
 def sha256(path):
@@ -145,8 +180,9 @@ def generate():
     return lock
 
 
-def row_digest(row):
-    return hashlib.sha256(json.dumps([str(row.get(k, '')) for k in CONTEXT], ensure_ascii=False).encode()).hexdigest()
+def row_digest(row, context=None):
+    context = CONTEXT if context is None else context
+    return hashlib.sha256(json.dumps([str(row.get(k, '')) for k in context], ensure_ascii=False).encode()).hexdigest()
 
 
 def guide(rows, lock):
@@ -188,19 +224,35 @@ def guide(rows, lock):
 
 
 def validate(path):
-    """(preview, errors) for a returned worksheet; writes nothing."""
-    lock = json.loads(LOCK.read_text(encoding='utf-8'))
+    """(preview, errors) for a returned worksheet of any revision, against that revision's own lock and context;
+    writes nothing."""
     inventory = {r['artifact']: r['sha256'] for r in read_csv(INVENTORY_CSV)}
     current = {d['artifact']: d for d in read_decisions(DECISIONS_CSV)}
     errors, warnings, changes = [], [], []
-    if sha256(INVENTORY_CSV) != lock['inventory_sha256']:
-        errors.append('the inventory changed since the worksheet was generated; regenerate it')
     try:
         returned = read_csv(path)
-    except (OSError, csv.Error, UnicodeDecodeError) as exc:
+        revision = revision_of(returned[0]) if returned else 1
+    except (OSError, csv.Error, UnicodeDecodeError, ValueError) as exc:
         return None, [f'unreadable worksheet: {exc}']
-    if not returned or set(COLUMNS) - set(returned[0]):
-        return None, [f"missing columns: {sorted(set(COLUMNS) - set(returned[0] if returned else {}))}"]
+    spec = revisions()[revision]
+    if not spec['lock'].exists():
+        return None, [f'no lock for worksheet revision r{revision}']
+    lock = json.loads(spec['lock'].read_text(encoding='utf-8'))
+    if not returned or set(spec['columns']) - set(returned[0]):
+        return None, [f"missing columns for r{revision}: "
+                      f"{sorted(set(spec['columns']) - set(returned[0] if returned else {}))}"]
+    try:
+        if any(revision_of(r) != revision for r in returned):
+            return None, ['rows from different worksheet revisions are mixed']
+    except ValueError as exc:
+        return None, [str(exc)]
+    if sha256(INVENTORY_CSV) != lock['inventory_sha256']:
+        errors.append('the inventory changed since the worksheet was generated; regenerate it')
+    changed_evidence = evidence_changes()
+    for name, old in current.items():
+        if old.get('redistribution_decision') not in (None, 'unresolved') and name in changed_evidence:
+            warnings.append(f"{name}: the recorded decision ({old['redistribution_decision']}) predates evidence "
+                            f"changed in r2 ({', '.join(changed_evidence[name])}); reconfirm it")
     seen = Counter(r['artifact'] for r in returned)
     errors += [f'duplicate row for {a}' for a, n in seen.items() if n > 1]
     errors += [f'row for an artifact not in the inventory: {a}' for a in seen if a not in inventory]
@@ -213,7 +265,7 @@ def validate(path):
         if r['sha256'] != inventory[name]:
             errors.append(f'{name}: SHA-256 does not match the inventory (artifact binding)')
             continue
-        if row_digest(r) != lock['context_sha256'].get(name):
+        if row_digest(r, spec['context']) != lock['context_sha256'].get(name):
             warnings.append(f'{name}: context columns were edited (proposal text is not authoritative; ignored)')
         decision = r['reviewer_decision'].strip()
         if not decision:
@@ -225,6 +277,17 @@ def validate(path):
             continue
         row = {'artifact': name, 'sha256': inventory[name],
                **{target: r[source].strip() for source, target in REVIEWER.items()}}
+        affected = changed_evidence.get(name, [])
+        if revision == 1 and affected:
+            warnings.append(f"{name}: decided on r1 evidence, which changed in r2 ({', '.join(affected)}); this entry "
+                            'keeps its r1 meaning only and should be reconfirmed against r2')
+        if revision >= 2:
+            carried = r.get('carried_from', '').strip()
+            if carried not in ('', 'r1'):
+                errors.append(f'{name}: carried_from {carried!r} is not recognised')
+            elif carried == 'r1' and affected and r.get('reviewer_reconfirmed_for_r2', '').strip().lower() != 'yes':
+                errors.append(f"{name}: entry carried from r1 but the evidence changed ({', '.join(affected)}); set "
+                              'reviewer_reconfirmed_for_r2 to yes only after reconfirming against r2')
         if decision != 'unresolved':
             for source in ('reviewer_rationale', 'reviewer_name'):
                 if not r[source].strip():
@@ -257,12 +320,16 @@ def validate(path):
                             'conditions': len(conditions), 'satisfied': len([s for s in satisfied if s]),
                             # the complete decision rows, so the owner reviews exactly what would be imported
                             'before': {k: old.get(k, '') for k in DECISION_FIELDS},
-                            'after': {k: row[k] for k in DECISION_FIELDS}})
+                            'after': {k: row[k] for k in DECISION_FIELDS},
+                            'worksheet_revision': revision,
+                            'affected_by_newer_evidence': affected if revision == 1 else [],
+                            'carried_from': r.get('carried_from', '').strip() if revision >= 2 else ''})
             proposed[name] = row
     resulting = [proposed[a] for a in inventory]
     errors += [f'resulting decisions: {p}' for p in check_decisions(read_csv(INVENTORY_CSV), resulting)]
     blockers = bundle_eligibility(read_csv(INVENTORY_CSV), resulting)
     preview = {'schema': 'wheelhouse_decision_import_preview_v1', 'worksheet': str(path),
+               'worksheet_revision': revision, 'worksheet_lock_sha256': sha256(spec['lock']),
                'worksheet_sha256': sha256(path), 'decisions_sha256_now': sha256(DECISIONS_CSV),
                'errors': errors, 'warnings': warnings, 'changes': changes,
                'counts_after': dict(Counter(d['redistribution_decision'] for d in resulting)),

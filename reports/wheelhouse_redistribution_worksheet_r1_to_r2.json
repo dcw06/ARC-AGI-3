@@ -1,0 +1,2465 @@
+{
+ "schema": "wheelhouse_worksheet_comparison_v1",
+ "from": "r1",
+ "to": "r2",
+ "r1_worksheet_sha256": "7af2954d75b106968914ceffdc91a90bd01b5eaed1aec3cb4c52b50e9fe8a5f8",
+ "r2_worksheet_sha256": "bf0d9e4b0be5520123198ecd1bf00dcf76a229eef7ef8c741ee0e54b156f5802",
+ "rows_changed": 58,
+ "tier_moves": {
+  "conditional, with additional obligations -> conditional": 22
+ },
+ "rows": [
+  {
+   "artifact": "nvidia_cufile_cu12-1.13.1.3-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "priority NVIDIA",
+    "priority NVIDIA"
+   ],
+   "obligations_removed": [
+    "NVIDIA terms: decide whether a private team-only dataset is permitted distribution (not stand-alone); private access is not clearance"
+   ],
+   "obligations_added": [
+    "shared NVIDIA deployment assessment applies; owner deployment inputs are outstanding (account, recipients, access controls, publication intent)",
+    "product question: Which text governs: the bundled CUDA EULA (omits this component) or the official CUDA 12.8.1 EULA (lists its libraries)?"
+   ],
+   "new_evidence": [
+    "nvidia_deployment_assessment.md: product-specific findings"
+   ]
+  },
+  {
+   "artifact": "nvidia_nvjitlink_cu12-12.8.93-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "priority NVIDIA",
+    "priority NVIDIA"
+   ],
+   "obligations_removed": [
+    "NVIDIA terms: decide whether a private team-only dataset is permitted distribution (not stand-alone); private access is not clearance"
+   ],
+   "obligations_added": [
+    "shared NVIDIA deployment assessment applies; owner deployment inputs are outstanding (account, recipients, access controls, publication intent)",
+    "product question: Which text governs: the bundled CUDA EULA (omits this component) or the official CUDA 12.8.1 EULA (lists its libraries)?"
+   ],
+   "new_evidence": [
+    "nvidia_deployment_assessment.md: product-specific findings"
+   ]
+  },
+  {
+   "artifact": "nvidia_nvshmem_cu12-3.4.5-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "priority NVIDIA",
+    "priority NVIDIA"
+   ],
+   "obligations_removed": [
+    "NVIDIA terms: decide whether a private team-only dataset is permitted distribution (not stand-alone); private access is not clearance"
+   ],
+   "obligations_added": [
+    "shared NVIDIA deployment assessment applies; owner deployment inputs are outstanding (account, recipients, access controls, publication intent)",
+    "product question: Which text governs: the bundled CUDA EULA or the NVSHMEM v3.4.5-0 SDK licence and supplement? Under the bundled CUDA EULA none of the 14 shipped library files is named in Attachment A; under the supplement \"any portion of the SDK\" is distributable, and the application requirements still apply."
+   ],
+   "new_evidence": [
+    "nvidia_deployment_assessment.md: product-specific findings"
+   ]
+  },
+  {
+   "artifact": "nvidia_cutlass_dsl_libs_base-4.5.0.dev0-cp312-cp312-manylinux_2_28_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "priority NVIDIA",
+    "priority NVIDIA"
+   ],
+   "obligations_removed": [
+    "NVIDIA terms: decide whether a private team-only dataset is permitted distribution (not stand-alone); private access is not clearance"
+   ],
+   "obligations_added": [
+    "CUTLASS question: Is any permission available for the compiled files (libcute_dsl_runtime.so, _cutlass_ir.cpython-312 .so, libcuda_dialect_runtime_static.a) and the header CuteDSLRuntime.h?",
+    "CUTLASS question: Do the embedded LLVM/MLIR components (markers: Copyright (c) 2005-%s NVIDIA Corporation, LLVM Exception, LLVM version 20.0.0, clang version 16.0.0, clang version 7.1.0) impose their own notice obligations when the binaries are redistributed?",
+    "CUTLASS question: Section 3 permits access by employees and contractors \"from your secure network\": does the planned deployment fit that, or is it making the Software available to others (2.2)?"
+   ],
+   "new_evidence": [
+    "cutlass_binaries.md: No applicable binary redistribution grant identified (scoped; see pack)"
+   ]
+  },
+  {
+   "artifact": "ninja-1.13.0-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [
+    "Apache NOTICE status inconclusive: the wheel carries code from third-party copies that the sdist holds in trimmed form, so their upstream NOTICE status is unknown: ninja-upstream/src/third_party/emhash (2 files, no top-level licence file; it may be compiled into the native binaries); ninja-upstream/src/third_party/rapidhash (2 files, no top-level licence file; it may be compiled into the native binaries). Repository: scikit-build/ninja-python-distributions@8f6505ad465c (tag 1.13.0, version NOT verified at the commit): no NOTICE-named file in 37 tree entries; a repository without a NOTICE does not establish absence for the release",
+    "vendored components (ninja-upstream/src/third_party/emhash, ninja-upstream/src/third_party/rapidhash) carry their own licence terms, not yet checked; their licence texts may need to ship",
+    "declared-licence discrepancy explained: BSD (classifier \"License :: OSI Approved :: BSD License\", variant not named) traced to a shipped component; proposed: Ship, alongside the wheel and its bundled LICENSE_Apache_20 and AUTHORS.rst, the rapidhash BSD-2-Clause notice (copyright line, both conditions and the disclaimer) from sources/metadata-ninja-rapidhash-licence-header.txt: rapidhash code is compiled into ninja-1.13.0.data/scripts/ninja, and the licence asks binary redistributions to reproduce the notice in the documentation or other materials; the wheel carries no copy. Because emhash (MIT) is compiled into the same binary and is not declared, also ship its MIT notice from sources/metadata-ninja-emhash-licence-header.txt."
+   ],
+   "new_evidence": [
+    "apache_notice_check.md: inconclusive",
+    "metadata_discrepancies.md: explained (rapidhash (Copyright (C) 2024 Nicolas De Carli; based on wyhash by Wang Yi), vendored by ninja at ninja-upstream/src/third_party/rapidhash/)"
+   ]
+  },
+  {
+   "artifact": "nvidia_cublas_cu12-12.8.4.1-py3-none-manylinux_2_27_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [
+    "NVIDIA terms: decide whether a private team-only dataset is permitted distribution (not stand-alone); private access is not clearance"
+   ],
+   "obligations_added": [
+    "shared NVIDIA deployment assessment applies; owner deployment inputs are outstanding (account, recipients, access controls, publication intent)"
+   ],
+   "new_evidence": [
+    "nvidia_deployment_assessment.md: product-specific findings"
+   ]
+  },
+  {
+   "artifact": "nvidia_cuda_cupti_cu12-12.8.90-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [
+    "NVIDIA terms: decide whether a private team-only dataset is permitted distribution (not stand-alone); private access is not clearance"
+   ],
+   "obligations_added": [
+    "shared NVIDIA deployment assessment applies; owner deployment inputs are outstanding (account, recipients, access controls, publication intent)",
+    "product question: Files not covered by the distributable listing: libcheckpoint.so, libnvperf_host.so, libnvperf_target.so, libpcsamplingutil.so \u2014 are they distributable?"
+   ],
+   "new_evidence": [
+    "nvidia_deployment_assessment.md: product-specific findings"
+   ]
+  },
+  {
+   "artifact": "nvidia_cuda_nvrtc_cu12-12.8.93-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [
+    "NVIDIA terms: decide whether a private team-only dataset is permitted distribution (not stand-alone); private access is not clearance"
+   ],
+   "obligations_added": [
+    "shared NVIDIA deployment assessment applies; owner deployment inputs are outstanding (account, recipients, access controls, publication intent)",
+    "product question: Files not covered by the distributable listing: libnvrtc-builtins.alt.so.12.8, libnvrtc.alt.so.12 \u2014 are they distributable?"
+   ],
+   "new_evidence": [
+    "nvidia_deployment_assessment.md: product-specific findings"
+   ]
+  },
+  {
+   "artifact": "nvidia_cuda_runtime_cu12-12.8.90-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [
+    "NVIDIA terms: decide whether a private team-only dataset is permitted distribution (not stand-alone); private access is not clearance"
+   ],
+   "obligations_added": [
+    "shared NVIDIA deployment assessment applies; owner deployment inputs are outstanding (account, recipients, access controls, publication intent)"
+   ],
+   "new_evidence": [
+    "nvidia_deployment_assessment.md: product-specific findings"
+   ]
+  },
+  {
+   "artifact": "nvidia_cudnn_cu12-9.10.2.21-py3-none-manylinux_2_27_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [
+    "NVIDIA terms: decide whether a private team-only dataset is permitted distribution (not stand-alone); private access is not clearance"
+   ],
+   "obligations_added": [
+    "shared NVIDIA deployment assessment applies; owner deployment inputs are outstanding (account, recipients, access controls, publication intent)",
+    "product question: The primary text (release-specific (cuDNN backend v9.10.2 documentation)) differs from the bundled text in 34 spans beyond list numbering (listed above); which text governs this wheel?"
+   ],
+   "new_evidence": [
+    "nvidia_deployment_assessment.md: product-specific findings"
+   ]
+  },
+  {
+   "artifact": "nvidia_cufft_cu12-11.3.3.83-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [
+    "NVIDIA terms: decide whether a private team-only dataset is permitted distribution (not stand-alone); private access is not clearance"
+   ],
+   "obligations_added": [
+    "shared NVIDIA deployment assessment applies; owner deployment inputs are outstanding (account, recipients, access controls, publication intent)"
+   ],
+   "new_evidence": [
+    "nvidia_deployment_assessment.md: product-specific findings"
+   ]
+  },
+  {
+   "artifact": "nvidia_curand_cu12-10.3.9.90-py3-none-manylinux_2_27_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [
+    "NVIDIA terms: decide whether a private team-only dataset is permitted distribution (not stand-alone); private access is not clearance"
+   ],
+   "obligations_added": [
+    "shared NVIDIA deployment assessment applies; owner deployment inputs are outstanding (account, recipients, access controls, publication intent)"
+   ],
+   "new_evidence": [
+    "nvidia_deployment_assessment.md: product-specific findings"
+   ]
+  },
+  {
+   "artifact": "nvidia_cusolver_cu12-11.7.3.90-py3-none-manylinux_2_27_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [
+    "NVIDIA terms: decide whether a private team-only dataset is permitted distribution (not stand-alone); private access is not clearance"
+   ],
+   "obligations_added": [
+    "shared NVIDIA deployment assessment applies; owner deployment inputs are outstanding (account, recipients, access controls, publication intent)",
+    "product question: Files not covered by the distributable listing: libcusolverMg.so.11 \u2014 are they distributable?"
+   ],
+   "new_evidence": [
+    "nvidia_deployment_assessment.md: product-specific findings"
+   ]
+  },
+  {
+   "artifact": "nvidia_cusparse_cu12-12.5.8.93-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [
+    "NVIDIA terms: decide whether a private team-only dataset is permitted distribution (not stand-alone); private access is not clearance"
+   ],
+   "obligations_added": [
+    "shared NVIDIA deployment assessment applies; owner deployment inputs are outstanding (account, recipients, access controls, publication intent)"
+   ],
+   "new_evidence": [
+    "nvidia_deployment_assessment.md: product-specific findings"
+   ]
+  },
+  {
+   "artifact": "nvidia_cusparselt_cu12-0.7.1-py3-none-manylinux2014_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [
+    "NVIDIA terms: decide whether a private team-only dataset is permitted distribution (not stand-alone); private access is not clearance"
+   ],
+   "obligations_added": [
+    "shared NVIDIA deployment assessment applies; owner deployment inputs are outstanding (account, recipients, access controls, publication intent)",
+    "product question: Evidence gap: no release-specific (0.7.1) licence text was found; is the bundled text accepted as governing?",
+    "product question: The primary text (NOT release-specific: the current cuSPARSELt licence page; no 0.7.1 page was found) matches the bundled text except list numbering; it is not release-specific, so the match does not establish the 0.7.1 terms."
+   ],
+   "new_evidence": [
+    "nvidia_deployment_assessment.md: product-specific findings"
+   ]
+  },
+  {
+   "artifact": "nvidia_cutlass_dsl-4.5.0.dev0-py3-none-any.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [
+    "NVIDIA terms: decide whether a private team-only dataset is permitted distribution (not stand-alone); private access is not clearance"
+   ],
+   "obligations_added": [
+    "CUTLASS question: Is any permission available for the compiled files (libcute_dsl_runtime.so, _cutlass_ir.cpython-312 .so, libcuda_dialect_runtime_static.a) and the header CuteDSLRuntime.h?",
+    "CUTLASS question: Do the embedded LLVM/MLIR components (markers: Copyright (c) 2005-%s NVIDIA Corporation, LLVM Exception, LLVM version 20.0.0, clang version 16.0.0, clang version 7.1.0) impose their own notice obligations when the binaries are redistributed?",
+    "CUTLASS question: Section 3 permits access by employees and contractors \"from your secure network\": does the planned deployment fit that, or is it making the Software available to others (2.2)?"
+   ],
+   "new_evidence": [
+    "cutlass_binaries.md: No applicable binary redistribution grant identified (scoped; see pack)"
+   ]
+  },
+  {
+   "artifact": "openai_harmony-0.0.8-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [
+    "Apache NOTICE status inconclusive: the wheel contains components not traced to the sdist, whose NOTICE status is unknown: openai_harmony/openai_harmony.abi3.so: Rust build; 310 crates resolved from a registry/git per Cargo.lock are compiled in and are not vendored in the sdist. Repository: not checked (the wheel METADATA names no GitHub repository)"
+   ],
+   "new_evidence": [
+    "apache_notice_check.md: inconclusive"
+   ]
+  },
+  {
+   "artifact": "opencv_python_headless-4.13.0.92-cp37-abi3-manylinux_2_28_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [
+    "copyleft as built: FFmpeg 8.0.1 (LGPL-2.1-or-later): corresponding source and instructions required; provenance chain partial (missing: source archive named by URL but no checksum pinned: the exact source bytes are not established; built inside a separately published container image (image not verified against the Dockerfile at the commit))",
+    "notice gap: OpenBLAS has no section in the wheel's third-party notice",
+    "copyleft as built: libgfortran 8.5.0-28.el8_10.alma.1 (EL8 package build from .gnu_debuglink) (GPL-3.0-or-later WITH GCC-exception-3.1): corresponding source and instructions required; provenance chain clue_only (missing: no build file names this library or pins its version)",
+    "notice gap: libgfortran has no section in the wheel's third-party notice",
+    "copyleft as built: libquadmath 8.5.0-28.el8_10.alma.1 (EL8 package build from .gnu_debuglink) (LGPL-2.1-or-later): corresponding source and instructions required; provenance chain clue_only (missing: no build file names this library or pins its version)",
+    "notice gap: libquadmath has no section in the wheel's third-party notice",
+    "notice gap: libdrm has no section in the wheel's third-party notice"
+   ],
+   "new_evidence": [
+    "native_libraries.md: 10 bundled components traced (3 clue_only, 7 partial); no source checksum pinned by the build, so no chain is complete"
+   ]
+  },
+  {
+   "artifact": "pillow-12.2.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [
+    "dual licence with a GPL option: FreeType (FTL OR GPL-2.0-or-later): record the option relied on",
+    "dual licence with a GPL option: Zstandard (BSD-3-Clause OR GPL-2.0-only): record the option relied on"
+   ],
+   "new_evidence": [
+    "native_libraries.md: 17 bundled components traced (1 clue_only, 16 partial); no source checksum pinned by the build, so no chain is complete"
+   ]
+  },
+  {
+   "artifact": "prometheus_client-0.25.0-py3-none-any.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [
+    "declared-licence discrepancy explained: BSD-2-Clause (License-Expression \"Apache-2.0 AND BSD-2-Clause\") traced to a shipped component; proposed: Ship the wheel unmodified: prometheus_client/decorator.py carries the licence text in its header and the bundled NOTICE points to it. Where licence documents are collected separately from the wheel, add the decorator notice from sources/metadata-prometheus_client-decorator-licence-header.txt beside LICENSE and NOTICE. If the module is ever redistributed only as bytecode, the licence asks for the notice in the accompanying documentation."
+   ],
+   "new_evidence": [
+    "metadata_discrepancies.md: explained (decorator 4.0.10 (Copyright (c) 2005-2016, Michele Simionato), vendored as prometheus_client/decorator.py)"
+   ]
+  },
+  {
+   "artifact": "pyzmq-27.1.0-cp312-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [
+    "copyleft as built: libzmq 4.3.5 (MPL-2.0): corresponding source and instructions required; provenance chain partial (missing: source archive named by URL but no checksum pinned: the exact source bytes are not established)"
+   ],
+   "new_evidence": [
+    "native_libraries.md: 2 bundled components traced (2 partial); no source checksum pinned by the build, so no chain is complete"
+   ]
+  },
+  {
+   "artifact": "quack_kernels-0.4.1-py3-none-any.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "regex-2026.4.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [
+    "declared-licence discrepancy explained: CNRI-Python (License-Expression \"Apache-2.0 AND CNRI-Python\") traced to a shipped component; proposed: Ship, alongside the wheel and its bundled LICENSE.txt, a copy of the CNRI licence text. Proposed: sources/metadata-regex-spdx-v3.27.0-CNRI-Python.txt (the text of the declared SPDX identifier, which in clause 2 asks that the CNRI agreement be retained in any derivative version). The reviewer may instead or also choose the CPython licence file (sources/metadata-regex-cpython-v3.1-LICENSE.txt), which carries the CNRI agreement for Python 1.6.1 within the PSF licence history. The Secret Labs AB copyright notices already ship in the headers of regex/_main.py and regex/_regex_core.py; keep those files unmodified."
+   ],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)",
+    "metadata_discrepancies.md: explained (SRE regular expression engine (Copyright (c) 1997-2001 Secret Labs AB), from CPython 2.6/3.1's re module, from which regex derives)"
+   ]
+  },
+  {
+   "artifact": "aiohttp-3.13.5-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [
+    "vendored components (vendor/llhttp) carry their own licence terms, not yet checked; their licence texts may need to ship"
+   ],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "apache_tvm_ffi-0.1.10-cp312-abi3-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "blake3-1.0.8-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [
+    "Apache NOTICE status inconclusive: the wheel contains components not traced to the sdist, whose NOTICE status is unknown: 2 wheel file(s) present in the sdist by neither content nor path (e.g. blake3/__init__.py, blake3/py.typed); blake3/blake3.cpython-312-x86_64-linux-gnu.so: Rust build; 34 crates resolved from a registry/git per Cargo.lock are compiled in and are not vendored in the sdist. Repository: oconnor663/blake3-py@ff5b05c5dc42 (tag 1.0.8, version verified in Cargo.toml): no NOTICE-named file in 46 tree entries; a repository without a NOTICE does not establish absence for the release"
+   ],
+   "new_evidence": [
+    "apache_notice_check.md: inconclusive"
+   ]
+  },
+  {
+   "artifact": "certifi-2026.4.22-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "cryptography-47.0.0-cp311-abi3-manylinux_2_34_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [
+    "Apache NOTICE status inconclusive: the wheel contains components not traced to the sdist, whose NOTICE status is unknown: cryptography/hazmat/bindings/_rust.abi3.so: Rust build; 32 crates resolved from a registry/git per Cargo.lock are compiled in and are not vendored in the sdist; cryptography/hazmat/bindings/_rust.abi3.so: embeds third-party library markers (OpenSSL 4.0.0). Repository: pyca/cryptography@59c5f5e4b939 (tag 47.0.0, version verified in pyproject.toml): no NOTICE-named file in 3217 tree entries; a repository without a NOTICE does not establish absence for the release"
+   ],
+   "new_evidence": [
+    "apache_notice_check.md: inconclusive"
+   ]
+  },
+  {
+   "artifact": "cuda_bindings-12.9.4-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [
+    "NVIDIA terms: decide whether a private team-only dataset is permitted distribution (not stand-alone); private access is not clearance"
+   ],
+   "obligations_added": [
+    "own NVIDIA Software License (not the CUDA Toolkit EULA): distribution terms consistent with it; notify NVIDIA of known non-compliance"
+   ],
+   "new_evidence": [
+    "worksheet r2: the CUDA Toolkit stand-alone/application question does not apply to this licence (r1 flagged it in error)"
+   ]
+  },
+  {
+   "artifact": "cuda_pathfinder-1.5.4-py3-none-any.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [
+    "Apache NOTICE status inconclusive: no sdist for this exact version on PyPI (no sdist on PyPI); absence cannot be verified. Repository: NVIDIA/cuda-python@7f97d90f0908 (tag cuda-pathfinder-v1.5.4, version NOT verified at the commit): no NOTICE-named file in 812 tree entries; a repository without a NOTICE does not establish absence for the release"
+   ],
+   "new_evidence": [
+    "apache_notice_check.md: inconclusive"
+   ]
+  },
+  {
+   "artifact": "cuda_python-12.9.4-py3-none-any.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [
+    "NVIDIA terms: decide whether a private team-only dataset is permitted distribution (not stand-alone); private access is not clearance"
+   ],
+   "obligations_added": [
+    "own NVIDIA Software License (not the CUDA Toolkit EULA): distribution terms consistent with it; notify NVIDIA of known non-compliance"
+   ],
+   "new_evidence": [
+    "worksheet r2: the CUDA Toolkit stand-alone/application question does not apply to this licence (r1 flagged it in error)"
+   ]
+  },
+  {
+   "artifact": "flashinfer_cubin-0.6.6-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "flashinfer_python-0.6.6-py3-none-any.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [
+    "Apache NOTICE found upstream for this release: the NOTICE is in the upstream repository at the release commit but not in the PyPI sdist or the wheel: the reviewer decides whether 4(d) reaches this wheel (shipping the retained NOTICE alongside is the cautious option)",
+    "vendored components (3rdparty/cutlass, 3rdparty/spdlog) carry their own licence terms, not yet checked; their licence texts may need to ship"
+   ],
+   "new_evidence": [
+    "apache_notice_check.md: found"
+   ]
+  },
+  {
+   "artifact": "grpcio-1.80.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "hf_xet-1.4.3-cp37-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [
+    "Apache NOTICE status inconclusive: the wheel contains components not traced to the sdist, whose NOTICE status is unknown: 1 wheel file(s) present in the sdist by neither content nor path (e.g. hf_xet/__init__.py); hf_xet/hf_xet.abi3.so: Rust build; 488 crates resolved from a registry/git per Cargo.lock are compiled in and are not vendored in the sdist; hf_xet/hf_xet.abi3.so: embeds third-party library markers (BoringSSL). Repository: huggingface/xet-core@b24e739036d6 (tag v1.4.3, version verified in hf_xet/Cargo.toml): no NOTICE-named file in 456 tree entries; a repository without a NOTICE does not establish absence for the release"
+   ],
+   "new_evidence": [
+    "apache_notice_check.md: inconclusive"
+   ]
+  },
+  {
+   "artifact": "llvmlite-0.44.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [
+    "Apache NOTICE status inconclusive: the wheel contains components not traced to the sdist, whose NOTICE status is unknown: llvmlite/binding/libllvmlite.so: no source file named libllvmlite/llvmlite.{c,cc,cpp,pyx,cu,...} in the sdist; provenance of the binary not established; llvmlite/binding/libllvmlite.so: embeds third-party library markers (LLVM 15.0.7). Repository: numba/llvmlite@2c67a6b8deaa (tag v0.44.0, version NOT verified at the commit): no NOTICE-named file in 225 tree entries; a repository without a NOTICE does not establish absence for the release"
+   ],
+   "new_evidence": [
+    "apache_notice_check.md: inconclusive"
+   ]
+  },
+  {
+   "artifact": "model_hosting_container_standards-0.1.14-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "outlines_core-0.2.11-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [
+    "Apache NOTICE status inconclusive: the wheel contains components not traced to the sdist, whose NOTICE status is unknown: outlines_core/outlines_core.cpython-312-x86_64-linux-gnu.so: Rust build; 270 crates resolved from a registry/git per Cargo.lock are compiled in and are not vendored in the sdist. Repository: dottxt-ai/outlines-core@ad8c7b7236e2 (tag 0.2.11, version NOT verified at the commit): no NOTICE-named file in 83 tree entries; a repository without a NOTICE does not establish absence for the release"
+   ],
+   "new_evidence": [
+    "apache_notice_check.md: inconclusive"
+   ]
+  },
+  {
+   "artifact": "propcache-0.4.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "pycountry-26.2.16-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "requests-2.33.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "safetensors-0.7.0-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [
+    "Apache NOTICE status inconclusive: the wheel contains components not traced to the sdist, whose NOTICE status is unknown: safetensors/_safetensors_rust.abi3.so: Rust build; 31 crates resolved from a registry/git per Cargo.lock are compiled in and are not vendored in the sdist. Repository: huggingface/safetensors@fa27fa835a46 (tag v0.7.0, version verified in safetensors/Cargo.toml): no NOTICE-named file in 132 tree entries; a repository without a NOTICE does not establish absence for the release"
+   ],
+   "new_evidence": [
+    "apache_notice_check.md: inconclusive"
+   ]
+  },
+  {
+   "artifact": "setuptools-80.10.2-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "torch_c_dlpack_ext-0.1.5-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "tqdm-4.67.3-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "uvloop-0.22.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [
+    "vendored components (vendor/libuv) carry their own licence terms, not yet checked; their licence texts may need to ship"
+   ],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "vllm-0.19.0-cp38-abi3-manylinux_2_31_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [
+    "Apache NOTICE status inconclusive: the wheel contains components not traced to the sdist, whose NOTICE status is unknown: 8 native binaries; the sdist's build scripts contain download directives (CMakeLists.txt:324 FetchContent_Declare; CMakeLists.txt:326 FetchContent_Declare; cmake/cpu_extension.cmake:250 FetchContent_Declare; cmake/cpu_extension.cmake:258 FetchContent_Declare +11 more); whether the shipped binaries include downloaded code was not established; 75 wheel file(s) present in the sdist by neither content nor path (e.g. vllm/third_party/flashmla/flash_mla_interface.py, vllm/third_party/triton_kernels/compaction.py, vllm/third_party/triton_kernels/distributed.py); vllm/_C.abi3.so: no source file named _C.{c,cc,cpp,pyx,cu,...} in the sdist; provenance of the binary not established; vllm/_C_stable_libtorch.abi3.so: no source file named _C_stable_libtorch.{c,cc,cpp,pyx,cu,...} in the sdist; provenance of the binary not established; vllm/_flashmla_C.abi3.so: no source file named _flashmla_C.{c,cc,cpp,pyx,cu,...} in the sdist; provenance of the binary not established; vllm/_flashmla_extension_C.abi3.so: no source file named _flashmla_extension_C.{c,cc,cpp,pyx,cu,...} in the sdist; provenance of the binary not established (+3 more). Repository: vllm-project/vllm@2a69949bdadf (tag v0.19.0, version NOT verified at the commit): no NOTICE-named file in 4950 tree entries; a repository without a NOTICE does not establish absence for the release",
+    "vendored components (vllm/third_party/flashmla) carry their own licence terms, not yet checked; their licence texts may need to ship"
+   ],
+   "new_evidence": [
+    "apache_notice_check.md: inconclusive"
+   ]
+  },
+  {
+   "artifact": "xgrammar-0.1.34-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "yarl-1.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "aiohappyeyeballs-2.6.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "aiosignal-1.4.0-py3-none-any.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "annotated_doc-0.0.4-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "annotated_types-0.7.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "anthropic-0.97.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "anyio-4.13.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "astor-0.8.1-py2.py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "attrs-26.1.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "cachetools-7.0.6-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "cbor2-6.0.1-cp312-cp312-manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "cffi-2.0.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "charset_normalizer-3.4.7-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "click-8.3.3-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "cloudpickle-3.1.2-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "compressed_tensors-0.14.0.1-py3-none-any.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "depyf-0.20.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "dill-0.4.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "diskcache-5.6.3-py3-none-any.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "distro-1.9.0-py3-none-any.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "dnspython-2.8.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "docstring_parser-0.18.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "einops-0.8.2-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "email_validator-2.3.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "fastapi-0.136.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "fastapi_cli-0.0.24-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "fastapi_cloud_cli-0.17.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "fastar-0.11.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "filelock-3.29.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "frozenlist-1.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "fsspec-2026.4.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "gguf-0.18.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "googleapis_common_protos-1.74.0-py3-none-any.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "h11-0.16.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "httpcore-1.0.9-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "httptools-0.7.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "httpx-0.28.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "httpx_sse-0.4.3-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "huggingface_hub-0.36.2-py3-none-any.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "idna-3.13-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "ijson-3.5.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "importlib_metadata-8.7.1-py3-none-any.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "interegular-0.3.3-py37-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "jinja2-3.1.6-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "jiter-0.14.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "jmespath-1.1.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "jsonschema-4.26.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "jsonschema_specifications-2025.9.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "lark-1.2.2-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "llguidance-1.3.0-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "lm_format_enforcer-0.11.3-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "loguru-0.7.3-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "markdown_it_py-4.0.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "mcp-1.27.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "mdurl-0.1.2-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "mistral_common-1.11.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "mpmath-1.3.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "msgspec-0.21.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "multidict-6.7.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "networkx-3.6.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "numba-0.61.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "numpy-2.2.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_cudnn_frontend-1.18.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_ml_py-13.595.45-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_nccl_cu12-2.27.5-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_nvtx_cu12-12.8.90-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "openai-2.33.0-py3-none-any.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "opentelemetry_api-1.41.1-py3-none-any.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "opentelemetry_exporter_otlp-1.41.1-py3-none-any.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "opentelemetry_exporter_otlp_proto_common-1.41.1-py3-none-any.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "opentelemetry_exporter_otlp_proto_grpc-1.41.1-py3-none-any.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "opentelemetry_exporter_otlp_proto_http-1.41.1-py3-none-any.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "opentelemetry_proto-1.41.1-py3-none-any.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "opentelemetry_sdk-1.41.1-py3-none-any.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "opentelemetry_semantic_conventions-0.62b1-py3-none-any.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "opentelemetry_semantic_conventions_ai-0.5.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "packaging-26.2-py3-none-any.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "partial_json_parser-0.2.1.1.post7-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "prometheus_fastapi_instrumentator-7.1.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "protobuf-6.33.6-cp39-abi3-manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "psutil-7.2.2-cp36-abi3-manylinux2010_x86_64.manylinux_2_12_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "py_cpuinfo-9.0.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "pybase64-1.4.3-cp312-cp312-manylinux1_x86_64.manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_5_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "pycparser-3.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "pydantic-2.13.3-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "pydantic_core-2.46.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "pydantic_extra_types-2.11.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "pydantic_settings-2.14.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "pygments-2.20.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "pyjwt-2.12.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "python_dotenv-1.2.2-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "python_json_logger-4.1.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "python_multipart-0.0.27-py3-none-any.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "referencing-0.37.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "rich-15.0.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "rich_toolkit-0.19.7-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "rignore-0.7.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "rpds_py-0.30.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "sentencepiece-0.2.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "sentry_sdk-2.58.0-py2.py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "setproctitle-1.3.7-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "shellingham-1.5.4-py2.py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "six-1.17.0-py2.py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "sniffio-1.3.1-py3-none-any.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "sse_starlette-3.4.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "starlette-0.52.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "supervisor-4.3.0-py2.py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "sympy-1.14.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "tabulate-0.10.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "tiktoken-0.12.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "tokenizers-0.22.2-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "torch-2.10.0-3-cp312-cp312-manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "torchaudio-2.10.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "torchvision-0.25.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "transformers-4.57.6-py3-none-any.whl",
+   "changed_fields": [
+    "priority",
+    "tier",
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional"
+   ],
+   "obligations_removed": [
+    "Apache-2.0 without a NOTICE in the wheel: confirm no upstream NOTICE must accompany it"
+   ],
+   "obligations_added": [],
+   "new_evidence": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ]
+  },
+  {
+   "artifact": "triton-3.6.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "typer-0.25.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "typing_extensions-4.15.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "typing_inspection-0.4.2-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "urllib3-2.6.3-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "uvicorn-0.46.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "watchfiles-1.1.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "websockets-16.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "zipp-3.23.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "new_evidence": []
+  }
+ ]
+}
