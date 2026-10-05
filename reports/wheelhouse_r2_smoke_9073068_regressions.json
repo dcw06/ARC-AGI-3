@@ -1,0 +1,28 @@
+{
+ "baseline_commit": "9073068c3dee6a60815d136064b84885fe3f2fc9",
+ "source_bindings_verified_against_git": {
+  "certification/wheelhouse_r2_smoke_v1/server.py": "b259dc53f27679db53623c3cd53701accfa12eb849cd88d813045be713f4c3e2",
+  "certification/wheelhouse_r2_smoke_v1/run.py": "cc049b12dab92e41cc561cba4acd6d89f885132583a7ecce65d7feae999db6f1",
+  "certification/wheelhouse_r2_smoke_v1/evidence.py": "665296328f1e9fb13c3575825c238e999309744998caeb73201b0037b8f7a06e",
+  "certification/wheelhouse_r2_smoke_v1/notebook.py": "d10653fefbe34fa7f5ff85b92086fba6f55cf60918b9dad6ecb7b4a93fe45965",
+  "certification/wheelhouse_r2_smoke_v1/protocol.json": "f472c551c50794a85c8325c81908bf04ce42e6c451c7f28c8464523289c08538"
+ },
+ "regression_test_sha256": "7edcabaab4a04d787cd29d432454f07d53000cafc509f648736c7d7483f72435",
+ "command": [
+  "/home/jingjing/.local/share/agi/dev-env/bin/python",
+  "-m",
+  "unittest",
+  "tests.test_wheelhouse_r2_smoke_lifecycle.StartupOwnership.test_original_reproduction_interrupt_before_assignment",
+  "tests.test_wheelhouse_r2_smoke_lifecycle.StartupOwnership.test_interrupt_before_group_registration",
+  "tests.test_wheelhouse_r2_smoke_lifecycle.LifecycleDeadline.test_original_reproduction_cleanup_overrun"
+ ],
+ "exit_code": 1,
+ "tests": [
+  "tests.test_wheelhouse_r2_smoke_lifecycle.StartupOwnership.test_original_reproduction_interrupt_before_assignment",
+  "tests.test_wheelhouse_r2_smoke_lifecycle.StartupOwnership.test_interrupt_before_group_registration",
+  "tests.test_wheelhouse_r2_smoke_lifecycle.LifecycleDeadline.test_original_reproduction_cleanup_overrun"
+ ],
+ "expected_failures": 3,
+ "expected_failure_demonstration_passed": true,
+ "scope": "CPU-only scripted checks; the startup tests own and terminate their real sleeper processes"
+}

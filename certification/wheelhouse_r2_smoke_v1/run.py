@@ -3,6 +3,7 @@ host facts -> bundle integrity -> offline install and package checks -> GPU fact
 -> startup probes -> inference -> cancellation probes -> termination and cleanup -> retained evidence.
 One attempt; nothing is retried; any failure ends the run, still stopping the server and retaining evidence."""
 import json
+import shutil
 import signal
 import sys
 import tempfile
@@ -21,11 +22,14 @@ NOT_ESTABLISHED = ['solving ability or task performance', 'Phase 4 completion', 
 
 
 def run(mode, protocol, output, started, *, bundle, workdir, gpu_query=None, model_check=None, server_argv=None,
-        python=sys.executable, now=time.monotonic, sleep=time.sleep, attempt_id=None, on_cleanup=None):
+        python=sys.executable, now=time.monotonic, sleep=time.sleep, attempt_id=None, on_cleanup=None,
+        on_environment_cleanup=None):
     if mode not in ('live', 'rehearsal'):
         raise ValueError('mode must be live or rehearsal')
     if mode == 'live' and gpu_query is None:
         raise ValueError('the live path requires GPU queries')
+    if mode == 'live' and on_environment_cleanup is None:
+        raise ValueError('the live path requires owned temporary-environment cleanup')
     limits, runtime, server_cfg = protocol['limits'], protocol['runtime'], protocol['server']
     evidence = Evidence(output, mode)
     clock = Clock(limits, started, now)
@@ -140,12 +144,16 @@ def run(mode, protocol, output, started, *, bundle, workdir, gpu_query=None, mod
                                    'deadline_at': round(clock.cleanup_deadline() - started, 3)}
         stop_deadline = min(now() + server_cfg['terminate_grace_seconds'] + server_cfg['kill_grace_seconds'] + 5,
                             clock.cleanup_deadline())
+        begin = now()
         stopped = server.stop(stop_deadline, server_cfg['terminate_grace_seconds'], server_cfg['kill_grace_seconds']) \
-            if server else {'groups_absent': True, 'note': 'server never started'}
+            if server else {'groups_absent': True, 'ownership': 'never_spawned', 'note': 'server never started'}
+        clock.record('server_cleanup', begin, 'passed' if stopped['groups_absent'] else 'failed')
         result['cleanup'] = {'server': stopped}
         if gpu is not None:
+            begin = now()
             result['cleanup']['gpu'] = host.gpu_cleanup(gpu['uuid'], stopped['groups_absent'], gpu_query)
             cleaned = result['cleanup']['gpu']['gpu_cleanup_verified']
+            clock.record('gpu_cleanup', begin, 'passed' if cleaned else 'failed')
         else:
             result['cleanup']['gpu'] = 'not_exercised (no GPU in a CPU rehearsal)'
             cleaned = stopped['groups_absent']
@@ -153,17 +161,80 @@ def run(mode, protocol, output, started, *, bundle, workdir, gpu_query=None, mod
             cleaned = False if not stopped['groups_absent'] else cleaned
             result['cleanup_interrupted'] = stopped['interrupted']
         result['cleanup_verified'] = cleaned
-        result['passed'] = (bool(result.get('completed_plan')) and cleaned and result['error'] is None
-                            and not stopped.get('interrupted'))
+        eligible = (bool(result.get('completed_plan')) and cleaned and result['error'] is None
+                    and not stopped.get('interrupted'))
         if result['error'] is None and not cleaned:
             result['failed_stage'], result['error'] = 'cleanup', 'process or GPU cleanup not verified'
         result['ledger'] = ledger.summary()
         result['phases'] = clock.phases
         result['elapsed_seconds'] = round(clock.elapsed(), 3)
         result['limits'] = limits
+        begin = now()
         evidence.text_tail('logs/server.log', workdir / 'server.log', server_cfg['log_retained_bytes'])
         evidence.text_tail('logs/install.log', workdir / 'install.log', server_cfg['log_retained_bytes'])
-        final = evidence.finalize(result)
+        clock.record('log_retention', begin, 'passed')
+        # Logs have been retained before removing the venv, scratch and (in the notebook) extracted source.
+        # Cleanup still runs after an overrun; that never restores eligibility for a passing verdict.
+        begin = now()
+        try:
+            details = on_environment_cleanup() if on_environment_cleanup else None
+            result['cleanup']['environment'] = {'removed': True if on_environment_cleanup else None, 'details': details,
+                                                 'scope': 'owned temporary directories' if on_environment_cleanup
+                                                 else 'caller-retained rehearsal work directory'}
+        except Exception as exc:
+            eligible = False
+            result['cleanup_verified'] = False
+            result['cleanup']['environment'] = {'removed': False, 'error': f'{type(exc).__name__}: {exc}'}
+            if result['error'] is None:
+                result['failed_stage'], result['error'] = 'environment_cleanup', str(exc)[:500]
+        clock.record('environment_cleanup', begin, 'not_applicable' if not on_environment_cleanup else
+                     'passed' if result['cleanup']['environment']['removed'] else 'failed')
+        # Persist a non-passing result first. Only a complete lifecycle, including evidence finalization,
+        # can reach the explicit final deadline check and become a passing verdict.
+        result['verdict_status'] = 'pending_lifecycle'
+        begin = now()
+        evidence.finalize(result)
+        clock.record('evidence_finalization', begin, 'passed')
+
+        def final_deadline_check(phase):
+            elapsed = clock.elapsed()
+            try:
+                clock.check(phase)
+                met = True
+            except TimeoutError as exc:
+                met = False
+                result['passed'] = False
+                if result['error'] is None:
+                    result['failed_stage'], result['error'] = 'lifecycle_deadline', str(exc)
+            result['lifecycle_deadline'] = {'met': met, 'checked_after': phase,
+                                            'checked_at_seconds': elapsed,
+                                            'internal_seconds': limits['internal_seconds']}
+            result['elapsed_seconds'] = round(elapsed, 3)
+            return met
+
+        met = final_deadline_check('GPU cleanup, environment removal and evidence finalization')
+        result['passed'] = eligible and met
+        result['verdict_status'] = 'passed' if result['passed'] else 'failed'
+        try:
+            final = evidence.finalize(result)
+        except BaseException as exc:
+            # A partially published verdict is not success. Try to retain failure evidence; if storage itself
+            # is broken, propagate instead of returning a passing result.
+            result['passed'], result['verdict_status'] = False, 'failed'
+            result['failed_stage'], result['error'] = 'verdict_publication', f'{type(exc).__name__}: {exc}'
+            try:
+                evidence.finalize(result)
+            except BaseException:
+                pass
+            raise
+        # Verdict/manifest publication is also accounted for. If it crosses the deadline, replace the result
+        # with failure and rebuild its manifest. Failure evidence may be written after the deadline.
+        try:
+            clock.check('final verdict and manifest publication')
+        except TimeoutError:
+            final_deadline_check('final verdict and manifest publication')
+            result['passed'], result['verdict_status'] = False, 'failed'
+            final = evidence.finalize(result)
     return final
 
 
@@ -197,7 +268,7 @@ class CutoffAlarm:
         signal.signal(signal.SIGALRM, self.previous if self.previous is not None else signal.SIG_DFL)
 
 
-def live_main(root, output, started, working):
+def live_main(root, output, started, working, *, on_source_cleanup=None):
     """Live entry, called from the notebook only after `binding.consume`. A cutoff alarm hands a hung run to cleanup;
     cleanup itself runs with the alarm disarmed and blocked."""
     from certification.wheelhouse_r2_smoke_v1.binding import require_live
@@ -205,10 +276,27 @@ def live_main(root, output, started, working):
     limits = protocol['limits']
     alarm = CutoffAlarm()
     alarm.arm(limits['admission_cutoff_seconds'] - (time.monotonic() - started))
+    folder = None
     try:
         bundle = host.dataset_mount(protocol['dataset']['ref'], protocol['dataset']['version'])
-        with tempfile.TemporaryDirectory(prefix='wheelhouse-r2-smoke-', dir=working) as folder:
-            return run('live', protocol, output, started, bundle=bundle, workdir=folder, gpu_query=host.nvidia_smi,
-                       attempt_id=execution['attempt_id'], on_cleanup=alarm.enter_cleanup)
+        folder = Path(tempfile.mkdtemp(prefix='wheelhouse-r2-smoke-', dir=working))
+
+        def remove_environment():
+            shutil.rmtree(folder)
+            if folder.exists():
+                raise RuntimeError('temporary environment removal was not verified')
+            if on_source_cleanup:
+                on_source_cleanup()
+            return {'temporary_environment_removed': True,
+                    'embedded_source_removed': bool(on_source_cleanup)}
+
+        return run('live', protocol, output, started, bundle=bundle, workdir=folder, gpu_query=host.nvidia_smi,
+                   attempt_id=execution['attempt_id'], on_cleanup=alarm.enter_cleanup,
+                   on_environment_cleanup=remove_environment)
     finally:
-        alarm.release()
+        try:
+            # Emergency fallback for exceptions before the normal cleanup callback. This path cannot return pass.
+            if folder is not None and folder.exists():
+                shutil.rmtree(folder)
+        finally:
+            alarm.release()

@@ -1,6 +1,7 @@
 """Model-server process lifecycle: own process group, TCP-only readiness within the startup ceiling, and group
 termination (SIGTERM, then SIGKILL) with verification that no member of the group remains."""
 import os
+from contextlib import contextmanager
 import signal
 import socket
 import subprocess
@@ -10,6 +11,34 @@ from pathlib import Path
 
 class StartupFailed(RuntimeError):
     pass
+
+
+@contextmanager
+def defer_startup_signals():
+    """Defer Python-handled shutdown signals until ownership is registered.
+
+    Unlike blocking a signal mask around Popen, replacing the handlers does not give the child a blocked SIGTERM
+    mask. Timers keep running. Delivery is replayed using the original handler after the protected section.
+    Default fatal signals and SIGKILL cannot be recovered by Python; this guard covers the notebook cutoff and
+    handled user interrupts, and an exceptional Popen outcome is separately marked uncertain.
+    """
+    handlers, pending = {}, []
+
+    def defer(signum, frame):
+        pending.append((signum, frame))
+
+    try:
+        for signum in (signal.SIGALRM, signal.SIGINT, signal.SIGTERM, signal.SIGHUP):
+            handler = signal.getsignal(signum)
+            if callable(handler):
+                handlers[signum] = handler
+                signal.signal(signum, defer)
+        yield
+    finally:
+        for signum, handler in handlers.items():
+            signal.signal(signum, handler)
+        for signum, frame in pending:
+            handlers[signum](signum, frame)
 
 
 def argv_for(server, python, model_path, port):
@@ -35,16 +64,29 @@ class ModelServer:
     def __init__(self, argv, env, log, host, port):
         self.argv, self.env, self.log_path, self.host, self.port = argv, env, Path(log), host, port
         self.process = self.pgid = None
+        self.ownership = 'never_spawned'
         self.events = []
 
     def start(self):
         env = {k: v for k, v in os.environ.items() if k not in ('PYTHONPATH', 'PYTHONHOME', 'VIRTUAL_ENV')}
         env.update(self.env)
         self._log = self.log_path.open('ab')
-        self.process = subprocess.Popen(self.argv, env=env, stdout=self._log, stderr=subprocess.STDOUT,
-                                        stdin=subprocess.DEVNULL, start_new_session=True)
-        self.pgid = os.getpgid(self.process.pid)
-        self.events.append({'event': 'started', 'pid': self.process.pid, 'pgid': self.pgid})
+        with defer_startup_signals():
+            # Missing handles after entering Popen do not prove that no child was created.
+            self.ownership = 'uncertain'
+            self.process = subprocess.Popen(self.argv, env=env, stdout=self._log, stderr=subprocess.STDOUT,
+                                            stdin=subprocess.DEVNULL, start_new_session=True)
+            try:
+                self.pgid = os.getpgid(self.process.pid)
+            except ProcessLookupError:
+                # The leader may already have exited. start_new_session fixes the owned group id to its PID;
+                # descendants can still be present and must be checked/terminated using that same group id.
+                self.pgid = self.process.pid
+            if self.pgid != self.process.pid:
+                self.pgid = None
+                raise StartupFailed('spawned process did not own the expected new process group')
+            self.ownership = 'registered'
+            self.events.append({'event': 'started', 'pid': self.process.pid, 'pgid': self.pgid})
         return self.process.pid
 
     def wait_ready(self, deadline, interval=1.0):
@@ -68,11 +110,21 @@ class ModelServer:
         escalation and the reap run in `finally` blocks: an interruption during the SIGTERM grace (for example a
         stray alarm) is recorded and cannot skip the kill. The kill phase keeps its own grace even if the SIGTERM
         phase used up the shared deadline."""
-        receipt = {'pgid': self.pgid, 'sigterm_sent': False, 'sigkill_sent': False, 'groups_absent': False,
+        receipt = {'pgid': self.pgid, 'ownership': self.ownership,
+                   'sigterm_sent': False, 'sigkill_sent': False, 'groups_absent': False,
                    'remaining_members': None, 'interrupted': [], 'error': None}
         if self.process is None:
-            receipt['groups_absent'] = True
+            receipt['groups_absent'] = self.ownership == 'never_spawned'
+            if not receipt['groups_absent']:
+                receipt['error'] = 'spawn ownership uncertain: no child handle; group absence cannot be verified'
+            if hasattr(self, '_log'):
+                self._log.close()
             return receipt
+        if self.pgid is None:
+            # Emergency termination is still possible when a handle exists but registration was interrupted.
+            # Popen used start_new_session=True, so never signal the caller's or an arbitrary observed group.
+            self.pgid = self.process.pid
+            receipt['pgid'] = self.pgid
 
         def wait(until):
             while time.monotonic() < until and self._group_alive():
@@ -104,7 +156,10 @@ class ModelServer:
                 self.process.poll()
                 remaining = group_members(self.pgid)
                 receipt['remaining_members'] = remaining
-                receipt['groups_absent'] = not remaining and not self._group_alive()
+                receipt['groups_absent'] = (self.ownership == 'registered' and not remaining
+                                             and not self._group_alive())
+                if self.ownership != 'registered':
+                    receipt['error'] = 'spawn ownership uncertain; emergency termination attempted'
                 receipt['exit_code'] = self.process.returncode
             except BaseException as exc:  # noqa: B036
                 receipt['error'] = f'{type(exc).__name__}: {str(exc)[:256]}'

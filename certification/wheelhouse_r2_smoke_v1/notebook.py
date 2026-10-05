@@ -35,12 +35,18 @@ try:
     from certification.wheelhouse_r2_smoke_v1.binding import consume
     consume(source, working)  # the live gate: refuses here, before any installation, model or GPU use
     from certification.wheelhouse_r2_smoke_v1.run import live_main
-    result = live_main(source, working / 'wheelhouse-r2-smoke-v1', started, pathlib.Path('/tmp'))
+    def remove_source():
+        shutil.rmtree(source)
+        if source.exists():
+            raise RuntimeError('embedded source removal was not verified')
+    result = live_main(source, working / 'wheelhouse-r2-smoke-v1', started, pathlib.Path('/tmp'),
+                       on_source_cleanup=remove_source)
     print(json.dumps({{k: result[k] for k in ('passed', 'failed_stage', 'error', 'evidence_class')}}))
     if not result['passed']:
         raise SystemExit('smoke test failed; evidence in /kaggle/working/wheelhouse-r2-smoke-v1')
 finally:
-    shutil.rmtree(source, ignore_errors=True)
+    if source.exists():
+        shutil.rmtree(source)
 '''
 
 

@@ -2,6 +2,10 @@
 
 Prepared October 4, 2026 on branch `wheelhouse-r2-smoke-v1` (Step 4 of the R2 path).
 
+Updated October 5, 2026: successor review r4 addresses startup ownership and the final lifecycle deadline findings
+on `9073068`. Historical review r1-r3 artifacts remain unchanged. These changes do not alter the separate licence
+worksheet or licence-preview review, and confer no source approval, compute authorization or launch permission.
+
 **Status.** No approval, compute authorization or reservation exists.
 - **GPU disabled throughout.** No bundle was built, nothing was uploaded, no attempt was reserved, and no real model was called.
 - **Evidence class.** Everything below is scripted CPU rehearsal evidence of the control code. It is **not** GPU compatibility evidence.
@@ -46,6 +50,24 @@ At the admission cutoff, a whole-run alarm hands control to cleanup.
 **Cleanup is its own bounded phase.** Fixes review finding P1-1 on `77eb06f`.
 - Cleanup first disarms the cutoff alarm and blocks `SIGALRM`, so the cutoff cannot interrupt it. That transition is retried once if the one-shot alarm lands at that instant.
 - `stop()` runs its SIGKILL escalation and the reap in `finally` blocks, so an interruption during the SIGTERM grace is recorded and still reaches SIGKILL. A recorded interruption marks the run failed.
+
+**Startup ownership (P1 on `9073068`).** Python-handled cutoff and shutdown signals are deferred from entry into
+`Popen` through PID/process-group registration, then delivered using their original handlers. This does not block
+the child's signal mask or disable its SIGTERM handling. Receipts distinguish `never_spawned`, `registered` and
+`uncertain`. An exception inside process creation can leave ownership uncertain; missing handles never establish
+group absence. With a known child handle but interrupted group registration, cleanup still attempts emergency
+termination of the expected new session group, and reports uncertainty rather than success.
+
+**Final lifecycle deadline (P2 on `9073068`).** The first-cell clock covers process termination, independent GPU
+cleanup, retained logs, removal of the temporary installation environment and embedded source, and evidence
+finalization. Evidence is first finalized with a pending, non-passing verdict. An explicit deadline check after
+these operations is required before a passing verdict. The final verdict/manifest write is checked afterwards
+too: a late publication is downgraded to failure and its manifest rebuilt. Emergency termination and retaining
+failure evidence remain possible after the deadline; neither can turn an overrun into passing evidence.
+
+Temporary-directory removal failures fail the attempt. The notebook's removal callback runs inside lifecycle
+accounting; its outer `finally` is only an emergency fallback. Rehearsals may explicitly retain their caller-owned
+work directories, which is recorded separately from live temporary-environment removal.
 
 **Request deadlines are absolute.** Fixes review finding P2 on `77eb06f`.
 - Each request's deadline covers connection, headers and body.
@@ -126,11 +148,17 @@ Regressions for the three review findings on `77eb06f`. The first three fail on 
 | provider responses | P2 on `d494f50` | only a confirmed response with the authorized kernel and a valid version is `submitted`; no response, an empty or non-mapping response, another kernel, or a missing, zero, text or boolean version is `submission_uncertain`; invalid sources or a provider error is `submission_rejected`; every outcome spends the attempt with exactly one push |
 | tampered package | P1-2 | never submitted |
 
-The local review check executes the review notebook's exact code with no GPU and a decoy `nvidia-smi` (`reports/wheelhouse_r2_smoke_review_check_r3.json`). It stops at the live gate, `nvidia-smi` is never called, and no temporary files remain.
+The local review check executes the review notebook's exact code with no GPU and a decoy `nvidia-smi` (`reports/wheelhouse_r2_smoke_review_check_r4.json`). It must stop at the live gate, never call `nvidia-smi`, and leave no temporary files.
+
+`tests/test_wheelhouse_r2_smoke_lifecycle.py` retains the two original reproductions and adds boundary checks for
+group registration, uncertain spawn outcomes, SIGTERM handling, GPU cleanup, both evidence publication phases,
+temporary-environment/source removal, and removal/write failures. Baseline evidence in
+`reports/wheelhouse_r2_smoke_9073068_regressions.{json,log}` verifies historical runtime source bytes directly
+against `9073068`: both original regressions and the group-registration interruption fail on that revision.
 
 ## Review snapshot
 
-`notebooks/wheelhouse-r2-smoke-v1-review-r3/` (r1 and r2 are preserved but stale, since their sources changed):
+`notebooks/wheelhouse-r2-smoke-v1-review-r4/` (r1-r3 are preserved but stale, since their sources changed):
 - GPU disabled;
 - no dataset source, because the binding is unresolved;
 - every package source embedded and hash-bound.
@@ -141,5 +169,5 @@ This is a review snapshot, not an approval.
 
 1. **Bind the dataset.** Replace the four placeholders in `protocol.json` with the actual Kaggle dataset ref and version, the `SHA256SUMS` hash and the `bundle-manifest.json` hash from Record A.
 2. **Verify attachment access** from the launch account. The account must be able to list the files and attach that version. A provider `invalid*Sources` result counts as a failure even with HTTP 200. Then re-verify `SHA256SUMS` against the attached files. Kaggle kernel metadata names the dataset but cannot pin a version, so the live path's bundle-integrity stage is the version guard: any other version fails before installation.
-3. **Rebuild and re-check the review snapshot** (r4). Rerun the tests and rehearsals from a fresh clone, and present the final package for review.
+3. **Rebuild and re-check a new review snapshot** (r5 or later). Rerun the tests and rehearsals from a fresh clone, and present the final package for review.
 4. **Bring Record C back for explicit confirmation**, with the review lock hash, the protocol hash, the dataset binding and the limits above. Only then record the source approval and compute authorization, reserve the single attempt, build the launch package (`launch-build`, which refuses until then) and launch.
