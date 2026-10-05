@@ -207,6 +207,21 @@ class Tracing(unittest.TestCase):
         self.assertEqual(N.download_hits({'setup.py': setup}), [])
         self.assertEqual(len(N.download_hits({'setup.py': b'subprocess.check_call("git clone https://x")\n'})), 1)
 
+    def test_a_vendored_copy_with_its_own_licence_still_needs_upstream_verification(self):
+        """Review gap on cca0551: a LICENSE in a vendored copy does not establish that upstream has no NOTICE."""
+        sdist = dict(SDIST, **{'vendor/libuv/LICENSE': h('mit'), 'vendor/libuv/src/uv.c': h('uv')})
+        vendored = N.vendored_dirs(sdist)
+        native = [member('pkg/_ext.cpython-312-x86_64-linux-gnu.so', 'bin', elf=True)]
+        copies = N.third_party_copies(vendored, native, sdist)
+        self.assertEqual(list(copies), ['vendor/libuv'])
+        self.assertIn('top-level licence files LICENSE', copies['vendor/libuv'])
+        outcome, reason = N.classify(evidence(third_party=copies))
+        self.assertEqual(outcome, 'inconclusive')
+        self.assertIn('a licence file in a copy does not establish it', reason)
+        verified = N.classify(evidence(third_party={}, cleared=['vendor/libuv (libuv/libuv@abc, 2 files matching '
+                                                                 'its blobs, no NOTICE-named file)']))
+        self.assertEqual(verified[0], 'verified_absent')
+
     def test_trimmed_third_party_copy_reaching_the_wheel_is_inconclusive(self):
         sdist = dict(SDIST, **{'3rdparty/cutlass/include/gemm.h': h('gemm'), 'vendor/libuv/LICENSE': h('uv-lic'),
                                'vendor/libuv/src/uv.c': h('uv')})
@@ -214,13 +229,13 @@ class Tracing(unittest.TestCase):
         self.assertEqual([(v['dir'], v['top_level_licence_files']) for v in vendored],
                          [('3rdparty/cutlass', []), ('vendor/libuv', ['LICENSE'])])
         shipped = [member('pkg/data/cutlass/include/gemm.h', 'gemm')]
-        trimmed = N.trimmed_copies(vendored, shipped, sdist)
+        trimmed = N.third_party_copies(vendored, shipped, sdist)
         self.assertEqual(list(trimmed), ['3rdparty/cutlass'])
-        outcome, reason = N.classify(evidence(trimmed=trimmed))
+        outcome, reason = N.classify(evidence(third_party=trimmed))
         self.assertEqual(outcome, 'inconclusive')
         self.assertIn('3rdparty/cutlass', reason)
-        self.assertEqual(N.trimmed_copies(vendored, [member('pkg/__init__.py', 'init')], sdist), {})
-        cleared = N.classify(evidence(trimmed={}, cleared=['3rdparty/cutlass (NVIDIA/cutlass@abc)']))
+        self.assertEqual(N.third_party_copies(vendored, [member('pkg/__init__.py', 'init')], sdist), {})
+        cleared = N.classify(evidence(third_party={}, cleared=['3rdparty/cutlass (NVIDIA/cutlass@abc)']))
         self.assertEqual(cleared[0], 'verified_absent')
         self.assertIn('3rdparty/cutlass', cleared[1])
 
@@ -290,7 +305,7 @@ class CommittedPack(unittest.TestCase):
             self.assertTrue(all(not b['outside_sdist_reasons'] for b in traced['native_binaries']), r['artifact'])
             cleared = {s['path'] for s in (r.get('repository_check') or {}).get('submodule_checks', [])
                        if s['cleared']}
-            self.assertEqual(set(listing['trimmed_third_party_copies']) - cleared, set(), r['artifact'])
+            self.assertEqual(set(listing['third_party_copies_reaching_wheel']) - cleared, set(), r['artifact'])
             self.assertIn('can be dropped', r['remains'])
             self.assertIn('licence texts', r['remains'])
             repo = r['repository_check']

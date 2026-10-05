@@ -19,10 +19,11 @@ outcome per wheel:
                    scripts other than test-only ones inside a CMake if(BUILD_TESTING) branch, embedded third-party
                    library markers, or no matching source file in the sdist), and no wheel file that is absent from
                    the sdist by both content and path (a small generated version stub carrying the exact version
-                   excepted); and no code reaching the wheel from a trimmed third-party copy in the sdist (a
-                   third-party directory without any top-level licence file), unless that copy is a git submodule
-                   whose pinned upstream tree at the version-verified release commit has no NOTICE-named file and
-                   matches every file of the copy; AND (d) the release repository (named by the wheel METADATA)
+                   excepted); and no code reaching the wheel from a third-party copy in the sdist (any vendored
+                   third-party directory, whether or not it carries a licence file: a licence file in the copy does
+                   not show that the copy is complete or that its upstream has no NOTICE), unless that copy is a git
+                   submodule whose pinned upstream tree at the version-verified release commit has no NOTICE-named
+                   or notice-like file and matches every file of the copy; AND (d) the release repository (named by the wheel METADATA)
                    is listed at the release tag, a version file at that commit carries the exact version, and its
                    complete (untruncated) tree has no NOTICE-named or notice-like file. Absence from the wheel and the
                    sdist alone does not establish absence upstream (a repository-only NOTICE is possible).
@@ -30,7 +31,7 @@ outcome per wheel:
                    file is never treated as absence. A row absent from the inspected wheel and sdist whose release
                    repository could not be verified stays inconclusive, with the upstream NOTICE question open.
 Every row not already found in the wheel or sdist gets the repository check (2 GitHub API calls per repository, plus
-1 per git submodule that holds a trimmed third-party copy). A NOTICE there counts only if a version file at that
+1 per git submodule that holds a third-party copy reaching the wheel). A NOTICE there counts only if a version file at that
 commit carries the exact version; such a repository-only NOTICE is reported as found, with the note that the PyPI
 sdist and the wheel lack it.
 
@@ -264,7 +265,7 @@ def classify(e):
     e: {'notices': [{'source', 'path', ...}] (wheel, sdist, or repository at a version-verified commit),
         'sdist': {'status': 'verified'|'none'|'error', 'reason'?, 'sdist'?}, 'listing_complete': bool,
         'listing_error'?: str, 'member_count'?: int, 'pkg_info_version_matches': bool, 'notice_like': [paths],
-        'outside': [reasons], 'trimmed'?: {dir: reason} (open), 'cleared'?: [dirs resolved upstream]}"""
+        'outside': [reasons], 'third_party'?: {dir: reason} (unverified), 'cleared'?: [dirs verified upstream]}"""
     sdist = e.get('sdist') or {'status': 'error', 'reason': 'no sdist evidence recorded'}
     if e.get('notices'):
         reason = 'NOTICE file(s) in the exact release: ' + '; '.join(f"{n['source']}: {n['path']}" for n in e['notices'])
@@ -292,12 +293,13 @@ def classify(e):
         return 'inconclusive', 'the wheel contains components not traced to the sdist, whose NOTICE status is ' \
                                'unknown: ' + '; '.join(e['outside'][:6]) + \
             (f' (+{len(e["outside"]) - 6} more)' if len(e['outside']) > 6 else '')
-    if e.get('trimmed'):
-        return 'inconclusive', 'the wheel carries code from third-party copies that the sdist holds in trimmed ' \
-                               'form, so their upstream NOTICE status is unknown: ' + '; '.join(e['trimmed'].values())
+    if e.get('third_party'):
+        return 'inconclusive', 'the wheel carries code from third-party copies in the sdist whose upstream NOTICE ' \
+                               'status is not verified (a licence file in a copy does not establish it): ' + \
+            '; '.join(e['third_party'].values())
     package = (f"exact-version sdist {sdist.get('sdist')} verified against PyPI's SHA-256; its complete listing "
                f"({e.get('member_count')} members) has no NOTICE-named file at any path; every wheel component is "
-               'traced to the sdist' + ('; trimmed third-party copies cleared at their pinned upstream commits: '
+               'traced to the sdist' + ('; third-party copies verified at their pinned upstream commits: '
                                         + ', '.join(e['cleared']) if e.get('cleared') else ''))
     repository = e.get('repository') or {}
     if not repository.get('verified_clean'):
@@ -309,21 +311,22 @@ def classify(e):
                                         'or notice-like file: ' + repository['summary']
 
 
-def trimmed_copies(vendored, wheel_members, sdist_files):
-    """{dir: reason} for third-party directories that the sdist carries without their top-level licence files (a
-    trimmed copy, so a NOTICE at the component's root may have been left out) and whose code reaches the wheel:
-    files shipped verbatim, or any native binary in the wheel (which may compile them in)."""
+def third_party_copies(vendored, wheel_members, sdist_files):
+    """{dir: reason} for every third-party directory carried in the sdist whose code reaches the wheel (files
+    shipped verbatim, or any native binary in the wheel, which may compile it in). A licence file in the copy does
+    not establish that the copy is complete or that its upstream has no NOTICE, so each copy must be verified
+    upstream (see submodule_checks) or the row stays inconclusive."""
     wheel_hashes = {m['sha256'] for m in wheel_members if '.dist-info/' not in m['path']}
     native = any(m['elf'] for m in wheel_members)
     out = {}
     for v in vendored:
-        if v['top_level_licence_files']:
-            continue
         shipped = sum(sha in wheel_hashes for p, sha in sdist_files.items() if p.startswith(v['dir'] + '/'))
         if shipped or native:
             how = f'{shipped} of its files ship in the wheel' if shipped else 'it may be compiled into the native ' \
                                                                               'binaries'
-            out[v['dir']] = f"{v['dir']} ({v['files']} files, no top-level licence file; {how})"
+            licence = ('top-level licence files ' + ', '.join(v['top_level_licence_files'])
+                       if v['top_level_licence_files'] else 'no top-level licence file')
+            out[v['dir']] = f"{v['dir']} ({v['files']} files, {licence}; {how})"
     return out
 
 
@@ -496,7 +499,8 @@ def version_file_candidates(blobs, distribution, limit=30):
 
 def repository_check(distribution, version, repo, trimmed=None):
     """Tree of the upstream repository at the release tag; NOTICE files there count only at a version-verified commit.
-    trimmed: {sdist directory: {path inside it: git blob sha1}} for trimmed third-party copies to resolve upstream."""
+    trimmed: {sdist directory: {path inside it: git blob sha1}} for third-party copies reaching the wheel, to verify
+    upstream."""
     if repo is None:
         return {'performed': False, 'reason': 'the wheel METADATA names no GitHub repository'}
     owner, name = repo
@@ -588,7 +592,7 @@ def gitmodules_urls(text):
 
 
 def submodule_checks(distribution, owner, name, commit, tree, trimmed, version_verified):
-    """For trimmed third-party copies that are git submodules at the release commit: the upstream tree at the pinned
+    """For third-party copies (reaching the wheel) that are git submodules at the release commit: the upstream tree at the pinned
     commit (1 GitHub API call each), whether the sdist's copy matches its blobs, and any NOTICE files there."""
     wanted = [t for t in tree['tree'] if t['type'] == 'commit' and t['path'] in trimmed]
     if not wanted:
@@ -598,7 +602,7 @@ def submodule_checks(distribution, owner, name, commit, tree, trimmed, version_v
     except Exception as exc:
         return [{'path': t['path'], 'error': f'.gitmodules fetch failed: {type(exc).__name__}'} for t in wanted]
     checks = []
-    for t in wanted[:4]:
+    for t in wanted[:8]:
         entry = {'path': t['path'], 'pinned_commit': t['sha'], 'url': urls.get(t['path']), 'cleared': False,
                  'notices': []}
         match = re.search(r'github\.com[:/]([A-Za-z0-9_.-]+)/([A-Za-z0-9_.-]+?)(?:\.git)?/?$', entry['url'] or '')
@@ -671,7 +675,7 @@ def decide(evidence, notices, lookup_repository):
     counted = [n for n in repo.get('notices', []) + [n for s in subs for n in s.get('notices', [])]
                if n.get('counts_for_outcome')]
     for path in [s['path'] for s in subs if s.get('cleared')]:
-        evidence.setdefault('trimmed', {}).pop(path, None)
+        evidence.setdefault('third_party', {}).pop(path, None)
     evidence['cleared'] = [f"{s['path']} ({s['repository'].split('github.com/')[1]}@{s['pinned_commit'][:12]}, "
                            f"{s['sdist_copy_files']} files matching its blobs, no NOTICE-named file)"
                            for s in subs if s.get('cleared')]
@@ -706,7 +710,7 @@ def check(row, inventory):
                                                f"wheel:{artifact['filename']}#{path}", data, kind='notice')})
         else:
             notice_like.append(f'wheel: {path}')
-    evidence = {'notices': notices, 'notice_like': notice_like, 'outside': [], 'trimmed': {}}
+    evidence = {'notices': notices, 'notice_like': notice_like, 'outside': [], 'third_party': {}}
     listing, trimmed_blobs, vendored = None, {}, []
     try:
         data, sdist = verified_sdist(distribution, version, f'notice-{distribution}')
@@ -744,9 +748,9 @@ def check(row, inventory):
             hits = download_hits(kept['build'])
             evidence['outside'], coverage = outside_components(members, listing['files'], rust, hits, version)
             vendored = vendored_dirs(listing['files'])
-            evidence['trimmed'] = trimmed_copies(vendored, members, listing['files'])
+            evidence['third_party'] = third_party_copies(vendored, members, listing['files'])
             trimmed_blobs = {d: {p[len(d) + 1:]: b for p, b in listing['git_blobs'].items() if p.startswith(d + '/')}
-                             for d in evidence['trimmed']}
+                             for d in evidence['third_party']}
             record['sdist_listing'] = {'members': listing['members'], 'member_types': listing['types'],
                                        'regular_files': len(listing['files']), 'root': listing['root'],
                                        'pkg_info_version_matches': evidence['pkg_info_version_matches'],
@@ -754,7 +758,7 @@ def check(row, inventory):
                                        'notice_like_paths': [p for p in notice_like if p.startswith('sdist')],
                                        'rust': rust, 'third_party_dirs': vendored[:MAX_LISTED],
                                        'third_party_dirs_total': len(vendored),
-                                       'trimmed_third_party_copies': dict(evidence['trimmed'])}
+                                       'third_party_copies_reaching_wheel': dict(evidence['third_party'])}
             record['wheel_traced_to_sdist'] = coverage
     outcome, reason, record['repository_check'] = decide(
         evidence, notices,
@@ -788,8 +792,9 @@ def build():
                 'found': 'a NOTICE-named file is in the local wheel, the PyPI-verified exact-version sdist, or the '
                          'repository at a commit whose version file carries the exact version',
                 'verified_absent': 'exact-version sdist verified against PyPI; complete listing has no NOTICE-named '
-                                   'or notice-like file; every wheel component traced to the sdist; no wheel code '
-                                   'from a trimmed third-party copy left unresolved; AND the release repository at a '
+                                   'or notice-like file; every wheel component traced to the sdist; every vendored '
+                                   'third-party copy reaching the wheel verified upstream (a licence file in the copy '
+                                   'is not enough); AND the release repository at a '
                                    'version-verified commit has no NOTICE-named or notice-like file',
                 'inconclusive': 'anything else; the reason is recorded'},
             'notice_name_pattern': NOTICE_NAME.pattern, 'counts': counts, 'rows': records,
@@ -802,11 +807,10 @@ def build():
                 'counted; they are listed in the pack',
                 'a small wheel file named like a version stub (_version.py etc.) that is absent from the sdist but '
                 'carries the exact version is treated as generated by the build backend',
-                'a third-party directory carried inside an sdist counts as a complete copy if it keeps a top-level '
-                'licence file (a NOTICE is conventionally top-level too); one without any is treated as a trimmed '
-                'copy whose upstream NOTICE status is unknown, unless it is a git submodule at the version-verified '
-                'release commit whose pinned upstream tree has no NOTICE-named file and whose blobs match every file '
-                'of the copy',
+                'every third-party directory carried inside an sdist whose code reaches the wheel must be verified '
+                'upstream: a git submodule at the version-verified release commit whose pinned upstream tree has no '
+                'NOTICE-named or notice-like file and whose blobs match every file of the copy; a licence file in '
+                'the copy is not enough, and a copy that is not a verifiable submodule leaves the row inconclusive',
                 'repository trees do not show the contents of git submodules',
                 'no legal conclusion is drawn; the reviewer decides']}
 
@@ -823,8 +827,9 @@ def markdown(p):
              f"For each of the {len(p['rows'])} wheels whose worksheet row says \"{FLAG}\", this checks whether the "
              'exact upstream release includes a NOTICE-named file. `verified_absent` requires a PyPI-verified '
              'exact-version sdist whose complete listing has no NOTICE-named file and a wheel whose every component '
-             'is traced to that sdist (third-party copies that the sdist carries in trimmed form must be resolved '
-             'upstream); anything short of that is `inconclusive` with the reason. A fetch failure or a '
+             'is traced to that sdist (every vendored third-party copy reaching the wheel must be verified upstream, '
+             'whether or not it carries a licence file); anything short of that is `inconclusive` with the reason. A '
+             'fetch failure or a '
              'missing root-level file is never read as absence. Absence from the wheel and the sdist does not by '
              'itself establish absence upstream: `verified_absent` also requires the release repository, at a commit '
              'whose version file carries the exact version, to have no NOTICE-named or notice-like file. Where the '
