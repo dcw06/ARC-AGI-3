@@ -1,0 +1,88 @@
+{
+ "schema": "wheelhouse_r2_smoke_v1_protocol",
+ "scope": "wheelhouse-r2-smoke-v1",
+ "purpose": "runtime compatibility of the R2 wheelhouse with the pinned model on the target GPU; no solving claim, no Phase 4 completion, no environment actions, no scorecards",
+ "placeholder_prefix": "UNRESOLVED:",
+ "dataset": {
+  "ref": "UNRESOLVED:RECORD_B_DATASET_REF",
+  "version": "UNRESOLVED:RECORD_B_DATASET_VERSION",
+  "sha256sums_sha256": "UNRESOLVED:RECORD_A_SHA256SUMS_SHA256",
+  "bundle_manifest_sha256": "UNRESOLVED:RECORD_A_BUNDLE_MANIFEST_SHA256"
+ },
+ "bundle": {
+  "approved_manifest_sha256": "3691cb8854df4d8ff10e42ca9957fddb9a8ae0362064e7b31b3205891af0d546",
+  "requirements_lock_sha256": "ba80d35062245421daf1cae65474281952cc0c44fb46e11cf7f68d0ece496406",
+  "wheel_count": 174
+ },
+ "runtime": {
+  "python": "3.12",
+  "glibc_minimum": "2.34",
+  "machine": "x86_64",
+  "packages": {"torch": "2.10.0+cu128", "vllm": "0.19.0", "transformers": "4.57.6", "numpy": "2.2.6"},
+  "imports": ["torch", "vllm", "transformers", "numpy"],
+  "torch_cuda_build": "12.8",
+  "gpu_name_contains": "RTX PRO 6000",
+  "gpu_count": 1
+ },
+ "model": {
+  "model_id": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+  "revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+  "kaggle_source": "qwen-lm/qwen-3-vl/Transformers/30b-a3b-instruct-fp8/1",
+  "mounted_path": "/kaggle/input/models/qwen-lm/qwen-3-vl/transformers/30b-a3b-instruct-fp8/1",
+  "tree_sha256": "052ab27f06c28261e143b8c1638382d107b034692bc0cd1792ec4e02ddab8627",
+  "required_files": ["config.json", "model.safetensors.index.json", "tokenizer.json", "tokenizer_config.json", "chat_template.json"],
+  "shard_glob": "model-*.safetensors",
+  "shard_count": 4,
+  "reasoning_setting": "instruct_non_thinking"
+ },
+ "server": {
+  "argv": ["{python}", "-m", "vllm.entrypoints.openai.api_server", "--model", "{model_path}",
+           "--served-model-name", "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8", "--host", "127.0.0.1", "--port", "{port}",
+           "--tensor-parallel-size", "1", "--generation-config", "vllm", "--enable-prefix-caching",
+           "--gpu-memory-utilization", "0.75", "--max-model-len", "65536"],
+  "env": {"HF_HUB_OFFLINE": "1", "TRANSFORMERS_OFFLINE": "1", "VLLM_NO_USAGE_STATS": "1", "USE_TF": "0",
+          "TRANSFORMERS_NO_TF": "1"},
+  "host": "127.0.0.1",
+  "port": 8000,
+  "served_model_name": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+  "readiness": "TCP connection only (no HTTP request); every HTTP request to the server is a counted model request",
+  "log_retained_bytes": 2097152,
+  "terminate_grace_seconds": 30,
+  "kill_grace_seconds": 10
+ },
+ "sampling": {"temperature": 0, "seed": 0},
+ "limits": {
+  "authorized_seconds": 3600,
+  "internal_seconds": 3420,
+  "cleanup_reserve_seconds": 300,
+  "admission_cutoff_seconds": 3120,
+  "installation_seconds": 900,
+  "model_verification_seconds": 600,
+  "startup_ceiling_seconds": 900,
+  "maximum_attempts": 1,
+  "maximum_model_requests": 12,
+  "automatic_retries": 0,
+  "environment_actions": 0,
+  "scorecards": 0
+ },
+ "requests": [
+  {"id": "S1", "kind": "startup_probe", "method": "GET", "path": "/health", "timeout_seconds": 10},
+  {"id": "S2", "kind": "startup_probe", "method": "GET", "path": "/v1/models", "timeout_seconds": 10},
+  {"id": "S3", "kind": "startup_probe", "method": "POST", "path": "/v1/chat/completions", "timeout_seconds": 300,
+   "case": "canary"},
+  {"id": "I1", "kind": "inference", "method": "POST", "path": "/v1/chat/completions", "timeout_seconds": 120,
+   "case": "exact_word"},
+  {"id": "I2", "kind": "inference", "method": "POST", "path": "/v1/chat/completions", "timeout_seconds": 120,
+   "case": "exact_word"},
+  {"id": "I3", "kind": "inference", "method": "POST", "path": "/v1/chat/completions", "timeout_seconds": 120,
+   "case": "long_context"},
+  {"id": "I4", "kind": "inference", "method": "POST", "path": "/v1/chat/completions", "timeout_seconds": 180,
+   "case": "image"},
+  {"id": "C1", "kind": "cancellation_probe", "method": "POST", "path": "/v1/chat/completions", "timeout_seconds": 120,
+   "case": "stream_then_cancel"},
+  {"id": "C2", "kind": "cancellation_probe", "method": "GET", "path": "/metrics", "timeout_seconds": 10,
+   "max_issues": 2, "retry_delay_seconds": 3},
+  {"id": "C3", "kind": "cancellation_probe", "method": "POST", "path": "/v1/chat/completions", "timeout_seconds": 120,
+   "case": "exact_word"}
+ ]
+}
