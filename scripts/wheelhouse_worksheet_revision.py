@@ -6,9 +6,11 @@
       revision ..._worksheet_r(N-1)_to_rN.{json,md}. Earlier revisions stay as issued under their own locks; nothing
       is overwritten.
   python scripts/wheelhouse_worksheet_revision.py carry-forward RETURNED.csv OUT.csv
-      copy a returned earlier-revision worksheet's reviewer entries onto a fresh copy of the latest revision
-      (carried_from = rK). Rows whose evidence changed since rK must be reconfirmed by the reviewer
-      (reviewer_reconfirmed_for_rN = yes) before validation accepts them.
+      copy a returned earlier-revision worksheet's reviewer entries onto a fresh copy of the latest revision.
+      carried_from records the revision each entry was last confirmed against: an entry already carried and not
+      reconfirmed keeps its earlier origin, so a reconfirmation still owed is never dropped by carrying again. Rows
+      whose evidence changed since that origin must be reconfirmed (reviewer_reconfirmed_for_rN = yes) before
+      validation accepts them.
 
 Validation and import of any revision: scripts/wheelhouse_decision_worksheet.py (each against its own lock).
 """
@@ -320,16 +322,32 @@ def carry_forward(returned_path, out):
         if r['sha256'] != inventory.get(r['artifact']) or r['artifact'] not in source_lock['context_sha256']:
             raise SystemExit(f"{r['artifact']}: not bound to the r{source} inventory")
         if any(r[k].strip() for k in W.REVIEWER):
-            entries[r['artifact']] = {k: r[k] for k in W.REVIEWER}
+            entries[r['artifact']] = ({k: r[k] for k in W.REVIEWER}, review_origin(r, source))
     rows, _ = issued_rows(latest)
     column = W.reconfirm_column(latest)
     for row in rows:
         if row['artifact'] in entries:
-            row.update(entries[row['artifact']], carried_from=f'r{source}', **{column: ''})
+            fields, origin = entries[row['artifact']]
+            row.update(fields, carried_from=f'r{origin}', **{column: ''})
     write_exclusive(out, csv_text(rows, W.columns(latest)))
-    changed = W.evidence_changes(source, latest)
+    origins = {a: origin for a, (_, origin) in entries.items()}
+    changes = {o: W.evidence_changes(o, latest) for o in set(origins.values())}
     return {'carried': len(entries), 'from': f'r{source}', 'to': f'r{latest}',
-            'require_reconfirmation': sorted(a for a in entries if a in changed)}
+            'origins': {a: f'r{o}' for a, o in sorted(origins.items())},
+            'require_reconfirmation': sorted(a for a, o in origins.items() if a in changes[o])}
+
+
+def review_origin(row, source):
+    """The revision whose evidence an entry was last confirmed against. An entry carried into `source` keeps its
+    earlier origin unless it was reconfirmed there (reviewer_reconfirmed_for_r<source> = yes); an entry made fresh on
+    `source` originates there. Carrying an entry again therefore never drops a reconfirmation that is still owed."""
+    carried = row.get('carried_from', '').strip().lower() if source >= 2 else ''
+    if not carried:
+        return source
+    if not (carried.startswith('r') and carried[1:].isdigit() and 1 <= int(carried[1:]) < source):
+        raise SystemExit(f"{row['artifact']}: carried_from {carried!r} is not an earlier revision")
+    reconfirmed = row.get(W.reconfirm_column(source), '').strip().lower() == 'yes'
+    return source if reconfirmed else int(carried[1:])
 
 
 def main():

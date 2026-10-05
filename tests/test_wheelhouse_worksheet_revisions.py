@@ -176,6 +176,7 @@ class Returned(unittest.TestCase):
         out = self.tmp / 'carried.csv'
         summary = R.carry_forward(returned, out)
         self.assertEqual(summary, {'carried': 2, 'from': 'r1', 'to': f'r{self.latest}',
+                                   'origins': {self.changed: 'r1', self.unchanged: 'r1'},
                                    'require_reconfirmation': [self.changed]})
         _, errors = W.validate(out)
         self.assertEqual(len(errors), 1)
@@ -190,6 +191,64 @@ class Returned(unittest.TestCase):
         self.assertEqual({c['carried_from'] for c in preview['changes']}, {'r1'})
         with self.assertRaises(FileExistsError):
             R.carry_forward(returned, out)
+
+    def carried_into_r2(self, artifact, reconfirmed):
+        """The r2 worksheet a reviewer holds after carrying an r1 entry into r2 (reconfirmed there or not)."""
+        rows = [dict(r) for r in W.read_csv(W.revision_files(2)['csv'])]
+        for r in rows:
+            if r['artifact'] == artifact:
+                r.update(self.entry(), carried_from='r1', **{W.reconfirm_column(2): 'yes' if reconfirmed else ''})
+        return self.write(rows, W.columns(2))
+
+    def test_carrying_again_keeps_an_outstanding_reconfirmation(self):
+        """Review P1 on 18ae35e: r1 -> r2 (not reconfirmed) -> later revision must still demand reconfirmation."""
+        if self.latest < 3:
+            self.skipTest('needs at least three revisions')
+        later = W.evidence_changes(2)
+        candidates = sorted(a for a in W.evidence_changes(1, 2) if a not in later)
+        if not candidates:
+            self.skipTest('no row changed r1->r2 and stayed unchanged afterwards')
+        target = candidates[0]
+        held = self.carried_into_r2(target, reconfirmed=False)
+        _, errors = W.validate(held)  # step 1: on r2 itself the missing reconfirmation is an error
+        self.assertTrue(any(target in e and 'reconfirm' in e for e in errors))
+        out = self.tmp / 'carried-again.csv'
+        summary = R.carry_forward(held, out)  # step 2: carry the same entry again
+        self.assertEqual(summary['origins'][target], 'r1')
+        self.assertIn(target, summary['require_reconfirmation'])
+        self.assertEqual({r['artifact']: r['carried_from'] for r in W.read_csv(out)}[target], 'r1')
+        (preview, _), errors = W.validate(out)
+        self.assertTrue(any(target in e and 'reconfirm' in e for e in errors))
+        self.assertNotIn(target, [c['artifact'] for c in preview['changes']])
+        rows = W.read_csv(out)
+        for r in rows:
+            if r['artifact'] == target:
+                r[W.reconfirm_column(self.latest)] = 'yes'
+        (preview, _), errors = W.validate(self.write(rows, W.columns(self.latest)))
+        self.assertEqual(errors, [])
+        self.assertEqual(next(c for c in preview['changes'] if c['artifact'] == target)['after']['evidence_sha256'],
+                         P.current_evidence()[1][target])
+
+    def test_an_entry_reconfirmed_on_r2_carries_from_r2(self):
+        if self.latest < 3:
+            self.skipTest('needs at least three revisions')
+        later = W.evidence_changes(2)
+        candidates = sorted(a for a in W.evidence_changes(1, 2) if a not in later)
+        if not candidates:
+            self.skipTest('no row changed r1->r2 and stayed unchanged afterwards')
+        target = candidates[0]
+        out = self.tmp / 'carried-reconfirmed.csv'
+        summary = R.carry_forward(self.carried_into_r2(target, reconfirmed=True), out)
+        self.assertEqual(summary['origins'][target], 'r2')
+        self.assertNotIn(target, summary['require_reconfirmation'])
+        _, errors = W.validate(out)
+        self.assertEqual(errors, [])
+
+    def test_a_forged_carried_from_is_refused(self):
+        rows = [dict(r) for r in W.read_csv(W.revision_files(2)['csv'])]
+        rows[0].update(self.entry(), carried_from='r9')
+        with self.assertRaises(SystemExit):
+            R.carry_forward(self.write(rows, W.columns(2)), self.tmp / 'forged.csv')
 
     def test_a_recorded_decision_on_a_changed_row_is_flagged(self):
         rows = P.read_decisions(W.DECISIONS_CSV)

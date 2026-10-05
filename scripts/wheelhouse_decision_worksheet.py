@@ -360,6 +360,7 @@ def validate(path):
                     errors.append(f"{name}: entry carried from r{source} but the evidence changed "
                                   f"({', '.join(moved)}); set {reconfirm_column(revision)} to yes only after "
                                   f'reconfirming against r{revision}')
+                    continue
         if decision != 'unresolved':
             for source in ('reviewer_rationale', 'reviewer_name'):
                 if not r[source].strip():
