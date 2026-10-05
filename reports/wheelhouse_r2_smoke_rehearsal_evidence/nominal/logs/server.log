@@ -1,0 +1,12 @@
+SCRIPTED STUB (no model, no GPU) behaviour=normal
+stub: "GET /health HTTP/1.1" 200 -
+stub: "GET /v1/models HTTP/1.1" 200 -
+stub: "POST /v1/chat/completions HTTP/1.1" 200 -
+stub: "POST /v1/chat/completions HTTP/1.1" 200 -
+stub: "POST /v1/chat/completions HTTP/1.1" 200 -
+stub: "POST /v1/chat/completions HTTP/1.1" 200 -
+stub: "POST /v1/chat/completions HTTP/1.1" 200 -
+stub: "POST /v1/chat/completions HTTP/1.1" 200 -
+stub: "GET /metrics HTTP/1.1" 200 -
+stub: "GET /metrics HTTP/1.1" 200 -
+stub: "POST /v1/chat/completions HTTP/1.1" 200 -
