@@ -1,0 +1,222 @@
+{
+ "schema": "wheelhouse_r2_review_handoff_v1",
+ "source_revision": "a82e7e66c26fba15de1f9d6cf6de2c01eadf5f1b",
+ "initial_checkout_clean": true,
+ "checkout_core_autocrlf": false,
+ "input_sha256": {
+  "reports/wheelhouse_redistribution_decision_worksheet.csv": "7af2954d75b106968914ceffdc91a90bd01b5eaed1aec3cb4c52b50e9fe8a5f8",
+  "reports/wheelhouse_redistribution_decision_worksheet.lock.json": "f4be2b6e112fccdd8d87fc95e8cd9c155f4abc7b8ea5066818471062ec768fb6",
+  "reports/wheelhouse_redistribution_inventory.csv": "5770f42630f113b7b1c4d68c9eef246243dddd3fc70482b0f1a9b74e5f4ee594",
+  "reports/wheelhouse_redistribution_proposed_dispositions.csv": "00d9f0b499661bb2cc0f5b6e1e0ac61706fb80fe664b26b67ff1b7526488a464",
+  "reports/wheelhouse_redistribution_decisions.csv": "b754d3ac672a47f67fc87bd86d9cb35bb736ca9a3328bf6a19b34c794bfe1d9e",
+  "reports/wheelhouse_nvidia_licence_reconciliation.json": "497640affe72bda71f962b459e247d34886206ed99dd82a25cad0f16add063c9",
+  "reports/wheelhouse_primary_licence_sources/index.json": "aef799e4c2d01f9f71d4402f1c6cf8a359c35073888fd8237b852cb330031abc",
+  "reports/wheelhouse_upstream_licenses/index.json": "c274596833422d7b9d85e58c6ffb9e32019ab5f8e5b1f06b4730925f037860e9",
+  "reports/wheelhouse_r2_bundle_plan.json": "d8da7cbea5db811237cde675c5c7a7c11835e5598f9ac4b7db65148a97797624",
+  "reports/wheelhouse_download_manifest.json": "91ad9ede70c4fdf027cf5739a828f9063dc07c22c6010a64ebd1af0db8f0462b"
+ },
+ "worksheet_lock_and_regenerated_context_match": true,
+ "reviewer_columns_filled": 0,
+ "tier_counts": {
+  "1": 4,
+  "2": 19,
+  "3": 48,
+  "4": 103
+ },
+ "retained_primary_source_files_verified": 6,
+ "retained_upstream_licence_files_verified": 16,
+ "validation": {
+  "command": [
+   "/home/jingjing/.local/share/agi/dev-env/bin/python",
+   "-B",
+   "scripts/wheelhouse_decision_worksheet.py",
+   "validate",
+   "reports/wheelhouse_redistribution_decision_worksheet.csv"
+  ],
+  "exit_code": 0,
+  "stdout": "{\n \"errors\": 0,\n \"warnings\": 0,\n \"changes\": 0,\n \"preview_sha256\": \"ed5128d14a6faa779f698855022c7066d39a8bb9137f688703030fc836e754fd\"\n}\n",
+  "stderr": "",
+  "preview_sha256": "ed5128d14a6faa779f698855022c7066d39a8bb9137f688703030fc836e754fd",
+  "errors": 0,
+  "warnings": 0,
+  "changes": 0,
+  "decisions_unchanged": true,
+  "build_eligible": false,
+  "build_blockers": 174
+ },
+ "priority_review_rows": [
+  {
+   "artifact": "nvidia_cufile_cu12-1.13.1.3-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "sha256": "1d069003be650e131b21c932ec3d8969c1715379251f8d23a1860554b1cb24fc",
+   "distribution": "nvidia_cufile_cu12",
+   "version": "1.13.1.3",
+   "proposed_disposition": "needs_qualified_review",
+   "unresolved_questions": "Which text governs: the licence bundled in the wheel or the official version-specific EULA? Is a private Kaggle dataset, attached only to the team's own notebook (the ARC-AGI-3 agent, the application), distribution \"incorporated into a software application\", or distribution \"as a stand-alone product\"? Private access is not a substitute for redistribution clearance. Does the official 12.8.1 listing apply to this wheel although its bundled text omits the component?",
+   "alternative_if_not_cleared": "Do not redistribute until resolved. Options for the owner to choose explicitly: (a) written clarification from NVIDIA via the licensing contact; (b) a new runtime revision using libraries preinstalled in the Kaggle image, only after their exact versions are established and shown to satisfy both the runtime and the package requirements (a new manifest, closure, download and install check; never a silent substitution); (c) record the bundle as blocked. Never dropped silently."
+  },
+  {
+   "artifact": "nvidia_nvjitlink_cu12-12.8.93-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl",
+   "sha256": "81ff63371a7ebd6e6451970684f916be2eab07321b73c9d244dc2b4da7f73b88",
+   "distribution": "nvidia_nvjitlink_cu12",
+   "version": "12.8.93",
+   "proposed_disposition": "needs_qualified_review",
+   "unresolved_questions": "Which text governs: the licence bundled in the wheel or the official version-specific EULA? Is a private Kaggle dataset, attached only to the team's own notebook (the ARC-AGI-3 agent, the application), distribution \"incorporated into a software application\", or distribution \"as a stand-alone product\"? Private access is not a substitute for redistribution clearance. Does the official 12.8.1 listing apply to this wheel although its bundled text omits the component?",
+   "alternative_if_not_cleared": "Do not redistribute until resolved. Options for the owner to choose explicitly: (a) written clarification from NVIDIA via the licensing contact; (b) a new runtime revision using libraries preinstalled in the Kaggle image, only after their exact versions are established and shown to satisfy both the runtime and the package requirements (a new manifest, closure, download and install check; never a silent substitution); (c) record the bundle as blocked. Never dropped silently."
+  },
+  {
+   "artifact": "nvidia_nvshmem_cu12-3.4.5-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "sha256": "042f2500f24c021db8a06c5eec2539027d57460e1c1a762055a6554f72c369bd",
+   "distribution": "nvidia_nvshmem_cu12",
+   "version": "3.4.5",
+   "proposed_disposition": "needs_qualified_review",
+   "unresolved_questions": "Which text governs: the licence bundled in the wheel or the official version-specific EULA? Is a private Kaggle dataset, attached only to the team's own notebook (the ARC-AGI-3 agent, the application), distribution \"incorporated into a software application\", or distribution \"as a stand-alone product\"? Private access is not a substitute for redistribution clearance. Does the NVSHMEM supplement or the bundled CUDA EULA govern this wheel? Do the bundled third-party notices in the tag's License.txt (DF-NVSHMEM-prototype and others) need to ship?",
+   "alternative_if_not_cleared": "Do not redistribute until resolved. Options for the owner to choose explicitly: (a) written clarification from NVIDIA via the licensing contact; (b) a new runtime revision using libraries preinstalled in the Kaggle image, only after their exact versions are established and shown to satisfy both the runtime and the package requirements (a new manifest, closure, download and install check; never a silent substitution); (c) record the bundle as blocked. Never dropped silently."
+  },
+  {
+   "artifact": "nvidia_cutlass_dsl_libs_base-4.5.0.dev0-cp312-cp312-manylinux_2_28_x86_64.whl",
+   "sha256": "38136edf1a1cd0c49fed73dcce966c8ac8b4396bdbd996deada6f73c81f5896e",
+   "distribution": "nvidia_cutlass_dsl_libs_base",
+   "version": "4.5.0.dev0",
+   "proposed_disposition": "likely_not_distributable",
+   "unresolved_questions": "Is any grant available for the compiled files? Are Kaggle notebook viewers \"authorized users\" under section 3?",
+   "alternative_if_not_cleared": "Owner chooses explicitly: NVIDIA clarification; or an explicitly revised dependency set (removal is possible only through an explicitly revised dependency set with fresh validation (new manifest, closure, download and offline install check), never because an inference path seems not to use it); or record the bundle as blocked."
+  }
+ ],
+ "other_qualified_review_rows": [
+  {
+   "artifact": "ninja-1.13.0-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "sha256": "fb46acf6b93b8dd0322adc3a4945452a4e774b75b91293bafcc7b7f8e6517dfa",
+   "distribution": "ninja",
+   "version": "1.13.0",
+   "proposed_disposition": "needs_qualified_review"
+  },
+  {
+   "artifact": "nvidia_cublas_cu12-12.8.4.1-py3-none-manylinux_2_27_x86_64.whl",
+   "sha256": "8ac4e771d5a348c551b2a426eda6193c19aa630236b418086020df5ba9667142",
+   "distribution": "nvidia_cublas_cu12",
+   "version": "12.8.4.1",
+   "proposed_disposition": "needs_qualified_review"
+  },
+  {
+   "artifact": "nvidia_cuda_cupti_cu12-12.8.90-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "sha256": "ea0cb07ebda26bb9b29ba82cda34849e73c166c18162d3913575b0c9db9a6182",
+   "distribution": "nvidia_cuda_cupti_cu12",
+   "version": "12.8.90",
+   "proposed_disposition": "needs_qualified_review"
+  },
+  {
+   "artifact": "nvidia_cuda_nvrtc_cu12-12.8.93-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl",
+   "sha256": "a7756528852ef889772a84c6cd89d41dfa74667e24cca16bb31f8f061e3e9994",
+   "distribution": "nvidia_cuda_nvrtc_cu12",
+   "version": "12.8.93",
+   "proposed_disposition": "needs_qualified_review"
+  },
+  {
+   "artifact": "nvidia_cuda_runtime_cu12-12.8.90-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "sha256": "adade8dcbd0edf427b7204d480d6066d33902cab2a4707dcfc48a2d0fd44ab90",
+   "distribution": "nvidia_cuda_runtime_cu12",
+   "version": "12.8.90",
+   "proposed_disposition": "needs_qualified_review"
+  },
+  {
+   "artifact": "nvidia_cudnn_cu12-9.10.2.21-py3-none-manylinux_2_27_x86_64.whl",
+   "sha256": "949452be657fa16687d0930933f032835951ef0892b37d2d53824d1a84dc97a8",
+   "distribution": "nvidia_cudnn_cu12",
+   "version": "9.10.2.21",
+   "proposed_disposition": "needs_qualified_review"
+  },
+  {
+   "artifact": "nvidia_cufft_cu12-11.3.3.83-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "sha256": "4d2dd21ec0b88cf61b62e6b43564355e5222e4a3fb394cac0db101f2dd0d4f74",
+   "distribution": "nvidia_cufft_cu12",
+   "version": "11.3.3.83",
+   "proposed_disposition": "needs_qualified_review"
+  },
+  {
+   "artifact": "nvidia_curand_cu12-10.3.9.90-py3-none-manylinux_2_27_x86_64.whl",
+   "sha256": "b32331d4f4df5d6eefa0554c565b626c7216f87a06a4f56fab27c3b68a830ec9",
+   "distribution": "nvidia_curand_cu12",
+   "version": "10.3.9.90",
+   "proposed_disposition": "needs_qualified_review"
+  },
+  {
+   "artifact": "nvidia_cusolver_cu12-11.7.3.90-py3-none-manylinux_2_27_x86_64.whl",
+   "sha256": "4376c11ad263152bd50ea295c05370360776f8c3427b30991df774f9fb26c450",
+   "distribution": "nvidia_cusolver_cu12",
+   "version": "11.7.3.90",
+   "proposed_disposition": "needs_qualified_review"
+  },
+  {
+   "artifact": "nvidia_cusparse_cu12-12.5.8.93-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "sha256": "1ec05d76bbbd8b61b06a80e1eaf8cf4959c3d4ce8e711b65ebd0443bb0ebb13b",
+   "distribution": "nvidia_cusparse_cu12",
+   "version": "12.5.8.93",
+   "proposed_disposition": "needs_qualified_review"
+  },
+  {
+   "artifact": "nvidia_cusparselt_cu12-0.7.1-py3-none-manylinux2014_x86_64.whl",
+   "sha256": "f1bb701d6b930d5a7cea44c19ceb973311500847f81b634d802b7b539dc55623",
+   "distribution": "nvidia_cusparselt_cu12",
+   "version": "0.7.1",
+   "proposed_disposition": "needs_qualified_review"
+  },
+  {
+   "artifact": "nvidia_cutlass_dsl-4.5.0.dev0-py3-none-any.whl",
+   "sha256": "ee81170c5f6e660147888ab84a86aa01e46b810e7c20c9e0fc5bcc8e35bbc719",
+   "distribution": "nvidia_cutlass_dsl",
+   "version": "4.5.0.dev0",
+   "proposed_disposition": "needs_qualified_review"
+  },
+  {
+   "artifact": "openai_harmony-0.0.8-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "sha256": "c007d277218a50db8839e599ed78e0fffe5130f614c3f6d93ae257f282071a29",
+   "distribution": "openai_harmony",
+   "version": "0.0.8",
+   "proposed_disposition": "needs_qualified_review"
+  },
+  {
+   "artifact": "opencv_python_headless-4.13.0.92-cp37-abi3-manylinux_2_28_x86_64.whl",
+   "sha256": "0bd48544f77c68b2941392fcdf9bcd2b9cdf00e98cb8c29b2455d194763cf99e",
+   "distribution": "opencv_python_headless",
+   "version": "4.13.0.92",
+   "proposed_disposition": "needs_qualified_review"
+  },
+  {
+   "artifact": "pillow-12.2.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+   "sha256": "62f5409336adb0663b7caa0da5c7d9e7bdbaae9ce761d34669420c2a801b2780",
+   "distribution": "pillow",
+   "version": "12.2.0",
+   "proposed_disposition": "needs_qualified_review"
+  },
+  {
+   "artifact": "prometheus_client-0.25.0-py3-none-any.whl",
+   "sha256": "d5aec89e349a6ec230805d0df882f3807f74fd6c1a2fa86864e3c2279059fed1",
+   "distribution": "prometheus_client",
+   "version": "0.25.0",
+   "proposed_disposition": "needs_qualified_review"
+  },
+  {
+   "artifact": "pyzmq-27.1.0-cp312-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl",
+   "sha256": "43ad9a73e3da1fab5b0e7e13402f0b2fb934ae1c876c51d0afff0e7c052eca31",
+   "distribution": "pyzmq",
+   "version": "27.1.0",
+   "proposed_disposition": "needs_qualified_review"
+  },
+  {
+   "artifact": "quack_kernels-0.4.1-py3-none-any.whl",
+   "sha256": "c1c8df2935bf5156ec47d2c5384ac08b411fd0ee702d80ae916dbf6d6f5ae813",
+   "distribution": "quack_kernels",
+   "version": "0.4.1",
+   "proposed_disposition": "needs_qualified_review"
+  },
+  {
+   "artifact": "regex-2026.4.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "sha256": "993f657a7c1c6ec51b5e0ba97c9817d06b84ea5fa8d82e43b9405de0defdc2b9",
+   "distribution": "regex",
+   "version": "2026.4.4",
+   "proposed_disposition": "needs_qualified_review"
+  }
+ ],
+ "status": "review_preparation_complete; reviewer_decisions_pending",
+ "scope": "no decisions imported, bundle built, upload, reservation, provider call or GPU launch"
+}
