@@ -1,0 +1,735 @@
+{
+ "source_revision": "3ba79e3f680877a0d1d18f095c8f6f730534f399",
+ "working_tree_clean": false,
+ "command": "python scripts/run_wheelhouse_checks.py --out reports/wheelhouse_tooling_checks_3ba79e3.json",
+ "started": "2026-10-05T00:00:04-04:00",
+ "seconds": 23.1,
+ "environment": {
+  "python": "3.12.3",
+  "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39"
+ },
+ "suites": [
+  "tests.test_wheelhouse_metadata",
+  "tests.test_wheelhouse_offline_install",
+  "tests.test_wheelhouse_licenses",
+  "tests.test_wheelhouse_review3",
+  "tests.test_wheelhouse_review4",
+  "tests.test_wheelhouse_review5",
+  "tests.test_wheelhouse_review6",
+  "tests.test_wheelhouse_review7",
+  "tests.test_wheelhouse_decision_worksheet"
+ ],
+ "summary": {
+  "run": 140,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "passed": true
+ },
+ "offline_report_reproduction": {
+  "exit": 0,
+  "output": "reports match a fresh offline analysis"
+ },
+ "tests": [
+  {
+   "test": "tests.test_wheelhouse_decision_worksheet.Generated.test_lock_binds_the_inputs",
+   "outcome": "pass",
+   "seconds": 0.004
+  },
+  {
+   "test": "tests.test_wheelhouse_decision_worksheet.Generated.test_never_overwritten",
+   "outcome": "pass",
+   "seconds": 0.002
+  },
+  {
+   "test": "tests.test_wheelhouse_decision_worksheet.Generated.test_no_approval_is_prefilled",
+   "outcome": "pass",
+   "seconds": 0.002
+  },
+  {
+   "test": "tests.test_wheelhouse_decision_worksheet.Generated.test_one_blank_row_per_artifact_bound_to_its_hash",
+   "outcome": "pass",
+   "seconds": 0.002
+  },
+  {
+   "test": "tests.test_wheelhouse_decision_worksheet.Generated.test_priority_nvidia_rows_come_first_and_are_flagged",
+   "outcome": "pass",
+   "seconds": 0.002
+  },
+  {
+   "test": "tests.test_wheelhouse_decision_worksheet.Returned.test_a_recorded_decision_is_never_replaced",
+   "outcome": "pass",
+   "seconds": 0.014
+  },
+  {
+   "test": "tests.test_wheelhouse_decision_worksheet.Returned.test_a_valid_decision_is_a_proposed_change",
+   "outcome": "pass",
+   "seconds": 0.013
+  },
+  {
+   "test": "tests.test_wheelhouse_decision_worksheet.Returned.test_artifact_binding_and_coverage",
+   "outcome": "pass",
+   "seconds": 0.054
+  },
+  {
+   "test": "tests.test_wheelhouse_decision_worksheet.Returned.test_changing_any_imported_field_invalidates_the_confirmed_preview",
+   "outcome": "pass",
+   "seconds": 0.177
+  },
+  {
+   "test": "tests.test_wheelhouse_decision_worksheet.Returned.test_edited_context_is_reported",
+   "outcome": "pass",
+   "seconds": 0.013
+  },
+  {
+   "test": "tests.test_wheelhouse_decision_worksheet.Returned.test_import_only_through_the_confirmed_preview",
+   "outcome": "pass",
+   "seconds": 0.048
+  },
+  {
+   "test": "tests.test_wheelhouse_decision_worksheet.Returned.test_import_refuses_when_validation_fails",
+   "outcome": "pass",
+   "seconds": 0.021
+  },
+  {
+   "test": "tests.test_wheelhouse_decision_worksheet.Returned.test_preview_shows_every_imported_field",
+   "outcome": "pass",
+   "seconds": 0.018
+  },
+  {
+   "test": "tests.test_wheelhouse_decision_worksheet.Returned.test_required_fields_and_conditions",
+   "outcome": "pass",
+   "seconds": 0.078
+  },
+  {
+   "test": "tests.test_wheelhouse_decision_worksheet.Returned.test_restricted_is_flagged_as_a_bundle_blocker",
+   "outcome": "pass",
+   "seconds": 0.015
+  },
+  {
+   "test": "tests.test_wheelhouse_decision_worksheet.Returned.test_unchanged_worksheet_proposes_nothing",
+   "outcome": "pass",
+   "seconds": 0.012
+  },
+  {
+   "test": "tests.test_wheelhouse_decision_worksheet.Returned.test_unsatisfied_conditions_are_recorded_but_block_the_build",
+   "outcome": "pass",
+   "seconds": 0.012
+  },
+  {
+   "test": "tests.test_wheelhouse_licenses.Rules.test_committed_evidence_flags",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_licenses.Rules.test_declared_copyleft_regex_has_real_word_boundaries",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_licenses.Rules.test_families",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_licenses.Rules.test_licence_members",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_licenses.Rules.test_unsafe_archive_paths_are_refused",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Closure.test_compatible_older_manylinux_tags_are_accepted",
+   "outcome": "pass",
+   "seconds": 0.006
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Closure.test_complete_closure_passes",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Closure.test_conflicting_constraints",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Closure.test_dependencies_activated_through_extras",
+   "outcome": "pass",
+   "seconds": 0.003
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Closure.test_dependency_absent_from_inventory",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Closure.test_duplicate_distributions_are_diagnosed",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Closure.test_incompatible_requires_python",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Closure.test_markers_use_the_declared_target_not_the_host",
+   "outcome": "pass",
+   "seconds": 0.002
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Closure.test_report_generation_is_stable",
+   "outcome": "pass",
+   "seconds": 0.002
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Closure.test_unknown_metadata_never_passes_and_unrequired_is_only_reported",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Closure.test_wrong_architecture_abi_or_newer_glibc_is_rejected",
+   "outcome": "pass",
+   "seconds": 0.006
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Deadline.test_a_response_arriving_just_after_the_deadline_is_refused",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Deadline.test_normal_bounded_completion",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Deadline.test_operation_timeout_is_capped_by_the_remaining_allowance",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Deadline.test_redirects_consume_the_same_allowance",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Deadline.test_retries_and_backoff_exhaust_the_deadline",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Deadline.test_trickling_body_cannot_outlast_the_deadline",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.DownloadGate.test_approval_must_name_this_manifest",
+   "outcome": "pass",
+   "seconds": 0.002
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.DownloadGate.test_download_verifies_and_reuses_only_verified_files",
+   "outcome": "pass",
+   "seconds": 0.003
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.DownloadGate.test_foreign_or_mismatched_urls_and_in_repo_destinations_are_refused",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.DownloadGate.test_the_downloader_never_installs_or_resolves",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.DownloadGate.test_wrong_bytes_never_become_a_completed_artifact",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.EvidenceValidation.test_fixture_mutations_downgrade_to_invalid",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.EvidenceValidation.test_review_mutations_each_prevent_a_complete_result",
+   "outcome": "pass",
+   "seconds": 0.413
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.EvidenceValidation.test_stored_flags_are_not_trusted",
+   "outcome": "pass",
+   "seconds": 2.136
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.EvidenceValidation.test_the_retained_acquisition_passes_validation",
+   "outcome": "pass",
+   "seconds": 0.164
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.ManifestAndLicences.test_committed_manifest_and_licence_table_match_the_retained_evidence",
+   "outcome": "pass",
+   "seconds": 0.159
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.ManifestAndLicences.test_manifest_is_refused_unless_the_closure_is_complete",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Network.test_exact_filename_and_hash_match_is_verified_and_no_wheel_is_requested",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Network.test_metadata_hash_mismatch_is_unknown",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Network.test_missing_core_metadata_is_unknown_with_no_wheel_fallback",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Network.test_oversized_truncated_and_malformed_responses",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Network.test_redirects_are_validated",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Network.test_same_version_with_another_build_or_hash",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Network.test_the_client_refuses_wheel_urls_and_foreign_hosts",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Network.test_timeouts_are_bounded_and_recorded_unknown",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Retained.test_acquisition_record_is_byte_stable",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Retained.test_committed_reports_reproduce_offline_without_network",
+   "outcome": "pass",
+   "seconds": 0.167
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Retained.test_inventory_is_verified_against_the_pinned_manifest_hashes",
+   "outcome": "pass",
+   "seconds": 0.002
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.Retained.test_root_pins_match_the_current_install_path",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.TargetTags.test_debug_and_free_threaded_wheels_are_rejected",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.TargetTags.test_host_debug_or_free_threaded_settings_do_not_change_the_target",
+   "outcome": "pass",
+   "seconds": 0.003
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.TargetTags.test_report_records_the_declared_abi",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.TargetTags.test_standard_abi3_and_pure_python_wheels_remain_accepted",
+   "outcome": "pass",
+   "seconds": 0.004
+  },
+  {
+   "test": "tests.test_wheelhouse_metadata.TargetTags.test_wrong_architecture_and_newer_glibc_remain_rejected",
+   "outcome": "pass",
+   "seconds": 0.003
+  },
+  {
+   "test": "tests.test_wheelhouse_offline_install.Freeze.test_freeze_comparison",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_offline_install.Lock.test_clean_environment_has_no_user_config_or_network_helpers",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_offline_install.Lock.test_install_command_is_offline_and_hash_pinned",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_offline_install.Lock.test_lock_pins_every_artifact_by_version_and_hash",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_offline_install.Lock.test_the_approved_manifest_is_the_one_bound",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_offline_install.Refusals.test_refuses_paths_inside_the_repository",
+   "outcome": "pass",
+   "seconds": 0.002
+  },
+  {
+   "test": "tests.test_wheelhouse_offline_install.Refusals.test_refuses_when_the_network_is_reachable",
+   "outcome": "pass",
+   "seconds": 0.002
+  },
+  {
+   "test": "tests.test_wheelhouse_offline_install.Refusals.test_wheel_verification_detects_bad_files",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_review3.ManifestBinding.test_installer_refuses_a_tampered_manifest_before_any_filesystem_change",
+   "outcome": "pass",
+   "seconds": 0.003
+  },
+  {
+   "test": "tests.test_wheelhouse_review3.ManifestBinding.test_licence_extractor_refuses_a_tampered_manifest",
+   "outcome": "pass",
+   "seconds": 0.002
+  },
+  {
+   "test": "tests.test_wheelhouse_review3.ManifestBinding.test_licence_texts_may_not_overlap_the_wheels",
+   "outcome": "pass",
+   "seconds": 0.004
+  },
+  {
+   "test": "tests.test_wheelhouse_review3.ManifestBinding.test_the_approved_manifest_still_validates",
+   "outcome": "pass",
+   "seconds": 0.003
+  },
+  {
+   "test": "tests.test_wheelhouse_review3.SlowHeaders.test_a_fast_local_response_still_completes",
+   "outcome": "pass",
+   "seconds": 0.159
+  },
+  {
+   "test": "tests.test_wheelhouse_review3.SlowHeaders.test_downloader_returns_at_the_deadline_and_leaves_no_partial_file",
+   "outcome": "pass",
+   "seconds": 2.279
+  },
+  {
+   "test": "tests.test_wheelhouse_review3.SlowHeaders.test_metadata_client_returns_at_the_deadline_and_cancels_the_socket",
+   "outcome": "pass",
+   "seconds": 2.076
+  },
+  {
+   "test": "tests.test_wheelhouse_review3.StalledBeforeConnect.test_an_unstalled_worker_process_completes_normally",
+   "outcome": "pass",
+   "seconds": 0.122
+  },
+  {
+   "test": "tests.test_wheelhouse_review3.StalledBeforeConnect.test_download_worker_is_killed_and_never_connects",
+   "outcome": "pass",
+   "seconds": 3.008
+  },
+  {
+   "test": "tests.test_wheelhouse_review3.StalledBeforeConnect.test_metadata_worker_is_killed_and_never_connects",
+   "outcome": "pass",
+   "seconds": 3.009
+  },
+  {
+   "test": "tests.test_wheelhouse_review3.UnsafeWorkDirectory.test_a_fresh_child_is_created_and_nothing_else_is_touched",
+   "outcome": "pass",
+   "seconds": 0.006
+  },
+  {
+   "test": "tests.test_wheelhouse_review3.UnsafeWorkDirectory.test_overlapping_wheel_paths_are_refused",
+   "outcome": "pass",
+   "seconds": 0.01
+  },
+  {
+   "test": "tests.test_wheelhouse_review3.UnsafeWorkDirectory.test_removal_is_confined_to_the_exclusive_directory",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_review3.UnsafeWorkDirectory.test_root_home_repository_and_ancestors_are_refused_before_any_change",
+   "outcome": "pass",
+   "seconds": 0.014
+  },
+  {
+   "test": "tests.test_wheelhouse_review4.InterruptedDownload.test_interrupted_download_publishes_nothing_and_cleans_up_after_the_worker",
+   "outcome": "pass",
+   "seconds": 1.005
+  },
+  {
+   "test": "tests.test_wheelhouse_review4.NoConnectionAfterCancellation.test_no_connection_after_a_cancelled_stalled_worker",
+   "outcome": "pass",
+   "seconds": 3.01
+  },
+  {
+   "test": "tests.test_wheelhouse_review4.ResultDelivery.test_a_complete_result_is_preserved",
+   "outcome": "pass",
+   "seconds": 0.106
+  },
+  {
+   "test": "tests.test_wheelhouse_review4.ResultDelivery.test_a_crash_midway_is_a_controlled_failure_with_no_partial_result",
+   "outcome": "pass",
+   "seconds": 0.091
+  },
+  {
+   "test": "tests.test_wheelhouse_review4.ResultDelivery.test_a_partial_result_then_stall_is_killed_at_the_deadline",
+   "outcome": "pass",
+   "seconds": 1.005
+  },
+  {
+   "test": "tests.test_wheelhouse_review4.ResultDelivery.test_a_result_completed_after_the_deadline_is_rejected",
+   "outcome": "pass",
+   "seconds": 1.004
+  },
+  {
+   "test": "tests.test_wheelhouse_review4.ResultDelivery.test_interrupting_the_parent_cleans_up_the_worker_first",
+   "outcome": "pass",
+   "seconds": 1.003
+  },
+  {
+   "test": "tests.test_wheelhouse_review4.ResultDelivery.test_temporary_result_directories_are_removed",
+   "outcome": "pass",
+   "seconds": 0.212
+  },
+  {
+   "test": "tests.test_wheelhouse_review5.BundleSpecification.test_checksum_files_do_not_hash_each_other",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_review5.BundleSpecification.test_installation_evidence_is_self_contained",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_review5.HumanDecisions.test_regeneration_never_erases_a_recorded_decision",
+   "outcome": "pass",
+   "seconds": 0.02
+  },
+  {
+   "test": "tests.test_wheelhouse_review5.HumanDecisions.test_stale_or_invalid_decisions_are_refused_and_left_untouched",
+   "outcome": "pass",
+   "seconds": 0.127
+  },
+  {
+   "test": "tests.test_wheelhouse_review5.HumanDecisions.test_the_generated_inventory_holds_no_decision_columns",
+   "outcome": "pass",
+   "seconds": 0.009
+  },
+  {
+   "test": "tests.test_wheelhouse_review5.HumanDecisions.test_the_license_table_command_refuses_to_overwrite",
+   "outcome": "pass",
+   "seconds": 0.152
+  },
+  {
+   "test": "tests.test_wheelhouse_review5.Runner.test_the_documented_command_imports_every_suite_without_pythonpath",
+   "outcome": "pass",
+   "seconds": 0.116
+  },
+  {
+   "test": "tests.test_wheelhouse_review5.UnconfirmedTermination.test_downloader_aborts_without_retrying_or_touching_the_partial_file",
+   "outcome": "pass",
+   "seconds": 0.002
+  },
+  {
+   "test": "tests.test_wheelhouse_review5.UnconfirmedTermination.test_it_is_not_an_ordinary_fetch_failure",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_review5.UnconfirmedTermination.test_metadata_acquisition_aborts_instead_of_recording_unknown",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_review6.BuildEligibility.test_approved_with_listed_conditions_blocks",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_review6.BuildEligibility.test_committed_draft_is_consistent_but_not_eligible",
+   "outcome": "pass",
+   "seconds": 0.003
+  },
+  {
+   "test": "tests.test_wheelhouse_review6.BuildEligibility.test_conditions_all_documented_as_satisfied_is_eligible",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_review6.BuildEligibility.test_fully_approved_is_eligible",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_review6.BuildEligibility.test_old_column_layout_is_a_decision_problem",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_review6.BuildEligibility.test_rationale_reviewer_and_date_are_required",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_review6.BuildEligibility.test_stale_hash_and_missing_rows_block",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_review6.BuildEligibility.test_unresolved_restricted_and_excluded_block",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_review6.BuildEligibility.test_unsatisfied_or_missing_conditions_block",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_review6.ProposedDispositions.test_a_flagged_artifact_without_a_proposal_is_reported",
+   "outcome": "pass",
+   "seconds": 0.002
+  },
+  {
+   "test": "tests.test_wheelhouse_review6.ProposedDispositions.test_every_flagged_artifact_has_a_specific_proposal",
+   "outcome": "pass",
+   "seconds": 0.003
+  },
+  {
+   "test": "tests.test_wheelhouse_review6.ProposedDispositions.test_keyed_by_artifact_and_hash_and_never_plainly_approved",
+   "outcome": "pass",
+   "seconds": 0.003
+  },
+  {
+   "test": "tests.test_wheelhouse_review6.ProposedDispositions.test_the_generator_does_not_write_the_decisions_file",
+   "outcome": "pass",
+   "seconds": 0.004
+  },
+  {
+   "test": "tests.test_wheelhouse_review6.UpstreamLicences.test_embedded_header_and_named_extra_members",
+   "outcome": "pass",
+   "seconds": 0.002
+  },
+  {
+   "test": "tests.test_wheelhouse_review6.UpstreamLicences.test_every_wheel_without_a_licence_has_hashed_sourced_upstream_text",
+   "outcome": "pass",
+   "seconds": 0.002
+  },
+  {
+   "test": "tests.test_wheelhouse_review6.UpstreamLicences.test_plan_carries_each_upstream_text_the_index_and_notices",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_review6.UpstreamLicences.test_supervisor_terms_not_only_its_copyright_lines",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_review7.Proposals.test_batch_two_rule",
+   "outcome": "pass",
+   "seconds": 0.002
+  },
+  {
+   "test": "tests.test_wheelhouse_review7.Proposals.test_cufile_and_nvjitlink_are_an_applicability_discrepancy",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_review7.Proposals.test_cutlass_is_not_dropped_for_an_unused_inference_path",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_review7.Proposals.test_every_row_has_a_proposal_and_none_is_bulk_approved",
+   "outcome": "pass",
+   "seconds": 0.002
+  },
+  {
+   "test": "tests.test_wheelhouse_review7.Proposals.test_kaggle_image_libraries_are_a_new_runtime_revision",
+   "outcome": "pass",
+   "seconds": 0.002
+  },
+  {
+   "test": "tests.test_wheelhouse_review7.Reconciliation.test_altered_extraction_is_refused",
+   "outcome": "pass",
+   "seconds": 0.006
+  },
+  {
+   "test": "tests.test_wheelhouse_review7.Reconciliation.test_altered_html_or_missing_extraction_hash_is_refused",
+   "outcome": "pass",
+   "seconds": 0.003
+  },
+  {
+   "test": "tests.test_wheelhouse_review7.Reconciliation.test_attachment_a_section_and_name_matching",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_review7.Reconciliation.test_committed_extractions_reproduce_from_the_verified_html",
+   "outcome": "pass",
+   "seconds": 0.006
+  },
+  {
+   "test": "tests.test_wheelhouse_review7.Reconciliation.test_cufile_and_nvjitlink_are_listed_officially_but_not_in_the_bundled_text",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_review7.Reconciliation.test_nvshmem_and_cutlass_have_their_own_primary_sources",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_review7.Reconciliation.test_retained_primary_sources_match_their_hashes",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_review7.RepositorySources.test_a_confirmed_ref_is_pinned_to_its_commit",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_review7.RepositorySources.test_a_ref_without_the_exact_version_is_refused",
+   "outcome": "pass",
+   "seconds": 0.0
+  },
+  {
+   "test": "tests.test_wheelhouse_review7.RepositorySources.test_committed_repository_sources_are_commit_pinned_and_version_checked",
+   "outcome": "pass",
+   "seconds": 0.001
+  },
+  {
+   "test": "tests.test_wheelhouse_review7.RepositorySources.test_version_line_must_match_a_whole_line",
+   "outcome": "pass",
+   "seconds": 0.0
+  }
+ ]
+}
