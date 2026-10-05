@@ -4,7 +4,9 @@ import base64
 import http.client
 import json
 import re
+import socket
 import struct
+import threading
 import time
 import zlib
 
@@ -62,41 +64,46 @@ class Client:
         remaining = deadline - time.monotonic()
         if remaining <= 0:
             raise RequestFailed('request deadline reached before sending')
-        connection = http.client.HTTPConnection(self.host, self.port, timeout=remaining)
+        connection = http.client.HTTPConnection(self.host, self.port, timeout=remaining)  # connect is bounded too
         connection.connect()
         return connection, connection.sock  # keep the socket: a streaming response takes it from the connection
 
     def call(self, request_id, body=None):
-        """One counted request; returns (status, raw bytes). Never retried here."""
+        """One counted request; returns (status, raw bytes). The absolute deadline covers connection, headers and
+        body: a watchdog shuts the socket at the deadline (so trickling bytes cannot extend a read) and every read is
+        followed by a deadline check, so late data is rejected. Never retried here."""
         item, entry = self.ledger.admit(request_id)
         deadline = self._deadline(item)
         begin = time.monotonic()
+        connection = sock = None
         try:
             connection, sock = self._connection(deadline)
-            try:
+            with Watchdog(sock, deadline):
                 payload = None if body is None else json.dumps(body).encode()
                 connection.request(item['method'], item['path'], body=payload,
                                    headers={'Content-Type': 'application/json'} if payload else {})
                 response = connection.getresponse()
+                on_time(deadline, 'response headers')
                 data = b''
                 while True:
-                    if time.monotonic() >= deadline:
-                        raise RequestFailed('request deadline reached while reading')
-                    sock.settimeout(max(0.01, deadline - time.monotonic()))
-                    part = response.read1(65536) if hasattr(response, 'read1') else response.read(65536)
+                    part = response.read1(65536)
+                    on_time(deadline, 'response body')
                     if not part:
                         break
                     data += part
                     if len(data) > RESPONSE_CAP:
                         raise RequestFailed('response exceeds cap')
-                entry.update(outcome='http_' + str(response.status), seconds=round(time.monotonic() - begin, 3))
-                return response.status, data
-            finally:
-                connection.close()
-        except (OSError, http.client.HTTPException, RequestFailed) as exc:
+            on_time(deadline, 'response')
+            entry.update(outcome='http_' + str(response.status), seconds=round(time.monotonic() - begin, 3))
+            return response.status, data
+        except (OSError, http.client.HTTPException, ValueError, RequestFailed) as exc:
+            if time.monotonic() >= deadline and not isinstance(exc, RequestFailed):
+                exc = RequestFailed(f'deadline exceeded ({type(exc).__name__}: {exc})')
             entry.update(outcome='failed', error=f'{type(exc).__name__}: {str(exc)[:200]}',
                          seconds=round(time.monotonic() - begin, 3))
             raise RequestFailed(f'{request_id}: {type(exc).__name__}: {exc}') from exc
+        finally:
+            close(connection, sock)
 
     def completion(self, request_id, case, sampling):
         body = body_for(case, self.served, sampling)
@@ -119,41 +126,44 @@ class Client:
         return record
 
     def stream_then_cancel(self, request_id, case, sampling):
-        """Stream a long completion, close the connection after the first content chunk (client cancellation)."""
+        """Stream a long completion, close the connection after the first content chunk (client cancellation). The
+        first content must arrive complete before the absolute deadline; late content is rejected."""
         item, entry = self.ledger.admit(request_id)
         deadline = self._deadline(item)
         body = body_for(case, self.served, sampling)
         begin = time.monotonic()
-        connection, sock = self._connection(deadline)
+        connection = sock = None
         try:
-            connection.request('POST', item['path'], body=json.dumps(body).encode(),
-                               headers={'Content-Type': 'application/json'})
-            response = connection.getresponse()
-            if response.status != 200:
-                raise RequestFailed(f'HTTP {response.status}')
-            while True:
-                if time.monotonic() >= deadline:
-                    raise RequestFailed('no streamed content before the deadline')
-                sock.settimeout(max(0.01, deadline - time.monotonic()))
-                line = response.readline(65536)
-                if not line:
-                    raise RequestFailed('stream ended before any content')
-                line = line.strip()
-                if line.startswith(b'data:') and line != b'data: [DONE]':
-                    delta = json.loads(line[5:])['choices'][0].get('delta', {})
-                    if delta.get('content'):
-                        first = round(time.monotonic() - begin, 3)
-                        break
+            connection, sock = self._connection(deadline)
+            with Watchdog(sock, deadline):
+                connection.request('POST', item['path'], body=json.dumps(body).encode(),
+                                   headers={'Content-Type': 'application/json'})
+                response = connection.getresponse()
+                on_time(deadline, 'stream headers')
+                if response.status != 200:
+                    raise RequestFailed(f'HTTP {response.status}')
+                first = None
+                while first is None:
+                    line = response.readline(65536)
+                    on_time(deadline, 'streamed content')
+                    if not line:
+                        raise RequestFailed('stream ended before any content')
+                    line = line.strip()
+                    if line.startswith(b'data:') and line != b'data: [DONE]':
+                        if json.loads(line[5:])['choices'][0].get('delta', {}).get('content'):
+                            first = round(time.monotonic() - begin, 3)
+            on_time(deadline, 'streamed content')
             entry.update(outcome='cancelled_after_first_content', first_content_seconds=first,
                          seconds=round(time.monotonic() - begin, 3))
             return {'cancelled': True, 'first_content_seconds': first}
         except (OSError, http.client.HTTPException, ValueError, KeyError, RequestFailed) as exc:
+            if time.monotonic() >= deadline and not isinstance(exc, RequestFailed):
+                exc = RequestFailed(f'deadline exceeded ({type(exc).__name__}: {exc})')
             entry.update(outcome='failed', error=f'{type(exc).__name__}: {str(exc)[:200]}',
                          seconds=round(time.monotonic() - begin, 3))
             raise RequestFailed(f'{request_id}: {type(exc).__name__}: {exc}') from exc
         finally:
-            connection.close()  # the cancellation: the server sees the client disconnect
-            sock.close()
+            close(connection, sock)  # the cancellation: the server sees the client disconnect
 
     def idle_after_cancel(self, request_id, sleep=time.sleep):
         """Read /metrics (at most the plan's max_issues times) until no request is running or waiting."""
@@ -170,6 +180,45 @@ class Client:
             if values.get('running') == 0 and values.get('waiting') == 0:
                 return {'idle': True, 'readings': readings}
         raise RequestFailed(f'{request_id}: server not idle after cancellation: {readings}')
+
+
+def on_time(deadline, what):
+    """Reject anything that completes at or after the absolute deadline."""
+    if time.monotonic() >= deadline:
+        raise RequestFailed(f'deadline exceeded while receiving {what}; late data rejected')
+
+
+def close(connection, sock):
+    for item in (connection, sock):
+        if item is not None:
+            try:
+                item.close()
+            except OSError:
+                pass
+
+
+class Watchdog:
+    """Shut the socket down at the absolute deadline, so a blocked or trickling read returns at once."""
+
+    def __init__(self, sock, deadline):
+        self.sock, self.deadline, self.fired = sock, deadline, False
+        self.timer = threading.Timer(max(0.0, deadline - time.monotonic()), self._fire)
+        self.timer.daemon = True
+
+    def _fire(self):
+        self.fired = True
+        try:
+            self.sock.shutdown(socket.SHUT_RDWR)
+        except OSError:
+            pass
+
+    def __enter__(self):
+        self.timer.start()
+        return self
+
+    def __exit__(self, *exc):
+        self.timer.cancel()
+        return False
 
 
 def metrics(text):

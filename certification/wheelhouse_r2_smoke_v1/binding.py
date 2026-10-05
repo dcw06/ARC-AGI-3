@@ -15,6 +15,8 @@ SOURCE = 'reports/wheelhouse_r2_smoke_v1_source_approval.json'
 COMPUTE = 'reports/wheelhouse_r2_smoke_v1_compute_authorization.json'
 EXECUTION = PACKAGE + '/execution_lock.json'
 RESERVATION = PACKAGE + '/reservation.json'
+CLAIM = 'config/wheelhouse_r2_smoke_v1_launch_claim.json'
+RECEIPT = 'reports/wheelhouse_r2_smoke_v1_launch.json'
 COMPUTE_LIMITS = ('authorized_seconds', 'internal_seconds', 'cleanup_reserve_seconds', 'admission_cutoff_seconds',
                   'maximum_attempts', 'maximum_model_requests', 'automatic_retries')
 ATTEMPT = re.compile(r'r2s-[a-zA-Z0-9-]{8,80}')
@@ -126,9 +128,25 @@ def check_reservation(root, lock_name):
     return execution
 
 
-def require_live(root=None):
+def reservation_digest(root):
+    return sha256(resolve(root, RESERVATION))
+
+
+def check_claim(root, execution):
+    """The launch-side claim: created exclusively by the launch tooling before the package is built, immutable,
+    and embedded in the launch package. It binds the attempt to one recorded launch."""
+    claim = read_json(root, CLAIM)
+    if (claim.get('status') != 'claimed' or claim.get('attempt_id') != execution['attempt_id']
+            or claim.get('execution_sha256') != sha256(resolve(root, EXECUTION))
+            or claim.get('reservation_sha256') != reservation_digest(root) or not claim.get('claimed_at')):
+        raise ValueError('launch claim missing or not bound to this attempt')
+    return claim
+
+
+def require_live(root=None, need_claim=True):
     """Every live-path condition, checked before any installation, model or GPU activity. Raises LiveRefused with
-    all reasons found; returns (protocol, execution) when the attempt may run."""
+    all reasons found; returns (protocol, execution) when the attempt may run. `need_claim=False` is used only by
+    the launch tooling to create the claim itself."""
     root = ROOT if root is None else Path(root)
     reasons = []
     try:
@@ -144,6 +162,8 @@ def require_live(root=None):
         check_sources(root, lock_name)
         check_approvals(root, lock_name, protocol)
         execution = check_reservation(root, lock_name)
+        if need_claim:
+            check_claim(root, execution)
     except (OSError, ValueError, KeyError, TypeError) as exc:
         reasons.append(f'authorization: {type(exc).__name__}: {exc}')
     if reasons:
@@ -152,11 +172,15 @@ def require_live(root=None):
 
 
 def consume(root, working):
-    """Mark the reservation consumed in the provider working directory (exclusive create: never twice)."""
+    """Session-local guard: mark the attempt consumed in this provider session's working directory (exclusive
+    create), so it cannot run twice within one session. It cannot see other sessions: an offline notebook has no
+    durable shared state. Durable once-only accounting is the launch-side claim and receipt (launch.py); see
+    reports/wheelhouse_r2_smoke_v1_package.md for what neither can prevent."""
     protocol, execution = require_live(root)
     marker = Path(working) / f".{execution['attempt_id']}.consumed.json"
     with marker.open('x', encoding='utf-8') as stream:
-        json.dump({'attempt_id': execution['attempt_id'], 'status': 'consumed'}, stream)
+        json.dump({'attempt_id': execution['attempt_id'], 'status': 'consumed', 'scope': 'this provider session only',
+                   'provider_run_type': os.environ.get('KAGGLE_KERNEL_RUN_TYPE')}, stream)
         stream.flush()
         os.fsync(stream.fileno())
     return protocol, execution, marker

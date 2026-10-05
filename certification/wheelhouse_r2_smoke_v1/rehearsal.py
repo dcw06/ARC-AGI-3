@@ -119,7 +119,7 @@ SCENARIOS = {
 }
 
 
-def scenario(name, base):
+def scenario(name, base, on_cleanup=None):
     """Run one scenario in a fresh directory under `base`; returns (expectation check, result)."""
     spec = SCENARIOS[name]
     work = Path(tempfile.mkdtemp(prefix=f'{name}-', dir=base))
@@ -142,7 +142,7 @@ def scenario(name, base):
     os.environ['CUDA_VISIBLE_DEVICES'] = ''
     import time
     result = run('rehearsal', protocol, work / 'evidence', time.monotonic(), bundle=work / 'bundle',
-                 workdir=work / 'work', server_argv=argv)
+                 workdir=work / 'work', server_argv=argv, on_cleanup=on_cleanup)
     stopped = result['cleanup']['server']
     check = {'passed_as_expected': result['passed'] == spec['expect_passed'],
              'stage_as_expected': result['failed_stage'] == spec['expect_stage'],

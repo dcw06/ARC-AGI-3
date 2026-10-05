@@ -7,9 +7,9 @@ import json
 import lzma
 from pathlib import Path
 
-from certification.wheelhouse_r2_smoke_v1.binding import (COMPUTE, EXECUTION, PACKAGE, PROTOCOL, RESERVATION, ROOT,
-                                                          SOURCE, load_protocol, require_live, review_lock, sha256,
-                                                          unresolved)
+from certification.wheelhouse_r2_smoke_v1.binding import (CLAIM, COMPUTE, EXECUTION, PACKAGE, PROTOCOL, RESERVATION,
+                                                          ROOT, SOURCE, load_protocol, require_live, review_lock,
+                                                          sha256, unresolved)
 
 MODEL_SOURCE = 'qwen-lm/qwen-3-vl/Transformers/30b-a3b-instruct-fp8/1'
 KERNEL_ID = 'daichongwei06/arc3-wheelhouse-r2-smoke-v1'
@@ -104,7 +104,7 @@ def launch_artifacts(root=ROOT):
         if sha256(folder / name) != digest:
             raise ValueError('reviewed artifact drift: ' + name)
     sidecars = {name: (Path(root) / name).read_bytes() for name in (lock_name, SOURCE, COMPUTE, EXECUTION,
-                                                                    RESERVATION)}
+                                                                    RESERVATION, CLAIM)}
     hashes = {n: hashlib.sha256(d).hexdigest() for n, d in sidecars.items()}
     injection = (f'    sidecars = {{n: base64.b64decode(v) for n, v in '
                  f'{ {n: base64.b64encode(d).decode() for n, d in sidecars.items()}!r}.items()}}\n'

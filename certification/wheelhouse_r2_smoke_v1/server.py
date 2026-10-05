@@ -64,37 +64,56 @@ class ModelServer:
             time.sleep(min(interval, max(0.0, deadline - time.monotonic())))
 
     def stop(self, deadline, terminate_grace, kill_grace):
-        """Terminate the whole group and verify it is gone; returns a receipt and never raises."""
+        """Terminate the whole group and verify it is gone; returns a receipt and never raises. The SIGKILL
+        escalation and the reap run in `finally` blocks: an interruption during the SIGTERM grace (for example a
+        stray alarm) is recorded and cannot skip the kill. The kill phase keeps its own grace even if the SIGTERM
+        phase used up the shared deadline."""
         receipt = {'pgid': self.pgid, 'sigterm_sent': False, 'sigkill_sent': False, 'groups_absent': False,
-                   'remaining_members': None, 'error': None}
+                   'remaining_members': None, 'interrupted': [], 'error': None}
         if self.process is None:
             receipt['groups_absent'] = True
             return receipt
+
+        def wait(until):
+            while time.monotonic() < until and self._group_alive():
+                time.sleep(0.1)
         try:
-            for sig, grace, flag in ((signal.SIGTERM, terminate_grace, 'sigterm_sent'),
-                                     (signal.SIGKILL, kill_grace, 'sigkill_sent')):
-                if not self._group_alive():
-                    break
-                try:
-                    os.killpg(self.pgid, sig)
-                    receipt[flag] = True
-                except ProcessLookupError:
-                    break
-                end = min(time.monotonic() + grace, deadline)
-                while time.monotonic() < end and self._group_alive():
-                    self.process.poll()
-                    time.sleep(0.2)
-            self.process.poll()
-            remaining = group_members(self.pgid)
-            receipt['remaining_members'] = remaining
-            receipt['groups_absent'] = not remaining and not self._group_alive()
-            receipt['exit_code'] = self.process.returncode
-        except Exception as exc:
-            receipt['error'] = f'{type(exc).__name__}: {str(exc)[:256]}'
+            try:
+                if self._group_alive():
+                    os.killpg(self.pgid, signal.SIGTERM)
+                    receipt['sigterm_sent'] = True
+                    wait(min(time.monotonic() + terminate_grace, deadline))
+            except ProcessLookupError:
+                pass
+            except BaseException as exc:  # noqa: B036 - must not bypass escalation
+                receipt['interrupted'].append(f'sigterm phase: {type(exc).__name__}: {str(exc)[:120]}')
+            finally:
+                for attempt in range(2):  # retried once if the kill phase itself is interrupted
+                    try:
+                        if self._group_alive():
+                            os.killpg(self.pgid, signal.SIGKILL)
+                            receipt['sigkill_sent'] = True
+                            wait(time.monotonic() + kill_grace)
+                        break
+                    except ProcessLookupError:
+                        break
+                    except BaseException as exc:  # noqa: B036
+                        receipt['interrupted'].append(f'sigkill phase: {type(exc).__name__}: {str(exc)[:120]}')
         finally:
-            self._log.close()
+            try:
+                self.process.poll()
+                remaining = group_members(self.pgid)
+                receipt['remaining_members'] = remaining
+                receipt['groups_absent'] = not remaining and not self._group_alive()
+                receipt['exit_code'] = self.process.returncode
+            except BaseException as exc:  # noqa: B036
+                receipt['error'] = f'{type(exc).__name__}: {str(exc)[:256]}'
+            try:
+                self._log.close()
+            except OSError:
+                pass
         self.events.append({'event': 'stopped', **{k: receipt[k] for k in ('sigterm_sent', 'sigkill_sent',
-                                                                        'groups_absent')}})
+                                                                        'groups_absent', 'interrupted')}})
         return receipt
 
     def _group_alive(self):

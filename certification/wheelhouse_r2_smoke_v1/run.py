@@ -21,7 +21,7 @@ NOT_ESTABLISHED = ['solving ability or task performance', 'Phase 4 completion', 
 
 
 def run(mode, protocol, output, started, *, bundle, workdir, gpu_query=None, model_check=None, server_argv=None,
-        python=sys.executable, now=time.monotonic, sleep=time.sleep, attempt_id=None):
+        python=sys.executable, now=time.monotonic, sleep=time.sleep, attempt_id=None, on_cleanup=None):
     if mode not in ('live', 'rehearsal'):
         raise ValueError('mode must be live or rehearsal')
     if mode == 'live' and gpu_query is None:
@@ -125,6 +125,19 @@ def run(mode, protocol, output, started, *, bundle, workdir, gpu_query=None, mod
         if not isinstance(exc, Exception):
             raise
     finally:
+        # Cleanup is its own phase: first stop the cutoff alarm from interrupting it (retried once: the alarm is
+        # one-shot), then stop processes within the cleanup reserve. stop() escalates to SIGKILL regardless.
+        transition = []
+        for _ in range(2):
+            try:
+                if on_cleanup:
+                    on_cleanup()
+                transition.append('entered')
+                break
+            except BaseException as exc:  # noqa: B036 - the alarm may land here; never skip cleanup
+                transition.append(f'interrupted: {type(exc).__name__}')
+        result['cleanup_phase'] = {'entered_at': round(clock.elapsed(), 3), 'transition': transition,
+                                   'deadline_at': round(clock.cleanup_deadline() - started, 3)}
         stop_deadline = min(now() + server_cfg['terminate_grace_seconds'] + server_cfg['kill_grace_seconds'] + 5,
                             clock.cleanup_deadline())
         stopped = server.stop(stop_deadline, server_cfg['terminate_grace_seconds'], server_cfg['kill_grace_seconds']) \
@@ -136,8 +149,12 @@ def run(mode, protocol, output, started, *, bundle, workdir, gpu_query=None, mod
         else:
             result['cleanup']['gpu'] = 'not_exercised (no GPU in a CPU rehearsal)'
             cleaned = stopped['groups_absent']
+        if stopped.get('interrupted'):
+            cleaned = False if not stopped['groups_absent'] else cleaned
+            result['cleanup_interrupted'] = stopped['interrupted']
         result['cleanup_verified'] = cleaned
-        result['passed'] = bool(result.get('completed_plan')) and cleaned and result['error'] is None
+        result['passed'] = (bool(result.get('completed_plan')) and cleaned and result['error'] is None
+                            and not stopped.get('interrupted'))
         if result['error'] is None and not cleaned:
             result['failed_stage'], result['error'] = 'cleanup', 'process or GPU cleanup not verified'
         result['ledger'] = ledger.summary()
@@ -150,23 +167,48 @@ def run(mode, protocol, output, started, *, bundle, workdir, gpu_query=None, mod
     return final
 
 
+class CutoffAlarm:
+    """The whole-run alarm at the admission cutoff. `enter_cleanup` disarms it and blocks SIGALRM, so the cutoff can
+    never interrupt cleanup; `release` restores the previous state without delivering a pending alarm."""
+
+    def __init__(self):
+        self.previous = None
+        self.in_cleanup = False
+
+    @staticmethod
+    def _raise(*_):
+        raise TimeoutError('internal deadline (admission cutoff alarm)')
+
+    def arm(self, seconds):
+        if seconds <= 0:
+            raise TimeoutError('clock exhausted before the run could start')
+        self.previous = signal.signal(signal.SIGALRM, self._raise)
+        signal.setitimer(signal.ITIMER_REAL, seconds)
+
+    def enter_cleanup(self):
+        signal.pthread_sigmask(signal.SIG_BLOCK, {signal.SIGALRM})
+        signal.setitimer(signal.ITIMER_REAL, 0)
+        self.in_cleanup = True
+
+    def release(self):
+        signal.setitimer(signal.ITIMER_REAL, 0)
+        signal.signal(signal.SIGALRM, signal.SIG_IGN)  # a pending alarm is discarded, not raised
+        signal.pthread_sigmask(signal.SIG_UNBLOCK, {signal.SIGALRM})
+        signal.signal(signal.SIGALRM, self.previous if self.previous is not None else signal.SIG_DFL)
+
+
 def live_main(root, output, started, working):
-    """Live entry, called from the notebook only after `binding.consume`. Installs a whole-run alarm at the internal
-    deadline so a hang still reaches cleanup and evidence retention."""
+    """Live entry, called from the notebook only after `binding.consume`. A cutoff alarm hands a hung run to cleanup;
+    cleanup itself runs with the alarm disarmed and blocked."""
     from certification.wheelhouse_r2_smoke_v1.binding import require_live
     protocol, execution = require_live(root)  # again: nothing below runs unless every condition holds
-    remaining = protocol['limits']['internal_seconds'] - (time.monotonic() - started)
-    if remaining <= protocol['limits']['cleanup_reserve_seconds']:
-        raise TimeoutError('clock exhausted before the run could start')
-
-    def alarm(*_):
-        raise TimeoutError('internal deadline (whole-run alarm)')
-    signal.signal(signal.SIGALRM, alarm)
-    signal.setitimer(signal.ITIMER_REAL, remaining - protocol['limits']['cleanup_reserve_seconds'])
+    limits = protocol['limits']
+    alarm = CutoffAlarm()
+    alarm.arm(limits['admission_cutoff_seconds'] - (time.monotonic() - started))
     try:
         bundle = host.dataset_mount(protocol['dataset']['ref'], protocol['dataset']['version'])
         with tempfile.TemporaryDirectory(prefix='wheelhouse-r2-smoke-', dir=working) as folder:
             return run('live', protocol, output, started, bundle=bundle, workdir=folder, gpu_query=host.nvidia_smi,
-                       attempt_id=execution['attempt_id'])
+                       attempt_id=execution['attempt_id'], on_cleanup=alarm.enter_cleanup)
     finally:
-        signal.setitimer(signal.ITIMER_REAL, 0)
+        alarm.release()

@@ -11,6 +11,7 @@ import unittest
 from pathlib import Path
 
 from certification.wheelhouse_r2_smoke_v1 import binding as B
+from certification.wheelhouse_r2_smoke_v1 import launch as L
 from certification.wheelhouse_r2_smoke_v1 import notebook as N
 from certification.wheelhouse_r2_smoke_v1.accounting import Clock, Ledger, RequestRefused
 from certification.wheelhouse_r2_smoke_v1.client import CASES, body_for, metrics, png
@@ -67,6 +68,9 @@ class FixtureRoot:
                                        'execution_sha256': hashlib.sha256(
                                            json.dumps(execution, sort_keys=True, indent=2).encode() + b'\n'
                                        ).hexdigest(), 'events': ['reserve']})
+        put(self.root, B.CLAIM, {'status': 'claimed', 'attempt_id': execution['attempt_id'],
+                                 'execution_sha256': self.sha(B.EXECUTION), 'reservation_sha256': self.sha(B.RESERVATION),
+                                 'claimed_at': '2026-10-04T00:00:00+00:00'})
 
 
 class LiveGate(unittest.TestCase):
@@ -111,13 +115,27 @@ class LiveGate(unittest.TestCase):
                 damage(fixture)
                 self.assertIn('authorization', self.refused(fixture.root))
 
-    def test_consume_marks_the_attempt_once(self):
+    def test_consume_marks_the_attempt_once_per_session_only(self):
+        """The notebook marker is a session-local guard; it cannot see other sessions (documented limit)."""
         fixture = FixtureRoot(self)
-        working = Path(tempfile.mkdtemp())
-        self.addCleanup(shutil.rmtree, working)
-        B.consume(fixture.root, working)
+        first, second = Path(tempfile.mkdtemp()), Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, first)
+        self.addCleanup(shutil.rmtree, second)
+        B.consume(fixture.root, first)
         with self.assertRaises(FileExistsError):
-            B.consume(fixture.root, working)
+            B.consume(fixture.root, first)
+        B.consume(fixture.root, second)  # another session: not preventable offline; see DurableAccounting
+        marker = json.loads(next(second.glob('.*.consumed.json')).read_text())
+        self.assertEqual(marker['scope'], 'this provider session only')
+
+    def test_missing_or_unbound_launch_claim_refuses(self):
+        fixture = FixtureRoot(self)
+        (fixture.root / B.CLAIM).unlink()
+        self.assertIn('launch_claim.json', self.refused(fixture.root))
+        fixture = FixtureRoot(self)
+        claim = json.loads((fixture.root / B.CLAIM).read_text())
+        put(fixture.root, B.CLAIM, dict(claim, reservation_sha256='0' * 64))
+        self.assertIn('launch claim', self.refused(fixture.root))
 
     def test_launch_package_refuses_here_and_binds_everything_when_authorized(self):
         with self.assertRaises(B.LiveRefused):
@@ -130,7 +148,7 @@ class LiveGate(unittest.TestCase):
         lock = json.loads(artifacts['launch-package-lock.json'])
         self.assertEqual(lock['attempt_id'], 'r2s-fixture0001')
         self.assertEqual(set(lock['sidecars']), {B.review_lock(fixture.root), B.SOURCE, B.COMPUTE, B.EXECUTION,
-                                                 B.RESERVATION})
+                                                 B.RESERVATION, B.CLAIM})
         self.assertIn("authority sidecar drift", json.loads(artifacts['profile.ipynb'])['cells'][1]['source'])
 
     def test_review_notebook_is_gpu_disabled_without_a_dataset_while_unresolved(self):
@@ -275,6 +293,251 @@ class Rehearsals(unittest.TestCase):
         self.assertRegex(result['error'], 'timed out|deadline')
         self.assertEqual(result['failed_stage'], 'startup_probe_S3')
         self.assertTrue(result['cleanup']['server']['groups_absent'])
+
+
+IGNORES_SIGTERM = ('import signal, time\nsignal.signal(signal.SIGTERM, signal.SIG_IGN)\ntime.sleep(60)\n')
+
+
+class CleanupInterruption(unittest.TestCase):
+    """Review P1: the cutoff alarm must not be able to bypass SIGKILL escalation during cleanup."""
+
+    def setUp(self):
+        import signal
+        import sys
+        self.signal, self.sys = signal, sys
+        self.previous = signal.getsignal(signal.SIGALRM)
+        self.addCleanup(signal.signal, signal.SIGALRM, self.previous)
+        self.addCleanup(signal.setitimer, signal.ITIMER_REAL, 0)
+        self.addCleanup(signal.pthread_sigmask, signal.SIG_UNBLOCK, {signal.SIGALRM})
+        self.folder = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, self.folder)
+
+    def server(self):
+        from certification.wheelhouse_r2_smoke_v1.server import ModelServer
+        server = ModelServer([self.sys.executable, '-c', IGNORES_SIGTERM], {}, self.folder / 'log', '127.0.0.1', 1)
+        server.start()
+        time.sleep(0.3)  # let the child install its SIGTERM handler
+        return server
+
+    def raise_on_alarm(self, *_):
+        raise TimeoutError('cutoff alarm (test)')
+
+    def test_an_alarm_during_the_sigterm_grace_still_reaches_sigkill(self):
+        server = self.server()
+        self.signal.signal(self.signal.SIGALRM, self.raise_on_alarm)
+        self.signal.setitimer(self.signal.ITIMER_REAL, 0.3)  # fires inside the 3-second SIGTERM grace
+        receipt = server.stop(time.monotonic() + 10, terminate_grace=3, kill_grace=3)
+        self.assertTrue(receipt['sigterm_sent'])
+        self.assertTrue(receipt['sigkill_sent'])
+        self.assertTrue(receipt['groups_absent'])
+        self.assertTrue(any('sigterm phase: TimeoutError' in x for x in receipt['interrupted']))
+
+    def test_entering_cleanup_disarms_and_blocks_the_cutoff(self):
+        from certification.wheelhouse_r2_smoke_v1.run import CutoffAlarm
+        server = self.server()
+        alarm = CutoffAlarm()
+        alarm.arm(0.3)
+        alarm.enter_cleanup()
+        receipt = server.stop(time.monotonic() + 10, terminate_grace=1, kill_grace=3)
+        time.sleep(0.4)  # past the original cutoff
+        alarm.release()  # a pending alarm is discarded, not raised
+        self.assertEqual(receipt['interrupted'], [])
+        self.assertTrue(receipt['sigkill_sent'] and receipt['groups_absent'])
+
+    def test_cutoff_during_run_cleanup(self):
+        """run(): a real alarm lands during cleanup (transition bypassed): SIGKILL still sent, group gone, run failed.
+        With the transition in place, the same alarm cannot interrupt cleanup."""
+        from certification.wheelhouse_r2_smoke_v1.run import CutoffAlarm
+        base = tempfile.mkdtemp(prefix='smoke-cutoff-')
+        self.addCleanup(shutil.rmtree, base)
+        self.signal.signal(self.signal.SIGALRM, self.raise_on_alarm)
+
+        def bypassed():  # the cutoff fires 0.5 s into cleanup: inside the stub's 2-second SIGTERM grace
+            self.signal.setitimer(self.signal.ITIMER_REAL, 0.5)
+        summary, result = scenario('server_ignores_sigterm', base, on_cleanup=bypassed)
+        stopped = result['cleanup']['server']
+        self.assertTrue(stopped['sigkill_sent'] and stopped['groups_absent'])
+        self.assertTrue(stopped['interrupted'])
+        self.assertFalse(result['passed'])
+
+        alarm = CutoffAlarm()
+
+        def proper():
+            self.signal.setitimer(self.signal.ITIMER_REAL, 0.5)
+            alarm.enter_cleanup()
+        alarm.previous = self.raise_on_alarm
+        summary, result = scenario('server_ignores_sigterm', base, on_cleanup=proper)
+        alarm.release()
+        self.assertEqual(result['cleanup']['server']['interrupted'], [])
+        self.assertTrue(result['passed'], result['error'])
+
+
+class FakeBackend:
+    def __init__(self, fail=False):
+        self.fail, self.pushes = fail, 0
+
+    def push(self, folder):
+        self.pushes += 1
+        if self.fail:
+            raise ConnectionError('provider did not answer')
+        return {'kernel': 'team/arc3-wheelhouse-r2-smoke-v1', 'version': 1}
+
+
+class DurableAccounting(unittest.TestCase):
+    """Review P1: once-only accounting must survive a fresh session; it lives launch-side, in the repository."""
+
+    def package(self):
+        fixture = FixtureRoot(self)
+        folder = Path(tempfile.mkdtemp()) / 'launch'
+        self.addCleanup(shutil.rmtree, folder.parent)
+        L.write_package(fixture.root, folder)
+        return fixture, folder
+
+    def test_a_claim_is_created_once(self):
+        fixture = FixtureRoot(self)
+        (fixture.root / B.CLAIM).unlink()
+        self.assertEqual(L.claim(fixture.root), 'r2s-fixture0001')
+        B.require_live(fixture.root)  # the claim the tooling wrote satisfies the gate
+        with self.assertRaises(L.LaunchRefused):
+            L.claim(fixture.root)
+
+    def test_no_claim_without_valid_approvals(self):
+        fixture = FixtureRoot(self)
+        (fixture.root / B.CLAIM).unlink()
+        (fixture.root / B.COMPUTE).unlink()
+        with self.assertRaises(B.LiveRefused):
+            L.claim(fixture.root)
+        self.assertFalse((fixture.root / B.CLAIM).exists())
+
+    def test_a_submitted_attempt_cannot_be_launched_again_from_any_session(self):
+        fixture, folder = self.package()
+        backend = FakeBackend()
+        L.submit(fixture.root, folder, backend)
+        receipt = json.loads((fixture.root / B.RECEIPT).read_text())
+        self.assertEqual((receipt['status'], receipt['attempt_id']), ('submitted', 'r2s-fixture0001'))
+        fresh = Path(tempfile.mkdtemp()) / 'again'  # a new session/working directory changes nothing
+        self.addCleanup(shutil.rmtree, fresh.parent)
+        for action in (lambda: L.submit(fixture.root, folder, backend), lambda: L.write_package(fixture.root, fresh),
+                       lambda: L.claim(fixture.root)):
+            with self.assertRaises(L.LaunchRefused):
+                action()
+        self.assertEqual(backend.pushes, 1)
+
+    def test_an_uncertain_submission_spends_the_attempt(self):
+        fixture, folder = self.package()
+        with self.assertRaises(ConnectionError):
+            L.submit(fixture.root, folder, FakeBackend(fail=True))
+        receipt = json.loads((fixture.root / B.RECEIPT).read_text())
+        self.assertEqual(receipt['status'], 'submission_uncertain')
+        with self.assertRaises(L.LaunchRefused):
+            L.submit(fixture.root, folder, FakeBackend())
+
+    def test_an_interrupted_push_leaves_a_spent_attempt(self):
+        fixture, folder = self.package()
+        put(fixture.root, B.RECEIPT, {'status': 'submitting', 'attempt_id': 'r2s-fixture0001'})
+        with self.assertRaises(L.LaunchRefused):
+            L.submit(fixture.root, folder, FakeBackend())
+
+    def test_a_tampered_package_is_not_submitted(self):
+        fixture, folder = self.package()
+        (folder / 'profile.ipynb').write_bytes(b'{}')
+        backend = FakeBackend()
+        with self.assertRaises(L.LaunchRefused):
+            L.submit(fixture.root, folder, backend)
+        self.assertEqual(backend.pushes, 0)
+        self.assertFalse((fixture.root / B.RECEIPT).exists())
+
+
+class ScriptedSocketServer:
+    """A raw TCP server whose handler controls exactly when bytes are sent."""
+
+    def __init__(self, test, handler):
+        import socket
+        import threading
+        self.listener = socket.socket()
+        self.listener.bind(('127.0.0.1', 0))
+        self.listener.listen(4)
+        self.port = self.listener.getsockname()[1]
+        self.handler = handler
+        test.addCleanup(self.listener.close)
+        threading.Thread(target=self.serve, daemon=True).start()
+
+    def serve(self):
+        try:
+            conn, _ = self.listener.accept()
+        except OSError:
+            return
+        with conn:
+            data = b''
+            while b'\r\n\r\n' not in data:
+                data += conn.recv(65536)
+            head, _, rest = data.partition(b'\r\n\r\n')
+            length = next((int(x.split(b':')[1]) for x in head.split(b'\r\n') if x.lower().startswith(b'content-length')),
+                          0)
+            while len(rest) < length:
+                rest += conn.recv(65536)
+            try:
+                self.handler(conn)
+            except OSError:
+                pass
+
+
+def trickle(conn, data, interval):
+    for i in range(len(data)):
+        conn.sendall(data[i:i + 1])
+        time.sleep(interval)
+
+
+CONTENT_LINE = b'data: {"choices": [{"delta": {"content": "1 "}}]}\n\n'
+
+
+class Deadlines(unittest.TestCase):
+    """Review P2: the absolute deadline covers connection, headers and body; late content is rejected."""
+
+    def client(self, port, timeout):
+        from certification.wheelhouse_r2_smoke_v1.client import Client
+        clock = Clock(PROTOCOL['limits'], time.monotonic())
+        plan = [{'id': 'T1', 'kind': 'inference', 'method': 'POST', 'path': '/v1/chat/completions',
+                 'timeout_seconds': timeout}]
+        return Client('127.0.0.1', port, Ledger(plan, 12, clock), clock, 'served')
+
+    def late(self, handler, timeout, call):
+        from certification.wheelhouse_r2_smoke_v1.client import RequestFailed
+        server = ScriptedSocketServer(self, handler)
+        client = self.client(server.port, timeout)
+        begin = time.monotonic()
+        with self.assertRaises(RequestFailed) as caught:
+            call(client)
+        elapsed = time.monotonic() - begin
+        self.assertLess(elapsed, timeout + 0.25, f'returned after {elapsed:.3f}s for a {timeout}s deadline')
+        self.assertEqual(client.ledger.entries[0]['outcome'], 'failed')
+        return str(caught.exception)
+
+    def test_slow_headers(self):
+        self.late(lambda c: trickle(c, b'HTTP/1.1 200 OK\r\nContent-Type: application/json\r\n\r\n', 0.05), 0.3,
+                  lambda client: client.call('T1', {}))
+
+    def test_slow_body(self):
+        body = b'{"padding": "' + b'x' * 60 + b'"}'
+        head = b'HTTP/1.1 200 OK\r\nContent-Length: %d\r\n\r\n' % len(body)
+        self.late(lambda c: (c.sendall(head), trickle(c, body, 0.02)), 0.3, lambda client: client.call('T1', {}))
+
+    def test_slow_stream_content_is_rejected_when_late(self):
+        def handler(conn):
+            conn.sendall(b'HTTP/1.1 200 OK\r\nContent-Type: text/event-stream\r\n\r\n')
+            trickle(conn, CONTENT_LINE, 0.007)  # the first full content line completes after ~0.36 s
+        self.late(handler, 0.1, lambda client: client.stream_then_cancel('T1', 'stream_then_cancel', {}))
+
+    def test_timely_stream_content_is_accepted(self):
+        def handler(conn):
+            conn.sendall(b'HTTP/1.1 200 OK\r\nContent-Type: text/event-stream\r\n\r\n' + CONTENT_LINE)
+            time.sleep(1)
+        server = ScriptedSocketServer(self, handler)
+        result = self.client(server.port, 2).stream_then_cancel('T1', 'stream_then_cancel', {})
+        self.assertTrue(result['cancelled'])
+
+    def test_nothing_sent(self):
+        self.late(lambda c: time.sleep(2), 0.3, lambda client: client.call('T1', {}))
 
 
 if __name__ == '__main__':
