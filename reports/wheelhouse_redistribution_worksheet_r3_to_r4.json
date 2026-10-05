@@ -1,0 +1,2123 @@
+{
+ "schema": "wheelhouse_worksheet_comparison_v1",
+ "from": "r3",
+ "to": "r4",
+ "r3_worksheet_sha256": "6a7b67aac6b3c578353945fb2db861d0ee65f12cdb9f84528fd4983a89c4c0a8",
+ "r4_worksheet_sha256": "2f08e622892f597aa2447e76b42005f0e67beb8e5243dc3377b449d17b409bc5",
+ "rows_changed": 3,
+ "tier_moves": {},
+ "rows": [
+  {
+   "artifact": "nvidia_cufile_cu12-1.13.1.3-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "priority NVIDIA",
+    "priority NVIDIA"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_nvjitlink_cu12-12.8.93-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "priority NVIDIA",
+    "priority NVIDIA"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_nvshmem_cu12-3.4.5-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "priority NVIDIA",
+    "priority NVIDIA"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_cutlass_dsl_libs_base-4.5.0.dev0-cp312-cp312-manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "priority NVIDIA",
+    "priority NVIDIA"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "ninja-1.13.0-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations"
+   ],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [
+    "Apache NOTICE status inconclusive: the wheel carries code from third-party copies that the sdist holds in trimmed form, so their upstream NOTICE status is unknown: ninja-upstream/src/third_party/emhash (2 files, no top-level licence file; it may be compiled into the native binaries); ninja-upstream/src/third_party/rapidhash (2 files, no top-level licence file; it may be compiled into the native binaries). Repository: scikit-build/ninja-python-distributions@8f6505ad465c (tag 1.13.0, version NOT verified at the commit): no NOTICE-named file in 37 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent"
+   ],
+   "obligations_added": [
+    "Apache NOTICE status inconclusive: the wheel carries code from third-party copies in the sdist whose upstream NOTICE status is not verified (a licence file in a copy does not establish it): ninja-upstream/src/third_party/emhash (2 files, no top-level licence file; it may be compiled into the native binaries); ninja-upstream/src/third_party/rapidhash (2 files, no top-level licence file; it may be compiled into the native binaries). Repository: scikit-build/ninja-python-distributions@8f6505ad465c (tag 1.13.0, version NOT verified at the commit): no NOTICE-named file in 37 tree entries; a NOTICE-free repository is required for, but does not alone establish, verified_absent"
+   ],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_cublas_cu12-12.8.4.1-py3-none-manylinux_2_27_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_cuda_cupti_cu12-12.8.90-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_cuda_nvrtc_cu12-12.8.93-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_cuda_runtime_cu12-12.8.90-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_cudnn_cu12-9.10.2.21-py3-none-manylinux_2_27_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_cufft_cu12-11.3.3.83-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_curand_cu12-10.3.9.90-py3-none-manylinux_2_27_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_cusolver_cu12-11.7.3.90-py3-none-manylinux_2_27_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_cusparse_cu12-12.5.8.93-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_cusparselt_cu12-0.7.1-py3-none-manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_cutlass_dsl-4.5.0.dev0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "openai_harmony-0.0.8-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "opencv_python_headless-4.13.0.92-cp37-abi3-manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "pillow-12.2.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "prometheus_client-0.25.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "pyzmq-27.1.0-cp312-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "quack_kernels-0.4.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "regex-2026.4.4-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "qualified review",
+    "qualified review"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "aiohttp-3.13.5-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [
+    "Apache NOTICE status inconclusive: the wheel carries code from third-party copies in the sdist whose upstream NOTICE status is not verified (a licence file in a copy does not establish it): vendor/llhttp (68 files, top-level licence files LICENSE; it may be compiled into the native binaries). Repository: aio-libs/aiohttp@1c1dfb0bb24f (tag v3.13.5, version verified in aiohttp/__init__.py): no NOTICE-named file in 330 tree entries; submodule vendor/llhttp@06b12e87f209: 0 NOTICE-named file(s), 65/68 sdist files match its blobs, not cleared; a NOTICE-free repository is required for, but does not alone establish, verified_absent"
+   ],
+   "evidence_removed": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ],
+   "new_evidence": [
+    "apache_notice_check.md: inconclusive"
+   ]
+  },
+  {
+   "artifact": "apache_tvm_ffi-0.1.10-cp312-abi3-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "blake3-1.0.8-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "certifi-2026.4.22-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "compressed_tensors-0.14.0.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "cryptography-47.0.0-cp311-abi3-manylinux_2_34_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "cuda_bindings-12.9.4-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "cuda_pathfinder-1.5.4-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "cuda_python-12.9.4-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "distro-1.9.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "flashinfer_cubin-0.6.6-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "flashinfer_python-0.6.6-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "googleapis_common_protos-1.74.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "grpcio-1.80.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "hf_xet-1.4.3-cp37-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "importlib_metadata-8.7.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "llvmlite-0.44.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "model_hosting_container_standards-0.1.14-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "opentelemetry_exporter_otlp-1.41.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "opentelemetry_exporter_otlp_proto_common-1.41.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "opentelemetry_exporter_otlp_proto_grpc-1.41.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "opentelemetry_exporter_otlp_proto_http-1.41.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "opentelemetry_proto-1.41.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "opentelemetry_semantic_conventions-0.62b1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "outlines_core-0.2.11-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "propcache-0.4.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "pycountry-26.2.16-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "requests-2.33.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "safetensors-0.7.0-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "setuptools-80.10.2-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "torch_c_dlpack_ext-0.1.5-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "tqdm-4.67.3-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "uvloop-0.22.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [
+    "additional_obligations",
+    "evidence_checks"
+   ],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [
+    "Apache NOTICE status inconclusive: the wheel carries code from third-party copies in the sdist whose upstream NOTICE status is not verified (a licence file in a copy does not establish it): vendor/libuv (386 files, top-level licence files LICENSE, LICENSE-docs, LICENSE-extra; 2 of its files ship in the wheel). Repository: MagicStack/uvloop@74f4c96d3fc5 (tag v0.22.1, version verified in uvloop/_version.py): no NOTICE-named file in 126 tree entries; submodule vendor/libuv@e9f29cb98423: 0 NOTICE-named file(s), 361/386 sdist files match its blobs, not cleared; a NOTICE-free repository is required for, but does not alone establish, verified_absent"
+   ],
+   "evidence_removed": [
+    "apache_notice_check.md: verified_absent (the \"confirm no upstream NOTICE\" question is dropped; shipping the licence texts and keeping attribution notices still apply)"
+   ],
+   "new_evidence": [
+    "apache_notice_check.md: inconclusive"
+   ]
+  },
+  {
+   "artifact": "vllm-0.19.0-cp38-abi3-manylinux_2_31_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "xgrammar-0.1.34-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "yarl-1.23.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional, with additional obligations",
+    "conditional, with additional obligations"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "aiohappyeyeballs-2.6.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "aiosignal-1.4.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "annotated_doc-0.0.4-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "annotated_types-0.7.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "anthropic-0.97.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "anyio-4.13.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "astor-0.8.1-py2.py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "attrs-26.1.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "cachetools-7.0.6-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "cbor2-6.0.1-cp312-cp312-manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "cffi-2.0.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "charset_normalizer-3.4.7-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "click-8.3.3-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "cloudpickle-3.1.2-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "depyf-0.20.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "dill-0.4.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "diskcache-5.6.3-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "dnspython-2.8.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "docstring_parser-0.18.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "einops-0.8.2-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "email_validator-2.3.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "fastapi-0.136.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "fastapi_cli-0.0.24-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "fastapi_cloud_cli-0.17.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "fastar-0.11.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "filelock-3.29.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "frozenlist-1.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "fsspec-2026.4.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "gguf-0.18.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "h11-0.16.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "httpcore-1.0.9-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "httptools-0.7.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "httpx-0.28.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "httpx_sse-0.4.3-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "huggingface_hub-0.36.2-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "idna-3.13-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "ijson-3.5.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "interegular-0.3.3-py37-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "jinja2-3.1.6-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "jiter-0.14.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "jmespath-1.1.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "jsonschema-4.26.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "jsonschema_specifications-2025.9.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "lark-1.2.2-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "llguidance-1.3.0-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "lm_format_enforcer-0.11.3-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "loguru-0.7.3-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "markdown_it_py-4.0.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "mcp-1.27.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "mdurl-0.1.2-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "mistral_common-1.11.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "mpmath-1.3.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "msgspec-0.21.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "multidict-6.7.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "networkx-3.6.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "numba-0.61.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "numpy-2.2.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_cudnn_frontend-1.18.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_ml_py-13.595.45-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_nccl_cu12-2.27.5-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "nvidia_nvtx_cu12-12.8.90-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "openai-2.33.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "opentelemetry_api-1.41.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "opentelemetry_sdk-1.41.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "opentelemetry_semantic_conventions_ai-0.5.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "packaging-26.2-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "partial_json_parser-0.2.1.1.post7-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "prometheus_fastapi_instrumentator-7.1.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "protobuf-6.33.6-cp39-abi3-manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "psutil-7.2.2-cp36-abi3-manylinux2010_x86_64.manylinux_2_12_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "py_cpuinfo-9.0.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "pybase64-1.4.3-cp312-cp312-manylinux1_x86_64.manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_5_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "pycparser-3.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "pydantic-2.13.3-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "pydantic_core-2.46.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "pydantic_extra_types-2.11.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "pydantic_settings-2.14.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "pygments-2.20.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "pyjwt-2.12.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "python_dotenv-1.2.2-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "python_json_logger-4.1.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "python_multipart-0.0.27-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "referencing-0.37.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "rich-15.0.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "rich_toolkit-0.19.7-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "rignore-0.7.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "rpds_py-0.30.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "sentencepiece-0.2.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "sentry_sdk-2.58.0-py2.py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "setproctitle-1.3.7-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "shellingham-1.5.4-py2.py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "six-1.17.0-py2.py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "sniffio-1.3.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "sse_starlette-3.4.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "starlette-0.52.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "supervisor-4.3.0-py2.py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "sympy-1.14.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "tabulate-0.10.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "tiktoken-0.12.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "tokenizers-0.22.2-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "torch-2.10.0-3-cp312-cp312-manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "torchaudio-2.10.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "torchvision-0.25.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "transformers-4.57.6-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "triton-3.6.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "typer-0.25.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "typing_extensions-4.15.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "typing_inspection-0.4.2-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "urllib3-2.6.3-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "uvicorn-0.46.0-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "watchfiles-1.1.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "websockets-16.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  },
+  {
+   "artifact": "zipp-3.23.1-py3-none-any.whl",
+   "changed_fields": [],
+   "tier": [
+    "conditional",
+    "conditional"
+   ],
+   "obligations_removed": [],
+   "obligations_added": [],
+   "evidence_removed": [],
+   "new_evidence": []
+  }
+ ]
+}
