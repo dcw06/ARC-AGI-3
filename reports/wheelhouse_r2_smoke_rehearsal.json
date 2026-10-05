@@ -7,18 +7,18 @@
   "installation was exercised on fixture wheels, not the R2 bundle",
   "establishes only that the control code (gate, clock, request ledger, timeouts, cancellation handling, process cleanup, evidence retention) behaves as specified against scripted behaviour"
  ],
- "source_revision": "77eb06f5d1d6fce8e8540e41d4acbbb026c34f9b",
+ "source_revision": "d494f50d218425233752e0983be961b10020e1cd",
  "host": {
   "python": "3.12.3",
   "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
   "gpu": "none (CUDA_VISIBLE_DEVICES empty; no GPU query is made in rehearsal mode)"
  },
- "ran_at": "2026-10-04T23:00:57-04:00",
+ "ran_at": "2026-10-04T23:21:02-04:00",
  "live_gate_on_this_checkout": {
   "refused": true,
   "reasons": [
    "unresolved placeholders: dataset.ref, dataset.version, dataset.sha256sums_sha256, dataset.bundle_manifest_sha256",
-   "authorization: FileNotFoundError: [Errno 2] No such file or directory: '/home/jingjing/smoke-77eb06f/reports/wheelhouse_r2_smoke_v1_source_approval.json'"
+   "authorization: FileNotFoundError: [Errno 2] No such file or directory: '/home/jingjing/smoke-d494f50/reports/wheelhouse_r2_smoke_v1_source_approval.json'"
   ]
  },
  "scenarios": [
@@ -47,11 +47,12 @@
     "cancellation_probe": 4
    },
    "cleanup": {
-    "pgid": 571,
+    "pgid": 707,
     "sigterm_sent": true,
     "sigkill_sent": false,
     "groups_absent": true,
     "remaining_members": [],
+    "interrupted": [],
     "error": null,
     "exit_code": -15
    }
@@ -178,11 +179,12 @@
    "requests_issued": 0,
    "by_kind": {},
    "cleanup": {
-    "pgid": 700,
+    "pgid": 845,
     "sigterm_sent": false,
     "sigkill_sent": false,
     "groups_absent": true,
     "remaining_members": [],
+    "interrupted": [],
     "error": null,
     "exit_code": 3
    }
@@ -209,11 +211,12 @@
    "requests_issued": 0,
    "by_kind": {},
    "cleanup": {
-    "pgid": 739,
+    "pgid": 884,
     "sigterm_sent": true,
     "sigkill_sent": false,
     "groups_absent": true,
     "remaining_members": [],
+    "interrupted": [],
     "error": null,
     "exit_code": -15
    }
@@ -242,11 +245,12 @@
     "startup_probe": 2
    },
    "cleanup": {
-    "pgid": 778,
+    "pgid": 923,
     "sigterm_sent": true,
     "sigkill_sent": false,
     "groups_absent": true,
     "remaining_members": [],
+    "interrupted": [],
     "error": null,
     "exit_code": -15
    }
@@ -269,17 +273,18 @@
    },
    "as_expected": true,
    "failed_stage": "startup_probe_S3",
-   "error": "RequestFailed: S3: TimeoutError: timed out",
+   "error": "RequestFailed: S3: RequestFailed: deadline exceeded (RemoteDisconnected: Remote end closed connection without response)",
    "requests_issued": 3,
    "by_kind": {
     "startup_probe": 3
    },
    "cleanup": {
-    "pgid": 820,
+    "pgid": 967,
     "sigterm_sent": true,
     "sigkill_sent": false,
     "groups_absent": true,
     "remaining_members": [],
+    "interrupted": [],
     "error": null,
     "exit_code": -15
    }
@@ -310,11 +315,12 @@
     "cancellation_probe": 3
    },
    "cleanup": {
-    "pgid": 863,
+    "pgid": 1013,
     "sigterm_sent": true,
     "sigkill_sent": false,
     "groups_absent": true,
     "remaining_members": [],
+    "interrupted": [],
     "error": null,
     "exit_code": -15
    }
@@ -347,11 +353,12 @@
     "cancellation_probe": 4
    },
    "cleanup": {
-    "pgid": 913,
+    "pgid": 1073,
     "sigterm_sent": true,
     "sigkill_sent": true,
     "groups_absent": true,
     "remaining_members": [],
+    "interrupted": [],
     "error": null,
     "exit_code": -9
    }
@@ -384,11 +391,12 @@
     "cancellation_probe": 4
    },
    "cleanup": {
-    "pgid": 964,
+    "pgid": 1135,
     "sigterm_sent": true,
     "sigkill_sent": true,
     "groups_absent": true,
     "remaining_members": [],
+    "interrupted": [],
     "error": null,
     "exit_code": -15
    }

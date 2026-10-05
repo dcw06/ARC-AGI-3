@@ -6,15 +6,23 @@
    "error": null,
    "exit_code": -15,
    "groups_absent": true,
-   "pgid": 571,
+   "interrupted": [],
+   "pgid": 707,
    "remaining_members": [],
    "sigkill_sent": false,
    "sigterm_sent": true
   }
  },
+ "cleanup_phase": {
+  "deadline_at": 600.0,
+  "entered_at": 8.357,
+  "transition": [
+   "entered"
+  ]
+ },
  "cleanup_verified": true,
  "completed_plan": true,
- "elapsed_seconds": 8.593,
+ "elapsed_seconds": 8.467,
  "error": null,
  "evidence_class": "scripted_cpu_rehearsal",
  "failed_stage": null,
@@ -30,47 +38,47 @@
   "entries": [
    {
     "id": "S1",
-    "issued_at": 5.359,
+    "issued_at": 5.334,
     "kind": "startup_probe",
     "method": "GET",
     "outcome": "http_200",
     "path": "/health",
-    "seconds": 0.002,
+    "seconds": 0.004,
     "sequence": 1
    },
    {
     "id": "S2",
-    "issued_at": 5.361,
+    "issued_at": 5.338,
     "kind": "startup_probe",
     "method": "GET",
     "outcome": "http_200",
     "path": "/v1/models",
-    "seconds": 0.001,
+    "seconds": 0.002,
     "sequence": 2
    },
    {
     "id": "S3",
-    "issued_at": 5.363,
+    "issued_at": 5.34,
     "kind": "startup_probe",
     "method": "POST",
     "outcome": "http_200",
     "path": "/v1/chat/completions",
-    "seconds": 0.001,
+    "seconds": 0.002,
     "sequence": 3
    },
    {
     "id": "I1",
-    "issued_at": 5.364,
+    "issued_at": 5.342,
     "kind": "inference",
     "method": "POST",
     "outcome": "http_200",
     "path": "/v1/chat/completions",
-    "seconds": 0.001,
+    "seconds": 0.002,
     "sequence": 4
    },
    {
     "id": "I2",
-    "issued_at": 5.366,
+    "issued_at": 5.344,
     "kind": "inference",
     "method": "POST",
     "outcome": "http_200",
@@ -80,7 +88,7 @@
    },
    {
     "id": "I3",
-    "issued_at": 5.367,
+    "issued_at": 5.345,
     "kind": "inference",
     "method": "POST",
     "outcome": "http_200",
@@ -90,7 +98,7 @@
    },
    {
     "id": "I4",
-    "issued_at": 5.369,
+    "issued_at": 5.347,
     "kind": "inference",
     "method": "POST",
     "outcome": "http_200",
@@ -101,7 +109,7 @@
    {
     "first_content_seconds": 0.001,
     "id": "C1",
-    "issued_at": 5.37,
+    "issued_at": 5.348,
     "kind": "cancellation_probe",
     "method": "POST",
     "outcome": "cancelled_after_first_content",
@@ -111,7 +119,7 @@
    },
    {
     "id": "C2",
-    "issued_at": 5.372,
+    "issued_at": 5.349,
     "kind": "cancellation_probe",
     "method": "GET",
     "outcome": "http_200",
@@ -121,22 +129,22 @@
    },
    {
     "id": "C2",
-    "issued_at": 8.385,
+    "issued_at": 8.351,
     "kind": "cancellation_probe",
     "method": "GET",
     "outcome": "http_200",
     "path": "/metrics",
-    "seconds": 0.001,
+    "seconds": 0.003,
     "sequence": 10
    },
    {
     "id": "C3",
-    "issued_at": 8.387,
+    "issued_at": 8.354,
     "kind": "cancellation_probe",
     "method": "POST",
     "outcome": "http_200",
     "path": "/v1/chat/completions",
-    "seconds": 0.001,
+    "seconds": 0.003,
     "sequence": 11
    }
   ],
@@ -185,88 +193,88 @@
    "seconds": 0.001
   },
   {
-   "began_at": 0.002,
+   "began_at": 0.001,
    "outcome": "passed",
    "phase": "installation",
-   "seconds": 4.354
+   "seconds": 4.328
   },
   {
-   "began_at": 4.355,
+   "began_at": 4.33,
    "outcome": "passed",
    "phase": "model_artifact",
    "seconds": 0.001
   },
   {
-   "began_at": 4.356,
+   "began_at": 4.33,
    "outcome": "passed",
    "phase": "server_start",
    "seconds": 0.001
   },
   {
-   "began_at": 4.356,
+   "began_at": 4.331,
    "outcome": "passed",
    "phase": "server_ready",
    "seconds": 1.002
   },
   {
-   "began_at": 5.359,
+   "began_at": 5.334,
    "outcome": "passed",
    "phase": "startup_probe_S1",
-   "seconds": 0.002
+   "seconds": 0.004
   },
   {
-   "began_at": 5.361,
+   "began_at": 5.338,
    "outcome": "passed",
    "phase": "startup_probe_S2",
    "seconds": 0.002
   },
   {
-   "began_at": 5.363,
+   "began_at": 5.34,
    "outcome": "passed",
    "phase": "startup_probe_S3",
    "seconds": 0.002
   },
   {
-   "began_at": 5.364,
+   "began_at": 5.342,
    "outcome": "passed",
    "phase": "inference_I1",
-   "seconds": 0.001
+   "seconds": 0.002
   },
   {
-   "began_at": 5.366,
+   "began_at": 5.344,
    "outcome": "passed",
    "phase": "inference_I2",
    "seconds": 0.001
   },
   {
-   "began_at": 5.367,
+   "began_at": 5.345,
    "outcome": "passed",
    "phase": "inference_I3",
    "seconds": 0.002
   },
   {
-   "began_at": 5.369,
+   "began_at": 5.347,
    "outcome": "passed",
    "phase": "inference_I4",
-   "seconds": 0.002
+   "seconds": 0.001
   },
   {
-   "began_at": 5.37,
+   "began_at": 5.348,
    "outcome": "passed",
    "phase": "cancellation_C1",
    "seconds": 0.001
   },
   {
-   "began_at": 5.372,
+   "began_at": 5.349,
    "outcome": "passed",
    "phase": "cancellation_C2_idle",
-   "seconds": 3.015
+   "seconds": 3.005
   },
   {
-   "began_at": 8.387,
+   "began_at": 8.354,
    "outcome": "passed",
    "phase": "cancellation_C3_responsive",
-   "seconds": 0.001
+   "seconds": 0.003
   }
  ],
  "rehearsal_limits": [
@@ -525,12 +533,12 @@
   },
   "installation": {
    "imports": {
-    "fixturea": "/tmp/wheelhouse-r2-smoke-rehearsal-n6550fqa/nominal-r_plxabz/work/venv/lib/python3.12/site-packages/fixturea/__init__.py",
-    "fixtureb": "/tmp/wheelhouse-r2-smoke-rehearsal-n6550fqa/nominal-r_plxabz/work/venv/lib/python3.12/site-packages/fixtureb/__init__.py"
+    "fixturea": "/tmp/wheelhouse-r2-smoke-rehearsal-14c38jr8/nominal-qxkl0mku/work/venv/lib/python3.12/site-packages/fixturea/__init__.py",
+    "fixtureb": "/tmp/wheelhouse-r2-smoke-rehearsal-14c38jr8/nominal-qxkl0mku/work/venv/lib/python3.12/site-packages/fixtureb/__init__.py"
    },
-   "install_seconds": 3.852,
+   "install_seconds": 3.891,
    "passed": true,
-   "python": "/tmp/wheelhouse-r2-smoke-rehearsal-n6550fqa/nominal-r_plxabz/work/venv/bin/python",
+   "python": "/tmp/wheelhouse-r2-smoke-rehearsal-14c38jr8/nominal-qxkl0mku/work/venv/bin/python",
    "versions": {
     "fixturea": "1.0",
     "fixtureb": "1.0"
@@ -544,7 +552,7 @@
   "server_ready": {
    "seconds": 1.002
   },
-  "server_start": 571,
+  "server_start": 707,
   "startup_probe_S1": {
    "status": 200
   },
