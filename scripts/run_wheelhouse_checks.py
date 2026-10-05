@@ -20,7 +20,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))  # so `python scripts/run_wheelhouse_checks.py` can import tests.*
 SUITES = ['tests.test_wheelhouse_metadata', 'tests.test_wheelhouse_offline_install', 'tests.test_wheelhouse_licenses',
           'tests.test_wheelhouse_review3', 'tests.test_wheelhouse_review4', 'tests.test_wheelhouse_review5',
-          'tests.test_wheelhouse_review6']
+          'tests.test_wheelhouse_review6', 'tests.test_wheelhouse_review7']
 
 
 class Recorder(unittest.TextTestResult):

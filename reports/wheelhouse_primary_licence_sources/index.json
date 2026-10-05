@@ -1,0 +1,38 @@
+{
+ "cuda-12.8.1-eula": {
+  "url": "https://docs.nvidia.com/cuda/archive/12.8.1/eula/index.html",
+  "basis": "official CUDA Toolkit 12.8.1 EULA (archive page for the release whose components these wheels are: cuBLAS 12.8.4.1, CUDA runtime 12.8.90, nvJitLink 12.8.93, cuFile 1.13.1.3, ...)",
+  "retrieved_on": "2026-10-04",
+  "file": "cuda-12.8.1-eula.html",
+  "sha256": "6722d4c310a2ec9ad869ede3371a648fe2cfc2baaf8e1ece2c35e1dccc05752c",
+  "size": 103460,
+  "text_file": "cuda-12.8.1-eula.extracted.txt",
+  "text_sha256": "267bfc6c4eb769d5b9427336bca8dc817c282801046bd5c2fb7e63cacb212285"
+ },
+ "nvshmem-v3.4.5-0-license": {
+  "url": "https://raw.githubusercontent.com/NVIDIA/nvshmem/v3.4.5-0/License.txt",
+  "basis": "License.txt at the NVIDIA/nvshmem tag v3.4.5-0 (the release of the 3.4.5 wheel): NVIDIA SDK licence plus the NVSHMEM supplement",
+  "retrieved_on": "2026-10-04",
+  "file": "nvshmem-v3.4.5-0-license.txt",
+  "sha256": "1f5b7ada702926bc73327e6eb02dc2d41facc844cc4512ac900451bda06a459e",
+  "size": 28205
+ },
+ "nvshmem-sla-latest": {
+  "url": "https://docs.nvidia.com/nvshmem/api/latest/sla.html",
+  "basis": "current NVSHMEM SLA page; NOT version-specific (no 3.4.x SLA page exists in the NVSHMEM archive, which ends at 2.8.0)",
+  "retrieved_on": "2026-10-04",
+  "file": "nvshmem-sla-latest.html",
+  "sha256": "cc97365321980129da6fdd73be3d271440d6f20dd379601ea469911c464bf127",
+  "size": 43818,
+  "text_file": "nvshmem-sla-latest.extracted.txt",
+  "text_sha256": "318eff1e393a7b96882be4bf43b1ce4299cf75e932cb1bad96179b9af304e5c1"
+ },
+ "cutlass-v4.5.0-eula": {
+  "url": "https://raw.githubusercontent.com/NVIDIA/cutlass/v4.5.0/EULA.txt",
+  "basis": "EULA.txt at the NVIDIA/cutlass tag v4.5.0; the wheels are 4.5.0.dev0, a pre-release with no tag of its own",
+  "retrieved_on": "2026-10-04",
+  "file": "cutlass-v4.5.0-eula.txt",
+  "sha256": "9ed3a0344d6bf9f08420f268d8aa70f7e3930d248edc2cf1a8107a560b483433",
+  "size": 21683
+ }
+}

@@ -145,11 +145,8 @@ class ProposedDispositions(unittest.TestCase):
     def test_every_flagged_artifact_has_a_specific_proposal(self):
         for p in self.proposals:
             with self.subTest(artifact=p['artifact']):
-                if p['flags']:
-                    self.assertNotEqual(p['proposed_disposition'], 'not_yet_proposed')
-                    self.assertTrue(p['rationale'] and p['questions_for_reviewer'])
-                else:
-                    self.assertEqual(p['proposed_disposition'], 'not_yet_proposed')
+                self.assertEqual(p['batch'], '1' if p['flags'] else '2')
+                self.assertTrue(p['rationale'] and p['questions_for_reviewer'])
                 if p['proposed_disposition'] == 'likely_not_distributable':
                     self.assertTrue(p['alternative_if_not_cleared'])
 

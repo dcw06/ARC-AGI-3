@@ -2,10 +2,10 @@
 
 For each listed artifact the source is, in order of preference:
   1. the package's own source distribution on PyPI for the exact version, verified against PyPI's recorded SHA-256
-     before it is opened; only licence/notice members are read (no code is extracted or run);
+     before it is opened; only licence/notice members (plus explicitly named members) are read, nothing is run;
   2. the licence notice embedded in a named source file of that verified sdist (e.g. a header comment);
-  3. otherwise the upstream repository's licence file at a release tag whose name matches the version (recorded as
-     such; the tag-to-version mapping is an assumption for the reviewer to confirm).
+  3. otherwise licence and NOTICE files from the upstream repository at a named ref, resolved to an immutable commit
+     and checked to carry the exact package version (a version file at that commit must contain the expected line).
 Texts are written to reports/wheelhouse_upstream_licenses/<artifact>/ with an index recording each file's source URL,
 source hash, member path and SHA-256. Bounded: size caps, timeouts, https only, no installs.
 
@@ -29,18 +29,40 @@ INDEX = OUT / 'index.json'
 SDIST_CAP = 16 * 1024 ** 2
 TEXT_CAP = 2 * 1024 ** 2
 TIMEOUT = 60
-GH = 'https://raw.githubusercontent.com/'
-# artifact -> (PyPI project, version, source file whose header holds the licence, repository URL at the release tag)
+
+
+def repo(slug, ref, files, version_file, version_line, note=''):
+    return {'slug': slug, 'ref': ref, 'files': files, 'version_file': version_file, 'version_line': version_line,
+            'note': note}
+
+
+# artifact -> (PyPI project, version, source file whose header holds the licence, repository source or None)
 TARGETS = {
-    'flashinfer_cubin-0.6.6-py3-none-any.whl': ('flashinfer-cubin', '0.6.6', None, GH + 'flashinfer-ai/flashinfer/v0.6.6/LICENSE'),
-    'loguru-0.7.3-py3-none-any.whl': ('loguru', '0.7.3', None, GH + 'Delgan/loguru/0.7.3/LICENSE'),
-    'mistral_common-1.11.1-py3-none-any.whl': ('mistral-common', '1.11.1', None, GH + 'mistralai/mistral-common/v1.11.1/LICENCE'),
+    'flashinfer_cubin-0.6.6-py3-none-any.whl': (
+        'flashinfer-cubin', '0.6.6', None,
+        repo('flashinfer-ai/flashinfer', 'v0.6.6', ['LICENSE', 'NOTICE'], 'version.txt', '0.6.6')),
+    'loguru-0.7.3-py3-none-any.whl': (
+        'loguru', '0.7.3', None, repo('Delgan/loguru', '0.7.3', ['LICENSE'], 'loguru/__init__.py',
+                                      '__version__ = "0.7.3"')),
+    'mistral_common-1.11.1-py3-none-any.whl': (
+        'mistral-common', '1.11.1', None, repo('mistralai/mistral-common', 'v1.11.1', ['LICENCE'], 'pyproject.toml',
+                                               'version = "1.11.1"')),
     'model_hosting_container_standards-0.1.14-py3-none-any.whl': (
-        'model-hosting-container-standards', '0.1.14', None, GH + 'aws/model-hosting-container-standards/v0.1.14/LICENSE'),
+        'model-hosting-container-standards', '0.1.14', None,
+        repo('aws/model-hosting-container-standards', 'v0.1.14', ['LICENSE', 'NOTICE'], 'python/pyproject.toml',
+             'version = "0.1.14"')),
     'nvidia_ml_py-13.595.45-py3-none-any.whl': ('nvidia-ml-py', '13.595.45', 'pynvml.py', None),
     'opentelemetry_semantic_conventions_ai-0.5.1-py3-none-any.whl': (
-        'opentelemetry-semantic-conventions-ai', '0.5.1', None, GH + 'traceloop/openllmetry/v0.5.1/LICENSE'),
-    'sentencepiece-0.2.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl': ('sentencepiece', '0.2.1', None, None),
+        'opentelemetry-semantic-conventions-ai', '0.5.1', None,
+        # the monorepo tag v0.5.1 is an unrelated openllmetry release (this package is 0.0.12 there); the commit that
+        # set this package to 0.5.1 (2026-03-26, the PyPI upload date) is used instead
+        repo('traceloop/openllmetry', 'ddcff1c205bf041f262a823a08ac8915cc8d156b', ['LICENSE'],
+             'packages/opentelemetry-semantic-conventions-ai/pyproject.toml', 'version = "0.5.1"',
+             'monorepo: no package-level LICENSE or NOTICE exists, so the repository-root LICENSE is used; PyPI '
+             'metadata names no repository, so the attribution to traceloop/openllmetry is for the reviewer to '
+             'confirm')),
+    'sentencepiece-0.2.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl': ('sentencepiece', '0.2.1', None,
+                                                                                        None),
     'supervisor-4.3.0-py2.py3-none-any.whl': ('supervisor', '4.3.0', None, None),
     'tokenizers-0.22.2-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl': ('tokenizers', '0.22.2', None, None),
 }
@@ -95,20 +117,45 @@ def sdist_members(data, filename, extra=()):
     return out
 
 
-def safe_name(member):
-    return '__'.join(p for p in Path(member).parts if p not in ('', '.', '..'))
+def version_confirmed(text, line):
+    """True if `line` occurs as a whole stripped line of `text` (the version check for a repository source)."""
+    return any(candidate.strip() == line for candidate in text.splitlines())
+
+
+def repository_files(source, get=fetch):
+    """Resolve the ref to a commit, check the package version there, and return (source record, members)."""
+    commit = json.loads(get(f"https://api.github.com/repos/{source['slug']}/commits/{source['ref']}",
+                            4 * 1024 ** 2))['sha']
+    base = f"https://raw.githubusercontent.com/{source['slug']}/{commit}/"
+    version_text = get(base + source['version_file'], TEXT_CAP).decode('utf-8', 'replace')
+    if not version_confirmed(version_text, source['version_line']):
+        raise SystemExit(f"{source['slug']}@{commit}: {source['version_file']} lacks {source['version_line']!r}")
+    members, files = [], {}
+    for name in source['files']:
+        text = get(base + name, TEXT_CAP)
+        members.append((name, text))
+        files[name] = {'url': base + name, 'sha256': hashlib.sha256(text).hexdigest()}
+    note = ('no licence file in a PyPI sdist for this version; files taken from the commit the ref resolves to, '
+            'which carries the exact version')
+    record = {'kind': 'repository_files_at_release_commit', 'repository': source['slug'], 'ref': source['ref'],
+              'commit': commit, 'url': base + source['files'][0], 'sha256': files[source['files'][0]]['sha256'],
+              'files': files, 'version_check': {'file': source['version_file'],
+                                                'expected_line': source['version_line'], 'confirmed': True},
+              'note': note + (f"; {source['note']}" if source['note'] else '')}
+    return record, members
 
 
 def gather():
     expected_artifacts = {a['filename'] for a in json.loads((ROOT / 'reports/wheelhouse_download_manifest.json')
                                                             .read_text(encoding='utf-8'))['artifacts']}
     index = []
-    for artifact, (project, version, source_file, fallback) in sorted(TARGETS.items()):
+    for artifact, (project, version, source_file, repository) in sorted(TARGETS.items()):
         if artifact not in expected_artifacts:
             raise SystemExit(f'{artifact} is not in the approved manifest')
         entry = {'artifact': artifact, 'project': project, 'version': version, 'files': []}
         info = json.loads(fetch(f'https://pypi.org/pypi/{project}/{version}/json', 4 * 1024 ** 2))
         sdists = [u for u in info['urls'] if u['packagetype'] == 'sdist']
+        members = []
         if sdists:
             s = sdists[0]
             data = fetch(s['url'], SDIST_CAP)
@@ -124,17 +171,10 @@ def gather():
                 if found:
                     member, header = found
                     members = [(member + '.licence-header.txt', header)]
-                    entry['source']['note'] = f'licence notice embedded in the header of {member} (the same file ships in the wheel)'
-        else:
-            members = []
-        if not members and fallback:
-            text = fetch(fallback, TEXT_CAP)
-            entry['source'] = {'kind': 'repository_file_at_release_tag', 'url': fallback,
-                               'sha256': hashlib.sha256(text).hexdigest(),
-                               'note': ('licence file at the release tag matching the version (no licence file in a '
-                                        'PyPI sdist for this version); the tag-to-version mapping and that the '
-                                        'repository-level licence covers this package are for the reviewer to confirm')}
-            members = [(fallback.rsplit('/', 1)[-1], text)]
+                    entry['source']['note'] = (f'licence notice embedded in the header of {member} (the same file '
+                                               'ships in the wheel)')
+        if not members and repository:
+            entry['source'], members = repository_files(repository)
         folder = OUT / artifact
         folder.mkdir(parents=True, exist_ok=True)
         for member, raw in members:
@@ -146,6 +186,10 @@ def gather():
         index.append(entry)
     INDEX.write_text(json.dumps(index, indent=1) + '\n', encoding='utf-8')
     return index
+
+
+def safe_name(member):
+    return '__'.join(p for p in Path(member).parts if p not in ('', '.', '..'))
 
 
 if __name__ == '__main__':

@@ -8,7 +8,7 @@
  "wheel_count": 174,
  "wheel_bytes": 5185992159,
  "licence_documents": 225,
- "upstream_licence_documents": 14,
+ "upstream_licence_documents": 16,
  "requirements_lock": {
   "sha256": "ba80d35062245421daf1cae65474281952cc0c44fb46e11cf7f68d0ece496406",
   "matches_installed_lock": true,
@@ -2858,28 +2858,42 @@
    "kind": "upstream_licence_document",
    "size": 12332,
    "sha256": "cb67c224f503e0a063908950b12f89a7280c6e527dcffac972aa114e4bf3c5de",
-   "source": "repository_file_at_release_tag: https://raw.githubusercontent.com/flashinfer-ai/flashinfer/v0.6.6/LICENSE"
+   "source": "repository_files_at_release_commit: https://raw.githubusercontent.com/flashinfer-ai/flashinfer/70b142b75b46aa56e7f675a8e6ec1a977352c91f/LICENSE"
+  },
+  {
+   "path": "LICENSES/flashinfer_cubin-0.6.6-py3-none-any.whl/UPSTREAM/NOTICE",
+   "kind": "upstream_licence_document",
+   "size": 435,
+   "sha256": "90bb9e1dec06f26a34f8f8ce98c53ded10b4fd8e1a9e91e2360e6be354e81db3",
+   "source": "repository_files_at_release_commit: https://raw.githubusercontent.com/flashinfer-ai/flashinfer/70b142b75b46aa56e7f675a8e6ec1a977352c91f/LICENSE"
   },
   {
    "path": "LICENSES/loguru-0.7.3-py3-none-any.whl/UPSTREAM/LICENSE",
    "kind": "upstream_licence_document",
    "size": 1056,
    "sha256": "b35d026cc7aca9d5859a02eb87ddf7a386a24c986838651bd1f283f94e003327",
-   "source": "repository_file_at_release_tag: https://raw.githubusercontent.com/Delgan/loguru/0.7.3/LICENSE"
+   "source": "repository_files_at_release_commit: https://raw.githubusercontent.com/Delgan/loguru/ae3bfd1b85b6b4a3db535f69b975687c79498be4/LICENSE"
   },
   {
    "path": "LICENSES/mistral_common-1.11.1-py3-none-any.whl/UPSTREAM/LICENCE",
    "kind": "upstream_licence_document",
    "size": 11339,
    "sha256": "5ed6f79e77734b5a60740dd821af5ecac9a6f33709c860eea4e20fcb6cca7fcc",
-   "source": "repository_file_at_release_tag: https://raw.githubusercontent.com/mistralai/mistral-common/v1.11.1/LICENCE"
+   "source": "repository_files_at_release_commit: https://raw.githubusercontent.com/mistralai/mistral-common/e5fe9b0beb7d982e4207bbed38291566a5d22041/LICENCE"
   },
   {
    "path": "LICENSES/model_hosting_container_standards-0.1.14-py3-none-any.whl/UPSTREAM/LICENSE",
    "kind": "upstream_licence_document",
    "size": 10142,
    "sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b",
-   "source": "repository_file_at_release_tag: https://raw.githubusercontent.com/aws/model-hosting-container-standards/v0.1.14/LICENSE"
+   "source": "repository_files_at_release_commit: https://raw.githubusercontent.com/aws/model-hosting-container-standards/34ee9946fa5f050cce4cf7ebb8f78fe6be0bfb88/LICENSE"
+  },
+  {
+   "path": "LICENSES/model_hosting_container_standards-0.1.14-py3-none-any.whl/UPSTREAM/NOTICE",
+   "kind": "upstream_licence_document",
+   "size": 67,
+   "sha256": "d4290ed64c2edd0fce1d84e3f9dfb2881240fe534def76b8cd29ed6af683e287",
+   "source": "repository_files_at_release_commit: https://raw.githubusercontent.com/aws/model-hosting-container-standards/34ee9946fa5f050cce4cf7ebb8f78fe6be0bfb88/LICENSE"
   },
   {
    "path": "LICENSES/nvidia_ml_py-13.595.45-py3-none-any.whl/UPSTREAM/nvidia_ml_py-13.595.45__pynvml.py.licence-header.txt",
@@ -2893,7 +2907,7 @@
    "kind": "upstream_licence_document",
    "size": 11357,
    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
-   "source": "repository_file_at_release_tag: https://raw.githubusercontent.com/traceloop/openllmetry/v0.5.1/LICENSE"
+   "source": "repository_files_at_release_commit: https://raw.githubusercontent.com/traceloop/openllmetry/ddcff1c205bf041f262a823a08ac8915cc8d156b/LICENSE"
   },
   {
    "path": "LICENSES/sentencepiece-0.2.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl/UPSTREAM/sentencepiece-0.2.1__sentencepiece__LICENSE",
@@ -2954,8 +2968,8 @@
   {
    "path": "LICENSES/upstream-sources.json",
    "kind": "licence_index",
-   "size": 9063,
-   "sha256": "054c16abdca4844585ad2adf4f54fe080aa0df86381a869519f3bdd62291b7d5",
+   "size": 12425,
+   "sha256": "c274596833422d7b9d85e58c6ffb9e32019ab5f8e5b1f06b4730925f037860e9",
    "source": "reports/wheelhouse_upstream_licenses/index.json (source URL, source hash, member and SHA-256 of every upstream text)"
   },
   {
@@ -3035,7 +3049,7 @@
  },
  "decisions": {
   "file": "reports/wheelhouse_redistribution_decisions.csv",
-  "created_now": true,
+  "created_now": false,
   "counts": {
    "unresolved": 174
   },

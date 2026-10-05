@@ -9,13 +9,37 @@
     "path": "flashinfer_cubin-0.6.6-py3-none-any.whl/LICENSE",
     "size": 12332,
     "sha256": "cb67c224f503e0a063908950b12f89a7280c6e527dcffac972aa114e4bf3c5de"
+   },
+   {
+    "member": "NOTICE",
+    "path": "flashinfer_cubin-0.6.6-py3-none-any.whl/NOTICE",
+    "size": 435,
+    "sha256": "90bb9e1dec06f26a34f8f8ce98c53ded10b4fd8e1a9e91e2360e6be354e81db3"
    }
   ],
   "source": {
-   "kind": "repository_file_at_release_tag",
-   "url": "https://raw.githubusercontent.com/flashinfer-ai/flashinfer/v0.6.6/LICENSE",
+   "kind": "repository_files_at_release_commit",
+   "repository": "flashinfer-ai/flashinfer",
+   "ref": "v0.6.6",
+   "commit": "70b142b75b46aa56e7f675a8e6ec1a977352c91f",
+   "url": "https://raw.githubusercontent.com/flashinfer-ai/flashinfer/70b142b75b46aa56e7f675a8e6ec1a977352c91f/LICENSE",
    "sha256": "cb67c224f503e0a063908950b12f89a7280c6e527dcffac972aa114e4bf3c5de",
-   "note": "licence file at the release tag matching the version (no licence file in a PyPI sdist for this version); the tag-to-version mapping and that the repository-level licence covers this package are for the reviewer to confirm"
+   "files": {
+    "LICENSE": {
+     "url": "https://raw.githubusercontent.com/flashinfer-ai/flashinfer/70b142b75b46aa56e7f675a8e6ec1a977352c91f/LICENSE",
+     "sha256": "cb67c224f503e0a063908950b12f89a7280c6e527dcffac972aa114e4bf3c5de"
+    },
+    "NOTICE": {
+     "url": "https://raw.githubusercontent.com/flashinfer-ai/flashinfer/70b142b75b46aa56e7f675a8e6ec1a977352c91f/NOTICE",
+     "sha256": "90bb9e1dec06f26a34f8f8ce98c53ded10b4fd8e1a9e91e2360e6be354e81db3"
+    }
+   },
+   "version_check": {
+    "file": "version.txt",
+    "expected_line": "0.6.6",
+    "confirmed": true
+   },
+   "note": "no licence file in a PyPI sdist for this version; files taken from the commit the ref resolves to, which carries the exact version"
   },
   "found": true
  },
@@ -32,10 +56,24 @@
    }
   ],
   "source": {
-   "kind": "repository_file_at_release_tag",
-   "url": "https://raw.githubusercontent.com/Delgan/loguru/0.7.3/LICENSE",
+   "kind": "repository_files_at_release_commit",
+   "repository": "Delgan/loguru",
+   "ref": "0.7.3",
+   "commit": "ae3bfd1b85b6b4a3db535f69b975687c79498be4",
+   "url": "https://raw.githubusercontent.com/Delgan/loguru/ae3bfd1b85b6b4a3db535f69b975687c79498be4/LICENSE",
    "sha256": "b35d026cc7aca9d5859a02eb87ddf7a386a24c986838651bd1f283f94e003327",
-   "note": "licence file at the release tag matching the version (no licence file in a PyPI sdist for this version); the tag-to-version mapping and that the repository-level licence covers this package are for the reviewer to confirm"
+   "files": {
+    "LICENSE": {
+     "url": "https://raw.githubusercontent.com/Delgan/loguru/ae3bfd1b85b6b4a3db535f69b975687c79498be4/LICENSE",
+     "sha256": "b35d026cc7aca9d5859a02eb87ddf7a386a24c986838651bd1f283f94e003327"
+    }
+   },
+   "version_check": {
+    "file": "loguru/__init__.py",
+    "expected_line": "__version__ = \"0.7.3\"",
+    "confirmed": true
+   },
+   "note": "no licence file in a PyPI sdist for this version; files taken from the commit the ref resolves to, which carries the exact version"
   },
   "found": true
  },
@@ -52,10 +90,24 @@
    }
   ],
   "source": {
-   "kind": "repository_file_at_release_tag",
-   "url": "https://raw.githubusercontent.com/mistralai/mistral-common/v1.11.1/LICENCE",
+   "kind": "repository_files_at_release_commit",
+   "repository": "mistralai/mistral-common",
+   "ref": "v1.11.1",
+   "commit": "e5fe9b0beb7d982e4207bbed38291566a5d22041",
+   "url": "https://raw.githubusercontent.com/mistralai/mistral-common/e5fe9b0beb7d982e4207bbed38291566a5d22041/LICENCE",
    "sha256": "5ed6f79e77734b5a60740dd821af5ecac9a6f33709c860eea4e20fcb6cca7fcc",
-   "note": "licence file at the release tag matching the version (no licence file in a PyPI sdist for this version); the tag-to-version mapping and that the repository-level licence covers this package are for the reviewer to confirm"
+   "files": {
+    "LICENCE": {
+     "url": "https://raw.githubusercontent.com/mistralai/mistral-common/e5fe9b0beb7d982e4207bbed38291566a5d22041/LICENCE",
+     "sha256": "5ed6f79e77734b5a60740dd821af5ecac9a6f33709c860eea4e20fcb6cca7fcc"
+    }
+   },
+   "version_check": {
+    "file": "pyproject.toml",
+    "expected_line": "version = \"1.11.1\"",
+    "confirmed": true
+   },
+   "note": "no licence file in a PyPI sdist for this version; files taken from the commit the ref resolves to, which carries the exact version"
   },
   "found": true
  },
@@ -69,13 +121,37 @@
     "path": "model_hosting_container_standards-0.1.14-py3-none-any.whl/LICENSE",
     "size": 10142,
     "sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b"
+   },
+   {
+    "member": "NOTICE",
+    "path": "model_hosting_container_standards-0.1.14-py3-none-any.whl/NOTICE",
+    "size": 67,
+    "sha256": "d4290ed64c2edd0fce1d84e3f9dfb2881240fe534def76b8cd29ed6af683e287"
    }
   ],
   "source": {
-   "kind": "repository_file_at_release_tag",
-   "url": "https://raw.githubusercontent.com/aws/model-hosting-container-standards/v0.1.14/LICENSE",
+   "kind": "repository_files_at_release_commit",
+   "repository": "aws/model-hosting-container-standards",
+   "ref": "v0.1.14",
+   "commit": "34ee9946fa5f050cce4cf7ebb8f78fe6be0bfb88",
+   "url": "https://raw.githubusercontent.com/aws/model-hosting-container-standards/34ee9946fa5f050cce4cf7ebb8f78fe6be0bfb88/LICENSE",
    "sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b",
-   "note": "licence file at the release tag matching the version (no licence file in a PyPI sdist for this version); the tag-to-version mapping and that the repository-level licence covers this package are for the reviewer to confirm"
+   "files": {
+    "LICENSE": {
+     "url": "https://raw.githubusercontent.com/aws/model-hosting-container-standards/34ee9946fa5f050cce4cf7ebb8f78fe6be0bfb88/LICENSE",
+     "sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b"
+    },
+    "NOTICE": {
+     "url": "https://raw.githubusercontent.com/aws/model-hosting-container-standards/34ee9946fa5f050cce4cf7ebb8f78fe6be0bfb88/NOTICE",
+     "sha256": "d4290ed64c2edd0fce1d84e3f9dfb2881240fe534def76b8cd29ed6af683e287"
+    }
+   },
+   "version_check": {
+    "file": "python/pyproject.toml",
+    "expected_line": "version = \"0.1.14\"",
+    "confirmed": true
+   },
+   "note": "no licence file in a PyPI sdist for this version; files taken from the commit the ref resolves to, which carries the exact version"
   },
   "found": true
  },
@@ -113,10 +189,24 @@
    }
   ],
   "source": {
-   "kind": "repository_file_at_release_tag",
-   "url": "https://raw.githubusercontent.com/traceloop/openllmetry/v0.5.1/LICENSE",
+   "kind": "repository_files_at_release_commit",
+   "repository": "traceloop/openllmetry",
+   "ref": "ddcff1c205bf041f262a823a08ac8915cc8d156b",
+   "commit": "ddcff1c205bf041f262a823a08ac8915cc8d156b",
+   "url": "https://raw.githubusercontent.com/traceloop/openllmetry/ddcff1c205bf041f262a823a08ac8915cc8d156b/LICENSE",
    "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
-   "note": "licence file at the release tag matching the version (no licence file in a PyPI sdist for this version); the tag-to-version mapping and that the repository-level licence covers this package are for the reviewer to confirm"
+   "files": {
+    "LICENSE": {
+     "url": "https://raw.githubusercontent.com/traceloop/openllmetry/ddcff1c205bf041f262a823a08ac8915cc8d156b/LICENSE",
+     "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    }
+   },
+   "version_check": {
+    "file": "packages/opentelemetry-semantic-conventions-ai/pyproject.toml",
+    "expected_line": "version = \"0.5.1\"",
+    "confirmed": true
+   },
+   "note": "no licence file in a PyPI sdist for this version; files taken from the commit the ref resolves to, which carries the exact version; monorepo: no package-level LICENSE or NOTICE exists, so the repository-root LICENSE is used; PyPI metadata names no repository, so the attribution to traceloop/openllmetry is for the reviewer to confirm"
   },
   "found": true
  },

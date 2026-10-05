@@ -9,7 +9,7 @@ Identity: new bundle (R2); wheels byte-identical to official PyPI artifacts; not
 |---|---|---|
 | `wheels/` | 174 | 5,185,992,159 bytes, SHA-256 and PyPI URL per file |
 | `LICENSES/<artifact>/` | 225 | licence documents extracted from the wheels, hashed |
-| `LICENSES/<artifact>/UPSTREAM/` | 14 | upstream licence texts for the wheels that ship none, hashed |
+| `LICENSES/<artifact>/UPSTREAM/` | 16 | upstream licence texts for the wheels that ship none, hashed |
 | `LICENSES/upstream-sources.json` | 1 | source URL and source hash of every upstream text |
 | `NOTICES.md` | 1 | per wheel: licence documents, required notices, conditions and how each was satisfied (generated at build from the decisions) |
 | `requirements.lock` | 1 | hash-pinned, 174 lines; SHA-256 `ba80d3506224…`, identical to the lock used by the passing CPU installation |

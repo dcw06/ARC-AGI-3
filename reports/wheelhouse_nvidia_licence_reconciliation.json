@@ -1,0 +1,480 @@
+{
+ "sources": {
+  "cuda-12.8.1-eula": {
+   "url": "https://docs.nvidia.com/cuda/archive/12.8.1/eula/index.html",
+   "basis": "official CUDA Toolkit 12.8.1 EULA (archive page for the release whose components these wheels are: cuBLAS 12.8.4.1, CUDA runtime 12.8.90, nvJitLink 12.8.93, cuFile 1.13.1.3, ...)",
+   "retrieved_on": "2026-10-04",
+   "file": "cuda-12.8.1-eula.html",
+   "sha256": "6722d4c310a2ec9ad869ede3371a648fe2cfc2baaf8e1ece2c35e1dccc05752c",
+   "size": 103460,
+   "text_file": "cuda-12.8.1-eula.extracted.txt",
+   "text_sha256": "267bfc6c4eb769d5b9427336bca8dc817c282801046bd5c2fb7e63cacb212285"
+  },
+  "nvshmem-v3.4.5-0-license": {
+   "url": "https://raw.githubusercontent.com/NVIDIA/nvshmem/v3.4.5-0/License.txt",
+   "basis": "License.txt at the NVIDIA/nvshmem tag v3.4.5-0 (the release of the 3.4.5 wheel): NVIDIA SDK licence plus the NVSHMEM supplement",
+   "retrieved_on": "2026-10-04",
+   "file": "nvshmem-v3.4.5-0-license.txt",
+   "sha256": "1f5b7ada702926bc73327e6eb02dc2d41facc844cc4512ac900451bda06a459e",
+   "size": 28205
+  },
+  "nvshmem-sla-latest": {
+   "url": "https://docs.nvidia.com/nvshmem/api/latest/sla.html",
+   "basis": "current NVSHMEM SLA page; NOT version-specific (no 3.4.x SLA page exists in the NVSHMEM archive, which ends at 2.8.0)",
+   "retrieved_on": "2026-10-04",
+   "file": "nvshmem-sla-latest.html",
+   "sha256": "cc97365321980129da6fdd73be3d271440d6f20dd379601ea469911c464bf127",
+   "size": 43818,
+   "text_file": "nvshmem-sla-latest.extracted.txt",
+   "text_sha256": "318eff1e393a7b96882be4bf43b1ce4299cf75e932cb1bad96179b9af304e5c1"
+  },
+  "cutlass-v4.5.0-eula": {
+   "url": "https://raw.githubusercontent.com/NVIDIA/cutlass/v4.5.0/EULA.txt",
+   "basis": "EULA.txt at the NVIDIA/cutlass tag v4.5.0; the wheels are 4.5.0.dev0, a pre-release with no tag of its own",
+   "retrieved_on": "2026-10-04",
+   "file": "cutlass-v4.5.0-eula.txt",
+   "sha256": "9ed3a0344d6bf9f08420f268d8aa70f7e3930d248edc2cf1a8107a560b483433",
+   "size": 21683
+  }
+ },
+ "findings": {
+  "nvidia_cufile_cu12": "Applicability discrepancy requiring review. The wheel's bundled License.txt (the same older CUDA EULA text in all eleven CUDA wheels) has no cuFile entry in Attachment A, but the official CUDA 12.8.1 EULA Attachment A lists libcufile.so, libcufile_rdma.so and their static libraries as distributable. Which text governs this wheel, and whether the proposed private-dataset distribution meets the official conditions (incorporation in an application with material additional functionality; no stand-alone distribution), is for qualified review. This is not a finding that no grant exists, and not a grant.",
+  "nvidia_nvjitlink_cu12": "Applicability discrepancy requiring review. As for cuFile: the bundled text omits nvJitLink, while the official CUDA 12.8.1 EULA Attachment A lists libnvJitLink.so and libnvJitLink_static.a as distributable. The same applicability and distribution-condition questions apply.",
+  "nvidia_nvshmem_cu12": "Separate product terms. The wheel bundles the CUDA Toolkit EULA, which does not mention NVSHMEM. The License.txt at NVIDIA/nvshmem tag v3.4.5-0 is the NVIDIA SDK licence plus an NVSHMEM supplement whose section 2 makes \"any portion of the SDK\" distributable, still subject to the SDK licence's distribution requirements (incorporation into an application with material additional functionality, accessed only by it; no stand-alone distribution). The current NVSHMEM SLA page carries the same supplement (v. July 11, 2019) but is not version-specific. GitHub's repository metadata reports Apache-2.0 for the default branch, which differs from the tag's License.txt; the tag text is treated as the version-specific source. Which text governs the wheel, and whether the proposed distribution meets the conditions, is for qualified review.",
+  "nvidia_cutlass_dsl_libs_base": "Bundled text confirmed as the primary text. The wheel's LICENSE is byte-identical to EULA.txt at NVIDIA/cutlass tags v4.2.0 through v4.5.0 and main (sha256 9ed3a034...). Section 1.1(d) grants distribution of \"python files in the Software package in source format as incorporated into a software application\"; the wheel also ships compiled files (listed below) for which no distribution grant has been identified in that text. Whether another grant covers them is for qualified review or NVIDIA clarification. The package is a required dependency (see required_by) and must not be dropped without an explicitly revised dependency set and fresh validation."
+ },
+ "wheels": [
+  {
+   "artifact": "nvidia_cublas_cu12-12.8.4.1-py3-none-manylinux_2_27_x86_64.whl",
+   "sha256": "8ac4e771d5a348c551b2a426eda6193c19aa630236b418086020df5ba9667142",
+   "primary_source": "cuda-12.8.1-eula",
+   "bundled_licences": {
+    "nvidia_cublas_cu12-12.8.4.1.dist-info/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "bundled_identical_to_primary": false,
+   "bundled_has_attachment_a": true,
+   "official_has_attachment_a": true,
+   "library_files": [
+    {
+     "member": "nvidia/cublas/lib/libcublas.so.12",
+     "name": "libcublas.so",
+     "in_bundled_attachment_a": true,
+     "in_official_attachment_a": true
+    },
+    {
+     "member": "nvidia/cublas/lib/libcublasLt.so.12",
+     "name": "libcublasLt.so",
+     "in_bundled_attachment_a": true,
+     "in_official_attachment_a": true
+    },
+    {
+     "member": "nvidia/cublas/lib/libnvblas.so.12",
+     "name": "libnvblas.so",
+     "in_bundled_attachment_a": true,
+     "in_official_attachment_a": true
+    }
+   ],
+   "required_by": [
+    "nvidia-cusolver-cu12==11.7.3.90 (Requires-Dist: nvidia-cublas-cu12)"
+   ]
+  },
+  {
+   "artifact": "nvidia_cuda_cupti_cu12-12.8.90-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "sha256": "ea0cb07ebda26bb9b29ba82cda34849e73c166c18162d3913575b0c9db9a6182",
+   "primary_source": "cuda-12.8.1-eula",
+   "bundled_licences": {
+    "nvidia_cuda_cupti_cu12-12.8.90.dist-info/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "bundled_identical_to_primary": false,
+   "bundled_has_attachment_a": true,
+   "official_has_attachment_a": true,
+   "library_files": [
+    {
+     "member": "nvidia/cuda_cupti/lib/libcheckpoint.so",
+     "name": "libcheckpoint.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    },
+    {
+     "member": "nvidia/cuda_cupti/lib/libcupti.so.12",
+     "name": "libcupti.so",
+     "in_bundled_attachment_a": true,
+     "in_official_attachment_a": true
+    },
+    {
+     "member": "nvidia/cuda_cupti/lib/libnvperf_host.so",
+     "name": "libnvperf_host.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    },
+    {
+     "member": "nvidia/cuda_cupti/lib/libnvperf_target.so",
+     "name": "libnvperf_target.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    },
+    {
+     "member": "nvidia/cuda_cupti/lib/libpcsamplingutil.so",
+     "name": "libpcsamplingutil.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    }
+   ],
+   "required_by": []
+  },
+  {
+   "artifact": "nvidia_cuda_nvrtc_cu12-12.8.93-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl",
+   "sha256": "a7756528852ef889772a84c6cd89d41dfa74667e24cca16bb31f8f061e3e9994",
+   "primary_source": "cuda-12.8.1-eula",
+   "bundled_licences": {
+    "nvidia_cuda_nvrtc_cu12-12.8.93.dist-info/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "bundled_identical_to_primary": false,
+   "bundled_has_attachment_a": true,
+   "official_has_attachment_a": true,
+   "library_files": [
+    {
+     "member": "nvidia/cuda_nvrtc/lib/libnvrtc-builtins.alt.so.12.8",
+     "name": "libnvrtc-builtins.alt.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    },
+    {
+     "member": "nvidia/cuda_nvrtc/lib/libnvrtc-builtins.so.12.8",
+     "name": "libnvrtc-builtins.so",
+     "in_bundled_attachment_a": true,
+     "in_official_attachment_a": true
+    },
+    {
+     "member": "nvidia/cuda_nvrtc/lib/libnvrtc.alt.so.12",
+     "name": "libnvrtc.alt.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    },
+    {
+     "member": "nvidia/cuda_nvrtc/lib/libnvrtc.so.12",
+     "name": "libnvrtc.so",
+     "in_bundled_attachment_a": true,
+     "in_official_attachment_a": true
+    }
+   ],
+   "required_by": []
+  },
+  {
+   "artifact": "nvidia_cuda_runtime_cu12-12.8.90-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "sha256": "adade8dcbd0edf427b7204d480d6066d33902cab2a4707dcfc48a2d0fd44ab90",
+   "primary_source": "cuda-12.8.1-eula",
+   "bundled_licences": {
+    "nvidia_cuda_runtime_cu12-12.8.90.dist-info/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "bundled_identical_to_primary": false,
+   "bundled_has_attachment_a": true,
+   "official_has_attachment_a": true,
+   "library_files": [
+    {
+     "member": "nvidia/cuda_runtime/lib/libcudart.so.12",
+     "name": "libcudart.so",
+     "in_bundled_attachment_a": true,
+     "in_official_attachment_a": true
+    }
+   ],
+   "required_by": []
+  },
+  {
+   "artifact": "nvidia_cufft_cu12-11.3.3.83-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "sha256": "4d2dd21ec0b88cf61b62e6b43564355e5222e4a3fb394cac0db101f2dd0d4f74",
+   "primary_source": "cuda-12.8.1-eula",
+   "bundled_licences": {
+    "nvidia_cufft_cu12-11.3.3.83.dist-info/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "bundled_identical_to_primary": false,
+   "bundled_has_attachment_a": true,
+   "official_has_attachment_a": true,
+   "library_files": [
+    {
+     "member": "nvidia/cufft/lib/libcufft.so.11",
+     "name": "libcufft.so",
+     "in_bundled_attachment_a": true,
+     "in_official_attachment_a": true
+    },
+    {
+     "member": "nvidia/cufft/lib/libcufftw.so.11",
+     "name": "libcufftw.so",
+     "in_bundled_attachment_a": true,
+     "in_official_attachment_a": true
+    }
+   ],
+   "required_by": []
+  },
+  {
+   "artifact": "nvidia_cufile_cu12-1.13.1.3-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "sha256": "1d069003be650e131b21c932ec3d8969c1715379251f8d23a1860554b1cb24fc",
+   "primary_source": "cuda-12.8.1-eula",
+   "bundled_licences": {
+    "nvidia_cufile_cu12-1.13.1.3.dist-info/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "bundled_identical_to_primary": false,
+   "bundled_has_attachment_a": true,
+   "official_has_attachment_a": true,
+   "library_files": [
+    {
+     "member": "nvidia/cufile/lib/libcufile.so.0",
+     "name": "libcufile.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": true
+    },
+    {
+     "member": "nvidia/cufile/lib/libcufile_rdma.so.1",
+     "name": "libcufile_rdma.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": true
+    }
+   ],
+   "required_by": []
+  },
+  {
+   "artifact": "nvidia_curand_cu12-10.3.9.90-py3-none-manylinux_2_27_x86_64.whl",
+   "sha256": "b32331d4f4df5d6eefa0554c565b626c7216f87a06a4f56fab27c3b68a830ec9",
+   "primary_source": "cuda-12.8.1-eula",
+   "bundled_licences": {
+    "nvidia_curand_cu12-10.3.9.90.dist-info/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "bundled_identical_to_primary": false,
+   "bundled_has_attachment_a": true,
+   "official_has_attachment_a": true,
+   "library_files": [
+    {
+     "member": "nvidia/curand/lib/libcurand.so.10",
+     "name": "libcurand.so",
+     "in_bundled_attachment_a": true,
+     "in_official_attachment_a": true
+    }
+   ],
+   "required_by": []
+  },
+  {
+   "artifact": "nvidia_cusolver_cu12-11.7.3.90-py3-none-manylinux_2_27_x86_64.whl",
+   "sha256": "4376c11ad263152bd50ea295c05370360776f8c3427b30991df774f9fb26c450",
+   "primary_source": "cuda-12.8.1-eula",
+   "bundled_licences": {
+    "nvidia_cusolver_cu12-11.7.3.90.dist-info/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "bundled_identical_to_primary": false,
+   "bundled_has_attachment_a": true,
+   "official_has_attachment_a": true,
+   "library_files": [
+    {
+     "member": "nvidia/cusolver/lib/libcusolver.so.11",
+     "name": "libcusolver.so",
+     "in_bundled_attachment_a": true,
+     "in_official_attachment_a": true
+    },
+    {
+     "member": "nvidia/cusolver/lib/libcusolverMg.so.11",
+     "name": "libcusolverMg.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    }
+   ],
+   "required_by": []
+  },
+  {
+   "artifact": "nvidia_cusparse_cu12-12.5.8.93-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "sha256": "1ec05d76bbbd8b61b06a80e1eaf8cf4959c3d4ce8e711b65ebd0443bb0ebb13b",
+   "primary_source": "cuda-12.8.1-eula",
+   "bundled_licences": {
+    "nvidia_cusparse_cu12-12.5.8.93.dist-info/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "bundled_identical_to_primary": false,
+   "bundled_has_attachment_a": true,
+   "official_has_attachment_a": true,
+   "library_files": [
+    {
+     "member": "nvidia/cusparse/lib/libcusparse.so.12",
+     "name": "libcusparse.so",
+     "in_bundled_attachment_a": true,
+     "in_official_attachment_a": true
+    }
+   ],
+   "required_by": [
+    "nvidia-cusolver-cu12==11.7.3.90 (Requires-Dist: nvidia-cusparse-cu12)"
+   ]
+  },
+  {
+   "artifact": "nvidia_nvjitlink_cu12-12.8.93-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl",
+   "sha256": "81ff63371a7ebd6e6451970684f916be2eab07321b73c9d244dc2b4da7f73b88",
+   "primary_source": "cuda-12.8.1-eula",
+   "bundled_licences": {
+    "nvidia_nvjitlink_cu12-12.8.93.dist-info/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "bundled_identical_to_primary": false,
+   "bundled_has_attachment_a": true,
+   "official_has_attachment_a": true,
+   "library_files": [
+    {
+     "member": "nvidia/nvjitlink/lib/libnvJitLink.so.12",
+     "name": "libnvJitLink.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": true
+    }
+   ],
+   "required_by": [
+    "nvidia-cufft-cu12==11.3.3.83 (Requires-Dist: nvidia-nvjitlink-cu12)",
+    "nvidia-cusolver-cu12==11.7.3.90 (Requires-Dist: nvidia-cusparse-cu12)",
+    "nvidia-cusolver-cu12==11.7.3.90 (Requires-Dist: nvidia-nvjitlink-cu12)",
+    "nvidia-cusparse-cu12==12.5.8.93 (Requires-Dist: nvidia-nvjitlink-cu12)"
+   ]
+  },
+  {
+   "artifact": "nvidia_nvshmem_cu12-3.4.5-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "sha256": "042f2500f24c021db8a06c5eec2539027d57460e1c1a762055a6554f72c369bd",
+   "primary_source": "nvshmem-v3.4.5-0-license",
+   "bundled_licences": {
+    "nvidia_nvshmem_cu12-3.4.5.dist-info/licenses/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "bundled_identical_to_primary": false,
+   "bundled_has_attachment_a": true,
+   "official_has_attachment_a": false,
+   "library_files": [
+    {
+     "member": "nvidia/nvshmem/lib/libnvshmem_device.a",
+     "name": "libnvshmem_device.a",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    },
+    {
+     "member": "nvidia/nvshmem/lib/libnvshmem_device.bc",
+     "name": "libnvshmem_device.bc",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    },
+    {
+     "member": "nvidia/nvshmem/lib/libnvshmem_host.so.3",
+     "name": "libnvshmem_host.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    },
+    {
+     "member": "nvidia/nvshmem/lib/nvshmem_bootstrap_mpi.so.3",
+     "name": "nvshmem_bootstrap_mpi.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    },
+    {
+     "member": "nvidia/nvshmem/lib/nvshmem_bootstrap_pmi.so.3",
+     "name": "nvshmem_bootstrap_pmi.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    },
+    {
+     "member": "nvidia/nvshmem/lib/nvshmem_bootstrap_pmi2.so.3",
+     "name": "nvshmem_bootstrap_pmi2.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    },
+    {
+     "member": "nvidia/nvshmem/lib/nvshmem_bootstrap_pmix.so.3",
+     "name": "nvshmem_bootstrap_pmix.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    },
+    {
+     "member": "nvidia/nvshmem/lib/nvshmem_bootstrap_shmem.so.3",
+     "name": "nvshmem_bootstrap_shmem.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    },
+    {
+     "member": "nvidia/nvshmem/lib/nvshmem_bootstrap_uid.so.3",
+     "name": "nvshmem_bootstrap_uid.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    },
+    {
+     "member": "nvidia/nvshmem/lib/nvshmem_transport_ibdevx.so.3",
+     "name": "nvshmem_transport_ibdevx.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    },
+    {
+     "member": "nvidia/nvshmem/lib/nvshmem_transport_ibgda.so.3",
+     "name": "nvshmem_transport_ibgda.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    },
+    {
+     "member": "nvidia/nvshmem/lib/nvshmem_transport_ibrc.so.3",
+     "name": "nvshmem_transport_ibrc.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    },
+    {
+     "member": "nvidia/nvshmem/lib/nvshmem_transport_libfabric.so.3",
+     "name": "nvshmem_transport_libfabric.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    },
+    {
+     "member": "nvidia/nvshmem/lib/nvshmem_transport_ucx.so.3",
+     "name": "nvshmem_transport_ucx.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    }
+   ],
+   "required_by": []
+  },
+  {
+   "artifact": "nvidia_cutlass_dsl-4.5.0.dev0-py3-none-any.whl",
+   "sha256": "ee81170c5f6e660147888ab84a86aa01e46b810e7c20c9e0fc5bcc8e35bbc719",
+   "primary_source": "cutlass-v4.5.0-eula",
+   "bundled_licences": {
+    "nvidia_cutlass_dsl-4.5.0.dev0.dist-info/licenses/LICENSE": "9ed3a0344d6bf9f08420f268d8aa70f7e3930d248edc2cf1a8107a560b483433"
+   },
+   "bundled_identical_to_primary": true,
+   "bundled_has_attachment_a": false,
+   "official_has_attachment_a": false,
+   "library_files": [],
+   "required_by": [
+    "flashinfer-python==0.6.6 (nvidia-cutlass-dsl>=4.3.4)",
+    "quack-kernels==0.4.1 (nvidia-cutlass-dsl>=4.4.2)"
+   ]
+  },
+  {
+   "artifact": "nvidia_cutlass_dsl_libs_base-4.5.0.dev0-cp312-cp312-manylinux_2_28_x86_64.whl",
+   "sha256": "38136edf1a1cd0c49fed73dcce966c8ac8b4396bdbd996deada6f73c81f5896e",
+   "primary_source": "cutlass-v4.5.0-eula",
+   "bundled_licences": {
+    "nvidia_cutlass_dsl/LICENSE": "9ed3a0344d6bf9f08420f268d8aa70f7e3930d248edc2cf1a8107a560b483433",
+    "nvidia_cutlass_dsl_libs_base-4.5.0.dev0.dist-info/licenses/LICENSE": "9ed3a0344d6bf9f08420f268d8aa70f7e3930d248edc2cf1a8107a560b483433"
+   },
+   "bundled_identical_to_primary": true,
+   "bundled_has_attachment_a": false,
+   "official_has_attachment_a": false,
+   "library_files": [
+    {
+     "member": "nvidia_cutlass_dsl/lib/libcuda_dialect_runtime_static.a",
+     "name": "libcuda_dialect_runtime_static.a",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    },
+    {
+     "member": "nvidia_cutlass_dsl/lib/libcute_dsl_runtime.so",
+     "name": "libcute_dsl_runtime.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    },
+    {
+     "member": "nvidia_cutlass_dsl/python_packages/cutlass/_mlir/_mlir_libs/_cutlass_ir.cpython-312-x86_64-linux-gnu.so",
+     "name": "_cutlass_ir.cpython-312-x86_64-linux-gnu.so",
+     "in_bundled_attachment_a": false,
+     "in_official_attachment_a": false
+    }
+   ],
+   "required_by": [
+    "flashinfer-python==0.6.6 (nvidia-cutlass-dsl>=4.3.4)",
+    "nvidia-cutlass-dsl==4.5.0.dev0 (Requires-Dist: nvidia-cutlass-dsl-libs-base==4.5.0.dev0)",
+    "quack-kernels==0.4.1 (nvidia-cutlass-dsl>=4.4.2)"
+   ]
+  }
+ ]
+}
