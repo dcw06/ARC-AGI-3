@@ -1,0 +1,4053 @@
+{
+ "method": {
+  "chain": "wheel -> build commit -> pin at that commit -> source URL/checksum -> flags/patches -> binary corroboration",
+  "clues": "File names, SONAMEs and libtool interface numbers are clues: a libtool mapping that matches the pinned release is consistent with it but does not prove it.",
+  "complete_note": "\"complete\" requires a named source URL with a pinned checksum; none of the three builds pins a checksum for any source archive, so no chain is complete and each such row lists the missing checksum as a missing link.",
+  "statuses": {
+   "clue_only": "no build file names the library or pins its version; its version rests on binary / file-name clues",
+   "complete": "build commit attested or tag-resolved -> explicit version pin in a build file at that commit -> source URL named by that build WITH a pinned checksum (so the exact source bytes are established) -> built in the same CI run -> binary corroboration (embedded version string, libtool mapping at the pinned upstream tag, or EL8 package build id)",
+   "partial": "some links established; the missing links are listed on the row"
+  }
+ },
+ "prepared_on": "2026-10-05",
+ "schema": "wheelhouse_evidence_native_libraries_v1",
+ "status": "evidence for the designated reviewer; a proposal, not a decision",
+ "status_counts": {
+  "clue_only": 4,
+  "partial": 25
+ },
+ "wheels": [
+  {
+   "artifact": "opencv_python_headless-4.13.0.92-cp37-abi3-manylinux_2_28_x86_64.whl",
+   "build_commit": {
+    "attestation": {
+     "available": false,
+     "record": {
+      "error": "HTTPError: HTTP Error 404: Not Found",
+      "retrieved_on": "2026-10-05",
+      "url": "https://pypi.org/integrity/opencv-python-headless/4.13.0.92/opencv_python_headless-4.13.0.92-cp37-abi3-manylinux_2_28_x86_64.whl/provenance"
+     }
+    },
+    "commit": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+    "corroboration": {
+     "embedded_build_timestamp": "Timestamp:                   2026-02-05T07:45:09Z",
+     "embedded_opencv_commit_matches_submodule": true,
+     "embedded_version_control": "Version control:               4.13.0-1-gb4c5ec4042",
+     "submodule_tree_record": {
+      "bytes": 5240,
+      "error": "HTTPError: HTTP Error 403: rate limit exceeded",
+      "file": "sources/native-opencv_python_headless-tree.json",
+      "kind": "raw",
+      "retrieved_on": "2026-10-05",
+      "reused_retained_copy": true,
+      "sha256": "2f56ffb5a53b5ce7bcaa8b4c9c95ad2e841ce04852dbfec48f59e5683584a057",
+      "url": "https://api.github.com/repos/opencv/opencv-python/git/trees/4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8"
+     },
+     "submodules_at_commit": {
+      "multibuild": "0714f52ea1ea57a0bc33c7f8b74bae457e1fa8e0",
+      "opencv": "b4c5ec4042f097e2a5b386b9d413ec7333d0a184",
+      "opencv_contrib": "d99ad2a188210cc35067c2e60076eed7c2442bc3",
+      "opencv_extra": "c322faf6f5d10649c4215a16203b923e36c4ba6f"
+     }
+    },
+    "pypi": {
+     "record": {
+      "bytes": 27703,
+      "file": "sources/native-opencv_python_headless-pypi-release.json",
+      "kind": "raw",
+      "retrieved_on": "2026-10-05",
+      "sha256": "c2660e2f27856a0c3f078f22979368ee2ededb22ae50524a8f298e715340cf72",
+      "url": "https://pypi.org/pypi/opencv-python-headless/4.13.0.92/json"
+     },
+     "sha256_matches_manifest": true,
+     "upload_time": "2026-02-05T10:30:14.236092Z"
+    },
+    "release_tag": {
+     "commit": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+     "commit_date": "2026-02-03T07:12:07Z",
+     "message_first_line": "Merge pull request #1200 from asmorkalov:as/twine_upload_fix",
+     "record": {
+      "bytes": 22912,
+      "error": "HTTPError: HTTP Error 403: rate limit exceeded",
+      "file": "sources/native-opencv_python_headless-tag-92-commit.json",
+      "kind": "raw",
+      "retrieved_on": "2026-10-05",
+      "reused_retained_copy": true,
+      "sha256": "0f70b057b72b1cca6b620dad8f102083c947dc84419ffefd8da5bc574762c17c",
+      "url": "https://api.github.com/repos/opencv/opencv-python/commits/92"
+     },
+     "tag": "92"
+    },
+    "repository": "https://github.com/opencv/opencv-python",
+    "run": null,
+    "status": "tag_resolved",
+    "tag_agrees_with_attestation": null,
+    "workflow": "https://github.com/opencv/opencv-python/.github/workflows/build_wheels_manylinux.yml (inferred)"
+   },
+   "build_files": {
+    "dockerfile": {
+     "bytes": 5301,
+     "file": "sources/native-opencv_python_headless-dockerfile",
+     "kind": "raw",
+     "path": "docker/manylinux_2_28/Dockerfile_x86_64",
+     "ref": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+     "repository": "opencv/opencv-python",
+     "retrieved_on": "2026-10-05",
+     "sha256": "b6891212bb0565e47d2b90fd883443cfbc87e02caed110322d1b3cd5037efd69",
+     "url": "https://raw.githubusercontent.com/opencv/opencv-python/4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8/docker/manylinux_2_28/Dockerfile_x86_64"
+    },
+    "ffmpeg-n8.0.1-LICENSE.md": {
+     "bytes": 4346,
+     "file": "sources/native-opencv_python_headless-ffmpeg-n8.0.1-LICENSE.md",
+     "kind": "raw",
+     "path": "LICENSE.md",
+     "ref": "n8.0.1",
+     "repository": "FFmpeg/FFmpeg",
+     "retrieved_on": "2026-10-05",
+     "sha256": "2e1d16c72fd74e12063776371da757322f8b77589386532f4fd8634bde7de1af",
+     "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n8.0.1/LICENSE.md"
+    },
+    "ffmpeg-n8.0.1-configure": {
+     "bytes": 294878,
+     "file": "sources/native-opencv_python_headless-ffmpeg-n8.0.1-configure",
+     "kind": "raw",
+     "path": "configure",
+     "ref": "n8.0.1",
+     "repository": "FFmpeg/FFmpeg",
+     "retrieved_on": "2026-10-05",
+     "sha256": "c4a99785591813c43258e080d86688de8cd0a4782f1d197d25aa5851411c7f00",
+     "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n8.0.1/configure"
+    },
+    "libavif-v1.3.0-LocalLibyuv.cmake": {
+     "bytes": 3106,
+     "file": "sources/native-opencv_python_headless-libavif-v1.3.0-LocalLibyuv.cmake",
+     "kind": "raw",
+     "path": "cmake/Modules/LocalLibyuv.cmake",
+     "ref": "v1.3.0",
+     "repository": "AOMediaCodec/libavif",
+     "retrieved_on": "2026-10-05",
+     "sha256": "663c7b5f43a18828f7694ab4f75c5a7ed25413298d887f967f9a5e09ff2f7217",
+     "url": "https://raw.githubusercontent.com/AOMediaCodec/libavif/v1.3.0/cmake/Modules/LocalLibyuv.cmake"
+    },
+    "setup.py": {
+     "bytes": 21011,
+     "file": "sources/native-opencv_python_headless-setup.py",
+     "kind": "raw",
+     "path": "setup.py",
+     "ref": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+     "repository": "opencv/opencv-python",
+     "retrieved_on": "2026-10-05",
+     "sha256": "84c950d0f1ba5652416cb2f8e99289d0684ddc99713d7b916c614fe5b025c295",
+     "url": "https://raw.githubusercontent.com/opencv/opencv-python/4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8/setup.py"
+    },
+    "workflow": {
+     "bytes": 10811,
+     "file": "sources/native-opencv_python_headless-workflow",
+     "kind": "raw",
+     "path": ".github/workflows/build_wheels_manylinux.yml",
+     "ref": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+     "repository": "opencv/opencv-python",
+     "retrieved_on": "2026-10-05",
+     "sha256": "0340395fa3138ff9ff1a5ac5b5088f64bbc698e2a6caaa0659b01fc62da78de8",
+     "url": "https://raw.githubusercontent.com/opencv/opencv-python/4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8/.github/workflows/build_wheels_manylinux.yml"
+    }
+   },
+   "build_image": {
+    "dockerfile_base_image": {
+     "line": 4,
+     "text": "FROM quay.io/pypa/manylinux_2_28_x86_64:latest",
+     "value": "quay.io/pypa/manylinux_2_28_x86_64:latest"
+    },
+    "dockerfile_version_comment": {
+     "line": 1,
+     "text": "# Version: 20260102",
+     "value": "20260102"
+    },
+    "image_tag_matches_dockerfile_version": true,
+    "note": "The libraries in opencv_python_headless.libs/ were built into the prebuilt image named by the workflow, not in the wheel run. The Dockerfile at the commit carries the same version tag, but the image (and its unpinned \":latest\" base) was not inspected or verified.",
+    "workflow_image_line": {
+     "line": 42,
+     "text": "DOCKER_IMAGE: quay.io/opencv-ci/opencv-python-manylinux_2_28-x86-64:20260102",
+     "value": "quay.io/opencv-ci/opencv-python-manylinux_2_28-x86-64:20260102"
+    }
+   },
+   "bundled_libraries": [
+    "opencv_python_headless.libs/libaom-512edd8c.so.3.13.1",
+    "opencv_python_headless.libs/libavcodec-156beeea.so.62.11.100",
+    "opencv_python_headless.libs/libavformat-8c8a026e.so.62.3.100",
+    "opencv_python_headless.libs/libavif-cbf1e83c.so.16.3.0",
+    "opencv_python_headless.libs/libavutil-ec54c519.so.60.8.100",
+    "opencv_python_headless.libs/libcrypto-bdaed0ea.so.1.1.1k",
+    "opencv_python_headless.libs/libdrm-b0291a67.so.2.4.0",
+    "opencv_python_headless.libs/libgfortran-83c28eba.so.5.0.0",
+    "opencv_python_headless.libs/libopenblasp-r0-59ffcd50.3.15.so",
+    "opencv_python_headless.libs/libpng16-1b998e9d.so.16.53.0",
+    "opencv_python_headless.libs/libquadmath-2284e583.so.0.0.0",
+    "opencv_python_headless.libs/libssl-60250281.so.1.1.1k",
+    "opencv_python_headless.libs/libswresample-02b1114a.so.6.1.100",
+    "opencv_python_headless.libs/libswscale-09114b18.so.9.1.100",
+    "opencv_python_headless.libs/libvpx-ab02766e.so.11.0.1"
+   ],
+   "components": [
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "embedded_configuration_strings": [
+       "--prefix=/ffmpeg_build --extra-cflags=-I/ffmpeg_build/include --extra-ldflags=-L/ffmpeg_build/lib --enable-openssl --enable-libvpx --enable-shared --enable-pic --bindir=/root/bin"
+      ],
+      "embedded_library_idents": {
+       "libavcodec-156beeea.so.62.11.100": [
+        "Lavc62.11.100"
+       ],
+       "libavformat-8c8a026e.so.62.3.100": [
+        "Lavf62.3.100"
+       ],
+       "libavutil-ec54c519.so.60.8.100": [],
+       "libswresample-02b1114a.so.6.1.100": [],
+       "libswscale-09114b18.so.9.1.100": []
+      },
+      "embedded_licence_strings": [
+       "LGPL version 2.1 or later"
+      ],
+      "embedded_version_strings": [
+       "8.0.1"
+      ]
+     },
+     "chain_links": {
+      "build_commit": "tag_resolved",
+      "build_environment": "prebuilt_image",
+      "corroboration": "embedded_version",
+      "pin": "explicit",
+      "source": "upstream_url"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "8.0.1",
+     "component": "FFmpeg (libavcodec, libavformat, libavutil, libswresample, libswscale)",
+     "copyleft_as_built": "LGPL-2.1-or-later",
+     "corroboration": "embedded_version",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 18561649,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "62.11.100",
+       "needed": [
+        "libswresample-02b1114a.so.6.1.100",
+        "libavutil-ec54c519.so.60.8.100",
+        "libvpx-ab02766e.so.11.0.1",
+        "libm.so.6",
+        "libz.so.1",
+        "libpthread.so.0",
+        "libc.so.6"
+       ],
+       "path": "opencv_python_headless.libs/libavcodec-156beeea.so.62.11.100",
+       "sha256": "d833257accea377cdd773f20bddd9b0d2be3028d024b88891a5a9a60663cd6b8",
+       "soname": "libavcodec-156beeea.so.62.11.100"
+      },
+      {
+       "bytes": 2946353,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "62.3.100",
+       "needed": [
+        "libavcodec-156beeea.so.62.11.100",
+        "libavutil-ec54c519.so.60.8.100",
+        "libm.so.6",
+        "libz.so.1",
+        "libssl-60250281.so.1.1.1k",
+        "libcrypto-bdaed0ea.so.1.1.1k",
+        "libpthread.so.0",
+        "libc.so.6"
+       ],
+       "path": "opencv_python_headless.libs/libavformat-8c8a026e.so.62.3.100",
+       "sha256": "c653856e04d865f049fb4209d58900991738a737c80fa5ccb59ab1b14d7d20aa",
+       "soname": "libavformat-8c8a026e.so.62.3.100"
+      },
+      {
+       "bytes": 1090865,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "60.8.100",
+       "needed": [
+        "libm.so.6",
+        "libdrm-b0291a67.so.2.4.0",
+        "libcrypto-bdaed0ea.so.1.1.1k",
+        "libpthread.so.0",
+        "libc.so.6"
+       ],
+       "path": "opencv_python_headless.libs/libavutil-ec54c519.so.60.8.100",
+       "sha256": "6330ef30a30768db87d9d5be335bcc684a3043f4c821512970613d2941a64bdc",
+       "soname": "libavutil-ec54c519.so.60.8.100"
+      },
+      {
+       "bytes": 148745,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "6.1.100",
+       "needed": [
+        "libavutil-ec54c519.so.60.8.100",
+        "libm.so.6",
+        "libc.so.6"
+       ],
+       "path": "opencv_python_headless.libs/libswresample-02b1114a.so.6.1.100",
+       "sha256": "4c907e59417ef7941e5116449f3184bceb1e2ef5dd0417f248eff6e433e1fa84",
+       "soname": "libswresample-02b1114a.so.6.1.100"
+      },
+      {
+       "bytes": 1714009,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "9.1.100",
+       "needed": [
+        "libavutil-ec54c519.so.60.8.100",
+        "libm.so.6",
+        "libpthread.so.0",
+        "libc.so.6"
+       ],
+       "path": "opencv_python_headless.libs/libswscale-09114b18.so.9.1.100",
+       "sha256": "60cf34d9bc10d1a73180f86832941d3d5ec2e2c6bf3560ab403c093c88c8ffd0",
+       "soname": "libswscale-09114b18.so.9.1.100"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-opencv_python_headless-dockerfile",
+       "line": 91,
+       "path": "docker/manylinux_2_28/Dockerfile_x86_64",
+       "ref": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+       "repository": "opencv/opencv-python",
+       "text": "PKG_CONFIG_PATH=\"/ffmpeg_build/lib/pkgconfig\" ./configure --prefix=\"/ffmpeg_build\" --extra-cflags=\"-I/ffmpeg_build/include\" --extra-ldflags=\"-L/ffmpeg_build/lib\" --enable-openssl --enable-libvpx --enable-shared --enable-pic --bindir=\"$HOME/bin\" && \\",
+       "value": "--prefix=\"/ffmpeg_build\" --extra-cflags=\"-I/ffmpeg_build/include\" --extra-ldflags=\"-L/ffmpeg_build/lib\" --enable-openssl --enable-libvpx --enable-shared --enable-pic --bindir=\"$HOME/bin\""
+      }
+     ],
+     "key": "ffmpeg",
+     "licence_as_built": "LGPL-2.1-or-later, as FFmpeg's configure labels this build (see the FFmpeg licence logic section). Linked at run time against bundled OpenSSL 1.1.1k (libavformat, libavutil), libvpx (libavcodec), libdrm (libavutil) and the system zlib. FFmpeg LICENSE.md also notes three libavcodec files under libjpeg (IJG) terms.",
+     "missing_links": [
+      "source archive named by URL but no checksum pinned: the exact source bytes are not established",
+      "built inside a separately published container image (image not verified against the Dockerfile at the commit)"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-opencv_python_headless-dockerfile",
+      "line": 6,
+      "path": "docker/manylinux_2_28/Dockerfile_x86_64",
+      "ref": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+      "repository": "opencv/opencv-python",
+      "text": "ARG FFMPEG_VERSION=8.0.1",
+      "value": "8.0.1"
+     },
+     "redistributor_would_need": "Corresponding source for the LGPL libraries: ffmpeg-8.0.1.tar.gz from the URL shown (no checksum pinned; the reviewer may wish to record FFmpeg's published signature), the configure command and the Dockerfile; the LGPL-2.1 text (present in the wheel's LICENSE-3RD-PARTY.txt); terms that allow replacing the shared libraries (auditwheel renamed them with hash suffixes).",
+     "source": {
+      "checksum_lines_in_file": 0,
+      "checksum_pinned": null,
+      "kind": "archive URL",
+      "named_at": {
+       "file": "sources/native-opencv_python_headless-dockerfile",
+       "line": 87,
+       "path": "docker/manylinux_2_28/Dockerfile_x86_64",
+       "ref": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+       "repository": "opencv/opencv-python",
+       "text": "curl -O -L https://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.gz && \\",
+       "value": "https://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.gz"
+      },
+      "url": "https://ffmpeg.org/releases/ffmpeg-8.0.1.tar.gz"
+     },
+     "subcomponents": [],
+     "uncertainty": [
+      "the build pins no checksum for this source",
+      "libraries built in the prebuilt image, not in the wheel run",
+      "FFmpeg's statement that OpenSSL is LGPL-compatible is FFmpeg's assessment (\"to the best of our knowledge\"), not a legal conclusion"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "embedded_configure": [
+       "--prefix=/ffmpeg_build --disable-examples --disable-unit-tests --enable-vp9-highbitdepth --as=yasm --enable-pic --enable-shared"
+      ],
+      "embedded_configure_matches_flags": true,
+      "embedded_version_strings": [
+       "v1.15.2"
+      ]
+     },
+     "chain_links": {
+      "build_commit": "tag_resolved",
+      "build_environment": "prebuilt_image",
+      "corroboration": "embedded_version",
+      "pin": "explicit",
+      "source": "upstream_url"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "v1.15.2",
+     "component": "libvpx",
+     "copyleft_as_built": null,
+     "corroboration": "embedded_version",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 3692569,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "11.0.1",
+       "needed": [
+        "libpthread.so.0",
+        "libstdc++.so.6",
+        "libm.so.6",
+        "libgcc_s.so.1",
+        "libc.so.6"
+       ],
+       "path": "opencv_python_headless.libs/libvpx-ab02766e.so.11.0.1",
+       "sha256": "62f1f97989a1b700d91234bf5b0c837443fff755a9355b58349a727acabd3c4e",
+       "soname": "libvpx-ab02766e.so.11.0.1"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-opencv_python_headless-dockerfile",
+       "line": 61,
+       "path": "docker/manylinux_2_28/Dockerfile_x86_64",
+       "ref": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+       "repository": "opencv/opencv-python",
+       "text": "./configure --prefix=\"/ffmpeg_build\" --disable-examples --disable-unit-tests --enable-vp9-highbitdepth --as=yasm --enable-pic --enable-shared && \\",
+       "value": "--prefix=\"/ffmpeg_build\" --disable-examples --disable-unit-tests --enable-vp9-highbitdepth --as=yasm --enable-pic --enable-shared"
+      }
+     ],
+     "key": "libvpx",
+     "licence_as_built": "BSD-3-Clause, with the WebM additional IP rights grant (PATENTS).",
+     "missing_links": [
+      "source archive named by URL but no checksum pinned: the exact source bytes are not established",
+      "built inside a separately published container image (image not verified against the Dockerfile at the commit)"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-opencv_python_headless-dockerfile",
+      "line": 9,
+      "path": "docker/manylinux_2_28/Dockerfile_x86_64",
+      "ref": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+      "repository": "opencv/opencv-python",
+      "text": "ARG VPX_VERSION=v1.15.2",
+      "value": "v1.15.2"
+     },
+     "redistributor_would_need": "BSD notice and PATENTS text (the wheel's LICENSE-3RD-PARTY.txt has a libvpx section); source not required by the licence.",
+     "source": {
+      "checksum_lines_in_file": 0,
+      "checksum_pinned": null,
+      "kind": "git tag (no commit hash pinned)",
+      "named_at": {
+       "file": "sources/native-opencv_python_headless-dockerfile",
+       "line": 59,
+       "path": "docker/manylinux_2_28/Dockerfile_x86_64",
+       "ref": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+       "repository": "opencv/opencv-python",
+       "text": "git clone --depth 1 -b ${VPX_VERSION} https://chromium.googlesource.com/webm/libvpx.git && \\",
+       "value": "https://chromium.googlesource.com/webm/libvpx.git"
+      },
+      "url": "https://chromium.googlesource.com/webm/libvpx.git"
+     },
+     "subcomponents": [],
+     "uncertainty": [
+      "the build pins no checksum for this source",
+      "git tag, not a commit hash, is pinned",
+      "built in the prebuilt image"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "embedded_version_strings": [
+       "3.13.1"
+      ]
+     },
+     "chain_links": {
+      "build_commit": "tag_resolved",
+      "build_environment": "prebuilt_image",
+      "corroboration": "embedded_version",
+      "pin": "explicit",
+      "source": "upstream_url"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "v3.13.1",
+     "component": "libaom",
+     "copyleft_as_built": null,
+     "corroboration": "embedded_version",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 8096233,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "3.13.1",
+       "needed": [
+        "libm.so.6",
+        "libpthread.so.0",
+        "libc.so.6"
+       ],
+       "path": "opencv_python_headless.libs/libaom-512edd8c.so.3.13.1",
+       "sha256": "1c4988da778227d7602d7983e4f0035ba0b0dc968c66c68f867074998d8e4a6e",
+       "soname": "libaom-512edd8c.so.3.13.1"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-opencv_python_headless-dockerfile",
+       "line": 71,
+       "path": "docker/manylinux_2_28/Dockerfile_x86_64",
+       "ref": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+       "repository": "opencv/opencv-python",
+       "text": "cmake -DCMAKE_C_COMPILER=$(dirname $(which g++))/gcc -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS=ON -DENABLE_TESTS=OFF ../aom/ && \\",
+       "value": "cmake -DCMAKE_C_COMPILER=$(dirname $(which g++))/gcc -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS=ON -DENABLE_TESTS=OFF ../aom/"
+      }
+     ],
+     "key": "libaom",
+     "licence_as_built": "BSD-2-Clause, with the Alliance for Open Media Patent License 1.0.",
+     "missing_links": [
+      "source archive named by URL but no checksum pinned: the exact source bytes are not established",
+      "built inside a separately published container image (image not verified against the Dockerfile at the commit)"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-opencv_python_headless-dockerfile",
+      "line": 11,
+      "path": "docker/manylinux_2_28/Dockerfile_x86_64",
+      "ref": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+      "repository": "opencv/opencv-python",
+      "text": "ARG AOM_VERSION=v3.13.1",
+      "value": "v3.13.1"
+     },
+     "redistributor_would_need": "BSD notice and AOM patent licence text; source not required by the licence.",
+     "source": {
+      "checksum_lines_in_file": 0,
+      "checksum_pinned": null,
+      "kind": "git tag (no commit hash pinned)",
+      "named_at": {
+       "file": "sources/native-opencv_python_headless-dockerfile",
+       "line": 69,
+       "path": "docker/manylinux_2_28/Dockerfile_x86_64",
+       "ref": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+       "repository": "opencv/opencv-python",
+       "text": "git clone --depth 1 -b ${AOM_VERSION} https://aomedia.googlesource.com/aom && \\",
+       "value": "https://aomedia.googlesource.com/aom"
+      },
+      "url": "https://aomedia.googlesource.com/aom"
+     },
+     "subcomponents": [],
+     "uncertainty": [
+      "the build pins no checksum for this source",
+      "git tag, not a commit hash, is pinned",
+      "built in the prebuilt image"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "embedded_version_strings": [
+       "1.3.0"
+      ]
+     },
+     "chain_links": {
+      "build_commit": "tag_resolved",
+      "build_environment": "prebuilt_image",
+      "corroboration": "embedded_version",
+      "pin": "explicit",
+      "source": "upstream_url"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "v1.3.0",
+     "component": "libavif",
+     "copyleft_as_built": null,
+     "corroboration": "embedded_version",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 1078641,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "16.3.0",
+       "needed": [
+        "libaom-512edd8c.so.3.13.1",
+        "libstdc++.so.6",
+        "libm.so.6",
+        "libgcc_s.so.1",
+        "libpthread.so.0",
+        "libc.so.6"
+       ],
+       "path": "opencv_python_headless.libs/libavif-cbf1e83c.so.16.3.0",
+       "sha256": "9d16ff198136b93ee6d29ba1caa9f5d58ad4d446ac295d440981d0f30fbaceb8",
+       "soname": "libavif-cbf1e83c.so.16.3.0"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-opencv_python_headless-dockerfile",
+       "line": 80,
+       "path": "docker/manylinux_2_28/Dockerfile_x86_64",
+       "ref": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+       "repository": "opencv/opencv-python",
+       "text": "cmake -DCMAKE_INSTALL_PREFIX=/usr -DAVIF_CODEC_AOM=SYSTEM -DAVIF_LIBYUV=LOCAL -DAVIF_BUILD_APPS=OFF ../libavif && \\",
+       "value": "cmake -DCMAKE_INSTALL_PREFIX=/usr -DAVIF_CODEC_AOM=SYSTEM -DAVIF_LIBYUV=LOCAL -DAVIF_BUILD_APPS=OFF ../libavif"
+      }
+     ],
+     "key": "libavif",
+     "licence_as_built": "BSD-2-Clause (libavif); statically includes libyuv (BSD-3-Clause); uses the bundled libaom.",
+     "missing_links": [
+      "source archive named by URL but no checksum pinned: the exact source bytes are not established",
+      "built inside a separately published container image (image not verified against the Dockerfile at the commit)"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-opencv_python_headless-dockerfile",
+      "line": 12,
+      "path": "docker/manylinux_2_28/Dockerfile_x86_64",
+      "ref": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+      "repository": "opencv/opencv-python",
+      "text": "ARG AVIF_VERSION=v1.3.0",
+      "value": "v1.3.0"
+     },
+     "redistributor_would_need": "BSD notices for libavif and libyuv; source not required by these licences.",
+     "source": {
+      "checksum_lines_in_file": 0,
+      "checksum_pinned": null,
+      "kind": "git tag (no commit hash pinned)",
+      "named_at": {
+       "file": "sources/native-opencv_python_headless-dockerfile",
+       "line": 78,
+       "path": "docker/manylinux_2_28/Dockerfile_x86_64",
+       "ref": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+       "repository": "opencv/opencv-python",
+       "text": "git clone -b ${AVIF_VERSION} https://github.com/AOMediaCodec/libavif.git && \\",
+       "value": "https://github.com/AOMediaCodec/libavif.git"
+      },
+      "url": "https://github.com/AOMediaCodec/libavif.git"
+     },
+     "subcomponents": [
+      {
+       "licence": "BSD-3-Clause",
+       "name": "libyuv (AVIF_LIBYUV=LOCAL, statically linked)",
+       "pin": {
+        "file": "sources/native-opencv_python_headless-libavif-v1.3.0-LocalLibyuv.cmake",
+        "line": 1,
+        "path": "cmake/Modules/LocalLibyuv.cmake",
+        "ref": "v1.3.0",
+        "repository": "AOMediaCodec/libavif",
+        "text": "set(AVIF_LIBYUV_TAG \"4db2af62dab48895226be6b52737247e898ebe36\")",
+        "value": "4db2af62dab48895226be6b52737247e898ebe36"
+       },
+       "source": "https://chromium.googlesource.com/libyuv/libyuv (commit pinned by libavif v1.3.0)"
+      }
+     ],
+     "uncertainty": [
+      "the build pins no checksum for this source",
+      "git tag, not a commit hash, is pinned",
+      "built in the prebuilt image",
+      "libyuv revision taken from libavif's own pin at the tag (not verified in the binary)"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "embedded_version_strings": [
+       "libpng version 1.6.53"
+      ]
+     },
+     "chain_links": {
+      "build_commit": "tag_resolved",
+      "build_environment": "prebuilt_image",
+      "corroboration": "embedded_version",
+      "pin": "explicit",
+      "source": "upstream_url"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "1.6.53",
+     "component": "libpng",
+     "copyleft_as_built": null,
+     "corroboration": "embedded_version",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 1072625,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "16.53.0",
+       "needed": [
+        "libz.so.1",
+        "libm.so.6",
+        "libc.so.6"
+       ],
+       "path": "opencv_python_headless.libs/libpng16-1b998e9d.so.16.53.0",
+       "sha256": "a63dc88e3bdc0d7eee45f6c8e1e929221ce96f2bf464c0fed1dcca9f3bc405c8",
+       "soname": "libpng16-1b998e9d.so.16.53.0"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-opencv_python_headless-dockerfile",
+       "line": 27,
+       "path": "docker/manylinux_2_28/Dockerfile_x86_64",
+       "ref": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+       "repository": "opencv/opencv-python",
+       "text": "./configure --prefix=/usr/local && \\",
+       "value": "./configure --prefix=/usr/local"
+      }
+     ],
+     "key": "libpng",
+     "licence_as_built": "libpng-2.0 (PNG Reference Library License version 2).",
+     "missing_links": [
+      "source archive named by URL but no checksum pinned: the exact source bytes are not established",
+      "built inside a separately published container image (image not verified against the Dockerfile at the commit)"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-opencv_python_headless-dockerfile",
+      "line": 8,
+      "path": "docker/manylinux_2_28/Dockerfile_x86_64",
+      "ref": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+      "repository": "opencv/opencv-python",
+      "text": "ARG LIBPNG_VERSION=1.6.53",
+      "value": "1.6.53"
+     },
+     "redistributor_would_need": "libpng licence notice (the wheel has a libpng section); source not required.",
+     "source": {
+      "checksum_lines_in_file": 0,
+      "checksum_pinned": null,
+      "kind": "archive URL",
+      "named_at": {
+       "file": "sources/native-opencv_python_headless-dockerfile",
+       "line": 24,
+       "path": "docker/manylinux_2_28/Dockerfile_x86_64",
+       "ref": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+       "repository": "opencv/opencv-python",
+       "text": "curl -O -L https://download.sourceforge.net/libpng/libpng-${LIBPNG_VERSION}.tar.gz && \\",
+       "value": "https://download.sourceforge.net/libpng/libpng-${LIBPNG_VERSION}.tar.gz"
+      },
+      "url": "https://download.sourceforge.net/libpng/libpng-1.6.53.tar.gz"
+     },
+     "subcomponents": [],
+     "uncertainty": [
+      "the build pins no checksum for this source",
+      "built in the prebuilt image"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "el8_package_build": [
+       "1.1.1k-14.el8_6"
+      ],
+      "embedded_version_strings": [
+       "OpenSSL 1.1.1k  FIPS 25 Mar 2021"
+      ]
+     },
+     "chain_links": {
+      "build_commit": "tag_resolved",
+      "build_environment": "prebuilt_image",
+      "corroboration": "package_build_id",
+      "pin": "package_named",
+      "source": "distro_srpm"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "1.1.1k-14.el8_6 (EL8 package build from .gnu_debuglink)",
+     "component": "OpenSSL (libcrypto, libssl)",
+     "copyleft_as_built": null,
+     "corroboration": "package_build_id",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 3215921,
+       "compiler_comment": [],
+       "debuglink": "libcrypto.so.1.1.1k-1.1.1k-14.el8_6.x86_64.debug",
+       "debuglink_package_build": [
+        "libcrypto.so.1.1.1k",
+        "1.1.1k-14.el8_6"
+       ],
+       "file_name_interface_numbers": "1.1.1k",
+       "needed": [
+        "libz.so.1",
+        "libdl.so.2",
+        "libpthread.so.0",
+        "libc.so.6"
+       ],
+       "path": "opencv_python_headless.libs/libcrypto-bdaed0ea.so.1.1.1k",
+       "sha256": "b5e4d4d446f022a7312ca1304020b15430cb367314caf6e0251ccf6f7ec8deea",
+       "soname": "libcrypto-bdaed0ea.so.1.1.1k"
+      },
+      {
+       "bytes": 666865,
+       "compiler_comment": [],
+       "debuglink": "libssl.so.1.1.1k-1.1.1k-14.el8_6.x86_64.debug",
+       "debuglink_package_build": [
+        "libssl.so.1.1.1k",
+        "1.1.1k-14.el8_6"
+       ],
+       "file_name_interface_numbers": "1.1.1k",
+       "needed": [
+        "libcrypto-bdaed0ea.so.1.1.1k",
+        "libz.so.1",
+        "libdl.so.2",
+        "libpthread.so.0",
+        "libc.so.6"
+       ],
+       "path": "opencv_python_headless.libs/libssl-60250281.so.1.1.1k",
+       "sha256": "30236e4c8dcaf2f73e97f06f3799c496a3e9b36c56dc239ed84667bb1b5f42b1",
+       "soname": "libssl-60250281.so.1.1.1k"
+      }
+     ],
+     "flags": [],
+     "key": "openssl",
+     "licence_as_built": "OpenSSL License AND SSLeay License (the OpenSSL 1.1.1 dual licence, with advertising-acknowledgement clauses). This is the EL8 package build (Red Hat \"FIPS\" variant per the embedded version string), which carries distribution patches.",
+     "missing_links": [
+      "installed from distribution packages without a version pin",
+      "corresponding source is a distribution source package (not fetched or verified)",
+      "built inside a separately published container image (image not verified against the Dockerfile at the commit)"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "package_named",
+     "package_install_line": {
+      "file": "sources/native-opencv_python_headless-dockerfile",
+      "line": 18,
+      "path": "docker/manylinux_2_28/Dockerfile_x86_64",
+      "ref": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+      "repository": "opencv/opencv-python",
+      "text": "yum install openblas-devel dejavu-sans-fonts ccache yasm nasm ninja-build openssl openssl-devel -y && \\",
+      "value": "openblas-devel dejavu-sans-fonts ccache yasm nasm ninja-build openssl openssl-devel -y"
+     },
+     "patch_commands": [],
+     "pin": null,
+     "redistributor_would_need": "The OpenSSL/SSLeay licence text and required acknowledgements (present in the wheel's notice file). Source is not required by these licences; if offered, it is the AlmaLinux 8 source package of the build shown (not fetched).",
+     "subcomponents": [],
+     "uncertainty": [
+      "package version not pinned by the build; identified from .gnu_debuglink",
+      "licence compatibility with LGPL FFmpeg rests on FFmpeg's own statement"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "el8_package_build": [
+       "0.3.15-6.el8"
+      ],
+      "embedded_version_strings": [
+       "OpenBLAS 0.3.15 DYNAMIC_ARCH NO_CH NO_AFFINITY"
+      ]
+     },
+     "chain_links": {
+      "build_commit": "tag_resolved",
+      "build_environment": "prebuilt_image",
+      "corroboration": "package_build_id",
+      "pin": "package_named",
+      "source": "distro_srpm"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "0.3.15-6.el8 (EL8 package build from .gnu_debuglink)",
+     "component": "OpenBLAS",
+     "copyleft_as_built": null,
+     "corroboration": "package_build_id",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 38683921,
+       "compiler_comment": [],
+       "debuglink": "libopenblasp-r0.3.15.so-0.3.15-6.el8.x86_64.debug",
+       "debuglink_package_build": [
+        "libopenblasp-r0.3.15.so",
+        "0.3.15-6.el8"
+       ],
+       "file_name_interface_numbers": null,
+       "needed": [
+        "libm.so.6",
+        "libpthread.so.0",
+        "libgfortran-83c28eba.so.5.0.0",
+        "libc.so.6",
+        "ld-linux-x86-64.so.2"
+       ],
+       "path": "opencv_python_headless.libs/libopenblasp-r0-59ffcd50.3.15.so",
+       "sha256": "17ae38ab93a9aa5cfd59569f18719cc08b619f87aae823d57213d1e92f370a75",
+       "soname": "libopenblasp-r0-59ffcd50.3.15.so"
+      }
+     ],
+     "flags": [],
+     "key": "openblas",
+     "licence_as_built": "BSD-3-Clause (EL8 package build).",
+     "missing_links": [
+      "installed from distribution packages without a version pin",
+      "corresponding source is a distribution source package (not fetched or verified)",
+      "built inside a separately published container image (image not verified against the Dockerfile at the commit)"
+     ],
+     "named_in_wheel_notice": false,
+     "origin": "package_named",
+     "package_install_line": {
+      "file": "sources/native-opencv_python_headless-dockerfile",
+      "line": 18,
+      "path": "docker/manylinux_2_28/Dockerfile_x86_64",
+      "ref": "4ddfc013fd1f13d9b9e379dbebf2cdbeb052e7f8",
+      "repository": "opencv/opencv-python",
+      "text": "yum install openblas-devel dejavu-sans-fonts ccache yasm nasm ninja-build openssl openssl-devel -y && \\",
+      "value": "openblas-devel dejavu-sans-fonts ccache yasm nasm ninja-build openssl openssl-devel -y"
+     },
+     "patch_commands": [],
+     "pin": null,
+     "redistributor_would_need": "BSD notice. No OpenBLAS section was found in the wheel's LICENSE-3RD-PARTY.txt.",
+     "subcomponents": [],
+     "uncertainty": [
+      "package version not pinned; identified from .gnu_debuglink",
+      "no matching section found in the licence/notice files shipped in the wheel"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "el8_package_build": [
+       "8.5.0-28.el8_10.alma.1"
+      ]
+     },
+     "chain_links": {
+      "build_commit": "tag_resolved",
+      "build_environment": "prebuilt_image",
+      "corroboration": "package_build_id",
+      "pin": "package_transitive",
+      "source": "distro_srpm"
+     },
+     "chain_status": "clue_only",
+     "claimed_upstream_version": "8.5.0-28.el8_10.alma.1 (EL8 package build from .gnu_debuglink)",
+     "component": "libgfortran (GCC runtime)",
+     "copyleft_as_built": "GPL-3.0-or-later WITH GCC-exception-3.1",
+     "corroboration": "package_build_id",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 2714697,
+       "compiler_comment": [],
+       "debuglink": "libgfortran.so.5.0.0-8.5.0-28.el8_10.alma.1.x86_64.debug",
+       "debuglink_package_build": [
+        "libgfortran.so.5.0.0",
+        "8.5.0-28.el8_10.alma.1"
+       ],
+       "file_name_interface_numbers": "5.0.0",
+       "needed": [
+        "libquadmath-2284e583.so.0.0.0",
+        "libz.so.1",
+        "libm.so.6",
+        "libgcc_s.so.1",
+        "libc.so.6"
+       ],
+       "path": "opencv_python_headless.libs/libgfortran-83c28eba.so.5.0.0",
+       "sha256": "e554879fee7eda80055b6ca1407a54d00050874f830cc86b2bf3f50df5c7bb2b",
+       "soname": "libgfortran-83c28eba.so.5.0.0"
+      }
+     ],
+     "flags": [],
+     "key": "libgfortran",
+     "licence_as_built": "GPL-3.0-or-later WITH GCC-exception-3.1 (GCC Runtime Library Exception); EL8 gcc package build.",
+     "missing_links": [
+      "no build file names this library or pins its version"
+     ],
+     "named_in_wheel_notice": false,
+     "origin": "package_transitive",
+     "patch_commands": [],
+     "pin": null,
+     "redistributor_would_need": "Reviewer to judge whether the Runtime Library Exception covers redistributing the runtime library file itself or whether GPLv3 source terms apply to it; if source is offered, it is the AlmaLinux 8 gcc source package of the build shown (not fetched). No notice section in the wheel.",
+     "subcomponents": [],
+     "uncertainty": [
+      "pulled in as a dependency of OpenBLAS; no build file names it",
+      "version known only from .gnu_debuglink and file name",
+      "no matching section found in the licence/notice files shipped in the wheel"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "el8_package_build": [
+       "8.5.0-28.el8_10.alma.1"
+      ]
+     },
+     "chain_links": {
+      "build_commit": "tag_resolved",
+      "build_environment": "prebuilt_image",
+      "corroboration": "package_build_id",
+      "pin": "package_transitive",
+      "source": "distro_srpm"
+     },
+     "chain_status": "clue_only",
+     "claimed_upstream_version": "8.5.0-28.el8_10.alma.1 (EL8 package build from .gnu_debuglink)",
+     "component": "libquadmath (GCC runtime)",
+     "copyleft_as_built": "LGPL-2.1-or-later",
+     "corroboration": "package_build_id",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 272193,
+       "compiler_comment": [],
+       "debuglink": "libquadmath.so.0.0.0-8.5.0-28.el8_10.alma.1.x86_64.debug",
+       "debuglink_package_build": [
+        "libquadmath.so.0.0.0",
+        "8.5.0-28.el8_10.alma.1"
+       ],
+       "file_name_interface_numbers": "0.0.0",
+       "needed": [
+        "libm.so.6",
+        "libc.so.6"
+       ],
+       "path": "opencv_python_headless.libs/libquadmath-2284e583.so.0.0.0",
+       "sha256": "a9307bbaa353623fa014e8b682d50c4629f5e5c7d61daa9a8652f7d165cd421a",
+       "soname": "libquadmath-2284e583.so.0.0.0"
+      }
+     ],
+     "flags": [],
+     "key": "libquadmath",
+     "licence_as_built": "LGPL-2.1-or-later (GCC's libquadmath); EL8 gcc package build.",
+     "missing_links": [
+      "no build file names this library or pins its version"
+     ],
+     "named_in_wheel_notice": false,
+     "origin": "package_transitive",
+     "patch_commands": [],
+     "pin": null,
+     "redistributor_would_need": "Corresponding source for an LGPL library: the AlmaLinux 8 gcc source package of the build shown (not fetched), the LGPL-2.1 text, and replaceability terms. No notice section in the wheel.",
+     "subcomponents": [],
+     "uncertainty": [
+      "pulled in as a dependency of libgfortran; no build file names it",
+      "version known only from .gnu_debuglink and file name",
+      "no matching section found in the licence/notice files shipped in the wheel"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "el8_package_build": [
+       "2.4.115-2.el8"
+      ]
+     },
+     "chain_links": {
+      "build_commit": "tag_resolved",
+      "build_environment": "prebuilt_image",
+      "corroboration": "package_build_id",
+      "pin": "package_transitive",
+      "source": "distro_srpm"
+     },
+     "chain_status": "clue_only",
+     "claimed_upstream_version": "2.4.115-2.el8 (EL8 package build from .gnu_debuglink)",
+     "component": "libdrm",
+     "copyleft_as_built": null,
+     "corroboration": "package_build_id",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 96417,
+       "compiler_comment": [],
+       "debuglink": "libdrm.so.2.4.0-2.4.115-2.el8.x86_64.debug",
+       "debuglink_package_build": [
+        "libdrm.so.2.4.0",
+        "2.4.115-2.el8"
+       ],
+       "file_name_interface_numbers": "2.4.0",
+       "needed": [
+        "libc.so.6"
+       ],
+       "path": "opencv_python_headless.libs/libdrm-b0291a67.so.2.4.0",
+       "sha256": "2b8f19025340baf49d5fb8b6b68113c429baf3ceb0e04d7b2663f673c44cdbed",
+       "soname": "libdrm-b0291a67.so.2.4.0"
+      }
+     ],
+     "flags": [],
+     "key": "libdrm",
+     "licence_as_built": "MIT (EL8 package build).",
+     "missing_links": [
+      "no build file names this library or pins its version"
+     ],
+     "named_in_wheel_notice": false,
+     "origin": "package_transitive",
+     "patch_commands": [],
+     "pin": null,
+     "redistributor_would_need": "MIT notice. No libdrm section was found in the wheel's LICENSE-3RD-PARTY.txt.",
+     "subcomponents": [],
+     "uncertainty": [
+      "detected by FFmpeg's configure (libavutil needs it); no build file names it",
+      "version known only from .gnu_debuglink",
+      "no matching section found in the licence/notice files shipped in the wheel"
+     ]
+    }
+   ],
+   "distribution": "opencv_python_headless",
+   "extension_module_notes": {
+    "cv2/cv2.abi3.so embedded build information (clue-level, not traced here)": [
+     "General configuration for OpenCV 4.13.0 =====================================",
+     "Version control:               4.13.0-1-gb4c5ec4042",
+     "Timestamp:                   2026-02-05T07:45:09Z",
+     "Extra dependencies:          /usr/lib64/libopenblasp.so avif /usr/local/lib/libpng.so /usr/lib64/libz.so dl m pthread rt",
+     "3rdparty dependencies:       libprotobuf ade ittnotify libjpeg-turbo libwebp libtiff libopenjp2 IlmImf ipphal ippiw ippicv",
+     "Non-free algorithms:         NO",
+     "ZLib:                        /usr/lib64/libz.so (ver 1.2.11)",
+     "JPEG:                        build-libjpeg-turbo (ver 3.1.2-70)",
+     "WEBP:                        build (ver decoder: 0x0210, encoder: 0x0210, demux: 0x0107)",
+     "AVIF:                        avif (ver 1.3.0)",
+     "PNG:                         /usr/local/lib/libpng.so (ver 1.6.53)",
+     "TIFF:                        build (ver 42 - 4.7.1)",
+     "JPEG 2000:                   build (ver 2.5.3)",
+     "OpenEXR:                     build (ver 2.3.0)",
+     "FFMPEG:                      YES",
+     "avcodec:                   YES (62.11.100)",
+     "avformat:                  YES (62.3.100)",
+     "avutil:                    YES (60.8.100)",
+     "swscale:                   YES (9.1.100)",
+     "Trace:                         YES (with Intel ITT(3.25.4))",
+     "Intel IPP:                   2022.2.0 [2022.2.0]",
+     "Intel IPP IW:                sources (2022.2.0)",
+     "Lapack:                      YES (/usr/lib64/libopenblasp.so)",
+     "Protobuf:                    build (3.19.1)",
+     "Flatbuffers:                 builtin/3rdparty (25.9.23)"
+    ],
+    "patches": [
+     {
+      "line": 225,
+      "text": "subprocess.check_call(\"patch -p0 < patches/patchOpenEXR\", shell=True)",
+      "value": "subprocess.check_call(\"patch -p0 < patches/patchOpenEXR\", shell=True)"
+     },
+     {
+      "line": 236,
+      "text": "subprocess.check_call(\"patch -p1 < patches/patchQtPlugins\", shell=True)",
+      "value": "subprocess.check_call(\"patch -p1 < patches/patchQtPlugins\", shell=True)"
+     }
+    ],
+    "patches_note": "opencv-python applies patches only to OpenEXR on 32-bit Linux and to the Qt plugins for non-headless builds; the Dockerfile applies no patches to the bundled libraries."
+   },
+   "ffmpeg_licence_logic": {
+    "configure_retained": {
+     "bytes": 294878,
+     "file": "sources/native-opencv_python_headless-ffmpeg-n8.0.1-configure",
+     "kind": "raw",
+     "path": "configure",
+     "ref": "n8.0.1",
+     "repository": "FFmpeg/FFmpeg",
+     "retrieved_on": "2026-10-05",
+     "sha256": "c4a99785591813c43258e080d86688de8cd0a4782f1d197d25aa5851411c7f00",
+     "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n8.0.1/configure"
+    },
+    "dockerfile_configure_flags": [
+     "--prefix=/ffmpeg_build",
+     "--extra-cflags=-I/ffmpeg_build/include",
+     "--extra-ldflags=-L/ffmpeg_build/lib",
+     "--enable-openssl",
+     "--enable-libvpx",
+     "--enable-shared",
+     "--enable-pic",
+     "--bindir=$HOME/bin"
+    ],
+    "dockerfile_flags_compared_as": [
+     "--prefix=/ffmpeg_build",
+     "--extra-cflags=-I/ffmpeg_build/include",
+     "--extra-ldflags=-L/ffmpeg_build/lib",
+     "--enable-openssl",
+     "--enable-libvpx",
+     "--enable-shared",
+     "--enable-pic",
+     "--bindir=/root/bin"
+    ],
+    "embedded_configuration_strings": [
+     "--prefix=/ffmpeg_build --extra-cflags=-I/ffmpeg_build/include --extra-ldflags=-L/ffmpeg_build/lib --enable-openssl --enable-libvpx --enable-shared --enable-pic --bindir=/root/bin"
+    ],
+    "embedded_equals_dockerfile": true,
+    "embedded_flags_not_in_dockerfile": [],
+    "embedded_library_idents": {
+     "libavcodec-156beeea.so.62.11.100": [
+      "Lavc62.11.100"
+     ],
+     "libavformat-8c8a026e.so.62.3.100": [
+      "Lavf62.3.100"
+     ],
+     "libavutil-ec54c519.so.60.8.100": [],
+     "libswresample-02b1114a.so.6.1.100": [],
+     "libswscale-09114b18.so.9.1.100": []
+    },
+    "embedded_licence_strings": [
+     "LGPL version 2.1 or later"
+    ],
+    "flags_in_dockerfile_not_embedded": [],
+    "home_substitution_note": "$HOME is compared as /root: the Dockerfile RUN steps before \"USER ci\" run as root, and the embedded string carries --bindir=/root/bin. This also indicates the libraries were built during the image build, not in the wheel CI run.",
+    "label_from_flags": "LGPL version 2.1 or later",
+    "licence_label_logic": {
+     "lines": [
+      "if enabled nonfree; then",
+      "    license=\"nonfree and unredistributable\"",
+      "elif enabled gplv3; then",
+      "    license=\"GPL version 3 or later\"",
+      "elif enabled lgplv3; then",
+      "    license=\"LGPL version 3 or later\"",
+      "elif enabled gpl; then",
+      "    license=\"GPL version 2 or later\"",
+      "else",
+      "    license=\"LGPL version 2.1 or later\"",
+      "fi"
+     ],
+     "start_line": 4598
+    },
+    "licence_md_retained": {
+     "bytes": 4346,
+     "file": "sources/native-opencv_python_headless-ffmpeg-n8.0.1-LICENSE.md",
+     "kind": "raw",
+     "path": "LICENSE.md",
+     "ref": "n8.0.1",
+     "repository": "FFmpeg/FFmpeg",
+     "retrieved_on": "2026-10-05",
+     "sha256": "2e1d16c72fd74e12063776371da757322f8b77589386532f4fd8634bde7de1af",
+     "url": "https://raw.githubusercontent.com/FFmpeg/FFmpeg/n8.0.1/LICENSE.md"
+    },
+    "licence_md_statement": "The Fraunhofer FDK AAC and OpenSSL libraries are under licenses which are incompatible with the GPLv2 and v3. To the best of our knowledge, they are compatible with the LGPL.",
+    "licence_relevant_flags_present": [],
+    "lists": {
+     "EXTERNAL_LIBRARY_GPLV3_LIST": [
+      "libsmbclient"
+     ],
+     "EXTERNAL_LIBRARY_GPL_LIST": [
+      "avisynth",
+      "frei0r",
+      "libcdio",
+      "libdavs2",
+      "libdvdnav",
+      "libdvdread",
+      "librubberband",
+      "libvidstab",
+      "libx264",
+      "libx265",
+      "libxavs",
+      "libxavs2",
+      "libxvid"
+     ],
+     "EXTERNAL_LIBRARY_NONFREE_LIST": [
+      "decklink",
+      "libfdk_aac",
+      "libtls"
+     ],
+     "EXTERNAL_LIBRARY_VERSION3_LIST": [
+      "gmp",
+      "libaribb24",
+      "liblensfun",
+      "libopencore_amrnb",
+      "libopencore_amrwb",
+      "libvo_amrwbenc",
+      "mbedtls",
+      "rkmpp"
+     ]
+    },
+    "openssl_check": {
+     "lines": [
+      "enabled openssl           && { { check_pkg_config openssl \"openssl >= 3.0.0\" openssl/ssl.h OPENSSL_init_ssl &&",
+      "                                 { enabled gplv3 || ! enabled gpl || enabled nonfree || die \"ERROR: OpenSSL >=3.0.0 requires --enable-version3\"; }; } ||",
+      "                               { enabled gpl && ! enabled nonfree && die \"ERROR: OpenSSL <3.0.0 is incompatible with the gpl\"; } ||",
+      "                               check_pkg_config openssl \"openssl >= 1.1.0\" openssl/ssl.h OPENSSL_init_ssl ||",
+      "                               check_lib openssl openssl/ssl.h OPENSSL_init_ssl -lssl -lcrypto ||",
+      "                               check_lib openssl openssl/ssl.h OPENSSL_init_ssl -lssl -lcrypto -lws2_32 -lgdi32 ||",
+      "                               die \"ERROR: openssl (>= 1.1.0) not found\"; }"
+     ],
+     "start_line": 7265
+    },
+    "openssl_in_lists": {
+     "EXTERNAL_LIBRARY_GPLV3_LIST": false,
+     "EXTERNAL_LIBRARY_GPL_LIST": false,
+     "EXTERNAL_LIBRARY_NONFREE_LIST": false,
+     "EXTERNAL_LIBRARY_VERSION3_LIST": false
+    },
+    "reading": "At n8.0.1, --enable-openssl is not in the GPL, nonfree or version3 library lists. The OpenSSL check requires --enable-version3 only for OpenSSL >= 3.0.0 combined with --enable-gpl, and refuses OpenSSL < 3.0.0 only with --enable-gpl (unless --enable-nonfree). Without --enable-gpl neither --enable-nonfree nor --enable-version3 is required, and the label stays \"LGPL version 2.1 or later\".",
+    "uncertainty": "The label is FFmpeg's; whether linking LGPL-2.1 FFmpeg with OpenSSL 1.1.1 (OpenSSL/SSLeay licences) is acceptable is FFmpeg's stated view (\"to the best of our knowledge\"), not a legal conclusion of this pack."
+   },
+   "licence_files_in_wheel": [
+    "cv2/LICENSE-3RD-PARTY.txt",
+    "cv2/LICENSE.txt",
+    "opencv_python_headless-4.13.0.92.dist-info/LICENSE-3RD-PARTY.txt",
+    "opencv_python_headless-4.13.0.92.dist-info/LICENSE.txt"
+   ],
+   "sha256": "0bd48544f77c68b2941392fcdf9bcd2b9cdf00e98cb8c29b2455d194763cf99e",
+   "unassigned_bundled_libraries": []
+  },
+  {
+   "artifact": "pillow-12.2.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+   "build_commit": {
+    "attestation": {
+     "available": true,
+     "certificate_claims": {
+      "build_config_digest": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+      "build_config_uri": "https://github.com/python-pillow/Pillow/.github/workflows/wheels.yml@refs/tags/12.2.0",
+      "build_signer_digest": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+      "build_signer_uri": "https://github.com/python-pillow/Pillow/.github/workflows/wheels.yml@refs/tags/12.2.0",
+      "build_trigger": "push",
+      "run_invocation_uri": "https://github.com/python-pillow/Pillow/actions/runs/23848087770/attempts/2",
+      "runner_environment": "github-hosted",
+      "source_repository_digest": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+      "source_repository_ref": "refs/tags/12.2.0",
+      "source_repository_uri": "https://github.com/python-pillow/Pillow",
+      "source_repository_visibility": "public"
+     },
+     "predicate_type": "https://docs.pypi.org/attestations/publish/v1",
+     "publisher": {
+      "environment": "release-pypi",
+      "kind": "GitHub",
+      "repository": "python-pillow/Pillow",
+      "workflow": "wheels.yml"
+     },
+     "record": {
+      "bytes": 9412,
+      "file": "sources/native-pillow-provenance.json",
+      "kind": "raw",
+      "retrieved_on": "2026-10-05",
+      "sha256": "de795813b93ee07c0fec31e756af063c410693db3f6c8dca2aa0c324fe9a9fd5",
+      "url": "https://pypi.org/integrity/pillow/12.2.0/pillow-12.2.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl/provenance"
+     },
+     "subject": [
+      {
+       "digest": {
+        "sha256": "62f5409336adb0663b7caa0da5c7d9e7bdbaae9ce761d34669420c2a801b2780"
+       },
+       "name": "pillow-12.2.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl"
+      }
+     ],
+     "subject_matches_wheel": true,
+     "transparency_log_index": "1206257928",
+     "verification_note": "Claims read from the Fulcio certificate PyPI returned; the Sigstore signature, certificate chain and transparency-log inclusion were not re-verified here (PyPI verifies attestations at upload under PEP 740)."
+    },
+    "commit": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+    "pypi": {
+     "record": {
+      "bytes": 180771,
+      "file": "sources/native-pillow-pypi-release.json",
+      "kind": "raw",
+      "retrieved_on": "2026-10-05",
+      "sha256": "c6b6a7c81f177465b93eee3f0d15f857c92ead496816b5fbc17f2bb87b1bdd23",
+      "url": "https://pypi.org/pypi/pillow/12.2.0/json"
+     },
+     "sha256_matches_manifest": true,
+     "upload_time": "2026-04-01T14:43:26.758012Z"
+    },
+    "release_tag": {
+     "commit": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+     "commit_date": "2026-04-01T12:11:14Z",
+     "message_first_line": "12.2.0 version bump",
+     "record": {
+      "bytes": 4002,
+      "error": "HTTPError: HTTP Error 403: rate limit exceeded",
+      "file": "sources/native-pillow-tag-12.2.0-commit.json",
+      "kind": "raw",
+      "retrieved_on": "2026-10-05",
+      "reused_retained_copy": true,
+      "sha256": "3797cdb39110d925298f73fe6c6998e923ac3e7537c7d17199f04b1f85856e6c",
+      "url": "https://api.github.com/repos/python-pillow/Pillow/commits/12.2.0"
+     },
+     "tag": "12.2.0"
+    },
+    "repository": "https://github.com/python-pillow/Pillow",
+    "run": "https://github.com/python-pillow/Pillow/actions/runs/23848087770/attempts/2",
+    "status": "attested",
+    "tag_agrees_with_attestation": true,
+    "workflow": "https://github.com/python-pillow/Pillow/.github/workflows/wheels.yml@refs/tags/12.2.0"
+   },
+   "build_files": {
+    "freetype-VER-2-14-3-configure.raw": {
+     "bytes": 35408,
+     "file": "sources/native-pillow-freetype-VER-2-14-3-configure.raw",
+     "kind": "raw",
+     "path": "builds/unix/configure.raw",
+     "ref": "VER-2-14-3",
+     "repository": "freetype/freetype",
+     "retrieved_on": "2026-10-05",
+     "sha256": "8689a4a9f2c8db1a0fe3ffe218d0ea1b188aea47822c89ba7221a7ed28069539",
+     "url": "https://raw.githubusercontent.com/freetype/freetype/VER-2-14-3/builds/unix/configure.raw"
+    },
+    "lcms2-2.18-configure.ac": {
+     "bytes": 12430,
+     "file": "sources/native-pillow-lcms2-2.18-configure.ac",
+     "kind": "raw",
+     "path": "configure.ac",
+     "ref": "lcms2.18",
+     "repository": "mm2/Little-CMS",
+     "retrieved_on": "2026-10-05",
+     "sha256": "e6a567ede9bc72def7c227ca2f9f8986d6487338f250bbee70d932aa6ef4219a",
+     "url": "https://raw.githubusercontent.com/mm2/Little-CMS/lcms2.18/configure.ac"
+    },
+    "libavif-v1.4.1-LocalAom.cmake": {
+     "bytes": 6760,
+     "file": "sources/native-pillow-libavif-v1.4.1-LocalAom.cmake",
+     "kind": "raw",
+     "path": "cmake/Modules/LocalAom.cmake",
+     "ref": "v1.4.1",
+     "repository": "AOMediaCodec/libavif",
+     "retrieved_on": "2026-10-05",
+     "sha256": "00b008cc37ac61fc421a9ac95bb82e5035e0ba87d4c33b40979e3799b5d58495",
+     "url": "https://raw.githubusercontent.com/AOMediaCodec/libavif/v1.4.1/cmake/Modules/LocalAom.cmake"
+    },
+    "libavif-v1.4.1-LocalDav1d.cmake": {
+     "bytes": 5681,
+     "file": "sources/native-pillow-libavif-v1.4.1-LocalDav1d.cmake",
+     "kind": "raw",
+     "path": "cmake/Modules/LocalDav1d.cmake",
+     "ref": "v1.4.1",
+     "repository": "AOMediaCodec/libavif",
+     "retrieved_on": "2026-10-05",
+     "sha256": "f9971a87e5fcc74e47305490e442eec7ba187dc0f822d6f0b6838f1811cffd68",
+     "url": "https://raw.githubusercontent.com/AOMediaCodec/libavif/v1.4.1/cmake/Modules/LocalDav1d.cmake"
+    },
+    "libavif-v1.4.1-LocalLibsharpyuv.cmake": {
+     "bytes": 2421,
+     "file": "sources/native-pillow-libavif-v1.4.1-LocalLibsharpyuv.cmake",
+     "kind": "raw",
+     "path": "cmake/Modules/LocalLibsharpyuv.cmake",
+     "ref": "v1.4.1",
+     "repository": "AOMediaCodec/libavif",
+     "retrieved_on": "2026-10-05",
+     "sha256": "8f1aa9d1299c7cba1e7e93690516a2b902d32ad04d97166d1cdf69424d0ba709",
+     "url": "https://raw.githubusercontent.com/AOMediaCodec/libavif/v1.4.1/cmake/Modules/LocalLibsharpyuv.cmake"
+    },
+    "libavif-v1.4.1-LocalLibyuv.cmake": {
+     "bytes": 3221,
+     "file": "sources/native-pillow-libavif-v1.4.1-LocalLibyuv.cmake",
+     "kind": "raw",
+     "path": "cmake/Modules/LocalLibyuv.cmake",
+     "ref": "v1.4.1",
+     "repository": "AOMediaCodec/libavif",
+     "retrieved_on": "2026-10-05",
+     "sha256": "cf668b13c8731fdd354ae87862880a941e5d762a5911b378c9286dc25ae07c41",
+     "url": "https://raw.githubusercontent.com/AOMediaCodec/libavif/v1.4.1/cmake/Modules/LocalLibyuv.cmake"
+    },
+    "libwebp-v1.6.0-demux-Makefile.am": {
+     "bytes": 623,
+     "file": "sources/native-pillow-libwebp-v1.6.0-demux-Makefile.am",
+     "kind": "raw",
+     "path": "src/demux/Makefile.am",
+     "ref": "v1.6.0",
+     "repository": "webmproject/libwebp",
+     "retrieved_on": "2026-10-05",
+     "sha256": "7565e3cdf141a7c037b64be6818218eff17067248ab50c3125ea0708b344bce4",
+     "url": "https://raw.githubusercontent.com/webmproject/libwebp/v1.6.0/src/demux/Makefile.am"
+    },
+    "libwebp-v1.6.0-mux-Makefile.am": {
+     "bytes": 720,
+     "file": "sources/native-pillow-libwebp-v1.6.0-mux-Makefile.am",
+     "kind": "raw",
+     "path": "src/mux/Makefile.am",
+     "ref": "v1.6.0",
+     "repository": "webmproject/libwebp",
+     "retrieved_on": "2026-10-05",
+     "sha256": "8470d0099dffc0419969e51bc700865bfd903900e696c90fef23291b45510b17",
+     "url": "https://raw.githubusercontent.com/webmproject/libwebp/v1.6.0/src/mux/Makefile.am"
+    },
+    "libwebp-v1.6.0-sharpyuv-Makefile.am": {
+     "bytes": 1476,
+     "file": "sources/native-pillow-libwebp-v1.6.0-sharpyuv-Makefile.am",
+     "kind": "raw",
+     "path": "sharpyuv/Makefile.am",
+     "ref": "v1.6.0",
+     "repository": "webmproject/libwebp",
+     "retrieved_on": "2026-10-05",
+     "sha256": "5a8443a7c432c9084be2dfa6fc6d925395fa705413529858fbdb1459716b9bd9",
+     "url": "https://raw.githubusercontent.com/webmproject/libwebp/v1.6.0/sharpyuv/Makefile.am"
+    },
+    "libwebp-v1.6.0-src-Makefile.am": {
+     "bytes": 1601,
+     "file": "sources/native-pillow-libwebp-v1.6.0-src-Makefile.am",
+     "kind": "raw",
+     "path": "src/Makefile.am",
+     "ref": "v1.6.0",
+     "repository": "webmproject/libwebp",
+     "retrieved_on": "2026-10-05",
+     "sha256": "3c58c7bdb76e230d03e2ef53d19fb8fb7ea0fc90e96fb3d5832fbc92f84187d4",
+     "url": "https://raw.githubusercontent.com/webmproject/libwebp/v1.6.0/src/Makefile.am"
+    },
+    "multibuild-common_utils.sh": {
+     "bytes": 22489,
+     "file": "sources/native-pillow-multibuild-common_utils.sh",
+     "kind": "raw",
+     "path": "common_utils.sh",
+     "ref": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+     "repository": "multi-build/multibuild",
+     "retrieved_on": "2026-10-05",
+     "sha256": "29e637ecb3564b2f69c9f4fdf7d0eed48b8a97157e092ee6f480bbb67940793f",
+     "url": "https://raw.githubusercontent.com/multi-build/multibuild/64739327166fcad1fa41ad9b23fa910fa244c84f/common_utils.sh"
+    },
+    "multibuild-library_builders.sh": {
+     "bytes": 18041,
+     "file": "sources/native-pillow-multibuild-library_builders.sh",
+     "kind": "raw",
+     "path": "library_builders.sh",
+     "ref": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+     "repository": "multi-build/multibuild",
+     "retrieved_on": "2026-10-05",
+     "sha256": "44e63c2e1271f2c4d565c05c6967941af4584836e777f7592d8639cc990dff2c",
+     "url": "https://raw.githubusercontent.com/multi-build/multibuild/64739327166fcad1fa41ad9b23fa910fa244c84f/library_builders.sh"
+    },
+    "pyproject.toml": {
+     "bytes": 5952,
+     "file": "sources/native-pillow-pyproject.toml",
+     "kind": "raw",
+     "path": "pyproject.toml",
+     "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+     "repository": "python-pillow/Pillow",
+     "retrieved_on": "2026-10-05",
+     "sha256": "121c8f6bc8a716ca77c9a4fed8e949d5d87bc959cc167396857c7168110cf8dd",
+     "url": "https://raw.githubusercontent.com/python-pillow/Pillow/3c41c095064200a02672d89cc5ff629eaf4b0d4f/pyproject.toml"
+    },
+    "requirements-cibw.txt": {
+     "bytes": 20,
+     "file": "sources/native-pillow-requirements-cibw.txt",
+     "kind": "raw",
+     "path": ".ci/requirements-cibw.txt",
+     "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+     "repository": "python-pillow/Pillow",
+     "retrieved_on": "2026-10-05",
+     "sha256": "e9dede3c196155b92b2174f7109e787e1d08b3a4cdd53b899986989aa7b0b480",
+     "url": "https://raw.githubusercontent.com/python-pillow/Pillow/3c41c095064200a02672d89cc5ff629eaf4b0d4f/.ci/requirements-cibw.txt"
+    },
+    "setup.py": {
+     "bytes": 41421,
+     "file": "sources/native-pillow-setup.py",
+     "kind": "raw",
+     "path": "setup.py",
+     "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+     "repository": "python-pillow/Pillow",
+     "retrieved_on": "2026-10-05",
+     "sha256": "c152c890ccea7fe73f7102c626ec12840f8c3b343985aff8c74ecfc5389300d1",
+     "url": "https://raw.githubusercontent.com/python-pillow/Pillow/3c41c095064200a02672d89cc5ff629eaf4b0d4f/setup.py"
+    },
+    "wheels-dependencies.sh": {
+     "bytes": 15884,
+     "file": "sources/native-pillow-wheels-dependencies.sh",
+     "kind": "raw",
+     "path": ".github/workflows/wheels-dependencies.sh",
+     "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+     "repository": "python-pillow/Pillow",
+     "retrieved_on": "2026-10-05",
+     "sha256": "183bb875d137f03c13a572e6c604ae54814296b9d210fab629869ab5e24a0519",
+     "url": "https://raw.githubusercontent.com/python-pillow/Pillow/3c41c095064200a02672d89cc5ff629eaf4b0d4f/.github/workflows/wheels-dependencies.sh"
+    },
+    "wheels.yml": {
+     "bytes": 9685,
+     "file": "sources/native-pillow-wheels.yml",
+     "kind": "raw",
+     "path": ".github/workflows/wheels.yml",
+     "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+     "repository": "python-pillow/Pillow",
+     "retrieved_on": "2026-10-05",
+     "sha256": "0842d864c6c97c6df25a6e001e6306d1b79c945595881e2b41db1a20287142f0",
+     "url": "https://raw.githubusercontent.com/python-pillow/Pillow/3c41c095064200a02672d89cc5ff629eaf4b0d4f/.github/workflows/wheels.yml"
+    }
+   },
+   "bundled_libraries": [
+    "pillow.libs/libXau-154567c4.so.6.0.0",
+    "pillow.libs/libavif-a883386a.so.16.4.1",
+    "pillow.libs/libbrotlicommon-785b7a00.so.1.2.0",
+    "pillow.libs/libbrotlidec-08d35d18.so.1.2.0",
+    "pillow.libs/libfreetype-d2d71ad9.so.6.20.6",
+    "pillow.libs/libharfbuzz-ef65cc8a.so.0.61321.0",
+    "pillow.libs/libjpeg-8296d2fa.so.62.4.0",
+    "pillow.libs/liblcms2-545f6561.so.2.0.18",
+    "pillow.libs/liblzma-3c942967.so.5.8.3",
+    "pillow.libs/libopenjp2-f3576751.so.2.5.4",
+    "pillow.libs/libpng16-65c953c0.so.16.56.0",
+    "pillow.libs/libsharpyuv-0bacc318.so.0.1.2",
+    "pillow.libs/libtiff-f4bc73ff.so.6.2.0",
+    "pillow.libs/libwebp-67ee3789.so.7.2.0",
+    "pillow.libs/libwebpdemux-eeb71312.so.2.0.17",
+    "pillow.libs/libwebpmux-20a90b09.so.3.1.2",
+    "pillow.libs/libxcb-bac6ebc8.so.1.1.0",
+    "pillow.libs/libzstd-6ea785c0.so.1.5.7"
+   ],
+   "cibuildwheel": {
+    "line": 1,
+    "text": "cibuildwheel==3.3.1",
+    "value": "cibuildwheel==3.3.1"
+   },
+   "components": [
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "libtool_mapping": {
+       "expected_file_suffix": "6.20.6",
+       "file_suffix": "6.20.6",
+       "matches": true,
+       "upstream_version_info": {
+        "file": "sources/native-pillow-freetype-VER-2-14-3-configure.raw",
+        "line": 20,
+        "path": "builds/unix/configure.raw",
+        "ref": "VER-2-14-3",
+        "repository": "freetype/freetype",
+        "text": "version_info='26:6:20'",
+        "value": "26:6:20"
+       }
+      }
+     },
+     "chain_links": {
+      "build_commit": "attested",
+      "build_environment": "same_run",
+      "corroboration": "libtool_mapping",
+      "pin": "explicit",
+      "source": "unpinned_mirror"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "2.14.3",
+     "component": "FreeType",
+     "copyleft_as_built": null,
+     "corroboration": "libtool_mapping",
+     "dual_licence_with_gpl_option": "FTL OR GPL-2.0-or-later",
+     "files": [
+      {
+       "bytes": 1459513,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)",
+        "GCC: (GNU) 8.5.0 20210514 (Red Hat 8.5.0-28)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "6.20.6",
+       "needed": [
+        "libpng16-65c953c0.so.16.56.0",
+        "libz.so.1",
+        "libm.so.6",
+        "libdl.so.2",
+        "libbrotlidec-08d35d18.so.1.2.0",
+        "libpthread.so.0",
+        "libc.so.6"
+       ],
+       "path": "pillow.libs/libfreetype-d2d71ad9.so.6.20.6",
+       "sha256": "5542ed456a4d931975a1bad8b8129b8d0398325fbc91f31a744249cba0f61078",
+       "soname": "libfreetype-d2d71ad9.so.6.20.6"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 311,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "build_freetype",
+       "value": "build_freetype"
+      },
+      {
+       "file": "sources/native-pillow-multibuild-library_builders.sh",
+       "line": 71,
+       "path": "library_builders.sh",
+       "ref": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+       "repository": "multi-build/multibuild",
+       "text": "&& ./configure --prefix=$BUILD_PREFIX $HOST_CONFIGURE_FLAGS $configure_args \\",
+       "value": "./configure --prefix=$BUILD_PREFIX $HOST_CONFIGURE_FLAGS $configure_args"
+      }
+     ],
+     "key": "freetype",
+     "licence_as_built": "FTL OR GPL-2.0-or-later (FreeType dual licence; the redistributor chooses); appears to include bzip2 1.0.8 statically (bzip2-1.0.6 licence).",
+     "missing_links": [
+      "source archive comes from an unpinned branch (identified only by inference)"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-pillow-wheels-dependencies.sh",
+      "line": 93,
+      "path": ".github/workflows/wheels-dependencies.sh",
+      "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+      "repository": "python-pillow/Pillow",
+      "text": "FREETYPE_VERSION=2.14.3",
+      "value": "2.14.3"
+     },
+     "redistributor_would_need": "Under the FTL: the FTL text and the documentation credit it requires; no source obligation. Choosing GPL-2.0 instead would bring source obligations.",
+     "source": {
+      "checksum_lines_in_file": 9,
+      "checksum_pinned": null,
+      "kind": "archive URL",
+      "named_at": {
+       "file": "sources/native-pillow-multibuild-library_builders.sh",
+       "line": 300,
+       "path": "library_builders.sh",
+       "ref": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+       "repository": "multi-build/multibuild",
+       "text": "build_simple freetype $FREETYPE_VERSION https://download.savannah.gnu.org/releases/freetype",
+       "value": "https://download.savannah.gnu.org/releases/freetype"
+      },
+      "pillow_depends_archive": {
+       "archive_name_fetch_unpack_looks_for": "freetype-2.14.3.tar.gz",
+       "commit": "74bd5eda4d4ddd57a23081c1e9977ff6ba1c1347",
+       "git_blob_sha1": "c5a0f6cec655dc684c8ade358c3de5fb250468dc",
+       "present_at_inferred_commit": true
+      },
+      "url": "https://download.savannah.gnu.org/releases/freetype/freetype-2.14.3.tar.gz"
+     },
+     "subcomponents": [
+      {
+       "embedded_version_strings": [
+        "/project/build/bzip2-1.0.8",
+        "1.0.8, 13-Jul-2019"
+       ],
+       "licence": "bzip2-1.0.6",
+       "name": "bzip2 (appears statically linked: no libbz2 in DT_NEEDED, \"1.0.8\" string)",
+       "pin": {
+        "file": "sources/native-pillow-wheels-dependencies.sh",
+        "line": 104,
+        "path": ".github/workflows/wheels-dependencies.sh",
+        "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+        "repository": "python-pillow/Pillow",
+        "text": "BZIP2_VERSION=1.0.8",
+        "value": "1.0.8"
+       },
+       "source": "https://mirrors.kernel.org/sourceware/bzip2/bzip2-1.0.8.tar.gz via multibuild build_bzip2 (archive also in pillow-depends)"
+      }
+     ],
+     "uncertainty": [
+      "the build pins no checksum for this source",
+      "multibuild's fetch_unpack uses freetype-2.14.3.tar.gz from the unpinned python-pillow/pillow-depends@main zip when present; it is present at 74bd5eda4d4d (latest main commit before upload), so the upstream URL is only the fallback; byte identity with upstream not checked"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "embedded_version_strings": [
+       "13.2.1"
+      ]
+     },
+     "chain_links": {
+      "build_commit": "attested",
+      "build_environment": "same_run",
+      "corroboration": "embedded_version",
+      "pin": "explicit",
+      "source": "unpinned_mirror"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "13.2.1",
+     "component": "HarfBuzz",
+     "copyleft_as_built": null,
+     "corroboration": "embedded_version",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 933009,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)",
+        "GCC: (GNU) 8.5.0 20210514 (Red Hat 8.5.0-28)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "0.61321.0",
+       "needed": [
+        "libm.so.6",
+        "libfreetype-d2d71ad9.so.6.20.6",
+        "libpthread.so.0",
+        "libc.so.6"
+       ],
+       "path": "pillow.libs/libharfbuzz-ef65cc8a.so.0.61321.0",
+       "sha256": "6f68517c84bace435b9fb9bb48024beeaaf8454ef6d7d5c33d0c072173591858",
+       "soname": "libharfbuzz-ef65cc8a.so.0.61321.0"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 166,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "&& meson setup build --prefix=$BUILD_PREFIX --libdir=$BUILD_PREFIX/lib --buildtype=minsize -Dfreetype=enabled -Dglib=disabled -Dtests=disabled $HOST_MESON_FLAGS)",
+       "value": "meson setup build --prefix=$BUILD_PREFIX --libdir=$BUILD_PREFIX/lib --buildtype=minsize -Dfreetype=enabled -Dglib=disabled -Dtests=disabled"
+      }
+     ],
+     "key": "harfbuzz",
+     "licence_as_built": "MIT (\"Old MIT\", HarfBuzz COPYING).",
+     "missing_links": [
+      "source archive comes from an unpinned branch (identified only by inference)"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-pillow-wheels-dependencies.sh",
+      "line": 94,
+      "path": ".github/workflows/wheels-dependencies.sh",
+      "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+      "repository": "python-pillow/Pillow",
+      "text": "HARFBUZZ_VERSION=13.2.1",
+      "value": "13.2.1"
+     },
+     "redistributor_would_need": "MIT notice (present in the wheel LICENSE).",
+     "source": {
+      "checksum_lines_in_file": 0,
+      "checksum_pinned": null,
+      "kind": "archive URL",
+      "named_at": {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 164,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "local out_dir=$(fetch_unpack https://github.com/harfbuzz/harfbuzz/releases/download/$HARFBUZZ_VERSION/harfbuzz-$HARFBUZZ_VERSION.tar.xz harfbuzz-$HARFBUZZ_VERSION.tar.xz)",
+       "value": "https://github.com/harfbuzz/harfbuzz/releases/download/$HARFBUZZ_VERSION/harfbuzz-$HARFBUZZ_VERSION.tar.xz"
+      },
+      "pillow_depends_archive": {
+       "archive_name_fetch_unpack_looks_for": "harfbuzz-13.2.1.tar.xz",
+       "commit": "74bd5eda4d4ddd57a23081c1e9977ff6ba1c1347",
+       "git_blob_sha1": "a601f16f705b325a76f96d0335f333d5182fb912",
+       "present_at_inferred_commit": true
+      },
+      "url": "https://github.com/harfbuzz/harfbuzz/releases/download/13.2.1/harfbuzz-13.2.1.tar.xz"
+     },
+     "subcomponents": [],
+     "uncertainty": [
+      "the build pins no checksum for this source",
+      "multibuild's fetch_unpack uses harfbuzz-13.2.1.tar.xz from the unpinned python-pillow/pillow-depends@main zip when present; it is present at 74bd5eda4d4d (latest main commit before upload), so the upstream URL is only the fallback; byte identity with upstream not checked"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "embedded_version_strings": [
+       "libjpeg-turbo version 3.1.4.1 (build 20260401)"
+      ]
+     },
+     "chain_links": {
+      "build_commit": "attested",
+      "build_environment": "same_run",
+      "corroboration": "embedded_version",
+      "pin": "explicit",
+      "source": "unpinned_mirror"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "3.1.4.1",
+     "component": "libjpeg-turbo",
+     "copyleft_as_built": null,
+     "corroboration": "embedded_version",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 836273,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "62.4.0",
+       "needed": [
+        "libc.so.6",
+        "ld-linux-x86-64.so.2"
+       ],
+       "path": "pillow.libs/libjpeg-8296d2fa.so.62.4.0",
+       "sha256": "7d756b9abefcfaffa6e0958931332c1a066f060931e311c811f6a4dff801bdf2",
+       "soname": "libjpeg-8296d2fa.so.62.4.0"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-pillow-multibuild-library_builders.sh",
+       "line": 170,
+       "path": "library_builders.sh",
+       "ref": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+       "repository": "multi-build/multibuild",
+       "text": "&& $cmake -G\"Unix Makefiles\" -DCMAKE_INSTALL_PREFIX=$BUILD_PREFIX \\",
+       "value": "$cmake -G\"Unix Makefiles\" -DCMAKE_INSTALL_PREFIX=$BUILD_PREFIX"
+      }
+     ],
+     "key": "libjpeg-turbo",
+     "licence_as_built": "IJG AND BSD-3-Clause AND Zlib (libjpeg-turbo LICENSE.md).",
+     "missing_links": [
+      "source archive comes from an unpinned branch (identified only by inference)"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-pillow-wheels-dependencies.sh",
+      "line": 96,
+      "path": ".github/workflows/wheels-dependencies.sh",
+      "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+      "repository": "python-pillow/Pillow",
+      "text": "JPEGTURBO_VERSION=3.1.4.1",
+      "value": "3.1.4.1"
+     },
+     "redistributor_would_need": "Notices, including the IJG documentation credit; source not required.",
+     "source": {
+      "checksum_lines_in_file": 9,
+      "checksum_pinned": null,
+      "kind": "archive URL",
+      "named_at": {
+       "file": "sources/native-pillow-multibuild-library_builders.sh",
+       "line": 168,
+       "path": "library_builders.sh",
+       "ref": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+       "repository": "multi-build/multibuild",
+       "text": "fetch_unpack https://github.com/libjpeg-turbo/libjpeg-turbo/releases/download/${JPEGTURBO_VERSION}/libjpeg-turbo-${JPEGTURBO_VERSION}.tar.gz",
+       "value": "https://github.com/libjpeg-turbo/libjpeg-turbo/releases/download/${JPEGTURBO_VERSION}/libjpeg-turbo-${JPEGTURBO_VERSION}.tar.gz"
+      },
+      "pillow_depends_archive": {
+       "archive_name_fetch_unpack_looks_for": "libjpeg-turbo-3.1.4.1.tar.gz",
+       "commit": "74bd5eda4d4ddd57a23081c1e9977ff6ba1c1347",
+       "git_blob_sha1": "20526994057c7da1eeda5a6e3cff6e07084ef652",
+       "present_at_inferred_commit": true
+      },
+      "url": "https://github.com/libjpeg-turbo/libjpeg-turbo/releases/download/3.1.4.1/libjpeg-turbo-3.1.4.1.tar.gz"
+     },
+     "subcomponents": [],
+     "uncertainty": [
+      "the build pins no checksum for this source",
+      "multibuild's fetch_unpack uses libjpeg-turbo-3.1.4.1.tar.gz from the unpinned python-pillow/pillow-depends@main zip when present; it is present at 74bd5eda4d4d (latest main commit before upload), so the upstream URL is only the fallback; byte identity with upstream not checked"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "libtool_mapping": {
+       "expected_file_suffix": "2.0.18",
+       "file_suffix": "2.0.18",
+       "matches": true,
+       "upstream_version_info": {
+        "file": "sources/native-pillow-lcms2-2.18-configure.ac",
+        "line": 18,
+        "path": "configure.ac",
+        "ref": "lcms2.18",
+        "repository": "mm2/Little-CMS",
+        "text": "LIBRARY_CURRENT=2",
+        "value": "2:18:0"
+       }
+      }
+     },
+     "chain_links": {
+      "build_commit": "attested",
+      "build_environment": "same_run",
+      "corroboration": "libtool_mapping",
+      "pin": "explicit",
+      "source": "unpinned_mirror"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "2.18",
+     "component": "Little CMS 2",
+     "copyleft_as_built": null,
+     "corroboration": "libtool_mapping",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 519073,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "2.0.18",
+       "needed": [
+        "libm.so.6",
+        "libpthread.so.0",
+        "libc.so.6"
+       ],
+       "path": "pillow.libs/liblcms2-545f6561.so.2.0.18",
+       "sha256": "c3f718ceefd4312af48f8ed57a0d8b26e0727908413a269e5d012a198507f412",
+       "soname": "liblcms2-545f6561.so.2.0.18"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-pillow-multibuild-library_builders.sh",
+       "line": 71,
+       "path": "library_builders.sh",
+       "ref": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+       "repository": "multi-build/multibuild",
+       "text": "&& ./configure --prefix=$BUILD_PREFIX $HOST_CONFIGURE_FLAGS $configure_args \\",
+       "value": "./configure --prefix=$BUILD_PREFIX $HOST_CONFIGURE_FLAGS $configure_args"
+      }
+     ],
+     "key": "lcms2",
+     "licence_as_built": "MIT.",
+     "missing_links": [
+      "source archive comes from an unpinned branch (identified only by inference)"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-pillow-wheels-dependencies.sh",
+      "line": 101,
+      "path": ".github/workflows/wheels-dependencies.sh",
+      "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+      "repository": "python-pillow/Pillow",
+      "text": "LCMS2_VERSION=2.18",
+      "value": "2.18"
+     },
+     "redistributor_would_need": "MIT notice (present).",
+     "source": {
+      "checksum_lines_in_file": 9,
+      "checksum_pinned": null,
+      "kind": "archive URL",
+      "named_at": {
+       "file": "sources/native-pillow-multibuild-library_builders.sh",
+       "line": 250,
+       "path": "library_builders.sh",
+       "ref": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+       "repository": "multi-build/multibuild",
+       "text": "build_simple lcms2 $LCMS2_VERSION https://downloads.sourceforge.net/project/lcms/lcms/$LCMS2_VERSION",
+       "value": "https://downloads.sourceforge.net/project/lcms/lcms/$LCMS2_VERSION"
+      },
+      "pillow_depends_archive": {
+       "archive_name_fetch_unpack_looks_for": "lcms2-2.18.tar.gz",
+       "commit": "74bd5eda4d4ddd57a23081c1e9977ff6ba1c1347",
+       "git_blob_sha1": "bdb6d2c801b0a38cbf20d8b86c5754c652026229",
+       "present_at_inferred_commit": true
+      },
+      "url": "https://downloads.sourceforge.net/project/lcms/lcms/2.18/lcms2-2.18.tar.gz"
+     },
+     "subcomponents": [],
+     "uncertainty": [
+      "the build pins no checksum for this source",
+      "multibuild's fetch_unpack uses lcms2-2.18.tar.gz from the unpinned python-pillow/pillow-depends@main zip when present; it is present at 74bd5eda4d4d (latest main commit before upload), so the upstream URL is only the fallback; byte identity with upstream not checked"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "embedded_version_strings": [
+       "5.8.3"
+      ]
+     },
+     "chain_links": {
+      "build_commit": "attested",
+      "build_environment": "same_run",
+      "corroboration": "embedded_version",
+      "pin": "explicit",
+      "source": "unpinned_mirror"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "5.8.3",
+     "component": "xz (liblzma)",
+     "copyleft_as_built": null,
+     "corroboration": "embedded_version",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 266369,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "5.8.3",
+       "needed": [
+        "libpthread.so.0",
+        "libc.so.6"
+       ],
+       "path": "pillow.libs/liblzma-3c942967.so.5.8.3",
+       "sha256": "6b452ee3bde01d571d8854c42df2d225ff39571d078b13479c4e6f62a5b33e29",
+       "soname": "liblzma-3c942967.so.5.8.3"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-pillow-multibuild-library_builders.sh",
+       "line": 71,
+       "path": "library_builders.sh",
+       "ref": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+       "repository": "multi-build/multibuild",
+       "text": "&& ./configure --prefix=$BUILD_PREFIX $HOST_CONFIGURE_FLAGS $configure_args \\",
+       "value": "./configure --prefix=$BUILD_PREFIX $HOST_CONFIGURE_FLAGS $configure_args"
+      }
+     ],
+     "key": "xz",
+     "licence_as_built": "0BSD (liblzma since xz 5.6.0).",
+     "missing_links": [
+      "source archive comes from an unpinned branch (identified only by inference)"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-pillow-wheels-dependencies.sh",
+      "line": 98,
+      "path": ".github/workflows/wheels-dependencies.sh",
+      "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+      "repository": "python-pillow/Pillow",
+      "text": "XZ_VERSION=5.8.3",
+      "value": "5.8.3"
+     },
+     "redistributor_would_need": "Notice (present as LIBLZMA).",
+     "source": {
+      "checksum_lines_in_file": 9,
+      "checksum_pinned": null,
+      "kind": "archive URL",
+      "named_at": {
+       "file": "sources/native-pillow-multibuild-library_builders.sh",
+       "line": 275,
+       "path": "library_builders.sh",
+       "ref": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+       "repository": "multi-build/multibuild",
+       "text": "build_simple xz $XZ_VERSION https://github.com/tukaani-project/xz/releases/download/v$XZ_VERSION",
+       "value": "https://github.com/tukaani-project/xz/releases/download/v$XZ_VERSION"
+      },
+      "pillow_depends_archive": {
+       "archive_name_fetch_unpack_looks_for": "xz-5.8.3.tar.gz",
+       "commit": "74bd5eda4d4ddd57a23081c1e9977ff6ba1c1347",
+       "git_blob_sha1": "bac3c8b4c5ee55e541067ae6eb20996d0093ba3c",
+       "present_at_inferred_commit": true
+      },
+      "url": "https://github.com/tukaani-project/xz/releases/download/v5.8.3/xz-5.8.3.tar.gz"
+     },
+     "subcomponents": [],
+     "uncertainty": [
+      "the build pins no checksum for this source",
+      "multibuild's fetch_unpack uses xz-5.8.3.tar.gz from the unpinned python-pillow/pillow-depends@main zip when present; it is present at 74bd5eda4d4d (latest main commit before upload), so the upstream URL is only the fallback; byte identity with upstream not checked"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "embedded_version_strings": [
+       "2.5.4"
+      ]
+     },
+     "chain_links": {
+      "build_commit": "attested",
+      "build_environment": "same_run",
+      "corroboration": "embedded_version",
+      "pin": "explicit",
+      "source": "upstream_url"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "2.5.4",
+     "component": "OpenJPEG",
+     "copyleft_as_built": null,
+     "corroboration": "embedded_version",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 585849,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "2.5.4",
+       "needed": [
+        "libm.so.6",
+        "libpthread.so.0",
+        "libc.so.6"
+       ],
+       "path": "pillow.libs/libopenjp2-f3576751.so.2.5.4",
+       "sha256": "2b534a95b85b3000f3a8ee97b8f1eedecb10ce72f4b8213729500e1206593d10",
+       "soname": "libopenjp2-f3576751.so.2.5.4"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-pillow-multibuild-library_builders.sh",
+       "line": 242,
+       "path": "library_builders.sh",
+       "ref": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+       "repository": "multi-build/multibuild",
+       "text": "&& $cmake -DCMAKE_INSTALL_PREFIX=$BUILD_PREFIX -DCMAKE_INSTALL_LIBDIR=$BUILD_PREFIX/lib -DCMAKE_INSTALL_NAME_DIR=$BUILD_PREFIX/lib $HOST_CMAKE_FLAGS . \\",
+       "value": "$cmake -DCMAKE_INSTALL_PREFIX=$BUILD_PREFIX -DCMAKE_INSTALL_LIBDIR=$BUILD_PREFIX/lib -DCMAKE_INSTALL_NAME_DIR=$BUILD_PREFIX/lib $HOST_CMAKE_FLAGS ."
+      }
+     ],
+     "key": "openjpeg",
+     "licence_as_built": "BSD-2-Clause.",
+     "missing_links": [
+      "source archive named by URL but no checksum pinned: the exact source bytes are not established"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-pillow-wheels-dependencies.sh",
+      "line": 97,
+      "path": ".github/workflows/wheels-dependencies.sh",
+      "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+      "repository": "python-pillow/Pillow",
+      "text": "OPENJPEG_VERSION=2.5.4",
+      "value": "2.5.4"
+     },
+     "redistributor_would_need": "BSD notice (present).",
+     "source": {
+      "checksum_lines_in_file": 9,
+      "checksum_pinned": null,
+      "kind": "archive URL",
+      "named_at": {
+       "file": "sources/native-pillow-multibuild-library_builders.sh",
+       "line": 240,
+       "path": "library_builders.sh",
+       "ref": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+       "repository": "multi-build/multibuild",
+       "text": "local out_dir=$(fetch_unpack https://github.com/uclouvain/openjpeg/archive/${archive_prefix}${OPENJPEG_VERSION}.tar.gz)",
+       "value": "https://github.com/uclouvain/openjpeg/archive/${archive_prefix}${OPENJPEG_VERSION}.tar.gz"
+      },
+      "pillow_depends_archive": {
+       "archive_name_fetch_unpack_looks_for": "v2.5.4.tar.gz",
+       "commit": "74bd5eda4d4ddd57a23081c1e9977ff6ba1c1347",
+       "git_blob_sha1": null,
+       "present_at_inferred_commit": false
+      },
+      "url": "https://github.com/uclouvain/openjpeg/archive/v2.5.4.tar.gz"
+     },
+     "subcomponents": [],
+     "uncertainty": [
+      "the build pins no checksum for this source"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "embedded_version_strings": [
+       "libpng version 1.6.56"
+      ]
+     },
+     "chain_links": {
+      "build_commit": "attested",
+      "build_environment": "same_run",
+      "corroboration": "embedded_version",
+      "pin": "explicit",
+      "source": "unpinned_mirror"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "1.6.56",
+     "component": "libpng",
+     "copyleft_as_built": null,
+     "corroboration": "embedded_version",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 278001,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "16.56.0",
+       "needed": [
+        "libz.so.1",
+        "libm.so.6",
+        "libc.so.6"
+       ],
+       "path": "pillow.libs/libpng16-65c953c0.so.16.56.0",
+       "sha256": "30e8f1e3fcc6703ffcfe327c8ca49de207f1c65f940cdb4714bb18c2a679a8df",
+       "soname": "libpng16-65c953c0.so.16.56.0"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-pillow-multibuild-library_builders.sh",
+       "line": 71,
+       "path": "library_builders.sh",
+       "ref": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+       "repository": "multi-build/multibuild",
+       "text": "&& ./configure --prefix=$BUILD_PREFIX $HOST_CONFIGURE_FLAGS $configure_args \\",
+       "value": "./configure --prefix=$BUILD_PREFIX $HOST_CONFIGURE_FLAGS $configure_args"
+      }
+     ],
+     "key": "libpng",
+     "licence_as_built": "libpng-2.0.",
+     "missing_links": [
+      "source archive comes from an unpinned branch (identified only by inference)"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-pillow-wheels-dependencies.sh",
+      "line": 95,
+      "path": ".github/workflows/wheels-dependencies.sh",
+      "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+      "repository": "python-pillow/Pillow",
+      "text": "LIBPNG_VERSION=1.6.56",
+      "value": "1.6.56"
+     },
+     "redistributor_would_need": "Notice (present).",
+     "source": {
+      "checksum_lines_in_file": 9,
+      "checksum_pinned": null,
+      "kind": "archive URL",
+      "named_at": {
+       "file": "sources/native-pillow-multibuild-library_builders.sh",
+       "line": 182,
+       "path": "library_builders.sh",
+       "ref": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+       "repository": "multi-build/multibuild",
+       "text": "build_simple libpng $LIBPNG_VERSION https://download.sourceforge.net/libpng",
+       "value": "https://download.sourceforge.net/libpng"
+      },
+      "pillow_depends_archive": {
+       "archive_name_fetch_unpack_looks_for": "libpng-1.6.56.tar.gz",
+       "commit": "74bd5eda4d4ddd57a23081c1e9977ff6ba1c1347",
+       "git_blob_sha1": "d181f692537483a28fdf5efd2476f44389366007",
+       "present_at_inferred_commit": true
+      },
+      "url": "https://download.sourceforge.net/libpng/libpng-1.6.56.tar.gz"
+     },
+     "subcomponents": [],
+     "uncertainty": [
+      "the build pins no checksum for this source",
+      "multibuild's fetch_unpack uses libpng-1.6.56.tar.gz from the unpinned python-pillow/pillow-depends@main zip when present; it is present at 74bd5eda4d4d (latest main commit before upload), so the upstream URL is only the fallback; byte identity with upstream not checked"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "embedded_version_strings": [
+       "LIBTIFF, Version 4.7.1"
+      ]
+     },
+     "chain_links": {
+      "build_commit": "attested",
+      "build_environment": "same_run",
+      "corroboration": "embedded_version",
+      "pin": "explicit",
+      "source": "unpinned_mirror"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "4.7.1",
+     "component": "libtiff",
+     "copyleft_as_built": null,
+     "corroboration": "embedded_version",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 754729,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)",
+        "GCC: (GNU) 8.5.0 20210514 (Red Hat 8.5.0-28)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "6.2.0",
+       "needed": [
+        "libzstd-6ea785c0.so.1.5.7",
+        "liblzma-3c942967.so.5.8.3",
+        "libjpeg-8296d2fa.so.62.4.0",
+        "libz.so.1",
+        "libm.so.6",
+        "libpthread.so.0",
+        "libc.so.6"
+       ],
+       "path": "pillow.libs/libtiff-f4bc73ff.so.6.2.0",
+       "sha256": "da609a6e8abd0b44d5e160bae614babc0073b311703abdbe69920094c7f06fca",
+       "soname": "libtiff-f4bc73ff.so.6.2.0"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-pillow-multibuild-library_builders.sh",
+       "line": 71,
+       "path": "library_builders.sh",
+       "ref": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+       "repository": "multi-build/multibuild",
+       "text": "&& ./configure --prefix=$BUILD_PREFIX $HOST_CONFIGURE_FLAGS $configure_args \\",
+       "value": "./configure --prefix=$BUILD_PREFIX $HOST_CONFIGURE_FLAGS $configure_args"
+      }
+     ],
+     "key": "libtiff",
+     "licence_as_built": "libtiff (MIT-style).",
+     "missing_links": [
+      "source archive comes from an unpinned branch (identified only by inference)"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-pillow-wheels-dependencies.sh",
+      "line": 100,
+      "path": ".github/workflows/wheels-dependencies.sh",
+      "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+      "repository": "python-pillow/Pillow",
+      "text": "TIFF_VERSION=4.7.1",
+      "value": "4.7.1"
+     },
+     "redistributor_would_need": "Notice (present).",
+     "source": {
+      "checksum_lines_in_file": 9,
+      "checksum_pinned": null,
+      "kind": "archive URL",
+      "named_at": {
+       "file": "sources/native-pillow-multibuild-library_builders.sh",
+       "line": 199,
+       "path": "library_builders.sh",
+       "ref": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+       "repository": "multi-build/multibuild",
+       "text": "build_simple tiff $TIFF_VERSION https://download.osgeo.org/libtiff",
+       "value": "https://download.osgeo.org/libtiff"
+      },
+      "pillow_depends_archive": {
+       "archive_name_fetch_unpack_looks_for": "tiff-4.7.1.tar.gz",
+       "commit": "74bd5eda4d4ddd57a23081c1e9977ff6ba1c1347",
+       "git_blob_sha1": "3876cbf78aec97f18898e69b17f5d17a07ac5e9b",
+       "present_at_inferred_commit": true
+      },
+      "url": "https://download.osgeo.org/libtiff/tiff-4.7.1.tar.gz"
+     },
+     "subcomponents": [],
+     "uncertainty": [
+      "the build pins no checksum for this source",
+      "multibuild's fetch_unpack uses tiff-4.7.1.tar.gz from the unpinned python-pillow/pillow-depends@main zip when present; it is present at 74bd5eda4d4d (latest main commit before upload), so the upstream URL is only the fallback; byte identity with upstream not checked"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "embedded_version_strings": [
+       "1.5.7"
+      ]
+     },
+     "chain_links": {
+      "build_commit": "attested",
+      "build_environment": "same_run",
+      "corroboration": "embedded_version",
+      "pin": "explicit",
+      "source": "upstream_url"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "1.5.7",
+     "component": "Zstandard",
+     "copyleft_as_built": null,
+     "corroboration": "embedded_version",
+     "dual_licence_with_gpl_option": "BSD-3-Clause OR GPL-2.0-only",
+     "files": [
+      {
+       "bytes": 1800497,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "1.5.7",
+       "needed": [
+        "libpthread.so.0",
+        "libc.so.6"
+       ],
+       "path": "pillow.libs/libzstd-6ea785c0.so.1.5.7",
+       "sha256": "e1b3a49bde31c799a932b7f9efd84cd99fb11c0c1c8f85b05424f1a1d3f20045",
+       "soname": "libzstd-6ea785c0.so.1.5.7"
+      }
+     ],
+     "flags": [],
+     "key": "zstd",
+     "licence_as_built": "BSD-3-Clause OR GPL-2.0-only (dual; the redistributor chooses).",
+     "missing_links": [
+      "source archive named by URL but no checksum pinned: the exact source bytes are not established"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-pillow-wheels-dependencies.sh",
+      "line": 99,
+      "path": ".github/workflows/wheels-dependencies.sh",
+      "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+      "repository": "python-pillow/Pillow",
+      "text": "ZSTD_VERSION=1.5.7",
+      "value": "1.5.7"
+     },
+     "redistributor_would_need": "BSD notice under the BSD option (present as ZSTD).",
+     "source": {
+      "checksum_lines_in_file": 0,
+      "checksum_pinned": null,
+      "kind": "archive URL",
+      "named_at": {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 247,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "local out_dir=$(fetch_unpack https://github.com/facebook/zstd/releases/download/v$ZSTD_VERSION/zstd-$ZSTD_VERSION.tar.gz)",
+       "value": "https://github.com/facebook/zstd/releases/download/v$ZSTD_VERSION/zstd-$ZSTD_VERSION.tar.gz"
+      },
+      "pillow_depends_archive": {
+       "archive_name_fetch_unpack_looks_for": "zstd-1.5.7.tar.gz",
+       "commit": "74bd5eda4d4ddd57a23081c1e9977ff6ba1c1347",
+       "git_blob_sha1": null,
+       "present_at_inferred_commit": false
+      },
+      "url": "https://github.com/facebook/zstd/releases/download/v1.5.7/zstd-1.5.7.tar.gz"
+     },
+     "subcomponents": [],
+     "uncertainty": [
+      "the build pins no checksum for this source"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "libtool_mapping": {
+       "expected_file_suffix": "7.2.0",
+       "file_suffix": "7.2.0",
+       "matches": true,
+       "upstream_version_info": {
+        "file": "sources/native-pillow-libwebp-v1.6.0-src-Makefile.am",
+        "line": 39,
+        "path": "src/Makefile.am",
+        "ref": "v1.6.0",
+        "repository": "webmproject/libwebp",
+        "text": "libwebp_la_LDFLAGS = -no-undefined -version-info 9:0:2",
+        "value": "9:0:2"
+       }
+      }
+     },
+     "chain_links": {
+      "build_commit": "attested",
+      "build_environment": "same_run",
+      "corroboration": "libtool_mapping",
+      "pin": "explicit",
+      "source": "unpinned_mirror"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "1.6.0",
+     "component": "libwebp",
+     "copyleft_as_built": null,
+     "corroboration": "libtool_mapping",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 731209,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "7.2.0",
+       "needed": [
+        "libsharpyuv-0bacc318.so.0.1.2",
+        "libm.so.6",
+        "libpthread.so.0",
+        "libc.so.6"
+       ],
+       "path": "pillow.libs/libwebp-67ee3789.so.7.2.0",
+       "sha256": "7fb7686775de32146fc52852f4daed65077d048da61780e6c03701ca09c877db",
+       "soname": "libwebp-67ee3789.so.7.2.0"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 303,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "--enable-libwebpmux --enable-libwebpdemux",
+       "value": "--enable-libwebpmux --enable-libwebpdemux"
+      },
+      {
+       "file": "sources/native-pillow-multibuild-library_builders.sh",
+       "line": 71,
+       "path": "library_builders.sh",
+       "ref": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+       "repository": "multi-build/multibuild",
+       "text": "&& ./configure --prefix=$BUILD_PREFIX $HOST_CONFIGURE_FLAGS $configure_args \\",
+       "value": "./configure --prefix=$BUILD_PREFIX $HOST_CONFIGURE_FLAGS $configure_args"
+      }
+     ],
+     "key": "libwebp",
+     "licence_as_built": "BSD-3-Clause, with the WebM additional IP rights grant.",
+     "missing_links": [
+      "source archive comes from an unpinned branch (identified only by inference)"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-pillow-wheels-dependencies.sh",
+      "line": 103,
+      "path": ".github/workflows/wheels-dependencies.sh",
+      "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+      "repository": "python-pillow/Pillow",
+      "text": "LIBWEBP_VERSION=1.6.0",
+      "value": "1.6.0"
+     },
+     "redistributor_would_need": "Notice (present).",
+     "source": {
+      "checksum_lines_in_file": 0,
+      "checksum_pinned": null,
+      "kind": "archive URL",
+      "named_at": {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 302,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "https://storage.googleapis.com/downloads.webmproject.org/releases/webp tar.gz \\",
+       "value": "https://storage.googleapis.com/downloads.webmproject.org/releases/webp"
+      },
+      "pillow_depends_archive": {
+       "archive_name_fetch_unpack_looks_for": "libwebp-1.6.0.tar.gz",
+       "commit": "74bd5eda4d4ddd57a23081c1e9977ff6ba1c1347",
+       "git_blob_sha1": "3e708848538a344cf6cb263976593e703fab11aa",
+       "present_at_inferred_commit": true
+      },
+      "url": "https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-1.6.0.tar.gz"
+     },
+     "subcomponents": [],
+     "uncertainty": [
+      "the build pins no checksum for this source",
+      "multibuild's fetch_unpack uses libwebp-1.6.0.tar.gz from the unpinned python-pillow/pillow-depends@main zip when present; it is present at 74bd5eda4d4d (latest main commit before upload), so the upstream URL is only the fallback; byte identity with upstream not checked"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "libtool_mapping": {
+       "expected_file_suffix": "3.1.2",
+       "file_suffix": "3.1.2",
+       "matches": true,
+       "upstream_version_info": {
+        "file": "sources/native-pillow-libwebp-v1.6.0-mux-Makefile.am",
+        "line": 20,
+        "path": "src/mux/Makefile.am",
+        "ref": "v1.6.0",
+        "repository": "webmproject/libwebp",
+        "text": "libwebpmux_la_LDFLAGS = -no-undefined -version-info 4:2:1 -lm",
+        "value": "4:2:1"
+       }
+      }
+     },
+     "chain_links": {
+      "build_commit": "attested",
+      "build_environment": "same_run",
+      "corroboration": "libtool_mapping",
+      "pin": "explicit",
+      "source": "unpinned_mirror"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "1.6.0",
+     "component": "libwebpmux (libwebp)",
+     "copyleft_as_built": null,
+     "corroboration": "libtool_mapping",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 58617,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "3.1.2",
+       "needed": [
+        "libm.so.6",
+        "libwebp-67ee3789.so.7.2.0",
+        "libpthread.so.0",
+        "libc.so.6"
+       ],
+       "path": "pillow.libs/libwebpmux-20a90b09.so.3.1.2",
+       "sha256": "72d253c93712a7f1bf8e26ae13d858b7576514c7c60567d963858c980bdf9f62",
+       "soname": "libwebpmux-20a90b09.so.3.1.2"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 303,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "--enable-libwebpmux --enable-libwebpdemux",
+       "value": "--enable-libwebpmux --enable-libwebpdemux"
+      },
+      {
+       "file": "sources/native-pillow-multibuild-library_builders.sh",
+       "line": 71,
+       "path": "library_builders.sh",
+       "ref": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+       "repository": "multi-build/multibuild",
+       "text": "&& ./configure --prefix=$BUILD_PREFIX $HOST_CONFIGURE_FLAGS $configure_args \\",
+       "value": "./configure --prefix=$BUILD_PREFIX $HOST_CONFIGURE_FLAGS $configure_args"
+      }
+     ],
+     "key": "libwebpmux",
+     "licence_as_built": "BSD-3-Clause, with the WebM additional IP rights grant.",
+     "missing_links": [
+      "source archive comes from an unpinned branch (identified only by inference)"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-pillow-wheels-dependencies.sh",
+      "line": 103,
+      "path": ".github/workflows/wheels-dependencies.sh",
+      "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+      "repository": "python-pillow/Pillow",
+      "text": "LIBWEBP_VERSION=1.6.0",
+      "value": "1.6.0"
+     },
+     "redistributor_would_need": "Notice (present).",
+     "source": {
+      "checksum_lines_in_file": 0,
+      "checksum_pinned": null,
+      "kind": "archive URL",
+      "named_at": {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 302,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "https://storage.googleapis.com/downloads.webmproject.org/releases/webp tar.gz \\",
+       "value": "https://storage.googleapis.com/downloads.webmproject.org/releases/webp"
+      },
+      "pillow_depends_archive": {
+       "archive_name_fetch_unpack_looks_for": "libwebp-1.6.0.tar.gz",
+       "commit": "74bd5eda4d4ddd57a23081c1e9977ff6ba1c1347",
+       "git_blob_sha1": "3e708848538a344cf6cb263976593e703fab11aa",
+       "present_at_inferred_commit": true
+      },
+      "url": "https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-1.6.0.tar.gz"
+     },
+     "subcomponents": [],
+     "uncertainty": [
+      "the build pins no checksum for this source",
+      "multibuild's fetch_unpack uses libwebp-1.6.0.tar.gz from the unpinned python-pillow/pillow-depends@main zip when present; it is present at 74bd5eda4d4d (latest main commit before upload), so the upstream URL is only the fallback; byte identity with upstream not checked"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "libtool_mapping": {
+       "expected_file_suffix": "2.0.17",
+       "file_suffix": "2.0.17",
+       "matches": true,
+       "upstream_version_info": {
+        "file": "sources/native-pillow-libwebp-v1.6.0-demux-Makefile.am",
+        "line": 16,
+        "path": "src/demux/Makefile.am",
+        "ref": "v1.6.0",
+        "repository": "webmproject/libwebp",
+        "text": "libwebpdemux_la_LDFLAGS = -no-undefined -version-info 2:17:0",
+        "value": "2:17:0"
+       }
+      }
+     },
+     "chain_links": {
+      "build_commit": "attested",
+      "build_environment": "same_run",
+      "corroboration": "libtool_mapping",
+      "pin": "explicit",
+      "source": "unpinned_mirror"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "1.6.0",
+     "component": "libwebpdemux (libwebp)",
+     "copyleft_as_built": null,
+     "corroboration": "libtool_mapping",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 30217,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "2.0.17",
+       "needed": [
+        "libwebp-67ee3789.so.7.2.0",
+        "libpthread.so.0",
+        "libc.so.6"
+       ],
+       "path": "pillow.libs/libwebpdemux-eeb71312.so.2.0.17",
+       "sha256": "5ceafa37e483e41f2bc3aa58cfb9d55e08aa80e3367f6c86488e3a53e6bab9b7",
+       "soname": "libwebpdemux-eeb71312.so.2.0.17"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 303,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "--enable-libwebpmux --enable-libwebpdemux",
+       "value": "--enable-libwebpmux --enable-libwebpdemux"
+      },
+      {
+       "file": "sources/native-pillow-multibuild-library_builders.sh",
+       "line": 71,
+       "path": "library_builders.sh",
+       "ref": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+       "repository": "multi-build/multibuild",
+       "text": "&& ./configure --prefix=$BUILD_PREFIX $HOST_CONFIGURE_FLAGS $configure_args \\",
+       "value": "./configure --prefix=$BUILD_PREFIX $HOST_CONFIGURE_FLAGS $configure_args"
+      }
+     ],
+     "key": "libwebpdemux",
+     "licence_as_built": "BSD-3-Clause, with the WebM additional IP rights grant.",
+     "missing_links": [
+      "source archive comes from an unpinned branch (identified only by inference)"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-pillow-wheels-dependencies.sh",
+      "line": 103,
+      "path": ".github/workflows/wheels-dependencies.sh",
+      "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+      "repository": "python-pillow/Pillow",
+      "text": "LIBWEBP_VERSION=1.6.0",
+      "value": "1.6.0"
+     },
+     "redistributor_would_need": "Notice (present).",
+     "source": {
+      "checksum_lines_in_file": 0,
+      "checksum_pinned": null,
+      "kind": "archive URL",
+      "named_at": {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 302,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "https://storage.googleapis.com/downloads.webmproject.org/releases/webp tar.gz \\",
+       "value": "https://storage.googleapis.com/downloads.webmproject.org/releases/webp"
+      },
+      "pillow_depends_archive": {
+       "archive_name_fetch_unpack_looks_for": "libwebp-1.6.0.tar.gz",
+       "commit": "74bd5eda4d4ddd57a23081c1e9977ff6ba1c1347",
+       "git_blob_sha1": "3e708848538a344cf6cb263976593e703fab11aa",
+       "present_at_inferred_commit": true
+      },
+      "url": "https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-1.6.0.tar.gz"
+     },
+     "subcomponents": [],
+     "uncertainty": [
+      "the build pins no checksum for this source",
+      "multibuild's fetch_unpack uses libwebp-1.6.0.tar.gz from the unpinned python-pillow/pillow-depends@main zip when present; it is present at 74bd5eda4d4d (latest main commit before upload), so the upstream URL is only the fallback; byte identity with upstream not checked"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "libtool_mapping": {
+       "expected_file_suffix": "0.1.2",
+       "file_suffix": "0.1.2",
+       "matches": true,
+       "upstream_version_info": {
+        "file": "sources/native-pillow-libwebp-v1.6.0-sharpyuv-Makefile.am",
+        "line": 36,
+        "path": "sharpyuv/Makefile.am",
+        "ref": "v1.6.0",
+        "repository": "webmproject/libwebp",
+        "text": "libsharpyuv_la_LDFLAGS = -no-undefined -version-info 1:2:1 -lm",
+        "value": "1:2:1"
+       }
+      }
+     },
+     "chain_links": {
+      "build_commit": "attested",
+      "build_environment": "same_run",
+      "corroboration": "libtool_mapping",
+      "pin": "explicit",
+      "source": "unpinned_mirror"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "1.6.0",
+     "component": "libsharpyuv (libwebp)",
+     "copyleft_as_built": null,
+     "corroboration": "libtool_mapping",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 46113,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "0.1.2",
+       "needed": [
+        "libm.so.6",
+        "libpthread.so.0",
+        "libc.so.6"
+       ],
+       "path": "pillow.libs/libsharpyuv-0bacc318.so.0.1.2",
+       "sha256": "27de1dba3546f088957c251f49f31becb797e6ff4a68246948f21cd737ce69d7",
+       "soname": "libsharpyuv-0bacc318.so.0.1.2"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 303,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "--enable-libwebpmux --enable-libwebpdemux",
+       "value": "--enable-libwebpmux --enable-libwebpdemux"
+      },
+      {
+       "file": "sources/native-pillow-multibuild-library_builders.sh",
+       "line": 71,
+       "path": "library_builders.sh",
+       "ref": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+       "repository": "multi-build/multibuild",
+       "text": "&& ./configure --prefix=$BUILD_PREFIX $HOST_CONFIGURE_FLAGS $configure_args \\",
+       "value": "./configure --prefix=$BUILD_PREFIX $HOST_CONFIGURE_FLAGS $configure_args"
+      }
+     ],
+     "key": "libsharpyuv",
+     "licence_as_built": "BSD-3-Clause, with the WebM additional IP rights grant.",
+     "missing_links": [
+      "source archive comes from an unpinned branch (identified only by inference)"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-pillow-wheels-dependencies.sh",
+      "line": 103,
+      "path": ".github/workflows/wheels-dependencies.sh",
+      "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+      "repository": "python-pillow/Pillow",
+      "text": "LIBWEBP_VERSION=1.6.0",
+      "value": "1.6.0"
+     },
+     "redistributor_would_need": "Notice (present).",
+     "source": {
+      "checksum_lines_in_file": 0,
+      "checksum_pinned": null,
+      "kind": "archive URL",
+      "named_at": {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 302,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "https://storage.googleapis.com/downloads.webmproject.org/releases/webp tar.gz \\",
+       "value": "https://storage.googleapis.com/downloads.webmproject.org/releases/webp"
+      },
+      "pillow_depends_archive": {
+       "archive_name_fetch_unpack_looks_for": "libwebp-1.6.0.tar.gz",
+       "commit": "74bd5eda4d4ddd57a23081c1e9977ff6ba1c1347",
+       "git_blob_sha1": "3e708848538a344cf6cb263976593e703fab11aa",
+       "present_at_inferred_commit": true
+      },
+      "url": "https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-1.6.0.tar.gz"
+     },
+     "subcomponents": [],
+     "uncertainty": [
+      "the build pins no checksum for this source",
+      "multibuild's fetch_unpack uses libwebp-1.6.0.tar.gz from the unpinned python-pillow/pillow-depends@main zip when present; it is present at 74bd5eda4d4d (latest main commit before upload), so the upstream URL is only the fallback; byte identity with upstream not checked"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {},
+     "chain_links": {
+      "build_commit": "attested",
+      "build_environment": "same_run",
+      "corroboration": null,
+      "pin": "explicit",
+      "source": "unpinned_mirror"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "1.17.0",
+     "component": "libxcb",
+     "copyleft_as_built": null,
+     "corroboration": null,
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 251425,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)",
+        "GCC: (GNU) 8.5.0 20210514 (Red Hat 8.5.0-28)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "1.1.0",
+       "needed": [
+        "libXau-154567c4.so.6.0.0",
+        "libc.so.6"
+       ],
+       "path": "pillow.libs/libxcb-bac6ebc8.so.1.1.0",
+       "sha256": "dfd64008fd2135a4cd8bb872f2fd70edb4982f25f12b9083983e6057d10c7276",
+       "soname": "libxcb-bac6ebc8.so.1.1.0"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-pillow-multibuild-library_builders.sh",
+       "line": 71,
+       "path": "library_builders.sh",
+       "ref": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+       "repository": "multi-build/multibuild",
+       "text": "&& ./configure --prefix=$BUILD_PREFIX $HOST_CONFIGURE_FLAGS $configure_args \\",
+       "value": "./configure --prefix=$BUILD_PREFIX $HOST_CONFIGURE_FLAGS $configure_args"
+      }
+     ],
+     "key": "libxcb",
+     "licence_as_built": "X11 (MIT-style).",
+     "missing_links": [
+      "source archive comes from an unpinned branch (identified only by inference)",
+      "no binary corroboration of the pinned version (file name only)"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-pillow-wheels-dependencies.sh",
+      "line": 105,
+      "path": ".github/workflows/wheels-dependencies.sh",
+      "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+      "repository": "python-pillow/Pillow",
+      "text": "LIBXCB_VERSION=1.17.0",
+      "value": "1.17.0"
+     },
+     "redistributor_would_need": "Notice (present as XCB).",
+     "source": {
+      "checksum_lines_in_file": 0,
+      "checksum_pinned": null,
+      "kind": "archive URL",
+      "named_at": {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 272,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "build_simple libxcb $LIBXCB_VERSION https://www.x.org/releases/individual/lib",
+       "value": "https://www.x.org/releases/individual/lib"
+      },
+      "pillow_depends_archive": {
+       "archive_name_fetch_unpack_looks_for": "libxcb-1.17.0.tar.gz",
+       "commit": "74bd5eda4d4ddd57a23081c1e9977ff6ba1c1347",
+       "git_blob_sha1": "e0c1d2499a480e446c7b0f18f60feeed532b418e",
+       "present_at_inferred_commit": true
+      },
+      "url": "https://www.x.org/releases/individual/lib/libxcb-1.17.0.tar.gz"
+     },
+     "subcomponents": [],
+     "uncertainty": [
+      "the build pins no checksum for this source",
+      "libxcb's SONAME/interface numbers do not change between releases; no embedded version",
+      "multibuild's fetch_unpack uses libxcb-1.17.0.tar.gz from the unpinned python-pillow/pillow-depends@main zip when present; it is present at 74bd5eda4d4d (latest main commit before upload), so the upstream URL is only the fallback; byte identity with upstream not checked"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {},
+     "chain_links": {
+      "build_commit": "attested",
+      "build_environment": "same_run",
+      "corroboration": null,
+      "pin": "explicit",
+      "source": "unpinned_mirror"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "1.2.0",
+     "component": "Brotli (libbrotlicommon, libbrotlidec)",
+     "copyleft_as_built": null,
+     "corroboration": null,
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 144425,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "1.2.0",
+       "needed": [
+        "libm.so.6",
+        "libc.so.6"
+       ],
+       "path": "pillow.libs/libbrotlicommon-785b7a00.so.1.2.0",
+       "sha256": "dc98aecac2580eca0bf637d77a2a1dcc1ee4606d00187139b50fc064d00023b8",
+       "soname": "libbrotlicommon-785b7a00.so.1.2.0"
+      },
+      {
+       "bytes": 62337,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "1.2.0",
+       "needed": [
+        "libm.so.6",
+        "libbrotlicommon-785b7a00.so.1.2.0",
+        "libc.so.6"
+       ],
+       "path": "pillow.libs/libbrotlidec-08d35d18.so.1.2.0",
+       "sha256": "9c8fc92dc06d6cb7b5f5302a96e36acd52d5162d85721583de3067ec971c36ea",
+       "soname": "libbrotlidec-08d35d18.so.1.2.0"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 155,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "&& cmake -DCMAKE_INSTALL_PREFIX=$BUILD_PREFIX -DCMAKE_INSTALL_LIBDIR=$BUILD_PREFIX/lib -DCMAKE_INSTALL_NAME_DIR=$BUILD_PREFIX/lib -DCMAKE_MACOSX_BUNDLE=OFF $HOST_CMAKE_FLAGS . \\",
+       "value": "cmake -DCMAKE_INSTALL_PREFIX=$BUILD_PREFIX -DCMAKE_INSTALL_LIBDIR=$BUILD_PREFIX/lib -DCMAKE_INSTALL_NAME_DIR=$BUILD_PREFIX/lib -DCMAKE_MACOSX_BUNDLE=OFF"
+      }
+     ],
+     "key": "brotli",
+     "licence_as_built": "MIT.",
+     "missing_links": [
+      "source archive comes from an unpinned branch (identified only by inference)",
+      "no binary corroboration of the pinned version (file name only)"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-pillow-wheels-dependencies.sh",
+      "line": 106,
+      "path": ".github/workflows/wheels-dependencies.sh",
+      "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+      "repository": "python-pillow/Pillow",
+      "text": "BROTLI_VERSION=1.2.0",
+      "value": "1.2.0"
+     },
+     "redistributor_would_need": "Notice (present as BROTLI).",
+     "source": {
+      "checksum_lines_in_file": 0,
+      "checksum_pinned": null,
+      "kind": "archive URL",
+      "named_at": {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 153,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "local out_dir=$(fetch_unpack https://github.com/google/brotli/archive/v$BROTLI_VERSION.tar.gz brotli-$BROTLI_VERSION.tar.gz)",
+       "value": "https://github.com/google/brotli/archive/v$BROTLI_VERSION.tar.gz"
+      },
+      "pillow_depends_archive": {
+       "archive_name_fetch_unpack_looks_for": "brotli-1.2.0.tar.gz",
+       "commit": "74bd5eda4d4ddd57a23081c1e9977ff6ba1c1347",
+       "git_blob_sha1": "d697d11621d3c1f8a96a63ae6bd7758dfa102f10",
+       "present_at_inferred_commit": true
+      },
+      "url": "https://github.com/google/brotli/archive/v1.2.0.tar.gz"
+     },
+     "subcomponents": [],
+     "uncertainty": [
+      "the build pins no checksum for this source",
+      "no embedded version string; file-name numbers only",
+      "multibuild's fetch_unpack uses brotli-1.2.0.tar.gz from the unpinned python-pillow/pillow-depends@main zip when present; it is present at 74bd5eda4d4d (latest main commit before upload), so the upstream URL is only the fallback; byte identity with upstream not checked"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "embedded_version_strings": [
+       "1.4.1"
+      ]
+     },
+     "chain_links": {
+      "build_commit": "attested",
+      "build_environment": "same_run",
+      "corroboration": "embedded_version",
+      "pin": "explicit",
+      "source": "unpinned_mirror"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "1.4.1",
+     "component": "libavif",
+     "copyleft_as_built": null,
+     "corroboration": "embedded_version",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 5183009,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-10)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "16.4.1",
+       "needed": [
+        "libdl.so.2",
+        "libstdc++.so.6",
+        "libm.so.6",
+        "libgcc_s.so.1",
+        "libpthread.so.0",
+        "libc.so.6"
+       ],
+       "path": "pillow.libs/libavif-a883386a.so.16.4.1",
+       "sha256": "583bcfbc868cc289c19f8efeccd413a5daf74b035cb5725db97f01a270eccf2c",
+       "soname": "libavif-a883386a.so.16.4.1"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 222,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "-DAVIF_LIBSHARPYUV=LOCAL \\",
+       "value": "-DAVIF_LIBSHARPYUV=LOCAL"
+      },
+      {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 223,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "-DAVIF_LIBYUV=LOCAL \\",
+       "value": "-DAVIF_LIBYUV=LOCAL"
+      },
+      {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 224,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "-DAVIF_CODEC_AOM=LOCAL \\",
+       "value": "-DAVIF_CODEC_AOM=LOCAL"
+      },
+      {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 207,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "-DAVIF_CODEC_AOM_DECODE=OFF \\",
+       "value": "-DAVIF_CODEC_AOM_DECODE=OFF"
+      },
+      {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 208,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "-DAVIF_CODEC_DAV1D=LOCAL",
+       "value": "-DAVIF_CODEC_DAV1D=LOCAL"
+      },
+      {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 225,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "-DCONFIG_AV1_HIGHBITDEPTH=0 \\",
+       "value": "-DCONFIG_AV1_HIGHBITDEPTH=0"
+      }
+     ],
+     "key": "libavif",
+     "licence_as_built": "BSD-2-Clause (libavif) with statically included libaom encoder (BSD-2-Clause + AOM Patent License 1.0), dav1d (BSD-2-Clause), libyuv and libsharpyuv (BSD-3-Clause).",
+     "missing_links": [
+      "source archive comes from an unpinned branch (identified only by inference)"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-pillow-wheels-dependencies.sh",
+      "line": 107,
+      "path": ".github/workflows/wheels-dependencies.sh",
+      "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+      "repository": "python-pillow/Pillow",
+      "text": "LIBAVIF_VERSION=1.4.1",
+      "value": "1.4.1"
+     },
+     "redistributor_would_need": "Notices for libavif, aom (incl. patent licence), dav1d, libyuv (present as LIBAVIF, AOM, DAV1D, LIBYUV); source not required by these licences.",
+     "source": {
+      "checksum_lines_in_file": 0,
+      "checksum_pinned": null,
+      "kind": "archive URL",
+      "named_at": {
+       "file": "sources/native-pillow-wheels-dependencies.sh",
+       "line": 212,
+       "path": ".github/workflows/wheels-dependencies.sh",
+       "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+       "repository": "python-pillow/Pillow",
+       "text": "local out_dir=$(fetch_unpack https://github.com/AOMediaCodec/libavif/archive/refs/tags/v$LIBAVIF_VERSION.tar.gz libavif-$LIBAVIF_VERSION.tar.gz)",
+       "value": "https://github.com/AOMediaCodec/libavif/archive/refs/tags/v$LIBAVIF_VERSION.tar.gz"
+      },
+      "pillow_depends_archive": {
+       "archive_name_fetch_unpack_looks_for": "libavif-1.4.1.tar.gz",
+       "commit": "74bd5eda4d4ddd57a23081c1e9977ff6ba1c1347",
+       "git_blob_sha1": "6367598ca2f3de2afeb5086b425ed3c4d53a8af8",
+       "present_at_inferred_commit": true
+      },
+      "url": "https://github.com/AOMediaCodec/libavif/archive/refs/tags/v1.4.1.tar.gz"
+     },
+     "subcomponents": [
+      {
+       "embedded_version_strings": [
+        "AOMedia Project AV1 Encoder 3.13.2"
+       ],
+       "licence": "BSD-2-Clause + AOM Patent License 1.0",
+       "name": "libaom encoder (AVIF_CODEC_AOM=LOCAL, static)",
+       "pin": {
+        "file": "sources/native-pillow-libavif-v1.4.1-LocalAom.cmake",
+        "line": 1,
+        "path": "cmake/Modules/LocalAom.cmake",
+        "ref": "v1.4.1",
+        "repository": "AOMediaCodec/libavif",
+        "text": "set(AVIF_AOM_GIT_TAG v3.13.2)",
+        "value": "v3.13.2"
+       },
+       "source": "https://aomedia.googlesource.com/aom (git tag pinned by libavif v1.4.1)"
+      },
+      {
+       "embedded_version_strings": [
+        "1.5.3-0-gb546257"
+       ],
+       "licence": "BSD-2-Clause",
+       "name": "dav1d decoder (AVIF_CODEC_DAV1D=LOCAL, static)",
+       "pin": {
+        "file": "sources/native-pillow-libavif-v1.4.1-LocalDav1d.cmake",
+        "line": 1,
+        "path": "cmake/Modules/LocalDav1d.cmake",
+        "ref": "v1.4.1",
+        "repository": "AOMediaCodec/libavif",
+        "text": "set(AVIF_DAV1D_TAG \"1.5.3\")",
+        "value": "1.5.3"
+       },
+       "source": "https://code.videolan.org/videolan/dav1d.git (git tag pinned by libavif v1.4.1)"
+      },
+      {
+       "licence": "BSD-3-Clause",
+       "name": "libyuv (AVIF_LIBYUV=LOCAL, static)",
+       "pin": {
+        "file": "sources/native-pillow-libavif-v1.4.1-LocalLibyuv.cmake",
+        "line": 4,
+        "path": "cmake/Modules/LocalLibyuv.cmake",
+        "ref": "v1.4.1",
+        "repository": "AOMediaCodec/libavif",
+        "text": "set(AVIF_LIBYUV_TAG \"6067afde563c3946eebd94f146b3824ab7a97a9c\")",
+        "value": "6067afde563c3946eebd94f146b3824ab7a97a9c"
+       },
+       "source": "https://chromium.googlesource.com/libyuv/libyuv (commit pinned by libavif v1.4.1)"
+      },
+      {
+       "licence": "BSD-3-Clause",
+       "name": "libsharpyuv (AVIF_LIBSHARPYUV=LOCAL, static)",
+       "pin": {
+        "file": "sources/native-pillow-libavif-v1.4.1-LocalLibsharpyuv.cmake",
+        "line": 1,
+        "path": "cmake/Modules/LocalLibsharpyuv.cmake",
+        "ref": "v1.4.1",
+        "repository": "AOMediaCodec/libavif",
+        "text": "set(AVIF_LIBSHARPYUV_GIT_TAG v1.6.0)",
+        "value": "v1.6.0"
+       },
+       "source": "https://chromium.googlesource.com/webm/libwebp (git tag pinned by libavif v1.4.1)"
+      }
+     ],
+     "uncertainty": [
+      "the build pins no checksum for this source",
+      "statically included codecs are fetched by git tag/commit inside libavif's CMake (FetchContent), not by Pillow's script",
+      "multibuild's fetch_unpack uses libavif-1.4.1.tar.gz from the unpinned python-pillow/pillow-depends@main zip when present; it is present at 74bd5eda4d4d (latest main commit before upload), so the upstream URL is only the fallback; byte identity with upstream not checked"
+     ]
+    },
+    {
+     "also_pinned": [],
+     "binary_evidence": {
+      "el8_package_build": [
+       "1.0.9-3.el8"
+      ]
+     },
+     "chain_links": {
+      "build_commit": "attested",
+      "build_environment": "same_run",
+      "corroboration": "package_build_id",
+      "pin": "package_transitive",
+      "source": "distro_srpm"
+     },
+     "chain_status": "clue_only",
+     "claimed_upstream_version": "1.0.9-3.el8 (EL8 package build from .gnu_debuglink)",
+     "component": "libXau",
+     "copyleft_as_built": null,
+     "corroboration": "package_build_id",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 22081,
+       "compiler_comment": [],
+       "debuglink": "libXau.so.6.0.0-1.0.9-3.el8.x86_64.debug",
+       "debuglink_package_build": [
+        "libXau.so.6.0.0",
+        "1.0.9-3.el8"
+       ],
+       "file_name_interface_numbers": "6.0.0",
+       "needed": [
+        "libc.so.6"
+       ],
+       "path": "pillow.libs/libXau-154567c4.so.6.0.0",
+       "sha256": "05484d24bf78cb8ed03169f1cb067204d829cb7af21de8820400d29d115e4320",
+       "soname": "libXau-154567c4.so.6.0.0"
+      }
+     ],
+     "flags": [],
+     "key": "libXau",
+     "licence_as_built": "X11-style (The Open Group permission notice); EL8 package build.",
+     "macos_only_build_line": {
+      "file": "sources/native-pillow-wheels-dependencies.sh",
+      "line": 267,
+      "path": ".github/workflows/wheels-dependencies.sh",
+      "ref": "3c41c095064200a02672d89cc5ff629eaf4b0d4f",
+      "repository": "python-pillow/Pillow",
+      "text": "build_simple libXau 1.0.12 https://www.x.org/pub/individual/lib",
+      "value": "build_simple libXau 1.0.12 https://www.x.org/pub/individual/lib"
+     },
+     "missing_links": [
+      "no build file names this library or pins its version"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "package_transitive",
+     "patch_commands": [],
+     "pin": null,
+     "redistributor_would_need": "Notice (present as XAU); source not required. If offered: the AlmaLinux 8 libXau source package of the build shown (not fetched).",
+     "subcomponents": [],
+     "uncertainty": [
+      "the script builds libXau only on macOS; the Linux copy is the image's EL8 package (version from .gnu_debuglink), pulled in by libxcb"
+     ]
+    }
+   ],
+   "distribution": "pillow",
+   "extension_module_notes": {
+    "config_settings": {
+     "line": 101,
+     "text": "config-settings = \"raqm=enable raqm=vendor fribidi=vendor imagequant=disable\"",
+     "value": "config-settings = \"raqm=enable raqm=vendor fribidi=vendor imagequant=disable\""
+    },
+    "fribidi_shim": {
+     "line": 964,
+     "text": "srcs.append(\"src/thirdparty/fribidi-shim/fribidi.c\")",
+     "value": "srcs.append(\"src/thirdparty/fribidi-shim/fribidi.c\")"
+    },
+    "note": "_imagingft compiles the vendored raqm (src/thirdparty, MIT) and a FriBiDi shim that loads libfribidi at run time if present; FriBiDi itself (LGPL) is not shipped in the wheel. zlib-ng is built but no libz is bundled (DT_NEEDED libz.so.1 is left to the system)."
+   },
+   "ffmpeg_licence_logic": null,
+   "licence_files_in_wheel": [
+    "pillow-12.2.0.dist-info/licenses/LICENSE"
+   ],
+   "multibuild_submodule": {
+    "commit": "64739327166fcad1fa41ad9b23fa910fa244c84f",
+    "record": {
+     "bytes": 909,
+     "error": "HTTPError: HTTP Error 403: rate limit exceeded",
+     "file": "sources/native-pillow-multibuild-submodule.json",
+     "kind": "raw",
+     "retrieved_on": "2026-10-05",
+     "reused_retained_copy": true,
+     "sha256": "102226d90a4850ff8e2ebed8bae9d57f79f7093edc1ce24cb7953ca9121264f1",
+     "url": "https://api.github.com/repos/python-pillow/Pillow/contents/wheels/multibuild?ref=3c41c095064200a02672d89cc5ff629eaf4b0d4f"
+    }
+   },
+   "patch_mechanism": {
+    "PATCH_DIR_set_in_wheels_dependencies": false,
+    "fetch_unpack_patch_hook": {
+     "line": 293,
+     "text": "if [ -e \"${PATCH_DIR}/${archive_fname}.patch\" ]; then",
+     "value": "if [ -e \"${PATCH_DIR}/${archive_fname}.patch\" ]; then"
+    },
+    "note": "multibuild applies ${PATCH_DIR}/<archive>.patch if present; Pillow's script does not set PATCH_DIR, so no patches are applied by this route."
+   },
+   "pillow_depends": {
+    "archives": {
+     ".gitignore": "b25c15b81fae06e1c55946ac6270bfdb293870e8",
+     "README.md": "94d75d0cf29d8dc0182883b38c1707cf3fb667a6",
+     "brotli-1.1.0.tar.gz": "c3bf09951b543a9e71d1cbd2fca9a58a26414837",
+     "brotli-1.2.0.tar.gz": "d697d11621d3c1f8a96a63ae6bd7758dfa102f10",
+     "bzip2-1.0.8.tar.gz": "985da4c34e4bcab886f49921eb486bae6f868609",
+     "freetype-2.14.1.tar.gz": "acd1a6249b32477011413efe6b681f9b8b62796c",
+     "freetype-2.14.2.tar.gz": "7982112940b15d13861faf88ddede1fff2606c22",
+     "freetype-2.14.3.tar.gz": "c5a0f6cec655dc684c8ade358c3de5fb250468dc",
+     "fribidi-1.0.15.zip": "760b95df401aa54e5f7e8addac500fa33a445408",
+     "fribidi-1.0.16.zip": "704fadf923e20cb9a6e6e267fdeca171ad183fc1",
+     "ghostscript-9.26.tar.gz": "dd1838d363bc17cb74050e4f918fef4d9c0c0da3",
+     "giflib-5.1.4.tar.gz": "2a646bfde6407788155a7eecb631a889cdddbed5",
+     "giflib-5.2.1.tar.gz": "f5555f590d7247a1d0995d576fb28e21a833084b",
+     "giflib-5.2.2.tar.gz": "f603813b77c2c2974df0db7d34d2df1f7a0462ef",
+     "harfbuzz-12.3.0.tar.xz": "b8a424e44e668cbc63a073b17cac9fd7f60a15c7",
+     "harfbuzz-13.0.1.tar.xz": "98c649e5268a510ce70636a0a6ee9f9d6775e026",
+     "harfbuzz-13.2.1.tar.xz": "a601f16f705b325a76f96d0335f333d5182fb912",
+     "jpegsr9b.zip": "38eb586353b0f3c684e23b8bc9c93f8da1527c83",
+     "jpegsr9c.zip": "537db78e7011dd0a37fc894306af00feafadb443",
+     "jpegsr9d.zip": "0b7e76d31ea83956467f51cb13bfd2ae7943ac1d",
+     "jpegsrc.v9c.tar.gz": "4b782b54bfd53101a1fbb490e80e3fe987962614",
+     "jpegsrc.v9d.tar.gz": "bdaf03aff39f87775821dddd0979b9231487aa00",
+     "lcms2-2.17.tar.gz": "52a58ed0e8ad4a5a53a95139e74ea6c404f2ea11",
+     "lcms2-2.18.tar.gz": "bdb6d2c801b0a38cbf20d8b86c5754c652026229",
+     "libXau-1.0.11.tar.gz": "8687920a95241a03205bfa0054ccbfd4fe248c92",
+     "libXau-1.0.12.tar.gz": "32c6d76bc271467f809103b82d5e6cfaf3469a68",
+     "libavif-1.3.0.tar.gz": "29c9cd272198014649f641eebef9f10846ba8c2f",
+     "libavif-1.4.0.tar.gz": "3f2173a0ebe19d46042354581a1c9c53a77f463d",
+     "libavif-1.4.1.tar.gz": "6367598ca2f3de2afeb5086b425ed3c4d53a8af8",
+     "libimagequant-2.17.0.tar.gz": "a0a43aa5e8efd0146eadec19310dba1fbe32a330",
+     "libimagequant-4.4.0.tar.gz": "ba7ef510a66039c734308e884f4019aaf5cd2305",
+     "libimagequant-4.4.1.tar.gz": "1d03b95db2a24428ff302b1e8428bf3f9b3d4737",
+     "libimagequant-ba653c8ccb34dde4e21c6076d85a72d21ed9d971.zip": "0da6c91b9d1416e7c28a9b9670fbda538bb449c7",
+     "libimagequant-e4c1334be0eff290af5e2b4155057c2953a313ab.zip": "0477831b71f52bc5c0efb286c8ade6826258d3e7",
+     "libimagequant-e5d454bc7f5eb63ee50c84a83a7fa5ac94f68ec4.zip": "30138dab71803d3c3d104572f7ea62d7701bf316",
+     "libjpeg-turbo-3.0.3.tar.gz": "1b901f29b47631fde77b1b94ebdc0453761ef902",
+     "libjpeg-turbo-3.1.3.tar.gz": "573a3da4b146dded20d5188e7b02021b114f4580",
+     "libjpeg-turbo-3.1.4.1.tar.gz": "20526994057c7da1eeda5a6e3cff6e07084ef652",
+     "libpng-1.6.53.tar.gz": "c0c533fe4a21bebfb6cf5515e68b81dc4757b765",
+     "libpng-1.6.55.tar.gz": "975cee2aca0eda6bfa3e9b7a1336c956fcf1b094",
+     "libpng-1.6.56.tar.gz": "d181f692537483a28fdf5efd2476f44389366007",
+     "libpthread-stubs-0.5.tar.gz": "fabd9ed0b9cacc2252a800eed786c953d323dbcd",
+     "libraqm-0.10.2.tar.gz": "5596dc2d65c3f0845d5ed4e080f859617fde35b8",
+     "libraqm-0.10.3.tar.gz": "f4f6ed51d4b1bdcfd5040cf327ea3993706b608d",
+     "libwebp-1.5.0.tar.gz": "c53bbc69f7f5293d4318804c7e5c10580a05a610",
+     "libwebp-1.6.0.tar.gz": "3e708848538a344cf6cb263976593e703fab11aa",
+     "libxcb-1.14.tar.gz": "7befb90af166c99b7af8df18fbd3558dcbc67a61",
+     "libxcb-1.15.tar.gz": "52268f51564fbde34931db94cf729407c4274b9d",
+     "libxcb-1.16.1.tar.gz": "8dcf392526d723998aef33185898ef3901bb6d5c",
+     "libxcb-1.16.tar.gz": "e12b74db41af894dcd197ef3e960b0a06305e40d",
+     "libxcb-1.17.0.tar.gz": "e0c1d2499a480e446c7b0f18f60feeed532b418e",
+     "lpng1644.zip": "e72d5c5d3b352f5283a78c4a818f407a651926b0",
+     "nasm-2.14.02-win64.zip": "215608a831e75aa14925977cfa29747a399fbfbf",
+     "nasm-2.15.05-win64.zip": "ad490e60e6fb4154a12111e6df2a285aa417fa94",
+     "nasm-2.16.01-win64.zip": "08c55593801663f381c8423d31cc36302058d3ea",
+     "nasm-2.16.03-win64.zip": "10e0d486564fadc776ab6368f52d575d5369053a",
+     "nasm-2.16.03.tar.gz": "d9b8ca8d4f29632bdf9bf74508189b7131ce0bce",
+     "openjpeg-2.5.3.tar.gz": "d7d7520e849cd3ec237795dc28f34d57934b31eb",
+     "openjpeg-2.5.4.tar.gz": "bd1329ee557ad2c4953d4a7ba1f6ec66eb58919a",
+     "pkg-config-0.29.2.tar.gz": "a82b28f5f4e443c528ee278d8fa8ca673ecfff7a",
+     "pngquant-2.6.0.tar.gz": "23f189556fcbb692f507f4971585195b7f0a6342",
+     "pngquant-2.8.2.tar.gz": "bbae7c4f85b2cd470879f49fe00241f23029c638",
+     "raqm-cmake-99300ff3.tar.gz": "aa3e055a3d7ab0f9cbd71f68f505fbb2d2195493",
+     "sed-4.9.tar.gz": "d89dce521418bf0d3c12fdcd95c88524fafccdfa",
+     "tcl8519-src.zip": "63015e0bcf6703deeccba935e4e2fa0989621132",
+     "tcl8610-src.zip": "53b76d4fde2898f86d3c04febfd310aa1692d0ed",
+     "tcl865-src.zip": "eb6f9359688358b30449a5694dc2aabd1a6af04c",
+     "tcl866-src.zip": "bf83a51f661ef265ef034d9b8bbe3294a0d9001d",
+     "tcl867-src.zip": "03c5c16ddc2188aacfb39271e383fa38b2328925",
+     "tcl868-src.zip": "7f3fb49cd31b7b319ecd6e7d19c43161df85b731",
+     "tcl869-src.zip": "a313de6f0d7e9748d52600c7568685f5123317a4",
+     "tiff-4.7.0.tar.gz": "313b5f995cdd6638a44cb66a762a842ebc587a0a",
+     "tiff-4.7.1.tar.gz": "3876cbf78aec97f18898e69b17f5d17a07ac5e9b",
+     "tk8519-src.zip": "9ad1b07629d26ed30212d87f8acb1d5806e764a8",
+     "tk8610-src.zip": "5fe7d2ba3a7addee0071982031c262b1fcaee923",
+     "tk865-src.zip": "e688aeab30aeb0f8847de25b3937b875ca4f0e5a",
+     "tk866-src.zip": "636502a27bd7b97a3be3361c2b75ab15366e9998",
+     "tk867-src.zip": "5f96ebdaa66d3db0fd49b8723e4af0019c4d4178",
+     "tk868-src.zip": "29ef395d5e5bfdd5f2890efff1302f36e9b622a6",
+     "tk869-src.zip": "02b8d8f25154a53e565062508d35725bfa311912",
+     "v2.5.2.tar.gz": "e72f318d1715d387f9b4b722ec7c37a06ebe4e82",
+     "v2.5.3.tar.gz": "d7d7520e849cd3ec237795dc28f34d57934b31eb",
+     "xcb-proto-1.14.1.tar.gz": "00940e310836d77cabf792738b099c32cacba8f8",
+     "xcb-proto-1.15.2.tar.gz": "fdb201bd0f695aa8791102fc84209ee7c5f5cffd",
+     "xcb-proto-1.16.0.tar.gz": "ab29877014b0d8e6b599c958f95835783b6fdc63",
+     "xcb-proto-1.17.0.tar.gz": "fc43cdc2713f94ae7813168f3cb329cb66a03b47",
+     "xorgproto-2024.1.tar.gz": "1ba4eb08861d8a18212955a012e8e1453fedc1dc",
+     "xorgproto-2025.1.tar.gz": "fb1c17b570b630b011617f9077f9e39147dfb605",
+     "xz-5.8.2.tar.gz": "9681a081f88cdbaa7b70bd7f40d7da50367e578a",
+     "xz-5.8.3.tar.gz": "bac3c8b4c5ee55e541067ae6eb20996d0093ba3c",
+     "zlib-ng-2.3.2.tar.gz": "8a1ec8638f7806942dc74ef68f786dc12026b015",
+     "zlib-ng-2.3.3.tar.gz": "b84948cae31d607b990614764be0932c3a0c8e17"
+    },
+    "basis": "wheels-dependencies.sh downloads https://github.com/python-pillow/pillow-depends/archive/main.zip at build time (branch, not a commit); the commit shown is the latest on main before the PyPI upload time, an inference about what the build saw.",
+    "commit": "74bd5eda4d4ddd57a23081c1e9977ff6ba1c1347",
+    "commit_date": "2026-03-31T21:25:35Z",
+    "message_first_line": "Added xz 5.8.3",
+    "records": [
+     {
+      "bytes": 3363,
+      "error": "HTTPError: HTTP Error 403: rate limit exceeded",
+      "file": "sources/native-pillow-pillow-depends-main-commits.json",
+      "kind": "raw",
+      "retrieved_on": "2026-10-05",
+      "reused_retained_copy": true,
+      "sha256": "adc40fd84c11a924623a267d91cf9b8ae1f4182faec5cfeaaf8a10475c86b551",
+      "url": "https://api.github.com/repos/python-pillow/pillow-depends/commits?sha=main&until=2026-04-01T14:43:26.758012Z&per_page=1"
+     },
+     {
+      "bytes": 22527,
+      "error": "HTTPError: HTTP Error 403: rate limit exceeded",
+      "file": "sources/native-pillow-pillow-depends-tree.json",
+      "kind": "raw",
+      "retrieved_on": "2026-10-05",
+      "reused_retained_copy": true,
+      "sha256": "e18e921388075cb9041e4a112cb7ad20cbcd2db486a1316e9140007406dacdd4",
+      "url": "https://api.github.com/repos/python-pillow/pillow-depends/git/trees/74bd5eda4d4ddd57a23081c1e9977ff6ba1c1347"
+     }
+    ]
+   },
+   "sha256": "62f5409336adb0663b7caa0da5c7d9e7bdbaae9ce761d34669420c2a801b2780",
+   "unassigned_bundled_libraries": []
+  },
+  {
+   "artifact": "pyzmq-27.1.0-cp312-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl",
+   "build_commit": {
+    "attestation": {
+     "available": true,
+     "certificate_claims": {
+      "build_config_digest": "425a21fd2ae3bc50d81176ff9a8253af3535a3d4",
+      "build_config_uri": "https://github.com/zeromq/pyzmq/.github/workflows/wheels.yml@refs/tags/v27.1.0",
+      "build_signer_digest": "425a21fd2ae3bc50d81176ff9a8253af3535a3d4",
+      "build_signer_uri": "https://github.com/zeromq/pyzmq/.github/workflows/wheels.yml@refs/tags/v27.1.0",
+      "build_trigger": "push",
+      "run_invocation_uri": "https://github.com/zeromq/pyzmq/actions/runs/17566330923/attempts/1",
+      "runner_environment": "github-hosted",
+      "source_repository_digest": "425a21fd2ae3bc50d81176ff9a8253af3535a3d4",
+      "source_repository_ref": "refs/tags/v27.1.0",
+      "source_repository_uri": "https://github.com/zeromq/pyzmq",
+      "source_repository_visibility": "public"
+     },
+     "predicate_type": "https://docs.pypi.org/attestations/publish/v1",
+     "publisher": {
+      "environment": "release",
+      "kind": "GitHub",
+      "repository": "zeromq/pyzmq",
+      "workflow": "wheels.yml"
+     },
+     "record": {
+      "bytes": 9146,
+      "file": "sources/native-pyzmq-provenance.json",
+      "kind": "raw",
+      "retrieved_on": "2026-10-05",
+      "sha256": "64bbfa06bff8dcc929b0742bd82a6e5b23468967210471cd788c66508ec902f5",
+      "url": "https://pypi.org/integrity/pyzmq/27.1.0/pyzmq-27.1.0-cp312-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl/provenance"
+     },
+     "subject": [
+      {
+       "digest": {
+        "sha256": "43ad9a73e3da1fab5b0e7e13402f0b2fb934ae1c876c51d0afff0e7c052eca31"
+       },
+       "name": "pyzmq-27.1.0-cp312-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl"
+      }
+     ],
+     "subject_matches_wheel": true,
+     "transparency_log_index": "486041408",
+     "verification_note": "Claims read from the Fulcio certificate PyPI returned; the Sigstore signature, certificate chain and transparency-log inclusion were not re-verified here (PyPI verifies attestations at upload under PEP 740)."
+    },
+    "commit": "425a21fd2ae3bc50d81176ff9a8253af3535a3d4",
+    "pypi": {
+     "record": {
+      "bytes": 85832,
+      "file": "sources/native-pyzmq-pypi-release.json",
+      "kind": "raw",
+      "retrieved_on": "2026-10-05",
+      "sha256": "6b08f96d48815ffdc2fb2de7757e83d700cc4bed9c2264ccd44c28b6bf2e52d0",
+      "url": "https://pypi.org/pypi/pyzmq/27.1.0/json"
+     },
+     "sha256_matches_manifest": true,
+     "upload_time": "2025-09-08T23:08:08.396894Z"
+    },
+    "release_tag": {
+     "commit": "425a21fd2ae3bc50d81176ff9a8253af3535a3d4",
+     "commit_date": "2025-09-08T22:54:18Z",
+     "message_first_line": "Bump to 27.1.0",
+     "record": {
+      "bytes": 5651,
+      "error": "HTTPError: HTTP Error 403: rate limit exceeded",
+      "file": "sources/native-pyzmq-tag-v27.1.0-commit.json",
+      "kind": "raw",
+      "retrieved_on": "2026-10-05",
+      "reused_retained_copy": true,
+      "sha256": "e93769c1261095e456119763876f2e51b8fbc371ab3ca3d54a06b24c16e19977",
+      "url": "https://api.github.com/repos/zeromq/pyzmq/commits/v27.1.0"
+     },
+     "tag": "v27.1.0"
+    },
+    "repository": "https://github.com/zeromq/pyzmq",
+    "run": "https://github.com/zeromq/pyzmq/actions/runs/17566330923/attempts/1",
+    "status": "attested",
+    "tag_agrees_with_attestation": true,
+    "workflow": "https://github.com/zeromq/pyzmq/.github/workflows/wheels.yml@refs/tags/v27.1.0"
+   },
+   "build_files": {
+    "CMakeLists.txt": {
+     "bytes": 17386,
+     "file": "sources/native-pyzmq-CMakeLists.txt",
+     "kind": "raw",
+     "path": "CMakeLists.txt",
+     "ref": "425a21fd2ae3bc50d81176ff9a8253af3535a3d4",
+     "repository": "zeromq/pyzmq",
+     "retrieved_on": "2026-10-05",
+     "sha256": "68cbf7b47915f73b07f20e0046cac170feaf230a2305f66c3fa27c4e87616289",
+     "url": "https://raw.githubusercontent.com/zeromq/pyzmq/425a21fd2ae3bc50d81176ff9a8253af3535a3d4/CMakeLists.txt"
+    },
+    "bundle.py": {
+     "bytes": 1665,
+     "file": "sources/native-pyzmq-bundle.py",
+     "kind": "raw",
+     "path": "buildutils/bundle.py",
+     "ref": "425a21fd2ae3bc50d81176ff9a8253af3535a3d4",
+     "repository": "zeromq/pyzmq",
+     "retrieved_on": "2026-10-05",
+     "sha256": "90a18e19a7986e79d75f4299009a6412c339b05b9c7f5f530d867c4b11a3dcf4",
+     "url": "https://raw.githubusercontent.com/zeromq/pyzmq/425a21fd2ae3bc50d81176ff9a8253af3535a3d4/buildutils/bundle.py"
+    },
+    "install_libzmq.sh": {
+     "bytes": 2549,
+     "file": "sources/native-pyzmq-install_libzmq.sh",
+     "kind": "raw",
+     "path": "tools/install_libzmq.sh",
+     "ref": "425a21fd2ae3bc50d81176ff9a8253af3535a3d4",
+     "repository": "zeromq/pyzmq",
+     "retrieved_on": "2026-10-05",
+     "sha256": "e1a677db1dd409dfce45b0798241cb79a6bb13beaff2f67912d8ce37d5406cea",
+     "url": "https://raw.githubusercontent.com/zeromq/pyzmq/425a21fd2ae3bc50d81176ff9a8253af3535a3d4/tools/install_libzmq.sh"
+    },
+    "libsodium-1.0.20-RELEASE-LICENSE": {
+     "bytes": 823,
+     "file": "sources/native-pyzmq-libsodium-1.0.20-RELEASE-LICENSE",
+     "kind": "raw",
+     "path": "LICENSE",
+     "ref": "1.0.20-RELEASE",
+     "repository": "jedisct1/libsodium",
+     "retrieved_on": "2026-10-05",
+     "sha256": "43964d976a6db3fb986af689d05f8ca0e9971878bccae709750dac8fdc4a99cf",
+     "url": "https://raw.githubusercontent.com/jedisct1/libsodium/1.0.20-RELEASE/LICENSE"
+    },
+    "libzmq-v4.3.5-LICENSE": {
+     "bytes": 16725,
+     "file": "sources/native-pyzmq-libzmq-v4.3.5-LICENSE",
+     "kind": "raw",
+     "path": "LICENSE",
+     "ref": "v4.3.5",
+     "repository": "zeromq/libzmq",
+     "retrieved_on": "2026-10-05",
+     "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+     "url": "https://raw.githubusercontent.com/zeromq/libzmq/v4.3.5/LICENSE"
+    },
+    "libzmq-v4.3.5-configure.ac": {
+     "bytes": 40663,
+     "file": "sources/native-pyzmq-libzmq-v4.3.5-configure.ac",
+     "kind": "raw",
+     "path": "configure.ac",
+     "ref": "v4.3.5",
+     "repository": "zeromq/libzmq",
+     "retrieved_on": "2026-10-05",
+     "sha256": "ccf765ca7bb12790b94774cd96e5c3988097b439d60f30c9b797c64ef54713bb",
+     "url": "https://raw.githubusercontent.com/zeromq/libzmq/v4.3.5/configure.ac"
+    },
+    "pyproject.toml": {
+     "bytes": 6238,
+     "file": "sources/native-pyzmq-pyproject.toml",
+     "kind": "raw",
+     "path": "pyproject.toml",
+     "ref": "425a21fd2ae3bc50d81176ff9a8253af3535a3d4",
+     "repository": "zeromq/pyzmq",
+     "retrieved_on": "2026-10-05",
+     "sha256": "c818eb170350e38b708111a1b0d9f63a1421ff1823b1cd4bad97cb0422c6a25d",
+     "url": "https://raw.githubusercontent.com/zeromq/pyzmq/425a21fd2ae3bc50d81176ff9a8253af3535a3d4/pyproject.toml"
+    },
+    "wheel-requirements.txt": {
+     "bytes": 74,
+     "file": "sources/native-pyzmq-wheel-requirements.txt",
+     "kind": "raw",
+     "path": "tools/wheel-requirements.txt",
+     "ref": "425a21fd2ae3bc50d81176ff9a8253af3535a3d4",
+     "repository": "zeromq/pyzmq",
+     "retrieved_on": "2026-10-05",
+     "sha256": "855769933b9bfa3bd61bc3110417dc8a9ceb4aa2fb215535d91b807d1fcd33e5",
+     "url": "https://raw.githubusercontent.com/zeromq/pyzmq/425a21fd2ae3bc50d81176ff9a8253af3535a3d4/tools/wheel-requirements.txt"
+    },
+    "wheels.yml": {
+     "bytes": 6921,
+     "file": "sources/native-pyzmq-wheels.yml",
+     "kind": "raw",
+     "path": ".github/workflows/wheels.yml",
+     "ref": "425a21fd2ae3bc50d81176ff9a8253af3535a3d4",
+     "repository": "zeromq/pyzmq",
+     "retrieved_on": "2026-10-05",
+     "sha256": "ff31796bea346b9b09a9be0ff51256a56cdc98e9e3daedbdb105ded99d34f4d7",
+     "url": "https://raw.githubusercontent.com/zeromq/pyzmq/425a21fd2ae3bc50d81176ff9a8253af3535a3d4/.github/workflows/wheels.yml"
+    }
+   },
+   "bundled_libraries": [
+    "pyzmq.libs/libsodium-19479d6d.so.26.2.0",
+    "pyzmq.libs/libzmq-7b073b3d.so.5.2.5"
+   ],
+   "cibuildwheel": {
+    "line": 2,
+    "text": "cibuildwheel==3.1.*",
+    "value": "cibuildwheel==3.1.*"
+   },
+   "components": [
+    {
+     "also_pinned": [
+      {
+       "file": "sources/native-pyzmq-CMakeLists.txt",
+       "line": 38,
+       "path": "CMakeLists.txt",
+       "ref": "425a21fd2ae3bc50d81176ff9a8253af3535a3d4",
+       "repository": "zeromq/pyzmq",
+       "text": "set(PYZMQ_LIBZMQ_VERSION \"4.3.5\" CACHE STRING \"libzmq version when bundling\")",
+       "value": "4.3.5"
+      }
+     ],
+     "binary_evidence": {
+      "libtool_mapping": {
+       "expected_file_suffix": "5.2.5",
+       "file_suffix": "5.2.5",
+       "matches": true,
+       "upstream_version_info": {
+        "file": "sources/native-pyzmq-libzmq-v4.3.5-configure.ac",
+        "line": 58,
+        "path": "configure.ac",
+        "ref": "v4.3.5",
+        "repository": "zeromq/libzmq",
+        "text": "LTVER=\"7:5:2\"",
+        "value": "7:5:2"
+       }
+      }
+     },
+     "chain_links": {
+      "build_commit": "attested",
+      "build_environment": "same_run",
+      "corroboration": "libtool_mapping",
+      "pin": "explicit",
+      "source": "upstream_url"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "4.3.5",
+     "component": "libzmq (ZeroMQ)",
+     "copyleft_as_built": "MPL-2.0",
+     "corroboration": "libtool_mapping",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 950593,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-7)",
+        "GCC: (GNU) 8.5.0 20210514 (Red Hat 8.5.0-26)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "5.2.5",
+       "needed": [
+        "libsodium-19479d6d.so.26.2.0",
+        "librt.so.1",
+        "libpthread.so.0",
+        "libstdc++.so.6",
+        "libm.so.6",
+        "libc.so.6",
+        "libgcc_s.so.1"
+       ],
+       "path": "pyzmq.libs/libzmq-7b073b3d.so.5.2.5",
+       "sha256": "811573ed3af354fa8da51e0a7b055cfe38d15ea6bd067a2c6c4974b55de38c8b",
+       "soname": "libzmq-7b073b3d.so.5.2.5"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-pyzmq-install_libzmq.sh",
+       "line": 81,
+       "path": "tools/install_libzmq.sh",
+       "ref": "425a21fd2ae3bc50d81176ff9a8253af3535a3d4",
+       "repository": "zeromq/pyzmq",
+       "text": "./configure --prefix=\"$PREFIX\" --disable-perf --without-docs --enable-curve --with-libsodium --disable-drafts --disable-libsodium_randombytes_close",
+       "value": "./configure --prefix=\"$PREFIX\" --disable-perf --without-docs --enable-curve --with-libsodium --disable-drafts --disable-libsodium_randombytes_close"
+      }
+     ],
+     "key": "libzmq",
+     "licence_as_built": "MPL-2.0 (libzmq 4.3.5 LICENSE). Built with CURVE via libsodium and without draft APIs; DT_NEEDED shows no GnuTLS/NSS/PGM/NORM.",
+     "licence_text_check": {
+      "identical": true,
+      "upstream": {
+       "bytes": 16725,
+       "file": "sources/native-pyzmq-libzmq-v4.3.5-LICENSE",
+       "kind": "raw",
+       "path": "LICENSE",
+       "ref": "v4.3.5",
+       "repository": "zeromq/libzmq",
+       "retrieved_on": "2026-10-05",
+       "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+       "url": "https://raw.githubusercontent.com/zeromq/libzmq/v4.3.5/LICENSE"
+      },
+      "wheel_member": "licenses/LICENSE.zeromq.txt"
+     },
+     "missing_links": [
+      "source archive named by URL but no checksum pinned: the exact source bytes are not established"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-pyzmq-bundle.py",
+      "line": 16,
+      "path": "buildutils/bundle.py",
+      "ref": "425a21fd2ae3bc50d81176ff9a8253af3535a3d4",
+      "repository": "zeromq/pyzmq",
+      "text": "bundled_version = \"4.3.5\"",
+      "value": "4.3.5"
+     },
+     "redistributor_would_need": "MPL-2.0 s3.2: make the Source Code Form of the MPL-covered files available (zeromq-4.3.5.tar.gz from the URL shown; no checksum pinned) and tell recipients how to obtain it; keep the MPL-2.0 text (present in the wheel).",
+     "source": {
+      "checksum_lines_in_file": 0,
+      "checksum_pinned": null,
+      "kind": "archive URL",
+      "named_at": {
+       "file": "sources/native-pyzmq-install_libzmq.sh",
+       "line": 59,
+       "path": "tools/install_libzmq.sh",
+       "ref": "425a21fd2ae3bc50d81176ff9a8253af3535a3d4",
+       "repository": "zeromq/pyzmq",
+       "text": "curl -L -O \"https://github.com/zeromq/libzmq/releases/download/v${LIBZMQ_VERSION}/zeromq-${LIBZMQ_VERSION}.tar.gz\"",
+       "value": "https://github.com/zeromq/libzmq/releases/download/v${LIBZMQ_VERSION}/zeromq-${LIBZMQ_VERSION}.tar.gz"
+      },
+      "url": "https://github.com/zeromq/libzmq/releases/download/v4.3.5/zeromq-4.3.5.tar.gz"
+     },
+     "subcomponents": [],
+     "uncertainty": [
+      "the build pins no checksum for this source",
+      "no embedded version string; version corroborated only by libtool interface mapping, which is consistent with but does not uniquely prove 4.3.5"
+     ]
+    },
+    {
+     "also_pinned": [
+      {
+       "file": "sources/native-pyzmq-CMakeLists.txt",
+       "line": 39,
+       "path": "CMakeLists.txt",
+       "ref": "425a21fd2ae3bc50d81176ff9a8253af3535a3d4",
+       "repository": "zeromq/pyzmq",
+       "text": "set(PYZMQ_LIBSODIUM_VERSION \"1.0.20\" CACHE STRING \"libsodium version when bundling\")",
+       "value": "1.0.20"
+      }
+     ],
+     "binary_evidence": {
+      "embedded_version_strings": [
+       "1.0.20"
+      ]
+     },
+     "chain_links": {
+      "build_commit": "attested",
+      "build_environment": "same_run",
+      "corroboration": "embedded_version",
+      "pin": "explicit",
+      "source": "upstream_url"
+     },
+     "chain_status": "partial",
+     "claimed_upstream_version": "1.0.20",
+     "component": "libsodium",
+     "copyleft_as_built": null,
+     "corroboration": "embedded_version",
+     "dual_licence_with_gpl_option": null,
+     "files": [
+      {
+       "bytes": 1209897,
+       "compiler_comment": [
+        "GCC: (GNU) 14.2.1 20250110 (Red Hat 14.2.1-7)",
+        "GCC: (GNU) 8.5.0 20210514 (Red Hat 8.5.0-26)"
+       ],
+       "debuglink": null,
+       "debuglink_package_build": null,
+       "file_name_interface_numbers": "26.2.0",
+       "needed": [
+        "libpthread.so.0",
+        "libc.so.6",
+        "ld-linux-x86-64.so.2"
+       ],
+       "path": "pyzmq.libs/libsodium-19479d6d.so.26.2.0",
+       "sha256": "0ddb0009726fd4ea61cf66f2c29e52829ae95cc6600e392a0974b311e41b1be3",
+       "soname": "libsodium-19479d6d.so.26.2.0"
+      }
+     ],
+     "flags": [
+      {
+       "file": "sources/native-pyzmq-install_libzmq.sh",
+       "line": 64,
+       "path": "tools/install_libzmq.sh",
+       "ref": "425a21fd2ae3bc50d81176ff9a8253af3535a3d4",
+       "repository": "zeromq/pyzmq",
+       "text": "./configure --prefix=\"$PREFIX\"",
+       "value": "./configure --prefix=\"$PREFIX\""
+      }
+     ],
+     "key": "libsodium",
+     "licence_as_built": "ISC.",
+     "licence_text_check": {
+      "identical": true,
+      "upstream": {
+       "bytes": 823,
+       "file": "sources/native-pyzmq-libsodium-1.0.20-RELEASE-LICENSE",
+       "kind": "raw",
+       "path": "LICENSE",
+       "ref": "1.0.20-RELEASE",
+       "repository": "jedisct1/libsodium",
+       "retrieved_on": "2026-10-05",
+       "sha256": "43964d976a6db3fb986af689d05f8ca0e9971878bccae709750dac8fdc4a99cf",
+       "url": "https://raw.githubusercontent.com/jedisct1/libsodium/1.0.20-RELEASE/LICENSE"
+      },
+      "wheel_member": "licenses/LICENSE.libsodium.txt"
+     },
+     "missing_links": [
+      "source archive named by URL but no checksum pinned: the exact source bytes are not established"
+     ],
+     "named_in_wheel_notice": true,
+     "origin": "source_build",
+     "patch_commands": [],
+     "pin": {
+      "file": "sources/native-pyzmq-bundle.py",
+      "line": 15,
+      "path": "buildutils/bundle.py",
+      "ref": "425a21fd2ae3bc50d81176ff9a8253af3535a3d4",
+      "repository": "zeromq/pyzmq",
+      "text": "bundled_libsodium_version = \"1.0.20\"",
+      "value": "1.0.20"
+     },
+     "redistributor_would_need": "ISC notice (present in the wheel).",
+     "source": {
+      "checksum_lines_in_file": 0,
+      "checksum_pinned": null,
+      "kind": "archive URL",
+      "named_at": {
+       "file": "sources/native-pyzmq-install_libzmq.sh",
+       "line": 57,
+       "path": "tools/install_libzmq.sh",
+       "ref": "425a21fd2ae3bc50d81176ff9a8253af3535a3d4",
+       "repository": "zeromq/pyzmq",
+       "text": "curl -L -O \"https://github.com/jedisct1/libsodium/releases/download/${LIBSODIUM_VERSION}-RELEASE/libsodium-${LIBSODIUM_VERSION}.tar.gz\"",
+       "value": "https://github.com/jedisct1/libsodium/releases/download/${LIBSODIUM_VERSION}-RELEASE/libsodium-${LIBSODIUM_VERSION}.tar.gz"
+      },
+      "url": "https://github.com/jedisct1/libsodium/releases/download/1.0.20-RELEASE/libsodium-1.0.20.tar.gz"
+     },
+     "subcomponents": [],
+     "uncertainty": [
+      "the build pins no checksum for this source"
+     ]
+    }
+   ],
+   "distribution": "pyzmq",
+   "ffmpeg_licence_logic": null,
+   "licence_files_in_wheel": [
+    "pyzmq-27.1.0.dist-info/licenses/LICENSE.md",
+    "pyzmq-27.1.0.dist-info/licenses/licenses/LICENSE.libsodium.txt",
+    "pyzmq-27.1.0.dist-info/licenses/licenses/LICENSE.tornado.txt",
+    "pyzmq-27.1.0.dist-info/licenses/licenses/LICENSE.zeromq.txt"
+   ],
+   "linux_build_hook": {
+    "line": 164,
+    "text": "before-all = \"bash tools/install_libzmq.sh\"",
+    "value": "bash tools/install_libzmq.sh"
+   },
+   "linux_image": {
+    "line": 165,
+    "text": "manylinux-x86_64-image = \"manylinux_2_28\"",
+    "value": "manylinux_2_28"
+   },
+   "sha256": "43ad9a73e3da1fab5b0e7e13402f0b2fb934ae1c876c51d0afff0e7c052eca31",
+   "unassigned_bundled_libraries": []
+  }
+ ]
+}
