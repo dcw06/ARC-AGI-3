@@ -8,6 +8,7 @@
  "wheel_count": 174,
  "wheel_bytes": 5185992159,
  "licence_documents": 225,
+ "upstream_licence_documents": 14,
  "requirements_lock": {
   "sha256": "ba80d35062245421daf1cae65474281952cc0c44fb46e11cf7f68d0ece496406",
   "matches_installed_lock": true,
@@ -51,6 +52,7 @@
    "record sha256(SHA256SUMS)"
   ]
  },
+ "build_rule": "the builder writes nothing unless bundle_eligibility() is empty: every included artifact is approved, or approved_with_conditions with every condition documented as satisfied; each decision names the exact artifact SHA-256, rationale, reviewer and date; unresolved, restricted and excluded block; required dependencies are never silently omitted",
  "upload_blocked_until": [
   "every one of the 174 artifacts has a recorded redistribution decision (22 carry proprietary terms)",
   "required notices are prepared",
@@ -2852,6 +2854,111 @@
    "source": "extracted from zipp-3.23.1-py3-none-any.whl"
   },
   {
+   "path": "LICENSES/flashinfer_cubin-0.6.6-py3-none-any.whl/UPSTREAM/LICENSE",
+   "kind": "upstream_licence_document",
+   "size": 12332,
+   "sha256": "cb67c224f503e0a063908950b12f89a7280c6e527dcffac972aa114e4bf3c5de",
+   "source": "repository_file_at_release_tag: https://raw.githubusercontent.com/flashinfer-ai/flashinfer/v0.6.6/LICENSE"
+  },
+  {
+   "path": "LICENSES/loguru-0.7.3-py3-none-any.whl/UPSTREAM/LICENSE",
+   "kind": "upstream_licence_document",
+   "size": 1056,
+   "sha256": "b35d026cc7aca9d5859a02eb87ddf7a386a24c986838651bd1f283f94e003327",
+   "source": "repository_file_at_release_tag: https://raw.githubusercontent.com/Delgan/loguru/0.7.3/LICENSE"
+  },
+  {
+   "path": "LICENSES/mistral_common-1.11.1-py3-none-any.whl/UPSTREAM/LICENCE",
+   "kind": "upstream_licence_document",
+   "size": 11339,
+   "sha256": "5ed6f79e77734b5a60740dd821af5ecac9a6f33709c860eea4e20fcb6cca7fcc",
+   "source": "repository_file_at_release_tag: https://raw.githubusercontent.com/mistralai/mistral-common/v1.11.1/LICENCE"
+  },
+  {
+   "path": "LICENSES/model_hosting_container_standards-0.1.14-py3-none-any.whl/UPSTREAM/LICENSE",
+   "kind": "upstream_licence_document",
+   "size": 10142,
+   "sha256": "09e8a9bcec8067104652c168685ab0931e7868f9c8284b66f5ae6edae5f1130b",
+   "source": "repository_file_at_release_tag: https://raw.githubusercontent.com/aws/model-hosting-container-standards/v0.1.14/LICENSE"
+  },
+  {
+   "path": "LICENSES/nvidia_ml_py-13.595.45-py3-none-any.whl/UPSTREAM/nvidia_ml_py-13.595.45__pynvml.py.licence-header.txt",
+   "kind": "upstream_licence_document",
+   "size": 1586,
+   "sha256": "4301ef224f42c6de47aa65fbf172f4006891c7ddc333c824dd9ee254453cd38a",
+   "source": "pypi_sdist: https://files.pythonhosted.org/packages/ce/49/c29f6e30d8662d2e94fef17739ea7309cc76aba269922ae999e4cc07f268/nvidia_ml_py-13.595.45.tar.gz"
+  },
+  {
+   "path": "LICENSES/opentelemetry_semantic_conventions_ai-0.5.1-py3-none-any.whl/UPSTREAM/LICENSE",
+   "kind": "upstream_licence_document",
+   "size": 11357,
+   "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+   "source": "repository_file_at_release_tag: https://raw.githubusercontent.com/traceloop/openllmetry/v0.5.1/LICENSE"
+  },
+  {
+   "path": "LICENSES/sentencepiece-0.2.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl/UPSTREAM/sentencepiece-0.2.1__sentencepiece__LICENSE",
+   "kind": "upstream_licence_document",
+   "size": 11358,
+   "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+   "source": "pypi_sdist: https://files.pythonhosted.org/packages/15/15/2e7a025fc62d764b151ae6d0f2a92f8081755ebe8d4a64099accc6f77ba6/sentencepiece-0.2.1.tar.gz"
+  },
+  {
+   "path": "LICENSES/sentencepiece-0.2.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl/UPSTREAM/sentencepiece-0.2.1__sentencepiece__third_party__absl__LICENSE",
+   "kind": "upstream_licence_document",
+   "size": 11365,
+   "sha256": "d3e2f59e1d71176dfdb555ece6a41f7a5aa0f52ff21211010ace314f57695f6b",
+   "source": "pypi_sdist: https://files.pythonhosted.org/packages/15/15/2e7a025fc62d764b151ae6d0f2a92f8081755ebe8d4a64099accc6f77ba6/sentencepiece-0.2.1.tar.gz"
+  },
+  {
+   "path": "LICENSES/sentencepiece-0.2.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl/UPSTREAM/sentencepiece-0.2.1__sentencepiece__third_party__darts_clone__LICENSE",
+   "kind": "upstream_licence_document",
+   "size": 1481,
+   "sha256": "155f59997298ee336602c49f9c1110f268ac394ca2197eb02647a3555935ad52",
+   "source": "pypi_sdist: https://files.pythonhosted.org/packages/15/15/2e7a025fc62d764b151ae6d0f2a92f8081755ebe8d4a64099accc6f77ba6/sentencepiece-0.2.1.tar.gz"
+  },
+  {
+   "path": "LICENSES/sentencepiece-0.2.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl/UPSTREAM/sentencepiece-0.2.1__sentencepiece__third_party__esaxx__LICENSE",
+   "kind": "upstream_licence_document",
+   "size": 1112,
+   "sha256": "7c28553d1d3312d65fe309f76a22ebaf33a3d76c8c1e3b98a88ee4654ecb53db",
+   "source": "pypi_sdist: https://files.pythonhosted.org/packages/15/15/2e7a025fc62d764b151ae6d0f2a92f8081755ebe8d4a64099accc6f77ba6/sentencepiece-0.2.1.tar.gz"
+  },
+  {
+   "path": "LICENSES/sentencepiece-0.2.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl/UPSTREAM/sentencepiece-0.2.1__sentencepiece__third_party__protobuf-lite__LICENSE",
+   "kind": "upstream_licence_document",
+   "size": 1732,
+   "sha256": "6e5e117324afd944dcf67f36cf329843bc1a92229a8cd9bb573d7a83130fea7d",
+   "source": "pypi_sdist: https://files.pythonhosted.org/packages/15/15/2e7a025fc62d764b151ae6d0f2a92f8081755ebe8d4a64099accc6f77ba6/sentencepiece-0.2.1.tar.gz"
+  },
+  {
+   "path": "LICENSES/supervisor-4.3.0-py2.py3-none-any.whl/UPSTREAM/supervisor-4.3.0__COPYRIGHT.txt",
+   "kind": "upstream_licence_document",
+   "size": 244,
+   "sha256": "3f49f4637a2237405749a46ea0dec93f040a25c2b6eec6dc6afefe41abdb7416",
+   "source": "pypi_sdist: https://files.pythonhosted.org/packages/a9/b5/37e7a3706de436a8a2d75334711dad1afb4ddffab09f25e31d89e467542f/supervisor-4.3.0.tar.gz"
+  },
+  {
+   "path": "LICENSES/supervisor-4.3.0-py2.py3-none-any.whl/UPSTREAM/supervisor-4.3.0__LICENSES.txt",
+   "kind": "upstream_licence_document",
+   "size": 5152,
+   "sha256": "4c35fda9f70bb7883fd94e5a4d5addd88ad1a6d5d15e21c9d17c4d96fdc5e369",
+   "source": "pypi_sdist: https://files.pythonhosted.org/packages/a9/b5/37e7a3706de436a8a2d75334711dad1afb4ddffab09f25e31d89e467542f/supervisor-4.3.0.tar.gz"
+  },
+  {
+   "path": "LICENSES/tokenizers-0.22.2-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl/UPSTREAM/tokenizers-0.22.2__tokenizers__LICENSE",
+   "kind": "upstream_licence_document",
+   "size": 11357,
+   "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+   "source": "pypi_sdist: https://files.pythonhosted.org/packages/73/6f/f80cfef4a312e1fb34baf7d85c72d4411afde10978d4657f8cdd811d3ccc/tokenizers-0.22.2.tar.gz"
+  },
+  {
+   "path": "LICENSES/upstream-sources.json",
+   "kind": "licence_index",
+   "size": 9063,
+   "sha256": "054c16abdca4844585ad2adf4f54fe080aa0df86381a869519f3bdd62291b7d5",
+   "source": "reports/wheelhouse_upstream_licenses/index.json (source URL, source hash, member and SHA-256 of every upstream text)"
+  },
+  {
    "path": "requirements.lock",
    "kind": "generated",
    "size": 17382,
@@ -2861,8 +2968,8 @@
   {
    "path": "README.md",
    "kind": "generated",
-   "size": 1355,
-   "sha256": "3fc36769f8f29ac9878c08d061925f63056882c6946ed7ac0d3941ec3ebd4ce3",
+   "size": 1685,
+   "sha256": "eb7bb608bb146d4a36261174f4464c82deab986225415b7219c6d12fbb4fbf47",
    "source": "generated (draft in this plan)"
   },
   {
@@ -2871,6 +2978,13 @@
    "size": null,
    "sha256": null,
    "source": "inventory joined with the owner decisions file, at build, once every row is decided"
+  },
+  {
+   "path": "NOTICES.md",
+   "kind": "generated",
+   "size": null,
+   "sha256": null,
+   "source": "generated at build from REVIEW.csv: per wheel, its licence documents (bundled or upstream), the required notices, and each condition with how it was satisfied"
   },
   {
    "path": "EVIDENCE/offline_install_check.json",
@@ -2908,9 +3022,20 @@
    "source": "generated at build: sha256sum lines for every payload file and bundle-manifest.json (excludes itself)"
   }
  ],
+ "build_eligibility": {
+  "eligible": false,
+  "blocker_count": 174,
+  "first_blockers": [
+   "aiohappyeyeballs-2.6.1-py3-none-any.whl: decision 'unresolved' blocks the bundle (a required dependency; only approved or approved_with_conditions can be included)",
+   "aiohttp-3.13.5-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl: decision 'unresolved' blocks the bundle (a required dependency; only approved or approved_with_conditions can be included)",
+   "aiosignal-1.4.0-py3-none-any.whl: decision 'unresolved' blocks the bundle (a required dependency; only approved or approved_with_conditions can be included)",
+   "annotated_doc-0.0.4-py3-none-any.whl: decision 'unresolved' blocks the bundle (a required dependency; only approved or approved_with_conditions can be included)",
+   "annotated_types-0.7.0-py3-none-any.whl: decision 'unresolved' blocks the bundle (a required dependency; only approved or approved_with_conditions can be included)"
+  ]
+ },
  "decisions": {
   "file": "reports/wheelhouse_redistribution_decisions.csv",
-  "created_now": false,
+  "created_now": true,
   "counts": {
    "unresolved": 174
   },

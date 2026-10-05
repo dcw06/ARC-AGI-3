@@ -10,9 +10,12 @@ the retained CPU installation evidence. Outputs:
   reports/wheelhouse_r2_bundle_plan.json           every proposed bundle file with its source and (where known) hash
   reports/wheelhouse_r2_bundle_plan.md             the same for review, with the README draft and open decisions
 The generator validates the decisions file against the inventory and exits non-zero (without touching it) if any
-entry is missing, stale (different SHA-256), unexpected or not an allowed decision value.
+entry is missing, stale (different SHA-256), unexpected, not an allowed decision value or the columns differ.
+An `unresolved` draft is not an error here; `bundle_eligibility` is the stricter rule the eventual builder must
+enforce before writing anything (Record A).
 """
 import csv
+import datetime
 import hashlib
 import json
 import sys
@@ -28,9 +31,13 @@ INSTALL = ROOT / 'reports/wheelhouse_r2_offline_install_check.json'
 INVENTORY_CSV = ROOT / 'reports/wheelhouse_redistribution_inventory.csv'
 DECISIONS_CSV = ROOT / 'reports/wheelhouse_redistribution_decisions.csv'
 EVIDENCE_DIR = ROOT / 'reports/wheelhouse_r2_offline_install_evidence'
-DECISION_FIELDS = ['artifact', 'sha256', 'redistribution_decision', 'rationale', 'required_notices',
-                   'resolved_questions', 'resolver', 'decided_on']
+DECISION_FIELDS = ['artifact', 'sha256', 'redistribution_decision', 'rationale', 'required_notices', 'conditions',
+                   'conditions_satisfied', 'resolved_questions', 'resolver', 'decided_on']
 ALLOWED_DECISIONS = {'unresolved', 'approved', 'approved_with_conditions', 'restricted', 'excluded'}
+INCLUDABLE_DECISIONS = {'approved', 'approved_with_conditions'}
+CONDITION_SEPARATOR = '|'  # conditions and conditions_satisfied are parallel '|'-separated lists, one per condition
+UPSTREAM_DIR = ROOT / 'reports/wheelhouse_upstream_licenses'
+UPSTREAM_INDEX = UPSTREAM_DIR / 'index.json'
 PLAN_JSON = ROOT / 'reports/wheelhouse_r2_bundle_plan.json'
 PLAN_MD = ROOT / 'reports/wheelhouse_r2_bundle_plan.md'
 RESOLVER = 'dcw06'
@@ -58,7 +65,8 @@ def lock_lines(manifest):
     return lines
 
 
-def review_rows(manifest, evidence):
+def review_rows(manifest, evidence, upstream=()):
+    upstream = {e['artifact']: e['files'] for e in upstream if e.get('found')}
     by_artifact = {r['artifact']: r for r in evidence['wheels']}
     rows = []
     for a in sorted(manifest['artifacts'], key=lambda a: a['filename']):
@@ -77,8 +85,11 @@ def review_rows(manifest, evidence):
             'metadata_declared': '; '.join(e['metadata_declared']),
             'detected_families': ', '.join(e['detected_families']),
             'flags': ', '.join(e['flags']),
-            'required_notices_proposed': (f"ship LICENSES/{a['filename']}/ with the {len(docs)} bundled document(s)"
-                                          if docs else 'obtain and ship the upstream licence text'),
+            'required_notices_proposed': (
+                f"ship LICENSES/{a['filename']}/ with the {len(docs)} bundled document(s)" if docs else
+                f"ship LICENSES/{a['filename']}/UPSTREAM/ with the {len(upstream[a['filename']])} upstream "
+                'document(s); sources in LICENSES/upstream-sources.json' if upstream.get(a['filename']) else
+                'obtain and ship the upstream licence text'),
             'open_questions': ' | '.join(questions),
         })
     return rows
@@ -104,15 +115,18 @@ Verify first: `sha256sum -c SHA256SUMS` from the bundle root; bundle-manifest.js
 Evidence: metadata closure complete; wheel bytes verified after download; CPU-only offline installation passed in a
 network-isolated environment. GPU startup, inference and cleanup are NOT yet verified by this bundle.
 
-Licences: LICENSES/ holds the licence documents bundled in each wheel; see LICENSES/REVIEW.csv for the
-redistribution review of every artifact.
+Licences: LICENSES/<wheel>/ holds the licence documents bundled in each wheel; for wheels that ship none,
+LICENSES/<wheel>/UPSTREAM/ holds the upstream licence text, with its source and hash in
+LICENSES/upstream-sources.json. NOTICES.md lists, per wheel, its licence documents and the notices and conditions
+recorded in the redistribution review (LICENSES/REVIEW.csv). Wheels are redistributed unmodified; the PyPI source
+of every wheel is recorded in bundle-manifest.json.
 '''
 
 
 def initial_decisions(rows):
     return [{'artifact': r['artifact'], 'sha256': r['sha256'], 'redistribution_decision': 'unresolved',
-             'rationale': '', 'required_notices': '', 'resolved_questions': '', 'resolver': RESOLVER,
-             'decided_on': ''} for r in rows]
+             'rationale': '', 'required_notices': '', 'conditions': '', 'conditions_satisfied': '',
+             'resolved_questions': '', 'resolver': RESOLVER, 'decided_on': ''} for r in rows]
 
 
 def read_decisions(path):
@@ -124,6 +138,8 @@ def check_decisions(rows, decisions):
     """Problems with the human decisions file relative to the generated inventory (empty list if consistent)."""
     expected = {r['artifact']: r['sha256'] for r in rows}
     problems, seen = [], set()
+    if decisions and list(decisions[0]) != DECISION_FIELDS:
+        problems.append(f'decision columns {list(decisions[0])} differ from {DECISION_FIELDS}')
     for d in decisions:
         name = d.get('artifact')
         if name in seen:
@@ -142,13 +158,81 @@ def check_decisions(rows, decisions):
     return problems
 
 
+def split_conditions(text):
+    text = (text or '').strip()
+    return [c.strip() for c in text.split(CONDITION_SEPARATOR)] if text else []
+
+
+def valid_date(text):
+    try:
+        datetime.date.fromisoformat((text or '').strip())
+        return True
+    except ValueError:
+        return False
+
+
+def bundle_eligibility(rows, decisions):
+    """Blockers for building the bundle (empty list = eligible); the builder must refuse to write anything unless it
+    is empty. Every artifact of the approved manifest is a required dependency and is included, so each must be
+    `approved`, or `approved_with_conditions` with every condition documented as satisfied, and each decision must
+    name the exact artifact SHA-256 and carry a rationale, reviewer and ISO date. `unresolved`, `restricted` and
+    `excluded` block the bundle: nothing is silently omitted."""
+    blockers = list(check_decisions(rows, decisions))
+    by_artifact = {d.get('artifact'): d for d in decisions}
+    for r in rows:
+        d = by_artifact.get(r['artifact'])
+        if d is None or d.get('sha256') != r['sha256']:
+            continue  # reported by check_decisions
+        name, decision = r['artifact'], d.get('redistribution_decision')
+        if decision not in INCLUDABLE_DECISIONS:
+            blockers.append(f'{name}: decision {decision!r} blocks the bundle (a required dependency; only approved '
+                            'or approved_with_conditions can be included)')
+            continue
+        for field in ('rationale', 'resolver'):
+            if not (d.get(field) or '').strip():
+                blockers.append(f'{name}: {field} missing')
+        if not valid_date(d.get('decided_on')):
+            blockers.append(f"{name}: decided_on {d.get('decided_on')!r} is not an ISO date")
+        conditions, satisfied = split_conditions(d.get('conditions')), split_conditions(d.get('conditions_satisfied'))
+        if decision == 'approved' and conditions:
+            blockers.append(f'{name}: approved but conditions are listed; record approved_with_conditions instead')
+        if decision == 'approved_with_conditions':
+            if not conditions or not all(conditions):
+                blockers.append(f'{name}: approved_with_conditions without a recorded condition')
+            elif len(satisfied) != len(conditions) or not all(satisfied):
+                blockers.append(f'{name}: {len(conditions)} condition(s) but '
+                                f'{len([x for x in satisfied if x])} documented as satisfied')
+    return blockers
+
+
+def upstream_files(upstream, rows):
+    """Plan entries for the gathered upstream licence texts, re-hashed from disk; every wheel without a bundled
+    licence must have at least one."""
+    by_artifact = {e['artifact']: e for e in upstream}
+    for r in rows:
+        if r['licence_documents'] == 'none in wheel' and not (by_artifact.get(r['artifact']) or {}).get('found'):
+            raise SystemExit(f"{r['artifact']} ships no licence and has no gathered upstream text")
+    entries = []
+    for e in sorted(upstream, key=lambda e: e['artifact']):
+        for f in e['files']:
+            entry = file_entry(UPSTREAM_DIR / f['path'], f"LICENSES/{e['artifact']}/UPSTREAM/{Path(f['path']).name}",
+                               'upstream_licence_document', f"{e['source']['kind']}: {e['source']['url']}")
+            if entry['sha256'] != f['sha256']:
+                raise SystemExit(f"{f['path']} does not match the hash in the upstream index")
+            entries.append(entry)
+    entries.append(file_entry(UPSTREAM_INDEX, 'LICENSES/upstream-sources.json', 'licence_index',
+                              'reports/wheelhouse_upstream_licenses/index.json (source URL, source hash, member and '
+                              'SHA-256 of every upstream text)'))
+    return entries
+
+
 def file_entry(path, bundle_path, kind, source):
     data = path.read_bytes()
     return {'path': bundle_path, 'kind': kind, 'size': len(data), 'sha256': hashlib.sha256(data).hexdigest(),
             'source': source}
 
 
-def plan(manifest, evidence, install):
+def plan(manifest, evidence, install, rows=(), upstream=()):
     lock = '\n'.join(lock_lines(manifest)) + '\n'
     lock_sha = hashlib.sha256(lock.encode()).hexdigest()
     install_lock_sha = (install.get('evidence') or {}).get('files_sha256', {}).get('requirements.lock')
@@ -158,6 +242,7 @@ def plan(manifest, evidence, install):
         for doc in row['licence_files']:
             files.append({'path': f"LICENSES/{row['artifact']}/{doc['path']}", 'kind': 'licence_document',
                           'size': doc['size'], 'sha256': doc['sha256'], 'source': f"extracted from {row['artifact']}"})
+    files += upstream_files(list(upstream), list(rows))
     readme = README.encode()
     files += [
         {'path': 'requirements.lock', 'kind': 'generated', 'size': len(lock.encode()), 'sha256': lock_sha,
@@ -166,6 +251,9 @@ def plan(manifest, evidence, install):
          'source': 'generated (draft in this plan)'},
         {'path': 'LICENSES/REVIEW.csv', 'kind': 'generated', 'size': None, 'sha256': None,
          'source': 'inventory joined with the owner decisions file, at build, once every row is decided'},
+        {'path': 'NOTICES.md', 'kind': 'generated', 'size': None, 'sha256': None,
+         'source': 'generated at build from REVIEW.csv: per wheel, its licence documents (bundled or upstream), the '
+                   'required notices, and each condition with how it was satisfied'},
         file_entry(INSTALL, 'EVIDENCE/offline_install_check.json', 'evidence',
                    'reports/wheelhouse_r2_offline_install_check.json (retained CPU-only installation receipt)'),
     ]
@@ -193,6 +281,7 @@ def plan(manifest, evidence, install):
         'source_manifest_sha256': manifest['manifest_sha256'],
         'wheel_count': manifest['artifact_count'], 'wheel_bytes': manifest['total_bytes'],
         'licence_documents': sum(len(r['licence_files']) for r in evidence['wheels']),
+        'upstream_licence_documents': sum(len(e['files']) for e in upstream),
         'requirements_lock': {'sha256': lock_sha, 'matches_installed_lock': lock_sha == install_lock_sha,
                               'installed_lock_sha256': install_lock_sha},
         'non_wheel_files_of_earlier_bundle': {
@@ -213,6 +302,10 @@ def plan(manifest, evidence, install):
             'order': ['write payload', 'write bundle-manifest.json over the payload',
                       'write SHA256SUMS over the payload and bundle-manifest.json', 'record sha256(SHA256SUMS)'],
         },
+        'build_rule': ('the builder writes nothing unless bundle_eligibility() is empty: every included artifact is '
+                       'approved, or approved_with_conditions with every condition documented as satisfied; each '
+                       'decision names the exact artifact SHA-256, rationale, reviewer and date; unresolved, '
+                       'restricted and excluded block; required dependencies are never silently omitted'),
         'upload_blocked_until': [f'every one of the {manifest["artifact_count"]} artifacts has a recorded '
                                  f'redistribution decision ({proprietary} carry proprietary terms)',
                                  'required notices are prepared', 'the dataset name and access are chosen',
@@ -230,6 +323,11 @@ def render(p, rows, decisions_status):
              '## Proposed contents', '', '| Part | Files | Notes |', '|---|---|---|',
              f"| `wheels/` | {p['wheel_count']} | {p['wheel_bytes']:,} bytes, SHA-256 and PyPI URL per file |",
              f"| `LICENSES/<artifact>/` | {p['licence_documents']} | licence documents extracted from the wheels, hashed |",
+             f"| `LICENSES/<artifact>/UPSTREAM/` | {p['upstream_licence_documents']} | upstream licence texts for the "
+             'wheels that ship none, hashed |',
+             '| `LICENSES/upstream-sources.json` | 1 | source URL and source hash of every upstream text |',
+             '| `NOTICES.md` | 1 | per wheel: licence documents, required notices, conditions and how each was '
+             'satisfied (generated at build from the decisions) |',
              f"| `requirements.lock` | 1 | hash-pinned, 174 lines; SHA-256 `{p['requirements_lock']['sha256'][:12]}…`, "
              f"{'identical to' if p['requirements_lock']['matches_installed_lock'] else 'DIFFERENT from'} the lock "
              'used by the passing CPU installation |',
@@ -253,6 +351,10 @@ def render(p, rows, decisions_status):
               '`reports/wheelhouse_redistribution_inventory.csv`; they are review prompts, not legal clearance. '
               'Flags to decide:', '']
     lines += [f'- `{f}`: {n}' for f, n in sorted(flags.items())]
+    elig = p['build_eligibility']
+    lines += ['', '## Build eligibility (Record A rule)', '', p['build_rule'] + '.', '',
+              f"Current state: {'ELIGIBLE' if elig['eligible'] else 'NOT eligible'} ({elig['blocker_count']} "
+              'blocker(s)); expected while the decisions are a draft.']
     lines += ['', '## Upload is blocked until', '']
     lines += [f'- {item}' for item in p['upload_blocked_until']]
     lines += ['', '## README draft', '', '```', README.rstrip(), '```', '']
@@ -265,7 +367,8 @@ def main():
     if evidence.get('manifest_sha256') != manifest['manifest_sha256']:
         raise SystemExit('licence evidence is not bound to the approved manifest')
     install = json.loads(INSTALL.read_text(encoding='utf-8'))
-    rows = review_rows(manifest, evidence)
+    upstream = json.loads(UPSTREAM_INDEX.read_text(encoding='utf-8'))
+    rows = review_rows(manifest, evidence, upstream)
     with INVENTORY_CSV.open('w', encoding='utf-8', newline='') as stream:  # generated: safe to regenerate
         writer = csv.DictWriter(stream, fieldnames=list(rows[0]), lineterminator='\n')
         writer.writeheader()
@@ -284,13 +387,16 @@ def main():
         counts[d.get('redistribution_decision')] = counts.get(d.get('redistribution_decision'), 0) + 1
     status = ('INCONSISTENT: ' + '; '.join(problems[:5])) if problems else ', '.join(
         f'{n} {k}' for k, n in sorted(counts.items()))
-    p = plan(manifest, evidence, install)
+    p = plan(manifest, evidence, install, rows, upstream)
+    blockers = bundle_eligibility(rows, decisions)
+    p['build_eligibility'] = {'eligible': not blockers, 'blocker_count': len(blockers),
+                              'first_blockers': blockers[:5]}
     p['decisions'] = {'file': str(DECISIONS_CSV.relative_to(ROOT)) if DECISIONS_CSV.is_relative_to(ROOT)
                       else str(DECISIONS_CSV), 'created_now': created, 'counts': counts, 'problems': problems}
     PLAN_JSON.write_text(json.dumps(p, indent=1) + '\n', encoding='utf-8')
     PLAN_MD.write_text(render(p, rows, status), encoding='utf-8')
     print(json.dumps({'inventory_rows': len(rows), 'plan_files': len(p['files']), 'decisions': counts,
-                      'decision_problems': len(problems),
+                      'decision_problems': len(problems), 'build_eligible': not blockers,
                       'lock_matches_installed': p['requirements_lock']['matches_installed_lock']}))
     return 1 if problems else 0
 

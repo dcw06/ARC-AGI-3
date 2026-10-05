@@ -9,6 +9,9 @@ Identity: new bundle (R2); wheels byte-identical to official PyPI artifacts; not
 |---|---|---|
 | `wheels/` | 174 | 5,185,992,159 bytes, SHA-256 and PyPI URL per file |
 | `LICENSES/<artifact>/` | 225 | licence documents extracted from the wheels, hashed |
+| `LICENSES/<artifact>/UPSTREAM/` | 14 | upstream licence texts for the wheels that ship none, hashed |
+| `LICENSES/upstream-sources.json` | 1 | source URL and source hash of every upstream text |
+| `NOTICES.md` | 1 | per wheel: licence documents, required notices, conditions and how each was satisfied (generated at build from the decisions) |
 | `requirements.lock` | 1 | hash-pinned, 174 lines; SHA-256 `ba80d3506224…`, identical to the lock used by the passing CPU installation |
 | `README.md` | 1 | draft below |
 | `LICENSES/REVIEW.csv` | 1 | the redistribution review, once every decision is recorded |
@@ -40,6 +43,12 @@ Decisions file `reports/wheelhouse_redistribution_decisions.csv` (owner-maintain
 - `proprietary_terms_present`: 22
 - `unrecognised_licence_text`: 1
 
+## Build eligibility (Record A rule)
+
+the builder writes nothing unless bundle_eligibility() is empty: every included artifact is approved, or approved_with_conditions with every condition documented as satisfied; each decision names the exact artifact SHA-256, rationale, reviewer and date; unresolved, restricted and excluded block; required dependencies are never silently omitted.
+
+Current state: NOT eligible (174 blocker(s)); expected while the decisions are a draft.
+
 ## Upload is blocked until
 
 - every one of the 174 artifacts has a recorded redistribution decision (22 carry proprietary terms)
@@ -70,6 +79,9 @@ Verify first: `sha256sum -c SHA256SUMS` from the bundle root; bundle-manifest.js
 Evidence: metadata closure complete; wheel bytes verified after download; CPU-only offline installation passed in a
 network-isolated environment. GPU startup, inference and cleanup are NOT yet verified by this bundle.
 
-Licences: LICENSES/ holds the licence documents bundled in each wheel; see LICENSES/REVIEW.csv for the
-redistribution review of every artifact.
+Licences: LICENSES/<wheel>/ holds the licence documents bundled in each wheel; for wheels that ship none,
+LICENSES/<wheel>/UPSTREAM/ holds the upstream licence text, with its source and hash in
+LICENSES/upstream-sources.json. NOTICES.md lists, per wheel, its licence documents and the notices and conditions
+recorded in the redistribution review (LICENSES/REVIEW.csv). Wheels are redistributed unmodified; the PyPI source
+of every wheel is recorded in bundle-manifest.json.
 ```
