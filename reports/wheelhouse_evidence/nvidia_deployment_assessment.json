@@ -1,0 +1,479 @@
+{
+ "deployment": {
+  "owner_inputs_required": [
+   "Which Kaggle account will own the R2 dataset (personal account of a team member, or another team-controlled account)?",
+   "Who will be granted access (named collaborators and their roles: team members, contractors, others)?",
+   "Access controls: dataset visibility, collaborator permissions (view/edit), and whether any notebook that attaches it will ever be made public or shared",
+   "Whether the dataset or any notebook attaching it is intended to be published for milestone or prize eligibility, and if so whether the NVIDIA wheels would be part of the published materials",
+   "Whether the team or its members hold any separate agreement with NVIDIA covering these components"
+  ],
+  "phases": {
+   "A": "private development: a private dataset attached to the team's own notebooks",
+   "B": "publication for milestone or prize eligibility, if pursued"
+  },
+  "recorded_facts": [
+   {
+    "fact": "Notebooks are created and pushed under the Kaggle account daichongwei06",
+    "source": "kernel ids in notebooks/*/kernel-metadata.json; docs/Team_Environment_and_Credentials_Guide_ZH.md"
+   },
+   {
+    "fact": "The proposed R2 dataset is private, named arc3-vllm-0.19.0-cu128-wheelhouse-r2 (not yet confirmed or created)",
+    "source": "reports/wheelhouse_r2_approval_artifacts.md (Record B draft)"
+   },
+   {
+    "fact": "Runtime use: the wheels are installed offline into a fresh virtual environment inside the team's Kaggle notebook and loaded by vLLM/torch serving the pinned Qwen3-VL model for the ARC-AGI-3 agent; internet is disabled",
+    "source": "certification/wheelhouse_r2_smoke_v1/protocol.json; docs/ARC-AGI-3_Final_Project_Plan.md"
+   },
+   {
+    "fact": "Maximum team size 8; identity verification required",
+    "source": "docs/ARC-AGI-3_Final_Project_Plan.md (competition constraints table; to revalidate)"
+   },
+   {
+    "fact": "Milestone and prize eligibility require a public notebook and open-source materials with compatible licences; the stated winner licence is CC BY 4.0 plus open-system/model/weights obligations",
+    "source": "docs/ARC-AGI-3_Final_Project_Plan.md (sections on milestone release and constraints; to revalidate)"
+   }
+  ],
+  "requirements_against_deployment": [
+   {
+    "assessment_inputs": "Product-specific: see file coverage below.",
+    "requirement": "Distribution only of portions identified as distributable (Attachment A / the SLA's distribution clause)"
+   },
+   {
+    "assessment_inputs": "Phase A (private development): the wheels are installed into an environment and loaded by vLLM/torch for the agent. Whether a wheelhouse dataset attached to the notebook is \"incorporated into\" that application, or a separate stand-alone copy of the SDK components, is the central open question. Phase B (publication): publishing the wheelhouse would be distribution to the public.",
+    "requirement": "Incorporated into a software application with material additional functionality"
+   },
+   {
+    "assessment_inputs": "Phase A: anyone with dataset access could download the wheels directly, outside the application. Recipients and access controls (owner inputs) are material.",
+    "requirement": "The distributable portions are accessed only by the application"
+   },
+   {
+    "assessment_inputs": "A wheelhouse that also contains the unmodified NVIDIA wheels is not itself an application; whether attaching it to the team's notebook avoids stand-alone distribution needs the reviewer's assessment.",
+    "requirement": "No distribution of the SDK as a stand-alone product"
+   },
+   {
+    "assessment_inputs": "Depends on who the collaborators are (owner input) and whether Kaggle hosting counts as the team's secure network.",
+    "requirement": "Authorized users: employees and contractors (internal access, secure network)"
+   },
+   {
+    "assessment_inputs": "The wheels are byte-identical to PyPI; nothing is modified.",
+    "requirement": "Linux portions may be redistributed unmodified (CUDA EULA 2.3); unmodified object files"
+   },
+   {
+    "assessment_inputs": "Phase B: open-source publication terms (the competition's open-source requirements) may conflict with the proprietary terms; this is a Release Owner question as well as a licence question.",
+    "requirement": "Terms of the application's distribution consistent with the agreement; notices retained"
+   }
+  ]
+ },
+ "prepared_on": "2026-10-05",
+ "products": [
+  {
+   "artifact": "nvidia_cublas_cu12-12.8.4.1-py3-none-manylinux_2_27_x86_64.whl",
+   "bundled_identical_to_primary": false,
+   "bundled_licence": {
+    "nvidia_cublas_cu12-12.8.4.1.dist-info/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "distribution": "nvidia_cublas_cu12",
+   "file_coverage": {
+    "library_files": 3,
+    "named_in_bundled_attachment_a": 3,
+    "named_in_primary_attachment_a": 3,
+    "not_named_in_primary": []
+   },
+   "primary_source": "cuda-12.8.1-eula",
+   "primary_source_basis": "official CUDA Toolkit 12.8.1 EULA (archive page for the release whose components these wheels are: cuBLAS 12.8.4.1, CUDA runtime 12.8.90, nvJitLink 12.8.93, cuFile 1.13.1.3, ...)",
+   "questions": [],
+   "sha256": "8ac4e771d5a348c551b2a426eda6193c19aa630236b418086020df5ba9667142"
+  },
+  {
+   "artifact": "nvidia_cuda_cupti_cu12-12.8.90-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "bundled_identical_to_primary": false,
+   "bundled_licence": {
+    "nvidia_cuda_cupti_cu12-12.8.90.dist-info/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "distribution": "nvidia_cuda_cupti_cu12",
+   "file_coverage": {
+    "library_files": 5,
+    "named_in_bundled_attachment_a": 1,
+    "named_in_primary_attachment_a": 1,
+    "not_named_in_primary": [
+     "libcheckpoint.so",
+     "libnvperf_host.so",
+     "libnvperf_target.so",
+     "libpcsamplingutil.so"
+    ]
+   },
+   "primary_source": "cuda-12.8.1-eula",
+   "primary_source_basis": "official CUDA Toolkit 12.8.1 EULA (archive page for the release whose components these wheels are: cuBLAS 12.8.4.1, CUDA runtime 12.8.90, nvJitLink 12.8.93, cuFile 1.13.1.3, ...)",
+   "questions": [
+    "Files not covered by the distributable listing: libcheckpoint.so, libnvperf_host.so, libnvperf_target.so, libpcsamplingutil.so \u2014 are they distributable?"
+   ],
+   "sha256": "ea0cb07ebda26bb9b29ba82cda34849e73c166c18162d3913575b0c9db9a6182"
+  },
+  {
+   "artifact": "nvidia_cuda_nvrtc_cu12-12.8.93-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl",
+   "bundled_identical_to_primary": false,
+   "bundled_licence": {
+    "nvidia_cuda_nvrtc_cu12-12.8.93.dist-info/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "distribution": "nvidia_cuda_nvrtc_cu12",
+   "file_coverage": {
+    "library_files": 4,
+    "named_in_bundled_attachment_a": 2,
+    "named_in_primary_attachment_a": 2,
+    "not_named_in_primary": [
+     "libnvrtc-builtins.alt.so.12.8",
+     "libnvrtc.alt.so.12"
+    ]
+   },
+   "primary_source": "cuda-12.8.1-eula",
+   "primary_source_basis": "official CUDA Toolkit 12.8.1 EULA (archive page for the release whose components these wheels are: cuBLAS 12.8.4.1, CUDA runtime 12.8.90, nvJitLink 12.8.93, cuFile 1.13.1.3, ...)",
+   "questions": [
+    "Files not covered by the distributable listing: libnvrtc-builtins.alt.so.12.8, libnvrtc.alt.so.12 \u2014 are they distributable?"
+   ],
+   "sha256": "a7756528852ef889772a84c6cd89d41dfa74667e24cca16bb31f8f061e3e9994"
+  },
+  {
+   "artifact": "nvidia_cuda_runtime_cu12-12.8.90-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "bundled_identical_to_primary": false,
+   "bundled_licence": {
+    "nvidia_cuda_runtime_cu12-12.8.90.dist-info/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "distribution": "nvidia_cuda_runtime_cu12",
+   "file_coverage": {
+    "library_files": 1,
+    "named_in_bundled_attachment_a": 1,
+    "named_in_primary_attachment_a": 1,
+    "not_named_in_primary": []
+   },
+   "primary_source": "cuda-12.8.1-eula",
+   "primary_source_basis": "official CUDA Toolkit 12.8.1 EULA (archive page for the release whose components these wheels are: cuBLAS 12.8.4.1, CUDA runtime 12.8.90, nvJitLink 12.8.93, cuFile 1.13.1.3, ...)",
+   "questions": [],
+   "sha256": "adade8dcbd0edf427b7204d480d6066d33902cab2a4707dcfc48a2d0fd44ab90"
+  },
+  {
+   "artifact": "nvidia_cufft_cu12-11.3.3.83-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "bundled_identical_to_primary": false,
+   "bundled_licence": {
+    "nvidia_cufft_cu12-11.3.3.83.dist-info/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "distribution": "nvidia_cufft_cu12",
+   "file_coverage": {
+    "library_files": 2,
+    "named_in_bundled_attachment_a": 2,
+    "named_in_primary_attachment_a": 2,
+    "not_named_in_primary": []
+   },
+   "primary_source": "cuda-12.8.1-eula",
+   "primary_source_basis": "official CUDA Toolkit 12.8.1 EULA (archive page for the release whose components these wheels are: cuBLAS 12.8.4.1, CUDA runtime 12.8.90, nvJitLink 12.8.93, cuFile 1.13.1.3, ...)",
+   "questions": [],
+   "sha256": "4d2dd21ec0b88cf61b62e6b43564355e5222e4a3fb394cac0db101f2dd0d4f74"
+  },
+  {
+   "artifact": "nvidia_cufile_cu12-1.13.1.3-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "bundled_identical_to_primary": false,
+   "bundled_licence": {
+    "nvidia_cufile_cu12-1.13.1.3.dist-info/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "distribution": "nvidia_cufile_cu12",
+   "file_coverage": {
+    "library_files": 2,
+    "named_in_bundled_attachment_a": 0,
+    "named_in_primary_attachment_a": 2,
+    "not_named_in_primary": []
+   },
+   "primary_source": "cuda-12.8.1-eula",
+   "primary_source_basis": "official CUDA Toolkit 12.8.1 EULA (archive page for the release whose components these wheels are: cuBLAS 12.8.4.1, CUDA runtime 12.8.90, nvJitLink 12.8.93, cuFile 1.13.1.3, ...)",
+   "questions": [
+    "Which text governs: the bundled CUDA EULA (omits this component) or the official CUDA 12.8.1 EULA (lists its libraries)?"
+   ],
+   "sha256": "1d069003be650e131b21c932ec3d8969c1715379251f8d23a1860554b1cb24fc"
+  },
+  {
+   "artifact": "nvidia_curand_cu12-10.3.9.90-py3-none-manylinux_2_27_x86_64.whl",
+   "bundled_identical_to_primary": false,
+   "bundled_licence": {
+    "nvidia_curand_cu12-10.3.9.90.dist-info/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "distribution": "nvidia_curand_cu12",
+   "file_coverage": {
+    "library_files": 1,
+    "named_in_bundled_attachment_a": 1,
+    "named_in_primary_attachment_a": 1,
+    "not_named_in_primary": []
+   },
+   "primary_source": "cuda-12.8.1-eula",
+   "primary_source_basis": "official CUDA Toolkit 12.8.1 EULA (archive page for the release whose components these wheels are: cuBLAS 12.8.4.1, CUDA runtime 12.8.90, nvJitLink 12.8.93, cuFile 1.13.1.3, ...)",
+   "questions": [],
+   "sha256": "b32331d4f4df5d6eefa0554c565b626c7216f87a06a4f56fab27c3b68a830ec9"
+  },
+  {
+   "artifact": "nvidia_cusolver_cu12-11.7.3.90-py3-none-manylinux_2_27_x86_64.whl",
+   "bundled_identical_to_primary": false,
+   "bundled_licence": {
+    "nvidia_cusolver_cu12-11.7.3.90.dist-info/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "distribution": "nvidia_cusolver_cu12",
+   "file_coverage": {
+    "library_files": 2,
+    "named_in_bundled_attachment_a": 1,
+    "named_in_primary_attachment_a": 1,
+    "not_named_in_primary": [
+     "libcusolverMg.so.11"
+    ]
+   },
+   "primary_source": "cuda-12.8.1-eula",
+   "primary_source_basis": "official CUDA Toolkit 12.8.1 EULA (archive page for the release whose components these wheels are: cuBLAS 12.8.4.1, CUDA runtime 12.8.90, nvJitLink 12.8.93, cuFile 1.13.1.3, ...)",
+   "questions": [
+    "Files not covered by the distributable listing: libcusolverMg.so.11 \u2014 are they distributable?"
+   ],
+   "sha256": "4376c11ad263152bd50ea295c05370360776f8c3427b30991df774f9fb26c450"
+  },
+  {
+   "artifact": "nvidia_cusparse_cu12-12.5.8.93-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "bundled_identical_to_primary": false,
+   "bundled_licence": {
+    "nvidia_cusparse_cu12-12.5.8.93.dist-info/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "distribution": "nvidia_cusparse_cu12",
+   "file_coverage": {
+    "library_files": 1,
+    "named_in_bundled_attachment_a": 1,
+    "named_in_primary_attachment_a": 1,
+    "not_named_in_primary": []
+   },
+   "primary_source": "cuda-12.8.1-eula",
+   "primary_source_basis": "official CUDA Toolkit 12.8.1 EULA (archive page for the release whose components these wheels are: cuBLAS 12.8.4.1, CUDA runtime 12.8.90, nvJitLink 12.8.93, cuFile 1.13.1.3, ...)",
+   "questions": [],
+   "sha256": "1ec05d76bbbd8b61b06a80e1eaf8cf4959c3d4ce8e711b65ebd0443bb0ebb13b"
+  },
+  {
+   "artifact": "nvidia_nvjitlink_cu12-12.8.93-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl",
+   "bundled_identical_to_primary": false,
+   "bundled_licence": {
+    "nvidia_nvjitlink_cu12-12.8.93.dist-info/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "distribution": "nvidia_nvjitlink_cu12",
+   "file_coverage": {
+    "library_files": 1,
+    "named_in_bundled_attachment_a": 0,
+    "named_in_primary_attachment_a": 1,
+    "not_named_in_primary": []
+   },
+   "primary_source": "cuda-12.8.1-eula",
+   "primary_source_basis": "official CUDA Toolkit 12.8.1 EULA (archive page for the release whose components these wheels are: cuBLAS 12.8.4.1, CUDA runtime 12.8.90, nvJitLink 12.8.93, cuFile 1.13.1.3, ...)",
+   "questions": [
+    "Which text governs: the bundled CUDA EULA (omits this component) or the official CUDA 12.8.1 EULA (lists its libraries)?"
+   ],
+   "sha256": "81ff63371a7ebd6e6451970684f916be2eab07321b73c9d244dc2b4da7f73b88"
+  },
+  {
+   "artifact": "nvidia_nvshmem_cu12-3.4.5-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+   "bundled_identical_to_primary": false,
+   "bundled_licence": {
+    "nvidia_nvshmem_cu12-3.4.5.dist-info/licenses/License.txt": "ad6f5853fba0ca0d159d0f58d49ae49830c2f8c93f7a92648b9ce90adb4c6ccd"
+   },
+   "distribution": "nvidia_nvshmem_cu12",
+   "file_coverage": {
+    "library_files": 14,
+    "named_in_bundled_attachment_a": 0,
+    "named_in_primary_attachment_a": 0,
+    "not_named_in_primary": []
+   },
+   "primary_source": "nvshmem-v3.4.5-0-license",
+   "primary_source_basis": "License.txt at the NVIDIA/nvshmem tag v3.4.5-0 (the release of the 3.4.5 wheel): NVIDIA SDK licence plus the NVSHMEM supplement",
+   "questions": [
+    "Which text governs: the bundled CUDA EULA or the NVSHMEM v3.4.5-0 SDK licence and supplement? Under the bundled CUDA EULA none of the 14 shipped library files is named in Attachment A; under the supplement \"any portion of the SDK\" is distributable, and the application requirements still apply."
+   ],
+   "sha256": "042f2500f24c021db8a06c5eec2539027d57460e1c1a762055a6554f72c369bd"
+  },
+  {
+   "artifact": "nvidia_cudnn_cu12-9.10.2.21-py3-none-manylinux_2_27_x86_64.whl",
+   "bundled_licence": {
+    "nvidia_cudnn_cu12-9.10.2.21.dist-info/licenses/License.txt": "49cf79bdb35734b52fe6203013b3bd759f81e998cd32aa2c65c51db9a88c61d2"
+   },
+   "bundled_vs_primary": {
+    "bundled_words": 2921,
+    "difference_count": 34,
+    "differences": [
+     [
+      "non transferable",
+      "nontransferable"
+     ],
+     [
+      "pre release",
+      "prerelease"
+     ],
+     [
+      "1 6 third party",
+      "components under other"
+     ],
+     [
+      "",
+      "nvidia or"
+     ],
+     [
+      "by a nvidia supplier",
+      "with separate legal notices or terms as may be described in proprietary notices accompanying the sdk if"
+     ],
+     [
+      "or open source software provided under an open source license use of third party software is subject",
+      ""
+     ],
+     [
+      "third party",
+      "extent there is a conflict between the terms in this agreement and the"
+     ],
+     [
+      "or in",
+      "associated with"
+     ],
+     [
+      "absence of third party",
+      "component the license"
+     ],
+     [
+      "",
+      "associated with"
+     ],
+     [
+      "terms of this agreement copyright",
+      "components control only"
+     ],
+     [
+      "third party software is held by",
+      ""
+     ],
+     [
+      "copyright holders indicated in",
+      "extent necessary to resolve"
+     ],
+     [
+      "third party software or license 1 7",
+      "conflict"
+     ],
+     [
+      "unless",
+      ""
+     ],
+     [
+      "have an agreement with",
+      "acknowledge that the sdk as delivered is not tested or certified by"
+     ],
+     [
+      "this purpose you may not",
+      ""
+     ],
+     [
+      "",
+      "in connection with"
+     ],
+     [
+      "sdk with",
+      "design construction maintenance and or operation of"
+     ],
+     [
+      "or application",
+      ""
+     ],
+     [
+      "the",
+      "such"
+     ],
+     [
+      "or application can reasonably be expected to threaten or",
+      "could"
+     ],
+     [
+      "personal injury death",
+      "a situation that threatens the safety of human life"
+     ],
+     [
+      "",
+      "results in"
+     ],
+     [
+      "loss",
+      "damages each a critical application"
+     ]
+    ],
+    "matching_words": 2781,
+    "note": "the primary page is trimmed to the span between the first and last eight words of the bundled text (page navigation excluded); differences are word-level, after lower-casing",
+    "numbering_only_differences": 21,
+    "primary_words": 2933
+   },
+   "distribution": "nvidia_cudnn_cu12",
+   "distribution_clause": "the runtime files .so and .h",
+   "file_coverage": {
+    "by_suffix": {
+     ".9": 8,
+     ".h": 14
+    },
+    "files_matching_clause": 22,
+    "other_files": []
+   },
+   "primary_source": {
+    "bytes": 43905,
+    "file": "sources/nvidia-cudnn-9.10.2-sla.html",
+    "kind": "raw",
+    "retrieved_on": "2026-10-05",
+    "sha256": "f3763a5ae20aa135e6f0186ac64c22f61c049e5ef5b81122ea06dd4b9ce58707",
+    "url": "https://docs.nvidia.com/deeplearning/cudnn/backend/v9.10.2/reference/eula.html"
+   },
+   "primary_source_basis": "release-specific (cuDNN backend v9.10.2 documentation)",
+   "questions": [
+    "The primary text (release-specific (cuDNN backend v9.10.2 documentation)) differs from the bundled text in 34 spans beyond list numbering (listed above); which text governs this wheel?"
+   ],
+   "sha256": "949452be657fa16687d0930933f032835951ef0892b37d2d53824d1a84dc97a8"
+  },
+  {
+   "artifact": "nvidia_cusparselt_cu12-0.7.1-py3-none-manylinux2014_x86_64.whl",
+   "bundled_licence": {
+    "nvidia/cusparselt/LICENSE.txt": "e8d158885a681b95ec7a6fc06dd8d4a52989f374cb1380c8a4c8fb27fd3d5d5e"
+   },
+   "bundled_vs_primary": {
+    "bundled_words": 2861,
+    "difference_count": 0,
+    "differences": [],
+    "matching_words": 2842,
+    "note": "the primary page is trimmed to the span between the first and last eight words of the bundled text (page navigation excluded); differences are word-level, after lower-casing",
+    "numbering_only_differences": 19,
+    "primary_words": 2842
+   },
+   "distribution": "nvidia_cusparselt_cu12",
+   "distribution_clause": "the runtimes files ending with .so and .h as part of your application",
+   "file_coverage": {
+    "by_suffix": {
+     ".0": 1,
+     ".h": 1
+    },
+    "files_matching_clause": 2,
+    "other_files": []
+   },
+   "primary_source": {
+    "bytes": 32245,
+    "file": "sources/nvidia-cusparselt-latest-licence.html",
+    "kind": "raw",
+    "retrieved_on": "2026-10-05",
+    "sha256": "596ac591bebd55fecac68a164d64650e0f60739483ddbeab1c7a65be342a7a6b",
+    "url": "https://docs.nvidia.com/cuda/cusparselt/license.html"
+   },
+   "primary_source_basis": "NOT release-specific: the current cuSPARSELt licence page; no 0.7.1 page was found",
+   "questions": [
+    "Evidence gap: no release-specific (0.7.1) licence text was found; is the bundled text accepted as governing?",
+    "The primary text (NOT release-specific: the current cuSPARSELt licence page; no 0.7.1 page was found) matches the bundled text except list numbering; it is not release-specific, so the match does not establish the 0.7.1 terms."
+   ],
+   "sha256": "f1bb701d6b930d5a7cea44c19ceb973311500847f81b634d802b7b539dc55623"
+  }
+ ],
+ "schema": "wheelhouse_evidence_nvidia_deployment_v1",
+ "scope": {
+  "excluded_with_reason": {
+   "cuda_python, cuda_bindings": "own NVIDIA Software License without the application requirements; reviewed separately",
+   "nvidia_cutlass_dsl, nvidia_cutlass_dsl_libs_base": "own EULA; see cutlass_binaries pack",
+   "nvidia_nccl_cu12, nvidia_nvtx_cu12, nvidia_cudnn_frontend": "permissive licence texts under a proprietary classifier; reviewed separately"
+  },
+  "note": "an earlier note said 14 rows; the correct count is 13 (11 CUDA-EULA wheels including NVSHMEM, plus cuDNN and cuSPARSELt)",
+  "rows": 13
+ },
+ "status": "evidence for the designated reviewer; a proposal, not a decision"
+}
