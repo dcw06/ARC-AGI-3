@@ -5,9 +5,10 @@
       inventory, proposals and NVIDIA reconciliation; refuses to overwrite an existing worksheet. Reviewer columns
       are blank: nothing is prefilled.
   python scripts/wheelhouse_decision_worksheet.py validate RETURNED.csv
-      accepts r1 or r2 (scripts/wheelhouse_worksheet_r2.py), each against its own lock and context; flags r1 entries
-      on rows whose evidence changed in r2, requires reconfirmation of carried entries on changed rows, and flags
-      recorded decisions on changed rows. Then: check the returned worksheet (artifact bindings, required fields, recorded conditions, conflicts with existing
+      accepts any revision (r1, or later ones from scripts/wheelhouse_worksheet_revision.py), each against its own
+      lock and context; refuses entries on rows whose evidence changed in a later revision, requires reconfirmation
+      of carried entries on rows that changed since their source revision, and flags recorded decisions on changed
+      rows. Then: check the returned worksheet (artifact bindings, required fields, recorded conditions, conflicts with existing
       decisions) and write the proposed changes to reports/wheelhouse_decision_import_preview.{json,md}. Never
       writes the decisions file.
   python scripts/wheelhouse_decision_worksheet.py import RETURNED.csv --preview-sha256 SHA
@@ -48,21 +49,50 @@ CONTEXT = ['priority', 'tier', 'artifact', 'sha256', 'distribution', 'version', 
            'proposed_conditions', 'additional_obligations', 'evidence', 'proposal_rationale', 'unresolved_questions',
            'alternative_if_not_cleared']
 COLUMNS = CONTEXT + list(REVIEWER)
-# Revision 2: same reviewer fields, two more context columns, and carry-forward bookkeeping. r1 keeps its own files
-# and lock; each returned worksheet is validated against the lock and context of its own revision.
-WORKSHEET_R2 = ROOT / 'reports/wheelhouse_redistribution_decision_worksheet_r2.csv'
-LOCK_R2 = ROOT / 'reports/wheelhouse_redistribution_decision_worksheet_r2.lock.json'
-GUIDE_R2 = ROOT / 'reports/wheelhouse_redistribution_decision_worksheet_r2.md'
-COMPARISON_JSON = ROOT / 'reports/wheelhouse_redistribution_worksheet_r1_to_r2.json'
-COMPARISON_MD = ROOT / 'reports/wheelhouse_redistribution_worksheet_r1_to_r2.md'
+# Revisions >= 2 share r2's context (two more context columns) plus carry-forward bookkeeping. Every revision keeps its
+# own files and lock; a returned worksheet is validated against the lock and context of its own revision.
 CONTEXT_R2 = CONTEXT + ['worksheet_revision', 'evidence_checks']
-CARRY = ['carried_from', 'reviewer_reconfirmed_for_r2']
-COLUMNS_R2 = CONTEXT_R2 + list(REVIEWER) + CARRY
+
+
+def reconfirm_column(n):
+    return f'reviewer_reconfirmed_for_r{n}'
+
+
+def revision_files(n):
+    if n == 1:
+        return {'csv': WORKSHEET, 'lock': LOCK, 'guide': GUIDE}
+    stem = f'reports/wheelhouse_redistribution_decision_worksheet_r{n}'
+    return {'csv': ROOT / f'{stem}.csv', 'lock': ROOT / f'{stem}.lock.json', 'guide': ROOT / f'{stem}.md'}
+
+
+def comparison_files(n):
+    """The comparison from revision n-1 to revision n."""
+    stem = f'reports/wheelhouse_redistribution_worksheet_r{n - 1}_to_r{n}'
+    return {'json': ROOT / f'{stem}.json', 'md': ROOT / f'{stem}.md'}
+
+
+def columns(n):
+    return COLUMNS if n == 1 else CONTEXT_R2 + list(REVIEWER) + ['carried_from', reconfirm_column(n)]
 
 
 def revisions():
-    return {1: {'csv': WORKSHEET, 'lock': LOCK, 'context': CONTEXT, 'columns': COLUMNS},
-            2: {'csv': WORKSHEET_R2, 'lock': LOCK_R2, 'context': CONTEXT_R2, 'columns': COLUMNS_R2}}
+    """{n: files, context and columns} for every revision whose lock exists (r1, r2, ... without gaps)."""
+    out, n = {}, 1
+    while revision_files(n)['lock'].exists():
+        out[n] = dict(revision_files(n), context=CONTEXT if n == 1 else CONTEXT_R2, columns=columns(n))
+        n += 1
+    return out
+
+
+def latest_revision():
+    return max(revisions(), default=1)
+
+
+# r2 names, kept for callers that refer to the second revision directly
+WORKSHEET_R2, LOCK_R2, GUIDE_R2 = (revision_files(2)[k] for k in ('csv', 'lock', 'guide'))
+COMPARISON_JSON, COMPARISON_MD = comparison_files(2)['json'], comparison_files(2)['md']
+CARRY = ['carried_from', reconfirm_column(2)]
+COLUMNS_R2 = columns(2)
 
 
 def revision_of(row):
@@ -75,12 +105,28 @@ def revision_of(row):
     return int(value[1:])
 
 
-def evidence_changes():
-    """artifact -> changed context fields between r1 and r2 (empty if no comparison exists yet)."""
-    if not COMPARISON_JSON.exists():
-        return {}
-    return {c['artifact']: c['changed_fields'] for c in json.loads(COMPARISON_JSON.read_text(encoding='utf-8'))['rows']
-            if c['changed_fields']}
+def evidence_changes(since=1, until=None):
+    """artifact -> fields (labelled by revision) changed in any revision after `since`, up to `until` (default: the
+    latest). Fails closed: every consecutive comparison in that range must exist and be bound to the locked hashes of
+    both of its worksheets."""
+    revs = revisions()
+    until = max(revs, default=1) if until is None else until
+    changed = {}
+    for n in range(since + 1, until + 1):
+        path = comparison_files(n)['json']
+        if not path.exists():
+            raise ValueError(f'worksheet r{n} exists but the r{n - 1}->r{n} comparison is missing; entries made on '
+                             'earlier revisions cannot be assessed')
+        comparison = json.loads(path.read_text(encoding='utf-8'))
+        before = json.loads(revs[n - 1]['lock'].read_text(encoding='utf-8'))['worksheet_sha256']
+        after = json.loads(revs[n]['lock'].read_text(encoding='utf-8'))['worksheet_sha256']
+        if (comparison.get(f'r{n - 1}_worksheet_sha256') != before
+                or comparison.get(f'r{n}_worksheet_sha256') != after):
+            raise ValueError(f'the r{n - 1}->r{n} comparison is not bound to the current r{n - 1} and r{n} worksheets')
+        for c in comparison['rows']:
+            if c['changed_fields']:
+                changed.setdefault(c['artifact'], []).extend(f'{f} (r{n})' for f in c['changed_fields'])
+    return changed
 
 
 def sha256(path):
@@ -248,11 +294,17 @@ def validate(path):
         return None, [str(exc)]
     if sha256(INVENTORY_CSV) != lock['inventory_sha256']:
         errors.append('the inventory changed since the worksheet was generated; regenerate it')
-    changed_evidence = evidence_changes()
+    latest = latest_revision()
+    try:
+        changed_evidence = evidence_changes(revision)  # changes after this worksheet's revision
+        changed_since_r1 = evidence_changes(1)
+        carried_changes = {}
+    except (OSError, ValueError, KeyError) as exc:
+        return None, [f'cannot assess revision changes: {exc}']
     for name, old in current.items():
-        if old.get('redistribution_decision') not in (None, 'unresolved') and name in changed_evidence:
-            warnings.append(f"{name}: the recorded decision ({old['redistribution_decision']}) predates evidence "
-                            f"changed in r2 ({', '.join(changed_evidence[name])}); reconfirm it")
+        if old.get('redistribution_decision') not in (None, 'unresolved') and name in changed_since_r1:
+            warnings.append(f"{name}: the recorded decision ({old['redistribution_decision']}) may predate evidence "
+                            f"changed since r1 ({', '.join(changed_since_r1[name])}); reconfirm it")
     seen = Counter(r['artifact'] for r in returned)
     errors += [f'duplicate row for {a}' for a, n in seen.items() if n > 1]
     errors += [f'row for an artifact not in the inventory: {a}' for a in seen if a not in inventory]
@@ -278,16 +330,27 @@ def validate(path):
         row = {'artifact': name, 'sha256': inventory[name],
                **{target: r[source].strip() for source, target in REVIEWER.items()}}
         affected = changed_evidence.get(name, [])
-        if revision == 1 and affected:
-            warnings.append(f"{name}: decided on r1 evidence, which changed in r2 ({', '.join(affected)}); this entry "
-                            'keeps its r1 meaning only and should be reconfirmed against r2')
+        if affected and decision != 'unresolved':
+            # The decisions file keeps no revision or reconfirmation status, so an entry on a row whose evidence
+            # changed in a later revision would be imported (and could count toward eligibility) without the
+            # reconfirmation the later revision requires: refused.
+            errors.append(f"{name}: decided on r{revision} evidence, which changed later ({', '.join(affected)}); not "
+                          f'importable from r{revision}: carry it forward to r{latest} and reconfirm it there, or '
+                          f'decide it on r{latest}')
+            continue
         if revision >= 2:
-            carried = r.get('carried_from', '').strip()
-            if carried not in ('', 'r1'):
-                errors.append(f'{name}: carried_from {carried!r} is not recognised')
-            elif carried == 'r1' and affected and r.get('reviewer_reconfirmed_for_r2', '').strip().lower() != 'yes':
-                errors.append(f"{name}: entry carried from r1 but the evidence changed ({', '.join(affected)}); set "
-                              'reviewer_reconfirmed_for_r2 to yes only after reconfirming against r2')
+            carried = r.get('carried_from', '').strip().lower()
+            source = int(carried[1:]) if carried[1:].isdigit() and carried.startswith('r') else None
+            if carried and (source is None or not 1 <= source < revision):
+                errors.append(f'{name}: carried_from {carried!r} is not an earlier revision')
+            elif source is not None:
+                if source not in carried_changes:
+                    carried_changes[source] = evidence_changes(source, revision)
+                moved = carried_changes[source].get(name, [])
+                if moved and r.get(reconfirm_column(revision), '').strip().lower() != 'yes':
+                    errors.append(f"{name}: entry carried from r{source} but the evidence changed "
+                                  f"({', '.join(moved)}); set {reconfirm_column(revision)} to yes only after "
+                                  f'reconfirming against r{revision}')
         if decision != 'unresolved':
             for source in ('reviewer_rationale', 'reviewer_name'):
                 if not r[source].strip():
@@ -322,7 +385,7 @@ def validate(path):
                             'before': {k: old.get(k, '') for k in DECISION_FIELDS},
                             'after': {k: row[k] for k in DECISION_FIELDS},
                             'worksheet_revision': revision,
-                            'affected_by_newer_evidence': affected if revision == 1 else [],
+                            'affected_by_newer_evidence': affected,
                             'carried_from': r.get('carried_from', '').strip() if revision >= 2 else ''})
             proposed[name] = row
     resulting = [proposed[a] for a in inventory]

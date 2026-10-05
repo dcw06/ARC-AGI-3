@@ -80,7 +80,9 @@ class Returned(unittest.TestCase):
         return {artifact: base}
 
     def first(self, tier='conditional'):
-        return next(r['artifact'] for r in self.rows if r['priority'] == tier)
+        """An r1 row of `tier` whose evidence did not change in r2 (changed rows are not importable from r1)."""
+        changed = W.evidence_changes()
+        return next(r['artifact'] for r in self.rows if r['priority'] == tier and r['artifact'] not in changed)
 
     def test_unchanged_worksheet_proposes_nothing(self):
         (preview, _), errors = W.validate(self.returned())
@@ -122,8 +124,7 @@ class Returned(unittest.TestCase):
         self.assertTrue(any('build stays blocked' in w for w in preview['warnings']))
 
     def test_restricted_is_flagged_as_a_bundle_blocker(self):
-        artifact = W.PRIORITY[3]
-        name = next(r['artifact'] for r in self.rows if r['distribution'] == artifact)
+        name = self.first()
         (preview, _), errors = W.validate(self.returned(self.decide(
             name, reviewer_decision='restricted', reviewer_rationale='no grant for the compiled files')))
         self.assertEqual(errors, [])
