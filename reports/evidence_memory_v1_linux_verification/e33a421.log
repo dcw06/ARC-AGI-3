@@ -1,0 +1,29 @@
+clone at e33a421; load: 0.41 0.10 0.03 1/221 397
+== derive check
+/home/jingjing/.local/share/agi/dev-env/bin/python: No module named research.evidence_memory_v1.run.derive_run
+12 derived files match the derivation
+== connected (all 10)
+test_deadline_interruption_in_each_gate_pass (tests.test_evidence_memory_v1_run_connected.Rehearsals.test_deadline_interruption_in_each_gate_pass) ... ok
+test_failures_are_bounded_cleaned_and_keep_honest_evidence (tests.test_evidence_memory_v1_run_connected.Rehearsals.test_failures_are_bounded_cleaned_and_keep_honest_evidence) ... ok
+test_instrumentation_leaves_requests_and_answers_unchanged (tests.test_evidence_memory_v1_run_connected.Rehearsals.test_instrumentation_leaves_requests_and_answers_unchanged) ... ok
+test_late_abort_trickling_metrics_and_late_replies_stop_within_the_bound (tests.test_evidence_memory_v1_run_connected.Rehearsals.test_late_abort_trickling_metrics_and_late_replies_stop_within_the_bound) ... ok
+test_normal_run_and_scores_come_only_from_retained_responses (tests.test_evidence_memory_v1_run_connected.Rehearsals.test_normal_run_and_scores_come_only_from_retained_responses) ... ok
+test_prefix_caching_enabled_is_refused_before_any_question (tests.test_evidence_memory_v1_run_connected.Rehearsals.test_prefix_caching_enabled_is_refused_before_any_question) ... ok
+test_server_that_ignores_cancellation_stops_the_run (tests.test_evidence_memory_v1_run_connected.Rehearsals.test_server_that_ignores_cancellation_stops_the_run) ... ok
+test_slow_abort_within_the_window_is_verified (tests.test_evidence_memory_v1_run_connected.Rehearsals.test_slow_abort_within_the_window_is_verified) ... ok
+test_surviving_child_is_cleaned_up (tests.test_evidence_memory_v1_run_connected.Rehearsals.test_surviving_child_is_cleaned_up) ... ok
+test_timeout_cancels_server_side_work (tests.test_evidence_memory_v1_run_connected.Rehearsals.test_timeout_cancels_server_side_work) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 967.735s
+
+OK
+connected exit 0
+== all other Track 2 + transition suites
+..............................................................................................................................................
+----------------------------------------------------------------------
+Ran 142 tests in 87.885s
+
+OK
+suites exit 0 ; load after: 0.98 1.08 0.65 1/211 115851
+DONE

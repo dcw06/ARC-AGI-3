@@ -1,0 +1,817 @@
+{
+ "schema": "linux_verification_record_v1",
+ "scope": "CPU-only rehearsals with scripted (fake-server) answers in WSL Ubuntu 24.04; not model evidence",
+ "host": "WSL Ubuntu 24.04.1, CPython 3.12.3 (dev-env), no GPU",
+ "runs": [
+  {
+   "revision": "e33a421",
+   "clone": "fresh clone of track2-evidence-memory-v1 at e33a421",
+   "commands": [
+    "python -m research.evidence_memory_v1.run.derive_run --check",
+    "python -m unittest -v tests.test_evidence_memory_v1_run_connected",
+    "python -m unittest tests.test_evidence_memory_v1 tests.test_evidence_memory_v1_harness tests.test_evidence_memory_v1_migration tests.test_evidence_memory_v1_protocol tests.test_evidence_memory_v1_stage1 tests.test_evidence_memory_v1_run tests.test_evidence_memory_v1_final tests.test_evidence_memory_v1_run_evidence tests.test_transition_evidence_v2 tests.test_transition_evidence_v1"
+   ],
+   "results": {
+    "derived_files_match": 12,
+    "connected": "10 of 10 passed (968 s)",
+    "other_suites": "142 of 142 passed"
+   },
+   "log": "e33a421.log",
+   "log_sha256": "72d34dcc9bd9404c28d183c92a6ddee24926b49db1ef57b975ee418f05d4b941"
+  },
+  {
+   "revision": "1583a9d",
+   "clone": "fresh clone of track2-evidence-memory-v1 at 1583a9d",
+   "commands": [
+    "python -m research.evidence_memory_v1.run.derive_run --check",
+    "python -m unittest -v tests.test_evidence_memory_v1_run_final_e2e",
+    "python -m unittest -v tests.test_evidence_memory_v1_run_connected",
+    "python -m unittest -v (the ten suites above)"
+   ],
+   "environment": {
+    "EVIDENCE_MEMORY_TOKENIZER": "pinned tokenizer files (outside the repository)"
+   },
+   "results": {
+    "derived_files_match": 12,
+    "end_to_end_pooling": "3 of 3 passed (117 s)",
+    "connected": "10 of 10 passed (1,052 s)",
+    "other_suites": "144 of 144 passed"
+   },
+   "named_outcomes": [
+    {
+     "test": "test_1_two_real_sessions_are_evaluated_and_pooled",
+     "class": "tests.test_evidence_memory_v1_run_final_e2e.PooledAnalysisEndToEnd.test_1_two_real_sessions_are_evaluated_and_pooled",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_2_an_altered_session_is_refused_because_its_re_evaluation_fails",
+     "class": "tests.test_evidence_memory_v1_run_final_e2e.PooledAnalysisEndToEnd.test_2_an_altered_session_is_refused_because_its_re_evaluation_fails",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_3_the_altered_session_with_its_earlier_successful_evaluation_is_refused",
+     "class": "tests.test_evidence_memory_v1_run_final_e2e.PooledAnalysisEndToEnd.test_3_the_altered_session_with_its_earlier_successful_evaluation_is_refused",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_a_change_only_inside_the_mask_is_set_aside_not_denied",
+     "class": "tests.test_transition_evidence_v2.MaskedView.test_a_change_only_inside_the_mask_is_set_aside_not_denied",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_a_consistent_forgery_passes_validate_but_not_verify",
+     "class": "tests.test_transition_evidence_v2.ValidationRegressions.test_a_consistent_forgery_passes_validate_but_not_verify",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_a_finalized_run_is_returned_unchanged",
+     "class": "tests.test_evidence_memory_v1_run_evidence.NeverFinalizedIndex.test_a_finalized_run_is_returned_unchanged",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_a_float_action_id_is_refused_by_verify_too",
+     "class": "tests.test_transition_evidence_v2.ReviewOf19c211b.test_a_float_action_id_is_refused_by_verify_too",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_a_mask_cannot_create_a_change",
+     "class": "tests.test_transition_evidence_v2.MaskedView.test_a_mask_cannot_create_a_change",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_a_mask_for_another_frame_shape_does_not_apply",
+     "class": "tests.test_transition_evidence_v2.MaskedView.test_a_mask_for_another_frame_shape_does_not_apply",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_a_missing_answer_makes_the_session_incomplete",
+     "class": "tests.test_evidence_memory_v1_run.DryRehearsal.test_a_missing_answer_makes_the_session_incomplete",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_a_missing_substitution_is_refused",
+     "class": "tests.test_evidence_memory_v1_run.Derivation.test_a_missing_substitution_is_refused",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_a_running_index_after_a_canceled_call_is_recovered_as_interrupted",
+     "class": "tests.test_evidence_memory_v1_run_evidence.NeverFinalizedIndex.test_a_running_index_after_a_canceled_call_is_recovered_as_interrupted",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_a_running_index_after_an_answered_first_call_is_recovered_too",
+     "class": "tests.test_evidence_memory_v1_run_evidence.NeverFinalizedIndex.test_a_running_index_after_an_answered_first_call_is_recovered_too",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_a_valid_session_and_a_changed_response",
+     "class": "tests.test_evidence_memory_v1_run.DryRehearsal.test_a_valid_session_and_a_changed_response",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_agrees_with_schema_on_which_entries_are_faulty",
+     "class": "tests.test_evidence_memory_v1.IndependentChecker.test_agrees_with_schema_on_which_entries_are_faulty",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_an_altered_run_with_an_earlier_successful_evaluation_is_refused",
+     "class": "tests.test_evidence_memory_v1_final.EvaluationBinding.test_an_altered_run_with_an_earlier_successful_evaluation_is_refused",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_an_edited_table_is_refused",
+     "class": "tests.test_transition_evidence_v2.FrozenDeclaredMasks.test_an_edited_table_is_refused",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_an_evaluation_not_bound_to_the_pooled_inputs_is_refused",
+     "class": "tests.test_evidence_memory_v1_final.TwoSessionAnalysis.test_an_evaluation_not_bound_to_the_pooled_inputs_is_refused",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_an_invalid_second_session_is_refused",
+     "class": "tests.test_evidence_memory_v1_final.TwoSessionAnalysis.test_an_invalid_second_session_is_refused",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_ar25_and_wa30_stay_unmasked",
+     "class": "tests.test_transition_evidence_v2.ArchivedDevelopmentTransitions.test_ar25_and_wa30_stay_unmasked",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_audit_replays_and_is_append_only",
+     "class": "tests.test_evidence_memory_v1.Store.test_audit_replays_and_is_append_only",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_audit_tampering_is_detected",
+     "class": "tests.test_evidence_memory_v1.IndependentChecker.test_audit_tampering_is_detected",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_available_actions_are_reported_or_absent_never_assumed",
+     "class": "tests.test_transition_evidence_v2.IdentityAndContext.test_available_actions_are_reported_or_absent_never_assumed",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_available_actions_must_exist_in_the_action_vocabulary",
+     "class": "tests.test_transition_evidence_v2.ReviewOf19c211b.test_available_actions_must_exist_in_the_action_vocabulary",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_boolean_flags_replaced_by_integers_are_refused",
+     "class": "tests.test_transition_evidence_v2.ReviewOf19c211b.test_boolean_flags_replaced_by_integers_are_refused",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_bootstrap_is_seeded_stratified_and_brackets_the_estimate",
+     "class": "tests.test_evidence_memory_v1_protocol.PrimaryEndpointAndContrasts.test_bootstrap_is_seeded_stratified_and_brackets_the_estimate",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_both_valid_sessions_give_the_analysis_of_the_concatenated_rows",
+     "class": "tests.test_evidence_memory_v1_final.TwoSessionAnalysis.test_both_valid_sessions_give_the_analysis_of_the_concatenated_rows",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_canary_and_unknown_requests",
+     "class": "tests.test_evidence_memory_v1_run.DryRehearsal.test_canary_and_unknown_requests",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_changes_outside_the_mask_are_kept",
+     "class": "tests.test_transition_evidence_v2.MaskedView.test_changes_outside_the_mask_are_kept",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_clean_answers_reach_the_server_and_answer_every_question_with_its_key",
+     "class": "tests.test_evidence_memory_v1_run.RehearsalOnlyKnobs.test_clean_answers_reach_the_server_and_answer_every_question_with_its_key",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_committed_stand_in_equals_a_fresh_build",
+     "class": "tests.test_evidence_memory_v1_stage1.FrozenSet.test_committed_stand_in_equals_a_fresh_build",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_comprehension_floor_and_unsupported_margin",
+     "class": "tests.test_evidence_memory_v1_protocol.PrimaryEndpointAndContrasts.test_comprehension_floor_and_unsupported_margin",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_consistent_colour_relabelling_preserves_equality_and_counts",
+     "class": "tests.test_transition_evidence_v1.Properties.test_consistent_colour_relabelling_preserves_equality_and_counts",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_contradictory_masked_counts_and_summaries",
+     "class": "tests.test_transition_evidence_v2.ValidationRegressions.test_contradictory_masked_counts_and_summaries",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_counts_match_an_independent_brute_force_count",
+     "class": "tests.test_transition_evidence_v2.MaskedView.test_counts_match_an_independent_brute_force_count",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_coverage_and_partitions",
+     "class": "tests.test_transition_evidence_v1.Fixtures.test_coverage_and_partitions",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_deadline_interruption_in_each_gate_pass",
+     "class": "tests.test_evidence_memory_v1_run_connected.Rehearsals.test_deadline_interruption_in_each_gate_pass",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_delay_moves_relevant_evidence_away_from_the_question",
+     "class": "tests.test_evidence_memory_v1.Trajectories.test_delay_moves_relevant_evidence_away_from_the_question",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_deterministic_valid_and_construction_agrees_with_gold",
+     "class": "tests.test_evidence_memory_v1.Trajectories.test_deterministic_valid_and_construction_agrees_with_gold",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_dimension_change_has_no_cell_count_but_differs",
+     "class": "tests.test_transition_evidence_v1.Properties.test_dimension_change_has_no_cell_count_but_differs",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_dispatch_uncertainty_is_never_masked",
+     "class": "tests.test_transition_evidence_v2.MaskNeverSuppresses.test_dispatch_uncertainty_is_never_masked",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_each_faulty_writer_is_caught_by_its_own_failure_class",
+     "class": "tests.test_evidence_memory_v1_harness.Writers.test_each_faulty_writer_is_caught_by_its_own_failure_class",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_each_server_fault_fires_at_its_call",
+     "class": "tests.test_evidence_memory_v1_run.FaultPlacement.test_each_server_fault_fires_at_its_call",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_enumeration_covers_every_scheduled_call_of_both_sessions",
+     "class": "tests.test_evidence_memory_v1_stage1.FrozenSet.test_enumeration_covers_every_scheduled_call_of_both_sessions",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_equality_is_type_sensitive",
+     "class": "tests.test_transition_evidence_v2.ReviewOf19c211b.test_equality_is_type_sensitive",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_every_arm_question_and_budget",
+     "class": "tests.test_evidence_memory_v1_stage1.FrozenSet.test_every_arm_question_and_budget",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_every_frozen_fixture_contains_its_version_1_record_exactly",
+     "class": "tests.test_transition_evidence_v2.PreservesVersion1.test_every_frozen_fixture_contains_its_version_1_record_exactly",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_every_record_is_v2_and_verifies_against_its_raw_evidence",
+     "class": "tests.test_evidence_memory_v1.TransitionEvidenceV2.test_every_record_is_v2_and_verifies_against_its_raw_evidence",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_every_record_validates_verifies_and_reports_available_actions",
+     "class": "tests.test_transition_evidence_v2.ArchivedDevelopmentTransitions.test_every_record_validates_verifies_and_reports_available_actions",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_every_stage1_prompt_is_encodable_and_packages_respect_the_token_budget",
+     "class": "tests.test_evidence_memory_v1_protocol.PinnedTokenizer.test_every_stage1_prompt_is_encodable_and_packages_respect_the_token_budget",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_every_targeted_mutation_is_flagged_by_both_checkers",
+     "class": "tests.test_evidence_memory_v1.IndependentChecker.test_every_targeted_mutation_is_flagged_by_both_checkers",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_every_transition",
+     "class": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_every_transition",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_every_writer_call_is_charged",
+     "class": "tests.test_evidence_memory_v1_harness.Writers.test_every_writer_call_is_charged",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_evidence_classes_and_recent_controls",
+     "class": "tests.test_evidence_memory_v1_protocol.Stage1Instruments.test_evidence_classes_and_recent_controls",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_evidence_rules",
+     "class": "tests.test_evidence_memory_v1.Store.test_evidence_rules",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_failed_and_unknown_dispatches_keep_the_level_they_started_from",
+     "class": "tests.test_transition_evidence_v2.IdentityAndContext.test_failed_and_unknown_dispatches_keep_the_level_they_started_from",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_failed_dispatch_is_never_a_no_op",
+     "class": "tests.test_transition_evidence_v1.Properties.test_failed_dispatch_is_never_a_no_op",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_failures_are_bounded_cleaned_and_keep_honest_evidence",
+     "class": "tests.test_evidence_memory_v1_run_connected.Rehearsals.test_failures_are_bounded_cleaned_and_keep_honest_evidence",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_faithful_writer_is_faithful_everywhere",
+     "class": "tests.test_evidence_memory_v1_harness.Writers.test_faithful_writer_is_faithful_everywhere",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_fidelity_imports_nothing_from_the_project",
+     "class": "tests.test_evidence_memory_v1.IndependentChecker.test_fidelity_imports_nothing_from_the_project",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_finalized_and_already_recovered_runs_are_unchanged",
+     "class": "tests.test_evidence_memory_v1_run_evidence.WrapperDecision.test_finalized_and_already_recovered_runs_are_unchanged",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_frozen_fixtures_match_a_fresh_generation",
+     "class": "tests.test_transition_evidence_v1.Fixtures.test_frozen_fixtures_match_a_fresh_generation",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_games_are_matched_on_their_full_id",
+     "class": "tests.test_transition_evidence_v2.FrozenDeclaredMasks.test_games_are_matched_on_their_full_id",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_gate_blocks_bad_writes_but_not_omissions",
+     "class": "tests.test_evidence_memory_v1_harness.Writers.test_gate_blocks_bad_writes_but_not_omissions",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_groups_share_their_construction_across_horizons",
+     "class": "tests.test_evidence_memory_v1_protocol.Stage1Instruments.test_groups_share_their_construction_across_horizons",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_instrumentation_leaves_requests_and_answers_unchanged",
+     "class": "tests.test_evidence_memory_v1_run_connected.Rehearsals.test_instrumentation_leaves_requests_and_answers_unchanged",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_intermediate_change_then_original_stays_transient",
+     "class": "tests.test_transition_evidence_v1.Properties.test_intermediate_change_then_original_stays_transient",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_invalid_frames_and_shape_changes_stay_undecided_or_changed",
+     "class": "tests.test_transition_evidence_v2.MaskedView.test_invalid_frames_and_shape_changes_stay_undecided_or_changed",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_invalid_outputs_are_retained_and_charged",
+     "class": "tests.test_evidence_memory_v1_harness.Writers.test_invalid_outputs_are_retained_and_charged",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_known_correct_memory_and_scripted_readers",
+     "class": "tests.test_evidence_memory_v1_harness.Readers.test_known_correct_memory_and_scripted_readers",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_late_abort_trickling_metrics_and_late_replies_stop_within_the_bound",
+     "class": "tests.test_evidence_memory_v1_run_connected.Rehearsals.test_late_abort_trickling_metrics_and_late_replies_stop_within_the_bound",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_level_change_does_not_make_a_rule_universal",
+     "class": "tests.test_evidence_memory_v1.Checks.test_level_change_does_not_make_a_rule_universal",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_level_comes_from_context_and_equals_the_old_carry_forward",
+     "class": "tests.test_evidence_memory_v1.TransitionEvidenceV2.test_level_comes_from_context_and_equals_the_old_carry_forward",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_level_completion_terminal_state_and_action_changes_are_reported_regardless",
+     "class": "tests.test_transition_evidence_v2.MaskNeverSuppresses.test_level_completion_terminal_state_and_action_changes_are_reported_regardless",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_live_is_refused_before_any_approval_is_read",
+     "class": "tests.test_evidence_memory_v1_run.GpuDisabled.test_live_is_refused_before_any_approval_is_read",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_malformed_context_and_available_actions",
+     "class": "tests.test_transition_evidence_v2.ValidationRegressions.test_malformed_context_and_available_actions",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_malformed_masks_are_refused",
+     "class": "tests.test_transition_evidence_v2.MaskedView.test_malformed_masks_are_refused",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_margins_hold_with_stated_bounds",
+     "class": "tests.test_evidence_memory_v1_run.SlowFaultPlacement.test_margins_hold_with_stated_bounds",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_missing_observations_never_produce_a_zero_count",
+     "class": "tests.test_transition_evidence_v1.Properties.test_missing_observations_never_produce_a_zero_count",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_model_statements_stay_separate_from_measurements",
+     "class": "tests.test_transition_evidence_v1.Properties.test_model_statements_stay_separate_from_measurements",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_no_admitted_call_reaches_the_cleanup_reserve",
+     "class": "tests.test_evidence_memory_v1_run.OrderAndAdmission.test_no_admitted_call_reaches_the_cleanup_reserve",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_no_drift_and_every_file_names_its_reviewed_source",
+     "class": "tests.test_evidence_memory_v1_run.Derivation.test_no_drift_and_every_file_names_its_reviewed_source",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_no_evaluator_data_or_game_rules_in_raw_evidence",
+     "class": "tests.test_transition_evidence_v1.Fixtures.test_no_evaluator_data_or_game_rules_in_raw_evidence",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_no_numeric_confidence_and_fixed_fields",
+     "class": "tests.test_evidence_memory_v1.Store.test_no_numeric_confidence_and_fixed_fields",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_no_silent_overwrite",
+     "class": "tests.test_evidence_memory_v1.Store.test_no_silent_overwrite",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_normal_run_and_scores_come_only_from_retained_responses",
+     "class": "tests.test_evidence_memory_v1_run_connected.Rehearsals.test_normal_run_and_scores_come_only_from_retained_responses",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_observation_must_be_reconstructable",
+     "class": "tests.test_evidence_memory_v1.Checks.test_observation_must_be_reconstructable",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_old_evidence_accuracy_is_primary_and_a_smaller_forgetting_gap_is_not_rewarded",
+     "class": "tests.test_evidence_memory_v1_protocol.PrimaryEndpointAndContrasts.test_old_evidence_accuracy_is_primary_and_a_smaller_forgetting_gap_is_not_rewarded",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_one_session_alone_is_refused",
+     "class": "tests.test_evidence_memory_v1_final.TwoSessionAnalysis.test_one_session_alone_is_refused",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_only_a_development_partition_exists",
+     "class": "tests.test_evidence_memory_v1.Trajectories.test_only_a_development_partition_exists",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_only_s5i5_is_declared_with_its_exact_region_and_source",
+     "class": "tests.test_transition_evidence_v2.FrozenDeclaredMasks.test_only_s5i5_is_declared_with_its_exact_region_and_source",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_oracle_dry_run_shows_the_designed_contrast",
+     "class": "tests.test_evidence_memory_v1_protocol.Stage1Instruments.test_oracle_dry_run_shows_the_designed_contrast",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_packages_respect_one_budget_and_never_show_retired_entries",
+     "class": "tests.test_evidence_memory_v1_harness.Readers.test_packages_respect_one_budget_and_never_show_retired_entries",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_pass_one_then_the_repeat_and_truncation_keeps_whole_groups",
+     "class": "tests.test_evidence_memory_v1_run.OrderAndAdmission.test_pass_one_then_the_repeat_and_truncation_keeps_whole_groups",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_prefix_caching_enabled_is_refused_before_any_question",
+     "class": "tests.test_evidence_memory_v1_run_connected.Rehearsals.test_prefix_caching_enabled_is_refused_before_any_question",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_prompts_memory_packages_and_tables_are_byte_identical",
+     "class": "tests.test_evidence_memory_v1_migration.FormatMigration.test_prompts_memory_packages_and_tables_are_byte_identical",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_raw_evidence_carries_no_labels_or_answers",
+     "class": "tests.test_evidence_memory_v1.Trajectories.test_raw_evidence_carries_no_labels_or_answers",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_reader_never_sees_the_answer",
+     "class": "tests.test_evidence_memory_v1_harness.Readers.test_reader_never_sees_the_answer",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_recent_window_forgets_and_full_history_does_not",
+     "class": "tests.test_evidence_memory_v1_harness.ContextPressure.test_recent_window_forgets_and_full_history_does_not",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_record_id_and_model_statements_cite_it",
+     "class": "tests.test_transition_evidence_v2.IdentityAndContext.test_record_id_and_model_statements_cite_it",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_reference_imports_nothing",
+     "class": "tests.test_transition_evidence_v1.AgreementWithConstruction.test_reference_imports_nothing",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_references_resolve_through_the_contract_record_id",
+     "class": "tests.test_evidence_memory_v1.TransitionEvidenceV2.test_references_resolve_through_the_contract_record_id",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_refuses_what_it_cannot_encode_exactly",
+     "class": "tests.test_evidence_memory_v1_protocol.PinnedTokenizer.test_refuses_what_it_cannot_encode_exactly",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_reordering_intermediate_frames_changes_chronology_not_the_final_comparison",
+     "class": "tests.test_transition_evidence_v1.Properties.test_reordering_intermediate_frames_changes_chronology_not_the_final_comparison",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_repeating_an_identical_frame_adds_no_change",
+     "class": "tests.test_transition_evidence_v1.Properties.test_repeating_an_identical_frame_adds_no_change",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_representation_contrast_is_restricted_to_evidence_available_in_both",
+     "class": "tests.test_evidence_memory_v1_protocol.PrimaryEndpointAndContrasts.test_representation_contrast_is_restricted_to_evidence_available_in_both",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_reproduces_the_exact_transformers_audit",
+     "class": "tests.test_evidence_memory_v1_protocol.PinnedTokenizer.test_reproduces_the_exact_transformers_audit",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_request_schema_and_key_answers_validate",
+     "class": "tests.test_evidence_memory_v1_stage1.RepeatSelection.test_request_schema_and_key_answers_validate",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_reset_invalidates_state_dependent_entries_only",
+     "class": "tests.test_evidence_memory_v1.Checks.test_reset_invalidates_state_dependent_entries_only",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_response_schema_is_validated_before_correctness",
+     "class": "tests.test_evidence_memory_v1_harness.Readers.test_response_schema_is_validated_before_correctness",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_retire_preserves_and_blocks",
+     "class": "tests.test_evidence_memory_v1.Store.test_retire_preserves_and_blocks",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_reviewer_case_observation_citing_its_own_support_as_counterevidence",
+     "class": "tests.test_evidence_memory_v1.IndependentChecker.test_reviewer_case_observation_citing_its_own_support_as_counterevidence",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_running_index_is_recovered",
+     "class": "tests.test_evidence_memory_v1_run_evidence.WrapperDecision.test_running_index_is_recovered",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_running_index_keeps_a_recorded_stop_reason",
+     "class": "tests.test_evidence_memory_v1_run_evidence.WrapperDecision.test_running_index_keeps_a_recorded_stop_reason",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_runtime_estimate_uses_the_measured_fit",
+     "class": "tests.test_evidence_memory_v1_protocol.Stage1Instruments.test_runtime_estimate_uses_the_measured_fit",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_s5i5_every_change_is_inside_the_declared_region",
+     "class": "tests.test_transition_evidence_v2.ArchivedDevelopmentTransitions.test_s5i5_every_change_is_inside_the_declared_region",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_schedule_is_group_interleaved_and_the_repeat_is_whole_groups",
+     "class": "tests.test_evidence_memory_v1_stage1.FrozenSet.test_schedule_is_group_interleaved_and_the_repeat_is_whole_groups",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_scoring_flags",
+     "class": "tests.test_evidence_memory_v1_protocol.Stage1Instruments.test_scoring_flags",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_server_that_ignores_cancellation_stops_the_run",
+     "class": "tests.test_evidence_memory_v1_run_connected.Rehearsals.test_server_that_ignores_cancellation_stops_the_run",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_slow_abort_within_the_window_is_verified",
+     "class": "tests.test_evidence_memory_v1_run_connected.Rehearsals.test_slow_abort_within_the_window_is_verified",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_stability_counts_identical_repeated_answers",
+     "class": "tests.test_evidence_memory_v1_protocol.PrimaryEndpointAndContrasts.test_stability_counts_identical_repeated_answers",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_starting_state_must_agree_with_the_environment_report",
+     "class": "tests.test_transition_evidence_v2.ReviewOf19c211b.test_starting_state_must_agree_with_the_environment_report",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_surviving_child_is_cleaned_up",
+     "class": "tests.test_evidence_memory_v1_run_connected.Rehearsals.test_surviving_child_is_cleaned_up",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_swapped_duplicated_or_unregistered_sessions_are_refused",
+     "class": "tests.test_evidence_memory_v1_final.TwoSessionAnalysis.test_swapped_duplicated_or_unregistered_sessions_are_refused",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_the_call_ceiling_covers_the_session",
+     "class": "tests.test_evidence_memory_v1_run.GpuDisabled.test_the_call_ceiling_covers_the_session",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_the_canary_and_every_stage1_question_are_told_apart",
+     "class": "tests.test_evidence_memory_v1_run.FaultPlacement.test_the_canary_and_every_stage1_question_are_told_apart",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_the_derived_worker_uses_the_derived_values_and_forwards_the_repeat_fault",
+     "class": "tests.test_evidence_memory_v1_run.SlowFaultPlacement.test_the_derived_worker_uses_the_derived_values_and_forwards_the_repeat_fault",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_the_development_stand_in_is_refused_unless_explicitly_allowed",
+     "class": "tests.test_evidence_memory_v1_final.TwoSessionAnalysis.test_the_development_stand_in_is_refused_unless_explicitly_allowed",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_the_digest_covers_the_frozen_set_the_run_files_the_tree_and_the_evaluator",
+     "class": "tests.test_evidence_memory_v1_final.EvaluationBinding.test_the_digest_covers_the_frozen_set_the_run_files_the_tree_and_the_evaluator",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_the_evaluator_never_grants_completion_to_a_recovered_run",
+     "class": "tests.test_evidence_memory_v1_run_evidence.NeverFinalizedIndex.test_the_evaluator_never_grants_completion_to_a_recovered_run",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_the_evaluator_reads_the_frozen_set_given_for_the_session",
+     "class": "tests.test_evidence_memory_v1_final.EvaluatorUsesTheSessionFrozenSet.test_the_evaluator_reads_the_frozen_set_given_for_the_session",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_the_fault_call_is_inside_pass_one_of_the_schedule",
+     "class": "tests.test_evidence_memory_v1_run.FaultPlacement.test_the_fault_call_is_inside_pass_one_of_the_schedule",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_the_frozen_files_are_byte_identical_to_the_reviewed_revision",
+     "class": "tests.test_transition_evidence_v2.Freeze.test_the_frozen_files_are_byte_identical_to_the_reviewed_revision",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_the_frozen_set_override_is_honoured_only_in_cpu_rehearsal",
+     "class": "tests.test_evidence_memory_v1_run.RehearsalOnlyKnobs.test_the_frozen_set_override_is_honoured_only_in_cpu_rehearsal",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_the_prompt_frame_is_identical_across_arms_and_hides_the_answer",
+     "class": "tests.test_evidence_memory_v1_protocol.Stage1Instruments.test_the_prompt_frame_is_identical_across_arms_and_hides_the_answer",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_the_record_names_no_cause_for_the_masked_region",
+     "class": "tests.test_transition_evidence_v2.MaskedView.test_the_record_names_no_cause_for_the_masked_region",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_the_repeat_fault_slows_only_repeat_calls",
+     "class": "tests.test_evidence_memory_v1_run.SlowFaultPlacement.test_the_repeat_fault_slows_only_repeat_calls",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_the_session_report_is_technical_only",
+     "class": "tests.test_evidence_memory_v1_run.DryRehearsal.test_the_session_report_is_technical_only",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_the_two_contrasts_support_different_conclusions",
+     "class": "tests.test_evidence_memory_v1_protocol.PrimaryEndpointAndContrasts.test_the_two_contrasts_support_different_conclusions",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_three_failed_clicks_never_become_clicking_never_works",
+     "class": "tests.test_evidence_memory_v1.Checks.test_three_failed_clicks_never_become_clicking_never_works",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_timeout_cancels_server_side_work",
+     "class": "tests.test_evidence_memory_v1_run_connected.Rehearsals.test_timeout_cancels_server_side_work",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_track_never_touches_the_masked_view_or_the_masks_module",
+     "class": "tests.test_evidence_memory_v1.TransitionEvidenceV2.test_track_never_touches_the_masked_view_or_the_masks_module",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_transition_contract_is_used_read_only",
+     "class": "tests.test_evidence_memory_v1_harness.Boundaries.test_transition_contract_is_used_read_only",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_truncated_answers_are_invalid_never_parsed",
+     "class": "tests.test_evidence_memory_v1_run.DryRehearsal.test_truncated_answers_are_invalid_never_parsed",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_unknown_outcome_breaks_unsupported_continuity",
+     "class": "tests.test_transition_evidence_v1.Properties.test_unknown_outcome_breaks_unsupported_continuity",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_validation_catches_collapsed_semantics",
+     "class": "tests.test_transition_evidence_v1.Properties.test_validation_catches_collapsed_semantics",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_verify_history_rejects_type_changes_and_invalid_records",
+     "class": "tests.test_transition_evidence_v2.ReviewOf19c211b.test_verify_history_rejects_type_changes_and_invalid_records",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_visual_change_is_not_progress_and_progress_needs_an_allowed_signal",
+     "class": "tests.test_transition_evidence_v1.Properties.test_visual_change_is_not_progress_and_progress_needs_an_allowed_signal",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_vocabulary_values_are_version_1s",
+     "class": "tests.test_transition_evidence_v2.PreservesVersion1.test_vocabulary_values_are_version_1s",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_whole_groups_ten_percent_every_family_deterministic",
+     "class": "tests.test_evidence_memory_v1_stage1.RepeatSelection.test_whole_groups_ten_percent_every_family_deterministic",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_window_is_frozen",
+     "class": "tests.test_evidence_memory_v1_harness.ContextPressure.test_window_is_frozen",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_withheld_seed_changes_cases_and_label_without_touching_development",
+     "class": "tests.test_evidence_memory_v1_protocol.Stage1Instruments.test_withheld_seed_changes_cases_and_label_without_touching_development",
+     "outcome": "ok"
+    },
+    {
+     "test": "test_wording_is_no_observed_change_outside_the_declared_region",
+     "class": "tests.test_transition_evidence_v2.MaskNeverSuppresses.test_wording_is_no_observed_change_outside_the_declared_region",
+     "outcome": "ok"
+    }
+   ],
+   "log": "1583a9d.log",
+   "log_sha256": "cebb4bbfaebfdc22d55e9ef2c259b2f81cf4004569cc111c33ac78003f46e364",
+   "script": "run_1583a9d.sh",
+   "script_sha256": "5c00fe537bdb6ba92c5b010b4dd71be16fd0b9316dfb378ffabcbfbe6b51fd6f"
+  }
+ ],
+ "closes": [
+  "pooled analysis bound to an independent evaluation of the exact session inputs (review finding 1)",
+  "repeat-pass invalid answers included in technical validity (review finding 2)"
+ ]
+}
