@@ -1,0 +1,810 @@
+{
+    "ref":  "codywhatleymd/arc3-vllm-0271-sm120-wheelhouse",
+    "url":  "https://www.kaggle.com/datasets/codywhatleymd/arc3-vllm-0271-sm120-wheelhouse",
+    "assessment_date":  "2026-10-06",
+    "version":  6,
+    "listing_complete":  true,
+    "file_count":  200,
+    "files":  [
+                  {
+                      "name":  "requirements.lock",
+                      "totalBytes":  4121
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/accelerate-1.14.0-py3-none-any.whl",
+                      "totalBytes":  389246
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/aiohappyeyeballs-2.7.1-py3-none-any.whl",
+                      "totalBytes":  15038
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/aiohttp-3.14.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  1792122
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/aiosignal-1.4.0-py3-none-any.whl",
+                      "totalBytes":  7490
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/annotated_doc-0.0.5-py3-none-any.whl",
+                      "totalBytes":  5302
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/annotated_types-0.8.0-py3-none-any.whl",
+                      "totalBytes":  13427
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/anthropic-1.0.0-py3-none-any.whl",
+                      "totalBytes":  1171725
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/anyio-4.14.2-py3-none-any.whl",
+                      "totalBytes":  125813
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/apache_tvm_ffi-0.1.11-cp312-abi3-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  2697683
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/astor-0.8.1-py2.py3-none-any.whl",
+                      "totalBytes":  27488
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/attrs-26.1.0-py3-none-any.whl",
+                      "totalBytes":  67548
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/blake3-1.0.9-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+                      "totalBytes":  383851
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/cachetools-7.1.7-py3-none-any.whl",
+                      "totalBytes":  16830
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/cbor2-6.1.4-cp312-cp312-manylinux_2_28_x86_64.whl",
+                      "totalBytes":  461193
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/certifi-2026.7.22-py3-none-any.whl",
+                      "totalBytes":  136983
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/cffi-2.1.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+                      "totalBytes":  221822
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/charset_normalizer-3.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  248801
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/click-8.4.2-py3-none-any.whl",
+                      "totalBytes":  119243
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/cloudpickle-3.1.2-py3-none-any.whl",
+                      "totalBytes":  22228
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/compressed_tensors-0.17.0-py3-none-any.whl",
+                      "totalBytes":  211714
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/cryptography-50.0.0-cp311-abi3-manylinux_2_34_x86_64.whl",
+                      "totalBytes":  4734462
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/cuda_bindings-13.3.1-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  6657965
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/cuda_core-1.0.1-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  5106023
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/cuda_pathfinder-1.7.0-py3-none-any.whl",
+                      "totalBytes":  63091
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/cuda_python-13.3.1-py3-none-any.whl",
+                      "totalBytes":  8295
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/cuda_tile-1.5.0-cp312-cp312-manylinux2014_x86_64.whl",
+                      "totalBytes":  324990
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/cuda_toolkit-13.0.3.0-py2.py3-none-any.whl",
+                      "totalBytes":  2512
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/dataset-metadata.json",
+                      "totalBytes":  246
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/depyf-0.20.0-py3-none-any.whl",
+                      "totalBytes":  39381
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/detect_installer-0.1.0-py3-none-any.whl",
+                      "totalBytes":  4539
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/dill-0.4.1-py3-none-any.whl",
+                      "totalBytes":  120019
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/dnspython-2.8.0-py3-none-any.whl",
+                      "totalBytes":  331094
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/docstring_parser-0.18.0-py3-none-any.whl",
+                      "totalBytes":  22484
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/einops-0.8.2-py3-none-any.whl",
+                      "totalBytes":  65638
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/email_validator-2.3.0-py3-none-any.whl",
+                      "totalBytes":  35604
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/fastapi-0.136.3-py3-none-any.whl",
+                      "totalBytes":  117481
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/fastapi_cli-0.0.32-py3-none-any.whl",
+                      "totalBytes":  14670
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/fastapi_cloud_cli-0.23.0-py3-none-any.whl",
+                      "totalBytes":  78058
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/fastar-0.12.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+                      "totalBytes":  808091
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/fastsafetensors-0.3.3-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  1915478
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/filelock-3.32.4-py3-none-any.whl",
+                      "totalBytes":  99864
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/flashinfer_jit_cache-0.6.16.post3+cu130-cp39-abi3-manylinux_2_28_x86_64.whl",
+                      "totalBytes":  1505323968
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/flashinfer_python-0.6.16.post3-py3-none-any.whl",
+                      "totalBytes":  15836034
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/frozenlist-1.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+                      "totalBytes":  242411
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/fsspec-2026.7.0-py3-none-any.whl",
+                      "totalBytes":  206583
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/googleapis_common_protos-1.75.1-py3-none-any.whl",
+                      "totalBytes":  300626
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/grpcio-1.83.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+                      "totalBytes":  7040616
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/h11-0.16.0-py3-none-any.whl",
+                      "totalBytes":  37515
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/hf_xet-1.6.0-cp38-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+                      "totalBytes":  4464663
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/httpcore-1.0.9-py3-none-any.whl",
+                      "totalBytes":  78784
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/httpcore2-2.12.0-py3-none-any.whl",
+                      "totalBytes":  83074
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/httptools-0.8.0-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+                      "totalBytes":  523851
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/httpx-0.28.1-py3-none-any.whl",
+                      "totalBytes":  73517
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/httpx2-2.12.0-py3-none-any.whl",
+                      "totalBytes":  95427
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/huggingface_hub-1.28.0-py3-none-any.whl",
+                      "totalBytes":  793202
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/humming_kernels-0.1.10-py3-none-any.whl",
+                      "totalBytes":  184889
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/idna-3.19-py3-none-any.whl",
+                      "totalBytes":  68550
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/ijson-3.5.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  149848
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/interegular-0.3.3-py37-none-any.whl",
+                      "totalBytes":  23635
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/jinja2-3.1.6-py3-none-any.whl",
+                      "totalBytes":  134899
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/jiter-0.16.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+                      "totalBytes":  343805
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/jmespath-1.1.0-py3-none-any.whl",
+                      "totalBytes":  20419
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/jsonschema-4.26.0-py3-none-any.whl",
+                      "totalBytes":  90630
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/jsonschema_specifications-2025.9.1-py3-none-any.whl",
+                      "totalBytes":  18437
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/lark-1.2.2-py3-none-any.whl",
+                      "totalBytes":  111036
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/llguidance-1.7.6-cp39-abi3-manylinux_2_31_x86_64.whl",
+                      "totalBytes":  3074809
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/llvmlite-0.47.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+                      "totalBytes":  56275178
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/lm_format_enforcer-0.11.3-py3-none-any.whl",
+                      "totalBytes":  45418
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/loguru-0.7.3-py3-none-any.whl",
+                      "totalBytes":  61595
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/markdown_it_py-4.2.0-py3-none-any.whl",
+                      "totalBytes":  91687
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/markupsafe-3.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  22947
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/mcp-2.1.0-py3-none-any.whl",
+                      "totalBytes":  357320
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/mcp_types-2.1.0-py3-none-any.whl",
+                      "totalBytes":  69654
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/mdurl-0.1.2-py3-none-any.whl",
+                      "totalBytes":  9979
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/mistral_common-1.11.7-py3-none-any.whl",
+                      "totalBytes":  6553583
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/ml_dtypes-0.6.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  409890
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/model_hosting_container_standards-0.1.16-py3-none-any.whl",
+                      "totalBytes":  125666
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/mpmath-1.3.0-py3-none-any.whl",
+                      "totalBytes":  536198
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/msgspec-0.21.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  225025
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/multidict-6.7.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  256322
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nccl4py-0.4.1-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  2897696
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/networkx-3.6.1-py3-none-any.whl",
+                      "totalBytes":  2068504
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/ninja-1.13.0-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+                      "totalBytes":  180716
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/numba-0.65.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+                      "totalBytes":  3801411
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/numpy-2.3.5-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  16606086
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_cublas-13.1.1.3-py3-none-manylinux_2_27_x86_64.whl",
+                      "totalBytes":  423138758
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_cuda_cccl-13.3.3.4.1-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+                      "totalBytes":  3454034
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_cuda_crt-13.3.73-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+                      "totalBytes":  157352
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_cuda_cupti-13.0.85-py3-none-manylinux_2_25_x86_64.whl",
+                      "totalBytes":  10715597
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_cuda_nvcc-13.3.73-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+                      "totalBytes":  44942138
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_cuda_nvdisasm-13.3.73-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+                      "totalBytes":  4782824
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_cuda_nvrtc-13.0.88-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl",
+                      "totalBytes":  90215200
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_cuda_runtime-13.0.96-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+                      "totalBytes":  2243632
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_cudnn_cu13-9.20.0.48-py3-none-manylinux_2_27_x86_64.whl",
+                      "totalBytes":  366173588
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_cudnn_frontend-1.27.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  4749917
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_cufft-12.0.0.61-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+                      "totalBytes":  214085489
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_cufile-1.15.1.6-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+                      "totalBytes":  1223672
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_curand-10.4.0.35-py3-none-manylinux_2_27_x86_64.whl",
+                      "totalBytes":  59544258
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_cusolver-12.0.4.66-py3-none-manylinux_2_27_x86_64.whl",
+                      "totalBytes":  200941980
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_cusparse-12.6.3.3-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+                      "totalBytes":  145942937
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_cusparselt_cu13-0.8.1-py3-none-manylinux2014_x86_64.whl",
+                      "totalBytes":  170148586
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_cutlass_dsl-4.6.0-py3-none-any.whl",
+                      "totalBytes":  10459
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_cutlass_dsl_libs_base-4.6.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+                      "totalBytes":  2824817
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_cutlass_dsl_libs_core-4.6.0-py3-none-any.whl",
+                      "totalBytes":  767713
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_cutlass_dsl_libs_cu12-4.6.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+                      "totalBytes":  88436835
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_cutlass_dsl_libs_cu13-4.6.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+                      "totalBytes":  88026053
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_ml_py-13.610.43-py3-none-any.whl",
+                      "totalBytes":  53163
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_nccl_cu13-2.29.7-py3-none-manylinux_2_18_x86_64.whl",
+                      "totalBytes":  205976000
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_nvjitlink-13.3.33-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl",
+                      "totalBytes":  40742423
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_nvshmem_cu13-3.4.5-py3-none-manylinux2014_x86_64.manylinux_2_17_x86_64.whl",
+                      "totalBytes":  60412546
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_nvtx-13.0.85-py3-none-manylinux1_x86_64.manylinux_2_5_x86_64.whl",
+                      "totalBytes":  148047
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvidia_nvvm-13.3.73-py3-none-manylinux2010_x86_64.manylinux_2_12_x86_64.whl",
+                      "totalBytes":  69250424
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/nvtx-0.2.15-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  806187
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/openai-3.3.1-py3-none-any.whl",
+                      "totalBytes":  1690337
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/openai_harmony-0.0.8-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+                      "totalBytes":  2953260
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/opencv_python_headless-5.0.0.93-cp37-abi3-manylinux_2_28_x86_64.whl",
+                      "totalBytes":  61204038
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/opentelemetry_api-1.44.0-py3-none-any.whl",
+                      "totalBytes":  60018
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/opentelemetry_exporter_otlp-1.44.0-py3-none-any.whl",
+                      "totalBytes":  6727
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/opentelemetry_exporter_otlp_proto_common-1.44.0-py3-none-any.whl",
+                      "totalBytes":  17045
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/opentelemetry_exporter_otlp_proto_grpc-1.44.0-py3-none-any.whl",
+                      "totalBytes":  19624
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/opentelemetry_exporter_otlp_proto_http-1.44.0-py3-none-any.whl",
+                      "totalBytes":  21850
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/opentelemetry_proto-1.44.0-py3-none-any.whl",
+                      "totalBytes":  72483
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/opentelemetry_sdk-1.44.0-py3-none-any.whl",
+                      "totalBytes":  137221
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/opentelemetry_semantic_conventions-0.65b0-py3-none-any.whl",
+                      "totalBytes":  204645
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/opentelemetry_semantic_conventions_ai-0.5.1-py3-none-any.whl",
+                      "totalBytes":  11250
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/outlines_core-0.2.14-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+                      "totalBytes":  2341426
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/packaging-26.3-py3-none-any.whl",
+                      "totalBytes":  129956
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/partial_json_parser-0.2.1.1.post7-py3-none-any.whl",
+                      "totalBytes":  10877
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/pillow-12.3.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  6940830
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/prometheus_client-0.26.0-py3-none-any.whl",
+                      "totalBytes":  64494
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/prometheus_fastapi_instrumentator-8.1.0-py3-none-any.whl",
+                      "totalBytes":  19649
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/propcache-0.5.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  61639
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/protobuf-6.33.6-cp39-abi3-manylinux2014_x86_64.whl",
+                      "totalBytes":  323436
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/psutil-7.2.2-cp36-abi3-manylinux2010_x86_64.manylinux_2_12_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  155560
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/py_cpuinfo-9.0.0-py3-none-any.whl",
+                      "totalBytes":  22335
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/pybase64-1.5.0-cp312-cp312-manylinux1_x86_64.manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_5_x86_64.whl",
+                      "totalBytes":  94681
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/pycountry-26.2.16-py3-none-any.whl",
+                      "totalBytes":  8044600
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/pycparser-3.0-py3-none-any.whl",
+                      "totalBytes":  48172
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/pydantic-2.13.4-py3-none-any.whl",
+                      "totalBytes":  472262
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/pydantic_core-2.46.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+                      "totalBytes":  2094516
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/pydantic_extra_types-2.11.1-py3-none-any.whl",
+                      "totalBytes":  79526
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/pydantic_settings-2.15.0-py3-none-any.whl",
+                      "totalBytes":  69413
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/pyelftools-0.33-py3-none-any.whl",
+                      "totalBytes":  201178
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/pygments-2.21.0-py3-none-any.whl",
+                      "totalBytes":  1250147
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/pyjwt-2.13.0-py3-none-any.whl",
+                      "totalBytes":  31274
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/pynvvideocodec-2.0.4-cp312-cp312-manylinux_2_28_x86_64.whl",
+                      "totalBytes":  43176147
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/python_dotenv-1.2.3-py3-none-any.whl",
+                      "totalBytes":  22780
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/python_json_logger-4.2.0-py3-none-any.whl",
+                      "totalBytes":  14988
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/python_multipart-0.0.32-py3-none-any.whl",
+                      "totalBytes":  30042
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/pyyaml-6.0.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  807870
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/pyzmq-27.2.0-cp312-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  872258
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/quack_kernels-0.6.1-py3-none-any.whl",
+                      "totalBytes":  358439
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/referencing-0.37.0-py3-none-any.whl",
+                      "totalBytes":  26766
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/regex-2026.7.19-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  801798
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/requests-2.34.2-py3-none-any.whl",
+                      "totalBytes":  73075
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/requirements.lock",
+                      "totalBytes":  4121
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/rich-15.0.0-py3-none-any.whl",
+                      "totalBytes":  310654
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/rich_toolkit-0.20.3-py3-none-any.whl",
+                      "totalBytes":  36195
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/rignore-0.8.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+                      "totalBytes":  927835
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/rpds_py-2026.6.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+                      "totalBytes":  366189
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/safetensors-0.8.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+                      "totalBytes":  516040
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/sentencepiece-0.2.2-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  1397736
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/sentry_sdk-2.68.1-py3-none-any.whl",
+                      "totalBytes":  520851
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/setproctitle-1.3.7-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+                      "totalBytes":  32932
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/setuptools-80.10.2-py3-none-any.whl",
+                      "totalBytes":  1064234
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/shellingham-1.5.4-py2.py3-none-any.whl",
+                      "totalBytes":  9755
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/six-1.17.0-py2.py3-none-any.whl",
+                      "totalBytes":  11050
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/sniffio-1.3.1-py3-none-any.whl",
+                      "totalBytes":  10235
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/sse_starlette-3.4.8-py3-none-any.whl",
+                      "totalBytes":  16516
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/starlette-1.6.0-py3-none-any.whl",
+                      "totalBytes":  75969
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/supervisor-4.3.0-py2.py3-none-any.whl",
+                      "totalBytes":  320736
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/sympy-1.14.0-py3-none-any.whl",
+                      "totalBytes":  6299353
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/tabulate-0.10.0-py3-none-any.whl",
+                      "totalBytes":  39814
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/tiktoken-0.14.0-cp312-cp312-manylinux_2_28_x86_64.whl",
+                      "totalBytes":  1204197
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/tilelang-0.1.12-cp38-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  50501074
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/tokenizers-0.22.2-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+                      "totalBytes":  3274982
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/tokenspeed_mla-0.1.8-py3-none-manylinux_2_28_x86_64.whl",
+                      "totalBytes":  755827
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/tokenspeed_triton-3.8.10.post20260721-cp312-abi3-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  87210295
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/torch-2.13.0+cu130-cp312-cp312-manylinux_2_28_x86_64.whl",
+                      "totalBytes":  526482318
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/torch_c_dlpack_ext-0.1.5-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  897846
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/torchaudio-2.11.0+cu130-cp312-cp312-manylinux_2_28_x86_64.whl",
+                      "totalBytes":  1728401
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/torchcodec-0.16.0+cu130-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  9469278
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/torchvision-0.28.0+cu130-cp312-cp312-manylinux_2_28_x86_64.whl",
+                      "totalBytes":  7675105
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/tqdm-4.70.0-py3-none-any.whl",
+                      "totalBytes":  80184
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/transformers-5.15.1-py3-none-any.whl",
+                      "totalBytes":  11749582
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/triton-3.7.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  197149381
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/truststore-0.10.4-py3-none-any.whl",
+                      "totalBytes":  18660
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/typer-0.27.1-py3-none-any.whl",
+                      "totalBytes":  122874
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/typing_extensions-4.16.0-py3-none-any.whl",
+                      "totalBytes":  45571
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/typing_inspection-0.4.4-py3-none-any.whl",
+                      "totalBytes":  14750
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/urllib3-2.7.0-py3-none-any.whl",
+                      "totalBytes":  131087
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/uvicorn-0.52.4-py3-none-any.whl",
+                      "totalBytes":  79871
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/uvloop-0.22.1-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  4426307
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/vllm-0.27.1-cp38-abi3-manylinux_2_28_x86_64.whl",
+                      "totalBytes":  312887766
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/watchfiles-1.2.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+                      "totalBytes":  456398
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/websockets-17.0.1-cp312-cp312-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl",
+                      "totalBytes":  220150
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/xgrammar-0.2.3-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  44855110
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/yarl-1.24.5-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+                      "totalBytes":  109835
+                  },
+                  {
+                      "name":  "wheels/wheelhouse/z3_solver-4.15.4.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+                      "totalBytes":  29268352
+                  }
+              ]
+}
