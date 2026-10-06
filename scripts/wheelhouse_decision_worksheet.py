@@ -28,8 +28,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from scripts.plan_wheelhouse_r2_bundle import (ALLOWED_DECISIONS, DECISION_FIELDS, DECISIONS_CSV,  # noqa: E402
-                                               INVENTORY_CSV, bundle_eligibility, check_decisions, current_evidence,
-                                               evidence_digest, read_decisions, split_conditions, valid_date)
+                                               INVENTORY_CSV, bundle_eligibility, check_decisions, condition_status,
+                                               current_evidence, evidence_digest, read_decisions, split_conditions,
+                                               valid_date)
 
 PROPOSALS_CSV = ROOT / 'reports/wheelhouse_redistribution_proposed_dispositions.csv'
 RECONCILIATION = ROOT / 'reports/wheelhouse_nvidia_licence_reconciliation.json'
@@ -367,17 +368,21 @@ def validate(path):
                     errors.append(f'{name}: {source} is required for {decision}')
             if not valid_date(r['reviewer_date']):
                 errors.append(f"{name}: reviewer_date {r['reviewer_date']!r} is not an ISO date")
-        conditions, satisfied = split_conditions(row['conditions']), split_conditions(row['conditions_satisfied'])
+        conditions = split_conditions(row['conditions'])
+        statuses, surplus = condition_status(row['conditions'], row['conditions_satisfied'])
+        unmet = [(i, s) for i, s in enumerate(statuses, 1) if not s['satisfied']]
         if decision == 'approved' and conditions:
             errors.append(f'{name}: approved with conditions listed; use approved_with_conditions')
         if decision == 'approved_with_conditions':
             if not conditions or not all(conditions):
                 errors.append(f'{name}: approved_with_conditions needs at least one recorded condition')
-            elif len(satisfied) > len(conditions):
-                errors.append(f'{name}: more satisfaction entries ({len(satisfied)}) than conditions ({len(conditions)})')
-            elif len(satisfied) < len(conditions) or not all(satisfied):
-                warnings.append(f'{name}: {len(conditions)} condition(s), {len([s for s in satisfied if s])} documented '
-                                'as satisfied: recorded, but the build stays blocked until all are')
+            elif surplus:
+                errors.append(f'{name}: more satisfaction entries ({len(conditions) + len(surplus)}) than conditions '
+                              f'({len(conditions)})')
+            elif unmet:
+                warnings.append(f'{name}: {len(conditions)} condition(s), {len(conditions) - len(unmet)} documented '
+                                'as satisfied: recorded, but the build stays blocked until all are ('
+                                + '; '.join(f"#{i}: {s['problem']}" for i, s in unmet) + ')')
         if decision in ('restricted', 'excluded'):
             warnings.append(f'{name}: {decision} blocks the bundle (a required dependency); an explicit alternative is '
                             "the owner's decision")
@@ -391,7 +396,8 @@ def validate(path):
         if any(old.get(k, '') != row[k] for k in DECISION_FIELDS):
             changes.append({'artifact': name, 'from': old.get('redistribution_decision'), 'to': decision,
                             'reviewer': row['resolver'], 'date': row['decided_on'],
-                            'conditions': len(conditions), 'satisfied': len([s for s in satisfied if s]),
+                            'conditions': len(conditions), 'satisfied': sum(s['satisfied'] for s in statuses),
+                            'condition_status': statuses,
                             # the complete decision rows, so the owner reviews exactly what would be imported
                             'before': {k: old.get(k, '') for k in DECISION_FIELDS},
                             'after': {k: row[k] for k in DECISION_FIELDS},
@@ -455,12 +461,13 @@ def write_preview(preview):
                 before, after = c['before'].get(field, ''), c['after'].get(field, '')
                 mark = ' **(changed)**' if before != after else ''
                 lines.append(f'| `{field}`{mark} | {cell(before)} | {cell(after)} |')
-            conditions = split_conditions(c['after'].get('conditions'))
-            satisfied = split_conditions(c['after'].get('conditions_satisfied'))
-            if conditions:
+            statuses, _ = condition_status(c['after'].get('conditions'), c['after'].get('conditions_satisfied'))
+            if statuses:
                 lines += ['', 'Conditions and how each was satisfied:', '']
-                lines += [f"{i}. {condition} — satisfied: {satisfied[i - 1] if i <= len(satisfied) and satisfied[i - 1] else '**not documented**'}"
-                          for i, condition in enumerate(conditions, 1)]
+                lines += [f"{i}. {s['condition']} — satisfied: {s['evidence']}" if s['satisfied'] else
+                          f"{i}. {s['condition']} — **not satisfied** ({s['problem']})"
+                          + (f": {s['evidence']}" if s['evidence'] else '')
+                          for i, s in enumerate(statuses, 1)]
             lines.append('')
     lines += ['', f"Import requires `--preview-sha256 {hashlib.sha256(data).hexdigest()}` and no errors.", '']
     PREVIEW_MD.write_text('\n'.join(lines), encoding='utf-8')

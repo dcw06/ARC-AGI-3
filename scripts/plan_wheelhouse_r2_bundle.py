@@ -16,6 +16,7 @@ enforce before writing anything (Record A).
 """
 import csv
 import datetime
+import re
 import hashlib
 import json
 import sys
@@ -199,6 +200,45 @@ def split_conditions(text):
     return [c.strip() for c in text.split(CONDITION_SEPARATOR)] if text else []
 
 
+# Satisfaction evidence must positively document fulfilment. An entry that is blank, a placeholder, or that states the
+# condition is pending or unmet is not evidence. The check fails closed: any such marker anywhere in an entry rejects
+# it, so genuine evidence must be written without them.
+NOT_EVIDENCE = re.compile(r'''(?ix)
+    \bpending\b | \btbd\b | \btbc\b | \btodo\b | \bawaiting\b | \bin\ progress\b | \bincomplete\b | \boutstanding\b
+  | \bunsatisfied\b | \bunfulfilled\b | \bunverified\b | \bnot\ yet\b
+  | \bto\ be\ (done|determined|confirmed|verified|supplied|provided|checked|completed|satisfied)\b
+  | \bnot\ (satisfied|met|fulfilled|done|verified|supplied|provided|audited|checked|completed|confirmed|established)\b
+  | \bremains?\ (required|open|outstanding|pending|unmet)\b | \bstill\ (required|needed|open|pending)\b
+  | \bno\ (satisfaction\ )?evidence\b''')
+PLACEHOLDER = re.compile(r'^\s*(n/?a|none|nil|null|blank|-+|\u2014+|\u2013+|\?+|x|\.+)\s*$', re.I)
+
+
+def satisfaction_problem(entry):
+    """Why an entry is not satisfaction evidence (None if it is acceptable as evidence)."""
+    text = (entry or '').strip()
+    if not text:
+        return 'blank'
+    if PLACEHOLDER.match(text):
+        return f'placeholder {text!r}'
+    marker = NOT_EVIDENCE.search(text)
+    if marker:
+        return f'states the condition is not fulfilled ({marker.group(0).strip()!r})'
+    return None
+
+
+def condition_status(conditions_text, satisfied_text):
+    """([{condition, evidence, satisfied, problem} per condition], surplus satisfaction entries). The single rule used by
+    worksheet validation, import previews and bundle eligibility."""
+    conditions, satisfied = split_conditions(conditions_text), split_conditions(satisfied_text)
+    statuses = []
+    for index, condition in enumerate(conditions):
+        evidence = satisfied[index] if index < len(satisfied) else ''
+        problem = satisfaction_problem(evidence)
+        statuses.append({'condition': condition, 'evidence': evidence, 'satisfied': problem is None,
+                         'problem': problem})
+    return statuses, satisfied[len(conditions):]
+
+
 def valid_date(text):
     try:
         datetime.date.fromisoformat((text or '').strip())
@@ -234,15 +274,20 @@ def bundle_eligibility(rows, decisions, current=None):
                 blockers.append(f'{name}: {field} missing')
         if not valid_date(d.get('decided_on')):
             blockers.append(f"{name}: decided_on {d.get('decided_on')!r} is not an ISO date")
-        conditions, satisfied = split_conditions(d.get('conditions')), split_conditions(d.get('conditions_satisfied'))
+        conditions = split_conditions(d.get('conditions'))
+        statuses, surplus = condition_status(d.get('conditions'), d.get('conditions_satisfied'))
         if decision == 'approved' and conditions:
             blockers.append(f'{name}: approved but conditions are listed; record approved_with_conditions instead')
         if decision == 'approved_with_conditions':
+            unmet = [(i, s) for i, s in enumerate(statuses, 1) if not s['satisfied']]
             if not conditions or not all(conditions):
                 blockers.append(f'{name}: approved_with_conditions without a recorded condition')
-            elif len(satisfied) != len(conditions) or not all(satisfied):
-                blockers.append(f'{name}: {len(conditions)} condition(s) but '
-                                f'{len([x for x in satisfied if x])} documented as satisfied')
+            elif surplus:
+                blockers.append(f'{name}: more satisfaction entries ({len(conditions) + len(surplus)}) than '
+                                f'conditions ({len(conditions)})')
+            elif unmet:
+                blockers.append(f'{name}: {len(conditions)} condition(s) but {len(conditions) - len(unmet)} documented '
+                                'as satisfied (' + '; '.join(f"#{i}: {s['problem']}" for i, s in unmet) + ')')
         if not d.get('evidence_sha256') or d.get('evidence_sha256') != current.get(name):
             made_on = d.get('worksheet_revision') or 'no recorded worksheet revision'
             blockers.append(f'{name}: not made on the current evidence ({made_on}); reconfirm it on the latest '

@@ -23,7 +23,7 @@ SUITES = ['tests.test_wheelhouse_metadata', 'tests.test_wheelhouse_offline_insta
           'tests.test_wheelhouse_review6', 'tests.test_wheelhouse_review7', 'tests.test_wheelhouse_decision_worksheet',
           'tests.test_wheelhouse_worksheet_revisions', 'tests.test_wheelhouse_evidence_nvidia',
           'tests.test_wheelhouse_evidence_notice', 'tests.test_wheelhouse_evidence_native',
-          'tests.test_wheelhouse_evidence_metadata']
+          'tests.test_wheelhouse_evidence_metadata', 'tests.test_wheelhouse_condition_evidence']
 
 
 class Recorder(unittest.TextTestResult):
