@@ -1,0 +1,7 @@
+# Version-pinned model dataset packaging
+
+The smoke-test notebook can now attach a model through a version-pinned Kaggle Dataset instead of a Kaggle Model. `model.source_kind = "dataset"` requires `owner/slug/version`, attaches it alongside the explicitly version-pinned wheel dataset, and leaves `model_sources` empty. The existing Model source remains supported. Invalid kinds, missing versions and a model/wheel dataset collision are rejected. Launch packaging verifies that the reviewed input bindings match the protocol.
+
+The controller, installation method, immutable image, request budget, GPU identity check, cleanup and lifecycle deadlines are unchanged. The model tree is still checked by the existing strict `host.tree_sha256` algorithm before model loading. That algorithm appends binary per-file SHA256 digests to the framed path/size records; a verifier using ASCII hexadecimal per-file digests produces a different tree hash. Reconstruction from verified individual file hashes is tested against actual host hashing, with both encodings retained separately in private evidence.
+
+Validation: 78 focused CPU checks passed, including five dataset-binding/tree-contract checks. Public review r7 reproduces byte-for-byte. Its GPU-disabled execution refused at the live gate, made no `nvidia-smi` call, and left no temporary source files. These checks establish packaging/control behavior, not GPU runtime compatibility. The public snapshot carries no private approvals, launch records or account-specific model binding.

@@ -1,0 +1,15 @@
+{
+ "schema": "direct_publisher_smoke_review_check_v1",
+ "review_revision": 7,
+ "review_lock_sha256": "acbe49a922a02a494e7fd52bbbd52de2238341978e6d6b450c27ac5fbb7456c7",
+ "evidence_class": "scripted_cpu_rehearsal",
+ "gpu_compatibility_evidence": false,
+ "exit_code": 1,
+ "refused_at_live_gate": true,
+ "refusal": "certification.direct_publisher_smoke_v1.binding.LiveRefused: direct publisher smoke test live path refused: unresolved placeholders: kernel_id; authorization: ValueError: no review source lock",
+ "nvidia_smi_called": false,
+ "temporary_files_left": [],
+ "kaggle_paths_touched": false,
+ "stderr_tail": "Traceback (most recent call last):\n  File \"<string>\", line 19, in <module>\n  File \"/tmp/direct-publisher-smoke-review-check-nbtenoxk/tmp/direct-publisher-smoke-source-58lnsf_a/certification/direct_publisher_smoke_v1/binding.py\", line 260, in consume\n  File \"/tmp/direct-publisher-smoke-review-check-nbtenoxk/tmp/direct-publisher-smoke-source-58lnsf_a/certification/direct_publisher_smoke_v1/binding.py\", line 251, in require_live\ncertification.direct_publisher_smoke_v1.binding.LiveRefused: direct publisher smoke test live path refused: unresolved placeholders: kernel_id; authorization: ValueError: no review source lock\n",
+ "passed": true
+}

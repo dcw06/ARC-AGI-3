@@ -69,6 +69,32 @@ def image_metadata(protocol):
     return {key: pin[key] for key in ('docker_image', 'docker_image_pinning_type')}
 
 
+def input_sources(protocol, pending=False):
+    """Pin datasets explicitly and attach a model through exactly one source kind."""
+    dataset = protocol['dataset']
+    ref = dataset['ref']
+    if not re.fullmatch(r'[A-Za-z0-9_-]+/[A-Za-z0-9_-]+', ref):
+        raise ValueError('invalid wheel dataset reference')
+    version = dataset['version']
+    if type(version) is not int or version < 1:
+        raise ValueError('dataset version must be a positive integer')
+    datasets = [] if pending else [f'{ref}/{version}']
+    model = protocol['model']
+    source = model['kaggle_source']
+    kind = model.get('source_kind', 'model')
+    if kind == 'model':
+        if not re.fullmatch(r'[A-Za-z0-9_-]+/[A-Za-z0-9_-]+/[A-Za-z0-9_-]+/[A-Za-z0-9_-]+/[1-9][0-9]*', source):
+            raise ValueError('version-pinned Kaggle Model reference required')
+        return {'dataset_sources': datasets, 'model_sources': [source]}
+    if kind != 'dataset':
+        raise ValueError('unsupported model source kind')
+    if not re.fullmatch(r'[A-Za-z0-9_-]+/[A-Za-z0-9_-]+/[1-9][0-9]*', source):
+        raise ValueError('version-pinned model dataset reference required')
+    if source.rsplit('/', 1)[0] == ref:
+        raise ValueError('model and wheel datasets must be distinct')
+    return {'dataset_sources': datasets + [source], 'model_sources': []}
+
+
 def review_notebook(root=ROOT):
     protocol = load_protocol(root)
     image = image_metadata(protocol)
@@ -92,8 +118,7 @@ def review_notebook(root=ROOT):
     metadata = {'id': KERNEL_ID + '-review', 'title': 'ARC3 Direct publisher Smoke V1 Review', 'code_file': 'profile.ipynb',
                 'language': 'python', 'kernel_type': 'notebook', 'is_private': True, 'enable_gpu': False,
                 'enable_tpu': False, 'enable_internet': False, 'competition_sources': [],
-                'dataset_sources': [] if pending else [load_protocol(root)['dataset']['ref']],
-                'model_sources': [MODEL_SOURCE], **image}
+                **input_sources(protocol, pending=bool(pending)), **image}
     return notebook, metadata, bindings, pending
 
 
@@ -146,8 +171,11 @@ def launch_artifacts(root=ROOT):
         raise ValueError('review metadata')
     if any(metadata.get(key) != value for key, value in image_metadata(protocol).items()):
         raise ValueError('review image pin differs from the protocol')
+    sources = input_sources(protocol)
+    if any(metadata.get(key) != value for key, value in sources.items()):
+        raise ValueError('review input bindings differ from the protocol')
     metadata.update(id=protocol['kernel_id'], title=protocol['kernel_id'].split('/')[1], enable_gpu=True,
-                    machine_shape='NvidiaRtxPro6000', dataset_sources=[protocol['dataset']['ref']])
+                    machine_shape='NvidiaRtxPro6000', **sources)
     artifacts = {'profile.ipynb': encode(notebook), 'kernel-metadata.json': encode(metadata)}
     if len(artifacts['profile.ipynb']) >= SIZE_GUARD:
         raise ValueError('notebook exceeds the upload size guard')
