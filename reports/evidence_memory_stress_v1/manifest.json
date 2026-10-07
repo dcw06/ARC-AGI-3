@@ -1,0 +1,68 @@
+{
+  "base_revision": "107d8b44b6ebb7c4ea81f4972a65e64990cf638c",
+  "common_budget": "pinned tokenizer count of the last six rendered transitions",
+  "evaluator_keys_sent_to_model": false,
+  "files": {
+    "evaluator_keys.json": {
+      "bytes": 192260,
+      "sha256": "675ab0458f96d3324980076994fa7ffeefe881cd513eaa09cf02a65ead7e34ca"
+    },
+    "fixtures.json": {
+      "bytes": 6651344,
+      "sha256": "86e69413cd3ffae14d93fb42d3f839e552ddfa7a2cebc90ebf9ce6e7b639d6e5"
+    },
+    "report.md": {
+      "bytes": 8119,
+      "sha256": "28d1c705cca51497f2628c02a013268dd58cf18aab3004d8aaf1e366ce3bd976"
+    },
+    "requests.jsonl": {
+      "bytes": 892600,
+      "sha256": "2d5a9b2c50c7c6c58c83d523ee2d5435802175d862cf8bc88e4ea6fbf5ddf542"
+    },
+    "results.json": {
+      "bytes": 383835,
+      "sha256": "66449ebb1f88b76bf220f3545aa110592319c37ea43e91fadbf68473fc1fd170"
+    }
+  },
+  "gpu_launch_authorized": false,
+  "model": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+  "model_calls": 0,
+  "model_revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+  "partition": "development",
+  "request_count": 324,
+  "sources": {
+    "reports/evidence_memory_v1_protocol_v2.md": "0ef16edbbe7caf78bbbf407f69dbec7509460faf4d12373870e45f15d178ab9c",
+    "research/evidence_memory_stress_v1/__init__.py": "d54317868ee29d3be1a26f4d1911d1d3538ee70f393708521a7a9424a093db7a",
+    "research/evidence_memory_stress_v1/build.py": "30ff255af8a72384109651a354ffdb3ea585da543bf235c635d36bff818cef3a",
+    "research/evidence_memory_stress_v1/diagnostics.py": "17c90a2b26269b02a50e218f8e13966432b6b635f1660068f689087eb297a61c",
+    "research/evidence_memory_stress_v1/fixtures.py": "9e596b495229c8aafe017abafc53a6fc5604609b2b67409563a3e7d03789c5b7",
+    "research/evidence_memory_v1/fidelity.py": "85c2bc7b4b01bfd969b2e474bf83081e0f2bf317118f1792cc7af5a55f85c67a",
+    "research/evidence_memory_v1/protocol.py": "05cecef8a5fe8e52810c5020c839a474e6d594f527d2c2b4f0ccb25c3b345159",
+    "research/evidence_memory_v1/readers.py": "c5abfd818a7acb7f901dd80a1fa3b1927216105f3311f010a0916825e8070b2d",
+    "research/evidence_memory_v1/render.py": "6eda9897f745a5172f07e5eb9d32b12cbe809876142b859fd0e2cf87024795bd",
+    "research/evidence_memory_v1/schema.py": "adc61b344123b98a99cc1b5422a31e2aecf935ec5b9d14adcca13fd8eeff438f",
+    "research/evidence_memory_v1/stage1.py": "214a38e8132709be8f1989cdc243b40bf9a61127f244089f7fc558f369c2b5bc",
+    "research/evidence_memory_v1/tokens.py": "ec6771a1548dcb2edd11b6975d65e2fb0b2318b2cb1d28fdc1a7d0f7252f54a2",
+    "research/evidence_memory_v1/trajectories.py": "dc3790c55e663c470fc648185bf093b5d671f27c232bab979fe4656052919e8a",
+    "research/evidence_memory_v1/writers.py": "0e7aa26948775cbb9f5479fe42ff6dfc9fba9f74de900f1397c02ec5011e8ff7",
+    "research/transition_evidence_v1/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "research/transition_evidence_v1/fixtures.py": "75bd3821d8dd9575cb828e01db6b37b283e96b290599d760df6b00163fb825f7",
+    "research/transition_evidence_v1/questionnaire.py": "dc715cac7b9fe4ffa488600e38f678586abe72d71b71b81bd83cc3fb1e8b0618",
+    "research/transition_evidence_v1/reference.py": "ee30559bf938c50eb6204096885b854d1d955e028ef9ac41ee258cdbda30945d",
+    "research/transition_evidence_v1/score.py": "0e65605df30cff6be6b1729709f1b4e9f7cf9db5ad5289d9d3f5a242d665c988",
+    "research/transition_evidence_v1/transition.py": "1b60b66b86773ed19aa1bcdcb03fe87ce794365ca5717f53f0adb77ed7da3110",
+    "research/transition_evidence_v1/vocabulary.py": "7c707d17c1800b7fc9c2b4b05a03557d0664003cc32821405e791809b09bc0d9",
+    "research/transition_evidence_v2/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "research/transition_evidence_v2/masks.py": "b459bcd24437a21177568d8d736bf58a22c8e2f6f52c7325838b0fc1ba39420c",
+    "research/transition_evidence_v2/transition.py": "dce1b19b35ed0d6bc6b627eafebe26f7b459ea7d0a4fd0843a00d035d63cd305",
+    "research/transition_evidence_v2/vocabulary.py": "afbd5325ff3fe8efe08a54aafa990eca626bce19748461cd965cf5fd7e2673fb",
+    "tests/test_evidence_memory_stress_v1.py": "f42e89df6da33da01180d74eea3a961f9ebd16744df380569a1a9f6e4ab13570"
+  },
+  "tokenizer_sha256": {
+    "chat_template.json": "2c1437f11fc16ab501b984c000f6e291c599f0d28d2c9c6bf2c4533e65429b42",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "tokenizer.json": "ba85e4e5222d9f53d4bd00b303ef7e9743c8ac3d07e3c23f8498dbe17baa9a2d",
+    "vocab.json": "7a0cfa95c65792d7510205839f80cfd8a3c8f6b1fdad5132d95cee481800374d"
+  },
+  "version": "evidence_memory_stress_v1"
+}
