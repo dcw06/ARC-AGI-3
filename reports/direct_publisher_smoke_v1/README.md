@@ -1,8 +1,8 @@
 # Direct-publisher smoke preparation, October 6, 2026
 
-This retains the original CPU-only intake draft for consuming `driessmit1/arc3-vllm-h100-wheelhouse-v3`, requested version 1. A separate runtime runner and review candidate are now implemented; see [runner.md](runner.md) for the current source/evidence gates. No final GPU package approval or compute authorization exists. Nothing was attached, installed, uploaded or run on Kaggle.
+This retains the original CPU-only intake draft for consuming `driessmit1/arc3-vllm-h100-wheelhouse-v3`, requested version 1. A separate runtime runner and review candidate are now implemented; see [runner.md](runner.md) for the current source/evidence gates. A private derivative of the CPU verifier has completed actual mounted-wheel verification: see [cpu_verification.md](cpu_verification.md). No packages were installed and no GPU job, final GPU package approval or compute authorization occurred.
 
-The fresh anonymous checks in `availability.json` returned HTTP 200 for dataset view/list and the three small files. View reports version 1; all three downloaded files match the retained evidence. The publisher README says the dataset was recreated October 5. Earlier 403 responses do not establish current unavailability. Attachment by the consuming account is not verified: no credentials were available in the checked Windows and WSL locations.
+The original anonymous checks in `availability.json` returned HTTP 200 for dataset view/list and the three small files. View reports version 1; all three downloaded files match the retained evidence. The publisher README says the dataset was recreated October 5. Earlier 403 responses do not establish current unavailability. In the later CPU follow-up, WSL authentication was available and account identity/reference attachment were verified privately. Exact provider attachment-version confirmation remains pending because pulled notebook metadata omits the version suffix.
 
 Both requirements locks contain the same 174 package/version pins. The publisher's has no embedded hashes; the retained trusted lock has 174. The proposed installation must use the trusted lock, without dropping `--require-hashes` or changing versions.
 
@@ -30,9 +30,9 @@ The deployment facts supplied in conversation are retained locally and excluded 
 
 ## Remaining work before a GPU smoke review
 
-1. Authenticate as the consuming account and retain provider attachment/version evidence without starting a GPU job.
+1. Account identity and dataset-reference attachment are established privately; complete exact provider attachment-version evidence without starting a GPU job.
 2. Resolve and review the specific direct-consumption permissions assessment.
-3. Run the CPU byte verifier against the mounted dataset; preserve its receipt. No remote wheel payload has been verified yet.
+3. Actual mounted-byte verification is complete for all 174 wheels; preserve and bind the [receipt](cpu_integrity_receipt_2026-10-06.json). The live runner must reverify the mounted bytes before installation.
 4. Review the implemented smoke runner's source binding and installation adapter in [runner.md](runner.md). It installs from the verified flat mount with the retained trusted lock and does not assert an R2 bundle manifest. Resolve the private consuming-account binding and freeze the successor review package before final approval.
 5. Preserve the existing smoke harness's startup ownership protection, uncertainty-aware cleanup, request accounting, single-attempt reservation/launch receipts and final lifecycle deadline accounting through GPU cleanup, evidence finalization and environment removal.
 6. Freeze the final model/runtime, request plan, compute limits, review lock and authorization for that revised smoke package before any live run. The proposed values in `proposal.json` are not an authorization and changing a status label cannot complete any gate.
