@@ -1,0 +1,57 @@
+{
+  "dataset_ref": "driessmit1/arc3-vllm-h100-wheelhouse-v3",
+  "requested_version": 1,
+  "checked_at_utc": "2026-10-07T00:04:37.034784+00:00",
+  "account_attachment_verified": false,
+  "authenticated_account_verified": false,
+  "credentials_available_in_checked_windows_and_wsl_locations": false,
+  "wheel_payloads_downloaded": false,
+  "checks": [
+    {
+      "operation": "view",
+      "url": "https://www.kaggle.com/api/v1/datasets/view/driessmit1/arc3-vllm-h100-wheelhouse-v3",
+      "authenticated": false,
+      "http_status": 200,
+      "bytes": 2983,
+      "json_response": true,
+      "provider_error": false,
+      "current_version": 1
+    },
+    {
+      "operation": "list",
+      "url": "https://www.kaggle.com/api/v1/datasets/list/driessmit1/arc3-vllm-h100-wheelhouse-v3?datasetVersionNumber=1",
+      "authenticated": false,
+      "http_status": 200,
+      "bytes": 8231,
+      "json_response": true,
+      "provider_error": false
+    },
+    {
+      "operation": "README.md",
+      "url": "https://www.kaggle.com/api/v1/datasets/download/driessmit1/arc3-vllm-h100-wheelhouse-v3/README.md?datasetVersionNumber=1",
+      "authenticated": false,
+      "http_status": 200,
+      "bytes": 645,
+      "sha256": "d2e8da6d36c243198882e6cb68d60d7121d8aa9642e55d7fcc384bc4d087b631",
+      "matches_retained_file": true
+    },
+    {
+      "operation": "SHA256SUMS",
+      "url": "https://www.kaggle.com/api/v1/datasets/download/driessmit1/arc3-vllm-h100-wheelhouse-v3/SHA256SUMS?datasetVersionNumber=1",
+      "authenticated": false,
+      "http_status": 200,
+      "bytes": 20949,
+      "sha256": "805388efb6bf7f0a248f2bb70798188737077545159fe0e475aee4d44843c901",
+      "matches_retained_file": true
+    },
+    {
+      "operation": "requirements.lock",
+      "url": "https://www.kaggle.com/api/v1/datasets/download/driessmit1/arc3-vllm-h100-wheelhouse-v3/requirements.lock?datasetVersionNumber=1",
+      "authenticated": false,
+      "http_status": 200,
+      "bytes": 3636,
+      "sha256": "bb3e30ac5e327456e3915b807da960203c20bc1aa352204e39f66d5618a6bcb0",
+      "matches_retained_file": true
+    }
+  ]
+}

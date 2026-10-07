@@ -1,0 +1,40 @@
+# Direct-publisher smoke preparation, October 6, 2026
+
+This is a separate, CPU-only intake draft for consuming `driessmit1/arc3-vllm-h100-wheelhouse-v3`, requested version 1. It is not the R2 redistribution bundle, a completed GPU smoke-test package, an approval, or compute authorization. Nothing was attached, installed, uploaded or run on Kaggle.
+
+The fresh anonymous checks in `availability.json` returned HTTP 200 for dataset view/list and the three small files. View reports version 1; all three downloaded files match the retained evidence. The publisher README says the dataset was recreated October 5. Earlier 403 responses do not establish current unavailability. Attachment by the consuming account is not verified: no credentials were available in the checked Windows and WSL locations.
+
+Both requirements locks contain the same 174 package/version pins. The publisher's has no embedded hashes; the retained trusted lock has 174. The proposed installation must use the trusted lock, without dropping `--require-hashes` or changing versions.
+
+## Reviewable intake package
+
+`certification/direct_publisher_smoke_v1/` retains the trusted manifest and exact hash-pinned lock, a proposed use/compute record with unresolved gates, and a CPU-only byte verifier. The verifier requires the exact flat dataset file inventory: 174 wheels and the three bound metadata files. It checks every wheel's size and streamed SHA-256 against the trusted manifest, metadata hashes, identical package/version pins, and a final integrity deadline. It refuses changed/missing/extra files and symlinks. It does not execute installed package code or invoke pip, a model server, or a GPU query.
+
+`notebooks/direct-publisher-smoke-v1-preflight-review-r1/` is an embedded-source snapshot of this intake only. GPU, TPU and internet are disabled; no model is attached. It has not been submitted. Its metadata requests the dataset reference, but that field does not prove or pin the provider attachment version: retain separate provider evidence for version 1. A byte match does not establish provenance or permission.
+
+Local commands:
+
+```powershell
+python -m unittest discover -s tests -p test_direct_publisher_smoke_preflight.py -v
+python scripts/direct_publisher_smoke_preflight.py review-check
+python scripts/direct_publisher_smoke_preflight.py verify --dataset-root <mounted-dataset-root>
+```
+
+`review-build` reproduces the snapshot in a clean checkout where its output directory does not yet exist. Its source lock binds the embedded input files and generated artifacts. A local run without a Kaggle mount must refuse before any package installation or GPU activity. Local fixture results are integrity-control evidence, not actual remote wheel verification or GPU compatibility evidence.
+
+## Separate use assessment to complete
+
+The 67 existing findings block the proposed redistribution bundle. Their application to direct consumption has not been assessed; do not automatically carry either clearance or every blocker into this new use. Matching bytes and public availability do not decide permission.
+
+The deployment facts supplied in conversation are retained locally and excluded from this public draft. See [use_assessment.md](use_assessment.md) for the separate installation/use and redistribution questions. A reviewer must assess the actual account, collaborator roles, access model, publication intent, applicable agreements and payload/output handling. The reviewer outcome must bind those facts to this exact dataset/version, inventory and review snapshot. This document supplies questions, not a legal conclusion.
+
+## Remaining work before a GPU smoke review
+
+1. Authenticate as the consuming account and retain provider attachment/version evidence without starting a GPU job.
+2. Resolve and review the specific direct-consumption permissions assessment.
+3. Run the CPU byte verifier against the mounted dataset; preserve its receipt. No remote wheel payload has been verified yet.
+4. Build the separate smoke runner's source binding and installation adapter. Install from the verified flat mount with the retained trusted lock; no repackaging or R2 bundle-manifest assertion. Freeze all changed sources and repeat appropriate CPU rehearsals.
+5. Preserve the existing smoke harness's startup ownership protection, uncertainty-aware cleanup, request accounting, single-attempt reservation/launch receipts and final lifecycle deadline accounting through GPU cleanup, evidence finalization and environment removal.
+6. Freeze the final model/runtime, request plan, compute limits, review lock and authorization for that revised smoke package before any live run. The proposed values in `proposal.json` are not an authorization and changing a status label cannot complete any gate.
+
+The intake deliberately provides no live launch path. Existing R2 protocols, reviewer decisions and approvals are unchanged.
