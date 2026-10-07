@@ -1,13 +1,27 @@
 
-$ /mnt/c/Users/jjzzw/Desktop/AGI/.cache/offline-env/bin/python -m venv /tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/work/venv
+$ /mnt/c/Users/jjzzw/Desktop/AGI/.cache/offline-env/bin/python -m venv /tmp/direct-publisher-smoke-rehearsal-s5w2ybp0/nominal-y1ak57ij/work/venv
 
-$ /tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/work/venv/bin/python -m pip install --no-index --no-cache-dir --require-hashes --only-binary=:all: --find-links /tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/bundle -r /tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/inputs/trusted_requirements.lock
-Looking in links: /tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/bundle
-Processing /tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/bundle/fixturea-1.0-py3-none-any.whl (from -r /tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/inputs/trusted_requirements.lock (line 1))
-Processing /tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/bundle/fixtureb-1.0-py3-none-any.whl (from -r /tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/inputs/trusted_requirements.lock (line 2))
+$ /tmp/direct-publisher-smoke-rehearsal-s5w2ybp0/nominal-y1ak57ij/work/venv/bin/python -m pip install --no-index --no-cache-dir --require-hashes --only-binary=:all: --find-links /tmp/direct-publisher-smoke-rehearsal-s5w2ybp0/nominal-y1ak57ij/bundle -r /tmp/direct-publisher-smoke-rehearsal-s5w2ybp0/nominal-y1ak57ij/inputs/trusted_requirements.lock
+Looking in links: /tmp/direct-publisher-smoke-rehearsal-s5w2ybp0/nominal-y1ak57ij/bundle
+Processing /tmp/direct-publisher-smoke-rehearsal-s5w2ybp0/nominal-y1ak57ij/bundle/fixturea-1.0-py3-none-any.whl (from -r /tmp/direct-publisher-smoke-rehearsal-s5w2ybp0/nominal-y1ak57ij/inputs/trusted_requirements.lock (line 1))
+Processing /tmp/direct-publisher-smoke-rehearsal-s5w2ybp0/nominal-y1ak57ij/bundle/fixtureb-1.0-py3-none-any.whl (from -r /tmp/direct-publisher-smoke-rehearsal-s5w2ybp0/nominal-y1ak57ij/inputs/trusted_requirements.lock (line 2))
 Installing collected packages: fixtureb, fixturea
 Successfully installed fixturea-1.0 fixtureb-1.0
 
-$ /tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/work/venv/bin/python -m pip check
+$ /tmp/direct-publisher-smoke-rehearsal-s5w2ybp0/nominal-y1ak57ij/work/venv/bin/python -m pip check
 No broken requirements found.
-{"versions": {"fixturea": "1.0", "fixtureb": "1.0"}, "imports": {"fixturea": "/tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/work/venv/lib/python3.12/site-packages/fixturea/__init__.py", "fixtureb": "/tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/work/venv/lib/python3.12/site-packages/fixtureb/__init__.py"}}
+
+$ /tmp/direct-publisher-smoke-rehearsal-s5w2ybp0/nominal-y1ak57ij/work/venv/bin/python -I -c import importlib, importlib.metadata as m, json, sys
+expected = json.loads(sys.argv[1])
+report = {"versions": {}, "imports": {}}
+for name in expected["packages"]:
+    report["versions"][name] = m.version(name)
+for name in expected["imports"]:
+    module = importlib.import_module(name)
+    report["imports"][name] = getattr(module, "__file__", None)
+if "torch" in expected["imports"]:
+    import torch
+    report["torch_cuda_build"] = torch.version.cuda
+print(json.dumps(report))
+ {"python": "3.12", "glibc_minimum": "2.34", "machine": "x86_64", "packages": {"fixturea": "1.0", "fixtureb": "1.0"}, "imports": ["fixturea", "fixtureb"], "gpu_name_contains": "RTX PRO 6000", "gpu_count": 1}
+{"versions": {"fixturea": "1.0", "fixtureb": "1.0"}, "imports": {"fixturea": "/tmp/direct-publisher-smoke-rehearsal-s5w2ybp0/nominal-y1ak57ij/work/venv/lib/python3.12/site-packages/fixturea/__init__.py", "fixtureb": "/tmp/direct-publisher-smoke-rehearsal-s5w2ybp0/nominal-y1ak57ij/work/venv/lib/python3.12/site-packages/fixtureb/__init__.py"}}

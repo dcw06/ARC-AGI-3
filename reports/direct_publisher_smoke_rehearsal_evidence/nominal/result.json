@@ -7,13 +7,74 @@
    "scope": "caller-retained rehearsal work directory"
   },
   "gpu": "not_exercised (no GPU in a CPU rehearsal)",
+  "groups_absent": true,
+  "installation": {
+   "error": null,
+   "groups": [
+    {
+     "error": null,
+     "exit_code": 0,
+     "groups_absent": true,
+     "interrupted": [],
+     "ownership": "registered",
+     "pgid": 471,
+     "phase": "venv creation",
+     "reaped_descendants": [],
+     "remaining_members": [],
+     "sigkill_sent": false,
+     "sigterm_sent": false
+    },
+    {
+     "error": null,
+     "exit_code": 0,
+     "groups_absent": true,
+     "interrupted": [],
+     "ownership": "registered",
+     "pgid": 490,
+     "phase": "offline install",
+     "reaped_descendants": [],
+     "remaining_members": [],
+     "sigkill_sent": false,
+     "sigterm_sent": false
+    },
+    {
+     "error": null,
+     "exit_code": 0,
+     "groups_absent": true,
+     "interrupted": [],
+     "ownership": "registered",
+     "pgid": 507,
+     "phase": "pip check",
+     "reaped_descendants": [],
+     "remaining_members": [],
+     "sigkill_sent": false,
+     "sigterm_sent": false
+    },
+    {
+     "error": null,
+     "exit_code": 0,
+     "groups_absent": true,
+     "interrupted": [],
+     "ownership": "registered",
+     "pgid": 508,
+     "phase": "package checks",
+     "reaped_descendants": [],
+     "remaining_members": [],
+     "sigkill_sent": false,
+     "sigterm_sent": false
+    }
+   ],
+   "groups_absent": true,
+   "interrupted": []
+  },
   "server": {
    "error": null,
    "exit_code": -15,
    "groups_absent": true,
    "interrupted": [],
    "ownership": "registered",
-   "pgid": 462,
+   "pgid": 509,
+   "reaped_descendants": [],
    "remaining_members": [],
    "sigkill_sent": false,
    "sigterm_sent": true
@@ -21,14 +82,14 @@
  },
  "cleanup_phase": {
   "deadline_at": 600.0,
-  "entered_at": 8.004,
+  "entered_at": 7.911,
   "transition": [
    "entered"
   ]
  },
  "cleanup_verified": true,
  "completed_plan": true,
- "elapsed_seconds": 8.125,
+ "elapsed_seconds": 8.032,
  "error": null,
  "evidence_class": "scripted_cpu_rehearsal",
  "failed_stage": null,
@@ -44,17 +105,17 @@
   "entries": [
    {
     "id": "S1",
-    "issued_at": 4.989,
+    "issued_at": 4.892,
     "kind": "startup_probe",
     "method": "GET",
     "outcome": "http_200",
     "path": "/health",
-    "seconds": 0.003,
+    "seconds": 0.002,
     "sequence": 1
    },
    {
     "id": "S2",
-    "issued_at": 4.992,
+    "issued_at": 4.894,
     "kind": "startup_probe",
     "method": "GET",
     "outcome": "http_200",
@@ -64,7 +125,7 @@
    },
    {
     "id": "S3",
-    "issued_at": 4.993,
+    "issued_at": 4.894,
     "kind": "startup_probe",
     "method": "POST",
     "outcome": "http_200",
@@ -74,7 +135,7 @@
    },
    {
     "id": "I1",
-    "issued_at": 4.994,
+    "issued_at": 4.895,
     "kind": "inference",
     "method": "POST",
     "outcome": "http_200",
@@ -84,7 +145,7 @@
    },
    {
     "id": "I2",
-    "issued_at": 4.995,
+    "issued_at": 4.896,
     "kind": "inference",
     "method": "POST",
     "outcome": "http_200",
@@ -94,7 +155,7 @@
    },
    {
     "id": "I3",
-    "issued_at": 4.996,
+    "issued_at": 4.897,
     "kind": "inference",
     "method": "POST",
     "outcome": "http_200",
@@ -104,7 +165,7 @@
    },
    {
     "id": "I4",
-    "issued_at": 4.997,
+    "issued_at": 4.898,
     "kind": "inference",
     "method": "POST",
     "outcome": "http_200",
@@ -115,7 +176,7 @@
    {
     "first_content_seconds": 0.001,
     "id": "C1",
-    "issued_at": 4.998,
+    "issued_at": 4.899,
     "kind": "cancellation_probe",
     "method": "POST",
     "outcome": "cancelled_after_first_content",
@@ -125,7 +186,7 @@
    },
    {
     "id": "C2",
-    "issued_at": 5.0,
+    "issued_at": 4.9,
     "kind": "cancellation_probe",
     "method": "GET",
     "outcome": "http_200",
@@ -135,7 +196,7 @@
    },
    {
     "id": "C2",
-    "issued_at": 8.001,
+    "issued_at": 7.908,
     "kind": "cancellation_probe",
     "method": "GET",
     "outcome": "http_200",
@@ -145,7 +206,7 @@
    },
    {
     "id": "C3",
-    "issued_at": 8.003,
+    "issued_at": 7.91,
     "kind": "cancellation_probe",
     "method": "POST",
     "outcome": "http_200",
@@ -160,7 +221,7 @@
  },
  "lifecycle_deadline": {
   "checked_after": "GPU cleanup, environment removal and evidence finalization",
-  "checked_at_seconds": 8.124929515999998,
+  "checked_at_seconds": 8.032348590999959,
   "internal_seconds": 600,
   "met": true
  },
@@ -199,118 +260,124 @@
    "seconds": 0.0
   },
   {
-   "began_at": 0.0,
+   "began_at": 0.001,
    "outcome": "passed",
    "phase": "bundle_integrity",
    "seconds": 0.001
   },
   {
-   "began_at": 0.001,
+   "began_at": 0.002,
    "outcome": "passed",
    "phase": "installation",
-   "seconds": 3.985
+   "seconds": 3.886
   },
   {
-   "began_at": 3.987,
+   "began_at": 3.888,
    "outcome": "passed",
    "phase": "model_artifact",
    "seconds": 0.0
   },
   {
-   "began_at": 3.987,
+   "began_at": 3.888,
    "outcome": "passed",
    "phase": "server_start",
    "seconds": 0.001
   },
   {
-   "began_at": 3.988,
+   "began_at": 3.889,
    "outcome": "passed",
    "phase": "server_ready",
-   "seconds": 1.002
+   "seconds": 1.003
   },
   {
-   "began_at": 4.989,
+   "began_at": 4.892,
    "outcome": "passed",
    "phase": "startup_probe_S1",
-   "seconds": 0.003
+   "seconds": 0.002
   },
   {
-   "began_at": 4.992,
+   "began_at": 4.894,
    "outcome": "passed",
    "phase": "startup_probe_S2",
    "seconds": 0.001
   },
   {
-   "began_at": 4.993,
+   "began_at": 4.894,
    "outcome": "passed",
    "phase": "startup_probe_S3",
    "seconds": 0.001
   },
   {
-   "began_at": 4.994,
+   "began_at": 4.895,
    "outcome": "passed",
    "phase": "inference_I1",
    "seconds": 0.001
   },
   {
-   "began_at": 4.995,
+   "began_at": 4.896,
    "outcome": "passed",
    "phase": "inference_I2",
    "seconds": 0.001
   },
   {
-   "began_at": 4.996,
+   "began_at": 4.897,
    "outcome": "passed",
    "phase": "inference_I3",
    "seconds": 0.001
   },
   {
-   "began_at": 4.997,
+   "began_at": 4.898,
    "outcome": "passed",
    "phase": "inference_I4",
    "seconds": 0.001
   },
   {
-   "began_at": 4.998,
+   "began_at": 4.899,
    "outcome": "passed",
    "phase": "cancellation_C1",
    "seconds": 0.001
   },
   {
-   "began_at": 5.0,
+   "began_at": 4.9,
    "outcome": "passed",
    "phase": "cancellation_C2_idle",
-   "seconds": 3.003
+   "seconds": 3.01
   },
   {
-   "began_at": 8.003,
+   "began_at": 7.91,
    "outcome": "passed",
    "phase": "cancellation_C3_responsive",
    "seconds": 0.001
   },
   {
-   "began_at": 8.004,
+   "began_at": 7.911,
    "outcome": "passed",
    "phase": "server_cleanup",
-   "seconds": 0.104
+   "seconds": 0.106
   },
   {
-   "began_at": 8.108,
+   "began_at": 8.017,
+   "outcome": "passed",
+   "phase": "installation_cleanup",
+   "seconds": 0.0
+  },
+  {
+   "began_at": 8.017,
    "outcome": "passed",
    "phase": "log_retention",
-   "seconds": 0.01
+   "seconds": 0.009
   },
   {
-   "began_at": 8.118,
+   "began_at": 8.026,
    "outcome": "not_applicable",
    "phase": "environment_cleanup",
    "seconds": 0.0
   },
   {
-   "began_at": 8.118,
+   "began_at": 8.026,
    "outcome": "passed",
    "phase": "evidence_finalization",
-   "seconds": 0.007
+   "seconds": 0.006
   }
  ],
  "rehearsal_limits": [
@@ -451,7 +518,7 @@
   "bundle_integrity": {
    "account_attachment_verified": false,
    "dataset_ref": "rehearsal/fixture-publisher",
-   "elapsed_seconds": 0.0,
+   "elapsed_seconds": 0.001,
    "gpu_compatibility_established": false,
    "installation_requirements_sha256": "851f33674254c2b45882662939c207c0792fd9ae3e3d7b6935bc5e1266a07575",
    "integrity_passed": true,
@@ -577,12 +644,12 @@
   },
   "installation": {
    "imports": {
-    "fixturea": "/tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/work/venv/lib/python3.12/site-packages/fixturea/__init__.py",
-    "fixtureb": "/tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/work/venv/lib/python3.12/site-packages/fixtureb/__init__.py"
+    "fixturea": "/tmp/direct-publisher-smoke-rehearsal-s5w2ybp0/nominal-y1ak57ij/work/venv/lib/python3.12/site-packages/fixturea/__init__.py",
+    "fixtureb": "/tmp/direct-publisher-smoke-rehearsal-s5w2ybp0/nominal-y1ak57ij/work/venv/lib/python3.12/site-packages/fixtureb/__init__.py"
    },
-   "install_seconds": 3.604,
+   "install_seconds": 3.451,
    "passed": true,
-   "python": "/tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/work/venv/bin/python",
+   "python": "/tmp/direct-publisher-smoke-rehearsal-s5w2ybp0/nominal-y1ak57ij/work/venv/bin/python",
    "versions": {
     "fixturea": "1.0",
     "fixtureb": "1.0"
@@ -594,9 +661,9 @@
    "tree_sha256": "ccec944bc12c9c99c0a10eb0fe19ba7e16286fccc2c9ceb5d05198cb8b38e128"
   },
   "server_ready": {
-   "seconds": 1.002
+   "seconds": 1.003
   },
-  "server_start": 462,
+  "server_start": 509,
   "startup_probe_S1": {
    "status": 200
   },

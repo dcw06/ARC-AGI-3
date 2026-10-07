@@ -1,11 +1,11 @@
 {
   "schema": "direct_publisher_smoke_cpu_checks_v1",
-  "source_revision": "da31405c7d60b24a4301a595f5ebc985939be744",
+  "source_revision": "e584ccdb4924e57ec87ee442e14a76c008f40b41",
   "working_tree_clean_before_checks": true,
   "python": "3.12.3",
   "evidence_class": "cpu_control_checks_not_remote_wheel_or_gpu_evidence",
   "summary": {
-    "run": 49,
+    "run": 61,
     "failures": 0,
     "errors": 0,
     "skipped": 0
@@ -14,7 +14,7 @@
     {
       "test": "tests.test_direct_publisher_smoke.AdapterTests.test_ambiguous_dataset_mount_refused",
       "outcome": "pass",
-      "seconds": 0.003,
+      "seconds": 0.004,
       "detail": null
     },
     {
@@ -38,7 +38,7 @@
     {
       "test": "tests.test_direct_publisher_smoke.DurableLaunchTests.test_existing_receipt_spends_attempt",
       "outcome": "pass",
-      "seconds": 0.092,
+      "seconds": 0.12,
       "detail": null
     },
     {
@@ -50,7 +50,7 @@
     {
       "test": "tests.test_direct_publisher_smoke.DurableLaunchTests.test_uncertain_submission_never_retries",
       "outcome": "pass",
-      "seconds": 0.127,
+      "seconds": 0.13,
       "detail": null
     },
     {
@@ -62,139 +62,139 @@
     {
       "test": "tests.test_direct_publisher_smoke.GateTests.test_complete_fixture_gate_and_launch_bind_all_private_evidence",
       "outcome": "pass",
-      "seconds": 0.098,
+      "seconds": 0.108,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke.GateTests.test_consume_only_once_within_session",
       "outcome": "pass",
-      "seconds": 0.121,
+      "seconds": 0.102,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke.GateTests.test_consumed_reservation_and_bad_claim_refuse",
       "outcome": "pass",
-      "seconds": 0.198,
+      "seconds": 0.191,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke.GateTests.test_invalid_protocol_limits_and_version_refuse",
       "outcome": "pass",
-      "seconds": 0.316,
+      "seconds": 0.366,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke.GateTests.test_missing_sidecars_all_refuse",
       "outcome": "pass",
-      "seconds": 0.64,
+      "seconds": 0.664,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke.GateTests.test_permission_label_alone_cannot_replace_facts",
       "outcome": "pass",
-      "seconds": 0.087,
+      "seconds": 0.085,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke.GateTests.test_provider_and_assessment_drift_refuse",
       "outcome": "pass",
-      "seconds": 0.174,
+      "seconds": 0.167,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke.GateTests.test_provider_confirmation_must_be_boolean_and_version_integer",
       "outcome": "pass",
-      "seconds": 0.205,
+      "seconds": 0.176,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke.GateTests.test_provider_label_alone_cannot_confirm_attachment",
       "outcome": "pass",
-      "seconds": 0.095,
+      "seconds": 0.087,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke.GateTests.test_review_snapshot_is_gpu_disabled_and_contains_trusted_inputs",
       "outcome": "pass",
-      "seconds": 0.086,
+      "seconds": 0.08,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke.GateTests.test_scopes_versions_and_compute_limits_refuse",
       "outcome": "pass",
-      "seconds": 1.043,
+      "seconds": 1.161,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke.GateTests.test_source_and_input_drift_refuse",
       "outcome": "pass",
-      "seconds": 0.324,
+      "seconds": 0.331,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke.GateTests.test_wrong_review_scope_refuses",
       "outcome": "pass",
-      "seconds": 0.074,
+      "seconds": 0.094,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke_lifecycle.LifecycleDeadline.test_environment_removal_failure_is_failed",
       "outcome": "pass",
-      "seconds": 0.02,
+      "seconds": 0.017,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke_lifecycle.LifecycleDeadline.test_environment_removal_overrun",
       "outcome": "pass",
-      "seconds": 0.231,
+      "seconds": 0.223,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke_lifecycle.LifecycleDeadline.test_evidence_finalization_overrun",
       "outcome": "pass",
-      "seconds": 0.63,
+      "seconds": 0.635,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke_lifecycle.LifecycleDeadline.test_evidence_write_failure_cannot_return_success",
       "outcome": "pass",
-      "seconds": 0.003,
+      "seconds": 0.002,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke_lifecycle.LifecycleDeadline.test_final_publication_overrun_is_downgraded_and_rehashed",
       "outcome": "pass",
-      "seconds": 0.226,
+      "seconds": 0.228,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke_lifecycle.LifecycleDeadline.test_gpu_cleanup_overrun",
       "outcome": "pass",
-      "seconds": 0.225,
+      "seconds": 0.226,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke_lifecycle.LifecycleDeadline.test_live_entry_removes_environment_and_source_before_success",
       "outcome": "pass",
-      "seconds": 0.019,
+      "seconds": 0.016,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke_lifecycle.LifecycleDeadline.test_live_entry_source_removal_overrun_fails",
       "outcome": "pass",
-      "seconds": 0.228,
+      "seconds": 0.226,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke_lifecycle.LifecycleDeadline.test_original_reproduction_cleanup_overrun",
       "outcome": "pass",
-      "seconds": 0.225,
+      "seconds": 0.227,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke_lifecycle.LifecycleDeadline.test_partially_published_success_is_replaced_with_failure",
       "outcome": "pass",
-      "seconds": 0.024,
+      "seconds": 0.025,
       "detail": null
     },
     {
@@ -206,7 +206,7 @@
     {
       "test": "tests.test_direct_publisher_smoke_lifecycle.StartupOwnership.test_child_still_handles_sigterm_after_protected_start",
       "outcome": "pass",
-      "seconds": 0.108,
+      "seconds": 0.11,
       "detail": null
     },
     {
@@ -218,7 +218,7 @@
     {
       "test": "tests.test_direct_publisher_smoke_lifecycle.StartupOwnership.test_emergency_sigkill_still_runs_after_cleanup_deadline",
       "outcome": "pass",
-      "seconds": 0.252,
+      "seconds": 0.274,
       "detail": null
     },
     {
@@ -230,19 +230,19 @@
     {
       "test": "tests.test_direct_publisher_smoke_lifecycle.StartupOwnership.test_original_reproduction_interrupt_before_assignment",
       "outcome": "pass",
-      "seconds": 0.108,
+      "seconds": 0.11,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke_lifecycle.StartupOwnership.test_uncertain_group_registration_still_attempts_emergency_termination",
       "outcome": "pass",
-      "seconds": 0.108,
+      "seconds": 0.109,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke_lifecycle.StartupOwnership.test_unknown_spawn_outcome_never_reports_absence",
       "outcome": "pass",
-      "seconds": 0.007,
+      "seconds": 0.006,
       "detail": null
     },
     {
@@ -260,7 +260,7 @@
     {
       "test": "tests.test_direct_publisher_smoke_preflight.DirectPublisherPreflightTests.test_nominal_integrity_never_claims_permission_or_launch",
       "outcome": "pass",
-      "seconds": 0.001,
+      "seconds": 0.002,
       "detail": null
     },
     {
@@ -272,25 +272,25 @@
     {
       "test": "tests.test_direct_publisher_smoke_preflight.DirectPublisherPreflightTests.test_publisher_pin_mismatch_refused_even_when_metadata_bound",
       "outcome": "pass",
-      "seconds": 0.002,
+      "seconds": 0.003,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke_preflight.DirectPublisherPreflightTests.test_retained_production_inputs_are_consistent",
       "outcome": "pass",
-      "seconds": 0.002,
+      "seconds": 0.003,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke_preflight.DirectPublisherPreflightTests.test_same_size_wheel_tampering_refused",
       "outcome": "pass",
-      "seconds": 0.001,
+      "seconds": 0.002,
       "detail": null
     },
     {
       "test": "tests.test_direct_publisher_smoke_preflight.DirectPublisherPreflightTests.test_symlink_refused",
       "outcome": "pass",
-      "seconds": 0.001,
+      "seconds": 0.003,
       "detail": null
     },
     {
@@ -302,7 +302,79 @@
     {
       "test": "tests.test_direct_publisher_smoke_preflight.DirectPublisherPreflightTests.test_trusted_manifest_tampering_refused",
       "outcome": "pass",
-      "seconds": 0.002,
+      "seconds": 0.001,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_install_lifecycle.InstallationDescendants.test_command_cleanup_overrun_fails_installation_deadline",
+      "outcome": "pass",
+      "seconds": 2.169,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_install_lifecycle.InstallationDescendants.test_commands_enable_adoption_and_restore_previous_setting",
+      "outcome": "pass",
+      "seconds": 0.381,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_install_lifecycle.InstallationDescendants.test_final_cleanup_does_not_signal_retired_numeric_group_ids",
+      "outcome": "pass",
+      "seconds": 0.177,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_install_lifecycle.InstallationDescendants.test_gpu_receipt_cannot_override_unverified_installation_groups",
+      "outcome": "pass",
+      "seconds": 0.228,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_install_lifecycle.InstallationDescendants.test_import_timeout_descendant_is_reaped_before_cleanup_verified",
+      "outcome": "pass",
+      "seconds": 3.131,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_install_lifecycle.InstallationDescendants.test_installation_and_import_interruptions_reap_descendants",
+      "outcome": "pass",
+      "seconds": 1.554,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_install_lifecycle.InstallationDescendants.test_installation_cleanup_overrun_cannot_pass",
+      "outcome": "pass",
+      "seconds": 0.227,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_install_lifecycle.InstallationDescendants.test_installation_timeout_descendant_is_reaped_before_cleanup_verified",
+      "outcome": "pass",
+      "seconds": 3.125,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_install_lifecycle.InstallationDescendants.test_parent_exit_does_not_hide_living_child",
+      "outcome": "pass",
+      "seconds": 0.378,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_install_lifecycle.InstallationDescendants.test_startup_interruptions_preserve_installation_ownership",
+      "outcome": "pass",
+      "seconds": 0.219,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_install_lifecycle.InstallationDescendants.test_uncertain_installation_startup_never_verifies_cleanup",
+      "outcome": "pass",
+      "seconds": 0.029,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_install_lifecycle.InstallationDescendants.test_venv_and_pip_check_timeouts_reap_descendants",
+      "outcome": "pass",
+      "seconds": 6.287,
       "detail": null
     }
   ],
@@ -311,7 +383,8 @@
     "kernel-metadata.json": true,
     "review-source-lock.json": true
   },
-  "review_lock_sha256": "f2bec3e31a6cee23c539998ce0fe5f8867b597efb85643c918fcc2a2b7e5b7b2",
+  "review_lock_sha256": "99499d712ccbb6ad0420763be8530bde8972c6ab4f8271bc810844ff9d51578a",
+  "review_revision": 2,
   "passed": true,
   "gpu_compatibility_evidence": false,
   "launch_authorized": false

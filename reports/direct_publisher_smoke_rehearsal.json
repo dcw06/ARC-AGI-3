@@ -7,18 +7,18 @@
   "installation was exercised on fixture wheels, not the publisher wheels",
   "establishes only that the control code (gate, clock, request ledger, timeouts, cancellation handling, process cleanup, evidence retention) behaves as specified against scripted behaviour"
  ],
- "source_revision": "da31405c7d60b24a4301a595f5ebc985939be744",
+ "source_revision": "e584ccdb4924e57ec87ee442e14a76c008f40b41",
  "host": {
   "python": "3.12.3",
   "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
   "gpu": "none (CUDA_VISIBLE_DEVICES empty; no GPU query is made in rehearsal mode)"
  },
- "ran_at": "2026-10-06T20:42:15-04:00",
+ "ran_at": "2026-10-06T23:07:51-04:00",
  "live_gate_on_this_checkout": {
   "refused": true,
   "reasons": [
    "unresolved placeholders: kernel_id",
-   "authorization: FileNotFoundError: [Errno 2] No such file or directory: '/tmp/agi-direct-runner-fresh-i2hrr370/checkout/reports/direct_publisher_smoke_v1_source_approval.json'"
+   "authorization: FileNotFoundError: [Errno 2] No such file or directory: '/tmp/agi-direct-runner-fresh-c0fhqqcs/checkout/reports/direct_publisher_smoke_v1_source_approval.json'"
   ]
  },
  "scenarios": [
@@ -47,7 +47,7 @@
     "cancellation_probe": 4
    },
    "cleanup": {
-    "pgid": 462,
+    "pgid": 509,
     "ownership": "registered",
     "sigterm_sent": true,
     "sigkill_sent": false,
@@ -55,7 +55,8 @@
     "remaining_members": [],
     "interrupted": [],
     "error": null,
-    "exit_code": -15
+    "exit_code": -15,
+    "reaped_descendants": []
    }
   },
   {
@@ -184,7 +185,7 @@
    "requests_issued": 0,
    "by_kind": {},
    "cleanup": {
-    "pgid": 603,
+    "pgid": 649,
     "ownership": "registered",
     "sigterm_sent": false,
     "sigkill_sent": false,
@@ -192,7 +193,8 @@
     "remaining_members": [],
     "interrupted": [],
     "error": null,
-    "exit_code": 3
+    "exit_code": 3,
+    "reaped_descendants": []
    }
   },
   {
@@ -217,7 +219,7 @@
    "requests_issued": 0,
    "by_kind": {},
    "cleanup": {
-    "pgid": 642,
+    "pgid": 688,
     "ownership": "registered",
     "sigterm_sent": true,
     "sigkill_sent": false,
@@ -225,7 +227,8 @@
     "remaining_members": [],
     "interrupted": [],
     "error": null,
-    "exit_code": -15
+    "exit_code": -15,
+    "reaped_descendants": []
    }
   },
   {
@@ -252,7 +255,7 @@
     "startup_probe": 2
    },
    "cleanup": {
-    "pgid": 681,
+    "pgid": 727,
     "ownership": "registered",
     "sigterm_sent": true,
     "sigkill_sent": false,
@@ -260,7 +263,8 @@
     "remaining_members": [],
     "interrupted": [],
     "error": null,
-    "exit_code": -15
+    "exit_code": -15,
+    "reaped_descendants": []
    }
   },
   {
@@ -287,7 +291,7 @@
     "startup_probe": 3
    },
    "cleanup": {
-    "pgid": 727,
+    "pgid": 771,
     "ownership": "registered",
     "sigterm_sent": true,
     "sigkill_sent": false,
@@ -295,7 +299,8 @@
     "remaining_members": [],
     "interrupted": [],
     "error": null,
-    "exit_code": -15
+    "exit_code": -15,
+    "reaped_descendants": []
    }
   },
   {
@@ -324,7 +329,7 @@
     "cancellation_probe": 3
    },
    "cleanup": {
-    "pgid": 773,
+    "pgid": 817,
     "ownership": "registered",
     "sigterm_sent": true,
     "sigkill_sent": false,
@@ -332,7 +337,8 @@
     "remaining_members": [],
     "interrupted": [],
     "error": null,
-    "exit_code": -15
+    "exit_code": -15,
+    "reaped_descendants": []
    }
   },
   {
@@ -363,7 +369,7 @@
     "cancellation_probe": 4
    },
    "cleanup": {
-    "pgid": 833,
+    "pgid": 877,
     "ownership": "registered",
     "sigterm_sent": true,
     "sigkill_sent": true,
@@ -371,7 +377,8 @@
     "remaining_members": [],
     "interrupted": [],
     "error": null,
-    "exit_code": -9
+    "exit_code": -9,
+    "reaped_descendants": []
    }
   },
   {
@@ -402,7 +409,7 @@
     "cancellation_probe": 4
    },
    "cleanup": {
-    "pgid": 895,
+    "pgid": 939,
     "ownership": "registered",
     "sigterm_sent": true,
     "sigkill_sent": true,
@@ -410,7 +417,10 @@
     "remaining_members": [],
     "interrupted": [],
     "error": null,
-    "exit_code": -15
+    "exit_code": -15,
+    "reaped_descendants": [
+     940
+    ]
    }
   }
  ],

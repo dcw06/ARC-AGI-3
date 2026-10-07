@@ -1,0 +1,166 @@
+{
+  "schema": "direct_publisher_install_timeout_reproduction_v1",
+  "source_revision": "e584ccdb4924e57ec87ee442e14a76c008f40b41",
+  "working_tree_clean_before_checks": true,
+  "python": "3.12.3",
+  "regression_fixture_sha256": "8f7e8d133b717cb9b1fba47eb86ed718741048456bfeefca67841bc020e8c223",
+  "controller_install_sha256": "0eb9fced64d4527a57030e2331c775c989057869616db4662143ebb4c9056fb5",
+  "evidence_class": "scripted_cpu_regressions",
+  "expected": "fixed",
+  "tests_run": 2,
+  "failures": 0,
+  "errors": 0,
+  "observations": [
+    {
+      "test": "test_installation_timeout_descendant_is_reaped_before_cleanup_verified",
+      "passed": false,
+      "failed_stage": "installation",
+      "error": "InstallFailed: offline install: installation deadline reached",
+      "cleanup_verified": true,
+      "cleanup": {
+        "environment": {
+          "details": null,
+          "removed": null,
+          "scope": "caller-retained rehearsal work directory"
+        },
+        "gpu": "not_exercised (no GPU in a CPU rehearsal)",
+        "groups_absent": true,
+        "installation": {
+          "error": null,
+          "groups": [
+            {
+              "error": null,
+              "exit_code": 0,
+              "groups_absent": true,
+              "interrupted": [],
+              "ownership": "registered",
+              "pgid": 418,
+              "phase": "venv creation",
+              "reaped_descendants": [],
+              "remaining_members": [],
+              "sigkill_sent": false,
+              "sigterm_sent": false
+            },
+            {
+              "error": null,
+              "exit_code": -15,
+              "groups_absent": true,
+              "interrupted": [],
+              "ownership": "registered",
+              "pgid": 419,
+              "phase": "offline install",
+              "reaped_descendants": [
+                420
+              ],
+              "remaining_members": [],
+              "sigkill_sent": true,
+              "sigterm_sent": true
+            }
+          ],
+          "groups_absent": true,
+          "interrupted": []
+        },
+        "server": {
+          "groups_absent": true,
+          "note": "server never started",
+          "ownership": "never_spawned"
+        }
+      },
+      "fixture_pids": [
+        420,
+        419
+      ],
+      "pids_present_when_cleanup_reported": []
+    },
+    {
+      "test": "test_import_timeout_descendant_is_reaped_before_cleanup_verified",
+      "passed": false,
+      "failed_stage": "installation",
+      "error": "InstallFailed: package checks: installation deadline reached",
+      "cleanup_verified": true,
+      "cleanup": {
+        "environment": {
+          "details": null,
+          "removed": null,
+          "scope": "caller-retained rehearsal work directory"
+        },
+        "gpu": "not_exercised (no GPU in a CPU rehearsal)",
+        "groups_absent": true,
+        "installation": {
+          "error": null,
+          "groups": [
+            {
+              "error": null,
+              "exit_code": 0,
+              "groups_absent": true,
+              "interrupted": [],
+              "ownership": "registered",
+              "pgid": 421,
+              "phase": "venv creation",
+              "reaped_descendants": [],
+              "remaining_members": [],
+              "sigkill_sent": false,
+              "sigterm_sent": false
+            },
+            {
+              "error": null,
+              "exit_code": 0,
+              "groups_absent": true,
+              "interrupted": [],
+              "ownership": "registered",
+              "pgid": 422,
+              "phase": "offline install",
+              "reaped_descendants": [],
+              "remaining_members": [],
+              "sigkill_sent": false,
+              "sigterm_sent": false
+            },
+            {
+              "error": null,
+              "exit_code": 0,
+              "groups_absent": true,
+              "interrupted": [],
+              "ownership": "registered",
+              "pgid": 423,
+              "phase": "pip check",
+              "reaped_descendants": [],
+              "remaining_members": [],
+              "sigkill_sent": false,
+              "sigterm_sent": false
+            },
+            {
+              "error": null,
+              "exit_code": -15,
+              "groups_absent": true,
+              "interrupted": [],
+              "ownership": "registered",
+              "pgid": 424,
+              "phase": "package checks",
+              "reaped_descendants": [
+                425
+              ],
+              "remaining_members": [],
+              "sigkill_sent": true,
+              "sigterm_sent": true
+            }
+          ],
+          "groups_absent": true,
+          "interrupted": []
+        },
+        "server": {
+          "groups_absent": true,
+          "note": "server never started",
+          "ownership": "never_spawned"
+        }
+      },
+      "fixture_pids": [
+        425,
+        424
+      ],
+      "pids_present_when_cleanup_reported": []
+    }
+  ],
+  "fixture_pids_present_after_teardown": [],
+  "as_expected": true,
+  "gpu_launched": false
+}
