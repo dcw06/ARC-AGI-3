@@ -1,0 +1,83 @@
+{
+  "upstream_commit": "b07e2b2",
+  "modules": {
+    "accounting.py": {
+      "upstream_path": "certification/wheelhouse_r2_smoke_v1/accounting.py",
+      "upstream_sha256": "121e56d47afa86dcf44db1476cf68b734fa3ab7fdd9a002ce6a9e35dbd5e94ca",
+      "derived_sha256": "121e56d47afa86dcf44db1476cf68b734fa3ab7fdd9a002ce6a9e35dbd5e94ca"
+    },
+    "binding.py": {
+      "upstream_path": "certification/wheelhouse_r2_smoke_v1/binding.py",
+      "upstream_sha256": "2a91e3ebc55d9a26eba07932b9d07596c870576b702f118431d8110b8ca88707",
+      "derived_sha256": "81991b497bf9289b05230151597aa34cc70729554f881e35dbc19abdb68c1651"
+    },
+    "client.py": {
+      "upstream_path": "certification/wheelhouse_r2_smoke_v1/client.py",
+      "upstream_sha256": "50d68ac3e31bafb70ef83eaff2377395ead35f265468099004a990c15996db49",
+      "derived_sha256": "d83c463384a54506d6aea1ca00217111b3daa4601d3dee10c6f0b0b0c4d45c37"
+    },
+    "evidence.py": {
+      "upstream_path": "certification/wheelhouse_r2_smoke_v1/evidence.py",
+      "upstream_sha256": "665296328f1e9fb13c3575825c238e999309744998caeb73201b0037b8f7a06e",
+      "derived_sha256": "d9be6ad7bbe9e09ed3297b2bb1af9f4909aef95d78d39adef226d7c94cb4ed65"
+    },
+    "host.py": {
+      "upstream_path": "certification/wheelhouse_r2_smoke_v1/host.py",
+      "upstream_sha256": "184cc48a006001c85c9988b6fa7afd213e3d3584e6dfc28ef0536f15e765ae55",
+      "derived_sha256": "5dd3d799997592ea9709228f9f76e788bfb63c1ac192305a7367699d84537075"
+    },
+    "install.py": {
+      "upstream_path": "certification/wheelhouse_r2_smoke_v1/install.py",
+      "upstream_sha256": "6b274f84a96b9fe5267c66e1f6c7b8c0d2b8fa2a8cdde88e89190a980874c4bd",
+      "derived_sha256": "b4000a8d55b0ce6621f01b99c7b890c10c81f26259edc1c8538254895930b3df"
+    },
+    "launch.py": {
+      "upstream_path": "certification/wheelhouse_r2_smoke_v1/launch.py",
+      "upstream_sha256": "b5ab04753acfc8649f7f3ea281cc8b5bbbb2ed26882e16918b10fbddd413cca2",
+      "derived_sha256": "1751bc29b1ea59214bd69e18743e211288c33c2b05934fd98e4891f9b03f4bff"
+    },
+    "notebook.py": {
+      "upstream_path": "certification/wheelhouse_r2_smoke_v1/notebook.py",
+      "upstream_sha256": "007e7e689366129f13f67567fecc00cbd04a257c1f30588595f5aad93c008071",
+      "derived_sha256": "b019576fd21db204e445da44af5653e9bd83bf3a4ae2568c2af1e4703c7b2f84"
+    },
+    "rehearsal.py": {
+      "upstream_path": "certification/wheelhouse_r2_smoke_v1/rehearsal.py",
+      "upstream_sha256": "1af7569656b75d9e72383414e30a24f1c816f307e4985bf1272c58aecddb2ea1",
+      "derived_sha256": "7e20699eb610e438d050b90b379aa673ce848ab16825ee76c4a0ec916db3b246"
+    },
+    "rehearsal_stub.py": {
+      "upstream_path": "certification/wheelhouse_r2_smoke_v1/rehearsal_stub.py",
+      "upstream_sha256": "5ffec6525399a51379ffde7864571263ca3f99661723a7ebe07e8a8631202d0e",
+      "derived_sha256": "5ffec6525399a51379ffde7864571263ca3f99661723a7ebe07e8a8631202d0e"
+    },
+    "run.py": {
+      "upstream_path": "certification/wheelhouse_r2_smoke_v1/run.py",
+      "upstream_sha256": "219caf965ad60b525ff8ddbee8415fa22d6562477a4c1c77c3b83d06bae75b6f",
+      "derived_sha256": "a9372c5839e28db18eebd095b6f57506e85be31d1fabcb3325a53087a9bb289f"
+    },
+    "server.py": {
+      "upstream_path": "certification/wheelhouse_r2_smoke_v1/server.py",
+      "upstream_sha256": "fbe746b8883b290c69ed2d830fb2b1b7224fc1540339b3e88837d527df1be77f",
+      "derived_sha256": "ff6ee45ccb038a60ec6576d68bfcb6c26638ffdc7eda6f2888bf63b52413f116"
+    }
+  },
+  "adaptation": "namespace, flat-mount integrity and trusted-lock installation, new evidence/authorization scope; startup ownership and final deadline logic retained",
+  "tests_and_tools": {
+    "tests/test_direct_publisher_smoke_lifecycle.py": {
+      "upstream_path": "tests/test_wheelhouse_r2_smoke_lifecycle.py",
+      "upstream_sha256": "7edcabaab4a04d787cd29d432454f07d53000cafc509f648736c7d7483f72435",
+      "derived_sha256": "e498f705c8e2ca3b00baea12d59265e8e6dcba1a69c2e119205f3b035fdbe6a8"
+    },
+    "scripts/direct_publisher_smoke_package.py": {
+      "upstream_path": "scripts/wheelhouse_r2_smoke_package.py",
+      "upstream_sha256": "a138e07c2e3177d246883d5a5548354bbe3e5904776d8afcc804c42dc0c0ae04",
+      "derived_sha256": "5e025e0af1e1063bebf6cf90eda69027bd39a2434aa6f2811afde6300f31f834"
+    },
+    "scripts/direct_publisher_smoke_rehearsal.py": {
+      "upstream_path": "scripts/wheelhouse_r2_smoke_rehearsal.py",
+      "upstream_sha256": "37f594359d3174cf309343378538233c28445763a49ffd9c9fc1759c5f9c7009",
+      "derived_sha256": "a1e93bf414aeae41ed051c0b822ec8672371628387f375bea96b1e3f51d05af7"
+    }
+  }
+}

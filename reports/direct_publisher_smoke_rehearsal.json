@@ -1,0 +1,419 @@
+{
+ "schema": "direct_publisher_smoke_rehearsal_v1",
+ "evidence_class": "scripted_cpu_rehearsal",
+ "gpu_compatibility_evidence": false,
+ "limits_of_this_evidence": [
+  "no GPU, CUDA, vLLM engine or model weights were used: the model server is a scripted stub",
+  "installation was exercised on fixture wheels, not the publisher wheels",
+  "establishes only that the control code (gate, clock, request ledger, timeouts, cancellation handling, process cleanup, evidence retention) behaves as specified against scripted behaviour"
+ ],
+ "source_revision": "",
+ "host": {
+  "python": "3.12.3",
+  "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "gpu": "none (CUDA_VISIBLE_DEVICES empty; no GPU query is made in rehearsal mode)"
+ },
+ "ran_at": "2026-10-06T20:30:38-04:00",
+ "live_gate_on_this_checkout": {
+  "refused": true,
+  "reasons": [
+   "unresolved placeholders: kernel_id",
+   "authorization: ValueError: no review source lock"
+  ]
+ },
+ "scenarios": [
+  {
+   "scenario": "nominal",
+   "behaviour": "normal",
+   "expected": {
+    "expect_passed": true,
+    "expect_stage": null
+   },
+   "checks": {
+    "passed_as_expected": true,
+    "stage_as_expected": true,
+    "groups_absent": true,
+    "gpu_never_queried": true,
+    "evidence_class_rehearsal": true,
+    "within_request_cap": true
+   },
+   "as_expected": true,
+   "failed_stage": null,
+   "error": null,
+   "requests_issued": 11,
+   "by_kind": {
+    "startup_probe": 3,
+    "inference": 4,
+    "cancellation_probe": 4
+   },
+   "cleanup": {
+    "pgid": 415,
+    "ownership": "registered",
+    "sigterm_sent": true,
+    "sigkill_sent": false,
+    "groups_absent": true,
+    "remaining_members": [],
+    "interrupted": [],
+    "error": null,
+    "exit_code": -15
+   }
+  },
+  {
+   "scenario": "bundle_file_tampered",
+   "behaviour": "normal",
+   "expected": {
+    "expect_passed": false,
+    "expect_stage": "bundle_integrity"
+   },
+   "checks": {
+    "passed_as_expected": true,
+    "stage_as_expected": true,
+    "groups_absent": true,
+    "gpu_never_queried": true,
+    "evidence_class_rehearsal": true,
+    "within_request_cap": true
+   },
+   "as_expected": true,
+   "failed_stage": "bundle_integrity",
+   "error": "PreflightFailed: wheel size differs: fixtureb-1.0-py3-none-any.whl",
+   "requests_issued": 0,
+   "by_kind": {},
+   "cleanup": {
+    "groups_absent": true,
+    "ownership": "never_spawned",
+    "note": "server never started"
+   }
+  },
+  {
+   "scenario": "sha256sums_binding_mismatch",
+   "behaviour": "normal",
+   "expected": {
+    "expect_passed": false,
+    "expect_stage": "bundle_integrity"
+   },
+   "checks": {
+    "passed_as_expected": true,
+    "stage_as_expected": true,
+    "groups_absent": true,
+    "gpu_never_queried": true,
+    "evidence_class_rehearsal": true,
+    "within_request_cap": true
+   },
+   "as_expected": true,
+   "failed_stage": "bundle_integrity",
+   "error": "InstallFailed: dataset differs from the trusted intake binding",
+   "requests_issued": 0,
+   "by_kind": {},
+   "cleanup": {
+    "groups_absent": true,
+    "ownership": "never_spawned",
+    "note": "server never started"
+   }
+  },
+  {
+   "scenario": "version_mismatch",
+   "behaviour": "normal",
+   "expected": {
+    "expect_passed": false,
+    "expect_stage": "installation"
+   },
+   "checks": {
+    "passed_as_expected": true,
+    "stage_as_expected": true,
+    "groups_absent": true,
+    "gpu_never_queried": true,
+    "evidence_class_rehearsal": true,
+    "within_request_cap": true
+   },
+   "as_expected": true,
+   "failed_stage": "installation",
+   "error": "InstallFailed: version mismatch (no upgrade attempted): {'fixturea': '1.0'}",
+   "requests_issued": 0,
+   "by_kind": {},
+   "cleanup": {
+    "groups_absent": true,
+    "ownership": "never_spawned",
+    "note": "server never started"
+   }
+  },
+  {
+   "scenario": "model_tree_mismatch",
+   "behaviour": "normal",
+   "expected": {
+    "expect_passed": false,
+    "expect_stage": "model_artifact"
+   },
+   "checks": {
+    "passed_as_expected": true,
+    "stage_as_expected": true,
+    "groups_absent": true,
+    "gpu_never_queried": true,
+    "evidence_class_rehearsal": true,
+    "within_request_cap": true
+   },
+   "as_expected": true,
+   "failed_stage": "model_artifact",
+   "error": "HostMismatch: model artifact tree SHA-256 differs from the pin",
+   "requests_issued": 0,
+   "by_kind": {},
+   "cleanup": {
+    "groups_absent": true,
+    "ownership": "never_spawned",
+    "note": "server never started"
+   }
+  },
+  {
+   "scenario": "server_exits_early",
+   "behaviour": "exit_early",
+   "expected": {
+    "expect_passed": false,
+    "expect_stage": "server_ready",
+    "behaviour": "exit_early"
+   },
+   "checks": {
+    "passed_as_expected": true,
+    "stage_as_expected": true,
+    "groups_absent": true,
+    "gpu_never_queried": true,
+    "evidence_class_rehearsal": true,
+    "within_request_cap": true
+   },
+   "as_expected": true,
+   "failed_stage": "server_ready",
+   "error": "StartupFailed: model server exited with 3 before readiness",
+   "requests_issued": 0,
+   "by_kind": {},
+   "cleanup": {
+    "pgid": 559,
+    "ownership": "registered",
+    "sigterm_sent": false,
+    "sigkill_sent": false,
+    "groups_absent": true,
+    "remaining_members": [],
+    "interrupted": [],
+    "error": null,
+    "exit_code": 3
+   }
+  },
+  {
+   "scenario": "startup_ceiling",
+   "behaviour": "never_ready",
+   "expected": {
+    "expect_passed": false,
+    "expect_stage": "server_ready",
+    "behaviour": "never_ready"
+   },
+   "checks": {
+    "passed_as_expected": true,
+    "stage_as_expected": true,
+    "groups_absent": true,
+    "gpu_never_queried": true,
+    "evidence_class_rehearsal": true,
+    "within_request_cap": true
+   },
+   "as_expected": true,
+   "failed_stage": "server_ready",
+   "error": "StartupFailed: model startup ceiling reached before readiness",
+   "requests_issued": 0,
+   "by_kind": {},
+   "cleanup": {
+    "pgid": 598,
+    "ownership": "registered",
+    "sigterm_sent": true,
+    "sigkill_sent": false,
+    "groups_absent": true,
+    "remaining_members": [],
+    "interrupted": [],
+    "error": null,
+    "exit_code": -15
+   }
+  },
+  {
+   "scenario": "wrong_served_model",
+   "behaviour": "wrong_model",
+   "expected": {
+    "expect_passed": false,
+    "expect_stage": "startup_probe_S2",
+    "behaviour": "wrong_model"
+   },
+   "checks": {
+    "passed_as_expected": true,
+    "stage_as_expected": true,
+    "groups_absent": true,
+    "gpu_never_queried": true,
+    "evidence_class_rehearsal": true,
+    "within_request_cap": true
+   },
+   "as_expected": true,
+   "failed_stage": "startup_probe_S2",
+   "error": "RequestFailed: S2: served model not listed (['some-other-model'])",
+   "requests_issued": 2,
+   "by_kind": {
+    "startup_probe": 2
+   },
+   "cleanup": {
+    "pgid": 640,
+    "ownership": "registered",
+    "sigterm_sent": true,
+    "sigkill_sent": false,
+    "groups_absent": true,
+    "remaining_members": [],
+    "interrupted": [],
+    "error": null,
+    "exit_code": -15
+   }
+  },
+  {
+   "scenario": "request_timeout",
+   "behaviour": "slow_completion",
+   "expected": {
+    "expect_passed": false,
+    "expect_stage": "startup_probe_S3",
+    "behaviour": "slow_completion"
+   },
+   "checks": {
+    "passed_as_expected": true,
+    "stage_as_expected": true,
+    "groups_absent": true,
+    "gpu_never_queried": true,
+    "evidence_class_rehearsal": true,
+    "within_request_cap": true
+   },
+   "as_expected": true,
+   "failed_stage": "startup_probe_S3",
+   "error": "RequestFailed: S3: RequestFailed: deadline exceeded (RemoteDisconnected: Remote end closed connection without response)",
+   "requests_issued": 3,
+   "by_kind": {
+    "startup_probe": 3
+   },
+   "cleanup": {
+    "pgid": 684,
+    "ownership": "registered",
+    "sigterm_sent": true,
+    "sigkill_sent": false,
+    "groups_absent": true,
+    "remaining_members": [],
+    "interrupted": [],
+    "error": null,
+    "exit_code": -15
+   }
+  },
+  {
+   "scenario": "not_idle_after_cancel",
+   "behaviour": "stay_busy",
+   "expected": {
+    "expect_passed": false,
+    "expect_stage": "cancellation_C2_idle",
+    "behaviour": "stay_busy"
+   },
+   "checks": {
+    "passed_as_expected": true,
+    "stage_as_expected": true,
+    "groups_absent": true,
+    "gpu_never_queried": true,
+    "evidence_class_rehearsal": true,
+    "within_request_cap": true
+   },
+   "as_expected": true,
+   "failed_stage": "cancellation_C2_idle",
+   "error": "RequestFailed: C2: server not idle after cancellation: [{'running': 2, 'waiting': 0}, {'running': 1, 'waiting': 0}]",
+   "requests_issued": 10,
+   "by_kind": {
+    "startup_probe": 3,
+    "inference": 4,
+    "cancellation_probe": 3
+   },
+   "cleanup": {
+    "pgid": 730,
+    "ownership": "registered",
+    "sigterm_sent": true,
+    "sigkill_sent": false,
+    "groups_absent": true,
+    "remaining_members": [],
+    "interrupted": [],
+    "error": null,
+    "exit_code": -15
+   }
+  },
+  {
+   "scenario": "server_ignores_sigterm",
+   "behaviour": "ignore_sigterm",
+   "expected": {
+    "expect_passed": true,
+    "expect_stage": null,
+    "behaviour": "ignore_sigterm",
+    "expect_sigkill": true
+   },
+   "checks": {
+    "passed_as_expected": true,
+    "stage_as_expected": true,
+    "groups_absent": true,
+    "gpu_never_queried": true,
+    "evidence_class_rehearsal": true,
+    "within_request_cap": true,
+    "sigkill_needed_and_sent": true
+   },
+   "as_expected": true,
+   "failed_stage": null,
+   "error": null,
+   "requests_issued": 11,
+   "by_kind": {
+    "startup_probe": 3,
+    "inference": 4,
+    "cancellation_probe": 4
+   },
+   "cleanup": {
+    "pgid": 792,
+    "ownership": "registered",
+    "sigterm_sent": true,
+    "sigkill_sent": true,
+    "groups_absent": true,
+    "remaining_members": [],
+    "interrupted": [],
+    "error": null,
+    "exit_code": -9
+   }
+  },
+  {
+   "scenario": "child_ignores_sigterm",
+   "behaviour": "child_ignores_sigterm",
+   "expected": {
+    "expect_passed": true,
+    "expect_stage": null,
+    "behaviour": "child_ignores_sigterm",
+    "expect_sigkill": true
+   },
+   "checks": {
+    "passed_as_expected": true,
+    "stage_as_expected": true,
+    "groups_absent": true,
+    "gpu_never_queried": true,
+    "evidence_class_rehearsal": true,
+    "within_request_cap": true,
+    "sigkill_needed_and_sent": true
+   },
+   "as_expected": true,
+   "failed_stage": null,
+   "error": null,
+   "requests_issued": 11,
+   "by_kind": {
+    "startup_probe": 3,
+    "inference": 4,
+    "cancellation_probe": 4
+   },
+   "cleanup": {
+    "pgid": 854,
+    "ownership": "registered",
+    "sigterm_sent": true,
+    "sigkill_sent": true,
+    "groups_absent": true,
+    "remaining_members": [],
+    "interrupted": [],
+    "error": null,
+    "exit_code": -15
+   }
+  }
+ ],
+ "all_as_expected": true,
+ "source_state": "working tree before implementation commit; fresh-checkout validation follows separately"
+}

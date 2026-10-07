@@ -35,3 +35,16 @@ config/phase4_compute_ledger.lck
 .DS_Store
 .idea/
 .vscode/
+
+# Direct-publisher operational evidence and approvals may contain private facts.
+private/direct_publisher_smoke_v1/
+reports/direct_publisher_smoke_v1_account_attachment.json
+reports/direct_publisher_smoke_v1_use_permission.json
+reports/direct_publisher_smoke_v1_byte_verification.json
+reports/direct_publisher_smoke_v1_source_approval.json
+reports/direct_publisher_smoke_v1_compute_authorization.json
+reports/direct_publisher_smoke_v1_launch.json
+config/direct_publisher_smoke_v1_launch_claim.json
+certification/direct_publisher_smoke_v1/execution_lock.json
+certification/direct_publisher_smoke_v1/reservation.json
+notebooks/direct-publisher-smoke-v1-launch/
