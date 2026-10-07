@@ -1,0 +1,27 @@
+test_installation_timeout_descendant_is_reaped_before_cleanup_verified (__main__.main.<locals>.RetainedReproduction.test_installation_timeout_descendant_is_reaped_before_cleanup_verified) ... FAIL
+test_import_timeout_descendant_is_reaped_before_cleanup_verified (__main__.main.<locals>.RetainedReproduction.test_import_timeout_descendant_is_reaped_before_cleanup_verified) ... FAIL
+
+======================================================================
+FAIL: test_installation_timeout_descendant_is_reaped_before_cleanup_verified (__main__.main.<locals>.RetainedReproduction.test_installation_timeout_descendant_is_reaped_before_cleanup_verified)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/jjzzw/Desktop/AGI/.claude/worktrees/wheelhouse-audit/tests/test_direct_publisher_smoke_install_lifecycle.py", line 141, in test_installation_timeout_descendant_is_reaped_before_cleanup_verified
+    self.assert_reaped(result)
+  File "/mnt/c/Users/jjzzw/Desktop/AGI/.claude/worktrees/wheelhouse-audit/tests/test_direct_publisher_smoke_install_lifecycle.py", line 129, in assert_reaped
+    self.assertFalse(Path(f'/proc/{pid}').exists(), f'installation descendant {pid} remains')
+AssertionError: True is not false : installation descendant 410 remains
+
+======================================================================
+FAIL: test_import_timeout_descendant_is_reaped_before_cleanup_verified (__main__.main.<locals>.RetainedReproduction.test_import_timeout_descendant_is_reaped_before_cleanup_verified)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/jjzzw/Desktop/AGI/.claude/worktrees/wheelhouse-audit/tests/test_direct_publisher_smoke_install_lifecycle.py", line 147, in test_import_timeout_descendant_is_reaped_before_cleanup_verified
+    self.assert_reaped(result)
+  File "/mnt/c/Users/jjzzw/Desktop/AGI/.claude/worktrees/wheelhouse-audit/tests/test_direct_publisher_smoke_install_lifecycle.py", line 129, in assert_reaped
+    self.assertFalse(Path(f'/proc/{pid}').exists(), f'installation descendant {pid} remains')
+AssertionError: True is not false : installation descendant 415 remains
+
+----------------------------------------------------------------------
+Ran 2 tests in 6.074s
+
+FAILED (failures=2)

@@ -29,7 +29,7 @@
     "install.py": {
       "upstream_path": "certification/wheelhouse_r2_smoke_v1/install.py",
       "upstream_sha256": "6b274f84a96b9fe5267c66e1f6c7b8c0d2b8fa2a8cdde88e89190a980874c4bd",
-      "derived_sha256": "b4000a8d55b0ce6621f01b99c7b890c10c81f26259edc1c8538254895930b3df"
+      "derived_sha256": "0eb9fced64d4527a57030e2331c775c989057869616db4662143ebb4c9056fb5"
     },
     "launch.py": {
       "upstream_path": "certification/wheelhouse_r2_smoke_v1/launch.py",
@@ -54,15 +54,15 @@
     "run.py": {
       "upstream_path": "certification/wheelhouse_r2_smoke_v1/run.py",
       "upstream_sha256": "219caf965ad60b525ff8ddbee8415fa22d6562477a4c1c77c3b83d06bae75b6f",
-      "derived_sha256": "a9372c5839e28db18eebd095b6f57506e85be31d1fabcb3325a53087a9bb289f"
+      "derived_sha256": "84cd8bbf594d31a32945b944f5a917372690a36ac78d2d36cb2ad906a1c39701"
     },
     "server.py": {
       "upstream_path": "certification/wheelhouse_r2_smoke_v1/server.py",
       "upstream_sha256": "fbe746b8883b290c69ed2d830fb2b1b7224fc1540339b3e88837d527df1be77f",
-      "derived_sha256": "ff6ee45ccb038a60ec6576d68bfcb6c26638ffdc7eda6f2888bf63b52413f116"
+      "derived_sha256": "e3cbdf0949f21fc2edb6f8c781a55aaeacf3410aa4f5794e3ebe420f2bcee888"
     }
   },
-  "adaptation": "namespace, flat-mount integrity and trusted-lock installation, new evidence/authorization scope; startup ownership and final deadline logic retained",
+  "adaptation": "namespace, flat-mount integrity and trusted-lock installation, new evidence/authorization scope; startup ownership and final deadline logic retained; installation/import process groups, orphan adoption/reaping and aggregate cleanup receipts",
   "tests_and_tools": {
     "tests/test_direct_publisher_smoke_lifecycle.py": {
       "upstream_path": "tests/test_wheelhouse_r2_smoke_lifecycle.py",
@@ -79,5 +79,10 @@
       "upstream_sha256": "37f594359d3174cf309343378538233c28445763a49ffd9c9fc1759c5f9c7009",
       "derived_sha256": "a1e93bf414aeae41ed051c0b822ec8672371628387f375bea96b1e3f51d05af7"
     }
+  },
+  "additional_authored_checks": {
+    "tests/test_direct_publisher_smoke_install_lifecycle.py": "8f7e8d133b717cb9b1fba47eb86ed718741048456bfeefca67841bc020e8c223",
+    "scripts/reproduce_direct_publisher_install_timeout.py": "1b08f262647a77e96b72cdb82de3343256c03b185453a69eb3024b400cec519f",
+    "scripts/run_direct_publisher_smoke_checks.py": "acf263e4ee9663aee9af2657b811fa54b9f264610710e49b0ed275ee5f834b32"
   }
 }

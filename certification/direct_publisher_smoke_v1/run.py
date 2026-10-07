@@ -14,7 +14,7 @@ from certification.direct_publisher_smoke_v1 import host
 from certification.direct_publisher_smoke_v1.accounting import Clock, Ledger
 from certification.direct_publisher_smoke_v1.client import Client, RequestFailed
 from certification.direct_publisher_smoke_v1.evidence import Evidence
-from certification.direct_publisher_smoke_v1.install import install, verify_bundle
+from certification.direct_publisher_smoke_v1.install import InstallationProcesses, install, verify_bundle
 from certification.direct_publisher_smoke_v1.server import ModelServer, argv_for
 
 NOT_ESTABLISHED = ['solving ability or task performance', 'Phase 4 completion', 'throughput or capacity limits',
@@ -43,6 +43,7 @@ def run(mode, protocol, output, started, *, bundle, workdir, gpu_query=None, mod
     if gpu_query is None:
         result['stages']['gpu'] = 'not_exercised (no GPU in a CPU rehearsal)'
     server = gpu = None
+    installation = InstallationProcesses(server_cfg['terminate_grace_seconds'], server_cfg['kill_grace_seconds'])
     stage_name = None
 
     def stage(name, action):
@@ -73,7 +74,8 @@ def run(mode, protocol, output, started, *, bundle, workdir, gpu_query=None, mod
         stage('bundle_integrity', lambda: verify_bundle(bundle, protocol['dataset'], protocol['bundle'],
                                                         within_install, inputs=trusted_inputs))
         installed = stage('installation', lambda: install(bundle, workdir / 'venv', runtime, install_deadline,
-                                                          workdir / 'install.log', python=python, requirements=Path(trusted_inputs) / 'trusted_requirements.lock' if trusted_inputs else None))
+                                                          workdir / 'install.log', python=python, processes=installation,
+                                                          requirements=Path(trusted_inputs) / 'trusted_requirements.lock' if trusted_inputs else None))
         if gpu_query is not None:
             gpu = stage('gpu', lambda: host.gpu_facts(runtime, gpu_query))
             telemetry('before_server')
@@ -150,21 +152,27 @@ def run(mode, protocol, output, started, *, bundle, workdir, gpu_query=None, mod
         stopped = server.stop(stop_deadline, server_cfg['terminate_grace_seconds'], server_cfg['kill_grace_seconds']) \
             if server else {'groups_absent': True, 'ownership': 'never_spawned', 'note': 'server never started'}
         clock.record('server_cleanup', begin, 'passed' if stopped['groups_absent'] else 'failed')
-        result['cleanup'] = {'server': stopped}
+        begin = now()
+        installed_cleanup = installation.stop(stop_deadline)
+        clock.record('installation_cleanup', begin, 'passed' if installed_cleanup['groups_absent']
+                     and not installed_cleanup['error'] else 'failed')
+        groups_absent = stopped['groups_absent'] and installed_cleanup['groups_absent']
+        result['cleanup'] = {'server': stopped, 'installation': installed_cleanup, 'groups_absent': groups_absent}
         if gpu is not None:
             begin = now()
-            result['cleanup']['gpu'] = host.gpu_cleanup(gpu['uuid'], stopped['groups_absent'], gpu_query)
-            cleaned = result['cleanup']['gpu']['gpu_cleanup_verified']
+            result['cleanup']['gpu'] = host.gpu_cleanup(gpu['uuid'], groups_absent, gpu_query)
+            cleaned = groups_absent and result['cleanup']['gpu']['gpu_cleanup_verified']
             clock.record('gpu_cleanup', begin, 'passed' if cleaned else 'failed')
         else:
             result['cleanup']['gpu'] = 'not_exercised (no GPU in a CPU rehearsal)'
-            cleaned = stopped['groups_absent']
-        if stopped.get('interrupted'):
-            cleaned = False if not stopped['groups_absent'] else cleaned
-            result['cleanup_interrupted'] = stopped['interrupted']
+            cleaned = groups_absent
+        cleaned = cleaned and installed_cleanup['error'] is None
+        interruptions = stopped.get('interrupted', []) + installed_cleanup['interrupted']
+        if interruptions:
+            result['cleanup_interrupted'] = interruptions
         result['cleanup_verified'] = cleaned
         eligible = (bool(result.get('completed_plan')) and cleaned and result['error'] is None
-                    and not stopped.get('interrupted'))
+                    and not interruptions)
         if result['error'] is None and not cleaned:
             result['failed_stage'], result['error'] = 'cleanup', 'process or GPU cleanup not verified'
         result['ledger'] = ledger.summary()

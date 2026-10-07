@@ -12,7 +12,9 @@ Offline installation uses the verified flat mount as `--find-links` and the embe
 
 Model/runtime, server command, sampling and the request plan retain the pinned smoke settings: Qwen3-VL-30B-A3B-Instruct-FP8, one RTX PRO 6000, CPython 3.12, torch 2.10.0+cu128, vLLM 0.19.0, transformers 4.57.6 and numpy 2.2.6. These are proposed compatibility requirements, not evidence that the current Kaggle image or GPU has been verified. A mismatch fails without upgrading packages.
 
-The protected process creation through PID/process-group registration, uncertain-ownership cleanup, request cap/deadlines, cancellation probes and cleanup escalation are retained. An explicit final lifecycle deadline covers GPU cleanup, retained logs, temporary environment/source removal and evidence finalization/publication. An overrun always fails; emergency termination and failure-evidence retention remain possible afterwards.
+Venv creation, pip installation, pip check and import checks now each own a registered process group, in addition to the model server. The controller retains each owner before spawning, defers handled shutdown signals through PID/group registration, and treats uncertain ownership as unverified. Commands terminate the entire group on timeout/interruption and also check for children left behind by a successfully exited parent. Linux subreaper mode adopts orphaned descendants; scoped waits reap those children without consuming unrelated child statuses. The previous subreaper setting is restored after lifecycle cleanup. Import output uses a bounded log tail rather than a pipe that a surviving child could hold open.
+
+Cleanup receipts retain every installation/import group and the model-server group. Overall process absence and GPU cleanup depend on all those groups being absent. Request cap/deadlines, cancellation probes and cleanup escalation are retained. An explicit final lifecycle deadline covers installation-group cleanup, GPU cleanup, retained logs, temporary environment/source removal and evidence finalization/publication. An overrun always fails; emergency termination and failure-evidence retention remain possible afterwards.
 
 ## Gates before live effects
 
@@ -33,16 +35,16 @@ Proposed limits: 3,600 authorized seconds, 3,420 internal seconds, admission cut
 ## CPU review and validation
 
 ```powershell
-python -m unittest tests.test_direct_publisher_smoke tests.test_direct_publisher_smoke_lifecycle tests.test_direct_publisher_smoke_preflight -v
+python -m unittest tests.test_direct_publisher_smoke tests.test_direct_publisher_smoke_lifecycle tests.test_direct_publisher_smoke_preflight tests.test_direct_publisher_smoke_install_lifecycle -v
 python scripts/direct_publisher_smoke_rehearsal.py
-python scripts/direct_publisher_smoke_package.py review-build --revision 1
-python scripts/direct_publisher_smoke_package.py review-check --revision 1
+python scripts/direct_publisher_smoke_package.py review-check --revision 2
+python scripts/run_direct_publisher_smoke_checks.py --out /tmp/direct-publisher-checks.json --review-revision 2
 python scripts/direct_publisher_smoke_package.py launch-build
 ```
 
-The last command must refuse in this checkout; it cannot submit a notebook. The review snapshot embeds every runtime source and trusted input, has GPU/TPU/internet disabled and stops at the live gate. Build output directories are created exclusively so earlier review snapshots are not overwritten.
+The last command must refuse in this checkout; it cannot submit a notebook. Public runtime review r2 replaces r1 for the changed source; r1 is preserved as historical evidence. The review snapshot embeds every runtime source and trusted input, has GPU/TPU/internet disabled and stops at the live gate. Build output directories are created exclusively so earlier review snapshots are not overwritten. A privately bound operational derivative also needs a successor review; earlier source approvals cannot cover the changed hashes.
 
-CPU rehearsals install tiny fixture wheels into real temporary virtual environments and exercise a scripted local server. Their receipts always state that they are not GPU compatibility evidence. The production mounted wheels and actual model are never used by these rehearsals. Startup/lifecycle tests retain both original reproductions and the additional boundary/overrun cases.
+CPU rehearsals install tiny fixture wheels into real temporary virtual environments and exercise a scripted local server. Their receipts always state that they are not GPU compatibility evidence. The production mounted wheels and actual model are never used by these rehearsals. Startup/lifecycle tests retain both original reproductions and the additional boundary/overrun cases. The installation and import descendant-timeout regressions fail on clean `500caa6`, with the false cleanup claim and explicit fixture cleanup retained in [install_timeout_baseline_500caa6.json](install_timeout_baseline_500caa6.json). `scripts/reproduce_direct_publisher_install_timeout.py` runs those same tests against a supplied source checkout.
 
 ## Private operational handoff
 

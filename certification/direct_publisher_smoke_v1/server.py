@@ -61,14 +61,17 @@ def group_members(pgid, proc=Path('/proc')):
 
 
 class ModelServer:
-    def __init__(self, argv, env, log, host, port):
+    def __init__(self, argv, env, log, host, port, *, inherit_env=True):
         self.argv, self.env, self.log_path, self.host, self.port = argv, env, Path(log), host, port
+        self.inherit_env = inherit_env
         self.process = self.pgid = None
         self.ownership = 'never_spawned'
         self.events = []
+        self.reaped_descendants = []
 
     def start(self):
-        env = {k: v for k, v in os.environ.items() if k not in ('PYTHONPATH', 'PYTHONHOME', 'VIRTUAL_ENV')}
+        env = {k: v for k, v in os.environ.items() if k not in ('PYTHONPATH', 'PYTHONHOME', 'VIRTUAL_ENV')} \
+            if self.inherit_env else {}
         env.update(self.env)
         self._log = self.log_path.open('ab')
         with defer_startup_signals():
@@ -153,7 +156,7 @@ class ModelServer:
                         receipt['interrupted'].append(f'sigkill phase: {type(exc).__name__}: {str(exc)[:120]}')
         finally:
             try:
-                self.process.poll()
+                self._reap()
                 remaining = group_members(self.pgid)
                 receipt['remaining_members'] = remaining
                 receipt['groups_absent'] = (self.ownership == 'registered' and not remaining
@@ -161,6 +164,7 @@ class ModelServer:
                 if self.ownership != 'registered':
                     receipt['error'] = 'spawn ownership uncertain; emergency termination attempted'
                 receipt['exit_code'] = self.process.returncode
+                receipt['reaped_descendants'] = sorted(self.reaped_descendants)
             except BaseException as exc:  # noqa: B036
                 receipt['error'] = f'{type(exc).__name__}: {str(exc)[:256]}'
             try:
@@ -172,7 +176,7 @@ class ModelServer:
         return receipt
 
     def _group_alive(self):
-        self.process.poll()  # reap the leader if it exited
+        self._reap()
         try:
             os.killpg(self.pgid, 0)
         except ProcessLookupError:
@@ -180,3 +184,17 @@ class ModelServer:
         except PermissionError:
             return True
         return bool(group_members(self.pgid))
+
+    def _reap(self):
+        # Popen owns the leader's wait status. Only after it has been reaped may we
+        # wait for adopted descendants, and only within this owned process group.
+        if self.process.poll() is None or self.pgid is None:
+            return
+        while True:
+            try:
+                pid, _ = os.waitpid(-self.pgid, os.WNOHANG)
+            except ChildProcessError:
+                return
+            if not pid:
+                return
+            self.reaped_descendants.append(pid)

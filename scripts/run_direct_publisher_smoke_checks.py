@@ -19,7 +19,7 @@ from certification.direct_publisher_smoke_v1 import notebook as N
 from certification.direct_publisher_smoke_v1.binding import sha256
 
 SUITES = ['tests.test_direct_publisher_smoke', 'tests.test_direct_publisher_smoke_lifecycle',
-          'tests.test_direct_publisher_smoke_preflight']
+          'tests.test_direct_publisher_smoke_preflight', 'tests.test_direct_publisher_smoke_install_lifecycle']
 
 
 class Recorder(unittest.TextTestResult):
@@ -59,13 +59,14 @@ def git(*args):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out', required=True, type=Path)
+    parser.add_argument('--review-revision', type=int, default=2)
     args = parser.parse_args()
     revision, clean = git('rev-parse', 'HEAD'), not git('status', '--porcelain')
     suite = unittest.defaultTestLoader.loadTestsFromNames(SUITES)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with args.out.with_suffix('.log').open('w', encoding='utf-8') as stream:
         result = unittest.TextTestRunner(stream=stream, verbosity=2, resultclass=Recorder).run(suite)
-    frozen = ROOT / 'notebooks/direct-publisher-smoke-v1-review-r1'
+    frozen = ROOT / f'notebooks/direct-publisher-smoke-v1-review-r{args.review_revision}'
     with tempfile.TemporaryDirectory(prefix='direct-publisher-review-reproduce-') as folder:
         reproduced = Path(folder) / 'snapshot'
         N.build_review(reproduced, root=ROOT)
@@ -78,6 +79,7 @@ def main():
                           'errors': len(result.errors), 'skipped': len(result.skipped)},
               'tests': result.records, 'review_snapshot_reproduces': matches,
               'review_lock_sha256': sha256(frozen / 'review-source-lock.json'),
+              'review_revision': args.review_revision,
               'passed': result.wasSuccessful() and all(matches.values()),
               'gpu_compatibility_evidence': False, 'launch_authorized': False}
     args.out.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')

@@ -1,0 +1,72 @@
+{
+  "schema": "direct_publisher_install_timeout_reproduction_v1",
+  "source_revision": "500caa6b54644f901c4f50a8a51af9f1f45e15ea",
+  "working_tree_clean_before_checks": true,
+  "python": "3.12.3",
+  "regression_fixture_sha256": "8f7e8d133b717cb9b1fba47eb86ed718741048456bfeefca67841bc020e8c223",
+  "controller_install_sha256": "b4000a8d55b0ce6621f01b99c7b890c10c81f26259edc1c8538254895930b3df",
+  "evidence_class": "scripted_cpu_regressions",
+  "expected": "vulnerable",
+  "tests_run": 2,
+  "failures": 2,
+  "errors": 0,
+  "observations": [
+    {
+      "test": "test_installation_timeout_descendant_is_reaped_before_cleanup_verified",
+      "passed": false,
+      "failed_stage": "installation",
+      "error": "InstallFailed: offline install: installation deadline reached",
+      "cleanup_verified": true,
+      "cleanup": {
+        "environment": {
+          "details": null,
+          "removed": null,
+          "scope": "caller-retained rehearsal work directory"
+        },
+        "gpu": "not_exercised (no GPU in a CPU rehearsal)",
+        "server": {
+          "groups_absent": true,
+          "note": "server never started",
+          "ownership": "never_spawned"
+        }
+      },
+      "fixture_pids": [
+        410,
+        409
+      ],
+      "pids_present_when_cleanup_reported": [
+        410
+      ]
+    },
+    {
+      "test": "test_import_timeout_descendant_is_reaped_before_cleanup_verified",
+      "passed": false,
+      "failed_stage": "installation",
+      "error": "InstallFailed: package checks: installation deadline reached",
+      "cleanup_verified": true,
+      "cleanup": {
+        "environment": {
+          "details": null,
+          "removed": null,
+          "scope": "caller-retained rehearsal work directory"
+        },
+        "gpu": "not_exercised (no GPU in a CPU rehearsal)",
+        "server": {
+          "groups_absent": true,
+          "note": "server never started",
+          "ownership": "never_spawned"
+        }
+      },
+      "fixture_pids": [
+        415,
+        414
+      ],
+      "pids_present_when_cleanup_reported": [
+        415
+      ]
+    }
+  ],
+  "fixture_pids_present_after_teardown": [],
+  "as_expected": true,
+  "gpu_launched": false
+}

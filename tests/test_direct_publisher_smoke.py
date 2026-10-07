@@ -249,8 +249,10 @@ class AdapterTests(unittest.TestCase):
         calls = []
         report = {'versions': {'fixturea': '1.0'}, 'imports': {'fixturea': 'fixture'}}
         process = type('Process', (), {'returncode': 0, 'stdout': json.dumps(report), 'stderr': ''})()
-        with patch.object(I, '_run', side_effect=lambda argv, *args: calls.append(argv)), \
-             patch.object(I.subprocess, 'run', return_value=process):
+        def command(argv, *args):
+            calls.append(argv)
+            return process
+        with patch.object(I, '_run', side_effect=command):
             I.install(self.mount, self.root / 'venv', {'packages': {'fixturea': '1.0'}, 'imports': ['fixturea']},
                       time.monotonic() + 10, self.root / 'install.log',
                       requirements=self.inputs / 'trusted_requirements.lock')
