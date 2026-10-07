@@ -1,0 +1,35 @@
+FFF
+======================================================================
+FAIL: test_distinct_kernel_slugs_have_distinct_launch_titles (tests.test_direct_publisher_smoke.GateTests.test_distinct_kernel_slugs_have_distinct_launch_titles) (slug='arc3-direct-publisher-smoke-v1')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/direct-title-baseline-cm2cwpo_/tests/test_direct_publisher_smoke.py", line 128, in test_distinct_kernel_slugs_have_distinct_launch_titles
+    self.assertEqual(metadata['title'], slug)
+AssertionError: 'ARC3 Direct publisher Smoke V1' != 'arc3-direct-publisher-smoke-v1'
+- ARC3 Direct publisher Smoke V1
++ arc3-direct-publisher-smoke-v1
+
+
+======================================================================
+FAIL: test_distinct_kernel_slugs_have_distinct_launch_titles (tests.test_direct_publisher_smoke.GateTests.test_distinct_kernel_slugs_have_distinct_launch_titles) (slug='arc3-direct-publisher-smoke-v2')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/direct-title-baseline-cm2cwpo_/tests/test_direct_publisher_smoke.py", line 128, in test_distinct_kernel_slugs_have_distinct_launch_titles
+    self.assertEqual(metadata['title'], slug)
+AssertionError: 'ARC3 Direct publisher Smoke V1' != 'arc3-direct-publisher-smoke-v2'
+- ARC3 Direct publisher Smoke V1
++ arc3-direct-publisher-smoke-v2
+
+
+======================================================================
+FAIL: test_distinct_kernel_slugs_have_distinct_launch_titles (tests.test_direct_publisher_smoke.GateTests.test_distinct_kernel_slugs_have_distinct_launch_titles)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/direct-title-baseline-cm2cwpo_/tests/test_direct_publisher_smoke.py", line 130, in test_distinct_kernel_slugs_have_distinct_launch_titles
+    self.assertEqual(len(set(titles)), 2)
+AssertionError: 0 != 2
+
+----------------------------------------------------------------------
+Ran 1 test in 0.184s
+
+FAILED (failures=3)

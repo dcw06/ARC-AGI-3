@@ -25,12 +25,12 @@ def put(root, name, value):
 
 class FixtureRoot:
     """Everything here is fabricated in a temporary test root, never a real approval."""
-    def __init__(self, test):
+    def __init__(self, test, kernel_id='fixture/direct-publisher-smoke'):
         self.root = Path(tempfile.mkdtemp(prefix='direct-publisher-gate-fixture-'))
         test.addCleanup(shutil.rmtree, self.root)
         shutil.copytree(ROOT / B.PACKAGE, self.root / B.PACKAGE, ignore=shutil.ignore_patterns('__pycache__'))
         self.protocol = copy.deepcopy(B.load_protocol())
-        self.protocol['kernel_id'] = 'fixture/direct-publisher-smoke'
+        self.protocol['kernel_id'] = kernel_id
         put(self.root, B.PROTOCOL, self.protocol)
         N.build_review(self.root / 'notebooks/direct-publisher-smoke-v1-review-r1', root=self.root)
         self.lock = B.review_lock(self.root)
@@ -116,6 +116,18 @@ class GateTests(unittest.TestCase):
         self.assertEqual(metadata.get('docker_image_pinning_type'), 'original')
         package_lock = json.loads(artifacts['launch-package-lock.json'])
         self.assertTrue(set(B.evidence_names(fixture.root)) <= set(package_lock['sidecars']))
+
+    def test_distinct_kernel_slugs_have_distinct_launch_titles(self):
+        titles = []
+        for slug in ('arc3-direct-publisher-smoke-v1', 'arc3-direct-publisher-smoke-v2'):
+            with self.subTest(slug=slug):
+                fixture = FixtureRoot(self, kernel_id='fixture/' + slug)
+                artifacts = N.launch_artifacts(fixture.root)
+                metadata = json.loads(artifacts['kernel-metadata.json'])
+                self.assertEqual(metadata['id'], 'fixture/' + slug)
+                self.assertEqual(metadata['title'], slug)
+                titles.append(metadata['title'])
+        self.assertEqual(len(set(titles)), 2)
 
     def test_missing_sidecars_all_refuse(self):
         for name in (B.SOURCE, B.COMPUTE, B.ACCOUNT, B.PERMISSION, B.BYTES, B.EXECUTION, B.RESERVATION, B.CLAIM):

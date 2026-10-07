@@ -146,7 +146,7 @@ def launch_artifacts(root=ROOT):
         raise ValueError('review metadata')
     if any(metadata.get(key) != value for key, value in image_metadata(protocol).items()):
         raise ValueError('review image pin differs from the protocol')
-    metadata.update(id=protocol['kernel_id'], title='ARC3 Direct publisher Smoke V1', enable_gpu=True,
+    metadata.update(id=protocol['kernel_id'], title=protocol['kernel_id'].split('/')[1], enable_gpu=True,
                     machine_shape='NvidiaRtxPro6000', dataset_sources=[protocol['dataset']['ref']])
     artifacts = {'profile.ipynb': encode(notebook), 'kernel-metadata.json': encode(metadata)}
     if len(artifacts['profile.ipynb']) >= SIZE_GUARD:

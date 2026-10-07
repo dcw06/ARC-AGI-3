@@ -1,0 +1,11 @@
+# Notebook title conflict and successor packaging repair
+
+One submission of the image-pinned package returned HTTP 409 Conflict from Kaggle's SaveKernel endpoint. The client warned that the title did not resolve to the requested notebook ID. The launch builder used a fixed `v1` title even when the reviewed protocol selected a distinct `v2` notebook ID. The [official client implementation](https://github.com/Kaggle/kaggle-api/blob/main/src/kaggle/api/kaggle_api_extended.py) sends both the slug and new title, and warns when the title's slug differs.
+
+Read-only authenticated reconciliation found the requested successor absent from a complete personal notebook listing; the original notebook's saved identity, private flag and source were unchanged. No job-status polling or repeated submission was performed. The detailed server error body was not retained, so the title collision is a supported explanation rather than a confirmed server-side reason. A 409 is not evidence that the image pin was accepted or provisioned.
+
+The launch title now equals the exact protocol-selected notebook slug. The regression builds fully gated fixture launch packages for two distinct slugs and requires the correct, distinct titles. This avoids a hard-coded title and the client mismatch warning for this package. GPU shape, immutable image pin, all 174 wheel identities and hashes, model binding, permissions and compute limits are unchanged.
+
+The attempted submission remains `submission_uncertain` and spent under the existing once-only transport policy. The repair preserves that receipt and all consumed authorization records. It does not authorize a replacement attempt or claim a successful GPU launch. Public review r4 and a separate private successor proposal contain the repaired code; older snapshots and submitted packages remain preserved.
+
+Validation: [65 focused CPU tests](title_cpu_checks.json) pass with no failures, errors or skips; public review r4 reproduces byte-for-byte. The [title regression fails on 956d5b4](title_baseline_956d5b4.json) with three assertion failures and no errors. The [GPU-disabled public review check](../direct_publisher_smoke_review_check_r4.json) refuses locally before installation/model/GPU activity and leaves no temporary files. Tests ran on the repaired working tree; no fresh-clone or provider-execution result is claimed.
