@@ -20,7 +20,7 @@ from certification.direct_publisher_smoke_v1.binding import sha256
 
 SUITES = ['tests.test_direct_publisher_smoke', 'tests.test_direct_publisher_smoke_lifecycle',
           'tests.test_direct_publisher_smoke_preflight', 'tests.test_direct_publisher_smoke_install_lifecycle',
-          'tests.test_direct_publisher_smoke_bootstrap']
+          'tests.test_direct_publisher_smoke_bootstrap', 'tests.test_direct_publisher_smoke_runtime_versions']
 
 
 class Recorder(unittest.TextTestResult):

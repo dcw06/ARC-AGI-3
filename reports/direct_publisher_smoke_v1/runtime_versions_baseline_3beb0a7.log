@@ -1,0 +1,40 @@
+.FF..
+======================================================================
+FAIL: test_protocol_distribution_versions_match_trusted_installation_pins (tests.test_direct_publisher_smoke_runtime_versions.RuntimeVersionTests.test_protocol_distribution_versions_match_trusted_installation_pins)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/direct-runtime-baseline-_rvolcuy/tests/test_direct_publisher_smoke_runtime_versions.py", line 29, in test_protocol_distribution_versions_match_trusted_installation_pins
+    self.assertEqual(version, pins[normalize(name)][0], name)
+AssertionError: '2.10.0+cu128' != '2.10.0'
+- 2.10.0+cu128
++ 2.10.0
+ : torch
+
+======================================================================
+FAIL: test_trusted_torch_metadata_and_cuda_build_pass_independent_checks (tests.test_direct_publisher_smoke_runtime_versions.RuntimeVersionTests.test_trusted_torch_metadata_and_cuda_build_pass_independent_checks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/direct-runtime-baseline-_rvolcuy/tests/test_direct_publisher_smoke_runtime_versions.py", line 33, in test_trusted_torch_metadata_and_cuda_build_pass_independent_checks
+    report = self.checked_install()
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/direct-runtime-baseline-_rvolcuy/tests/test_direct_publisher_smoke_runtime_versions.py", line 23, in checked_install
+    return I.install(Path(folder) / 'bundle', Path(folder) / 'venv', self.runtime,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/direct-runtime-baseline-_rvolcuy/certification/direct_publisher_smoke_v1/install.py", line 185, in install
+    return _install(bundle, venv, runtime, deadline, log, python, env, requirements, processes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/direct-runtime-baseline-_rvolcuy/certification/direct_publisher_smoke_v1/install.py", line 213, in _install
+    raise InstallFailed(f'version mismatch (no upgrade attempted): {mismatched}')
+certification.direct_publisher_smoke_v1.install.InstallFailed: version mismatch (no upgrade attempted): {'torch': '2.10.0'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/tmp/direct-runtime-baseline-_rvolcuy/tests/test_direct_publisher_smoke_runtime_versions.py", line 35, in test_trusted_torch_metadata_and_cuda_build_pass_independent_checks
+    self.fail(f'trusted distribution metadata and CUDA build were rejected: {exc}')
+AssertionError: trusted distribution metadata and CUDA build were rejected: version mismatch (no upgrade attempted): {'torch': '2.10.0'}
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.006s
+
+FAILED (failures=2)

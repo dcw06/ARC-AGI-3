@@ -1,0 +1,9 @@
+# Exact Torch distribution version correction
+
+The trusted installation lock and wheel inventory pin `torch==2.10.0`. The runtime protocol incorrectly expected the distribution metadata to contain `2.10.0+cu128`. A retained installation result reported distribution version `2.10.0` and `torch.version.cuda == "12.8"` after successfully installing all 174 hash-verified wheels, passing pip check, and importing the four runtime packages. The attempt failed at the exact version guard before GPU identification or model requests.
+
+The successor protocol expects distribution version `2.10.0`, while retaining the independent exact CUDA build check for `12.8`. No version normalization, package replacement, checksum change, licence-scope expansion, GPU substitution, limit increase or retry is introduced. The historical intake proposal remains preserved; the current runtime protocol supplies the corrected distribution-version expectation.
+
+Five CPU-only checks cover protocol consistency with the trusted installation pins, acceptance of the recorded distribution/CUDA pair, and refusal of a different version, unexpected local-version suffix, or different CUDA build. Overlaying this test file onto `3beb0a7` produces two assertion failures and no errors. The focused suite and public GPU-disabled review r6 are recorded in `runtime_version_cpu_checks.json`; baseline results are retained separately.
+
+GPU allocation and compatibility remain unverified. A saved `NvidiaRtxPro6000` request is configuration evidence only. The live hardware guard requires exactly one GPU whose reported name contains `RTX PRO 6000` before model serving or requests. Prior consumed attempts remain spent; any successor requires its own bound authorization and reservation. Account-specific RTX availability is not established by general GPU quota or the documented accelerator identifier.
