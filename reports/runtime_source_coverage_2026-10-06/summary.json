@@ -629,7 +629,16 @@
     "requirements_lock_downloaded": "bb3e30ac5e327456e3915b807da960203c20bc1aa352204e39f66d5618a6bcb0",
     "requirements_lock_exact_match": false,
     "bundle_manifest_present_in_listing": false,
-    "note": "Do not change bindings to claim this is the reviewed R2 bundle; external-source use needs a separately validated package."
+    "note": "Do not change bindings to claim this is the reviewed R2 bundle; external-source use needs a separately validated package.",
+    "requirements_lock_content_comparison": {
+      "trusted_requirements_path": "reports/wheelhouse_r2_offline_install_evidence/install-check-hacm1z70/requirements.lock",
+      "trusted_package_version_pin_count": 174,
+      "publisher_package_version_pin_count": 174,
+      "package_version_pins_identical": true,
+      "trusted_embedded_hash_count": 174,
+      "publisher_embedded_hash_count": 0,
+      "meaning": "File-hash mismatch reflects missing embedded wheel hashes, not different package/version pins. Preserve the trusted hash-pinned installation lock."
+    }
   },
   "limitations": [
     "Only metadata and three small source files downloaded; none of the remote wheel bytes hashed.",
