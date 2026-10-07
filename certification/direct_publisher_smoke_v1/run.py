@@ -164,7 +164,8 @@ def run(mode, protocol, output, started, *, bundle, workdir, gpu_query=None, mod
             cleaned = groups_absent and result['cleanup']['gpu']['gpu_cleanup_verified']
             clock.record('gpu_cleanup', begin, 'passed' if cleaned else 'failed')
         else:
-            result['cleanup']['gpu'] = 'not_exercised (no GPU in a CPU rehearsal)'
+            result['cleanup']['gpu'] = ('not_exercised (GPU verification stage not reached)' if mode == 'live'
+                                        else 'not_exercised (no GPU in a CPU rehearsal)')
             cleaned = groups_absent
         cleaned = cleaned and installed_cleanup['error'] is None
         interruptions = stopped.get('interrupted', []) + installed_cleanup['interrupted']

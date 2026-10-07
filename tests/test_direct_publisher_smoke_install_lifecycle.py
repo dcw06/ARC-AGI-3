@@ -22,6 +22,9 @@ from certification.direct_publisher_smoke_v1.binding import ROOT, load_protocol
 
 WRAPPER = '''import json, os, pathlib, signal, sys, time
 args = sys.argv[1:]
+if args[:2] == ["-m", "pip"] and "--python" in args:
+    index = args.index("--python")
+    args = args[:index] + args[index + 2:]
 phase = ("venv creation" if args[:2] == ["-m", "venv"] else
          "offline install" if args[:3] == ["-m", "pip", "install"] else
          "pip check" if args[:3] == ["-m", "pip", "check"] else "package checks")
@@ -97,7 +100,8 @@ class InstallationDescendants(unittest.TestCase):
 
         def wait(process, *args, **kwargs):
             nonlocal interrupted
-            selected = ((phase == 'offline install' and process.args[1:4] == ['-m', 'pip', 'install'])
+            selected = ((phase == 'offline install' and process.args[1:3] == ['-m', 'pip']
+                         and 'install' in process.args)
                         or (phase == 'package checks' and process.args[1] == '-I'))
             if interruption and selected and not interrupted:
                 until = time.monotonic() + 3

@@ -1,0 +1,57 @@
+FFF
+======================================================================
+FAIL: test_hash_mismatch_still_fails_without_ensurepip (tests.test_direct_publisher_smoke_bootstrap.BootstrapWithoutEnsurepip.test_hash_mismatch_still_fails_without_ensurepip)
+----------------------------------------------------------------------
+certification.direct_publisher_smoke_v1.install.InstallFailed: venv creation exited 1: ensurepip unavailable in this runtime image
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/tmp/direct-bootstrap-baseline-tn2xtu82/tests/test_direct_publisher_smoke_bootstrap.py", line 64, in test_hash_mismatch_still_fails_without_ensurepip
+    with self.assertRaisesRegex(I.InstallFailed, 'offline install exited'):
+AssertionError: "offline install exited" does not match "venv creation exited 1: ensurepip unavailable in this runtime image"
+
+======================================================================
+FAIL: test_live_install_failure_does_not_claim_cpu_only_gpu_cleanup (tests.test_direct_publisher_smoke_bootstrap.BootstrapWithoutEnsurepip.test_live_install_failure_does_not_claim_cpu_only_gpu_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/direct-bootstrap-baseline-tn2xtu82/tests/test_direct_publisher_smoke_bootstrap.py", line 80, in test_live_install_failure_does_not_claim_cpu_only_gpu_cleanup
+    self.assertEqual(result['cleanup']['gpu'], 'not_exercised (GPU verification stage not reached)')
+AssertionError: 'not_exercised (no GPU in a CPU rehearsal)' != 'not_exercised (GPU verification stage not reached)'
+- not_exercised (no GPU in a CPU rehearsal)
++ not_exercised (GPU verification stage not reached)
+
+
+======================================================================
+FAIL: test_offline_hash_pinned_install_without_ensurepip (tests.test_direct_publisher_smoke_bootstrap.BootstrapWithoutEnsurepip.test_offline_hash_pinned_install_without_ensurepip)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/direct-bootstrap-baseline-tn2xtu82/tests/test_direct_publisher_smoke_bootstrap.py", line 47, in test_offline_hash_pinned_install_without_ensurepip
+    result = self.install()
+             ^^^^^^^^^^^^^^
+  File "/tmp/direct-bootstrap-baseline-tn2xtu82/tests/test_direct_publisher_smoke_bootstrap.py", line 41, in install
+    return I.install(self.mount, self.base / 'venv', self.runtime, time.monotonic() + 30,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/direct-bootstrap-baseline-tn2xtu82/certification/direct_publisher_smoke_v1/install.py", line 185, in install
+    return _install(bundle, venv, runtime, deadline, log, python, env, requirements, processes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/direct-bootstrap-baseline-tn2xtu82/certification/direct_publisher_smoke_v1/install.py", line 196, in _install
+    _run([python, '-m', 'venv', str(venv)], log, deadline, env, 'venv creation', processes)
+  File "/tmp/direct-bootstrap-baseline-tn2xtu82/certification/direct_publisher_smoke_v1/install.py", line 150, in _run
+    return processes.command(argv, log, deadline, env, what)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/direct-bootstrap-baseline-tn2xtu82/certification/direct_publisher_smoke_v1/install.py", line 129, in command
+    raise InstallFailed(f'{what} exited {code}: {output.strip()[-300:]}')
+certification.direct_publisher_smoke_v1.install.InstallFailed: venv creation exited 1: ensurepip unavailable in this runtime image
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/tmp/direct-bootstrap-baseline-tn2xtu82/tests/test_direct_publisher_smoke_bootstrap.py", line 49, in test_offline_hash_pinned_install_without_ensurepip
+    self.fail(f'offline install must work without ensurepip: {exc}')
+AssertionError: offline install must work without ensurepip: venv creation exited 1: ensurepip unavailable in this runtime image
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.177s
+
+FAILED (failures=3)

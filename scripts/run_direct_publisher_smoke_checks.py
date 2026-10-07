@@ -19,7 +19,8 @@ from certification.direct_publisher_smoke_v1 import notebook as N
 from certification.direct_publisher_smoke_v1.binding import sha256
 
 SUITES = ['tests.test_direct_publisher_smoke', 'tests.test_direct_publisher_smoke_lifecycle',
-          'tests.test_direct_publisher_smoke_preflight', 'tests.test_direct_publisher_smoke_install_lifecycle']
+          'tests.test_direct_publisher_smoke_preflight', 'tests.test_direct_publisher_smoke_install_lifecycle',
+          'tests.test_direct_publisher_smoke_bootstrap']
 
 
 class Recorder(unittest.TextTestResult):

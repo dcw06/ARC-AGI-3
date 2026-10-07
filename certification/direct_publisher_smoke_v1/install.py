@@ -193,13 +193,17 @@ def install(bundle, venv, runtime, deadline, log, python=sys.executable, environ
 def _install(bundle, venv, runtime, deadline, log, python, env, requirements, processes):
     receipt = {'passed': False}
     begin = time.monotonic()
-    _run([python, '-m', 'venv', str(venv)], log, deadline, env, 'venv creation', processes)
+    # Some runtime images cannot seed pip through ensurepip. Keep the venv
+    # isolated and use the pinned host image's pip to manage that interpreter.
+    # pip --python supports environments with no pip installed (pip >= 22.3).
+    _run([python, '-m', 'venv', str(venv), '--without-pip'], log, deadline, env, 'venv creation', processes)
     vpython = str(venv / 'bin' / 'python')
-    _run([vpython, '-m', 'pip', 'install', '--no-index', '--no-cache-dir', '--require-hashes', '--only-binary=:all:',
+    pip = [python, '-m', 'pip', '--python', vpython]
+    _run([*pip, 'install', '--no-index', '--no-cache-dir', '--require-hashes', '--only-binary=:all:',
           '--find-links', str(bundle), '-r', str(requirements or Path(__file__).with_name('trusted_requirements.lock'))],
          log, deadline, env, 'offline install', processes)
     receipt['install_seconds'] = round(time.monotonic() - begin, 3)
-    _run([vpython, '-m', 'pip', 'check'], log, deadline, env, 'pip check', processes)
+    _run([*pip, 'check'], log, deadline, env, 'pip check', processes)
     checked = _run([vpython, '-I', '-c', PACKAGE_CHECK, json.dumps(runtime)], log, deadline, env,
                    'package checks', processes)
     report = json.loads(checked.stdout.strip().splitlines()[-1])

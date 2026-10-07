@@ -1,0 +1,27 @@
+
+$ /usr/bin/python3 -m venv /tmp/direct-publisher-smoke-rehearsal-y869jhof/nominal-l2cenjrs/work/venv --without-pip
+
+$ /usr/bin/python3 -m pip --python /tmp/direct-publisher-smoke-rehearsal-y869jhof/nominal-l2cenjrs/work/venv/bin/python install --no-index --no-cache-dir --require-hashes --only-binary=:all: --find-links /tmp/direct-publisher-smoke-rehearsal-y869jhof/nominal-l2cenjrs/bundle -r /tmp/direct-publisher-smoke-rehearsal-y869jhof/nominal-l2cenjrs/inputs/trusted_requirements.lock
+Looking in links: /tmp/direct-publisher-smoke-rehearsal-y869jhof/nominal-l2cenjrs/bundle
+Processing /tmp/direct-publisher-smoke-rehearsal-y869jhof/nominal-l2cenjrs/bundle/fixturea-1.0-py3-none-any.whl (from -r /tmp/direct-publisher-smoke-rehearsal-y869jhof/nominal-l2cenjrs/inputs/trusted_requirements.lock (line 1))
+Processing /tmp/direct-publisher-smoke-rehearsal-y869jhof/nominal-l2cenjrs/bundle/fixtureb-1.0-py3-none-any.whl (from -r /tmp/direct-publisher-smoke-rehearsal-y869jhof/nominal-l2cenjrs/inputs/trusted_requirements.lock (line 2))
+Installing collected packages: fixtureb, fixturea
+Successfully installed fixturea-1.0 fixtureb-1.0
+
+$ /usr/bin/python3 -m pip --python /tmp/direct-publisher-smoke-rehearsal-y869jhof/nominal-l2cenjrs/work/venv/bin/python check
+No broken requirements found.
+
+$ /tmp/direct-publisher-smoke-rehearsal-y869jhof/nominal-l2cenjrs/work/venv/bin/python -I -c import importlib, importlib.metadata as m, json, sys
+expected = json.loads(sys.argv[1])
+report = {"versions": {}, "imports": {}}
+for name in expected["packages"]:
+    report["versions"][name] = m.version(name)
+for name in expected["imports"]:
+    module = importlib.import_module(name)
+    report["imports"][name] = getattr(module, "__file__", None)
+if "torch" in expected["imports"]:
+    import torch
+    report["torch_cuda_build"] = torch.version.cuda
+print(json.dumps(report))
+ {"python": "3.12", "glibc_minimum": "2.34", "machine": "x86_64", "packages": {"fixturea": "1.0", "fixtureb": "1.0"}, "imports": ["fixturea", "fixtureb"], "gpu_name_contains": "RTX PRO 6000", "gpu_count": 1}
+{"versions": {"fixturea": "1.0", "fixtureb": "1.0"}, "imports": {"fixturea": "/tmp/direct-publisher-smoke-rehearsal-y869jhof/nominal-l2cenjrs/work/venv/lib/python3.12/site-packages/fixturea/__init__.py", "fixtureb": "/tmp/direct-publisher-smoke-rehearsal-y869jhof/nominal-l2cenjrs/work/venv/lib/python3.12/site-packages/fixtureb/__init__.py"}}

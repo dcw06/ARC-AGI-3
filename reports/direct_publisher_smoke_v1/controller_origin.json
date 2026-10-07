@@ -29,7 +29,7 @@
     "install.py": {
       "upstream_path": "certification/wheelhouse_r2_smoke_v1/install.py",
       "upstream_sha256": "6b274f84a96b9fe5267c66e1f6c7b8c0d2b8fa2a8cdde88e89190a980874c4bd",
-      "derived_sha256": "0eb9fced64d4527a57030e2331c775c989057869616db4662143ebb4c9056fb5"
+      "derived_sha256": "568ef619fce6fc8ed03eda07e7a240f079e017379e1494f4a6b95672cad0019b"
     },
     "launch.py": {
       "upstream_path": "certification/wheelhouse_r2_smoke_v1/launch.py",
@@ -54,7 +54,7 @@
     "run.py": {
       "upstream_path": "certification/wheelhouse_r2_smoke_v1/run.py",
       "upstream_sha256": "219caf965ad60b525ff8ddbee8415fa22d6562477a4c1c77c3b83d06bae75b6f",
-      "derived_sha256": "84cd8bbf594d31a32945b944f5a917372690a36ac78d2d36cb2ad906a1c39701"
+      "derived_sha256": "4a9e8711ce539cdb092a2763c37bc32f8b2b010cd370eba36e92342accf4eaf1"
     },
     "server.py": {
       "upstream_path": "certification/wheelhouse_r2_smoke_v1/server.py",
@@ -62,7 +62,7 @@
       "derived_sha256": "e3cbdf0949f21fc2edb6f8c781a55aaeacf3410aa4f5794e3ebe420f2bcee888"
     }
   },
-  "adaptation": "namespace, flat-mount integrity and trusted-lock installation, new evidence/authorization scope; startup ownership and final deadline logic retained; installation/import process groups, orphan adoption/reaping and aggregate cleanup receipts; protocol-bound immutable Kaggle image in review/launch metadata; protocol-selected slug as launch title",
+  "adaptation": "namespace, flat-mount integrity and trusted-lock installation, new evidence/authorization scope; startup ownership and final deadline logic retained; installation/import process groups, orphan adoption/reaping and aggregate cleanup receipts; protocol-bound immutable Kaggle image in review/launch metadata; protocol-selected slug as launch title; pip-managed isolated environment without ensurepip; distinguish live pre-GPU cleanup from CPU rehearsal",
   "tests_and_tools": {
     "tests/test_direct_publisher_smoke_lifecycle.py": {
       "upstream_path": "tests/test_wheelhouse_r2_smoke_lifecycle.py",
