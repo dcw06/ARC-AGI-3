@@ -1,13 +1,13 @@
 
-$ /mnt/c/Users/jjzzw/Desktop/AGI/.cache/offline-env/bin/python -m venv /tmp/direct-publisher-smoke-rehearsal-5fx9gwcr/nominal-hlwk0s65/work/venv
+$ /mnt/c/Users/jjzzw/Desktop/AGI/.cache/offline-env/bin/python -m venv /tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/work/venv
 
-$ /tmp/direct-publisher-smoke-rehearsal-5fx9gwcr/nominal-hlwk0s65/work/venv/bin/python -m pip install --no-index --no-cache-dir --require-hashes --only-binary=:all: --find-links /tmp/direct-publisher-smoke-rehearsal-5fx9gwcr/nominal-hlwk0s65/bundle -r /tmp/direct-publisher-smoke-rehearsal-5fx9gwcr/nominal-hlwk0s65/inputs/trusted_requirements.lock
-Looking in links: /tmp/direct-publisher-smoke-rehearsal-5fx9gwcr/nominal-hlwk0s65/bundle
-Processing /tmp/direct-publisher-smoke-rehearsal-5fx9gwcr/nominal-hlwk0s65/bundle/fixturea-1.0-py3-none-any.whl (from -r /tmp/direct-publisher-smoke-rehearsal-5fx9gwcr/nominal-hlwk0s65/inputs/trusted_requirements.lock (line 1))
-Processing /tmp/direct-publisher-smoke-rehearsal-5fx9gwcr/nominal-hlwk0s65/bundle/fixtureb-1.0-py3-none-any.whl (from -r /tmp/direct-publisher-smoke-rehearsal-5fx9gwcr/nominal-hlwk0s65/inputs/trusted_requirements.lock (line 2))
+$ /tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/work/venv/bin/python -m pip install --no-index --no-cache-dir --require-hashes --only-binary=:all: --find-links /tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/bundle -r /tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/inputs/trusted_requirements.lock
+Looking in links: /tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/bundle
+Processing /tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/bundle/fixturea-1.0-py3-none-any.whl (from -r /tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/inputs/trusted_requirements.lock (line 1))
+Processing /tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/bundle/fixtureb-1.0-py3-none-any.whl (from -r /tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/inputs/trusted_requirements.lock (line 2))
 Installing collected packages: fixtureb, fixturea
 Successfully installed fixturea-1.0 fixtureb-1.0
 
-$ /tmp/direct-publisher-smoke-rehearsal-5fx9gwcr/nominal-hlwk0s65/work/venv/bin/python -m pip check
+$ /tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/work/venv/bin/python -m pip check
 No broken requirements found.
-{"versions": {"fixturea": "1.0", "fixtureb": "1.0"}, "imports": {"fixturea": "/tmp/direct-publisher-smoke-rehearsal-5fx9gwcr/nominal-hlwk0s65/work/venv/lib/python3.12/site-packages/fixturea/__init__.py", "fixtureb": "/tmp/direct-publisher-smoke-rehearsal-5fx9gwcr/nominal-hlwk0s65/work/venv/lib/python3.12/site-packages/fixtureb/__init__.py"}}
+{"versions": {"fixturea": "1.0", "fixtureb": "1.0"}, "imports": {"fixturea": "/tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/work/venv/lib/python3.12/site-packages/fixturea/__init__.py", "fixtureb": "/tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/work/venv/lib/python3.12/site-packages/fixtureb/__init__.py"}}

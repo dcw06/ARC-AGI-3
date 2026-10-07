@@ -7,18 +7,18 @@
   "installation was exercised on fixture wheels, not the publisher wheels",
   "establishes only that the control code (gate, clock, request ledger, timeouts, cancellation handling, process cleanup, evidence retention) behaves as specified against scripted behaviour"
  ],
- "source_revision": "",
+ "source_revision": "da31405c7d60b24a4301a595f5ebc985939be744",
  "host": {
   "python": "3.12.3",
   "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
   "gpu": "none (CUDA_VISIBLE_DEVICES empty; no GPU query is made in rehearsal mode)"
  },
- "ran_at": "2026-10-06T20:30:38-04:00",
+ "ran_at": "2026-10-06T20:42:15-04:00",
  "live_gate_on_this_checkout": {
   "refused": true,
   "reasons": [
    "unresolved placeholders: kernel_id",
-   "authorization: ValueError: no review source lock"
+   "authorization: FileNotFoundError: [Errno 2] No such file or directory: '/tmp/agi-direct-runner-fresh-i2hrr370/checkout/reports/direct_publisher_smoke_v1_source_approval.json'"
   ]
  },
  "scenarios": [
@@ -47,7 +47,7 @@
     "cancellation_probe": 4
    },
    "cleanup": {
-    "pgid": 415,
+    "pgid": 462,
     "ownership": "registered",
     "sigterm_sent": true,
     "sigkill_sent": false,
@@ -184,7 +184,7 @@
    "requests_issued": 0,
    "by_kind": {},
    "cleanup": {
-    "pgid": 559,
+    "pgid": 603,
     "ownership": "registered",
     "sigterm_sent": false,
     "sigkill_sent": false,
@@ -217,7 +217,7 @@
    "requests_issued": 0,
    "by_kind": {},
    "cleanup": {
-    "pgid": 598,
+    "pgid": 642,
     "ownership": "registered",
     "sigterm_sent": true,
     "sigkill_sent": false,
@@ -252,7 +252,7 @@
     "startup_probe": 2
    },
    "cleanup": {
-    "pgid": 640,
+    "pgid": 681,
     "ownership": "registered",
     "sigterm_sent": true,
     "sigkill_sent": false,
@@ -287,7 +287,7 @@
     "startup_probe": 3
    },
    "cleanup": {
-    "pgid": 684,
+    "pgid": 727,
     "ownership": "registered",
     "sigterm_sent": true,
     "sigkill_sent": false,
@@ -324,7 +324,7 @@
     "cancellation_probe": 3
    },
    "cleanup": {
-    "pgid": 730,
+    "pgid": 773,
     "ownership": "registered",
     "sigterm_sent": true,
     "sigkill_sent": false,
@@ -363,7 +363,7 @@
     "cancellation_probe": 4
    },
    "cleanup": {
-    "pgid": 792,
+    "pgid": 833,
     "ownership": "registered",
     "sigterm_sent": true,
     "sigkill_sent": true,
@@ -402,7 +402,7 @@
     "cancellation_probe": 4
    },
    "cleanup": {
-    "pgid": 854,
+    "pgid": 895,
     "ownership": "registered",
     "sigterm_sent": true,
     "sigkill_sent": true,
@@ -414,6 +414,5 @@
    }
   }
  ],
- "all_as_expected": true,
- "source_state": "working tree before implementation commit; fresh-checkout validation follows separately"
+ "all_as_expected": true
 }

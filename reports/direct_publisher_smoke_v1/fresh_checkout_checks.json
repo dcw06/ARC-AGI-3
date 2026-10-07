@@ -1,0 +1,318 @@
+{
+  "schema": "direct_publisher_smoke_cpu_checks_v1",
+  "source_revision": "da31405c7d60b24a4301a595f5ebc985939be744",
+  "working_tree_clean_before_checks": true,
+  "python": "3.12.3",
+  "evidence_class": "cpu_control_checks_not_remote_wheel_or_gpu_evidence",
+  "summary": {
+    "run": 49,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "tests": [
+    {
+      "test": "tests.test_direct_publisher_smoke.AdapterTests.test_ambiguous_dataset_mount_refused",
+      "outcome": "pass",
+      "seconds": 0.003,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke.AdapterTests.test_each_hash_chunk_obeys_combined_installation_deadline",
+      "outcome": "pass",
+      "seconds": 0.001,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke.AdapterTests.test_flat_mount_has_no_r2_manifest_and_verifies_bytes",
+      "outcome": "pass",
+      "seconds": 0.002,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke.AdapterTests.test_install_uses_flat_mount_and_trusted_hash_lock",
+      "outcome": "pass",
+      "seconds": 0.001,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke.DurableLaunchTests.test_existing_receipt_spends_attempt",
+      "outcome": "pass",
+      "seconds": 0.092,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke.DurableLaunchTests.test_provider_response_requires_exact_kernel_and_valid_version",
+      "outcome": "pass",
+      "seconds": 0.0,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke.DurableLaunchTests.test_uncertain_submission_never_retries",
+      "outcome": "pass",
+      "seconds": 0.127,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke.GateTests.test_checkout_refuses_before_any_effect",
+      "outcome": "pass",
+      "seconds": 0.005,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke.GateTests.test_complete_fixture_gate_and_launch_bind_all_private_evidence",
+      "outcome": "pass",
+      "seconds": 0.098,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke.GateTests.test_consume_only_once_within_session",
+      "outcome": "pass",
+      "seconds": 0.121,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke.GateTests.test_consumed_reservation_and_bad_claim_refuse",
+      "outcome": "pass",
+      "seconds": 0.198,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke.GateTests.test_invalid_protocol_limits_and_version_refuse",
+      "outcome": "pass",
+      "seconds": 0.316,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke.GateTests.test_missing_sidecars_all_refuse",
+      "outcome": "pass",
+      "seconds": 0.64,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke.GateTests.test_permission_label_alone_cannot_replace_facts",
+      "outcome": "pass",
+      "seconds": 0.087,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke.GateTests.test_provider_and_assessment_drift_refuse",
+      "outcome": "pass",
+      "seconds": 0.174,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke.GateTests.test_provider_confirmation_must_be_boolean_and_version_integer",
+      "outcome": "pass",
+      "seconds": 0.205,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke.GateTests.test_provider_label_alone_cannot_confirm_attachment",
+      "outcome": "pass",
+      "seconds": 0.095,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke.GateTests.test_review_snapshot_is_gpu_disabled_and_contains_trusted_inputs",
+      "outcome": "pass",
+      "seconds": 0.086,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke.GateTests.test_scopes_versions_and_compute_limits_refuse",
+      "outcome": "pass",
+      "seconds": 1.043,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke.GateTests.test_source_and_input_drift_refuse",
+      "outcome": "pass",
+      "seconds": 0.324,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke.GateTests.test_wrong_review_scope_refuses",
+      "outcome": "pass",
+      "seconds": 0.074,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_lifecycle.LifecycleDeadline.test_environment_removal_failure_is_failed",
+      "outcome": "pass",
+      "seconds": 0.02,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_lifecycle.LifecycleDeadline.test_environment_removal_overrun",
+      "outcome": "pass",
+      "seconds": 0.231,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_lifecycle.LifecycleDeadline.test_evidence_finalization_overrun",
+      "outcome": "pass",
+      "seconds": 0.63,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_lifecycle.LifecycleDeadline.test_evidence_write_failure_cannot_return_success",
+      "outcome": "pass",
+      "seconds": 0.003,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_lifecycle.LifecycleDeadline.test_final_publication_overrun_is_downgraded_and_rehashed",
+      "outcome": "pass",
+      "seconds": 0.226,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_lifecycle.LifecycleDeadline.test_gpu_cleanup_overrun",
+      "outcome": "pass",
+      "seconds": 0.225,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_lifecycle.LifecycleDeadline.test_live_entry_removes_environment_and_source_before_success",
+      "outcome": "pass",
+      "seconds": 0.019,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_lifecycle.LifecycleDeadline.test_live_entry_source_removal_overrun_fails",
+      "outcome": "pass",
+      "seconds": 0.228,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_lifecycle.LifecycleDeadline.test_original_reproduction_cleanup_overrun",
+      "outcome": "pass",
+      "seconds": 0.225,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_lifecycle.LifecycleDeadline.test_partially_published_success_is_replaced_with_failure",
+      "outcome": "pass",
+      "seconds": 0.024,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_lifecycle.LifecycleDeadline.test_success_requires_environment_removed_and_final_check",
+      "outcome": "pass",
+      "seconds": 0.017,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_lifecycle.StartupOwnership.test_child_still_handles_sigterm_after_protected_start",
+      "outcome": "pass",
+      "seconds": 0.108,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_lifecycle.StartupOwnership.test_definitely_never_spawned_reports_absence",
+      "outcome": "pass",
+      "seconds": 0.0,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_lifecycle.StartupOwnership.test_emergency_sigkill_still_runs_after_cleanup_deadline",
+      "outcome": "pass",
+      "seconds": 0.252,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_lifecycle.StartupOwnership.test_interrupt_before_group_registration",
+      "outcome": "pass",
+      "seconds": 0.111,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_lifecycle.StartupOwnership.test_original_reproduction_interrupt_before_assignment",
+      "outcome": "pass",
+      "seconds": 0.108,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_lifecycle.StartupOwnership.test_uncertain_group_registration_still_attempts_emergency_termination",
+      "outcome": "pass",
+      "seconds": 0.108,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_lifecycle.StartupOwnership.test_unknown_spawn_outcome_never_reports_absence",
+      "outcome": "pass",
+      "seconds": 0.007,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_preflight.DirectPublisherPreflightTests.test_deadline_crossed_on_final_check_refused",
+      "outcome": "pass",
+      "seconds": 0.003,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_preflight.DirectPublisherPreflightTests.test_missing_and_extra_files_refused",
+      "outcome": "pass",
+      "seconds": 0.003,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_preflight.DirectPublisherPreflightTests.test_nominal_integrity_never_claims_permission_or_launch",
+      "outcome": "pass",
+      "seconds": 0.001,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_preflight.DirectPublisherPreflightTests.test_publisher_metadata_tampering_refused",
+      "outcome": "pass",
+      "seconds": 0.003,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_preflight.DirectPublisherPreflightTests.test_publisher_pin_mismatch_refused_even_when_metadata_bound",
+      "outcome": "pass",
+      "seconds": 0.002,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_preflight.DirectPublisherPreflightTests.test_retained_production_inputs_are_consistent",
+      "outcome": "pass",
+      "seconds": 0.002,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_preflight.DirectPublisherPreflightTests.test_same_size_wheel_tampering_refused",
+      "outcome": "pass",
+      "seconds": 0.001,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_preflight.DirectPublisherPreflightTests.test_symlink_refused",
+      "outcome": "pass",
+      "seconds": 0.001,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_preflight.DirectPublisherPreflightTests.test_trusted_lock_tampering_refused",
+      "outcome": "pass",
+      "seconds": 0.001,
+      "detail": null
+    },
+    {
+      "test": "tests.test_direct_publisher_smoke_preflight.DirectPublisherPreflightTests.test_trusted_manifest_tampering_refused",
+      "outcome": "pass",
+      "seconds": 0.002,
+      "detail": null
+    }
+  ],
+  "review_snapshot_reproduces": {
+    "profile.ipynb": true,
+    "kernel-metadata.json": true,
+    "review-source-lock.json": true
+  },
+  "review_lock_sha256": "f2bec3e31a6cee23c539998ce0fe5f8867b597efb85643c918fcc2a2b7e5b7b2",
+  "passed": true,
+  "gpu_compatibility_evidence": false,
+  "launch_authorized": false
+}

@@ -13,7 +13,7 @@
    "groups_absent": true,
    "interrupted": [],
    "ownership": "registered",
-   "pgid": 415,
+   "pgid": 462,
    "remaining_members": [],
    "sigkill_sent": false,
    "sigterm_sent": true
@@ -21,14 +21,14 @@
  },
  "cleanup_phase": {
   "deadline_at": 600.0,
-  "entered_at": 8.38,
+  "entered_at": 8.004,
   "transition": [
    "entered"
   ]
  },
  "cleanup_verified": true,
  "completed_plan": true,
- "elapsed_seconds": 8.507,
+ "elapsed_seconds": 8.125,
  "error": null,
  "evidence_class": "scripted_cpu_rehearsal",
  "failed_stage": null,
@@ -44,17 +44,17 @@
   "entries": [
    {
     "id": "S1",
-    "issued_at": 5.362,
+    "issued_at": 4.989,
     "kind": "startup_probe",
     "method": "GET",
     "outcome": "http_200",
     "path": "/health",
-    "seconds": 0.005,
+    "seconds": 0.003,
     "sequence": 1
    },
    {
     "id": "S2",
-    "issued_at": 5.368,
+    "issued_at": 4.992,
     "kind": "startup_probe",
     "method": "GET",
     "outcome": "http_200",
@@ -64,7 +64,7 @@
    },
    {
     "id": "S3",
-    "issued_at": 5.369,
+    "issued_at": 4.993,
     "kind": "startup_probe",
     "method": "POST",
     "outcome": "http_200",
@@ -74,7 +74,7 @@
    },
    {
     "id": "I1",
-    "issued_at": 5.37,
+    "issued_at": 4.994,
     "kind": "inference",
     "method": "POST",
     "outcome": "http_200",
@@ -84,7 +84,7 @@
    },
    {
     "id": "I2",
-    "issued_at": 5.372,
+    "issued_at": 4.995,
     "kind": "inference",
     "method": "POST",
     "outcome": "http_200",
@@ -94,7 +94,7 @@
    },
    {
     "id": "I3",
-    "issued_at": 5.373,
+    "issued_at": 4.996,
     "kind": "inference",
     "method": "POST",
     "outcome": "http_200",
@@ -104,7 +104,7 @@
    },
    {
     "id": "I4",
-    "issued_at": 5.374,
+    "issued_at": 4.997,
     "kind": "inference",
     "method": "POST",
     "outcome": "http_200",
@@ -115,7 +115,7 @@
    {
     "first_content_seconds": 0.001,
     "id": "C1",
-    "issued_at": 5.375,
+    "issued_at": 4.998,
     "kind": "cancellation_probe",
     "method": "POST",
     "outcome": "cancelled_after_first_content",
@@ -125,7 +125,7 @@
    },
    {
     "id": "C2",
-    "issued_at": 5.376,
+    "issued_at": 5.0,
     "kind": "cancellation_probe",
     "method": "GET",
     "outcome": "http_200",
@@ -135,22 +135,22 @@
    },
    {
     "id": "C2",
-    "issued_at": 8.377,
+    "issued_at": 8.001,
     "kind": "cancellation_probe",
     "method": "GET",
     "outcome": "http_200",
     "path": "/metrics",
-    "seconds": 0.001,
+    "seconds": 0.002,
     "sequence": 10
    },
    {
     "id": "C3",
-    "issued_at": 8.378,
+    "issued_at": 8.003,
     "kind": "cancellation_probe",
     "method": "POST",
     "outcome": "http_200",
     "path": "/v1/chat/completions",
-    "seconds": 0.002,
+    "seconds": 0.001,
     "sequence": 11
    }
   ],
@@ -160,7 +160,7 @@
  },
  "lifecycle_deadline": {
   "checked_after": "GPU cleanup, environment removal and evidence finalization",
-  "checked_at_seconds": 8.507276765,
+  "checked_at_seconds": 8.124929515999998,
   "internal_seconds": 600,
   "met": true
  },
@@ -199,118 +199,118 @@
    "seconds": 0.0
   },
   {
-   "began_at": 0.001,
+   "began_at": 0.0,
    "outcome": "passed",
    "phase": "bundle_integrity",
-   "seconds": 0.017
-  },
-  {
-   "began_at": 0.018,
-   "outcome": "passed",
-   "phase": "installation",
-   "seconds": 4.339
-  },
-  {
-   "began_at": 4.357,
-   "outcome": "passed",
-   "phase": "model_artifact",
    "seconds": 0.001
   },
   {
-   "began_at": 4.358,
+   "began_at": 0.001,
+   "outcome": "passed",
+   "phase": "installation",
+   "seconds": 3.985
+  },
+  {
+   "began_at": 3.987,
+   "outcome": "passed",
+   "phase": "model_artifact",
+   "seconds": 0.0
+  },
+  {
+   "began_at": 3.987,
    "outcome": "passed",
    "phase": "server_start",
    "seconds": 0.001
   },
   {
-   "began_at": 4.358,
+   "began_at": 3.988,
    "outcome": "passed",
    "phase": "server_ready",
-   "seconds": 1.004
+   "seconds": 1.002
   },
   {
-   "began_at": 5.362,
+   "began_at": 4.989,
    "outcome": "passed",
    "phase": "startup_probe_S1",
-   "seconds": 0.006
+   "seconds": 0.003
   },
   {
-   "began_at": 5.368,
+   "began_at": 4.992,
    "outcome": "passed",
    "phase": "startup_probe_S2",
    "seconds": 0.001
   },
   {
-   "began_at": 5.369,
+   "began_at": 4.993,
    "outcome": "passed",
    "phase": "startup_probe_S3",
    "seconds": 0.001
   },
   {
-   "began_at": 5.37,
+   "began_at": 4.994,
    "outcome": "passed",
    "phase": "inference_I1",
    "seconds": 0.001
   },
   {
-   "began_at": 5.372,
+   "began_at": 4.995,
    "outcome": "passed",
    "phase": "inference_I2",
    "seconds": 0.001
   },
   {
-   "began_at": 5.373,
+   "began_at": 4.996,
    "outcome": "passed",
    "phase": "inference_I3",
    "seconds": 0.001
   },
   {
-   "began_at": 5.374,
+   "began_at": 4.997,
    "outcome": "passed",
    "phase": "inference_I4",
    "seconds": 0.001
   },
   {
-   "began_at": 5.375,
+   "began_at": 4.998,
    "outcome": "passed",
    "phase": "cancellation_C1",
    "seconds": 0.001
   },
   {
-   "began_at": 5.376,
+   "began_at": 5.0,
    "outcome": "passed",
    "phase": "cancellation_C2_idle",
    "seconds": 3.003
   },
   {
-   "began_at": 8.378,
+   "began_at": 8.003,
    "outcome": "passed",
    "phase": "cancellation_C3_responsive",
-   "seconds": 0.002
+   "seconds": 0.001
   },
   {
-   "began_at": 8.38,
+   "began_at": 8.004,
    "outcome": "passed",
    "phase": "server_cleanup",
    "seconds": 0.104
   },
   {
-   "began_at": 8.484,
+   "began_at": 8.108,
    "outcome": "passed",
    "phase": "log_retention",
-   "seconds": 0.012
+   "seconds": 0.01
   },
   {
-   "began_at": 8.496,
+   "began_at": 8.118,
    "outcome": "not_applicable",
    "phase": "environment_cleanup",
    "seconds": 0.0
   },
   {
-   "began_at": 8.496,
+   "began_at": 8.118,
    "outcome": "passed",
    "phase": "evidence_finalization",
-   "seconds": 0.011
+   "seconds": 0.007
   }
  ],
  "rehearsal_limits": [
@@ -451,7 +451,7 @@
   "bundle_integrity": {
    "account_attachment_verified": false,
    "dataset_ref": "rehearsal/fixture-publisher",
-   "elapsed_seconds": 0.001,
+   "elapsed_seconds": 0.0,
    "gpu_compatibility_established": false,
    "installation_requirements_sha256": "851f33674254c2b45882662939c207c0792fd9ae3e3d7b6935bc5e1266a07575",
    "integrity_passed": true,
@@ -577,12 +577,12 @@
   },
   "installation": {
    "imports": {
-    "fixturea": "/tmp/direct-publisher-smoke-rehearsal-5fx9gwcr/nominal-hlwk0s65/work/venv/lib/python3.12/site-packages/fixturea/__init__.py",
-    "fixtureb": "/tmp/direct-publisher-smoke-rehearsal-5fx9gwcr/nominal-hlwk0s65/work/venv/lib/python3.12/site-packages/fixtureb/__init__.py"
+    "fixturea": "/tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/work/venv/lib/python3.12/site-packages/fixturea/__init__.py",
+    "fixtureb": "/tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/work/venv/lib/python3.12/site-packages/fixtureb/__init__.py"
    },
-   "install_seconds": 3.899,
+   "install_seconds": 3.604,
    "passed": true,
-   "python": "/tmp/direct-publisher-smoke-rehearsal-5fx9gwcr/nominal-hlwk0s65/work/venv/bin/python",
+   "python": "/tmp/direct-publisher-smoke-rehearsal-bb3dvhci/nominal-r4rayhqa/work/venv/bin/python",
    "versions": {
     "fixturea": "1.0",
     "fixtureb": "1.0"
@@ -594,9 +594,9 @@
    "tree_sha256": "ccec944bc12c9c99c0a10eb0fe19ba7e16286fccc2c9ceb5d05198cb8b38e128"
   },
   "server_ready": {
-   "seconds": 1.004
+   "seconds": 1.002
   },
-  "server_start": 415,
+  "server_start": 462,
   "startup_probe_S1": {
    "status": 200
   },
