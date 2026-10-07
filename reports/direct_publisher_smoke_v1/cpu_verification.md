@@ -16,13 +16,21 @@ The verification notebook derives from the unchanged five-input CPU preflight sn
 
 The provider's pulled metadata returns `driessmit1/arc3-vllm-h100-wheelhouse-v3` without a version suffix. A fresh dataset-view response reports current version **1**, and all mounted bytes match the trusted inventory and publisher metadata previously retained for version 1. This corroborates content identity to the intended version; it does not establish an explicit provider attachment-version ID or a durable version pin. The requested version and the provider's current version are separate observations.
 
-The private account receipt therefore remains **partially verified**. It records successful account identity/reference attachment and leaves exact provider attachment-version confirmation false. The operational byte receipt is retained independently. Neither receipt is edited to claim permission, attachment-version verification or GPU compatibility. Before final approval, obtain provider evidence showing the attached version in the notebook's Input panel or another authoritative provider record, and bind that evidence to the private account receipt. Reassess availability/version for the final launch package; live installation also rehashes every mounted file.
+At the initial CPU review, the private account receipt was **partially verified**: identity/reference attachment were established, but exact attachment-version confirmation was missing. That partial receipt and the original byte-verifier output are preserved. The byte verifier's false account/version flags describe its own scope and are not overwritten by subsequent evidence.
+
+## Follow-up: saved-run Input panel confirmation
+
+The operator inspected the completed CPU notebook's saved-run Input panel, selected the exact dataset reference, and reported **Version 1**. This is a user observation of the provider UI; it is not an API version echo, an agent-observed screenshot or a machine-generated version-probe result.
+
+The private account receipt is now **verified** for the reviewed dataset reference/version, using authenticated provider identity/reference evidence plus that saved-run UI observation. Its provider evidence binds the retained metadata, exact observation and actual 174-wheel byte receipt by SHA-256. Those bindings and the private source snapshot validate. The previous partial record is retained for chronology. Account, notebook and participant details remain private.
+
+No additional job or session was started for this confirmation. A possible provider-version probe was prepared but not submitted and supplies no operational evidence. No permission, source approval or compute authorization was created; the live gate still refuses. This closes the completed run's attachment-version question. It does not establish a durable pin for a future GPU notebook: revalidate that notebook's attachment before final launch approval, and retain the runner's live byte rechecks.
 
 ## Remaining gates
 
 | Gate | Current outcome | Required next evidence |
 |---|---|---|
-| Account and version | Account identity and reference attachment established; exact provider attachment version pending. | Confirm the actual attached version and retain the provider evidence privately. |
+| Account and version | Complete for the reviewed CPU run: authenticated identity/reference and user-observed saved-run version 1, retained privately. | Bind that evidence to final approvals; revalidate the future launch notebook's attachment. |
 | Mounted wheel bytes | Complete: 174/174 actual wheels verified. | Bind this receipt to final approvals; reverify mounted bytes at live installation. |
 | Direct-use permission | Private deployment facts and [review addendum](use_review_addendum.md) prepared; no reviewer outcome. | Select the actual smoke-test recipient/output scope, resolve governing terms/acceptance/provenance, and obtain the scoped outcome. |
 | Final source/compute | Private account-bound source snapshot and exact compute proposal prepared, without approvals or reservation. | Review the final source and complete evidence bindings; obtain separate source approval and explicit authorization for the frozen one-attempt GPU limits. |
