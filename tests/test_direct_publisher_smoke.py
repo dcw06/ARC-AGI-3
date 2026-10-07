@@ -14,6 +14,7 @@ from certification.direct_publisher_smoke_v1 import host
 from certification.direct_publisher_smoke_v1.rehearsal import fixture_bundle
 
 ROOT = Path(__file__).resolve().parents[1]
+EXPECTED_IMAGE = 'gcr.io/kaggle-private-byod/python@sha256:37c64f7dd9c54116ecd1bcc88817c5469b88387388fade02bfa8bf3fc647d461'
 
 
 def put(root, name, value):
@@ -111,6 +112,8 @@ class GateTests(unittest.TestCase):
         metadata = json.loads(artifacts['kernel-metadata.json'])
         self.assertEqual(metadata['id'], 'fixture/direct-publisher-smoke')
         self.assertTrue(metadata['enable_gpu'])
+        self.assertEqual(metadata.get('docker_image'), EXPECTED_IMAGE)
+        self.assertEqual(metadata.get('docker_image_pinning_type'), 'original')
         package_lock = json.loads(artifacts['launch-package-lock.json'])
         self.assertTrue(set(B.evidence_names(fixture.root)) <= set(package_lock['sidecars']))
 
@@ -222,6 +225,42 @@ class GateTests(unittest.TestCase):
         self.assertEqual(pending, ['kernel_id'])
         for name in ('preflight.py', 'trusted_manifest.json', 'trusted_requirements.lock'):
             self.assertIn(B.PACKAGE + '/' + name, bindings)
+
+    def test_review_metadata_pins_compatible_image(self):
+        _, metadata, _, _ = N.review_notebook(ROOT)
+        self.assertEqual(metadata.get('docker_image'), EXPECTED_IMAGE)
+        self.assertEqual(metadata.get('docker_image_pinning_type'), 'original')
+        self.assertFalse(metadata['enable_gpu'])
+
+    def test_missing_or_mutable_image_pin_refuses_review(self):
+        cases = (None, {}, {'docker_image': EXPECTED_IMAGE},
+                 {'docker_image': EXPECTED_IMAGE, 'docker_image_pinning_type': 'latest'},
+                 {'docker_image': 'gcr.io/kaggle-private-byod/python:latest', 'docker_image_pinning_type': 'original'})
+        for pin in cases:
+            with self.subTest(pin=pin):
+                fixture = FixtureRoot(self)
+                fixture.protocol.pop('kaggle_image', None)
+                if pin is not None:
+                    fixture.protocol['kaggle_image'] = pin
+                put(fixture.root, B.PROTOCOL, fixture.protocol)
+                with self.assertRaisesRegex(ValueError, 'image pin required'):
+                    N.review_notebook(fixture.root)
+
+    def test_reviewed_image_pin_drift_refuses_launch(self):
+        for changes in ({'docker_image': 'gcr.io/kaggle-private-byod/python@sha256:' + '0' * 64},
+                        {'docker_image_pinning_type': 'latest'},
+                        {'docker_image': None}):
+            with self.subTest(changes=changes):
+                fixture = FixtureRoot(self)
+                metadata_name = str(Path(fixture.lock).parent / 'kernel-metadata.json')
+                fixture.update(metadata_name, **changes)
+                lock = B.read_json(fixture.root, fixture.lock)
+                lock['artifacts']['kernel-metadata.json'] = fixture.sha(metadata_name)
+                put(fixture.root, fixture.lock, lock)
+                fixture.update(B.PERMISSION, review_lock_sha256=fixture.sha(fixture.lock))
+                fixture.authorize()
+                with self.assertRaisesRegex(ValueError, 'review image pin differs'):
+                    N.launch_artifacts(fixture.root)
 
 
 class AdapterTests(unittest.TestCase):

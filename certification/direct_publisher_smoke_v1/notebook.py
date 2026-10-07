@@ -6,6 +6,7 @@ import hashlib
 import json
 import lzma
 from pathlib import Path
+import re
 
 from certification.direct_publisher_smoke_v1.binding import (CLAIM, COMPUTE, EXECUTION, PACKAGE, PROTOCOL, RESERVATION,
                                                           ROOT, SOURCE, ACCOUNT, PERMISSION, BYTES, evidence_names, load_protocol, require_live, review_lock,
@@ -15,6 +16,7 @@ MODEL_SOURCE = 'qwen-lm/qwen-3-vl/Transformers/30b-a3b-instruct-fp8/1'
 KERNEL_ID = 'REPLACE_WITH_KAGGLE_OWNER/arc3-direct-publisher-smoke-v1'
 SIZE_GUARD = 900000
 MARKER = '    sys.path.insert(0, str(source))\n'
+IMAGE = re.compile(r'gcr\.io/kaggle-(?:private-byod|gpu-images)/python@sha256:[a-f0-9]{64}')
 CELL = '''import base64, hashlib, json, lzma, pathlib, shutil, sys, tempfile, time
 started = time.monotonic()  # one clock: installation start through cleanup
 source = pathlib.Path(tempfile.mkdtemp(prefix='direct-publisher-smoke-source-'))
@@ -55,7 +57,21 @@ def source_names(root=ROOT):
     return names + [PROTOCOL, PACKAGE + '/proposal.json', PACKAGE + '/trusted_manifest.json', PACKAGE + '/trusted_requirements.lock']
 
 
+def image_metadata(protocol):
+    """Require an immutable Kaggle GPU image; never fall back to latest."""
+    pin = protocol.get('kaggle_image')
+    if not isinstance(pin, dict):
+        raise ValueError('immutable Kaggle GPU image pin required')
+    image = pin.get('docker_image')
+    if (not isinstance(image, str) or not IMAGE.fullmatch(image)
+            or pin.get('docker_image_pinning_type') != 'original'):
+        raise ValueError('immutable Kaggle GPU image pin required')
+    return {key: pin[key] for key in ('docker_image', 'docker_image_pinning_type')}
+
+
 def review_notebook(root=ROOT):
+    protocol = load_protocol(root)
+    image = image_metadata(protocol)
     names = source_names(root)
     bindings = {name: sha256(Path(root) / name) for name in names}
     payload = {name: base64.b64encode((Path(root) / name).read_bytes()).decode() for name in names}
@@ -77,7 +93,7 @@ def review_notebook(root=ROOT):
                 'language': 'python', 'kernel_type': 'notebook', 'is_private': True, 'enable_gpu': False,
                 'enable_tpu': False, 'enable_internet': False, 'competition_sources': [],
                 'dataset_sources': [] if pending else [load_protocol(root)['dataset']['ref']],
-                'model_sources': [MODEL_SOURCE]}
+                'model_sources': [MODEL_SOURCE], **image}
     return notebook, metadata, bindings, pending
 
 
@@ -128,6 +144,8 @@ def launch_artifacts(root=ROOT):
     metadata = json.loads((folder / 'kernel-metadata.json').read_bytes())
     if metadata.get('enable_gpu') is not False or metadata.get('is_private') is not True:
         raise ValueError('review metadata')
+    if any(metadata.get(key) != value for key, value in image_metadata(protocol).items()):
+        raise ValueError('review image pin differs from the protocol')
     metadata.update(id=protocol['kernel_id'], title='ARC3 Direct publisher Smoke V1', enable_gpu=True,
                     machine_shape='NvidiaRtxPro6000', dataset_sources=[protocol['dataset']['ref']])
     artifacts = {'profile.ipynb': encode(notebook), 'kernel-metadata.json': encode(metadata)}

@@ -1,0 +1,12 @@
+{
+  "baseline_revision": "0825e67312fa453405c9ebca3160241dee8ee819",
+  "overlay": "only image-pin regression tests",
+  "tests": [
+    "test_review_metadata_pins_compatible_image",
+    "test_missing_or_mutable_image_pin_refuses_review",
+    "test_reviewed_image_pin_drift_refuses_launch"
+  ],
+  "exit_code": 1,
+  "regressions_fail_on_baseline": true,
+  "evidence_class": "local CPU packaging regressions; no provider or GPU used"
+}
