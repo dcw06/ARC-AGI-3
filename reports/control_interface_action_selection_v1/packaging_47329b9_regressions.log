@@ -1,0 +1,23 @@
+test_extracted_notebook_default_verifier_loads_all_trusted_inputs (tests.test_control_interface_action_selection_v1.RuntimeChecks.test_extracted_notebook_default_verifier_loads_all_trusted_inputs) ... FAIL
+test_source_gate_requires_shared_proposal_binding (tests.test_control_interface_action_selection_v1.RuntimeChecks.test_source_gate_requires_shared_proposal_binding) ... FAIL
+
+======================================================================
+FAIL: test_extracted_notebook_default_verifier_loads_all_trusted_inputs (tests.test_control_interface_action_selection_v1.RuntimeChecks.test_extracted_notebook_default_verifier_loads_all_trusted_inputs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/jjzzw/Desktop/AGI/.claude/worktrees/wheelhouse-audit/tests/test_control_interface_action_selection_v1.py", line 173, in test_extracted_notebook_default_verifier_loads_all_trusted_inputs
+    self.assertTrue(result['passed'], result)
+AssertionError: False is not true : {'passed': False, 'default_inputs_loaded': False, 'error_type': 'FileNotFoundError', 'error': 'missing default verifier input: certification/direct_publisher_smoke_v1/proposal.json', 'exit_code': 1, 'evidence_class': 'cpu_extracted_default_input_check', 'network_calls': 0, 'gpu_used': False, 'model_calls': 0, 'mounted_wheel_bytes_checked': False}
+
+======================================================================
+FAIL: test_source_gate_requires_shared_proposal_binding (tests.test_control_interface_action_selection_v1.RuntimeChecks.test_source_gate_requires_shared_proposal_binding)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/jjzzw/Desktop/AGI/.claude/worktrees/wheelhouse-audit/tests/test_control_interface_action_selection_v1.py", line 190, in test_source_gate_requires_shared_proposal_binding
+    with self.assertRaisesRegex(ValueError, 'reviewed sources incomplete'):
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 2.175s
+
+FAILED (failures=2)

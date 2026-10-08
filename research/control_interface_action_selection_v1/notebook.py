@@ -58,7 +58,7 @@ def source_names(root=ROOT):
     names = sorted(p.relative_to(root).as_posix() for p in (Path(root) / PACKAGE).glob('*.py'))
     names += sorted(p.relative_to(root).as_posix() for p in (Path(root) / 'certification/direct_publisher_smoke_v1').glob('*.py'))
     names += [PACKAGE + '/cases.json', PACKAGE + '/cases-lock.json', PACKAGE + '/derivation.json', PACKAGE + '/token-audit.json']
-    names += ['certification/direct_publisher_smoke_v1/' + n for n in ('trusted_manifest.json', 'trusted_requirements.lock')]
+    names += ['certification/direct_publisher_smoke_v1/' + n for n in ('proposal.json', 'trusted_manifest.json', 'trusted_requirements.lock')]
     return names + [PROTOCOL, PACKAGE + '/proposal.json', PACKAGE + '/trusted_manifest.json', PACKAGE + '/trusted_requirements.lock']
 
 

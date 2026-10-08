@@ -166,6 +166,30 @@ class ScientificChecks(unittest.TestCase):
 
 
 class RuntimeChecks(unittest.TestCase):
+    def test_extracted_notebook_default_verifier_loads_all_trusted_inputs(self):
+        from scripts.check_control_interface_embedded_inputs import check
+        notebook, metadata, bindings, pending = N.review_notebook(ROOT)
+        result = check(notebook)
+        self.assertTrue(result['passed'], result)
+        self.assertEqual(result['trusted_wheels'], 174)
+        self.assertFalse(result['gpu_used'])
+
+    def test_source_gate_requires_shared_proposal_binding(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            notebook, metadata, bindings, pending = N.review_notebook(ROOT)
+            lock = {'scope': B.SCOPE, 'gpu_enabled': False, 'bindings': dict(bindings)}
+            lock['bindings'].pop('certification/direct_publisher_smoke_v1/proposal.json', None)
+            for name in lock['bindings']:
+                p = root / name
+                p.parent.mkdir(parents=True, exist_ok=True)
+                p.write_bytes((ROOT / name).read_bytes())
+            p = root / 'notebooks/lock.json'
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_text(json.dumps(lock))
+            with self.assertRaisesRegex(ValueError, 'reviewed sources incomplete'):
+                B.check_sources(root, 'notebooks/lock.json')
+
     def test_complete_new_scope_gate_and_notebook_binding_in_fabricated_fixture(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)

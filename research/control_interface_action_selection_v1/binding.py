@@ -104,7 +104,7 @@ def check_sources(root, lock_name):
     required = {p.relative_to(root).as_posix() for p in (Path(root) / PACKAGE).glob('*.py')} | {PROTOCOL, PACKAGE + '/proposal.json', PACKAGE + '/trusted_manifest.json', PACKAGE + '/trusted_requirements.lock'}
     required |= {p.relative_to(root).as_posix() for p in (Path(root) / 'certification/direct_publisher_smoke_v1').glob('*.py')}
     required |= {PACKAGE + '/cases.json', PACKAGE + '/cases-lock.json', PACKAGE + '/derivation.json', PACKAGE + '/token-audit.json'}
-    required |= {'certification/direct_publisher_smoke_v1/' + n for n in ('trusted_manifest.json', 'trusted_requirements.lock')}
+    required |= {'certification/direct_publisher_smoke_v1/' + n for n in ('proposal.json', 'trusted_manifest.json', 'trusted_requirements.lock')}
     missing = sorted(required - set(lock.get('bindings', {})))
     if missing:
         raise ValueError('reviewed sources incomplete: ' + ', '.join(missing))

@@ -127,12 +127,12 @@ def build(root=ROOT):
                 text = replace(text, anchor,
                     "    required |= {p.relative_to(root).as_posix() for p in (Path(root) / 'certification/direct_publisher_smoke_v1').glob('*.py')}\n"
                     "    required |= {PACKAGE + '/cases.json', PACKAGE + '/cases-lock.json', PACKAGE + '/derivation.json', PACKAGE + '/token-audit.json'}\n"
-                    "    required |= {'certification/direct_publisher_smoke_v1/' + n for n in ('trusted_manifest.json', 'trusted_requirements.lock')}\n" + anchor)
+                    "    required |= {'certification/direct_publisher_smoke_v1/' + n for n in ('proposal.json', 'trusted_manifest.json', 'trusted_requirements.lock')}\n" + anchor)
                 text = text.replace("ATTEMPT = re.compile(r'dps-", "ATTEMPT = re.compile(r'cia-")
             elif module == 'notebook':
                 text = replace(text, "    return names + [PROTOCOL,", "    names += sorted(p.relative_to(root).as_posix() for p in (Path(root) / 'certification/direct_publisher_smoke_v1').glob('*.py'))\n"
                     "    names += [PACKAGE + '/cases.json', PACKAGE + '/cases-lock.json', PACKAGE + '/derivation.json', PACKAGE + '/token-audit.json']\n"
-                    "    names += ['certification/direct_publisher_smoke_v1/' + n for n in ('trusted_manifest.json', 'trusted_requirements.lock')]\n"
+                    "    names += ['certification/direct_publisher_smoke_v1/' + n for n in ('proposal.json', 'trusted_manifest.json', 'trusted_requirements.lock')]\n"
                     "    return names + [PROTOCOL,")
                 text = text.replace('at most 12 counted', 'at most 131 counted')
                 text = text.replace('Direct publisher smoke test v1 (runtime compatibility only)',
@@ -145,7 +145,7 @@ def build(root=ROOT):
         'changes': ['new scope and approval/attempt paths; no inherited authority',
                     '131 counted HTTP requests including 120 research calls; 0 game actions',
                     'research callback before cancellation; cache-disabled configuration verification',
-                    'new development evidence label; complete shared import closure in source lock',
+                    'new development evidence label; complete shared import and default verification data closure in source lock',
                     'unchanged process ownership, installation, watchdog, cleanup and final deadline logic']})
     result[NEW + '/historical-measurements.json'] = encoded({'archive_sha256': ARCHIVE_SHA, 'rows': measurements,
         'note': 'historical constrained-decoder/cache-enabled calls; timing clues only, not rates guaranteed for this new decoder/cache configuration'})
