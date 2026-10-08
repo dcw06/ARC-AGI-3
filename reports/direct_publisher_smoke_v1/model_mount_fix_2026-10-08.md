@@ -1,0 +1,13 @@
+# Resolve the verified model dataset before server startup
+
+The smoke controller used the protocol's configured model path directly for both verification and server startup. A dataset can appear under `/kaggle/input/datasets/<owner>/<slug>` or `/kaggle/input/<slug>`. A valid attachment at the other layout therefore failed with `ValueError: artifact root must be a real directory`. That message also covered root symlinks, so the original failure evidence does not establish which filesystem case occurred.
+
+Dataset-backed models now derive exactly these two candidate paths from the reviewed, version-pinned dataset reference. The configured path must name one of those candidates. Selection requires one real directory; a root alias is accepted only when it resolves to the other candidate for that same dataset. Distinct directories, broken aliases, unrelated targets and unsupported source kinds are rejected. No recursive search or download fallback is used.
+
+The selected directory must still pass the unchanged complete `arc3-artifact-tree-v1` SHA256 pin, required-file checks and shard count. Symlinks within the model tree remain forbidden. The successful receipt retains the configured path, selected real path and candidate observations. Missing mounts report both checked paths. The server receives the selected path whose bytes were verified. Requested dataset versions are recorded without claiming that filesystem selection independently verifies the provider attachment version.
+
+Model-tree verification now checks its deadline before traversal, for each entry, after the last file and after layout verification. This covers empty files as well as the final read. An overrun fails the attempt; cleanup remains available.
+
+Validation records accompany this report. Three CPU reproductions on unchanged `54242eb` cover the missing configured path, a bound root alias and empty files bypassing the deadline callback. The first two raise the original root error; the third fails because no timeout was raised. Fifteen new CPU tests cover those cases, alternate layouts, ambiguity, references, broken/escaping aliases, byte/layout mismatches, internal links, deadline checks and the actual server argument. The full CPU smoke suite and GPU-disabled review r10 are checked separately. CPU fixtures do not establish that a future Kaggle mount or model startup succeeds.
+
+The immutable image, reviewed dataset/version and model-byte pins, offline hash-pinned installation, competition attachment, single RTX PRO 6000 requirement, request plan, deadlines, process ownership and cleanup remain enforced. New source hashes require a new package review and compute authorization; no previously consumed attempt is reusable.

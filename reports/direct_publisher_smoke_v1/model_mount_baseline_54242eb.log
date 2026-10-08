@@ -1,0 +1,44 @@
+test_original_reproduction_missing_configured_path_with_legacy_mount (tests.test_direct_publisher_smoke_model_mount.ModelMountTests.test_original_reproduction_missing_configured_path_with_legacy_mount) ... ERROR
+test_bound_layout_alias_is_resolved_without_hashing_the_link (tests.test_direct_publisher_smoke_model_mount.ModelMountTests.test_bound_layout_alias_is_resolved_without_hashing_the_link) ... ERROR
+test_deadline_after_last_model_read_cannot_pass (tests.test_direct_publisher_smoke_model_mount.ModelMountTests.test_deadline_after_last_model_read_cannot_pass) ... FAIL
+
+======================================================================
+ERROR: test_original_reproduction_missing_configured_path_with_legacy_mount (tests.test_direct_publisher_smoke_model_mount.ModelMountTests.test_original_reproduction_missing_configured_path_with_legacy_mount)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/model-mount-baseline-b87yz_rl/tests/test_direct_publisher_smoke_model_mount.py", line 42, in test_original_reproduction_missing_configured_path_with_legacy_mount
+    result = host.verify_model(self.model)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/model-mount-baseline-b87yz_rl/certification/direct_publisher_smoke_v1/host.py", line 101, in verify_model
+    tree = tree_sha256(path, check)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/model-mount-baseline-b87yz_rl/certification/direct_publisher_smoke_v1/host.py", line 79, in tree_sha256
+    raise ValueError('artifact root must be a real directory')
+ValueError: artifact root must be a real directory
+
+======================================================================
+ERROR: test_bound_layout_alias_is_resolved_without_hashing_the_link (tests.test_direct_publisher_smoke_model_mount.ModelMountTests.test_bound_layout_alias_is_resolved_without_hashing_the_link)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/model-mount-baseline-b87yz_rl/tests/test_direct_publisher_smoke_model_mount.py", line 60, in test_bound_layout_alias_is_resolved_without_hashing_the_link
+    result = host.verify_model(self.model)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/model-mount-baseline-b87yz_rl/certification/direct_publisher_smoke_v1/host.py", line 101, in verify_model
+    tree = tree_sha256(path, check)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/model-mount-baseline-b87yz_rl/certification/direct_publisher_smoke_v1/host.py", line 79, in tree_sha256
+    raise ValueError('artifact root must be a real directory')
+ValueError: artifact root must be a real directory
+
+======================================================================
+FAIL: test_deadline_after_last_model_read_cannot_pass (tests.test_direct_publisher_smoke_model_mount.ModelMountTests.test_deadline_after_last_model_read_cannot_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/model-mount-baseline-b87yz_rl/tests/test_direct_publisher_smoke_model_mount.py", line 148, in test_deadline_after_last_model_read_cannot_pass
+    with self.assertRaisesRegex(TimeoutError, 'model verification'):
+AssertionError: TimeoutError not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.222s
+
+FAILED (failures=1, errors=2)

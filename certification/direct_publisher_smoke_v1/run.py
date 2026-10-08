@@ -84,9 +84,10 @@ def run(mode, protocol, output, started, *, bundle, workdir, gpu_query=None, mod
         def within_model():
             if now() >= model_deadline:
                 raise TimeoutError('model verification deadline reached')
-        stage('model_artifact', lambda: (model_check or (lambda c: host.verify_model(protocol['model'], c)))(
+        model_artifact = stage('model_artifact', lambda: (model_check or (lambda c: host.verify_model(protocol['model'], c)))(
             within_model))
-        argv = (server_argv or (lambda py: argv_for(server_cfg, py, protocol['model']['mounted_path'],
+        model_path = model_artifact.get('mounted_path', protocol['model']['mounted_path'])
+        argv = (server_argv or (lambda py: argv_for(server_cfg, py, model_path,
                                                      server_cfg['port'])))(installed['python'])
         server = ModelServer(argv, server_cfg['env'], workdir / 'server.log', server_cfg['host'], server_cfg['port'])
         stage('server_start', server.start)

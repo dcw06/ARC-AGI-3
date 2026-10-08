@@ -1,0 +1,18 @@
+{
+  "baseline_commit": "54242eb951f66f5440f7470eeb43a021ba747cff",
+  "source_overlay": "new regression test module only",
+  "cases": [
+    "test_original_reproduction_missing_configured_path_with_legacy_mount",
+    "test_bound_layout_alias_is_resolved_without_hashing_the_link",
+    "test_deadline_after_last_model_read_cannot_pass"
+  ],
+  "run": 3,
+  "failures": 1,
+  "errors": 2,
+  "expected_failure_reproduced": true,
+  "exit_code": 1,
+  "root_failures": "The original missing path and root alias both fail with ValueError: artifact root must be a real directory.",
+  "deadline_failure": "Empty files bypass the original model-verification callback.",
+  "evidence_class": "CPU fixture reproduction, not observation of the failed GPU filesystem",
+  "gpu_launched": false
+}

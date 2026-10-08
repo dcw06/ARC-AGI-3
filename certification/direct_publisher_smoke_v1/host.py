@@ -4,10 +4,13 @@ import csv
 import hashlib
 import os
 import platform
+import re
 import subprocess
 import sys
 import time
 from pathlib import Path
+
+INPUT_ROOT = Path('/kaggle/input')
 
 
 class HostMismatch(RuntimeError):
@@ -77,9 +80,11 @@ def tree_sha256(root, check=lambda: None):
     base = Path(root).resolve()
     if Path(root).is_symlink() or not base.is_dir():
         raise ValueError('artifact root must be a real directory')
+    check()
     digest = hashlib.sha256(b'arc3-artifact-tree-v1\0')
     count = total = 0
     for path in sorted(base.rglob('*'), key=lambda p: p.relative_to(base).as_posix()):
+        check()
         if path.is_symlink():
             raise ValueError('artifact tree contains a symlink')
         if not path.is_file():
@@ -93,11 +98,55 @@ def tree_sha256(root, check=lambda: None):
         count, total = count + 1, total + size
     if not count:
         raise ValueError('artifact tree is empty')
+    check()  # Empty files and the last read must also obey the model-verification deadline.
     return {'tree_sha256': digest.hexdigest(), 'files': count, 'bytes': total}
 
 
+def model_mount(model):
+    """Select only the reviewed model dataset's two supported Kaggle mount layouts.
+
+    A root alias may point to the other layout of that same dataset. Distinct
+    directories, broken aliases and links to other roots are refused; internal
+    symlinks remain forbidden by tree_sha256. Version identity still depends on
+    the version-pinned attachment and the complete trusted tree digest.
+    """
+    configured = Path(model['mounted_path'])
+    kind = model.get('source_kind', 'model')
+    if kind == 'model':
+        return {'configured_path': str(configured), 'mounted_path': str(configured)}
+    if kind != 'dataset':
+        raise HostMismatch('unsupported model source kind')
+    source = model['kaggle_source']
+    if not isinstance(source, str) or not re.fullmatch(r'[A-Za-z0-9_-]+/[A-Za-z0-9_-]+/[1-9][0-9]*', source):
+        raise HostMismatch('version-pinned model dataset reference required')
+    owner, name, version = source.split('/')
+    candidates = [INPUT_ROOT / 'datasets' / owner / name, INPUT_ROOT / name]
+    if configured not in candidates:
+        raise HostMismatch('configured model path does not name the bound dataset')
+    observations, found = [], set()
+    for candidate in candidates:
+        present, alias = candidate.exists(), candidate.is_symlink()
+        resolved = candidate.resolve() if present else None
+        observations.append({'path': str(candidate), 'exists': present, 'is_directory': candidate.is_dir(),
+                             'is_symlink': alias, 'resolved_path': str(resolved) if resolved else None})
+        if alias and not present:
+            raise HostMismatch(f'broken model dataset mount alias: {candidate}')
+        if present:
+            if not candidate.is_dir() or resolved not in candidates or resolved.is_symlink():
+                raise HostMismatch(f'model dataset mount must resolve to a real bound directory: {candidate}')
+            found.add(resolved)
+    if len(found) != 1:
+        paths = ', '.join(str(path) for path in candidates)
+        raise HostMismatch(f'model dataset {owner}/{name} version {version}: expected one unambiguous mount; '
+                           f'found {len(found)} real directories; checked {paths}')
+    return {'configured_path': str(configured), 'mounted_path': str(found.pop()),
+            'dataset_ref': f'{owner}/{name}', 'requested_version': int(version),
+            'provider_attachment_version_verified': False, 'mount_candidates': observations}
+
+
 def verify_model(model, check=lambda: None):
-    path = Path(model['mounted_path'])
+    mount = model_mount(model)
+    path = Path(mount['mounted_path'])
     tree = tree_sha256(path, check)
     if tree['tree_sha256'] != model['tree_sha256']:
         raise HostMismatch('model artifact tree SHA-256 differs from the pin')
@@ -105,7 +154,8 @@ def verify_model(model, check=lambda: None):
     shards = len(list(path.glob(model['shard_glob'])))
     if missing or shards != model['shard_count']:
         raise HostMismatch(f'model layout: missing {missing}, {shards} shards')
-    return tree
+    check()
+    return dict(tree, **mount)
 
 
 def dataset_mount(ref, version, base=Path('/kaggle/input')):
