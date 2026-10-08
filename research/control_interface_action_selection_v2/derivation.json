@@ -1,0 +1,34 @@
+{
+ "baseline_bindings": {
+  "research/control_interface_action_selection_v1/__init__.py": "9e4993af890737eb3aeefef7fa50d5571a0e7365119b7cfa63ff5f8962116685",
+  "research/control_interface_action_selection_v1/binding.py": "8ebfa8ae6ba77d163a593c6085aa7bc2e5c83743e9d54a5a3a0019151b52578d",
+  "research/control_interface_action_selection_v1/cases-lock.json": "d3964b10a085ecf0903129d693b242a5137298c6f93d064e14578c1786180183",
+  "research/control_interface_action_selection_v1/cases.json": "57231b44a693953fd633cd43cb31a5a31c945482b8e1cf6b59f04f784aab0439",
+  "research/control_interface_action_selection_v1/derivation.json": "9f657116401cee0dfbe98b68802b5214a33aa6829bd9a0c807ba9c98c3076c6b",
+  "research/control_interface_action_selection_v1/evidence.py": "d471dc0a87a7e834add9b336e6e1f16c714bc1ebbce99c22a7d4d7c9270e08f4",
+  "research/control_interface_action_selection_v1/historical-measurements.json": "33ab9f8659ea270c727f9a30208fe0de805576007b1139b38d991ebf7393858a",
+  "research/control_interface_action_selection_v1/launch.py": "fcfc1399962e3d5cb9a6efa4422ca8d06e8dc6e82a9eb9fabbe3220745f22b4d",
+  "research/control_interface_action_selection_v1/notebook.py": "b5dcd444bd6a67b948def6c0d8980312f4855c48913b08d4fc7cf7d4b3401222",
+  "research/control_interface_action_selection_v1/probe.py": "30c86729d5a02d4429ce0c4632a1af4e3c7a4944c34d5e9883cca0284bf284dc",
+  "research/control_interface_action_selection_v1/proposal.json": "8d296646e20c87fc25221911bde4b5aa4ddbe419622006da1e14cc19513f252b",
+  "research/control_interface_action_selection_v1/protocol.json": "f590e1f1cd5b52aafd95cba335e5fe7e7b057a8ea9818a9608e3cec4957a3aad",
+  "research/control_interface_action_selection_v1/rehearsal.py": "02eeadc021f38b34d1e8f03575305616e9bebf31f5a43f8c4edde3ed1cf3a899",
+  "research/control_interface_action_selection_v1/rehearsal_stub.py": "232fd63a53d6c1b9b700e61d0bd32d8096d82e5cefd42edaca045cf0fb8a044e",
+  "research/control_interface_action_selection_v1/run.py": "ca76f9cda673191a0f2920a62530701d8de59a65f6c11080c1c9865a0c593613",
+  "research/control_interface_action_selection_v1/runtime_controls.py": "e2ad08a5ce698f24a0407e5d76b79cc72146b0c762bc3f91721ae1ac49ef2376",
+  "research/control_interface_action_selection_v1/token-audit.json": "0ef06584b828cff4ca5f1f712a689ad95a14708c145f599c472b1c996c7683c5",
+  "research/control_interface_action_selection_v1/trusted_manifest.json": "91ad9ede70c4fdf027cf5739a828f9063dc07c22c6010a64ebd1af0db8f0462b",
+  "research/control_interface_action_selection_v1/trusted_requirements.lock": "ba80d35062245421daf1cae65474281952cc0c44fb46e11cf7f68d0ece496406"
+ },
+ "basis_commit": "8230c5c",
+ "builder": "scripts/build_control_interface_action_selection_v2.py",
+ "case_package": "research/control_interface_action_selection_v1",
+ "changes": [
+  "separate v2 scope; no inherited approvals or attempts",
+  "identical explicit output contract for both arms; new shared background",
+  "integer/object format score separated from legality and argument validity",
+  "conditional denominators and step0/step10 diagnostics; full validity remains primary",
+  "unchanged runtime controller, cleanup, deadlines, frozen cases, schedule and request cap"
+ ],
+ "preserves_baseline_files": true
+}

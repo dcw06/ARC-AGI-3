@@ -20,7 +20,8 @@ from pathlib import Path
 root = Path(sys.argv[1])
 sys.path.insert(0, str(root))
 from certification.direct_publisher_smoke_v1 import preflight as P, install as I
-from research.control_interface_action_selection_v1.binding import load_protocol
+from importlib import import_module
+load_protocol = import_module(sys.argv[2] + '.binding').load_protocol
 try:
     proposal, artifacts, pins = P.load_inputs()
     protocol = load_protocol(root)
@@ -74,10 +75,12 @@ def extract(notebook, folder):
         path.write_bytes(raw)
 
 
-def check(notebook):
+def check(notebook, package='research.control_interface_action_selection_v1'):
+    if package not in ('research.control_interface_action_selection_v1', 'research.control_interface_action_selection_v2'):
+        raise ValueError('unknown extracted probe package')
     with tempfile.TemporaryDirectory(prefix='control-interface-extracted-check-') as folder:
         extract(notebook, folder)
-        result = subprocess.run([sys.executable, '-I', '-c', SCRIPT, folder],
+        result = subprocess.run([sys.executable, '-I', '-c', SCRIPT, folder, package],
                                 cwd=folder, capture_output=True, text=True, timeout=60)
         try:
             record = json.loads(result.stdout)
@@ -91,11 +94,13 @@ def check(notebook):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--revision', type=int, required=True)
+    parser.add_argument('--version', type=int, choices=(1, 2), default=1)
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--expect-missing-proposal', action='store_true')
     args = parser.parse_args()
-    folder = ROOT / f'notebooks/control-interface-action-selection-v1-review-r{args.revision}'
-    record = check(json.loads((folder / 'profile.ipynb').read_bytes()))
+    folder = ROOT / f'notebooks/control-interface-action-selection-v{args.version}-review-r{args.revision}'
+    record = check(json.loads((folder / 'profile.ipynb').read_bytes()),
+                   f'research.control_interface_action_selection_v{args.version}')
     record.update(review_revision=args.revision,
                   review_lock_sha256=hashlib.sha256((folder / 'review-source-lock.json').read_bytes()).hexdigest())
     args.out.parent.mkdir(parents=True, exist_ok=True)
