@@ -1,0 +1,20 @@
+F
+======================================================================
+FAIL: test_review_and_launch_retain_arc3_competition_without_enabling_review_gpu (tests.test_direct_publisher_smoke_competition.CompetitionBindingTests.test_review_and_launch_retain_arc3_competition_without_enabling_review_gpu)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/direct-competition-baseline-1ey91fxu/tests/test_direct_publisher_smoke_competition.py", line 15, in test_review_and_launch_retain_arc3_competition_without_enabling_review_gpu
+    self.assertEqual(metadata['competition_sources'], ['arc-prize-2026-arc-agi-3'])
+AssertionError: Lists differ: [] != ['arc-prize-2026-arc-agi-3']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'arc-prize-2026-arc-agi-3'
+
+- []
++ ['arc-prize-2026-arc-agi-3']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.134s
+
+FAILED (failures=1)

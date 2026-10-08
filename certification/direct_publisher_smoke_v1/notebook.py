@@ -13,6 +13,7 @@ from certification.direct_publisher_smoke_v1.binding import (CLAIM, COMPUTE, EXE
                                                           sha256, unresolved)
 
 MODEL_SOURCE = 'qwen-lm/qwen-3-vl/Transformers/30b-a3b-instruct-fp8/1'
+COMPETITION_SOURCE = 'arc-prize-2026-arc-agi-3'
 KERNEL_ID = 'REPLACE_WITH_KAGGLE_OWNER/arc3-direct-publisher-smoke-v1'
 SIZE_GUARD = 900000
 MARKER = '    sys.path.insert(0, str(source))\n'
@@ -95,6 +96,13 @@ def input_sources(protocol, pending=False):
     return {'dataset_sources': datasets + [source], 'model_sources': []}
 
 
+def competition_sources(protocol):
+    """This ARC-AGI-3 smoke package must retain its reviewed competition binding."""
+    if protocol.get('competition', {}).get('ref') != COMPETITION_SOURCE:
+        raise ValueError('explicit ARC-AGI-3 competition binding required')
+    return [COMPETITION_SOURCE]
+
+
 def review_notebook(root=ROOT):
     protocol = load_protocol(root)
     image = image_metadata(protocol)
@@ -117,7 +125,8 @@ def review_notebook(root=ROOT):
                            'source': CELL.format(packed=packed, bindings=bindings)}]}
     metadata = {'id': KERNEL_ID + '-review', 'title': 'ARC3 Direct publisher Smoke V1 Review', 'code_file': 'profile.ipynb',
                 'language': 'python', 'kernel_type': 'notebook', 'is_private': True, 'enable_gpu': False,
-                'enable_tpu': False, 'enable_internet': False, 'competition_sources': [],
+                'enable_tpu': False, 'enable_internet': False,
+                'competition_sources': competition_sources(protocol),
                 **input_sources(protocol, pending=bool(pending)), **image}
     return notebook, metadata, bindings, pending
 
@@ -172,6 +181,7 @@ def launch_artifacts(root=ROOT):
     if any(metadata.get(key) != value for key, value in image_metadata(protocol).items()):
         raise ValueError('review image pin differs from the protocol')
     sources = input_sources(protocol)
+    sources['competition_sources'] = competition_sources(protocol)
     if any(metadata.get(key) != value for key, value in sources.items()):
         raise ValueError('review input bindings differ from the protocol')
     metadata.update(id=protocol['kernel_id'], title=protocol['kernel_id'].split('/')[1], enable_gpu=True,
