@@ -1,0 +1,39 @@
+{
+ "admission_cutoff_seconds": 3120,
+ "authorized_seconds_proposal": 3600,
+ "cleanup_reserve_seconds": 300,
+ "counted_http_cap": 131,
+ "gpu": "exactly one RTX PRO 6000",
+ "internal_seconds": 3420,
+ "note": "Assumptions, not throughput predictions. Historical selected calls used another decoder and cache setting. Tiny smoke prompts do not predict these real prompt costs. Slow or incomplete runs fail and retain partial evidence; no automatic retries. The 300-second cleanup reserve is separate from every estimate.",
+ "other_http_calls_max": 11,
+ "research_calls": 120,
+ "research_ceiling_seconds": 1500,
+ "scenarios": [
+  {
+   "assumed_seconds_per_research_call": 5,
+   "before_cleanup_seconds": 1600,
+   "fits_1500_second_research_ceiling": true,
+   "fits_3120_second_admission_cutoff": true,
+   "pre_and_post_request_allowance_seconds": 1000,
+   "research_seconds": 600
+  },
+  {
+   "assumed_seconds_per_research_call": 10,
+   "before_cleanup_seconds": 2200,
+   "fits_1500_second_research_ceiling": true,
+   "fits_3120_second_admission_cutoff": true,
+   "pre_and_post_request_allowance_seconds": 1000,
+   "research_seconds": 1200
+  },
+  {
+   "assumed_seconds_per_research_call": 20,
+   "before_cleanup_seconds": 3400,
+   "fits_1500_second_research_ceiling": false,
+   "fits_3120_second_admission_cutoff": false,
+   "pre_and_post_request_allowance_seconds": 1000,
+   "research_seconds": 2400
+  }
+ ],
+ "status": "proposal_not_authorized"
+}
