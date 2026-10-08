@@ -1,0 +1,78 @@
+{
+  "limits": [
+    "Exposed development contexts; repeated passes and within-game contexts are correlated.",
+    "No game actions: usefulness, progress, solving and held-out generalization are untested.",
+    "The shared prompt changed in v2; cross-run differences do not isolate its causal effect."
+  ],
+  "public_review_source_lock_sha256": "1fe36d03ee517f17e8581b9a69515815c6731514c2367aac27c302c1b111c35f",
+  "review_revision": "r2",
+  "runtime": {
+    "automatic_retries": 0,
+    "cleanup_verified": true,
+    "final_deadline_met": true,
+    "game_actions": 0,
+    "gpu_count": 1,
+    "gpu_name": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "lifecycle_seconds": 611.532,
+    "manifest_files_verified": 125,
+    "offline_prompt_token_audit_matches": true,
+    "prefix_caching_disabled": {
+      "confirmation": "all retained startup configuration entries say enable_prefix_caching=False",
+      "disabled": true,
+      "matches": 2
+    },
+    "provider_total_duration_established": false,
+    "raw_responses_independently_rescored": 120,
+    "requests_allowed": 131,
+    "requests_issued": 131,
+    "status": "completed_passed_independently_rescored_development_probe",
+    "summary_matches": true
+  },
+  "schema_version": 1,
+  "scope": "sanitized_aggregate_results",
+  "source_commit": "8230c5c18934cf3129b525ad21ddd744ada3b91c",
+  "summary": {
+    "action_switches_by_pass": {
+      "1": 4,
+      "2": 4
+    },
+    "arms": {
+      "computed_control_metadata": {
+        "components_per_response": {
+          "arguments": 48,
+          "json_object": 60,
+          "legal_id": 48,
+          "shape": 48,
+          "valid": 48
+        },
+        "exact_repeatability": 24,
+        "valid_both_passes": 24,
+        "valid_both_passes_fraction": 0.8
+      },
+      "reference": {
+        "components_per_response": {
+          "arguments": 24,
+          "json_object": 60,
+          "legal_id": 22,
+          "shape": 38,
+          "valid": 22
+        },
+        "exact_repeatability": 11,
+        "valid_both_passes": 11,
+        "valid_both_passes_fraction": 0.36666666666666664
+      }
+    },
+    "complete": true,
+    "contexts": 30,
+    "decision": "development_diagnostic_only_no_policy_promotion",
+    "games": 15,
+    "paired_contexts": {
+      "both_valid": 10,
+      "improved": 14,
+      "neither_valid": 5,
+      "regressed": 1
+    },
+    "research_responses": 120
+  },
+  "version": "v1"
+}

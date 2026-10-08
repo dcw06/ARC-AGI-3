@@ -1,0 +1,132 @@
+{
+  "limits": [
+    "Exposed development contexts; repeated passes and within-game contexts are correlated.",
+    "No game actions: usefulness, progress, solving and held-out generalization are untested.",
+    "The shared prompt changed in v2; cross-run differences do not isolate its causal effect."
+  ],
+  "public_review_source_lock_sha256": "beeb6719ed817e3cb42a9842b03a7c47a2ee75aa87831908520318a54c041dc7",
+  "review_revision": "r1",
+  "runtime": {
+    "automatic_retries": 0,
+    "cleanup_verified": true,
+    "final_deadline_met": true,
+    "game_actions": 0,
+    "gpu_count": 1,
+    "gpu_name": "NVIDIA RTX PRO 6000 Blackwell Server Edition",
+    "lifecycle_seconds": 539.741,
+    "manifest_files_verified": 125,
+    "offline_prompt_token_audit_matches": true,
+    "prefix_caching_disabled": {
+      "confirmation": "all retained startup configuration entries say enable_prefix_caching=False",
+      "disabled": true,
+      "matches": 2
+    },
+    "provider_total_duration_established": false,
+    "raw_responses_independently_rescored": 120,
+    "requests_allowed": 131,
+    "requests_issued": 131,
+    "status": "completed_passed_independently_rescored_v2_development_probe",
+    "summary_matches": true
+  },
+  "schema_version": 1,
+  "scope": "sanitized_aggregate_results",
+  "source_commit": "26ef128f9c642044985556468a3c6b9a118d016d",
+  "summary": {
+    "action_switches_by_pass": {
+      "1": 13,
+      "2": 13
+    },
+    "arms": {
+      "computed_control_metadata": {
+        "arguments_given_format_and_legal_per_response": {
+          "denominator": 58,
+          "fraction": 1.0,
+          "numerator": 58
+        },
+        "components_per_response": {
+          "arguments": 60,
+          "format_valid": 60,
+          "integer_id": 60,
+          "json_object": 60,
+          "legal_id": 58,
+          "shape": 60,
+          "valid": 58
+        },
+        "exact_repeatability": 29,
+        "format_valid_both_passes": 30,
+        "legality_given_format_per_response": {
+          "denominator": 60,
+          "fraction": 0.9666666666666667,
+          "numerator": 58
+        },
+        "valid_both_passes": 29,
+        "valid_both_passes_fraction": 0.9666666666666667
+      },
+      "reference": {
+        "arguments_given_format_and_legal_per_response": {
+          "denominator": 60,
+          "fraction": 1.0,
+          "numerator": 60
+        },
+        "components_per_response": {
+          "arguments": 60,
+          "format_valid": 60,
+          "integer_id": 60,
+          "json_object": 60,
+          "legal_id": 60,
+          "shape": 60,
+          "valid": 60
+        },
+        "exact_repeatability": 30,
+        "format_valid_both_passes": 30,
+        "legality_given_format_per_response": {
+          "denominator": 60,
+          "fraction": 1.0,
+          "numerator": 60
+        },
+        "valid_both_passes": 30,
+        "valid_both_passes_fraction": 1.0
+      }
+    },
+    "by_step": {
+      "0": {
+        "arms": {
+          "computed_control_metadata": {
+            "format_valid_both_passes": 15,
+            "valid_both_passes": 14
+          },
+          "reference": {
+            "format_valid_both_passes": 15,
+            "valid_both_passes": 15
+          }
+        },
+        "contexts": 15
+      },
+      "10": {
+        "arms": {
+          "computed_control_metadata": {
+            "format_valid_both_passes": 15,
+            "valid_both_passes": 15
+          },
+          "reference": {
+            "format_valid_both_passes": 15,
+            "valid_both_passes": 15
+          }
+        },
+        "contexts": 15
+      }
+    },
+    "complete": true,
+    "contexts": 30,
+    "decision": "development_diagnostic_only_no_policy_promotion",
+    "games": 15,
+    "paired_contexts": {
+      "both_valid": 29,
+      "improved": 0,
+      "neither_valid": 0,
+      "regressed": 1
+    },
+    "research_responses": 120
+  },
+  "version": "v2"
+}
