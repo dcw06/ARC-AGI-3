@@ -20,5 +20,15 @@
    "note": "Verifies that the retained copy reproduces the frozen question set. It is not a holder's independent check."
   }
  ],
- "earlier_unretained_check": "A check script ran on the same copy on 2026-10-03; its output was not retained."
+ "earlier_unretained_check": "A check script ran on the same copy on 2026-10-03; its output was not retained.",
+ "holder_check_entry": {
+  "holder": "name or role of the person holding this copy (two distinct holders)",
+  "checked_at": "UTC timestamp of the check",
+  "commit": "the track4-successor-runtime-v1 commit checked out cleanly",
+  "printed": "question set matches a fresh build: f93ec44bab00453147e8e7e555704b60edc8220e6b5677b89d199ce8fca5e02c",
+  "exit_code": 0,
+  "independent": "true: the holder ran the check personally on their own copy",
+  "copy_outside_repository": "true: the holder keeps the copy outside any repository"
+ },
+ "confirmation_rule": "status becomes two_holder_retention_confirmed and holders_confirmed 2 only when holder_checks holds two such entries from distinct holders, each reported by the holder. The launch gate reads this committed record; no approval substitutes for it."
 }

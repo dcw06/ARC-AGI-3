@@ -36,7 +36,11 @@ frozen set, and the retention gate could not be met.
    question set matches a fresh build: f93ec44bab00453147e8e7e555704b60edc8220e6b5677b89d199ce8fca5e02c
    ```
 
-3. Report the holder (name or role), the date, the commit checked and the printed line. Never report the seed.
+3. Report the holder (name or role), the date, the commit checked and the printed line. Confirm that you ran the
+   check yourself on your own copy, and that you keep the copy outside any repository. Never report the seed.
 
 Each report is added to `holder_checks` in the JSON record. Two-holder retention is confirmed when both entries are
 present and both show the expected hash.
+
+The fields of each entry are in the JSON record (`holder_check_entry`). The authorized Track 4 attempt cannot be
+reserved or launched until this record holds two such entries from distinct holders and is committed.
