@@ -1,6 +1,6 @@
 {
  "schema": "progress_subgoal_v1_seed_verification_v1",
- "status": "single_holder_two_copies_not_confirmed",
+ "status": "single_holder_two_copies_confirmed",
  "owner_rule": "Two-holder retention is confirmed only after both holders have each independently run the check successfully. The seed stays private; only verification records and the resulting hash are retained.",
  "seed_sha256": "ca1e518ccbfded860c80c481ca188e25fd3009a9c15db7413c69907db7ad02aa",
  "expected_question_set_sha256": "f93ec44bab00453147e8e7e555704b60edc8220e6b5677b89d199ce8fca5e02c",
@@ -39,8 +39,33 @@
   "limitation": "redundant storage, but no independent second holder: the owner is a single point of failure and the two checks are not independent verifications"
  },
  "copies_required": 2,
- "copies_confirmed": 0,
- "copy_checks": [],
+ "copies_confirmed": 2,
+ "copy_checks": [
+  {
+   "copy_id": "copy A",
+   "holder": "owner",
+   "checked_at": "2026-10-09T20:48:46Z",
+   "commit": "2a80579e6112e817d16dfe2e8dfd7b21c1629d83",
+   "printed": "question set matches a fresh build: f93ec44bab00453147e8e7e555704b60edc8220e6b5677b89d199ce8fca5e02c",
+   "exit_code": 0,
+   "run_personally": true,
+   "copy_outside_repository": true,
+   "separate_storage": true,
+   "storage": "Windows filesystem of the owner's computer"
+  },
+  {
+   "copy_id": "copy B",
+   "holder": "owner",
+   "checked_at": "2026-10-09T20:48:46Z",
+   "commit": "2a80579e6112e817d16dfe2e8dfd7b21c1629d83",
+   "printed": "question set matches a fresh build: f93ec44bab00453147e8e7e555704b60edc8220e6b5677b89d199ce8fca5e02c",
+   "exit_code": 0,
+   "run_personally": true,
+   "copy_outside_repository": true,
+   "separate_storage": true,
+   "storage": "WSL (ext4) filesystem of the same computer"
+  }
+ ],
  "copy_check_entry": {
   "holder": "owner",
   "copy_id": "a label distinguishing the two copies, e.g. \"copy A\" and \"copy B\" (no storage location needed)",
@@ -51,5 +76,13 @@
   "run_personally": "true: the owner ran this check",
   "copy_outside_repository": "true: this copy is kept outside any repository",
   "separate_storage": "true: this copy is stored separately from the other copy"
+ },
+ "copy_check_notes": {
+  "how_reported": "the owner ran both checks in their own WSL terminal in a fresh shallow clone at 2a80579 and pasted the session; checked_at is the `date -u` printed immediately before the two checks",
+  "exit_code_basis": "the script prints the success line only when the rebuilt question set matches; otherwise it refuses with an error",
+  "outside_repository_verified": "neither copy folder is inside a git repository (checked without reading the seed)",
+  "inputs_unchanged": "probes.json, the build script, questions.py and evaluation_seed.json at 2a80579 are identical to the frozen package (c5644d9 and earlier)",
+  "storage_limitation": "both copies are on the same computer, on separate filesystems; they do not protect against loss of that computer",
+  "supplementary": "reports/progress_subgoal_v1_assistant_copy_checks.* (assistant-run checks of the same copies, not counted)"
  }
 }

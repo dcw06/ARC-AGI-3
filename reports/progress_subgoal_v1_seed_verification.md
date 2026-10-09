@@ -63,3 +63,18 @@ For each copy, report:
 - the printed line;
 - confirmation that you ran the check yourself, that the copy is outside any repository, and that it is stored
   separately from the other copy.
+
+## Recorded under the amended rule (October 9, 2026, 20:48 UTC)
+
+The owner personally ran the check on both copies, in a fresh clone at `2a80579`. The files the check reads there are
+unchanged from the frozen package. Both checks printed
+`question set matches a fresh build: f93ec44bab00453147e8e7e555704b60edc8220e6b5677b89d199ce8fca5e02c`.
+
+| Copy | Storage | Outside any repository |
+|---|---|---|
+| A | Windows filesystem of the owner's computer | yes (verified without reading the seed) |
+| B | WSL (ext4) filesystem of the same computer | yes (verified without reading the seed) |
+
+**Status: confirmed under the amended rule (2 of 2 copies).** Limitation: both copies are on one computer, so they
+do not protect against losing it. The assistant-run checks in `progress_subgoal_v1_assistant_copy_checks.*` are
+supplementary and not counted.
