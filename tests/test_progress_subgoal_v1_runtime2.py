@@ -7,6 +7,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import re
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -306,6 +307,41 @@ class LiveGate(unittest.TestCase):
                 put(B.COMPUTE, {**compute, **fields})
                 with self.assertRaises(B.LiveRefused):
                     B.require_live(root)
+
+    def test_review_document_drift_refused_before_launch_and_before_evaluation(self):
+        from scripts import evaluate_progress_subgoal_v1_runtime2 as EV
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            gated_fixture(root)
+            lock = B.review_lock(root)
+            bound = B.read_json(root, lock)['bindings']
+            self.assertLessEqual(set(B.REVIEW_REQUIRED), set(B.read_json(root, lock)['review_documents']))
+            self.assertEqual(EV.review_errors(root)[0], [])
+            review_only = [t for t in B.REVIEW_REQUIRED if t not in bound]
+            self.assertIn('scripts/evaluate_progress_subgoal_v1_runtime2.py', review_only)
+            self.assertIn('reports/progress_subgoal_v1_protocol_v2_frozen.md', review_only)
+            for target in B.REVIEW_REQUIRED:
+                original = (root / target).read_bytes()
+                (root / target).write_bytes(original + b'\n')
+                with self.assertRaises(B.LiveRefused) as caught:
+                    B.require_live(root)
+                with self.assertRaisesRegex(Exception, 'drift'):
+                    N.launch_artifacts(root)
+                self.assertTrue(EV.review_errors(root)[0], target)
+                if target in review_only:  # only the new check can see these; the payload never carries them
+                    self.assertIn('review document drift: ' + target, str(caught.exception))
+                    B.require_live(root, review_documents=False)
+                else:  # also a runtime source: refused everywhere, the payload included
+                    self.assertRegex(str(caught.exception), 'drift')
+                    with self.assertRaises(B.LiveRefused):
+                        B.require_live(root, review_documents=False)
+                (root / target).write_bytes(original)
+            B.require_live(root)
+            value = B.read_json(root, lock)
+            del value['review_documents']['scripts/evaluate_progress_subgoal_v1_runtime2.py']
+            (root / lock).write_bytes(json.dumps(value).encode())
+            with self.assertRaisesRegex(B.LiveRefused, 'review documents incomplete'):
+                B.require_live(root)
 
     def test_source_drift_and_missing_bindings_refused(self):
         with tempfile.TemporaryDirectory() as folder:

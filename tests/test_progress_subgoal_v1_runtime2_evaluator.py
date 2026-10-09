@@ -161,6 +161,70 @@ class Evaluator(unittest.TestCase):
         value = self.evaluate('limits', result_hook=limits)
         self.assertTrue(any('limits' in e for e in value['lifecycle_errors']))
 
+    def test_every_mandatory_runtime_probe_must_be_issued_and_match_its_stage_evidence(self):
+        def edit(change):
+            def apply(folder):
+                result = json.loads((folder / 'result.json').read_bytes())
+                change(result)
+                for n, entry in enumerate(result['ledger']['entries']):
+                    entry['sequence'] = n + 1
+                result['ledger']['issued'] = len(result['ledger']['entries'])
+                FX.put(folder, 'result.json', result)
+                FX.finalize(folder)
+            return apply
+
+        def without(request_id, ledger=True, stage=True):
+            stage_name = {'C2': 'cancellation_C2_idle', 'C3': 'cancellation_C3_responsive'}.get(
+                request_id, 'inference_' + request_id)
+
+            def change(result):
+                if ledger:
+                    result['ledger']['entries'] = [e for e in result['ledger']['entries'] if e['id'] != request_id]
+                if stage:
+                    result['requests'].pop(request_id)
+                    result['stages'].pop(stage_name)
+                    result['phases'] = [p for p in result['phases'] if p['phase'] != stage_name]
+            return change
+
+        def entry(request_id, **fields):
+            def change(result):
+                for e in result['ledger']['entries']:
+                    if e['id'] == request_id:
+                        e.update(fields)
+            return change
+
+        def probe(request_id, stage_name, **fields):
+            def change(result):
+                result['requests'][request_id].update(fields)
+                result['stages'][stage_name].update(fields)
+            return change
+
+        def second_c2_read(result):  # C2 may be issued twice; its retained readings must say so
+            entries = result['ledger']['entries']
+            n = [e['id'] for e in entries].index('C2')
+            entries.insert(n + 1, dict(entries[n]))
+
+        def c1_first(result):
+            entries = result['ledger']['entries']
+            entries.insert(0, entries.pop([e['id'] for e in entries].index('C1')))
+
+        cases = {  # the reviewer's case first: C3 removed from the retained evidence, ledger count adjusted
+                 'C3 removed': (without('C3'), 'missing from the ledger: C3'),
+                 'C3 ledger entry removed': (without('C3', stage=False), 'missing from the ledger: C3'),
+                 'C3 stage evidence removed': (without('C3', ledger=False), 'without matching retained stage evidence: C3'),
+                 'I2 removed': (without('I2'), 'missing from the ledger: I2'),
+                 'C3 failed its checks': (probe('C3', 'cancellation_C3_responsive', passed=False),
+                                          'does not show it passed: C3'),
+                 'C2 readings differ from the ledger': (second_c2_read, 'does not show it passed: C2'),
+                 'I1 outcome failed': (entry('I1', outcome='failed'), 'outcome differs from its stage evidence: I1'),
+                 'C1 before the questionnaire': (c1_first, 'not after the questionnaire: C1')}
+        for label, (change, message) in cases.items():
+            value = self.mutate('probe-' + label.replace(' ', '-'), edit(change))
+            self.assertFalse(value['technically_complete'], label)
+            self.assertFalse(value['lifecycle_passed'], label)
+            self.assertTrue(any(message in e for e in value['lifecycle_errors']), (label, value['lifecycle_errors']))
+            self.assertEqual(set(value['gate'].values()), {'incomplete'}, label)
+
     def test_collected_answers_with_failed_post_run_checks_qualify_no_arm(self):
         # Frozen protocol v2 §9: every answer retained, but the cancellation probes after the questionnaire were
         # refused at the admission cutoff. The attempt fails; the scores stay descriptive; no arm qualifies.

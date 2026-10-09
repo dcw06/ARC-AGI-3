@@ -120,11 +120,28 @@ def write_evidence(folder, protocol, *, policy='scripted', count=None, stop_reas
                  'outcome': 'http_200'} for i in ('C1', 'C2', 'C3')]
     for n, e in enumerate(entries):
         e.update(sequence=n + 1, issued_at=round(1 + n * 0.001, 3))
+    entries[[e['id'] for e in entries].index('C1')]['outcome'] = 'cancelled_after_first_content'
+    # The mandatory runtime probes' retained stage evidence, as research/progress_subgoal_v1_runtime2/run.py keeps it.
+    checks = {'model_matches': True, 'content_nonempty': True, 'finish_reason_valid': True,
+              'prompt_tokens_positive': True, 'completion_within_limit': True}
+    probes = {'S1': {'status': 200}, 'S2': {'models': [protocol['server']['served_model_name']]},
+              'C1': {'cancelled': True, 'first_content_seconds': 0.01},
+              'C2': {'idle': True, 'readings': [{'running': 0, 'waiting': 0}]}}
+    for i in ('S3', 'I1', 'I2', 'I3', 'I4', 'C3'):
+        probes[i] = {'case': plan[i]['case'], 'content': 'ok', 'finish_reason': 'stop',
+                     'usage': {'prompt_tokens': 10, 'completion_tokens': 1}, 'checks': dict(checks), 'passed': True}
+    stage_names = {'S1': 'startup_probe_S1', 'S2': 'startup_probe_S2', 'S3': 'startup_probe_S3',
+                   'I1': 'inference_I1', 'I2': 'inference_I2', 'I3': 'inference_I3', 'I4': 'inference_I4',
+                   'C1': 'cancellation_C1', 'C2': 'cancellation_C2_idle', 'C3': 'cancellation_C3_responsive'}
+    stages = {'cache_config': {'disabled': True, 'matches': 1}}
+    stages.update({stage_names[i]: copy.deepcopy(v) for i, v in probes.items()})
+    phases = [{'phase': name, 'began_at': 1.0, 'seconds': 0.001, 'outcome': 'passed'}
+              for name in (*stage_names.values(), 'cache_config', 'questionnaire')]
     result = {'mode': 'rehearsal', 'evidence_class': 'scripted_cpu_rehearsal', 'passed': True,
               'verdict_status': 'passed', 'failed_stage': None, 'error': None, 'cleanup_verified': True,
               'cleanup': {'groups_absent': True, 'gpu': 'not_exercised (no GPU in a CPU rehearsal)'},
               'lifecycle_deadline': {'met': True}, 'limits': protocol['limits'], 'elapsed_seconds': t + 5,
-              'stages': {'cache_config': {'disabled': True, 'matches': 1}}, 'completed_plan': True,
+              'stages': stages, 'requests': probes, 'phases': phases, 'completed_plan': True,
               'ledger': {'maximum_model_requests': protocol['limits']['maximum_model_requests'],
                          'issued': len(entries), 'entries': entries, 'refusals': []},
               'gpu_compatibility_evidence': False}

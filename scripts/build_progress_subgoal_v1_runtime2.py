@@ -267,9 +267,10 @@ NOTEBOOK_CONSTANTS_NEW = """SIZE_GUARD = 900000
 # The superseded review package of the same experiment (old runtime). It stays byte-identical; nothing is inherited.
 SUPERSEDES = {'review_lock': 'notebooks/progress-subgoal-v1-review-r4/review-source-lock.json',
               'review_lock_sha256': 'e7e1518ba6e23b9b3d4a24a6de25aaac94df5663e31dbf884859fd44eeff70f2',
-              # The previous runtime2 snapshot (draft protocol), also kept byte-identical.
-              'previous_revision_lock': 'notebooks/progress-subgoal-v1-runtime2-review-r5/review-source-lock.json',
-              'previous_revision_lock_sha256': '0cf45e6ccaf88bb956289e2b9b05729d0e9e9078c633e0994b35aea1592d4feb'}
+              # The previous runtime2 snapshot (frozen protocol, before the probe and review-document checks), kept
+              # byte-identical; r5 (draft protocol) is kept too.
+              'previous_revision_lock': 'notebooks/progress-subgoal-v1-runtime2-review-r6/review-source-lock.json',
+              'previous_revision_lock_sha256': '447bd4b50775ac2facee824d46f875b84441f4e11b9763edc02eed7b9fbf57a8'}
 # Hash-bound for review, never part of the runtime payload: the protocol, frozen rules and decisions, the independent
 # evaluator and token audit tooling, the derivation, and this successor's reports.
 REVIEW_DOCUMENTS = ('reports/progress_subgoal_v1_protocol_v2_frozen.md', 'reports/progress_subgoal_v1_model_identity.json',
@@ -470,6 +471,25 @@ if __name__ == '__main__':
 '''
 
 
+BINDING_REVIEW_REQUIRED = """# Review documents every review lock must bind; every repository-side gate verifies them.
+REVIEW_REQUIRED = ('reports/progress_subgoal_v1_protocol_v2_frozen.md', 'reports/progress_subgoal_v1_model_identity.json',
+                   'research/progress_subgoal_v1/decision_rules.json', 'research/progress_subgoal_v1/score.py',
+                   'research/progress_subgoal_v1/evaluate_run.py', 'scripts/evaluate_progress_subgoal_v1_runtime2.py')
+"""
+BINDING_CHECK_SOURCES_HEAD = '''def check_sources(root, lock_name, review_documents=True):
+    """The reviewed runtime sources and, unless inside the runtime payload, the review documents, by hash."""
+'''
+BINDING_REVIEW_CHECK = """    if review_documents:
+        listed = lock.get('review_documents') or {}
+        missing = sorted(set(REVIEW_REQUIRED) - set(listed))
+        if missing:
+            raise ValueError('review documents incomplete: ' + ', '.join(missing))
+        for name, digest in sorted(listed.items()):
+            if sha256(resolve(root, name)) != digest:
+                raise ValueError('review document drift: ' + name)
+"""
+
+
 def derivations(experiment_sources):
     """target -> (basis, [(old, new, count)]) applied after the global renames."""
     package = 'scripts/progress_subgoal_v1_runtime2_package.py'
@@ -493,6 +513,25 @@ def derivations(experiment_sources):
              "PACKAGE + '/token-audit.json'}\n",
              "    from .runtime_controls import EXPERIMENT_SOURCES\n"
              "    required |= set(EXPERIMENT_SOURCES) | {PACKAGE + '/derivation.json', PACKAGE + '/token-audit.json'}\n", 1),
+            # Review documents (frozen protocol, decision rules, scorer, independent evaluator) are verified wherever
+            # they exist by design: the repository checkout (review check, launch tooling, launch-build) and the
+            # independent evaluation. The runtime payload never carries them, so the in-payload gate skips them.
+            ("BYTES = 'reports/progress_subgoal_v1_runtime2_byte_verification.json'\n",
+             "BYTES = 'reports/progress_subgoal_v1_runtime2_byte_verification.json'\n" + BINDING_REVIEW_REQUIRED, 1),
+            ("def check_sources(root, lock_name):\n", BINDING_CHECK_SOURCES_HEAD, 1),
+            ("            raise ValueError('source drift: ' + name)\n    return lock\n",
+             "            raise ValueError('source drift: ' + name)\n" + BINDING_REVIEW_CHECK + "    return lock\n", 1),
+            ("def require_live(root=None, need_claim=True):\n",
+             "def require_live(root=None, need_claim=True, review_documents=True):\n", 1),
+            ("    the launch tooling to create the claim itself.\"\"\"\n",
+             "    the launch tooling to create the claim itself. `review_documents=False` is used only inside the runtime\n"
+             "    payload, which never carries the review documents; they were verified when the launch package was built.\"\"\"\n",
+             1),
+            ("        check_sources(root, lock_name)\n        check_approvals(root, lock_name, protocol)\n",
+             "        check_sources(root, lock_name, review_documents)\n        check_approvals(root, lock_name, protocol)\n", 1),
+            ("    protocol, execution = require_live(root)\n    marker = ",
+             "    protocol, execution = require_live(root, review_documents=False)  # inside the runtime payload\n"
+             "    marker = ", 1),
         ]),
         NEW + '/runtime_controls.py': (OLD + '/runtime_controls.py', [
             (RUNTIME_CONTROLS_OLD_BODY, RUNTIME_CONTROLS_NEW_HEAD.format(experiment_sources=tuple(experiment_sources)), 1),
@@ -532,6 +571,8 @@ def derivations(experiment_sources):
              "                   'throughput or capacity limits', 'behaviour beyond the frozen request plan']", 1),
             (RUN_STAGE_OLD, RUN_STAGE_NEW, 1),
             ("prefix='control-interface-probe-'", "prefix='progress-subgoal-v1-runtime2-'", 1),
+            ("    protocol, execution = require_live(root)  # again: nothing below runs unless every condition holds\n",
+             "    protocol, execution = require_live(root, review_documents=False)  # again, inside the runtime payload\n", 1),
         ]),
         NEW + '/evidence.py': (OLD + '/evidence.py', [
             ("LIVE = 'gpu_progress_subgoal_v1_runtime2_development_probe'",
@@ -562,11 +603,11 @@ def derivations(experiment_sources):
         package: ('scripts/control_interface_action_selection_v2_package.py', [
             ('"""Direct publisher smoke test packaging (no upload, no reservation, no GPU).',
              '"""progress_subgoal_v1 runtime2 packaging (no upload, no reservation, no GPU).', 1),
-            ('review-build --revision 1', 'review-build --revision 6', 1),
-            ('review-check --revision 1', 'review-check --revision 6', 1),
+            ('review-build --revision 1', 'review-build --revision 7', 1),
+            ('review-check --revision 1', 'review-check --revision 7', 1),
             ("prefix='control-interface-review-check-'", "prefix='psv1-runtime2-review-check-'", 1),
             ("    parser.add_argument('--revision', type=int, default=1)",
-             "    parser.add_argument('--revision', type=int, default=6)", 1),
+             "    parser.add_argument('--revision', type=int, default=7)", 1),
             ("    check_sources(ROOT, (folder / 'review-source-lock.json').relative_to(ROOT).as_posix())\n"
              "    for name, digest in lock['artifacts'].items():\n"
              "        if sha256(folder / name) != digest:\n"
@@ -760,7 +801,7 @@ def protocol_record(root=ROOT):
     protocol['requests'] = runtime[:7] + QN.request_plan(record['scheduled_calls'],
                                                          record['call_timing']['timeout_seconds']) + runtime[7:]
     protocol['experiment'] = dict(record, name='progress_subgoal_v1', decision_rules_sha256=DECISION_RULES_SHA256,
-                                  protocol_document='reports/progress_subgoal_v1_protocol_v2.md',
+                                  protocol_document='reports/progress_subgoal_v1_protocol_v2_frozen.md',
                                   third_arm_decision='keep_two_arms (research/progress_subgoal_v1/third_arm_decision.json)',
                                   evaluation_seed='hash only: research/progress_subgoal_v1/evaluation_seed.json',
                                   decision_partition='withheld (the frozen evaluation build)',

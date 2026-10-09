@@ -106,7 +106,7 @@ def snapshot(revision):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--group', choices=('successor', 'controller', 'snapshot'), required=True)
-    parser.add_argument('--revision', type=int, default=6)
+    parser.add_argument('--revision', type=int, default=7)
     parser.add_argument('--out', type=Path, required=True)
     args = parser.parse_args()
     if sys.platform != 'linux':

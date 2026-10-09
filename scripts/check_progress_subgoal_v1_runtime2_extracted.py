@@ -9,7 +9,7 @@ the payload. The retained evidence is then evaluated independently against the p
 
 Not GPU or model evidence; the scripted answers' labels are not results.
 
-Usage: python scripts/check_progress_subgoal_v1_runtime2_extracted.py --revision 6 [--out FILE]
+Usage: python scripts/check_progress_subgoal_v1_runtime2_extracted.py --revision 7 [--out FILE]
 """
 import argparse
 import json
@@ -44,7 +44,7 @@ print(json.dumps({'passed': result['passed'], 'failed_stage': result['failed_sta
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--revision', type=int, default=6)
+    parser.add_argument('--revision', type=int, default=7)
     parser.add_argument('--out', type=Path)
     args = parser.parse_args()
     if sys.platform != 'linux':

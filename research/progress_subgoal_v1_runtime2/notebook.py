@@ -20,9 +20,10 @@ SIZE_GUARD = 900000
 # The superseded review package of the same experiment (old runtime). It stays byte-identical; nothing is inherited.
 SUPERSEDES = {'review_lock': 'notebooks/progress-subgoal-v1-review-r4/review-source-lock.json',
               'review_lock_sha256': 'e7e1518ba6e23b9b3d4a24a6de25aaac94df5663e31dbf884859fd44eeff70f2',
-              # The previous runtime2 snapshot (draft protocol), also kept byte-identical.
-              'previous_revision_lock': 'notebooks/progress-subgoal-v1-runtime2-review-r5/review-source-lock.json',
-              'previous_revision_lock_sha256': '0cf45e6ccaf88bb956289e2b9b05729d0e9e9078c633e0994b35aea1592d4feb'}
+              # The previous runtime2 snapshot (frozen protocol, before the probe and review-document checks), kept
+              # byte-identical; r5 (draft protocol) is kept too.
+              'previous_revision_lock': 'notebooks/progress-subgoal-v1-runtime2-review-r6/review-source-lock.json',
+              'previous_revision_lock_sha256': '447bd4b50775ac2facee824d46f875b84441f4e11b9763edc02eed7b9fbf57a8'}
 # Hash-bound for review, never part of the runtime payload: the protocol, frozen rules and decisions, the independent
 # evaluator and token audit tooling, the derivation, and this successor's reports.
 REVIEW_DOCUMENTS = ('reports/progress_subgoal_v1_protocol_v2_frozen.md', 'reports/progress_subgoal_v1_model_identity.json',

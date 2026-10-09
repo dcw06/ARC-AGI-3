@@ -32,6 +32,11 @@ ADMISSION_SLACK_SECONDS = 0.5  # stamps are taken just after admission and just 
 FINISH_REASONS = ('stop', 'length')
 STOP_STATUSES = ('transport_failure', 'rejected', 'canceled', 'deadline_expired')
 MAX_PROMPT_TOKENS = 60000
+PROBE_KINDS = ('startup_probe', 'inference', 'cancellation_probe')
+# The stage under which research/progress_subgoal_v1_runtime2/run.py retains each mandatory runtime probe.
+PROBE_STAGES = {'S1': 'startup_probe_S1', 'S2': 'startup_probe_S2', 'S3': 'startup_probe_S3', 'I1': 'inference_I1',
+                'I2': 'inference_I2', 'I3': 'inference_I3', 'I4': 'inference_I4', 'C1': 'cancellation_C1',
+                'C2': 'cancellation_C2_idle', 'C3': 'cancellation_C3_responsive'}
 
 
 def finite(value, low=None, high=None):
@@ -133,7 +138,77 @@ def ledger_errors(result, protocol, records):
     idle_reads = sum((r.get('idle_verification') or {}).get('reads', 0) for r in records)
     if issued.get('QIDLE', 0) != idle_reads:
         errors.append('ledger idle-check reads differ from the retained idle verifications')
+    return errors + probe_errors(result, protocol, entries)
+
+
+def probe_errors(result, protocol, entries):
+    """Every mandatory runtime probe of the frozen plan must be in the ledger, in the frozen order (startup and
+    inference before the first questionnaire request, cancellation after the last), with the expected outcome, and
+    must agree with its retained stage evidence: the request record, the identical stage value and a passed phase."""
+    plan = {item['id']: item for item in protocol['requests']}
+    probes = [item['id'] for item in protocol['requests'] if item['kind'] in PROBE_KINDS]
+    if set(probes) != set(PROBE_STAGES):
+        return ['runtime probe plan differs from the frozen probe stages']
+    errors = []
+    if [e.get('sequence') for e in entries] != list(range(1, len(entries) + 1)):
+        errors.append('ledger sequence is not contiguous')
+    requests, stages = result.get('requests') or {}, result.get('stages') or {}
+    passed = {p.get('phase') for p in result.get('phases') or [] if isinstance(p, dict) and p.get('outcome') == 'passed'}
+    positions = {}
+    for n, entry in enumerate(entries):
+        positions.setdefault(entry.get('id'), []).append(n)
+    questionnaire = [n for n, e in enumerate(entries)
+                     if (plan.get(e.get('id')) or {}).get('kind') in ('questionnaire', 'questionnaire_idle_check')]
+    for request_id in probes:
+        item, stage, issued = plan[request_id], PROBE_STAGES[request_id], positions.get(request_id, [])
+        record = requests.get(request_id)
+        if not issued:
+            errors.append('mandatory runtime probe missing from the ledger: ' + request_id)
+            continue
+        if not isinstance(record, dict) or stages.get(stage) != record or stage not in passed:
+            errors.append('runtime probe without matching retained stage evidence: ' + request_id)
+            continue
+        expected = 'cancelled_after_first_content' if request_id == 'C1' else 'http_200'
+        if any(entries[n].get('outcome') != expected for n in issued):
+            errors.append('runtime probe outcome differs from its stage evidence: ' + request_id)
+        if item['kind'] == 'cancellation_probe':
+            if not questionnaire or issued[0] < questionnaire[-1]:
+                errors.append('cancellation probe not after the questionnaire: ' + request_id)
+        elif questionnaire and issued[-1] > questionnaire[0]:
+            errors.append('startup or inference probe not before the questionnaire: ' + request_id)
+        if request_id == 'S1':
+            content_ok = record.get('status') == 200
+        elif request_id == 'S2':
+            content_ok = protocol['server']['served_model_name'] in (record.get('models') or [])
+        elif request_id == 'C1':
+            content_ok = record.get('cancelled') is True and finite(record.get('first_content_seconds'), 0)
+        elif request_id == 'C2':
+            readings = record.get('readings')
+            content_ok = (record.get('idle') is True and isinstance(readings, list) and len(readings) == len(issued)
+                          and isinstance(readings[-1], dict) and readings[-1].get('running') == 0
+                          and readings[-1].get('waiting') == 0)
+        else:
+            checks = record.get('checks')
+            content_ok = (record.get('passed') is True and record.get('case') == item.get('case')
+                          and isinstance(checks, dict) and bool(checks) and all(v is True for v in checks.values()))
+        if not content_ok:
+            errors.append('runtime probe stage evidence does not show it passed: ' + request_id)
+    order = [positions[r][0] for r in probes if r in positions]
+    if order != sorted(order):
+        errors.append('runtime probes out of the frozen order')
     return errors
+
+
+def review_errors(root):
+    """Live: the evaluating checkout must hold exactly the reviewed sources and review documents (the frozen
+    protocol, decision rules, scorer and this evaluator) of its latest review lock. Returns (errors, verified)."""
+    from research.progress_subgoal_v1_runtime2.binding import check_sources, review_lock, sha256
+    try:
+        name = review_lock(root)
+        check_sources(root, name)
+        return [], {'review_lock': name, 'review_lock_sha256': sha256(Path(root) / name)}
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        return ['review sources: ' + type(exc).__name__ + ': ' + str(exc)[:160]], None
 
 
 def answered_errors(n, record, probe, audit_tokens, served):
@@ -263,7 +338,9 @@ def evaluate_output(folder, *, mode='live', root=ROOT, protocol=None):
     frozen, probe_set_sha256, schedule = QN.scheduled(root)
     audit = QN.token_audit(root)
     hashes = [request_hash(row[4]) for row in schedule]
-    binding = []
+    binding, review = [], None
+    if mode == 'live':
+        binding, review = review_errors(root)
     if probe_set_sha256 != experiment['probe_set_sha256'] or audit.get('probe_set_sha256') != probe_set_sha256:
         binding.append('frozen question set differs from the protocol or token audit')
     if audit.get('request_digest') != QN.request_digest(hashes) or len(audit.get('prompt_tokens', [])) != len(schedule):
@@ -323,7 +400,7 @@ def evaluate_output(folder, *, mode='live', root=ROOT, protocol=None):
             'evidence': evidence, 'call_errors': calls[:20], 'run': run_summary, 'gate_status': gate_status,
             'gate': gate, 'descriptive_readiness': descriptive, 'questionnaire_collected': collected,
             'attempt_verdict': 'technically_complete' if technically_complete else 'failed_technically_incomplete',
-            'analysis': analysis, 'technically_complete': technically_complete,
+            'analysis': analysis, 'technically_complete': technically_complete, 'review_lock_verified': review,
             'exact_provider_billed_seconds': None, 'scoring': 'research/progress_subgoal_v1/score.py (unchanged)'}
 
 

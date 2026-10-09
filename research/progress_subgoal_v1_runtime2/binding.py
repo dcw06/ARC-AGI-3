@@ -21,6 +21,10 @@ RECEIPT = 'reports/progress_subgoal_v1_runtime2_launch.json'
 ACCOUNT = 'reports/progress_subgoal_v1_runtime2_account_attachment.json'
 PERMISSION = 'reports/progress_subgoal_v1_runtime2_use_permission.json'
 BYTES = 'reports/progress_subgoal_v1_runtime2_byte_verification.json'
+# Review documents every review lock must bind; every repository-side gate verifies them.
+REVIEW_REQUIRED = ('reports/progress_subgoal_v1_protocol_v2_frozen.md', 'reports/progress_subgoal_v1_model_identity.json',
+                   'research/progress_subgoal_v1/decision_rules.json', 'research/progress_subgoal_v1/score.py',
+                   'research/progress_subgoal_v1/evaluate_run.py', 'scripts/evaluate_progress_subgoal_v1_runtime2.py')
 COMPUTE_LIMITS = ('authorized_seconds', 'internal_seconds', 'cleanup_reserve_seconds', 'admission_cutoff_seconds',
                   'maximum_attempts', 'maximum_model_requests', 'automatic_retries')
 ATTEMPT = re.compile(r'psv1r2-[a-zA-Z0-9-]{8,80}')
@@ -97,7 +101,8 @@ def review_lock(root):
     return locks[-1].relative_to(root).as_posix()
 
 
-def check_sources(root, lock_name):
+def check_sources(root, lock_name, review_documents=True):
+    """The reviewed runtime sources and, unless inside the runtime payload, the review documents, by hash."""
     lock = read_json(root, lock_name)
     if lock.get('scope') != SCOPE or lock.get('gpu_enabled') is not False:
         raise ValueError('review lock is outside this GPU-disabled source-review scope')
@@ -112,6 +117,14 @@ def check_sources(root, lock_name):
     for name, digest in lock['bindings'].items():
         if sha256(resolve(root, name)) != digest:
             raise ValueError('source drift: ' + name)
+    if review_documents:
+        listed = lock.get('review_documents') or {}
+        missing = sorted(set(REVIEW_REQUIRED) - set(listed))
+        if missing:
+            raise ValueError('review documents incomplete: ' + ', '.join(missing))
+        for name, digest in sorted(listed.items()):
+            if sha256(resolve(root, name)) != digest:
+                raise ValueError('review document drift: ' + name)
     return lock
 
 
@@ -230,10 +243,11 @@ def check_claim(root, execution):
     return claim
 
 
-def require_live(root=None, need_claim=True):
+def require_live(root=None, need_claim=True, review_documents=True):
     """Every live-path condition, checked before any installation, model or GPU activity. Raises LiveRefused with
     all reasons found; returns (protocol, execution) when the attempt may run. `need_claim=False` is used only by
-    the launch tooling to create the claim itself."""
+    the launch tooling to create the claim itself. `review_documents=False` is used only inside the runtime
+    payload, which never carries the review documents; they were verified when the launch package was built."""
     root = ROOT if root is None else Path(root)
     reasons = []
     try:
@@ -246,7 +260,7 @@ def require_live(root=None, need_claim=True):
     execution = None
     try:
         lock_name = review_lock(root)
-        check_sources(root, lock_name)
+        check_sources(root, lock_name, review_documents)
         check_approvals(root, lock_name, protocol)
         check_evidence(root, lock_name, protocol)
         execution = check_reservation(root, lock_name)
@@ -264,7 +278,7 @@ def consume(root, working):
     create), so it cannot run twice within one session. It cannot see other sessions: an offline notebook has no
     durable shared state. Durable once-only accounting is the launch-side claim and receipt (launch.py); see
     reports/progress_subgoal_v1_runtime2_package.md for what neither can prevent."""
-    protocol, execution = require_live(root)
+    protocol, execution = require_live(root, review_documents=False)  # inside the runtime payload
     marker = Path(working) / f".{execution['attempt_id']}.consumed.json"
     with marker.open('x', encoding='utf-8') as stream:
         json.dump({'attempt_id': execution['attempt_id'], 'status': 'consumed', 'scope': 'this provider session only',
