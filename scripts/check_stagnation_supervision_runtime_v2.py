@@ -16,7 +16,10 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-OUT = ROOT / 'reports/stagnation_supervision_runtime_v2_local_checks_r1.json'
+OUT = ROOT / 'reports/stagnation_supervision_runtime_v2_local_checks_r2.json'
+# The first run (r1) is retained as failed: discovery used the repository as top level, which breaks the R4 suite's
+# own `from test_stagnation_supervision_v1_connected import ...`, and one runtime v2 test predated the r1 snapshot.
+FAILED_R1 = 'reports/stagnation_supervision_runtime_v2_local_checks_r1.json'
 PATTERNS = ('test_stagnation_supervision_v1*.py', 'test_ssv_*.py')
 HISTORICAL_CHECKS = (
     [sys.executable, '-m', 'scripts.derive_stagnation_supervision_v1', '--check'],
@@ -69,7 +72,7 @@ def run():
     suites = {}
     totals = {'tests_run': 0, 'failures': 0, 'errors': 0, 'skipped': 0}
     for pattern in PATTERNS:
-        suite = unittest.defaultTestLoader.discover(str(ROOT / 'tests'), pattern, top_level_dir=str(ROOT))
+        suite = unittest.defaultTestLoader.discover(str(ROOT / 'tests'), pattern)  # as R4: tests/ is the top level
         result = unittest.TextTestRunner(verbosity=1).run(suite)
         suites[pattern] = {'tests_run': result.testsRun, 'failures': len(result.failures), 'errors': len(result.errors),
                            'skipped': len(result.skipped),
@@ -79,7 +82,7 @@ def run():
     if sources != source_bindings() or tests != test_bindings():
         raise ValueError('tested source changed while the suite ran')
     passed = not totals['failures'] and not totals['errors'] and all(h['returncode'] == 0 for h in historical)
-    value = {'version': 'stagnation_supervision_runtime_v2_local_checks_r1',
+    value = {'version': 'stagnation_supervision_runtime_v2_local_checks_r2', 'supersedes_failed_run': FAILED_R1,
              'status': 'passed_cpu_scope' if passed else 'failed', **totals, 'suites': suites,
              'historical_and_receipt_checks': historical, 'elapsed_seconds': round(time.monotonic() - started, 3),
              'python_version': sys.version.split()[0],

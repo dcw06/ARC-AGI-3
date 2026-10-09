@@ -27,7 +27,8 @@ class ThisCheckout(unittest.TestCase):
             A.require_live(ROOT)
         reasons = ' '.join(caught.exception.reasons)
         self.assertIn('unresolved placeholders: kernel_ids.1, kernel_ids.2, model.kaggle_source, model.mounted_path', reasons)
-        self.assertIn('no review source lock', reasons)
+        # With the r1 review snapshot committed, the gate passes source binding and stops at the absent decisions.
+        self.assertTrue('no review source lock' in reasons or 'source_approval.json' in reasons, reasons)
 
     def test_no_authority_record_exists_in_the_repository(self):
         records = ROOT / A.RECORDS
