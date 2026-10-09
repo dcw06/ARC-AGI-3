@@ -5,6 +5,83 @@
 **Scope.** These are CPU-only checks with scripted (stub) answers and fixture wheels. They are not GPU, model,
 throughput or outcome evidence. No provider was contacted.
 
+## r2: the protocol freeze (fresh clone of `239c418`)
+
+**What changed since r1.** The owner's freeze decisions of October 9, 2026 (`freeze_change_list_r2.md`): the recall
+decoding schema has no `uniqueItems`; the unsupported-claim margins are read three ways; session B's launch tooling
+waits for session A's technical completion; the frozen protocol is bound by review snapshots r2.
+
+**Clone.** A fresh `--no-local` clone of `track2-successor-runtime-v1` at `239c418`, with the basis commit `5a21dd3`,
+the Track 2 baseline `107d8b4` and the r1 audits' commit `fb8cf77` available, so every comparison ran and none was
+skipped. Every check ran network-isolated (`unshare --net`, loopback only), with a logging `nvidia-smi` stub on
+`PATH` in addition to each review check's own decoy. `239c418` is the freeze commit `b58e5f1` plus a fix to one test
+file (the first fresh-clone run, of `b58e5f1`, found the connected rehearsal module unimportable; its other checks
+had passed). The commit that adds these records changes only reports.
+
+| Check | Result |
+|---|---|
+| `scripts/build_evidence_memory_v1_sessions.py --check` | 31 derived files match |
+| Structured-output check r2 (dump with the dev env; check with the vLLM 0.19.0 interpreter, CPU) | Passed, and it rewrote `structured_outputs_check_r2.json` byte-identically. Both Track 2 schemas accepted (xgrammar). The decoder admits exactly two answers the protocol counts invalid (recall duplicate; "no_evidence" with another value), and the scorer rejects both. Every valid answer passes decoder and scorer. Every structural error tested is rejected by the decoder |
+| Real-tokenizer cross-check (`scripts/audit_evidence_memory_v1_tokens.py`, transformers 4.57.6 / tokenizers 0.22.2) | Passed. It rewrote both token audits and `token_cross_check_r2.json` byte-identically |
+| Prompt token counts against the r1 audits (`scripts/compare_evidence_memory_v1_token_audits.py --before fb8cf77`) | Identical on every row of both sessions: A 2,896 rows, 1,728,220 prompt tokens; B 2,832 rows, 1,686,442. Every recall request digest changed (A 2,144; B 2,096); every decision digest is unchanged (A 752; B 736). Distinct requests unchanged (1,979; 1,976). The receipt `token_counts_r1_vs_r2.json` was rewritten byte-identically |
+| Review check, session A (r2, lock `750ea373…`) | Refused at the live gate. Exit 1; `LiveRefused` with 4 reasons; no `nvidia-smi` call (decoy or stub); no temporary files |
+| Review check, session B (r2, lock `37296378…`) | The same |
+| Embedded inputs, r2 (each payload extracted alone) | Passed for A and B: 174 trusted wheel records loaded; the live entry points import from the payload alone; nothing outside the payload (`extracted_inputs_session_{a,b}_r2.json`) |
+| `launch-build`, A and B | Refused (exit 1) with the live-gate reasons. Session B also names the missing session-A technical evaluation (`reports/evidence_memory_v1_session_a_technical_evaluation.json`); session A does not |
+| Successor group (`--group successor`, system Python with pip; 791 s) | 163 tests: 163 passed, 0 failed, 0 skipped. That is 67 successor tests and the 96 vendored verified-runtime tests. New since r1: 12 session-order tests (fabricated fixtures only), the bound-document test, and session-order assertions on real evaluator output in the connected rehearsals. Both r2 snapshots reproduce byte for byte (`cpu_checks_successor_r2.json`) |
+| Track 2 group (`--group track2`, dev-env Python; 1,680 s) | 162 tests: 162 passed, 0 failed, 0 skipped. The earlier suites, with the new tests of the decoding schema (2) and of the three-way margin reading (3, boundaries included). Both r2 snapshots reproduce under this interpreter too (`cpu_checks_track2_r2.json`) |
+| Working tree after every reproduction and at the end | Empty (`git status`), after restoring the review-check receipts the checks rewrite with their temporary paths |
+
+**Retained records** (SHA-256):
+
+| Record | SHA-256 |
+|---|---|
+| `fresh_clone_run_r2.sh` | `53878fa9…` |
+| `fresh_clone_run_r2.log` | `88c53fad…` |
+| `cpu_checks_successor_r2.json` | `a1d0d9c1…` |
+| `cpu_checks_successor_r2.log` | `497eedc1…` |
+| `cpu_checks_track2_r2.json` | `6e0aa261…` |
+| `cpu_checks_track2_r2.log` | `37e880d9…` |
+| `extracted_inputs_session_a_r2.json` | `8a1daf3c…` |
+| `extracted_inputs_session_b_r2.json` | `9bd29cba…` |
+| `structured_outputs_check_r2.json` | `fb45fe16…` |
+| `token_cross_check_r2.json` | `c0a18e21…` |
+| `token_counts_r1_vs_r2.json` | `338a5e0a…` |
+| `../evidence_memory_v1_session_a_review_check_r2.json` | `841b54ea…` |
+| `../evidence_memory_v1_session_b_review_check_r2.json` | `40a0a5c4…` |
+
+The script writes its log to a scratch path outside the repository; the copy kept here is the same log. The
+review-check receipts committed for r2 (`../evidence_memory_v1_session_{a,b}_review_check_r2.json`) were written by
+the same command on the worktree before the commit; the fresh-clone reruns gave the same verdicts.
+
+### What the r2 checks add
+
+- **The decoding schema.** `uniqueItems` is gone from every request schema, and the answers the decoder now admits
+  are still scored invalid by `readers`, `protocol.score` and `run/score.score` (`tests/test_evidence_memory_v1_stage1.py`).
+  The baseline tests apply the exact recorded amendment to the `107d8b4` file and require the committed file
+  (`tests/test_evidence_memory_v1_successor.py`).
+- **The margin reading.** `met`, `exceeded` and `not_shown` at and just beyond both inclusive bounds; the verdict for
+  each; only `met` advances; an end-to-end `not_shown` (`tests/test_evidence_memory_v1_protocol.py`).
+- **Session B after session A** (`tests/test_evidence_memory_v1_successor_session_order.py`, fabricated fixtures in
+  temporary directories). The check refuses when the record is absent, when the hash is unnamed or mismatched, when
+  A is not technically complete, when A is invalid in any pass, when A was not live or not withheld, and when the
+  record is of another session or frozen set. It passes on a complete record. B's launch package, `write_package`,
+  `submit` and `claim` all refuse and spend nothing; the per-scope live gate ignores the record; A's tooling never
+  reads it. In the connected rehearsals, the check applied to real evaluator output refuses a complete rehearsal of A
+  only as "not live" and "not withheld", the invalid-repeat rehearsal as invalid in a pass, and the timeout rehearsal
+  as not technically complete.
+
+### Not established (unchanged from r1)
+
+- GPU or runtime compatibility of these packages, beyond the CPU structured-output check. In particular, these were
+  not run on the new runtime: strict `json_schema` decoding on a GPU, the per-call prefix-cache counters, and server
+  prompt-token parity.
+- Throughput, or whether a session fits its reservation on the GPU.
+- Anything about withheld cases, which do not exist yet.
+- Approvals, attachment, permission or mounted-byte evidence.
+
+## r1: the successor build (fresh clone of `9655dbf`)
+
 **Clone.** Everything below was run in a fresh clone of `track2-successor-runtime-v1` at `9655dbf`. The clone also
 had the basis commit `5a21dd3` and the Track 2 baseline `107d8b4` available, so the comparisons against both ran;
 none was skipped.
@@ -32,7 +109,7 @@ none was skipped.
 
 The script writes its log to a scratch path outside the repository; the copy kept here is the same log.
 
-## Real-tokenizer cross-check (`token_cross_check.json`)
+### Real-tokenizer cross-check (`token_cross_check.json`)
 
 | | Session A | Session B |
 |---|---|---|
@@ -54,7 +131,7 @@ pretty-printed; the longest candidate-shaped decision answer is 22 and 42.
 - 0 budget violations;
 - maximum prompt 1,247 (A) and 1,249 (B).
 
-## What the connected rehearsals establish (`tests/test_evidence_memory_v1_successor_connected.py`)
+### What the connected rehearsals establish (`tests/test_evidence_memory_v1_successor_connected.py`)
 
 Each rehearsal runs the complete verified lifecycle with fixture wheels in a real venv and the scripted stub as an
 owned process group.
@@ -97,7 +174,7 @@ Evaluating a rehearsal output as `live` fails on the evidence class.
 | HTTP error | Transport failure; the study stops |
 | Admission cutoff inside pass 1 | Stops at `admission_cutoff`; incomplete; the call checks are clean; the cleanup reserve is kept |
 
-## Not established
+### Not established
 
 - GPU or runtime compatibility of these packages. In particular, these were not run on the new runtime:
   - strict `json_schema` decoding;
