@@ -41,8 +41,7 @@ def session_order_reasons(evaluation):
     with tempfile.TemporaryDirectory() as folder:
         root = Path(folder)
         protocol = PL.SESSIONS['A']['package'] + '/protocol.json'
-        for name, data in ((session_order.RECORD, (json.dumps(evaluation, indent=1) + '
-').encode()),
+        for name, data in ((session_order.RECORD, (json.dumps(evaluation, indent=1) + '\n').encode()),
                            (protocol, (ROOT / protocol).read_bytes())):
             (root / name).parent.mkdir(parents=True, exist_ok=True)
             (root / name).write_bytes(data)
