@@ -22,6 +22,9 @@ HISTORICAL_CHECKS = (
     [sys.executable, '-m', 'scripts.derive_stagnation_supervision_v1', '--check'],
     [sys.executable, '-m', 'scripts.check_stagnation_supervision_v1_review_r4', '--check'],
     [sys.executable, '-m', 'scripts.verify_stagnation_supervision_v1_audit_inputs_r3', '--check'],
+    [sys.executable, '-m', 'scripts.review_stagnation_supervision_v1_notebook_r4', '--folder',
+     'notebooks/stagnation-supervision-v1-review-r4'],
+    [sys.executable, '-m', 'scripts.build_review_stagnation_preparation_r7'],
     [sys.executable, '-m', 'scripts.verify_stagnation_supervision_runtime_v2_detector', '--check'],
     [sys.executable, '-m', 'scripts.report_stagnation_supervision_runtime_v2_diff', '--check'],
 )

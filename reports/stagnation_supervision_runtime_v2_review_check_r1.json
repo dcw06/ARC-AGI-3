@@ -1,0 +1,35 @@
+{
+ "all_embedded_python_compiled": true,
+ "authorized_seconds": 0,
+ "cpu_rehearsal_of_embedded_cell": {
+  "cleanup": {
+   "independent_gpu_cleanup_verified": true,
+   "process_groups_exited": true,
+   "scratch_removed": true
+  },
+  "episodes": 3,
+  "first_cell_cleanup_verified": true,
+  "installation": "none",
+  "problems": [],
+  "runtime_binding": "stagnation-supervision-v1-runtime-v2",
+  "source_leaked": [],
+  "technically_complete": true
+ },
+ "evidence_class": "scripted_cpu_rehearsal_injected_gpu",
+ "gpu_compatibility_evidence": false,
+ "gpu_runs": 0,
+ "live_refusal": {
+  "exit_code": 1,
+  "kaggle_paths_touched": false,
+  "nvidia_smi_called": false,
+  "refusal": "research.stagnation_supervision_runtime_v2.authority.LiveRefused: stagnation-supervision runtime v2 live path refused: unresolved placeholders: kernel_ids.1, kernel_ids.2, model.kaggle_source, model.mounted_path; authorization: ValueError: no review source lock",
+  "refused_at_live_gate": true,
+  "temporary_files_left": []
+ },
+ "passed": true,
+ "provider_calls": 0,
+ "review_lock_sha256": "84bf195d77c31d9a22075442838b109ba9486154103e146a6ff3acd3c83d4ec7",
+ "review_revision": 1,
+ "schema": "stagnation_supervision_runtime_v2_review_check_v1",
+ "source_bindings_verified": 159
+}
