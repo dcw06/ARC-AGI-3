@@ -143,10 +143,12 @@ def run(path, service, adapter_factory, *, deadline_seconds=3000, kind='scripted
         online['dispatched'] += 1
         if outcome['status'] != 'acknowledged':
             online['dispatch_failures'] += 1
-        if online['dispatch_failures'] > Fraction(rule['dispatch_failure_rate']) * online['dispatched']:
+        floor = rule.get('dispatch_denominator_floor', 0)  # 0 unless the owner gate records the floor option
+        if online['dispatch_failures'] > Fraction(rule['dispatch_failure_rate']) * max(online['dispatched'], floor):
             raise SessionAbort('F5_dispatch_failures', {
                 'dispatch_failures': online['dispatch_failures'], 'dispatched': online['dispatched'],
-                'threshold_rate': rule['dispatch_failure_rate'], 'episode_id': episode['episode_id']})
+                'threshold_rate': rule['dispatch_failure_rate'], 'denominator_floor': floor,
+                'episode_id': episode['episode_id']})
 
     def call(episode, request, obs):
         check()

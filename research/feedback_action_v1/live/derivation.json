@@ -1,0 +1,177 @@
+{
+ "copied_function": {
+  "research/feedback_action_v1/live/runtime.py:verify_cache_disabled": {
+   "source": "research/control_interface_action_selection_v2/runtime_controls.py",
+   "source_sha256": "d2e8fa1051de4b63109480f85536913cf1e3171546db4f16eb10bc80339a0603"
+  }
+ },
+ "derived_from_action_effect_history_v1": {
+  "research/feedback_action_v1/live/engine.py": {
+   "builder": "research/feedback_action_v1/derive.py",
+   "source": "research/action_effect_history_v1/engine.py",
+   "source_sha256": "de3441282ac5249d1eae888f0b02ce236d077d46273236efc62a682703f381f4",
+   "substitutions": 0
+  },
+  "research/feedback_action_v1/live/evidence.py": {
+   "builder": "research/feedback_action_v1/derive.py",
+   "source": "research/action_effect_history_v1/evidence.py",
+   "source_sha256": "96a1e8c05cfc01702d2430a1d77878f9616bb1fa58d1931e2ff1874aba1b3a8e",
+   "substitutions": 0
+  },
+  "research/feedback_action_v1/live/host.py": {
+   "builder": "research/feedback_action_v1/derive.py",
+   "source": "research/action_effect_history_v1/host.py",
+   "source_sha256": "a7d73f6e60bd0236faca76bbeae4969aa78fb4a0c1d92fd4f38cf218406172ff",
+   "substitutions": 9
+  },
+  "research/feedback_action_v1/live/monitor.py": {
+   "builder": "research/feedback_action_v1/derive.py",
+   "source": "research/action_effect_history_v1/monitor.py",
+   "source_sha256": "a41e05dee3669553ece063e7ad8c822ea956d611db7c88d168140a04d299cb01",
+   "substitutions": 2
+  },
+  "research/feedback_action_v1/live/resources.py": {
+   "builder": "research/feedback_action_v1/derive.py",
+   "source": "research/action_effect_history_v1/resources.py",
+   "source_sha256": "96bf66ec80481926356d8f092682490ccd426aebc256e8e99f050676fc6726c6",
+   "substitutions": 2
+  },
+  "research/feedback_action_v1/live/runner.py": {
+   "builder": "research/feedback_action_v1/derive.py",
+   "source": "research/action_effect_history_v1/runner.py",
+   "source_sha256": "0d286637d39f54faf23c6e623f964aef60386b42050f0dd73f53ed822b39a320",
+   "substitutions": 19
+  },
+  "research/feedback_action_v1/live/service.py": {
+   "builder": "research/feedback_action_v1/derive.py",
+   "source": "research/action_effect_history_v1/service.py",
+   "source_sha256": "6639c231d1414f2ecea1381972c1ba49bacdcc0f70e13d01a8b2acfc02435495",
+   "substitutions": 4
+  },
+  "research/feedback_action_v1/live/supervisor.py": {
+   "builder": "research/feedback_action_v1/derive.py",
+   "source": "research/action_effect_history_v1/supervisor.py",
+   "source_sha256": "be2f8a632ccf6e5a2695be5e5b94b961261b3c0de2ca38d1025aa3a40cc5a4c1",
+   "substitutions": 12
+  },
+  "research/feedback_action_v1/live/worker.py": {
+   "builder": "research/feedback_action_v1/derive.py",
+   "source": "research/action_effect_history_v1/worker.py",
+   "source_sha256": "ad98463c31262b0f233a2fbb1a9d10b0cce89657780c924a960b0991c485fd76",
+   "substitutions": 10
+  },
+  "scripts/evaluate_feedback_action_v1.py": {
+   "builder": "research/feedback_action_v1/derive.py",
+   "source": "scripts/evaluate_action_effect_history_v1.py",
+   "source_sha256": "10011d670d6fe62712b41875fbdf8aab1399f20fe9d0772670533219c3a94e4e",
+   "substitutions": 7
+  },
+  "scripts/feedback_action_v1_launch.py": {
+   "builder": "research/feedback_action_v1/derive.py",
+   "source": "scripts/action_effect_history_v1_launch.py",
+   "source_sha256": "d3e91192d6a19bb87aa263d1bf35f4e3d59f33037497edaa23d553c941926277",
+   "substitutions": 12
+  }
+ },
+ "derived_from_verified_runtime": {
+  "research/feedback_action_v1/live/binding.py": {
+   "builder": "research/feedback_action_v1/derive_runtime.py",
+   "source": "research/control_interface_action_selection_v2/binding.py",
+   "source_git_blob": "43d69e1700a89681896b8c777abe90dde611b017",
+   "source_sha256": "ff2ddcf04e811f00eb6002485968c88ad1c383eeeb9dfdb01514b1458b18bad1",
+   "substitutions": 12
+  },
+  "research/feedback_action_v1/live/launch.py": {
+   "builder": "research/feedback_action_v1/derive_runtime.py",
+   "source": "research/control_interface_action_selection_v2/launch.py",
+   "source_git_blob": "49ee13ef72c78c3ac5842a1cac7f76b7dc328e8d",
+   "source_sha256": "1148e4ee138102cc8ada817318aa01643163d101827c43d19c7748b925d7a682",
+   "substitutions": 0
+  },
+  "research/feedback_action_v1/live/notebook.py": {
+   "builder": "research/feedback_action_v1/derive_runtime.py",
+   "source": "research/control_interface_action_selection_v2/notebook.py",
+   "source_git_blob": "c12f67ec58740677c7f2990c105ec43239478d68",
+   "source_sha256": "a208d642caa0a5c6e5126432ab3a0c034157b224cab117a59224749d2a3e1c15",
+   "substitutions": 6
+  },
+  "scripts/feedback_action_v1_package.py": {
+   "builder": "research/feedback_action_v1/derive_runtime.py",
+   "source": "scripts/control_interface_action_selection_v2_package.py",
+   "source_git_blob": "3495b541fc2ee092fed6ff66f76340d74a85cc7d",
+   "source_sha256": "66f215eb350bc3e30c9cdea1b353046af203a5d00c31a983b41d037602f25b68",
+   "substitutions": 5
+  }
+ },
+ "game_requirements_lock": {
+  "derived_from": "reports/phase4_v2_offline_package.json (wheels/*: names, versions and SHA-256 of the 31 competition wheels)",
+  "resolution": "the six game pins resolve to exactly these 31 wheels (pip --dry-run, offline, from the committed archive copy of the same wheels)"
+ },
+ "hand_written": [
+  "research/feedback_action_v1/live/runtime.py",
+  "research/feedback_action_v1/live/runtime.json",
+  "research/feedback_action_v1/live/authority.py",
+  "research/feedback_action_v1/live/rehearsal.py",
+  "research/feedback_action_v1/live/owner_gates.py",
+  "research/feedback_action_v1/live/owner_gates.json",
+  "research/feedback_action_v1/live/game_requirements.lock",
+  "research/feedback_action_v1/live_evaluation.py"
+ ],
+ "schema": "feedback_action_v1_runtime_derivation_v1",
+ "status": "successor_runtime_v1_derivation_no_authority",
+ "unchanged_science": [
+  "research/feedback_action_v1/adapter.py",
+  "research/feedback_action_v1/evidence.py",
+  "research/feedback_action_v1/evaluate.py",
+  "research/feedback_action_v1/live/protocol.json",
+  "research/feedback_action_v1/live/fake_server.py"
+ ],
+ "verbatim": {
+  "certification/direct_publisher_smoke_v1/__init__.py": {
+   "git_blob": "7b7dc19651e55056266d8aa22b1e8db3f9f2e554",
+   "sha256": "08c32bf5bc6167ad1202120f90a00043271310c34896d33188c78e2049eb2665",
+   "source": "certification/direct_publisher_smoke_v1/__init__.py at 5a21dd3"
+  },
+  "certification/direct_publisher_smoke_v1/host.py": {
+   "git_blob": "1c2125e842e5ed1db326b09da623184e132fd947",
+   "sha256": "6eab062887c5ba4460f4a5f953da8b6b17fc7ddf40404ec74e9d10bbb8c1c9a8",
+   "source": "certification/direct_publisher_smoke_v1/host.py at 5a21dd3"
+  },
+  "certification/direct_publisher_smoke_v1/install.py": {
+   "git_blob": "a9a28d677cfbf36cff9054783b6dfddefba72585",
+   "sha256": "568ef619fce6fc8ed03eda07e7a240f079e017379e1494f4a6b95672cad0019b",
+   "source": "certification/direct_publisher_smoke_v1/install.py at 5a21dd3"
+  },
+  "certification/direct_publisher_smoke_v1/preflight.py": {
+   "git_blob": "8d24d0f20cf8678153945bf328e3c937112a4fba",
+   "sha256": "369a39a09c4f5f97b0d92613c3ecc6aa281779af4721a4154fe98576e4fc3b0d",
+   "source": "certification/direct_publisher_smoke_v1/preflight.py at 5a21dd3"
+  },
+  "certification/direct_publisher_smoke_v1/proposal.json": {
+   "git_blob": "468e47192c8ef0ea70b96f2f1a7051a0cb12aeae",
+   "sha256": "cb5e1cee9903861e16960664c4d392821fb880e4125c7bce1865ea69573a600c",
+   "source": "certification/direct_publisher_smoke_v1/proposal.json at 5a21dd3"
+  },
+  "certification/direct_publisher_smoke_v1/server.py": {
+   "git_blob": "5e76ad3b3ef74af57b98c9a2c0eb570cb6ce1628",
+   "sha256": "e3cbdf0949f21fc2edb6f8c781a55aaeacf3410aa4f5794e3ebe420f2bcee888",
+   "source": "certification/direct_publisher_smoke_v1/server.py at 5a21dd3"
+  },
+  "certification/direct_publisher_smoke_v1/trusted_manifest.json": {
+   "git_blob": "b38f70b767f28351f3c6eb21196a7abb76acd5f9",
+   "sha256": "91ad9ede70c4fdf027cf5739a828f9063dc07c22c6010a64ebd1af0db8f0462b",
+   "source": "certification/direct_publisher_smoke_v1/trusted_manifest.json at 5a21dd3"
+  },
+  "certification/direct_publisher_smoke_v1/trusted_requirements.lock": {
+   "git_blob": "89e8d2d7117b3a146308579e0418d9be5232115b",
+   "sha256": "ba80d35062245421daf1cae65474281952cc0c44fb46e11cf7f68d0ece496406",
+   "source": "certification/direct_publisher_smoke_v1/trusted_requirements.lock at 5a21dd3"
+  }
+ },
+ "verified_runtime": {
+  "branch": "wheelhouse-replacement-audit",
+  "commit": "5a21dd3",
+  "gpu_run_review_lock_sha256": "beeb6719ed817e3cb42a9842b03a7c47a2ee75aa87831908520318a54c041dc7",
+  "gpu_runs": "control-interface action selection v1 (review r2) and v2 (review r1), one RTX PRO 6000 each, both technically passed with cleanup; zero game actions"
+ }
+}
