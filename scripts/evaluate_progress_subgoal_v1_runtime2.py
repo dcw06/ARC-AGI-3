@@ -312,13 +312,18 @@ def evaluate_output(folder, *, mode='live', root=ROOT, protocol=None):
     gate_status = ('complete' if analysis and not analysis['evidence_recovered']
                    and analysis['completeness']['primary'] == analysis['completeness']['over_claim_gates'] == 'complete'
                    else 'incomplete')
+    collected = (not manifest and not calls and run_summary is not None and run_summary['status'] == 'complete'
+                 and gate_status == 'complete')
+    technically_complete = collected and not lifecycle and not ledger
+    descriptive = {arm: row['status'] for arm, row in analysis['readiness'].items()} if analysis else None
+    # Frozen protocol v2 §9: an attempt that is not technically complete qualifies no arm, even when every answer was
+    # retained (for example, required post-run checks refused after the admission cutoff). Its scores stay descriptive.
+    gate = descriptive if technically_complete or descriptive is None else {arm: 'incomplete' for arm in descriptive}
     return {'mode': mode, 'lifecycle_passed': not lifecycle and not ledger, 'lifecycle_errors': lifecycle + ledger,
             'evidence': evidence, 'call_errors': calls[:20], 'run': run_summary, 'gate_status': gate_status,
-            'gate': ({arm: row['status'] for arm, row in analysis['readiness'].items()} if analysis else None),
-            'analysis': analysis,
-            'technically_complete': (not lifecycle and not ledger and not manifest and not calls
-                                     and run_summary is not None and run_summary['status'] == 'complete'
-                                     and gate_status == 'complete'),
+            'gate': gate, 'descriptive_readiness': descriptive, 'questionnaire_collected': collected,
+            'attempt_verdict': 'technically_complete' if technically_complete else 'failed_technically_incomplete',
+            'analysis': analysis, 'technically_complete': technically_complete,
             'exact_provider_billed_seconds': None, 'scoring': 'research/progress_subgoal_v1/score.py (unchanged)'}
 
 

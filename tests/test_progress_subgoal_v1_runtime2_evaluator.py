@@ -161,6 +161,31 @@ class Evaluator(unittest.TestCase):
         value = self.evaluate('limits', result_hook=limits)
         self.assertTrue(any('limits' in e for e in value['lifecycle_errors']))
 
+    def test_collected_answers_with_failed_post_run_checks_qualify_no_arm(self):
+        # Frozen protocol v2 §9: every answer retained, but the cancellation probes after the questionnaire were
+        # refused at the admission cutoff. The attempt fails; the scores stay descriptive; no arm qualifies.
+        def refused(result):
+            return dict(result, passed=False, verdict_status='failed', failed_stage='cancellation_C1',
+                        error='request refused: admission cutoff reached')
+        value = self.evaluate('post-run-refused', policy='oracle', result_hook=refused)
+        self.assertEqual(value['call_errors'], [])
+        self.assertFalse(value['lifecycle_passed'])
+        self.assertTrue(value['questionnaire_collected'])
+        self.assertEqual(value['gate_status'], 'complete')
+        self.assertFalse(value['technically_complete'])
+        self.assertEqual(value['attempt_verdict'], 'failed_technically_incomplete')
+        self.assertEqual(value['analysis'], offline('oracle'))
+        self.assertEqual(set(value['descriptive_readiness'].values()), {'eligible_for_memory_or_supervision'})
+        self.assertEqual(set(value['gate'].values()), {'incomplete'})
+
+    def test_attempt_verdict_and_collection_on_complete_and_cut_runs(self):
+        self.assertEqual(self.value['attempt_verdict'], 'technically_complete')
+        self.assertTrue(self.value['questionnaire_collected'])
+        self.assertEqual(self.value['gate'], self.value['descriptive_readiness'])
+        value = self.evaluate('cut-verdict', count=4000, stop_reason='admission_cutoff')
+        self.assertFalse(value['questionnaire_collected'])
+        self.assertEqual(value['attempt_verdict'], 'failed_technically_incomplete')
+
     def test_invalid_answers_stay_a_reliability_failure_not_an_over_claim(self):
         # Replace every valid answer to an over-claim gate member with malformed output.
         from research.progress_subgoal_v1 import questions as Q

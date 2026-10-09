@@ -1,9 +1,9 @@
 # Derived from scripts/control_interface_action_selection_v2_package.py (5a21dd3) by scripts/build_progress_subgoal_v1_runtime2.py; edit the derivation.
 """progress_subgoal_v1 runtime2 packaging (no upload, no reservation, no GPU).
 
-  python scripts/progress_subgoal_v1_runtime2_package.py review-build --revision 5
+  python scripts/progress_subgoal_v1_runtime2_package.py review-build --revision 6
       freeze notebooks/progress-subgoal-v1-runtime2-review-r<N>/ (GPU disabled; review snapshot, not an approval)
-  python scripts/progress_subgoal_v1_runtime2_package.py review-check --revision 5
+  python scripts/progress_subgoal_v1_runtime2_package.py review-check --revision 6
       execute that notebook's code locally with no GPU and a decoy nvidia-smi; it must stop at the live gate before
       any installation, model or GPU activity; writes reports/progress_subgoal_v1_runtime2_review_check_r<N>.json
   python scripts/progress_subgoal_v1_runtime2_package.py launch-build
@@ -77,7 +77,7 @@ def review_check(revision):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('command', choices=['review-build', 'review-check', 'launch-build'])
-    parser.add_argument('--revision', type=int, default=5)
+    parser.add_argument('--revision', type=int, default=6)
     args = parser.parse_args()
     if args.command == 'review-build':
         print(json.dumps({k: v for k, v in build_review(review_folder(args.revision)).items() if k != 'bindings'},

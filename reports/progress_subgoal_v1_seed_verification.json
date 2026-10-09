@@ -1,0 +1,24 @@
+{
+ "schema": "progress_subgoal_v1_seed_verification_v1",
+ "status": "two_holder_retention_not_confirmed",
+ "owner_rule": "Two-holder retention is confirmed only after both holders have each independently run the check successfully. The seed stays private; only verification records and the resulting hash are retained.",
+ "seed_sha256": "ca1e518ccbfded860c80c481ca188e25fd3009a9c15db7413c69907db7ad02aa",
+ "expected_question_set_sha256": "f93ec44bab00453147e8e7e555704b60edc8220e6b5677b89d199ce8fca5e02c",
+ "check_command": "python scripts/build_progress_subgoal_v1.py --check --seed-file <path to that holder's copy>",
+ "holders_confirmed": 0,
+ "holders_required": 2,
+ "holder_checks": [],
+ "retained_copy_checks": [
+  {
+   "copy": "the single known copy: written once on 2026-10-02 on the drawing machine, to a git-ignored file in its working copy; never committed",
+   "checked_at": "2026-10-09T06:08:36Z",
+   "commit": "bd65f091eb0f46d98d6234fb8f4ebd473def8c5a",
+   "environment": "fresh clone of track4-successor-runtime-v1, network-isolated, Python 3.12.3",
+   "printed": "question set matches a fresh build: f93ec44bab00453147e8e7e555704b60edc8220e6b5677b89d199ce8fca5e02c",
+   "exit_code": 0,
+   "counts_as_holder_check": false,
+   "note": "Verifies that the retained copy reproduces the frozen question set. It is not a holder's independent check."
+  }
+ ],
+ "earlier_unretained_check": "A check script ran on the same copy on 2026-10-03; its output was not retained."
+}

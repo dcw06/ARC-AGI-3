@@ -1,0 +1,82 @@
+{
+ "schema": "progress_subgoal_v1_model_identity_v1",
+ "status": "provenance_record_for_review_not_an_approval",
+ "owner_decision": "Accept the model provenance only after review, without claiming unverified equivalence. Matching revision labels and tokenizer files do not prove identical weights. Compare retained weight-shard hashes if available; if equality cannot be established, describe the dataset snapshot as the exact model artifact of this experiment, with its provenance and hashes (2026-10-09).",
+ "experiment_model_artifact": {
+  "model_id": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+  "revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+  "source_kind": "dataset: a private Kaggle dataset, version 1; owner, dataset and mount stay REPLACE_WITH_ placeholders in public files",
+  "tree_digest_format": "arc3-artifact-tree-v1 (certification/direct_publisher_smoke_v1/host.py: tree_sha256)",
+  "tree_sha256": "b480ad92cda91474084c795d2ff64b07a6c477909b22d2784d24abf8fb4ef7df",
+  "file_count": 20,
+  "bytes": 32268935715,
+  "file_list": "reports/direct_publisher_smoke_v1/qwen_upstream_attachment_candidate_2026-10-07.json at 5a21dd3 (attachment_files)",
+  "tree_recomputed_from_file_list": true,
+  "weight_shards": [
+   {
+    "path": "model-00001-of-00004.safetensors",
+    "bytes": 10597785920,
+    "sha256": "232be72a85a61ba59ee66c8e11d6d2c0aae33d960f05bcb3092b3b923045c6b4"
+   },
+   {
+    "path": "model-00002-of-00004.safetensors",
+    "bytes": 10600204240,
+    "sha256": "9398c079631928f081db3ac774335307b3d10270258e85493a152cdf59d131a7"
+   },
+   {
+    "path": "model-00003-of-00004.safetensors",
+    "bytes": 10728745128,
+    "sha256": "d540c42d0f319c9345901f6edc2ad223273e3bb29e93a132bcb897b60921523a"
+   },
+   {
+    "path": "model-00004-of-00004.safetensors",
+    "bytes": 325219632,
+    "sha256": "49d39cc48e99e733f77b48c4222bb12cd45e5c9c709cce37484ab081353a3eea"
+   }
+  ],
+  "upstream": {
+   "source_tree_url": "https://huggingface.co/Qwen/Qwen3-VL-30B-A3B-Instruct-FP8/tree/d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+   "source_tree_metadata_sha256": "d364b3c556047cb14e380f26aba3d6e04fe031e83c30caa11a6d99b3cd40a0a5",
+   "upstream_payload_files": 16,
+   "upstream_payload_bytes": 32268919202,
+   "upstream_payload_tree_sha256": "6505581562ad4ac049f5a6225b5cbf90b757c5d785d511db7574fab2c66018dc",
+   "local_full_byte_verification_passed": true,
+   "files_added_by_the_attachment": [
+    "ATTACHMENT-README.md",
+    "MODEL-LICENSE.txt",
+    "MODEL-PROVENANCE.json",
+    "UPSTREAM-FILES.json"
+   ]
+  },
+  "verified_at_run_time": "the verified runtime hashes the mounted tree before serving and refuses to start unless it equals tree_sha256 (model verification limit 600 s)"
+ },
+ "earlier_attachment": {
+  "kaggle_source": "qwen-lm/qwen-3-vl/Transformers/30b-a3b-instruct-fp8/1 (public Kaggle Model)",
+  "tree_sha256": "052ab27f06c28261e143b8c1638382d107b034692bc0cd1792ec4e02ddab8627",
+  "file_count": 81,
+  "bytes": 64526033084,
+  "records": [
+   "config/model_manifest.yaml (main)",
+   "reports/m0_profiles/m0-q3vl30-instruct.json (main)"
+  ],
+  "per_file_hashes_retained": false
+ },
+ "comparison": {
+  "weight_shard_equality": "not_established",
+  "reason": "No per-file hashes of the earlier attachment were retained in any branch of this repository or in the private operations records searched on 2026-10-09: only its aggregate tree digest, file count (81) and byte total (64,526,033,084). The two tree digests cover different file sets, so their difference alone shows nothing about the weights.",
+  "consistent_facts_not_proof": [
+   "the same model id and revision label",
+   "the byte total of the upstream source recorded for the earlier attachment (source_tree_bytes 32,268,919,202 in config/model_manifest.yaml) equals the snapshot's upstream payload bytes",
+   "six tokenizer and configuration files are byte-identical to the pinned tokenizer used for the exact token audit"
+  ],
+  "tokenizer_files_equal_to_pinned_tokenizer": [
+   "chat_template.json",
+   "config.json",
+   "merges.txt",
+   "tokenizer.json",
+   "tokenizer_config.json",
+   "vocab.json"
+  ]
+ },
+ "statement": "The model of this experiment is the dataset snapshot identified above by its provenance and hashes. It is not claimed to be byte-identical to the earlier Kaggle Model attachment. Track 4 has no earlier model results, so no comparison inside this experiment depends on that equivalence. A comparison with results of experiments that used the earlier attachment must state that their weight files were not shown to be identical."
+}

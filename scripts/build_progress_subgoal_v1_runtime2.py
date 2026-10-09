@@ -245,8 +245,9 @@ NOTEBOOK_MARKDOWN_OLD = """                           '# Milestone E paired acti
 """
 NOTEBOOK_MARKDOWN_NEW = """                           '# progress_subgoal_v1 questionnaire on the verified runtime (runtime2)\\n'
                            'One attempt: offline install from the verified flat publisher mount with our trusted '
-                           'hash-pinned requirements, pinned model startup, at most 6,613 counted '
-                           'model requests (startup, idle-check and cancellation probes included), cancellation, cleanup and '
+                           'hash-pinned requirements, pinned model startup, at most 6,613 counted HTTP requests to '
+                           'the model server (5,852 questionnaire completions, 11 runtime checks, at most 750 idle-check reads), '
+                           'of which at most 5,859 are generation requests (5,852 questionnaire, 7 runtime checks), cancellation, cleanup and '
                            'retained evidence. The frozen questionnaire: 3,062 questions in 5,852 scheduled calls; zero game actions. '
                            'Scores and readiness come only from the independent evaluator. This notebook refuses to run unless the dataset/account and direct-use evidence, '
 """
@@ -265,10 +266,14 @@ NOTEBOOK_CONSTANTS_OLD = "SIZE_GUARD = 900000\n"
 NOTEBOOK_CONSTANTS_NEW = """SIZE_GUARD = 900000
 # The superseded review package of the same experiment (old runtime). It stays byte-identical; nothing is inherited.
 SUPERSEDES = {'review_lock': 'notebooks/progress-subgoal-v1-review-r4/review-source-lock.json',
-              'review_lock_sha256': 'e7e1518ba6e23b9b3d4a24a6de25aaac94df5663e31dbf884859fd44eeff70f2'}
+              'review_lock_sha256': 'e7e1518ba6e23b9b3d4a24a6de25aaac94df5663e31dbf884859fd44eeff70f2',
+              # The previous runtime2 snapshot (draft protocol), also kept byte-identical.
+              'previous_revision_lock': 'notebooks/progress-subgoal-v1-runtime2-review-r5/review-source-lock.json',
+              'previous_revision_lock_sha256': '0cf45e6ccaf88bb956289e2b9b05729d0e9e9078c633e0994b35aea1592d4feb'}
 # Hash-bound for review, never part of the runtime payload: the protocol, frozen rules and decisions, the independent
 # evaluator and token audit tooling, the derivation, and this successor's reports.
-REVIEW_DOCUMENTS = ('reports/progress_subgoal_v1_protocol_v2.md', 'research/progress_subgoal_v1/decision_rules.json',
+REVIEW_DOCUMENTS = ('reports/progress_subgoal_v1_protocol_v2_frozen.md', 'reports/progress_subgoal_v1_model_identity.json',
+                    'reports/progress_subgoal_v1_protocol_v2.md', 'research/progress_subgoal_v1/decision_rules.json',
                     'research/progress_subgoal_v1/third_arm_decision.json',
                     'research/progress_subgoal_v1/evaluation_seed.json', 'research/progress_subgoal_v1/score.py',
                     'research/progress_subgoal_v1/evaluate_run.py', 'research/progress_subgoal_v1/token_audit.py',
@@ -557,11 +562,11 @@ def derivations(experiment_sources):
         package: ('scripts/control_interface_action_selection_v2_package.py', [
             ('"""Direct publisher smoke test packaging (no upload, no reservation, no GPU).',
              '"""progress_subgoal_v1 runtime2 packaging (no upload, no reservation, no GPU).', 1),
-            ('review-build --revision 1', 'review-build --revision 5', 1),
-            ('review-check --revision 1', 'review-check --revision 5', 1),
+            ('review-build --revision 1', 'review-build --revision 6', 1),
+            ('review-check --revision 1', 'review-check --revision 6', 1),
             ("prefix='control-interface-review-check-'", "prefix='psv1-runtime2-review-check-'", 1),
             ("    parser.add_argument('--revision', type=int, default=1)",
-             "    parser.add_argument('--revision', type=int, default=5)", 1),
+             "    parser.add_argument('--revision', type=int, default=6)", 1),
             ("    check_sources(ROOT, (folder / 'review-source-lock.json').relative_to(ROOT).as_posix())\n"
              "    for name, digest in lock['artifacts'].items():\n"
              "        if sha256(folder / name) != digest:\n"
