@@ -1,0 +1,1786 @@
+{
+ "bundle": {
+  "approved_manifest_sha256": "3691cb8854df4d8ff10e42ca9957fddb9a8ae0362064e7b31b3205891af0d546",
+  "requirements_lock_sha256": "ba80d35062245421daf1cae65474281952cc0c44fb46e11cf7f68d0ece496406",
+  "wheel_count": 174
+ },
+ "competition": {
+  "purpose": "ARC-AGI-3 runtime compatibility smoke test; attachment does not submit to the leaderboard or establish accelerator allocation",
+  "ref": "arc-prize-2026-arc-agi-3"
+ },
+ "dataset": {
+  "publisher_metadata_sha256": {
+   "README.md": "d2e8da6d36c243198882e6cb68d60d7121d8aa9642e55d7fcc384bc4d087b631",
+   "SHA256SUMS": "805388efb6bf7f0a248f2bb70798188737077545159fe0e475aee4d44843c901",
+   "requirements.lock": "bb3e30ac5e327456e3915b807da960203c20bc1aa352204e39f66d5618a6bcb0"
+  },
+  "ref": "driessmit1/arc3-vllm-h100-wheelhouse-v3",
+  "version": 1
+ },
+ "experiment": {
+  "arms": [
+   "reference",
+   "computed_control_metadata"
+  ],
+  "background": "shared explicit output contract; new development condition, not unchanged v1 baseline",
+  "cases_sha256": "57231b44a693953fd633cd43cb31a5a31c945482b8e1cf6b59f04f784aab0439",
+  "contexts": 30,
+  "decoder": "shared json_object format only; semantic validation after response",
+  "games": 15,
+  "max_tokens": 128,
+  "passes": 2,
+  "prefix_caching": false,
+  "prompt_token_ceiling": 60000,
+  "research_requests": 120,
+  "research_seconds": 1500,
+  "schedule": [
+   {
+    "arm": "reference",
+    "case_id": "cl1-00-no_concrete_examples-s00",
+    "id": "E000",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-00-no_concrete_examples-s00",
+    "id": "E001",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-00-no_concrete_examples-s10",
+    "id": "E002",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-00-no_concrete_examples-s10",
+    "id": "E003",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-01-no_concrete_examples-s00",
+    "id": "E004",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-01-no_concrete_examples-s00",
+    "id": "E005",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-01-no_concrete_examples-s10",
+    "id": "E006",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-01-no_concrete_examples-s10",
+    "id": "E007",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-02-no_concrete_examples-s00",
+    "id": "E008",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-02-no_concrete_examples-s00",
+    "id": "E009",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-02-no_concrete_examples-s10",
+    "id": "E010",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-02-no_concrete_examples-s10",
+    "id": "E011",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-03-no_concrete_examples-s00",
+    "id": "E012",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-03-no_concrete_examples-s00",
+    "id": "E013",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-03-no_concrete_examples-s10",
+    "id": "E014",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-03-no_concrete_examples-s10",
+    "id": "E015",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-04-no_concrete_examples-s00",
+    "id": "E016",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-04-no_concrete_examples-s00",
+    "id": "E017",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-04-no_concrete_examples-s10",
+    "id": "E018",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-04-no_concrete_examples-s10",
+    "id": "E019",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-05-no_concrete_examples-s00",
+    "id": "E020",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-05-no_concrete_examples-s00",
+    "id": "E021",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-05-no_concrete_examples-s10",
+    "id": "E022",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-05-no_concrete_examples-s10",
+    "id": "E023",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-06-no_concrete_examples-s00",
+    "id": "E024",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-06-no_concrete_examples-s00",
+    "id": "E025",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-06-no_concrete_examples-s10",
+    "id": "E026",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-06-no_concrete_examples-s10",
+    "id": "E027",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-07-no_concrete_examples-s00",
+    "id": "E028",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-07-no_concrete_examples-s00",
+    "id": "E029",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-07-no_concrete_examples-s10",
+    "id": "E030",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-07-no_concrete_examples-s10",
+    "id": "E031",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-08-no_concrete_examples-s00",
+    "id": "E032",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-08-no_concrete_examples-s00",
+    "id": "E033",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-08-no_concrete_examples-s10",
+    "id": "E034",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-08-no_concrete_examples-s10",
+    "id": "E035",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-09-no_concrete_examples-s00",
+    "id": "E036",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-09-no_concrete_examples-s00",
+    "id": "E037",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-09-no_concrete_examples-s10",
+    "id": "E038",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-09-no_concrete_examples-s10",
+    "id": "E039",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-10-no_concrete_examples-s00",
+    "id": "E040",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-10-no_concrete_examples-s00",
+    "id": "E041",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-10-no_concrete_examples-s10",
+    "id": "E042",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-10-no_concrete_examples-s10",
+    "id": "E043",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-11-no_concrete_examples-s00",
+    "id": "E044",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-11-no_concrete_examples-s00",
+    "id": "E045",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-11-no_concrete_examples-s10",
+    "id": "E046",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-11-no_concrete_examples-s10",
+    "id": "E047",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-12-no_concrete_examples-s00",
+    "id": "E048",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-12-no_concrete_examples-s00",
+    "id": "E049",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-12-no_concrete_examples-s10",
+    "id": "E050",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-12-no_concrete_examples-s10",
+    "id": "E051",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-13-no_concrete_examples-s00",
+    "id": "E052",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-13-no_concrete_examples-s00",
+    "id": "E053",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-13-no_concrete_examples-s10",
+    "id": "E054",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-13-no_concrete_examples-s10",
+    "id": "E055",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-14-no_concrete_examples-s00",
+    "id": "E056",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-14-no_concrete_examples-s00",
+    "id": "E057",
+    "pass_number": 1
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-14-no_concrete_examples-s10",
+    "id": "E058",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-14-no_concrete_examples-s10",
+    "id": "E059",
+    "pass_number": 1
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-14-no_concrete_examples-s10",
+    "id": "E060",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-14-no_concrete_examples-s10",
+    "id": "E061",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-14-no_concrete_examples-s00",
+    "id": "E062",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-14-no_concrete_examples-s00",
+    "id": "E063",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-13-no_concrete_examples-s10",
+    "id": "E064",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-13-no_concrete_examples-s10",
+    "id": "E065",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-13-no_concrete_examples-s00",
+    "id": "E066",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-13-no_concrete_examples-s00",
+    "id": "E067",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-12-no_concrete_examples-s10",
+    "id": "E068",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-12-no_concrete_examples-s10",
+    "id": "E069",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-12-no_concrete_examples-s00",
+    "id": "E070",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-12-no_concrete_examples-s00",
+    "id": "E071",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-11-no_concrete_examples-s10",
+    "id": "E072",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-11-no_concrete_examples-s10",
+    "id": "E073",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-11-no_concrete_examples-s00",
+    "id": "E074",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-11-no_concrete_examples-s00",
+    "id": "E075",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-10-no_concrete_examples-s10",
+    "id": "E076",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-10-no_concrete_examples-s10",
+    "id": "E077",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-10-no_concrete_examples-s00",
+    "id": "E078",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-10-no_concrete_examples-s00",
+    "id": "E079",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-09-no_concrete_examples-s10",
+    "id": "E080",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-09-no_concrete_examples-s10",
+    "id": "E081",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-09-no_concrete_examples-s00",
+    "id": "E082",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-09-no_concrete_examples-s00",
+    "id": "E083",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-08-no_concrete_examples-s10",
+    "id": "E084",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-08-no_concrete_examples-s10",
+    "id": "E085",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-08-no_concrete_examples-s00",
+    "id": "E086",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-08-no_concrete_examples-s00",
+    "id": "E087",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-07-no_concrete_examples-s10",
+    "id": "E088",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-07-no_concrete_examples-s10",
+    "id": "E089",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-07-no_concrete_examples-s00",
+    "id": "E090",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-07-no_concrete_examples-s00",
+    "id": "E091",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-06-no_concrete_examples-s10",
+    "id": "E092",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-06-no_concrete_examples-s10",
+    "id": "E093",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-06-no_concrete_examples-s00",
+    "id": "E094",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-06-no_concrete_examples-s00",
+    "id": "E095",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-05-no_concrete_examples-s10",
+    "id": "E096",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-05-no_concrete_examples-s10",
+    "id": "E097",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-05-no_concrete_examples-s00",
+    "id": "E098",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-05-no_concrete_examples-s00",
+    "id": "E099",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-04-no_concrete_examples-s10",
+    "id": "E100",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-04-no_concrete_examples-s10",
+    "id": "E101",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-04-no_concrete_examples-s00",
+    "id": "E102",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-04-no_concrete_examples-s00",
+    "id": "E103",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-03-no_concrete_examples-s10",
+    "id": "E104",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-03-no_concrete_examples-s10",
+    "id": "E105",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-03-no_concrete_examples-s00",
+    "id": "E106",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-03-no_concrete_examples-s00",
+    "id": "E107",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-02-no_concrete_examples-s10",
+    "id": "E108",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-02-no_concrete_examples-s10",
+    "id": "E109",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-02-no_concrete_examples-s00",
+    "id": "E110",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-02-no_concrete_examples-s00",
+    "id": "E111",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-01-no_concrete_examples-s10",
+    "id": "E112",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-01-no_concrete_examples-s10",
+    "id": "E113",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-01-no_concrete_examples-s00",
+    "id": "E114",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-01-no_concrete_examples-s00",
+    "id": "E115",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-00-no_concrete_examples-s10",
+    "id": "E116",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-00-no_concrete_examples-s10",
+    "id": "E117",
+    "pass_number": 2
+   },
+   {
+    "arm": "computed_control_metadata",
+    "case_id": "cl1-00-no_concrete_examples-s00",
+    "id": "E118",
+    "pass_number": 2
+   },
+   {
+    "arm": "reference",
+    "case_id": "cl1-00-no_concrete_examples-s00",
+    "id": "E119",
+    "pass_number": 2
+   }
+  ],
+  "scoring": "strict full validity; structural format and legality given format reported separately",
+  "shared_output_contract_sha256": "ef6e27d454ad9fd6d288ecac09c979a82953410bb722ca52cf58383703aad071",
+  "system_sha256": "bca6fb10394d82b2f60167ab58c654cd8e8103ead681bcc346123b5970664be9"
+ },
+ "kaggle_image": {
+  "docker_image": "gcr.io/kaggle-private-byod/python@sha256:37c64f7dd9c54116ecd1bcc88817c5469b88387388fade02bfa8bf3fc647d461",
+  "docker_image_pinning_type": "original"
+ },
+ "kernel_id": "REPLACE_WITH_OWNER/arc3-control-interface-action-selection-v2",
+ "limits": {
+  "admission_cutoff_seconds": 3120,
+  "authorized_seconds": 3600,
+  "automatic_retries": 0,
+  "cleanup_reserve_seconds": 300,
+  "environment_actions": 0,
+  "installation_seconds": 900,
+  "internal_seconds": 3420,
+  "maximum_attempts": 1,
+  "maximum_model_requests": 131,
+  "model_verification_seconds": 600,
+  "scorecards": 0,
+  "startup_ceiling_seconds": 900
+ },
+ "model": {
+  "kaggle_source": "REPLACE_WITH_MODEL_OWNER/REPLACE_WITH_MODEL_DATASET/1",
+  "model_id": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+  "mounted_path": "REPLACE_WITH_VERIFIED_MODEL_MOUNT",
+  "reasoning_setting": "instruct_non_thinking",
+  "required_files": [
+   "config.json",
+   "model.safetensors.index.json",
+   "tokenizer.json",
+   "tokenizer_config.json",
+   "chat_template.json"
+  ],
+  "revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+  "shard_count": 4,
+  "shard_glob": "model-*.safetensors",
+  "source_kind": "dataset",
+  "tree_sha256": "b480ad92cda91474084c795d2ff64b07a6c477909b22d2784d24abf8fb4ef7df"
+ },
+ "placeholder_prefix": "REPLACE_WITH_",
+ "purpose": "paired retained-observation action selection with shared explicit output contract; zero game actions; no policy promotion",
+ "requests": [
+  {
+   "id": "S1",
+   "kind": "startup_probe",
+   "method": "GET",
+   "path": "/health",
+   "timeout_seconds": 10
+  },
+  {
+   "id": "S2",
+   "kind": "startup_probe",
+   "method": "GET",
+   "path": "/v1/models",
+   "timeout_seconds": 10
+  },
+  {
+   "case": "canary",
+   "id": "S3",
+   "kind": "startup_probe",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 300
+  },
+  {
+   "case": "exact_word",
+   "id": "I1",
+   "kind": "inference",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 120
+  },
+  {
+   "case": "exact_word",
+   "id": "I2",
+   "kind": "inference",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 120
+  },
+  {
+   "case": "long_context",
+   "id": "I3",
+   "kind": "inference",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 120
+  },
+  {
+   "case": "image",
+   "id": "I4",
+   "kind": "inference",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 180
+  },
+  {
+   "id": "E000",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E001",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E002",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E003",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E004",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E005",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E006",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E007",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E008",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E009",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E010",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E011",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E012",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E013",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E014",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E015",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E016",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E017",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E018",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E019",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E020",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E021",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E022",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E023",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E024",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E025",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E026",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E027",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E028",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E029",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E030",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E031",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E032",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E033",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E034",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E035",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E036",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E037",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E038",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E039",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E040",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E041",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E042",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E043",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E044",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E045",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E046",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E047",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E048",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E049",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E050",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E051",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E052",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E053",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E054",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E055",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E056",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E057",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E058",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E059",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E060",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E061",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E062",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E063",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E064",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E065",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E066",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E067",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E068",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E069",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E070",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E071",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E072",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E073",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E074",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E075",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E076",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E077",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E078",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E079",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E080",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E081",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E082",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E083",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E084",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E085",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E086",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E087",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E088",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E089",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E090",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E091",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E092",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E093",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E094",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E095",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E096",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E097",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E098",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E099",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E100",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E101",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E102",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E103",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E104",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E105",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E106",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E107",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E108",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E109",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E110",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E111",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E112",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E113",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E114",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E115",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E116",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E117",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E118",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "id": "E119",
+   "kind": "action_selection",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 60
+  },
+  {
+   "case": "stream_then_cancel",
+   "id": "C1",
+   "kind": "cancellation_probe",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 120
+  },
+  {
+   "id": "C2",
+   "kind": "cancellation_probe",
+   "max_issues": 2,
+   "method": "GET",
+   "path": "/metrics",
+   "retry_delay_seconds": 3,
+   "timeout_seconds": 10
+  },
+  {
+   "case": "exact_word",
+   "id": "C3",
+   "kind": "cancellation_probe",
+   "method": "POST",
+   "path": "/v1/chat/completions",
+   "timeout_seconds": 120
+  }
+ ],
+ "runtime": {
+  "glibc_minimum": "2.34",
+  "gpu_count": 1,
+  "gpu_name_contains": "RTX PRO 6000",
+  "imports": [
+   "torch",
+   "vllm",
+   "transformers",
+   "numpy"
+  ],
+  "machine": "x86_64",
+  "packages": {
+   "numpy": "2.2.6",
+   "torch": "2.10.0",
+   "transformers": "4.57.6",
+   "vllm": "0.19.0"
+  },
+  "python": "3.12",
+  "torch_cuda_build": "12.8"
+ },
+ "sampling": {
+  "seed": 0,
+  "temperature": 0
+ },
+ "schema": "control_interface_action_selection_v2_protocol",
+ "scope": "control-interface-action-selection-v2",
+ "server": {
+  "argv": [
+   "{python}",
+   "-m",
+   "vllm.entrypoints.openai.api_server",
+   "--model",
+   "{model_path}",
+   "--served-model-name",
+   "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+   "--host",
+   "127.0.0.1",
+   "--port",
+   "{port}",
+   "--tensor-parallel-size",
+   "1",
+   "--generation-config",
+   "vllm",
+   "--no-enable-prefix-caching",
+   "--gpu-memory-utilization",
+   "0.75",
+   "--max-model-len",
+   "65536"
+  ],
+  "env": {
+   "HF_HUB_OFFLINE": "1",
+   "TRANSFORMERS_NO_TF": "1",
+   "TRANSFORMERS_OFFLINE": "1",
+   "USE_TF": "0",
+   "VLLM_NO_USAGE_STATS": "1"
+  },
+  "host": "127.0.0.1",
+  "kill_grace_seconds": 10,
+  "log_retained_bytes": 2097152,
+  "port": 8000,
+  "readiness": "TCP connection only (no HTTP request); every HTTP request to the server is a counted model request",
+  "served_model_name": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+  "terminate_grace_seconds": 30
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "compute_proposal": {
+  "admission_cutoff_seconds": 3000,
+  "authorized_seconds": 3600,
+  "automatic_retries": 0,
+  "cleanup_reserve_seconds": 300,
+  "environment_actions": 0,
+  "installation_seconds": 900,
+  "internal_seconds": 3300,
+  "maximum_attempts": 1,
+  "maximum_model_requests": 194044,
+  "model_verification_seconds": 600,
+  "scorecards": 0,
+  "startup_ceiling_seconds": 900
+ },
+ "live_enabled_in_this_package": false,
+ "new_source_use_compute_review_required": true,
+ "prior_attempts_reusable": false,
+ "purpose": "Track 2 evidence memory v1, Stage 1 session A: frozen reader questions under a common token budget; zero game actions; technical evaluation only per session",
+ "scheduled_study_calls": 2896,
+ "scope": "evidence-memory-v1-session-a",
+ "session": "A",
+ "status": "proposal_only_no_approval_no_reservation"
+}

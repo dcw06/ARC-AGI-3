@@ -1,0 +1,175 @@
+# Track 2 Stage 1: protocol choices still open (for the owner)
+
+**Status.** Protocol v2 (`reports/evidence_memory_v1_protocol_v2.md`) is a draft. Nothing in it is frozen,
+scheduled, reserved or approved. This note decides nothing. For each choice it lists the options and the
+consequences, and gives a recommendation for the owner to accept or reject.
+
+**What the successor packages implement.** They implement protocol v2 as written: two package builds, the 9-group
+repeat split, per-call admission, separate duplicate requests, and the provisional margins. They do not change any of
+these.
+
+**Choices 1 to 5 are protocol v2 section 15.** Choices 6 to 12 arise from moving to the verified runtime, or from
+gaps found while preparing it.
+
+## 1. Two package builds or one (section 15.1)
+
+**Current design.** Two builds, A and B. They share code and differ in scope, frozen set, token audit, review lock,
+approvals, claim, receipt and reservation. The successor implements this as `research/evidence_memory_v1_session_{a,b}`.
+
+**Options.**
+- **(a) Keep two builds.** This is what is built. A session-A approval cannot run B. The two review notebooks and
+  locks differ only in those session bindings. It costs two reviews and two approval sets.
+- **(b) One package that selects its session from a locked frozen file.** One review and one source approval, but
+  the session must be chosen at launch. The gate would then need its own once-per-session accounting, which the
+  verified launch accounting does not provide.
+
+**Recommendation: (a).** It reuses the verified one-attempt accounting unchanged and keeps the two sessions'
+authority separate.
+
+## 2. Repeat split (section 15.2)
+
+**Current design.** 9 of 84 groups are repeated. Session A repeats 5 groups (304 calls) and B repeats 4 (240 calls).
+Each family is covered only across both sessions.
+
+**Options.**
+- **(a) Keep it.**
+- **(b) 7 groups per session**, so each session covers every family on its own. That adds about 120–150 calls per
+  session.
+
+**Recommendation: (a).** The repeat measures stability only and never enters an endpoint, and pooling across both
+sessions already covers every family. Choose (b) only if a per-session stability statement is wanted; per-session
+outcome reporting is excluded anyway.
+
+## 3. Admission granularity (section 15.3)
+
+**Current design.** The reviewed per-call rule: a call starts only if its whole 80 s bound ends before 3,000 s.
+
+**Options.**
+- **(a) Keep per-call admission.** At most one partial group results; the connected rehearsal shows a cutoff inside
+  pass 1 stopping cleanly.
+- **(b) Add group-level admission at measured rates.** This needs a change to the reviewed runner.
+
+**Recommendation: (a).** An incomplete session yields no pooled analysis whichever rule truncates it, so (b) adds
+risk without changing any result.
+
+## 4. Duplicate requests at delay 0 (section 15.4)
+
+**Facts.** Many pass-1 calls repeat an identical request already made for another arm: 613 of 2,592 in session A
+(24%; 1,979 distinct requests) and 616 of 2,592 in B (1,976 distinct). The figures come from the token cross-check.
+
+**Options.**
+- **(a) Ask every scheduled call** (current).
+- **(b) Ask once and share the answer.** This saves about 600 calls per session but couples the arms, and changes
+  the schedule and the call count.
+
+**Recommendation: (a).** The answers must agree under temperature 0 and seed 0, which doubles as a determinism
+check. The runtime budget does not need the saving.
+
+## 5. Unsupported-claim margins (section 15.5)
+
+**Current design.** Point estimate ≤ +0.02 and upper bound ≤ +0.05 (memory minus recent).
+
+**Options.**
+- **(a) Accept them as provisional pilot margins.**
+- **(b) Set them from a power or precision argument before the seed is drawn.**
+
+**Recommendation.** Settle this before the withheld seed is drawn, because the seed is drawn only after every design
+decision is fixed. With 84 groups, the upper bound will rarely fall below +0.05 unless the true difference is near 0.
+(a) is defensible if it is stated as a pilot margin.
+
+## 6. Runtime estimate and phase ceilings on the new runtime
+
+**What changed.** Protocol v2 section 11 is based on the v3 runtime: 961 s measured before the first question, and a
+1,540 s allowance. The verified runtime has its own ceilings: installation 900 s, model verification 600 s and server
+startup 900 s. All are bounded by the unchanged 3,000 s admission cutoff.
+
+**What is known about the new runtime.** The verified v2 lifecycle took 539.7 s in total, with 131 requests and about
+2.15 million prompt tokens. That is an upper bound on its installation and startup overhead for this model. No
+per-phase split is published.
+
+**Options.**
+- **(a) Keep the section 11 figures** as conservative planning numbers.
+- **(b) Re-derive section 11** from the verified run's retained phase timings, which are private.
+
+**Recommendation: (b), as a documentation-only revision.** The budget itself (3,600 s reserved per session) needs no
+change. Admission control, not the estimate, protects the deadline.
+
+## 7. Should session B's gate require session A's technical report?
+
+**Facts.** The stop rule says only technical rules may stop the experiment after A. Nothing in the code makes B's
+launch depend on A's technical report.
+
+**Options.**
+- **(a) Leave it to the human compute authorization for B** (current).
+- **(b) Add a gate condition for B:** a retained, technically valid session-A evaluation, bound by hash.
+
+**Recommendation: (a) for the pilot, with the condition written into B's compute authorization text.** (b) would add
+a cross-session dependency to a gate that is otherwise per scope.
+
+## 8. Trajectory exclusions are specified but not implemented
+
+**Facts.** Protocol v2 section 4 excludes, before the run, any trajectory that:
+- fails `verify_history`;
+- has gold answers that differ from its construction;
+- has a faithful memory that is not faithful under the independent checker;
+- has a prompt over 4,096 tokens.
+
+Excluded trajectories are not replaced. `stage1.build` has no exclusion step. On development seeds there are 0
+exclusions (336 of 336 trajectories pass), so the gap is invisible there.
+
+The successor's frozen-set path (`successor/freeze.py`) checks every condition. If any trajectory fails, it refuses to
+write a frozen set; it does not exclude anything silently.
+
+**Options.**
+- **(a) Keep "refuse and redraw".** A failing withheld draw would be recorded and a new nonce drawn.
+- **(b) Implement exclusion in `stage1.build`.** Drop the trajectory and report counts. This is a scientific code
+  change and needs review.
+
+**Recommendation: decide before drawing the seed. (a) is simpler; (b) is what section 4 literally says.**
+
+## 9. Strict JSON-schema decoding on the verified runtime (a technical risk, not a design choice)
+
+**Facts.** The verified runs used `response_format: json_object`. Track 2 uses strict `json_schema`. The trusted
+lock contains the backends (xgrammar 0.1.34, llguidance 1.3.0, outlines_core 0.2.11), but no run on this runtime has
+exercised strict schemas. If structured outputs fail, the first study call fails and the session stops as a transport
+failure; it is not scored.
+
+**Options.**
+- **(a) Accept the risk.**
+- **(b) Run a separately approved, small runtime probe of the strict schemas before session A.** This would be a new
+  scope.
+
+**Recommendation: (b), if a compute authorization for a probe is cheaper than risking a session reservation.**
+Otherwise (a).
+
+## 10. Counted metrics reads and the request cap
+
+**Facts.** Protocol v2 section 10 requires per-call prefix-cache counters and idle verification after a timeout. On
+the verified runtime every HTTP request is counted. The successor's ledger cap is therefore the worst case: 194,044
+requests for A and 189,756 for B, with up to 65 idle-verification reads per timed-out call. A complete session issues
+2 × N + 12 requests (5,804 for A in rehearsal). The "calls ceiling per session" in section 12 (2,896 / 2,832
+completions) is still enforced separately by the study service.
+
+**Options.**
+- **(a) Accept the worst-case cap.**
+- **(b) Pool the idle-verification reads** under a smaller cap. This would add a stop condition, triggered only after
+  several timeouts, by which point the session is already incomplete.
+
+**Recommendation: (a), stated in the compute authorization alongside the 2,896 / 2,832 completion ceiling.**
+
+## 11. In-run tokenizer admission replaced by the offline audit
+
+**Facts.** The verified controller has no pinned transformers. The successor admits each call by the audited
+pinned-tokenizer count, and stops at the first server/tokenizer parity mismatch, as the reviewed bridge did.
+On all 5,728 stand-in requests the audit agrees exactly with the pure-Python tokenizer; for a withheld set the owner
+reruns the audit before the run. The successor's runtime-only diff report states this change.
+
+**Recommendation: accept.** The numbers are the same tokenizer's, computed before the run instead of during it.
+
+## 12. A teammate's stress set (development material only)
+
+Yue Yu's `evidence_memory_stress_v1` (on `origin/teammate/mac-track2`) is development material and was not merged or
+used here. If the owner wants it in Stage 1, it would need a reviewed amendment that defines its role (development
+only, or a third, separately powered set) before the withheld seed is drawn.
+
+**Recommendation:** keep it out of Stage 1. Consider it for a later stage or for development diagnostics.

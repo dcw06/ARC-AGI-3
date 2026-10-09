@@ -1,0 +1,493 @@
+"""Track 2 Stage 1 successor packages on the verified runtime: derivation, scientific invariance, request plan, live
+gate, notebooks and the import closure (CPU only; no GPU, provider call, approval or reservation)."""
+import copy
+import hashlib
+import importlib
+import importlib.util
+import json
+import os
+from pathlib import Path
+import subprocess
+import tempfile
+import unittest
+from unittest.mock import patch
+
+from research.evidence_memory_v1 import protocol as P, stage1 as ST, tokens as TK
+from research.evidence_memory_v1.run import schedule as S, score as SC
+from research.evidence_memory_v1.successor import plan as PL
+
+ROOT = Path(__file__).resolve().parents[1]
+FOUND = TK.locate()
+BUILDER = 'scripts/build_evidence_memory_v1_sessions.py'
+SESSIONS = {label: importlib.import_module(spec['module'] + '.binding') for label, spec in PL.SESSIONS.items()}
+NOTEBOOKS = {label: importlib.import_module(spec['module'] + '.notebook') for label, spec in PL.SESSIONS.items()}
+# The public checkout holds the development stand-ins. In the owner's private checkout the packages hold withheld
+# sets: tests that compare against stand-in numbers, or that would read withheld truths, are skipped there.
+STAND_INS = all(PL.load_frozen(ROOT, spec['package'])[0]['case_source'] == 'development_stand_in'
+                for spec in PL.SESSIONS.values())
+
+
+def builder():
+    spec = importlib.util.spec_from_file_location('em1_builder', ROOT / BUILDER)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def git_blob(revision, path):
+    try:
+        return subprocess.run(['git', 'show', f'{revision}:{path}'], cwd=ROOT, capture_output=True, check=True,
+                              timeout=30).stdout
+    except (OSError, subprocess.SubprocessError):
+        return None
+
+
+class Derivation(unittest.TestCase):
+    def test_the_committed_packages_are_exactly_the_derivation(self):
+        for name, data in builder().build().items():
+            self.assertEqual((ROOT / name).read_bytes(), data, name)
+
+    def test_vendored_verified_runtime_is_byte_identical_to_its_record(self):
+        b = builder()
+        self.assertEqual(b.SOURCES['basis_commit'], b.BASIS_COMMIT)
+        for origin, digest in b.REFERENCE_SHA256.items():
+            self.assertEqual(hashlib.sha256(b.vendored(origin)).hexdigest(), digest, origin)
+        self.assertEqual(len([o for o in b.REFERENCE_SHA256 if o.startswith(b.SHARED + '/')]), 18)
+
+    def test_vendored_verified_runtime_equals_the_basis_commit(self):
+        b = builder()
+        if git_blob(b.BASIS_COMMIT, b.SHARED + '/run.py') is None:
+            self.skipTest('the basis commit is not available in this clone')
+        for origin in b.REFERENCE_SHA256:
+            self.assertEqual(git_blob(b.BASIS_COMMIT, origin), b.vendored(origin), origin)
+
+    def test_reused_track2_sources_are_unchanged_from_the_baseline(self):
+        b = builder()
+        if git_blob(b.TRACK2_BASELINE, 'research/evidence_memory_v1/stage1.py') is None:
+            self.skipTest('the Track 2 baseline commit is not available in this clone')
+        for path in b.TRACK2_REUSED:
+            self.assertEqual(git_blob(b.TRACK2_BASELINE, path), (ROOT / path).read_bytes(), path)
+
+    def test_no_file_of_the_track2_baseline_was_modified_or_removed(self):
+        b = builder()
+        if git_blob(b.TRACK2_BASELINE, 'research/evidence_memory_v1/stage1.py') is None:
+            self.skipTest('the Track 2 baseline commit is not available in this clone')
+        listing = subprocess.run(['git', 'diff', '--name-status', '--no-renames', b.TRACK2_BASELINE], cwd=ROOT,
+                                 capture_output=True, text=True, check=True, timeout=60).stdout
+        changed = [line for line in listing.splitlines() if line and not line.startswith('A\t')]
+        self.assertEqual(changed, [])  # the successor only adds files; every earlier artifact is byte-identical
+
+    def test_every_derived_source_names_its_origin_and_no_reference_name_remains(self):
+        for label, spec in PL.SESSIONS.items():
+            derivation = json.loads((ROOT / spec['package'] / 'derivation.json').read_bytes())
+            self.assertFalse(derivation['scientific_configuration_changed'])
+            for target, origin in derivation['derived'].items():
+                text = (ROOT / target).read_text(encoding='utf-8')
+                self.assertTrue(text.startswith('# Derived by ' + BUILDER + ' from ' + origin), target)
+                for residue in ('control_interface', 'control-interface', 'action_selection'):
+                    self.assertNotIn(residue, text.split('\n', 1)[1], target)
+
+
+class ScientificConfigurationUnchanged(unittest.TestCase):
+    def test_protocol_binds_the_reviewed_prompts_arms_budgets_schedule_and_stop_rules(self):
+        for label, binding in SESSIONS.items():
+            protocol = binding.load_protocol(ROOT)
+            e = protocol['experiment']
+            self.assertEqual(e['system_sha256'], hashlib.sha256(P.SYSTEM.encode()).hexdigest())
+            self.assertEqual((e['arms'], e['primary_arms'], e['reference_arm']),
+                             (list(ST.ARM_ORDER), list(P.ARMS), P.REFERENCE))
+            self.assertEqual((e['max_tokens'], e['temperature'], e['request_seed']), (64, 0, 0))
+            self.assertEqual(protocol['sampling'], {'seed': 0, 'temperature': 0})
+            self.assertEqual(e['per_call_seconds'], {'timeout': S.PER_CALL_TIMEOUT_SECONDS, 'teardown': S.TEARDOWN_SECONDS,
+                                                     'verify': S.CANCELLATION_VERIFY_SECONDS,
+                                                     'bound': S.PER_CALL_BOUND_SECONDS})
+            self.assertEqual((e['max_consecutive_timeouts'], e['invalid_rate_max']), (2, 0.02))
+            limits = protocol['limits']
+            self.assertEqual({k: limits[k] for k in ('authorized_seconds', 'internal_seconds', 'admission_cutoff_seconds',
+                                                     'cleanup_reserve_seconds', 'maximum_attempts', 'automatic_retries')},
+                             {'authorized_seconds': 3600, 'internal_seconds': 3300, 'admission_cutoff_seconds': 3000,
+                              'cleanup_reserve_seconds': 300, 'maximum_attempts': 1, 'automatic_retries': 0})
+            self.assertEqual(limits['admission_cutoff_seconds'], S.ADMISSION_CUTOFF_SECONDS)
+            self.assertEqual(e['groups'], list(ST.SESSIONS[label]))
+            self.assertEqual(e['passes']['pass_1'], 2592)
+            if STAND_INS:  # the repeat groups are drawn from the frozen set's seed
+                self.assertEqual(e['passes']['pass_2'], {'A': 304, 'B': 240}[label])
+                self.assertEqual(e['scheduled_calls'], {'A': 2896, 'B': 2832}[label])
+            argv = protocol['server']['argv']
+            self.assertEqual(argv.count('--no-enable-prefix-caching'), 1)
+            self.assertNotIn('--enable-prefix-caching', argv)
+
+    @unittest.skipUnless(STAND_INS, 'the packages hold withheld sets')
+    def test_session_a_stand_in_is_the_reviewed_run_package_stand_in(self):
+        self.assertEqual((ROOT / PL.SESSIONS['A']['package'] / 'probes.json').read_bytes(), ST.RUN_PROBES.read_bytes())
+
+    @unittest.skipUnless(FOUND and STAND_INS, 'needs the pinned tokenizer files and the development stand-ins')
+    def test_session_frozen_sets_are_fresh_builds_with_the_reviewed_seed_and_repeat(self):
+        tokenizer = TK.Tokenizer(FOUND)
+        for label, spec in PL.SESSIONS.items():
+            raw = (ROOT / spec['package'] / 'probes.json').read_bytes()
+            self.assertEqual(raw, ST.encode(ST.build(label, tokenizer=tokenizer)), label)
+            frozen = json.loads(raw)
+            self.assertEqual(frozen['seed_sha256'], hashlib.sha256(b'evidence-memory-v1-development').hexdigest())
+            self.assertEqual([tuple(fg) for fg in frozen['repeat_groups']],
+                             [fg for fg in ST.repeat_groups('evidence-memory-v1-development') if fg[1] in ST.SESSIONS[label]])
+
+    def test_requests_are_the_reviewed_requests_and_the_audit_binds_them(self):
+        for label, spec in PL.SESSIONS.items():
+            frozen, digest = PL.load_frozen(ROOT, spec['package'])
+            audit = json.loads((ROOT / spec['package'] / 'token-audit.json').read_bytes())
+            counts = PL.validate_audit(audit, frozen, digest)
+            contexts = {c['context_id']: c for c in frozen['contexts']}
+            probes = {p['probe_id']: p for p in frozen['probes']}
+            for row in audit['requests'][::97]:
+                probe = probes[row['probe_id']]
+                request = ST.build_request(contexts[probe['context_id']], probe)
+                self.assertEqual(row['request_sha256'], PL.request_sha256(request))
+                self.assertEqual(request['max_tokens'], 64)
+                self.assertTrue(request['response_format']['json_schema']['strict'])
+            self.assertEqual(audit['tokenizer'], PL.PINNED_TOKENIZER)
+            if STAND_INS:
+                self.assertEqual(max(counts.values()), {'A': 1247, 'B': 1249}[label])
+
+    def test_tampered_audit_or_frozen_set_is_refused(self):
+        frozen, digest = PL.load_frozen(ROOT, PL.SESSIONS['A']['package'])
+        audit = json.loads((ROOT / PL.SESSIONS['A']['package'] / 'token-audit.json').read_bytes())
+        for change in ('count', 'parity', 'order', 'passed', 'frozen'):
+            bad = copy.deepcopy(audit)
+            if change == 'count':
+                bad['requests'][5]['prompt_tokens'] = bad['requests'][5]['pure_python_prompt_tokens'] = 70000
+            elif change == 'parity':
+                bad['requests'][5]['pure_python_prompt_tokens'] += 1
+            elif change == 'order':
+                bad['requests'][4], bad['requests'][5] = bad['requests'][5], bad['requests'][4]
+            elif change == 'passed':
+                bad['passed'] = False
+            else:
+                bad['frozen_set_sha256'] = '0' * 64
+            with self.assertRaises(ValueError, msg=change):
+                PL.validate_audit(bad, frozen, digest)
+
+
+@unittest.skipUnless(STAND_INS, 'stand-in numbers; never computed on withheld truths')
+class Distinguishability(unittest.TestCase):
+    """Writer fidelity, selection and reading stay separately measurable in the pooled analysis."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.frozen = {label: PL.load_frozen(ROOT, spec['package'])[0] for label, spec in PL.SESSIONS.items()}
+
+    def pooled(self, answer):
+        rows = []
+        for frozen in self.frozen.values():
+            passes = {'pass_1': {p['probe_id']: SC.score(p, answer(p)) for p in frozen['probes']}}
+            rows += SC.rows_by_pass(frozen, passes)['pass_1']
+        return P.analyze_rows({arm: [r for r in rows if r['arm'] == arm] for arm in SC.ARMS}, resamples=200)
+
+    @staticmethod
+    def package_reader(probe):
+        package = probe['package']
+        return json.dumps({'values': package} if probe['kind'] == 'recall' else
+                          {'choice': package[0] if package else probe['question']['candidates'][0]})
+
+    def test_an_exact_package_reader_reproduces_the_availability_ceilings(self):
+        result = self.pooled(self.package_reader)
+        primary = {arm: result['primary_endpoint'][arm]['estimate'] for arm in P.ARMS}
+        self.assertEqual({arm: round(v, 2) for arm, v in primary.items()},
+                         {'recent_raw': 0.0, 'state_keyed_raw': 0.9, 'memory': 0.9})
+        self.assertEqual(result['reference_full_history']['estimate'], 1.0)
+        restricted = result['contrasts']['memory_vs_state_keyed_raw_evidence_in_both']
+        self.assertEqual((restricted['eligible_questions'], restricted['excluded_questions']), (144, 24))
+        self.assertEqual(result['primary_endpoint']['memory']['questions'], 168)
+        for arm in P.ARMS:  # an exact reader reads every package perfectly: selection, not reading, limits access
+            self.assertEqual(result['diagnostics'][arm]['reading_accuracy_package_has_evidence'][0], 1.0)
+        self.assertEqual(result['conclusions']['verdict'], 'memory_preserves_access_not_shown_over_retrieval')
+
+    def test_a_misreading_reader_lowers_reading_accuracy_without_changing_availability(self):
+        def misread(probe):
+            if (probe['arm'] == 'memory' and probe['kind'] == 'recall' and probe['package'] != ['no_evidence']
+                    and int(hashlib.sha256(probe['probe_id'].encode()).hexdigest(), 16) % 5 == 0):
+                wrong = [v for v in P.VALUES if v not in probe['package']][:1] or ['no_evidence']
+                return json.dumps({'values': wrong})
+            return self.package_reader(probe)
+        exact, noisy = self.pooled(self.package_reader), self.pooled(misread)
+        reading = noisy['diagnostics']['memory']['reading_accuracy_package_has_evidence'][0]
+        self.assertLess(reading, 0.9)
+        self.assertEqual(noisy['diagnostics']['state_keyed_raw'], exact['diagnostics']['state_keyed_raw'])
+        restricted = noisy['contrasts']['memory_vs_state_keyed_raw_evidence_in_both']
+        self.assertEqual((restricted['eligible_questions'], restricted['excluded_questions']), (144, 24))
+        self.assertLess(restricted['estimate'], 0)  # a representation-specific reading loss, at equal availability
+
+    def test_invalid_answers_are_judged_separately_in_each_pass(self):
+        frozen = self.frozen['B']
+        probes = {p['probe_id']: p for p in frozen['probes']}
+        passes = {block['pass']: {i: SC.score(probes[i], json.dumps(probes[i]['key'])) for i in block['probe_ids']}
+                  for block in frozen['schedule']}
+        self.assertEqual(SC.technical(frozen, passes)['technical_status'], 'session_technically_valid')
+        repeat = frozen['schedule'][1]['probe_ids']
+        for i in [i for i in repeat if probes[i]['arm'] == 'memory'][:2]:
+            passes['pass_2'][i] = SC.score(probes[i], 'not json')
+        report = SC.technical(frozen, passes)
+        self.assertTrue(report['invalid_by_pass']['pass_1']['rule_met'])
+        self.assertFalse(report['invalid_by_pass']['pass_2']['by_arm']['memory']['rule_met'])
+        self.assertEqual(report['technical_status'], 'session_technically_invalid_outputs')
+        self.assertNotIn('correct', json.dumps(report))
+
+
+class RequestPlan(unittest.TestCase):
+    def test_plan_keeps_the_verified_probes_and_counts_every_study_request(self):
+        b = builder()
+        reference = json.loads(b.vendored(b.V2 + '/protocol.json'))['requests']
+        prefix, suffix = PL.split_reference(reference)
+        for label, binding in SESSIONS.items():
+            protocol = binding.load_protocol(ROOT)
+            plan, n = protocol['requests'], protocol['experiment']['scheduled_calls']
+            self.assertEqual(plan[:7], prefix)
+            self.assertEqual(plan[-3:], suffix)
+            self.assertEqual(len({r['id'] for r in plan}), len(plan))
+            self.assertEqual(PL.idle_reads(), 65)
+            verified = sum(r.get('max_issues', 1) for r in prefix + suffix)  # S1-S3, I1-I4, C1, C2 (twice), C3
+            self.assertEqual(verified, 11)
+            self.assertEqual(protocol['limits']['maximum_model_requests'], verified + 1 + n * (1 + 1 + 65))
+            self.assertEqual([r['id'] for r in plan[7:11]], ['K0000', 'Q00000', 'M00000', 'V00000'])
+
+    def test_ledger_admits_only_the_plan_and_stops_at_the_cutoff(self):
+        from certification.direct_publisher_smoke_v1.accounting import Clock, Ledger, RequestRefused
+        protocol = SESSIONS['B'].load_protocol(ROOT)
+        elapsed = [1]
+        clock = Clock(protocol['limits'], 0, now=lambda: elapsed[0])
+        ledger = Ledger(protocol['requests'], protocol['limits']['maximum_model_requests'], clock)
+        ledger.admit('Q00000')
+        for item in ('Q00000', 'Q02832', 'E000', 'NOT_PLANNED'):
+            with self.assertRaises(RequestRefused):
+                ledger.admit(item)
+        for _ in range(65):
+            ledger.admit('V00001')
+        with self.assertRaises(RequestRefused):
+            ledger.admit('V00001')
+        elapsed[0] = 3000
+        with self.assertRaises(RequestRefused):
+            ledger.admit('Q00002')
+
+
+def gated_fixture(root, label='A'):
+    """Fabricated authority in a disposable directory; never a real approval, reservation or claim. Returns the
+    writer and the patches that enable the live path for this fixture only (LIVE_ENABLED, withheld-set check)."""
+    B, N = SESSIONS[label], NOTEBOOKS[label]
+
+    def put(name, value):
+        path = root / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes((json.dumps(value, sort_keys=True, indent=2) + '\n').encode())
+
+    def sha(name):
+        return B.sha256(root / name)
+    for name in N.source_names(ROOT):
+        path = root / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes((ROOT / name).read_bytes())
+    protocol = json.loads((ROOT / B.PROTOCOL).read_bytes())
+    protocol['kernel_id'] = 'fixture/em1'
+    protocol['model'].update(kaggle_source='fixture/em-model/1', mounted_path='/kaggle/input/em-model')
+    protocol['experiment']['withheld_seed_sha256'] = 'f' * 64
+    put(B.PROTOCOL, protocol)
+    N.build_review(root / f"notebooks/{PL.SESSIONS[label]['scope']}-review-r1", root=root)
+    lock = B.review_lock(root)
+    dataset = {k: protocol['dataset'][k] for k in ('ref', 'version')}
+    provider, facts = 'private/fixture-provider.json', 'private/fixture-assessment.json'
+    put(provider, {'authenticated_account': 'fixture', 'dataset_attachments': [dict(dataset, attachment_confirmed=True)]})
+    put(B.ACCOUNT, {'status': 'verified', 'scope': B.SCOPE, 'dataset': dataset, 'consuming_account': 'fixture',
+                    'verified_at': 'fixture-only', 'provider_evidence': provider, 'provider_evidence_sha256': sha(provider)})
+    put(facts, {'consuming_account': 'fixture', 'dataset': dataset, **{k: 'fabricated fixture only' for k in (
+        'licence_holder', 'recipients_and_roles', 'access_controls', 'publication_intent', 'applicable_agreements',
+        'output_and_payload_handling', 'licence_evidence')}})
+    put(B.PERMISSION, {'status': 'approved', 'approval_kind': 'direct_consumption_permission', 'scope': B.SCOPE,
+                       'dataset': protocol['dataset'], 'review_lock_sha256': sha(lock), 'protocol_sha256': sha(B.PROTOCOL),
+                       'trusted_artifacts_sha256': protocol['bundle']['approved_manifest_sha256'],
+                       'requirements_lock_sha256': protocol['bundle']['requirements_lock_sha256'],
+                       'permission_outcome': 'permitted_for_reviewed_use', 'outstanding_conditions': [],
+                       'reviewer_response': 'fabricated fixture only', 'reviewed_at': 'fixture-only',
+                       'use_assessment': facts, 'use_assessment_sha256': sha(facts)})
+    put(B.BYTES, {'integrity_passed': True, 'wheel_bytes_verified': 174, 'dataset_ref': dataset['ref'],
+                  'requested_version': 1, 'trusted_artifacts_sha256': protocol['bundle']['approved_manifest_sha256'],
+                  'installation_requirements_sha256': protocol['bundle']['requirements_lock_sha256']})
+    common = {'status': 'approved', 'scope': B.SCOPE, 'review_lock_sha256': sha(lock), 'approved_at': 'fixture-only',
+              'user_response': 'fabricated fixture only', 'evidence_bindings': {n: sha(n) for n in B.evidence_names(root)}}
+    put(B.SOURCE, dict(common, approval_kind='source'))
+    put(B.COMPUTE, dict(common, approval_kind='compute', source_approval_sha256=sha(B.SOURCE),
+                        protocol_sha256=sha(B.PROTOCOL), dataset=protocol['dataset'],
+                        **{k: protocol['limits'][k] for k in B.COMPUTE_LIMITS}))
+    execution = {'scope': B.SCOPE, 'attempt_id': PL.SESSIONS[label]['attempt'] + '-fixture0001', 'review_lock': lock,
+                 'review_sha256': sha(lock), 'source_approval_sha256': sha(B.SOURCE),
+                 'compute_approval_sha256': sha(B.COMPUTE)}
+    put(B.EXECUTION, execution)
+    put(B.RESERVATION, {'status': 'reserved', 'attempt_id': execution['attempt_id'], 'execution_sha256': sha(B.EXECUTION),
+                        'events': ['reserve']})
+    put(B.CLAIM, {'status': 'claimed', 'attempt_id': execution['attempt_id'], 'execution_sha256': sha(B.EXECUTION),
+                  'reservation_sha256': sha(B.RESERVATION), 'claimed_at': 'fixture-only'})
+    controls = importlib.import_module(PL.SESSIONS[label]['module'] + '.runtime_controls')
+    return put, [patch.object(B, 'LIVE_ENABLED', True),
+                 patch.object(controls, 'live_frozen_set_reasons', lambda root, protocol: [])]
+
+
+class LiveGate(unittest.TestCase):
+    def test_this_checkout_refuses_every_session_for_every_independent_reason(self):
+        for label, B in SESSIONS.items():
+            with self.assertRaises(B.LiveRefused) as caught:
+                B.require_live(ROOT)
+            reasons = ' | '.join(caught.exception.reasons)
+            expected_reasons = ['LIVE_ENABLED is False']
+            if STAND_INS:  # the public checkout: placeholders and the stand-in refuse independently
+                expected_reasons += ['unresolved placeholders', 'experiment.withheld_seed_sha256', 'kernel_id',
+                                     'model.kaggle_source', 'model.mounted_path',
+                                     "case source is 'development_stand_in'", 'committed withheld seed']
+            for expected in expected_reasons:
+                self.assertIn(expected, reasons, label)
+            self.assertFalse(B.LIVE_ENABLED)
+
+    def test_refusal_reads_no_approval_while_live_is_disabled(self):
+        B = SESSIONS['A']
+        with patch.object(B, 'check_sources') as sources, patch.object(B, 'check_approvals') as approvals, \
+                patch.object(B, 'check_evidence') as evidence, patch.object(B, 'check_reservation') as reservation:
+            with self.assertRaises(B.LiveRefused):
+                B.require_live(ROOT)
+        for mock in (sources, approvals, evidence, reservation):
+            mock.assert_not_called()
+
+    def test_complete_fabricated_authority_passes_only_with_live_enabled_and_a_withheld_set(self):
+        for label in PL.SESSIONS:
+            B, N = SESSIONS[label], NOTEBOOKS[label]
+            with tempfile.TemporaryDirectory() as folder:
+                root = Path(folder)
+                put, patches = gated_fixture(root, label)
+                for p in patches:
+                    p.start()
+                try:
+                    protocol, execution = B.require_live(root)
+                    artifacts = N.launch_artifacts(root)
+                finally:
+                    for p in reversed(patches):
+                        p.stop()
+                metadata = json.loads(artifacts['kernel-metadata.json'])
+                self.assertTrue(metadata['enable_gpu'] and metadata['is_private'])  # artifacts only; nothing submitted
+                self.assertEqual(metadata['machine_shape'], 'NvidiaRtxPro6000')
+                self.assertIn('fixture/em-model/1', metadata['dataset_sources'])
+                self.assertIn(f"{protocol['dataset']['ref']}/{protocol['dataset']['version']}", metadata['dataset_sources'])
+                self.assertEqual(metadata['competition_sources'], ['arc-prize-2026-arc-agi-3'])
+                self.assertIn(PL.SESSIONS[label]['module'] + '.run', json.loads(artifacts['profile.ipynb'])['cells'][1]['source'])
+                controls = importlib.import_module(PL.SESSIONS[label]['module'] + '.runtime_controls')
+                for live_enabled, frozen_ok in ((False, True), (True, False)):  # either gate alone still refuses
+                    patches = [patch.object(B, 'LIVE_ENABLED', live_enabled)]
+                    if frozen_ok:
+                        patches.append(patch.object(controls, 'live_frozen_set_reasons', lambda root, protocol: []))
+                    for p in patches:
+                        p.start()
+                    try:
+                        with self.assertRaises(B.LiveRefused):
+                            B.require_live(root)
+                    finally:
+                        for p in reversed(patches):
+                            p.stop()
+
+    def test_one_session_authority_cannot_run_the_other(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            put, patches = gated_fixture(root, 'A')
+            B = SESSIONS['B']
+            controls = importlib.import_module(PL.SESSIONS['B']['module'] + '.runtime_controls')
+            with patch.object(B, 'LIVE_ENABLED', True), patch.object(controls, 'live_frozen_set_reasons',
+                                                                     lambda root, protocol: []):
+                with self.assertRaises(B.LiveRefused):
+                    B.require_live(root)
+
+    @unittest.skipUnless(os.name == 'posix', 'the reviewed run evidence is POSIX-only (fcntl)')
+    def test_the_study_phase_refuses_the_development_stand_in_live(self):
+        from research.evidence_memory_v1.successor.study import run_study
+
+        class Evidence:
+            mode, folder = 'live', Path('unused')
+
+        with self.assertRaisesRegex(PermissionError, 'not withheld'):
+            run_study(ROOT, PL.SESSIONS['A']['package'], None, Evidence(), None)
+
+    def test_live_frozen_set_check_accepts_only_the_committed_withheld_set(self):
+        protocol = SESSIONS['A'].load_protocol(ROOT)
+        frozen, digest = PL.load_frozen(ROOT, PL.SESSIONS['A']['package'])
+        self.assertTrue(PL.live_frozen_set_reasons(ROOT, protocol, PL.SESSIONS['A']['package']))
+        fake = copy.deepcopy(protocol)
+        fake['experiment'].update(case_source='withheld', withheld_seed_sha256=frozen['seed_sha256'])
+        with patch.object(PL, 'load_frozen', return_value=({**frozen, 'case_source': 'withheld'}, digest)):
+            self.assertEqual(PL.live_frozen_set_reasons(ROOT, fake, PL.SESSIONS['A']['package']), [])
+            fake['experiment']['withheld_seed_sha256'] = '0' * 64
+            self.assertTrue(PL.live_frozen_set_reasons(ROOT, fake, PL.SESSIONS['A']['package']))
+
+
+class Notebooks(unittest.TestCase):
+    def test_review_notebooks_are_gpu_disabled_pinned_and_bound(self):
+        for label, N in NOTEBOOKS.items():
+            notebook, metadata, bindings, pending = N.review_notebook(ROOT)
+            self.assertFalse(metadata['enable_gpu'] or metadata['enable_internet'] or metadata['enable_tpu'])
+            self.assertTrue(metadata['is_private'])
+            self.assertEqual(metadata['docker_image_pinning_type'], 'original')
+            self.assertEqual(metadata['dataset_sources'], ['REPLACE_WITH_MODEL_OWNER/REPLACE_WITH_MODEL_DATASET/1'])
+            self.assertEqual(metadata['competition_sources'], ['arc-prize-2026-arc-agi-3'])
+            self.assertIn('experiment.withheld_seed_sha256', pending)
+            for name in PL.STUDY_SOURCES + ('certification/direct_publisher_smoke_v1/install.py',
+                                            'certification/direct_publisher_smoke_v1/proposal.json',
+                                            PL.SESSIONS[label]['package'] + '/probes.json',
+                                            PL.SESSIONS[label]['package'] + '/token-audit.json'):
+                self.assertIn(name, bindings)
+            self.assertLess(len(N.encode(notebook)), N.SIZE_GUARD)
+
+    def test_source_gate_requires_the_study_closure(self):
+        B, N = SESSIONS['A'], NOTEBOOKS['A']
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            _, _, bindings, _ = N.review_notebook(ROOT)
+            for missing in ('research/evidence_memory_v1/successor/service.py',
+                            'certification/direct_publisher_smoke_v1/proposal.json'):
+                lock = {'scope': B.SCOPE, 'gpu_enabled': False, 'bindings': {k: v for k, v in bindings.items() if k != missing}}
+                for name in lock['bindings']:
+                    p = root / name
+                    p.parent.mkdir(parents=True, exist_ok=True)
+                    p.write_bytes((ROOT / name).read_bytes())
+                (root / 'notebooks').mkdir(exist_ok=True)
+                (root / 'notebooks/lock.json').write_text(json.dumps(lock))
+                with self.assertRaisesRegex(ValueError, 'reviewed sources incomplete'):
+                    B.check_sources(root, 'notebooks/lock.json')
+
+    @unittest.skipUnless(os.name == 'posix', 'the live closure imports POSIX modules (fcntl)')
+    def test_extracted_payload_imports_the_live_path_and_loads_default_verifier_inputs(self):
+        for label, spec in PL.SESSIONS.items():
+            checker = importlib.import_module(f"scripts.check_{spec['module'].split('.')[-1]}_embedded_inputs")
+            notebook, _, bindings, _ = NOTEBOOKS[label].review_notebook(ROOT)
+            result = checker.check(notebook, package=spec['module'])
+            self.assertTrue(result['passed'], result)
+            self.assertEqual(result['trusted_wheels'], 174)
+            self.assertEqual(result['modules_outside_payload'], [])
+            loaded = set(result['live_modules_imported'])
+            self.assertTrue({'research/evidence_memory_v1/successor/study.py', spec['package'] + '/run.py'} <= loaded)
+            self.assertTrue(loaded <= set(bindings), loaded - set(bindings))
+
+    @unittest.skipUnless(os.name == 'posix', 'review snapshots are built and reproduced on Linux')
+    def test_frozen_review_snapshots_reproduce_and_their_checks_refused_at_the_gate(self):
+        for label, spec in PL.SESSIONS.items():
+            name = f"{spec['scope']}-review-r1"
+            frozen = ROOT / 'notebooks' / name
+            if not frozen.is_dir():
+                self.skipTest('review snapshot not built yet')
+            with tempfile.TemporaryDirectory() as folder:
+                NOTEBOOKS[label].build_review(Path(folder) / 'review', root=ROOT)
+                for n in ('profile.ipynb', 'kernel-metadata.json', 'review-source-lock.json'):
+                    self.assertEqual((frozen / n).read_bytes(), (Path(folder) / 'review' / n).read_bytes(), n)
+            lock = json.loads((frozen / 'review-source-lock.json').read_bytes())
+            self.assertEqual(lock['status'], 'review_snapshot_not_approved_not_compute_authority')
+            self.assertFalse(lock['gpu_enabled'])
+            receipt = json.loads((ROOT / f"reports/{spec['module'].split('.')[-1]}_review_check_r1.json").read_bytes())
+            self.assertTrue(receipt['passed'] and receipt['refused_at_live_gate'])
+            self.assertFalse(receipt['nvidia_smi_called'])
+            self.assertEqual(receipt['review_lock_sha256'],
+                             hashlib.sha256((frozen / 'review-source-lock.json').read_bytes()).hexdigest())
+
+
+if __name__ == '__main__':
+    unittest.main()
