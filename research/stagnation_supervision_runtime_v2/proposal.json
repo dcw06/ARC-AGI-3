@@ -1,0 +1,82 @@
+{
+  "schema": "direct_publisher_smoke_preparation_v1",
+  "scope": "direct-publisher-smoke-v1",
+  "status": "cpu_intake_draft_not_a_gpu_smoke_launch_package",
+  "source_basis_commit": "318c5cb",
+  "dataset": {
+    "ref": "driessmit1/arc3-vllm-h100-wheelhouse-v3",
+    "version": 1
+  },
+  "trusted_artifacts_sha256": "3691cb8854df4d8ff10e42ca9957fddb9a8ae0362064e7b31b3205891af0d546",
+  "trusted_requirements_sha256": "ba80d35062245421daf1cae65474281952cc0c44fb46e11cf7f68d0ece496406",
+  "wheel_count": 174,
+  "integrity_budget_seconds": 900,
+  "publisher_metadata_sha256": {
+    "README.md": "d2e8da6d36c243198882e6cb68d60d7121d8aa9642e55d7fcc384bc4d087b631",
+    "SHA256SUMS": "805388efb6bf7f0a248f2bb70798188737077545159fe0e475aee4d44843c901",
+    "requirements.lock": "bb3e30ac5e327456e3915b807da960203c20bc1aa352204e39f66d5618a6bcb0"
+  },
+  "use_facts": {
+    "status": "deployment_facts_retained_locally_not_published",
+    "required_for_review": [
+      "consuming account",
+      "licence holder and teammate roles",
+      "access controls",
+      "publication intent",
+      "separate vendor agreement, if any",
+      "output and payload handling"
+    ],
+    "review_outcome": "not assessed or approved"
+  },
+  "unresolved_use_questions": [
+    "What legal entity, if any, is represented by the accepting account holder?",
+    "Do collaborators independently accept applicable licences, or qualify under the applicable authorized-user terms?",
+    "Does the hosted access and copying model satisfy the exact applicable licence terms?",
+    "Which installed payloads, notebook outputs, archives or images are retained/exported/shared?",
+    "Which exact governing texts apply to cuDNN, cuSPARSELt, NVSHMEM and CUDA subcomponents?"
+  ],
+  "gates": {
+    "account_attachment": "unverified; no credentials available in checked locations",
+    "provider_attachment_version": "unverified",
+    "mounted_wheel_byte_verification": "not run",
+    "direct_consumption_permission": "not assessed or approved",
+    "separate_smoke_runner": "not implemented; this package is CPU intake only",
+    "final_smoke_package_review": "not performed",
+    "compute_authorization": "absent"
+  },
+  "proposed_smoke": {
+    "status": "proposal_only_not_authorized",
+    "prior_control_harness": {
+      "branch": "wheelhouse-r2-smoke-v1",
+      "commit": "b07e2b2"
+    },
+    "model_id": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+    "model_revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+    "model_tree_sha256": "052ab27f06c28261e143b8c1638382d107b034692bc0cd1792ec4e02ddab8627",
+    "runtime": {
+      "python": "3.12",
+      "glibc_minimum": "2.34",
+      "machine": "x86_64",
+      "gpu_count": 1,
+      "gpu_name_contains": "RTX PRO 6000",
+      "packages": {
+        "torch": "2.10.0+cu128",
+        "vllm": "0.19.0",
+        "transformers": "4.57.6",
+        "numpy": "2.2.6"
+      }
+    },
+    "limits": {
+      "authorized_seconds": 3600,
+      "internal_seconds": 3420,
+      "cleanup_reserve_seconds": 300,
+      "admission_cutoff_seconds": 3120,
+      "installation_seconds": 900,
+      "maximum_attempts": 1,
+      "maximum_model_requests": 12,
+      "automatic_retries": 0
+    },
+    "installation": "fresh venv; no index/cache; binary only; trusted_requirements.lock with --require-hashes; pip check; exact imports/versions",
+    "lifecycle_requirements": "preserve protected startup ownership and uncertain-ownership cleanup, GPU cleanup, evidence finalization, temporary-environment removal and an explicit final deadline check; overruns always fail"
+  }
+}

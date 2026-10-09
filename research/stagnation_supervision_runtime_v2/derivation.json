@@ -1,0 +1,419 @@
+{
+ "builder": "scripts/derive_stagnation_supervision_runtime_v2.py",
+ "files": [
+  {
+   "derived": "research/stagnation_supervision_runtime_v2/publisher_preflight.py",
+   "derived_sha256": "cd007e0e3ccffe224ad07e3cd0f9965fe20c68929235616fbc546fe1c5326101",
+   "kind": "python",
+   "replacements": [],
+   "source_branch": "wheelhouse-replacement-audit",
+   "source_commit": "5a21dd3",
+   "source_path": "certification/direct_publisher_smoke_v1/preflight.py",
+   "source_sha256": "369a39a09c4f5f97b0d92613c3ecc6aa281779af4721a4154fe98576e4fc3b0d"
+  },
+  {
+   "derived": "research/stagnation_supervision_runtime_v2/publisher_process.py",
+   "derived_sha256": "5abb2b3b9be51bf6ceb48fb293dc7f5ca4ec15c55d10cfae2b9874387a405194",
+   "kind": "python",
+   "replacements": [],
+   "source_branch": "wheelhouse-replacement-audit",
+   "source_commit": "5a21dd3",
+   "source_path": "certification/direct_publisher_smoke_v1/server.py",
+   "source_sha256": "e3cbdf0949f21fc2edb6f8c781a55aaeacf3410aa4f5794e3ebe420f2bcee888"
+  },
+  {
+   "derived": "research/stagnation_supervision_runtime_v2/publisher_host.py",
+   "derived_sha256": "45727f320dc411f1bb4cf1d4dd4cd0751e3051711412359cffa4caa120b45ee5",
+   "kind": "python",
+   "replacements": [],
+   "source_branch": "wheelhouse-replacement-audit",
+   "source_commit": "5a21dd3",
+   "source_path": "certification/direct_publisher_smoke_v1/host.py",
+   "source_sha256": "6eab062887c5ba4460f4a5f953da8b6b17fc7ddf40404ec74e9d10bbb8c1c9a8"
+  },
+  {
+   "derived": "research/stagnation_supervision_runtime_v2/publisher_install.py",
+   "derived_sha256": "75fda984713f33ee93ff42d858f2eca49b7ab5da0a3d207057f5096d9549c470",
+   "kind": "python",
+   "replacements": [
+    [
+     "from certification.direct_publisher_smoke_v1.server import ModelServer, defer_startup_signals",
+     "from research.stagnation_supervision_runtime_v2.publisher_process import ModelServer, defer_startup_signals",
+     1
+    ],
+    [
+     "    from certification.direct_publisher_smoke_v1.preflight import PACKAGE, load_inputs, verify_mounted",
+     "    from research.stagnation_supervision_runtime_v2.publisher_preflight import PACKAGE, load_inputs, verify_mounted",
+     1
+    ]
+   ],
+   "source_branch": "wheelhouse-replacement-audit",
+   "source_commit": "5a21dd3",
+   "source_path": "certification/direct_publisher_smoke_v1/install.py",
+   "source_sha256": "568ef619fce6fc8ed03eda07e7a240f079e017379e1494f4a6b95672cad0019b"
+  },
+  {
+   "derived": "research/stagnation_supervision_runtime_v2/proposal.json",
+   "derived_sha256": "cb5e1cee9903861e16960664c4d392821fb880e4125c7bce1865ea69573a600c",
+   "kind": "data",
+   "replacements": [],
+   "source_branch": "wheelhouse-replacement-audit",
+   "source_commit": "5a21dd3",
+   "source_path": "certification/direct_publisher_smoke_v1/proposal.json",
+   "source_sha256": "cb5e1cee9903861e16960664c4d392821fb880e4125c7bce1865ea69573a600c"
+  },
+  {
+   "derived": "research/stagnation_supervision_runtime_v2/trusted_manifest.json",
+   "derived_sha256": "91ad9ede70c4fdf027cf5739a828f9063dc07c22c6010a64ebd1af0db8f0462b",
+   "kind": "data",
+   "replacements": [],
+   "source_branch": "wheelhouse-replacement-audit",
+   "source_commit": "5a21dd3",
+   "source_path": "certification/direct_publisher_smoke_v1/trusted_manifest.json",
+   "source_sha256": "91ad9ede70c4fdf027cf5739a828f9063dc07c22c6010a64ebd1af0db8f0462b"
+  },
+  {
+   "derived": "research/stagnation_supervision_runtime_v2/trusted_requirements.lock",
+   "derived_sha256": "ba80d35062245421daf1cae65474281952cc0c44fb46e11cf7f68d0ece496406",
+   "kind": "data",
+   "replacements": [],
+   "source_branch": "wheelhouse-replacement-audit",
+   "source_commit": "5a21dd3",
+   "source_path": "certification/direct_publisher_smoke_v1/trusted_requirements.lock",
+   "source_sha256": "ba80d35062245421daf1cae65474281952cc0c44fb46e11cf7f68d0ece496406"
+  },
+  {
+   "derived": "research/stagnation_supervision_runtime_v2/supervisor.py",
+   "derived_sha256": "49eec87cf1dd7c23df68b5a986b5a3db1482a6e8cb46a4a50a48de938da82c97",
+   "kind": "python",
+   "replacements": [
+    [
+     "from .resources import independent_cleanup, probes_for",
+     "from research.stagnation_supervision_runtime_v2.resources import independent_cleanup, probes_for",
+     1
+    ],
+    [
+     "ROOT = Path(__file__).resolve().parents[3]",
+     "ROOT = Path(__file__).resolve().parents[2]",
+     1
+    ],
+    [
+     "    from .worker import gate as worker_gate",
+     "    from research.stagnation_supervision_runtime_v2.worker import gate as worker_gate",
+     1
+    ],
+    [
+     "    from .worker import FAULTS as WORKER_FAULTS",
+     "    from research.stagnation_supervision_runtime_v2.worker import FAULTS as WORKER_FAULTS",
+     1
+    ],
+    [
+     "        from .authority import consume_runtime, verify_runtime_claim",
+     "        from research.stagnation_supervision_runtime_v2.authority import consume_runtime, verify_runtime_claim",
+     1
+    ],
+    [
+     "'research.stagnation_supervision_v1.closed_loop.worker'",
+     "'research.stagnation_supervision_runtime_v2.worker'",
+     1
+    ],
+    [
+     "'research.stagnation_supervision_v1.closed_loop.monitor'",
+     "'research.stagnation_supervision_runtime_v2.monitor'",
+     1
+    ],
+    [
+     "        from .evidence import load_verified",
+     "        from research.stagnation_supervision_v1.closed_loop.evidence import load_verified",
+     1
+    ]
+   ],
+   "source_branch": "track3-stagnation-supervision-v1",
+   "source_commit": "bc19919",
+   "source_path": "research/stagnation_supervision_v1/closed_loop/supervisor.py",
+   "source_sha256": "15925c14ed2a4a4cb6974c3c3e39d2b8c2f7d7b3fb155ef8fe7d8a926761ada5"
+  },
+  {
+   "derived": "research/stagnation_supervision_runtime_v2/worker.py",
+   "derived_sha256": "d5f9ee767298766cc093b241a264a4477a77a24a11fd2234e86460c00cad06a0",
+   "kind": "python",
+   "replacements": [
+    [
+     "from .model_service import ProxyService",
+     "from research.stagnation_supervision_v1.closed_loop.model_service import ProxyService",
+     1
+    ],
+    [
+     "ROOT = Path(__file__).resolve().parents[3]",
+     "ROOT = Path(__file__).resolve().parents[2]",
+     1
+    ],
+    [
+     "        from .authority import require\n        return require()",
+     "        from research.stagnation_supervision_runtime_v2.authority import require\n        return require()",
+     1
+    ],
+    [
+     "        from .authority import rehearsal_gate",
+     "        from research.stagnation_supervision_runtime_v2.authority import rehearsal_gate",
+     1
+    ],
+    [
+     "'research.stagnation_supervision_v1.closed_loop.host'",
+     "'research.stagnation_supervision_runtime_v2.host'",
+     2
+    ],
+    [
+     "        from .engine import DevelopmentAdapter\n        from .runner import run\n        from .bridge import session_run_spec, supervision_factory, worker_token_counter",
+     "        from research.stagnation_supervision_v1.closed_loop.engine import DevelopmentAdapter\n        from research.stagnation_supervision_v1.closed_loop.runner import run\n        from research.stagnation_supervision_v1.closed_loop.bridge import session_run_spec, supervision_factory, worker_token_counter",
+     1
+    ]
+   ],
+   "source_branch": "track3-stagnation-supervision-v1",
+   "source_commit": "bc19919",
+   "source_path": "research/stagnation_supervision_v1/closed_loop/worker.py",
+   "source_sha256": "4b977fb9b3438451f39daac5b54cbd951734660796196db4ed3211ff6bb65782"
+  },
+  {
+   "derived": "research/stagnation_supervision_runtime_v2/host.py",
+   "derived_sha256": "d661c798f4cf0d6d632e5105c779e018a140994d622501ff7335e99fdc86637f",
+   "kind": "python",
+   "replacements": [
+    [
+     "from .model_service import SupervisionModelService",
+     "from research.stagnation_supervision_v1.closed_loop.model_service import SupervisionModelService",
+     1
+    ],
+    [
+     "ROOT = Path(__file__).resolve().parents[3]",
+     "ROOT = Path(__file__).resolve().parents[2]",
+     1
+    ],
+    [
+     "    from research.grounded_action_v1.artifact_contract import expected_artifact as frozen\n    return frozen(root)  # the same pinned model tree as every earlier run",
+     "    from research.stagnation_supervision_runtime_v2.model_binding import expected_artifact as bound\n    return bound(root)  # runtime v2: the verified runtime's version-pinned dataset snapshot",
+     1
+    ],
+    [
+     "    from certification.phase4_integrated_v2.model_artifact import verify_artifact\n",
+     "    from certification.phase4_integrated_v2.model_artifact import verify_artifact\n    from research.stagnation_supervision_runtime_v2.model_binding import bind_primary\n",
+     1
+    ],
+    [
+     "    primary = replace(load_operational_primary(ROOT), scratch_log=Path('/dev/stdout'),",
+     "    primary = bind_primary(ROOT, replace(load_operational_primary(ROOT), scratch_log=Path('/dev/stdout'),",
+     1
+    ],
+    [
+     "                      hard_seconds=5100, finalization_reserve_seconds=300)  # the longer session",
+     "                      hard_seconds=5100, finalization_reserve_seconds=300))  # the longer session; runtime v2 binds the verified mount and tree pin",
+     1
+    ],
+    [
+     "    from .authority import rehearsal_gate\n    from .rehearsal import FixtureTokenizer, ScriptedTransport",
+     "    from research.stagnation_supervision_runtime_v2.authority import rehearsal_gate\n    from research.stagnation_supervision_v1.closed_loop.rehearsal import FixtureTokenizer, ScriptedTransport",
+     1
+    ],
+    [
+     "    from .server_config import rehearsal_record",
+     "    from research.stagnation_supervision_v1.closed_loop.server_config import rehearsal_record",
+     1
+    ],
+    [
+     "        from .server_config import KIND",
+     "        from research.stagnation_supervision_v1.closed_loop.server_config import KIND",
+     1
+    ],
+    [
+     "        from .authority import require\n        require()  # before model import, subprocess or GPU query",
+     "        from research.stagnation_supervision_runtime_v2.authority import require\n        require()  # before model import, subprocess or GPU query",
+     1
+    ],
+    [
+     "    from .server_config import model_owner",
+     "    from research.stagnation_supervision_v1.closed_loop.server_config import model_owner",
+     1
+    ]
+   ],
+   "source_branch": "track3-stagnation-supervision-v1",
+   "source_commit": "bc19919",
+   "source_path": "research/stagnation_supervision_v1/closed_loop/host.py",
+   "source_sha256": "63389a929b8e5da42fa9ae61c6946e941aa07e298034b5b7ca15759f5e42454b"
+  },
+  {
+   "derived": "research/stagnation_supervision_runtime_v2/monitor.py",
+   "derived_sha256": "4a2733e6342d8231ba7ad8c276794bc8d091ca154eddf95b9801e39323af1fc9",
+   "kind": "python",
+   "replacements": [
+    [
+     "from .resources import probes_for",
+     "from research.stagnation_supervision_runtime_v2.resources import probes_for",
+     1
+    ],
+    [
+     "        from .authority import require\n        require()",
+     "        from research.stagnation_supervision_runtime_v2.authority import require\n        require()",
+     1
+    ]
+   ],
+   "source_branch": "track3-stagnation-supervision-v1",
+   "source_commit": "bc19919",
+   "source_path": "research/stagnation_supervision_v1/closed_loop/monitor.py",
+   "source_sha256": "4419bb9b6f273e9faad5c801f3bd50a7b95256c2e4c277390884784ba964334c"
+  },
+  {
+   "derived": "research/stagnation_supervision_runtime_v2/resources.py",
+   "derived_sha256": "dfc71705eaed08f15e8dacab1ed9befb40c0d38359432aa2cc3c39df23847fd5",
+   "kind": "python",
+   "replacements": [
+    [
+     "        from .authority import require\n",
+     "        from research.stagnation_supervision_runtime_v2.authority import require\n",
+     1
+    ],
+    [
+     "        from .authority import rehearsal_gate\n",
+     "        from research.stagnation_supervision_runtime_v2.authority import rehearsal_gate\n",
+     1
+    ]
+   ],
+   "source_branch": "track3-stagnation-supervision-v1",
+   "source_commit": "bc19919",
+   "source_path": "research/stagnation_supervision_v1/closed_loop/resources.py",
+   "source_sha256": "1c1051394949b2a68129a019d103d1aeb30b511ce0e4ea155edc2e49a1c6924b"
+  },
+  {
+   "derived": "research/stagnation_supervision_runtime_v2/target_evaluate.py",
+   "derived_sha256": "d9e0d11f0fb1e1190b883ee240b6c27b5fd2dfc0b6e0b6189bb938f5a8d1574a",
+   "kind": "python",
+   "replacements": [
+    [
+     "from . import evaluate as trajectories\nfrom .model_service import validate_ready\nfrom .server_config import validate as validate_configuration",
+     "from research.stagnation_supervision_v1.closed_loop import evaluate as trajectories\nfrom research.stagnation_supervision_v1.closed_loop.model_service import validate_ready\nfrom research.stagnation_supervision_v1.closed_loop.server_config import validate as validate_configuration",
+     1
+    ],
+    [
+     "VERSION = 'stagnation_supervision_target_evaluation_r1'",
+     "VERSION = 'stagnation_supervision_target_evaluation_runtime_v2'",
+     1
+    ],
+    [
+     "    from .authority import SESSION_LIMITS\n    from .evidence import load_verified",
+     "    from research.stagnation_supervision_runtime_v2.authority import SESSION_LIMITS\n    from research.stagnation_supervision_v1.closed_loop.evidence import load_verified",
+     1
+    ],
+    [
+     "        from .bridge import session_spec\n        from .runner import protocol",
+     "        from research.stagnation_supervision_v1.closed_loop.bridge import session_spec\n        from research.stagnation_supervision_v1.closed_loop.runner import protocol",
+     1
+    ],
+    [
+     "    require(first['dependency_trees_removed'] is (True if mode == 'live' else None), 'dependency cleanup')",
+     "    require(first.get('installation') == ('target' if mode == 'live' else first.get('installation'))\n            and first.get('installation') in (('target',) if mode == 'live' else ('none', 'staged_rehearsal')),\n            'runtime v2 installation class')\n    require(first['dependency_trees_removed'] is (True if first['installation'] != 'none' else None), 'dependency cleanup')",
+     1
+    ],
+    [
+     "    from .host import expected_artifact",
+     "    from research.stagnation_supervision_runtime_v2.host import expected_artifact",
+     1
+    ]
+   ],
+   "source_branch": "track3-stagnation-supervision-v1",
+   "source_commit": "bc19919",
+   "source_path": "research/stagnation_supervision_v1/closed_loop/target_evaluate.py",
+   "source_sha256": "dad836b7d6765eb50c34100767421dc7d1d59c81afaaec382f7f6f8238cbef62"
+  },
+  {
+   "derived": "research/stagnation_supervision_runtime_v2/launch.py",
+   "derived_sha256": "c29978db1f4cf525ef2a400fcad1bd56a7ee8981ac95d23950877d19198d9567",
+   "kind": "python",
+   "replacements": [
+    [
+     "ROOT = Path(__file__).resolve().parents[1]\nOUTPUT_NAME = 'stagnation-supervision-v1'",
+     "ROOT = Path(__file__).resolve().parents[2]\nOUTPUT_NAME = 'stagnation-supervision-v1-runtime-v2'",
+     1
+    ],
+    [
+     "'research.stagnation_supervision_v1.closed_loop.supervisor'",
+     "'research.stagnation_supervision_runtime_v2.supervisor'",
+     1
+    ],
+    [
+     "def run(output, working, *, started, root=ROOT, mode='live', internal_seconds=None, fault='none', session=None):",
+     "def run(output, working, *, started, root=ROOT, mode='live', internal_seconds=None, fault='none', session=None,\n        staged_inputs=None, install_seconds=None):",
+     1
+    ],
+    [
+     "    from research.stagnation_supervision_v1.closed_loop.supervisor import LIVE_INTERNAL_SECONDS",
+     "    from research.stagnation_supervision_runtime_v2.supervisor import LIVE_INTERNAL_SECONDS",
+     1
+    ],
+    [
+     "    if mode == 'live':\n        from research.stagnation_supervision_v1.closed_loop.authority import consume_runtime, require\n        execution = require(root)",
+     "    if mode == 'live':\n        from research.stagnation_supervision_runtime_v2.authority import consume_runtime, require\n        if staged_inputs is not None or install_seconds is not None:\n            raise PermissionError('staged inputs and installation overrides are rehearsal-only')\n        execution = require(root)",
+     1
+    ],
+    [
+     "        from research.stagnation_supervision_v1.closed_loop.authority import rehearsal_gate",
+     "        from research.stagnation_supervision_runtime_v2.authority import rehearsal_gate",
+     1
+    ],
+    [
+     "        if mode == 'live':\n            manifest = json.loads((root / 'reports/phase4_v2_offline_package.json').read_bytes())\n            mount = Path('/kaggle/input/competitions/arc-prize-2026-arc-agi-3')\n            candidates = [Path('/kaggle/input/datasets/driessmit1/arc3-vllm-h100-wheelhouse-v3'),\n                          Path('/kaggle/input/arc3-vllm-h100-wheelhouse-v3')]\n            wheelhouse = next(path for path in candidates if path.is_dir())\n",
+     "        if mode == 'live' or staged_inputs is not None:\n            manifest = json.loads((root / 'reports/phase4_v2_offline_package.json').read_bytes())\n            from research.stagnation_supervision_runtime_v2.mounts import competition_mount, wheelhouse_mount\n            mount = competition_mount(root, inputs=staged_inputs)\n            wheelhouse = wheelhouse_mount(root, inputs=staged_inputs)\n",
+     1
+    ],
+    [
+     "                from certification.phase4_integrated_v2.prepare import prepare\n",
+     "                from research.stagnation_supervision_runtime_v2.prepare import prepare\n",
+     1
+    ],
+    [
+     "                pair = prepare(rootdir, output, wheelhouse, mount / 'arc_agi_3_wheels', manifest, started)",
+     "                pair = prepare(rootdir, output, wheelhouse, mount / 'arc_agi_3_wheels', manifest, started,\n                               root=root, install_seconds=install_seconds)",
+     1
+    ],
+    [
+     "               'provider_reconciliation_required': mode == 'live', 'phase4_complete': False}",
+     "               'provider_reconciliation_required': mode == 'live', 'phase4_complete': False,\n               'installation': ('target' if mode == 'live' else\n                                'staged_rehearsal' if staged_inputs is not None else 'none'),\n               'runtime_binding': 'stagnation-supervision-v1-runtime-v2'}",
+     1
+    ],
+    [
+     "        from research.stagnation_supervision_v1.closed_loop.authority import require\n        require(source)",
+     "        from research.stagnation_supervision_runtime_v2.authority import require\n        require(source)",
+     1
+    ],
+    [
+     "                      fault=os.environ.get('SSV_REHEARSAL_FAULT', 'none'))",
+     "                      fault=os.environ.get('SSV_REHEARSAL_FAULT', 'none'),\n                      staged_inputs=os.environ.get('SSV_RUNTIME_V2_STAGED_INPUTS') or None,\n                      install_seconds=(int(os.environ['SSV_RUNTIME_V2_REHEARSAL_INSTALL_SECONDS'])\n                                       if os.environ.get('SSV_RUNTIME_V2_REHEARSAL_INSTALL_SECONDS') else None))",
+     1
+    ]
+   ],
+   "source_branch": "track3-stagnation-supervision-v1",
+   "source_commit": "bc19919",
+   "source_path": "scripts/stagnation_supervision_v1_launch.py",
+   "source_sha256": "53b8a32668ac8c89edca7ecd5749406824d8df57c0ea3df2bb76d2ec164bc0b9"
+  }
+ ],
+ "note": "Runtime bindings only. The science files listed in protocol.json are imported unchanged. Hand-written successor modules (authority, model_binding, mounts, prepare, closure, notebook, launch_tooling, provider_preflight, verification) are not derived and are reviewed directly.",
+ "protocol_sha256": "48ae2f2dcc95ba8781f259b5f8a17f0cbd76d0d39e27d9b7d5b5dcbc4c33075c",
+ "reference": {
+  "branch": "wheelhouse-replacement-audit",
+  "commit": "5a21dd339d22ec6e13307722b42dcef0882f6829",
+  "inputs": {
+   "model_attachment": {
+    "path": "reports/direct_publisher_smoke_v1/qwen_upstream_attachment_candidate_2026-10-07.json",
+    "sha256": "fa6eeb165a6a192724730850699b2e6f187cea890da7407cd26bcb9565d5213f"
+   },
+   "protocol": {
+    "path": "research/control_interface_action_selection_v2/protocol.json",
+    "sha256": "b1ef5b2c759e0451197b08b49417b7f5ce4e864c8d52d297e5876954a3f68de9"
+   }
+  }
+ },
+ "schema": "stagnation_supervision_runtime_v2_derivation",
+ "track3": {
+  "branch": "track3-stagnation-supervision-v1",
+  "commit": "bc19919dace8dd919bf5617174534526783c159d"
+ }
+}

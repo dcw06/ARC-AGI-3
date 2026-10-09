@@ -1,0 +1,277 @@
+{
+ "bundle": {
+  "approved_manifest_sha256": "3691cb8854df4d8ff10e42ca9957fddb9a8ae0362064e7b31b3205891af0d546",
+  "requirements_lock_sha256": "ba80d35062245421daf1cae65474281952cc0c44fb46e11cf7f68d0ece496406",
+  "wheel_count": 174
+ },
+ "competition": {
+  "environment_file_count": 30,
+  "environment_files_dir": "environment_files",
+  "game_wheel_count": 31,
+  "game_wheels_dir": "arc_agi_3_wheels",
+  "manifest": "reports/phase4_v2_offline_package.json",
+  "manifest_sha256": "d2de00800e3067dc42d4346be83a7468c2c3756b710c83453d6ce6e95eb8875c",
+  "purpose": "offline development game files and the competition arc_agi_3 wheels for the game interpreter; attachment does not submit to the leaderboard",
+  "ref": "arc-prize-2026-arc-agi-3"
+ },
+ "consumed_attempts": [
+  "ssv1-r5-session1-reservation-001"
+ ],
+ "dataset": {
+  "publisher_metadata_sha256": {
+   "README.md": "d2e8da6d36c243198882e6cb68d60d7121d8aa9642e55d7fcc384bc4d087b631",
+   "SHA256SUMS": "805388efb6bf7f0a248f2bb70798188737077545159fe0e475aee4d44843c901",
+   "requirements.lock": "bb3e30ac5e327456e3915b807da960203c20bc1aa352204e39f66d5618a6bcb0"
+  },
+  "ref": "driessmit1/arc3-vllm-h100-wheelhouse-v3",
+  "version": 1
+ },
+ "kaggle_image": {
+  "docker_image": "gcr.io/kaggle-private-byod/python@sha256:37c64f7dd9c54116ecd1bcc88817c5469b88387388fade02bfa8bf3fc647d461",
+  "docker_image_pinning_type": "original"
+ },
+ "kernel_ids": {
+  "1": "REPLACE_WITH_OWNER/arc3-ssv1-runtime-v2-session-1",
+  "2": "REPLACE_WITH_OWNER/arc3-ssv1-runtime-v2-session-2"
+ },
+ "limits": {
+  "installation_seconds": 450,
+  "model_startup_ceiling_seconds": 900,
+  "session_limits_source": "research/stagnation_supervision_v1/closed_loop/authority.py SESSION_LIMITS"
+ },
+ "machine_shape": "NvidiaRtxPro6000",
+ "model": {
+  "bytes": 32268935715,
+  "file_count": 20,
+  "files": [
+   {
+    "bytes": 1519,
+    "path": ".gitattributes",
+    "sha256": "11ad7efa24975ee4b0c3c3a38ed18737f0658a5f75a0a96787b576a78a023361"
+   },
+   {
+    "bytes": 856,
+    "path": "ATTACHMENT-README.md",
+    "sha256": "6e9422d31d6c8f9665c55e0e2ee82241dbcbb98499d51691da538575b8946220"
+   },
+   {
+    "bytes": 11358,
+    "path": "MODEL-LICENSE.txt",
+    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+   },
+   {
+    "bytes": 1443,
+    "path": "MODEL-PROVENANCE.json",
+    "sha256": "11f58ccec7139c85c607306cbdb3da86df68bcbb540e451ed9b5c30a3f6a159d"
+   },
+   {
+    "bytes": 10145,
+    "path": "README.md",
+    "sha256": "e272740379cde6030c6084d1137af7c38c80ec272755c0ce5db50f77189565b5"
+   },
+   {
+    "bytes": 2856,
+    "path": "UPSTREAM-FILES.json",
+    "sha256": "6674cdac0ceb35633550d61267416ea02774c497096a50506f8cfdc9fe74ea67"
+   },
+   {
+    "bytes": 5497,
+    "path": "chat_template.json",
+    "sha256": "2c1437f11fc16ab501b984c000f6e291c599f0d28d2c9c6bf2c4533e65429b42"
+   },
+   {
+    "bytes": 14458,
+    "path": "config.json",
+    "sha256": "e52cea0eb24df634274d028d969b513edeced033988eb4528d1e8d2a08dd025d"
+   },
+   {
+    "bytes": 241,
+    "path": "generation_config.json",
+    "sha256": "400950911065ff26a690fdd65c7fc4dbd2f9015acc6e098d1a097b2491b0b847"
+   },
+   {
+    "bytes": 1671853,
+    "path": "merges.txt",
+    "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+   },
+   {
+    "bytes": 10597785920,
+    "path": "model-00001-of-00004.safetensors",
+    "sha256": "232be72a85a61ba59ee66c8e11d6d2c0aae33d960f05bcb3092b3b923045c6b4"
+   },
+   {
+    "bytes": 10600204240,
+    "path": "model-00002-of-00004.safetensors",
+    "sha256": "9398c079631928f081db3ac774335307b3d10270258e85493a152cdf59d131a7"
+   },
+   {
+    "bytes": 10728745128,
+    "path": "model-00003-of-00004.safetensors",
+    "sha256": "d540c42d0f319c9345901f6edc2ad223273e3bb29e93a132bcb897b60921523a"
+   },
+   {
+    "bytes": 325219632,
+    "path": "model-00004-of-00004.safetensors",
+    "sha256": "49d39cc48e99e733f77b48c4222bb12cd45e5c9c709cce37484ab081353a3eea"
+   },
+   {
+    "bytes": 111705,
+    "path": "model.safetensors.index.json",
+    "sha256": "63d9c0cf07b794e290164ba140c4d719ad2a129966f95d7921599eb0047d1dd3"
+   },
+   {
+    "bytes": 336,
+    "path": "preprocessor_config.json",
+    "sha256": "6a970fd06f30e6943b3e2c14d5d3b42d49b06cf99b99103d56689bef462d90f8"
+   },
+   {
+    "bytes": 10179867,
+    "path": "tokenizer.json",
+    "sha256": "ba85e4e5222d9f53d4bd00b303ef7e9743c8ac3d07e3c23f8498dbe17baa9a2d"
+   },
+   {
+    "bytes": 10868,
+    "path": "tokenizer_config.json",
+    "sha256": "c2da771801886ad9ae98181793ffd3dfb7f1af30f6f7c6a4e15d7dbba52e2399"
+   },
+   {
+    "bytes": 331,
+    "path": "video_preprocessor_config.json",
+    "sha256": "e203bc065dfcd75226838b8e937d624bec8f0eb6ef6630a397e9a675f2873ea6"
+   },
+   {
+    "bytes": 4957462,
+    "path": "vocab.json",
+    "sha256": "7a0cfa95c65792d7510205839f80cfd8a3c8f6b1fdad5132d95cee481800374d"
+   }
+  ],
+  "kaggle_source": "REPLACE_WITH_MODEL_OWNER/REPLACE_WITH_MODEL_DATASET/1",
+  "model_id": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+  "mounted_path": "REPLACE_WITH_VERIFIED_MODEL_MOUNT",
+  "reasoning_setting": "instruct_non_thinking",
+  "required_files": [
+   "config.json",
+   "model.safetensors.index.json",
+   "tokenizer.json",
+   "tokenizer_config.json",
+   "chat_template.json"
+  ],
+  "revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+  "shard_count": 4,
+  "shard_glob": "model-*.safetensors",
+  "source_kind": "dataset",
+  "tree_sha256": "b480ad92cda91474084c795d2ff64b07a6c477909b22d2784d24abf8fb4ef7df"
+ },
+ "placeholder_prefix": "REPLACE_WITH_",
+ "purpose": "Track 3 stagnation supervision v1 (protocol v2) bound to the verified GPU runtime. Runtime bindings only: games, horizon, arms, no-restart rule, frozen trigger, prompts, scoring and stop rules are the unchanged files bound under science.",
+ "reference_runtime": {
+  "branch": "wheelhouse-replacement-audit",
+  "commit": "5a21dd339d22ec6e13307722b42dcef0882f6829",
+  "protocol": "research/control_interface_action_selection_v2/protocol.json",
+  "protocol_sha256": "b1ef5b2c759e0451197b08b49417b7f5ce4e864c8d52d297e5876954a3f68de9"
+ },
+ "runtime": {
+  "game": {
+   "packages": {
+    "arc-agi": "0.9.8",
+    "arcengine": "0.9.3",
+    "numpy": "2.4.4",
+    "pydantic": "2.13.2",
+    "python-dotenv": "1.2.2",
+    "requests": "2.33.1"
+   }
+  },
+  "glibc_minimum": "2.34",
+  "gpu_count": 1,
+  "gpu_name_contains": "RTX PRO 6000",
+  "machine": "x86_64",
+  "model": {
+   "imports": [
+    "torch",
+    "vllm",
+    "transformers",
+    "numpy"
+   ],
+   "packages": {
+    "numpy": "2.2.6",
+    "torch": "2.10.0",
+    "transformers": "4.57.6",
+    "vllm": "0.19.0"
+   },
+   "torch_cuda_build": "12.8"
+  },
+  "python": "3.12"
+ },
+ "schema": "stagnation_supervision_runtime_v2_protocol",
+ "science": {
+  "files": {
+   "certification/phase4_integrated_v2/tokenizer_manifest.json": "9b23b48f0615f43aee0d6b344982cbd17d36841cd92b3ebaf52c5e0c7a60db72",
+   "certification/phase4_transient_v2/action_contract.py": "8c56c49b6b5455eb0d7002df6987ed52eea4d5f0f43ad7fe30adf81fbf798037",
+   "certification/phase4_transient_v2/contract.py": "c9d156d413c0b0400a68e23aca331fd3e4b29d40d63da7f8349fba1e66635184",
+   "config/m0_launch_spec_q3vl30.json": "88b23283f930b7968e75c087ffb44024fcf279254fb4993e88f18243ac12eb4a",
+   "config/operational_primary.yaml": "489765d436df7e0ae7c80b9494c3c1ab4b7153b46f8dc5951724b59561ebb709",
+   "reports/stagnation_supervision_v1_ls20_decision.json": "d170b548105a44f57e4764df2ecb7706ba0e447756cde957c7016ee1c34368b7",
+   "reports/stagnation_supervision_v1_protocol_v2.md": "a44fa6ae7c80d036fbdb5dadf8f8c12bceb25bae8df2e4a2162f8e5911a5de4f",
+   "reports/stagnation_supervision_v1_token_audit.json": "b5033e8a177692371632466671e46ef48c70e4aef55ec6f559564d61a6272636",
+   "research/action_effect_v1/records.py": "a3df922e908bf91f551f677308e1b9778f04a3d85e1a38a228e672c10c7cb586",
+   "research/stagnation_supervision_v1/closed_loop/authority.py": "1a95182e3aa698ca889bee12165acf52444c40ece4f63fa5bc69300148300447",
+   "research/stagnation_supervision_v1/closed_loop/bridge.py": "fdc2d9c37ab50638e528e760131b1e84e16b216fbaaf96ab26a93f17497734d6",
+   "research/stagnation_supervision_v1/closed_loop/contract.py": "1dbc5845e2885d1d3e39aebb01b052fd8737ed95a3eecfb6c8ba0932bdfab499",
+   "research/stagnation_supervision_v1/closed_loop/engine.py": "68acf71ba4ffb807b933c79c989b501fa6bd562b8bb7f32bb1ad29d5cea4c8eb",
+   "research/stagnation_supervision_v1/closed_loop/evaluate.py": "328a076b5265a664129c1cb8b9b88d1ccf62b9b3d1bca9fa9ef7b62ef11e3dc7",
+   "research/stagnation_supervision_v1/closed_loop/evidence.py": "3a0be4383b3377213588655bccd6275c4e1aae5bf6df4ac6d248d0312ee45796",
+   "research/stagnation_supervision_v1/closed_loop/model_service.py": "80b604031e07d54d85084998c873c139ff98d327bfd32f8df3796362b4786c26",
+   "research/stagnation_supervision_v1/closed_loop/protocol.json": "dee4faa8a1651b25d8ca0271523124f138b55314f6647a453d0feb9b7df75669",
+   "research/stagnation_supervision_v1/closed_loop/runner.py": "169038eef6a77867c4bb4416aa2bc615328f726126c961a8c39d75d08157e520",
+   "research/stagnation_supervision_v1/closed_loop/server_config.py": "60ad3a759361d8933c8f8c5f92f54071ef43aac0f07c89854984fd909bab45f4",
+   "research/stagnation_supervision_v1/closed_loop/service.py": "1bcf6075b4e2042117fe1c0970052f75bde591dce287a7816b86758982bc2720",
+   "research/stagnation_supervision_v1/closed_loop/token_bridge.py": "9f2df75c322ee717fcea3f03a224720dbe92ca8b9f875bb110cd616d4a8e091c",
+   "research/stagnation_supervision_v1/detector.py": "ee8b340cf69cd092e37508b86152da4b33073bbb9ab5caf833cef6ec6e931d62",
+   "research/stagnation_supervision_v1/intervention.py": "ce76c3d66ec7969b11673aa8d497c84d7c40590d93fb546d0540593e5518975b",
+   "research/stagnation_supervision_v1/outcomes.py": "22ee47772b7189c39116365b88bb3e8d0a838704b799c32f65b927a10bf9247e",
+   "research/stagnation_supervision_v1/supervision.py": "7251b1d398caa83334cb9945114e229bebcf0749e982708b5c04bc5a28032945",
+   "research/stagnation_supervision_v1/thresholds.py": "0a88196a13f74fd3ccb9a89441926ea54b5e3209b9589641b96461ffbfee3985",
+   "research/stagnation_supervision_v1/trigger_spec.json": "8dc8d9097d4764a3ecbe5185b3c8ec021d2ab15316e81f0515a67c3d9f6cd7d9",
+   "research/transition_evidence_v1/transition.py": "1b60b66b86773ed19aa1bcdcb03fe87ce794365ca5717f53f0adb77ed7da3110",
+   "research/transition_evidence_v1/vocabulary.py": "7c707d17c1800b7fc9c2b4b05a03557d0664003cc32821405e791809b09bc0d9",
+   "research/transition_evidence_v2/transition.py": "dce1b19b35ed0d6bc6b627eafebe26f7b459ea7d0a4fd0843a00d035d63cd305",
+   "research/transition_evidence_v2/vocabulary.py": "afbd5325ff3fe8efe08a54aafa990eca626bce19748461cd965cf5fd7e2673fb"
+  },
+  "unchanged": true
+ },
+ "scope": "stagnation-supervision-v1-runtime-v2",
+ "server": {
+  "argv": [
+   "{python}",
+   "-m",
+   "vllm.entrypoints.openai.api_server",
+   "--model",
+   "{model_path}",
+   "--served-model-name",
+   "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+   "--host",
+   "127.0.0.1",
+   "--port",
+   "8000",
+   "--tensor-parallel-size",
+   "1",
+   "--generation-config",
+   "vllm",
+   "--no-enable-prefix-caching",
+   "--gpu-memory-utilization",
+   "0.75",
+   "--max-model-len",
+   "65536"
+  ],
+  "derivation": "Track 3 m0 launch spec with server_config.cache_disabled_argv; equal to the verified runtime",
+  "env": {
+   "HF_HUB_OFFLINE": "1",
+   "TRANSFORMERS_NO_TF": "1",
+   "TRANSFORMERS_OFFLINE": "1",
+   "USE_TF": "0",
+   "VLLM_NO_USAGE_STATS": "1"
+  },
+  "launch_spec": "config/m0_launch_spec_q3vl30.json"
+ },
+ "status": "gpu_disabled_review_candidate_no_authority"
+}
