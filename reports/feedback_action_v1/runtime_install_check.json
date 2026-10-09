@@ -1,0 +1,139 @@
+{
+ "engine_tests": {
+  "exit_code": 0,
+  "game_package_versions": {
+   "arc-agi": "0.9.8",
+   "arcengine": "0.9.3",
+   "numpy": "2.4.4",
+   "pydantic": "2.13.2"
+  },
+  "interpreter": "/home/jingjing/t1-run/install-check-2/game/venv/bin/python",
+  "modules": [
+   "tests.test_feedback_action_v1_live",
+   "tests.test_feedback_action_v1_dispatch",
+   "tests.test_feedback_action_v1_live_evaluation"
+  ],
+  "seconds": 857.5,
+  "stderr_tail": null,
+  "summary": [
+   "Ran 41 tests in 855.306s",
+   "OK"
+  ]
+ },
+ "evidence_class": "cpu_replica_mounts_not_provider_mounts",
+ "games_staged": "/home/jingjing/t1-run/install-check-2/games",
+ "gpu_used": false,
+ "host": {
+  "libc": [
+   "glibc",
+   "2.39"
+  ],
+  "machine": "x86_64",
+  "python": "3.12.3"
+ },
+ "installation": {
+  "bundle": {
+   "account_attachment_verified": false,
+   "dataset_ref": "driessmit1/arc3-vllm-h100-wheelhouse-v3",
+   "elapsed_seconds": 13.833,
+   "gpu_compatibility_established": false,
+   "installation_requirements_sha256": "ba80d35062245421daf1cae65474281952cc0c44fb46e11cf7f68d0ece496406",
+   "integrity_passed": true,
+   "launch_authorized": false,
+   "permissions_assessed": false,
+   "provider_attachment_version_verified": false,
+   "requested_version": 1,
+   "trusted_artifacts_sha256": "3691cb8854df4d8ff10e42ca9957fddb9a8ae0362064e7b31b3205891af0d546",
+   "wheel_bytes_verified": 174
+  },
+  "error": null,
+  "game": {
+   "imports": {
+    "arc_agi": "/home/jingjing/t1-run/install-check-2/game/venv/lib/python3.12/site-packages/arc_agi/__init__.py",
+    "arcengine": "/home/jingjing/t1-run/install-check-2/game/venv/lib/python3.12/site-packages/arcengine/__init__.py",
+    "dotenv": "/home/jingjing/t1-run/install-check-2/game/venv/lib/python3.12/site-packages/dotenv/__init__.py",
+    "matplotlib": "/home/jingjing/t1-run/install-check-2/game/venv/lib/python3.12/site-packages/matplotlib/__init__.py",
+    "numpy": "/home/jingjing/t1-run/install-check-2/game/venv/lib/python3.12/site-packages/numpy/__init__.py",
+    "pydantic": "/home/jingjing/t1-run/install-check-2/game/venv/lib/python3.12/site-packages/pydantic/__init__.py",
+    "requests": "/home/jingjing/t1-run/install-check-2/game/venv/lib/python3.12/site-packages/requests/__init__.py"
+   },
+   "install_seconds": 14.497,
+   "passed": true,
+   "python": "/home/jingjing/t1-run/install-check-2/game/venv/bin/python",
+   "versions": {
+    "arc-agi": "0.9.8",
+    "arcengine": "0.9.3",
+    "numpy": "2.4.4",
+    "pydantic": "2.13.2",
+    "python-dotenv": "1.2.2",
+    "requests": "2.33.1"
+   }
+  },
+  "game_closure": {
+   "forbidden_absent": [
+    "torch",
+    "vllm",
+    "transformers"
+   ],
+   "imported": 82,
+   "modules": 82
+  },
+  "game_wheels": {
+   "game_wheels_verified": 31,
+   "manifest_sha256": "d2de00800e3067dc42d4346be83a7468c2c3756b710c83453d6ce6e95eb8875c",
+   "requirements_sha256": "9cbd701f16f3e3441692d9328f57b1f3c15c168a7e227431223cf9a3ddb1eb7d"
+  },
+  "model": {
+   "imports": {
+    "numpy": "/home/jingjing/t1-run/install-check-2/model/venv/lib/python3.12/site-packages/numpy/__init__.py",
+    "torch": "/home/jingjing/t1-run/install-check-2/model/venv/lib/python3.12/site-packages/torch/__init__.py",
+    "transformers": "/home/jingjing/t1-run/install-check-2/model/venv/lib/python3.12/site-packages/transformers/__init__.py",
+    "vllm": "/home/jingjing/t1-run/install-check-2/model/venv/lib/python3.12/site-packages/vllm/__init__.py"
+   },
+   "install_seconds": 219.313,
+   "passed": true,
+   "python": "/home/jingjing/t1-run/install-check-2/model/venv/bin/python",
+   "torch_cuda_build": "12.8",
+   "versions": {
+    "numpy": "2.2.6",
+    "torch": "2.10.0",
+    "transformers": "4.57.6",
+    "vllm": "0.19.0"
+   }
+  },
+  "model_closure": {
+   "forbidden_absent": [
+    "arc_agi",
+    "arcengine"
+   ],
+   "imported": 34,
+   "modules": 34
+  },
+  "passed": true,
+  "process_cleanup": {
+   "error": null,
+   "groups_absent": true,
+   "interrupted": []
+  },
+  "scope": "feedback_action_v1_interpreter_pair"
+ },
+ "installation_deadline_seconds": 900,
+ "installation_seconds": 278.3,
+ "interpreters": {
+  "game": "/home/jingjing/t1-run/install-check-2/game/venv/bin/python",
+  "model": "/home/jingjing/t1-run/install-check-2/model/venv/bin/python"
+ },
+ "model_loaded": false,
+ "network_used": false,
+ "passed": true,
+ "process_cleanup": {
+  "error": null,
+  "groups_absent": true,
+  "interrupted": []
+ },
+ "retained_install_logs": [
+  "install-game.json",
+  "install-model.json"
+ ],
+ "schema": "feedback_action_v1_runtime_install_check_v1"
+}

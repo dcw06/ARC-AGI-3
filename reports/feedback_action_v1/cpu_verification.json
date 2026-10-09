@@ -1,0 +1,222 @@
+{
+ "all_passed": true,
+ "approvals_created": 0,
+ "evidence_class": "cpu_only_scripted_model_not_gpu_or_model_evidence",
+ "gpu_used": false,
+ "model_calls": 0,
+ "provider_calls": 0,
+ "reservations_created": 0,
+ "review_check": {
+  "nvidia_smi_called": false,
+  "passed": true,
+  "refusal": "research.feedback_action_v1.live.binding.LiveRefused: feedback-action v1 live path refused: unresolved placeholders: kernel_id, model.kaggle_source, model.mounted_path; authorization: ValueError: no review source lock",
+  "refused_at_live_gate": true,
+  "temporary_files_left": []
+ },
+ "review_lock_sha256": "4b5b7a0648c968c2ec497e0ba963e2cee42ad4f87c0ec6c204efbd0d7bedf0b5",
+ "review_rehearsal": {
+  "evaluation": {
+   "failure_rules": {
+    "F1_technically_incomplete": false,
+    "F2a_invalid_outputs": false,
+    "F2b_decision_cap_episodes_by_arm": {
+     "baseline": 0,
+     "candidate": 0
+    },
+    "F3_holdout_identifier": false,
+    "F4_integrity": false,
+    "F5_dispatch_failures": false,
+    "F6_deadline_or_cancellation": false
+   },
+   "replay_passed": true,
+   "session": 1,
+   "session_2_permitted": true,
+   "technical_validity": "technically_complete"
+  },
+  "extracted_source_left": [],
+  "grammar_checked": true,
+  "interpreters": {
+   "game": "/home/jingjing/t1-run/install-check/game/venv/bin/python",
+   "model": "/home/jingjing/t1-run/install-check/model/venv/bin/python"
+  },
+  "passed": true,
+  "pinned_tokenizer": true,
+  "technically_complete": true
+ },
+ "review_revision": 1,
+ "runtime_install_check": {
+  "bundle_wheels_verified": 174,
+  "engine_tests": {
+   "exit_code": 0,
+   "game_package_versions": {
+    "arc-agi": "0.9.8",
+    "arcengine": "0.9.3",
+    "numpy": "2.4.4",
+    "pydantic": "2.13.2"
+   },
+   "modules": [
+    "tests.test_feedback_action_v1_live",
+    "tests.test_feedback_action_v1_dispatch",
+    "tests.test_feedback_action_v1_live_evaluation"
+   ],
+   "summary": [
+    "Ran 41 tests in 855.306s",
+    "OK"
+   ]
+  },
+  "game_closure": {
+   "forbidden_absent": [
+    "torch",
+    "vllm",
+    "transformers"
+   ],
+   "imported": 82,
+   "modules": 82
+  },
+  "game_versions": {
+   "arc-agi": "0.9.8",
+   "arcengine": "0.9.3",
+   "numpy": "2.4.4",
+   "pydantic": "2.13.2",
+   "python-dotenv": "1.2.2",
+   "requests": "2.33.1"
+  },
+  "installation_seconds": 278.3,
+  "model_closure": {
+   "forbidden_absent": [
+    "arc_agi",
+    "arcengine"
+   ],
+   "imported": 34,
+   "modules": 34
+  },
+  "model_versions": {
+   "numpy": "2.2.6",
+   "torch": "2.10.0",
+   "transformers": "4.57.6",
+   "vllm": "0.19.0"
+  },
+  "passed": true,
+  "process_cleanup": {
+   "error": null,
+   "groups_absent": true,
+   "interrupted": []
+  },
+  "torch_cuda_build": "12.8"
+ },
+ "schema": "feedback_action_v1_cpu_verification_v1",
+ "suites": {
+  "dev-env": {
+   "executable": "/home/jingjing/.local/share/agi/dev-env/bin/python",
+   "packages": {
+    "arc-agi": "0.9.9",
+    "arcengine": "0.9.3",
+    "numpy": "2.5.2",
+    "tokenizers": null,
+    "torch": null,
+    "transformers": null,
+    "vllm": null,
+    "xgrammar": null
+   },
+   "passed": true,
+   "rehearsal_environment": {},
+   "summary": {
+    "errors": 0,
+    "failures": 0,
+    "run": 173,
+    "seconds": 855.4,
+    "skipped": 1
+   }
+  },
+  "successor-game-interpreter": {
+   "executable": "/home/jingjing/t1-run/install-check-2/game/venv/bin/python",
+   "packages": {
+    "arc-agi": "0.9.8",
+    "arcengine": "0.9.3",
+    "numpy": "2.4.4",
+    "tokenizers": null,
+    "torch": null,
+    "transformers": null,
+    "vllm": null,
+    "xgrammar": null
+   },
+   "passed": true,
+   "rehearsal_environment": {
+    "FA1_FORMS": "/home/jingjing/t1-run/forms.json",
+    "FA1_REHEARSAL_COMPETITION": "/home/jingjing/t1-run/competition",
+    "FA1_REHEARSAL_GAME_PYTHON": "/home/jingjing/t1-run/install-check-2/game/venv/bin/python",
+    "FA1_REHEARSAL_GRAMMAR": "1",
+    "FA1_REHEARSAL_MODEL_PYTHON": "/home/jingjing/t1-run/install-check-2/model/venv/bin/python",
+    "FA1_REHEARSAL_TOKENIZER": "/mnt/c/Users/jjzzw/Desktop/AGI/.cache/phase4-tokenizer"
+   },
+   "summary": {
+    "errors": 0,
+    "failures": 0,
+    "run": 173,
+    "seconds": 941.9,
+    "skipped": 1
+   }
+  },
+  "successor-model-interpreter": {
+   "executable": "/home/jingjing/t1-run/install-check-2/model/venv/bin/python",
+   "packages": {
+    "arc-agi": null,
+    "arcengine": null,
+    "numpy": "2.2.6",
+    "tokenizers": "0.22.2",
+    "torch": "2.10.0",
+    "transformers": "4.57.6",
+    "vllm": "0.19.0",
+    "xgrammar": "0.1.34"
+   },
+   "passed": true,
+   "rehearsal_environment": {
+    "FA1_FORMS": "/home/jingjing/t1-run/forms.json",
+    "FA1_REHEARSAL_COMPETITION": "/home/jingjing/t1-run/competition",
+    "FA1_REHEARSAL_GAME_PYTHON": "/home/jingjing/t1-run/install-check-2/game/venv/bin/python",
+    "FA1_REHEARSAL_GRAMMAR": "1",
+    "FA1_REHEARSAL_MODEL_PYTHON": "/home/jingjing/t1-run/install-check-2/model/venv/bin/python",
+    "FA1_REHEARSAL_TOKENIZER": "/mnt/c/Users/jjzzw/Desktop/AGI/.cache/phase4-tokenizer"
+   },
+   "summary": {
+    "errors": 0,
+    "failures": 0,
+    "run": 1,
+    "seconds": 10.5,
+    "skipped": 0
+   }
+  }
+ },
+ "token_audit": {
+  "all_forms_within_limits": true,
+  "english_like_reference": {
+   "compact": 426,
+   "indent2": 570,
+   "indent4": 570,
+   "json_default": 482
+  },
+  "forms": 25,
+  "grammar": "0.1.34",
+  "longest_candidate_response_with_end_of_turn": {
+   "ascii_only": {
+    "compact": 666,
+    "indent2": 810,
+    "indent4": 810,
+    "json_default": 722
+   },
+   "current": {
+    "compact": 2106,
+    "indent2": 2250,
+    "indent4": 2250,
+    "json_default": 2162
+   }
+  },
+  "max_prompt_tokens": 30351,
+  "tokenizer_revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+  "versions": {
+   "jinja2": "3.1.6",
+   "tokenizers": "0.22.2",
+   "transformers": "4.57.6"
+  }
+ }
+}
