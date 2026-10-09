@@ -83,16 +83,41 @@ decision is fixed. With 84 groups, the upper bound will rarely fall below +0.05 
 1,540 s allowance. The verified runtime has its own ceilings: installation 900 s, model verification 600 s and server
 startup 900 s. All are bounded by the unchanged 3,000 s admission cutoff.
 
-**What is known about the new runtime.** The verified v2 lifecycle took 539.7 s in total, with 131 requests and about
-2.15 million prompt tokens. That is an upper bound on its installation and startup overhead for this model. No
-per-phase split is published.
+**Measured on this runtime (updated October 9, 2026).** Track 4's attempt ran the same runtime, model snapshot and
+lifecycle on one RTX PRO 6000 (`reports/progress_subgoal_v1_runtime2_attempt1_results.md` on
+`track4-successor-runtime-v1`). It split the overhead before the first study call into:
+
+| Phase | Seconds |
+|---|---|
+| Wheel integrity (all 174 mounted wheels hashed) | 31 |
+| Hash-pinned installation | 85 |
+| Model tree verification | 146 |
+| Server start to ready | 113 |
+| Startup and inference probes | about 26 |
+| **First study call** | **at about 401 s** |
+
+After the questionnaire, the cancellation probes and cleanup took about 5 s.
+
+**Per-call time.** Fitted on 5,852 sequential calls:
+- 0.0134 s per call, plus 2.11 × 10⁻⁵ s per prompt token, plus 0.0063 s per completion token;
+- mean 0.114 s per call; p95 0.143 s.
+- Track 4's prompts ran up to 5,675 tokens, but its completions were at most 10 tokens. The completion rate
+  therefore extrapolates to Track 2's 64-token cap. It matches the v3 fit (0.0064 s).
+
+**Re-derived estimates** (planning only; admission control enforces the deadline). Track 2's prompts average about
+597 tokens, with a maximum of 1,249. A metrics read per call is allowed at 0.01 s.
+
+| Session | Typical completions (about 20 tokens) | All completions at the 64-token cap | All at the cap, per-call time doubled |
+|---|---|---|---|
+| A (2,896 calls) | ≈ 875 s | ≈ 1,680 s | ≈ 2,950 s: just inside the 3,000 s cutoff |
+| B (2,832 calls) | ≈ 865 s | ≈ 1,650 s | ≈ 2,890 s |
 
 **Options.**
 - **(a) Keep the section 11 figures** as conservative planning numbers.
-- **(b) Re-derive section 11** from the verified run's retained phase timings, which are private.
+- **(b) Replace section 11** with these measured figures.
 
 **Recommendation: (b), as a documentation-only revision.** The budget itself (3,600 s reserved per session) needs no
-change. Admission control, not the estimate, protects the deadline.
+change. Expected use falls from 1,500–2,100 s to about 900 s per session.
 
 ## 7. Should session B's gate require session A's technical report?
 
@@ -127,20 +152,37 @@ write a frozen set; it does not exclude anything silently.
 
 **Recommendation: decide before drawing the seed. (a) is simpler; (b) is what section 4 literally says.**
 
-## 9. Strict JSON-schema decoding on the verified runtime (a technical risk, not a design choice)
+## 9. Strict JSON-schema decoding on the verified runtime (updated: a blocking defect, fix required)
 
-**Facts.** The verified runs used `response_format: json_object`. Track 2 uses strict `json_schema`. The trusted
-lock contains the backends (xgrammar 0.1.34, llguidance 1.3.0, outlines_core 0.2.11), but no run on this runtime has
-exercised strict schemas. If structured outputs fail, the first study call fails and the session stops as a transport
-failure; it is not scored.
+**What Track 4 showed.** Strict `json_schema` decoding works on this runtime for flat objects with string enums. All
+5,852 of 5,852 live calls were schema-valid; vLLM selected the xgrammar backend.
+
+**What Track 2's schemas need beyond that.**
+- Recall answers use an array of enum strings with `minItems` and `uniqueItems`.
+- Decision answers use an integer, a nested object and an integer-valued map.
+
+**CPU check on the exact runtime install.** `scripts/check_evidence_memory_v1_structured_outputs.py` was run with
+vLLM 0.19.0, xgrammar 0.1.34, llguidance 1.3.0 and the pinned tokenizer, under the server's default configuration
+(backend `auto`). The receipt is `structured_outputs_check_r1.json`.
+
+| Schema | Result |
+|---|---|
+| Decision | Accepted (xgrammar). The grammar accepts valid answers and rejects strings in `action_data`, a non-integer id and a missing field |
+| Control (flat string enum) | Accepted (xgrammar), as in Track 4 |
+| **Recall** | **Rejected.** xgrammar flags `uniqueItems` as unsupported, so vLLM falls back to llguidance, which fails with `Unimplemented keys: ["uniqueItems"]`. The server would refuse every recall request, so session A would stop at its first recall call as a transport failure and spend the attempt with no result |
 
 **Options.**
-- **(a) Accept the risk.**
-- **(b) Run a separately approved, small runtime probe of the strict schemas before session A.** This would be a new
-  scope.
+- **(a) Drop `uniqueItems` from the decoding schema only.** The scorer (`readers.validate_response`) already
+  enforces distinct values, and that "no_evidence" stands alone. A duplicate stays an invalid output, counted against
+  the 2% cap; scoring does not change. Checked on CPU: the recall schema without `uniqueItems` is accepted by
+  xgrammar and enforces everything except uniqueness.
+- **(b) Encode the allowed answers exactly**, as an enum of the eight canonical arrays. The decoder would then also
+  enforce uniqueness, "no_evidence" alone and canonical order. This is a larger change to what the decoder permits.
+- **(c) Pin another decoding backend in the server argv.** This changes the verified runtime; not recommended.
 
-**Recommendation: (b), if a compute authorization for a probe is cheaper than risking a session reservation.**
-Otherwise (a).
+**Recommendation: (a).** Either fix changes the request bodies but not the prompts, so the token counts are unchanged.
+The request digests, frozen request plans and review snapshots must then be rebuilt, and the check rerun until both
+schemas are accepted, all before the freeze.
 
 ## 10. Counted metrics reads and the request cap
 

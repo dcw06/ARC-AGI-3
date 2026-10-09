@@ -17,7 +17,8 @@ Decide the open choices in `open_protocol_choices.md`, at least:
 - the exclusion behaviour;
 - whether B waits for A's technical report.
 
-Then freeze a protocol revision. Every later step binds to it.
+Then freeze a protocol revision. Every later step binds to it. `freeze_decisions.md` orders these decisions. It
+also records one defect that must be fixed first: the recall response schema is rejected by the verified runtime.
 
 ## Gate 1. Draw and retain the withheld seed (protocol v2 section 5, steps 1 to 3)
 

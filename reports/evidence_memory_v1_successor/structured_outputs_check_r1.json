@@ -1,0 +1,72 @@
+{
+ "schema": "evidence_memory_v1_structured_outputs_check_v1",
+ "gpu_used": false,
+ "model_calls": 0,
+ "versions": {
+  "vllm": "0.19.0",
+  "xgrammar": "0.1.34",
+  "llguidance": "1.3.0",
+  "transformers": "4.57.6"
+ },
+ "configured_backend": "auto",
+ "schemas": {
+  "recall": {
+   "request_schema_sha256": "8b9292db9505cf90cae678e5e77d972c256ccd437e423bf0de83733c97519ed2",
+   "validated": false,
+   "backend": null,
+   "rejection": "ValueError: Grammar error: Unimplemented keys: [\"uniqueItems\"]"
+  },
+  "decision": {
+   "request_schema_sha256": "ac63a0a179e2f295e31b1987e2acda7296e0fbe8fc03b5988c8c783f3f710d88",
+   "validated": true,
+   "backend": "xgrammar",
+   "enforcement": {
+    "valid": {
+     "expected": true,
+     "accepted": true,
+     "as_expected": true
+    },
+    "valid empty data": {
+     "expected": true,
+     "accepted": true,
+     "as_expected": true
+    },
+    "string in data": {
+     "expected": false,
+     "accepted": false,
+     "as_expected": true
+    },
+    "float id": {
+     "expected": false,
+     "accepted": false,
+     "as_expected": true
+    },
+    "missing data": {
+     "expected": false,
+     "accepted": false,
+     "as_expected": true
+    }
+   },
+   "enforces_as_expected": true
+  },
+  "control_flat_string_enum": {
+   "request_schema_sha256": "240f7fdd25f329523c44f780c97694bb5715aa2480e897dcef84a1150841dcd8",
+   "validated": true,
+   "backend": "xgrammar",
+   "enforcement": {
+    "valid": {
+     "expected": true,
+     "accepted": true,
+     "as_expected": true
+    },
+    "not in enum": {
+     "expected": false,
+     "accepted": false,
+     "as_expected": true
+    }
+   },
+   "enforces_as_expected": true
+  }
+ },
+ "all_track2_schemas_accepted": false
+}
