@@ -1,0 +1,37 @@
+{
+ "schema": "progress_subgoal_v1_assistant_copy_checks_v1",
+ "created_at": "2026-10-09T19:45:25.345676+00:00",
+ "commit": "c5644d9ab1f92ae6c256601eb213c2cabd1da0c8",
+ "environment": "fresh GitHub clone; Python 3.12.3; network-disabled Linux namespace",
+ "expected_question_set_sha256": "f93ec44bab00453147e8e7e555704b60edc8220e6b5677b89d199ce8fca5e02c",
+ "checks": [
+  {
+   "copy_id": "copy A",
+   "checked_at": "2026-10-09T19:45:15.991595+00:00",
+   "commit": "c5644d9ab1f92ae6c256601eb213c2cabd1da0c8",
+   "printed": "question set matches a fresh build: f93ec44bab00453147e8e7e555704b60edc8220e6b5677b89d199ce8fca5e02c",
+   "exit_code": 0,
+   "copy_outside_repository": true,
+   "separate_filesystem": true,
+   "performed_by": "Codex assistant at owner request",
+   "run_personally_by_owner": false,
+   "counts_as_owner_check": false
+  },
+  {
+   "copy_id": "copy B",
+   "checked_at": "2026-10-09T19:45:20.667017+00:00",
+   "commit": "c5644d9ab1f92ae6c256601eb213c2cabd1da0c8",
+   "printed": "question set matches a fresh build: f93ec44bab00453147e8e7e555704b60edc8220e6b5677b89d199ce8fca5e02c",
+   "exit_code": 0,
+   "copy_outside_repository": true,
+   "separate_filesystem": true,
+   "performed_by": "Codex assistant at owner request",
+   "run_personally_by_owner": false,
+   "counts_as_owner_check": false
+  }
+ ],
+ "original_copy_preserved": true,
+ "owner_gate_satisfied": false,
+ "limitation": "Both copies remain on the same computer. These checks were run by the assistant, not personally by the owner; the recorded owner-check gate remains outstanding. No gate, approval, reservation, or launch record was modified.",
+ "publication_scope": "Supplementary verification evidence only. Seed values and private storage paths are omitted. The existing seed-verification record and reviewed package files are unchanged."
+}
