@@ -1,0 +1,38 @@
+{
+ "schema": "feedback_action_v1_review_rehearsal_v1",
+ "review_revision": 1,
+ "review_lock_sha256": "4b5b7a0648c968c2ec497e0ba963e2cee42ad4f87c0ec6c204efbd0d7bedf0b5",
+ "session": 1,
+ "evidence_class": "scripted_cpu_rehearsal_from_extracted_payload",
+ "gpu_compatibility_evidence": false,
+ "interpreters": {
+  "game": "/home/jingjing/t1-run/install-check/game/venv/bin/python",
+  "model": "/home/jingjing/t1-run/install-check/model/venv/bin/python"
+ },
+ "pinned_tokenizer": true,
+ "grammar_checked": true,
+ "exit_code": 0,
+ "extracted_source_left": [],
+ "technically_complete": true,
+ "lifecycle_errors": [],
+ "evaluation": {
+  "replay_passed": true,
+  "session": 1,
+  "failure_rules": {
+   "F1_technically_incomplete": false,
+   "F2a_invalid_outputs": false,
+   "F2b_decision_cap_episodes_by_arm": {
+    "baseline": 0,
+    "candidate": 0
+   },
+   "F3_holdout_identifier": false,
+   "F4_integrity": false,
+   "F5_dispatch_failures": false,
+   "F6_deadline_or_cancellation": false
+  },
+  "session_2_permitted": true,
+  "technical_validity": "technically_complete"
+ },
+ "stderr_tail": "",
+ "passed": true
+}
