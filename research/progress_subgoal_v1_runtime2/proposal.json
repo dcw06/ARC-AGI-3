@@ -1,0 +1,28 @@
+{
+ "compute_proposal": {
+  "admission_cutoff_seconds": 3000,
+  "authorized_seconds": 3600,
+  "automatic_retries": 0,
+  "cleanup_reserve_seconds": 300,
+  "environment_actions": 0,
+  "installation_seconds": 900,
+  "internal_seconds": 3300,
+  "maximum_attempts": 1,
+  "maximum_model_requests": 6613,
+  "model_verification_seconds": 600,
+  "scorecards": 0,
+  "startup_ceiling_seconds": 900
+ },
+ "game_actions": 0,
+ "new_source_use_compute_review_required": true,
+ "prior_attempts_reusable": false,
+ "purpose": "progress_subgoal_v1 frozen questionnaire (change, progress and subgoal claims) on the verified runtime; zero game actions; scores only from the independent evaluator",
+ "scope": "progress-subgoal-v1-runtime2",
+ "sessions": 1,
+ "status": "proposal_only_no_approval_no_reservation",
+ "supersedes": {
+  "note": "superseded review package of the same experiment on the old runtime; no approval, attempt or reservation exists or is inherited",
+  "review_lock": "notebooks/progress-subgoal-v1-review-r4/review-source-lock.json",
+  "review_lock_sha256": "e7e1518ba6e23b9b3d4a24a6de25aaac94df5663e31dbf884859fd44eeff70f2"
+ }
+}

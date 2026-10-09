@@ -35,3 +35,16 @@ config/phase4_compute_ledger.lck
 .DS_Store
 .idea/
 .vscode/
+
+# progress_subgoal_v1 runtime2: operational evidence, approvals and launch records may contain private facts.
+private/progress_subgoal_v1_runtime2/
+reports/progress_subgoal_v1_runtime2_account_attachment.json
+reports/progress_subgoal_v1_runtime2_use_permission.json
+reports/progress_subgoal_v1_runtime2_byte_verification.json
+reports/progress_subgoal_v1_runtime2_source_approval.json
+reports/progress_subgoal_v1_runtime2_compute_authorization.json
+reports/progress_subgoal_v1_runtime2_launch.json
+reports/progress_subgoal_v1_runtime2_launch_claim.json
+research/progress_subgoal_v1_runtime2/execution_lock.json
+research/progress_subgoal_v1_runtime2/reservation.json
+notebooks/progress-subgoal-v1-runtime2-launch/

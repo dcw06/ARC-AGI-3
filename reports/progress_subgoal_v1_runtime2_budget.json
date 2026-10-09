@@ -1,0 +1,129 @@
+{
+ "admission_rule": {
+  "admission_cutoff_seconds": 3000,
+  "last_permitted_start_seconds": 2920,
+  "per_call_bound_seconds": 80
+ },
+ "exact_development_prompt_tokens": 587462,
+ "exact_evaluation_prompt_tokens": 12191728,
+ "fitted_all_call_seconds": 1163.6,
+ "fitted_evaluation_call_seconds": 1109.6,
+ "gpu_used": false,
+ "method": {
+  "call_seconds": "intercept + per-prompt-token x exact prompt tokens + per-completion-token x 20",
+  "fit": {
+   "completion_tokens_assumed": 20,
+   "intercept_seconds": 0.03944,
+   "per_completion_token_seconds": 0.006418,
+   "per_prompt_token_seconds": 1.421e-05
+  },
+  "fit_source": "reports/progress_subgoal_v1_protocol_v2.md section 10"
+ },
+ "model_calls": 0,
+ "note": "A cut session is incomplete; admission control, not this estimate, protects the deadline. The verified runtime adds model-tree hashing and offline installation before startup; their durations were not published per phase.",
+ "overheads_considered": {
+  "1540": "protocol v2 old runtime with allowances",
+  "300": "assumption only",
+  "540": "whole first-cell lifecycle of the verified runtime run (131 requests, prompts up to 36k tokens), retained in its published aggregate; an upper reference for its pre-research overhead, not a measurement of it",
+  "961": "protocol v2 measured overhead of the old runtime"
+ },
+ "scenarios": [
+  {
+   "all_5852_calls_started": true,
+   "call_time_factor": 1.0,
+   "calls_started_before_admission_closes": 5852,
+   "evaluation_calls_end_at_seconds": 1409.6,
+   "evaluation_complete_before_admission_closes": true,
+   "pre_questionnaire_overhead_seconds": 300
+  },
+  {
+   "all_5852_calls_started": true,
+   "call_time_factor": 1.5,
+   "calls_started_before_admission_closes": 5852,
+   "evaluation_calls_end_at_seconds": 1964.4,
+   "evaluation_complete_before_admission_closes": true,
+   "pre_questionnaire_overhead_seconds": 300
+  },
+  {
+   "all_5852_calls_started": true,
+   "call_time_factor": 2.0,
+   "calls_started_before_admission_closes": 5852,
+   "evaluation_calls_end_at_seconds": 2519.1,
+   "evaluation_complete_before_admission_closes": true,
+   "pre_questionnaire_overhead_seconds": 300
+  },
+  {
+   "all_5852_calls_started": true,
+   "call_time_factor": 1.0,
+   "calls_started_before_admission_closes": 5852,
+   "evaluation_calls_end_at_seconds": 1649.6,
+   "evaluation_complete_before_admission_closes": true,
+   "pre_questionnaire_overhead_seconds": 540
+  },
+  {
+   "all_5852_calls_started": true,
+   "call_time_factor": 1.5,
+   "calls_started_before_admission_closes": 5852,
+   "evaluation_calls_end_at_seconds": 2204.4,
+   "evaluation_complete_before_admission_closes": true,
+   "pre_questionnaire_overhead_seconds": 540
+  },
+  {
+   "all_5852_calls_started": true,
+   "call_time_factor": 2.0,
+   "calls_started_before_admission_closes": 5852,
+   "evaluation_calls_end_at_seconds": 2759.1,
+   "evaluation_complete_before_admission_closes": true,
+   "pre_questionnaire_overhead_seconds": 540
+  },
+  {
+   "all_5852_calls_started": true,
+   "call_time_factor": 1.0,
+   "calls_started_before_admission_closes": 5852,
+   "evaluation_calls_end_at_seconds": 2070.6,
+   "evaluation_complete_before_admission_closes": true,
+   "pre_questionnaire_overhead_seconds": 961
+  },
+  {
+   "all_5852_calls_started": true,
+   "call_time_factor": 1.5,
+   "calls_started_before_admission_closes": 5852,
+   "evaluation_calls_end_at_seconds": 2625.4,
+   "evaluation_complete_before_admission_closes": true,
+   "pre_questionnaire_overhead_seconds": 961
+  },
+  {
+   "all_5852_calls_started": false,
+   "call_time_factor": 2.0,
+   "calls_started_before_admission_closes": 4928,
+   "evaluation_calls_end_at_seconds": null,
+   "evaluation_complete_before_admission_closes": false,
+   "pre_questionnaire_overhead_seconds": 961
+  },
+  {
+   "all_5852_calls_started": true,
+   "call_time_factor": 1.0,
+   "calls_started_before_admission_closes": 5852,
+   "evaluation_calls_end_at_seconds": 2649.6,
+   "evaluation_complete_before_admission_closes": true,
+   "pre_questionnaire_overhead_seconds": 1540
+  },
+  {
+   "all_5852_calls_started": false,
+   "call_time_factor": 1.5,
+   "calls_started_before_admission_closes": 4627,
+   "evaluation_calls_end_at_seconds": null,
+   "evaluation_complete_before_admission_closes": false,
+   "pre_questionnaire_overhead_seconds": 1540
+  },
+  {
+   "all_5852_calls_started": false,
+   "call_time_factor": 2.0,
+   "calls_started_before_admission_closes": 3473,
+   "evaluation_calls_end_at_seconds": null,
+   "evaluation_complete_before_admission_closes": false,
+   "pre_questionnaire_overhead_seconds": 1540
+  }
+ ],
+ "status": "estimates_not_authorization"
+}

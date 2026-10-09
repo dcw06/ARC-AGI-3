@@ -1,0 +1,194 @@
+{
+ "basis_commit": "5a21dd3",
+ "basis_ref": "origin/wheelhouse-replacement-audit",
+ "builder": "scripts/build_progress_subgoal_v1_runtime2.py",
+ "changes": [
+  "separate runtime2 scope, approval/attempt paths and attempt prefix; no inherited approvals, reservations or attempts",
+  "shared controller copied byte-identically from the verified runtime (certification/direct_publisher_smoke_v1 at 5a21dd3)",
+  "wheels: verified publisher dataset driessmit1/arc3-vllm-h100-wheelhouse-v3 version 1 (flat mount, publisher metadata hashes), 174 wheels checked against the trusted manifest and installed offline with the trusted hash-pinned lock; replaces the old two-interpreter install from an unversioned wheelhouse and the competition game wheels",
+  "model: dataset-backed private snapshot of Qwen/Qwen3-VL-30B-A3B-Instruct-FP8 at d9748a51 pinned by tree b480ad92 (owner/dataset/mount left as REPLACE_WITH_ placeholders); replaces the Kaggle Model attachment",
+  "image: pinned Kaggle CPython 3.12 image digest; exactly one RTX PRO 6000 checked before model serving",
+  "server argv: the verified runtime argv with --no-enable-prefix-caching (identical to the old derived argv)",
+  "lifecycle: the verified single-process controller (phase ceilings, counted request ledger, cutoff alarm, process-group cleanup, final deadline, evidence manifest) replaces the supervisor/worker/monitor/bridge stack",
+  "questionnaire stage: the frozen schedule, requests, admission cutoff, per-call bound and consecutive-timeout stop imported unchanged; idle checks after timeouts are counted /metrics reads; token parity against the frozen offline audit; cache disabled verified from the retained server configuration",
+  "independent evaluator re-derives requests from the frozen question set and scores with the unchanged scorer"
+ ],
+ "controller_copied_unchanged": {
+  "certification/direct_publisher_smoke_v1/__init__.py": "08c32bf5bc6167ad1202120f90a00043271310c34896d33188c78e2049eb2665",
+  "certification/direct_publisher_smoke_v1/accounting.py": "121e56d47afa86dcf44db1476cf68b734fa3ab7fdd9a002ce6a9e35dbd5e94ca",
+  "certification/direct_publisher_smoke_v1/binding.py": "81991b497bf9289b05230151597aa34cc70729554f881e35dbc19abdb68c1651",
+  "certification/direct_publisher_smoke_v1/client.py": "d83c463384a54506d6aea1ca00217111b3daa4601d3dee10c6f0b0b0c4d45c37",
+  "certification/direct_publisher_smoke_v1/evidence.py": "d9be6ad7bbe9e09ed3297b2bb1af9f4909aef95d78d39adef226d7c94cb4ed65",
+  "certification/direct_publisher_smoke_v1/host.py": "6eab062887c5ba4460f4a5f953da8b6b17fc7ddf40404ec74e9d10bbb8c1c9a8",
+  "certification/direct_publisher_smoke_v1/install.py": "568ef619fce6fc8ed03eda07e7a240f079e017379e1494f4a6b95672cad0019b",
+  "certification/direct_publisher_smoke_v1/launch.py": "1751bc29b1ea59214bd69e18743e211288c33c2b05934fd98e4891f9b03f4bff",
+  "certification/direct_publisher_smoke_v1/notebook.py": "96382e1fa675f42765946805241804f60a3b4178ec713bcf1f3bcd4a3214e406",
+  "certification/direct_publisher_smoke_v1/preflight.py": "369a39a09c4f5f97b0d92613c3ecc6aa281779af4721a4154fe98576e4fc3b0d",
+  "certification/direct_publisher_smoke_v1/proposal.json": "cb5e1cee9903861e16960664c4d392821fb880e4125c7bce1865ea69573a600c",
+  "certification/direct_publisher_smoke_v1/protocol.json": "b0c3757e0d12b0b3839bbbf9f67e2ca133637f13a46c52e113c3494b9c24c106",
+  "certification/direct_publisher_smoke_v1/rehearsal.py": "7e20699eb610e438d050b90b379aa673ce848ab16825ee76c4a0ec916db3b246",
+  "certification/direct_publisher_smoke_v1/rehearsal_stub.py": "5ffec6525399a51379ffde7864571263ca3f99661723a7ebe07e8a8631202d0e",
+  "certification/direct_publisher_smoke_v1/run.py": "ba9e75e5ad7e0f952fea224fc3aff9b4950e1850b9d318354fe45c5ee21705b1",
+  "certification/direct_publisher_smoke_v1/server.py": "e3cbdf0949f21fc2edb6f8c781a55aaeacf3410aa4f5794e3ebe420f2bcee888",
+  "certification/direct_publisher_smoke_v1/trusted_manifest.json": "91ad9ede70c4fdf027cf5739a828f9063dc07c22c6010a64ebd1af0db8f0462b",
+  "certification/direct_publisher_smoke_v1/trusted_requirements.lock": "ba80d35062245421daf1cae65474281952cc0c44fb46e11cf7f68d0ece496406"
+ },
+ "derived_from_basis": {
+  "research/progress_subgoal_v1_runtime2/__init__.py": {
+   "basis": "research/control_interface_action_selection_v2/__init__.py",
+   "basis_sha256": "42e947c03c585549674be9ba3c0d17b394674d58df2ae90c95f5569675ae3372",
+   "output_sha256": "805cead81971a25470bfc880e9b96b894355ec18a941b3bc4e500729534dd269"
+  },
+  "research/progress_subgoal_v1_runtime2/binding.py": {
+   "basis": "research/control_interface_action_selection_v2/binding.py",
+   "basis_sha256": "ff2ddcf04e811f00eb6002485968c88ad1c383eeeb9dfdb01514b1458b18bad1",
+   "output_sha256": "5628cf6984249af6070997ed6e1950e75ff17297bff1452f7dc79420f07e71f1"
+  },
+  "research/progress_subgoal_v1_runtime2/evidence.py": {
+   "basis": "research/control_interface_action_selection_v2/evidence.py",
+   "basis_sha256": "7347a23c8e06f8ee8fd88a5a37aad6472a3652bde6f776057650151e0dec26fa",
+   "output_sha256": "4fd8120daef2918eee5fd87a291a1708cab41e682e4b3c9bcda7d0b56054b99e"
+  },
+  "research/progress_subgoal_v1_runtime2/launch.py": {
+   "basis": "research/control_interface_action_selection_v2/launch.py",
+   "basis_sha256": "1148e4ee138102cc8ada817318aa01643163d101827c43d19c7748b925d7a682",
+   "output_sha256": "17066db5fffcfd00f914b3765805227619b313dda0a373b928d12580e59d121f"
+  },
+  "research/progress_subgoal_v1_runtime2/notebook.py": {
+   "basis": "research/control_interface_action_selection_v2/notebook.py",
+   "basis_sha256": "a208d642caa0a5c6e5126432ab3a0c034157b224cab117a59224749d2a3e1c15",
+   "output_sha256": "aec9209054c08545ef4486c744ecf37fd7f15f0db01a687745bd983c2affa618"
+  },
+  "research/progress_subgoal_v1_runtime2/rehearsal.py": {
+   "basis": "research/control_interface_action_selection_v2/rehearsal.py",
+   "basis_sha256": "942c644714f7f5a4126a90203846ea196433f5f4a0d012fb3c7955ca108eb3c7",
+   "output_sha256": "d6da7f2385ef7adf76c96bf4e78cb93aa7fb8ab516cc138039e84fd7814d06ce"
+  },
+  "research/progress_subgoal_v1_runtime2/rehearsal_stub.py": {
+   "basis": "research/control_interface_action_selection_v2/rehearsal_stub.py",
+   "basis_sha256": "763d2afecfb35960b519d2a7f0a9c803e3675bb9b2bb60e85d5e17164648307d",
+   "output_sha256": "7970c46a7a1b278efbf793fcc047585d260758903cf7659be2292eefb05cfeec"
+  },
+  "research/progress_subgoal_v1_runtime2/run.py": {
+   "basis": "research/control_interface_action_selection_v2/run.py",
+   "basis_sha256": "a6fd4d76e90ba23ca1015b08f7e300005acab7be2c2ac616ab404679d6bf5b69",
+   "output_sha256": "8b72f49e55b7968056436a19aabef1b8b486281e0cace54a3ef5610445c36cca"
+  },
+  "research/progress_subgoal_v1_runtime2/runtime_controls.py": {
+   "basis": "research/control_interface_action_selection_v2/runtime_controls.py",
+   "basis_sha256": "d2e8fa1051de4b63109480f85536913cf1e3171546db4f16eb10bc80339a0603",
+   "output_sha256": "afda871526ac1bdc5f8e02666c99e5aa96a44d15f4aff32de985167707a551b8"
+  },
+  "scripts/check_progress_subgoal_v1_runtime2_embedded_inputs.py": {
+   "basis": "scripts/check_control_interface_embedded_inputs.py",
+   "basis_sha256": "a6f9a327fbfdb142c749294e5f694eda109d71c05d82ce231295d1f74b67dde7",
+   "output_sha256": "3edf6ac96fc4b1ccb5d2e0ee2cf457b302b0ab71f85c720fe3f662d94e91d1c8"
+  },
+  "scripts/progress_subgoal_v1_runtime2_package.py": {
+   "basis": "scripts/control_interface_action_selection_v2_package.py",
+   "basis_sha256": "66f215eb350bc3e30c9cdea1b353046af203a5d00c31a983b41d037602f25b68",
+   "output_sha256": "8c8a95ebaa09f7fbcb886e3ffc364bc370c1b29ad360515bdf019de0ab15f17c"
+  }
+ },
+ "experiment_sources_bound_by_r4": [
+  "research/action_effect_history_v1/__init__.py",
+  "research/action_effect_history_v1/contract.py",
+  "research/action_effect_history_v1/service.py",
+  "research/action_effect_v1/__init__.py",
+  "research/action_effect_v1/records.py",
+  "research/evidence_comprehension_v1/__init__.py",
+  "research/evidence_comprehension_v1/fake_server.py",
+  "research/evidence_comprehension_v1/probes.py",
+  "research/evidence_comprehension_v1/schedule.py",
+  "research/evidence_comprehension_v1/transport.py",
+  "research/evidence_comprehension_v2/__init__.py",
+  "research/evidence_comprehension_v2/fake_server.py",
+  "research/evidence_comprehension_v2/schedule.py",
+  "research/progress_subgoal_v1/__init__.py",
+  "research/progress_subgoal_v1/fake_server.py",
+  "research/progress_subgoal_v1/fixtures.py",
+  "research/progress_subgoal_v1/probes.json",
+  "research/progress_subgoal_v1/probes.py",
+  "research/progress_subgoal_v1/questions.py",
+  "research/progress_subgoal_v1/reference.py",
+  "research/progress_subgoal_v1/rehearsal_timing.py",
+  "research/progress_subgoal_v1/schedule.py",
+  "research/progress_subgoal_v1/subgoal.py",
+  "research/transition_evidence_v1/__init__.py",
+  "research/transition_evidence_v1/transition.py",
+  "research/transition_evidence_v1/vocabulary.py"
+ ],
+ "experiment_sources_equal_r4_hashes": true,
+ "experiment_sources_unchanged": {
+  "research/action_effect_history_v1/__init__.py": "f7ae8eaf7e6c266a826305b4686e4e0c7d8978e1b0aa5c251a129e539bb23c26",
+  "research/action_effect_history_v1/contract.py": "078160596c567bc8fdf8afe49db830fa53d8045b780742c94df52b15f7c890de",
+  "research/action_effect_history_v1/service.py": "6639c231d1414f2ecea1381972c1ba49bacdcc0f70e13d01a8b2acfc02435495",
+  "research/action_effect_v1/__init__.py": "bfa14bc28e364e804d754b5cd138c419bba9bbb2484868a758a103e268870563",
+  "research/action_effect_v1/records.py": "a3df922e908bf91f551f677308e1b9778f04a3d85e1a38a228e672c10c7cb586",
+  "research/evidence_comprehension_v1/__init__.py": "61086378feb28b379ff4176b92838e78ea818ad8cfa740f2ee03d4dbc2041479",
+  "research/evidence_comprehension_v1/fake_server.py": "bce86b969ecd61dc5025c8024b4562f1ebf60b652d968c9aa012b6ecc8e1ad6d",
+  "research/evidence_comprehension_v1/probes.py": "617512620ad4116f9d035249ff973d9f0c28e385733c1a037ea0fc583e3de8fb",
+  "research/evidence_comprehension_v1/schedule.py": "8731cad85517f556687503087ad20d69e2d7d8904c7b6c7380d327a0cb010ed9",
+  "research/evidence_comprehension_v1/transport.py": "5ebb988fe15bedd430a47a067f7aeecc5fdff35a6c591d52b0bd1969cd184fd1",
+  "research/evidence_comprehension_v2/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+  "research/evidence_comprehension_v2/fake_server.py": "1afc05fcb076a60f90242958dfd16b61bbad9c5011c7696a2a494bd5eb4ebd66",
+  "research/evidence_comprehension_v2/schedule.py": "51ba7fa90314c04a65ab96a5ae8e65547ee9822ea3b89c8d57382f61e0022b49",
+  "research/progress_subgoal_v1/__init__.py": "f0320358b1dda1a0e3bcb3a4c8c76fbc10aebf9170f414f74e04a6a5e1d25f14",
+  "research/progress_subgoal_v1/decision_rules.json": "38c8de63a875e54949fc0ecede9c0dd2b0b603901aad4a3f8348fd6b92089af2",
+  "research/progress_subgoal_v1/fake_server.py": "08d2c08b45c9d9424c7ae0e917418457640a37a305408abd5c2c5741a9a0344f",
+  "research/progress_subgoal_v1/fixtures.py": "b20a9a05682ffa26b35021fc2bba6b939d24ac99a287a4f3a72dc28833e7735d",
+  "research/progress_subgoal_v1/probes.json": "f93ec44bab00453147e8e7e555704b60edc8220e6b5677b89d199ce8fca5e02c",
+  "research/progress_subgoal_v1/probes.py": "5591b295e168a06b88ee7cf3817c4f0accda3785183b379ced79f57229210186",
+  "research/progress_subgoal_v1/questions.py": "1e896edab58e3c606899ed40a9e2854168cba923e410ea613a3e269a1f45430c",
+  "research/progress_subgoal_v1/reference.py": "3abd7c126e01aaf7804bbc915f22c048c5654ff87ebb2d03abd83f2df7f3cf91",
+  "research/progress_subgoal_v1/rehearsal_timing.py": "32a0e7d98c2829433111a9c2860d766bfacbb5b454626508256ac4601e964613",
+  "research/progress_subgoal_v1/schedule.py": "f85eadacb40006ac540c52c945c390d8c69d5950575a42edefc15d7be80cd57b",
+  "research/progress_subgoal_v1/subgoal.py": "e0851d52f59b25dc266b701a3b476fd12cca90e7d945c205d7390837cb58a074",
+  "research/transition_evidence_v1/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+  "research/transition_evidence_v1/transition.py": "1b60b66b86773ed19aa1bcdcb03fe87ce794365ca5717f53f0adb77ed7da3110",
+  "research/transition_evidence_v1/vocabulary.py": "7c707d17c1800b7fc9c2b4b05a03557d0664003cc32821405e791809b09bc0d9"
+ },
+ "gpu_launches": 0,
+ "hand_written_adapters": {
+  "research/progress_subgoal_v1_runtime2/questionnaire.py": "9982a517718c32d44299edeccb093abc28f98073413ec9a4d915af27fa3330a1",
+  "scripts/audit_progress_subgoal_v1_runtime2.py": "eeb0a5e6e636f5d16606880c444ea0e13e45914842f629f9dfe2b4a7d638cdcd",
+  "scripts/evaluate_progress_subgoal_v1_runtime2.py": "e8478face706c71fc7f9ad57553e9c752cff865d2f24b2ad42636401e802175b"
+ },
+ "lazy_imports_not_packaged": {
+  "research/action_effect_history_v1/contract.py": [
+   "agent/__init__.py",
+   "agent/representation.py",
+   "certification/phase4_transient_v2/__init__.py",
+   "certification/phase4_transient_v2/action_contract.py"
+  ],
+  "research/action_effect_history_v1/service.py": [
+   "certification/phase4_integrated_v2/__init__.py",
+   "certification/phase4_integrated_v2/model_transport.py",
+   "certification/phase4_integrated_v2/response_evidence.py",
+   "certification/phase4_integrated_v2/tokenizer_binding.py",
+   "certification/phase4_transient_v2/__init__.py",
+   "certification/phase4_transient_v2/action_contract.py"
+  ],
+  "research/evidence_comprehension_v2/fake_server.py": [
+   "research/evidence_comprehension_v2/probes.py"
+  ]
+ },
+ "preserves_baseline_files": true,
+ "protocol_derived_from": {
+  "path": "certification/direct_publisher_smoke_v1/protocol.json",
+  "runtime_bindings_equal": "research/control_interface_action_selection_v2/protocol.json",
+  "runtime_bindings_equal_sha256": "b1ef5b2c759e0451197b08b49417b7f5ce4e864c8d52d297e5876954a3f68de9",
+  "sha256": "b0c3757e0d12b0b3839bbbf9f67e2ca133637f13a46c52e113c3494b9c24c106"
+ },
+ "provider_calls": 0,
+ "scientific_configuration_changed": false,
+ "superseded_package": {
+  "kept_byte_identical": true,
+  "review_lock": "notebooks/progress-subgoal-v1-review-r4/review-source-lock.json",
+  "review_lock_sha256": "e7e1518ba6e23b9b3d4a24a6de25aaac94df5663e31dbf884859fd44eeff70f2"
+ },
+ "trusted_inputs_copied": {
+  "research/progress_subgoal_v1_runtime2/trusted_manifest.json": "91ad9ede70c4fdf027cf5739a828f9063dc07c22c6010a64ebd1af0db8f0462b",
+  "research/progress_subgoal_v1_runtime2/trusted_requirements.lock": "ba80d35062245421daf1cae65474281952cc0c44fb46e11cf7f68d0ece496406"
+ }
+}
