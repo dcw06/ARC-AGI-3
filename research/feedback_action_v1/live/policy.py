@@ -12,6 +12,7 @@ import copy
 import json
 
 from research.feedback_action_v1 import adapter as AD, evidence as E
+from research.feedback_action_v1.live import owner_gates as G
 from research.transition_evidence_v2 import transition as T
 
 SOURCE = 'offline_development_engine'
@@ -30,7 +31,7 @@ def session_spec(block):
     if str(block) not in spec['sessions']:
         raise ValueError('session')
     spec['schedule'] = [p for p in spec['schedule'] if p['block'] == spec['sessions'][str(block)]['block']]
-    return spec
+    return G.apply(spec)  # the effective F5 rule: unchanged while the owner has recorded no decision
 
 
 def observation_payload(runtime):
@@ -112,7 +113,7 @@ def validate_policy_request(request):
                 raise ValueError('carried statement shape')
         elif set(statement) != {'record', 'available', 'reason'} or statement['available'] is not False:
             raise ValueError('carried statement shape')
-        expected_format = AD.candidate_response_format(observation['legal_actions'])
+        expected_format = G.candidate_response_format(observation['legal_actions'])  # the adapter's, unless gated
     else:
         from certification.phase4_transient_v2.action_contract import response_format
         expected_format = response_format(observation['legal_actions'])
@@ -163,12 +164,15 @@ class EpisodePolicy:
         self.legal = list(observation['legal_actions'])
         carried = AD.carried_statement(*(self.previous or (None,))) if self.arm == 'candidate' else None
         view = E.view(self.raws, obs.frames[-1].tolist())
-        return AD.build_request(observation, view, self.arm, carried, model=MODEL_ID, seed=self.seed)
+        return G.gate_request(AD.build_request(observation, view, self.arm, carried, model=MODEL_ID, seed=self.seed))
 
     def decided(self, call_row, obs):
         """Record the adapter's decision for the call just made (from the retained response bytes)."""
         self.decision = AD.parse({'content': call_row.get('response'), 'finish_reason': call_row.get('finish_reason')},
                                  self.legal, self.arm)
+        problem = G.free_text_problem(self.decision['procedure'])  # None while no free-text decision is recorded
+        if problem:
+            self.decision.update(procedure=None, procedure_error=problem)
         if self.decision['action'] is None:
             self.previous = (self.decision, None, None)  # nothing dispatched; its block (if valid) is about nothing
         return self.decision

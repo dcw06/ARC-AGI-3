@@ -1,0 +1,24 @@
+{
+  "schema": "feedback_action_v1_owner_gates_v1",
+  "status": "open_no_decision_recorded",
+  "rule": "Owner decisions only. A null decision means the committed protocol v2 behaviour applies, unchanged. Recording a decision is a protocol amendment: it needs the owner's explicit response, a new review snapshot and a compute authorization bound to this file's new hash. Nothing in this repository records one.",
+  "analysis": "reports/feedback_action_v1_owner_gates.md",
+  "free_text_format": {
+    "decision": null,
+    "committed": "current",
+    "options": {
+      "current": "hypothesis and if_different: JSON strings, schema maxLength 240 (code points). Under vLLM 0.19's default xgrammar backend the decoder admits any code point except quote, backslash, CR and LF, with no escapes.",
+      "ascii_only": "hypothesis and if_different: printable ASCII without quote and backslash, at most 240 characters, enforced by the decoder through the schema pattern ^[ !#-\\[\\]-~]{0,240}$ (maxLength kept), and checked again when the block is parsed."
+    },
+    "recommended": "ascii_only"
+  },
+  "f5_early_abort": {
+    "decision": null,
+    "committed": "running_rate_from_first_dispatch",
+    "options": {
+      "running_rate_from_first_dispatch": "abort when failed plus unknown dispatches x 10 > dispatches so far, after every dispatch (protocol v2 section 10 as written): one failure among the first 9 dispatches aborts.",
+      "denominator_floor_10": "abort when failed plus unknown dispatches x 10 > max(dispatches so far, 10), after every dispatch: a single failure never aborts; a second aborts if it comes before the 20th dispatch; from the 10th dispatch on the rule is identical to the committed one."
+    },
+    "recommended": "denominator_floor_10"
+  }
+}
