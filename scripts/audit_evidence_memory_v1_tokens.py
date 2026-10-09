@@ -33,7 +33,9 @@ from research.evidence_memory_v1 import protocol as P, stage1 as ST, tokens as T
 from research.evidence_memory_v1 import writers as W  # noqa: E402
 from research.evidence_memory_v1.successor import freeze as FZ, plan as PL  # noqa: E402
 
-REPORT = ROOT / 'reports/evidence_memory_v1_successor/token_cross_check.json'
+# r2: after the recall decoding schema change (protocol v2 frozen, section 2). The r1 report,
+# token_cross_check.json, is kept unchanged as history.
+REPORT = ROOT / 'reports/evidence_memory_v1_successor/token_cross_check_r2.json'
 
 
 def longest_answers(tokenizer):

@@ -36,6 +36,9 @@ def review_check(revision):
     for name, digest in lock['artifacts'].items():
         if sha256(folder / name) != digest:
             raise SystemExit(f'review artifact drift: {name}')
+    for name, digest in lock.get('review_documents', {}).items():
+        if sha256(ROOT / name) != digest:
+            raise SystemExit(f'review document drift: {name}')
     code = json.loads((folder / 'profile.ipynb').read_text(encoding='utf-8'))['cells'][1]['source']
     with tempfile.TemporaryDirectory(prefix='evidence-memory-session-a-review-check-') as base:
         base = Path(base)

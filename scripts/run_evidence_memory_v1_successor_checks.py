@@ -23,7 +23,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 GROUPS = {
     'successor': ['tests.test_evidence_memory_v1_successor', 'tests.test_evidence_memory_v1_successor_service',
-                  'tests.test_evidence_memory_v1_successor_freeze', 'tests.test_evidence_memory_v1_successor_connected',
+                  'tests.test_evidence_memory_v1_successor_freeze', 'tests.test_evidence_memory_v1_successor_session_order',
+                  'tests.test_evidence_memory_v1_successor_connected',
                   'tests.test_direct_publisher_smoke', 'tests.test_direct_publisher_smoke_lifecycle',
                   'tests.test_direct_publisher_smoke_preflight', 'tests.test_direct_publisher_smoke_install_lifecycle',
                   'tests.test_direct_publisher_smoke_bootstrap', 'tests.test_direct_publisher_smoke_runtime_versions',
@@ -69,16 +70,20 @@ class Recorder(unittest.TextTestResult):
 
 
 def reproduce(label):
+    """The latest review snapshot (r2 since the protocol freeze; earlier ones are kept as history) rebuilt from this
+    checkout, file by file."""
     import importlib
     from research.evidence_memory_v1.successor import plan as PL
     module = importlib.import_module(PL.SESSIONS[label]['module'] + '.notebook')
-    frozen = ROOT / 'notebooks' / f"{PL.SESSIONS[label]['scope']}-review-r1"
+    binding = importlib.import_module(PL.SESSIONS[label]['module'] + '.binding')
+    frozen = (ROOT / binding.review_lock(ROOT)).parent
     with tempfile.TemporaryDirectory() as folder:
         regenerated = Path(folder) / 'review'
         module.build_review(regenerated, root=ROOT)
         same = {n: (frozen / n).read_bytes() == (regenerated / n).read_bytes()
                 for n in ('profile.ipynb', 'kernel-metadata.json', 'review-source-lock.json')}
-    return {'review_lock_sha256': hashlib.sha256((frozen / 'review-source-lock.json').read_bytes()).hexdigest(), **same}
+    return {'review_revision': frozen.name.rsplit('-r', 1)[1],
+            'review_lock_sha256': hashlib.sha256((frozen / 'review-source-lock.json').read_bytes()).hexdigest(), **same}
 
 
 def head():
@@ -111,7 +116,8 @@ def main():
               'summary': {'run': result.testsRun, 'failures': len(result.failures), 'errors': len(result.errors),
                           'skipped': len(result.skipped)},
               'tests': result.records, 'snapshots_reproduce': snapshots,
-              'passed': result.wasSuccessful() and all(all(v for k, v in s.items() if k != 'review_lock_sha256')
+              'passed': result.wasSuccessful() and all(all(v for k, v in s.items()
+                                                           if k not in ('review_lock_sha256', 'review_revision'))
                                                        for s in snapshots.values())}
     args.out.write_bytes((json.dumps(record, sort_keys=True, indent=1) + '\n').encode())
     print(json.dumps({k: record[k] for k in ('passed', 'summary', 'snapshots_reproduce', 'seconds')}, indent=1))

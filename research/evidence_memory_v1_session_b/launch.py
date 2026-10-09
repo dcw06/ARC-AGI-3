@@ -12,13 +12,17 @@
 
 Any receipt, whatever its status, means the attempt is spent: the tooling refuses every further launch of it.
 An uncertain submission is reconciled by hand against the provider's version history and is never relaunched; a
-new attempt needs a new authorization and reservation."""
+new attempt needs a new authorization and reservation.
+
+Session B only: the claim and the launch package also require session A's retained technical evaluation to show A
+technically complete, bound by hash in session B's compute authorization
+(research/evidence_memory_v1/successor/session_order.py). If A is not technically complete, B is never launched."""
 import json
 import os
 from datetime import datetime, timezone
 from pathlib import Path
 
-from research.evidence_memory_v1_session_b.binding import (CLAIM, EXECUTION, RECEIPT, LiveRefused, require_live,
+from research.evidence_memory_v1_session_b.binding import (CLAIM, COMPUTE, EXECUTION, RECEIPT, LiveRefused, require_live,
                                                           reservation_digest, resolve, sha256)
 from research.evidence_memory_v1_session_b.notebook import launch_artifacts
 
@@ -64,6 +68,10 @@ def claim(root):
     if reason:
         raise LaunchRefused(reason)
     protocol, execution = require_live(root, need_claim=False)
+    from research.evidence_memory_v1.successor import session_order
+    order = session_order.reasons(root, COMPUTE)
+    if order:  # session B is never claimed before session A is technically complete
+        raise LaunchRefused('; '.join(order))
     try:
         _exclusive(root, CLAIM, {'status': 'claimed', 'attempt_id': execution['attempt_id'],
                                  'execution_sha256': sha256(resolve(root, EXECUTION)),

@@ -10,13 +10,26 @@ from pathlib import Path
 import re
 
 from research.evidence_memory_v1_session_b.binding import (CLAIM, COMPUTE, EXECUTION, PACKAGE, PROTOCOL, RESERVATION,
-                                                          ROOT, SOURCE, ACCOUNT, PERMISSION, BYTES, evidence_names, load_protocol, require_live, review_lock,
+                                                          ROOT, SOURCE, ACCOUNT, PERMISSION, BYTES, LiveRefused, evidence_names, load_protocol, require_live, review_lock,
                                                           sha256, unresolved)
 
 MODEL_SOURCE = 'qwen-lm/qwen-3-vl/Transformers/30b-a3b-instruct-fp8/1'
 COMPETITION_SOURCE = 'arc-prize-2026-arc-agi-3'
 KERNEL_ID = 'REPLACE_WITH_KAGGLE_OWNER/arc3-evidence-memory-v1-session-b'
 SIZE_GUARD = 900000
+# Hash-bound by the review lock and verified by the review check; never part of the runtime payload.
+REVIEW_DOCUMENTS = (
+    'reports/evidence_memory_v1_protocol_v2_frozen.md',
+    'scripts/check_evidence_memory_v1_structured_outputs.py',
+    'reports/evidence_memory_v1_successor/structured_outputs_check_r2.json',
+    'research/evidence_memory_v1/successor/evaluate.py',
+    'research/evidence_memory_v1/successor/final.py',
+    'research/evidence_memory_v1/run/evaluate.py',
+    'research/evidence_memory_v1/run/final.py',
+    'scripts/audit_evidence_memory_v1_tokens.py',
+    'scripts/build_evidence_memory_v1_sessions.py',
+    'scripts/evidence_memory_v1_session_b_package.py',
+)
 MARKER = '    sys.path.insert(0, str(source))\n'
 IMAGE = re.compile(r'gcr\.io/kaggle-(?:private-byod|gpu-images)/python@sha256:[a-f0-9]{64}')
 CELL = '''import base64, hashlib, json, lzma, pathlib, shutil, sys, tempfile, time
@@ -60,6 +73,7 @@ def source_names(root=ROOT):
     names += [PACKAGE + '/probes.json', PACKAGE + '/derivation.json', PACKAGE + '/token-audit.json']
     from research.evidence_memory_v1.successor.plan import STUDY_SOURCES
     names += list(STUDY_SOURCES)
+    names.append('research/evidence_memory_v1/successor/session_order.py')  # the launch tooling's session-A condition
     names += ['certification/direct_publisher_smoke_v1/' + n for n in ('proposal.json', 'trusted_manifest.json', 'trusted_requirements.lock')]
     return names + [PROTOCOL, PACKAGE + '/proposal.json', PACKAGE + '/trusted_manifest.json', PACKAGE + '/trusted_requirements.lock']
 
@@ -152,14 +166,24 @@ def build_review(output, root=ROOT):
         (output / name).write_bytes(data)
     lock = {'status': 'review_snapshot_not_approved_not_compute_authority', 'scope': 'evidence-memory-v1-session-b',
             'bindings': bindings, 'artifacts': {n: hashlib.sha256(d).hexdigest() for n, d in artifacts.items()},
-            'unresolved_placeholders': pending, 'gpu_enabled': False}
+            'unresolved_placeholders': pending, 'gpu_enabled': False,
+            'review_documents': {n: sha256(Path(root) / n) for n in REVIEW_DOCUMENTS}}
     (output / 'review-source-lock.json').write_bytes(encode(lock))
     return lock
 
 
 def launch_artifacts(root=ROOT):
-    """The launch package (built in memory). Refuses unless the live gate passes for `root`."""
-    protocol, execution = require_live(root)
+    """The launch package (built in memory). Refuses unless the live gate passes for `root` and, for session B, unless
+    session A's retained technical evaluation shows A technically complete, bound by hash in this session's compute
+    authorization (research/evidence_memory_v1/successor/session_order.py; launch tooling only, never the live gate)."""
+    from research.evidence_memory_v1.successor import session_order
+    try:
+        protocol, execution = require_live(root)
+    except LiveRefused as exc:  # name the session-order condition too (checking the record reads no approval)
+        raise LiveRefused(exc.reasons + session_order.record_reasons(root)) from exc
+    order = session_order.reasons(root, COMPUTE)
+    if order:
+        raise LiveRefused(order)
     lock_name = review_lock(root)
     folder = (Path(root) / lock_name).parent
     lock = json.loads((Path(root) / lock_name).read_bytes())

@@ -1,4 +1,10 @@
 {
+ "baseline_files_modified": [
+  "research/evidence_memory_v1/protocol.py",
+  "research/evidence_memory_v1/stage1.py",
+  "tests/test_evidence_memory_v1_protocol.py",
+  "tests/test_evidence_memory_v1_stage1.py"
+ ],
  "basis_branch": "origin/wheelhouse-replacement-audit",
  "basis_commit": "5a21dd339d22ec6e13307722b42dcef0882f6829",
  "builder": "scripts/build_evidence_memory_v1_sessions.py",
@@ -9,7 +15,10 @@
   "every model-server HTTP request is counted by the verified ledger; the study adds K0000 and per-call Q/M/V entries; the cap is the plan worst case",
   "pinned-tokenizer prompt counts come from the offline token audit (transformers cross-check) instead of an in-run tokenizer; token parity is still enforced per call",
   "separate scope, approvals, claim, receipt and reservation per session; LIVE_ENABLED is False and the live gate refuses the development stand-in",
-  "unchanged: prompts, arms, schemas, budgets, seeds and seed procedure, schedule, admission and stop rules, scoring, the technical-only session report and the pooled analysis"
+  "unchanged by this derivation: prompts, arms, schemas, budgets, seeds and seed procedure, schedule, admission and stop rules, scoring, the technical-only session report and the pooled analysis",
+  "protocol freeze (owner decisions of October 9, 2026; reports/evidence_memory_v1_protocol_v2_frozen.md), applied to the reused modules themselves, not by this derivation: the recall decoding schema drops uniqueItems (scoring unchanged; request digests and token audits rebuilt, prompt token counts unchanged); the unsupported-claim margins are read three ways (met / exceeded / not_shown; only met advances)",
+  "the review lock binds the frozen protocol and review documents; the protocol names protocol_document",
+  "session B's launch tooling (claim and launch package) refuses unless session A's retained technical evaluation shows A technically complete, bound by hash in B's compute authorization (successor/session_order.py); the per-scope live gate is unchanged"
  ],
  "derived": {
   "research/evidence_memory_v1_session_b/__init__.py": "research/control_interface_action_selection_v2/__init__.py",
@@ -23,7 +32,8 @@
   "scripts/check_evidence_memory_v1_session_b_embedded_inputs.py": "scripts/check_control_interface_embedded_inputs.py",
   "scripts/evidence_memory_v1_session_b_package.py": "scripts/control_interface_action_selection_v2_package.py"
  },
- "preserves_baseline_files": true,
+ "preserves_baseline_files": false,
+ "protocol_document": "reports/evidence_memory_v1_protocol_v2_frozen.md",
  "reference_sources": {
   "certification/direct_publisher_smoke_v1/__init__.py": "08c32bf5bc6167ad1202120f90a00043271310c34896d33188c78e2049eb2665",
   "certification/direct_publisher_smoke_v1/accounting.py": "121e56d47afa86dcf44db1476cf68b734fa3ab7fdd9a002ce6a9e35dbd5e94ca",
@@ -70,18 +80,33 @@
  "session_inputs": {
   "research/evidence_memory_v1/successor/seed-commitment.json": "51708b77a6d92257aad55e8f8ffd601ab2df0652db990709ae9c203e050ce1e2",
   "research/evidence_memory_v1_session_b/probes.json": "e2baf2bd4268980c6fbeb8d56468c85622fab151563e500ddaf18515c28df880",
-  "research/evidence_memory_v1_session_b/token-audit.json": "28fe45775733cf7ab28a3af8eb8534e3187320a2fe44189d86d3484ff96055e4"
+  "research/evidence_memory_v1_session_b/token-audit.json": "cec49586d425fdc85822db33bfbefb6be6425bf8d22fa804863e191e78c57e2b"
  },
  "shared_runtime": "certification/direct_publisher_smoke_v1 (byte-identical to the basis commit)",
  "study_runner": {
   "research/evidence_memory_v1/successor/runner.py": "research/evidence_memory_v1/run/runner.py"
  },
+ "track2_amended_at_protocol_freeze": {
+  "research/evidence_memory_v1/protocol.py": {
+   "baseline_sha256": "05cecef8a5fe8e52810c5020c839a474e6d594f527d2c2b4f0ccb25c3b345159",
+   "decision": "decision 2: the unsupported-claim margins are read three ways (met / exceeded / not_shown) with unchanged thresholds; only met permits advancement, as before",
+   "sha256": "4ba46b292a1b7da3a06d6ddce05584042f6dda8bc88030b53a5fa751ab74f43e"
+  },
+  "research/evidence_memory_v1/stage1.py": {
+   "baseline_sha256": "214a38e8132709be8f1989cdc243b40bf9a61127f244089f7fc558f369c2b5bc",
+   "decision": "decision 1: the recall DECODING schema drops uniqueItems (refused by vLLM 0.19 structured outputs); readers.validate_response still rejects duplicates, so scoring is unchanged",
+   "sha256": "5cd12315b820996f68c73192f363a0c1aeaa48bfbc9f5e05e2ad3fbaa3e45032"
+  }
+ },
  "track2_baseline_commit": "107d8b4",
+ "track2_baseline_tests_amended_at_protocol_freeze": {
+  "tests/test_evidence_memory_v1_protocol.py": "decision 2: the margin outcome is renamed (exceeded) and every branch of the three-way reading is tested, boundaries included",
+  "tests/test_evidence_memory_v1_stage1.py": "decision 1: no request schema carries uniqueItems; answers the decoder now admits (duplicates, \"no_evidence\" with another value) score invalid"
+ },
  "track2_reused_unchanged": {
   "research/evidence_memory_v1/__init__.py": "75f088161faf2bde352c629ccb3b4672f8532c86875bed26ec50f5de67848ee6",
   "research/evidence_memory_v1/fidelity.py": "85c2bc7b4b01bfd969b2e474bf83081e0f2bf317118f1792cc7af5a55f85c67a",
   "research/evidence_memory_v1/mutations.py": "d449815b7e16bbb252f1854ed47629b6be649ff3f9075967afbbd0902142de63",
-  "research/evidence_memory_v1/protocol.py": "05cecef8a5fe8e52810c5020c839a474e6d594f527d2c2b4f0ccb25c3b345159",
   "research/evidence_memory_v1/readers.py": "c5abfd818a7acb7f901dd80a1fa3b1927216105f3311f010a0916825e8070b2d",
   "research/evidence_memory_v1/render.py": "6eda9897f745a5172f07e5eb9d32b12cbe809876142b859fd0e2cf87024795bd",
   "research/evidence_memory_v1/run/__init__.py": "1439a8ac352bd042b3f71303f870336eae23b23d229dcca684072f1340926322",
@@ -98,7 +123,6 @@
   "research/evidence_memory_v1/run/service.py": "a7a9909f6a2113b00f3b3eeb5d484d897a8b1be3fae6e155b44397df3b792300",
   "research/evidence_memory_v1/run/transport.py": "2382a7e7b6c0b88d6759a31627ce21519ab3dc3cf9ee0ec54c727320d62a5e7c",
   "research/evidence_memory_v1/schema.py": "adc61b344123b98a99cc1b5422a31e2aecf935ec5b9d14adcca13fd8eeff438f",
-  "research/evidence_memory_v1/stage1.py": "214a38e8132709be8f1989cdc243b40bf9a61127f244089f7fc558f369c2b5bc",
   "research/evidence_memory_v1/study.py": "0140aaef669902ce032ca058a5f205e897cb58de8c3b88bd07eecabaab30e437",
   "research/evidence_memory_v1/tokens.py": "ec6771a1548dcb2edd11b6975d65e2fb0b2318b2cb1d28fdc1a7d0f7252f54a2",
   "research/evidence_memory_v1/trajectories.py": "dc3790c55e663c470fc648185bf093b5d671f27c232bab979fe4656052919e8a",

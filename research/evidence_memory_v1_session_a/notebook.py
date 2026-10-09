@@ -17,6 +17,19 @@ MODEL_SOURCE = 'qwen-lm/qwen-3-vl/Transformers/30b-a3b-instruct-fp8/1'
 COMPETITION_SOURCE = 'arc-prize-2026-arc-agi-3'
 KERNEL_ID = 'REPLACE_WITH_KAGGLE_OWNER/arc3-evidence-memory-v1-session-a'
 SIZE_GUARD = 900000
+# Hash-bound by the review lock and verified by the review check; never part of the runtime payload.
+REVIEW_DOCUMENTS = (
+    'reports/evidence_memory_v1_protocol_v2_frozen.md',
+    'scripts/check_evidence_memory_v1_structured_outputs.py',
+    'reports/evidence_memory_v1_successor/structured_outputs_check_r2.json',
+    'research/evidence_memory_v1/successor/evaluate.py',
+    'research/evidence_memory_v1/successor/final.py',
+    'research/evidence_memory_v1/run/evaluate.py',
+    'research/evidence_memory_v1/run/final.py',
+    'scripts/audit_evidence_memory_v1_tokens.py',
+    'scripts/build_evidence_memory_v1_sessions.py',
+    'scripts/evidence_memory_v1_session_a_package.py',
+)
 MARKER = '    sys.path.insert(0, str(source))\n'
 IMAGE = re.compile(r'gcr\.io/kaggle-(?:private-byod|gpu-images)/python@sha256:[a-f0-9]{64}')
 CELL = '''import base64, hashlib, json, lzma, pathlib, shutil, sys, tempfile, time
@@ -152,7 +165,8 @@ def build_review(output, root=ROOT):
         (output / name).write_bytes(data)
     lock = {'status': 'review_snapshot_not_approved_not_compute_authority', 'scope': 'evidence-memory-v1-session-a',
             'bindings': bindings, 'artifacts': {n: hashlib.sha256(d).hexdigest() for n, d in artifacts.items()},
-            'unresolved_placeholders': pending, 'gpu_enabled': False}
+            'unresolved_placeholders': pending, 'gpu_enabled': False,
+            'review_documents': {n: sha256(Path(root) / n) for n in REVIEW_DOCUMENTS}}
     (output / 'review-source-lock.json').write_bytes(encode(lock))
     return lock
 

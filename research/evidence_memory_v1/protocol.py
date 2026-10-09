@@ -1,4 +1,5 @@
-"""Stage 1 instruments for reports/evidence_memory_v1_protocol_v2.md (Track 2). No model is called; CPU only.
+"""Stage 1 instruments for reports/evidence_memory_v1_protocol_v2_frozen.md (Track 2; the draft
+reports/evidence_memory_v1_protocol_v2.md is kept as history). No model is called; CPU only.
 
 The model is the reader only. Memory is written by the deterministic faithful writer (writers.Faithful), so Stage 1
 tests memory access and representation, not the model's ability to write faithful memory or to complete levels.
@@ -381,6 +382,18 @@ def analyze_rows(rows_by_arm, resamples=BOOTSTRAP_RESAMPLES):
     return result
 
 
+def unsupported_margin(u):
+    """The three-way reading of the unsupported-claim difference (memory minus recent_raw), protocol v2 frozen,
+    section 9: `met` (point <= +0.02 and 95% upper bound <= +0.05), `exceeded` (point > +0.02), `not_shown` (point
+    <= +0.02 but upper bound > +0.05: not measured precisely enough to show the margin); `not_estimable` without an
+    interval. Only `met` permits advancement, exactly as strict as the earlier two-way rule."""
+    if u['ci95'] is None:
+        return 'not_estimable'
+    if u['estimate'] > UNSUPPORTED_MARGIN_POINT:
+        return 'exceeded'
+    return 'met' if u['ci95'][1] <= UNSUPPORTED_MARGIN_UPPER else 'not_shown'
+
+
 def conclusions(result):
     """The predeclared reading of an analysis. Each conclusion stands alone: beating recent history does not show
     an advantage over retrieval, and a failed comprehension floor makes the experiment uninterpretable."""
@@ -390,10 +403,7 @@ def conclusions(result):
     interpretable = (all(v is not None and v >= COMPREHENSION_FLOOR for v in reading.values())
                      and recent is not None and recent >= COMPREHENSION_FLOOR)
     c = result['contrasts']
-    u = result['unsupported_difference_memory_minus_recent_raw']
-    safety = ('not_estimable' if u['ci95'] is None else
-              'within_margin' if u['estimate'] <= UNSUPPORTED_MARGIN_POINT and u['ci95'][1] <= UNSUPPORTED_MARGIN_UPPER
-              else 'outside_margin')
+    safety = unsupported_margin(result['unsupported_difference_memory_minus_recent_raw'])
     forgetting = d['recent_raw']['forgetting_effect'][0]
     out = {
         'interpretable': interpretable,
@@ -410,12 +420,14 @@ def conclusions(result):
     }
     if not interpretable:
         out['verdict'] = 'not_interpretable_cannot_isolate_retention_from_comprehension'
-    elif out['access_vs_recent_history'] == 'memory_preserves_access' and safety == 'within_margin':
+    elif out['access_vs_recent_history'] == 'memory_preserves_access' and safety == 'met':
         out['verdict'] = ('memory_preserves_access_and_improves_over_retrieval'
                           if out['improvement_over_retrieval'] == 'memory_improves_over_retrieval'
                           else 'memory_preserves_access_not_shown_over_retrieval')
-    elif out['access_vs_recent_history'] == 'memory_preserves_access':
+    elif out['access_vs_recent_history'] == 'memory_preserves_access' and safety == 'exceeded':
         out['verdict'] = 'memory_preserves_access_unsupported_claims_outside_margin'
+    elif out['access_vs_recent_history'] == 'memory_preserves_access':  # not_shown (or not_estimable)
+        out['verdict'] = 'memory_preserves_access_unsupported_claims_margin_not_shown'
     else:
         out['verdict'] = 'access_preservation_not_shown'
     return out

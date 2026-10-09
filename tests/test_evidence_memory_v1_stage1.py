@@ -29,6 +29,45 @@ class RepeatSelection(unittest.TestCase):
         self.assertEqual(RD.score(key, q, ['final_frame_differs']), {'valid': True, 'correct': True})
 
 
+class DecodingSchemaWithoutUniqueItems(unittest.TestCase):
+    """Protocol v2 frozen, section 2: `uniqueItems` is dropped from the recall DECODING schema only (vLLM 0.19's
+    structured-output backends refuse it); scoring is unchanged and still rejects duplicates."""
+
+    def test_no_request_schema_carries_unique_items(self):
+        recall = ST.response_schema('recall')
+        self.assertEqual(recall, {'type': 'object', 'additionalProperties': False, 'required': ['values'],
+                                  'properties': {'values': {'type': 'array', 'minItems': 1, 'items': {
+                                      'type': 'string', 'enum': list(ST.RECALL_VALUES)}}}})
+        for kind in ('recall', 'decision'):
+            q = {'kind': kind, 'level': 0, 'state': 'a' * 64, 'action': TR.act(1), 'control': 'family',
+                 'goal': 'reach the goal', 'candidates': [TR.act(1), TR.act(2)]}
+            request = ST.build_request({'evidence': 'step 0 | x'}, {'kind': kind, 'question': q})
+            self.assertNotIn('uniqueItems', json.dumps(request))
+            self.assertEqual(request['response_format']['json_schema']['schema'], ST.response_schema(kind))
+            self.assertTrue(request['response_format']['json_schema']['strict'])
+
+    def test_answers_the_decoder_now_admits_are_still_scored_invalid(self):
+        from research.evidence_memory_v1.run import score as SC
+        q = {'kind': 'recall', 'level': 0, 'state': 'a' * 64, 'action': TR.act(1), 'control': 'family'}
+        value = ST.RECALL_VALUES[0]
+        for values in ([value, value], ['final_frame_differs', 'final_frame_differs', 'no_observed_change'],
+                       ['no_evidence', 'no_evidence'], ['no_evidence', value]):
+            output = json.dumps({'values': values})
+            gold = sorted(set(values))
+            with self.assertRaises(RD.ResponseError):
+                RD.validate_response(output, q)
+            self.assertEqual(RD.score(output, q, gold)['valid'], False)
+            self.assertEqual(RD.score(output, q, gold)['correct'], False)
+            flags = P.score(output, q, gold, gold)
+            self.assertEqual({k: flags[k] for k in ('valid', 'correct_truth', 'correct_package', 'unsupported',
+                                                     'abstained')},
+                             {'valid': False, 'correct_truth': False, 'correct_package': False, 'unsupported': False,
+                              'abstained': False})
+            probe = {'probe_id': 'p', 'question': q, 'truth': gold, 'package': gold}
+            self.assertEqual((SC.score(probe, output)['valid'], SC.score(probe, output)['correct']), (False, False))
+        self.assertTrue(RD.score(json.dumps({'values': [value]}), q, [value])['valid'])
+
+
 @unittest.skipUnless(FOUND, 'the pinned tokenizer files are not available offline')
 class FrozenSet(unittest.TestCase):
     @classmethod

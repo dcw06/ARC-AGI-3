@@ -37,9 +37,12 @@ RECALL_VALUES = P.VALUES + ('no_evidence',)
 
 
 def response_schema(kind):
+    """The decoding schema sent with each request. The recall schema has no `uniqueItems`: vLLM 0.19's structured-output
+    backends refuse it (protocol v2 frozen, section 2). Scoring is unchanged: readers.validate_response still rejects
+    duplicate values and "no_evidence" with another value, so such an answer stays invalid."""
     if kind == 'recall':
         return {'type': 'object', 'additionalProperties': False, 'required': ['values'],
-                'properties': {'values': {'type': 'array', 'minItems': 1, 'uniqueItems': True,
+                'properties': {'values': {'type': 'array', 'minItems': 1,
                                           'items': {'type': 'string', 'enum': list(RECALL_VALUES)}}}}
     action = {'type': 'object', 'additionalProperties': False, 'required': ['action_id', 'action_data'],
               'properties': {'action_id': {'type': 'integer'},

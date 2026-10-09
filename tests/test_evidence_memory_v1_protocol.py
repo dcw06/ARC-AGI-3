@@ -200,14 +200,98 @@ class PrimaryEndpointAndContrasts(unittest.TestCase):
         for r in rows['memory']:
             r['unsupported'] = r['group'] == 0  # one group in six asserts unsupported values
         c = P.analyze_rows(rows, resamples=500)['conclusions']
-        self.assertEqual(c['unsupported_claims'], 'outside_margin')
+        self.assertEqual(c['unsupported_claims'], 'exceeded')
         self.assertEqual(c['verdict'], 'memory_preserves_access_unsupported_claims_outside_margin')
+
+    def test_unsupported_margin_not_shown_end_to_end(self):
+        # Memory asserts unsupported values in group 0 of every family, recent_raw in group 1: the paired point
+        # estimate is 0 (within +0.02), but the interval is too wide to show the +0.05 upper margin.
+        rows = arms({'recent_raw': (1.0, 0.0), 'state_keyed_raw': (1.0, 0.0), 'memory': (1.0, 1.0),
+                     P.REFERENCE: (1.0, 1.0)})
+        for r in rows['memory']:
+            r['unsupported'] = r['group'] == 0
+        for r in rows['recent_raw']:
+            r['unsupported'] = r['group'] == 1
+        result = P.analyze_rows(rows, resamples=500)
+        u = result['unsupported_difference_memory_minus_recent_raw']
+        self.assertEqual(u['estimate'], 0.0)
+        self.assertGreater(u['ci95'][1], P.UNSUPPORTED_MARGIN_UPPER)
+        c = result['conclusions']
+        self.assertEqual(c['access_vs_recent_history'], 'memory_preserves_access')
+        self.assertEqual(c['unsupported_claims'], 'not_shown')
+        self.assertEqual(c['verdict'], 'memory_preserves_access_unsupported_claims_margin_not_shown')
 
     def test_stability_counts_identical_repeated_answers(self):
         first = [row('memory', 'f0', 0, 8, 'old', True, question=q, answer=str(q)) for q in range(4)]
         second = [dict(r, answer=r['answer'] if r['question'] else 'changed') for r in first]
         s = P.stability(first, second)
         self.assertEqual((s['repeated_questions'], s['identical']), (4, 3))
+
+
+def reading_of(unsupported, access_ci=(0.5, 0.9), retrieval_ci=(-0.1, 0.1), floor=1.0):
+    """protocol.conclusions on a synthetic analysis: contrast intervals and the unsupported-claim summary given."""
+    diagnostics = {arm: {'reading_accuracy_package_has_evidence': (floor, 1, 1),
+                         'factual_accuracy_recent_family': (floor, 1, 1), 'forgetting_effect': (0.0, 1, 1)}
+                   for arm in P.ARMS + (P.REFERENCE,)}
+    contrast = lambda ci: {'estimate': sum(ci) / 2, 'ci95': list(ci)}
+    return P.conclusions({'diagnostics': diagnostics,
+                          'contrasts': {'memory_vs_recent_raw': contrast(access_ci),
+                                        'memory_vs_state_keyed_raw': contrast(retrieval_ci),
+                                        'memory_vs_state_keyed_raw_evidence_in_both': contrast(retrieval_ci)},
+                          'unsupported_difference_memory_minus_recent_raw': unsupported})
+
+
+class UnsupportedClaimMargins(unittest.TestCase):
+    """Protocol v2 frozen, section 9: the three-way reading of the unsupported-claim difference (memory minus
+    recent_raw). Both thresholds are unchanged (point <= +0.02, 95% upper bound <= +0.05); only `met` permits
+    advancement, exactly as strict as the earlier two-way rule."""
+
+    ADVANCING = ('memory_preserves_access_and_improves_over_retrieval',
+                 'memory_preserves_access_not_shown_over_retrieval')
+
+    def test_each_branch_including_the_boundaries(self):
+        point, upper, tiny = P.UNSUPPORTED_MARGIN_POINT, P.UNSUPPORTED_MARGIN_UPPER, 1e-9
+        self.assertEqual((point, upper), (0.02, 0.05))
+        cases = [
+            ((0.0, [0.0, 0.0]), 'met'),
+            ((point, [0.0, upper]), 'met'),  # both boundaries are inclusive
+            ((-0.03, [-0.08, upper]), 'met'),
+            ((point, [0.0, upper + tiny]), 'not_shown'),
+            ((0.0, [-0.04, 0.06]), 'not_shown'),
+            ((-0.01, [-0.2, 0.3]), 'not_shown'),
+            ((point + tiny, [0.0, upper]), 'exceeded'),  # the point estimate alone decides `exceeded`
+            ((point + tiny, [0.0, upper + tiny]), 'exceeded'),
+            ((0.03, [0.01, 0.08]), 'exceeded'),
+        ]
+        for (estimate, ci), expected in cases:
+            summary = {'estimate': estimate, 'ci95': ci}
+            self.assertEqual(P.unsupported_margin(summary), expected, summary)
+        self.assertEqual(P.unsupported_margin({'estimate': None, 'ci95': None}), 'not_estimable')
+
+    def test_verdicts_and_advancement(self):
+        point, upper, tiny = P.UNSUPPORTED_MARGIN_POINT, P.UNSUPPORTED_MARGIN_UPPER, 1e-9
+        met = {'estimate': point, 'ci95': [0.0, upper]}
+        not_shown = {'estimate': point, 'ci95': [0.0, upper + tiny]}
+        exceeded = {'estimate': point + tiny, 'ci95': [0.0, upper]}
+        missing = {'estimate': None, 'ci95': None}
+        expected = {
+            'met': ('memory_preserves_access_not_shown_over_retrieval',
+                    'memory_preserves_access_and_improves_over_retrieval'),
+            'not_shown': ('memory_preserves_access_unsupported_claims_margin_not_shown',) * 2,
+            'exceeded': ('memory_preserves_access_unsupported_claims_outside_margin',) * 2,
+            'not_estimable': ('memory_preserves_access_unsupported_claims_margin_not_shown',) * 2,
+        }
+        for name, summary in (('met', met), ('not_shown', not_shown), ('exceeded', exceeded),
+                              ('not_estimable', missing)):
+            plain, improves = reading_of(summary), reading_of(summary, retrieval_ci=(0.1, 0.3))
+            self.assertEqual(plain['unsupported_claims'], name)
+            self.assertEqual((plain['verdict'], improves['verdict']), expected[name], name)
+            advances = plain['verdict'] in self.ADVANCING and improves['verdict'] in self.ADVANCING
+            self.assertEqual(advances, name == 'met', name)  # only `met` permits advancement
+            # without access preservation, or below the comprehension floor, the margin decides nothing
+            self.assertEqual(reading_of(summary, access_ci=(-0.1, 0.2))['verdict'], 'access_preservation_not_shown')
+            self.assertEqual(reading_of(summary, floor=0.5)['verdict'],
+                             'not_interpretable_cannot_isolate_retention_from_comprehension')
 
 
 if __name__ == '__main__':

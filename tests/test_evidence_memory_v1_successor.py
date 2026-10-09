@@ -1,6 +1,7 @@
 """Track 2 Stage 1 successor packages on the verified runtime: derivation, scientific invariance, request plan, live
 gate, notebooks and the import closure (CPU only; no GPU, provider call, approval or reservation)."""
 import copy
+import functools
 import hashlib
 import importlib
 import importlib.util
@@ -25,6 +26,11 @@ NOTEBOOKS = {label: importlib.import_module(spec['module'] + '.notebook') for la
 # sets: tests that compare against stand-in numbers, or that would read withheld truths, are skipped there.
 STAND_INS = all(PL.load_frozen(ROOT, spec['package'])[0]['case_source'] == 'development_stand_in'
                 for spec in PL.SESSIONS.values())
+# Review snapshots: r2 binds the frozen protocol (reports/evidence_memory_v1_protocol_v2_frozen.md); r1 (the draft)
+# is kept byte-identical as history, at the lock hashes recorded when it was frozen.
+LATEST_REVIEW_REVISION = 2
+RETAINED_REVIEW_LOCKS = {'A': {1: '5539e1266c5fd6ccad5881878a9b5699b822dd7d97b82e3ff9f02ea2e7246b41'},
+                         'B': {1: 'fb94736b47c2aee8d3b98f07fc912a8f8f3f2b12c4e24bd158f1504c671fe39f'}}
 
 
 def builder():
@@ -62,11 +68,18 @@ class Derivation(unittest.TestCase):
             self.assertEqual(git_blob(b.BASIS_COMMIT, origin), b.vendored(origin), origin)
 
     def test_reused_track2_sources_are_unchanged_from_the_baseline(self):
+        # Unchanged except the owner's protocol-freeze amendments, each applied exactly to the baseline file.
         b = builder()
         if git_blob(b.TRACK2_BASELINE, 'research/evidence_memory_v1/stage1.py') is None:
             self.skipTest('the Track 2 baseline commit is not available in this clone')
+        self.assertEqual(set(b.FREEZE_AMENDMENTS), {'research/evidence_memory_v1/stage1.py',
+                                                    'research/evidence_memory_v1/protocol.py'})
         for path in b.TRACK2_REUSED:
-            self.assertEqual(git_blob(b.TRACK2_BASELINE, path), (ROOT / path).read_bytes(), path)
+            baseline = git_blob(b.TRACK2_BASELINE, path)
+            expected = b.amended(path, baseline) if path in b.FREEZE_AMENDMENTS else baseline
+            self.assertEqual(expected, (ROOT / path).read_bytes(), path)
+            if path in b.FREEZE_AMENDMENTS:
+                self.assertEqual(b.baseline_of(path), baseline, path)
 
     def test_no_file_of_the_track2_baseline_was_modified_or_removed(self):
         b = builder()
@@ -75,7 +88,17 @@ class Derivation(unittest.TestCase):
         listing = subprocess.run(['git', 'diff', '--name-status', '--no-renames', b.TRACK2_BASELINE], cwd=ROOT,
                                  capture_output=True, text=True, check=True, timeout=60).stdout
         changed = [line for line in listing.splitlines() if line and not line.startswith('A\t')]
-        self.assertEqual(changed, [])  # the successor only adds files; every earlier artifact is byte-identical
+        # The successor only adds files; the protocol freeze modifies exactly the amended modules and the two test
+        # files covering those decisions. Every other earlier artifact (protocol drafts, the run package, its
+        # stand-in, reports, the Linux verification record) is byte-identical.
+        self.assertEqual(sorted(changed), sorted(f'M\t{p}' for p in (*b.FREEZE_AMENDMENTS, *b.FREEZE_AMENDED_TESTS)))
+        for label, spec in PL.SESSIONS.items():
+            derivation = json.loads((ROOT / spec['package'] / 'derivation.json').read_bytes())
+            self.assertEqual(derivation['baseline_files_modified'],
+                             sorted([*b.FREEZE_AMENDMENTS, *b.FREEZE_AMENDED_TESTS]))
+            for path, record in derivation['track2_amended_at_protocol_freeze'].items():
+                self.assertEqual(record['baseline_sha256'],
+                                 hashlib.sha256(git_blob(b.TRACK2_BASELINE, path)).hexdigest(), path)
 
     def test_every_derived_source_names_its_origin_and_no_reference_name_remains(self):
         for label, spec in PL.SESSIONS.items():
@@ -269,9 +292,48 @@ class RequestPlan(unittest.TestCase):
             ledger.admit('Q00002')
 
 
-def gated_fixture(root, label='A'):
+def fabricated_session_a_evaluation():
+    """A fabricated technically complete, live, withheld session-A evaluation in the shape successor/evaluate.py
+    writes, over the committed stand-in set with every key answer (fixture only; never a real record or result)."""
+    return copy.deepcopy(_fabricated_session_a_evaluation())
+
+
+@functools.lru_cache(maxsize=1)
+def _fabricated_session_a_evaluation():
+    package = PL.SESSIONS['A']['package']
+    frozen, _ = PL.load_frozen(ROOT, package)
+    protocol = json.loads((ROOT / package / 'protocol.json').read_bytes())
+    probes = {p['probe_id']: p for p in frozen['probes']}
+    passes = {block['pass']: {i: SC.score(probes[i], json.dumps(probes[i]['key'])) for i in block['probe_ids']}
+              for block in frozen['schedule']}
+    technical = dict(SC.technical(frozen, passes), case_source='withheld')
+    calls = sum(len(b['probe_ids']) for b in frozen['schedule'])
+    return {'fixture': 'fabricated for tests only; not an evaluation of any run', 'mode': 'live', 'session': 'A',
+            'package': package, 'frozen_set_sha256': protocol['experiment']['frozen_set_sha256'],
+            'case_source': 'withheld', 'limits': protocol['limits'], 'lifecycle_passed': True, 'lifecycle_errors': [],
+            'run_evidence': {'verified': True, 'recovered': False}, 'call_errors': [],
+            'run': {'status': 'complete', 'stop_reason': None, 'calls_recorded': calls, 'scheduled_calls': calls},
+            'gate_status': 'complete', 'gate': {'questionnaire': technical['technical_status']},
+            'analysis': technical, 'technically_complete': True, 'exact_provider_billed_seconds': None,
+            'phase4_complete': False}
+
+
+def put_session_a_record(root, record):
+    """Retain a (fabricated) session-A evaluation at the fixed path in a fixture checkout; returns its SHA-256."""
+    from research.evidence_memory_v1.successor import session_order
+    data = (json.dumps(record, indent=1) + '\n').encode() if isinstance(record, dict) else record
+    path = root / session_order.RECORD
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(data)
+    return hashlib.sha256(data).hexdigest()
+
+
+def gated_fixture(root, label='A', session_a_record=True, named=None):
     """Fabricated authority in a disposable directory; never a real approval, reservation or claim. Returns the
-    writer and the patches that enable the live path for this fixture only (LIVE_ENABLED, withheld-set check)."""
+    writer and the patches that enable the live path for this fixture only (LIVE_ENABLED, withheld-set check).
+    For session B it also retains a session-A evaluation (True: a fabricated technically complete one; a dict or
+    bytes: that record; False: none) and names `named`, or the retained record's SHA-256, in the fabricated compute
+    authorization (nothing is named when there is neither)."""
     B, N = SESSIONS[label], NOTEBOOKS[label]
 
     def put(name, value):
@@ -281,10 +343,16 @@ def gated_fixture(root, label='A'):
 
     def sha(name):
         return B.sha256(root / name)
-    for name in N.source_names(ROOT):
+    for name in N.source_names(ROOT) + list(N.REVIEW_DOCUMENTS) + [PL.SESSIONS['A']['package'] + '/protocol.json']:
         path = root / name
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes((ROOT / name).read_bytes())
+    order = {}
+    if label == 'B':
+        record = fabricated_session_a_evaluation() if session_a_record is True else session_a_record
+        digest = put_session_a_record(root, record) if record is not False else None
+        if (named or digest) is not None:
+            order['session_a_technical_evaluation_sha256'] = named or digest
     protocol = json.loads((ROOT / B.PROTOCOL).read_bytes())
     protocol['kernel_id'] = 'fixture/em1'
     protocol['model'].update(kaggle_source='fixture/em-model/1', mounted_path='/kaggle/input/em-model')
@@ -315,7 +383,7 @@ def gated_fixture(root, label='A'):
     put(B.SOURCE, dict(common, approval_kind='source'))
     put(B.COMPUTE, dict(common, approval_kind='compute', source_approval_sha256=sha(B.SOURCE),
                         protocol_sha256=sha(B.PROTOCOL), dataset=protocol['dataset'],
-                        **{k: protocol['limits'][k] for k in B.COMPUTE_LIMITS}))
+                        **{k: protocol['limits'][k] for k in B.COMPUTE_LIMITS}, **order))
     execution = {'scope': B.SCOPE, 'attempt_id': PL.SESSIONS[label]['attempt'] + '-fixture0001', 'review_lock': lock,
                  'review_sha256': sha(lock), 'source_approval_sha256': sha(B.SOURCE),
                  'compute_approval_sha256': sha(B.COMPUTE)}
@@ -470,23 +538,58 @@ class Notebooks(unittest.TestCase):
 
     @unittest.skipUnless(os.name == 'posix', 'review snapshots are built and reproduced on Linux')
     def test_frozen_review_snapshots_reproduce_and_their_checks_refused_at_the_gate(self):
+        # The latest snapshot (r2, the frozen protocol) reproduces from this checkout; r1 (the draft) is kept
+        # byte-identical as history, with its receipt.
         for label, spec in PL.SESSIONS.items():
-            name = f"{spec['scope']}-review-r1"
-            frozen = ROOT / 'notebooks' / name
-            if not frozen.is_dir():
-                self.skipTest('review snapshot not built yet')
-            with tempfile.TemporaryDirectory() as folder:
-                NOTEBOOKS[label].build_review(Path(folder) / 'review', root=ROOT)
-                for n in ('profile.ipynb', 'kernel-metadata.json', 'review-source-lock.json'):
-                    self.assertEqual((frozen / n).read_bytes(), (Path(folder) / 'review' / n).read_bytes(), n)
-            lock = json.loads((frozen / 'review-source-lock.json').read_bytes())
-            self.assertEqual(lock['status'], 'review_snapshot_not_approved_not_compute_authority')
-            self.assertFalse(lock['gpu_enabled'])
-            receipt = json.loads((ROOT / f"reports/{spec['module'].split('.')[-1]}_review_check_r1.json").read_bytes())
-            self.assertTrue(receipt['passed'] and receipt['refused_at_live_gate'])
-            self.assertFalse(receipt['nvidia_smi_called'])
-            self.assertEqual(receipt['review_lock_sha256'],
-                             hashlib.sha256((frozen / 'review-source-lock.json').read_bytes()).hexdigest())
+            revision = int(SESSIONS[label].review_lock(ROOT).split('-review-r')[1].split('/')[0])
+            self.assertEqual(revision, LATEST_REVIEW_REVISION)
+            for n in range(1, revision + 1):
+                frozen = ROOT / 'notebooks' / f"{spec['scope']}-review-r{n}"
+                lock_raw = (frozen / 'review-source-lock.json').read_bytes()
+                lock = json.loads(lock_raw)
+                self.assertEqual(lock['status'], 'review_snapshot_not_approved_not_compute_authority')
+                self.assertFalse(lock['gpu_enabled'])
+                for artifact, digest in lock['artifacts'].items():
+                    self.assertEqual(hashlib.sha256((frozen / artifact).read_bytes()).hexdigest(), digest, artifact)
+                receipt = json.loads((ROOT / f"reports/{spec['module'].split('.')[-1]}_review_check_r{n}.json")
+                                     .read_bytes())
+                self.assertTrue(receipt['passed'] and receipt['refused_at_live_gate'])
+                self.assertFalse(receipt['nvidia_smi_called'])
+                self.assertEqual(receipt['review_lock_sha256'], hashlib.sha256(lock_raw).hexdigest())
+                if n in RETAINED_REVIEW_LOCKS[label]:
+                    self.assertEqual(hashlib.sha256(lock_raw).hexdigest(), RETAINED_REVIEW_LOCKS[label][n])
+                if n == revision:
+                    with tempfile.TemporaryDirectory() as folder:
+                        NOTEBOOKS[label].build_review(Path(folder) / 'review', root=ROOT)
+                        for name in ('profile.ipynb', 'kernel-metadata.json', 'review-source-lock.json'):
+                            self.assertEqual((frozen / name).read_bytes(),
+                                             (Path(folder) / 'review' / name).read_bytes(), name)
+
+    def test_the_frozen_protocol_and_review_documents_are_bound(self):
+        b = builder()
+        for label, spec in PL.SESSIONS.items():
+            protocol = SESSIONS[label].load_protocol(ROOT)
+            self.assertEqual(protocol['protocol_document'], b.PROTOCOL_DOCUMENT)
+            self.assertEqual(b.PROTOCOL_DOCUMENT, 'reports/evidence_memory_v1_protocol_v2_frozen.md')
+            self.assertTrue((ROOT / b.PROTOCOL_DOCUMENT).is_file())
+            documents = NOTEBOOKS[label].REVIEW_DOCUMENTS
+            self.assertEqual(documents, b.review_documents(b.Session(label)))
+            for required in (b.PROTOCOL_DOCUMENT, 'scripts/check_evidence_memory_v1_structured_outputs.py',
+                             'reports/evidence_memory_v1_successor/structured_outputs_check_r2.json'):
+                self.assertIn(required, documents)
+            lock = json.loads((ROOT / SESSIONS[label].review_lock(ROOT)).read_bytes())
+            self.assertEqual(sorted(lock['review_documents']), sorted(documents))
+            for name, digest in lock['review_documents'].items():
+                self.assertEqual(hashlib.sha256((ROOT / name).read_bytes()).hexdigest(), digest, name)
+            # the draft protocol is history: kept, never bound as the protocol of record
+            self.assertNotIn('reports/evidence_memory_v1_protocol_v2.md', documents)
+        receipt = json.loads((ROOT / 'reports/evidence_memory_v1_successor/structured_outputs_check_r2.json')
+                             .read_bytes())
+        self.assertTrue(receipt['passed'] and receipt['all_track2_schemas_accepted'])
+        self.assertEqual(receipt['schemas']['recall']['request_schema'], ST.response_schema('recall'))
+        self.assertEqual(receipt['schemas']['decision']['request_schema'], ST.response_schema('decision'))
+        self.assertEqual(receipt['decoder_admitted_invalid_answers'],
+                         ['recall: duplicate', 'recall: no_evidence with another value'])
 
 
 if __name__ == '__main__':

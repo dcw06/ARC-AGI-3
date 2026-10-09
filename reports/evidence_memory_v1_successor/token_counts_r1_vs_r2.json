@@ -1,0 +1,80 @@
+{
+ "before_revision": "fb8cf77b2a4aa2d64cc9c1df953537a1ad40f87d",
+ "change": "recall decoding schema without uniqueItems (protocol v2 frozen, section 2)",
+ "gpu_used": false,
+ "model_calls": 0,
+ "passed": true,
+ "schema": "evidence_memory_v1_token_audit_comparison_v1",
+ "sessions": {
+  "A": {
+   "audit": "research/evidence_memory_v1_session_a/token-audit.json",
+   "distinct_requests": {
+    "after": 1979,
+    "before": 1979
+   },
+   "frozen_set_sha256": {
+    "after": "136770b5bc2a40bbafe0bc843f29f92c5266db0a0374eb1dff722325dead1c6a",
+    "before": "136770b5bc2a40bbafe0bc843f29f92c5266db0a0374eb1dff722325dead1c6a"
+   },
+   "max_prompt_tokens": {
+    "after": 1247,
+    "before": 1247
+   },
+   "passed": true,
+   "prompt_count_mismatches": 0,
+   "request_digests_changed": {
+    "decision": 0,
+    "recall": 2144
+   },
+   "request_digests_unchanged": {
+    "decision": 752,
+    "recall": 0
+   },
+   "rows": {
+    "after": 2896,
+    "before": 2896
+   },
+   "same_rows_in_order": true,
+   "tokenizer_unchanged": true,
+   "total_prompt_tokens": {
+    "after": 1728220,
+    "before": 1728220
+   }
+  },
+  "B": {
+   "audit": "research/evidence_memory_v1_session_b/token-audit.json",
+   "distinct_requests": {
+    "after": 1976,
+    "before": 1976
+   },
+   "frozen_set_sha256": {
+    "after": "e2baf2bd4268980c6fbeb8d56468c85622fab151563e500ddaf18515c28df880",
+    "before": "e2baf2bd4268980c6fbeb8d56468c85622fab151563e500ddaf18515c28df880"
+   },
+   "max_prompt_tokens": {
+    "after": 1249,
+    "before": 1249
+   },
+   "passed": true,
+   "prompt_count_mismatches": 0,
+   "request_digests_changed": {
+    "decision": 0,
+    "recall": 2096
+   },
+   "request_digests_unchanged": {
+    "decision": 736,
+    "recall": 0
+   },
+   "rows": {
+    "after": 2832,
+    "before": 2832
+   },
+   "same_rows_in_order": true,
+   "tokenizer_unchanged": true,
+   "total_prompt_tokens": {
+    "after": 1686442,
+    "before": 1686442
+   }
+  }
+ }
+}

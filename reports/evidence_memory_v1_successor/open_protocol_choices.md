@@ -1,5 +1,11 @@
 # Track 2 Stage 1: protocol choices still open (for the owner)
 
+**Decided October 9, 2026.** The owner decided these choices on October 9, 2026: choice 9 as option (a), choice 5
+as the three-way reading (`freeze_decisions.md`, item 1), choice 8 as (a), choice 7 as enforced in session B's
+launch tooling (not (a) as recommended below), and every other recommendation as written. Who holds the two
+copies of the withheld nonce stays open (owner gate 1). The protocol of record is
+`reports/evidence_memory_v1_protocol_v2_frozen.md`. This note is kept unchanged below as the options considered.
+
 **Status.** Protocol v2 (`reports/evidence_memory_v1_protocol_v2.md`) is a draft. Nothing in it is frozen,
 scheduled, reserved or approved. This note decides nothing. For each choice it lists the options and the
 consequences, and gives a recommendation for the owner to accept or reject.

@@ -34,6 +34,21 @@ def rehearsal(label):
     return importlib.import_module(PL.SESSIONS[label]['module'] + '.rehearsal')
 
 
+def session_order_reasons(evaluation):
+    """Session B's launch-tooling check (successor/session_order.py) applied to a real evaluator record, retained at
+    its fixed path in a disposable checkout with session A's protocol."""
+    from research.evidence_memory_v1.successor import session_order
+    with tempfile.TemporaryDirectory() as folder:
+        root = Path(folder)
+        protocol = PL.SESSIONS['A']['package'] + '/protocol.json'
+        for name, data in ((session_order.RECORD, (json.dumps(evaluation, indent=1) + '
+').encode()),
+                           (protocol, (ROOT / protocol).read_bytes())):
+            (root / name).parent.mkdir(parents=True, exist_ok=True)
+            (root / name).write_bytes(data)
+        return session_order.record_reasons(root)
+
+
 def run(label, folder, fault, latency=0.0):
     """One connected rehearsal and its independent evaluation (harness-declared rehearsal limits)."""
     from research.evidence_memory_v1.successor.evaluate import evaluate_output
@@ -80,6 +95,12 @@ class SessionsAndPooledAnalysis(unittest.TestCase):
             self.assertTrue(evaluation['technically_complete'], evaluation['lifecycle_errors'] + evaluation['call_errors'])
             self.assertEqual(evaluation['analysis']['technical_status'], 'session_technically_valid')
             self.assertTrue(evaluation['analysis']['invalid_by_pass']['pass_2']['rule_met'])
+        # Session B's launch tooling reads this evaluator's real output: a complete, valid rehearsal of A is refused
+        # only because it is a rehearsal of the development stand-in, never for its shape.
+        reasons = session_order_reasons(self.runs['A'][1])
+        self.assertEqual(len(reasons), 2, reasons)
+        self.assertIn('not live', reasons[0])
+        self.assertIn('not withheld', reasons[1])
 
     def test_2_a_session_reports_only_its_technical_status(self):
         for label, (result, evaluation, output) in self.runs.items():
@@ -179,6 +200,7 @@ class Faults(unittest.TestCase):
         self.assertTrue(invalid['pass_1']['rule_met'])
         self.assertFalse(invalid['pass_2']['rule_met'])
         self.assertEqual(evaluation['analysis']['technical_status'], 'session_technically_invalid_outputs')
+        self.assertIn('session A is not technically valid in every pass', session_order_reasons(evaluation))
 
     def test_a_timeout_is_cancelled_and_verified_idle_and_leaves_the_session_incomplete(self):
         result, evaluation, output = run('A', self.folder, 'hang_once')
@@ -191,6 +213,7 @@ class Faults(unittest.TestCase):
         self.assertFalse(evaluation['technically_complete'])
         self.assertEqual(evaluation['analysis']['technical_status'], 'incomplete')
         self.assertGreaterEqual(result['ledger']['by_kind'].get('study_idle_verification', 0), 1)
+        self.assertIn('session A is not technically complete', session_order_reasons(evaluation))
 
     def test_a_server_that_ignores_cancellation_stops_the_study_and_is_still_cleaned_up(self):
         result, evaluation, output = self.stopped('no_abort', 7)

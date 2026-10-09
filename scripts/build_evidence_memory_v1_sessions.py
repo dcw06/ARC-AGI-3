@@ -12,6 +12,10 @@ writing. Inputs, all committed:
 Each derived source is its reference file with the reference banner replaced, the ordered global renames below, and
 that file's own substitutions, each required to match an exact number of times; a residue check refuses leftover
 reference names. The study's runner is derived the same way from research/evidence_memory_v1/run/runner.py.
+The reused Track 2 modules are those of 107d8b4, except the owner's protocol-freeze amendments (FREEZE_AMENDMENTS:
+the recall decoding schema and the three-way margin reading), which tests check against the baseline exactly. Each
+protocol names the frozen protocol document, and each review lock binds it with the other review documents. Session
+B's launch tooling also requires session A's technical completion (successor/session_order.py); A's is unchanged.
 
     python scripts/build_evidence_memory_v1_sessions.py           # write
     python scripts/build_evidence_memory_v1_sessions.py --check   # fail on any drift
@@ -44,6 +48,94 @@ TRACK2_REUSED = tuple('research/evidence_memory_v1/' + n for n in (
     'study.py', 'tokens.py', 'trajectories.py', 'writers.py', 'run/__init__.py', 'run/evaluate.py', 'run/evidence.py',
     'run/final.py', 'run/probes.py', 'run/runner.py', 'run/schedule.py', 'run/score.py', 'run/service.py',
     'run/transport.py', 'run/fake_server.py', 'run/fake_vllm.py', 'run/probes.json'))
+# The frozen protocol (owner decisions of October 9, 2026). The draft reports/evidence_memory_v1_protocol_v2.md stays
+# unchanged as history.
+PROTOCOL_DOCUMENT = 'reports/evidence_memory_v1_protocol_v2_frozen.md'
+# The only changes to reused Track 2 modules: the owner's freeze decisions, each the exact change from the 107d8b4 file
+# ((old, new, count) applied in order). Tests apply them to the baseline blob and require the committed file; the
+# derivation records both hashes. Nothing else in a reused module differs from the baseline.
+FREEZE_AMENDMENTS = {
+    'research/evidence_memory_v1/stage1.py': (
+        'decision 1: the recall DECODING schema drops uniqueItems (refused by vLLM 0.19 structured outputs); '
+        'readers.validate_response still rejects duplicates, so scoring is unchanged', (
+            ('def response_schema(kind):\n    if kind',
+             'def response_schema(kind):\n'
+             '    """The decoding schema sent with each request. The recall schema has no `uniqueItems`: vLLM 0.19\'s '
+             'structured-output\n'
+             '    backends refuse it (protocol v2 frozen, section 2). Scoring is unchanged: readers.validate_response '
+             'still rejects\n'
+             '    duplicate values and "no_evidence" with another value, so such an answer stays invalid."""\n'
+             '    if kind', 1),
+            ("'minItems': 1, 'uniqueItems': True,\n", "'minItems': 1,\n", 1))),
+    'research/evidence_memory_v1/protocol.py': (
+        'decision 2: the unsupported-claim margins are read three ways (met / exceeded / not_shown) with unchanged '
+        'thresholds; only met permits advancement, as before', (
+            ('"""Stage 1 instruments for reports/evidence_memory_v1_protocol_v2.md (Track 2). No model is called; '
+             'CPU only.\n',
+             '"""Stage 1 instruments for reports/evidence_memory_v1_protocol_v2_frozen.md (Track 2; the draft\n'
+             'reports/evidence_memory_v1_protocol_v2.md is kept as history). No model is called; CPU only.\n', 1),
+            ('\n\ndef conclusions(result):\n',
+             '\n\ndef unsupported_margin(u):\n'
+             '    """The three-way reading of the unsupported-claim difference (memory minus recent_raw), protocol v2 '
+             'frozen,\n'
+             '    section 9: `met` (point <= +0.02 and 95% upper bound <= +0.05), `exceeded` (point > +0.02), '
+             '`not_shown` (point\n'
+             '    <= +0.02 but upper bound > +0.05: not measured precisely enough to show the margin); `not_estimable` '
+             'without an\n'
+             '    interval. Only `met` permits advancement, exactly as strict as the earlier two-way rule."""\n'
+             "    if u['ci95'] is None:\n"
+             "        return 'not_estimable'\n"
+             "    if u['estimate'] > UNSUPPORTED_MARGIN_POINT:\n"
+             "        return 'exceeded'\n"
+             "    return 'met' if u['ci95'][1] <= UNSUPPORTED_MARGIN_UPPER else 'not_shown'\n"
+             '\n\ndef conclusions(result):\n', 1),
+            ("    u = result['unsupported_difference_memory_minus_recent_raw']\n"
+             "    safety = ('not_estimable' if u['ci95'] is None else\n"
+             "              'within_margin' if u['estimate'] <= UNSUPPORTED_MARGIN_POINT and u['ci95'][1] <= "
+             "UNSUPPORTED_MARGIN_UPPER\n"
+             "              else 'outside_margin')\n",
+             "    safety = unsupported_margin(result['unsupported_difference_memory_minus_recent_raw'])\n", 1),
+            ("    elif out['access_vs_recent_history'] == 'memory_preserves_access' and safety == 'within_margin':\n",
+             "    elif out['access_vs_recent_history'] == 'memory_preserves_access' and safety == 'met':\n", 1),
+            ("    elif out['access_vs_recent_history'] == 'memory_preserves_access':\n"
+             "        out['verdict'] = 'memory_preserves_access_unsupported_claims_outside_margin'\n",
+             "    elif out['access_vs_recent_history'] == 'memory_preserves_access' and safety == 'exceeded':\n"
+             "        out['verdict'] = 'memory_preserves_access_unsupported_claims_outside_margin'\n"
+             "    elif out['access_vs_recent_history'] == 'memory_preserves_access':  # not_shown (or not_estimable)\n"
+             "        out['verdict'] = 'memory_preserves_access_unsupported_claims_margin_not_shown'\n", 1))),
+}
+# Baseline test files changed to cover those decisions (the only other modified baseline files).
+FREEZE_AMENDED_TESTS = {
+    'tests/test_evidence_memory_v1_stage1.py': 'decision 1: no request schema carries uniqueItems; answers the decoder '
+                                               'now admits (duplicates, "no_evidence" with another value) score invalid',
+    'tests/test_evidence_memory_v1_protocol.py': 'decision 2: the margin outcome is renamed (exceeded) and every branch '
+                                                 'of the three-way reading is tested, boundaries included',
+}
+SESSION_ORDER = 'research/evidence_memory_v1/successor/session_order.py'  # decision 4: session B's launch tooling
+
+
+def amended(path, baseline):
+    """The baseline bytes of a reused module with its freeze amendment applied."""
+    return substitute(path, baseline.decode('utf-8'), FREEZE_AMENDMENTS[path][1]).encode('utf-8')
+
+
+def baseline_of(path):
+    """The 107d8b4 bytes of an amended module, recovered by undoing its amendment (each change is unique)."""
+    text = (ROOT / path).read_text(encoding='utf-8')
+    for old, new, count in reversed(FREEZE_AMENDMENTS[path][1]):
+        text = substitute(path, text, ((new, old, count),))
+    return text.encode('utf-8')
+
+
+def review_documents(s):
+    """Hash-bound by each review lock for review and verified by the review check; never in the runtime payload: the
+    frozen protocol, the structured-output check and its receipt, the independent evaluator and the pooled analysis,
+    the token audit, the builder and the session's package script."""
+    return (PROTOCOL_DOCUMENT, 'scripts/check_evidence_memory_v1_structured_outputs.py',
+            'reports/evidence_memory_v1_successor/structured_outputs_check_r2.json',
+            'research/evidence_memory_v1/successor/evaluate.py', 'research/evidence_memory_v1/successor/final.py',
+            'research/evidence_memory_v1/run/evaluate.py', 'research/evidence_memory_v1/run/final.py',
+            'scripts/audit_evidence_memory_v1_tokens.py', BUILDER, f'scripts/{s.name}_package.py')
 
 
 def vendored(origin):
@@ -181,7 +273,9 @@ def package_files(s, scheduled, maximum):
          "PACKAGE + '/token-audit.json']\n",
          "    names += [PACKAGE + '/probes.json', PACKAGE + '/derivation.json', PACKAGE + '/token-audit.json']\n"
          "    from research.evidence_memory_v1.successor.plan import STUDY_SOURCES\n"
-         "    names += list(STUDY_SOURCES)\n", 1),
+         "    names += list(STUDY_SOURCES)\n"
+         + (f"    names.append('{SESSION_ORDER}')  # the launch tooling's session-A condition\n"
+            if s.label == 'B' else ''), 1),
         ("'# Milestone E paired action selection v1 (development observations only)\\n'\n"
          "                           'One attempt: offline install from the verified flat publisher mount with our "
          "trusted '\n"
@@ -192,7 +286,57 @@ def package_files(s, scheduled, maximum):
          "or game-progress claim. This notebook refuses to run unless the dataset/account and direct-use evidence, '",
          "'" + markdown, 1),
         ("'ARC3 Control Interface Action Selection V1 Review'", f"'ARC3 Evidence Memory V1 Session {s.label} Review'", 1),
+        # The frozen protocol and the review documents are bound by the review lock (not embedded in the payload).
+        ('SIZE_GUARD = 900000\n',
+         'SIZE_GUARD = 900000\n'
+         '# Hash-bound by the review lock and verified by the review check; never part of the runtime payload.\n'
+         'REVIEW_DOCUMENTS = (\n' + ''.join(f'    {name!r},\n' for name in review_documents(s)) + ')\n', 1),
+        ("            'unresolved_placeholders': pending, 'gpu_enabled': False}\n",
+         "            'unresolved_placeholders': pending, 'gpu_enabled': False,\n"
+         "            'review_documents': {n: sha256(Path(root) / n) for n in REVIEW_DOCUMENTS}}\n", 1),
     )
+    launch = ()
+    if s.label == 'B':  # decision 4: B's launch tooling waits for A's technical completion; A's tooling is unchanged
+        notebook += (
+            ('ROOT, SOURCE, ACCOUNT, PERMISSION, BYTES, evidence_names, load_protocol, require_live, review_lock,\n',
+             'ROOT, SOURCE, ACCOUNT, PERMISSION, BYTES, LiveRefused, evidence_names, load_protocol, require_live, '
+             'review_lock,\n', 1),
+            ('    """The launch package (built in memory). Refuses unless the live gate passes for `root`."""\n'
+             '    protocol, execution = require_live(root)\n',
+             '    """The launch package (built in memory). Refuses unless the live gate passes for `root` and, for session '
+             'B, unless\n'
+             "    session A's retained technical evaluation shows A technically complete, bound by hash in this session's "
+             'compute\n'
+             '    authorization (research/evidence_memory_v1/successor/session_order.py; launch tooling only, never the '
+             'live gate)."""\n'
+             '    from research.evidence_memory_v1.successor import session_order\n'
+             '    try:\n'
+             '        protocol, execution = require_live(root)\n'
+             '    except LiveRefused as exc:  # name the session-order condition too (checking the record reads no '
+             'approval)\n'
+             '        raise LiveRefused(exc.reasons + session_order.record_reasons(root)) from exc\n'
+             '    order = session_order.reasons(root, COMPUTE)\n'
+             '    if order:\n'
+             '        raise LiveRefused(order)\n', 1),
+        )
+        launch = (
+            ('(CLAIM, EXECUTION, RECEIPT, LiveRefused, require_live,\n',
+             '(CLAIM, COMPUTE, EXECUTION, RECEIPT, LiveRefused, require_live,\n', 1),
+            ('new attempt needs a new authorization and reservation."""',
+             'new attempt needs a new authorization and reservation.\n\n'
+             "Session B only: the claim and the launch package also require session A's retained technical evaluation "
+             'to show A\n'
+             "technically complete, bound by hash in session B's compute authorization\n"
+             '(research/evidence_memory_v1/successor/session_order.py). If A is not technically complete, B is never '
+             'launched."""', 1),
+            ('    protocol, execution = require_live(root, need_claim=False)\n    try:\n',
+             '    protocol, execution = require_live(root, need_claim=False)\n'
+             '    from research.evidence_memory_v1.successor import session_order\n'
+             '    order = session_order.reasons(root, COMPUTE)\n'
+             '    if order:  # session B is never claimed before session A is technically complete\n'
+             "        raise LaunchRefused('; '.join(order))\n"
+             '    try:\n', 1),
+        )
     evidence = (
         (f"LIVE = 'gpu_{s.name}_development_probe'", f"LIVE = 'gpu_{s.name}_stage1_run'", 1),
         ("            result['model_action_selection_evidence'] = bool(result.get('passed'))\n"
@@ -236,7 +380,7 @@ def package_files(s, scheduled, maximum):
             (s.package + '/run.py', V2 + '/run.py', run),
             (s.package + '/runtime_controls.py', V2 + '/runtime_controls.py', runtime_controls),
             (s.package + '/notebook.py', V2 + '/notebook.py', notebook),
-            (s.package + '/launch.py', V2 + '/launch.py', ()),
+            (s.package + '/launch.py', V2 + '/launch.py', launch),
             (s.package + '/evidence.py', V2 + '/evidence.py', evidence),
             (s.package + '/rehearsal.py', V2 + '/rehearsal.py', rehearsal)]
 
@@ -245,7 +389,18 @@ def script_files(s):
     package_script = (
         ('"""Direct publisher smoke test packaging (no upload, no reservation, no GPU).',
          f'"""Track 2 Stage 1 session {s.label} packaging (no upload, no reservation, no GPU).', 1),
-        ("prefix='control-interface-review-check-'", f"prefix='evidence-memory-session-{s.lower}-review-check-'", 1))
+        ("prefix='control-interface-review-check-'", f"prefix='evidence-memory-session-{s.lower}-review-check-'", 1),
+        ("            raise SystemExit(f'review artifact drift: {name}')\n",
+         "            raise SystemExit(f'review artifact drift: {name}')\n"
+         "    for name, digest in lock.get('review_documents', {}).items():\n"
+         "        if sha256(ROOT / name) != digest:\n"
+         "            raise SystemExit(f'review document drift: {name}')\n", 1))
+    if s.label == 'B':
+        package_script += (
+            ('      build the launch package; refuses unless every live-gate condition holds\n',
+             "      build the launch package; refuses unless every live-gate condition holds and session A's retained\n"
+             '      technical evaluation shows A technically complete (session B only; successor/session_order.py)\n',
+             1),)
     check_script = (
         ("from certification.direct_publisher_smoke_v1 import preflight as P, install as I\n",
          "from certification.direct_publisher_smoke_v1 import preflight as P, install as I\n"
@@ -318,7 +473,7 @@ def protocol_for(s, frozen, frozen_sha, audit_sha, commitment):
                     kernel_id=f'REPLACE_WITH_OWNER/arc3-{s.scope}',
                     purpose=(f'Track 2 evidence memory v1, Stage 1 session {s.label}: frozen reader questions under a '
                              'common token budget; zero game actions; technical evaluation only per session'),
-                    limits=limits, requests=plan,
+                    protocol_document=PROTOCOL_DOCUMENT, limits=limits, requests=plan,
                     experiment=PL.experiment_section(frozen, frozen_sha, audit_sha, s.package, commitment))
     return protocol, scheduled
 
@@ -354,7 +509,13 @@ def build(root=ROOT):
             'vendored_reference_folder': REFERENCE, 'shared_runtime': SHARED + ' (byte-identical to the basis commit)',
             'derived': derived, 'study_runner': {'research/evidence_memory_v1/successor/runner.py': runner_origin},
             'track2_baseline_commit': TRACK2_BASELINE,
-            'track2_reused_unchanged': {path: sha_of(path) for path in TRACK2_REUSED},
+            'track2_reused_unchanged': {path: sha_of(path) for path in TRACK2_REUSED if path not in FREEZE_AMENDMENTS},
+            'protocol_document': PROTOCOL_DOCUMENT,
+            'track2_amended_at_protocol_freeze': {
+                path: {'decision': decision, 'baseline_sha256': hashlib.sha256(baseline_of(path)).hexdigest(),
+                       'sha256': sha_of(path)}
+                for path, (decision, _) in sorted(FREEZE_AMENDMENTS.items())},
+            'track2_baseline_tests_amended_at_protocol_freeze': dict(sorted(FREEZE_AMENDED_TESTS.items())),
             'session_inputs': {s.package + '/' + PL.FROZEN_NAME: hashlib.sha256(frozen_raw).hexdigest(),
                                s.package + '/' + PL.AUDIT_NAME: hashlib.sha256(audit_raw).hexdigest(),
                                COMMITMENT: sha_of(COMMITMENT)},
@@ -371,9 +532,19 @@ def build(root=ROOT):
                 'of an in-run tokenizer; token parity is still enforced per call',
                 'separate scope, approvals, claim, receipt and reservation per session; LIVE_ENABLED is False and the '
                 'live gate refuses the development stand-in',
-                'unchanged: prompts, arms, schemas, budgets, seeds and seed procedure, schedule, admission and stop '
-                'rules, scoring, the technical-only session report and the pooled analysis'],
-            'scientific_configuration_changed': False, 'preserves_baseline_files': True})
+                'unchanged by this derivation: prompts, arms, schemas, budgets, seeds and seed procedure, schedule, '
+                'admission and stop rules, scoring, the technical-only session report and the pooled analysis',
+                'protocol freeze (owner decisions of October 9, 2026; ' + PROTOCOL_DOCUMENT + '), applied to the '
+                'reused modules themselves, not by this derivation: the recall decoding schema drops uniqueItems '
+                '(scoring unchanged; request digests and token audits rebuilt, prompt token counts unchanged); the '
+                'unsupported-claim margins are read three ways (met / exceeded / not_shown; only met advances)',
+                'the review lock binds the frozen protocol and review documents; the protocol names protocol_document']
+            + (["session B's launch tooling (claim and launch package) refuses unless session A's retained technical "
+                "evaluation shows A technically complete, bound by hash in B's compute authorization "
+                '(successor/session_order.py); the per-scope live gate is unchanged'] if label == 'B' else []),
+            'scientific_configuration_changed': False,
+            'baseline_files_modified': sorted([*FREEZE_AMENDMENTS, *FREEZE_AMENDED_TESTS]),
+            'preserves_baseline_files': False})
     return result
 
 

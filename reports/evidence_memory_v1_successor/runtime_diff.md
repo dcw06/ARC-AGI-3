@@ -10,6 +10,19 @@ for byte:
   `research/evidence_memory_v1/successor/verified_sources/`;
 - `verified_sources/SOURCES.json`, which records the commit, origin paths and SHA-256 of all 40 vendored files.
 
+**Amended at the protocol freeze (October 9, 2026; review snapshots r2).** The comparison below describes the
+runtime-only successor at `9655dbf`. The owner's freeze decisions then changed exactly two reused Track 2 modules
+and the two test files covering them; nothing else of `107d8b4` changed:
+- `research/evidence_memory_v1/stage1.py`: the recall decoding schema drops `uniqueItems` (scoring unchanged);
+- `research/evidence_memory_v1/protocol.py`: the three-way unsupported-claim margin reading;
+- `tests/test_evidence_memory_v1_stage1.py`, `tests/test_evidence_memory_v1_protocol.py`: tests of both.
+
+Each amendment is recorded as an exact change from the baseline file (`FREEZE_AMENDMENTS` in the builder; each
+session's `derivation.json`: `track2_amended_at_protocol_freeze`), and the tests apply it to the `107d8b4` blob.
+The statements below that every baseline file is byte-identical, and that the schemas are unchanged, held until
+then. Session B's launch tooling also gained the session-A condition (`successor/session_order.py`); the live gate
+is unchanged. The full list is `freeze_change_list_r2.md`.
+
 ## Summary
 
 - **No existing file was modified or removed.** The successor only adds files. Every file tracked at `107d8b4`,

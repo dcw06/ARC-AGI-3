@@ -7,7 +7,8 @@
       execute that notebook's code locally with no GPU and a decoy nvidia-smi; it must stop at the live gate before
       any installation, model or GPU activity; writes reports/evidence_memory_v1_session_b_review_check_r<N>.json
   python scripts/evidence_memory_v1_session_b_package.py launch-build
-      build the launch package; refuses unless every live-gate condition holds
+      build the launch package; refuses unless every live-gate condition holds and session A's retained
+      technical evaluation shows A technically complete (session B only; successor/session_order.py)
 """
 import argparse
 import json
@@ -36,6 +37,9 @@ def review_check(revision):
     for name, digest in lock['artifacts'].items():
         if sha256(folder / name) != digest:
             raise SystemExit(f'review artifact drift: {name}')
+    for name, digest in lock.get('review_documents', {}).items():
+        if sha256(ROOT / name) != digest:
+            raise SystemExit(f'review document drift: {name}')
     code = json.loads((folder / 'profile.ipynb').read_text(encoding='utf-8'))['cells'][1]['source']
     with tempfile.TemporaryDirectory(prefix='evidence-memory-session-b-review-check-') as base:
         base = Path(base)

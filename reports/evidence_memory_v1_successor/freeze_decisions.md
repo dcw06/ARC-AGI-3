@@ -1,7 +1,21 @@
-# Track 2 Stage 1: decisions needed to freeze protocol v2
+# Track 2 Stage 1: decisions to freeze protocol v2 (decided October 9, 2026)
 
-Prepared October 9, 2026, for the owner. This page decides nothing; nothing is frozen, drawn, approved or reserved.
-The full options are in `open_protocol_choices.md`. This page orders them for the freeze:
+**Decided.** The owner decided every item below on October 9, 2026, except who holds the two copies of the withheld
+nonce, which stays open (owner gate 1). The decisions are recorded in the frozen protocol,
+`reports/evidence_memory_v1_protocol_v2_frozen.md` (§16), and implemented as listed in `freeze_change_list_r2.md`.
+Nothing is drawn, approved or reserved: a freeze is not an approval.
+
+| Item | Owner decision, October 9, 2026 |
+|---|---|
+| 0. Recall response schema (choice 9) | Drop `uniqueItems` from the decoding schema only; scoring unchanged |
+| 1. Unsupported-claim margins (choice 5) | (b): keep both thresholds; read three ways (met / exceeded / not shown); only met advances |
+| 2. Trajectory exclusions (choice 8) | (a): refuse and redraw; no science-code change |
+| 3. Session B after session A (choice 7) | Enforce it in session B's launch tooling, bound by hash in B's compute authorization |
+| 4. Remaining choices 1, 2, 3, 4, 6, 10, 11, 12 | As recommended in section 4 below |
+| Who holds the two nonce copies | **Not decided; open owner gate 1** |
+
+The analysis below is the decision packet as prepared for the owner, kept for the record. It was prepared October 9,
+2026, and ordered the open choices for the freeze:
 - **First:** one defect found today, which must be fixed.
 - **Then:** the three priorities named in the review of the Track 4 results.
 - **Then:** the rest.
@@ -13,6 +27,10 @@ The withheld seed is drawn only after every decision here is recorded in a froze
 **The defect.** vLLM 0.19's default structured-output path refuses the recall schema. `uniqueItems` is unsupported by
 xgrammar and unimplemented in the llguidance fallback (`structured_outputs_check_r1.json`). Every recall request
 would be refused, so session A would stop at its first recall call and spend its attempt.
+
+**Decided by the owner on October 9, 2026: drop `uniqueItems` from the decoding schema only** (frozen protocol §2).
+The structured-output check, rerun on the amended schema, accepts both Track 2 schemas through xgrammar
+(`structured_outputs_check_r2.json`), and every prompt token count is unchanged (`token_counts_r1_vs_r2.json`).
 
 **Recommendation: drop `uniqueItems` from the decoding schema only.**
 - The scorer already enforces distinct values and "no_evidence" standing alone, so a duplicate stays an invalid
@@ -59,6 +77,10 @@ true difference near zero can then fail the margin from imprecision alone. The c
 - **(c) Widen the upper margin** (for example to +0.08), chosen from this precision argument before the seed is
   drawn.
 
+**Decided by the owner on October 9, 2026: (b)** (frozen protocol §9; `protocol.unsupported_margin`). The verdict
+`memory_preserves_access_unsupported_claims_outside_margin` now means *exceeded*; *not shown* gives the new verdict
+`memory_preserves_access_unsupported_claims_margin_not_shown`.
+
 **Recommendation: (b).** It keeps the decision rule as conservative as now, but reports imprecision honestly instead of
 as a failed margin. (a) is acceptable if the owner prefers no code change.
 
@@ -78,6 +100,9 @@ On development seeds 336 of 336 trajectories pass.
 - **(b) Implement exclusion in `stage1.build`,** as §4 literally says. Report the counts; the denominators shrink.
   This is a reviewed change to science code, with tests.
 
+**Decided by the owner on October 9, 2026: (a), refuse and redraw** (frozen protocol §4 and §5; `owner_gates.md`
+gates 1 and 2). No science code changed.
+
 **Recommendation: (a).** With 0 exclusions in development, a redraw should be rare. A recorded redraw is more
 transparent than a silently smaller withheld set. Choose (b) if keeping every first draw matters more than avoiding a
 code change.
@@ -92,6 +117,13 @@ code change.
 **What Track 4 showed.** A condition that lives only in authorization text is weak. Track 4's seed condition had to
 be enforced by a launch-tooling gate that refuses until the committed record shows it satisfied.
 
+**Decided by the owner on October 9, 2026: enforce it** (frozen protocol §12). Session B's compute authorization
+names `session_a_technical_evaluation_sha256`. Session B's launch tooling (the claim and the launch package:
+`launch-build`, `write_package`, `submit`) refuses unless
+`reports/evidence_memory_v1_session_a_technical_evaluation.json` exists in B's checkout, matches that hash, and shows
+session A live, technically complete and valid in every pass (`research/evidence_memory_v1/successor/session_order.py`).
+The reviewed per-scope live gate and session A's tooling are unchanged.
+
 **Recommendation: enforce it.**
 - B's compute authorization names the SHA-256 of A's retained technical evaluation.
 - B's launch tooling refuses unless that evaluation exists, matches the hash, and shows A technically complete and
@@ -100,6 +132,9 @@ be enforced by a launch-tooling gate that refuses until the committed record sho
 - If A is not technically complete, the experiment stops: no pooled analysis is possible, and B is not launched.
 
 ## 4. Remaining choices
+
+**Decided by the owner on October 9, 2026: every recommendation in this table is accepted** (frozen protocol §11,
+§12, §15 and §16).
 
 | Choice | Recommendation |
 |---|---|
@@ -112,13 +147,14 @@ be enforced by a launch-tooling gate that refuses until the committed record sho
 | 11. Tokenizer admission | Accept the offline audit |
 | 12. Teammate stress set | Keep it out of Stage 1 |
 
-**Also decide before Gate 1.** Who holds the two copies of the withheld nonce? Track 4 used an owner-approved
-single-holder amendment, with two copies on one computer and the limitation recorded. Deciding the rule in advance
-avoids an amendment at launch time.
+**Still open (not decided on October 9, 2026).** Who holds the two copies of the withheld nonce? Track 4 used an
+owner-approved single-holder amendment, with two copies on one computer and the limitation recorded. Deciding the
+rule in advance avoids an amendment at launch time. It is owner gate 1, before the draw.
 
-## 5. After the decisions
+## 5. After the decisions (done for the freeze on October 9, 2026, except the owner gates)
 
 1. Make the agreed changes: the recall schema; and, if chosen, `protocol.conclusions`, §4 text and B's launch gate.
 2. Write the frozen protocol revision with the measured §11. Rebuild both packages and review snapshots. Run the
    structured-output check and the fresh-clone CPU checks.
-3. Owner gates 1 to 7 follow unchanged (`owner_gates.md`), starting with the seed draw.
+3. Owner gates 1 to 7 follow (`owner_gates.md`, updated for refuse-and-redraw and session B's launch condition),
+   starting with the holder rule and the seed draw.
