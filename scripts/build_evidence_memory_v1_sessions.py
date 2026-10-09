@@ -192,6 +192,25 @@ class Session:
         return (self.header(origin) + text).encode()
 
 
+BINDING_REVIEW_REQUIRED = """# Review documents every review lock must bind; every repository-side gate verifies them (never in the payload).
+REVIEW_REQUIRED = ('reports/evidence_memory_v1_protocol_v2_frozen.md', 'research/evidence_memory_v1/successor/evaluate.py',
+                   'research/evidence_memory_v1/successor/final.py', 'research/evidence_memory_v1/run/evaluate.py',
+                   'research/evidence_memory_v1/run/final.py')
+"""
+BINDING_CHECK_SOURCES_HEAD = '''def check_sources(root, lock_name, review_documents=True):
+    """The reviewed runtime sources and, unless inside the runtime payload, the review documents, by hash."""
+'''
+BINDING_REVIEW_CHECK = """    if review_documents:
+        listed = lock.get('review_documents') or {}
+        missing = sorted(set(REVIEW_REQUIRED) - set(listed))
+        if missing:
+            raise ValueError('review documents incomplete: ' + ', '.join(missing))
+        for name, digest in sorted(listed.items()):
+            if sha256(resolve(root, name)) != digest:
+                raise ValueError('review document drift: ' + name)
+"""
+
+
 def package_files(s, scheduled, maximum):
     """The derived sources of one session package: (target, origin, substitutions)."""
     refused = f"evidence memory v1 session {s.label} live path refused: "
@@ -219,6 +238,25 @@ def package_files(s, scheduled, maximum):
          "        raise LiveRefused(reasons)\n"
          "    execution = None\n", 1),
         (f'reports/{s.name}_package.md', 'reports/evidence_memory_v1_successor/runtime_diff.md', 1),
+        # Review documents (r3): verified wherever they exist by design, i.e. the repository checkout (review check,
+        # launch tooling, launch-build) and the live independent evaluation. The runtime payload never carries them,
+        # so only the in-payload gate (consume, run.live_main) skips them.
+        (f"BYTES = 'reports/{s.name}_byte_verification.json'\n",
+         f"BYTES = 'reports/{s.name}_byte_verification.json'\n" + BINDING_REVIEW_REQUIRED, 1),
+        ("def check_sources(root, lock_name):\n", BINDING_CHECK_SOURCES_HEAD, 1),
+        ("            raise ValueError('source drift: ' + name)\n    return lock\n",
+         "            raise ValueError('source drift: ' + name)\n" + BINDING_REVIEW_CHECK + "    return lock\n", 1),
+        ("def require_live(root=None, need_claim=True):\n",
+         "def require_live(root=None, need_claim=True, review_documents=True):\n", 1),
+        ("    the launch tooling to create the claim itself.\"\"\"\n",
+         "    the launch tooling to create the claim itself. `review_documents=False` is used only inside the runtime\n"
+         "    payload, which never carries the review documents; they were verified when the launch package was built.\"\"\"\n",
+         1),
+        ("        check_sources(root, lock_name)\n        check_approvals(root, lock_name, protocol)\n",
+         "        check_sources(root, lock_name, review_documents)\n        check_approvals(root, lock_name, protocol)\n", 1),
+        ("    protocol, execution = require_live(root)\n    marker = ",
+         "    protocol, execution = require_live(root, review_documents=False)  # inside the runtime payload\n"
+         "    marker = ", 1),
     )
     run = (
         ('-> startup probes -> inference -> cancellation probes -> termination and cleanup -> retained evidence.',
@@ -237,6 +275,8 @@ def package_files(s, scheduled, maximum):
          "        result['study'] = stage('study', lambda: run_study(experiment_root, PACKAGE, client, evidence, clock))\n"
          "        telemetry('after_study')\n", 1),
         ("prefix='control-interface-probe-'", f"prefix='evidence-memory-session-{s.lower}-'", 1),
+        ("    protocol, execution = require_live(root)  # again: nothing below runs unless every condition holds\n",
+         "    protocol, execution = require_live(root, review_documents=False)  # again, inside the runtime payload\n", 1),
     )
     controls_old = vendored(V2 + '/runtime_controls.py').decode('utf-8')
     controls_old = controls_old[controls_old.index('from . import probe as P'):controls_old.index('def verify_cache_disabled')]

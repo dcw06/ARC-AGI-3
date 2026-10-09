@@ -148,6 +148,19 @@ def server_errors(output, mode, probe_set_sha256, timing):
         return ['study server configuration: ' + type(exc).__name__ + ': ' + str(exc)[:120]], total
 
 
+def review_errors(root, label):
+    """Live: the evaluating checkout must hold exactly the session's reviewed sources and review documents (the frozen
+    protocol, this evaluator and the pooled analysis) of its latest review lock. Returns (errors, verified)."""
+    import importlib
+    B = importlib.import_module(PL.SESSIONS[label]['module'] + '.binding')
+    try:
+        name = B.review_lock(root)
+        B.check_sources(root, name)
+        return [], {'review_lock': name, 'review_lock_sha256': B.sha256(Path(root) / name)}
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        return ['review sources: ' + type(exc).__name__ + ': ' + str(exc)[:160]], None
+
+
 def evaluate_output(output, label, *, mode='live', rehearsal_limits=None, root=ROOT, frozen=None):
     """One session's technical evaluation. `rehearsal_limits` (rehearsal only) are the harness-declared limits."""
     from research.evidence_memory_v1.run.evidence import load_verified
@@ -165,6 +178,10 @@ def evaluate_output(output, label, *, mode='live', rehearsal_limits=None, root=R
     frozen, digest = frozen or PL.load_frozen(root, package)
     timing = {**PL.timing(mode), 'cutoff': limits['admission_cutoff_seconds']}
     lifecycle = lifecycle_errors(output, mode, label, protocol, limits)
+    review = None
+    if mode == 'live':  # the reviewed sources and review documents of the evaluating checkout
+        found, review = review_errors(root, label)
+        lifecycle += found
     found, canary_total = server_errors(output, mode, digest, timing)
     lifecycle += found
     evidence, technical, run_summary, calls_errors, recovered = {'verified': False}, None, None, [], None
@@ -196,7 +213,7 @@ def evaluate_output(output, label, *, mode='live', rehearsal_limits=None, root=R
             'case_source': frozen['case_source'], 'limits': limits, 'lifecycle_passed': not lifecycle,
             'lifecycle_errors': lifecycle, 'run_evidence': evidence, 'call_errors': calls_errors[:20],
             'run': run_summary, 'gate_status': gate_status, 'gate': {'questionnaire': status} if technical else None,
-            'analysis': technical,
+            'analysis': technical, 'review_lock_verified': review,
             'technically_complete': (not lifecycle and evidence['verified'] and not calls_errors and not recovered
                                      and run_summary['status'] == 'complete' and gate_status == 'complete'),
             'exact_provider_billed_seconds': None, 'phase4_complete': False}

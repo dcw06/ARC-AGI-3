@@ -26,11 +26,14 @@ NOTEBOOKS = {label: importlib.import_module(spec['module'] + '.notebook') for la
 # sets: tests that compare against stand-in numbers, or that would read withheld truths, are skipped there.
 STAND_INS = all(PL.load_frozen(ROOT, spec['package'])[0]['case_source'] == 'development_stand_in'
                 for spec in PL.SESSIONS.values())
-# Review snapshots: r2 binds the frozen protocol (reports/evidence_memory_v1_protocol_v2_frozen.md); r1 (the draft)
-# is kept byte-identical as history, at the lock hashes recorded when it was frozen.
-LATEST_REVIEW_REVISION = 2
-RETAINED_REVIEW_LOCKS = {'A': {1: '5539e1266c5fd6ccad5881878a9b5699b822dd7d97b82e3ff9f02ea2e7246b41'},
-                         'B': {1: 'fb94736b47c2aee8d3b98f07fc912a8f8f3f2b12c4e24bd158f1504c671fe39f'}}
+# Review snapshots: r3 adds the review-document check to the repository-side gates and the live evaluation; r2
+# binds the frozen protocol (reports/evidence_memory_v1_protocol_v2_frozen.md); r1 (the draft). r1 and r2 are
+# kept byte-identical as history, at the lock hashes recorded when they were built.
+LATEST_REVIEW_REVISION = 3
+RETAINED_REVIEW_LOCKS = {'A': {1: '5539e1266c5fd6ccad5881878a9b5699b822dd7d97b82e3ff9f02ea2e7246b41',
+                               2: '750ea373200bd89a9ee15a325cf11265bceb0b90cd5e5ba94a8d56c2ba1f4dd9'},
+                         'B': {1: 'fb94736b47c2aee8d3b98f07fc912a8f8f3f2b12c4e24bd158f1504c671fe39f',
+                               2: '372963785c0526cb523eb374a7ae52b1d071fd83e955c556b7b594a8d35212b8'}}
 
 
 def builder():
@@ -455,6 +458,43 @@ class LiveGate(unittest.TestCase):
                     finally:
                         for p in reversed(patches):
                             p.stop()
+
+    def test_review_document_drift_refused_before_launch_and_before_evaluation(self):
+        from research.evidence_memory_v1.successor import evaluate as EV
+        for label in PL.SESSIONS:
+            B, N = SESSIONS[label], NOTEBOOKS[label]
+            with tempfile.TemporaryDirectory() as folder:
+                root = Path(folder)
+                put, patches = gated_fixture(root, label)
+                lock = B.review_lock(root)
+                bound = B.read_json(root, lock)['bindings']
+                self.assertLessEqual(set(B.REVIEW_REQUIRED), set(B.read_json(root, lock)['review_documents']))
+                self.assertEqual(EV.review_errors(root, label)[0], [])
+                self.assertTrue(all(t not in bound for t in B.REVIEW_REQUIRED))  # review documents only
+                for p in patches:
+                    p.start()
+                try:
+                    B.require_live(root)
+                    for target in B.REVIEW_REQUIRED:
+                        original = (root / target).read_bytes()
+                        (root / target).write_bytes(original + b'\n')
+                        with self.assertRaises(B.LiveRefused) as caught:
+                            B.require_live(root)
+                        self.assertIn('review document drift: ' + target, str(caught.exception))
+                        with self.assertRaisesRegex(Exception, 'review document drift'):
+                            N.launch_artifacts(root)
+                        self.assertTrue(any('review document drift' in e for e in EV.review_errors(root, label)[0]))
+                        B.require_live(root, review_documents=False)  # the runtime payload never carries them
+                        (root / target).write_bytes(original)
+                    B.require_live(root)
+                    value = B.read_json(root, lock)
+                    del value['review_documents']['research/evidence_memory_v1/successor/evaluate.py']
+                    (root / lock).write_bytes(json.dumps(value).encode())
+                    with self.assertRaisesRegex(B.LiveRefused, 'review documents incomplete'):
+                        B.require_live(root)
+                finally:
+                    for p in reversed(patches):
+                        p.stop()
 
     def test_one_session_authority_cannot_run_the_other(self):
         with tempfile.TemporaryDirectory() as folder:

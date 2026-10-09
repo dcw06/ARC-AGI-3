@@ -295,7 +295,7 @@ def live_main(root, output, started, working, *, on_source_cleanup=None):
     """Live entry, called from the notebook only after `binding.consume`. A cutoff alarm hands a hung run to cleanup;
     cleanup itself runs with the alarm disarmed and blocked."""
     from research.evidence_memory_v1_session_a.binding import require_live
-    protocol, execution = require_live(root)  # again: nothing below runs unless every condition holds
+    protocol, execution = require_live(root, review_documents=False)  # again, inside the runtime payload
     limits = protocol['limits']
     alarm = CutoffAlarm()
     alarm.arm(limits['admission_cutoff_seconds'] - (time.monotonic() - started))
