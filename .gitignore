@@ -35,3 +35,17 @@ config/phase4_compute_ledger.lck
 .DS_Store
 .idea/
 .vscode/
+
+# Feedback-action v1 (successor runtime v1): operational evidence, approvals and launch records may contain private
+# facts; they are created only in a private checkout and never committed here.
+private/feedback_action_v1/
+reports/feedback_action_v1_account_attachment.json
+reports/feedback_action_v1_use_permission.json
+reports/feedback_action_v1_byte_verification.json
+reports/feedback_action_v1_source_approval.json
+reports/feedback_action_v1_compute_authorization.json
+reports/feedback_action_v1_launch.json
+config/feedback_action_v1_launch_claim.json
+research/feedback_action_v1/live/execution_lock.json
+research/feedback_action_v1/live/reservation.json
+notebooks/feedback-action-v1-launch/

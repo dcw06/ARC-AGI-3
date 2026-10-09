@@ -1,0 +1,109 @@
+{
+  "schema": "feedback_action_v1_runtime_v1",
+  "scope": "feedback-action-v1",
+  "status": "successor_runtime_binding_draft_no_authority",
+  "purpose": "feedback-action v1 sessions bound to the runtime verified by control-interface action selection v1/v2 (one RTX PRO 6000, CPython 3.12 image); the experiment protocol (live/protocol.json) is unchanged",
+  "placeholder_prefix": "REPLACE_WITH_",
+  "kernel_id": "REPLACE_WITH_KAGGLE_OWNER/arc3-feedback-action-v1",
+  "verified_runtime_source": {
+    "branch": "wheelhouse-replacement-audit",
+    "commit": "5a21dd3",
+    "protocol": "research/control_interface_action_selection_v2/protocol.json",
+    "protocol_sha256": "b1ef5b2c759e0451197b08b49417b7f5ce4e864c8d52d297e5876954a3f68de9",
+    "gpu_run_review_lock_sha256": "beeb6719ed817e3cb42a9842b03a7c47a2ee75aa87831908520318a54c041dc7"
+  },
+  "kaggle_image": {
+    "docker_image": "gcr.io/kaggle-private-byod/python@sha256:37c64f7dd9c54116ecd1bcc88817c5469b88387388fade02bfa8bf3fc647d461",
+    "docker_image_pinning_type": "original"
+  },
+  "competition": {
+    "ref": "arc-prize-2026-arc-agi-3",
+    "purpose": "the competition-provided arc_agi_3 wheels (separate game interpreter) and environment files for the three development games; attachment does not submit to the leaderboard",
+    "game_wheels": "arc_agi_3_wheels",
+    "environment_files": "environment_files"
+  },
+  "dataset": {
+    "ref": "driessmit1/arc3-vllm-h100-wheelhouse-v3",
+    "version": 1,
+    "publisher_metadata_sha256": {
+      "README.md": "d2e8da6d36c243198882e6cb68d60d7121d8aa9642e55d7fcc384bc4d087b631",
+      "SHA256SUMS": "805388efb6bf7f0a248f2bb70798188737077545159fe0e475aee4d44843c901",
+      "requirements.lock": "bb3e30ac5e327456e3915b807da960203c20bc1aa352204e39f66d5618a6bcb0"
+    }
+  },
+  "bundle": {
+    "approved_manifest_sha256": "3691cb8854df4d8ff10e42ca9957fddb9a8ae0362064e7b31b3205891af0d546",
+    "requirements_lock_sha256": "ba80d35062245421daf1cae65474281952cc0c44fb46e11cf7f68d0ece496406",
+    "wheel_count": 174
+  },
+  "model": {
+    "kaggle_source": "REPLACE_WITH_MODEL_OWNER/REPLACE_WITH_MODEL_DATASET/1",
+    "model_id": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+    "mounted_path": "REPLACE_WITH_VERIFIED_MODEL_MOUNT",
+    "reasoning_setting": "instruct_non_thinking",
+    "required_files": ["config.json", "model.safetensors.index.json", "tokenizer.json", "tokenizer_config.json",
+                       "chat_template.json"],
+    "revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+    "shard_count": 4,
+    "shard_glob": "model-*.safetensors",
+    "source_kind": "dataset",
+    "tree_sha256": "b480ad92cda91474084c795d2ff64b07a6c477909b22d2784d24abf8fb4ef7df"
+  },
+  "runtime": {
+    "glibc_minimum": "2.34",
+    "gpu_count": 1,
+    "gpu_name_contains": "RTX PRO 6000",
+    "imports": ["torch", "vllm", "transformers", "numpy"],
+    "machine": "x86_64",
+    "packages": {"numpy": "2.2.6", "torch": "2.10.0", "transformers": "4.57.6", "vllm": "0.19.0"},
+    "python": "3.12",
+    "torch_cuda_build": "12.8"
+  },
+  "model_host_packages": {"jinja2": "3.1.6", "tokenizers": "0.22.2", "torch": "2.10.0", "transformers": "4.57.6",
+                          "vllm": "0.19.0"},
+  "game": {
+    "manifest": "reports/phase4_v2_offline_package.json",
+    "manifest_sha256": "d2de00800e3067dc42d4346be83a7468c2c3756b710c83453d6ce6e95eb8875c",
+    "requirements": "research/feedback_action_v1/live/game_requirements.lock",
+    "requirements_sha256": "9cbd701f16f3e3441692d9328f57b1f3c15c168a7e227431223cf9a3ddb1eb7d",
+    "wheel_count": 31,
+    "runtime": {
+      "glibc_minimum": "2.34",
+      "imports": ["arc_agi", "arcengine", "numpy", "requests", "pydantic", "dotenv", "matplotlib"],
+      "machine": "x86_64",
+      "packages": {"arc-agi": "0.9.8", "arcengine": "0.9.3", "numpy": "2.4.4", "pydantic": "2.13.2",
+                   "python-dotenv": "1.2.2", "requests": "2.33.1"},
+      "python": "3.12"
+    }
+  },
+  "server": {
+    "argv": ["{python}", "-m", "vllm.entrypoints.openai.api_server", "--model", "{model_path}", "--served-model-name",
+             "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8", "--host", "127.0.0.1", "--port", "{port}",
+             "--tensor-parallel-size", "1", "--generation-config", "vllm", "--no-enable-prefix-caching",
+             "--gpu-memory-utilization", "0.75", "--max-model-len", "65536"],
+    "env": {"HF_HUB_OFFLINE": "1", "TRANSFORMERS_NO_TF": "1", "TRANSFORMERS_OFFLINE": "1", "USE_TF": "0",
+            "VLLM_NO_USAGE_STATS": "1"},
+    "host": "127.0.0.1",
+    "kill_grace_seconds": 10,
+    "log_retained_bytes": 2097152,
+    "port": 8000,
+    "readiness": "TCP connection only; the first HTTP request is the retained startup canary",
+    "request_timeout_seconds": 120,
+    "served_model_name": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+    "terminate_grace_seconds": 30
+  },
+  "sampling": {"seed": 0, "temperature": 0},
+  "lifecycle": {
+    "authorized_seconds": 3600,
+    "automatic_retries": 0,
+    "cleanup_reserve_seconds": 300,
+    "installation_seconds": 900,
+    "internal_seconds": 3300,
+    "maximum_attempts": 1,
+    "maximum_canaries": 1,
+    "maximum_policy_calls": 192,
+    "pair_admission_seconds": 600,
+    "sessions": [1, 2],
+    "startup_ceiling_seconds": 900
+  }
+}
