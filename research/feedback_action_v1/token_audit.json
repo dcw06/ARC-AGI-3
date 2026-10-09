@@ -1,0 +1,660 @@
+{
+ "all_forms_within_limits": true,
+ "completion_caps": {
+  "baseline": 128,
+  "candidate": 640
+ },
+ "completions": {
+  "baseline": {
+   "compact": {
+    "content_tokens": 21,
+    "fits_128": true,
+    "with_end_of_turn": 22
+   },
+   "indent2": {
+    "content_tokens": 41,
+    "fits_128": true,
+    "with_end_of_turn": 42
+   },
+   "indent4": {
+    "content_tokens": 41,
+    "fits_128": true,
+    "with_end_of_turn": 42
+   },
+   "json_default": {
+    "content_tokens": 28,
+    "fits_128": true,
+    "with_end_of_turn": 29
+   }
+  },
+  "candidate_by_free_text_option": {
+   "ascii_only": {
+    "compact": {
+     "byte_bound_fits_640": false,
+     "bytes": 1096,
+     "choices": {
+      "claim": "no_observed_change",
+      "level_completed": true,
+      "status": "retained",
+      "visual_effect": "no_observed_change"
+     },
+     "content_tokens": 665,
+     "fits_640": false,
+     "with_end_of_turn": 666
+    },
+    "indent2": {
+     "byte_bound_fits_640": false,
+     "bytes": 1534,
+     "choices": {
+      "claim": "no_observed_change",
+      "level_completed": true,
+      "status": "retained",
+      "visual_effect": "no_observed_change"
+     },
+     "content_tokens": 809,
+     "fits_640": false,
+     "with_end_of_turn": 810
+    },
+    "indent4": {
+     "byte_bound_fits_640": false,
+     "bytes": 1882,
+     "choices": {
+      "claim": "no_observed_change",
+      "level_completed": true,
+      "status": "retained",
+      "visual_effect": "no_observed_change"
+     },
+     "content_tokens": 809,
+     "fits_640": false,
+     "with_end_of_turn": 810
+    },
+    "json_default": {
+     "byte_bound_fits_640": false,
+     "bytes": 1154,
+     "choices": {
+      "claim": "no_observed_change",
+      "level_completed": true,
+      "status": "retained",
+      "visual_effect": "no_observed_change"
+     },
+     "content_tokens": 721,
+     "fits_640": false,
+     "with_end_of_turn": 722
+    }
+   },
+   "current": {
+    "compact": {
+     "byte_bound_fits_640": false,
+     "bytes": 2536,
+     "choices": {
+      "claim": "no_observed_change",
+      "level_completed": true,
+      "status": "retained",
+      "visual_effect": "no_observed_change"
+     },
+     "content_tokens": 2105,
+     "fits_640": false,
+     "with_end_of_turn": 2106
+    },
+    "indent2": {
+     "byte_bound_fits_640": false,
+     "bytes": 2974,
+     "choices": {
+      "claim": "no_observed_change",
+      "level_completed": true,
+      "status": "retained",
+      "visual_effect": "no_observed_change"
+     },
+     "content_tokens": 2249,
+     "fits_640": false,
+     "with_end_of_turn": 2250
+    },
+    "indent4": {
+     "byte_bound_fits_640": false,
+     "bytes": 3322,
+     "choices": {
+      "claim": "no_observed_change",
+      "level_completed": true,
+      "status": "retained",
+      "visual_effect": "no_observed_change"
+     },
+     "content_tokens": 2249,
+     "fits_640": false,
+     "with_end_of_turn": 2250
+    },
+    "json_default": {
+     "byte_bound_fits_640": false,
+     "bytes": 2594,
+     "choices": {
+      "claim": "no_observed_change",
+      "level_completed": true,
+      "status": "retained",
+      "visual_effect": "no_observed_change"
+     },
+     "content_tokens": 2161,
+     "fits_640": false,
+     "with_end_of_turn": 2162
+    }
+   }
+  },
+  "candidate_natural_ascii_reference": {
+   "compact": {
+    "byte_bound_fits_640": false,
+    "bytes": 1096,
+    "choices": {
+     "claim": "no_observed_change",
+     "level_completed": true,
+     "status": "retained",
+     "visual_effect": "no_observed_change"
+    },
+    "content_tokens": 425,
+    "fits_640": true,
+    "with_end_of_turn": 426
+   },
+   "indent2": {
+    "byte_bound_fits_640": false,
+    "bytes": 1534,
+    "choices": {
+     "claim": "no_observed_change",
+     "level_completed": true,
+     "status": "retained",
+     "visual_effect": "no_observed_change"
+    },
+    "content_tokens": 569,
+    "fits_640": true,
+    "with_end_of_turn": 570
+   },
+   "indent4": {
+    "byte_bound_fits_640": false,
+    "bytes": 1882,
+    "choices": {
+     "claim": "no_observed_change",
+     "level_completed": true,
+     "status": "retained",
+     "visual_effect": "no_observed_change"
+    },
+    "content_tokens": 569,
+    "fits_640": true,
+    "with_end_of_turn": 570
+   },
+   "json_default": {
+    "byte_bound_fits_640": false,
+    "bytes": 1154,
+    "choices": {
+     "claim": "no_observed_change",
+     "level_completed": true,
+     "status": "retained",
+     "visual_effect": "no_observed_change"
+    },
+    "content_tokens": 481,
+    "fits_640": true,
+    "with_end_of_turn": 482
+   }
+  },
+  "candidate_structure_only": {
+   "compact": {
+    "bytes": 616,
+    "content_tokens": 184,
+    "with_end_of_turn": 185
+   },
+   "indent2": {
+    "bytes": 1054,
+    "content_tokens": 327,
+    "with_end_of_turn": 328
+   },
+   "indent4": {
+    "bytes": 1402,
+    "content_tokens": 327,
+    "with_end_of_turn": 328
+   },
+   "json_default": {
+    "bytes": 674,
+    "content_tokens": 240,
+    "with_end_of_turn": 241
+   }
+  }
+ },
+ "counts_are": "exact for the pinned tokenizer; the completion maxima are over the enumerated enum choices and the searched worst text (exact per-character bounds stated in worst_text_search)",
+ "findings": [
+  "Prompt: every form, including the carried statement at its caps under either option, is far below the 60,000-token ceiling and the 65,536 context.",
+  "Under vLLM 0.19 defaults the decoder admits unbounded whitespace between JSON tokens and unbounded digits in a citation ref (pattern ^T[0-9]+$), in both arms and both options: no finite cap covers every response the grammar admits. A truncated response is an invalid output (protocol v2 section 5).",
+  "xgrammar 0.1.34 drops maxLength when a pattern is present: the ascii_only option must carry its bound inside the pattern ({0,240}), as owner_gates.ASCII_PATTERN does.",
+  "The counts above are canonical tokenizations. Guided decoding may also emit non-canonical token sequences; their only bound is the response byte length (bytes field)."
+ ],
+ "forms": [
+  {
+   "arm": null,
+   "context_with_cap": 167,
+   "game_id": null,
+   "label": "canary",
+   "max_tokens": 128,
+   "prompt_tokens": 39,
+   "request_bytes": 881,
+   "request_sha256": "a167377b1892ab6448d06d76896cd7b97877b45503b80bffb832258ea4068ed0",
+   "system_chars": 63,
+   "user_chars": 63,
+   "within_limits": true
+  },
+  {
+   "arm": "baseline",
+   "context_with_cap": 8877,
+   "game_id": "ls20-9607627b",
+   "label": "first",
+   "max_tokens": 128,
+   "prompt_tokens": 8749,
+   "request_bytes": 11158,
+   "request_sha256": "652a95cb2d708a8069f4b83e167bda65e25ec77f3e14cd34e112a81b0fd9249c",
+   "system_chars": 744,
+   "user_chars": 9695,
+   "within_limits": true
+  },
+  {
+   "arm": "baseline",
+   "context_with_cap": 26242,
+   "game_id": "ls20-9607627b",
+   "label": "steady_largest",
+   "max_tokens": 128,
+   "prompt_tokens": 26114,
+   "request_bytes": 30964,
+   "request_sha256": "27f142f832bde6849143f1ba2f1d496ae7dba4bd59499e26c5177821aff195a6",
+   "system_chars": 744,
+   "user_chars": 29163,
+   "within_limits": true
+  },
+  {
+   "arm": "candidate",
+   "context_with_cap": 9679,
+   "game_id": "ls20-9607627b",
+   "label": "first",
+   "max_tokens": 640,
+   "prompt_tokens": 9039,
+   "request_bytes": 14245,
+   "request_sha256": "bfdb34dfe58041d3e0f4aade6870e5d74c9a54ed2c17d9fb10a95c2566035aaf",
+   "system_chars": 2050,
+   "user_chars": 9816,
+   "within_limits": true
+  },
+  {
+   "arm": "candidate",
+   "context_with_cap": 27115,
+   "game_id": "ls20-9607627b",
+   "label": "steady_largest",
+   "max_tokens": 640,
+   "prompt_tokens": 26475,
+   "request_bytes": 34400,
+   "request_sha256": "57e41dc08a6113d2c68b7b65dc0b36cde8c575ef7b8639f820feb63c977eab2b",
+   "system_chars": 2050,
+   "user_chars": 29603,
+   "within_limits": true
+  },
+  {
+   "arm": "candidate",
+   "context_with_cap": 30951,
+   "game_id": "ls20-9607627b",
+   "label": "steady_worst_carried_current",
+   "max_tokens": 640,
+   "prompt_tokens": 30311,
+   "request_bytes": 41055,
+   "request_sha256": "8cdaaec5079ebd30b2c30a458fbb4c5265d4f0b03152acfe2e1920b2558cd368",
+   "system_chars": 2050,
+   "user_chars": 35298,
+   "within_limits": true
+  },
+  {
+   "arm": "candidate",
+   "context_with_cap": 27591,
+   "game_id": "ls20-9607627b",
+   "label": "steady_worst_carried_ascii_only",
+   "max_tokens": 640,
+   "prompt_tokens": 26951,
+   "request_bytes": 34815,
+   "request_sha256": "6353ec354cc61b7cf36ed74c50b5a854e91e033eebd9c1172c7b56508c98a4ce",
+   "system_chars": 2050,
+   "user_chars": 30018,
+   "within_limits": true
+  },
+  {
+   "arm": "candidate",
+   "context_with_cap": 27351,
+   "game_id": "ls20-9607627b",
+   "label": "steady_worst_carried_ascii_letters",
+   "max_tokens": 640,
+   "prompt_tokens": 26711,
+   "request_bytes": 34815,
+   "request_sha256": "27db7873aace4ab3cfbe3c5d51709bde3dbefd0b06a7dc7935c7910149fc01d0",
+   "system_chars": 2050,
+   "user_chars": 30018,
+   "within_limits": true
+  },
+  {
+   "arm": "candidate",
+   "context_with_cap": 30153,
+   "game_id": "ls20-9607627b",
+   "label": "steady_worst_carried_mixed_non_ascii",
+   "max_tokens": 640,
+   "prompt_tokens": 29513,
+   "request_bytes": 38815,
+   "request_sha256": "0f3dee92e2122a65d620129b6b7420988f1644110c0c5c1230e899889e1b0eb4",
+   "system_chars": 2050,
+   "user_chars": 33378,
+   "within_limits": true
+  },
+  {
+   "arm": "baseline",
+   "context_with_cap": 8854,
+   "game_id": "s5i5-18d95033",
+   "label": "first",
+   "max_tokens": 128,
+   "prompt_tokens": 8726,
+   "request_bytes": 11243,
+   "request_sha256": "7176e1cfc4332272b77e7c8157b7ed9b48e340a93c1be25c8c93a8b8965d6679",
+   "system_chars": 744,
+   "user_chars": 9670,
+   "within_limits": true
+  },
+  {
+   "arm": "baseline",
+   "context_with_cap": 26282,
+   "game_id": "s5i5-18d95033",
+   "label": "steady_largest",
+   "max_tokens": 128,
+   "prompt_tokens": 26154,
+   "request_bytes": 31175,
+   "request_sha256": "7af408319adac78d96aef9196cf1130c6a2174510cf10853d98416c996fd047b",
+   "system_chars": 744,
+   "user_chars": 29232,
+   "within_limits": true
+  },
+  {
+   "arm": "candidate",
+   "context_with_cap": 9656,
+   "game_id": "s5i5-18d95033",
+   "label": "first",
+   "max_tokens": 640,
+   "prompt_tokens": 9016,
+   "request_bytes": 14330,
+   "request_sha256": "543240ca3c9fafe1402a612ead3d638097645ee7b79db473e54af0e38b9332e3",
+   "system_chars": 2050,
+   "user_chars": 9791,
+   "within_limits": true
+  },
+  {
+   "arm": "candidate",
+   "context_with_cap": 27156,
+   "game_id": "s5i5-18d95033",
+   "label": "steady_largest",
+   "max_tokens": 640,
+   "prompt_tokens": 26516,
+   "request_bytes": 34612,
+   "request_sha256": "47422b19d2d1a540fbf88a639932236b227674fe712a1e96b4eb138d21ae0029",
+   "system_chars": 2050,
+   "user_chars": 29673,
+   "within_limits": true
+  },
+  {
+   "arm": "candidate",
+   "context_with_cap": 30991,
+   "game_id": "s5i5-18d95033",
+   "label": "steady_worst_carried_current",
+   "max_tokens": 640,
+   "prompt_tokens": 30351,
+   "request_bytes": 41266,
+   "request_sha256": "ee365c42e5be9c071812ae2d926ca581f6063795c016dba54ef4585c6f3051fc",
+   "system_chars": 2050,
+   "user_chars": 35367,
+   "within_limits": true
+  },
+  {
+   "arm": "candidate",
+   "context_with_cap": 27631,
+   "game_id": "s5i5-18d95033",
+   "label": "steady_worst_carried_ascii_only",
+   "max_tokens": 640,
+   "prompt_tokens": 26991,
+   "request_bytes": 35026,
+   "request_sha256": "452d0c8c3ae4eb921e9c40617ad20dc8b52bb0c87c6103061bd9c9bffbac40e1",
+   "system_chars": 2050,
+   "user_chars": 30087,
+   "within_limits": true
+  },
+  {
+   "arm": "candidate",
+   "context_with_cap": 27391,
+   "game_id": "s5i5-18d95033",
+   "label": "steady_worst_carried_ascii_letters",
+   "max_tokens": 640,
+   "prompt_tokens": 26751,
+   "request_bytes": 35026,
+   "request_sha256": "6d71ee273bf8fb35612598fc31e6ed23a44a92ad9fb97e6ff34d79bfc0db4a81",
+   "system_chars": 2050,
+   "user_chars": 30087,
+   "within_limits": true
+  },
+  {
+   "arm": "candidate",
+   "context_with_cap": 30193,
+   "game_id": "s5i5-18d95033",
+   "label": "steady_worst_carried_mixed_non_ascii",
+   "max_tokens": 640,
+   "prompt_tokens": 29553,
+   "request_bytes": 39026,
+   "request_sha256": "4cf9d7504a197c63a4ff327beb01948a3f039a2b4cbca69eaa63b53d5f7230da",
+   "system_chars": 2050,
+   "user_chars": 33447,
+   "within_limits": true
+  },
+  {
+   "arm": "baseline",
+   "context_with_cap": 8820,
+   "game_id": "sk48-d8078629",
+   "label": "first",
+   "max_tokens": 128,
+   "prompt_tokens": 8692,
+   "request_bytes": 11438,
+   "request_sha256": "f1f7eec2d15d8cf65eab71bcef31bc28f59c7a26f4fd5fe6debe74bc69018d58",
+   "system_chars": 744,
+   "user_chars": 9637,
+   "within_limits": true
+  },
+  {
+   "arm": "baseline",
+   "context_with_cap": 26122,
+   "game_id": "sk48-d8078629",
+   "label": "steady_largest",
+   "max_tokens": 128,
+   "prompt_tokens": 25994,
+   "request_bytes": 31188,
+   "request_sha256": "5911fb7148a7b8585d1a624475c775985dd28678eb235905df41023cbc4743fc",
+   "system_chars": 744,
+   "user_chars": 29045,
+   "within_limits": true
+  },
+  {
+   "arm": "candidate",
+   "context_with_cap": 9622,
+   "game_id": "sk48-d8078629",
+   "label": "first",
+   "max_tokens": 640,
+   "prompt_tokens": 8982,
+   "request_bytes": 14525,
+   "request_sha256": "9a71f2c9a10d1603d473e6327c43e9424c651ef8f09e4404ee8ef4da172bd7ce",
+   "system_chars": 2050,
+   "user_chars": 9758,
+   "within_limits": true
+  },
+  {
+   "arm": "candidate",
+   "context_with_cap": 26996,
+   "game_id": "sk48-d8078629",
+   "label": "steady_largest",
+   "max_tokens": 640,
+   "prompt_tokens": 26356,
+   "request_bytes": 34625,
+   "request_sha256": "d80c1af9c8d744a180d0dc9f1f85f6e98dfc3f63dce9a41c253c431877d729d0",
+   "system_chars": 2050,
+   "user_chars": 29486,
+   "within_limits": true
+  },
+  {
+   "arm": "candidate",
+   "context_with_cap": 30831,
+   "game_id": "sk48-d8078629",
+   "label": "steady_worst_carried_current",
+   "max_tokens": 640,
+   "prompt_tokens": 30191,
+   "request_bytes": 41279,
+   "request_sha256": "723479d53c05bdefbe74c602f1b51afef4b33802f88633a78b44495700fbc907",
+   "system_chars": 2050,
+   "user_chars": 35180,
+   "within_limits": true
+  },
+  {
+   "arm": "candidate",
+   "context_with_cap": 27471,
+   "game_id": "sk48-d8078629",
+   "label": "steady_worst_carried_ascii_only",
+   "max_tokens": 640,
+   "prompt_tokens": 26831,
+   "request_bytes": 35039,
+   "request_sha256": "6896cd217a6fc92519d204e0b4c73f432f9721d685f483c4d4111f07008df1a3",
+   "system_chars": 2050,
+   "user_chars": 29900,
+   "within_limits": true
+  },
+  {
+   "arm": "candidate",
+   "context_with_cap": 27231,
+   "game_id": "sk48-d8078629",
+   "label": "steady_worst_carried_ascii_letters",
+   "max_tokens": 640,
+   "prompt_tokens": 26591,
+   "request_bytes": 35039,
+   "request_sha256": "73fe8818f5ef4c2a0e18e7bcff05fb7858f9af544e64560496fa645bf5641c8e",
+   "system_chars": 2050,
+   "user_chars": 29900,
+   "within_limits": true
+  },
+  {
+   "arm": "candidate",
+   "context_with_cap": 30033,
+   "game_id": "sk48-d8078629",
+   "label": "steady_worst_carried_mixed_non_ascii",
+   "max_tokens": 640,
+   "prompt_tokens": 29393,
+   "request_bytes": 39039,
+   "request_sha256": "7d4d3725c94ff3bb5a0fcee9121165fd7bb0638c2525008724e2b538a1c2c48f",
+   "system_chars": 2050,
+   "user_chars": 33260,
+   "within_limits": true
+  }
+ ],
+ "grammar": {
+  "accepts": {
+   "ascii_only": {
+    "ascii_240": true,
+    "ascii_241": false,
+    "astral_240": false,
+    "astral_241": false,
+    "escaped_backslash_1": false,
+    "escaped_e_acute_1": false,
+    "escaped_newline_1": false,
+    "escaped_quote_1": false,
+    "five_supporting_citations": false,
+    "raw_tab_in_text": false,
+    "ref_500_digits": true,
+    "whitespace_2000_after_brace": true
+   },
+   "current": {
+    "ascii_240": true,
+    "ascii_241": false,
+    "astral_240": true,
+    "astral_241": false,
+    "escaped_backslash_1": false,
+    "escaped_e_acute_1": false,
+    "escaped_newline_1": false,
+    "escaped_quote_1": false,
+    "five_supporting_citations": false,
+    "raw_tab_in_text": true,
+    "ref_500_digits": true,
+    "whitespace_2000_after_brace": true
+   },
+   "pattern_without_bound": {
+    "ascii_240": true,
+    "ascii_241": true,
+    "astral_240": false,
+    "astral_241": false,
+    "escaped_backslash_1": false,
+    "escaped_e_acute_1": false,
+    "escaped_newline_1": false,
+    "escaped_quote_1": false,
+    "five_supporting_citations": false,
+    "raw_tab_in_text": false,
+    "ref_500_digits": true,
+    "whitespace_2000_after_brace": true
+   }
+  },
+  "compile": "Grammar.from_json_schema(schema, any_whitespace=True), as vLLM 0.19 compiles json_schema by default (structured_outputs_config.disable_any_whitespace = False)",
+  "xgrammar_version": "0.1.34"
+ },
+ "max_prompt_tokens": 30351,
+ "prompt_with_worst_carried_statement_by_option": {
+  "ascii_only": {
+   "all_within_limits": true,
+   "largest_prompt_tokens": 26991
+  },
+  "current": {
+   "all_within_limits": true,
+   "largest_prompt_tokens": 30351
+  }
+ },
+ "schema": "feedback_action_v1_token_audit_v2",
+ "tokenizer_files": {
+  "chat_template.json": {
+   "bytes": 5497,
+   "sha256": "2c1437f11fc16ab501b984c000f6e291c599f0d28d2c9c6bf2c4533e65429b42"
+  },
+  "config.json": {
+   "bytes": 14458,
+   "sha256": "e52cea0eb24df634274d028d969b513edeced033988eb4528d1e8d2a08dd025d"
+  },
+  "merges.txt": {
+   "bytes": 1671853,
+   "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+  },
+  "tokenizer.json": {
+   "bytes": 10179867,
+   "sha256": "ba85e4e5222d9f53d4bd00b303ef7e9743c8ac3d07e3c23f8498dbe17baa9a2d"
+  },
+  "tokenizer_config.json": {
+   "bytes": 10868,
+   "sha256": "c2da771801886ad9ae98181793ffd3dfb7f1af30f6f7c6a4e15d7dbba52e2399"
+  },
+  "vocab.json": {
+   "bytes": 4957462,
+   "sha256": "7a0cfa95c65792d7510205839f80cfd8a3c8f6b1fdad5132d95cee481800374d"
+  }
+ },
+ "tokenizer_revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+ "versions": {
+  "jinja2": "3.1.6",
+  "tokenizers": "0.22.2",
+  "transformers": "4.57.6"
+ },
+ "worst_text_search": {
+  "ascii_only": {
+   "bound": 240,
+   "note": "every permitted character is one byte, so 240 tokens is an exact upper bound",
+   "pair": "~}",
+   "pair_240_tokens": 240,
+   "single_char": "9",
+   "single_char_240_tokens": 240
+  },
+  "current": {
+   "bound": 960,
+   "code_points_searched": 2951,
+   "note": "at most 4 UTF-8 bytes per code point, so 960 tokens is an exact upper bound",
+   "worst_240_tokens": 960,
+   "worst_code_point": "U+10FAA4"
+  }
+ }
+}
