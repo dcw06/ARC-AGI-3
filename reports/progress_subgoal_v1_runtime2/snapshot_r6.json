@@ -1,0 +1,41 @@
+{
+ "artifacts_verified": true,
+ "environment": {
+  "CUDA_VISIBLE_DEVICES": "",
+  "PSV1R2_BASIS": "/home/jingjing/basis-5a21dd3",
+  "PSV1R2_REHEARSALS": "1",
+  "PSV1R2_REHEARSAL_HOST_PYTHON": "/usr/bin/python3"
+ },
+ "evidence_class": "scripted_cpu_control_checks_not_gpu_or_model_evidence",
+ "executable": "/home/jingjing/.local/share/agi/dev-env/bin/python",
+ "gpu_enabled": false,
+ "gpu_used": false,
+ "group": "snapshot",
+ "internet_enabled": false,
+ "launch_authorized": false,
+ "model_calls": 0,
+ "notebook_bytes": 565521,
+ "passed": true,
+ "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+ "private": true,
+ "provider_calls": 0,
+ "python": "3.12.3",
+ "rebuild_reproduces": {
+  "kernel-metadata.json": true,
+  "profile.ipynb": true,
+  "review-source-lock.json": true
+ },
+ "review_documents_verified": true,
+ "review_lock_sha256": "447bd4b50775ac2facee824d46f875b84441f4e11b9763edc02eed7b9fbf57a8",
+ "review_revision": 6,
+ "schema": "progress_subgoal_v1_runtime2_cpu_checks_v1",
+ "seconds": 4.5,
+ "source_bindings_verified": 60,
+ "started_unix": 1791528235.0,
+ "superseded_r4_lock_sha256": "e7e1518ba6e23b9b3d4a24a6de25aaac94df5663e31dbf884859fd44eeff70f2",
+ "unresolved_placeholders": [
+  "kernel_id",
+  "model.kaggle_source",
+  "model.mounted_path"
+ ]
+}
