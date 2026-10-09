@@ -247,7 +247,8 @@ class F5DispatchFailureAbort(unittest.TestCase):
     def test_just_over_10_percent_aborts(self):
         report, server = run_synthetic(self, 'reset', faults={9: 'reject'}, expect='aborted')  # 1 in 9
         self.assertEqual(report['abort'], {'rule': 'F5_dispatch_failures', 'dispatch_failures': 1, 'dispatched': 9,
-                                           'threshold_rate': '1/10', 'episode_id': 'syn-reset-baseline'})
+                                           'threshold_rate': '1/10', 'denominator_floor': 0,  # committed rule
+                                           'episode_id': 'syn-reset-baseline'})
         self.assertEqual([(e['arm'], len(e['steps']), len(e['calls'])) for e in report['episodes']],
                          [('baseline', 9, 9)])
         self.assertEqual(server.transport.calls, 9)

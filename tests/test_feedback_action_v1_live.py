@@ -30,23 +30,24 @@ class Derivation(unittest.TestCase):
     def test_sources_are_the_reviewed_r3_files(self):
         lock = json.loads(REVIEW_LOCK.read_bytes())
         text = json.dumps(lock)
-        for name in D.DERIVED:
-            path = D.SOURCE_DIR + name
+        for target, (path, _) in D.DERIVED.items():  # the runner and, since successor runtime v1, the harness
             digest = hashlib.sha256((ROOT / path).read_bytes()).hexdigest()
             self.assertIn(f'"{path}": "{digest}"', text, path)
         contract = 'research/action_effect_history_v1/contract.py'  # observation_payload, reused unchanged
         self.assertIn(f'"{contract}": "{hashlib.sha256((ROOT / contract).read_bytes()).hexdigest()}"', text)
 
     def test_counted_substitutions_fail_closed(self):
-        original = D.RUNNER
+        key = 'research/feedback_action_v1/live/runner.py'
+        source, original = D.DERIVED[key]
         try:
-            D.DERIVED['runner.py'] = original + (('this text does not occur', 'x', 1),)
+            D.DERIVED[key] = (source, original + (('this text does not occur', 'x', 1),))
             with self.assertRaises(ValueError):
-                D.derive_one('runner.py')
+                D.derive_one(key)
         finally:
-            D.DERIVED['runner.py'] = original
+            D.DERIVED[key] = (source, original)
         for target, text in D.derive().items():
-            self.assertTrue(text.startswith('# Derived from research/action_effect_history_v1/'), target)
+            self.assertTrue(text.startswith('# Derived from research/action_effect_history_v1/')
+                            or text.startswith('# Derived from scripts/'), target)
             self.assertNotIn('action_effect_history', text.split('\n', 1)[1])
 
 

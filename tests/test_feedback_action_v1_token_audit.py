@@ -1,10 +1,15 @@
-"""Feedback-action v1 token audit: every request form is enumerated from the real offline engine; exact counting is
-refused outside the pinned tokenizer stack (TODO for the main session's pinned environment)."""
+"""Feedback-action v1 token audit: every request form is enumerated from the real offline engine (both sessions) and
+the committed exact audit (pinned tokenizer, research/feedback_action_v1/token_audit.json) is bound to those forms."""
+import hashlib
 import json
+import tempfile
 import unittest
+from pathlib import Path
 
 from research.feedback_action_v1 import adapter as AD, token_audit as TA
 from research.feedback_action_v1.live.policy import validate_policy_request
+
+LABELS_PER_CANDIDATE = len(TA.WORST_TEXT) + len(TA.PROBE_TEXT)
 
 
 class Forms(unittest.TestCase):
@@ -21,9 +26,9 @@ class Forms(unittest.TestCase):
             for arm in AD.ARMS:
                 self.assertIn(('first', game, arm), labels)
                 self.assertIn(('steady_largest', game, arm), labels)
-            for name in TA.WORST_TEXT:
+            for name in list(TA.WORST_TEXT) + list(TA.PROBE_TEXT):
                 self.assertIn((f'steady_worst_carried_{name}', game, 'candidate'), labels)
-        self.assertEqual(len(labels), 1 + 3 * 2 * 2 + 3 * len(TA.WORST_TEXT))
+        self.assertEqual(len(labels), 1 + 3 * 2 * 2 + 3 * LABELS_PER_CANDIDATE)
         for label, game, arm, request in self.rows[1:]:
             self.assertEqual(validate_policy_request(request), arm, (label, game))
 
@@ -34,31 +39,49 @@ class Forms(unittest.TestCase):
                 self.assertEqual((len(carried['hypothesis']), len(carried['if_different'])),
                                  (AD.TEXT_LIMIT, AD.TEXT_LIMIT))
 
-    def test_described_rows(self):
-        rows = TA.describe(self.rows)
-        self.assertTrue(all(len(r['request_sha256']) == 64 and r['request_bytes'] > 0 for r in rows))
-        self.assertEqual({r['max_tokens'] for r in rows if r['arm'] == 'candidate'}, {AD.CANDIDATE_MAX_TOKENS})
+    def test_committed_exact_audit_is_bound_to_these_forms(self):
+        if not TA.OUTPUT.exists():
+            self.skipTest('exact audit not produced yet (pinned stack)')
+        audit = json.loads(TA.OUTPUT.read_bytes())
+        self.assertEqual(audit['versions'], TA.PINNED)
+        described = TA.describe(self.rows)
+        self.assertEqual([(r['label'], r['game_id'], r['arm'], r['request_sha256']) for r in audit['forms']],
+                         [(r['label'], r['game_id'], r['arm'], r['request_sha256']) for r in described])
+        self.assertTrue(audit['all_forms_within_limits'])
+        self.assertTrue(all(type(r['prompt_tokens']) is int and 0 < r['prompt_tokens'] <= TA.PROMPT_CEILING
+                            for r in audit['forms']))
+        manifest = json.loads(Path(TA.ROOT / 'certification/phase4_integrated_v2/tokenizer_manifest.json').read_bytes())
+        self.assertEqual(audit['tokenizer_files'], manifest['files'])
 
 
 class Completions(unittest.TestCase):
-    def test_longest_completions_are_schema_valid(self):
-        texts = TA.longest_completions()
-        for arm, rows in texts.items():
-            for text in rows:
-                decision = AD.parse({'content': text, 'finish_reason': 'stop'}, [6], arm)
-                self.assertIsNotNone(decision['action'], (arm, text[:60]))
-                if arm == 'candidate':
-                    self.assertIsNotNone(decision['procedure'], decision['procedure_error'])
+    def test_longest_responses_are_schema_valid_for_both_options(self):
+        from research.feedback_action_v1.live import owner_gates as G
+        gates = json.loads(G.GATES.read_bytes())
+        gates['free_text_format']['decision'] = 'ascii_only'
+        for option, text in TA.WORST_TEXT.items():
+            value = TA.candidate_response(text, 'changed_then_returned', 'different_state_from_now', 'retained', False)
+            for name, options in TA.FORMATS.items():
+                serialized = json.dumps(value, ensure_ascii=False, **options)
+                decision = AD.parse({'content': serialized, 'finish_reason': 'stop'}, [6], 'candidate')
+                self.assertIsNotNone(decision['action'], (option, name))
+                self.assertIsNotNone(decision['procedure'], decision['procedure_error'])
+                problem = G.free_text_problem(decision['procedure'], gates)
+                self.assertEqual(problem is None, option == 'ascii_only', (option, problem))
 
 
 class PinnedOnly(unittest.TestCase):
     def test_counting_refuses_outside_the_pinned_stack(self):
         if TA.pinned_versions() == TA.PINNED:
             self.skipTest('pinned stack present: the audit can run here')
-        with self.assertRaises(SystemExit) as caught:
-            TA.tokenize(TA.ROOT / '.cache/phase4-tokenizer')
-        self.assertIn('TODO(pinned tokenizer)', str(caught.exception))
-        self.assertFalse(TA.OUTPUT.exists())  # no counts were written
+        with tempfile.TemporaryDirectory() as tmp:
+            forms = Path(tmp) / 'forms.json'
+            forms.write_text('[]')
+            out = Path(tmp) / 'audit.json'
+            with self.assertRaises(SystemExit) as caught:
+                TA.tokenize(forms, TA.ROOT / '.cache/phase4-tokenizer', out)
+            self.assertIn('TODO(pinned tokenizer)', str(caught.exception))
+            self.assertFalse(out.exists())  # no counts were written
 
 
 if __name__ == '__main__':
