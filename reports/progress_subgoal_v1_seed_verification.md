@@ -44,3 +44,22 @@ present and both show the expected hash.
 
 The fields of each entry are in the JSON record (`holder_check_entry`). The authorized Track 4 attempt cannot be
 reserved or launched until this record holds two such entries from distinct holders and is committed.
+
+## Amendment of October 9, 2026: one holder, two copies
+
+For the authorized Track 4 attempt the owner amended the rule:
+- **Rule:** one holder, the owner, keeps **two separately stored copies** outside any repository and personally runs
+  the check on each copy.
+- **When:** both copy checks are recorded in `copy_checks` (JSON record) before any reservation or launch.
+- **Limitation:** the copies are redundant storage, but there is no independent second holder. The owner is a single
+  point of failure, and the two checks are not independent verifications.
+
+The copy kept in the drawing machine's working folder does not count, because it is inside a repository folder.
+
+For each copy, report:
+- a copy label, such as "copy A" or "copy B";
+- the date;
+- the commit checked;
+- the printed line;
+- confirmation that you ran the check yourself, that the copy is outside any repository, and that it is stored
+  separately from the other copy.

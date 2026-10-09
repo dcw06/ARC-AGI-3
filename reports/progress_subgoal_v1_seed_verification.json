@@ -1,6 +1,6 @@
 {
  "schema": "progress_subgoal_v1_seed_verification_v1",
- "status": "two_holder_retention_not_confirmed",
+ "status": "single_holder_two_copies_not_confirmed",
  "owner_rule": "Two-holder retention is confirmed only after both holders have each independently run the check successfully. The seed stays private; only verification records and the resulting hash are retained.",
  "seed_sha256": "ca1e518ccbfded860c80c481ca188e25fd3009a9c15db7413c69907db7ad02aa",
  "expected_question_set_sha256": "f93ec44bab00453147e8e7e555704b60edc8220e6b5677b89d199ce8fca5e02c",
@@ -30,5 +30,26 @@
   "independent": "true: the holder ran the check personally on their own copy",
   "copy_outside_repository": "true: the holder keeps the copy outside any repository"
  },
- "confirmation_rule": "status becomes two_holder_retention_confirmed and holders_confirmed 2 only when holder_checks holds two such entries from distinct holders, each reported by the holder. The launch gate reads this committed record; no approval substitutes for it."
+ "confirmation_rule": "status becomes single_holder_two_copies_confirmed and copies_confirmed 2 only when copy_checks holds two such entries with distinct copy_id, each reported by the owner. The launch gate reads this committed record; no approval substitutes for it. (The two-holder fields above are kept as the original rule.)",
+ "amendment": {
+  "decided_at": "2026-10-09",
+  "by": "the owner, for the authorized Track 4 attempt",
+  "rule": "one holder, the owner, keeps two separately stored copies outside any repository and personally runs the check on each; both copy checks are recorded here before any reservation or launch",
+  "replaces": "the two-holder rule (two distinct holders, each checking independently)",
+  "limitation": "redundant storage, but no independent second holder: the owner is a single point of failure and the two checks are not independent verifications"
+ },
+ "copies_required": 2,
+ "copies_confirmed": 0,
+ "copy_checks": [],
+ "copy_check_entry": {
+  "holder": "owner",
+  "copy_id": "a label distinguishing the two copies, e.g. \"copy A\" and \"copy B\" (no storage location needed)",
+  "checked_at": "UTC timestamp of the check",
+  "commit": "the track4-successor-runtime-v1 commit checked out cleanly",
+  "printed": "question set matches a fresh build: f93ec44bab00453147e8e7e555704b60edc8220e6b5677b89d199ce8fca5e02c",
+  "exit_code": 0,
+  "run_personally": "true: the owner ran this check",
+  "copy_outside_repository": "true: this copy is kept outside any repository",
+  "separate_storage": "true: this copy is stored separately from the other copy"
+ }
 }
