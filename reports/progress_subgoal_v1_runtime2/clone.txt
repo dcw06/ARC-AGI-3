@@ -1,0 +1,22 @@
+clone head: de7f7261cc646fbb8839b655197ab52b4a8efe8d dirty: 0
+2026-10-09T01:21:52Z start
+build --check exit 0
+build --basis exit 0
+diff exit 0
+snapshot exit 0
+review-check exit 0
+launch-build exit 1 (must refuse)
+embedded exit 0
+controller exit 0
+successor exit 0
+rehearsals exit 0
+compare scripted exit 1
+compare oracle exit 0
+extracted exit 0
+old suite exit 1
+2026-10-09T01:51:37Z end
+second clone head: 3d8523614df738c184cb2ed648cc03f1140cef08 dirty: 0
+2026-10-09T01:53:51Z second start
+compare scripted (with old-runtime evidence) exit 0
+old suite (python -m) exit 0
+2026-10-09T02:27:33Z second end

@@ -1,0 +1,17 @@
+{
+ "evidence_class": "scripted_cpu_rehearsal",
+ "gpu_used": false,
+ "model_calls": 0,
+ "note": "scripted answers; labels and rates here are not results",
+ "passed": true,
+ "policy": "oracle",
+ "rehearsal": "/home/jingjing/t4-sr1-rehearsals/nominal_oracle-1791510320",
+ "retained_answers_equal_offline_scripted_answers": true,
+ "schema": "progress_subgoal_v1_runtime2_scoring_reproduction_v1",
+ "successor_analysis_equals_offline_recomputation": true,
+ "successor_gate": {
+  "raw_plus_computed_record": "eligible_for_memory_or_supervision",
+  "raw_plus_computed_record_plus_safeguard": "eligible_for_memory_or_supervision"
+ },
+ "successor_technically_complete": true
+}

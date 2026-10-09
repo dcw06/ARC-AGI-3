@@ -1,0 +1,151 @@
+{
+ "default_trusted_inputs": {
+  "default_inputs_loaded": true,
+  "evidence_class": "cpu_extracted_default_input_check",
+  "exit_code": 0,
+  "gpu_used": false,
+  "model_calls": 0,
+  "mounted_wheel_bytes_checked": false,
+  "network_calls": 0,
+  "passed": true,
+  "trusted_wheels": 174,
+  "verification_boundary_reached": true
+ },
+ "evidence_class": "scripted_cpu_rehearsal",
+ "exit_code": 0,
+ "gpu_compatibility_evidence": false,
+ "gpu_used": false,
+ "independent_evaluation": {
+  "call_errors": [],
+  "gate": {
+   "raw_plus_computed_record": "not_eligible",
+   "raw_plus_computed_record_plus_safeguard": "not_eligible"
+  },
+  "gate_status": "complete",
+  "lifecycle_errors": [],
+  "seconds": 11.9,
+  "technically_complete": true
+ },
+ "isolated_rehearsal": {
+  "cleanup_verified": true,
+  "error": null,
+  "evidence_class": "scripted_cpu_rehearsal",
+  "failed_stage": null,
+  "issued": 5863,
+  "lifecycle_seconds": 121.831,
+  "modules_outside_payload": [],
+  "passed": true,
+  "phases": [
+   [
+    "host",
+    0.001
+   ],
+   [
+    "bundle_integrity",
+    0.006
+   ],
+   [
+    "installation",
+    2.832
+   ],
+   [
+    "model_artifact",
+    0.001
+   ],
+   [
+    "server_start",
+    0.001
+   ],
+   [
+    "server_ready",
+    3.004
+   ],
+   [
+    "startup_probe_S1",
+    0.002
+   ],
+   [
+    "startup_probe_S2",
+    0.001
+   ],
+   [
+    "startup_probe_S3",
+    0.001
+   ],
+   [
+    "inference_I1",
+    0.001
+   ],
+   [
+    "inference_I2",
+    0.001
+   ],
+   [
+    "inference_I3",
+    0.001
+   ],
+   [
+    "inference_I4",
+    0.001
+   ],
+   [
+    "cache_config",
+    0.0
+   ],
+   [
+    "questionnaire",
+    112.008
+   ],
+   [
+    "cancellation_C1",
+    0.002
+   ],
+   [
+    "cancellation_C2_idle",
+    3.004
+   ],
+   [
+    "cancellation_C3_responsive",
+    0.002
+   ],
+   [
+    "server_cleanup",
+    0.111
+   ],
+   [
+    "installation_cleanup",
+    0.0
+   ],
+   [
+    "log_retention",
+    0.02
+   ],
+   [
+    "environment_cleanup",
+    0.0
+   ],
+   [
+    "evidence_finalization",
+    0.823
+   ]
+  ],
+  "questionnaire": {
+   "calls_recorded": 5852,
+   "counts": {
+    "answered": 5852
+   },
+   "phase_reached": "development_pass_1",
+   "probe_set_sha256": "f93ec44bab00453147e8e7e555704b60edc8220e6b5677b89d199ce8fca5e02c",
+   "scheduled_calls": 5852,
+   "status": "complete",
+   "stop_reason": null
+  }
+ },
+ "isolated_rehearsal_wall_seconds": 126.3,
+ "model_calls": 0,
+ "note": "scripted CPU stub, fixture wheels; labels are not results",
+ "passed": true,
+ "provider_calls": 0,
+ "review_revision": 5,
+ "schema": "progress_subgoal_v1_runtime2_extracted_payload_check_v1"
+}

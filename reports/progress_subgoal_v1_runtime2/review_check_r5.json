@@ -1,0 +1,15 @@
+{
+ "schema": "progress_subgoal_v1_runtime2_review_check_v1",
+ "review_revision": 5,
+ "review_lock_sha256": "0cf45e6ccaf88bb956289e2b9b05729d0e9e9078c633e0994b35aea1592d4feb",
+ "evidence_class": "scripted_cpu_rehearsal",
+ "gpu_compatibility_evidence": false,
+ "exit_code": 1,
+ "refused_at_live_gate": true,
+ "refusal": "research.progress_subgoal_v1_runtime2.binding.LiveRefused: progress_subgoal_v1 runtime2 live path refused: unresolved placeholders: kernel_id, model.kaggle_source, model.mounted_path; authorization: ValueError: no review source lock",
+ "nvidia_smi_called": false,
+ "temporary_files_left": [],
+ "kaggle_paths_touched": false,
+ "stderr_tail": "Traceback (most recent call last):\n  File \"/tmp/psv1-runtime2-review-check-8d9zlbyj/review_cell.py\", line 19, in <module>\n    consume(source, working)  # the live gate: refuses here, before any installation, model or GPU use\n    ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/psv1-runtime2-review-check-8d9zlbyj/tmp/progress-subgoal-v1-source-q96ug42w/research/progress_subgoal_v1_runtime2/binding.py\", line 267, in consume\n  File \"/tmp/psv1-runtime2-review-check-8d9zlbyj/tmp/progress-subgoal-v1-source-q96ug42w/research/progress_subgoal_v1_runtime2/binding.py\", line 258, in require_live\nresearch.progress_subgoal_v1_runtime2.binding.LiveRefused: progress_subgoal_v1 runtime2 live path refused: unresolved placeholders: kernel_id, model.kaggle_source, model.mounted_path; authorization: ValueError: no review source lock\n",
+ "passed": true
+}

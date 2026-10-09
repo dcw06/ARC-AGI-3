@@ -1,0 +1,364 @@
+{
+ "environment": {
+  "CUDA_VISIBLE_DEVICES": "",
+  "PSV1R2_BASIS": "/home/jingjing/t4-sr1-basis",
+  "PSV1R2_REHEARSALS": "1",
+  "PSV1R2_REHEARSAL_HOST_PYTHON": "/usr/bin/python3"
+ },
+ "errors": 0,
+ "evidence_class": "scripted_cpu_control_checks_not_gpu_or_model_evidence",
+ "executable": "/home/jingjing/.local/share/agi/dev-env/bin/python",
+ "failures": 0,
+ "gpu_used": false,
+ "group": "successor",
+ "launch_authorized": false,
+ "model_calls": 0,
+ "passed": true,
+ "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+ "provider_calls": 0,
+ "python": "3.12.3",
+ "run": 55,
+ "schema": "progress_subgoal_v1_runtime2_cpu_checks_v1",
+ "seconds": 1184.3,
+ "skipped": 0,
+ "started_unix": 1791508987.8,
+ "suites": [
+  "tests.test_progress_subgoal_v1_runtime2",
+  "tests.test_progress_subgoal_v1_runtime2_questionnaire",
+  "tests.test_progress_subgoal_v1_runtime2_evaluator",
+  "tests.test_progress_subgoal_v1_runtime2_science",
+  "tests.test_progress_subgoal_v1_runtime2_rehearsal"
+ ],
+ "tests": [
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 0.001,
+   "test": "tests.test_progress_subgoal_v1_runtime2.Derivation.test_controller_is_byte_identical_to_the_verified_runtime"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 3.826,
+   "test": "tests.test_progress_subgoal_v1_runtime2.Derivation.test_copied_controller_derived_outputs_and_records_match"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 3.739,
+   "test": "tests.test_progress_subgoal_v1_runtime2.Derivation.test_derivation_reproduces_byte_for_byte_from_the_basis"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 0.494,
+   "test": "tests.test_progress_subgoal_v1_runtime2.Derivation.test_experiment_source_closure_is_recomputed_exactly"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 0.014,
+   "test": "tests.test_progress_subgoal_v1_runtime2.Derivation.test_experiment_sources_are_unchanged_from_review_r4"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 0.001,
+   "test": "tests.test_progress_subgoal_v1_runtime2.Derivation.test_superseded_review_r4_is_untouched"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 26.76,
+   "test": "tests.test_progress_subgoal_v1_runtime2.LiveGate.test_complete_new_scope_gate_and_notebook_binding_in_fabricated_fixture"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 7.435,
+   "test": "tests.test_progress_subgoal_v1_runtime2.LiveGate.test_live_questionnaire_refuses_non_frozen_timing"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 0.001,
+   "test": "tests.test_progress_subgoal_v1_runtime2.LiveGate.test_no_authority_record_exists_in_the_checkout"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 24.213,
+   "test": "tests.test_progress_subgoal_v1_runtime2.LiveGate.test_other_scope_or_changed_limits_refused"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 9.779,
+   "test": "tests.test_progress_subgoal_v1_runtime2.LiveGate.test_source_drift_and_missing_bindings_refused"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 9.312,
+   "test": "tests.test_progress_subgoal_v1_runtime2.LiveGate.test_this_checkout_refuses_before_any_effect"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 0.018,
+   "test": "tests.test_progress_subgoal_v1_runtime2.LiveGate.test_uncertain_submission_is_consumed_and_cannot_be_retried"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 0.003,
+   "test": "tests.test_progress_subgoal_v1_runtime2.RuntimeBindings.test_cache_config_missing_enabled_or_conflicting_refused"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 0.027,
+   "test": "tests.test_progress_subgoal_v1_runtime2.RuntimeBindings.test_dataset_backed_pinned_model_with_private_placeholders"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 28.386,
+   "test": "tests.test_progress_subgoal_v1_runtime2.RuntimeBindings.test_drift_in_any_frozen_setting_is_refused"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 0.0,
+   "test": "tests.test_progress_subgoal_v1_runtime2.RuntimeBindings.test_image_runtime_competition_and_server"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 0.0,
+   "test": "tests.test_progress_subgoal_v1_runtime2.RuntimeBindings.test_limits_are_the_frozen_package_limits"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 1.397,
+   "test": "tests.test_progress_subgoal_v1_runtime2.RuntimeBindings.test_request_plan_and_cap"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 4.297,
+   "test": "tests.test_progress_subgoal_v1_runtime2.RuntimeBindings.test_token_audit_must_bind_the_actual_requests"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 0.001,
+   "test": "tests.test_progress_subgoal_v1_runtime2.RuntimeBindings.test_verified_wheel_dataset_and_trusted_installation_inputs"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 6.934,
+   "test": "tests.test_progress_subgoal_v1_runtime2_questionnaire.Stage.test_admission_cutoff_is_a_reported_stop_not_a_failure"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 92.447,
+   "test": "tests.test_progress_subgoal_v1_runtime2_questionnaire.Stage.test_complete_run_sends_the_frozen_requests_in_order_and_never_scores"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 3.577,
+   "test": "tests.test_progress_subgoal_v1_runtime2_questionnaire.Stage.test_http_error_and_refusal_stop_the_run"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 0.004,
+   "test": "tests.test_progress_subgoal_v1_runtime2_questionnaire.Stage.test_idle_reads_stay_inside_the_window_and_the_cap"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 1.813,
+   "test": "tests.test_progress_subgoal_v1_runtime2_questionnaire.Stage.test_intent_is_retained_before_the_request_is_sent"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 1.828,
+   "test": "tests.test_progress_subgoal_v1_runtime2_questionnaire.Stage.test_live_mode_uses_only_the_frozen_cutoff_and_timing"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 110.355,
+   "test": "tests.test_progress_subgoal_v1_runtime2_questionnaire.Stage.test_one_timeout_with_the_server_idle_is_missing_not_failed"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 1.484,
+   "test": "tests.test_progress_subgoal_v1_runtime2_questionnaire.Stage.test_request_plan_timeouts_must_match_the_call_timing"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 1.891,
+   "test": "tests.test_progress_subgoal_v1_runtime2_questionnaire.Stage.test_server_not_idle_after_a_timeout_stops_as_transport_failure"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 2.089,
+   "test": "tests.test_progress_subgoal_v1_runtime2_questionnaire.Stage.test_two_consecutive_timeouts_stop_the_run"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 17.189,
+   "test": "tests.test_progress_subgoal_v1_runtime2_evaluator.Evaluator.test_a_timed_out_call_needs_its_own_idle_measurements"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 4.943,
+   "test": "tests.test_progress_subgoal_v1_runtime2_evaluator.Evaluator.test_an_interrupted_call_is_not_a_final_record"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 8.843,
+   "test": "tests.test_progress_subgoal_v1_runtime2_evaluator.Evaluator.test_complete_evidence_reproduces_the_offline_scores"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 5.724,
+   "test": "tests.test_progress_subgoal_v1_runtime2_evaluator.Evaluator.test_interrupted_schedule_cannot_be_complete"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 14.897,
+   "test": "tests.test_progress_subgoal_v1_runtime2_evaluator.Evaluator.test_invalid_answers_stay_a_reliability_failure_not_an_over_claim"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 38.069,
+   "test": "tests.test_progress_subgoal_v1_runtime2_evaluator.Evaluator.test_lifecycle_and_ledger_must_hold"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 27.126,
+   "test": "tests.test_progress_subgoal_v1_runtime2_evaluator.Evaluator.test_never_finalized_or_unmanifested_evidence_is_never_complete"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 21.804,
+   "test": "tests.test_progress_subgoal_v1_runtime2_evaluator.Evaluator.test_oracle_answers_are_eligible_through_the_same_path"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 38.316,
+   "test": "tests.test_progress_subgoal_v1_runtime2_evaluator.Evaluator.test_tampering_and_inconsistency_are_call_errors"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 0.146,
+   "test": "tests.test_progress_subgoal_v1_runtime2_science.FrozenSet.test_arms_see_identical_evidence_and_differ_only_in_the_safeguard"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 0.287,
+   "test": "tests.test_progress_subgoal_v1_runtime2_science.FrozenSet.test_computed_record_restates_the_raw_evidence_and_adds_no_answers"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 0.017,
+   "test": "tests.test_progress_subgoal_v1_runtime2_science.FrozenSet.test_dimension_changes_keep_their_distinction_in_the_unchanged_presentation"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 24.616,
+   "test": "tests.test_progress_subgoal_v1_runtime2_science.FrozenSet.test_interrupted_schedules_cannot_produce_complete_verdicts"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 6.755,
+   "test": "tests.test_progress_subgoal_v1_runtime2_science.FrozenSet.test_invalid_answers_are_a_reliability_category_not_over_claims"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 7.676,
+   "test": "tests.test_progress_subgoal_v1_runtime2_science.FrozenSet.test_temporal_sequence_is_not_causation"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 0.0,
+   "test": "tests.test_progress_subgoal_v1_runtime2_science.FrozenSet.test_the_successor_sends_the_frozen_question_set"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 0.001,
+   "test": "tests.test_progress_subgoal_v1_runtime2_science.FrozenSet.test_transient_changes_are_neither_no_change_nor_a_final_difference"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 0.004,
+   "test": "tests.test_progress_subgoal_v1_runtime2_science.FrozenSet.test_unknown_outcomes_stay_unknown"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 7.601,
+   "test": "tests.test_progress_subgoal_v1_runtime2_science.FrozenSet.test_visible_change_is_not_confirmed_progress"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 99.359,
+   "test": "tests.test_progress_subgoal_v1_runtime2_rehearsal.Rehearsals.test_admission_cutoff_cuts_the_schedule_and_the_verdict_is_incomplete"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 135.675,
+   "test": "tests.test_progress_subgoal_v1_runtime2_rehearsal.Rehearsals.test_nominal_complete_questionnaire_and_independent_reproduction"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 132.909,
+   "test": "tests.test_progress_subgoal_v1_runtime2_rehearsal.Rehearsals.test_prompt_token_mismatch_against_the_frozen_audit_is_caught"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 44.618,
+   "test": "tests.test_progress_subgoal_v1_runtime2_rehearsal.Rehearsals.test_stop_rules_end_the_run_and_cleanup_still_runs"
+  },
+  {
+   "detail": null,
+   "outcome": "success",
+   "seconds": 130.593,
+   "test": "tests.test_progress_subgoal_v1_runtime2_rehearsal.Rehearsals.test_timeout_is_cancelled_verified_idle_and_left_missing"
+  }
+ ]
+}

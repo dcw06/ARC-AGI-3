@@ -1,0 +1,135 @@
+{
+ "all_as_expected": true,
+ "evidence_class": "scripted_cpu_rehearsal",
+ "gpu_compatibility_evidence": false,
+ "gpu_used": false,
+ "model_calls": 0,
+ "platform": "Linux-6.18.40.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+ "provider_calls": 0,
+ "python": "3.12.3",
+ "scenarios": [
+  {
+   "as_expected": {
+    "lifecycle_passed": true,
+    "run_status": true,
+    "technically_complete": true
+   },
+   "cleanup_verified": true,
+   "error": null,
+   "evaluator": {
+    "call_errors": [],
+    "calls_recorded": 5852,
+    "counts": {
+     "answered": 5852
+    },
+    "gate": {
+     "raw_plus_computed_record": "not_eligible",
+     "raw_plus_computed_record_plus_safeguard": "not_eligible"
+    },
+    "gate_status": "complete",
+    "lifecycle_errors": [],
+    "lifecycle_passed": true,
+    "manifest_verified": true,
+    "run_status": "complete",
+    "stop_reason": null,
+    "technically_complete": true
+   },
+   "evidence_class": "scripted_cpu_rehearsal",
+   "evidence_dir": "/home/jingjing/t4-sr1-rehearsals/nominal_scripted-1791510172/evidence",
+   "expected": {
+    "lifecycle_passed": true,
+    "run_status": "complete",
+    "technically_complete": true
+   },
+   "failed_stage": null,
+   "gpu_compatibility_evidence": false,
+   "lifecycle_deadline_met": true,
+   "lifecycle_verdict_passed": true,
+   "note": "scripted CPU stub with scripted answers: labels here are not results",
+   "questionnaire_stage": {
+    "calls_recorded": 5852,
+    "counts": {
+     "answered": 5852
+    },
+    "phase_reached": "development_pass_1",
+    "probe_set_sha256": "f93ec44bab00453147e8e7e555704b60edc8220e6b5677b89d199ce8fca5e02c",
+    "scheduled_calls": 5852,
+    "status": "complete",
+    "stop_reason": null
+   },
+   "request_cap": 6613,
+   "requests_by_kind": {
+    "cancellation_probe": 4,
+    "inference": 4,
+    "questionnaire": 5852,
+    "startup_probe": 3
+   },
+   "requests_issued": 5863,
+   "scenario": "nominal_scripted",
+   "seconds": 129.4,
+   "server_group_absent": true
+  },
+  {
+   "as_expected": {
+    "lifecycle_passed": true,
+    "run_status": true,
+    "technically_complete": true
+   },
+   "cleanup_verified": true,
+   "error": null,
+   "evaluator": {
+    "call_errors": [],
+    "calls_recorded": 5852,
+    "counts": {
+     "answered": 5852
+    },
+    "gate": {
+     "raw_plus_computed_record": "eligible_for_memory_or_supervision",
+     "raw_plus_computed_record_plus_safeguard": "eligible_for_memory_or_supervision"
+    },
+    "gate_status": "complete",
+    "lifecycle_errors": [],
+    "lifecycle_passed": true,
+    "manifest_verified": true,
+    "run_status": "complete",
+    "stop_reason": null,
+    "technically_complete": true
+   },
+   "evidence_class": "scripted_cpu_rehearsal",
+   "evidence_dir": "/home/jingjing/t4-sr1-rehearsals/nominal_oracle-1791510320/evidence",
+   "expected": {
+    "lifecycle_passed": true,
+    "run_status": "complete",
+    "technically_complete": true
+   },
+   "failed_stage": null,
+   "gpu_compatibility_evidence": false,
+   "lifecycle_deadline_met": true,
+   "lifecycle_verdict_passed": true,
+   "note": "scripted CPU stub with scripted answers: labels here are not results",
+   "questionnaire_stage": {
+    "calls_recorded": 5852,
+    "counts": {
+     "answered": 5852
+    },
+    "phase_reached": "development_pass_1",
+    "probe_set_sha256": "f93ec44bab00453147e8e7e555704b60edc8220e6b5677b89d199ce8fca5e02c",
+    "scheduled_calls": 5852,
+    "status": "complete",
+    "stop_reason": null
+   },
+   "request_cap": 6613,
+   "requests_by_kind": {
+    "cancellation_probe": 4,
+    "inference": 4,
+    "questionnaire": 5852,
+    "startup_probe": 3
+   },
+   "requests_issued": 5863,
+   "scenario": "nominal_oracle",
+   "seconds": 144.9,
+   "server_group_absent": true
+  }
+ ],
+ "schema": "progress_subgoal_v1_runtime2_cpu_rehearsals_v1"
+}
