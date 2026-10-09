@@ -1,0 +1,90 @@
+clone at 9655dbfa1a16f6e6c6f44dac22a6673d994966d7; basis object: commit; baseline: commit; load 5.33 4.41 3.80 3/261 211547
+== builder check
+{"derived_files": 31, "checked": true, "network_calls": 0, "gpu_launches": 0, "provider_calls": 0}
+builder exit 0
+== token cross-check (transformers) reproduces the committed audits
+audit exit 0
+== review checks
+{
+ "passed": true,
+ "exit_code": 1,
+ "refused_at_live_gate": true,
+ "nvidia_smi_called": false,
+ "temporary_files_left": [],
+ "refusal": "research.evidence_memory_v1_session_a.binding.LiveRefused: evidence memory v1 session A live path refused: unresolved placeholders: experiment.withheld_seed_sha256, kernel_id, model.kaggle_source, model.mounted_path; frozen set case source is 'development_stand_in', not withheld (owner gate: draw the withheld seed and build the frozen set); frozen set seed does not match the committed withheld seed SHA-256; GPU-disabled package: Track 2 Stage 1 has no approved live run (LIVE_ENABLED is False)"
+}
+review-check a exit 0
+launch package refused:
+  unresolved placeholders: experiment.withheld_seed_sha256, kernel_id, model.kaggle_source, model.mounted_path
+  frozen set case source is 'development_stand_in', not withheld (owner gate: draw the withheld seed and build the frozen set)
+  frozen set seed does not match the committed withheld seed SHA-256
+  GPU-disabled package: Track 2 Stage 1 has no approved live run (LIVE_ENABLED is False)
+launch-build a exit 1 (must be 1)
+{
+ "passed": true,
+ "exit_code": 1,
+ "refused_at_live_gate": true,
+ "nvidia_smi_called": false,
+ "temporary_files_left": [],
+ "refusal": "research.evidence_memory_v1_session_b.binding.LiveRefused: evidence memory v1 session B live path refused: unresolved placeholders: experiment.withheld_seed_sha256, kernel_id, model.kaggle_source, model.mounted_path; frozen set case source is 'development_stand_in', not withheld (owner gate: draw the withheld seed and build the frozen set); frozen set seed does not match the committed withheld seed SHA-256; GPU-disabled package: Track 2 Stage 1 has no approved live run (LIVE_ENABLED is False)"
+}
+review-check b exit 0
+launch package refused:
+  unresolved placeholders: experiment.withheld_seed_sha256, kernel_id, model.kaggle_source, model.mounted_path
+  frozen set case source is 'development_stand_in', not withheld (owner gate: draw the withheld seed and build the frozen set)
+  frozen set seed does not match the committed withheld seed SHA-256
+  GPU-disabled package: Track 2 Stage 1 has no approved live run (LIVE_ENABLED is False)
+launch-build b exit 1 (must be 1)
+== successor group
+{
+ "passed": true,
+ "summary": {
+  "run": 150,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0
+ },
+ "snapshots_reproduce": {
+  "A": {
+   "review_lock_sha256": "5539e1266c5fd6ccad5881878a9b5699b822dd7d97b82e3ff9f02ea2e7246b41",
+   "profile.ipynb": true,
+   "kernel-metadata.json": true,
+   "review-source-lock.json": true
+  },
+  "B": {
+   "review_lock_sha256": "fb94736b47c2aee8d3b98f07fc912a8f8f3f2b12c4e24bd158f1504c671fe39f",
+   "profile.ipynb": true,
+   "kernel-metadata.json": true,
+   "review-source-lock.json": true
+  }
+ },
+ "seconds": 1024.4
+}
+successor exit 0
+== track2 group
+{
+ "passed": true,
+ "summary": {
+  "run": 157,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0
+ },
+ "snapshots_reproduce": {
+  "A": {
+   "review_lock_sha256": "5539e1266c5fd6ccad5881878a9b5699b822dd7d97b82e3ff9f02ea2e7246b41",
+   "profile.ipynb": true,
+   "kernel-metadata.json": true,
+   "review-source-lock.json": true
+  },
+  "B": {
+   "review_lock_sha256": "fb94736b47c2aee8d3b98f07fc912a8f8f3f2b12c4e24bd158f1504c671fe39f",
+   "profile.ipynb": true,
+   "kernel-metadata.json": true,
+   "review-source-lock.json": true
+  }
+ },
+ "seconds": 1797.1
+}
+track2 exit 0
+DONE Thu Oct  8 22:13:57 EDT 2026 load 3.18 4.54 5.04 1/218 567656

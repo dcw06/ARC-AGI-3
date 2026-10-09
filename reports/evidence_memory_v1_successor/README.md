@@ -11,8 +11,8 @@ inspected.
 
 | Session | Package | Review snapshot (r1) | Review lock SHA-256 |
 |---|---|---|---|
-| A (groups 0-5, 2,896 calls) | `research/evidence_memory_v1_session_a/` | `notebooks/evidence-memory-v1-session-a-review-r1/` | see `verification.md` |
-| B (groups 6-11, 2,832 calls) | `research/evidence_memory_v1_session_b/` | `notebooks/evidence-memory-v1-session-b-review-r1/` | see `verification.md` |
+| A (groups 0-5, 2,896 calls) | `research/evidence_memory_v1_session_a/` | `notebooks/evidence-memory-v1-session-a-review-r1/` | `5539e1266c5fd6ccad5881878a9b5699b822dd7d97b82e3ff9f02ea2e7246b41` |
+| B (groups 6-11, 2,832 calls) | `research/evidence_memory_v1_session_b/` | `notebooks/evidence-memory-v1-session-b-review-r1/` | `fb94736b47c2aee8d3b98f07fc912a8f8f3f2b12c4e24bd158f1504c671fe39f` |
 
 **Shared code.**
 - `research/evidence_memory_v1/successor/`:
@@ -38,4 +38,5 @@ inspected.
   and imports the live path.
 - `../evidence_memory_v1_session_{a,b}_review_check_r1.json`: each GPU-disabled review notebook, executed with a
   decoy `nvidia-smi`, stops at the live gate.
-- `verification.md`, `cpu_checks_*.json` and `.log`: the Linux CPU test and rehearsal record.
+- `verification.md`, `cpu_checks_*.json` and `.log`, `fresh_clone_run.sh` and `.log`: the Linux CPU test and
+  rehearsal record, from a fresh clone at `9655dbf`.
