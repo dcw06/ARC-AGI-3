@@ -77,9 +77,10 @@ def main():
               'note': 'scripted answers; labels and rates here are not results'}
     if args.old_evidence:
         from research.progress_subgoal_v1.evaluate_run import evaluate_output as old_evaluate
+        from research.progress_subgoal_v1.evidence import load_verified  # the old runner's verified loader
         old = old_evaluate(args.old_evidence, mode='rehearsal', rehearsal_seconds=args.old_rehearsal_seconds)
-        old_calls = sorted((args.old_evidence / 'worker/run/calls').iterdir())
-        old_contents = [json.loads(p.read_bytes()).get('response') for p in old_calls]
+        old_calls = load_verified(args.old_evidence / 'worker/run')['calls']
+        old_contents = [c.get('response') if c.get('status') == 'answered' else None for c in old_calls]
         record.update(old_evidence=str(args.old_evidence), old_technically_complete=old['technically_complete'],
                       old_gate=old['gate'], old_retained_answers_equal_successor=old_contents == retained,
                       old_analysis_equals_successor_analysis=old['analysis'] == value['analysis'])
