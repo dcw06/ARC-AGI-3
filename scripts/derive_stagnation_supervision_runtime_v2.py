@@ -133,7 +133,12 @@ TRACK3 = {
         ("def run(output, working, *, started, root=ROOT, mode='live', internal_seconds=None, fault='none', session=None):",
          "def run(output, working, *, started, root=ROOT, mode='live', internal_seconds=None, fault='none', session=None,\n"
          "        staged_inputs=None, install_seconds=None):", 1),
-        (f'    from {CL}.supervisor import LIVE_INTERNAL_SECONDS', f'    from {RT}.supervisor import LIVE_INTERNAL_SECONDS', 1),
+        # The notebook (image) interpreter has no game packages: importing the supervisor module here pulls
+        # agent -> arcengine into it (found by the staged CPU rehearsal on a base CPython 3.12 interpreter; the
+        # action-effect-history v1 launcher that ran live never imported it). The values are identical.
+        (f'    from {CL}.supervisor import LIVE_INTERNAL_SECONDS',
+         f'    from {RT}.authority import SESSION_LIMITS  # stdlib-only closure in the notebook interpreter\n'
+         "    LIVE_INTERNAL_SECONDS = {s: v['internal_seconds'] for s, v in SESSION_LIMITS.items()}  # 5100 / 4500", 1),
         (f"    if mode == 'live':\n        from {CL}.authority import consume_runtime, require\n        execution = require(root)",
          f"    if mode == 'live':\n        from {RT}.authority import consume_runtime, require\n"
          "        if staged_inputs is not None or install_seconds is not None:\n"

@@ -142,7 +142,10 @@ def review_check(revision, record=False):
                'cpu_rehearsal_of_embedded_cell': rehearsed,
                'evidence_class': 'scripted_cpu_rehearsal_injected_gpu', 'gpu_compatibility_evidence': False,
                'gpu_runs': 0, 'provider_calls': 0, 'authorized_seconds': 0}
+    reason = refused['refusal'] or ''
     receipt['passed'] = (refused['exit_code'] != 0 and refused['refused_at_live_gate'] and not refused['nvidia_smi_called']
+                         and 'unresolved placeholders' in reason and 'no review source lock' in reason
+                         and 'protocol unreadable' not in reason
                          and not refused['temporary_files_left'] and not refused['kaggle_paths_touched']
                          and rehearsed['technically_complete'] and not rehearsed['problems']
                          and all(v is True for v in rehearsed['cleanup'].values())

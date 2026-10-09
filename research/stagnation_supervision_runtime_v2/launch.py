@@ -127,7 +127,8 @@ def run_supervisor(output, working, game_python, model_python, games, *, started
 def run(output, working, *, started, root=ROOT, mode='live', internal_seconds=None, fault='none', session=None,
         staged_inputs=None, install_seconds=None):
     """Installation, supervisor, evidence and cleanup all charged to `started`."""
-    from research.stagnation_supervision_runtime_v2.supervisor import LIVE_INTERNAL_SECONDS
+    from research.stagnation_supervision_runtime_v2.authority import SESSION_LIMITS  # stdlib-only closure in the notebook interpreter
+    LIVE_INTERNAL_SECONDS = {s: v['internal_seconds'] for s, v in SESSION_LIMITS.items()}  # 5100 / 4500
     if str(session) not in LIVE_INTERNAL_SECONDS:
         raise ValueError('unknown session')
     internal_seconds = LIVE_INTERNAL_SECONDS[str(session)] if internal_seconds is None else internal_seconds

@@ -1,0 +1,474 @@
+{
+ "causality": {
+  "failures": [],
+  "passed": true,
+  "steps_prefix_replayed": 1692,
+  "trajectories": 152
+ },
+ "continuation": {
+  "archived_real_development_play": {
+   "ar25": {
+    "episodes": 4,
+    "lc_points": 0,
+    "st_points": 40,
+    "steps": 48,
+    "trigger_steps_at_lc": [],
+    "triggers": 8,
+    "triggers_at_lc": 0
+   },
+   "s5i5": {
+    "episodes": 4,
+    "lc_points": 0,
+    "st_points": 40,
+    "steps": 48,
+    "trigger_steps_at_lc": [],
+    "triggers": 2,
+    "triggers_at_lc": 0
+   },
+   "wa30": {
+    "episodes": 4,
+    "lc_points": 48,
+    "st_points": 0,
+    "steps": 48,
+    "trigger_steps_at_lc": [
+     "b2-wa30-baseline@7"
+    ],
+    "triggers": 1,
+    "triggers_at_lc": 1
+   }
+  },
+  "held_out_fixtures": {
+   "false_intervention_trajectories": 4,
+   "families_with_false_interventions": [
+    "delayed_effect"
+   ],
+   "hard_negatives": 36,
+   "hard_negatives_with_false_intervention": 4,
+   "precision": 0.9242424242424242,
+   "recall": 0.9,
+   "trajectories": 76
+  },
+  "held_out_matches_retained_results": true,
+  "note": "Descriptive. The archive is 12-step episodes of exposed development play without intervention; labels are the frozen mechanical LC/ST rule, not independent judgements.",
+  "passed": true
+ },
+ "display_vs_progress": {
+  "counter_only_repeat": {
+   "first_opportunity": {
+    "level_completed_in_window": false,
+    "new_frames_in_window": 10,
+    "opened_at": 9,
+    "signals": [
+     "tiny_effect_repeat"
+    ],
+    "status": "not_recovered"
+   },
+   "labels": {
+    "IND": 2,
+    "LC": 0,
+    "ST": 28,
+    "UNOBSERVED": 0
+   }
+  },
+  "genuine_escape": {
+   "actions_to_exit": 1,
+   "completed_levels": 1,
+   "level_completed_in_window": true,
+   "status": "recovered"
+  },
+  "ls20_engine": {
+   "display_rows_from": 60,
+   "game_id": "ls20-9607627b",
+   "note": "Descriptive only (like the post-hoc Tier B inspection): three fixed policies, no model, no selection, no endpoint. It shows what the frozen full-frame detector and LC labels see on ls20.",
+   "policies": {
+    "alternate_1_2": {
+     "actions": [
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2,
+      1,
+      2
+     ],
+     "completed_levels": 0,
+     "detector": {
+      "firing_steps": [],
+      "triggers": []
+     },
+     "display_only_change_steps": 0,
+     "display_rows_from": 60,
+     "labels": {
+      "IND": 0,
+      "LC": 40,
+      "ST": 0,
+      "UNOBSERVED": 0
+     },
+     "observed_steps": 40,
+     "oscillation": {
+      "frame_above_display_revisit_steps": 39
+     },
+     "scope": "descriptive post-hoc report; not an endpoint, label, gate, mask or detector input",
+     "state_novelty": {
+      "frame_above_display_new_steps": 1,
+      "full_frame_new_steps": 40
+     },
+     "steps": 40,
+     "terminal": "NOT_FINISHED"
+    },
+    "repeat_1": {
+     "actions": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+     ],
+     "completed_levels": 0,
+     "detector": {
+      "firing_steps": [
+       7,
+       8,
+       9,
+       10,
+       11,
+       12,
+       13,
+       14,
+       15,
+       16,
+       17,
+       18,
+       19,
+       20,
+       21,
+       22,
+       23,
+       24,
+       25,
+       26,
+       27,
+       28,
+       29,
+       30,
+       31,
+       32,
+       33,
+       34,
+       35,
+       36,
+       37,
+       38,
+       39
+      ],
+      "triggers": [
+       7,
+       13,
+       19,
+       25,
+       31,
+       37
+      ]
+     },
+     "display_only_change_steps": 0,
+     "display_rows_from": 60,
+     "labels": {
+      "IND": 0,
+      "LC": 8,
+      "ST": 32,
+      "UNOBSERVED": 0
+     },
+     "observed_steps": 40,
+     "oscillation": {
+      "frame_above_display_revisit_steps": 34
+     },
+     "scope": "descriptive post-hoc report; not an endpoint, label, gate, mask or detector input",
+     "state_novelty": {
+      "frame_above_display_new_steps": 6,
+      "full_frame_new_steps": 6
+     },
+     "steps": 40,
+     "terminal": "NOT_FINISHED"
+    },
+    "rotate_1_2_3_4": {
+     "actions": [
+      1,
+      2,
+      3,
+      4,
+      1,
+      2,
+      3,
+      4,
+      1,
+      2,
+      3,
+      4,
+      1,
+      2,
+      3,
+      4,
+      1,
+      2,
+      3,
+      4,
+      1,
+      2,
+      3,
+      4,
+      1,
+      2,
+      3,
+      4,
+      1,
+      2,
+      3,
+      4,
+      1,
+      2,
+      3,
+      4,
+      1,
+      2,
+      3,
+      4
+     ],
+     "completed_levels": 0,
+     "detector": {
+      "firing_steps": [],
+      "triggers": []
+     },
+     "display_only_change_steps": 0,
+     "display_rows_from": 60,
+     "labels": {
+      "IND": 0,
+      "LC": 40,
+      "ST": 0,
+      "UNOBSERVED": 0
+     },
+     "observed_steps": 40,
+     "oscillation": {
+      "frame_above_display_revisit_steps": 38
+     },
+     "scope": "descriptive post-hoc report; not an endpoint, label, gate, mask or detector input",
+     "state_novelty": {
+      "frame_above_display_new_steps": 2,
+      "full_frame_new_steps": 40
+     },
+     "steps": 40,
+     "terminal": "NOT_FINISHED"
+    }
+   },
+   "post_hoc": true,
+   "steps": 40
+  },
+  "oscillation_with_display": {
+   "completed_levels": 0,
+   "detector": {
+    "firing_steps": [],
+    "triggers": []
+   },
+   "display_only_change_steps": 0,
+   "display_rows_from": 60,
+   "labels": {
+    "IND": 0,
+    "LC": 40,
+    "ST": 0,
+    "UNOBSERVED": 0
+   },
+   "observed_steps": 40,
+   "opportunities": 0,
+   "oscillation": {
+    "frame_above_display_revisit_steps": 39
+   },
+   "scope": "descriptive post-hoc report; not an endpoint, label, gate, mask or detector input",
+   "state_novelty": {
+    "frame_above_display_new_steps": 1,
+    "full_frame_new_steps": 40
+   },
+   "steps": 40
+  },
+  "passed": true,
+  "problems": [],
+  "solving_source": "levels_completed deltas reported by the environment (closed_loop.evaluate.evaluate_episode)"
+ },
+ "frozen_files_sha256": {
+  "detector.py": "ee8b340cf69cd092e37508b86152da4b33073bbb9ab5caf833cef6ec6e931d62",
+  "fixtures.py": "974c66d886551532a9b8bb5f9cbc00c7899b0d8e0cb55d1324a4edec0e2ea1d1",
+  "intervention.py": "ce76c3d66ec7969b11673aa8d497c84d7c40590d93fb546d0540593e5518975b",
+  "outcomes.py": "22ee47772b7189c39116365b88bb3e8d0a838704b799c32f65b927a10bf9247e",
+  "supervision.py": "7251b1d398caa83334cb9945114e229bebcf0749e982708b5c04bc5a28032945",
+  "thresholds.py": "0a88196a13f74fd3ccb9a89441926ea54b5e3209b9589641b96461ffbfee3985",
+  "trigger_spec.json": "8dc8d9097d4764a3ecbe5185b3c8ec021d2ab15316e81f0515a67c3d9f6cd7d9"
+ },
+ "gpu_runs": 0,
+ "model_calls": 0,
+ "passed": true,
+ "terminal_and_failures": {
+  "calls_after_index_29": 0,
+  "failed_only_firings": 0,
+  "failure_calls": [
+   {
+    "charged_tokens": 100,
+    "delivered": null,
+    "error": true,
+    "finish": null,
+    "valid": false
+   },
+   {
+    "charged_tokens": 500,
+    "delivered": null,
+    "error": false,
+    "finish": "length",
+    "valid": false
+   },
+   {
+    "charged_tokens": 150,
+    "delivered": "Reflection (a hypothesis from a reviewer, not an observation):\nObserved pattern: The same action repeats with no lasting change.\nEvidence: action indices [12, 13]\nAssumption to reconsider: That repeating it will help.\nA test that would distinguish explanations: Try a different action once.\nTest actions: [{\"action_data\": {}, \"action_id\": 2}]\nA missing progress signal does not mean progress is impossible.",
+    "error": false,
+    "finish": "stop",
+    "valid": true
+   }
+  ],
+  "late_firing": {
+   "outcome": "suppressed_insufficient_remaining_actions",
+   "remaining_actions": 8
+  },
+  "level_change": [
+   "not_due",
+   "suppressed_segment_boundary",
+   "not_due"
+  ],
+  "passed": true,
+  "problems": [],
+  "reset": [
+   "not_due",
+   "suppressed_segment_boundary",
+   "not_due"
+  ],
+  "runner_level": "transport failure, storage exhaustion, cancellation, slow transport, monitor exit, surviving children and model-startup failure are exercised end to end by the connected rehearsal fault matrix (tests/test_stagnation_supervision_v1_connected.py and the runtime v2 connected tests); each ends without retry and without an outcome result",
+  "terminal": {
+   "detector_signals": [
+    {
+     "evidence": [
+      0,
+      1
+     ],
+     "signal": "state_action_recurrence",
+     "threshold": 2,
+     "value": 2
+    }
+   ],
+   "outcome": "suppressed_terminal_state",
+   "remaining_actions": 0
+  },
+  "terminal_in_window": [
+   "censored_terminal"
+  ],
+  "unknown_at_periodic_due_rule": "deferred_unobserved_state",
+  "unknown_at_periodic_due_runner": "suppressed_insufficient_remaining_actions",
+  "unknown_in_window": [
+   "indeterminate",
+   "censored_terminal"
+  ]
+ },
+ "thresholds": {
+  "cooldown_actions": 6,
+  "cooldown_trigger_steps": [
+   1,
+   7,
+   13
+  ],
+  "five_cells_tiny": false,
+  "four_cells_tiny": true,
+  "passed": true,
+  "problems": [],
+  "recurrence_second_repeat": [
+   [],
+   [
+    "state_action_recurrence"
+   ]
+  ],
+  "spec_params": {
+   "no_progress_horizon": null,
+   "novelty_stall": null,
+   "prediction_failures": null,
+   "repeat_no_effect": null,
+   "state_action_recurrence": 2,
+   "tiny_effect_repeat": 10
+  },
+  "tiny_cells": 4,
+  "tiny_streak_first_firing_index": 9,
+  "tiny_streak_with_failed_dispatch_first_firing_index": 10,
+  "tiny_streak_with_unknown_outcome_first_firing_index": 14
+ },
+ "version": "stagnation_supervision_runtime_v2_detector_verification_v1"
+}

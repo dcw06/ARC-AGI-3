@@ -101,13 +101,18 @@ def scan(root, path):
     tree = ast.parse(path.read_bytes(), filename=str(path))
     modules, data, third, unresolved = set(), set(), set(), set()
 
+    def excluded(dotted):
+        base = dotted.replace('.', '/')
+        return base + '.py' in EXCLUDED or base + '/__init__.py' in EXCLUDED
+
     def want(dotted):
         top = dotted.split('.')[0]
         if top in PROJECT:
             if module_path(root, dotted) is not None:
                 modules.add(dotted)
                 return True
-            unresolved.add(dotted)
+            if not excluded(dotted):  # an excluded module may be absent from an extracted payload by design
+                unresolved.add(dotted)
         elif top and top not in sys.stdlib_module_names and top != '__future__':
             third.add(top)
         return False
@@ -121,7 +126,7 @@ def scan(root, path):
             if base and base.split('.')[0] in PROJECT:
                 if module_path(root, base) is not None:
                     modules.add(base)
-                else:
+                elif not excluded(base):
                     unresolved.add(base)
                 for alias in node.names:
                     sub = base + '.' + alias.name
@@ -147,8 +152,13 @@ def scan(root, path):
 
 def closure(root=ROOT, entries=ENTRY_MODULES, files=ENTRY_FILES, explicit=EXPLICIT):
     root = Path(root)
+    import json
+    # Every frozen science file the protocol binds by hash travels with the payload: the gate re-hashes them in the
+    # extracted source, and reviewers see the exact detector, supervision, outcome and evaluator code.
+    science = json.loads((root / 'research/stagnation_supervision_runtime_v2/protocol.json').read_bytes())['science']['files']
     queue = [module_path(root, m).relative_to(root).as_posix() for m in entries] + list(files)
-    seen, data, third, unresolved, skipped = set(), set(explicit), {}, set(), set()
+    queue += [n for n in science if n.endswith('.py')]
+    seen, data, third, unresolved, skipped = set(), set(explicit) | {n for n in science if not n.endswith('.py')}, {}, set(), set()
     while queue:
         name = queue.pop()
         if name in EXCLUDED:

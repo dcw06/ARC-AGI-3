@@ -325,7 +325,7 @@
   },
   {
    "derived": "research/stagnation_supervision_runtime_v2/launch.py",
-   "derived_sha256": "c29978db1f4cf525ef2a400fcad1bd56a7ee8981ac95d23950877d19198d9567",
+   "derived_sha256": "7adfdec5d60e06b9cbabd6c5a1ad6fd9b26d53662eeca247ace7bcb906db192b",
    "kind": "python",
    "replacements": [
     [
@@ -345,7 +345,7 @@
     ],
     [
      "    from research.stagnation_supervision_v1.closed_loop.supervisor import LIVE_INTERNAL_SECONDS",
-     "    from research.stagnation_supervision_runtime_v2.supervisor import LIVE_INTERNAL_SECONDS",
+     "    from research.stagnation_supervision_runtime_v2.authority import SESSION_LIMITS  # stdlib-only closure in the notebook interpreter\n    LIVE_INTERNAL_SECONDS = {s: v['internal_seconds'] for s, v in SESSION_LIMITS.items()}  # 5100 / 4500",
      1
     ],
     [
