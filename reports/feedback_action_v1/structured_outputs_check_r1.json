@@ -1,0 +1,746 @@
+{
+ "schema": "feedback_action_v1_structured_outputs_check_v1",
+ "gpu_used": false,
+ "model_calls": 0,
+ "versions": {
+  "vllm": "0.19.0",
+  "xgrammar": "0.1.34",
+  "llguidance": "1.3.0",
+  "transformers": "4.57.6"
+ },
+ "configured_backend": "auto",
+ "disable_any_whitespace": false,
+ "schemas": {
+  "baseline/canary": {
+   "request_schema_sha256": "6fff0eb119697c24c4e40fd999fce8aaa49cd916fa67bd6924127d765cdb60ec",
+   "validated": true,
+   "backend": "xgrammar"
+  },
+  "baseline/s5i5_coordinate_only": {
+   "request_schema_sha256": "6fff0eb119697c24c4e40fd999fce8aaa49cd916fa67bd6924127d765cdb60ec",
+   "validated": true,
+   "backend": "xgrammar"
+  },
+  "candidate_current/s5i5_coordinate_only": {
+   "request_schema_sha256": "ac745f08d68fbfec9ea3af4379436b2e47f303532cda1bff7b4e8258cb1904ef",
+   "validated": true,
+   "backend": "xgrammar"
+  },
+  "candidate_ascii_only/s5i5_coordinate_only": {
+   "request_schema_sha256": "5f7ee1e6eb6b6da636cd6ae1514346c21e98268ae58c3abacb3ded605c2a66bf",
+   "validated": true,
+   "backend": "xgrammar"
+  },
+  "baseline/ls20_directional": {
+   "request_schema_sha256": "f1682da2b42709f465bc7944268a350c4e2abad0622c490d195effe334866a29",
+   "validated": true,
+   "backend": "xgrammar"
+  },
+  "candidate_current/ls20_directional": {
+   "request_schema_sha256": "9c70c7e369ee845e3e9e88c0bcfe34aed728d7827d373631f19649e86ffd329d",
+   "validated": true,
+   "backend": "xgrammar"
+  },
+  "candidate_ascii_only/ls20_directional": {
+   "request_schema_sha256": "738480170e2f24bd55f13d2829dcfac2eb3820f73ccbd8f364ac90de52d4bd68",
+   "validated": true,
+   "backend": "xgrammar"
+  },
+  "baseline/sk48_mixed": {
+   "request_schema_sha256": "19e51b31875f5aa86f1a02fd7f434280bcb0638d6e6a770a2548f8bd2458024f",
+   "validated": true,
+   "backend": "xgrammar"
+  },
+  "candidate_current/sk48_mixed": {
+   "request_schema_sha256": "fe20a992b3769236e7bf3b0cdbc449aeb0a021023e364a54e87728eefac6b633",
+   "validated": true,
+   "backend": "xgrammar"
+  },
+  "candidate_ascii_only/sk48_mixed": {
+   "request_schema_sha256": "cbd38110db9c5a2435c6ba4ca20ebd07b49620bf3a908c5fc684ce9fd1e35940",
+   "validated": true,
+   "backend": "xgrammar"
+  }
+ },
+ "cases": [
+  {
+   "schema": "baseline/canary",
+   "label": "simple action",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "baseline/s5i5_coordinate_only",
+   "label": "simple action",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "baseline/ls20_directional",
+   "label": "simple action",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "baseline/sk48_mixed",
+   "label": "simple action",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "baseline/canary",
+   "label": "ACTION6 at the corner",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "baseline/s5i5_coordinate_only",
+   "label": "ACTION6 at the corner",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "baseline/ls20_directional",
+   "label": "ACTION6 at the corner",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "baseline/sk48_mixed",
+   "label": "ACTION6 at the corner",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "baseline/canary",
+   "label": "illegal action id 5",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "baseline/s5i5_coordinate_only",
+   "label": "illegal action id 5",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "baseline/ls20_directional",
+   "label": "illegal action id 5",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "baseline/sk48_mixed",
+   "label": "illegal action id 5",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "baseline/canary",
+   "label": "ACTION6 x out of range",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "baseline/s5i5_coordinate_only",
+   "label": "ACTION6 x out of range",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "baseline/ls20_directional",
+   "label": "ACTION6 x out of range",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "baseline/sk48_mixed",
+   "label": "ACTION6 x out of range",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "baseline/canary",
+   "label": "simple action with data",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "baseline/s5i5_coordinate_only",
+   "label": "simple action with data",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "baseline/ls20_directional",
+   "label": "simple action with data",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "baseline/sk48_mixed",
+   "label": "simple action with data",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "baseline/canary",
+   "label": "extra key",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "baseline/s5i5_coordinate_only",
+   "label": "extra key",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "baseline/ls20_directional",
+   "label": "extra key",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "baseline/sk48_mixed",
+   "label": "extra key",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/s5i5_coordinate_only",
+   "label": "ASCII text, one citation",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/s5i5_coordinate_only",
+   "label": "ASCII text, one citation",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/ls20_directional",
+   "label": "ASCII text, one citation",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/ls20_directional",
+   "label": "ASCII text, one citation",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/sk48_mixed",
+   "label": "ASCII text, one citation",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/sk48_mixed",
+   "label": "ASCII text, one citation",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/s5i5_coordinate_only",
+   "label": "region of four cells",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/s5i5_coordinate_only",
+   "label": "region of four cells",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/ls20_directional",
+   "label": "region of four cells",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/ls20_directional",
+   "label": "region of four cells",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/sk48_mixed",
+   "label": "region of four cells",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/sk48_mixed",
+   "label": "region of four cells",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/s5i5_coordinate_only",
+   "label": "text at 240 ASCII characters",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/s5i5_coordinate_only",
+   "label": "text at 240 ASCII characters",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/ls20_directional",
+   "label": "text at 240 ASCII characters",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/ls20_directional",
+   "label": "text at 240 ASCII characters",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/sk48_mixed",
+   "label": "text at 240 ASCII characters",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/sk48_mixed",
+   "label": "text at 240 ASCII characters",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/s5i5_coordinate_only",
+   "label": "text at 241 characters",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/s5i5_coordinate_only",
+   "label": "text at 241 characters",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/ls20_directional",
+   "label": "text at 241 characters",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/ls20_directional",
+   "label": "text at 241 characters",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/sk48_mixed",
+   "label": "text at 241 characters",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/sk48_mixed",
+   "label": "text at 241 characters",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/s5i5_coordinate_only",
+   "label": "non-ASCII text (CJK)",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/s5i5_coordinate_only",
+   "label": "non-ASCII text (CJK)",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/ls20_directional",
+   "label": "non-ASCII text (CJK)",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/ls20_directional",
+   "label": "non-ASCII text (CJK)",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/sk48_mixed",
+   "label": "non-ASCII text (CJK)",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/sk48_mixed",
+   "label": "non-ASCII text (CJK)",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/s5i5_coordinate_only",
+   "label": "non-ASCII text (accented Latin)",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/s5i5_coordinate_only",
+   "label": "non-ASCII text (accented Latin)",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/ls20_directional",
+   "label": "non-ASCII text (accented Latin)",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/ls20_directional",
+   "label": "non-ASCII text (accented Latin)",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/sk48_mixed",
+   "label": "non-ASCII text (accented Latin)",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/sk48_mixed",
+   "label": "non-ASCII text (accented Latin)",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/s5i5_coordinate_only",
+   "label": "four citations",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/s5i5_coordinate_only",
+   "label": "four citations",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/ls20_directional",
+   "label": "four citations",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/ls20_directional",
+   "label": "four citations",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/sk48_mixed",
+   "label": "four citations",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/sk48_mixed",
+   "label": "four citations",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/s5i5_coordinate_only",
+   "label": "five citations",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/s5i5_coordinate_only",
+   "label": "five citations",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/ls20_directional",
+   "label": "five citations",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/ls20_directional",
+   "label": "five citations",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/sk48_mixed",
+   "label": "five citations",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/sk48_mixed",
+   "label": "five citations",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/s5i5_coordinate_only",
+   "label": "bad citation ref",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/s5i5_coordinate_only",
+   "label": "bad citation ref",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/ls20_directional",
+   "label": "bad citation ref",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/ls20_directional",
+   "label": "bad citation ref",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/sk48_mixed",
+   "label": "bad citation ref",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/sk48_mixed",
+   "label": "bad citation ref",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/s5i5_coordinate_only",
+   "label": "region of three cells",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/s5i5_coordinate_only",
+   "label": "region of three cells",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/ls20_directional",
+   "label": "region of three cells",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/ls20_directional",
+   "label": "region of three cells",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/sk48_mixed",
+   "label": "region of three cells",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/sk48_mixed",
+   "label": "region of three cells",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/s5i5_coordinate_only",
+   "label": "missing hypothesis_test",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/s5i5_coordinate_only",
+   "label": "missing hypothesis_test",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/ls20_directional",
+   "label": "missing hypothesis_test",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/ls20_directional",
+   "label": "missing hypothesis_test",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/sk48_mixed",
+   "label": "missing hypothesis_test",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/sk48_mixed",
+   "label": "missing hypothesis_test",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/s5i5_coordinate_only",
+   "label": "illegal action id 5",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/s5i5_coordinate_only",
+   "label": "illegal action id 5",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/ls20_directional",
+   "label": "illegal action id 5",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/ls20_directional",
+   "label": "illegal action id 5",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_current/sk48_mixed",
+   "label": "illegal action id 5",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "candidate_ascii_only/sk48_mixed",
+   "label": "illegal action id 5",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  }
+ ],
+ "all_schemas_accepted": true,
+ "backends": [
+  "xgrammar"
+ ],
+ "decoder_admits_a_study_invalid_answer": [],
+ "decoder_rejects_a_study_valid_answer": [],
+ "passed": true
+}
