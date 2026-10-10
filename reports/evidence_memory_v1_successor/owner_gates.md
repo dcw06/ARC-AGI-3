@@ -1,9 +1,13 @@
 # Track 2 Stage 1 successor: owner gates
 
 **What this is.** The steps that only the owner, or a human they authorize, may take before either session can run.
-Each step states its exact procedure. Only gate 0 has been taken (the protocol freeze of October 9, 2026). No seed
-has been drawn, no withheld set built, no private binding resolved, and no approval, authorization, reservation, claim
-or upload made.
+Each step states its exact procedure.
+- **Gate 0** was taken on October 9, 2026 (the protocol freeze).
+- **Gates 1 and 2** were taken for a first draw on October 10, 2026. That draw was then **retired before
+  execution**, because the recall decoding design changed after it (owner amendment; frozen protocol §5). Its records
+  are kept below. Gates 1 and 2 are repeated for a fresh draw (draw 2) after the revision that freezes the complete
+  final design (review snapshots r7).
+- No approval, authorization, reservation, claim or upload has been made.
 
 **Protocol of record.** `reports/evidence_memory_v1_protocol_v2_frozen.md` (frozen October 9, 2026). Its section
 numbers are the draft's; "protocol v2 section N" below refers to the frozen text.
@@ -29,12 +33,16 @@ SHA-256.
 
 ## Gate 1. Draw and retain the withheld seed (protocol v2 section 5, steps 1 to 3)
 
-**Done on October 10, 2026.**
+**Draw 1: drawn October 10, 2026, then retired before execution.**
 - The owner drew the nonce and checked both copies personally.
-- Commitment: `7f11432aed195bbd18732abd6cb513024b48e401de17c5fd27e11b17dadfb04b`. It is recorded in
-  `seed-commitment.json`, in each session's `protocol.json` and in the frozen protocol §5 (review snapshots r4).
-- Copy checks: `nonce_custody.json`. Both copies are on one computer, on separate filesystems.
-- The procedure below is kept for a redraw.
+- Commitment: `7f11432aed195bbd18732abd6cb513024b48e401de17c5fd27e11b17dadfb04b` (review snapshots r4 to r6).
+- **Retired** later on October 10 by the owner's amendment, because the recall decoding schema changed after the
+  draw (frozen protocol §5). It is not an automated-check failure. Its commitment and copy checks stay published in
+  `seed-commitment.json` (`retired`) and `nonce_custody.json` (`retired_draws`). Its nonce is never used again:
+  `freeze withheld` refuses a retired commitment.
+
+**Draw 2: awaiting the owner.** It is drawn after the commit of review snapshots r7, which freezes the complete
+final design. Use the new file names below (`withheld-nonce-2.txt`), so no retired copy is overwritten or reused.
 
 **The holder rule (decided by the owner on October 9, 2026; `nonce_custody.json`).**
 - **One human holder.** The owner draws the nonce and keeps **two separately stored copies outside every
@@ -42,19 +50,21 @@ SHA-256.
 - **Checks.** The owner checks each copy personally, by recomputing the commitment. The check prints only the hash.
 - **Limitation.** There is no independent second holder, so the owner is a single point of failure. Two copies on
   one computer would not survive losing that computer.
-- **Frozen text.** The frozen protocol's §5 still reads "open". The rule is copied in at the next review revision,
-  which the commitment requires anyway.
+- **Frozen text.** The rule is in the frozen protocol's §5 (review snapshots r4 on).
 
 Run this on the owner's own machine, with no model or assistant session watching the terminal. Replace
 `<copy B folder>` with a second location outside every repository, ideally on another device or removable drive.
 
 ```sh
 umask 077
-mkdir -p ~/private/track2
-python3 -c "import secrets; print(secrets.token_hex(16))" > ~/private/track2/withheld-nonce.txt
-mkdir -p "<copy B folder>" && cp ~/private/track2/withheld-nonce.txt "<copy B folder>/withheld-nonce.txt"
+set -C   # never overwrite an existing file: the retired draw-1 copies stay untouched
+mkdir -p ~/private/track2 "<copy B folder>"
+for d in ~/private/track2 "<copy B folder>"; do if git -C "$d" rev-parse 2>/dev/null; then echo "inside a repository: $d"; exit 1; fi; done
+python3 -c "import secrets; print(secrets.token_hex(16))" > ~/private/track2/withheld-nonce-2.txt
+cat ~/private/track2/withheld-nonce-2.txt > "<copy B folder>/withheld-nonce-2.txt"
+cmp -s ~/private/track2/withheld-nonce-2.txt "<copy B folder>/withheld-nonce-2.txt" && echo "copies identical"
 date -u
-for f in ~/private/track2/withheld-nonce.txt "<copy B folder>/withheld-nonce.txt"; do python3 -c "import hashlib, pathlib, sys; n = pathlib.Path(sys.argv[1]).read_text().strip(); print(hashlib.sha256(('evidence-memory-v1-stage1-withheld/' + n).encode()).hexdigest())" "$f"; done
+for f in ~/private/track2/withheld-nonce-2.txt "<copy B folder>/withheld-nonce-2.txt"; do python3 -c "import hashlib, pathlib, sys; n = pathlib.Path(sys.argv[1]).read_text().strip(); print(hashlib.sha256(('evidence-memory-v1-stage1-withheld/' + n).encode()).hexdigest())" "$f"; done
 ```
 
 - **Where the nonce goes.** It goes only into the two files. Nothing in these commands prints it.
@@ -71,7 +81,11 @@ for f in ~/private/track2/withheld-nonce.txt "<copy B folder>/withheld-nonce.txt
 - **Retention.** Never commit the nonce, never paste it into a conversation with a model, and never put it in a
   notebook output.
 - **Commitment.** Write only the printed hash into `research/evidence_memory_v1/successor/seed-commitment.json`
-  (`withheld_seed_sha256`; `status: committed`) and into the frozen protocol revision. Commit and publish that hash.
+  (`withheld_seed_sha256`; `status: committed`; the `retired` list stays) and into the frozen protocol revision.
+  Commit and publish that hash.
+- **If the design changes after a draw: retire and redraw** (frozen protocol §5). Publish the retired commitment
+  and the reason, keep its records, never use its nonce again, freeze the changed design in a new revision, and
+  repeat this gate with a new nonce and new file names.
 - **If the nonce is lost before the run:** draw a new one, commit it afresh and record the loss.
 - **If it is lost after the run:** the results stand but are recorded as not independently reproducible.
 - **If a draw fails the automated checks (gate 2): refuse and redraw** (frozen protocol §4). Publish the failed
@@ -80,7 +94,10 @@ for f in ~/private/track2/withheld-nonce.txt "<copy B folder>/withheld-nonce.txt
 
 ## Gate 2. Build the withheld frozen sets (protocol v2 section 5, step 4); private checkout only
 
-**Done on October 10, 2026, in a private checkout (never published).**
+**Draw 2: awaiting gate 1.** Its counts, caps and hashes are recorded mechanically in `withheld_draw_values.json`.
+
+**Draw 1 (retired before execution): done on October 10, 2026, in a private checkout (never published).** The
+private preparation built on it (gates 2 to 5) is kept, marked retired, and is never used for a launch.
 - The owner ran `freeze withheld` for both sessions in their own terminal; only counts and hashes were printed.
 - Both sets passed every automated check with 0 exclusions:
   - A: frozen set `4bc9d66c…`, 2,784 scheduled calls (2,592 + 192 repeat);
@@ -99,15 +116,15 @@ cross-check. No person opens `probes.json` or `token-audit.json`.
 
 ```sh
 # in the private checkout of the approved successor revision
-python -m research.evidence_memory_v1.successor.freeze withheld --session A --nonce-file ~/private/track2/withheld-nonce.txt
-python -m research.evidence_memory_v1.successor.freeze withheld --session B --nonce-file ~/private/track2/withheld-nonce.txt
+python -m research.evidence_memory_v1.successor.freeze withheld --session A --nonce-file ~/private/track2/withheld-nonce-2.txt
+python -m research.evidence_memory_v1.successor.freeze withheld --session B --nonce-file ~/private/track2/withheld-nonce-2.txt
 EVIDENCE_MEMORY_TOKENIZER=<pinned tokenizer dir> <isolated transformers 4.57.6 env>/bin/python \
     scripts/audit_evidence_memory_v1_tokens.py --no-report
 python scripts/build_evidence_memory_v1_sessions.py
 ```
 
 **What `freeze withheld` does.**
-1. It refuses unless `sha256(seed)` equals the committed hash.
+1. It refuses unless `sha256(seed)` equals the committed hash, and refuses a retired commitment.
 2. It builds `stage1.build(session, seed, partition='withheld', case_source='withheld')`.
 3. It rebuilds every trajectory and requires zero exclusion conditions. stage1.build has no exclusion step, so any
    failure refuses to write (the owner's refuse-and-redraw decision, frozen protocol §4).
@@ -176,8 +193,9 @@ These records are made by the owner and the reviewer, never by tooling:
 - the Record C compute authorization, bound to the protocol, the source approval, the dataset and every limit:
   - `authorized_seconds` 3,600, `internal_seconds` 3,300, `admission_cutoff_seconds` 3,000, cleanup reserve 300;
   - one attempt, zero retries;
-  - `maximum_model_requests` at the plan's worst case for the withheld sets (186,540 for A and 198,332 for B, which
-    counts metrics reads), beside the 2,784 / 2,960 study-completion ceilings, both stated (frozen protocol §12);
+  - `maximum_model_requests` at the plan's worst case for the withheld set (12 + 67 × completions, which counts
+    metrics reads), beside the study-completion ceiling, both stated (frozen protocol §12) and taken from
+    `withheld_draw_values.json` for the current draw;
   - **session B only:** `session_a_technical_evaluation_sha256`, the SHA-256 of session A's retained technical
     evaluation (below);
 - the execution lock and an unconsumed reservation.

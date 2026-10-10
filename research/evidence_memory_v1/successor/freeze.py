@@ -43,9 +43,12 @@ def seed_from_nonce_file(path):
 
 
 def committed_seed_sha256(commitment_path=None):
-    value = json.loads(Path(commitment_path or COMMITMENT).read_bytes())['withheld_seed_sha256']
+    record = json.loads(Path(commitment_path or COMMITMENT).read_bytes())
+    value = record['withheld_seed_sha256']
     if not re.fullmatch(r'[0-9a-f]{64}', value):
         raise PermissionError('no withheld seed has been committed (owner gate)')
+    if value in {draw.get('withheld_seed_sha256') for draw in record.get('retired', [])}:
+        raise PermissionError('this commitment belongs to a retired draw; its nonce is never used again')
     return value
 
 

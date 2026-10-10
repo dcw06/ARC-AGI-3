@@ -1,0 +1,15 @@
+{
+ "schema": "evidence_memory_v1_session_a_review_check_v1",
+ "review_revision": 7,
+ "review_lock_sha256": "364d06e074511133ac9e58d1bf19cf8190b3b940a29598fade8940f092a91bd3",
+ "evidence_class": "scripted_cpu_rehearsal",
+ "gpu_compatibility_evidence": false,
+ "exit_code": 1,
+ "refused_at_live_gate": true,
+ "refusal": "research.evidence_memory_v1_session_a.binding.LiveRefused: evidence memory v1 session A live path refused: unresolved placeholders: experiment.withheld_seed_sha256, kernel_id, model.kaggle_source, model.mounted_path; frozen set case source is 'development_stand_in', not withheld (owner gate: draw the withheld seed and build the frozen set); frozen set seed does not match the committed withheld seed SHA-256; GPU-disabled package: Track 2 Stage 1 has no approved live run (LIVE_ENABLED is False)",
+ "nvidia_smi_called": false,
+ "temporary_files_left": [],
+ "kaggle_paths_touched": false,
+ "stderr_tail": "Traceback (most recent call last):\n  File \"/tmp/evidence-memory-session-a-review-check-lvt78g5o/review_cell.py\", line 19, in <module>\n    consume(source, working)  # the live gate: refuses here, before any installation, model or GPU use\n    ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/evidence-memory-session-a-review-check-lvt78g5o/tmp/evidence-memory-session-a-source-yaa81kyb/research/evidence_memory_v1_session_a/binding.py\", line 289, in consume\n  File \"/tmp/evidence-memory-session-a-review-check-lvt78g5o/tmp/evidence-memory-session-a-source-yaa81kyb/research/evidence_memory_v1_session_a/binding.py\", line 267, in require_live\nresearch.evidence_memory_v1_session_a.binding.LiveRefused: evidence memory v1 session A live path refused: unresolved placeholders: experiment.withheld_seed_sha256, kernel_id, model.kaggle_source, model.mounted_path; frozen set case source is 'development_stand_in', not withheld (owner gate: draw the withheld seed and build the frozen set); frozen set seed does not match the committed withheld seed SHA-256; GPU-disabled package: Track 2 Stage 1 has no approved live run (LIVE_ENABLED is False)\n",
+ "passed": true
+}

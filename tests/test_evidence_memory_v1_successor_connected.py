@@ -142,6 +142,32 @@ class SessionsAndPooledAnalysis(unittest.TestCase):
         self.assertFalse(as_live['technically_complete'])
         self.assertTrue(any('evidence class' in e for e in as_live['lifecycle_errors']))
 
+    def test_6_a_missing_mandatory_probe_is_never_technically_complete(self):
+        # The review's reproductions: C3, then separately I4, removed from the ledger, the request results and the
+        # stage details, with the evidence manifest updated to match. Neither may evaluate as technically complete.
+        import hashlib
+        from research.evidence_memory_v1.successor.evaluate import evaluate_output
+        stage_of = {'C3': 'cancellation_C3_responsive', 'I4': 'inference_I4'}
+        for request_id in ('C3', 'I4'):
+            altered = Path(self.folder) / f'A-without-{request_id}'
+            shutil.copytree(self.runs['A'][2], altered)
+            result = json.loads((altered / 'result.json').read_bytes())
+            entries = [e for e in result['ledger']['entries'] if e['id'] != request_id]
+            for n, entry in enumerate(entries, 1):
+                entry['sequence'] = n
+            result['ledger'].update(entries=entries, issued=len(entries))
+            result['requests'].pop(request_id)
+            result['stages'].pop(stage_of[request_id])
+            (altered / 'result.json').write_bytes((json.dumps(result, indent=1, sort_keys=True) + '\n').encode())
+            manifest = json.loads((altered / 'evidence-manifest.json').read_bytes())
+            manifest['files']['result.json'] = hashlib.sha256((altered / 'result.json').read_bytes()).hexdigest()
+            (altered / 'evidence-manifest.json').write_bytes((json.dumps(manifest, indent=1, sort_keys=True) + '\n').encode())
+            evaluation = evaluate_output(altered, 'A', mode='rehearsal', rehearsal_limits=rehearsal('A').rehearsal_limits(ROOT))
+            self.assertFalse(evaluation['technically_complete'], request_id)
+            self.assertFalse(evaluation['lifecycle_passed'], request_id)
+            self.assertIn('mandatory runtime probe missing from the ledger: ' + request_id, evaluation['lifecycle_errors'])
+            self.assertFalse([e for e in evaluation['lifecycle_errors'] if 'evidence manifest' in e], request_id)
+
     def test_5_an_altered_session_is_refused_and_its_earlier_evaluation_cannot_be_reused(self):
         from research.evidence_memory_v1.successor import final
         earlier = self.sessions(('B',))[0]

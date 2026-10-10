@@ -1,0 +1,46 @@
+{
+ "schema": "evidence_memory_v1_withheld_draw_values_v1",
+ "note": "Counts, caps and hashes computed mechanically from each withheld draw (frozen protocol sections 3, 10 and 12). They are not design inputs: the complete final design was frozen before the current draw.",
+ "formulas": {
+  "study_completions": "the withheld schedule length: pass 1 (2,592 calls) plus every call of the 9 repeated whole groups that fall in this session (stage1.repeat_groups)",
+  "maximum_model_requests": "12 + 67 x study_completions",
+  "generation_requests": "study_completions + 7 runtime-check completions (I1-I4, C1-C3)",
+  "complete_session_requests": "12 + 2 x study_completions"
+ },
+ "current": {
+  "draw": 2,
+  "status": "awaiting_fresh_draw",
+  "sessions": null
+ },
+ "retired": [
+  {
+   "draw": 1,
+   "status": "retired_before_execution",
+   "withheld_seed_sha256": "7f11432aed195bbd18732abd6cb513024b48e401de17c5fd27e11b17dadfb04b",
+   "sessions": {
+    "A": {
+     "frozen_set_sha256_prefix": "4bc9d66c",
+     "pass_1": 2592,
+     "repeat": 192,
+     "repeat_groups": 3,
+     "study_completions": 2784,
+     "maximum_model_requests": 186540,
+     "generation_requests": 2791,
+     "complete_session_requests": 5580,
+     "repeat_answers_per_arm": 48
+    },
+    "B": {
+     "frozen_set_sha256_prefix": "b991a41f",
+     "pass_1": 2592,
+     "repeat": 368,
+     "repeat_groups": 6,
+     "study_completions": 2960,
+     "maximum_model_requests": 198332,
+     "generation_requests": 2967,
+     "complete_session_requests": 5932,
+     "repeat_answers_per_arm": 92
+    }
+   }
+  }
+ ]
+}

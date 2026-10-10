@@ -1,7 +1,20 @@
 {
  "note": "Owner gate (reports/evidence_memory_v1_successor/owner_gates.md): only sha256(seed) is ever recorded here; the nonce stays outside the repository. Both sessions share this one commitment.",
- "status": "committed",
- "withheld_seed_sha256": "7f11432aed195bbd18732abd6cb513024b48e401de17c5fd27e11b17dadfb04b",
- "drawn_and_checked_at": "2026-10-10T01:40:32Z",
- "custody": "reports/evidence_memory_v1_successor/nonce_custody.json"
+ "status": "awaiting_fresh_draw",
+ "withheld_seed_sha256": "REPLACE_WITH_WITHHELD_SEED_SHA256",
+ "custody": "reports/evidence_memory_v1_successor/nonce_custody.json",
+ "retired": [
+  {
+   "draw": 1,
+   "status": "retired_before_execution",
+   "withheld_seed_sha256": "7f11432aed195bbd18732abd6cb513024b48e401de17c5fd27e11b17dadfb04b",
+   "drawn_and_checked_at": "2026-10-10T01:40:32Z",
+   "retired_on": "2026-10-10",
+   "retired_by": "the owner",
+   "reason": "Retired before any execution: the recall decoding design changed after this draw (the eight-answer schema, owner amendment of October 10, 2026; frozen protocol section 5). Not an automated-check failure: both withheld sets built from it passed every check.",
+   "automated_check_failure": false,
+   "executed": false,
+   "rule": "its nonce is never used again; freeze.py refuses a retired commitment"
+  }
+ ]
 }

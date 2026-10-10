@@ -1,38 +1,16 @@
 {
  "schema": "evidence_memory_v1_withheld_nonce_custody_v1",
- "status": "two_copies_confirmed",
+ "status": "awaiting_fresh_draw",
  "decided_at": "2026-10-09",
  "decided_by": "the owner",
  "rule": "One human holder, the owner, draws the withheld nonce and keeps two separately stored copies outside every repository. The owner checks each copy personally by recomputing the commitment, sha256('evidence-memory-v1-stage1-withheld/' + nonce), which prints only the hash and never the nonce. Both copy checks must print the committed hash, and are recorded here before any reservation or launch.",
  "replaces": "the frozen text's two named holders (a private note held by the person who drew it, and a secret held by the run operator); the owner is both",
  "limitation": "There is no independent second holder: the owner is a single point of failure, and the two checks are not independent verifications. Two copies on one computer would not protect against losing that computer.",
  "assistant_access": "None. The nonce is drawn and checked in the owner's own terminal with no model or assistant watching. It is never pasted into a conversation with a model, never committed and never put in a notebook output. Only the commitment hash is reported.",
- "frozen_protocol_text": "The rule and the commitment are in the frozen protocol, section 5, from review snapshots r4 on.",
- "withheld_seed_sha256": "7f11432aed195bbd18732abd6cb513024b48e401de17c5fd27e11b17dadfb04b",
+ "frozen_protocol_text": "The rule is in the frozen protocol, section 5, from review snapshots r4 on; the retirement amendment and the chronology of both draws from r7 on.",
+ "withheld_seed_sha256": "REPLACE_WITH_WITHHELD_SEED_SHA256",
  "copies_required": 2,
- "copies_confirmed": 2,
- "copy_checks": [
-  {
-   "copy_id": "copy A",
-   "holder": "owner",
-   "checked_at": "2026-10-10T01:40:32Z",
-   "printed": "7f11432aed195bbd18732abd6cb513024b48e401de17c5fd27e11b17dadfb04b",
-   "run_personally": true,
-   "copy_outside_repository": true,
-   "separate_storage": true,
-   "storage": "WSL (ext4) home of the owner's computer"
-  },
-  {
-   "copy_id": "copy B",
-   "holder": "owner",
-   "checked_at": "2026-10-10T01:40:32Z",
-   "printed": "7f11432aed195bbd18732abd6cb513024b48e401de17c5fd27e11b17dadfb04b",
-   "run_personally": true,
-   "copy_outside_repository": true,
-   "separate_storage": true,
-   "storage": "Windows user folder (NTFS) of the same computer"
-  }
- ],
+ "copies_confirmed": 0,
  "copy_check_entry": {
   "holder": "owner",
   "copy_id": "\"copy A\" or \"copy B\" (no storage path)",
@@ -44,7 +22,44 @@
   "storage": "a generic description, e.g. 'WSL home', 'Windows user folder' or 'removable drive'"
  },
  "confirmation_rule": "status becomes two_copies_confirmed and copies_confirmed 2 only when copy_checks holds two entries with distinct copy_id, each printing the committed hash and reported by the owner.",
- "how_reported": "The owner drew the nonce and checked both copies in their own WSL terminal, with a script that refused to overwrite an existing copy or to write inside a repository, created each copy exclusively, confirmed each retained value equals the drawn value, and printed only the commitment of each copy. The owner pasted that session; the nonce was never printed. checked_at is the `date -u` the session printed.",
- "verified_without_reading_the_nonce": "both copies exist (33 bytes each), neither folder is inside a git repository, and they are on separate filesystems (ext4 and the Windows drive); no tool opened either file",
- "storage_limitation": "both copies are on one computer, on separate filesystems: they do not protect against losing that computer"
+ "current_draw": 2,
+ "copy_checks": [],
+ "fresh_draw_rule": "Draw 2 follows the same rule, with new file names so that no retired copy is overwritten or reused. Its two copy checks are recorded here before any reservation or launch.",
+ "retired_draws": [
+  {
+   "draw": 1,
+   "status": "retired_before_execution",
+   "retired_on": "2026-10-10",
+   "reason": "Retired before any execution: the recall decoding design changed after this draw (the eight-answer schema, owner amendment of October 10, 2026; frozen protocol section 5). Not an automated-check failure: both withheld sets built from it passed every check.",
+   "custody_status_when_retired": "two_copies_confirmed",
+   "withheld_seed_sha256": "7f11432aed195bbd18732abd6cb513024b48e401de17c5fd27e11b17dadfb04b",
+   "copies_confirmed": 2,
+   "copy_checks": [
+    {
+     "copy_id": "copy A",
+     "holder": "owner",
+     "checked_at": "2026-10-10T01:40:32Z",
+     "printed": "7f11432aed195bbd18732abd6cb513024b48e401de17c5fd27e11b17dadfb04b",
+     "run_personally": true,
+     "copy_outside_repository": true,
+     "separate_storage": true,
+     "storage": "WSL (ext4) home of the owner's computer"
+    },
+    {
+     "copy_id": "copy B",
+     "holder": "owner",
+     "checked_at": "2026-10-10T01:40:32Z",
+     "printed": "7f11432aed195bbd18732abd6cb513024b48e401de17c5fd27e11b17dadfb04b",
+     "run_personally": true,
+     "copy_outside_repository": true,
+     "separate_storage": true,
+     "storage": "Windows user folder (NTFS) of the same computer"
+    }
+   ],
+   "how_reported": "The owner drew the nonce and checked both copies in their own WSL terminal, with a script that refused to overwrite an existing copy or to write inside a repository, created each copy exclusively, confirmed each retained value equals the drawn value, and printed only the commitment of each copy. The owner pasted that session; the nonce was never printed. checked_at is the `date -u` the session printed.",
+   "verified_without_reading_the_nonce": "both copies exist (33 bytes each), neither folder is inside a git repository, and they are on separate filesystems (ext4 and the Windows drive); no tool opened either file",
+   "storage_limitation": "both copies are on one computer, on separate filesystems: they do not protect against losing that computer",
+   "disposal": "The owner keeps or deletes the two retired copies at their discretion; either way the nonce is never used again. No assistant reads, moves or deletes them."
+  }
+ ]
 }

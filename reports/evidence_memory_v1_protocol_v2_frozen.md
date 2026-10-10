@@ -13,12 +13,14 @@
 - **What changed from the draft**, each by an owner decision (§16):
   - §2: the recall decoding schema allows exactly the eight valid answers (October 9: without `uniqueItems`, which
     the verified runtime refuses; October 10: the exact enum). Scoring is unchanged.
-  - §3, §10–§12: the withheld draw (October 10) fixes the exact calls, ceilings and repeat split; the earlier figures
-    are the development stand-in's.
+  - §3, §10–§12: the calls, ceilings and repeat split follow mechanically from each withheld draw and are recorded
+    in `reports/evidence_memory_v1_successor/withheld_draw_values.json`. The figures given here are the retired
+    first draw's and the development stand-in's.
   - §4 and §5: a withheld draw with any failing trajectory is refused and redrawn; it is never thinned.
   - §5: one human holder, the owner, keeps the two copies of the withheld nonce (decided by the owner on
-    October 9, 2026). The nonce was drawn on October 10, 2026, and its commitment is recorded in §5 (review
-    snapshots r4).
+    October 9, 2026). A first nonce was drawn on October 10, 2026, and then **retired before execution**, because
+    the recall decoding design changed after it (owner amendment, October 10, 2026; §5). This revision freezes the
+    complete final design, and a fresh nonce is drawn after it.
   - §9: the unsupported-claim margins are read three ways (met, exceeded, not shown). The thresholds and the
     advancement rule are unchanged.
   - §11: the measured runtime figures replace the v3 estimates (documentation only).
@@ -87,9 +89,10 @@ before any correctness is computed.
   (`reports/evidence_memory_v1_successor/structured_outputs_check_r1.json`). The server would refuse every recall
   request, so session A would stop at its first recall call and spend its attempt with no result.
 - **The change (October 9).** `uniqueItems` is dropped from the recall **decoding** schema.
-- **The amendment (owner decision, October 10, 2026, after the withheld draw).** With `uniqueItems` gone, the
+- **The amendment (owner decision, October 10, 2026, after the first withheld draw, which was then retired; §5).**
+  With `uniqueItems` gone, the
   decoder could emit a duplicate value, or "no_evidence" with another value. Both are invalid answers, and the
-  withheld draw leaves session A's repeat with 48 answers per arm, where one invalid answer fails the 2% rule (§10).
+  first withheld draw left session A's repeat with 48 answers per arm, where one invalid answer fails the 2% rule.
   The recall decoding schema is therefore an object with exactly one key, `values`, whose value is one of the
   **eight valid answers in canonical order** (`stage1.RECALL_ANSWERS`): one to three distinct observed values, or
   "no_evidence" alone. The decision schema is unchanged.
@@ -127,13 +130,16 @@ before any correctness is computed.
   - **Family questions:** 2–4 per trajectory, recall and decision.
   - **One recent-control question.**
   - Each question is asked under all four arms.
-- **Calls.** The repeat's size depends on which whole groups the run seed selects, so the withheld draw fixes the
-  exact counts. The run packages use the withheld sets; the public rehearsal packages use the development stand-in.
+- **Calls.** The repeat's size depends on which whole groups the run seed selects. Each withheld draw therefore
+  fixes the exact counts mechanically, and they are recorded in
+  `reports/evidence_memory_v1_successor/withheld_draw_values.json`; no design choice is made from them. The run
+  packages use the withheld sets, and the public rehearsal packages use the development stand-in. For the record,
+  the retired first draw (§5) gave:
 
   | Session | Pass 1 | Repeat (pass 2) | Total |
   |---|---|---|---|
-  | A, withheld (October 10) | 2,592 | 192 (3 groups) | **2,784** |
-  | B, withheld (October 10) | 2,592 | 368 (6 groups) | **2,960** |
+  | A, retired first draw | 2,592 | 192 (3 groups) | 2,784 |
+  | B, retired first draw | 2,592 | 368 (6 groups) | 2,960 |
 
   The development stand-in (`stage1.enumerate_requests`), for the public rehearsal packages:
 
@@ -186,8 +192,51 @@ which test revision.
 | Bootstrap | `evidence-memory-v1-stage1-bootstrap`, 10,000 resamples |
 | Model requests | 0 |
 
-**The withheld seed was drawn after every design decision in this document was fixed** (October 10, 2026, 01:40
-UTC). Its commitment is `7f11432aed195bbd18732abd6cb513024b48e401de17c5fd27e11b17dadfb04b`. The procedure:
+**Chronology of the withheld draws (kept visible).**
+1. **First draw.** On October 10, 2026 at 01:40 UTC the owner drew a first nonce, with commitment
+   `7f11432aed195bbd18732abd6cb513024b48e401de17c5fd27e11b17dadfb04b`. The draw was made after the decisions then recorded.
+2. **Amendment after that draw.** Later on October 10, prompted only by the drawn repeat size (48 answers per arm in
+   session A's repeat), the recall decoding schema was amended to the eight valid answers (§2). No question, answer
+   or outcome was seen. So the statement that every design decision preceded the draw was **not true for that
+   draw**. A later draw does not make it true retrospectively.
+3. **Retirement.** The owner retired the first draw before any execution (the amendment below). It is **not** an
+   automated-check failure: both of its withheld sets had passed every check. Its commitment, custody records and
+   private preparation are kept.
+4. **Final design.** This revision freezes the complete final design (below).
+5. **Fresh draw.** A fresh nonce is drawn after this freeze, under the same custody procedure. Its commitment is
+   recorded in `seed-commitment.json` and in each session's `protocol.json`, and the counts derived from it in
+   `withheld_draw_values.json`. **This frozen text is not edited for the fresh draw.**
+
+**Retiring a draw (owner amendment, October 10, 2026).** A withheld draw may be retired before any execution if
+the design changes after it. When a draw is retired:
+- the retired commitment, its custody records and the reason are published;
+- its nonce is never used again;
+- a new nonce is drawn after the commit that freezes the changed design.
+
+Retirement is distinct from the refuse-and-redraw rule for a draw that fails the automated checks (§4).
+
+**The complete final design, frozen before the fresh draw** (this revision). Nothing below may change in response
+to the fresh draw.
+- **Decoding.** One single-turn request per question:
+  - a strict JSON schema; temperature 0, request seed 0, `max_tokens` 64, prefix caching off;
+  - the recall schema is the exact enum of the eight valid answers in canonical order
+    (`stage1.RECALL_ANSWERS`); the decision schema is unchanged (§2).
+- **Scoring.** `readers.validate_response` first. Invalid answers are retained, count in every denominator and
+  are never correct (§7). The per-session technical rules are those of §10, including at most 2% invalid per arm
+  in every pass.
+- **Thresholds and readings.**
+  - the reading-accuracy floors of 0.80 (§9);
+  - the two contrasts;
+  - the unsupported-claim margins (point ≤ +0.02, upper bound ≤ +0.05), read three ways;
+  - the verdicts and advancement rule of §9.
+- **Repeat selection.** 9 of 84 whole groups (`stage1.repeat_groups`): one in every family, then two more, drawn
+  from the run seed. The split between sessions follows the draw (§3).
+- **Redraw and retirement conditions.** A draw that fails an automated check is refused and redrawn (§4). A draw
+  followed by a design change is retired and redrawn (above).
+- **Derived quantities.** The calls, completion ceilings, request caps and repeat split are computed mechanically
+  from the draw by the formulas of §12, and recorded in `withheld_draw_values.json`. They are not design inputs.
+
+The procedure:
 
 1. **Drawing.** A person draws `nonce = secrets.token_hex(16)`. The run seed is
    `evidence-memory-v1-stage1-withheld/` + nonce.
@@ -208,14 +257,15 @@ after the run, the results stand, but they are recorded as not independently rep
 **A failed draw** is refused and redrawn (§4): the failed commitment and its counts are published, the nonce is
 discarded, and a new nonce is drawn and committed afresh.
 
-**Holder rule (owner decision of October 9, 2026, recorded before the draw).**
+**Holder rule (owner decision of October 9, 2026, recorded before the first draw; it applies to every draw).**
 - **One human holder.** The owner draws the nonce and keeps both copies of step 3, stored separately outside
   every repository. The owner checks each copy personally by recomputing the commitment, which prints only the
   hash.
 - **Limitation.** There is no independent second holder, so the owner is a single point of failure.
-- **The draw.** Both copies were checked on October 10, 2026: copy A in the WSL home and copy B in the Windows user
-  folder of the same computer, on separate filesystems. Both print the commitment above. They do not protect
-  against losing that computer.
+- **The retired first draw.** Both copies were checked on October 10, 2026: copy A in the WSL home and copy B in the
+  Windows user folder of the same computer, on separate filesystems. Both printed `7f11432a…`.
+- **The fresh draw.** It follows the same rule, and its two copy checks are recorded before any reservation or
+  launch.
 - **Records.** `reports/evidence_memory_v1_successor/nonce_custody.json`; the commitment is in
   `research/evidence_memory_v1/successor/seed-commitment.json` and in each session's `protocol.json`.
 
@@ -353,9 +403,10 @@ retrieval requires contrast 2 as well. Concision or readability never qualifies.
 - **Recovered evidence.** Evidence recovered from an interrupted run is never complete.
 - **Prefix caching off.** Verified from the server's own counters at the canary and at every call.
 - **Invalid outputs.** At most 2% per arm **in every pass**: in pass 1, and separately in the repeat pass. Each is
-  measured against that pass's own answered calls for that arm. In the withheld draw, session A's repeat has 48
-  answers per arm, so one invalid answer in an arm fails the rule; session B's repeat has 92, so at most one. All
-  invalid answers are retained, and both passes' counts, rates and verdicts are reported.
+  measured against that pass's own answered calls for that arm. Small repeats tolerate few invalid answers: in the
+  retired first draw, session A's repeat had 48 answers per arm (so none could be invalid), and B's had 92 (one).
+  The fresh draw's counts are in `withheld_draw_values.json`. All invalid answers are retained, and both passes'
+  counts, rates and verdicts are reported.
 - **Timeouts.** At most 1% of calls. The reviewed runner also stops after its consecutive-timeout limit.
 - **Model startup** within the reviewed ceiling.
 
@@ -425,8 +476,10 @@ metrics read per call is allowed at 0.01 s.
 
 | Session | Typical completions (about 20 tokens) | All completions at the 64-token cap | All at the cap, per-call time doubled |
 |---|---|---|---|
-| A (2,784 calls, withheld) | ≈ 860 s | ≈ 1,630 s | ≈ 2,850 s |
-| B (2,960 calls, withheld) | ≈ 885 s | ≈ 1,705 s | ≈ 3,010 s: the last calls cut by admission |
+| A (2,784 calls, retired first draw) | ≈ 860 s | ≈ 1,630 s | ≈ 2,850 s |
+| B (2,960 calls, retired first draw) | ≈ 885 s | ≈ 1,705 s | ≈ 3,010 s: the last calls cut by admission |
+
+The fresh draw changes these only through its repeat size (about 0.16 s per added call at typical completions).
 
 **These are planning figures, not authorization ceilings.** The reviewed admission control enforces the deadline:
 a call starts only if its whole per-call bound ends before the cutoff. An over-long session ends **incomplete**; it
@@ -446,8 +499,8 @@ runtime-only changes from the draft's package are listed in `reports/evidence_me
 | **Maximum reservation** | **3,600 s** (`authorized_seconds`; internal lifecycle 3,300 s) | the same |
 | **Admission cutoff** | **3,000 s** after the first-cell start; per-call bound 80 s | the same |
 | **Cleanup reserve** | **300 s.** No admitted call can reach it. | the same |
-| **Study completions** (the calls ceiling: the withheld schedule) | **2,784** | **2,960** |
-| **Counted HTTP requests to the model server** (`maximum_model_requests`) | **≤ 186,540** | **≤ 198,332** |
+| **Study completions** (the calls ceiling) | **the withheld schedule's length** (`withheld_draw_values.json`) | the same |
+| **Counted HTTP requests to the model server** (`maximum_model_requests`) | **≤ 12 + 67 × completions** | the same |
 | **Retry policy** | **No retry allowance.** `automatic_retries = 0` and `maximum_attempts = 1`. A failed or incomplete session is reported as such; any further attempt needs a new, separate approval. | the same |
 
 **Both ceilings go into each compute authorization** (owner decision, October 9, 2026).
@@ -459,7 +512,8 @@ runtime-only changes from the draft's package are listed in `reports/evidence_me
   - per scheduled call, its completion (Q) and one metrics read (M) after an answer, or at most 65 idle-verification
     reads (V) after a timeout.
 - The cap is the plan's worst case: 11 + 1 + 67 per scheduled call. A complete session issues at most 2 × calls +
-  12 requests (5,580 for A and 5,932 for B). The worst case counts metrics reads, not model generations.
+  12 requests (5,580 for A and 5,932 for B in the retired first draw). The worst case counts metrics reads, not
+  model generations.
 - The development stand-in's figures (2,896 / 2,832 completions; 194,044 / 189,756 requests; 5,804 for A in
   rehearsal) apply to the public rehearsal packages only.
 
@@ -569,9 +623,9 @@ only the technical `run/score.analyze`. Scientific results come only from `run/f
    (`reports/evidence_memory_v1_successor/token_cross_check_r2.json`).
 2. **Connected rehearsals in POSIX:** done on the verified runtime, both sessions and the fault matrix
    (`tests/test_evidence_memory_v1_successor_connected.py`; `reports/evidence_memory_v1_successor/verification.md`).
-3. **Design decisions:** fixed by this freeze (§16). The holder rule was decided before the draw (§5). The
-   withheld nonce is drawn and committed (§5); the withheld frozen sets are built only in a private checkout
-   (owner gate 2). The package check that refuses
+3. **Design decisions:** fixed by this freeze (§16), and the complete final design is frozen before the fresh draw
+   (§5). The holder rule was decided before the first draw. That draw was retired before execution; the fresh nonce
+   is drawn after this revision. The withheld frozen sets are built only in a private checkout (owner gate 2). The package check that refuses
    `development_stand_in`, or a seed hash that does not match the commitment, exists
    (`successor/plan.live_frozen_set_reasons`).
 4. **Packaging and review lock:** two session packages on the verified runtime, with GPU-disabled review snapshots r2
@@ -585,8 +639,8 @@ only the technical `run/score.analyze`. Scientific results come only from `run/f
 
 1. **Two package builds or one?** Two builds, A and B (§12).
 2. **The repeat split.** Kept: 9 of 84 whole groups, one in every family and then two more, covering every family
-   across both sessions. The split between sessions follows the draw: 3 in A and 6 in B for the withheld sets (5 and
-   4 in the stand-in). The repeat measures stability only and never enters an endpoint.
+   across both sessions. The split between sessions follows the draw: 3 in A and 6 in B in the retired first draw
+   (5 and 4 in the stand-in). The repeat measures stability only and never enters an endpoint.
 3. **Admission granularity.** Kept: the reviewed per-call admission. No group-level admission is added.
 4. **Duplicate requests.** Every scheduled call is asked; identical requests are not shared. Their answers must agree
    under temperature 0 and seed 0, which doubles as a determinism check.
@@ -599,23 +653,30 @@ All were decided by the owner on October 9, 2026. The decision record is
 The files changed for each decision are listed in `reports/evidence_memory_v1_successor/freeze_change_list_r2.md`.
 
 0. **Recall response schema** (blocking defect; choice 9): drop `uniqueItems` from the decoding schema only. Scoring is
-   unchanged (§2). **Amended by the owner on October 10, 2026, after the withheld draw:** the recall decoding schema
-   allows exactly the eight valid answers, so the decoder cannot emit an invalid recall answer (§2).
+   unchanged (§2). **Amended by the owner on October 10, 2026, after the first withheld draw** (which was then
+   retired; item 12): the recall decoding schema allows exactly the eight valid answers, so the decoder cannot emit
+   an invalid recall answer (§2).
 1. **Unsupported-claim margins** (choice 5): both thresholds kept, read three ways; only `met` permits advancement
    (§9).
 2. **Trajectory exclusions** (choice 8): refuse and redraw. No science-code change (§4, §5).
 3. **Session B after session A** (choice 7): enforced in session B's launch tooling and bound by hash in B's compute
    authorization (§12).
 4. **Package builds** (choice 1): two, A and B (§12).
-5. **Repeat split** (choice 2): 9 whole groups, split as the draw falls; 3 + 6 for the withheld sets (§3).
+5. **Repeat split** (choice 2): 9 whole groups, split as the draw falls; 3 + 6 in the retired first draw (§3).
 6. **Admission granularity** (choice 3): per-call admission.
 7. **Duplicate requests** (choice 4): every scheduled call is asked.
 8. **Runtime estimate** (choice 6): §11 replaced by the measured figures; documentation only.
-9. **Request cap** (choice 10): the worst case, 186,540 for A and 198,332 for B for the withheld sets, stated in
-   each compute authorization with the 2,784 / 2,960 completion ceilings (§12).
+9. **Request cap** (choice 10): the plan's worst case for the withheld schedule, stated in each compute
+   authorization with the completion ceiling (§12). The retired first draw gave 186,540 / 198,332 requests and
+   2,784 / 2,960 completions.
 10. **Tokenizer admission** (choice 11): the offline pinned-tokenizer audit, rerun on the withheld sets before the
     run.
 11. **Teammate stress set** (choice 12): kept out of Stage 1.
 
-**Decided after the freeze, before the draw:** one human holder, the owner, keeps the two copies of the withheld
-nonce (§5; owner gate 1). The nonce was drawn and committed on October 10, 2026.
+**Decided after the freeze, before the first draw:** one human holder, the owner, keeps the two copies of the
+withheld nonce (§5; owner gate 1). The first nonce was drawn on October 10, 2026, and retired before execution
+(item 12).
+
+12. **Draw retirement** (owner amendment, October 10, 2026). The first withheld draw is retired before execution,
+    because the recall decoding design changed after it. It is not an automated-check failure; its records are kept.
+    The complete final design is frozen in this revision, and a fresh nonce is drawn after it (§5).

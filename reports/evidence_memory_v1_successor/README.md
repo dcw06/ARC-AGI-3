@@ -12,30 +12,47 @@ unsupported-claim margins (three ways), the exclusion procedure (refuse and redr
 (only after session A is technically complete). Every changed file is listed in `freeze_change_list_r2.md`. Still
 open: who holds the two copies of the withheld nonce (owner gate 1).
 
-**Withheld seed (owner gate 1, done October 10, 2026).** One human holder, the owner, drew the nonce and checked
-both copies (`nonce_custody.json`). The commitment `7f11432a…` is in `seed-commitment.json`, in each
-session's `protocol.json` and in the frozen protocol §5; review snapshots r4 bind it.
+**Withheld seed: first draw retired; fresh draw awaiting the owner.**
+- **Draw 1.** On October 10, 2026, one human holder, the owner, drew a first nonce and checked both copies
+  (commitment `7f11432a…`; review snapshots r4 to r6).
+- **Retired.** The recall decoding design changed after that draw, so the owner retired it before any execution
+  (owner amendment, October 10, 2026; frozen protocol §5). It was not an automated-check failure. Its records are
+  kept in `seed-commitment.json` (`retired`) and `nonce_custody.json` (`retired_draws`), and `freeze withheld`
+  refuses its commitment. The frozen protocol keeps the chronology visible: the claim that every design decision
+  preceded the draw was not true for draw 1.
+- **Final design.** Review snapshots r7 freeze the complete final design (frozen protocol §5): decoder
+  restrictions, scoring, thresholds, repeat selection, and the redraw and retirement conditions.
+- **Draw 2.** Drawn by the owner after r7 (`owner_gates.md`, gate 1). Only its commitment is published. Its counts,
+  caps and hashes are recorded mechanically in `withheld_draw_values.json`, and the frozen text is not edited for
+  it.
 
-**Recall schema (owner decision, October 10, 2026).** After the withheld draw, the recall decoding schema allows
-exactly the eight valid answers (`structured_outputs_check_r3.json`). Session A's withheld repeat has 48 answers
-per arm, where one invalid answer would fail the 2% rule. Review snapshots r6 bind it.
+**Recall schema (owner decision, October 10, 2026).** After the first withheld draw, the recall decoding schema
+allows exactly the eight valid answers (`structured_outputs_check_r3.json`). In that draw, session A's repeat had
+48 answers per arm, where one invalid answer would fail the 2% rule. Review snapshots r6 and r7 bind it.
 
-**Withheld material.** The withheld seed is drawn and committed (above). No withheld frozen set exists in this
-repository: owner gate 2 builds them only in a private checkout. No withheld answer has been inspected.
+**Evaluator (r7).** The independent evaluator now requires every mandatory runtime probe (S1–S3, I1–I4, C1–C3)
+and the pre-study metrics read (K0000). Each must appear in the ledger in the frozen order with its expected
+outcome, and agree with its retained request record, stage value and passed phase. A run missing any probe is
+never technically complete. Connected test 6 retains both of the review's reproductions (C3 removed; I4
+removed); with the new check disabled, the C3 reproduction evaluates as technically complete.
+
+**Withheld material.** No withheld frozen set exists in this repository: owner gate 2 builds them only in a
+private checkout. No withheld answer has been inspected.
 
 ## Packages
 
-| Session | Package | Review snapshot r6 (current) | r6 review lock SHA-256 |
+| Session | Package | Review snapshot r7 (current) | r7 review lock SHA-256 |
 |---|---|---|---|
-| A (groups 0-5; withheld 2,784 calls, stand-in 2,896) | `research/evidence_memory_v1_session_a/` | `notebooks/evidence-memory-v1-session-a-review-r6/` | `80fbe454685f6d82b78a2a959d48a0f09bd404274895098a3f73dd53c675d20e` |
-| B (groups 6-11; withheld 2,960 calls, stand-in 2,832) | `research/evidence_memory_v1_session_b/` | `notebooks/evidence-memory-v1-session-b-review-r6/` | `26f321fc79eacf80252b696e49becea5f10d0a55603db98dfc25ac24c2ba50ac` |
+| A (groups 0-5; withheld calls per draw, stand-in 2,896) | `research/evidence_memory_v1_session_a/` | `notebooks/evidence-memory-v1-session-a-review-r7/` | `364d06e074511133ac9e58d1bf19cf8190b3b940a29598fade8940f092a91bd3` |
+| B (groups 6-11; withheld calls per draw, stand-in 2,832) | `research/evidence_memory_v1_session_b/` | `notebooks/evidence-memory-v1-session-b-review-r7/` | `9391afa577c0a421b0ee93ccba07451a3aa5fb9cc726fba83838ea932ec31656` |
 
 Kept as history (byte-identical): r1 locks `5539e126…` (A) and `fb94736b…` (B), built under the draft; r2 locks
 `750ea373…` (A) and `37296378…` (B), the frozen protocol before the r3 fix; r3 locks `fbad29c7…` (A) and
 `84407411…` (B), before the seed commitment; r4 locks `c6c89b3a…` (A) and `f9a480b8…` (B), before the eight-answer
 recall schema; r5 locks `2176121e…` (A) and `52205ad7…` (B), whose stage1 imported itertools (outside the research
-modules' import boundary; the schema is identical). Both r6 locks bind
-the frozen protocol (SHA-256 `bba44981…`) and the other review documents (`review_documents`). Session B's lock also
+modules' import boundary; the schema is identical); r6 locks `80fbe454…` (A) and `26f321fc…` (B), bound to the
+retired first draw and before the evaluator's probe reconciliation. Both r7 locks bind the frozen protocol
+(SHA-256 `6f96dbe7…`) and the other review documents (`review_documents`). Session B's lock also
 binds `research/evidence_memory_v1/successor/session_order.py`, its launch tooling's session-A condition.
 
 **Shared code.**

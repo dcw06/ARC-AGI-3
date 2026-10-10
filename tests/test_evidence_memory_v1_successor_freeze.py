@@ -88,8 +88,18 @@ class OwnerGatedPath(unittest.TestCase):
                 placeholder.write_text(json.dumps({'withheld_seed_sha256': PL.SEED_PLACEHOLDER}))
                 with patch.object(FZ, 'COMMITMENT', placeholder), self.assertRaises(PermissionError):
                     FZ.main()  # a placeholder commitment: no seed has been drawn
-                with self.assertRaisesRegex(SystemExit, 'does not match'):
-                    FZ.main()  # the owner's committed hash (gate 1): any other nonce builds nothing
+                if json.loads(FZ.COMMITMENT.read_bytes())['withheld_seed_sha256'] == PL.SEED_PLACEHOLDER:
+                    with self.assertRaises(PermissionError):
+                        FZ.main()  # the repository awaits the fresh draw: nothing builds
+                else:
+                    with self.assertRaisesRegex(SystemExit, 'does not match'):
+                        FZ.main()  # the owner's committed hash (gate 1): any other nonce builds nothing
+                retired = folder / 'retired.json'
+                matching = hashlib.sha256((FZ.SEED_PREFIX + TEST_NONCE).encode()).hexdigest()
+                retired.write_text(json.dumps({'withheld_seed_sha256': matching,
+                                               'retired': [{'withheld_seed_sha256': matching}]}))
+                with patch.object(FZ, 'COMMITMENT', retired), self.assertRaisesRegex(PermissionError, 'retired'):
+                    FZ.main()  # even the matching nonce of a retired draw builds nothing
                 other = folder / 'commitment.json'
                 other.write_text(json.dumps({'withheld_seed_sha256': 'a' * 64}))
                 with patch.object(FZ, 'COMMITMENT', other), self.assertRaisesRegex(SystemExit, 'does not match'):
@@ -119,18 +129,34 @@ class OwnerGatedPath(unittest.TestCase):
         self.assertFalse([m for m in TEXT_MARKERS if m in message])
 
     def test_the_committed_commitment_is_the_owners_recorded_hash(self):
-        # Owner gate 1 (October 10, 2026): only sha256(seed) is in the repository, matching the custody record.
+        # Only sha256(seed) is in the repository, matching the custody record. The first draw (October 10, 2026)
+        # was retired before execution because the decoding design changed after it (frozen protocol section 5):
+        # its record is kept, and it can never be built from again.
         record = json.loads(FZ.COMMITMENT.read_bytes())
         value = record['withheld_seed_sha256']
-        self.assertEqual(record['status'], 'committed')
-        self.assertTrue(len(value) == 64 and all(c in '0123456789abcdef' for c in value))
-        self.assertEqual(FZ.committed_seed_sha256(), value)
         custody = json.loads((Path(__file__).resolve().parents[1]
                               / 'reports/evidence_memory_v1_successor/nonce_custody.json').read_bytes())
+        first = '7f11432aed195bbd18732abd6cb513024b48e401de17c5fd27e11b17dadfb04b'
+        self.assertEqual([(r['draw'], r['withheld_seed_sha256'], r['status'], r['automated_check_failure'], r['executed'])
+                          for r in record['retired']], [(1, first, 'retired_before_execution', False, False)])
+        (draw1,) = custody['retired_draws']
+        self.assertEqual((draw1['withheld_seed_sha256'], draw1['status']), (first, 'retired_before_execution'))
+        self.assertEqual({c['printed'] for c in draw1['copy_checks']}, {first})
         self.assertEqual(custody['withheld_seed_sha256'], value)
-        self.assertEqual(custody['status'], 'two_copies_confirmed')
-        self.assertEqual({c['printed'] for c in custody['copy_checks']}, {value})
-        self.assertEqual(len({c['copy_id'] for c in custody['copy_checks']}), 2)
+        self.assertNotEqual(value, first)
+        if record['status'] == 'awaiting_fresh_draw':
+            self.assertEqual(value, PL.SEED_PLACEHOLDER)
+            self.assertEqual((custody['status'], custody['copies_confirmed'], custody['copy_checks']),
+                             ('awaiting_fresh_draw', 0, []))
+            with self.assertRaises(PermissionError):
+                FZ.committed_seed_sha256()
+        else:
+            self.assertEqual(record['status'], 'committed')
+            self.assertTrue(len(value) == 64 and all(c in '0123456789abcdef' for c in value))
+            self.assertEqual(FZ.committed_seed_sha256(), value)
+            self.assertEqual(custody['status'], 'two_copies_confirmed')
+            self.assertEqual({c['printed'] for c in custody['copy_checks']}, {value})
+            self.assertEqual(len({c['copy_id'] for c in custody['copy_checks']}), 2)
         self.assertEqual(ST.CASE_SOURCES, ('development_stand_in', 'withheld'))
 
 

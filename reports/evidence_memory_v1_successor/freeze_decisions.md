@@ -12,7 +12,8 @@ Nothing is drawn, approved or reserved: a freeze is not an approval.
 | 2. Trajectory exclusions (choice 8) | (a): refuse and redraw; no science-code change |
 | 3. Session B after session A (choice 7) | Enforce it in session B's launch tooling, bound by hash in B's compute authorization |
 | 4. Remaining choices 1, 2, 3, 4, 6, 10, 11, 12 | As recommended in section 4 below |
-| Who holds the two nonce copies | **Not decided; open owner gate 1** |
+| Who holds the two nonce copies | **Not decided; open owner gate 1** (decided later: one human holder, the owner) |
+| Draw retirement (owner amendment, October 10, 2026) | The first withheld draw is retired before execution because the decoding design changed after it; a fresh nonce is drawn after the final design is frozen (frozen protocol §5) |
 
 The analysis below is the decision packet as prepared for the owner, kept for the record. It was prepared October 9,
 2026, and ordered the open choices for the freeze:
@@ -30,7 +31,9 @@ would be refused, so session A would stop at its first recall call and spend its
 
 **Decided by the owner on October 9, 2026: drop `uniqueItems` from the decoding schema only** (frozen protocol §2).
 
-**Amended by the owner on October 10, 2026, after the withheld draw.** The draw left session A's repeat with 48
+**Amended by the owner on October 10, 2026, after the first withheld draw** (which the owner then retired before
+execution, so that the fresh draw follows the complete final design; frozen protocol §5). The draw left session A's
+repeat with 48
 answers per arm, where one invalid answer fails the 2% rule. Without `uniqueItems`, the decoder could emit two
 invalid recall forms: a duplicate value, and "no_evidence" with another value. The recall decoding schema is
 therefore the exact enum of the eight valid answers, in canonical order. It is accepted by xgrammar, and over every
@@ -146,7 +149,7 @@ The reviewed per-scope live gate and session A's tooling are unchanged.
 | Choice | Recommendation |
 |---|---|
 | 1. Two package builds or one | Keep two builds, A and B |
-| 2. Repeat split | Keep 9 whole groups (5 + 4 in the stand-in; the withheld draw gave 3 + 6) |
+| 2. Repeat split | Keep 9 whole groups (5 + 4 in the stand-in; the retired first draw gave 3 + 6) |
 | 3. Admission granularity | Keep per-call admission |
 | 4. Duplicate requests at delay 0 | Ask every scheduled call; doubles as a determinism check |
 | 6. Runtime estimate | Replace §11 with the measured Track 4 figures (documentation only) |

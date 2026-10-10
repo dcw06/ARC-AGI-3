@@ -29,6 +29,12 @@ STAGES = ('host', 'bundle_integrity', 'installation', 'gpu', 'model_artifact', '
           'inference_I4', 'cache_config', 'study', 'cancellation_C1', 'cancellation_C2_idle',
           'cancellation_C3_responsive')
 RESULT_LIMIT = 64 * 1024**2
+PROBE_KINDS = ('startup_probe', 'inference', 'cancellation_probe')
+# The stage under which the verified lifecycle (run.py) retains each mandatory runtime probe.
+PROBE_STAGES = {'S1': 'startup_probe_S1', 'S2': 'startup_probe_S2', 'S3': 'startup_probe_S3', 'I1': 'inference_I1',
+                'I2': 'inference_I2', 'I3': 'inference_I3', 'I4': 'inference_I4', 'C1': 'cancellation_C1',
+                'C2': 'cancellation_C2_idle', 'C3': 'cancellation_C3_responsive'}
+STUDY_KINDS = ('study_completion', 'study_metrics', 'study_idle_verification')
 
 
 def session_protocol(root, label):
@@ -74,6 +80,70 @@ def ledger_errors(ledger, protocol, limits):
     return errors[:10]
 
 
+def probe_errors(result, protocol):
+    """Every mandatory runtime probe of the frozen plan must be in the ledger, in the frozen order (startup and
+    inference before the study, cancellation after it), with the expected outcome, and must agree with its retained
+    evidence: the request record, the identical stage value and a passed phase. The study's one pre-study metrics
+    read (K0000) must be issued exactly once, after the probes and before the first study completion."""
+    plan = {item['id']: item for item in protocol['requests']}
+    probes = [item['id'] for item in protocol['requests'] if item['kind'] in PROBE_KINDS]
+    if set(probes) != set(PROBE_STAGES):
+        return ['runtime probe plan differs from the frozen probe stages']
+    entries = (result.get('ledger') or {}).get('entries') or []
+    requests, stages = result.get('requests') or {}, result.get('stages') or {}
+    passed = {p.get('phase') for p in result.get('phases') or [] if isinstance(p, dict) and p.get('outcome') == 'passed'}
+    positions = {}
+    for n, entry in enumerate(entries):
+        positions.setdefault(entry.get('id'), []).append(n)
+    study = [n for n, e in enumerate(entries) if (plan.get(e.get('id')) or {}).get('kind') in STUDY_KINDS]
+    completions = [n for n, e in enumerate(entries) if (plan.get(e.get('id')) or {}).get('kind') == 'study_completion']
+    errors = []
+    for request_id in probes:
+        item, stage, issued = plan[request_id], PROBE_STAGES[request_id], positions.get(request_id, [])
+        record = requests.get(request_id)
+        if not issued:
+            errors.append('mandatory runtime probe missing from the ledger: ' + request_id)
+            continue
+        if not isinstance(record, dict) or stages.get(stage) != record or stage not in passed:
+            errors.append('runtime probe without matching retained stage evidence: ' + request_id)
+            continue
+        expected = 'cancelled_after_first_content' if request_id == 'C1' else 'http_200'
+        if any(entries[n].get('outcome') != expected for n in issued):
+            errors.append('runtime probe outcome differs from its stage evidence: ' + request_id)
+        if item['kind'] == 'cancellation_probe':
+            if not study or issued[0] < study[-1]:
+                errors.append('cancellation probe not after the study: ' + request_id)
+        elif study and issued[-1] > study[0]:
+            errors.append('startup or inference probe not before the study: ' + request_id)
+        if request_id == 'S1':
+            content_ok = record.get('status') == 200
+        elif request_id == 'S2':
+            content_ok = protocol['server']['served_model_name'] in (record.get('models') or [])
+        elif request_id == 'C1':
+            content_ok = record.get('cancelled') is True and RE.finite(record.get('first_content_seconds'), 0)
+        elif request_id == 'C2':
+            readings = record.get('readings')
+            content_ok = (record.get('idle') is True and isinstance(readings, list) and len(readings) == len(issued)
+                          and isinstance(readings[-1], dict) and readings[-1].get('running') == 0
+                          and readings[-1].get('waiting') == 0)
+        else:
+            checks = record.get('checks')
+            content_ok = (record.get('passed') is True and record.get('case') == item.get('case')
+                          and isinstance(checks, dict) and bool(checks) and all(v is True for v in checks.values()))
+        if not content_ok:
+            errors.append('runtime probe stage evidence does not show it passed: ' + request_id)
+    order = [positions[r][0] for r in probes if r in positions]
+    if order != sorted(order):
+        errors.append('runtime probes out of the frozen order')
+    k0 = positions.get('K0000', [])
+    last_probe_before_study = max((positions[r][-1] for r in probes if r in positions
+                                   and plan[r]['kind'] != 'cancellation_probe'), default=-1)
+    if (len(k0) != 1 or entries[k0[0]].get('outcome') != 'http_200' or k0[0] < last_probe_before_study
+            or (completions and k0[0] > completions[0])):
+        errors.append('the pre-study metrics read K0000 is missing, repeated, failed or out of order')
+    return errors
+
+
 def lifecycle_errors(output, mode, label, protocol, limits):
     errors = manifest_errors(output)
     try:
@@ -106,6 +176,7 @@ def lifecycle_errors(output, mode, label, protocol, limits):
     if result.get('limits') != limits:
         errors.append('reported limits conflict with the frozen limits')
     errors += ledger_errors(result.get('ledger') or {}, protocol, limits)
+    errors += probe_errors(result, protocol)
     stages = result.get('stages') or {}
     expected = [s for s in STAGES if mode == 'live' or s != 'gpu']
     passed = [p.get('phase') for p in result.get('phases') or [] if p.get('outcome') == 'passed']
