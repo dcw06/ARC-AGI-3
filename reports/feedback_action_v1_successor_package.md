@@ -1,5 +1,9 @@
 # Feedback-action v1 successor package (runtime v1): review guide
 
+**Protocol of record:** `reports/feedback_action_v1_protocol_v2_frozen.md` (frozen October 10, 2026: gate A
+`ascii_only`, gate B `denominator_floor_10`). Review snapshots r2 bind it, the owner-gate record and the review
+documents (frozen protocol §15); r1 (lock `4b5b7a06…`) stays unchanged as history.
+
 **Status:**
 - GPU-disabled review package for one feedback-action v1 session on the verified runtime;
 - no approval, compute authorization, reservation, launch claim, upload or submission exists;
@@ -54,12 +58,19 @@
 ```bash
 python -m research.feedback_action_v1.derive --check            # harness derived from AEH v1
 python -m research.feedback_action_v1.derive_runtime --check    # gate/notebook/launch from the verified runtime; verbatim controller
-python scripts/feedback_action_v1_package.py review-check --revision 1     # must refuse at the live gate
-python scripts/feedback_action_v1_package.py review-rehearse --revision 1  # the same cell, MODE switched: one connected session
+python scripts/feedback_action_v1_package.py review-check --revision 2     # must refuse at the live gate
+python scripts/feedback_action_v1_package.py review-rehearse --revision 2  # the same cell, MODE switched: one connected session
 python scripts/feedback_action_v1_package.py launch-build                  # must refuse
 python scripts/check_feedback_action_v1_runtime.py --bundle <replica flat mount> --competition <replica competition mount> --work <new dir>
 python -m unittest tests.test_feedback_action_v1_successor tests.test_feedback_action_v1_live_evaluation tests.test_feedback_action_v1_connected
 ```
+
+## Review documents (r2)
+
+Every review lock binds the frozen protocol text, the independent evaluator's files outside the payload, the
+derivations, this package script and the structured-output check with its receipt (frozen protocol §15). The
+review check, the launch tooling, `launch-build` and the live independent evaluation verify them; only the gate
+inside the runtime payload skips them, because the payload never carries them.
 
 ## What the guards cannot prevent
 
@@ -74,11 +85,12 @@ These limits are the same as the verified runtime's.
 
 - the private bindings (consuming account, model dataset reference and mount path), resolved in a private checkout
   with a successor review snapshot;
-- the owner gates (`reports/feedback_action_v1_owner_gates.md`);
+- the owner gates: decided October 10, 2026 (`reports/feedback_action_v1_owner_gates.md`);
 - the use and attachment evidence for this scope;
 - review, source approval, compute authorization and one reservation per session;
 - everything GPU-side:
   - model load;
-  - the candidate schema through the server's structured-output path;
+  - guided decoding of the candidate schema during generation (request validation and grammar enforcement are
+    verified on CPU, `reports/feedback_action_v1/structured_outputs_check_r2.json`);
   - the competition mount layout on the pinned image;
   - cleanup on the target.

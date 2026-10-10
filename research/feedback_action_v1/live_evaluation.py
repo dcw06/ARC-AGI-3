@@ -18,6 +18,10 @@ constructors and verifier, and reads the experiment protocol and owner-gate reco
    under F2a or F3-F6";
 6. cost is reported per arm: provider prompt and completion tokens, call latency, episode wall time.
 
+In live mode the evaluating checkout must also be the reviewed one (freeze revision r2): its newest review lock must
+bind every review document, this evaluator among them, and every embedded source, all matching by hash. Otherwise
+the evaluation records the problem and never permits session 2, whose gate trusts `session_2_permitted`.
+
 `evaluate_sessions` pools two evaluated sessions and applies section 9 (solving and exploratory action-selection
 rules) and F2b. Free text is never scored for plausibility.
 """
@@ -44,6 +48,36 @@ REASON_CLEARED = 'cleared: the previous transition ended the segment (reset, lev
 CAPS = {'baseline': 128, 'candidate': 640}
 PROMPT_CEILING = 60000
 ASCII_FREE_TEXT = set(chr(c) for c in range(0x20, 0x7f)) - {'"', '\\'}
+REVIEW_GLOB = 'notebooks/feedback-action-v1-review-r*/review-source-lock.json'
+# The review documents every review lock binds (equal to binding.REVIEW_REQUIRED; a test keeps them equal).
+REVIEW_REQUIRED = ('reports/feedback_action_v1_protocol_v2_frozen.md', 'research/feedback_action_v1/live_evaluation.py',
+                   'research/feedback_action_v1/evaluate.py', 'research/transition_evidence_v1/reference.py',
+                   'scripts/evaluate_feedback_action_v1.py', 'research/feedback_action_v1/derive.py',
+                   'research/feedback_action_v1/derive_runtime.py', 'scripts/feedback_action_v1_package.py',
+                   'scripts/check_feedback_action_v1_structured_outputs.py',
+                   'reports/feedback_action_v1/structured_outputs_check_r2.json')
+
+
+def review_lock_status(root=ROOT):
+    """(verified lock record or None, problems): the evaluating checkout's newest review lock, its review documents
+    and its embedded-source bindings, by hash. Standard library only."""
+    root = Path(root)
+    try:
+        locks = sorted(root.glob(REVIEW_GLOB), key=lambda p: int(p.parent.name.rsplit('-r', 1)[1]))
+        if not locks:
+            raise ValueError('no review source lock')
+        lock = json.loads(locks[-1].read_bytes())
+        documents = lock.get('review_documents') or {}
+        missing = sorted(set(REVIEW_REQUIRED) - set(documents))
+        if missing:
+            raise ValueError('review documents missing from the lock: ' + ', '.join(missing))
+        for name, digest in sorted({**lock.get('bindings', {}), **documents}.items()):
+            if hashlib.sha256((root / name).read_bytes()).hexdigest() != digest:
+                raise ValueError('drift from the review lock: ' + name)
+        name = locks[-1].relative_to(root).as_posix()
+        return {'review_lock': name, 'review_lock_sha256': hashlib.sha256(locks[-1].read_bytes()).hexdigest()}, []
+    except (OSError, ValueError, KeyError, TypeError, AttributeError) as exc:
+        return None, [f'review lock not verified: {type(exc).__name__}: {str(exc)[:160]}']
 
 
 def canonical_digest(value):
@@ -259,7 +293,7 @@ def evaluate_session(run, *, session, mode='live', output=None, root=ROOT, lifec
         return {'session': session, 'replay_passed': False, 'technical_validity': 'technically_invalid',
                 'problems': ['session must be 1 or 2'], 'session_2_permitted': False, 'failure_rules': {}}
     cases = {c['game_id']: c for c in spec['cases']}
-    problems = []
+    review, problems = review_lock_status(root) if mode == 'live' else (None, [])
     if run.get('protocol_sha256') != canonical_digest(spec):
         problems.append('the run did not use the reviewed effective session spec')
     expected_episodes = [(p['pair_id'], arm) for p in spec['schedule'] for arm in p['order']]
@@ -339,7 +373,8 @@ def evaluate_session(run, *, session, mode='live', output=None, root=ROOT, lifec
         'run_status': run.get('status'), 'replay_passed': not problems, 'problems': problems[:50],
         'problem_count': len(problems), 'technical_validity': validity, 'failure_rules': rules,
         'stop_rules_fired': stop_rules, 'online_abort_recomputed': online,
-        'session_2_permitted': session == 1 and not stop_rules,
+        'session_2_permitted': session == 1 and not stop_rules and (mode != 'live' or review is not None),
+        'review_lock_verified': review,
         'carried_statements': statements, 'free_text_option': free_text_option(gates),
         'free_text_outside_option': free_text_outside,
         'holdout_identifiers_found': leaked, 'episodes': per_episode, 'pooled_by_game_and_arm': pooled,

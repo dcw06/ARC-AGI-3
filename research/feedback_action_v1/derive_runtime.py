@@ -64,6 +64,33 @@ VERBATIM = {
 }
 GPU_RUN_REVIEW_LOCK = 'beeb6719ed817e3cb42a9842b03a7c47a2ee75aa87831908520318a54c041dc7'
 
+# ---- review documents (freeze revision r2) ----------------------------------------------------------------------------
+# Hash-bound by every review lock and verified by every repository-side gate (review check, launch tooling, launch-build,
+# the live independent evaluation). The runtime payload never carries them, so only the in-payload gate skips them.
+# They are the frozen protocol text, the independent evaluator's files that are not embedded (live_evaluation.py and
+# its closure outside the payload), the derivations, the package script and the structured-output check.
+REVIEW_DOCUMENTS = ('reports/feedback_action_v1_protocol_v2_frozen.md', 'research/feedback_action_v1/live_evaluation.py',
+                    'research/feedback_action_v1/evaluate.py', 'research/transition_evidence_v1/reference.py',
+                    'scripts/evaluate_feedback_action_v1.py', 'research/feedback_action_v1/derive.py',
+                    'research/feedback_action_v1/derive_runtime.py', 'scripts/feedback_action_v1_package.py',
+                    'scripts/check_feedback_action_v1_structured_outputs.py',
+                    'reports/feedback_action_v1/structured_outputs_check_r2.json')
+BINDING_REVIEW_REQUIRED = ('# Review documents every review lock must bind; every repository-side gate verifies them (never '
+                           'in the payload).\nREVIEW_REQUIRED = (\n'
+                           + ''.join(f'    {name!r},\n' for name in REVIEW_DOCUMENTS) + ')\n')
+BINDING_CHECK_SOURCES_HEAD = '''def check_sources(root, lock_name, review_documents=True):
+    """The reviewed runtime sources and, unless inside the runtime payload, the review documents, by hash."""
+'''
+BINDING_REVIEW_CHECK = """    if review_documents:
+        listed = lock.get('review_documents') or {}
+        missing = sorted(set(REVIEW_REQUIRED) - set(listed))
+        if missing:
+            raise ValueError('review documents incomplete: ' + ', '.join(missing))
+        for name, digest in sorted(listed.items()):
+            if sha256(resolve(root, name)) != digest:
+                raise ValueError('review document drift: ' + name)
+"""
+
 # ---- binding.py: the live gate ---------------------------------------------------------------------------------------
 LOAD_PROTOCOL = '''def load_protocol(root=ROOT):
     """The runtime binding (runtime.json, validated by runtime.load) and the unchanged experiment protocol's
@@ -155,6 +182,22 @@ BINDING = (
      "    if execution['session'] == 2:\n"
      "        check_session_one(root, execution)\n", 1),
     ('reports/feedback_action_v1_package.md', 'reports/feedback_action_v1_successor_package.md', 1),
+    # Freeze revision r2: the review documents.
+    ("GATES = PACKAGE + '/owner_gates.json'\n", "GATES = PACKAGE + '/owner_gates.json'\n" + BINDING_REVIEW_REQUIRED, 1),
+    ("def check_sources(root, lock_name):\n", BINDING_CHECK_SOURCES_HEAD, 1),
+    ("            raise ValueError('source drift: ' + name)\n    return lock\n",
+     "            raise ValueError('source drift: ' + name)\n" + BINDING_REVIEW_CHECK + "    return lock\n", 1),
+    ("def require_live(root=None, need_claim=True):\n",
+     "def require_live(root=None, need_claim=True, review_documents=True):\n", 1),
+    ("    the launch tooling to create the claim itself.\"\"\"\n",
+     "    the launch tooling to create the claim itself. `review_documents=False` is used only inside the runtime\n"
+     "    payload, which never carries the review documents; they were verified when the launch package was built.\"\"\"\n",
+     1),
+    ("        check_sources(root, lock_name)\n        check_approvals(root, lock_name, protocol)\n",
+     "        check_sources(root, lock_name, review_documents)\n        check_approvals(root, lock_name, protocol)\n", 1),
+    ("    protocol, execution = require_live(root)\n    marker = ",
+     "    protocol, execution = require_live(root, review_documents=False)  # inside the runtime payload\n"
+     "    marker = ", 1),
 )
 
 # ---- notebook.py: review snapshot and launch artifacts ---------------------------------------------------------------
@@ -220,6 +263,12 @@ NOTEBOOK = (
     ("'title': 'ARC3 Control Interface Action Selection V1 Review'", "'title': 'ARC3 Feedback Action V1 Review'", 1),
     ("RESERVATION, CLAIM, *evidence_names(root))}", "RESERVATION, CLAIM, *evidence_names(root),\n"
      "                                                                    *session_names(root))}", 1),
+    # Freeze revision r2: every review lock binds the review documents by hash.
+    ("review_lock, session_names,", "review_lock, session_names,\n" + " " * 58 + "REVIEW_REQUIRED,", 1),
+    ("            'unresolved_placeholders': pending, 'gpu_enabled': False}\n",
+     "            'unresolved_placeholders': pending, 'gpu_enabled': False,\n"
+     "            'review_documents': {n: hashlib.sha256((Path(root) / n).read_bytes()).hexdigest()\n"
+     "                                 for n in REVIEW_REQUIRED}}\n", 1),
 )
 
 LAUNCH = ()

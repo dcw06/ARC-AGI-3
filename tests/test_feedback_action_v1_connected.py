@@ -85,8 +85,10 @@ class ConnectedRehearsals(unittest.TestCase):
             'surviving_child': ('complete', 'study_complete_pending_independent_evaluation'),
             'truncated_candidate': ('complete', 'study_complete_pending_independent_evaluation'),
             'always_invalid': ('aborted', 'failed'),        # F2a: the 7th invalid output of the first arm
-            'dispatch_failed': ('aborted', 'failed'),       # F5 as committed: 1 failure in the first 9 dispatches
-            'dispatch_unknown': ('aborted', 'failed'),
+            # F5 frozen with the floor (gate B, owner decision of October 10, 2026): one failed or unknown dispatch
+            # ends its own episode, which is retained, and the session continues to completion.
+            'dispatch_failed': ('complete', 'study_complete_pending_independent_evaluation'),
+            'dispatch_unknown': ('complete', 'study_complete_pending_independent_evaluation'),
         }
         for fault, (run_status, study) in cases.items():
             with self.subTest(fault=fault):
@@ -110,11 +112,18 @@ class ConnectedRehearsals(unittest.TestCase):
                     invalid = [c for e in value['evaluation']['episodes'] for c in [e]
                                if e['arm'] == 'candidate' and e['metrics']['invalid_actions']]
                     self.assertTrue(invalid)  # the truncation is an invalid output of the candidate arm
-                if fault in ('always_invalid', 'dispatch_failed', 'dispatch_unknown'):
+                if fault == 'always_invalid':
                     evaluation = value['evaluation']
-                    self.assertEqual(evaluation['online_abort_recomputed']['rule'],
-                                     'F2a_invalid_outputs' if fault == 'always_invalid' else 'F5_dispatch_failures')
+                    self.assertEqual(evaluation['online_abort_recomputed']['rule'], 'F2a_invalid_outputs')
                     self.assertFalse(evaluation['session_2_permitted'])
+                if fault in ('dispatch_failed', 'dispatch_unknown'):
+                    evaluation = value['evaluation']
+                    self.assertIsNone(evaluation['online_abort_recomputed'])
+                    self.assertFalse(evaluation['failure_rules']['F5_dispatch_failures'])
+                    stopped = [e for e in evaluation['episodes'] if e['stop_reason'] == 'dispatch_failure']
+                    self.assertEqual(len(stopped), 1)  # the faulted episode ends; the schedule continues
+                    self.assertEqual(len(evaluation['episodes']), 6)
+                    self.assertTrue(evaluation['session_2_permitted'])
 
     def test_admission_cutoff_admits_no_pair_without_the_frozen_allowance(self):
         """A lifecycle too short for one pair's 600 s allowance: nothing is played, every pair is recorded as not

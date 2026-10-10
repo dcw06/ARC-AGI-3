@@ -16,6 +16,9 @@ Two steps, in two interpreters:
 A rejected schema means every request using it is refused by the server. The token audit
 (research/feedback_action_v1/token_audit.json) compiled these schemas with xgrammar directly; this check adds vLLM's
 backend selection, which falls back from xgrammar to guidance for schemas xgrammar does not support.
+
+Receipt r1 (prepared before the owner decisions) and r2 (after them: free_text_format = ascii_only, recorded in
+owner_gates.json) cover both options; r2 also records the effective option and the owner-gate record's hash.
 """
 import argparse
 import hashlib
@@ -114,9 +117,13 @@ def dump(out):
         if game != 'canary':
             schemas[f'candidate_current/{game}'] = G.candidate_response_format(legal, None)['json_schema']['schema']
             schemas[f'candidate_ascii_only/{game}'] = G.candidate_response_format(legal, gated)['json_schema']['schema']
-    assert G.load()['free_text_format']['decision'] is None, 'the committed record must stay undecided here'
-    assert G.candidate_response_format(LEGAL_SETS['sk48_mixed'], gated) != G.candidate_response_format(
-        LEGAL_SETS['sk48_mixed'], None), 'the gated option must change the candidate schema'
+    committed = {**gated, 'free_text_format': {'decision': None, 'committed': 'current'}}
+    for game, legal in LEGAL_SETS.items():  # the two options as the gate builds them, whatever is recorded
+        if game != 'canary':
+            schemas[f'candidate_current/{game}'] = G.candidate_response_format(legal, committed)['json_schema']['schema']
+    effective = G.decision('free_text_format')
+    assert all(G.candidate_response_format(legal)['json_schema']['schema'] == schemas[f'candidate_{effective}/{g}']
+               for g, legal in LEGAL_SETS.items() if g != 'canary'), 'the effective schema is one of the two checked'
     for name, answers in cases().items():
         for label, answer in answers:
             for game, legal in LEGAL_SETS.items():
@@ -126,8 +133,9 @@ def dump(out):
                 for option in options:
                     rows.append({'schema': f'{option}/{game}', 'label': label, 'answer': answer,
                                  'study_valid': study_valid(name, answer, legal, option == 'candidate_ascii_only')})
-    Path(out).write_text(json.dumps({'schemas': schemas, 'cases': rows}, indent=1, ensure_ascii=False) + '\n',
-                         encoding='utf-8')
+    Path(out).write_text(json.dumps({'schemas': schemas, 'cases': rows, 'effective_free_text_format': effective,
+                                     'owner_gates_sha256': hashlib.sha256(G.GATES.read_bytes()).hexdigest()},
+                                    indent=1, ensure_ascii=False) + '\n', encoding='utf-8')
     print('schemas written:', out, len(schemas), 'schemas,', len(rows), 'cases')
 
 
@@ -140,10 +148,12 @@ def check(schemas_path, tokenizer_dir, out):
     data = json.loads(Path(schemas_path).read_text(encoding='utf-8'))
     tok = AutoTokenizer.from_pretrained(tokenizer_dir)
     config = StructuredOutputsConfig()
-    receipt = {'schema': 'feedback_action_v1_structured_outputs_check_v1', 'gpu_used': False, 'model_calls': 0,
+    receipt = {'schema': 'feedback_action_v1_structured_outputs_check_v2', 'gpu_used': False, 'model_calls': 0,
                'versions': {p: md.version(p) for p in ('vllm', 'xgrammar', 'llguidance', 'transformers')},
                'configured_backend': config.backend,
-               'disable_any_whitespace': getattr(config, 'disable_any_whitespace', None), 'schemas': {}}
+               'disable_any_whitespace': getattr(config, 'disable_any_whitespace', None),
+               'effective_free_text_format': data.get('effective_free_text_format'),
+               'owner_gates_sha256': data.get('owner_gates_sha256'), 'schemas': {}}
 
     def accepts(backend, schema, text):
         if backend == 'guidance':

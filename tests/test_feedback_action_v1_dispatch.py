@@ -150,10 +150,13 @@ class SyntheticAdapter:
 
 
 
-def run_synthetic(test, mode, *, faults=None, invalid_calls=(), expect='complete'):
-    """One synthetic pair (baseline, then candidate) through the derived runner. Returns (report, server)."""
+def run_synthetic(test, mode, *, faults=None, invalid_calls=(), expect='complete', committed_f5=False):
+    """One synthetic pair (baseline, then candidate) through the derived runner. Returns (report, server).
+    `committed_f5`: r0's F5 rule without the owner's denominator floor (gate B), kept as the reference it amends."""
     game = f'syn-{mode}'
     spec = P.session_spec(1)
+    if committed_f5:
+        spec['limits']['session_abort'].pop('dispatch_denominator_floor', None)
     spec['cases'] = [{'game_id': game, 'environment_seed': 0, 'initial_available_actions': [1, 2], 'win_levels': 2,
                       'initial_canonical_hash': SyntheticAdapter(game, mode).bootstrap().canonical_hash}]
     spec['schedule'] = [{'block': 1, 'pair_id': game, 'game_id': game, 'order': ['baseline', 'candidate']}]
@@ -234,7 +237,8 @@ class F2aInvalidOutputAbort(unittest.TestCase):
 
 class F5DispatchFailureAbort(unittest.TestCase):
     """The whole session: abort after any dispatch at which failed plus unknown dispatches exceed 10% of the
-    dispatches so far (failures x 10 > dispatches)."""
+    dispatches so far. Frozen rule (gate B, owner decision of October 10, 2026): failures x 10 > max(dispatches,
+    10). The committed r0 rule (failures x 10 > dispatches) is kept below as the reference the floor amends."""
 
     def test_exactly_10_percent_does_not_abort(self):
         report, _ = run_synthetic(self, 'reset', faults={10: 'reject'})  # 1 failure in 10 dispatches
@@ -244,8 +248,21 @@ class F5DispatchFailureAbort(unittest.TestCase):
         self.assertEqual(first['steps'][-1]['raw_transition']['outcome']['status'], 'failed')
         self.assertEqual((second['stop_reason'], len(second['steps'])), ('action_cap', 24))
 
-    def test_just_over_10_percent_aborts(self):
-        report, server = run_synthetic(self, 'reset', faults={9: 'reject'}, expect='aborted')  # 1 in 9
+    def test_frozen_floor_a_single_early_failure_ends_only_its_episode(self):
+        report, _ = run_synthetic(self, 'reset', faults={9: 'reject'})  # 1 in 9: under the floor, no abort
+        self.assertIsNone(report['abort'])
+        first, second = report['episodes']
+        self.assertEqual((first['stop_reason'], len(first['steps'])), ('dispatch_failure', 9))
+        self.assertEqual((second['stop_reason'], len(second['steps'])), ('action_cap', 24))
+
+    def test_frozen_floor_a_second_early_failure_aborts_and_records_the_floor(self):
+        report, server = run_synthetic(self, 'reset', faults={3: 'reject', 5: 'unknown'}, expect='aborted')
+        self.assertEqual(report['abort'], {'rule': 'F5_dispatch_failures', 'dispatch_failures': 2, 'dispatched': 5,
+                                           'threshold_rate': '1/10', 'denominator_floor': 10,
+                                           'episode_id': 'syn-reset-candidate'})
+
+    def test_committed_rule_just_over_10_percent_aborts(self):
+        report, server = run_synthetic(self, 'reset', faults={9: 'reject'}, expect='aborted', committed_f5=True)
         self.assertEqual(report['abort'], {'rule': 'F5_dispatch_failures', 'dispatch_failures': 1, 'dispatched': 9,
                                            'threshold_rate': '1/10', 'denominator_floor': 0,  # committed rule
                                            'episode_id': 'syn-reset-baseline'})
@@ -262,7 +279,7 @@ class F5DispatchFailureAbort(unittest.TestCase):
         self.assertEqual(report['episodes'][-1]['steps'][-1]['raw_transition']['outcome']['status'], 'outcome_unknown')
 
     def test_unknown_outcome_counts_and_its_record_is_indeterminate(self):
-        report, _ = run_synthetic(self, 'level', faults={3: 'unknown'}, expect='aborted')
+        report, _ = run_synthetic(self, 'level', faults={3: 'unknown'}, expect='aborted', committed_f5=True)
         self.assertEqual(report['abort']['rule'], 'F5_dispatch_failures')
         record = T.build(report['episodes'][0]['steps'][-1]['raw_transition'])
         self.assertEqual(record['measurements']['visual_effect']['status'], 'indeterminate')

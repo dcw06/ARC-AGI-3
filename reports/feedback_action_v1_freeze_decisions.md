@@ -1,7 +1,14 @@
-# Feedback-action v1 (Track 1): decisions to freeze protocol v2 (prepared October 10, 2026)
+# Feedback-action v1 (Track 1): decisions to freeze protocol v2 (prepared and decided October 10, 2026)
 
-**Status.** A decision packet for the owner. Nothing here is decided, frozen, approved or reserved. Protocol v2 draft
-r1 (`reports/feedback_action_v1_protocol_v2_r1.md`) and review snapshot r1 (lock `4b5b7a06…`) are unchanged.
+**Decided by the owner on October 10, 2026:**
+1. gate A: `ascii_only`;
+2. gate B: `denominator_floor_10`;
+3. freeze protocol v2 with both, and adopt the section 4 fixes in the same revision.
+
+They are recorded in `research/feedback_action_v1/live/owner_gates.json` and frozen in
+`reports/feedback_action_v1_protocol_v2_frozen.md`; review snapshots r2 bind them. Draft r1 and review snapshot r1
+(lock `4b5b7a06…`) stay unchanged as history. Nothing is approved or reserved. The packet below is kept as
+prepared.
 
 **What is new since r1.**
 - **A CPU check through vLLM's own request path** (`scripts/check_feedback_action_v1_structured_outputs.py`;

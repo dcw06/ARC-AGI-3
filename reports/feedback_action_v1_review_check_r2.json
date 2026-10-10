@@ -1,0 +1,15 @@
+{
+ "schema": "feedback_action_v1_review_check_v1",
+ "review_revision": 2,
+ "review_lock_sha256": "9ebbc968f91e5f10b0627a617254ab7c52bb38954021e10b631d77244dd06468",
+ "evidence_class": "scripted_cpu_rehearsal",
+ "gpu_compatibility_evidence": false,
+ "exit_code": 1,
+ "refused_at_live_gate": true,
+ "refusal": "research.feedback_action_v1.live.binding.LiveRefused: feedback-action v1 live path refused: unresolved placeholders: kernel_id, model.kaggle_source, model.mounted_path; authorization: ValueError: no review source lock",
+ "nvidia_smi_called": false,
+ "temporary_files_left": [],
+ "kaggle_paths_touched": false,
+ "stderr_tail": "Traceback (most recent call last):\n  File \"/tmp/feedback-action-v1-review-check-0in87t35/review_cell.py\", line 19, in <module>\n    receipt = notebook_entry(source, started, MODE)  # live: the gate refuses here, before installation, model or GPU\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/feedback-action-v1-review-check-0in87t35/tmp/feedback-action-v1-source-4wt12lb1/scripts/feedback_action_v1_launch.py\", line 227, in notebook_entry\n  File \"/tmp/feedback-action-v1-review-check-0in87t35/tmp/feedback-action-v1-source-4wt12lb1/research/feedback_action_v1/live/authority.py\", line 19, in require\n  File \"/tmp/feedback-action-v1-review-check-0in87t35/tmp/feedback-action-v1-source-4wt12lb1/research/feedback_action_v1/live/binding.py\", line 316, in require_live\nresearch.feedback_action_v1.live.binding.LiveRefused: feedback-action v1 live path refused: unresolved placeholders: kernel_id, model.kaggle_source, model.mounted_path; authorization: ValueError: no review source lock\n",
+ "passed": true
+}

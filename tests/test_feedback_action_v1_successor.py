@@ -24,7 +24,8 @@ SCIENCE = {'research/feedback_action_v1/adapter.py': '26a84909f6786dce8e9e66d5a5
            'research/feedback_action_v1/live/fake_server.py':
                'd80eb516f43e528d29d4474fd8b49a7264f8579518a0964c9ee0dea00d80b8a0'}
 VERIFIED_PROTOCOL_BLOB = '6061cbebb3f21ccd3ca698049f439b0546968f2f'  # control-interface v2 protocol.json at 5a21dd3
-REVIEW = ROOT / 'notebooks/feedback-action-v1-review-r1'
+REVIEW = ROOT / 'notebooks/feedback-action-v1-review-r2'  # the freeze revision (owner decisions of October 10, 2026)
+RETAINED_REVIEW_LOCKS = {1: '4b5b7a0648c968c2ec497e0ba963e2cee42ad4f87c0ec6c204efbd0d7bedf0b5'}  # history, unchanged
 
 
 def sha(path):
@@ -44,18 +45,23 @@ class ScienceUnchanged(unittest.TestCase):
         for name, digest in SCIENCE.items():
             self.assertEqual(sha(ROOT / name), digest, name)
 
-    def test_committed_owner_gates_leave_every_request_unchanged(self):
+    def test_recorded_owner_gates_change_exactly_the_candidate_schema_and_f5(self):
+        # Owner decisions of October 10, 2026, frozen in reports/feedback_action_v1_protocol_v2_frozen.md.
         gates = G.load()
-        self.assertEqual((gates['free_text_format']['decision'], gates['f5_early_abort']['decision']), (None, None))
-        self.assertEqual(G.decision('free_text_format'), 'current')
-        self.assertEqual(G.decision('f5_early_abort'), 'running_rate_from_first_dispatch')
+        self.assertEqual((gates['free_text_format']['decision'], gates['f5_early_abort']['decision']),
+                         ('ascii_only', 'denominator_floor_10'))
+        self.assertEqual(gates['owner_response']['freeze'], 'Yes, freeze with the fix (Recommended)')
         for legal in ([6], [1, 2, 3, 4], [1, 2, 3, 4, 6, 7]):
-            self.assertEqual(G.candidate_response_format(legal), AD.candidate_response_format(legal))
+            gated = G.candidate_response_format(legal)['json_schema']['schema']
+            committed = AD.candidate_response_format(legal)['json_schema']['schema']
+            for name in G.FREE_TEXT:  # the only difference: the pattern on the two free-text fields
+                field = gated['properties']['hypothesis_test']['properties'][name]
+                self.assertEqual(field.pop('pattern'), G.ASCII_PATTERN)
+            self.assertEqual(gated, committed)
         spec = P.session_spec(1)
-        self.assertNotIn('dispatch_denominator_floor', spec['limits']['session_abort'])
-        request = AD.build_request({'legal_actions': [1, 2]}, {}, 'candidate',
-                                   AD.no_statement('no earlier decision in this episode'))
-        self.assertIs(G.gate_request(request), request)
+        self.assertEqual(spec['limits']['session_abort']['dispatch_denominator_floor'], 10)
+        baseline = AD.build_request({'legal_actions': [1, 2]}, {}, 'baseline')
+        self.assertIs(G.gate_request(baseline), baseline)  # the baseline is unchanged
 
 
 class RuntimeBinding(unittest.TestCase):
@@ -191,7 +197,7 @@ class ImportClosure(unittest.TestCase):
 
 
 class OwnerGateOptions(unittest.TestCase):
-    """The recommended options are implemented but inactive; recording a decision is the owner's amendment."""
+    """Both options of each gate, built from explicit records (the owner recorded the recommended ones)."""
 
     def recorded(self, free_text=None, f5=None):
         gates = copy.deepcopy(G.load())
@@ -207,10 +213,12 @@ class OwnerGateOptions(unittest.TestCase):
         block = {'hypothesis': 'ok', 'if_different': 'café'}
         self.assertIn('if_different', G.free_text_problem(block, gates))
         self.assertIsNone(G.free_text_problem({'hypothesis': 'a ~ b', 'if_different': 'x'}, gates))
-        self.assertIsNone(G.free_text_problem(block))  # committed: no check
+        self.assertIsNone(G.free_text_problem(block, self.recorded()))  # the committed option: no check
+        self.assertIn('if_different', G.free_text_problem(block))  # the recorded decision: checked
 
     def test_f5_floor_option(self):
-        self.assertEqual(G.dispatch_denominator_floor(), 0)
+        self.assertEqual(G.dispatch_denominator_floor(self.recorded()), 0)  # the committed rule
+        self.assertEqual(G.dispatch_denominator_floor(), 10)  # the recorded decision
         gates = self.recorded(f5='denominator_floor_10')
         from research.feedback_action_v1.live import runner as RN
         spec = G.apply(RN.protocol(), gates)
@@ -313,12 +321,48 @@ class ReviewSnapshot(unittest.TestCase):
         lock = json.loads((REVIEW / 'review-source-lock.json').read_bytes())
         self.assertEqual((lock['scope'], lock['gpu_enabled']), ('feedback-action-v1', False))
         self.assertEqual(set(lock['bindings']), set(N.source_names(ROOT)))
+        self.assertEqual(set(lock['review_documents']), set(B.REVIEW_REQUIRED))
         B.check_sources(ROOT, (REVIEW / 'review-source-lock.json').relative_to(ROOT).as_posix())
         with tempfile.TemporaryDirectory() as tmp:
             rebuilt = N.build_review(Path(tmp) / 'r', ROOT)
             self.assertEqual(rebuilt['artifacts'], lock['artifacts'])
             for name in ('profile.ipynb', 'kernel-metadata.json', 'review-source-lock.json'):
                 self.assertEqual((Path(tmp) / 'r' / name).read_bytes(), (REVIEW / name).read_bytes(), name)
+
+    def test_newest_revision_and_retained_history(self):
+        locks = sorted(ROOT.glob(B.REVIEW_GLOB), key=lambda p: int(p.parent.name.rsplit('-r', 1)[1]))
+        self.assertEqual(locks[-1].parent, REVIEW)
+        for revision, digest in RETAINED_REVIEW_LOCKS.items():
+            lock = ROOT / f'notebooks/feedback-action-v1-review-r{revision}/review-source-lock.json'
+            self.assertEqual(hashlib.sha256(lock.read_bytes()).hexdigest(), digest)
+            # r1 bound no review documents (the defect the freeze revision fixes); the gate refuses it
+            self.assertNotIn('review_documents', json.loads(lock.read_bytes()))
+            with self.assertRaisesRegex(ValueError, 'source drift|review documents incomplete'):
+                B.check_sources(ROOT, lock.relative_to(ROOT).as_posix())
+
+    def test_review_documents_are_verified_and_drift_is_refused(self):
+        from research.feedback_action_v1 import live_evaluation as LE
+        self.assertEqual(LE.REVIEW_REQUIRED, B.REVIEW_REQUIRED)
+        self.assertEqual(LE.REVIEW_GLOB, B.REVIEW_GLOB)
+        record, problems = LE.review_lock_status(ROOT)
+        self.assertEqual((problems, record['review_lock']), ([], (REVIEW / 'review-source-lock.json').relative_to(
+            ROOT).as_posix()))
+        lock_name = (REVIEW / 'review-source-lock.json').relative_to(ROOT).as_posix()
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            lock = json.loads((ROOT / lock_name).read_bytes())
+            for name in (lock_name, *lock['bindings'], *lock['review_documents']):
+                (root / name).parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / name, root / name)
+            B.check_sources(root, lock_name)
+            path = root / 'research/feedback_action_v1/live_evaluation.py'
+            path.write_bytes(path.read_bytes() + b'\n# drift\n')
+            with self.assertRaisesRegex(ValueError, 'review document drift'):
+                B.check_sources(root, lock_name)
+            B.check_sources(root, lock_name, review_documents=False)  # the in-payload gate skips them
+            record, problems = LE.review_lock_status(root)
+            self.assertIsNone(record)
+            self.assertIn('drift from the review lock', problems[0])
 
     def test_metadata_is_gpu_disabled_and_pinned(self):
         metadata = json.loads((REVIEW / 'kernel-metadata.json').read_bytes())

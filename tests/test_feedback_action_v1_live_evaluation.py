@@ -158,13 +158,25 @@ class SyntheticBoundariesAndAborts(unittest.TestCase):
         self.assertEqual(sent[3]['reason'], LE.REASON_CLEARED)
 
     def test_f5_abort_recomputed_online(self):
-        run, spec = synthetic_session('reset', faults={9: 'reject'})
+        # The frozen rule (gate B: floor 10): two failures within the first dispatches abort.
+        run, spec = synthetic_session('reset', faults={3: 'reject', 5: 'unknown'})
         with SyntheticSpec(spec):
             value = LE.evaluate_session(run, session=1, mode='rehearsal')
         self.assertEqual(run['status'], 'aborted')
         self.assertEqual(value['online_abort_recomputed'], run['abort'])
         self.assertTrue(value['failure_rules']['F5_dispatch_failures'])
         self.assertFalse(value['session_2_permitted'])
+
+    def test_f5_committed_rule_recomputed_online(self):
+        # r0's rule without the floor, kept as the reference the owner's decision amends.
+        def committed(spec):
+            spec['limits']['session_abort'].pop('dispatch_denominator_floor', None)
+        run, spec = synthetic_session('reset', faults={9: 'reject'}, spec_change=committed)
+        self.assertEqual((run['status'], run['abort']['denominator_floor']), ('aborted', 0))
+        with SyntheticSpec(spec):
+            value = LE.evaluate_session(run, session=1, mode='rehearsal')
+        self.assertEqual(value['online_abort_recomputed'], run['abort'])
+        self.assertTrue(value['failure_rules']['F5_dispatch_failures'])
 
     def test_f5_floor_option_recomputed_online(self):
         def floor(spec):
@@ -213,7 +225,7 @@ class SyntheticBoundariesAndAborts(unittest.TestCase):
         self.assertFalse(value['session_2_permitted'])
 
     def test_a_removed_abort_record_is_detected(self):
-        run, spec = synthetic_session('reset', faults={9: 'reject'})
+        run, spec = synthetic_session('reset', faults={3: 'reject', 5: 'unknown'})
         run = copy.deepcopy(run)
         run['abort'], run['status'] = None, 'complete'
         with SyntheticSpec(spec):

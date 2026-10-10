@@ -1,4 +1,11 @@
-# Feedback-action v1: owner gates (analysis and prepared implementation; no decision recorded)
+# Feedback-action v1: owner gates (decided October 10, 2026)
+
+**Decided by the owner on October 10, 2026:** gate A `ascii_only`, gate B `denominator_floor_10`, and the freeze
+with the review-document fix. The decisions are recorded in `research/feedback_action_v1/live/owner_gates.json`
+(`owner_response`) and frozen in `reports/feedback_action_v1_protocol_v2_frozen.md`; review snapshots r2 bind
+them. The analysis below is kept as prepared on October 8. Since then, a CPU check through vLLM's own request path
+(`reports/feedback_action_v1/structured_outputs_check_r2.json`) confirmed that the server accepts both options'
+schemas with xgrammar and enforces them as described.
 
 Prepared October 8, 2026 on `track1-successor-runtime-v1`. Two decisions belong to the study owner:
 
@@ -8,15 +15,15 @@ Prepared October 8, 2026 on `track1-successor-runtime-v1`. Two decisions belong 
 This document prepares both decisions. For each gate it gives the exact token audit and the consequences of every
 option, and it implements the recommended option behind the gate in `research/feedback_action_v1/live/owner_gates.json`.
 
-Both decisions are `null`, so the committed protocol v2 behaviour applies unchanged. Tests show that requests, the
-schedule and the abort rule are then identical to the committed ones.
+When this analysis was prepared both decisions were `null`, so the committed protocol v2 behaviour applied
+unchanged. Tests showed that requests, the schedule and the abort rule were then identical to the committed ones.
 
 Recording a decision is a protocol amendment. It needs three things:
 - the owner's explicit response;
 - a new review snapshot;
 - a compute authorization bound to the record's new hash. The gate checks `owner_gates_sha256`.
 
-Nothing on this branch records a decision.
+The decisions were recorded on October 10, 2026, as an amendment with review snapshots r2.
 
 ## Gate A: the permitted free-text format
 

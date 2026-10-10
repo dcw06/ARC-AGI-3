@@ -11,6 +11,7 @@ import re
 
 from research.feedback_action_v1.live.binding import (CLAIM, COMPUTE, EXECUTION, PACKAGE, PROTOCOL, RESERVATION,
                                                           ROOT, SOURCE, ACCOUNT, PERMISSION, BYTES, evidence_names, load_protocol, require_live, review_lock, session_names,
+                                                          REVIEW_REQUIRED,
                                                           sha256, unresolved)
 
 MODEL_SOURCE = 'qwen-lm/qwen-3-vl/Transformers/30b-a3b-instruct-fp8/1'
@@ -145,7 +146,9 @@ def build_review(output, root=ROOT):
         (output / name).write_bytes(data)
     lock = {'status': 'review_snapshot_not_approved_not_compute_authority', 'scope': 'feedback-action-v1',
             'bindings': bindings, 'artifacts': {n: hashlib.sha256(d).hexdigest() for n, d in artifacts.items()},
-            'unresolved_placeholders': pending, 'gpu_enabled': False}
+            'unresolved_placeholders': pending, 'gpu_enabled': False,
+            'review_documents': {n: hashlib.sha256((Path(root) / n).read_bytes()).hexdigest()
+                                 for n in REVIEW_REQUIRED}}
     (output / 'review-source-lock.json').write_bytes(encode(lock))
     return lock
 
