@@ -28,26 +28,39 @@ SHA-256.
 
 ## Gate 1. Draw and retain the withheld seed (protocol v2 section 5, steps 1 to 3)
 
-**First, record the holder rule (open; not decided at the freeze).** Before the draw, the owner records who holds
-the two copies of the nonce: the frozen text names a private note held by the person who drew it and a secret held by
-the run operator, but not who they are, nor whether one person may hold both (Track 4 used an owner-approved
-single-holder amendment, with two copies on one computer and the limitation recorded). Record the rule, and its
-limitation if any, in a committed note before running the commands below.
+**The holder rule (decided by the owner on October 9, 2026; `nonce_custody.json`).**
+- **One human holder.** The owner draws the nonce and keeps **two separately stored copies outside every
+  repository**.
+- **Checks.** The owner checks each copy personally, by recomputing the commitment. The check prints only the hash.
+- **Limitation.** There is no independent second holder, so the owner is a single point of failure. Two copies on
+  one computer would not survive losing that computer.
+- **Frozen text.** The frozen protocol's §5 still reads "open". The rule is copied in at the next review revision,
+  which the commitment requires anyway.
 
-Run this on the owner's own machine, in a private directory outside every repository checkout, with no model or
-assistant session watching the terminal.
+Run this on the owner's own machine, with no model or assistant session watching the terminal. Replace
+`<copy B folder>` with a second location outside every repository, ideally on another device or removable drive.
 
 ```sh
 umask 077
 mkdir -p ~/private/track2
 python3 -c "import secrets; print(secrets.token_hex(16))" > ~/private/track2/withheld-nonce.txt
-python3 -c "import hashlib, pathlib; n = pathlib.Path.home().joinpath('private/track2/withheld-nonce.txt').read_text().strip(); print(hashlib.sha256(('evidence-memory-v1-stage1-withheld/' + n).encode()).hexdigest())"
+mkdir -p "<copy B folder>" && cp ~/private/track2/withheld-nonce.txt "<copy B folder>/withheld-nonce.txt"
+date -u
+for f in ~/private/track2/withheld-nonce.txt "<copy B folder>/withheld-nonce.txt"; do python3 -c "import hashlib, pathlib, sys; n = pathlib.Path(sys.argv[1]).read_text().strip(); print(hashlib.sha256(('evidence-memory-v1-stage1-withheld/' + n).encode()).hexdigest())" "$f"; done
 ```
 
-- **Where the nonce goes.** The nonce goes only into the file; nothing in these commands prints it.
-- **Where the hash goes.** The second command prints only `sha256(seed)`, the commitment.
-- **Retention.** Keep two copies outside the repository: a private note held by the person who drew it, and a secret
-  held by the run operator. Never commit it, never paste it into a conversation with a model, and never put it in a
+- **Where the nonce goes.** It goes only into the two files. Nothing in these commands prints it.
+- **What is printed.** The loop prints `sha256(seed)`, the commitment, once per copy. The two lines must be identical.
+- **What to report.** For each copy, report:
+  - "copy A" or "copy B";
+  - the `date -u` time;
+  - the printed hash;
+  - confirmation that you ran it yourself, that the copy is outside every repository, and that it is stored
+    separately from the other copy;
+  - a generic storage description.
+
+  Never report the nonce. The reports are recorded in `nonce_custody.json` (`copy_checks`).
+- **Retention.** Never commit the nonce, never paste it into a conversation with a model, and never put it in a
   notebook output.
 - **Commitment.** Write only the printed hash into `research/evidence_memory_v1/successor/seed-commitment.json`
   (`withheld_seed_sha256`; `status: committed`) and into the frozen protocol revision. Commit and publish that hash.

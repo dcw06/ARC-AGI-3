@@ -1,7 +1,7 @@
 # Track 2 Stage 1: decisions to freeze protocol v2 (decided October 9, 2026)
 
-**Decided.** The owner decided every item below on October 9, 2026, except who holds the two copies of the withheld
-nonce, which stays open (owner gate 1). The decisions are recorded in the frozen protocol,
+**Decided.** The owner decided every item below on October 9, 2026. The holder rule for the withheld nonce was
+decided later the same day: one human holder (`nonce_custody.json`). The decisions are recorded in the frozen protocol,
 `reports/evidence_memory_v1_protocol_v2_frozen.md` (§16), and implemented as listed in `freeze_change_list_r2.md`.
 Nothing is drawn, approved or reserved: a freeze is not an approval.
 
@@ -147,9 +147,11 @@ The reviewed per-scope live gate and session A's tooling are unchanged.
 | 11. Tokenizer admission | Accept the offline audit |
 | 12. Teammate stress set | Keep it out of Stage 1 |
 
-**Still open (not decided on October 9, 2026).** Who holds the two copies of the withheld nonce? Track 4 used an
-owner-approved single-holder amendment, with two copies on one computer and the limitation recorded. Deciding the
-rule in advance avoids an amendment at launch time. It is owner gate 1, before the draw.
+**Holder rule (decided by the owner later on October 9, 2026).** One human holder, the owner, keeps two separately
+stored copies outside every repository and checks each personally by recomputing the commitment. The limitation
+is stated: there is no independent second holder. The rule is recorded before the draw, in `nonce_custody.json`
+and owner gate 1. The frozen §5 text still reads "open", because the r3 review locks bind it; the rule is copied
+into §5 at the next review revision, which the commitment requires anyway.
 
 ## 5. After the decisions (done for the freeze on October 9, 2026, except the owner gates)
 

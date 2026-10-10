@@ -1,0 +1,26 @@
+{
+ "schema": "evidence_memory_v1_withheld_nonce_custody_v1",
+ "status": "rule_recorded_nonce_not_drawn",
+ "decided_at": "2026-10-09",
+ "decided_by": "the owner",
+ "rule": "One human holder, the owner, draws the withheld nonce and keeps two separately stored copies outside every repository. The owner checks each copy personally by recomputing the commitment, sha256('evidence-memory-v1-stage1-withheld/' + nonce), which prints only the hash and never the nonce. Both copy checks must print the committed hash, and are recorded here before any reservation or launch.",
+ "replaces": "the frozen text's two named holders (a private note held by the person who drew it, and a secret held by the run operator); the owner is both",
+ "limitation": "There is no independent second holder: the owner is a single point of failure, and the two checks are not independent verifications. Two copies on one computer would not protect against losing that computer.",
+ "assistant_access": "None. The nonce is drawn and checked in the owner's own terminal with no model or assistant watching. It is never pasted into a conversation with a model, never committed and never put in a notebook output. Only the commitment hash is reported.",
+ "frozen_protocol_text": "The frozen protocol (section 5) still says the holder rule is open; the r3 review locks bind that text. The rule is copied into section 5 at the next review revision, which the commitment and the withheld frozen sets require anyway (owner gates 1, 2 and 5).",
+ "withheld_seed_sha256": null,
+ "copies_required": 2,
+ "copies_confirmed": 0,
+ "copy_checks": [],
+ "copy_check_entry": {
+  "holder": "owner",
+  "copy_id": "\"copy A\" or \"copy B\" (no storage path)",
+  "checked_at": "UTC timestamp of the check",
+  "printed": "the 64-hex commitment printed by the check; must equal withheld_seed_sha256",
+  "run_personally": "true: the owner ran this check",
+  "copy_outside_repository": "true: this copy is outside every repository",
+  "separate_storage": "true: stored separately from the other copy",
+  "storage": "a generic description, e.g. 'WSL home', 'Windows user folder' or 'removable drive'"
+ },
+ "confirmation_rule": "status becomes two_copies_confirmed and copies_confirmed 2 only when copy_checks holds two entries with distinct copy_id, each printing the committed hash and reported by the owner."
+}
