@@ -7,7 +7,7 @@ Nothing is drawn, approved or reserved: a freeze is not an approval.
 
 | Item | Owner decision, October 9, 2026 |
 |---|---|
-| 0. Recall response schema (choice 9) | Drop `uniqueItems` from the decoding schema only; scoring unchanged |
+| 0. Recall response schema (choice 9) | Drop `uniqueItems` from the decoding schema only; scoring unchanged. Amended on October 10, 2026: exactly the eight valid answers (below) |
 | 1. Unsupported-claim margins (choice 5) | (b): keep both thresholds; read three ways (met / exceeded / not shown); only met advances |
 | 2. Trajectory exclusions (choice 8) | (a): refuse and redraw; no science-code change |
 | 3. Session B after session A (choice 7) | Enforce it in session B's launch tooling, bound by hash in B's compute authorization |
@@ -29,6 +29,13 @@ xgrammar and unimplemented in the llguidance fallback (`structured_outputs_check
 would be refused, so session A would stop at its first recall call and spend its attempt.
 
 **Decided by the owner on October 9, 2026: drop `uniqueItems` from the decoding schema only** (frozen protocol §2).
+
+**Amended by the owner on October 10, 2026, after the withheld draw.** The draw left session A's repeat with 48
+answers per arm, where one invalid answer fails the 2% rule. Without `uniqueItems`, the decoder could emit two
+invalid recall forms: a duplicate value, and "no_evidence" with another value. The recall decoding schema is
+therefore the exact enum of the eight valid answers, in canonical order. It is accepted by xgrammar, and over every
+recall answer of one to four values the decoder admits exactly the canonical form of each answer the scorer accepts
+(`structured_outputs_check_r3.json`). Scoring, the rules, the questions and the prompt tokens are unchanged.
 The structured-output check, rerun on the amended schema, accepts both Track 2 schemas through xgrammar
 (`structured_outputs_check_r2.json`), and every prompt token count is unchanged (`token_counts_r1_vs_r2.json`).
 
@@ -139,11 +146,11 @@ The reviewed per-scope live gate and session A's tooling are unchanged.
 | Choice | Recommendation |
 |---|---|
 | 1. Two package builds or one | Keep two builds, A and B |
-| 2. Repeat split | Keep 5 + 4 groups |
+| 2. Repeat split | Keep 9 whole groups (5 + 4 in the stand-in; the withheld draw gave 3 + 6) |
 | 3. Admission granularity | Keep per-call admission |
 | 4. Duplicate requests at delay 0 | Ask every scheduled call; doubles as a determinism check |
 | 6. Runtime estimate | Replace §11 with the measured Track 4 figures (documentation only) |
-| 10. Request cap | Accept the worst case (194,044 for A and 189,756 for B), with the 2,896 / 2,832 completion ceilings, stated in each compute authorization |
+| 10. Request cap | Accept the worst case (withheld sets: 186,540 for A and 198,332 for B), with the 2,784 / 2,960 completion ceilings, stated in each compute authorization |
 | 11. Tokenizer admission | Accept the offline audit |
 | 12. Teammate stress set | Keep it out of Stage 1 |
 

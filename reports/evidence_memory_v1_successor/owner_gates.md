@@ -19,7 +19,8 @@ numbers are the draft's; "protocol v2 section N" below refers to the frozen text
 The owner decided the open choices on October 9, 2026 (`freeze_decisions.md`), and the protocol is frozen
 (`reports/evidence_memory_v1_protocol_v2_frozen.md`, §16). Every later step binds to it; review snapshots r2 bind its
 SHA-256.
-- The recall decoding schema no longer carries `uniqueItems` (the defect); scoring is unchanged.
+- The recall decoding schema no longer carries `uniqueItems` (the defect). Since October 10 it allows exactly the
+  eight valid answers; scoring is unchanged.
 - The unsupported-claim margins are read three ways; only `met` permits advancement.
 - A failing withheld draw is refused and redrawn (gates 1 and 2).
 - Session B launches only after session A is technically complete, enforced by B's launch tooling (gate 6).
@@ -164,8 +165,8 @@ These records are made by the owner and the reviewer, never by tooling:
 - the Record C compute authorization, bound to the protocol, the source approval, the dataset and every limit:
   - `authorized_seconds` 3,600, `internal_seconds` 3,300, `admission_cutoff_seconds` 3,000, cleanup reserve 300;
   - one attempt, zero retries;
-  - `maximum_model_requests` at the plan's worst case (194,044 for A and 189,756 for B, which counts metrics reads)
-    beside the 2,896 / 2,832 study-completion ceiling, both stated (frozen protocol §12);
+  - `maximum_model_requests` at the plan's worst case for the withheld sets (186,540 for A and 198,332 for B, which
+    counts metrics reads), beside the 2,784 / 2,960 study-completion ceilings, both stated (frozen protocol §12);
   - **session B only:** `session_a_technical_evaluation_sha256`, the SHA-256 of session A's retained technical
     evaluation (below);
 - the execution lock and an unconsumed reservation.

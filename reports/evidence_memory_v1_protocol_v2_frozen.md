@@ -11,8 +11,10 @@
   unchanged. Section numbers are the draft's, so code comments citing "protocol v2, section N" still point to the
   same section. Sections 1, 3, 6, 7, 8 and 10 are copied verbatim.
 - **What changed from the draft**, each by an owner decision (§16):
-  - §2: the recall decoding schema no longer carries `uniqueItems`, which the verified runtime refuses. Scoring is
-    unchanged.
+  - §2: the recall decoding schema allows exactly the eight valid answers (October 9: without `uniqueItems`, which
+    the verified runtime refuses; October 10: the exact enum). Scoring is unchanged.
+  - §3, §10–§12: the withheld draw (October 10) fixes the exact calls, ceilings and repeat split; the earlier figures
+    are the development stand-in's.
   - §4 and §5: a withheld draw with any failing trajectory is refused and redrawn; it is never thinned.
   - §5: one human holder, the owner, keeps the two copies of the withheld nonce (decided by the owner on
     October 9, 2026). The nonce was drawn on October 10, 2026, and its commitment is recorded in §5 (review
@@ -52,7 +54,8 @@ within the generator, **not** to unfamiliar real games.
 - the model and decoding (temperature 0, request seed 0, `max_tokens` 64, prefix caching off);
 - one system message describing both formats (`protocol.SYSTEM`);
 - the question text and answer form;
-- a strict JSON schema for decoding (`stage1.response_schema`; without `uniqueItems` since the freeze, see below);
+- a strict JSON schema for decoding (`stage1.response_schema`; for recall, exactly the eight valid answers, see
+  below);
 - response validation before scoring (`readers.validate_response`).
 
 **What differs:** only the evidence block.
@@ -83,13 +86,20 @@ before any correctness is computed.
   fallback fails with `Unimplemented keys: ["uniqueItems"]`
   (`reports/evidence_memory_v1_successor/structured_outputs_check_r1.json`). The server would refuse every recall
   request, so session A would stop at its first recall call and spend its attempt with no result.
-- **The change.** `uniqueItems` is dropped from the recall **decoding** schema only. The recall schema is now an
-  object with exactly one key, `values`: an array of at least one of the four allowed strings. The decision schema
-  is unchanged.
-- **Scoring is unchanged.** `readers.validate_response` still requires distinct values, and "no_evidence" on its own.
-  The decoder can now emit a duplicate value, or "no_evidence" with another value. Such an answer is invalid: it is
-  retained, counts in every denominator and against the 2% rule (§10), and is never correct, unsupported or
-  abstaining.
+- **The change (October 9).** `uniqueItems` is dropped from the recall **decoding** schema.
+- **The amendment (owner decision, October 10, 2026, after the withheld draw).** With `uniqueItems` gone, the
+  decoder could emit a duplicate value, or "no_evidence" with another value. Both are invalid answers, and the
+  withheld draw leaves session A's repeat with 48 answers per arm, where one invalid answer fails the 2% rule (§10).
+  The recall decoding schema is therefore an object with exactly one key, `values`, whose value is one of the
+  **eight valid answers in canonical order** (`stage1.RECALL_ANSWERS`): one to three distinct observed values, or
+  "no_evidence" alone. The decision schema is unchanged.
+- **Checked on the exact runtime install (CPU).** `structured_outputs_check_r3.json`: both schemas are accepted
+  (xgrammar). Over every recall answer of one to four values, the decoder admits exactly the canonical form of each
+  answer the scorer accepts, and nothing else.
+- **Scoring is unchanged.** `readers.validate_response` still requires distinct values, and "no_evidence" on its
+  own, in any order. An invalid answer is retained, counts in every denominator and against the 2% rule, and is
+  never correct, unsupported or abstaining. The questions, the withheld sets and the prompt tokens are unchanged;
+  only the request digests change.
 - **Checked on CPU** with the exact runtime install (vLLM 0.19.0, xgrammar 0.1.34, llguidance 1.3.0, the pinned
   tokenizer; `reports/evidence_memory_v1_successor/structured_outputs_check_r2.json`):
   - both Track 2 schemas are accepted, through xgrammar;
@@ -117,7 +127,15 @@ before any correctness is computed.
   - **Family questions:** 2–4 per trajectory, recall and decision.
   - **One recent-control question.**
   - Each question is asked under all four arms.
-- **Calls** (`stage1.enumerate_requests`, development stand-in):
+- **Calls.** The repeat's size depends on which whole groups the run seed selects, so the withheld draw fixes the
+  exact counts. The run packages use the withheld sets; the public rehearsal packages use the development stand-in.
+
+  | Session | Pass 1 | Repeat (pass 2) | Total |
+  |---|---|---|---|
+  | A, withheld (October 10) | 2,592 | 192 (3 groups) | **2,784** |
+  | B, withheld (October 10) | 2,592 | 368 (6 groups) | **2,960** |
+
+  The development stand-in (`stage1.enumerate_requests`), for the public rehearsal packages:
 
   | Session | Pass 1 | Repeat (pass 2) | Total | Prompt tokens, mean / max |
   |---|---|---|---|---|
@@ -335,9 +353,9 @@ retrieval requires contrast 2 as well. Concision or readability never qualifies.
 - **Recovered evidence.** Evidence recovered from an interrupted run is never complete.
 - **Prefix caching off.** Verified from the server's own counters at the canary and at every call.
 - **Invalid outputs.** At most 2% per arm **in every pass**: in pass 1, and separately in the repeat pass. Each is
-  measured against that pass's own answered calls for that arm. For example, session A's repeat has about 76 answers
-  per arm, so at most 1 invalid answer per arm. All invalid answers are retained, and both passes' counts, rates and
-  verdicts are reported.
+  measured against that pass's own answered calls for that arm. In the withheld draw, session A's repeat has 48
+  answers per arm, so one invalid answer in an arm fails the rule; session B's repeat has 92, so at most one. All
+  invalid answers are retained, and both passes' counts, rates and verdicts are reported.
 - **Timeouts.** At most 1% of calls. The reviewed runner also stops after its consecutive-timeout limit.
 - **Model startup** within the reviewed ceiling.
 
@@ -407,8 +425,8 @@ metrics read per call is allowed at 0.01 s.
 
 | Session | Typical completions (about 20 tokens) | All completions at the 64-token cap | All at the cap, per-call time doubled |
 |---|---|---|---|
-| A (2,896 calls) | ≈ 875 s | ≈ 1,680 s | ≈ 2,950 s: just inside the 3,000 s cutoff |
-| B (2,832 calls) | ≈ 865 s | ≈ 1,650 s | ≈ 2,890 s |
+| A (2,784 calls, withheld) | ≈ 860 s | ≈ 1,630 s | ≈ 2,850 s |
+| B (2,960 calls, withheld) | ≈ 885 s | ≈ 1,705 s | ≈ 3,010 s: the last calls cut by admission |
 
 **These are planning figures, not authorization ceilings.** The reviewed admission control enforces the deadline:
 a call starts only if its whole per-call bound ends before the cutoff. An over-long session ends **incomplete**; it
@@ -428,8 +446,8 @@ runtime-only changes from the draft's package are listed in `reports/evidence_me
 | **Maximum reservation** | **3,600 s** (`authorized_seconds`; internal lifecycle 3,300 s) | the same |
 | **Admission cutoff** | **3,000 s** after the first-cell start; per-call bound 80 s | the same |
 | **Cleanup reserve** | **300 s.** No admitted call can reach it. | the same |
-| **Study completions** (the calls ceiling) | **2,896** | **2,832** |
-| **Counted HTTP requests to the model server** (`maximum_model_requests`) | **≤ 194,044** | **≤ 189,756** |
+| **Study completions** (the calls ceiling: the withheld schedule) | **2,784** | **2,960** |
+| **Counted HTTP requests to the model server** (`maximum_model_requests`) | **≤ 186,540** | **≤ 198,332** |
 | **Retry policy** | **No retry allowance.** `automatic_retries = 0` and `maximum_attempts = 1`. A failed or incomplete session is reported as such; any further attempt needs a new, separate approval. | the same |
 
 **Both ceilings go into each compute authorization** (owner decision, October 9, 2026).
@@ -441,7 +459,9 @@ runtime-only changes from the draft's package are listed in `reports/evidence_me
   - per scheduled call, its completion (Q) and one metrics read (M) after an answer, or at most 65 idle-verification
     reads (V) after a timeout.
 - The cap is the plan's worst case: 11 + 1 + 67 per scheduled call. A complete session issues at most 2 × calls +
-  12 requests (5,804 for A in rehearsal). The worst case counts metrics reads, not model generations.
+  12 requests (5,580 for A and 5,932 for B). The worst case counts metrics reads, not model generations.
+- The development stand-in's figures (2,896 / 2,832 completions; 194,044 / 189,756 requests; 5,804 for A in
+  rehearsal) apply to the public rehearsal packages only.
 
 **Proposed GPU budget: 2 sessions × 3,600 s reserved = 2 GPU-hours reserved.** The expected use is lower: about
 900 s per session on the measured figures (§11), which is an estimate. **The reservation, not the estimate, is the
@@ -564,8 +584,9 @@ only the technical `run/score.analyze`. Scientific results come only from `run/f
 ## 15. The draft's open questions, answered at the freeze
 
 1. **Two package builds or one?** Two builds, A and B (§12).
-2. **The repeat split.** Kept: 9 of 84 groups, 5 in session A and 4 in session B. Every family is covered across both
-   sessions. The repeat measures stability only and never enters an endpoint.
+2. **The repeat split.** Kept: 9 of 84 whole groups, one in every family and then two more, covering every family
+   across both sessions. The split between sessions follows the draw: 3 in A and 6 in B for the withheld sets (5 and
+   4 in the stand-in). The repeat measures stability only and never enters an endpoint.
 3. **Admission granularity.** Kept: the reviewed per-call admission. No group-level admission is added.
 4. **Duplicate requests.** Every scheduled call is asked; identical requests are not shared. Their answers must agree
    under temperature 0 and seed 0, which doubles as a determinism check.
@@ -578,19 +599,20 @@ All were decided by the owner on October 9, 2026. The decision record is
 The files changed for each decision are listed in `reports/evidence_memory_v1_successor/freeze_change_list_r2.md`.
 
 0. **Recall response schema** (blocking defect; choice 9): drop `uniqueItems` from the decoding schema only. Scoring is
-   unchanged (§2).
+   unchanged (§2). **Amended by the owner on October 10, 2026, after the withheld draw:** the recall decoding schema
+   allows exactly the eight valid answers, so the decoder cannot emit an invalid recall answer (§2).
 1. **Unsupported-claim margins** (choice 5): both thresholds kept, read three ways; only `met` permits advancement
    (§9).
 2. **Trajectory exclusions** (choice 8): refuse and redraw. No science-code change (§4, §5).
 3. **Session B after session A** (choice 7): enforced in session B's launch tooling and bound by hash in B's compute
    authorization (§12).
 4. **Package builds** (choice 1): two, A and B (§12).
-5. **Repeat split** (choice 2): 5 + 4 groups (§3).
+5. **Repeat split** (choice 2): 9 whole groups, split as the draw falls; 3 + 6 for the withheld sets (§3).
 6. **Admission granularity** (choice 3): per-call admission.
 7. **Duplicate requests** (choice 4): every scheduled call is asked.
 8. **Runtime estimate** (choice 6): §11 replaced by the measured figures; documentation only.
-9. **Request cap** (choice 10): the worst case, 194,044 for A and 189,756 for B, stated in each compute
-   authorization with the 2,896 / 2,832 completion ceilings (§12).
+9. **Request cap** (choice 10): the worst case, 186,540 for A and 198,332 for B for the withheld sets, stated in
+   each compute authorization with the 2,784 / 2,960 completion ceilings (§12).
 10. **Tokenizer admission** (choice 11): the offline pinned-tokenizer audit, rerun on the withheld sets before the
     run.
 11. **Teammate stress set** (choice 12): kept out of Stage 1.

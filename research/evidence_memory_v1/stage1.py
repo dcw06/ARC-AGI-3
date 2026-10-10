@@ -19,6 +19,7 @@ cross-check against the pinned `transformers` tokenizer.
 """
 import argparse
 import hashlib
+import itertools
 import json
 from pathlib import Path
 import random
@@ -34,16 +35,19 @@ ARM_ORDER = P.ARMS + (P.REFERENCE,)
 CASE_SOURCES = ('development_stand_in', 'withheld')
 RUN_PROBES = Path(__file__).with_name('run') / 'probes.json'
 RECALL_VALUES = P.VALUES + ('no_evidence',)
+# The eight valid recall answers, in canonical order: one to three distinct observed values, or "no_evidence"
+# alone (protocol v2 frozen, section 2). The recall decoding schema allows exactly these.
+RECALL_ANSWERS = tuple(c for r in (1, 2, 3) for c in itertools.combinations(P.VALUES, r)) + (('no_evidence',),)
 
 
 def response_schema(kind):
-    """The decoding schema sent with each request. The recall schema has no `uniqueItems`: vLLM 0.19's structured-output
-    backends refuse it (protocol v2 frozen, section 2). Scoring is unchanged: readers.validate_response still rejects
-    duplicate values and "no_evidence" with another value, so such an answer stays invalid."""
+    """The decoding schema sent with each request (protocol v2 frozen, section 2). A recall answer is one of the
+    eight valid answers in canonical order (RECALL_ANSWERS): vLLM 0.19 refuses `uniqueItems`, and the exact enum
+    lets the decoder enforce distinct values and "no_evidence" alone. Scoring is unchanged:
+    readers.validate_response applies the same rules to an answer in any order."""
     if kind == 'recall':
         return {'type': 'object', 'additionalProperties': False, 'required': ['values'],
-                'properties': {'values': {'type': 'array', 'minItems': 1,
-                                          'items': {'type': 'string', 'enum': list(RECALL_VALUES)}}}}
+                'properties': {'values': {'enum': [list(answer) for answer in RECALL_ANSWERS]}}}
     action = {'type': 'object', 'additionalProperties': False, 'required': ['action_id', 'action_data'],
               'properties': {'action_id': {'type': 'integer'},
                              'action_data': {'type': 'object', 'additionalProperties': {'type': 'integer'}}}}

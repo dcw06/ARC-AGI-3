@@ -29,15 +29,15 @@ class RepeatSelection(unittest.TestCase):
         self.assertEqual(RD.score(key, q, ['final_frame_differs']), {'valid': True, 'correct': True})
 
 
-class DecodingSchemaWithoutUniqueItems(unittest.TestCase):
-    """Protocol v2 frozen, section 2: `uniqueItems` is dropped from the recall DECODING schema only (vLLM 0.19's
-    structured-output backends refuse it); scoring is unchanged and still rejects duplicates."""
+class RecallDecodingSchema(unittest.TestCase):
+    """Protocol v2 frozen, section 2: the recall DECODING schema allows exactly the eight valid answers, in canonical
+    order (vLLM 0.19 refuses `uniqueItems`); scoring is unchanged and still rejects any other answer."""
 
-    def test_no_request_schema_carries_unique_items(self):
+    def test_the_recall_schema_is_the_exact_enum_and_no_request_carries_unique_items(self):
         recall = ST.response_schema('recall')
+        self.assertEqual(len(ST.RECALL_ANSWERS), 8)
         self.assertEqual(recall, {'type': 'object', 'additionalProperties': False, 'required': ['values'],
-                                  'properties': {'values': {'type': 'array', 'minItems': 1, 'items': {
-                                      'type': 'string', 'enum': list(ST.RECALL_VALUES)}}}})
+                                  'properties': {'values': {'enum': [list(a) for a in ST.RECALL_ANSWERS]}}})
         for kind in ('recall', 'decision'):
             q = {'kind': kind, 'level': 0, 'state': 'a' * 64, 'action': TR.act(1), 'control': 'family',
                  'goal': 'reach the goal', 'candidates': [TR.act(1), TR.act(2)]}
@@ -46,7 +46,28 @@ class DecodingSchemaWithoutUniqueItems(unittest.TestCase):
             self.assertEqual(request['response_format']['json_schema']['schema'], ST.response_schema(kind))
             self.assertTrue(request['response_format']['json_schema']['strict'])
 
-    def test_answers_the_decoder_now_admits_are_still_scored_invalid(self):
+    def test_the_decoder_admits_exactly_the_canonical_form_of_every_scorer_valid_answer(self):
+        import itertools
+        q = {'kind': 'recall', 'level': 0, 'state': 'a' * 64, 'action': TR.act(1), 'control': 'family'}
+        admitted = [list(a) for a in ST.RECALL_ANSWERS]
+        valid_sets = set()
+        for n in range(1, 5):
+            for values in itertools.product(ST.RECALL_VALUES, repeat=n):
+                output = json.dumps({'values': list(values)})
+                try:
+                    RD.validate_response(output, q)
+                    valid = True
+                except RD.ResponseError:
+                    valid = False
+                if list(values) in admitted:  # everything the decoder admits is a valid answer
+                    self.assertTrue(valid, values)
+                if valid:
+                    valid_sets.add(frozenset(values))
+        # every valid answer has exactly one admitted form: its canonical order
+        self.assertEqual(valid_sets, {frozenset(a) for a in admitted})
+        self.assertEqual(len(valid_sets), len(admitted))
+
+    def test_invalid_recall_answers_are_still_scored_invalid(self):
         from research.evidence_memory_v1.run import score as SC
         q = {'kind': 'recall', 'level': 0, 'state': 'a' * 64, 'action': TR.act(1), 'control': 'family'}
         value = ST.RECALL_VALUES[0]

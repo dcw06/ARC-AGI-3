@@ -16,19 +16,24 @@ open: who holds the two copies of the withheld nonce (owner gate 1).
 both copies (`nonce_custody.json`). The commitment `7f11432a…` is in `seed-commitment.json`, in each
 session's `protocol.json` and in the frozen protocol §5; review snapshots r4 bind it.
 
+**Recall schema (owner decision, October 10, 2026).** After the withheld draw, the recall decoding schema allows
+exactly the eight valid answers (`structured_outputs_check_r3.json`). Session A's withheld repeat has 48 answers
+per arm, where one invalid answer would fail the 2% rule. Review snapshots r5 bind it.
+
 **Withheld material.** The withheld seed is drawn and committed (above). No withheld frozen set exists in this
 repository: owner gate 2 builds them only in a private checkout. No withheld answer has been inspected.
 
 ## Packages
 
-| Session | Package | Review snapshot r4 (current) | r4 review lock SHA-256 |
+| Session | Package | Review snapshot r5 (current) | r5 review lock SHA-256 |
 |---|---|---|---|
-| A (groups 0-5, 2,896 calls) | `research/evidence_memory_v1_session_a/` | `notebooks/evidence-memory-v1-session-a-review-r4/` | `c6c89b3af1d6203e6b14cbd358f78c1b0706766f14314955dfe17f1050dba7d4` |
-| B (groups 6-11, 2,832 calls) | `research/evidence_memory_v1_session_b/` | `notebooks/evidence-memory-v1-session-b-review-r4/` | `f9a480b81d97689070dcdb09aa45864c5636e4a52020962fdd36113d0c247832` |
+| A (groups 0-5; withheld 2,784 calls, stand-in 2,896) | `research/evidence_memory_v1_session_a/` | `notebooks/evidence-memory-v1-session-a-review-r5/` | `2176121e06d1969e792775a4b05c8d4ac9ea7a6591e2beb742426dcaa1c23960` |
+| B (groups 6-11; withheld 2,960 calls, stand-in 2,832) | `research/evidence_memory_v1_session_b/` | `notebooks/evidence-memory-v1-session-b-review-r5/` | `52205ad76ef1189463a25012e5c6ea0ae27e2fedaedbca1941e05d7c59bf4b3f` |
 
 Kept as history (byte-identical): r1 locks `5539e126…` (A) and `fb94736b…` (B), built under the draft; r2 locks
 `750ea373…` (A) and `37296378…` (B), the frozen protocol before the r3 fix; r3 locks `fbad29c7…` (A) and
-`84407411…` (B), before the seed commitment. Both r4 locks bind
+`84407411…` (B), before the seed commitment; r4 locks `c6c89b3a…` (A) and `f9a480b8…` (B), before the eight-answer
+recall schema. Both r5 locks bind
 the frozen protocol (SHA-256 `bba44981…`) and the other review documents (`review_documents`). Session B's lock also
 binds `research/evidence_memory_v1/successor/session_order.py`, its launch tooling's session-A condition.
 

@@ -21,7 +21,7 @@ SIZE_GUARD = 900000
 REVIEW_DOCUMENTS = (
     'reports/evidence_memory_v1_protocol_v2_frozen.md',
     'scripts/check_evidence_memory_v1_structured_outputs.py',
-    'reports/evidence_memory_v1_successor/structured_outputs_check_r2.json',
+    'reports/evidence_memory_v1_successor/structured_outputs_check_r3.json',
     'research/evidence_memory_v1/successor/evaluate.py',
     'research/evidence_memory_v1/successor/final.py',
     'research/evidence_memory_v1/run/evaluate.py',

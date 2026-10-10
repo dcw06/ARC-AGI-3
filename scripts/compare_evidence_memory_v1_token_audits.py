@@ -64,12 +64,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--before', required=True, help='the revision whose committed audits are compared')
     parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--change', default='recall decoding schema without uniqueItems (protocol v2 frozen, section 2)',
+                        help='what changed since --before (recorded in the receipt)')
     args = parser.parse_args()
     before = subprocess.run(['git', 'rev-parse', args.before], cwd=ROOT, capture_output=True, text=True,
                             check=True).stdout.strip()
     sessions = {label: compare(label, before) for label in sorted(PL.SESSIONS)}
     record = {'schema': 'evidence_memory_v1_token_audit_comparison_v1', 'before_revision': before,
-              'change': 'recall decoding schema without uniqueItems (protocol v2 frozen, section 2)',
+              'change': args.change,
               'model_calls': 0, 'gpu_used': False, 'sessions': sessions,
               'passed': all(s['passed'] for s in sessions.values())}
     args.out.write_bytes((json.dumps(record, indent=1, sort_keys=True) + '\n').encode())

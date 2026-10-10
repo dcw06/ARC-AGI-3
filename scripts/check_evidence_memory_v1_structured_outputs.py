@@ -15,11 +15,12 @@ Two steps, in two interpreters:
 A rejected schema means every request using it is refused by the server: the session would stop at its first such
 call as a transport failure.
 
-Receipt r2 (protocol v2 frozen, section 2). The recall decoding schema no longer carries `uniqueItems`, which r1 found
-refused. The decoder is therefore expected to ADMIT two answers the protocol counts invalid (duplicate values, and
-"no_evidence" with another value); the scorer rejects both, so they are retained, counted invalid and never correct.
-The receipt passes only if both Track 2 schemas are accepted, the decoder admits and rejects exactly as expected,
-every valid answer passes decoder and scorer, and the scorer rejects every invalid answer the decoder admits.
+Receipt r3 (protocol v2 frozen, section 2). r1 found `uniqueItems` refused; r2 dropped it, so the decoder admitted
+duplicates and "no_evidence" with another value. Since the owner decision of October 10, 2026, the recall decoding
+schema is the exact enum of the eight valid answers in canonical order. The receipt passes only if both Track 2
+schemas are accepted, the listed cases behave as expected, the decoder admits no invalid answer, and an exhaustive
+check over every recall answer of one to four values shows the decoder admits exactly the canonical form of every
+answer the scorer accepts.
 """
 import argparse
 import json
@@ -34,15 +35,16 @@ CANDIDATES = [{'action_id': 1, 'action_data': {'x': 3}}, {'action_id': 2, 'actio
 
 
 def cases(values):
-    """{schema: [(label, answer, decoder admits it, the protocol counts it valid)]}. Since r2 the decoder admits
-    duplicate values and "no_evidence" with another value; the scorer rejects both. None: no Track 2 scorer."""
+    """{schema: [(label, answer, decoder admits it, the protocol counts it valid)]}. Since r3 the decoder admits
+    only the eight valid recall answers, in canonical order. None: no Track 2 scorer."""
     v = values
     return {
         'recall': [('valid single', {'values': [v[0]]}, True, True),
                    ('valid two', {'values': [v[0], v[1]]}, True, True),
                    ('valid no_evidence alone', {'values': ['no_evidence']}, True, True),
-                   ('duplicate', {'values': [v[0], v[0]]}, True, False),
-                   ('no_evidence with another value', {'values': ['no_evidence', v[0]]}, True, False),
+                   ('valid all three', {'values': [v[0], v[1], v[2]]}, True, True),
+                   ('duplicate', {'values': [v[0], v[0]]}, False, False),
+                   ('no_evidence with another value', {'values': ['no_evidence', v[0]]}, False, False),
                    ('empty list', {'values': []}, False, False),
                    ('not in enum', {'values': ['zzz-not-a-value']}, False, False),
                    ('extra key', {'values': [v[0]], 'x': 1}, False, False),
@@ -78,6 +80,16 @@ def dump(out):
                     scorer = False
             value['cases'][name].append({'label': label, 'answer': answer, 'decoder_expected': decoder,
                                          'answer_valid': valid, 'scorer_valid': scorer})
+    import itertools
+    value['recall_exhaustive'] = []
+    for n in range(1, 5):  # every recall answer of one to four values: scorer validity
+        for values in itertools.product(value['recall_values'], repeat=n):
+            try:
+                RD.validate_response(json.dumps({'values': list(values)}), questions['recall'])
+                scorer = True
+            except RD.ResponseError:
+                scorer = False
+            value['recall_exhaustive'].append({'values': list(values), 'scorer_valid': scorer})
     Path(out).write_text(json.dumps(value, indent=1) + '\n', encoding='utf-8')
     print('schemas written:', out)
 
@@ -91,7 +103,7 @@ def check(schemas_path, tokenizer_dir, out):
     data = json.loads(Path(schemas_path).read_text(encoding='utf-8'))
     tok = AutoTokenizer.from_pretrained(tokenizer_dir)
     config = StructuredOutputsConfig()
-    receipt = {'schema': 'evidence_memory_v1_structured_outputs_check_v2', 'gpu_used': False, 'model_calls': 0,
+    receipt = {'schema': 'evidence_memory_v1_structured_outputs_check_v3', 'gpu_used': False, 'model_calls': 0,
                'versions': {p: md.version(p) for p in ('vllm', 'xgrammar', 'llguidance', 'transformers')},
                'configured_backend': config.backend, 'schemas': {}}
 
@@ -143,6 +155,25 @@ def check(schemas_path, tokenizer_dir, out):
             rows = entry['enforcement'].values()
             entry['enforces_as_expected'] = all(r['decoder_as_expected'] and r['scorer_as_expected'] for r in rows)
         receipt['schemas'][name] = entry
+    exhaustive = {'answers_checked': 0}
+    if receipt['schemas']['recall'].get('validated'):
+        admitted, valid_sets, admitted_sets, bad = 0, set(), set(), []
+        for row in data['recall_exhaustive']:
+            got = accepts(receipt['schemas']['recall']['backend'], data['recall'],
+                          json.dumps({'values': row['values']}, separators=(',', ':')))
+            admitted += got
+            if got:
+                admitted_sets.add(frozenset(row['values']))
+                if not row['scorer_valid']:
+                    bad.append(row['values'])
+            if row['scorer_valid']:
+                valid_sets.add(frozenset(row['values']))
+        exhaustive = {'answers_checked': len(data['recall_exhaustive']), 'decoder_admitted': admitted,
+                      'scorer_valid_sets': len(valid_sets), 'admitted_but_scorer_invalid': bad,
+                      'every_admitted_answer_scores_valid': not bad,
+                      'decoder_admits_exactly_the_canonical_answers': (admitted == len(valid_sets)
+                                                                       and admitted_sets == valid_sets)}
+    receipt['recall_exhaustive'] = exhaustive
     track2 = [receipt['schemas'][n] for n in ('recall', 'decision')]
     rows = [r for e in track2 for r in (e.get('enforcement') or {}).values()]
     receipt['all_track2_schemas_accepted'] = all(e['validated'] for e in track2)
@@ -158,7 +189,10 @@ def check(schemas_path, tokenizer_dir, out):
         if r['decoder_accepted'] and not r['answer_valid'])
     receipt['passed'] = (receipt['all_track2_schemas_accepted'] and receipt['decoder_and_scorer_as_expected']
                          and receipt['every_valid_answer_admitted_and_scored_valid']
-                         and receipt['scorer_rejects_every_invalid_answer_the_decoder_admits'])
+                         and receipt['scorer_rejects_every_invalid_answer_the_decoder_admits']
+                         and receipt['decoder_admitted_invalid_answers'] == []
+                         and exhaustive.get('decoder_admits_exactly_the_canonical_answers') is True
+                         and exhaustive.get('every_admitted_answer_scores_valid') is True)
     Path(out).write_text(json.dumps(receipt, indent=1) + '\n', encoding='utf-8')
     print(json.dumps({**{n: {k: e.get(k) for k in ('validated', 'backend', 'rejection', 'enforces_as_expected')}
                          for n, e in receipt['schemas'].items()},

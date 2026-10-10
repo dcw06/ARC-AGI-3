@@ -56,17 +56,26 @@ PROTOCOL_DOCUMENT = 'reports/evidence_memory_v1_protocol_v2_frozen.md'
 # derivation records both hashes. Nothing else in a reused module differs from the baseline.
 FREEZE_AMENDMENTS = {
     'research/evidence_memory_v1/stage1.py': (
-        'decision 1: the recall DECODING schema drops uniqueItems (refused by vLLM 0.19 structured outputs); '
-        'readers.validate_response still rejects duplicates, so scoring is unchanged', (
+        'decision 1 (amended October 10, 2026, after the withheld draw): the recall DECODING schema allows exactly the '
+        'eight valid answers (vLLM 0.19 refuses uniqueItems; the exact enum also enforces distinct values and '
+        '"no_evidence" alone); readers.validate_response is unchanged', (
+            ('import hashlib\nimport json\n', 'import hashlib\nimport itertools\nimport json\n', 1),
+            ("RECALL_VALUES = P.VALUES + ('no_evidence',)\n",
+             "RECALL_VALUES = P.VALUES + ('no_evidence',)\n"
+             '# The eight valid recall answers, in canonical order: one to three distinct observed values, or "no_evidence"\n'
+             '# alone (protocol v2 frozen, section 2). The recall decoding schema allows exactly these.\n'
+             "RECALL_ANSWERS = tuple(c for r in (1, 2, 3) for c in itertools.combinations(P.VALUES, r)) + (('no_evidence',),)\n",
+             1),
             ('def response_schema(kind):\n    if kind',
              'def response_schema(kind):\n'
-             '    """The decoding schema sent with each request. The recall schema has no `uniqueItems`: vLLM 0.19\'s '
-             'structured-output\n'
-             '    backends refuse it (protocol v2 frozen, section 2). Scoring is unchanged: readers.validate_response '
-             'still rejects\n'
-             '    duplicate values and "no_evidence" with another value, so such an answer stays invalid."""\n'
+             '    """The decoding schema sent with each request (protocol v2 frozen, section 2). A recall answer is one of the\n'
+             '    eight valid answers in canonical order (RECALL_ANSWERS): vLLM 0.19 refuses `uniqueItems`, and the exact enum\n'
+             '    lets the decoder enforce distinct values and "no_evidence" alone. Scoring is unchanged:\n'
+             '    readers.validate_response applies the same rules to an answer in any order."""\n'
              '    if kind', 1),
-            ("'minItems': 1, 'uniqueItems': True,\n", "'minItems': 1,\n", 1))),
+            ("                'properties': {'values': {'type': 'array', 'minItems': 1, 'uniqueItems': True,\n"
+             "                                          'items': {'type': 'string', 'enum': list(RECALL_VALUES)}}}}\n",
+             "                'properties': {'values': {'enum': [list(answer) for answer in RECALL_ANSWERS]}}}\n", 1))),
     'research/evidence_memory_v1/protocol.py': (
         'decision 2: the unsupported-claim margins are read three ways (met / exceeded / not_shown) with unchanged '
         'thresholds; only met permits advancement, as before', (
@@ -106,8 +115,9 @@ FREEZE_AMENDMENTS = {
 }
 # Baseline test files changed to cover those decisions (the only other modified baseline files).
 FREEZE_AMENDED_TESTS = {
-    'tests/test_evidence_memory_v1_stage1.py': 'decision 1: no request schema carries uniqueItems; answers the decoder '
-                                               'now admits (duplicates, "no_evidence" with another value) score invalid',
+    'tests/test_evidence_memory_v1_stage1.py': 'decision 1: the recall decoding schema is the exact enum of the eight '
+                                               'valid answers; every answer it admits scores valid, and duplicates or '
+                                               '"no_evidence" with another value still score invalid',
     'tests/test_evidence_memory_v1_protocol.py': 'decision 2: the margin outcome is renamed (exceeded) and every branch '
                                                  'of the three-way reading is tested, boundaries included',
 }
@@ -132,7 +142,7 @@ def review_documents(s):
     frozen protocol, the structured-output check and its receipt, the independent evaluator and the pooled analysis,
     the token audit, the builder and the session's package script."""
     return (PROTOCOL_DOCUMENT, 'scripts/check_evidence_memory_v1_structured_outputs.py',
-            'reports/evidence_memory_v1_successor/structured_outputs_check_r2.json',
+            'reports/evidence_memory_v1_successor/structured_outputs_check_r3.json',
             'research/evidence_memory_v1/successor/evaluate.py', 'research/evidence_memory_v1/successor/final.py',
             'research/evidence_memory_v1/run/evaluate.py', 'research/evidence_memory_v1/run/final.py',
             'scripts/audit_evidence_memory_v1_tokens.py', BUILDER, f'scripts/{s.name}_package.py')
@@ -575,7 +585,7 @@ def build(root=ROOT):
                 'unchanged by this derivation: prompts, arms, schemas, budgets, seeds and seed procedure, schedule, '
                 'admission and stop rules, scoring, the technical-only session report and the pooled analysis',
                 'protocol freeze (owner decisions of October 9, 2026; ' + PROTOCOL_DOCUMENT + '), applied to the '
-                'reused modules themselves, not by this derivation: the recall decoding schema drops uniqueItems '
+                'reused modules themselves, not by this derivation: the recall decoding schema allows exactly the eight valid answers '
                 '(scoring unchanged; request digests and token audits rebuilt, prompt token counts unchanged); the '
                 'unsupported-claim margins are read three ways (met / exceeded / not_shown; only met advances)',
                 'the review lock binds the frozen protocol and review documents; the protocol names protocol_document']
