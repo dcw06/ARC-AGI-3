@@ -251,3 +251,29 @@ byte-identical to the one the r3 check verified.
 | Track 2 group | 163 tests: 0 failures, 0 errors, 0 skipped, including the import boundary |
 | Snapshots r6 | Rebuild byte for byte: A `80fbe454…`, B `26f321fc…` |
 | Working tree | Empty after the reproductions and at the end |
+
+## Review snapshots r7 (October 10, 2026): fresh-clone verification of `2cd1bdb`
+
+r7 adds the evaluator's probe reconciliation (review P1) and the retirement of the first withheld draw with the
+complete final design frozen (owner amendment; frozen protocol §5). The repository awaits the fresh draw: the
+commitment is the placeholder, so the live gate also refuses for it.
+
+| Check | Result |
+|---|---|
+| Builder `--check` | All 31 derived files match |
+| Structured-output check r3, token cross-check r3 | Reproduce the committed receipts byte for byte |
+| Review checks r7, A and B | Refuse at the live gate; no `nvidia-smi` call. The rewritten report differs only in the random temporary folder name inside the refusal traceback |
+| `launch-build`, A and B | Refused (exit 1) |
+| Embedded inputs r7, A and B | Pass |
+| Successor group | 165 tests: 0 failures, 0 errors, 0 skipped |
+| Track 2 group | 163 tests: 0 failures, 0 errors, 0 skipped |
+| Snapshots r7 | Rebuild byte for byte: A `364d06e0…`, B `9391afa5…` |
+| Working tree | Empty at the end |
+
+**The P1 regression, checked both ways (worktree, before the commit).** Connected test 6 removes C3, then I4,
+from a completed rehearsal's ledger, request results and stage details, with the evidence manifest updated to match.
+With the new reconciliation, neither evaluates as technically complete. With `probe_errors` disabled, the C3
+reproduction evaluates as technically complete, which is the review's finding.
+
+The run was interrupted once by a session end during the Track 2 group. That group was rerun in the same clone of
+`2cd1bdb`; the earlier stages had already passed.
