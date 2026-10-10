@@ -14,7 +14,9 @@
   - §2: the recall decoding schema no longer carries `uniqueItems`, which the verified runtime refuses. Scoring is
     unchanged.
   - §4 and §5: a withheld draw with any failing trajectory is refused and redrawn; it is never thinned.
-  - §5: who holds the two copies of the withheld nonce is still open (owner gate 1).
+  - §5: one human holder, the owner, keeps the two copies of the withheld nonce (decided by the owner on
+    October 9, 2026). The nonce was drawn on October 10, 2026, and its commitment is recorded in §5 (review
+    snapshots r4).
   - §9: the unsupported-claim margins are read three ways (met, exceeded, not shown). The thresholds and the
     advancement rule are unchanged.
   - §11: the measured runtime figures replace the v3 estimates (documentation only).
@@ -166,8 +168,8 @@ which test revision.
 | Bootstrap | `evidence-memory-v1-stage1-bootstrap`, 10,000 resamples |
 | Model requests | 0 |
 
-**The withheld seed is not drawn in this pass.** It is drawn only after every design decision in this document is
-fixed. Then:
+**The withheld seed was drawn after every design decision in this document was fixed** (October 10, 2026, 01:40
+UTC). Its commitment is `7f11432aed195bbd18732abd6cb513024b48e401de17c5fd27e11b17dadfb04b`. The procedure:
 
 1. **Drawing.** A person draws `nonce = secrets.token_hex(16)`. The run seed is
    `evidence-memory-v1-stage1-withheld/` + nonce.
@@ -188,11 +190,16 @@ after the run, the results stand, but they are recorded as not independently rep
 **A failed draw** is refused and redrawn (§4): the failed commitment and its counts are published, the nonce is
 discarded, and a new nonce is drawn and committed afresh.
 
-**Still open: who holds the two copies (owner gate 1).** Step 3 names two copies: a private note held by the person
-who drew the nonce, and a secret held by the run operator. Who these holders are is not decided by this freeze, nor
-whether one person may hold both copies (Track 4 used an owner-approved single-holder amendment: two copies on one
-computer, with the limitation recorded). The owner records the rule before the nonce is drawn
-(`reports/evidence_memory_v1_successor/owner_gates.md`, gate 1).
+**Holder rule (owner decision of October 9, 2026, recorded before the draw).**
+- **One human holder.** The owner draws the nonce and keeps both copies of step 3, stored separately outside
+  every repository. The owner checks each copy personally by recomputing the commitment, which prints only the
+  hash.
+- **Limitation.** There is no independent second holder, so the owner is a single point of failure.
+- **The draw.** Both copies were checked on October 10, 2026: copy A in the WSL home and copy B in the Windows user
+  folder of the same computer, on separate filesystems. Both print the commitment above. They do not protect
+  against losing that computer.
+- **Records.** `reports/evidence_memory_v1_successor/nonce_custody.json`; the commitment is in
+  `research/evidence_memory_v1/successor/seed-commitment.json` and in each session's `protocol.json`.
 
 ## 6. Horizons
 
@@ -542,8 +549,9 @@ only the technical `run/score.analyze`. Scientific results come only from `run/f
    (`reports/evidence_memory_v1_successor/token_cross_check_r2.json`).
 2. **Connected rehearsals in POSIX:** done on the verified runtime, both sessions and the fault matrix
    (`tests/test_evidence_memory_v1_successor_connected.py`; `reports/evidence_memory_v1_successor/verification.md`).
-3. **Design decisions:** fixed by this freeze (§16), except who holds the two nonce copies (§5, owner gate 1). The
-   withheld nonce is not drawn, and the withheld frozen sets are not built. The package check that refuses
+3. **Design decisions:** fixed by this freeze (§16). The holder rule was decided before the draw (§5). The
+   withheld nonce is drawn and committed (§5); the withheld frozen sets are built only in a private checkout
+   (owner gate 2). The package check that refuses
    `development_stand_in`, or a seed hash that does not match the commitment, exists
    (`successor/plan.live_frozen_set_reasons`).
 4. **Packaging and review lock:** two session packages on the verified runtime, with GPU-disabled review snapshots r2
@@ -587,5 +595,5 @@ The files changed for each decision are listed in `reports/evidence_memory_v1_su
     run.
 11. **Teammate stress set** (choice 12): kept out of Stage 1.
 
-**Still open:** who holds the two copies of the withheld nonce (§5; owner gate 1). The rule must be recorded before
-the nonce is drawn.
+**Decided after the freeze, before the draw:** one human holder, the owner, keeps the two copies of the withheld
+nonce (§5; owner gate 1). The nonce was drawn and committed on October 10, 2026.

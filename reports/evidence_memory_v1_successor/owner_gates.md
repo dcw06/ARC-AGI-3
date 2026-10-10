@@ -28,6 +28,13 @@ SHA-256.
 
 ## Gate 1. Draw and retain the withheld seed (protocol v2 section 5, steps 1 to 3)
 
+**Done on October 10, 2026.**
+- The owner drew the nonce and checked both copies personally.
+- Commitment: `7f11432aed195bbd18732abd6cb513024b48e401de17c5fd27e11b17dadfb04b`. It is recorded in
+  `seed-commitment.json`, in each session's `protocol.json` and in the frozen protocol §5 (review snapshots r4).
+- Copy checks: `nonce_custody.json`. Both copies are on one computer, on separate filesystems.
+- The procedure below is kept for a redraw.
+
 **The holder rule (decided by the owner on October 9, 2026; `nonce_custody.json`).**
 - **One human holder.** The owner draws the nonce and keeps **two separately stored copies outside every
   repository**.

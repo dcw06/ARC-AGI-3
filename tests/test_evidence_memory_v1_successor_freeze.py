@@ -84,8 +84,12 @@ class OwnerGatedPath(unittest.TestCase):
             nonce.write_text(TEST_NONCE)
             argv = ['freeze', 'withheld', '--session', 'A', '--nonce-file', str(nonce), '--out-root', str(folder)]
             with patch.object(sys, 'argv', argv), patch.object(FZ, 'build_checked') as build:
-                with self.assertRaises(PermissionError):  # the committed placeholder: no seed has been drawn
-                    FZ.main()
+                placeholder = folder / 'placeholder.json'
+                placeholder.write_text(json.dumps({'withheld_seed_sha256': PL.SEED_PLACEHOLDER}))
+                with patch.object(FZ, 'COMMITMENT', placeholder), self.assertRaises(PermissionError):
+                    FZ.main()  # a placeholder commitment: no seed has been drawn
+                with self.assertRaisesRegex(SystemExit, 'does not match'):
+                    FZ.main()  # the owner's committed hash (gate 1): any other nonce builds nothing
                 other = folder / 'commitment.json'
                 other.write_text(json.dumps({'withheld_seed_sha256': 'a' * 64}))
                 with patch.object(FZ, 'COMMITMENT', other), self.assertRaisesRegex(SystemExit, 'does not match'):
@@ -114,11 +118,19 @@ class OwnerGatedPath(unittest.TestCase):
         self.assertIn('"faithful_memory_not_faithful": 1', message)
         self.assertFalse([m for m in TEXT_MARKERS if m in message])
 
-    def test_the_committed_commitment_is_still_the_placeholder(self):
-        value = json.loads(FZ.COMMITMENT.read_bytes())['withheld_seed_sha256']
-        self.assertEqual(value, PL.SEED_PLACEHOLDER)
-        with self.assertRaises(PermissionError):
-            FZ.committed_seed_sha256()
+    def test_the_committed_commitment_is_the_owners_recorded_hash(self):
+        # Owner gate 1 (October 10, 2026): only sha256(seed) is in the repository, matching the custody record.
+        record = json.loads(FZ.COMMITMENT.read_bytes())
+        value = record['withheld_seed_sha256']
+        self.assertEqual(record['status'], 'committed')
+        self.assertTrue(len(value) == 64 and all(c in '0123456789abcdef' for c in value))
+        self.assertEqual(FZ.committed_seed_sha256(), value)
+        custody = json.loads((Path(__file__).resolve().parents[1]
+                              / 'reports/evidence_memory_v1_successor/nonce_custody.json').read_bytes())
+        self.assertEqual(custody['withheld_seed_sha256'], value)
+        self.assertEqual(custody['status'], 'two_copies_confirmed')
+        self.assertEqual({c['printed'] for c in custody['copy_checks']}, {value})
+        self.assertEqual(len({c['copy_id'] for c in custody['copy_checks']}), 2)
         self.assertEqual(ST.CASE_SOURCES, ('development_stand_in', 'withheld'))
 
 

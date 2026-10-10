@@ -12,18 +12,23 @@ unsupported-claim margins (three ways), the exclusion procedure (refuse and redr
 (only after session A is technically complete). Every changed file is listed in `freeze_change_list_r2.md`. Still
 open: who holds the two copies of the withheld nonce (owner gate 1).
 
-**Withheld material.** The withheld seed was not drawn. No withheld frozen set exists. No withheld answer was
-inspected.
+**Withheld seed (owner gate 1, done October 10, 2026).** One human holder, the owner, drew the nonce and checked
+both copies (`nonce_custody.json`). The commitment `7f11432a…` is in `seed-commitment.json`, in each
+session's `protocol.json` and in the frozen protocol §5; review snapshots r4 bind it.
+
+**Withheld material.** The withheld seed is drawn and committed (above). No withheld frozen set exists in this
+repository: owner gate 2 builds them only in a private checkout. No withheld answer has been inspected.
 
 ## Packages
 
-| Session | Package | Review snapshot r3 (current) | r3 review lock SHA-256 |
+| Session | Package | Review snapshot r4 (current) | r4 review lock SHA-256 |
 |---|---|---|---|
-| A (groups 0-5, 2,896 calls) | `research/evidence_memory_v1_session_a/` | `notebooks/evidence-memory-v1-session-a-review-r3/` | `fbad29c7f48f35025d849d6faee35de35368daae001a5356a16ecc58aaca669a` |
-| B (groups 6-11, 2,832 calls) | `research/evidence_memory_v1_session_b/` | `notebooks/evidence-memory-v1-session-b-review-r3/` | `84407411a1e054284adffb52a09d15561883b9aa1010c76442c463687e2601b6` |
+| A (groups 0-5, 2,896 calls) | `research/evidence_memory_v1_session_a/` | `notebooks/evidence-memory-v1-session-a-review-r4/` | `c6c89b3af1d6203e6b14cbd358f78c1b0706766f14314955dfe17f1050dba7d4` |
+| B (groups 6-11, 2,832 calls) | `research/evidence_memory_v1_session_b/` | `notebooks/evidence-memory-v1-session-b-review-r4/` | `f9a480b81d97689070dcdb09aa45864c5636e4a52020962fdd36113d0c247832` |
 
 Kept as history (byte-identical): r1 locks `5539e126…` (A) and `fb94736b…` (B), built under the draft; r2 locks
-`750ea373…` (A) and `37296378…` (B), the frozen protocol before the r3 fix. Both r3 locks bind
+`750ea373…` (A) and `37296378…` (B), the frozen protocol before the r3 fix; r3 locks `fbad29c7…` (A) and
+`84407411…` (B), before the seed commitment. Both r4 locks bind
 the frozen protocol (SHA-256 `bba44981…`) and the other review documents (`review_documents`). Session B's lock also
 binds `research/evidence_memory_v1/successor/session_order.py`, its launch tooling's session-A condition.
 
