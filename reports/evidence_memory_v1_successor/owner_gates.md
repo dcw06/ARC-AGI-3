@@ -7,6 +7,8 @@ Each step states its exact procedure.
   execution**, because the recall decoding design changed after it (owner amendment; frozen protocol §5). Its records
   are kept below. Gates 1 and 2 are repeated for a fresh draw (draw 2) after the revision that freezes the complete
   final design (review snapshots r7).
+- **Gate 1 for draw 2** was taken on October 10, 2026, after r7 (`2cd1bdb`) was committed and verified. Review
+  snapshots r8 record its commitment; the frozen protocol is byte-unchanged from r7.
 - No approval, authorization, reservation, claim or upload has been made.
 
 **Protocol of record.** `reports/evidence_memory_v1_protocol_v2_frozen.md` (frozen October 9, 2026). Its section
@@ -41,8 +43,14 @@ SHA-256.
   `seed-commitment.json` (`retired`) and `nonce_custody.json` (`retired_draws`). Its nonce is never used again:
   `freeze withheld` refuses a retired commitment.
 
-**Draw 2: awaiting the owner.** It is drawn after the commit of review snapshots r7, which freezes the complete
-final design. Use the new file names below (`withheld-nonce-2.txt`), so no retired copy is overwritten or reused.
+**Draw 2: done on October 10, 2026 (17:18:53 UTC), after r7 was committed and its fresh-clone check passed.**
+- The owner drew the nonce and checked both copies personally, with the script below (new file names, no
+  overwrite).
+- Commitment: `d80505e22aafdae5fd3490a95a3e5f7b84cf1335e651e1a380b55db233d02f32`. It is recorded in
+  `seed-commitment.json` and in each session's `protocol.json` (review snapshots r8). The frozen protocol is not
+  edited for it.
+- Copy checks: `nonce_custody.json`. Copy A is in the WSL home and copy B in the Windows Documents folder, on one
+  computer, on separate filesystems.
 
 **The holder rule (decided by the owner on October 9, 2026; `nonce_custody.json`).**
 - **One human holder.** The owner draws the nonce and keeps **two separately stored copies outside every
@@ -94,7 +102,8 @@ for f in ~/private/track2/withheld-nonce-2.txt "<copy B folder>/withheld-nonce-2
 
 ## Gate 2. Build the withheld frozen sets (protocol v2 section 5, step 4); private checkout only
 
-**Draw 2: awaiting gate 1.** Its counts, caps and hashes are recorded mechanically in `withheld_draw_values.json`.
+**Draw 2: awaiting the owner** (commitment `d80505e2…`). Its counts, caps and hashes are recorded mechanically in
+`withheld_draw_values.json`.
 
 **Draw 1 (retired before execution): done on October 10, 2026, in a private checkout (never published).** The
 private preparation built on it (gates 2 to 5) is kept, marked retired, and is never used for a launch.

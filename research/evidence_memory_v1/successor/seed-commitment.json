@@ -1,7 +1,9 @@
 {
  "note": "Owner gate (reports/evidence_memory_v1_successor/owner_gates.md): only sha256(seed) is ever recorded here; the nonce stays outside the repository. Both sessions share this one commitment.",
- "status": "awaiting_fresh_draw",
- "withheld_seed_sha256": "REPLACE_WITH_WITHHELD_SEED_SHA256",
+ "status": "committed",
+ "draw": 2,
+ "withheld_seed_sha256": "d80505e22aafdae5fd3490a95a3e5f7b84cf1335e651e1a380b55db233d02f32",
+ "drawn_and_checked_at": "2026-10-10T17:18:53Z",
  "custody": "reports/evidence_memory_v1_successor/nonce_custody.json",
  "retired": [
   {

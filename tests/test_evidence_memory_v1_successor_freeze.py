@@ -159,6 +159,17 @@ class OwnerGatedPath(unittest.TestCase):
             self.assertEqual(len({c['copy_id'] for c in custody['copy_checks']}), 2)
         self.assertEqual(ST.CASE_SOURCES, ('development_stand_in', 'withheld'))
 
+    def test_the_frozen_text_is_not_edited_after_the_final_design_freeze(self):
+        # Frozen protocol section 5: the complete final design was frozen in review snapshots r7, before the fresh
+        # draw, and the frozen text is not edited for that draw. Every later review lock binds the same bytes.
+        current = hashlib.sha256((ROOT / 'reports/evidence_memory_v1_protocol_v2_frozen.md').read_bytes()).hexdigest()
+        for scope in ('evidence-memory-v1-session-a', 'evidence-memory-v1-session-b'):
+            for frozen in sorted((ROOT / 'notebooks').glob(scope + '-review-r*')):
+                if int(frozen.name.rsplit('-r', 1)[1]) >= 7:
+                    lock = json.loads((frozen / 'review-source-lock.json').read_bytes())
+                    self.assertEqual(lock['review_documents']['reports/evidence_memory_v1_protocol_v2_frozen.md'],
+                                     current, frozen.name)
+
 
 if __name__ == '__main__':
     unittest.main()
