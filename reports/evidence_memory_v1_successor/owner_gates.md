@@ -80,6 +80,17 @@ for f in ~/private/track2/withheld-nonce.txt "<copy B folder>/withheld-nonce.txt
 
 ## Gate 2. Build the withheld frozen sets (protocol v2 section 5, step 4); private checkout only
 
+**Done on October 10, 2026, in a private checkout (never published).**
+- The owner ran `freeze withheld` for both sessions in their own terminal; only counts and hashes were printed.
+- Both sets passed every automated check with 0 exclusions:
+  - A: frozen set `4bc9d66c…`, 2,784 scheduled calls (2,592 + 192 repeat);
+  - B: frozen set `b991a41f…`, 2,960 scheduled calls (2,592 + 368 repeat).
+- The pinned-tokenizer audit passed: 0 prompt-token and 0 evidence-block mismatches, 0 blocks over budget.
+- Both packages are rebound to the withheld sets in the private checkout of `6113ec6` (review snapshots r6, with
+  the eight-answer recall schema). Request caps: 186,540 (A) and 198,332 (B). `live_frozen_set_reasons` returns no
+  reason for either session.
+- No person has opened `probes.json` or `token-audit.json`.
+
 The withheld frozen sets contain the questions and their truths. They are generated only in a private checkout and
 are not committed to the public repository before the run.
 
