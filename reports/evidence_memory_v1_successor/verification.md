@@ -204,3 +204,21 @@ only); script `fresh_clone_run_r3.sh`, log `fresh_clone_run_r3.log`.
 
 The "Not established" list above still applies, apart from strict `json_schema` decoding. Track 4 exercised flat
 string-enum schemas live, and the CPU check covers Track 2's schemas on the exact runtime install.
+
+## Review snapshots r4 (October 10, 2026): fresh-clone verification of `5d6abf1`
+
+r4 binds the owner's withheld-seed commitment (owner gate 1; `7f11432a…`) in both session protocols and the holder
+rule in the frozen protocol's §5. The procedure was that of r3: script `fresh_clone_run_r4.sh`, log
+`fresh_clone_run_r4.log`.
+
+| Check | Result |
+|---|---|
+| Builder `--check` | All 31 derived files match |
+| Structured-output check, token cross-check, prompt-count comparison | Reproduce the committed receipts; 0 prompt-count mismatches |
+| Review checks r4, A and B | Refuse at the live gate. The refusals list the private placeholders and the development stand-in, but no longer the seed commitment. No `nvidia-smi` call |
+| `launch-build`, A and B | Refused (exit 1) |
+| Embedded inputs r4, A and B | Pass |
+| Successor group (system Python) | 164 tests: 0 failures, 0 errors, 0 skipped |
+| Track 2 group (dev env) | 162 tests: 0 failures, 0 errors, 0 skipped |
+| Snapshots r4 | Rebuild byte for byte: A `c6c89b3a…`, B `f9a480b8…` |
+| Working tree | Empty after the reproductions and at the end |

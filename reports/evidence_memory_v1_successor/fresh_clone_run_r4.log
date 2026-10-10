@@ -1,0 +1,169 @@
+clone at 5d6abf1b1ffa942bf533a65a6387dfb2ca229101; basis object: commit; baseline: commit; r1 audits: commit; load 0.66 0.42 0.21 1/215 484927
+network isolation: every check below runs under: unshare --user --map-root-user --net sh -c 'ip link set lo up && exec "$@"' sh (loopback only)
+== builder check
+{"derived_files": 31, "checked": true, "network_calls": 0, "gpu_launches": 0, "provider_calls": 0}
+builder exit 0
+== structured-output check r2 (dump: dev env; check: vLLM 0.19.0 interpreter, CPU) reproduces the committed receipt
+schemas written: /tmp/t2r4-schemas.json
+dump exit 0
+{
+ "recall": {
+  "validated": true,
+  "backend": "xgrammar",
+  "rejection": null,
+  "enforces_as_expected": true
+ },
+ "decision": {
+  "validated": true,
+  "backend": "xgrammar",
+  "rejection": null,
+  "enforces_as_expected": true
+ },
+ "control_flat_string_enum": {
+  "validated": true,
+  "backend": "xgrammar",
+  "rejection": null,
+  "enforces_as_expected": true
+ },
+ "all_track2_schemas_accepted": true,
+ "decoder_admitted_invalid_answers": [
+  "recall: duplicate",
+  "recall: no_evidence with another value"
+ ],
+ "scorer_rejects_every_invalid_answer_the_decoder_admits": true,
+ "passed": true
+}
+check exit 0
+== token cross-check (transformers 4.57.6) reproduces the committed audits and the r2 report
+audit exit 0
+== prompt token counts against the r1 audits (fb8cf77)
+{
+ "A": {
+  "passed": true,
+  "prompt_count_mismatches": 0,
+  "request_digests_changed": {
+   "decision": 0,
+   "recall": 2144
+  },
+  "request_digests_unchanged": {
+   "decision": 752,
+   "recall": 0
+  },
+  "total_prompt_tokens": {
+   "after": 1728220,
+   "before": 1728220
+  }
+ },
+ "B": {
+  "passed": true,
+  "prompt_count_mismatches": 0,
+  "request_digests_changed": {
+   "decision": 0,
+   "recall": 2096
+  },
+  "request_digests_unchanged": {
+   "decision": 736,
+   "recall": 0
+  },
+  "total_prompt_tokens": {
+   "after": 1686442,
+   "before": 1686442
+  }
+ }
+}
+compare exit 0
+== working tree after the reproductions (must be empty)
+== review checks r4 (logging nvidia-smi stub on PATH, outside the package's own decoy) and launch-build
+nvidia-smi on PATH: /tmp/t2r4-stub-lfu0/nvidia-smi
+{
+ "passed": true,
+ "exit_code": 1,
+ "refused_at_live_gate": true,
+ "nvidia_smi_called": false,
+ "temporary_files_left": [],
+ "refusal": "research.evidence_memory_v1_session_a.binding.LiveRefused: evidence memory v1 session A live path refused: unresolved placeholders: kernel_id, model.kaggle_source, model.mounted_path; frozen set case source is 'development_stand_in', not withheld (owner gate: draw the withheld seed and build the frozen set); frozen set seed does not match the committed withheld seed SHA-256; GPU-disabled package: Track 2 Stage 1 has no approved live run (LIVE_ENABLED is False)"
+}
+review-check a exit 0
+launch package refused:
+  unresolved placeholders: kernel_id, model.kaggle_source, model.mounted_path
+  frozen set case source is 'development_stand_in', not withheld (owner gate: draw the withheld seed and build the frozen set)
+  frozen set seed does not match the committed withheld seed SHA-256
+  GPU-disabled package: Track 2 Stage 1 has no approved live run (LIVE_ENABLED is False)
+launch-build a exit 1 (must be 1)
+embedded-inputs a exit 0
+{
+ "passed": true,
+ "exit_code": 1,
+ "refused_at_live_gate": true,
+ "nvidia_smi_called": false,
+ "temporary_files_left": [],
+ "refusal": "research.evidence_memory_v1_session_b.binding.LiveRefused: evidence memory v1 session B live path refused: unresolved placeholders: kernel_id, model.kaggle_source, model.mounted_path; frozen set case source is 'development_stand_in', not withheld (owner gate: draw the withheld seed and build the frozen set); frozen set seed does not match the committed withheld seed SHA-256; GPU-disabled package: Track 2 Stage 1 has no approved live run (LIVE_ENABLED is False)"
+}
+review-check b exit 0
+launch package refused:
+  unresolved placeholders: kernel_id, model.kaggle_source, model.mounted_path
+  frozen set case source is 'development_stand_in', not withheld (owner gate: draw the withheld seed and build the frozen set)
+  frozen set seed does not match the committed withheld seed SHA-256
+  GPU-disabled package: Track 2 Stage 1 has no approved live run (LIVE_ENABLED is False)
+  session A technical evaluation absent: reports/evidence_memory_v1_session_a_technical_evaluation.json (session B launches only after session A is technically complete)
+launch-build b exit 1 (must be 1)
+embedded-inputs b exit 0
+logging nvidia-smi stub: no calls
+== successor group
+{
+ "passed": true,
+ "summary": {
+  "run": 164,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0
+ },
+ "snapshots_reproduce": {
+  "A": {
+   "review_revision": "4",
+   "review_lock_sha256": "c6c89b3af1d6203e6b14cbd358f78c1b0706766f14314955dfe17f1050dba7d4",
+   "profile.ipynb": true,
+   "kernel-metadata.json": true,
+   "review-source-lock.json": true
+  },
+  "B": {
+   "review_revision": "4",
+   "review_lock_sha256": "f9a480b81d97689070dcdb09aa45864c5636e4a52020962fdd36113d0c247832",
+   "profile.ipynb": true,
+   "kernel-metadata.json": true,
+   "review-source-lock.json": true
+  }
+ },
+ "seconds": 794.3
+}
+successor exit 0
+== track2 group
+{
+ "passed": true,
+ "summary": {
+  "run": 162,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0
+ },
+ "snapshots_reproduce": {
+  "A": {
+   "review_revision": "4",
+   "review_lock_sha256": "c6c89b3af1d6203e6b14cbd358f78c1b0706766f14314955dfe17f1050dba7d4",
+   "profile.ipynb": true,
+   "kernel-metadata.json": true,
+   "review-source-lock.json": true
+  },
+  "B": {
+   "review_revision": "4",
+   "review_lock_sha256": "f9a480b81d97689070dcdb09aa45864c5636e4a52020962fdd36113d0c247832",
+   "profile.ipynb": true,
+   "kernel-metadata.json": true,
+   "review-source-lock.json": true
+  }
+ },
+ "seconds": 1545.0
+}
+track2 exit 0
+== working tree at the end (must be empty)
+DONE Fri Oct  9 22:31:48 EDT 2026 load 2.09 1.79 1.39 1/204 693284
