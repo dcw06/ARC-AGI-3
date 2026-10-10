@@ -183,3 +183,24 @@ Evaluating a rehearsal output as `live` fails on the evidence class.
 - Throughput, or whether a session fits its reservation on the GPU.
 - Anything about withheld cases, which do not exist yet.
 - Approvals, attachment, permission or mounted-byte evidence.
+
+## Review snapshots r3 (October 9, 2026): fresh-clone verification of `7f16825`
+
+r3 adds one fix: review documents are verified by the launch tooling and the live evaluation, not only by the review
+check (`runtime_diff.md`, addendum r3). The procedure was that of r2, in a fresh, network-isolated clone (loopback
+only); script `fresh_clone_run_r3.sh`, log `fresh_clone_run_r3.log`.
+
+| Check | Result |
+|---|---|
+| Builder `--check` | All 31 derived files match |
+| Structured-output check, token cross-check, prompt-count comparison | Reproduce the committed r2 receipts; r3 changes none of their inputs. 0 prompt-count mismatches |
+| Review checks r3, A and B | Refuse at the live gate. Neither the package's own decoy nor a logging `nvidia-smi` stub on PATH was called |
+| `launch-build`, A and B | Refused (exit 1). B also names the missing session-A record |
+| Embedded inputs r3, A and B | Pass |
+| Successor group (system Python) | 164 tests: 0 failures, 0 errors, 0 skipped (`cpu_checks_successor_r3.json`) |
+| Track 2 group (dev env) | 162 tests: 0 failures, 0 errors, 0 skipped (`cpu_checks_track2_r3.json`) |
+| Snapshots r3 | Rebuild byte for byte under both interpreters: A `fbad29c7…`, B `84407411…` |
+| Working tree | Empty after the reproductions and at the end |
+
+The "Not established" list above still applies, apart from strict `json_schema` decoding. Track 4 exercised flat
+string-enum schemas live, and the CPU check covers Track 2's schemas on the exact runtime install.

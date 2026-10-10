@@ -95,3 +95,26 @@ runner is `run/runner.py` with the frozen set passed as an argument, derived by 
   - the package, notebook, review builder and snapshot test exist.
 
   Items 3 and 5 remain owner gates (`owner_gates.md`).
+
+## Addendum r3 (October 9, 2026): review documents verified before launch and before evaluation
+
+The r2 locks bind the frozen protocol, the independent evaluator and the pooled analysis as review documents. In r2
+only the review check verified them; Track 4's review found the same gap in its package, and r3 applies the same fix.
+
+- **`binding.check_sources`** (both sessions, derived through the builder) also verifies the lock's review
+  documents. It requires `REVIEW_REQUIRED`: the frozen protocol, `successor/evaluate.py`, `successor/final.py`,
+  `run/evaluate.py` and `run/final.py`.
+- **Where the check runs.** The check applies wherever the documents exist by design:
+  - the review check;
+  - the launch tooling (`launch.claim`);
+  - `launch-build` (`notebook.launch_artifacts`).
+
+  Only the in-payload gate passes `review_documents=False` (`binding.consume` and `run.live_main`), because the
+  runtime payload never carries the review documents. The launch package was built from a verified checkout.
+- **`successor/evaluate.py`, live mode.** The evaluating checkout's latest review lock (sources and review documents)
+  must verify, or the session is not technically complete. The output reports the verified lock
+  (`review_lock_verified`).
+- **Tests.** For both sessions, drift in each required document refuses `require_live` and `launch_artifacts` and is
+  reported by the evaluator; the payload gate still passes; and a lock missing a required document is refused.
+
+Review snapshots r3: A `fbad29c7f48f35025d849d6faee35de35368daae001a5356a16ecc58aaca669a`, B `84407411a1e054284adffb52a09d15561883b9aa1010c76442c463687e2601b6`. Nothing scientific changed, and `LIVE_ENABLED` stays False.

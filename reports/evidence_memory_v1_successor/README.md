@@ -5,8 +5,9 @@ prepared CPU-only. No GPU was used and no provider was called. No approval, comp
 claim, upload or notebook submission exists. Every live path refuses in this checkout.
 
 **Protocol of record.** `reports/evidence_memory_v1_protocol_v2_frozen.md`, frozen on the owner's decisions of
-October 9, 2026 (`freeze_decisions.md`). Review snapshots r2 bind it; r1 (built under the draft) is kept
-byte-identical as history. The decisions changed the recall decoding schema (no `uniqueItems`), the reading of the
+October 9, 2026 (`freeze_decisions.md`). Review snapshots r2 and r3 bind it; r1 (built under the draft) and r2 are
+kept byte-identical as history. r3 adds one fix (Track 4 parity): the review documents are verified by the launch
+tooling and the live evaluation too, not only by the review check (`runtime_diff.md`, addendum r3). The decisions changed the recall decoding schema (no `uniqueItems`), the reading of the
 unsupported-claim margins (three ways), the exclusion procedure (refuse and redraw) and session B's launch tooling
 (only after session A is technically complete). Every changed file is listed in `freeze_change_list_r2.md`. Still
 open: who holds the two copies of the withheld nonce (owner gate 1).
@@ -16,12 +17,13 @@ inspected.
 
 ## Packages
 
-| Session | Package | Review snapshot r2 (current) | r2 review lock SHA-256 |
+| Session | Package | Review snapshot r3 (current) | r3 review lock SHA-256 |
 |---|---|---|---|
-| A (groups 0-5, 2,896 calls) | `research/evidence_memory_v1_session_a/` | `notebooks/evidence-memory-v1-session-a-review-r2/` | `750ea373200bd89a9ee15a325cf11265bceb0b90cd5e5ba94a8d56c2ba1f4dd9` |
-| B (groups 6-11, 2,832 calls) | `research/evidence_memory_v1_session_b/` | `notebooks/evidence-memory-v1-session-b-review-r2/` | `372963785c0526cb523eb374a7ae52b1d071fd83e955c556b7b594a8d35212b8` |
+| A (groups 0-5, 2,896 calls) | `research/evidence_memory_v1_session_a/` | `notebooks/evidence-memory-v1-session-a-review-r3/` | `fbad29c7f48f35025d849d6faee35de35368daae001a5356a16ecc58aaca669a` |
+| B (groups 6-11, 2,832 calls) | `research/evidence_memory_v1_session_b/` | `notebooks/evidence-memory-v1-session-b-review-r3/` | `84407411a1e054284adffb52a09d15561883b9aa1010c76442c463687e2601b6` |
 
-Kept as history (draft protocol; byte-identical): r1 locks `5539e126…` (A) and `fb94736b…` (B). Both r2 locks bind
+Kept as history (byte-identical): r1 locks `5539e126…` (A) and `fb94736b…` (B), built under the draft; r2 locks
+`750ea373…` (A) and `37296378…` (B), the frozen protocol before the r3 fix. Both r3 locks bind
 the frozen protocol (SHA-256 `bba44981…`) and the other review documents (`review_documents`). Session B's lock also
 binds `research/evidence_memory_v1/successor/session_order.py`, its launch tooling's session-A condition.
 
