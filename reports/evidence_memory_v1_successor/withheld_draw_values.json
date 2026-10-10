@@ -9,10 +9,52 @@
  },
  "current": {
   "draw": 2,
-  "status": "committed_awaiting_gate_2",
+  "status": "withheld_sets_built_privately",
   "withheld_seed_sha256": "d80505e22aafdae5fd3490a95a3e5f7b84cf1335e651e1a380b55db233d02f32",
   "drawn_and_checked_at": "2026-10-10T17:18:53Z",
-  "sessions": null
+  "gate_2_built_on": "2026-10-10",
+  "built_in": "a private checkout of b9e9971 (review snapshots r8); never published",
+  "automated_checks": "both sets passed with 0 exclusions; pinned-tokenizer audit: 0 prompt-token and 0 evidence-block mismatches, 0 budgeted blocks over budget; live_frozen_set_reasons empty for both rebound packages",
+  "repeat_families_covered": 7,
+  "sessions": {
+   "A": {
+    "frozen_set_sha256": "69b450c1f5d89087bb28105651e636586598604e5252e332de8acbade3d69216",
+    "pass_1": 2592,
+    "repeat": 240,
+    "repeat_groups": 4,
+    "study_completions": 2832,
+    "maximum_model_requests": 189756,
+    "generation_requests": 2839,
+    "complete_session_requests": 5676,
+    "repeat_answers_per_arm": 60,
+    "exclusions": 0,
+    "max_prompt_tokens": 1252,
+    "planning_seconds": {
+     "typical_completions": 867,
+     "all_at_64_token_cap": 1650,
+     "all_at_cap_per_call_time_doubled": 2894
+    }
+   },
+   "B": {
+    "frozen_set_sha256": "fa1500fec7d073695397968510a9813305b650f2ee3107e4c287b58a4ac08cbb",
+    "pass_1": 2592,
+    "repeat": 336,
+    "repeat_groups": 5,
+    "study_completions": 2928,
+    "maximum_model_requests": 196188,
+    "generation_requests": 2935,
+    "complete_session_requests": 5868,
+    "repeat_answers_per_arm": 84,
+    "exclusions": 0,
+    "max_prompt_tokens": 1259,
+    "planning_seconds": {
+     "typical_completions": 880,
+     "all_at_64_token_cap": 1691,
+     "all_at_cap_per_call_time_doubled": 2981
+    }
+   }
+  },
+  "planning_note": "Planning figures only, not ceilings; admission control enforces the 3,000 s cutoff. The frozen protocol section 11 note gives about 0.16 s per added call at typical completions; its own table gives about 0.14 s (0.43 s at the cap, 0.91 s with per-call time doubled). The figures here are interpolated from the table itself."
  },
  "retired": [
   {

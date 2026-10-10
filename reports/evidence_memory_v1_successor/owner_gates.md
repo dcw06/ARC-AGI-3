@@ -102,8 +102,16 @@ for f in ~/private/track2/withheld-nonce-2.txt "<copy B folder>/withheld-nonce-2
 
 ## Gate 2. Build the withheld frozen sets (protocol v2 section 5, step 4); private checkout only
 
-**Draw 2: awaiting the owner** (commitment `d80505e2…`). Its counts, caps and hashes are recorded mechanically in
-`withheld_draw_values.json`.
+**Draw 2: done on October 10, 2026, in a private checkout of `b9e9971` (never published).**
+- The owner ran `freeze withheld` for both sessions in their own terminal; only counts and hashes were printed.
+- Both sets passed every automated check with 0 exclusions:
+  - A: frozen set `69b450c1…`, 2,832 scheduled calls (2,592 + 240 repeat, 4 groups);
+  - B: frozen set `fa1500fe…`, 2,928 scheduled calls (2,592 + 336 repeat, 5 groups).
+- The pinned-tokenizer audit passed: 0 prompt-token and 0 evidence-block mismatches, 0 blocks over budget.
+- Both packages are rebound to the withheld sets in the private checkout. Request caps: 189,756 (A) and
+  196,188 (B). `live_frozen_set_reasons` returns no reason for either session.
+- The derived counts, caps and planning figures are in `withheld_draw_values.json`.
+- No person has opened `probes.json` or `token-audit.json`.
 
 **Draw 1 (retired before execution): done on October 10, 2026, in a private checkout (never published).** The
 private preparation built on it (gates 2 to 5) is kept, marked retired, and is never used for a launch.

@@ -25,8 +25,10 @@ open: who holds the two copies of the withheld nonce (owner gate 1).
 - **Draw 2.** The owner drew it on October 10, 2026 at 17:18:53 UTC, after r7 was committed and verified, and
   checked both copies (`nonce_custody.json`). Only its commitment is published: `d80505e2…`, in
   `seed-commitment.json` and each session's `protocol.json`, bound by review snapshots r8. The frozen protocol is
-  byte-unchanged from r7. Its counts, caps and hashes are recorded mechanically in `withheld_draw_values.json`
-  after gate 2.
+  byte-unchanged from r7.
+- **Draw 2's withheld sets (gate 2, private).** Both passed with 0 exclusions: A 2,832 calls (repeat 4 groups),
+  B 2,928 calls (repeat 5 groups). The request caps are 189,756 and 196,188. The derived values are in
+  `withheld_draw_values.json`.
 
 **Recall schema (owner decision, October 10, 2026).** After the first withheld draw, the recall decoding schema
 allows exactly the eight valid answers (`structured_outputs_check_r3.json`). In that draw, session A's repeat had
