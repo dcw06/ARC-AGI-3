@@ -277,3 +277,20 @@ reproduction evaluates as technically complete, which is the review's finding.
 
 The run was interrupted once by a session end during the Track 2 group. That group was rerun in the same clone of
 `2cd1bdb`; the earlier stages had already passed.
+
+## Review snapshots r8 (October 10, 2026): fresh-clone verification of `b9e9971`
+
+r8 records draw 2's commitment (`d80505e2…`); the frozen protocol is byte-unchanged from r7, which a new freeze
+test asserts for r7 and every later lock.
+
+| Check | Result |
+|---|---|
+| Builder `--check` | All 31 derived files match |
+| Structured-output check r3, token cross-check r3 | Reproduce the committed receipts byte for byte |
+| Review checks r8, A and B | Refuse at the live gate; no `nvidia-smi` call. The rewritten report differs only in the random temporary folder name inside the refusal traceback |
+| `launch-build`, A and B | Refused (exit 1) |
+| Embedded inputs r8, A and B | Pass |
+| Successor group | 166 tests: 0 failures, 0 errors, 0 skipped |
+| Track 2 group | 163 tests: 0 failures, 0 errors, 0 skipped |
+| Snapshots r8 | Rebuild byte for byte: A `051e3470…`, B `bc9718ab…` |
+| Working tree | Empty at the end |
