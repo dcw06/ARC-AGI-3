@@ -59,12 +59,13 @@ FREEZE_AMENDMENTS = {
         'decision 1 (amended October 10, 2026, after the withheld draw): the recall DECODING schema allows exactly the '
         'eight valid answers (vLLM 0.19 refuses uniqueItems; the exact enum also enforces distinct values and '
         '"no_evidence" alone); readers.validate_response is unchanged', (
-            ('import hashlib\nimport json\n', 'import hashlib\nimport itertools\nimport json\n', 1),
             ("RECALL_VALUES = P.VALUES + ('no_evidence',)\n",
              "RECALL_VALUES = P.VALUES + ('no_evidence',)\n"
              '# The eight valid recall answers, in canonical order: one to three distinct observed values, or "no_evidence"\n'
              '# alone (protocol v2 frozen, section 2). The recall decoding schema allows exactly these.\n'
-             "RECALL_ANSWERS = tuple(c for r in (1, 2, 3) for c in itertools.combinations(P.VALUES, r)) + (('no_evidence',),)\n",
+             "RECALL_ANSWERS = (tuple((v,) for v in P.VALUES)\n"
+             "                  + tuple((a, b) for i, a in enumerate(P.VALUES) for b in P.VALUES[i + 1:])\n"
+             "                  + (tuple(P.VALUES), ('no_evidence',)))\n",
              1),
             ('def response_schema(kind):\n    if kind',
              'def response_schema(kind):\n'

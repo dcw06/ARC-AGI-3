@@ -18,22 +18,23 @@ session's `protocol.json` and in the frozen protocol §5; review snapshots r4 bi
 
 **Recall schema (owner decision, October 10, 2026).** After the withheld draw, the recall decoding schema allows
 exactly the eight valid answers (`structured_outputs_check_r3.json`). Session A's withheld repeat has 48 answers
-per arm, where one invalid answer would fail the 2% rule. Review snapshots r5 bind it.
+per arm, where one invalid answer would fail the 2% rule. Review snapshots r6 bind it.
 
 **Withheld material.** The withheld seed is drawn and committed (above). No withheld frozen set exists in this
 repository: owner gate 2 builds them only in a private checkout. No withheld answer has been inspected.
 
 ## Packages
 
-| Session | Package | Review snapshot r5 (current) | r5 review lock SHA-256 |
+| Session | Package | Review snapshot r6 (current) | r6 review lock SHA-256 |
 |---|---|---|---|
-| A (groups 0-5; withheld 2,784 calls, stand-in 2,896) | `research/evidence_memory_v1_session_a/` | `notebooks/evidence-memory-v1-session-a-review-r5/` | `2176121e06d1969e792775a4b05c8d4ac9ea7a6591e2beb742426dcaa1c23960` |
-| B (groups 6-11; withheld 2,960 calls, stand-in 2,832) | `research/evidence_memory_v1_session_b/` | `notebooks/evidence-memory-v1-session-b-review-r5/` | `52205ad76ef1189463a25012e5c6ea0ae27e2fedaedbca1941e05d7c59bf4b3f` |
+| A (groups 0-5; withheld 2,784 calls, stand-in 2,896) | `research/evidence_memory_v1_session_a/` | `notebooks/evidence-memory-v1-session-a-review-r6/` | `80fbe454685f6d82b78a2a959d48a0f09bd404274895098a3f73dd53c675d20e` |
+| B (groups 6-11; withheld 2,960 calls, stand-in 2,832) | `research/evidence_memory_v1_session_b/` | `notebooks/evidence-memory-v1-session-b-review-r6/` | `26f321fc79eacf80252b696e49becea5f10d0a55603db98dfc25ac24c2ba50ac` |
 
 Kept as history (byte-identical): r1 locks `5539e126…` (A) and `fb94736b…` (B), built under the draft; r2 locks
 `750ea373…` (A) and `37296378…` (B), the frozen protocol before the r3 fix; r3 locks `fbad29c7…` (A) and
 `84407411…` (B), before the seed commitment; r4 locks `c6c89b3a…` (A) and `f9a480b8…` (B), before the eight-answer
-recall schema. Both r5 locks bind
+recall schema; r5 locks `2176121e…` (A) and `52205ad7…` (B), whose stage1 imported itertools (outside the research
+modules' import boundary; the schema is identical). Both r6 locks bind
 the frozen protocol (SHA-256 `bba44981…`) and the other review documents (`review_documents`). Session B's lock also
 binds `research/evidence_memory_v1/successor/session_order.py`, its launch tooling's session-A condition.
 

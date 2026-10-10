@@ -1,0 +1,15 @@
+{
+ "schema": "evidence_memory_v1_session_b_review_check_v1",
+ "review_revision": 6,
+ "review_lock_sha256": "26f321fc79eacf80252b696e49becea5f10d0a55603db98dfc25ac24c2ba50ac",
+ "evidence_class": "scripted_cpu_rehearsal",
+ "gpu_compatibility_evidence": false,
+ "exit_code": 1,
+ "refused_at_live_gate": true,
+ "refusal": "research.evidence_memory_v1_session_b.binding.LiveRefused: evidence memory v1 session B live path refused: unresolved placeholders: kernel_id, model.kaggle_source, model.mounted_path; frozen set case source is 'development_stand_in', not withheld (owner gate: draw the withheld seed and build the frozen set); frozen set seed does not match the committed withheld seed SHA-256; GPU-disabled package: Track 2 Stage 1 has no approved live run (LIVE_ENABLED is False)",
+ "nvidia_smi_called": false,
+ "temporary_files_left": [],
+ "kaggle_paths_touched": false,
+ "stderr_tail": "Traceback (most recent call last):\n  File \"/tmp/evidence-memory-session-b-review-check-w1y9vtfi/review_cell.py\", line 19, in <module>\n    consume(source, working)  # the live gate: refuses here, before any installation, model or GPU use\n    ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/evidence-memory-session-b-review-check-w1y9vtfi/tmp/evidence-memory-session-b-source-dq0ba_ov/research/evidence_memory_v1_session_b/binding.py\", line 289, in consume\n  File \"/tmp/evidence-memory-session-b-review-check-w1y9vtfi/tmp/evidence-memory-session-b-source-dq0ba_ov/research/evidence_memory_v1_session_b/binding.py\", line 267, in require_live\nresearch.evidence_memory_v1_session_b.binding.LiveRefused: evidence memory v1 session B live path refused: unresolved placeholders: kernel_id, model.kaggle_source, model.mounted_path; frozen set case source is 'development_stand_in', not withheld (owner gate: draw the withheld seed and build the frozen set); frozen set seed does not match the committed withheld seed SHA-256; GPU-disabled package: Track 2 Stage 1 has no approved live run (LIVE_ENABLED is False)\n",
+ "passed": true
+}

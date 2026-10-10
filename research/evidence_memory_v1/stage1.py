@@ -19,7 +19,6 @@ cross-check against the pinned `transformers` tokenizer.
 """
 import argparse
 import hashlib
-import itertools
 import json
 from pathlib import Path
 import random
@@ -37,7 +36,9 @@ RUN_PROBES = Path(__file__).with_name('run') / 'probes.json'
 RECALL_VALUES = P.VALUES + ('no_evidence',)
 # The eight valid recall answers, in canonical order: one to three distinct observed values, or "no_evidence"
 # alone (protocol v2 frozen, section 2). The recall decoding schema allows exactly these.
-RECALL_ANSWERS = tuple(c for r in (1, 2, 3) for c in itertools.combinations(P.VALUES, r)) + (('no_evidence',),)
+RECALL_ANSWERS = (tuple((v,) for v in P.VALUES)
+                  + tuple((a, b) for i, a in enumerate(P.VALUES) for b in P.VALUES[i + 1:])
+                  + (tuple(P.VALUES), ('no_evidence',)))
 
 
 def response_schema(kind):

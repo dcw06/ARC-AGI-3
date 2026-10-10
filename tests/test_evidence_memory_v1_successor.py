@@ -26,7 +26,8 @@ NOTEBOOKS = {label: importlib.import_module(spec['module'] + '.notebook') for la
 # sets: tests that compare against stand-in numbers, or that would read withheld truths, are skipped there.
 STAND_INS = all(PL.load_frozen(ROOT, spec['package'])[0]['case_source'] == 'development_stand_in'
                 for spec in PL.SESSIONS.values())
-# Review snapshots: r5 makes the recall decoding schema the exact enum of the eight valid answers (owner decision,
+# Review snapshots: r6 computes the eight answers without itertools (the research modules' import boundary); r5
+# makes the recall decoding schema the exact enum of the eight valid answers (owner decision,
 # October 10, 2026); r4 binds the owner's withheld-seed commitment (gate 1) and the holder rule in the frozen
 # protocol's section 5; r3 adds the review-document check to the repository-side gates and the live evaluation; r2
 # binds the frozen protocol (reports/evidence_memory_v1_protocol_v2_frozen.md); r1 (the draft). r1 and r2 are
@@ -34,15 +35,17 @@ STAND_INS = all(PL.load_frozen(ROOT, spec['package'])[0]['case_source'] == 'deve
 # Whether the owner has committed the withheld seed (gate 1); before that the commitment is a placeholder.
 SEED_COMMITTED = (json.loads((ROOT / 'research/evidence_memory_v1/successor/seed-commitment.json').read_bytes())
                   ['withheld_seed_sha256'] != PL.SEED_PLACEHOLDER)
-LATEST_REVIEW_REVISION = 5
+LATEST_REVIEW_REVISION = 6
 RETAINED_REVIEW_LOCKS = {'A': {1: '5539e1266c5fd6ccad5881878a9b5699b822dd7d97b82e3ff9f02ea2e7246b41',
                                2: '750ea373200bd89a9ee15a325cf11265bceb0b90cd5e5ba94a8d56c2ba1f4dd9',
                                3: 'fbad29c7f48f35025d849d6faee35de35368daae001a5356a16ecc58aaca669a',
-                               4: 'c6c89b3af1d6203e6b14cbd358f78c1b0706766f14314955dfe17f1050dba7d4'},
+                               4: 'c6c89b3af1d6203e6b14cbd358f78c1b0706766f14314955dfe17f1050dba7d4',
+                               5: '2176121e06d1969e792775a4b05c8d4ac9ea7a6591e2beb742426dcaa1c23960'},
                          'B': {1: 'fb94736b47c2aee8d3b98f07fc912a8f8f3f2b12c4e24bd158f1504c671fe39f',
                                2: '372963785c0526cb523eb374a7ae52b1d071fd83e955c556b7b594a8d35212b8',
                                3: '84407411a1e054284adffb52a09d15561883b9aa1010c76442c463687e2601b6',
-                               4: 'f9a480b81d97689070dcdb09aa45864c5636e4a52020962fdd36113d0c247832'}}
+                               4: 'f9a480b81d97689070dcdb09aa45864c5636e4a52020962fdd36113d0c247832',
+                               5: '52205ad76ef1189463a25012e5c6ea0ae27e2fedaedbca1941e05d7c59bf4b3f'}}
 
 
 def builder():
