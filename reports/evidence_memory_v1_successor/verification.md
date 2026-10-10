@@ -222,3 +222,32 @@ rule in the frozen protocol's §5. The procedure was that of r3: script `fresh_c
 | Track 2 group (dev env) | 162 tests: 0 failures, 0 errors, 0 skipped |
 | Snapshots r4 | Rebuild byte for byte: A `c6c89b3a…`, B `f9a480b8…` |
 | Working tree | Empty after the reproductions and at the end |
+
+## Review snapshots r5 (October 10, 2026): fresh-clone check of `da465b5`, one failure
+
+r5 made the recall decoding schema the exact enum of the eight valid answers (owner decision, October 10, 2026). The
+structured-output check r3 passed: both schemas were accepted, and over all 340 recall answers of one to four values the
+decoder admitted exactly the canonical form of each scorer-valid answer. The token audits changed only in request
+digests (`token_counts_r2_vs_r3.json`: 0 prompt-count mismatches).
+
+The fresh clone (`fresh_clone_run_r5.log`) passed everything except one test in the Track 2 group, 162 of 163:
+`test_evidence_memory_v1_harness.Boundaries.test_no_model_network_or_process_imports`. The r5 `stage1.py` imported
+`itertools`, which the research modules' import boundary does not allow. Its receipts are kept
+(`cpu_checks_*_r5.json`).
+
+## Review snapshots r6 (October 10, 2026): fresh-clone verification of `8dc9b7a`
+
+r6 computes the eight answers with a plain comprehension in the same canonical order. The recall schema is
+byte-identical to the one the r3 check verified.
+
+| Check | Result |
+|---|---|
+| Builder `--check` | All 31 derived files match |
+| Structured-output check r3, token cross-check r3, prompt counts against the r4 audits (`2d0aa6b`) | Reproduce the committed receipts; 0 prompt-count mismatches |
+| Review checks r6, A and B | Refuse at the live gate; no `nvidia-smi` call |
+| `launch-build`, A and B | Refused (exit 1) |
+| Embedded inputs r6, A and B | Pass |
+| Successor group | 164 tests: 0 failures, 0 errors, 0 skipped |
+| Track 2 group | 163 tests: 0 failures, 0 errors, 0 skipped, including the import boundary |
+| Snapshots r6 | Rebuild byte for byte: A `80fbe454…`, B `26f321fc…` |
+| Working tree | Empty after the reproductions and at the end |
