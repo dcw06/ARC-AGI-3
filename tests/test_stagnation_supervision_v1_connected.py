@@ -146,18 +146,29 @@ class Connected(unittest.TestCase):
         self.assertFalse(evaluation['technically_complete'])
         self.assert_owned_cleanup(receipt, outer, detail)
         self.assertIsNotNone(detail['run'])
-        # Forced cutoff need not let the host write final counters.
-        from research.stagnation_supervision_v1.closed_loop.evidence import load_verified
-        retained = load_verified(Path(detail['output']) / 'worker/run')
-        self.assertEqual(retained['calls'], detail['run']['calls'])
-        self.assertGreater(sum(len(e['steps']) for e in retained['episodes']), 0)
-        # host may still say ready: final counters are not a cancellation receipt.
-        self.assertTrue(evaluation['evidence_verified'])
-        self.assertGreater(retained['calls'], 0)
+        # The external cutoff can interrupt an atomic evidence write. Its
+        # temporary file must survive as a failed-evidence marker, rather than
+        # being deleted to make the incomplete attempt look verified. When no
+        # write was interrupted, retain the original partial-evidence checks.
+        from research.stagnation_supervision_v1.closed_loop.evidence import EvidenceError, load_verified
+        run_folder = Path(detail['output']) / 'worker/run'
+        if any(p.is_file() for p in run_folder.rglob('*.tmp')):
+            with self.assertRaisesRegex(EvidenceError, 'interrupted write left a temporary file'):
+                load_verified(run_folder)
+            self.assertFalse(evaluation['evidence_verified'])
+            self.assertTrue(any('interrupted write left a temporary file' in p for p in evaluation['problems']))
+            self.assertFalse(evaluation['target_evaluation']['technically_complete'])
+        else:
+            retained = load_verified(run_folder)
+            self.assertEqual(retained['calls'], detail['run']['calls'])
+            self.assertGreater(sum(len(e['steps']) for e in retained['episodes']), 0)
+            # Host counters alone are not a cancellation receipt.
+            self.assertTrue(evaluation['evidence_verified'])
+            self.assertGreater(retained['calls'], 0)
+            self.assertIn((detail['run']['status'], detail['run']['error']),
+                          (('deadline_exceeded', 'run deadline enforced'),
+                           ('technical_failure', 'model transport')))
         self.assertIn('admission cutoff reserves cleanup', outer['error'])
-        self.assertIn((detail['run']['status'], detail['run']['error']),
-                      (('deadline_exceeded', 'run deadline enforced'),
-                       ('technical_failure', 'model transport')))
         self.assertGreater(detail['run']['calls'], 0)
 
     def test_reflection_length_is_a_charged_invalid_reflection_not_lifecycle_failure(self):
