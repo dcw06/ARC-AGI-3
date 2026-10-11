@@ -24,12 +24,13 @@ SCIENCE = {'research/feedback_action_v1/adapter.py': '26a84909f6786dce8e9e66d5a5
            'research/feedback_action_v1/live/fake_server.py':
                'd80eb516f43e528d29d4474fd8b49a7264f8579518a0964c9ee0dea00d80b8a0'}
 VERIFIED_PROTOCOL_BLOB = '6061cbebb3f21ccd3ca698049f439b0546968f2f'  # control-interface v2 protocol.json at 5a21dd3
-REVIEW = ROOT / 'notebooks/feedback-action-v1-review-r6'  # r5 plus the frozen-inventory anchoring (review P2)
+REVIEW = ROOT / 'notebooks/feedback-action-v1-review-r7'  # six-gap lifecycle and independent replay repair
 RETAINED_REVIEW_LOCKS = {1: '4b5b7a0648c968c2ec497e0ba963e2cee42ad4f87c0ec6c204efbd0d7bedf0b5',  # history, unchanged
                          2: '9ebbc968f91e5f10b0627a617254ab7c52bb38954021e10b631d77244dd06468',
                          3: '180c33ee895b5af2aca4032b8d5f9f878dbaa57fabdb32a1e1e5b612ed2f415d',
                          4: 'f0a5ad977b95d66fac91d0ddc482f3c02afe0b44bc3d8e954260796908817090',
-                         5: 'a32893cb63be0381e835770ac600f03e8760c94b1094f9dc52ed9eaba6e7c98d'}
+                         5: 'a32893cb63be0381e835770ac600f03e8760c94b1094f9dc52ed9eaba6e7c98d',
+                         6: '97ec8e1cb1bd898baa16761f22aef20e90ce95b5d31f21d47e4c71eee3d1768a'}
 
 
 def sha(path):
