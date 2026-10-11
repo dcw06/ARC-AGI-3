@@ -98,7 +98,9 @@ def validate_installation(root, first, outer, *, mode):
             require('-r' in offline and Path(offline[offline.index('-r')+1]).name == 'trusted_requirements.lock',
                     'hash-pinned requirements input')
         metadata = commands[3 if role == 'model' else 9]['argv']
+        from research.stagnation_supervision_runtime_v2.publisher_install import PACKAGE_CHECK
         require(metadata[:3] == [interpreters[role], '-I', '-c']
+                and metadata[-2] == PACKAGE_CHECK
                 and json.loads(metadata[-1]) == {**protocol['runtime'][role], 'imports': imports},
                 role + ' frozen metadata probe')
         packed_record = _read(root, 'logs/install-' + role + '.json')
@@ -112,6 +114,18 @@ def validate_installation(root, first, outer, *, mode):
         logs = json.loads(raw)
         require('install.log' in logs if role == 'model' else {'stages.log', 'stages.json', 'resolution.json',
                                                             'install_game.json'} <= set(logs), role + ' log inventory')
+        text = base64.b64decode(logs['install.log' if role == 'model' else 'stages.log'], validate=True).decode('utf-8')
+        reports = []
+        for line in text.splitlines():
+            if line.startswith('{'):
+                try:
+                    reports.append(json.loads(line))
+                except ValueError:
+                    pass  # command text can also contain a brace; only exact output objects match
+        expected_report = {k: installed[k] for k in ('versions', 'imports')}
+        if role == 'model':
+            expected_report['torch_cuda_build'] = installed['torch_cuda_build']
+        require(expected_report in reports, role + ' metadata receipt disagrees with retained stdout')
         if role == 'game':
             stages = json.loads(base64.b64decode(logs['stages.json'], validate=True))
             require([s.get('stage') for s in stages] == list(phases)

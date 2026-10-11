@@ -231,6 +231,7 @@ class InstallerReceiptChecks(unittest.TestCase):
     def fixture(self, output):
         import base64, gzip
         from research.stagnation_supervision_runtime_v2 import installation_evidence as IE
+        from research.stagnation_supervision_runtime_v2.publisher_install import PACKAGE_CHECK
         from certification.phase4_integrated_v2.evidence import EvidenceStore
         protocol = json.loads((IE.ROOT/'research/stagnation_supervision_runtime_v2/protocol.json').read_bytes())
         receipt = {'passed': True, 'error': None, 'scope': 'runtime_v2_split_install',
@@ -259,13 +260,14 @@ class InstallerReceiptChecks(unittest.TestCase):
                          'interrupted': [], 'returncode': 0, 'argv': ['python', p]} for i, p in enumerate(phases)]
             commands[1 if role == 'model' else 5]['argv'] = ['python', '--no-index', '--no-cache-dir',
                 '--only-binary=:all:', '--require-hashes', '-r', '/synthetic/trusted_requirements.lock']
-            commands[3 if role == 'model' else 9]['argv'] = [receipt['interpreters'][role], '-I', '-c', 'probe',
+            commands[3 if role == 'model' else 9]['argv'] = [receipt['interpreters'][role], '-I', '-c', PACKAGE_CHECK,
                 json.dumps({**protocol['runtime'][role], 'imports': imports})]
             receipt[role+'_process_cleanup'] = {'groups_absent': True, 'error': None, 'interrupted': [],
                                                 'groups': len(phases), 'commands': commands}
             stages = [{'stage': p, 'passed': True, 'error': None, 'started_seconds': 0., 'ended_seconds': 1.} for p in phases]
-            logs = {'install.log': b'model fixture'} if role == 'model' else {
-                'stages.json': json.dumps(stages).encode(), 'stages.log': b'game fixture',
+            probe_stdout = json.dumps(receipt[role+'_install']).encode() + b'\n'
+            logs = {'install.log': probe_stdout} if role == 'model' else {
+                'stages.json': json.dumps(stages).encode(), 'stages.log': probe_stdout,
                 'resolution.json': json.dumps(plan).encode(), 'install_game.json': json.dumps(plan).encode()}
             packed = gzip.compress(json.dumps({n: base64.b64encode(raw).decode() for n, raw in logs.items()}).encode())
             receipt['installer_evidence_sha256'][role] = hashlib.sha256(packed).hexdigest()
@@ -297,6 +299,22 @@ class InstallerReceiptChecks(unittest.TestCase):
                     EvidenceStore(output, 'control').save('installation.json', value)
                     with self.assertRaisesRegex(ValueError, 'installation evidence'):
                         IE.validate_installation(output, first, outer, mode='live')
+
+    def test_changed_installer_stdout_with_updated_hash_is_refused(self):
+        import base64, gzip
+        from research.stagnation_supervision_runtime_v2 import installation_evidence as IE
+        from certification.phase4_integrated_v2.evidence import EvidenceStore
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp)
+            receipt = self.fixture(output)
+            packed = gzip.compress(json.dumps({'install.log': base64.b64encode(b'{"versions":{}}\n').decode()}).encode())
+            receipt['installer_evidence_sha256']['model'] = hashlib.sha256(packed).hexdigest()
+            EvidenceStore(output, 'logs').save('install-model.json', {
+                'encoding': 'gzip-base64-json', 'data': base64.b64encode(packed).decode()})
+            EvidenceStore(output, 'control').save('installation.json', receipt)
+            with self.assertRaisesRegex(ValueError, 'retained stdout'):
+                IE.validate_installation(output, {'installation': 'target', 'first_cell_monotonic': 10.},
+                                         {'worker_released_seconds': 20.}, mode='live')
 
 
 @unittest.skipUnless(sys.platform == 'linux', 'connected retained lifecycle fixture')
