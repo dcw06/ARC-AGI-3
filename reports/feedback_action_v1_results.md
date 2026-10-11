@@ -1,5 +1,12 @@
 # Track 1 (feedback_action_v1): results of the two-session evaluation
 
+**Status: study executed and analyzed; final independent validation pending.** The runs used the fixed private
+package with lock `23cb7142…` (built from `edc9566`), which predates six prelaunch-gap repairs and the fail-closed
+finalization committed to the branch before the replacement launch. The post-fix audit
+(`reports/feedback_action_v1_post_fix_audit.md`) finds every evidence-level check passing and the findings below
+unchanged, but the runs cannot be certified technically complete under the post-fix rules (no finalization
+receipt in the pre-fix runtime).
+
 **What this is.** The sanitized results of the frozen protocol's two-session evaluation
 (`live_evaluation.evaluate_sessions`, frozen protocol §9), run once over both technically complete sessions on
 October 11, 2026. Aggregates only; the notebooks and raw outputs stay private and account-only.
