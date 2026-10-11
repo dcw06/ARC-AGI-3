@@ -58,15 +58,17 @@ r1 to r6 stay unchanged as history.
    - an independent GPU check confirms nothing remains;
    - the first cell stops every recorded group;
    - evidence is finalized and the extracted sources removed within the lifecycle deadline;
-   - a final deadline check charges the final evidence write before a passing verdict.
+   - a pending finalization barrier remains through the evidence write and post-write deadline check;
+   - interruptions revoke certification before emergency failure recording; the independent evaluator refuses a
+     remaining barrier, a missing receipt or an uncertified lifecycle; barrier removal is also charged.
 
 ## Review commands (CPU; WSL Ubuntu, CPython 3.12)
 
 ```bash
 python -m research.feedback_action_v1.derive --check            # harness derived from AEH v1
 python -m research.feedback_action_v1.derive_runtime --check    # gate/notebook/launch from the verified runtime; verbatim controller
-python scripts/feedback_action_v1_package.py review-check --revision 7     # must refuse at the live gate
-python scripts/feedback_action_v1_package.py review-rehearse --revision 7  # the same cell, MODE switched: one connected session
+python scripts/feedback_action_v1_package.py review-check --revision 8     # must refuse at the live gate
+python scripts/feedback_action_v1_package.py review-rehearse --revision 8  # the same cell, MODE switched: one connected session
 python scripts/feedback_action_v1_package.py launch-build                  # must refuse
 python scripts/check_feedback_action_v1_runtime.py --bundle <replica flat mount> --competition <replica competition mount> --work <new dir>
 python -m unittest tests.test_feedback_action_v1_successor tests.test_feedback_action_v1_live_evaluation tests.test_feedback_action_v1_connected

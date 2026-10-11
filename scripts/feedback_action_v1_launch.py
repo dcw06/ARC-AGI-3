@@ -239,8 +239,11 @@ def run(output, working, *, started, root=ROOT, mode='live', internal_seconds=33
                'study_status': report['status'] if report else None,
                'first_cell_cleanup_verified': report.get('first_cell_cleanup_verified') if report else None,
                'provider_reconciliation_required': mode == 'live', 'phase4_complete': False}
-    # First retain a provisional receipt; a partial write can never certify completion.
-    receipt.update(lifecycle_finalized=False, extracted_source_removed=None)
+    # A durable barrier makes even a replaced success receipt provisional.
+    # Only a completed, bounded transaction may remove it. The evaluator checks it independently.
+    from certification.direct_publisher_smoke_v1.server import defer_startup_signals
+    pending = control.save('finalization-pending.json', {'scope': 'first_cell_finalization', 'pending': True})
+    receipt.update(lifecycle_finalized=False, extracted_source_removed=None, finalization_guard_version=1)
     control.save('notebook-cost.json', receipt)
     try:
         if source_cleanup is not None:
@@ -252,14 +255,29 @@ def run(output, working, *, started, root=ROOT, mode='live', internal_seconds=33
     receipt['elapsed_seconds'] = time.monotonic() - started
     if receipt['elapsed_seconds'] >= internal_seconds:
         receipt['error'] = receipt['error'] or 'first-cell hard deadline exceeded during finalization'
-    receipt['lifecycle_finalized'] = True
-    control.save('notebook-cost.json', receipt)
-    # The certification write is charged too. Emergency failure recording is allowed after an overrun.
-    finalized = time.monotonic() - started
-    receipt['elapsed_seconds'] = finalized
-    if finalized >= internal_seconds:
-        receipt['error'] = receipt['error'] or 'first-cell hard deadline exceeded during final evidence write'
-        control.save('notebook-cost.json', receipt)
+    try:
+        # Handled cutoff/interrupt signals are replayed inside this try, after the write and checks.
+        with defer_startup_signals():
+            receipt['lifecycle_finalized'] = True
+            control.save('notebook-cost.json', receipt)
+            receipt['elapsed_seconds'] = time.monotonic() - started
+            if receipt['elapsed_seconds'] >= internal_seconds:
+                raise TimeoutError('first-cell hard deadline exceeded during final evidence write')
+            if receipt['error'] is None:
+                pending.unlink()
+                # Removing the barrier is charged too; any interruption/overrun revokes certification.
+                receipt['elapsed_seconds'] = time.monotonic() - started
+                if receipt['elapsed_seconds'] >= internal_seconds:
+                    raise TimeoutError('first-cell hard deadline exceeded during finalization commit')
+    except BaseException as exc:
+        receipt['lifecycle_finalized'] = False
+        receipt['elapsed_seconds'] = time.monotonic() - started
+        receipt['error'] = receipt['error'] or 'finalization: ' + type(exc).__name__ + ': ' + str(exc)[:192]
+        with defer_startup_signals():
+            # Invalidate first, before emergency writes: failed storage must not leave a passing receipt.
+            (output / 'control/notebook-cost.json').unlink(missing_ok=True)
+            control.save('finalization-pending.json', {'scope': 'first_cell_finalization', 'pending': True})
+            control.save('notebook-cost.json', receipt)
     return receipt
 
 

@@ -1,0 +1,78 @@
+{
+ "evidence_class": "scripted_cpu_checks_not_model_performance",
+ "executable": "/home/jingjing/t1-run/install-check-2/game/venv/bin/python",
+ "gpu_used": false,
+ "label": "finalization-afc34ca-final-regressions",
+ "launch_authorized": false,
+ "model_calls": 0,
+ "packages": {
+  "arc-agi": "0.9.8",
+  "arcengine": "0.9.3",
+  "numpy": "2.4.4",
+  "tokenizers": null,
+  "torch": null,
+  "transformers": null,
+  "vllm": null,
+  "xgrammar": null
+ },
+ "passed": false,
+ "provider_calls": 0,
+ "python": "3.12.3",
+ "rehearsal_environment": {
+  "FA1_FORMS": "/home/jingjing/t1-run/forms-r2.json",
+  "FA1_REHEARSAL_COMPETITION": "/home/jingjing/t1-run/competition",
+  "FA1_REHEARSAL_GAME_PYTHON": "/home/jingjing/t1-run/install-check-2/game/venv/bin/python",
+  "FA1_REHEARSAL_GRAMMAR": "1",
+  "FA1_REHEARSAL_MODEL_PYTHON": "/home/jingjing/t1-run/install-check-2/model/venv/bin/python",
+  "FA1_REHEARSAL_TOKENIZER": "/mnt/c/Users/jjzzw/Desktop/AGI/.cache/phase4-tokenizer"
+ },
+ "schema": "feedback_action_v1_cpu_checks_v1",
+ "suites": [
+  "tests.test_feedback_action_v1_finalization"
+ ],
+ "summary": {
+  "errors": 0,
+  "failures": 6,
+  "run": 6,
+  "seconds": 128.2,
+  "skipped": 0
+ },
+ "tests": [
+  {
+   "detail": "nds': [11.196, 11.574, 10.903], 'call_seconds_total': 10.127, 'call_seconds_max': 0.355155}, 'candidate': {'calls': 72, 'prompt_tokens': 1843395, 'completion_tokens': 9418, 'episode_seconds': [11.896, 13.064, 12.146], 'call_seconds_total': 13.068, 'call_seconds_max': 0.304506}}, 'interpretation': 'the candidate arm is a bundled treatment (procedure, hypothesis block, carried statements, 640-token completion cap); a difference cannot be attributed to one component'}, 'technically_complete': True, 'exact_provider_billed_seconds': None, 'phase4_complete': False, 'session': 1, 'attempt_id': None}\n",
+   "outcome": "failed",
+   "seconds": 127.96,
+   "test": "tests.test_feedback_action_v1_finalization.ConnectedFinalization.test_interrupted_connected_evidence_cannot_permit_session_two"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-finalization-interruption/baseline-afc34ca/tests/test_feedback_action_v1_finalization.py\", line 95, in test_barrier_removal_crossing_deadline_revokes_certification\n    self.assertIsNotNone(result['error'])\nAssertionError: unexpectedly None\n",
+   "outcome": "failed",
+   "seconds": 0.05,
+   "test": "tests.test_feedback_action_v1_finalization.FinalizationInterruption.test_barrier_removal_crossing_deadline_revokes_certification"
+  },
+  {
+   "detail": "hub-review/track1-finalization-interruption/baseline-afc34ca/tests/test_feedback_action_v1_finalization.py\", line 106, in test_failed_emergency_write_keeps_pending_barrier\n    self.exercise('storage_failure')\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-finalization-interruption/baseline-afc34ca/tests/test_feedback_action_v1_finalization.py\", line 76, in exercise\n    self.assertTrue(pending or saved.get('error') is not None or saved.get('lifecycle_finalized') is not True,\nAssertionError: False is not true : interrupted over-budget certification retained a passing receipt\n",
+   "outcome": "failed",
+   "seconds": 0.05,
+   "test": "tests.test_feedback_action_v1_finalization.FinalizationInterruption.test_failed_emergency_write_keeps_pending_barrier"
+  },
+  {
+   "detail": "he/github-review/track1-finalization-interruption/baseline-afc34ca/tests/test_feedback_action_v1_finalization.py\", line 100, in test_keyboard_interrupt_after_certification_write\n    self.exercise('interrupt')\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-finalization-interruption/baseline-afc34ca/tests/test_feedback_action_v1_finalization.py\", line 76, in exercise\n    self.assertTrue(pending or saved.get('error') is not None or saved.get('lifecycle_finalized') is not True,\nAssertionError: False is not true : interrupted over-budget certification retained a passing receipt\n",
+   "outcome": "failed",
+   "seconds": 0.05,
+   "test": "tests.test_feedback_action_v1_finalization.FinalizationInterruption.test_keyboard_interrupt_after_certification_write"
+  },
+  {
+   "detail": "esktop/AGI/.cache/github-review/track1-finalization-interruption/baseline-afc34ca/tests/test_feedback_action_v1_finalization.py\", line 110, in test_signal_after_certification_write\n    self.exercise('signal')\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-finalization-interruption/baseline-afc34ca/tests/test_feedback_action_v1_finalization.py\", line 76, in exercise\n    self.assertTrue(pending or saved.get('error') is not None or saved.get('lifecycle_finalized') is not True,\nAssertionError: False is not true : interrupted over-budget certification retained a passing receipt\n",
+   "outcome": "failed",
+   "seconds": 0.04,
+   "test": "tests.test_feedback_action_v1_finalization.FinalizationInterruption.test_signal_after_certification_write"
+  },
+  {
+   "detail": "/.cache/github-review/track1-finalization-interruption/baseline-afc34ca/tests/test_feedback_action_v1_finalization.py\", line 103, in test_system_exit_after_certification_write\n    self.exercise('system_exit')\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-finalization-interruption/baseline-afc34ca/tests/test_feedback_action_v1_finalization.py\", line 76, in exercise\n    self.assertTrue(pending or saved.get('error') is not None or saved.get('lifecycle_finalized') is not True,\nAssertionError: False is not true : interrupted over-budget certification retained a passing receipt\n",
+   "outcome": "failed",
+   "seconds": 0.04,
+   "test": "tests.test_feedback_action_v1_finalization.FinalizationInterruption.test_system_exit_after_certification_write"
+  }
+ ]
+}

@@ -1,0 +1,17 @@
+test_interrupted_connected_evidence_cannot_permit_session_two (tests.test_feedback_action_v1_finalization.ConnectedFinalization.test_interrupted_connected_evidence_cannot_permit_session_two) ... ok
+test_barrier_removal_crossing_deadline_revokes_certification (tests.test_feedback_action_v1_finalization.FinalizationInterruption.test_barrier_removal_crossing_deadline_revokes_certification) ... ok
+test_failed_emergency_write_keeps_pending_barrier (tests.test_feedback_action_v1_finalization.FinalizationInterruption.test_failed_emergency_write_keeps_pending_barrier) ... ok
+test_keyboard_interrupt_after_certification_write (tests.test_feedback_action_v1_finalization.FinalizationInterruption.test_keyboard_interrupt_after_certification_write) ... ok
+test_signal_after_certification_write (tests.test_feedback_action_v1_finalization.FinalizationInterruption.test_signal_after_certification_write) ... ok
+test_system_exit_after_certification_write (tests.test_feedback_action_v1_finalization.FinalizationInterruption.test_system_exit_after_certification_write) ... ok
+test_signal_before_assignment_is_deferred_until_registration (tests.test_feedback_action_v1_review_gaps.StartupOwnership.test_signal_before_assignment_is_deferred_until_registration) ... ok
+test_signal_before_group_registration_cleans_real_child (tests.test_feedback_action_v1_review_gaps.StartupOwnership.test_signal_before_group_registration_cleans_real_child) ... ok
+test_thread_start_interruption_cleans_real_child (tests.test_feedback_action_v1_review_gaps.StartupOwnership.test_thread_start_interruption_cleans_real_child) ... ok
+test_uncertain_spawn_never_claims_group_absence (tests.test_feedback_action_v1_review_gaps.StartupOwnership.test_uncertain_spawn_never_claims_group_absence) ... ok
+test_evidence_write_crossing_deadline_fails (tests.test_feedback_action_v1_review_gaps.FinalDeadline.test_evidence_write_crossing_deadline_fails) ... ok
+test_source_removal_is_charged_before_passing_verdict (tests.test_feedback_action_v1_review_gaps.FinalDeadline.test_source_removal_is_charged_before_passing_verdict) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 145.351s
+
+OK

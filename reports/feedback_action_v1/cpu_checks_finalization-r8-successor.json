@@ -1,0 +1,212 @@
+{
+ "evidence_class": "scripted_cpu_checks_not_model_performance",
+ "executable": "/home/jingjing/t1-run/install-check-2/game/venv/bin/python",
+ "gpu_used": false,
+ "label": "finalization-r8-successor",
+ "launch_authorized": false,
+ "model_calls": 0,
+ "packages": {
+  "arc-agi": "0.9.8",
+  "arcengine": "0.9.3",
+  "numpy": "2.4.4",
+  "tokenizers": null,
+  "torch": null,
+  "transformers": null,
+  "vllm": null,
+  "xgrammar": null
+ },
+ "passed": true,
+ "provider_calls": 0,
+ "python": "3.12.3",
+ "rehearsal_environment": {
+  "FA1_FORMS": "/home/jingjing/t1-run/forms-r2.json",
+  "FA1_REHEARSAL_COMPETITION": "/home/jingjing/t1-run/competition",
+  "FA1_REHEARSAL_GAME_PYTHON": "/home/jingjing/t1-run/install-check-2/game/venv/bin/python",
+  "FA1_REHEARSAL_GRAMMAR": "1",
+  "FA1_REHEARSAL_MODEL_PYTHON": "/home/jingjing/t1-run/install-check-2/model/venv/bin/python",
+  "FA1_REHEARSAL_TOKENIZER": "/mnt/c/Users/jjzzw/Desktop/AGI/.cache/phase4-tokenizer"
+ },
+ "schema": "feedback_action_v1_cpu_checks_v1",
+ "suites": [
+  "tests.test_feedback_action_v1_successor"
+ ],
+ "summary": {
+  "errors": 0,
+  "failures": 0,
+  "run": 34,
+  "seconds": 183.6,
+  "skipped": 0
+ },
+ "tests": [
+  {
+   "outcome": "passed",
+   "seconds": 0.43,
+   "test": "tests.test_feedback_action_v1_successor.Derivations.test_gate_notebook_launch_derived_from_the_verified_runtime"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.1,
+   "test": "tests.test_feedback_action_v1_successor.Derivations.test_harness_derived_from_action_effect_history_v1"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 3.49,
+   "test": "tests.test_feedback_action_v1_successor.Derivations.test_outdated_bindings_are_gone_from_the_live_path"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.03,
+   "test": "tests.test_feedback_action_v1_successor.Derivations.test_verified_controller_files_are_byte_identical"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 8.5,
+   "test": "tests.test_feedback_action_v1_successor.ImportClosure.test_every_embedded_file_exists_and_is_regular"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.85,
+   "test": "tests.test_feedback_action_v1_successor.ImportClosure.test_first_cell_is_standard_library_only"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 1.34,
+   "test": "tests.test_feedback_action_v1_successor.ImportClosure.test_first_cell_modules_import_here"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 3.33,
+   "test": "tests.test_feedback_action_v1_successor.ImportClosure.test_interpreters_never_import_the_other_side"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 15.27,
+   "test": "tests.test_feedback_action_v1_successor.LiveGate.test_launch_tooling_refuses_and_writes_nothing"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 14.56,
+   "test": "tests.test_feedback_action_v1_successor.LiveGate.test_live_path_refuses_in_this_checkout"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.01,
+   "test": "tests.test_feedback_action_v1_successor.LiveGate.test_no_approval_authorization_or_reservation_record_exists"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.01,
+   "test": "tests.test_feedback_action_v1_successor.LiveGate.test_session_two_requires_an_evaluated_permitting_session_one"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.01,
+   "test": "tests.test_feedback_action_v1_successor.OwnerGateOptions.test_ascii_only_schema_keeps_the_bound_inside_the_pattern"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.06,
+   "test": "tests.test_feedback_action_v1_successor.OwnerGateOptions.test_f5_floor_option"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.01,
+   "test": "tests.test_feedback_action_v1_successor.OwnerGateOptions.test_invalid_decision_values_are_refused"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 2.52,
+   "test": "tests.test_feedback_action_v1_successor.ReviewSnapshot.test_a_deleted_source_and_its_binding_are_refused_by_the_gate"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.01,
+   "test": "tests.test_feedback_action_v1_successor.ReviewSnapshot.test_closure_refuses_missing_repository_modules_but_not_attribute_imports"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 9.65,
+   "test": "tests.test_feedback_action_v1_successor.ReviewSnapshot.test_evaluator_review_check_imports_no_runner_policy_or_adapter"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.03,
+   "test": "tests.test_feedback_action_v1_successor.ReviewSnapshot.test_metadata_is_gpu_disabled_and_pinned"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 70.28,
+   "test": "tests.test_feedback_action_v1_successor.ReviewSnapshot.test_newest_revision_and_retained_history"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 13.92,
+   "test": "tests.test_feedback_action_v1_successor.ReviewSnapshot.test_review_documents_are_verified_and_drift_is_refused"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 26.77,
+   "test": "tests.test_feedback_action_v1_successor.ReviewSnapshot.test_snapshot_binds_every_embedded_source_and_reproduces"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.1,
+   "test": "tests.test_feedback_action_v1_successor.RuntimeBinding.test_bound_to_the_verified_runtime"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.02,
+   "test": "tests.test_feedback_action_v1_successor.RuntimeBinding.test_competition_mount_layouts"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.03,
+   "test": "tests.test_feedback_action_v1_successor.RuntimeBinding.test_game_lock_is_exactly_the_frozen_competition_wheels"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.23,
+   "test": "tests.test_feedback_action_v1_successor.RuntimeBinding.test_installation_never_inherits_the_notebook_matplotlib_backend"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.09,
+   "test": "tests.test_feedback_action_v1_successor.RuntimeBinding.test_lifecycle_agrees_with_the_experiment_protocol"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.06,
+   "test": "tests.test_feedback_action_v1_successor.RuntimeBinding.test_prefix_caching_disabled_exactly_once"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.02,
+   "test": "tests.test_feedback_action_v1_successor.RuntimeBinding.test_private_bindings_stay_placeholders"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.02,
+   "test": "tests.test_feedback_action_v1_successor.RuntimeBinding.test_server_log_must_confirm_prefix_caching_disabled"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.02,
+   "test": "tests.test_feedback_action_v1_successor.ScienceUnchanged.test_prompts_arms_schemas_schedule_scoring_are_byte_identical"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.03,
+   "test": "tests.test_feedback_action_v1_successor.ScienceUnchanged.test_recorded_owner_gates_change_exactly_the_candidate_schema_and_f5"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 1.25,
+   "test": "tests.test_feedback_action_v1_successor.ServerGroupCleanup.test_an_unsafe_record_is_never_signalled"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 10.54,
+   "test": "tests.test_feedback_action_v1_successor.ServerGroupCleanup.test_supervisor_stops_a_recorded_server_group_that_ignores_sigterm"
+  }
+ ]
+}

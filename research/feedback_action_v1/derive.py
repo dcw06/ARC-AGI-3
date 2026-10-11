@@ -571,6 +571,48 @@ LAUNCH_SUPERVISOR = '''def run_supervisor(output, working, game_python, model_py
 
 '''
 
+LAUNCH_FINALIZATION = '''    # A durable barrier makes even a replaced success receipt provisional.
+    # Only a completed, bounded transaction may remove it. The evaluator checks it independently.
+    from certification.direct_publisher_smoke_v1.server import defer_startup_signals
+    pending = control.save('finalization-pending.json', {'scope': 'first_cell_finalization', 'pending': True})
+    receipt.update(lifecycle_finalized=False, extracted_source_removed=None, finalization_guard_version=1)
+    control.save('notebook-cost.json', receipt)
+    try:
+        if source_cleanup is not None:
+            source_cleanup()
+            receipt['extracted_source_removed'] = True
+    except BaseException as exc:
+        receipt['extracted_source_removed'] = False
+        receipt['error'] = receipt['error'] or 'source cleanup: ' + type(exc).__name__
+    receipt['elapsed_seconds'] = time.monotonic() - started
+    if receipt['elapsed_seconds'] >= internal_seconds:
+        receipt['error'] = receipt['error'] or 'first-cell hard deadline exceeded during finalization'
+    try:
+        # Handled cutoff/interrupt signals are replayed inside this try, after the write and checks.
+        with defer_startup_signals():
+            receipt['lifecycle_finalized'] = True
+            control.save('notebook-cost.json', receipt)
+            receipt['elapsed_seconds'] = time.monotonic() - started
+            if receipt['elapsed_seconds'] >= internal_seconds:
+                raise TimeoutError('first-cell hard deadline exceeded during final evidence write')
+            if receipt['error'] is None:
+                pending.unlink()
+                # Removing the barrier is charged too; any interruption/overrun revokes certification.
+                receipt['elapsed_seconds'] = time.monotonic() - started
+                if receipt['elapsed_seconds'] >= internal_seconds:
+                    raise TimeoutError('first-cell hard deadline exceeded during finalization commit')
+    except BaseException as exc:
+        receipt['lifecycle_finalized'] = False
+        receipt['elapsed_seconds'] = time.monotonic() - started
+        receipt['error'] = receipt['error'] or 'finalization: ' + type(exc).__name__ + ': ' + str(exc)[:192]
+        with defer_startup_signals():
+            # Invalidate first, before emergency writes: failed storage must not leave a passing receipt.
+            (output / 'control/notebook-cost.json').unlink(missing_ok=True)
+            control.save('finalization-pending.json', {'scope': 'first_cell_finalization', 'pending': True})
+            control.save('notebook-cost.json', receipt)
+    return receipt
+'''
+
 LAUNCH = (
     ('"""First-cell lifecycle for the action-effect-history comparison (live needs separate reviewed authority)."""',
      '"""First-cell lifecycle for one feedback-action v1 session on the verified runtime (successor runtime v1; live\n'
@@ -659,7 +701,7 @@ LAUNCH = (
     (('def run_supervisor(', 'def install_pair('), LAUNCH_SUPERVISOR, 'block'),
     ("fault='none', session=None):\n", "fault='none', session=None, source_cleanup=None):\n", 1),
     ("    except Exception as exc:\n        error = type(exc).__name__ + ': ' + str(exc)[:256]\n", "    except BaseException as exc:\n        error = type(exc).__name__ + ': ' + str(exc)[:256]\n", 1),
-    ("    control.save('notebook-cost.json', receipt)\n    return receipt\n", "    # First retain a provisional receipt; a partial write can never certify completion.\n    receipt.update(lifecycle_finalized=False, extracted_source_removed=None)\n    control.save('notebook-cost.json', receipt)\n    try:\n        if source_cleanup is not None:\n            source_cleanup()\n            receipt['extracted_source_removed'] = True\n    except BaseException as exc:\n        receipt['extracted_source_removed'] = False\n        receipt['error'] = receipt['error'] or 'source cleanup: ' + type(exc).__name__\n    receipt['elapsed_seconds'] = time.monotonic() - started\n    if receipt['elapsed_seconds'] >= internal_seconds:\n        receipt['error'] = receipt['error'] or 'first-cell hard deadline exceeded during finalization'\n    receipt['lifecycle_finalized'] = True\n    control.save('notebook-cost.json', receipt)\n    # The certification write is charged too. Emergency failure recording is allowed after an overrun.\n    finalized = time.monotonic() - started\n    receipt['elapsed_seconds'] = finalized\n    if finalized >= internal_seconds:\n        receipt['error'] = receipt['error'] or 'first-cell hard deadline exceeded during final evidence write'\n        control.save('notebook-cost.json', receipt)\n    return receipt\n", 1),
+    ("    control.save('notebook-cost.json', receipt)\n    return receipt\n", LAUNCH_FINALIZATION, 1),
     ("    if mode == 'live':\n        from research.feedback_action_v1.live.authority import require\n        require(source)\n", "    import shutil\n    remove_source = lambda: shutil.rmtree(source)\n    if mode == 'live':\n        from research.feedback_action_v1.live.authority import require\n        require(source)\n", 1),
     ("started=started, root=source, mode='live')", "started=started, root=source, mode='live', source_cleanup=remove_source)", 1),
     ("session=int(os.environ.get('FA1_REHEARSAL_SESSION', '1')))\n", "session=int(os.environ.get('FA1_REHEARSAL_SESSION', '1')), source_cleanup=remove_source)\n", 1),
@@ -685,7 +727,7 @@ EVALUATE_RUNTIME = '''    if mode == 'live':  # successor-runtime evidence: inst
 '''
 
 EVALUATE = (
-    ("    trees = cost.get('dependency_trees_removed')\n", "    if (cost.get('lifecycle_finalized') is not True\n            or (mode == 'live' and cost.get('extracted_source_removed') is not True)):\n        lifecycle.append('lifecycle finalization/source removal not certified')\n    trees = cost.get('dependency_trees_removed')\n", 1),
+    ("    trees = cost.get('dependency_trees_removed')\n", "    if (cost.get('finalization_guard_version') != 1\n            or (output / 'control/finalization-pending.json').exists()\n            or (output / 'control/finalization-pending.json').is_symlink()\n            or cost.get('lifecycle_finalized') is not True\n            or (mode == 'live' and cost.get('extracted_source_removed') is not True)):\n        lifecycle.append('lifecycle finalization/source removal not certified')\n    trees = cost.get('dependency_trees_removed')\n", 1),
     ("            'exact_provider_billed_seconds': None, 'phase4_complete': False}\n",
      "            'exact_provider_billed_seconds': None, 'phase4_complete': False,\n"
      "            'session': outer.get('session'), 'attempt_id': cost.get('attempt_id')}\n", 1),
