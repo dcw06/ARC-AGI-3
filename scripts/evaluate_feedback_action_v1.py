@@ -59,6 +59,9 @@ def evaluate_output(output, *, mode='live', rehearsal_seconds=None):
     except Exception as exc:
         lifecycle.append('ownership evidence: ' + type(exc).__name__ + ': ' + str(exc)[:80])
     # Notebook finalization receipt.
+    if (cost.get('lifecycle_finalized') is not True
+            or (mode == 'live' and cost.get('extracted_source_removed') is not True)):
+        lifecycle.append('lifecycle finalization/source removal not certified')
     trees = cost.get('dependency_trees_removed')
     if (cost.get('error') is not None or cost.get('study_status') != 'study_complete_pending_independent_evaluation'
             or cost.get('first_cell_cleanup_verified') is not True

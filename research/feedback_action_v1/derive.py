@@ -476,6 +476,100 @@ LAUNCH_INSTALL = '''def install_pair(root, rootdir, output, bundle, mount, deadl
 
 def run(output, working, *, started'''
 
+LAUNCH_SUPERVISOR = '''def run_supervisor(output, working, game_python, model_python, games, *, started, mode, internal_seconds,
+                   session, fault='none', root=ROOT, spawn=subprocess.Popen):
+    """Protect startup ownership and retain cleanup even if startup or logging is interrupted."""
+    from certification.direct_publisher_smoke_v1.server import defer_startup_signals
+    root, output = Path(root), Path(output)
+    log, control = EvidenceStore(output, 'logs'), EvidenceStore(output, 'control')
+    errors, retained, cleanup = [], bytearray(), {}
+    process, thread, ownership = None, None, 'never_spawned'
+    command = [str(game_python), '-m', 'research.feedback_action_v1.live.supervisor', '--output', str(output),
+               '--working', str(working), '--game-python', str(game_python), '--model-python', str(model_python),
+               '--environments', str(games), '--started', str(started), '--mode', mode,
+               '--internal-seconds', str(internal_seconds), '--session', str(session), '--fault', fault]
+    env = dict(os.environ)
+    for key in ('PYTHONHOME', 'VIRTUAL_ENV'):
+        env.pop(key, None)
+    if mode == 'live':
+        env.pop('PYTHONPATH', None)
+    else:
+        env['PYTHONPATH'] = str(root)
+    env['PYTHONNOUSERSITE'], env['MPLBACKEND'] = '1', 'Agg'
+
+    def drain():
+        try:
+            while chunk := process.stdout.read(4096):
+                if len(retained) + len(chunk) > 3 * 1024**2:
+                    raise ValueError('supervisor log evidence exhausted')
+                retained.extend(chunk)
+                log.write('supervisor.json', bytes(retained))
+        except Exception as exc:
+            errors.append(type(exc).__name__ + ': ' + str(exc)[:200])
+        finally:
+            process.stdout.close()
+
+    try:
+        with defer_startup_signals():
+            ownership = 'uncertain'  # entering Popen does not prove that no child was created
+            process = spawn(command, cwd=root, env=env, start_new_session=True,
+                            stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            # start_new_session fixes ownership to this PID, including a leader that exits early.
+            cleanup[str(process.pid)] = False
+            ownership = 'registered'
+        thread = threading.Thread(target=drain, daemon=True)
+        thread.start()
+        while process.poll() is None:
+            if errors:
+                raise RuntimeError('supervisor log retention failed: ' + errors[0])
+            if time.monotonic() >= started + internal_seconds - 5:
+                raise TimeoutError('first-cell supervisor deadline')
+            time.sleep(.05)
+    finally:
+        # Handled signals cannot skip a kill, reap or receipt during emergency cleanup.
+        with defer_startup_signals():
+            if process is not None:
+                groups = [process.pid]
+                try:
+                    groups = _owned_groups(output, process.pid)
+                except BaseException as exc:
+                    errors.append('ownership evidence: ' + type(exc).__name__)
+                for pgid in groups:
+                    try:
+                        cleanup[str(pgid)] = _stop_group(pgid)
+                    except BaseException as exc:
+                        cleanup[str(pgid)] = type(exc).__name__ + ': ' + str(exc)[:128]
+                        try:
+                            os.killpg(pgid, signal.SIGKILL)
+                            cleanup[str(pgid)] = _group_exited(pgid)
+                        except BaseException:
+                            pass
+                try:
+                    process.wait(timeout=5)
+                except BaseException as exc:
+                    errors.append('supervisor reap: ' + type(exc).__name__)
+                if thread is not None and thread.ident is not None:
+                    thread.join(timeout=3)
+                elif process.stdout is not None:
+                    process.stdout.close()
+            absent = ownership == 'never_spawned' or (ownership == 'registered' and bool(cleanup)
+                                                      and all(v is True for v in cleanup.values()))
+            if ownership == 'uncertain':
+                errors.append('spawn ownership uncertain; group absence cannot be verified')
+            drained = thread is None or not thread.is_alive()
+            control.save('first-cell-supervisor-cleanup.json', {
+                'ownership': ownership, 'groups': cleanup, 'groups_absent': absent, 'drain_finished': drained,
+                'returncode': process.returncode if process else None, 'errors': errors})
+    report_path = output / 'control/outer.json'
+    if report_path.is_symlink() or not report_path.is_file() or report_path.stat().st_size > 65536:
+        raise RuntimeError('missing or oversized supervisor report')
+    report = json.loads(report_path.read_bytes())
+    report['first_cell_cleanup_verified'] = absent and drained and not errors
+    return report
+
+
+'''
+
 LAUNCH = (
     ('"""First-cell lifecycle for the action-effect-history comparison (live needs separate reviewed authority)."""',
      '"""First-cell lifecycle for one feedback-action v1 session on the verified runtime (successor runtime v1; live\n'
@@ -561,6 +655,14 @@ LAUNCH = (
     ("                      fault=os.environ.get('FA1_REHEARSAL_FAULT', 'none'))\n",
      "                      fault=os.environ.get('FA1_REHEARSAL_FAULT', 'none'),\n"
      "                      session=int(os.environ.get('FA1_REHEARSAL_SESSION', '1')))\n", 1),
+    (('def run_supervisor(', 'def install_pair('), LAUNCH_SUPERVISOR, 'block'),
+    ("fault='none', session=None):\n", "fault='none', session=None, source_cleanup=None):\n", 1),
+    ("    except Exception as exc:\n        error = type(exc).__name__ + ': ' + str(exc)[:256]\n", "    except BaseException as exc:\n        error = type(exc).__name__ + ': ' + str(exc)[:256]\n", 1),
+    ("    control.save('notebook-cost.json', receipt)\n    return receipt\n", "    # First retain a provisional receipt; a partial write can never certify completion.\n    receipt.update(lifecycle_finalized=False, extracted_source_removed=None)\n    control.save('notebook-cost.json', receipt)\n    try:\n        if source_cleanup is not None:\n            source_cleanup()\n            receipt['extracted_source_removed'] = True\n    except BaseException as exc:\n        receipt['extracted_source_removed'] = False\n        receipt['error'] = receipt['error'] or 'source cleanup: ' + type(exc).__name__\n    receipt['elapsed_seconds'] = time.monotonic() - started\n    if receipt['elapsed_seconds'] >= internal_seconds:\n        receipt['error'] = receipt['error'] or 'first-cell hard deadline exceeded during finalization'\n    receipt['lifecycle_finalized'] = True\n    control.save('notebook-cost.json', receipt)\n    # The certification write is charged too. Emergency failure recording is allowed after an overrun.\n    finalized = time.monotonic() - started\n    receipt['elapsed_seconds'] = finalized\n    if finalized >= internal_seconds:\n        receipt['error'] = receipt['error'] or 'first-cell hard deadline exceeded during final evidence write'\n        control.save('notebook-cost.json', receipt)\n    return receipt\n", 1),
+    ("    if mode == 'live':\n        from research.feedback_action_v1.live.authority import require\n        require(source)\n", "    import shutil\n    remove_source = lambda: shutil.rmtree(source)\n    if mode == 'live':\n        from research.feedback_action_v1.live.authority import require\n        require(source)\n", 1),
+    ("started=started, root=source, mode='live')", "started=started, root=source, mode='live', source_cleanup=remove_source)", 1),
+    ("session=int(os.environ.get('FA1_REHEARSAL_SESSION', '1')))\n", "session=int(os.environ.get('FA1_REHEARSAL_SESSION', '1')), source_cleanup=remove_source)\n", 1),
+
 )
 
 EVALUATE_RUNTIME = '''    if mode == 'live':  # successor-runtime evidence: installation, the model server's own group, prefix caching
@@ -582,6 +684,7 @@ EVALUATE_RUNTIME = '''    if mode == 'live':  # successor-runtime evidence: inst
 '''
 
 EVALUATE = (
+    ("    trees = cost.get('dependency_trees_removed')\n", "    if (cost.get('lifecycle_finalized') is not True\n            or (mode == 'live' and cost.get('extracted_source_removed') is not True)):\n        lifecycle.append('lifecycle finalization/source removal not certified')\n    trees = cost.get('dependency_trees_removed')\n", 1),
     ("            'exact_provider_billed_seconds': None, 'phase4_complete': False}\n",
      "            'exact_provider_billed_seconds': None, 'phase4_complete': False,\n"
      "            'session': outer.get('session'), 'attempt_id': cost.get('attempt_id')}\n", 1),

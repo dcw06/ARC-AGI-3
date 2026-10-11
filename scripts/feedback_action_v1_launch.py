@@ -60,10 +60,12 @@ def _owned_groups(output, supervisor_pid):
 
 def run_supervisor(output, working, game_python, model_python, games, *, started, mode, internal_seconds,
                    session, fault='none', root=ROOT, spawn=subprocess.Popen):
-    """Own the supervisor's session and every group it records; verify all are gone."""
+    """Protect startup ownership and retain cleanup even if startup or logging is interrupted."""
+    from certification.direct_publisher_smoke_v1.server import defer_startup_signals
     root, output = Path(root), Path(output)
     log, control = EvidenceStore(output, 'logs'), EvidenceStore(output, 'control')
-    errors, retained = [], bytearray()
+    errors, retained, cleanup = [], bytearray(), {}
+    process, thread, ownership = None, None, 'never_spawned'
     command = [str(game_python), '-m', 'research.feedback_action_v1.live.supervisor', '--output', str(output),
                '--working', str(working), '--game-python', str(game_python), '--model-python', str(model_python),
                '--environments', str(games), '--started', str(started), '--mode', mode,
@@ -75,9 +77,7 @@ def run_supervisor(output, working, game_python, model_python, games, *, started
         env.pop('PYTHONPATH', None)
     else:
         env['PYTHONPATH'] = str(root)
-    env['PYTHONNOUSERSITE'] = '1'
-    env['MPLBACKEND'] = 'Agg'
-    process = spawn(command, cwd=root, env=env, start_new_session=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    env['PYTHONNOUSERSITE'], env['MPLBACKEND'] = '1', 'Agg'
 
     def drain():
         try:
@@ -91,10 +91,16 @@ def run_supervisor(output, working, game_python, model_python, games, *, started
         finally:
             process.stdout.close()
 
-    thread = threading.Thread(target=drain, daemon=True)
-    thread.start()
-    cleanup = {}
     try:
+        with defer_startup_signals():
+            ownership = 'uncertain'  # entering Popen does not prove that no child was created
+            process = spawn(command, cwd=root, env=env, start_new_session=True,
+                            stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            # start_new_session fixes ownership to this PID, including a leader that exits early.
+            cleanup[str(process.pid)] = False
+            ownership = 'registered'
+        thread = threading.Thread(target=drain, daemon=True)
+        thread.start()
         while process.poll() is None:
             if errors:
                 raise RuntimeError('supervisor log retention failed: ' + errors[0])
@@ -102,28 +108,45 @@ def run_supervisor(output, working, game_python, model_python, games, *, started
                 raise TimeoutError('first-cell supervisor deadline')
             time.sleep(.05)
     finally:
-        groups = [process.pid]
-        try:
-            groups = _owned_groups(output, process.pid)
-        except Exception as exc:
-            errors.append('ownership evidence: ' + type(exc).__name__)
-        for pgid in groups:
-            try:
-                cleanup[str(pgid)] = _stop_group(pgid)
-            except Exception as exc:
-                cleanup[str(pgid)] = type(exc).__name__ + ': ' + str(exc)[:128]
-        try:
-            process.wait(timeout=5)
-        except Exception as exc:
-            errors.append('supervisor reap: ' + type(exc).__name__)
-        thread.join(timeout=3)
-        control.save('first-cell-supervisor-cleanup.json', {'groups': cleanup, 'drain_finished': not thread.is_alive(),
-                                                            'returncode': process.returncode, 'errors': errors})
+        # Handled signals cannot skip a kill, reap or receipt during emergency cleanup.
+        with defer_startup_signals():
+            if process is not None:
+                groups = [process.pid]
+                try:
+                    groups = _owned_groups(output, process.pid)
+                except BaseException as exc:
+                    errors.append('ownership evidence: ' + type(exc).__name__)
+                for pgid in groups:
+                    try:
+                        cleanup[str(pgid)] = _stop_group(pgid)
+                    except BaseException as exc:
+                        cleanup[str(pgid)] = type(exc).__name__ + ': ' + str(exc)[:128]
+                        try:
+                            os.killpg(pgid, signal.SIGKILL)
+                            cleanup[str(pgid)] = _group_exited(pgid)
+                        except BaseException:
+                            pass
+                try:
+                    process.wait(timeout=5)
+                except BaseException as exc:
+                    errors.append('supervisor reap: ' + type(exc).__name__)
+                if thread is not None and thread.ident is not None:
+                    thread.join(timeout=3)
+                elif process.stdout is not None:
+                    process.stdout.close()
+            absent = ownership == 'never_spawned' or (ownership == 'registered' and bool(cleanup)
+                                                      and all(v is True for v in cleanup.values()))
+            if ownership == 'uncertain':
+                errors.append('spawn ownership uncertain; group absence cannot be verified')
+            drained = thread is None or not thread.is_alive()
+            control.save('first-cell-supervisor-cleanup.json', {
+                'ownership': ownership, 'groups': cleanup, 'groups_absent': absent, 'drain_finished': drained,
+                'returncode': process.returncode if process else None, 'errors': errors})
     report_path = output / 'control/outer.json'
     if report_path.is_symlink() or not report_path.is_file() or report_path.stat().st_size > 65536:
         raise RuntimeError('missing or oversized supervisor report')
     report = json.loads(report_path.read_bytes())
-    report['first_cell_cleanup_verified'] = not errors and not thread.is_alive() and all(v is True for v in cleanup.values())
+    report['first_cell_cleanup_verified'] = absent and drained and not errors
     return report
 
 
@@ -152,7 +175,7 @@ def install_pair(root, rootdir, output, bundle, mount, deadline):
             raise RuntimeError('installation process groups not verified absent')
 
 
-def run(output, working, *, started, root=ROOT, mode='live', internal_seconds=3300, fault='none', session=None):
+def run(output, working, *, started, root=ROOT, mode='live', internal_seconds=3300, fault='none', session=None, source_cleanup=None):
     """Installation, supervisor, evidence and cleanup all charged to `started`."""
     root, output = Path(root), Path(output)
     from research.feedback_action_v1.live.runtime import load as load_runtime
@@ -204,7 +227,7 @@ def run(output, working, *, started, root=ROOT, mode='live', internal_seconds=33
             model_python = os.environ.get('FA1_REHEARSAL_MODEL_PYTHON', sys.executable)
             report = run_supervisor(output, working, game_python, model_python, games, started=started, mode=mode,
                                     internal_seconds=internal_seconds, fault=fault, root=root, session=session)
-    except Exception as exc:
+    except BaseException as exc:
         error = type(exc).__name__ + ': ' + str(exc)[:256]
     elapsed = time.monotonic() - started
     if elapsed >= internal_seconds:
@@ -216,23 +239,45 @@ def run(output, working, *, started, root=ROOT, mode='live', internal_seconds=33
                'study_status': report['status'] if report else None,
                'first_cell_cleanup_verified': report.get('first_cell_cleanup_verified') if report else None,
                'provider_reconciliation_required': mode == 'live', 'phase4_complete': False}
+    # First retain a provisional receipt; a partial write can never certify completion.
+    receipt.update(lifecycle_finalized=False, extracted_source_removed=None)
     control.save('notebook-cost.json', receipt)
+    try:
+        if source_cleanup is not None:
+            source_cleanup()
+            receipt['extracted_source_removed'] = True
+    except BaseException as exc:
+        receipt['extracted_source_removed'] = False
+        receipt['error'] = receipt['error'] or 'source cleanup: ' + type(exc).__name__
+    receipt['elapsed_seconds'] = time.monotonic() - started
+    if receipt['elapsed_seconds'] >= internal_seconds:
+        receipt['error'] = receipt['error'] or 'first-cell hard deadline exceeded during finalization'
+    receipt['lifecycle_finalized'] = True
+    control.save('notebook-cost.json', receipt)
+    # The certification write is charged too. Emergency failure recording is allowed after an overrun.
+    finalized = time.monotonic() - started
+    receipt['elapsed_seconds'] = finalized
+    if finalized >= internal_seconds:
+        receipt['error'] = receipt['error'] or 'first-cell hard deadline exceeded during final evidence write'
+        control.save('notebook-cost.json', receipt)
     return receipt
 
 
 def notebook_entry(source, started, mode):
     """Called by the notebook cell after source extraction and hash verification."""
+    import shutil
+    remove_source = lambda: shutil.rmtree(source)
     if mode == 'live':
         from research.feedback_action_v1.live.authority import require
         require(source)
         working = Path('/kaggle/working')
-        receipt = run(working / OUTPUT_NAME, working, started=started, root=source, mode='live')
+        receipt = run(working / OUTPUT_NAME, working, started=started, root=source, mode='live', source_cleanup=remove_source)
     elif mode == 'rehearsal':
         working = Path(os.environ['FA1_REHEARSAL_WORKING'])
         receipt = run(working / OUTPUT_NAME, working, started=started, root=source, mode='rehearsal',
                       internal_seconds=int(os.environ.get('FA1_REHEARSAL_SECONDS', '600')),
                       fault=os.environ.get('FA1_REHEARSAL_FAULT', 'none'),
-                      session=int(os.environ.get('FA1_REHEARSAL_SESSION', '1')))
+                      session=int(os.environ.get('FA1_REHEARSAL_SESSION', '1')), source_cleanup=remove_source)
     else:
         raise ValueError('mode')
     if receipt['error'] or receipt['study_status'] != 'study_complete_pending_independent_evaluation':
