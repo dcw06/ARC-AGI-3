@@ -140,6 +140,11 @@ def validate_ready(ready, expected_artifact):
             or canary.get('response_sha256') != hashlib.sha256(raw).hexdigest()
             or audit.get('request_sha256') != request_hash(request)
             or type(audit.get('server_prompt_tokens')) is not int
+            or type(audit.get('tokenizer_prompt_tokens')) is not int
+            or not 0 < audit['server_prompt_tokens'] <= MAX_PROMPT_TOKENS
+            or type(audit.get('server_completion_tokens')) is not int
+            or not 0 < audit['server_completion_tokens'] <= MAX_COMPLETION_TOKENS
+            or audit['server_prompt_tokens'] + audit['server_completion_tokens'] > CONTEXT_TOKENS
             or audit.get('server_prompt_tokens') != audit.get('tokenizer_prompt_tokens')
             or audit.get('finish_reason') != 'stop'):
         raise ValueError('model bridge canary evidence')

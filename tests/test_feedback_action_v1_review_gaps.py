@@ -120,5 +120,24 @@ class FinalDeadline(unittest.TestCase):
             self.assertIsNotNone(saved['error'])
 
 
+class CanaryBounds(unittest.TestCase):
+    def test_independent_canary_enforces_types_and_frozen_caps(self):
+        from research.feedback_action_v1.live.fake_server import FakeServer
+        from research.feedback_action_v1.live.service import validate_ready
+        good = {'artifact': {'test': 'cpu'}, 'startup_seconds': 1,
+                'canary_audit': FakeServer().service.canary_audit}
+        validate_ready(good, good['artifact'])
+        mutations = [{'server_completion_tokens': n} for n in (129, 0, True, -1, 1.0)] + [
+            {'server_prompt_tokens': -1, 'tokenizer_prompt_tokens': -1},
+            {'server_prompt_tokens': 60001, 'tokenizer_prompt_tokens': 60001},
+            {'server_prompt_tokens': 1, 'tokenizer_prompt_tokens': True}]
+        for mutation in mutations:
+            with self.subTest(mutation=mutation):
+                bad = copy.deepcopy(good)
+                bad['canary_audit']['audit'].update(mutation)
+                with self.assertRaises(ValueError):
+                    validate_ready(bad, good['artifact'])
+
+
 if __name__ == '__main__':
     unittest.main()

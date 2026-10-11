@@ -184,6 +184,7 @@ SERVICE_VALIDATE = (
     '    return validate(request)\n')
 
 SERVICE = (
+    ("            or type(audit.get('server_prompt_tokens')) is not int\n", "            or type(audit.get('server_prompt_tokens')) is not int\n            or type(audit.get('tokenizer_prompt_tokens')) is not int\n            or not 0 < audit['server_prompt_tokens'] <= MAX_PROMPT_TOKENS\n            or type(audit.get('server_completion_tokens')) is not int\n            or not 0 < audit['server_completion_tokens'] <= MAX_COMPLETION_TOKENS\n            or audit['server_prompt_tokens'] + audit['server_completion_tokens'] > CONTEXT_TOKENS\n", 1),
     ('MAX_POLICY_CALLS = 144', 'MAX_POLICY_CALLS = 192  # one session: 6 episodes x 32 decision calls', 1),
     ('"""One canary, then at most 144 contract-checked policy calls; raw evidence returned for retention."""',
      '"""One canary, then at most 192 contract-checked policy calls; raw evidence returned for retention."""', 1),
