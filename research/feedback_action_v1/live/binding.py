@@ -19,6 +19,8 @@ GATES = PACKAGE + '/owner_gates.json'
 REVIEW_REQUIRED = (
     'reports/feedback_action_v1_protocol_v2_frozen.md',
     'research/feedback_action_v1/live_evaluation.py',
+    'research/feedback_action_v1/replay.py',
+    'research/feedback_action_v1/replay_contract.json',
     'research/feedback_action_v1/evaluate.py',
     'research/transition_evidence_v1/reference.py',
     'scripts/evaluate_feedback_action_v1.py',

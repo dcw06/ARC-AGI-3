@@ -162,13 +162,20 @@ def trajectory(episode):
             'stop_reason': episode['stop_reason']}
 
 
-def replay_episode(episode, case, gates):
+def replay_episode(episode, case, gates, *, limits=None, contract=None):
     """Problems found replaying one episode from its retained bytes, plus the counts the report needs."""
     problems, arm, eid = [], episode['arm'], episode['episode_id']
     if case is None:
         return [f'{eid}: game outside the frozen cases'], {}
     if (episode.get('initial') or {}).get('canonical_hash') != case['initial_canonical_hash']:
         problems.append(f'{eid}: initial state differs from the frozen case')
+    if limits is not None and contract is not None:
+        from research.feedback_action_v1.replay import episode_problems
+        try:
+            problems += [f'{eid}: {p}' for p in episode_problems(
+                episode, case, gates, limits, contract, expected_statement)]
+        except (KeyError, IndexError, TypeError, ValueError) as exc:
+            problems.append(f'{eid}: observation/request reconstruction failed: {type(exc).__name__}: {exc}')
     for index, call in enumerate(episode['calls']):
         problems += [f'{eid}: {p}' for p in call_problems(call, arm, index)]
     steps = episode['steps']
@@ -281,6 +288,7 @@ def evaluate_session(run, *, session, mode='live', output=None, root=ROOT, lifec
                 'problems': ['session must be 1 or 2'], 'session_2_permitted': False, 'failure_rules': {}}
     cases = {c['game_id']: c for c in spec['cases']}
     review, problems = review_lock_status(root) if mode == 'live' else (None, [])
+    contract = json.loads((Path(root) / 'research/feedback_action_v1/replay_contract.json').read_bytes())
     if run.get('protocol_sha256') != canonical_digest(spec):
         problems.append('the run did not use the reviewed effective session spec')
     expected_episodes = [(p['pair_id'], arm) for p in spec['schedule'] for arm in p['order']]
@@ -298,7 +306,8 @@ def evaluate_session(run, *, session, mode='live', output=None, root=ROOT, lifec
     statements = {'checked': 0, 'available': 0, 'mismatched': 0}
     free_text_outside = 0
     for episode in run['episodes']:
-        eproblems, extra = replay_episode(episode, cases.get(episode['game_id']), gates)
+        eproblems, extra = replay_episode(episode, cases.get(episode['game_id']), gates,
+                                          limits=spec['limits'], contract=contract)
         problems += eproblems
         for k in statements:
             statements[k] += extra.get('statements', {}).get(k, 0)
@@ -335,8 +344,37 @@ def evaluate_session(run, *, session, mode='live', output=None, root=ROOT, lifec
     episodes_complete = (len(run['episodes']) == len(expected_episodes)
                          and all(e['status'] == 'complete' for e in run['episodes'])
                          and all((e.get('cleanup') or {}).get('closed') is True for e in run['episodes']))
+    totals = {'calls': sum(len(e['calls']) for e in run['episodes']),
+              'dispatches': sum(len(e['steps']) for e in run['episodes']),
+              'prompt_tokens': sum(c['server_prompt_tokens'] for e in run['episodes'] for c in e['calls']
+                                   if c.get('status') in ('valid', 'invalid_output')),
+              'completion_tokens': sum(c['server_completion_tokens'] for e in run['episodes'] for c in e['calls']
+                                       if c.get('status') in ('valid', 'invalid_output'))}
+    for name, total in totals.items():
+        if type(run.get(name)) is not int or run[name] != total:
+            problems.append(f'run aggregate {name} differs from retained events')
+    if totals['calls'] > spec['limits']['maximum_policy_calls'] or totals['dispatches'] > (
+            len(expected_episodes) * spec['limits']['actions_per_episode']):
+        problems.append('run exceeds the frozen call/action ceilings')
+    for frozen, pair in zip(spec['schedule'], run.get('pairs', [])):
+        if any(pair.get(k) != frozen[k] for k in ('pair_id', 'block', 'game_id', 'order')):
+            problems.append('pair identity differs from frozen schedule')
+        episodes = [e for e in run['episodes'] if e['pair_id'] == frozen['pair_id']]
+        for order, episode in enumerate(episodes):
+            if (episode.get('game_id') != frozen['game_id'] or episode.get('block') != frozen['block']
+                    or episode.get('order_in_pair') != order or order >= len(frozen['order'])
+                    or episode['episode_id'] != frozen['pair_id'] + '-' + episode['arm']):
+                problems.append('episode identity differs from frozen pair')
+        complete = len(episodes) == 2 and all(e['status'] == 'complete' for e in episodes)
+        if (pair.get('status') == 'complete') != complete or (pair.get('status') in ('not_admitted', 'not_started')
+                                                            and episodes):
+            problems.append('pair accounting differs from retained episodes')
+    if run.get('status') == 'complete' and (not episodes_complete or any(
+            p.get('status') != 'complete' for p in run.get('pairs', []))):
+        problems.append('run completion differs from reconstructed pair accounting')
     isolation_or_integrity = [p for p in problems if 'token audit' in p or 'request outside' in p
-                              or 'response bytes' in p or 'request hash' in p]
+                              or 'response bytes' in p or 'request hash' in p or 'reconstruction' in p
+                              or 'transition before' in p or 'transition after' in p]
     f4 = bool(isolation_or_integrity) or any('canary' in e or 'prefix' in e for e in lifecycle_errors) or bool(
         free_text_outside) or any('verify_history' in p or 'rebuild' in p for p in problems)
     rules = {
@@ -357,10 +395,13 @@ def evaluate_session(run, *, session, mode='live', output=None, root=ROOT, lifec
     pooled = {f'{game}|{arm}': EV.aggregate(rows) for (game, arm), rows in sorted(evaluations.items())}
     return {
         'version': 'feedback_action_v1_live_evaluation', 'session': session, 'mode': mode,
+        'run_sha256': canonical_digest(run), 'effective_spec_sha256': canonical_digest(spec),
+        'owner_gates_sha256': canonical_digest(gates), 'lifecycle_errors': list(lifecycle_errors),
         'run_status': run.get('status'), 'replay_passed': not problems, 'problems': problems[:50],
         'problem_count': len(problems), 'technical_validity': validity, 'failure_rules': rules,
         'stop_rules_fired': stop_rules, 'online_abort_recomputed': online,
-        'session_2_permitted': session == 1 and not stop_rules and (mode != 'live' or review is not None),
+        'session_2_permitted': session == 1 and validity == 'technically_complete' and not stop_rules
+        and (mode != 'live' or review is not None),
         'review_lock_verified': review,
         'carried_statements': statements, 'free_text_option': free_text_option(gates),
         'free_text_outside_option': free_text_outside,
@@ -376,11 +417,21 @@ def _levels(evaluation, game, arm):
                if e['game_id'] == game and e['arm'] == arm and 'metrics' in e)
 
 
-def evaluate_sessions(first, second, runs):
+def evaluate_sessions(first, second, runs, *, root=ROOT):
     """Pool two evaluated sessions (blocks 1 and 2) and apply protocol v2 section 9 and F2b. `runs` are the two
     verified run reports, used only for the per-episode decisions the pooled minimums need."""
     if first['session'] != 1 or second['session'] != 2:
         raise ValueError('sessions 1 and 2 required, in order')
+    if len(runs) != 2:
+        raise ValueError('exactly two input runs required')
+    for session, evaluation, run in zip((1, 2), (first, second), runs):
+        if evaluation.get('run_sha256') != canonical_digest(run):
+            raise ValueError(f'session {session}: pooled input differs from its evaluation')
+        # Bind both the inputs and derived metrics. Merely editing an old digest cannot certify a new run.
+        checked = evaluate_session(run, session=session, mode=evaluation['mode'], root=root,
+                                   lifecycle_errors=evaluation['lifecycle_errors'])
+        if canonical_digest(checked) != canonical_digest(evaluation):
+            raise ValueError(f'session {session}: stale or altered evaluation, spec or reviewed checkout')
     valid = all(e['technical_validity'] == 'technically_complete' for e in (first, second))
     games = sorted({e['game_id'] for e in first['episodes'] + second['episodes']})
     caps = {arm: first['failure_rules']['F2b_decision_cap_episodes_by_arm'][arm]

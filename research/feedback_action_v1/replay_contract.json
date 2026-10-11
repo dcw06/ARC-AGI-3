@@ -1,0 +1,314 @@
+{
+  "baseline_schema": {
+    "json_schema": {
+      "name": "arc_action_v12",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action_data": {
+                    "additionalProperties": false,
+                    "properties": {},
+                    "type": "object"
+                  },
+                  "action_id": {
+                    "enum": [
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      7
+                    ],
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "action_id",
+                  "action_data"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action_data": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "x": {
+                        "maximum": 63,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "y": {
+                        "maximum": 63,
+                        "minimum": 0,
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y"
+                    ],
+                    "type": "object"
+                  },
+                  "action_id": {
+                    "enum": [
+                      6
+                    ],
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "action_id",
+                  "action_data"
+                ],
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "required": [
+          "action"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  },
+  "candidate_schema": {
+    "json_schema": {
+      "name": "arc_action_v12",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action_data": {
+                    "additionalProperties": false,
+                    "properties": {},
+                    "type": "object"
+                  },
+                  "action_id": {
+                    "enum": [
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      7
+                    ],
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "action_id",
+                  "action_data"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "action_data": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "x": {
+                        "maximum": 63,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "y": {
+                        "maximum": 63,
+                        "minimum": 0,
+                        "type": "integer"
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y"
+                    ],
+                    "type": "object"
+                  },
+                  "action_id": {
+                    "enum": [
+                      6
+                    ],
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "action_id",
+                  "action_data"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "hypothesis_test": {
+            "additionalProperties": false,
+            "properties": {
+              "conflicting": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "claim": {
+                      "enum": [
+                        "no_observed_change",
+                        "changed_then_returned",
+                        "final_frame_differs",
+                        "indeterminate",
+                        "dispatch_failed",
+                        "outcome_unknown",
+                        "level_completed",
+                        "reset_acknowledged",
+                        "same_state_as_now",
+                        "different_state_from_now"
+                      ],
+                      "type": "string"
+                    },
+                    "ref": {
+                      "pattern": "^T[0-9]+$",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "ref",
+                    "claim"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 4,
+                "type": "array"
+              },
+              "hypothesis": {
+                "maxLength": 240,
+                "type": "string"
+              },
+              "if_different": {
+                "maxLength": 240,
+                "type": "string"
+              },
+              "prediction": {
+                "additionalProperties": false,
+                "properties": {
+                  "changed_region_xyxy": {
+                    "anyOf": [
+                      {
+                        "type": "null"
+                      },
+                      {
+                        "items": {
+                          "maximum": 63,
+                          "minimum": 0,
+                          "type": "integer"
+                        },
+                        "maxItems": 4,
+                        "minItems": 4,
+                        "type": "array"
+                      }
+                    ]
+                  },
+                  "level_completed": {
+                    "type": "boolean"
+                  },
+                  "visual_effect": {
+                    "enum": [
+                      "no_observed_change",
+                      "changed_then_returned",
+                      "final_frame_differs"
+                    ],
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "visual_effect",
+                  "level_completed",
+                  "changed_region_xyxy"
+                ],
+                "type": "object"
+              },
+              "status": {
+                "enum": [
+                  "new",
+                  "retained",
+                  "revised"
+                ],
+                "type": "string"
+              },
+              "supporting": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "claim": {
+                      "enum": [
+                        "no_observed_change",
+                        "changed_then_returned",
+                        "final_frame_differs",
+                        "indeterminate",
+                        "dispatch_failed",
+                        "outcome_unknown",
+                        "level_completed",
+                        "reset_acknowledged",
+                        "same_state_as_now",
+                        "different_state_from_now"
+                      ],
+                      "type": "string"
+                    },
+                    "ref": {
+                      "pattern": "^T[0-9]+$",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "ref",
+                    "claim"
+                  ],
+                  "type": "object"
+                },
+                "maxItems": 4,
+                "type": "array"
+              }
+            },
+            "required": [
+              "hypothesis",
+              "status",
+              "supporting",
+              "conflicting",
+              "prediction",
+              "if_different"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [
+          "hypothesis_test",
+          "action"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  },
+  "evidence_description": {
+    "computed_by": "deterministic frame-comparison tool, not the model",
+    "ref": "T<n> identifies one earlier transition; only refs listed in entries exist for you",
+    "scope": "up to 8 most recent transitions since the last reset, level change or terminal state, oldest first",
+    "states": "from_state, to_state and current_state identify observed frames by hash; equal ids mean identical frames, not identical hidden state",
+    "unavailable": "a value that could not be measured; it is never zero",
+    "visual_effect": "no_observed_change: no returned frame differed from the frame before the action. changed_then_returned: a returned frame differed, the last one equals the frame before. final_frame_differs: the last returned frame differs. indeterminate: the evidence cannot decide (for example the dispatch failed or its outcome is unknown); it never means no change"
+  },
+  "model": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+  "procedure": "Before the action, fill hypothesis_test, a short structured test of one hypothesis about this game:\n- hypothesis: one sentence you are currently testing. status: new, retained, or revised (revise when an observation conflicts with it).\n- supporting and conflicting: earlier transitions as {\"ref\": \"T<n>\", \"claim\": ...}. Cite only refs listed in action_effect_history. Each claim must be exactly what that entry shows: its visual_effect, dispatch_failed, outcome_unknown, level_completed, reset_acknowledged, or whether its from_state is same_state_as_now or different_state_from_now. A failed or unknown dispatch is not evidence of no change.\n- prediction: what the next returned frames will show after your action: visual_effect, whether a level will be completed, and optionally changed_region_xyxy [x0, y0, x1, y1] containing every cell that will differ (null when you do not predict a region or predict no change).\n- if_different: one sentence on what a different result would imply for the hypothesis.\nprevious_model_statement is your own previous hypothesis_test, carried forward when available. It is a statement, not an observation and not evidence, and cannot be cited. Its about field names the transition its prediction was about: compare them, and revise when the transition conflicts with it.",
+  "system_prompt": "You control one ARC-AGI-3 game from the supplied observation. Return only one JSON object matching the supplied response schema, with no Markdown.\nActions: choose exactly one action_id from legal_actions. Never choose reset or action 0. ACTION6 is the only action that takes arguments: action_data must be {\"x\": X, \"y\": Y} with integers 0 to 63, where x is the column counted left to right and y is the row counted top to bottom, so the selected cell is current_grid[y][x]. Every other action takes empty action_data {}.\nAn action being legal does not mean its effect is known. Effects can only be learned from observations. action_effect_history lists earlier transitions measured by a deterministic tool; its description explains every field.",
+  "version": "feedback_action_v1_independent_request_contract_v1"
+}

@@ -139,5 +139,89 @@ class CanaryBounds(unittest.TestCase):
                     validate_ready(bad, good['artifact'])
 
 
+class PooledInputBinding(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from tests.test_feedback_action_v1_live_evaluation import real_session
+        from research.feedback_action_v1 import live_evaluation as LE
+        cls.runs = [real_session(n)[0] for n in (1, 2)]
+        cls.evaluations = [LE.evaluate_session(run, session=n, mode='rehearsal')
+                           for n, run in enumerate(cls.runs, 1)]
+
+    def test_stale_successful_evaluation_cannot_certify_altered_run(self):
+        from research.feedback_action_v1 import live_evaluation as LE
+        runs = copy.deepcopy(self.runs)
+        runs[0]['episodes'][0]['calls'][0]['response'] += ' '
+        with self.assertRaises(ValueError):
+            LE.evaluate_sessions(*self.evaluations, runs)
+
+    def test_forged_evaluation_metrics_cannot_be_pooled(self):
+        from research.feedback_action_v1 import live_evaluation as LE
+        evaluations = copy.deepcopy(self.evaluations)
+        evaluations[0]['episodes'][0]['metrics']['levels_completed'] = 999
+        with self.assertRaises(ValueError):
+            LE.evaluate_sessions(*evaluations, self.runs)
+
+
+class ReplayEvidence(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from tests.test_feedback_action_v1_live_evaluation import synthetic_session
+        cls.fixture, cls.spec = synthetic_session('reset')
+
+    def evaluate(self, run):
+        from research.feedback_action_v1 import live_evaluation as LE
+        from tests.test_feedback_action_v1_live_evaluation import SyntheticSpec
+        with SyntheticSpec(self.spec):
+            return LE.evaluate_session(run, session=1, mode='rehearsal')
+
+    def refused(self, run):
+        value = self.evaluate(run)
+        self.assertFalse(value['replay_passed'], value['problems'])
+        self.assertNotEqual(value['technical_validity'], 'technically_complete')
+        self.assertFalse(value['session_2_permitted'])
+
+    def test_rehashed_contract_and_observation_mutations_are_rejected(self):
+        from research.feedback_action_v1 import live_evaluation as LE
+        self.assertTrue(self.evaluate(self.fixture)['replay_passed'])
+        for field in ('system', 'model', 'schema', 'role', 'grid', 'legal', 'history'):
+            with self.subTest(field=field):
+                run = copy.deepcopy(self.fixture)
+                call = run['episodes'][0]['calls'][0]
+                request = call['request']
+                user = json.loads(request['messages'][1]['content'])
+                if field == 'system':
+                    request['messages'][0]['content'] += ' changed'
+                elif field == 'model':
+                    request['model'] = 'another-model'
+                elif field == 'schema':
+                    request['response_format']['json_schema']['schema'] = {'type': 'object'}
+                elif field == 'role':
+                    request['messages'][1]['role'] = 'assistant'
+                elif field == 'grid':
+                    user['observation']['current_grid'][0][0] ^= 1
+                elif field == 'legal':
+                    user['observation']['legal_actions'].append(3)
+                else:
+                    user['observation']['history_compaction']['total_transitions'] = 999
+                request['messages'][1]['content'] = json.dumps(user, sort_keys=True, separators=(',', ':'))
+                call['request_sha256'] = LE.canonical_digest(request)
+                self.refused(run)
+
+    def test_terminal_final_pair_and_aggregate_forgeries_are_rejected(self):
+        for field in ('stop', 'final', 'pair', 'calls', 'dispatches', 'prompt_tokens', 'completion_tokens'):
+            with self.subTest(field=field):
+                run = copy.deepcopy(self.fixture)
+                if field == 'stop':
+                    run['episodes'][0]['stop_reason'] = 'win'
+                elif field == 'final':
+                    run['episodes'][0]['final']['levels_completed'] += 1
+                elif field == 'pair':
+                    run['pairs'][0]['status'] = 'not_admitted'
+                else:
+                    run[field] = 0
+                self.refused(run)
+
+
 if __name__ == '__main__':
     unittest.main()

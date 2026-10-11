@@ -4,9 +4,11 @@
 `ascii_only`, gate B `denominator_floor_10`). Review snapshots r2 bind it, the owner-gate record and the review
 documents (frozen protocol §15). r3 added the review's P2 evaluator fix; r4 the installation fix after session 1's
 first attempt (`MPLBACKEND=Agg`); r5 owner amendment A1 (one replacement session-1 attempt); r6 anchors the source
-inventory to the reviewed notebook and rejects missing repository modules (the review's second P2). Use the newest
+inventory to the reviewed notebook and rejects missing repository modules (the review's second P2). r7 protects
+startup ownership and final deadlines, reconstructs complete requests and observations independently, derives
+terminal and aggregate accounting, enforces canary token bounds, and binds pooled evaluations to their runs. Use the newest
 revision: a superseded revision's review check fails on source drift by design.
-r1 to r5 stay unchanged as history.
+r1 to r6 stay unchanged as history.
 
 **Status:**
 - GPU-disabled review package for one feedback-action v1 session on the verified runtime;
@@ -55,15 +57,16 @@ r1 to r5 stay unchanged as history.
    - the supervisor stops the worker and monitor groups, and the server group if it is still recorded;
    - an independent GPU check confirms nothing remains;
    - the first cell stops every recorded group;
-   - evidence is finalized.
+   - evidence is finalized and the extracted sources removed within the lifecycle deadline;
+   - a final deadline check charges the final evidence write before a passing verdict.
 
 ## Review commands (CPU; WSL Ubuntu, CPython 3.12)
 
 ```bash
 python -m research.feedback_action_v1.derive --check            # harness derived from AEH v1
 python -m research.feedback_action_v1.derive_runtime --check    # gate/notebook/launch from the verified runtime; verbatim controller
-python scripts/feedback_action_v1_package.py review-check --revision 6     # must refuse at the live gate
-python scripts/feedback_action_v1_package.py review-rehearse --revision 6  # the same cell, MODE switched: one connected session
+python scripts/feedback_action_v1_package.py review-check --revision 7     # must refuse at the live gate
+python scripts/feedback_action_v1_package.py review-rehearse --revision 7  # the same cell, MODE switched: one connected session
 python scripts/feedback_action_v1_package.py launch-build                  # must refuse
 python scripts/check_feedback_action_v1_runtime.py --bundle <replica flat mount> --competition <replica competition mount> --work <new dir>
 python -m unittest tests.test_feedback_action_v1_successor tests.test_feedback_action_v1_live_evaluation tests.test_feedback_action_v1_connected

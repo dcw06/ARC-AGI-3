@@ -46,7 +46,7 @@
    "builder": "research/feedback_action_v1/derive.py",
    "source": "research/action_effect_history_v1/service.py",
    "source_sha256": "6639c231d1414f2ecea1381972c1ba49bacdcc0f70e13d01a8b2acfc02435495",
-   "substitutions": 4
+   "substitutions": 5
   },
   "research/feedback_action_v1/live/supervisor.py": {
    "builder": "research/feedback_action_v1/derive.py",
@@ -64,13 +64,13 @@
    "builder": "research/feedback_action_v1/derive.py",
    "source": "scripts/evaluate_action_effect_history_v1.py",
    "source_sha256": "10011d670d6fe62712b41875fbdf8aab1399f20fe9d0772670533219c3a94e4e",
-   "substitutions": 7
+   "substitutions": 8
   },
   "scripts/feedback_action_v1_launch.py": {
    "builder": "research/feedback_action_v1/derive.py",
    "source": "scripts/action_effect_history_v1_launch.py",
    "source_sha256": "d3e91192d6a19bb87aa263d1bf35f4e3d59f33037497edaa23d553c941926277",
-   "substitutions": 12
+   "substitutions": 19
   }
  },
  "derived_from_verified_runtime": {

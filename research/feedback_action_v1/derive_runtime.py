@@ -70,6 +70,7 @@ GPU_RUN_REVIEW_LOCK = 'beeb6719ed817e3cb42a9842b03a7c47a2ee75aa87831908520318a54
 # They are the frozen protocol text, the independent evaluator's files that are not embedded (live_evaluation.py and
 # its closure outside the payload), the derivations, the package script and the structured-output check.
 REVIEW_DOCUMENTS = ('reports/feedback_action_v1_protocol_v2_frozen.md', 'research/feedback_action_v1/live_evaluation.py',
+                    'research/feedback_action_v1/replay.py', 'research/feedback_action_v1/replay_contract.json',
                     'research/feedback_action_v1/evaluate.py', 'research/transition_evidence_v1/reference.py',
                     'scripts/evaluate_feedback_action_v1.py', 'research/feedback_action_v1/derive.py',
                     'research/feedback_action_v1/derive_runtime.py', 'scripts/feedback_action_v1_package.py',
