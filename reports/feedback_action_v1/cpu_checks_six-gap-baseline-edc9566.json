@@ -1,0 +1,217 @@
+{
+ "evidence_class": "scripted_cpu_checks_not_model_performance",
+ "executable": "/home/jingjing/t1-run/install-check-2/game/venv/bin/python",
+ "gpu_used": false,
+ "label": "six-gap-baseline-edc9566",
+ "launch_authorized": false,
+ "model_calls": 0,
+ "packages": {
+  "arc-agi": "0.9.8",
+  "arcengine": "0.9.3",
+  "numpy": "2.4.4",
+  "tokenizers": null,
+  "torch": null,
+  "transformers": null,
+  "vllm": null,
+  "xgrammar": null
+ },
+ "passed": false,
+ "provider_calls": 0,
+ "python": "3.12.3",
+ "rehearsal_environment": {
+  "FA1_REHEARSAL_COMPETITION": "/home/jingjing/t1-run/competition"
+ },
+ "schema": "feedback_action_v1_cpu_checks_v1",
+ "suites": [
+  "tests.test_feedback_action_v1_review_gaps"
+ ],
+ "summary": {
+  "errors": 1,
+  "failures": 29,
+  "run": 11,
+  "seconds": 301.3,
+  "skipped": 0
+ },
+ "tests": [
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 138, in test_independent_canary_enforces_types_and_frozen_caps\n    with self.assertRaises(ValueError):\nAssertionError: ValueError not raised\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.CanaryBounds.test_independent_canary_enforces_types_and_frozen_caps (mutation={'server_completion_tokens': 129})"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 138, in test_independent_canary_enforces_types_and_frozen_caps\n    with self.assertRaises(ValueError):\nAssertionError: ValueError not raised\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.CanaryBounds.test_independent_canary_enforces_types_and_frozen_caps (mutation={'server_completion_tokens': 0})"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 138, in test_independent_canary_enforces_types_and_frozen_caps\n    with self.assertRaises(ValueError):\nAssertionError: ValueError not raised\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.CanaryBounds.test_independent_canary_enforces_types_and_frozen_caps (mutation={'server_completion_tokens': True})"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 138, in test_independent_canary_enforces_types_and_frozen_caps\n    with self.assertRaises(ValueError):\nAssertionError: ValueError not raised\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.CanaryBounds.test_independent_canary_enforces_types_and_frozen_caps (mutation={'server_completion_tokens': -1})"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 138, in test_independent_canary_enforces_types_and_frozen_caps\n    with self.assertRaises(ValueError):\nAssertionError: ValueError not raised\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.CanaryBounds.test_independent_canary_enforces_types_and_frozen_caps (mutation={'server_completion_tokens': 1.0})"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 138, in test_independent_canary_enforces_types_and_frozen_caps\n    with self.assertRaises(ValueError):\nAssertionError: ValueError not raised\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.CanaryBounds.test_independent_canary_enforces_types_and_frozen_caps (mutation={'server_prompt_tokens': -1, 'tokenizer_prompt_tokens': -1})"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 138, in test_independent_canary_enforces_types_and_frozen_caps\n    with self.assertRaises(ValueError):\nAssertionError: ValueError not raised\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.CanaryBounds.test_independent_canary_enforces_types_and_frozen_caps (mutation={'server_prompt_tokens': 60001, 'tokenizer_prompt_tokens': 60001})"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 138, in test_independent_canary_enforces_types_and_frozen_caps\n    with self.assertRaises(ValueError):\nAssertionError: ValueError not raised\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.CanaryBounds.test_independent_canary_enforces_types_and_frozen_caps (mutation={'server_prompt_tokens': 1, 'tokenizer_prompt_tokens': True})"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 117, in test_evidence_write_crossing_deadline_fails\n    self.assertIsNotNone(result['error'], 'final evidence write crossed the deadline')\nAssertionError: unexpectedly None : final evidence write crossed the deadline\n",
+   "outcome": "failed",
+   "seconds": 0.1,
+   "test": "tests.test_feedback_action_v1_review_gaps.FinalDeadline.test_evidence_write_crossing_deadline_fails"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 98, in test_source_removal_is_charged_before_passing_verdict\n    result = launch.run(Path(tmp) / 'output', tmp, started=0, mode='rehearsal', internal_seconds=60,\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: run() got an unexpected keyword argument 'source_cleanup'\n",
+   "outcome": "error",
+   "seconds": 0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.FinalDeadline.test_source_removal_is_charged_before_passing_verdict"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 162, in test_forged_evaluation_metrics_cannot_be_pooled\n    with self.assertRaises(ValueError):\nAssertionError: ValueError not raised\n",
+   "outcome": "failed",
+   "seconds": 30.68,
+   "test": "tests.test_feedback_action_v1_review_gaps.PooledInputBinding.test_forged_evaluation_metrics_cannot_be_pooled"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 155, in test_stale_successful_evaluation_cannot_certify_altered_run\n    with self.assertRaises(ValueError):\nAssertionError: ValueError not raised\n",
+   "outcome": "failed",
+   "seconds": 28.95,
+   "test": "tests.test_feedback_action_v1_review_gaps.PooledInputBinding.test_stale_successful_evaluation_cannot_certify_altered_run"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 209, in test_rehashed_contract_and_observation_mutations_are_rejected\n    self.refused(run)\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 180, in refused\n    self.assertFalse(value['replay_passed'], value['problems'])\nAssertionError: True is not false : []\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.ReplayEvidence.test_rehashed_contract_and_observation_mutations_are_rejected (field='system')"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 209, in test_rehashed_contract_and_observation_mutations_are_rejected\n    self.refused(run)\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 180, in refused\n    self.assertFalse(value['replay_passed'], value['problems'])\nAssertionError: True is not false : []\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.ReplayEvidence.test_rehashed_contract_and_observation_mutations_are_rejected (field='model')"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 209, in test_rehashed_contract_and_observation_mutations_are_rejected\n    self.refused(run)\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 180, in refused\n    self.assertFalse(value['replay_passed'], value['problems'])\nAssertionError: True is not false : []\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.ReplayEvidence.test_rehashed_contract_and_observation_mutations_are_rejected (field='schema')"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 209, in test_rehashed_contract_and_observation_mutations_are_rejected\n    self.refused(run)\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 180, in refused\n    self.assertFalse(value['replay_passed'], value['problems'])\nAssertionError: True is not false : []\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.ReplayEvidence.test_rehashed_contract_and_observation_mutations_are_rejected (field='role')"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 209, in test_rehashed_contract_and_observation_mutations_are_rejected\n    self.refused(run)\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 180, in refused\n    self.assertFalse(value['replay_passed'], value['problems'])\nAssertionError: True is not false : []\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.ReplayEvidence.test_rehashed_contract_and_observation_mutations_are_rejected (field='grid')"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 209, in test_rehashed_contract_and_observation_mutations_are_rejected\n    self.refused(run)\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 180, in refused\n    self.assertFalse(value['replay_passed'], value['problems'])\nAssertionError: True is not false : []\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.ReplayEvidence.test_rehashed_contract_and_observation_mutations_are_rejected (field='legal')"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 209, in test_rehashed_contract_and_observation_mutations_are_rejected\n    self.refused(run)\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 180, in refused\n    self.assertFalse(value['replay_passed'], value['problems'])\nAssertionError: True is not false : []\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.ReplayEvidence.test_rehashed_contract_and_observation_mutations_are_rejected (field='history')"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 223, in test_terminal_final_pair_and_aggregate_forgeries_are_rejected\n    self.refused(run)\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 180, in refused\n    self.assertFalse(value['replay_passed'], value['problems'])\nAssertionError: True is not false : []\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.ReplayEvidence.test_terminal_final_pair_and_aggregate_forgeries_are_rejected (field='stop')"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 223, in test_terminal_final_pair_and_aggregate_forgeries_are_rejected\n    self.refused(run)\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 180, in refused\n    self.assertFalse(value['replay_passed'], value['problems'])\nAssertionError: True is not false : []\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.ReplayEvidence.test_terminal_final_pair_and_aggregate_forgeries_are_rejected (field='final')"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 223, in test_terminal_final_pair_and_aggregate_forgeries_are_rejected\n    self.refused(run)\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 180, in refused\n    self.assertFalse(value['replay_passed'], value['problems'])\nAssertionError: True is not false : []\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.ReplayEvidence.test_terminal_final_pair_and_aggregate_forgeries_are_rejected (field='pair')"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 223, in test_terminal_final_pair_and_aggregate_forgeries_are_rejected\n    self.refused(run)\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 180, in refused\n    self.assertFalse(value['replay_passed'], value['problems'])\nAssertionError: True is not false : []\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.ReplayEvidence.test_terminal_final_pair_and_aggregate_forgeries_are_rejected (field='calls')"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 223, in test_terminal_final_pair_and_aggregate_forgeries_are_rejected\n    self.refused(run)\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 180, in refused\n    self.assertFalse(value['replay_passed'], value['problems'])\nAssertionError: True is not false : []\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.ReplayEvidence.test_terminal_final_pair_and_aggregate_forgeries_are_rejected (field='dispatches')"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 223, in test_terminal_final_pair_and_aggregate_forgeries_are_rejected\n    self.refused(run)\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 180, in refused\n    self.assertFalse(value['replay_passed'], value['problems'])\nAssertionError: True is not false : []\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.ReplayEvidence.test_terminal_final_pair_and_aggregate_forgeries_are_rejected (field='prompt_tokens')"
+  },
+  {
+   "detail": "Traceback (most recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 223, in test_terminal_final_pair_and_aggregate_forgeries_are_rejected\n    self.refused(run)\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 180, in refused\n    self.assertFalse(value['replay_passed'], value['problems'])\nAssertionError: True is not false : []\n",
+   "outcome": "failed",
+   "seconds": -0.0,
+   "test": "tests.test_feedback_action_v1_review_gaps.ReplayEvidence.test_terminal_final_pair_and_aggregate_forgeries_are_rejected (field='completion_tokens')"
+  },
+  {
+   "detail": "ile \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 78, in test_signal_before_assignment_is_deferred_until_registration\n    self.exercise('before_assignment')\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 59, in exercise\n    self.assertTrue(receipt.is_file(), 'startup interruption must retain a cleanup receipt')\nAssertionError: False is not true : startup interruption must retain a cleanup receipt\n",
+   "outcome": "failed",
+   "seconds": 0.01,
+   "test": "tests.test_feedback_action_v1_review_gaps.StartupOwnership.test_signal_before_assignment_is_deferred_until_registration"
+  },
+  {
+   "detail": "last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 84, in test_signal_before_group_registration_cleans_real_child\n    self.exercise('registration')\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 59, in exercise\n    self.assertTrue(receipt.is_file(), 'startup interruption must retain a cleanup receipt')\nAssertionError: False is not true : startup interruption must retain a cleanup receipt\n",
+   "outcome": "failed",
+   "seconds": 55.02,
+   "test": "tests.test_feedback_action_v1_review_gaps.StartupOwnership.test_signal_before_group_registration_cleans_real_child"
+  },
+  {
+   "detail": " recent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 75, in test_thread_start_interruption_cleans_real_child\n    self.exercise('thread')\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 59, in exercise\n    self.assertTrue(receipt.is_file(), 'startup interruption must retain a cleanup receipt')\nAssertionError: False is not true : startup interruption must retain a cleanup receipt\n",
+   "outcome": "failed",
+   "seconds": 0.01,
+   "test": "tests.test_feedback_action_v1_review_gaps.StartupOwnership.test_thread_start_interruption_cleans_real_child"
+  },
+  {
+   "detail": "ecent call last):\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 81, in test_uncertain_spawn_never_claims_group_absence\n    self.exercise('uncertain')\n  File \"/mnt/c/Users/jjzzw/Desktop/AGI/.cache/github-review/track1-six-gap-fixes/baseline-edc9566/tests/test_feedback_action_v1_review_gaps.py\", line 59, in exercise\n    self.assertTrue(receipt.is_file(), 'startup interruption must retain a cleanup receipt')\nAssertionError: False is not true : startup interruption must retain a cleanup receipt\n",
+   "outcome": "failed",
+   "seconds": 0.01,
+   "test": "tests.test_feedback_action_v1_review_gaps.StartupOwnership.test_uncertain_spawn_never_claims_group_absence"
+  }
+ ]
+}

@@ -1,0 +1,77 @@
+{
+ "evidence_class": "scripted_cpu_checks_not_model_performance",
+ "executable": "/home/jingjing/t1-run/install-check-2/game/venv/bin/python",
+ "gpu_used": false,
+ "label": "six-gap-r7-current-snapshot",
+ "launch_authorized": false,
+ "model_calls": 0,
+ "packages": {
+  "arc-agi": "0.9.8",
+  "arcengine": "0.9.3",
+  "numpy": "2.4.4",
+  "tokenizers": null,
+  "torch": null,
+  "transformers": null,
+  "vllm": null,
+  "xgrammar": null
+ },
+ "passed": true,
+ "provider_calls": 0,
+ "python": "3.12.3",
+ "rehearsal_environment": {
+  "FA1_FORMS": "/home/jingjing/t1-run/forms-r2.json",
+  "FA1_REHEARSAL_COMPETITION": "/home/jingjing/t1-run/competition",
+  "FA1_REHEARSAL_GAME_PYTHON": "/home/jingjing/t1-run/install-check-2/game/venv/bin/python",
+  "FA1_REHEARSAL_GRAMMAR": "1",
+  "FA1_REHEARSAL_MODEL_PYTHON": "/home/jingjing/t1-run/install-check-2/model/venv/bin/python",
+  "FA1_REHEARSAL_TOKENIZER": "/mnt/c/Users/jjzzw/Desktop/AGI/.cache/phase4-tokenizer"
+ },
+ "schema": "feedback_action_v1_cpu_checks_v1",
+ "suites": [
+  "tests.test_feedback_action_v1_successor.ReviewSnapshot"
+ ],
+ "summary": {
+  "errors": 0,
+  "failures": 0,
+  "run": 7,
+  "seconds": 119.9,
+  "skipped": 0
+ },
+ "tests": [
+  {
+   "outcome": "passed",
+   "seconds": 3.05,
+   "test": "tests.test_feedback_action_v1_successor.ReviewSnapshot.test_a_deleted_source_and_its_binding_are_refused_by_the_gate"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.01,
+   "test": "tests.test_feedback_action_v1_successor.ReviewSnapshot.test_closure_refuses_missing_repository_modules_but_not_attribute_imports"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 11.21,
+   "test": "tests.test_feedback_action_v1_successor.ReviewSnapshot.test_evaluator_review_check_imports_no_runner_policy_or_adapter"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 0.09,
+   "test": "tests.test_feedback_action_v1_successor.ReviewSnapshot.test_metadata_is_gpu_disabled_and_pinned"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 59.77,
+   "test": "tests.test_feedback_action_v1_successor.ReviewSnapshot.test_newest_revision_and_retained_history"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 15.97,
+   "test": "tests.test_feedback_action_v1_successor.ReviewSnapshot.test_review_documents_are_verified_and_drift_is_refused"
+  },
+  {
+   "outcome": "passed",
+   "seconds": 29.72,
+   "test": "tests.test_feedback_action_v1_successor.ReviewSnapshot.test_snapshot_binds_every_embedded_source_and_reproduces"
+  }
+ ]
+}

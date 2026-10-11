@@ -1,0 +1,18 @@
+{
+  "schema": "track1_six_gap_regression_baseline_v1",
+  "baseline_commit": "edc9566579a9484ff625050fccb4f8ffc1afe771",
+  "fixed_source_commit": "3f140bb40a07fc9a64569020904dc8b0d97f7339",
+  "baseline_preparation": "git archive baseline commit; copy only tests/test_feedback_action_v1_review_gaps.py from fixed source",
+  "test_file_sha256": "385383f7ac758b036e4fb2c8130f2de3f0961814ee66b73dee71ebaaa53fbdc8",
+  "gpu_used": false,
+  "network_namespace": "isolated; loopback only",
+  "expected_baseline_failure": true,
+  "baseline_summary": {
+    "errors": 1,
+    "failures": 29,
+    "run": 11,
+    "seconds": 301.3,
+    "skipped": 0
+  },
+  "baseline_interface_error": "The source-removal regression cannot pass the new source_cleanup hook to the old run(); late-evidence-write regression independently demonstrates the old deadline bug."
+}
