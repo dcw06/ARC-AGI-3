@@ -6,18 +6,22 @@ historical receipt checks, and bind a write-once receipt to the tested sources a
 """
 import argparse
 import hashlib
+import io
 import importlib.metadata
 import json
 from pathlib import Path
 import subprocess
 import sys
+import tarfile
+import tempfile
 import time
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-OUT = ROOT / 'reports/stagnation_supervision_runtime_v2_local_checks_r5.json'
-PREVIOUS = 'reports/stagnation_supervision_runtime_v2_local_checks_r4.json'  # initial prelaunch repair suite; retained
+OUT = ROOT / 'reports/stagnation_supervision_runtime_v2_local_checks_r6.json'
+PREVIOUS = 'reports/stagnation_supervision_runtime_v2_local_checks_r5_a4.json'
+HISTORICAL_RECEIPT_COMMIT = 'b39f9e6ebcb2ea11a2a0c6173254e8cea5dcf1fb'
 # The first run (r1) is retained as failed: discovery used the repository as top level, which breaks the R4 suite's
 # own `from test_stagnation_supervision_v1_connected import ...`, and one runtime v2 test predated the r1 snapshot.
 FAILED_R1 = 'reports/stagnation_supervision_runtime_v2_local_checks_r1.json'
@@ -60,6 +64,23 @@ def check():
     return value
 
 
+def historical_check(argv):
+    if argv[2:4] != ['scripts.check_stagnation_supervision_v1_review_r4', '--check']:
+        return subprocess.run(argv, cwd=ROOT, capture_output=True, text=True, timeout=1800), {}
+    # This receipt certifies its original tests, not our corrected forced-cutoff
+    # assertion. Reverify it against the exact retained tree; run every current
+    # test below, and bind those results to the current sources and tests.
+    archive = subprocess.run(['git', 'archive', '--format=tar', HISTORICAL_RECEIPT_COMMIT], cwd=ROOT,
+                             check=True, capture_output=True, timeout=180)
+    with tempfile.TemporaryDirectory(prefix='ssv-historical-receipt-') as temp:
+        with tarfile.open(fileobj=io.BytesIO(archive.stdout)) as tree:
+            tree.extractall(temp, filter='data')
+        result = subprocess.run(argv, cwd=temp, capture_output=True, text=True, timeout=1800)
+    return result, {'checked_commit': HISTORICAL_RECEIPT_COMMIT,
+                    'scope': 'read-only replay of original R4 receipt; current tests run separately',
+                    'archive_sha256': hashlib.sha256(archive.stdout).hexdigest()}
+
+
 def run():
     if OUT.exists():
         raise FileExistsError('write-once receipt exists: ' + str(OUT))
@@ -67,9 +88,9 @@ def run():
     started = time.monotonic()
     historical = []
     for argv in HISTORICAL_CHECKS:
-        value = subprocess.run(argv, cwd=ROOT, capture_output=True, text=True, timeout=1800)
+        value, provenance = historical_check(argv)
         historical.append({'command': ' '.join(argv[1:]), 'returncode': value.returncode,
-                           'tail': (value.stdout.strip().splitlines() or [''])[-1][:300]})
+                           'tail': (value.stdout.strip().splitlines() or [''])[-1][:300], **provenance})
     suites = {}
     totals = {'tests_run': 0, 'failures': 0, 'errors': 0, 'skipped': 0}
     for pattern in PATTERNS:
@@ -83,7 +104,7 @@ def run():
     if sources != source_bindings() or tests != test_bindings():
         raise ValueError('tested source changed while the suite ran')
     passed = not totals['failures'] and not totals['errors'] and all(h['returncode'] == 0 for h in historical)
-    value = {'version': 'stagnation_supervision_runtime_v2_local_checks_r5', 'supersedes_failed_run': FAILED_R1,
+    value = {'version': 'stagnation_supervision_runtime_v2_local_checks_r6', 'supersedes_failed_run': FAILED_R1,
              'previous_receipt': PREVIOUS, 'package_revision': 'r4 (prelaunch repairs plus installer stdout reconciliation)',
              'status': 'passed_cpu_scope' if passed else 'failed', **totals, 'suites': suites,
              'historical_and_receipt_checks': historical, 'elapsed_seconds': round(time.monotonic() - started, 3),
