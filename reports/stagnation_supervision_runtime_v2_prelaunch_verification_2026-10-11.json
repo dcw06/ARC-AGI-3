@@ -1,0 +1,105 @@
+{
+ "baseline_commit": "b39f9e6ebcb2ea11a2a0c6173254e8cea5dcf1fb",
+ "baseline_failed_assertions": 10,
+ "baseline_methods": 9,
+ "baseline_output_sha256": "61ab9e755a6c83acef574b18d71a9533c1be006626b6bc7142a78af2f6110eaa",
+ "compute_authorized_seconds": 0,
+ "connected_scripted_sessions": {
+  "1": {
+   "cleanup_verified": true,
+   "episodes": 15,
+   "first_cell_seconds": 741.763,
+   "installation_seconds": 370.019,
+   "receipt": "reports/stagnation_supervision_runtime_v2_staged_session1_r4.json",
+   "sha256": "f583a3ab711cad3dbc87e306f703408d16013a8cb6175d80a0073c341506c931",
+   "technically_complete_cpu_scope": true
+  },
+  "2": {
+   "cleanup_verified": true,
+   "episodes": 12,
+   "first_cell_seconds": 639.517,
+   "installation_seconds": 355.873,
+   "receipt": "reports/stagnation_supervision_runtime_v2_staged_session2_r4.json",
+   "sha256": "0ff17c12efc9adbd3543f828f87568645bf5c29d399dbf0e3bacaa64785dfa2d",
+   "technically_complete_cpu_scope": true
+  }
+ },
+ "cpu_attempts_preserved": {
+  "r4": {
+   "errors": 2,
+   "failures": 0,
+   "receipt": "reports/stagnation_supervision_runtime_v2_local_checks_r4.json",
+   "sha256": "ba187030389b0c6b111656c57fc62d8fbbc9f5fcabb002f7a4919dd701709b7e",
+   "skipped": 0,
+   "status": "failed",
+   "tests_run": 276
+  },
+  "r5": {
+   "errors": 2,
+   "failures": 0,
+   "receipt": "reports/stagnation_supervision_runtime_v2_local_checks_r5.json",
+   "sha256": "bf40dd531845a40e0fe8e85f02bc41ae9f9e60f0639f84a587874b4f65aa03c3",
+   "skipped": 0,
+   "status": "failed",
+   "tests_run": 277
+  },
+  "r5_a2": {
+   "errors": 2,
+   "failures": 0,
+   "receipt": "reports/stagnation_supervision_runtime_v2_local_checks_r5_a2.json",
+   "sha256": "25349be5ccc13c90760fecb9fd51f5d856200141165043c385a063c6f901d7a4",
+   "skipped": 0,
+   "status": "failed",
+   "tests_run": 277
+  },
+  "r5_a3": {
+   "errors": 0,
+   "failures": 1,
+   "receipt": "reports/stagnation_supervision_runtime_v2_local_checks_r5_a3.json",
+   "sha256": "eb1414195f89526a1d30c94c3c3a9f0ec23e5d4155d3625d4508c8489c939ab4",
+   "skipped": 0,
+   "status": "failed",
+   "tests_run": 277
+  },
+  "r5_a4": {
+   "errors": 2,
+   "failures": 2,
+   "receipt": "reports/stagnation_supervision_runtime_v2_local_checks_r5_a4.json",
+   "sha256": "8e8937f007298c416bb58997c38598aabd1fd8e09ba106826028c3b06832c7b6",
+   "skipped": 0,
+   "status": "failed",
+   "tests_run": 264
+  },
+  "r6_a1": {
+   "errors": 2,
+   "failures": 1,
+   "receipt": "reports/stagnation_supervision_runtime_v2_local_checks_r6_a1.json",
+   "sha256": "83fff2697f972019e02250809ddccf95134eb0ab29b9f72e5b972255e297d5d3",
+   "skipped": 0,
+   "status": "failed",
+   "tests_run": 264
+  },
+  "r7": {
+   "errors": 0,
+   "failures": 0,
+   "receipt": "reports/stagnation_supervision_runtime_v2_local_checks_r7.json",
+   "sha256": "be6b6ff29c4370afbea11ac6ebf6268d0cb08c51277b62d2336c4f00705572ad",
+   "skipped": 0,
+   "status": "passed_cpu_scope",
+   "tests_run": 277
+  }
+ },
+ "current_tests_and_historical_checks_passed": true,
+ "frozen_protocol_unchanged": true,
+ "gpu_runs": 0,
+ "private_authority_records_absent": true,
+ "private_licence_texts_verified": 23,
+ "private_permission_outcome": null,
+ "private_review_revision": 7,
+ "provider_calls": 0,
+ "public_review_lock_sha256": "b9f166006541166adaa98f0d699089ae716c7cd5da9c8c82020557cedfd5193c",
+ "public_review_revision": 4,
+ "reservation_created": false,
+ "schema": "stagnation_supervision_runtime_v2_prelaunch_verification_cpu_only_v1",
+ "source_approval_created": false
+}

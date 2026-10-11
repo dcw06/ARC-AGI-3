@@ -1,0 +1,100 @@
+test_monitor_interruption_before_assignment (tests.test_ssv_runtime_v2_prelaunch_gaps.InnerOwnershipRegressions.test_monitor_interruption_before_assignment) ... FAIL
+test_worker_interruption_before_assignment (tests.test_ssv_runtime_v2_prelaunch_gaps.InnerOwnershipRegressions.test_worker_interruption_before_assignment) ... FAIL
+test_missing_or_failed_installation_receipt_is_not_complete (tests.test_ssv_runtime_v2_prelaunch_gaps.InstallationRegressions.test_missing_or_failed_installation_receipt_is_not_complete) ... 
+  test_missing_or_failed_installation_receipt_is_not_complete (tests.test_ssv_runtime_v2_prelaunch_gaps.InstallationRegressions.test_missing_or_failed_installation_receipt_is_not_complete) (installation=None) ... FAIL
+  test_missing_or_failed_installation_receipt_is_not_complete (tests.test_ssv_runtime_v2_prelaunch_gaps.InstallationRegressions.test_missing_or_failed_installation_receipt_is_not_complete) (installation={'passed': False, 'error': 'installation failed'}) ... FAIL
+test_failed_checkout_withholds_outcomes (tests.test_ssv_runtime_v2_prelaunch_gaps.ReportingRegressions.test_failed_checkout_withholds_outcomes) ... FAIL
+test_failed_lifecycle_withholds_outcomes (tests.test_ssv_runtime_v2_prelaunch_gaps.ReportingRegressions.test_failed_lifecycle_withholds_outcomes) ... FAIL
+test_live_checkout_verification_cannot_be_disabled (tests.test_ssv_runtime_v2_prelaunch_gaps.ReportingRegressions.test_live_checkout_verification_cannot_be_disabled) ... FAIL
+test_live_trigger_override_refused_before_reading_runs (tests.test_ssv_runtime_v2_prelaunch_gaps.ReportingRegressions.test_live_trigger_override_refused_before_reading_runs) ... FAIL
+test_reflection_changes_invalidate_annotation_sample (tests.test_ssv_runtime_v2_prelaunch_gaps.ReportingRegressions.test_reflection_changes_invalidate_annotation_sample) ... FAIL
+test_supplied_hash_does_not_establish_prior_annotation_commitment (tests.test_ssv_runtime_v2_prelaunch_gaps.ReportingRegressions.test_supplied_hash_does_not_establish_prior_annotation_commitment) ... FAIL
+
+======================================================================
+FAIL: test_monitor_interruption_before_assignment (tests.test_ssv_runtime_v2_prelaunch_gaps.InnerOwnershipRegressions.test_monitor_interruption_before_assignment)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/track3-b39f9e6.MQFZnz/tests/test_ssv_runtime_v2_prelaunch_gaps.py", line 142, in test_monitor_interruption_before_assignment
+    self.exercise('monitor')
+  File "/tmp/track3-b39f9e6.MQFZnz/tests/test_ssv_runtime_v2_prelaunch_gaps.py", line 126, in exercise
+    self.assertTrue(all(p.poll() is not None for p in children), 'real child escaped startup cleanup')
+AssertionError: False is not true : real child escaped startup cleanup
+
+======================================================================
+FAIL: test_worker_interruption_before_assignment (tests.test_ssv_runtime_v2_prelaunch_gaps.InnerOwnershipRegressions.test_worker_interruption_before_assignment)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/track3-b39f9e6.MQFZnz/tests/test_ssv_runtime_v2_prelaunch_gaps.py", line 139, in test_worker_interruption_before_assignment
+    self.exercise('worker')
+  File "/tmp/track3-b39f9e6.MQFZnz/tests/test_ssv_runtime_v2_prelaunch_gaps.py", line 126, in exercise
+    self.assertTrue(all(p.poll() is not None for p in children), 'real child escaped startup cleanup')
+AssertionError: False is not true : real child escaped startup cleanup
+
+======================================================================
+FAIL: test_missing_or_failed_installation_receipt_is_not_complete (tests.test_ssv_runtime_v2_prelaunch_gaps.InstallationRegressions.test_missing_or_failed_installation_receipt_is_not_complete) (installation=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/track3-b39f9e6.MQFZnz/tests/test_ssv_runtime_v2_prelaunch_gaps.py", line 171, in test_missing_or_failed_installation_receipt_is_not_complete
+    self.assertFalse(value['technically_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_missing_or_failed_installation_receipt_is_not_complete (tests.test_ssv_runtime_v2_prelaunch_gaps.InstallationRegressions.test_missing_or_failed_installation_receipt_is_not_complete) (installation={'passed': False, 'error': 'installation failed'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/track3-b39f9e6.MQFZnz/tests/test_ssv_runtime_v2_prelaunch_gaps.py", line 171, in test_missing_or_failed_installation_receipt_is_not_complete
+    self.assertFalse(value['technically_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_failed_checkout_withholds_outcomes (tests.test_ssv_runtime_v2_prelaunch_gaps.ReportingRegressions.test_failed_checkout_withholds_outcomes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/track3-b39f9e6.MQFZnz/tests/test_ssv_runtime_v2_prelaunch_gaps.py", line 40, in test_failed_checkout_withholds_outcomes
+    self.assertIsNone(value['endpoints'])
+AssertionError: {'behavioural_recovery': {}, 'state_novelty_in_windows': {}, 'completed_levels': {'per_arm': None, 'level_completed_in_recovery_windows': {}}, 'false_interruptions': None, 'false_interruptions_calls': None, 'realised_cost': {'calls': 1}} is not None
+
+======================================================================
+FAIL: test_failed_lifecycle_withholds_outcomes (tests.test_ssv_runtime_v2_prelaunch_gaps.ReportingRegressions.test_failed_lifecycle_withholds_outcomes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/track3-b39f9e6.MQFZnz/tests/test_ssv_runtime_v2_prelaunch_gaps.py", line 31, in test_failed_lifecycle_withholds_outcomes
+    self.assertIsNone(value['endpoints'])
+AssertionError: {'behavioural_recovery': {}, 'state_novelty_in_windows': {}, 'completed_levels': {'per_arm': None, 'level_completed_in_recovery_windows': {}}, 'false_interruptions': None, 'false_interruptions_calls': None, 'realised_cost': {'calls': 1}} is not None
+
+======================================================================
+FAIL: test_live_checkout_verification_cannot_be_disabled (tests.test_ssv_runtime_v2_prelaunch_gaps.ReportingRegressions.test_live_checkout_verification_cannot_be_disabled)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/track3-b39f9e6.MQFZnz/tests/test_ssv_runtime_v2_prelaunch_gaps.py", line 45, in test_live_checkout_verification_cannot_be_disabled
+    with self.assertRaises((ValueError, PermissionError)):
+AssertionError: (<class 'ValueError'>, <class 'PermissionError'>) not raised
+
+======================================================================
+FAIL: test_live_trigger_override_refused_before_reading_runs (tests.test_ssv_runtime_v2_prelaunch_gaps.ReportingRegressions.test_live_trigger_override_refused_before_reading_runs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/track3-b39f9e6.MQFZnz/tests/test_ssv_runtime_v2_prelaunch_gaps.py", line 56, in test_live_trigger_override_refused_before_reading_runs
+    with self.assertRaisesRegex((ValueError, PermissionError), 'frozen|override'):
+AssertionError: (<class 'ValueError'>, <class 'PermissionError'>) not raised
+
+======================================================================
+FAIL: test_reflection_changes_invalidate_annotation_sample (tests.test_ssv_runtime_v2_prelaunch_gaps.ReportingRegressions.test_reflection_changes_invalidate_annotation_sample)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/track3-b39f9e6.MQFZnz/tests/test_ssv_runtime_v2_prelaunch_gaps.py", line 66, in test_reflection_changes_invalidate_annotation_sample
+    self.assertNotEqual(P.inputs_digest(a), P.inputs_digest(b))
+AssertionError: {'episodes': [['1', 'b1-wa30-continuation', 'c40908278ddd82d024ce731db411ed7c24c6a74a8572b3faebff955c95b79d62'], ['1', 'b1-ar25-continuation', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['1', 'b1-ls20-continuation', 'c00e9e6f4670a2b8c6df00e344bee4790910ddeb0550f2386a094a62b94acf31'], ['1', 'b1-s5i5-continuation', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['2', 'b2-wa30-continuation', 'c40908278ddd82d024ce731db411ed7c24c6a74a8572b3faebff955c95b79d62'], ['2', 'b2-ar25-continuation', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['2', 'b2-ls20-continuation', 'c00e9e6f4670a2b8c6df00e344bee4790910ddeb0550f2386a094a62b94acf31'], ['2', 'b2-s5i5-continuation', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['1', 'b1-wa30-periodic', 'c40908278ddd82d024ce731db411ed7c24c6a74a8572b3faebff955c95b79d62'], ['1', 'b1-ar25-periodic', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['1', 'b1-ls20-periodic', 'c00e9e6f4670a2b8c6df00e344bee4790910ddeb0550f2386a094a62b94acf31'], ['1', 'b1-s5i5-periodic', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['2', 'b2-wa30-periodic', 'c40908278ddd82d024ce731db411ed7c24c6a74a8572b3faebff955c95b79d62'], ['2', 'b2-ar25-periodic', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['2', 'b2-ls20-periodic', 'c00e9e6f4670a2b8c6df00e344bee4790910ddeb0550f2386a094a62b94acf31'], ['2', 'b2-s5i5-periodic', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['1', 'b1-wa30-triggered', 'c40908278ddd82d024ce731db411ed7c24c6a74a8572b3faebff955c95b79d62'], ['1', 'b1-ar25-triggered', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['1', 'b1-ls20-triggered', 'c00e9e6f4670a2b8c6df00e344bee4790910ddeb0550f2386a094a62b94acf31'], ['1', 'b1-s5i5-triggered', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['2', 'b2-wa30-triggered', 'c40908278ddd82d024ce731db411ed7c24c6a74a8572b3faebff955c95b79d62'], ['2', 'b2-ar25-triggered', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['2', 'b2-ls20-triggered', 'c00e9e6f4670a2b8c6df00e344bee4790910ddeb0550f2386a094a62b94acf31'], ['2', 'b2-s5i5-triggered', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['1', 'r1-ar25-continuation', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48']]} == {'episodes': [['1', 'b1-wa30-continuation', 'c40908278ddd82d024ce731db411ed7c24c6a74a8572b3faebff955c95b79d62'], ['1', 'b1-ar25-continuation', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['1', 'b1-ls20-continuation', 'c00e9e6f4670a2b8c6df00e344bee4790910ddeb0550f2386a094a62b94acf31'], ['1', 'b1-s5i5-continuation', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['2', 'b2-wa30-continuation', 'c40908278ddd82d024ce731db411ed7c24c6a74a8572b3faebff955c95b79d62'], ['2', 'b2-ar25-continuation', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['2', 'b2-ls20-continuation', 'c00e9e6f4670a2b8c6df00e344bee4790910ddeb0550f2386a094a62b94acf31'], ['2', 'b2-s5i5-continuation', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['1', 'b1-wa30-periodic', 'c40908278ddd82d024ce731db411ed7c24c6a74a8572b3faebff955c95b79d62'], ['1', 'b1-ar25-periodic', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['1', 'b1-ls20-periodic', 'c00e9e6f4670a2b8c6df00e344bee4790910ddeb0550f2386a094a62b94acf31'], ['1', 'b1-s5i5-periodic', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['2', 'b2-wa30-periodic', 'c40908278ddd82d024ce731db411ed7c24c6a74a8572b3faebff955c95b79d62'], ['2', 'b2-ar25-periodic', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['2', 'b2-ls20-periodic', 'c00e9e6f4670a2b8c6df00e344bee4790910ddeb0550f2386a094a62b94acf31'], ['2', 'b2-s5i5-periodic', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['1', 'b1-wa30-triggered', 'c40908278ddd82d024ce731db411ed7c24c6a74a8572b3faebff955c95b79d62'], ['1', 'b1-ar25-triggered', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['1', 'b1-ls20-triggered', 'c00e9e6f4670a2b8c6df00e344bee4790910ddeb0550f2386a094a62b94acf31'], ['1', 'b1-s5i5-triggered', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['2', 'b2-wa30-triggered', 'c40908278ddd82d024ce731db411ed7c24c6a74a8572b3faebff955c95b79d62'], ['2', 'b2-ar25-triggered', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['2', 'b2-ls20-triggered', 'c00e9e6f4670a2b8c6df00e344bee4790910ddeb0550f2386a094a62b94acf31'], ['2', 'b2-s5i5-triggered', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48'], ['1', 'r1-ar25-continuation', 'c11599ae3bd44430d0b5c241c9b0d5bc33ef243ab75c591eb960cfc73b2d3b48']]}
+
+======================================================================
+FAIL: test_supplied_hash_does_not_establish_prior_annotation_commitment (tests.test_ssv_runtime_v2_prelaunch_gaps.ReportingRegressions.test_supplied_hash_does_not_establish_prior_annotation_commitment)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/track3-b39f9e6.MQFZnz/tests/test_ssv_runtime_v2_prelaunch_gaps.py", line 94, in test_supplied_hash_does_not_establish_prior_annotation_commitment
+    self.assertIsNone(value['pooled'])
+AssertionError: {'comparison': True} is not None
+
+----------------------------------------------------------------------
+Ran 9 tests in 26.772s
+
+FAILED (failures=10)
