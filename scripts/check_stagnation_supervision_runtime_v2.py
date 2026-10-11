@@ -19,13 +19,18 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-OUT = ROOT / 'reports/stagnation_supervision_runtime_v2_local_checks_r6.json'
-PREVIOUS = 'reports/stagnation_supervision_runtime_v2_local_checks_r5_a4.json'
+OUT = ROOT / 'reports/stagnation_supervision_runtime_v2_local_checks_r7.json'
+PREVIOUS = 'reports/stagnation_supervision_runtime_v2_local_checks_r6_a1.json'
 HISTORICAL_RECEIPT_COMMIT = 'b39f9e6ebcb2ea11a2a0c6173254e8cea5dcf1fb'
 # The first run (r1) is retained as failed: discovery used the repository as top level, which breaks the R4 suite's
 # own `from test_stagnation_supervision_v1_connected import ...`, and one runtime v2 test predated the r1 snapshot.
 FAILED_R1 = 'reports/stagnation_supervision_runtime_v2_local_checks_r1.json'
 PATTERNS = ('test_stagnation_supervision_v1*.py', 'test_ssv_*.py')
+REPLACEMENTS = {
+    'test_stagnation_supervision_v1_connected.Connected.test_slow_transport_hits_the_external_deadline_after_admission':
+    {'replacement': 'test_ssv_runtime_v2_cutoff.ForcedCutoffEvidence.test_interrupted_or_partial_evidence_is_never_complete',
+     'reason': 'Frozen R4 assertion assumes final status/evidence writes survive forced termination. Successor checks '
+               'both rejected interrupted evidence and verified incomplete snapshots; original bound file preserved.'}}
 HISTORICAL_CHECKS = (
     [sys.executable, '-m', 'scripts.derive_stagnation_supervision_v1', '--check'],
     [sys.executable, '-m', 'scripts.check_stagnation_supervision_v1_review_r4', '--check'],
@@ -67,9 +72,8 @@ def check():
 def historical_check(argv):
     if argv[2:4] != ['scripts.check_stagnation_supervision_v1_review_r4', '--check']:
         return subprocess.run(argv, cwd=ROOT, capture_output=True, text=True, timeout=1800), {}
-    # This receipt certifies its original tests, not our corrected forced-cutoff
-    # assertion. Reverify it against the exact retained tree; run every current
-    # test below, and bind those results to the current sources and tests.
+    # This receipt certifies its original tests. Reverify it against the exact
+    # retained tree; current successor tests are run and bound separately below.
     archive = subprocess.run(['git', 'archive', '--format=tar', HISTORICAL_RECEIPT_COMMIT], cwd=ROOT,
                              check=True, capture_output=True, timeout=180)
     with tempfile.TemporaryDirectory(prefix='ssv-historical-receipt-') as temp:
@@ -95,6 +99,15 @@ def run():
     totals = {'tests_run': 0, 'failures': 0, 'errors': 0, 'skipped': 0}
     for pattern in PATTERNS:
         suite = unittest.defaultTestLoader.discover(str(ROOT / 'tests'), pattern)  # as R4: tests/ is the top level
+        def current_suite(tests):
+            kept = []
+            for test in tests:
+                if isinstance(test, unittest.TestSuite):
+                    kept.append(current_suite(test))
+                elif test.id() not in REPLACEMENTS:
+                    kept.append(test)
+            return unittest.TestSuite(kept)
+        suite = current_suite(suite)
         result = unittest.TextTestRunner(verbosity=1).run(suite)
         suites[pattern] = {'tests_run': result.testsRun, 'failures': len(result.failures), 'errors': len(result.errors),
                            'skipped': len(result.skipped),
@@ -104,9 +117,10 @@ def run():
     if sources != source_bindings() or tests != test_bindings():
         raise ValueError('tested source changed while the suite ran')
     passed = not totals['failures'] and not totals['errors'] and all(h['returncode'] == 0 for h in historical)
-    value = {'version': 'stagnation_supervision_runtime_v2_local_checks_r6', 'supersedes_failed_run': FAILED_R1,
+    value = {'version': 'stagnation_supervision_runtime_v2_local_checks_r7', 'supersedes_failed_run': FAILED_R1,
              'previous_receipt': PREVIOUS, 'package_revision': 'r4 (prelaunch repairs plus installer stdout reconciliation)',
              'status': 'passed_cpu_scope' if passed else 'failed', **totals, 'suites': suites,
+             'replaced_legacy_tests': REPLACEMENTS,
              'historical_and_receipt_checks': historical, 'elapsed_seconds': round(time.monotonic() - started, 3),
              'python_version': sys.version.split()[0],
              'packages': {n: importlib.metadata.version(n) for n in ('arcengine', 'arc-agi', 'numpy')},
