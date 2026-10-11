@@ -1,6 +1,13 @@
 # Track 1 (feedback_action_v1): post-fix audit of the retained evidence
 
-**Status: study executed and analyzed; final independent validation pending.**
+**Status: study closed (owner decision, October 11, 2026) with two qualifications.**
+1. **Technical completeness depends on the evaluator.** Both sessions are technically complete under the original
+   evaluator (`edc9566`, the package that ran). Under the post-fix evaluator (`d0c6518`) both are technically
+   incomplete (F1), because the pre-fix runtime wrote no finalization receipt; every evidence-level check passes
+   there, and the findings below are identical.
+2. **Finalization is not certified.** The recorded deadline margins (2,479 s and 2,438 s) make a late-finalization
+   overrun unlikely, but the missing finalization evidence prevents certification
+   (`reports/feedback_action_v1_post_fix_audit.md`).
 
 **What this is.** A read-only audit of the two completed sessions' retained evidence with the evaluator at `d0c6518`,
 which includes the six prelaunch-gap repairs (`3aeeb65`, `d218567`, `3f140bb`, `641ea70`) and the fail-closed
@@ -49,8 +56,8 @@ claim (zero levels everywhere), action selection inconclusive, thresholds met.
   and 2,438 s.
 
 The late-finalization defect that `cfda982` repairs concerns evidence writes or source removal crossing the deadline.
-With these margins that could not have occurred, but the old runtime cannot certify it, and the post-fix evaluator
-correctly refuses to infer it.
+These margins make such an overrun unlikely, but the missing finalization evidence prevents certification, and the
+post-fix evaluator correctly refuses to infer it.
 
 ## What this means
 
@@ -58,6 +65,5 @@ correctly refuses to infer it.
   unchanged.
 - The runs cannot be certified technically complete under the post-fix rules, because they predate the
   finalization certification. That is a documented limitation of these runs, not a defect found in their evidence.
-- Whether to accept the runs with this limitation, or to treat Track 1 as not technically validated, is for the
-  owner and the independent reviewer. A new GPU run is not implied: amendment A1 permits no further session-1
-  replacement, and any new study would need its own protocol decision.
+- **Owner decision (October 11, 2026): the study is closed with the two qualifications above.** No new GPU run:
+  amendment A1 permits no further session-1 replacement, and any new study would need its own protocol decision.

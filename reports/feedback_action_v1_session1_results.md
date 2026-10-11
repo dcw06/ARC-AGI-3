@@ -9,7 +9,7 @@ account-only. The study's outcomes come from `live_evaluation.evaluate_sessions`
 | Attempt | Outcome |
 |---|---|
 | `fa1-s1-8c598909fad24d9e96e71b7a482993eb` (October 11, 02:01 UTC; provider version 2) | **consumed, failed during installation**: Kaggle's `MPLBACKEND` reached the game interpreter's package checks. No model call, game action or study data. Preserved; never relaunched |
-| `fa1-s1r-d1bc3d6ba0cc493d8d21e326d23b1d06` (October 11, 05:11 UTC; provider version 3) | **the one replacement under owner amendment A1** (frozen protocol §16), on the fixed package (public review snapshots r6; private lock `23cb7142…`): **technically complete** |
+| `fa1-s1r-d1bc3d6ba0cc493d8d21e326d23b1d06` (October 11, 05:11 UTC; provider version 3) | **the one replacement under owner amendment A1** (frozen protocol §16), on the fixed package (public review snapshots r6; private lock `23cb7142…`): **technically complete under the original evaluator**; technically incomplete (F1, no finalization receipt) under the post-fix evaluator (`reports/feedback_action_v1_post_fix_audit.md`) |
 
 ## The replacement attempt
 
@@ -27,7 +27,7 @@ account-only. The study's outcomes come from `live_evaluation.evaluate_sessions`
 | Item | Value |
 |---|---|
 | Review lock verified | private r7, `23cb7142c6e41ae408e05255f9f443b62e7a313de8c5c9da7e50c4c79908eb07` |
-| Technically complete | yes; lifecycle passed, run evidence verified, replay passed, 0 problems |
+| Technically complete | yes under the original evaluator: lifecycle passed, run evidence verified, replay passed, 0 problems. Under the post-fix evaluator: F1, technically incomplete (no finalization receipt), all evidence-level checks passing |
 | Failure rules F1–F6 | none fired; F2b decision-cap episodes 0 and 0 |
 | Free text | `ascii_only` (gate A); 0 blocks outside the option |
 | Carried statements | 72 checked (69 available), 0 mismatches |

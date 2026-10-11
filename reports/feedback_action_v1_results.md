@@ -1,14 +1,20 @@
 # Track 1 (feedback_action_v1): results of the two-session evaluation
 
-**Status: study executed and analyzed; final independent validation pending.** The runs used the fixed private
-package with lock `23cb7142…` (built from `edc9566`), which predates six prelaunch-gap repairs and the fail-closed
-finalization committed to the branch before the replacement launch. The post-fix audit
-(`reports/feedback_action_v1_post_fix_audit.md`) finds every evidence-level check passing and the findings below
-unchanged, but the runs cannot be certified technically complete under the post-fix rules (no finalization
-receipt in the pre-fix runtime).
+**Status: study closed (owner decision, October 11, 2026) with two qualifications.**
+1. **Technical completeness depends on the evaluator.** Both sessions are technically complete under the original
+   evaluator (`edc9566`, the package that ran). Under the post-fix evaluator (`d0c6518`) both are technically
+   incomplete (F1), because the pre-fix runtime wrote no finalization receipt; every evidence-level check passes
+   there, and the findings below are identical.
+2. **Finalization is not certified.** The recorded deadline margins (2,479 s and 2,438 s) make a late-finalization
+   overrun unlikely, but the missing finalization evidence prevents certification
+   (`reports/feedback_action_v1_post_fix_audit.md`).
+
+The runs used the fixed private package with lock `23cb7142…` (built from `edc9566`), which predates six
+prelaunch-gap repairs and the fail-closed finalization committed to the branch before the replacement launch.
 
 **What this is.** The sanitized results of the frozen protocol's two-session evaluation
-(`live_evaluation.evaluate_sessions`, frozen protocol §9), run once over both technically complete sessions on
+(`live_evaluation.evaluate_sessions`, frozen protocol §9), run once over both sessions (technically complete under the
+original evaluator) on
 October 11, 2026. Aggregates only; the notebooks and raw outputs stay private and account-only.
 
 **Answer to the research question** ("Does structured hypothesis testing improve action selection?"): **not shown on
@@ -17,10 +23,10 @@ the candidate's predictions were never accurate.
 
 ## Sessions
 
-| Session | Attempt | Lifecycle | Model requests | Offline game actions | Technical status |
+| Session | Attempt | Lifecycle | Model requests | Offline game actions | Technical status: original evaluator / post-fix evaluator |
 |---|---|---|---|---|---|
-| 1 | attempt 1 `fa1-s1-8c598909…`: consumed during installation, no study data; replacement `fa1-s1r-d1bc3d6b…` (amendment A1) | 820.6 s | 145 (ceiling 193) | 144 (ceiling 144) | technically complete; permits session 2 |
-| 2 | `fa1-s2-c1264812…` (one attempt, no replacement) | 862.2 s | 145 (ceiling 193) | 144 (ceiling 144) | technically complete |
+| 1 | attempt 1 `fa1-s1-8c598909…`: consumed during installation, no study data; replacement `fa1-s1r-d1bc3d6b…` (amendment A1) | 820.6 s | 145 (ceiling 193) | 144 (ceiling 144) | technically complete, permits session 2 / technically incomplete (F1: no finalization receipt) |
+| 2 | `fa1-s2-c1264812…` (one attempt, no replacement) | 862.2 s | 145 (ceiling 193) | 144 (ceiling 144) | technically complete / technically incomplete (F1: no finalization receipt) |
 
 Both ran on one RTX PRO 6000, bound before study execution. In each, all six episodes reached the 24-action cap, no
 F-rule fired, free text stayed within `ascii_only` (gate A), and all 72 carried statements were reconstructed with 0
