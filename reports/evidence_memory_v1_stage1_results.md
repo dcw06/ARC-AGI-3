@@ -43,8 +43,10 @@ The experiment is interpretable: it can separate retention from comprehension.
 | `memory` | 0.892 | [0.875, 0.900] | 0.90 |
 | `full_history` (reference) | 1.000 | [1.000, 1.000] | 1.00 |
 
-The model read every arm at or within 0.01 of its exact-reader ceiling. Old-evidence accuracy here is therefore set
-by what each package makes available, not by how well the model reads it.
+Performance was near the availability ceilings: `recent_raw`, `state_keyed_raw` and `full_history` at theirs, and
+`memory` at 0.892 against 0.900. Availability explains most of the primary-endpoint difference. (Wording corrected
+after review on October 10, 2026: an earlier version said every arm reached its ceiling and attributed the endpoint
+entirely to availability. The registered verdict is unchanged.)
 
 ## Contrasts (paired, 168 pairs, 60 groups)
 
@@ -93,8 +95,9 @@ seed 0.
 
 - One model (`Qwen3-VL-30B-A3B-Instruct-FP8`), synthetic trajectories, single-turn reading, one draw (168 old
   questions per arm). The results describe access under a restricted context, not forgetting inside the model.
-- The design's availability ceilings determine the primary endpoint almost completely, and the model matched them.
-  This stage therefore tests whether the model reads each representation faithfully. It does not test whether one
+- Performance was near the design's availability ceilings, and availability explains most of the primary-endpoint
+  difference (`memory` 0.892 against its 0.900 ceiling). This stage therefore mainly tests whether the model reads
+  each representation faithfully. It does not test whether one
   representation is better at equal availability; that was contrast 2's restricted reading, which detected no
   difference.
 - The first withheld draw was retired before execution (frozen protocol §5). Draw 2 was drawn after the complete
