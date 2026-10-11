@@ -50,3 +50,29 @@ runner, the live policy or the adapter (a test checks the loaded modules).
 
 The frozen protocol text is unchanged: §10 and §15 already require the checkout to match its review lock; the fix
 makes the evaluator enforce it fully. As agreed, the full suites were not rerun for r3.
+
+## Review snapshots r4 (October 11, 2026): installation fix after session 1, attempt 1
+
+**What happened.** The authorized session 1 attempt (`fa1-s1-8c598909…`) failed in the first cell after 136 s. The
+verified installer's package checks for the game interpreter exited 1 because the Kaggle notebook's `MPLBACKEND`
+(`module://matplotlib_inline.backend_inline`) leaked into the isolated game interpreter; its package check imports
+matplotlib (the game engine's dependency), which rejects that backend. The supervisor never started: no model call,
+no game action, no study data. The attempt is consumed and preserved and is never relaunched.
+
+**Confirmed on the target by that attempt.** Host facts; the publisher and competition mounts, including the
+competition mount layout (an r1 "GPU-only" item); the three games staged by manifest hash; bundle integrity (174
+wheels); the model interpreter's installation and checks; the 31 game wheels.
+
+**Fix.** `runtime.prepare` passes the notebook environment with `MPLBACKEND=Agg` to both installations (the verbatim
+installer is unchanged; the import checks and the supervisor launch already set it).
+
+| Check | Result |
+|---|---|
+| The installed game interpreter's package check | with Kaggle's value: exit 1, the same error; with `Agg`: exit 0 |
+| The unfixed installation path on the CPU replica mounts, Kaggle's value set | fails with the attempt's exact error |
+| The fixed installation path, same conditions | passed in 176.7 s (`reports/feedback_action_v1/runtime_install_check_kaggle_mplbackend.json`) |
+| Regression test (`test_installation_never_inherits_the_notebook_matplotlib_backend`) | passes |
+| Review snapshot r4 | lock `f0a5ad977b95d66fac91d0ddc482f3c02afe0b44bc3d8e954260796908817090`; review check refuses at the live gate, no `nvidia-smi` call; review rehearsal technically complete |
+| Derivations; successor suite | match; 32 tests passed |
+
+Record: `reports/feedback_action_v1/kaggle_mplbackend_reproduction.json`. The frozen protocol text is unchanged.

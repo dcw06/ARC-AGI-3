@@ -1,0 +1,30 @@
+{
+ "schema": "feedback_action_v1_kaggle_mplbackend_reproduction_v1",
+ "gpu_used": false,
+ "network_used": false,
+ "cause": "session 1 attempt 1 (fa1-s1-8c598909…, October 11, 2026) failed in the first cell: the verified installer's game-interpreter package checks exited 1 because the Kaggle notebook's MPLBACKEND (module://matplotlib_inline.backend_inline) leaked into the isolated game interpreter, whose package check imports matplotlib (the game engine's dependency), and matplotlib rejects that backend",
+ "reproductions": {
+  "installed_game_interpreter_package_check": {
+   "MPLBACKEND=module://matplotlib_inline.backend_inline": "exit 1: the same matplotlib backend error",
+   "MPLBACKEND=Agg": "exit 0"
+  },
+  "unfixed_installation_path_on_cpu_replica_mounts_with_kaggle_value": "InstallFailed: package checks exited 1: ...kend_inline' is not a valid value for backend (identical to the attempt)",
+  "fixed_installation_path_on_cpu_replica_mounts_with_kaggle_value": "passed (reports/feedback_action_v1/runtime_install_check_kaggle_mplbackend.json)"
+ },
+ "fix": "research/feedback_action_v1/live/runtime.prepare passes the notebook environment with MPLBACKEND=Agg to both installations (the verbatim installer is unchanged); the import checks and the supervisor launch already set it",
+ "regression_test": "tests/test_feedback_action_v1_successor.py RuntimeBinding.test_installation_never_inherits_the_notebook_matplotlib_backend",
+ "verified_on_the_target_by_attempt_1": [
+  "host facts (CPython 3.12.13, x86_64, glibc 2.35)",
+  "publisher and competition mounts, including the competition mount layout",
+  "the three development games staged by manifest hash",
+  "bundle integrity (174 wheels)",
+  "model interpreter install and package checks",
+  "31 game wheels verified"
+ ],
+ "not_reached_by_attempt_1": [
+  "game interpreter package checks and import closure",
+  "supervisor, monitor and GPU binding",
+  "model load",
+  "any model call or game action"
+ ]
+}

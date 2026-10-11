@@ -24,9 +24,10 @@ SCIENCE = {'research/feedback_action_v1/adapter.py': '26a84909f6786dce8e9e66d5a5
            'research/feedback_action_v1/live/fake_server.py':
                'd80eb516f43e528d29d4474fd8b49a7264f8579518a0964c9ee0dea00d80b8a0'}
 VERIFIED_PROTOCOL_BLOB = '6061cbebb3f21ccd3ca698049f439b0546968f2f'  # control-interface v2 protocol.json at 5a21dd3
-REVIEW = ROOT / 'notebooks/feedback-action-v1-review-r3'  # r2 (the freeze) plus the review's P2 evaluator fix
+REVIEW = ROOT / 'notebooks/feedback-action-v1-review-r4'  # r3 plus the installation MPLBACKEND fix (session 1 attempt 1)
 RETAINED_REVIEW_LOCKS = {1: '4b5b7a0648c968c2ec497e0ba963e2cee42ad4f87c0ec6c204efbd0d7bedf0b5',  # history, unchanged
-                         2: '9ebbc968f91e5f10b0627a617254ab7c52bb38954021e10b631d77244dd06468'}
+                         2: '9ebbc968f91e5f10b0627a617254ab7c52bb38954021e10b631d77244dd06468',
+                         3: '180c33ee895b5af2aca4032b8d5f9f878dbaa57fabdb32a1e1e5b612ed2f415d'}
 
 
 def sha(path):
@@ -101,6 +102,25 @@ class RuntimeBinding(unittest.TestCase):
             (root / RT.RUNTIME).write_text(json.dumps(bad))
             with self.assertRaises(RT.RuntimeBindingError):
                 RT.load(root)
+
+    def test_installation_never_inherits_the_notebook_matplotlib_backend(self):
+        # Session 1, attempt 1 (October 11, 2026): Kaggle's MPLBACKEND reached the game interpreter's package checks.
+        from unittest import mock
+        seen = []
+
+        def fake_install(bundle, venv, runtime, deadline, log, python=None, environment=None, requirements=None,
+                         processes=None):
+            seen.append(dict(environment or {}))
+            return {'passed': True, 'python': str(venv / 'bin' / 'python')}
+        kaggle = {'MPLBACKEND': 'module://matplotlib_inline.backend_inline'}
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.dict('os.environ', kaggle), \
+                mock.patch('certification.direct_publisher_smoke_v1.install.install', fake_install), \
+                mock.patch('certification.direct_publisher_smoke_v1.install.verify_bundle', lambda *a, **k: {}), \
+                mock.patch.object(RT, 'verify_game_wheels', lambda *a, **k: {}), \
+                mock.patch.object(RT, 'import_check', lambda *a, **k: {}):
+            RT.prepare(ROOT, Path(tmp), Path(tmp) / 'bundle', Path(tmp) / 'competition', time.monotonic() + 60, None)
+        self.assertEqual(len(seen), 2)  # the model and the game interpreter
+        self.assertEqual([e['MPLBACKEND'] for e in seen], ['Agg', 'Agg'])
 
     def test_game_lock_is_exactly_the_frozen_competition_wheels(self):
         pins = RT.game_lock(ROOT, self.runtime)

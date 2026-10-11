@@ -320,17 +320,23 @@ def prepare(root, scratch, bundle, competition, deadline, processes, *, python=s
         check()
         if time.monotonic() >= deadline:
             raise TimeoutError('installation deadline reached')
+    # Kaggle notebooks set MPLBACKEND to the Jupyter inline backend (module://matplotlib_inline.backend_inline),
+    # which the isolated interpreters do not have. The game engine imports matplotlib, so the verified installer's
+    # package checks failed on it (session 1, attempt 1, October 11, 2026). Both installations therefore run with
+    # the non-interactive backend, as the import checks and the supervisor launch already do.
+    environment = {**os.environ, 'MPLBACKEND': 'Agg'}
     try:
         receipt['bundle'] = verify_bundle(bundle, runtime['dataset'], runtime['bundle'], within, inputs=bundle_inputs)
         within()
         receipt['model'] = install(bundle, scratch / 'model' / 'venv', runtime['runtime'], deadline,
-                                   scratch / 'model-install.log', python=python, processes=processes)
+                                   scratch / 'model-install.log', python=python, environment=environment,
+                                   processes=processes)
         within()
         wheels = Path(competition) / runtime['competition']['game_wheels']
         receipt['game_wheels'] = verify_game_wheels(wheels, root, runtime)
         receipt['game'] = install(wheels, scratch / 'game' / 'venv', runtime['game']['runtime'], deadline,
-                                  scratch / 'game-install.log', python=python, processes=processes,
-                                  requirements=root / runtime['game']['requirements'])
+                                  scratch / 'game-install.log', python=python, environment=environment,
+                                  processes=processes, requirements=root / runtime['game']['requirements'])
         within()
         receipt['model_closure'] = import_check(receipt['model']['python'], 'model', root, processes, deadline,
                                                 scratch / 'model-install.log')
