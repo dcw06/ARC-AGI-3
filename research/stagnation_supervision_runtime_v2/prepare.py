@@ -18,6 +18,7 @@ an explicit CPU rehearsal (`SSV_REHEARSAL=1`), where it is recorded and never be
 """
 import base64
 import gzip
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -43,6 +44,7 @@ def _retain(output, scratch, receipt):
             if folder.exists():
                 data = {p.name: base64.b64encode(p.read_bytes()).decode() for p in folder.iterdir() if p.is_file()}
                 packed = gzip.compress(json.dumps(data, sort_keys=True).encode())
+                receipt.setdefault('installer_evidence_sha256', {})[role] = hashlib.sha256(packed).hexdigest()
                 EvidenceStore(output, 'logs').save('install-' + role + '.json',
                                                    {'encoding': 'gzip-base64-json', 'data': base64.b64encode(packed).decode()})
     EvidenceStore(output, 'control').save('installation.json', receipt)
@@ -72,7 +74,29 @@ def prepare(scratch, output, wheelhouse, game_wheels, manifest, started, *, root
     receipt = {'passed': False, 'scope': 'runtime_v2_split_install', 'runtime_binding': protocol['scope'],
                'installation_seconds': seconds, 'override': install_seconds is not None, 'error': None,
                'evidence_class': 'cpu_rehearsal_not_target_timing' if install_seconds is not None else 'first_cell'}
+    receipt.update(first_cell_monotonic=started, runtime_identity={
+        k: protocol[k] for k in ('dataset', 'bundle', 'runtime')},
+        competition_manifest_sha256=protocol['competition']['manifest_sha256'])
     processes = InstallationProcesses(30, 10)
+    game_processes = InstallationProcesses(30, 10)
+
+    class TrackedGameEnvironment(HeadlessEnvironment):
+        def execute(self, stage, argv):
+            if any(row['stage'] == stage for row in self.stages):
+                raise ValueError('stage cannot be retried: ' + stage)
+            row = {'stage': stage, 'started_seconds': time.monotonic() - self.started,
+                   'passed': False, 'error': None}
+            self.stages.append(row)
+            try:
+                result = _run(argv, self.output / 'stages.log', self.deadline, self.env, stage, game_processes)
+                row['passed'] = True
+                return result
+            except BaseException as exc:
+                row['error'] = type(exc).__name__ + ': ' + str(exc)[:512]
+                raise
+            finally:
+                row['ended_seconds'] = time.monotonic() - self.started
+                (self.output / 'stages.json').write_text(json.dumps(self.stages), encoding='utf-8')
     evidence = scratch / 'install-evidence'
     try:
         check()
@@ -95,7 +119,7 @@ def prepare(scratch, output, wheelhouse, game_wheels, manifest, started, *, root
         _run([model['python'], '-I', '-c', ISOLATION_CHECK + MODEL_METADATA_EXTRA], log, deadline, env,
              'model metadata and isolation', processes)
         check()
-        runner = HeadlessEnvironment(scratch / 'game', evidence / 'game', host_python=sys.executable,
+        runner = TrackedGameEnvironment(scratch / 'game', evidence / 'game', host_python=sys.executable,
                                      seconds=max(0, deadline - time.monotonic()))
         runner.deadline = deadline  # one absolute deadline shared with the model interpreter's work
         runner.env.update(VLLM_NO_USAGE_STATS='1', USE_TF='0', TRANSFORMERS_NO_TF='1', CUDA_VISIBLE_DEVICES='')
@@ -107,21 +131,39 @@ def prepare(scratch, output, wheelhouse, game_wheels, manifest, started, *, root
         runner.install('install_game', game_wheels, ENVIRONMENT_PINS)
         runner.check()
         runner.execute('game_imports', [runner.python, '-I', '-c', GAME_CHECK])
+        from research.stagnation_supervision_runtime_v2.publisher_install import PACKAGE_CHECK
+        game_runtime = {**protocol['runtime']['game'], 'imports': ['arc_agi', 'arcengine', 'numpy']}
+        game_checked = runner.execute('game_metadata', [runner.python, '-I', '-c', PACKAGE_CHECK,
+                                                      json.dumps(game_runtime)])
+        receipt['game_install'] = json.loads(game_checked.stdout.strip().splitlines()[-1])
         check()
         receipt['passed'] = True
         receipt['interpreters'] = {'model': model['python'], 'game': runner.python}
         return dict(receipt['interpreters'])
-    except Exception as exc:
+    except BaseException as exc:
         receipt['error'] = type(exc).__name__ + ': ' + str(exc)[:512]
         raise
     finally:
-        cleanup = processes.stop(max(deadline, time.monotonic() + 15))
-        receipt['model_process_cleanup'] = {'groups_absent': cleanup['groups_absent'], 'error': cleanup['error'],
-                                            'interrupted': cleanup['interrupted'], 'groups': len(cleanup['groups'])}
-        if not cleanup['groups_absent'] or cleanup['error'] or cleanup['interrupted']:
-            receipt['passed'] = False
-            receipt['error'] = receipt['error'] or 'installation process cleanup not verified'
+        # Restore nested subreaper settings in reverse acquisition order.
+        from research.stagnation_supervision_runtime_v2.publisher_process import defer_startup_signals
+        with defer_startup_signals():
+            for role, tracker in (('game', game_processes), ('model', processes)):
+                cleanup = tracker.stop(max(deadline, time.monotonic() + 15))
+                receipt[role + '_process_cleanup'] = {**cleanup, 'groups': len(cleanup['groups']),
+                    'commands': [{**row, 'argv': entry['group'].argv,
+                                  'returncode': entry['group'].process.returncode
+                                  if entry['group'].process is not None else None}
+                                 for row, entry in zip(cleanup['groups'], tracker.groups)]}
+                if not cleanup['groups_absent'] or cleanup['error'] or cleanup['interrupted']:
+                    receipt['passed'] = False
+                    receipt['error'] = receipt['error'] or 'installation process cleanup not verified'
         receipt['elapsed_seconds'] = time.monotonic() - started
+        if receipt['elapsed_seconds'] >= seconds:
+            receipt.update(passed=False, error=receipt['error'] or 'installation deadline exceeded during cleanup')
         _retain(output, scratch, receipt)
+        if time.monotonic() >= deadline:
+            receipt.update(passed=False, error=receipt['error'] or 'installation deadline exceeded during evidence finalization',
+                           elapsed_seconds=time.monotonic() - started)
+            EvidenceStore(output, 'control').save('installation.json', receipt)
         if receipt['error'] and sys.exc_info()[0] is None:
             raise RuntimeError(receipt['error'])

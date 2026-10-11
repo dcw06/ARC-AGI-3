@@ -83,7 +83,9 @@ class StartupOwnership(unittest.TestCase):
                     self.assertEqual(value['ownership'], 'uncertain')
                 else:
                     self.assertIsNotNone(child.poll(), 'owned supervisor survived interruption')
-                    self.assertTrue(value['groups_absent'])
+                    # This stand-in never establishes inner child ownership. Its
+                    # own group is stopped, but absence of other groups is unknown.
+                    self.assertFalse(value['groups_absent'])
                     self.assertEqual(value['ownership'], 'registered')
             finally:
                 if child is not None:

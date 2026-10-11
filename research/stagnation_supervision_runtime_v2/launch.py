@@ -42,16 +42,8 @@ def _stop_group(pgid):
 
 
 def _owned_groups(output, supervisor_pid):
-    groups = [supervisor_pid]
-    ownership = output / 'control/ownership.json'
-    if ownership.is_file() and not ownership.is_symlink() and ownership.stat().st_size <= 8192:
-        record = json.loads(ownership.read_bytes())
-        for name in ('worker_pgid', 'monitor_pgid'):
-            pgid = record.get(name)
-            if type(pgid) is int and pgid > 0 and pgid not in groups:
-                groups.append(pgid)
-    return groups
-
+    from research.stagnation_supervision_runtime_v2.ownership import recovery_inventory
+    return recovery_inventory(output, supervisor_pid)[0]
 
 def run_supervisor(output, working, game_python, model_python, games, *, started, mode, internal_seconds,
                    fault='none', root=ROOT, spawn=subprocess.Popen, session=None):
@@ -108,8 +100,14 @@ def run_supervisor(output, working, game_python, model_python, games, *, started
         with defer_startup_signals():
             if process is not None:
                 groups = [process.pid]
+                inner_certain = False
                 try:
-                    groups = _owned_groups(output, process.pid)
+                    # Freeze child creation before scanning recovery records. Undetached
+                    # bootstraps are still in this group; detached children registered first.
+                    cleanup[str(process.pid)] = _stop_group(process.pid)
+                    process.wait(timeout=5)
+                    from research.stagnation_supervision_runtime_v2.ownership import recovery_inventory
+                    groups, inner_certain = recovery_inventory(output, process.pid)
                 except BaseException as exc:
                     errors.append('ownership evidence: ' + type(exc).__name__)
                 for pgid in groups:
@@ -131,12 +129,13 @@ def run_supervisor(output, working, game_python, model_python, games, *, started
                 elif process.stdout is not None:
                     process.stdout.close()
             absent = ownership == 'never_spawned' or (ownership == 'registered' and bool(cleanup)
-                                                      and all(v is True for v in cleanup.values()))
+                                                      and inner_certain and all(v is True for v in cleanup.values()))
             if ownership == 'uncertain':
                 errors.append('spawn ownership uncertain; group absence cannot be verified')
             drained = thread is None or not thread.is_alive()
             control.save('first-cell-supervisor-cleanup.json', {
                 'ownership': ownership, 'groups': cleanup, 'groups_absent': absent, 'drain_finished': drained,
+                'child_ownership_verified': inner_certain if process is not None else ownership == 'never_spawned',
                 'returncode': process.returncode if process else None, 'errors': errors,
                 'checked_monotonic': time.monotonic()})
     report_path = output / 'control/outer.json'

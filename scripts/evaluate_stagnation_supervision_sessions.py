@@ -25,10 +25,13 @@ def main():
     parser.add_argument('--session2-execution', type=Path)
     parser.add_argument('--annotations', required=True, type=Path)
     parser.add_argument('--annotations-sha256', required=True)
+    parser.add_argument('--annotations-commitment', required=True, type=Path,
+                        help='private receipt of the prior immutable annotation/sample Git commit')
     args = parser.parse_args()
     result = evaluate_sessions({'1': args.session1, '2': args.session2}, {'1': args.record1, '2': args.record2},
                                annotations=args.annotations, annotations_sha256=args.annotations_sha256,
-                               session2_execution=args.session2_execution)
+                               session2_execution=args.session2_execution,
+                               annotations_commitment=args.annotations_commitment)
     print(json.dumps(result, indent=1, allow_nan=False, default=str))
     return 0 if result['pooled'] is not None else 1
 

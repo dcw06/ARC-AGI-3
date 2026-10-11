@@ -167,3 +167,91 @@ def validate(sample, annotations):
                                'status': 'descriptive only (amendment S1); not label certification'}
     return {'version': VERSION, 'sample_sha256': sample['sample_sha256'], 'strata': summary,
             'label_disagreement': disagreement}
+def verify_commitment(receipt, sample, annotations, digest):
+    """Verify an immutable, local Git commit of the completed review before any comparison.
+
+    A caller-supplied digest alone is insufficient. The private receipt names an
+    existing commit whose two blobs must be the exact evidence-bound sample and
+    annotations now being pooled. No Git/network write occurs during verification.
+    """
+    import hashlib
+    import json
+    from pathlib import Path
+    import re
+    import subprocess
+    if receipt is None:
+        raise ValueError('prior private annotation commitment required')
+    path = Path(receipt)
+    if path.is_symlink() or not path.is_file() or path.stat().st_size > 8192:
+        raise ValueError('invalid private annotation commitment receipt')
+    record = json.loads(path.read_bytes())
+    commit = record.get('commit', '')
+    repository = Path(record['repository']).resolve()
+    if record.get('scope') != 'stagnation_supervision_private_annotations_v1' or not re.fullmatch('[0-9a-f]{40}', commit):
+        raise ValueError('invalid private annotation commitment')
+    def git(*args):
+        import os
+        env = {k: v for k, v in os.environ.items() if k not in ('GIT_DIR', 'GIT_WORK_TREE', 'GIT_INDEX_FILE')}
+        return subprocess.run(['git', '-C', str(repository), *args], check=True,
+                              capture_output=True, timeout=10, env=env).stdout
+    try:
+        if Path(git('rev-parse', '--show-toplevel').decode().strip()).resolve() != repository:
+            raise ValueError('commitment repository must be its own private checkout')
+        if git('remote').strip():
+            raise ValueError('annotation repository must have no publication remote')
+        if git('cat-file', '-t', commit).strip() != b'commit':
+            raise ValueError('annotation commitment is not a commit')
+        committed_annotations = git('show', commit + ':annotations.json')
+        committed_sample = git('show', commit + ':sample.json')
+    except (OSError, subprocess.SubprocessError) as exc:
+        raise ValueError('private annotation commit unavailable or invalid') from exc
+    if (hashlib.sha256(committed_annotations).hexdigest() != digest
+            or committed_annotations != Path(annotations).read_bytes()
+            or record.get('annotations_sha256') != digest
+            or record.get('sample_sha256') != sample['sample_sha256']
+            or json.loads(committed_sample) != sample):
+        raise ValueError('private annotation commit does not bind these exact evidence inputs and annotations')
+    validate(sample, json.loads(committed_annotations))
+    return {'commit': commit, 'annotations_sha256': digest, 'sample_sha256': sample['sample_sha256']}
+
+
+def commit_annotations(repository, receipt, sample_path, annotations_path):
+    """Owner-invoked local commitment; refuses reuse, incomplete annotations or a publication remote.
+
+    Use a new private directory outside every other repository. Git's configured
+    author identity is required. This never uploads, pushes or computes comparisons.
+    """
+    import hashlib
+    import json
+    from pathlib import Path
+    import subprocess
+    repository, receipt = Path(repository).resolve(), Path(receipt).resolve()
+    if repository.exists() or receipt.exists():
+        raise FileExistsError('private commitment destination already exists')
+    sample = json.loads(Path(sample_path).read_bytes())
+    raw = Path(annotations_path).read_bytes()
+    validate(sample, json.loads(raw))
+    import os
+    env = {k: v for k, v in os.environ.items() if k not in ('GIT_DIR', 'GIT_WORK_TREE', 'GIT_INDEX_FILE')}
+    probe = subprocess.run(['git', '-C', str(repository.parent), 'rev-parse', '--show-toplevel'],
+                           capture_output=True, timeout=10, env=env)
+    if probe.returncode == 0:
+        raise ValueError('private annotations must be committed outside every other repository')
+    repository.mkdir(parents=True, mode=0o700)
+    def git(*args):
+        return subprocess.run(['git', '-C', str(repository), *args], check=True,
+                              capture_output=True, timeout=10, env=env).stdout
+    git('init', '--quiet')
+    (repository / 'annotations.json').write_bytes(raw)
+    (repository / 'sample.json').write_bytes(Path(sample_path).read_bytes())
+    git('add', '--', 'annotations.json', 'sample.json')
+    git('commit', '--quiet', '-m', 'Commit completed Track 3 self-review before pooled comparison')
+    record = {'scope': 'stagnation_supervision_private_annotations_v1', 'repository': str(repository),
+              'commit': git('rev-parse', 'HEAD').decode().strip(),
+              'annotations_sha256': hashlib.sha256(raw).hexdigest(), 'sample_sha256': sample['sample_sha256']}
+    receipt.parent.mkdir(parents=True, exist_ok=True)
+    with receipt.open('x', encoding='utf-8', newline='\n') as stream:
+        json.dump(record, stream, indent=1)
+        stream.write('\n')
+    verify_commitment(receipt, sample, annotations_path, record['annotations_sha256'])
+    return record

@@ -114,7 +114,7 @@ TRACK3 = {
          f'from {CL} import evaluate as trajectories\nfrom {CL}.model_service import validate_ready\n'
          f'from {CL}.server_config import validate as validate_configuration', 1),
         ("VERSION = 'stagnation_supervision_target_evaluation_r1'",
-         "VERSION = 'stagnation_supervision_target_evaluation_runtime_v2_r2'", 1),
+         "VERSION = 'stagnation_supervision_target_evaluation_runtime_v2_r3'", 1),
         # r2: certify the fail-closed finalization and the protected startup ownership independently (Track 1 lessons).
         ("    require(first['study_status'] == outer['status'] == 'study_complete_pending_independent_evaluation', 'lifecycle status')\n",
          "    require(first['study_status'] == outer['status'] == 'study_complete_pending_independent_evaluation',\n"
@@ -328,6 +328,191 @@ TRACK3 = {
          "                      source_cleanup=remove_source if extracted else None)", 1)]),
 }
 
+# r3 independent prelaunch repairs; literal, invertible changes over the frozen sources.
+PRELAUNCH_REPAIRS = {'supervisor.py': [('    rfd = wfd = None\n    uuid = None\n',
+                    '    rfd = wfd = None\n'
+                    '    uuid = None\n'
+                    '    from research.stagnation_supervision_runtime_v2.ownership import ChildOwners\n'
+                    '    from research.stagnation_supervision_runtime_v2.publisher_process import '
+                    'defer_startup_signals\n'
+                    '    nonce = secrets.token_hex(32)\n'
+                    '    owners = ChildOwners(output, started, nonce)\n',
+                    1),
+                   ('    def launch(argv, *, env=None, pass_fds=()):\n'
+                    '        process = spawn(argv, cwd=ROOT, env=env, pass_fds=pass_fds, '
+                    'start_new_session=True,\n'
+                    '                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT)\n'
+                    '        processes.append(process)\n'
+                    '        thread = threading.Thread(target=drain, args=(process, str(process.pid)), '
+                    'daemon=True)\n'
+                    '        thread.start()\n'
+                    '        drains.append(thread)\n'
+                    '        return process\n',
+                    '    def launch(argv, *, env=None, pass_fds=()):\n'
+                    '        with defer_startup_signals():\n'
+                    "            role = 'worker' if not processes else 'monitor'\n"
+                    '            process = owners.start(role, argv, spawn=spawn, cwd=ROOT, env=env, '
+                    'pass_fds=pass_fds)\n'
+                    '            processes.append(process)\n'
+                    '            thread = threading.Thread(target=drain, args=(process, str(process.pid)), '
+                    'daemon=True)\n'
+                    '            drains.append(thread)\n'
+                    '            thread.start()\n'
+                    '        return process\n',
+                    1),
+                   ('        try:\n            env = worker_environment(os.environ, scratch)',
+                    '        try:\n'
+                    '            owners.save()\n'
+                    '            env = worker_environment(os.environ, scratch)',
+                    1),
+                   ('            nonce = secrets.token_hex(32)\n', '            # Nonce fixed before child creation.\n', 1),
+                   ("            control.save('ownership.json', {'worker_pgid': worker.pid, 'monitor_pgid': "
+                    "monitor.pid, 'nonce': nonce,\n"
+                    "                                            'first_cell_monotonic': started})",
+                    '            owners.save()  # both per-child recovery records already exist',
+                    1),
+                   ("        except Exception as exc:\n            report['error'] =",
+                    "        except BaseException as exc:\n            report['error'] =",
+                    1),
+                   ('        finally:\n'
+                    '            for fd in (rfd, wfd):\n'
+                    '                if fd is not None:\n'
+                    '                    os.close(fd)\n'
+                    '            from scripts.run_grounded_action_v1_engine_local import terminate_group, '
+                    'group_exited\n'
+                    '            cleanup_errors = []\n'
+                    '            for process in processes:\n'
+                    '                try:\n'
+                    '                    terminate_group(process, grace=.5, verification_seconds=3)\n'
+                    '                except Exception as exc:\n'
+                    "                    cleanup_errors.append(type(exc).__name__ + ': ' + str(exc)[:128])\n"
+                    '            try:\n'
+                    "                report['process_groups_exited'] = not cleanup_errors and "
+                    'all(group_exited(p.pid) for p in processes)\n'
+                    '            except Exception as exc:\n'
+                    "                cleanup_errors.append(type(exc).__name__ + ': ' + str(exc)[:128])\n"
+                    '            try:\n'
+                    '                probes = probes_for(mode)(processes[0].pid if processes else 1, '
+                    'scratch)\n'
+                    '                if uuid is None:\n'
+                    '                    uuid = validate_binding(probes.bind())\n'
+                    '                receipt = independent_cleanup(probes, expected_uuid=uuid, '
+                    "groups_absent=report['process_groups_exited'],\n"
+                    '                                              deadline=started + internal_seconds - 2)\n'
+                    "                control.save('gpu-cleanup.json', receipt)\n"
+                    "                report['independent_gpu_cleanup_verified'] = "
+                    "receipt['gpu_cleanup_verified']\n"
+                    '            except Exception as exc:\n'
+                    "                report['cleanup_error'] = type(exc).__name__ + ': ' + str(exc)[:256]\n"
+                    '            for thread in drains:\n'
+                    '                thread.join(timeout=2)\n'
+                    '            if cleanup_errors or log_errors or any(t.is_alive() for t in drains):\n'
+                    "                report['error'] = report['error'] or 'process/log cleanup failure'\n",
+                    '        finally:\n'
+                    '            with defer_startup_signals():\n'
+                    '                for fd in (rfd, wfd):\n'
+                    '                    if fd is not None:\n'
+                    '                        os.close(fd)\n'
+                    "                report['process_groups_exited'], cleanup_errors = owners.stop()\n"
+                    "                report['child_ownership_verified'] = report['process_groups_exited']\n"
+                    '                try:\n'
+                    '                    probes = probes_for(mode)(processes[0].pid if processes else 1, '
+                    'scratch)\n'
+                    '                    if uuid is None:\n'
+                    '                        uuid = validate_binding(probes.bind())\n'
+                    '                    receipt = independent_cleanup(probes, expected_uuid=uuid, '
+                    "groups_absent=report['process_groups_exited'],\n"
+                    '                                                  deadline=started + internal_seconds - '
+                    '2)\n'
+                    "                    control.save('gpu-cleanup.json', receipt)\n"
+                    "                    report['independent_gpu_cleanup_verified'] = "
+                    "receipt['gpu_cleanup_verified']\n"
+                    '                except Exception as exc:\n'
+                    "                    report['cleanup_error'] = type(exc).__name__ + ': ' + "
+                    'str(exc)[:256]\n'
+                    '                for thread in drains:\n'
+                    '                    if thread.ident is not None:\n'
+                    '                        thread.join(timeout=2)\n'
+                    '                for process, thread in zip(processes, drains):\n'
+                    '                    if thread.ident is None and process.stdout is not None:\n'
+                    '                        process.stdout.close()\n'
+                    '                if cleanup_errors or log_errors or any(t.is_alive() for t in drains):\n'
+                    "                    report['error'] = report['error'] or 'process/log cleanup "
+                    "failure'\n",
+                    1)],
+ 'launch.py': [('def _owned_groups(output, supervisor_pid):\n'
+                '    groups = [supervisor_pid]\n'
+                "    ownership = output / 'control/ownership.json'\n"
+                '    if ownership.is_file() and not ownership.is_symlink() and ownership.stat().st_size <= '
+                '8192:\n'
+                '        record = json.loads(ownership.read_bytes())\n'
+                "        for name in ('worker_pgid', 'monitor_pgid'):\n"
+                '            pgid = record.get(name)\n'
+                '            if type(pgid) is int and pgid > 0 and pgid not in groups:\n'
+                '                groups.append(pgid)\n'
+                '    return groups\n',
+                'def _owned_groups(output, supervisor_pid):\n'
+                '    from research.stagnation_supervision_runtime_v2.ownership import recovery_inventory\n'
+                '    return recovery_inventory(output, supervisor_pid)[0]',
+                1),
+               ('                try:\n'
+                '                    groups = _owned_groups(output, process.pid)\n'
+                '                except BaseException as exc:\n'
+                "                    errors.append('ownership evidence: ' + type(exc).__name__)\n",
+                '                inner_certain = False\n'
+                '                try:\n'
+                '                    # Freeze child creation before scanning recovery records. Undetached\n'
+                '                    # bootstraps are still in this group; detached children registered '
+                'first.\n'
+                '                    cleanup[str(process.pid)] = _stop_group(process.pid)\n'
+                '                    process.wait(timeout=5)\n'
+                '                    from research.stagnation_supervision_runtime_v2.ownership import '
+                'recovery_inventory\n'
+                '                    groups, inner_certain = recovery_inventory(output, process.pid)\n'
+                '                except BaseException as exc:\n'
+                "                    errors.append('ownership evidence: ' + type(exc).__name__)\n",
+                1),
+               ("            absent = ownership == 'never_spawned' or (ownership == 'registered' and "
+                'bool(cleanup)\n'
+                '                                                      and all(v is True for v in '
+                'cleanup.values()))',
+                "            absent = ownership == 'never_spawned' or (ownership == 'registered' and "
+                'bool(cleanup)\n'
+                '                                                      and inner_certain and all(v is True '
+                'for v in cleanup.values()))',
+                1),
+               ("                'ownership': ownership, 'groups': cleanup, 'groups_absent': absent, "
+                "'drain_finished': drained,",
+                "                'ownership': ownership, 'groups': cleanup, 'groups_absent': absent, "
+                "'drain_finished': drained,\n"
+                "                'child_ownership_verified': inner_certain if process is not None else "
+                "ownership == 'never_spawned',",
+                1)],
+ 'target_evaluate.py': [("    require(first['dependency_trees_removed'] is (True if first['installation'] != "
+                         "'none' else None), 'dependency cleanup')",
+                         "    require(first['dependency_trees_removed'] is (True if first['installation'] != "
+                         "'none' else None), 'dependency cleanup')\n"
+                         '    from research.stagnation_supervision_runtime_v2.installation_evidence import '
+                         'validate_installation\n'
+                         '    validate_installation(root, first, outer, mode=mode)',
+                         1),
+                        ("    groups = cleanup['groups']",
+                         "    require(cleanup.get('child_ownership_verified') is True and "
+                         "outer.get('child_ownership_verified') is True,\n"
+                         "            'child ownership uncertainty cannot certify cleanup')\n"
+                         '    from research.stagnation_supervision_runtime_v2.ownership import '
+                         'recovery_inventory\n'
+                         "    supervisor_groups = [int(p) for p in cleanup['groups'] if int(p) not in "
+                         "(owned['worker_pgid'], owned['monitor_pgid'])]\n"
+                         "    require(len(supervisor_groups) == 1, 'supervisor group inventory')\n"
+                         '    recovered, certain = recovery_inventory(root, supervisor_groups[0])\n'
+                         "    require(certain and {str(p) for p in recovered} == set(cleanup['groups']), "
+                         "'per-child ownership recovery inventory')\n"
+                         "    groups = cleanup['groups']",
+                         1)]}
+for _name, _replacements in PRELAUNCH_REPAIRS.items():
+    TRACK3[_name][1].extend(_replacements)
+
 # r2 behavioural repairs (lessons from Tracks 1, 2 and 4; reports/stagnation_supervision_runtime_v2_gap_checklist_r2.md).
 # They are the only replacements that change behaviour rather than rebind runtime paths: each source-text prefix below
 # names exactly one replacement, and the tests exempt exactly these from the runtime-path rule.
@@ -340,6 +525,9 @@ R2_REPAIRS = {
         "        receipt = run(working / OUTPUT_NAME, working, started=started, root=source, mode='live', session=session)"),
     'target_evaluate.py': ("    require(first['study_status']", "    require(cleanup['drain_finished']"),
 }
+
+for _name, _replacements in PRELAUNCH_REPAIRS.items():
+    R2_REPAIRS[_name] = R2_REPAIRS.get(_name, ()) + tuple(old for old, _, _ in _replacements)
 
 # Unchanged Track 3 science and lifecycle files the successor imports; their hashes are bound in the protocol.
 SCIENCE = (
@@ -525,7 +713,7 @@ def derive(read_reference):
               'reference': {'branch': REFERENCE_BRANCH, 'commit': REFERENCE_COMMIT, 'inputs': inputs},
               'track3': {'branch': TRACK3_BRANCH, 'commit': TRACK3_COMMIT},
               'files': records, 'protocol_sha256': sha(outputs['protocol.json']),
-              'note': ('Runtime bindings plus the r2 behavioural repairs named in R2_REPAIRS (startup ownership and '
+              'note': ('Runtime bindings plus the r2/r3 behavioural repairs named in R2_REPAIRS (startup ownership and '
                        'fail-closed finalization, with their independent checks). The science files listed in '
                        'protocol.json are imported unchanged. '
                        'Hand-written successor modules (authority, model_binding, mounts, prepare, closure, notebook, '

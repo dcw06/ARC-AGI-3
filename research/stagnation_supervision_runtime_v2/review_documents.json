@@ -1,10 +1,11 @@
 {
- "schema": "stagnation_supervision_runtime_v2_review_documents_r2",
+ "schema": "stagnation_supervision_runtime_v2_review_documents_r3",
  "note": "Bound in every review lock's review_documents with the strict import closure of the independent evaluators (authority.review_inventory). Kept as data so the payload closure scan does not embed the evaluators.",
  "documents": [
   "reports/stagnation_supervision_v1_protocol_v2_frozen.md",
   "reports/stagnation_supervision_runtime_v2_owner_questions.md",
   "reports/stagnation_supervision_runtime_v2_gap_checklist_r2.md",
+  "reports/stagnation_supervision_runtime_v2_prelaunch_repairs_r3.md",
   "reports/stagnation_supervision_v1_ls20_decision.json"
  ],
  "evaluation_entries": [
@@ -17,6 +18,7 @@
   "scripts/evaluate_stagnation_supervision_runtime_v2.py",
   "scripts/evaluate_stagnation_supervision_sessions.py",
   "scripts/stagnation_supervision_selfreview.py",
+  "scripts/commit_stagnation_supervision_selfreview.py",
   "scripts/replay_transition_evidence_v1.py"
  ]
 }

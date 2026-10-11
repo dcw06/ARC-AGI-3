@@ -49,7 +49,7 @@ REQUIRED_SOURCE = {PACKAGE + '/' + n for n in (
     '__init__.py', 'authority.py', 'protocol.json', 'derivation.json', 'model_binding.py', 'mounts.py', 'prepare.py',
     'launch.py', 'supervisor.py', 'worker.py', 'host.py', 'monitor.py', 'resources.py', 'publisher_install.py',
     'publisher_preflight.py', 'publisher_process.py', 'publisher_host.py', 'proposal.json', 'trusted_manifest.json',
-    'trusted_requirements.lock')}
+    'trusted_requirements.lock', 'ownership.py')}
 # Review documents (r2): bound in the lock's `review_documents` with the evaluators' import closure. The list is data
 # (review_documents.json), so the payload closure scan does not embed the evaluators.
 REVIEW_LIST = Path(__file__).with_name('review_documents.json')

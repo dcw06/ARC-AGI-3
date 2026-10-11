@@ -15,7 +15,7 @@ from research.stagnation_supervision_v1.closed_loop import evaluate as trajector
 from research.stagnation_supervision_v1.closed_loop.model_service import validate_ready
 from research.stagnation_supervision_v1.closed_loop.server_config import validate as validate_configuration
 
-VERSION = 'stagnation_supervision_target_evaluation_runtime_v2_r2'
+VERSION = 'stagnation_supervision_target_evaluation_runtime_v2_r3'
 
 
 def require(condition, message):
@@ -108,9 +108,18 @@ def lifecycle(root, spec, *, mode, session, internal_seconds):
             and first.get('installation') in (('target',) if mode == 'live' else ('none', 'staged_rehearsal')),
             'runtime v2 installation class')
     require(first['dependency_trees_removed'] is (True if first['installation'] != 'none' else None), 'dependency cleanup')
+    from research.stagnation_supervision_runtime_v2.installation_evidence import validate_installation
+    validate_installation(root, first, outer, mode=mode)
     require(cleanup['drain_finished'] is True and cleanup['returncode'] == 0 and cleanup['errors'] == []
             and cleanup.get('ownership') == 'registered' and cleanup.get('groups_absent') is True,
             'first-cell process/log cleanup')
+    require(cleanup.get('child_ownership_verified') is True and outer.get('child_ownership_verified') is True,
+            'child ownership uncertainty cannot certify cleanup')
+    from research.stagnation_supervision_runtime_v2.ownership import recovery_inventory
+    supervisor_groups = [int(p) for p in cleanup['groups'] if int(p) not in (owned['worker_pgid'], owned['monitor_pgid'])]
+    require(len(supervisor_groups) == 1, 'supervisor group inventory')
+    recovered, certain = recovery_inventory(root, supervisor_groups[0])
+    require(certain and {str(p) for p in recovered} == set(cleanup['groups']), 'per-child ownership recovery inventory')
     groups = cleanup['groups']
     require(type(groups) is dict and len(groups) == 3 and all(v is True for v in groups.values())
             and all(k.isdigit() and int(k) > 0 for k in groups), 'owned group closure inventory')

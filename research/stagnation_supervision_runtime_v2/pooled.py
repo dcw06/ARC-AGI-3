@@ -77,6 +77,8 @@ def session_episodes(run_folder, spec, trigger_spec, session):
     from research.stagnation_supervision_v1.closed_loop import evaluate as E
     from research.stagnation_supervision_v1.closed_loop.evidence import load_verified
     run = load_verified(run_folder)
+    inventory = json.loads((Path(run_folder) / 'manifest.json').read_bytes())
+    evidence_sha256 = O.digest(inventory)
     replay = E._replay_module()
     schedule = {s['pair_id']: s for s in spec['schedule']}
     out = []
@@ -91,6 +93,8 @@ def session_episodes(run_folder, spec, trigger_spec, session):
                     'game': episode['game_id'].split('-', 1)[0], 'repeat_of': row.get('repeat_of'),
                     'repeat': row.get('repeat_of') is not None, 'levels_completed': result['levels_completed'],
                     'stop_reason': result['stop_reason'], 'first_tests': _first_tests(episode),
+                    'evidence_inventory_sha256': evidence_sha256,
+                    'reflection_evidence': episode.get('supervision'),
                     'delivered': [e['action_index'] for e in events
                                   if e.get('outcome') == 'called' and e.get('delivered') is not None]})
     return out
@@ -284,14 +288,19 @@ def compute(episodes, trigger_spec, horizon):
 
 
 def evaluate_sessions(outputs, records, *, annotations, annotations_sha256, mode='live', specs=None,
-                      internal_seconds=None, session2_execution=None, root=None, trigger_spec=None):
+                      internal_seconds=None, session2_execution=None, root=None, trigger_spec=None,
+                      annotations_commitment=None):
     """outputs / records: {'1': path, '2': path} (target output folders; retained study-report JSON files).
     Returns the pooled evaluation; comparisons are withheld (None) unless every binding check passes."""
     from research.stagnation_supervision_v1 import thresholds as S
     from research.stagnation_supervision_v1.closed_loop.bridge import session_spec
     from research.stagnation_supervision_v1.closed_loop.runner import protocol
     from research.stagnation_supervision_runtime_v2.report import study_report
-    trigger_spec = trigger_spec or S.load()
+    if mode not in ('live', 'rehearsal'):
+        raise ValueError('explicit live or rehearsal mode required')
+    if mode == 'live' and trigger_spec is not None:
+        raise ValueError('live pooling uses frozen thresholds; trigger override refused')
+    trigger_spec = trigger_spec if trigger_spec is not None else S.load()
     problems, sessions = [], {}
     if mode == 'live' and (specs is not None or internal_seconds is not None):
         raise ValueError('live pooling uses the frozen session schedules and lifecycle')
@@ -329,14 +338,17 @@ def evaluate_sessions(outputs, records, *, annotations, annotations_sha256, mode
         episodes += session_episodes(Path(outputs[s]) / 'worker/run', sessions[s]['spec'], trigger_spec, s)
     sample = SR.draw(SR.candidates(episodes, trigger_spec, horizon), inputs=inputs_digest(episodes))
     try:
+        commitment = None
         if sha256_file(annotations) != annotations_sha256:
             raise ValueError('annotations differ from the committed hash')
+        if mode == 'live' or annotations_commitment is not None:
+            commitment = SR.verify_commitment(annotations_commitment, sample, annotations, annotations_sha256)
         review = SR.validate(sample, json.loads(Path(annotations).read_bytes()))
     except (OSError, ValueError, KeyError, TypeError) as exc:
         result['problems'].append(f'self-review (amendment S1): {type(exc).__name__}: {exc}')
         result['withheld_reason'] = 'the self-review must be drawn, annotated and committed before pooled comparison'
         return result
-    result['self_review'] = {**review, 'annotations_sha256': annotations_sha256}
+    result['self_review'] = {**review, 'annotations_sha256': annotations_sha256, 'private_commitment': commitment}
     result['pooled'] = compute(episodes, trigger_spec, horizon)
     result['limitations'] = [
         'exposed development games and one model; not real-game or generalisation evidence',
@@ -350,4 +362,7 @@ def evaluate_sessions(outputs, records, *, annotations, annotations_sha256, mode
 
 def inputs_digest(episodes):
     """The sample's binding to the evidence: each episode id with the digest of its rebuilt records."""
-    return {'episodes': [[e['session'], e['episode'], O.digest(e['records'])] for e in episodes]}
+    return {'episodes': [[e['session'], e['episode'], O.digest({
+        'records': e['records'], 'inventory': e.get('evidence_inventory_sha256'),
+        'reflection_evidence': e.get('reflection_evidence'), 'reflections': e.get('reflections'),
+        'first_tests': e.get('first_tests'), 'delivered': e.get('delivered')})] for e in episodes]}

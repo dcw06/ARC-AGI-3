@@ -67,6 +67,10 @@ def run(output, working, game_python, model_python, environments, *, started, mo
     processes, drains, log_errors = [], [], []
     rfd = wfd = None
     uuid = None
+    from research.stagnation_supervision_runtime_v2.ownership import ChildOwners
+    from research.stagnation_supervision_runtime_v2.publisher_process import defer_startup_signals
+    nonce = secrets.token_hex(32)
+    owners = ChildOwners(output, started, nonce)
 
     def drain(process, label):
         data = bytearray()
@@ -82,12 +86,13 @@ def run(output, working, game_python, model_python, environments, *, started, mo
             process.stdout.close()
 
     def launch(argv, *, env=None, pass_fds=()):
-        process = spawn(argv, cwd=ROOT, env=env, pass_fds=pass_fds, start_new_session=True,
-                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        processes.append(process)
-        thread = threading.Thread(target=drain, args=(process, str(process.pid)), daemon=True)
-        thread.start()
-        drains.append(thread)
+        with defer_startup_signals():
+            role = 'worker' if not processes else 'monitor'
+            process = owners.start(role, argv, spawn=spawn, cwd=ROOT, env=env, pass_fds=pass_fds)
+            processes.append(process)
+            thread = threading.Thread(target=drain, args=(process, str(process.pid)), daemon=True)
+            drains.append(thread)
+            thread.start()
         return process
 
     def check():
@@ -101,6 +106,7 @@ def run(output, working, game_python, model_python, environments, *, started, mo
     with tempfile.TemporaryDirectory(prefix='stagnation-supervision-') as folder:
         scratch = Path(folder)
         try:
+            owners.save()
             env = worker_environment(os.environ, scratch)
             for key in ('PYTHONPATH', 'PYTHONHOME', 'VIRTUAL_ENV'):
                 env.pop(key, None)
@@ -124,14 +130,13 @@ def run(output, working, game_python, model_python, environments, *, started, mo
                             env=env, pass_fds=(rfd,))
             os.close(rfd)
             rfd = None
-            nonce = secrets.token_hex(32)
+            # Nonce fixed before child creation.
             monitor = launch([str(game_python), '-m', 'research.stagnation_supervision_runtime_v2.monitor',
                               '--worker-pid', str(worker.pid), '--scratch', str(scratch), '--output', str(output),
                               '--started', str(started), '--deadline', str(started + internal_seconds - 3),
                               '--stop', str(output / 'control/stop-monitor.json'), '--nonce', nonce, '--mode', mode,
                               '--fault', 'exit' if fault == 'monitor_exit' else 'none'], env=env)
-            control.save('ownership.json', {'worker_pgid': worker.pid, 'monitor_pgid': monitor.pid, 'nonce': nonce,
-                                            'first_cell_monotonic': started})
+            owners.save()  # both per-child recovery records already exist
             ready_path = output / 'monitor/ready.json'
             ready_deadline = min(time.monotonic() + 30, started + admission)
             while not ready_path.exists():
@@ -173,41 +178,37 @@ def run(output, working, game_python, model_python, environments, *, started, mo
             if monitor.returncode != 0:
                 raise RuntimeError('resource monitor failed')
             report['status'] = 'worker_complete_pending_cleanup'
-        except Exception as exc:
+        except BaseException as exc:
             report['error'] = type(exc).__name__ + ': ' + str(exc)[:256]
             try:
                 control.save('cancel.json', {'reason': 'supervisor failure'})
             except Exception:
                 pass
         finally:
-            for fd in (rfd, wfd):
-                if fd is not None:
-                    os.close(fd)
-            from scripts.run_grounded_action_v1_engine_local import terminate_group, group_exited
-            cleanup_errors = []
-            for process in processes:
+            with defer_startup_signals():
+                for fd in (rfd, wfd):
+                    if fd is not None:
+                        os.close(fd)
+                report['process_groups_exited'], cleanup_errors = owners.stop()
+                report['child_ownership_verified'] = report['process_groups_exited']
                 try:
-                    terminate_group(process, grace=.5, verification_seconds=3)
+                    probes = probes_for(mode)(processes[0].pid if processes else 1, scratch)
+                    if uuid is None:
+                        uuid = validate_binding(probes.bind())
+                    receipt = independent_cleanup(probes, expected_uuid=uuid, groups_absent=report['process_groups_exited'],
+                                                  deadline=started + internal_seconds - 2)
+                    control.save('gpu-cleanup.json', receipt)
+                    report['independent_gpu_cleanup_verified'] = receipt['gpu_cleanup_verified']
                 except Exception as exc:
-                    cleanup_errors.append(type(exc).__name__ + ': ' + str(exc)[:128])
-            try:
-                report['process_groups_exited'] = not cleanup_errors and all(group_exited(p.pid) for p in processes)
-            except Exception as exc:
-                cleanup_errors.append(type(exc).__name__ + ': ' + str(exc)[:128])
-            try:
-                probes = probes_for(mode)(processes[0].pid if processes else 1, scratch)
-                if uuid is None:
-                    uuid = validate_binding(probes.bind())
-                receipt = independent_cleanup(probes, expected_uuid=uuid, groups_absent=report['process_groups_exited'],
-                                              deadline=started + internal_seconds - 2)
-                control.save('gpu-cleanup.json', receipt)
-                report['independent_gpu_cleanup_verified'] = receipt['gpu_cleanup_verified']
-            except Exception as exc:
-                report['cleanup_error'] = type(exc).__name__ + ': ' + str(exc)[:256]
-            for thread in drains:
-                thread.join(timeout=2)
-            if cleanup_errors or log_errors or any(t.is_alive() for t in drains):
-                report['error'] = report['error'] or 'process/log cleanup failure'
+                    report['cleanup_error'] = type(exc).__name__ + ': ' + str(exc)[:256]
+                for thread in drains:
+                    if thread.ident is not None:
+                        thread.join(timeout=2)
+                for process, thread in zip(processes, drains):
+                    if thread.ident is None and process.stdout is not None:
+                        process.stdout.close()
+                if cleanup_errors or log_errors or any(t.is_alive() for t in drains):
+                    report['error'] = report['error'] or 'process/log cleanup failure'
     report['scratch_removed'] = not scratch.exists()
     # Verify retained run evidence independently of the worker's own status; partial evidence stays partial.
     try:

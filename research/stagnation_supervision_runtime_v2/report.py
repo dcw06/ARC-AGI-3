@@ -32,6 +32,10 @@ def checkout_review_lock(root=None):
 
 
 def study_report(output, spec, *, mode='live', session='1', internal_seconds=None, root=None, verify_checkout=None):
+    if mode not in ('live', 'rehearsal'):
+        raise ValueError('explicit live or rehearsal mode required')
+    if mode == 'live' and verify_checkout is not None and verify_checkout is not True:
+        raise ValueError('live checkout verification is mandatory')
     from research.stagnation_supervision_runtime_v2.target_evaluate import evaluate_target
     from research.stagnation_supervision_runtime_v2.verification import display_report
     target = evaluate_target(output, spec, mode=mode, session=session, internal_seconds=internal_seconds)
@@ -66,12 +70,15 @@ def study_report(output, spec, *, mode='live', session='1', internal_seconds=Non
     verify_checkout = mode == 'live' if verify_checkout is None else verify_checkout
     lock, lock_problems = checkout_review_lock(root) if verify_checkout else (None, [])
     accepted = not lock_problems
-    return {'version': 'stagnation_supervision_runtime_v2_study_report_v2', 'mode': mode, 'session': session,
-            'technically_complete': target['technically_complete'] and accepted,
+    complete = target['technically_complete'] and accepted
+    return {'version': 'stagnation_supervision_runtime_v2_study_report_v3', 'mode': mode, 'session': session,
+            'technically_complete': complete,
             'target_accepted': target['target_accepted'] and accepted, 'review_lock': lock,
             'lifecycle_verified': target['lifecycle_verified'], 'problems': target['problems'] + lock_problems,
-            'endpoints': endpoints if target['trajectory'].get('technically_complete') else None,
-            'endpoints_withheld_reason': None if target['trajectory'].get('technically_complete') else
+            'endpoints': endpoints if complete else None,
+            'diagnostics': {'trajectory_complete': trajectory.get('technically_complete'),
+                            'realised_cost': trajectory.get('realised_cost')},
+            'endpoints_withheld_reason': None if complete else
             'a technically incomplete run reports no outcome result (protocol v2 section 9)',
             'ls20_display_and_oscillation': {'decision': 'reports/stagnation_supervision_v1_ls20_decision.json',
                                              'episodes': ls20,
