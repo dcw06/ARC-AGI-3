@@ -27,3 +27,26 @@ r2: `9ebbc968f91e5f10b0627a617254ab7c52bb38954021e10b631d77244dd06468`. r1 (lock
 
 **Not established by these checks:** model behaviour, GPU or model load, guided decoding during generation on the
 server, and the provider mounts or image (frozen protocol §11).
+
+## Review snapshots r3 (October 10, 2026): the review's P2 fix
+
+**Finding (review of `512cbd2`).** The live evaluator checked the hashes of the files a lock listed, but did not
+require the complete runtime inventory or check the lock's scope and GPU-disabled status. A lock with the policy's
+binding removed (and the policy changed), empty bindings, or a wrong scope still evaluated as technically complete
+with `session_2_permitted`. The launch gate already rejected those locks.
+
+**Fix.** `live_evaluation.review_lock_status` now applies the launch gate's own `binding.check_sources`: the scope, the
+GPU-disabled status, the complete embedded-source inventory, every binding's hash and every review document. Its
+separate document list is removed. The gate's source check is static, and the evaluator still imports none of the
+runner, the live policy or the adapter (a test checks the loaded modules).
+
+| Check | Result |
+|---|---|
+| Review snapshot r3 | lock `180c33ee895b5af2aca4032b8d5f9f878dbaa57fabdb32a1e1e5b612ed2f415d`; `profile.ipynb` and `kernel-metadata.json` byte-identical to r2's, embedded-source bindings identical; only the evaluator's review-document hash changed. r2's review rehearsal therefore covers this payload |
+| Review check r3 | refused at the live gate; no `nvidia-smi` call; no files left |
+| Regressions (`LiveModeSourceLock`): removed policy binding with changed source, empty bindings, wrong scope, GPU-enabled lock, missing review document | each refused: not technically complete, session 2 not permitted; the reviewed checkout is verified and permits it |
+| The same regressions against the evaluator's check at `512cbd2` | the four reviewed cases are accepted there (4 failures), which reproduces the finding; the missing review document was already refused |
+| Successor suite | 31 tests passed |
+
+The frozen protocol text is unchanged: §10 and §15 already require the checkout to match its review lock; the fix
+makes the evaluator enforce it fully. As agreed, the full suites were not rerun for r3.

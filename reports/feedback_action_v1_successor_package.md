@@ -2,7 +2,8 @@
 
 **Protocol of record:** `reports/feedback_action_v1_protocol_v2_frozen.md` (frozen October 10, 2026: gate A
 `ascii_only`, gate B `denominator_floor_10`). Review snapshots r2 bind it, the owner-gate record and the review
-documents (frozen protocol §15); r1 (lock `4b5b7a06…`) stays unchanged as history.
+documents (frozen protocol §15); r3 adds the review's P2 evaluator fix (the payload is byte-identical to r2's).
+r1 (lock `4b5b7a06…`) and r2 (lock `9ebbc968…`) stay unchanged as history.
 
 **Status:**
 - GPU-disabled review package for one feedback-action v1 session on the verified runtime;
@@ -58,8 +59,8 @@ documents (frozen protocol §15); r1 (lock `4b5b7a06…`) stays unchanged as his
 ```bash
 python -m research.feedback_action_v1.derive --check            # harness derived from AEH v1
 python -m research.feedback_action_v1.derive_runtime --check    # gate/notebook/launch from the verified runtime; verbatim controller
-python scripts/feedback_action_v1_package.py review-check --revision 2     # must refuse at the live gate
-python scripts/feedback_action_v1_package.py review-rehearse --revision 2  # the same cell, MODE switched: one connected session
+python scripts/feedback_action_v1_package.py review-check --revision 3     # must refuse at the live gate
+python scripts/feedback_action_v1_package.py review-rehearse --revision 3  # the same cell, MODE switched: one connected session
 python scripts/feedback_action_v1_package.py launch-build                  # must refuse
 python scripts/check_feedback_action_v1_runtime.py --bundle <replica flat mount> --competition <replica competition mount> --work <new dir>
 python -m unittest tests.test_feedback_action_v1_successor tests.test_feedback_action_v1_live_evaluation tests.test_feedback_action_v1_connected

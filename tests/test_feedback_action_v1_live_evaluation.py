@@ -233,6 +233,73 @@ class SyntheticBoundariesAndAborts(unittest.TestCase):
         self.assertIn('session-abort record differs from the online recomputation', value['problems'])
 
 
+class LiveModeSourceLock(unittest.TestCase):
+    """Review P2 (Track 1): in live mode the evaluator enforces the launch gate's source-lock rules. Each of the
+    review's reproductions leaves the session not technically complete and never permits session 2."""
+
+    @classmethod
+    def setUpClass(cls):
+        from research.feedback_action_v1.live import binding as B
+        cls.B = B
+        cls.lock_name = B.review_lock(LE.ROOT)
+        cls.session_run, cls.spec = synthetic_session('reset')
+
+    def evaluate(self, root):
+        with SyntheticSpec(self.spec):
+            return LE.evaluate_session(self.session_run, session=1, mode='live', root=root)
+
+    def copy_root(self, tmp):
+        import shutil
+        root = Path(tmp)
+        lock = json.loads((LE.ROOT / self.lock_name).read_bytes())
+        for name in (self.lock_name, LE.HOLDOUT_LEDGER, *lock['bindings'], *lock['review_documents']):
+            (root / name).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(LE.ROOT / name, root / name)
+        return root, lock
+
+    def tamper(self, change):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, lock = self.copy_root(tmp)
+            change(root, lock)
+            (root / self.lock_name).write_text(json.dumps(lock, indent=1, sort_keys=True) + '\n')
+            return self.evaluate(root)
+
+    def assert_refused(self, value):
+        self.assertIsNone(value['review_lock_verified'])
+        self.assertTrue(any(p.startswith('review lock not verified') for p in value['problems']), value['problems'])
+        self.assertFalse(value['replay_passed'])
+        self.assertNotEqual(value['technical_validity'], 'technically_complete')
+        self.assertFalse(value['session_2_permitted'])
+
+    def test_the_reviewed_checkout_is_verified_and_permits_session_2(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, _ = self.copy_root(tmp)
+            value = self.evaluate(root)
+        self.assertEqual(value['review_lock_verified']['review_lock'], self.lock_name)
+        self.assertTrue(value['session_2_permitted'], value['problems'])
+
+    def test_a_removed_policy_binding_with_changed_source_is_refused(self):
+        policy = 'research/feedback_action_v1/live/policy.py'
+
+        def change(root, lock):
+            del lock['bindings'][policy]
+            (root / policy).write_bytes((root / policy).read_bytes() + b'\n# changed after review\n')
+        self.assert_refused(self.tamper(change))
+
+    def test_empty_runtime_bindings_are_refused(self):
+        self.assert_refused(self.tamper(lambda root, lock: lock.update(bindings={})))
+
+    def test_a_wrong_scope_is_refused(self):
+        self.assert_refused(self.tamper(lambda root, lock: lock.update(scope='some-other-study')))
+
+    def test_a_gpu_enabled_lock_is_refused(self):
+        self.assert_refused(self.tamper(lambda root, lock: lock.update(gpu_enabled=True)))
+
+    def test_a_missing_review_document_is_refused(self):
+        self.assert_refused(self.tamper(lambda root, lock: lock['review_documents'].pop(
+            'research/feedback_action_v1/live_evaluation.py')))
+
+
 class TwoSessions(unittest.TestCase):
     def test_pooling_applies_section_9(self):
         run1, _ = real_session(1)

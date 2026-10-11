@@ -24,8 +24,9 @@ SCIENCE = {'research/feedback_action_v1/adapter.py': '26a84909f6786dce8e9e66d5a5
            'research/feedback_action_v1/live/fake_server.py':
                'd80eb516f43e528d29d4474fd8b49a7264f8579518a0964c9ee0dea00d80b8a0'}
 VERIFIED_PROTOCOL_BLOB = '6061cbebb3f21ccd3ca698049f439b0546968f2f'  # control-interface v2 protocol.json at 5a21dd3
-REVIEW = ROOT / 'notebooks/feedback-action-v1-review-r2'  # the freeze revision (owner decisions of October 10, 2026)
-RETAINED_REVIEW_LOCKS = {1: '4b5b7a0648c968c2ec497e0ba963e2cee42ad4f87c0ec6c204efbd0d7bedf0b5'}  # history, unchanged
+REVIEW = ROOT / 'notebooks/feedback-action-v1-review-r3'  # r2 (the freeze) plus the review's P2 evaluator fix
+RETAINED_REVIEW_LOCKS = {1: '4b5b7a0648c968c2ec497e0ba963e2cee42ad4f87c0ec6c204efbd0d7bedf0b5',  # history, unchanged
+                         2: '9ebbc968f91e5f10b0627a617254ab7c52bb38954021e10b631d77244dd06468'}
 
 
 def sha(path):
@@ -335,15 +336,13 @@ class ReviewSnapshot(unittest.TestCase):
         for revision, digest in RETAINED_REVIEW_LOCKS.items():
             lock = ROOT / f'notebooks/feedback-action-v1-review-r{revision}/review-source-lock.json'
             self.assertEqual(hashlib.sha256(lock.read_bytes()).hexdigest(), digest)
-            # r1 bound no review documents (the defect the freeze revision fixes); the gate refuses it
-            self.assertNotIn('review_documents', json.loads(lock.read_bytes()))
-            with self.assertRaisesRegex(ValueError, 'source drift|review documents incomplete'):
-                B.check_sources(ROOT, lock.relative_to(ROOT).as_posix())
+            if revision == 1:  # r1 bound no review documents (the defect the freeze revision fixes)
+                self.assertNotIn('review_documents', json.loads(lock.read_bytes()))
+            with self.assertRaisesRegex(ValueError, 'drift|review documents incomplete'):
+                B.check_sources(ROOT, lock.relative_to(ROOT).as_posix())  # superseded locks no longer match
 
     def test_review_documents_are_verified_and_drift_is_refused(self):
         from research.feedback_action_v1 import live_evaluation as LE
-        self.assertEqual(LE.REVIEW_REQUIRED, B.REVIEW_REQUIRED)
-        self.assertEqual(LE.REVIEW_GLOB, B.REVIEW_GLOB)
         record, problems = LE.review_lock_status(ROOT)
         self.assertEqual((problems, record['review_lock']), ([], (REVIEW / 'review-source-lock.json').relative_to(
             ROOT).as_posix()))
@@ -362,7 +361,15 @@ class ReviewSnapshot(unittest.TestCase):
             B.check_sources(root, lock_name, review_documents=False)  # the in-payload gate skips them
             record, problems = LE.review_lock_status(root)
             self.assertIsNone(record)
-            self.assertIn('drift from the review lock', problems[0])
+            self.assertIn('review document drift', problems[0])
+
+    def test_evaluator_review_check_imports_no_runner_policy_or_adapter(self):
+        code = ('import sys\nfrom research.feedback_action_v1 import live_evaluation as LE\n'
+                'record, problems = LE.review_lock_status()\n'
+                'bad = sorted(m for m in sys.modules if m.endswith(("live.runner", "live.policy", "adapter")))\n'
+                'print(problems, bad)')
+        result = subprocess.run([sys.executable, '-c', code], cwd=ROOT, capture_output=True, text=True, timeout=120)
+        self.assertEqual(result.stdout.strip(), '[] []', result.stderr[-800:])
 
     def test_metadata_is_gpu_disabled_and_pinned(self):
         metadata = json.loads((REVIEW / 'kernel-metadata.json').read_bytes())

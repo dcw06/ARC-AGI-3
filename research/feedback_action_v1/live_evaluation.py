@@ -18,9 +18,12 @@ constructors and verifier, and reads the experiment protocol and owner-gate reco
    under F2a or F3-F6";
 6. cost is reported per arm: provider prompt and completion tokens, call latency, episode wall time.
 
-In live mode the evaluating checkout must also be the reviewed one (freeze revision r2): its newest review lock must
-bind every review document, this evaluator among them, and every embedded source, all matching by hash. Otherwise
-the evaluation records the problem and never permits session 2, whose gate trusts `session_2_permitted`.
+In live mode the evaluating checkout must also be the reviewed one, under exactly the launch gate's source-lock
+rules (`binding.check_sources`): the newest review lock's scope and GPU-disabled status, the complete embedded-source
+inventory, every binding's hash and every review document, this evaluator among them. Otherwise the evaluation
+records the problem and never permits session 2, whose gate trusts `session_2_permitted`. That check is the gate's
+own static source check (it reads files and their import statements), imported lazily; it imports none of the
+runner, the live policy or the adapter.
 
 `evaluate_sessions` pools two evaluated sessions and applies section 9 (solving and exploratory action-selection
 rules) and F2b. Free text is never scored for plausibility.
@@ -48,35 +51,19 @@ REASON_CLEARED = 'cleared: the previous transition ended the segment (reset, lev
 CAPS = {'baseline': 128, 'candidate': 640}
 PROMPT_CEILING = 60000
 ASCII_FREE_TEXT = set(chr(c) for c in range(0x20, 0x7f)) - {'"', '\\'}
-REVIEW_GLOB = 'notebooks/feedback-action-v1-review-r*/review-source-lock.json'
-# The review documents every review lock binds (equal to binding.REVIEW_REQUIRED; a test keeps them equal).
-REVIEW_REQUIRED = ('reports/feedback_action_v1_protocol_v2_frozen.md', 'research/feedback_action_v1/live_evaluation.py',
-                   'research/feedback_action_v1/evaluate.py', 'research/transition_evidence_v1/reference.py',
-                   'scripts/evaluate_feedback_action_v1.py', 'research/feedback_action_v1/derive.py',
-                   'research/feedback_action_v1/derive_runtime.py', 'scripts/feedback_action_v1_package.py',
-                   'scripts/check_feedback_action_v1_structured_outputs.py',
-                   'reports/feedback_action_v1/structured_outputs_check_r2.json')
 
 
 def review_lock_status(root=ROOT):
-    """(verified lock record or None, problems): the evaluating checkout's newest review lock, its review documents
-    and its embedded-source bindings, by hash. Standard library only."""
+    """(verified lock record or None, problems): the evaluating checkout against its newest review lock, under the
+    launch gate's rules (binding.check_sources: scope, GPU-disabled status, the complete embedded-source inventory,
+    every binding's hash, every review document)."""
+    from research.feedback_action_v1.live.binding import check_sources, review_lock
     root = Path(root)
     try:
-        locks = sorted(root.glob(REVIEW_GLOB), key=lambda p: int(p.parent.name.rsplit('-r', 1)[1]))
-        if not locks:
-            raise ValueError('no review source lock')
-        lock = json.loads(locks[-1].read_bytes())
-        documents = lock.get('review_documents') or {}
-        missing = sorted(set(REVIEW_REQUIRED) - set(documents))
-        if missing:
-            raise ValueError('review documents missing from the lock: ' + ', '.join(missing))
-        for name, digest in sorted({**lock.get('bindings', {}), **documents}.items()):
-            if hashlib.sha256((root / name).read_bytes()).hexdigest() != digest:
-                raise ValueError('drift from the review lock: ' + name)
-        name = locks[-1].relative_to(root).as_posix()
-        return {'review_lock': name, 'review_lock_sha256': hashlib.sha256(locks[-1].read_bytes()).hexdigest()}, []
-    except (OSError, ValueError, KeyError, TypeError, AttributeError) as exc:
+        name = review_lock(root)
+        check_sources(root, name)
+        return {'review_lock': name, 'review_lock_sha256': hashlib.sha256((root / name).read_bytes()).hexdigest()}, []
+    except (OSError, ValueError, KeyError, TypeError, AttributeError, SyntaxError) as exc:
         return None, [f'review lock not verified: {type(exc).__name__}: {str(exc)[:160]}']
 
 
