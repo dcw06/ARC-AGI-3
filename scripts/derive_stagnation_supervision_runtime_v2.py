@@ -529,6 +529,23 @@ R2_REPAIRS = {
 for _name, _replacements in PRELAUNCH_REPAIRS.items():
     R2_REPAIRS[_name] = R2_REPAIRS.get(_name, ()) + tuple(old for old, _, _ in _replacements)
 
+# Session-1 attempt 1 (ssv1rt2-s1-c5ebca7f, 2026-10-11): on the target the monitor's first RSS probe took 5.45 s while
+# the GPU probe in the same sample took 0.012 s, so the frozen 1-s sampling-gap limit stopped the monitor before
+# readiness (no model start, no game action). Track 1's first probe on the same machine type took 0.03 s, so this is a
+# one-time first-call cost in a fresh container. Each probe now runs once, untimed, before the sampling clock starts;
+# the 0.5-s interval and 1-s gap limits are unchanged, and a persistently slow probe still fails closed.
+ATTEMPT1_REPAIRS = {'monitor.py': [(
+    "        state['monitor_started_seconds'] = clock() - started\n",
+    "        warm = clock()  # one untimed call of each probe absorbs first-call costs before the sampling clock\n"
+    "        probes.sample(uuid)\n"
+    "        probes.rss(worker_pid)\n"
+    "        probes.scratch_bytes()\n"
+    "        context['probe_warmup_seconds'] = clock() - warm\n"
+    "        state['monitor_started_seconds'] = clock() - started\n", 1)]}
+for _name, _replacements in ATTEMPT1_REPAIRS.items():
+    TRACK3[_name][1].extend(_replacements)
+    R2_REPAIRS[_name] = R2_REPAIRS.get(_name, ()) + tuple(old for old, _, _ in _replacements)
+
 # Unchanged Track 3 science and lifecycle files the successor imports; their hashes are bound in the protocol.
 SCIENCE = (
     'research/stagnation_supervision_v1/trigger_spec.json',

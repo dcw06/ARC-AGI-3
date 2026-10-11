@@ -30,6 +30,11 @@ def observe(worker_pid, scratch, output, *, started, deadline, stop, nonce, mode
         binding = probes.bind()
         uuid = validate_binding(binding)
         state['gpu_binding'] = binding
+        warm = clock()  # one untimed call of each probe absorbs first-call costs before the sampling clock
+        probes.sample(uuid)
+        probes.rss(worker_pid)
+        probes.scratch_bytes()
+        context['probe_warmup_seconds'] = clock() - warm
         state['monitor_started_seconds'] = clock() - started
         writer = AsyncTelemetry(store, {'nonce': nonce, 'worker_pid': worker_pid, 'monitor_pid': os.getpid(),
                                         'scope': state['scope'], 'gpu_binding': binding},

@@ -277,7 +277,7 @@
   },
   {
    "derived": "research/stagnation_supervision_runtime_v2/monitor.py",
-   "derived_sha256": "4a2733e6342d8231ba7ad8c276794bc8d091ca154eddf95b9801e39323af1fc9",
+   "derived_sha256": "29072c1de60b922975f0f8e1036fe1975dd1b62a74fc324c4f20902d0eb7135d",
    "kind": "python",
    "replacements": [
     [
@@ -288,6 +288,11 @@
     [
      "        from .authority import require\n        require()",
      "        from research.stagnation_supervision_runtime_v2.authority import require\n        require()",
+     1
+    ],
+    [
+     "        state['monitor_started_seconds'] = clock() - started\n",
+     "        warm = clock()  # one untimed call of each probe absorbs first-call costs before the sampling clock\n        probes.sample(uuid)\n        probes.rss(worker_pid)\n        probes.scratch_bytes()\n        context['probe_warmup_seconds'] = clock() - warm\n        state['monitor_started_seconds'] = clock() - started\n",
      1
     ]
    ],
