@@ -254,8 +254,13 @@ class InstallationBackend(unittest.TestCase):
         class Stop(Exception):
             pass
 
-        def headless(*args, **kwargs):
-            raise Stop('stop after the model interpreter')
+        # The installer subclasses this environment to track every game
+        # command. Keep the stand-in a class so that the regression still
+        # reaches the model environment checks rather than failing at class
+        # construction.
+        class Headless:
+            def __init__(self, *args, **kwargs):
+                raise Stop('stop after the model interpreter')
         kaggle = {'MPLBACKEND': 'module://matplotlib_inline.backend_inline'}
         rt = 'research.stagnation_supervision_runtime_v2.publisher_install.'
         with tempfile.TemporaryDirectory() as tmp, mock.patch.dict(os.environ, kaggle), \
@@ -263,7 +268,7 @@ class InstallationBackend(unittest.TestCase):
                 mock.patch(rt + 'verify_bundle', return_value={}), \
                 mock.patch('certification.phase4_v6.target_install_probe_r3.verify_torch_contract', return_value={}), \
                 mock.patch('certification.phase4_v6.clean_environment.verify_environment_wheels', return_value={}), \
-                mock.patch('certification.phase4_v6.headless_environment.HeadlessEnvironment', headless):
+                mock.patch('certification.phase4_v6.headless_environment.HeadlessEnvironment', Headless):
             with self.assertRaises(Stop):
                 PR.prepare(Path(tmp) / 'scratch', Path(tmp) / 'out', tmp, tmp, {}, time.monotonic(), root=A.ROOT)
         self.assertEqual(seen['install']['MPLBACKEND'], 'Agg')
