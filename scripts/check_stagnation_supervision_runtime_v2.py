@@ -16,7 +16,8 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-OUT = ROOT / 'reports/stagnation_supervision_runtime_v2_local_checks_r2.json'
+OUT = ROOT / 'reports/stagnation_supervision_runtime_v2_local_checks_r3.json'
+PREVIOUS = 'reports/stagnation_supervision_runtime_v2_local_checks_r2.json'  # passed for the r1 package; retained
 # The first run (r1) is retained as failed: discovery used the repository as top level, which breaks the R4 suite's
 # own `from test_stagnation_supervision_v1_connected import ...`, and one runtime v2 test predated the r1 snapshot.
 FAILED_R1 = 'reports/stagnation_supervision_runtime_v2_local_checks_r1.json'
@@ -82,7 +83,8 @@ def run():
     if sources != source_bindings() or tests != test_bindings():
         raise ValueError('tested source changed while the suite ran')
     passed = not totals['failures'] and not totals['errors'] and all(h['returncode'] == 0 for h in historical)
-    value = {'version': 'stagnation_supervision_runtime_v2_local_checks_r2', 'supersedes_failed_run': FAILED_R1,
+    value = {'version': 'stagnation_supervision_runtime_v2_local_checks_r3', 'supersedes_failed_run': FAILED_R1,
+             'previous_receipt': PREVIOUS, 'package_revision': 'r2 (gap checklist r2; review snapshot r2)',
              'status': 'passed_cpu_scope' if passed else 'failed', **totals, 'suites': suites,
              'historical_and_receipt_checks': historical, 'elapsed_seconds': round(time.monotonic() - started, 3),
              'python_version': sys.version.split()[0],
