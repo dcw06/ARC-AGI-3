@@ -2,7 +2,7 @@
 
   python -m scripts.stagnation_supervision_runtime_v2_package review-build --revision 1
       freeze notebooks/stagnation-supervision-v1-runtime-v2-review-r<N>/ (GPU disabled; not an approval)
-  python -m scripts.stagnation_supervision_runtime_v2_package review-check --revision 1 [--record]
+  python -m scripts.stagnation_supervision_runtime_v2_package review-check --revision 1 [--record] [--attempt N]
       verify every binding and artifact, compile every embedded Python file, execute the notebook cell with no GPU,
       a decoy nvidia-smi and a private TMPDIR (it must refuse at the runtime v2 gate before installation, model or
       GPU use and remove its extracted source), then CPU-rehearse the same embedded cell in rehearsal mode (one game
@@ -130,7 +130,7 @@ def rehearsal(code, *, group='b1-ar25', actions=12, seconds=1500):
                 'first_cell_cleanup_verified': first.get('first_cell_cleanup_verified'), 'source_leaked': leaked}
 
 
-def review_check(revision, record=False):
+def review_check(revision, record=False, attempt=1):
     folder = folder_for(revision)
     lock, code, payload = extract(folder)
     refused = refusal(code)
@@ -141,10 +141,13 @@ def review_check(revision, record=False):
                'live_refusal': {k: v for k, v in refused.items() if k != 'stderr_tail'},
                'cpu_rehearsal_of_embedded_cell': rehearsed,
                'evidence_class': 'scripted_cpu_rehearsal_injected_gpu', 'gpu_compatibility_evidence': False,
-               'gpu_runs': 0, 'provider_calls': 0, 'authorized_seconds': 0}
+               'gpu_runs': 0, 'provider_calls': 0, 'authorized_seconds': 0, 'attempt': attempt}
     reason = refused['refusal'] or ''
+    # A public snapshot keeps the four private placeholders, so its gate must also cite them; a privately bound
+    # snapshot has none, so it must not (r2 fix: the r1 condition could never pass for a privately bound snapshot).
+    placeholders = bool(lock['unresolved_placeholders'])
     receipt['passed'] = (refused['exit_code'] != 0 and refused['refused_at_live_gate'] and not refused['nvidia_smi_called']
-                         and 'unresolved placeholders' in reason and 'no review source lock' in reason
+                         and ('unresolved placeholders' in reason) is placeholders and 'no review source lock' in reason
                          and 'protocol unreadable' not in reason
                          and not refused['temporary_files_left'] and not refused['kaggle_paths_touched']
                          and rehearsed['technically_complete'] and not rehearsed['problems']
@@ -152,7 +155,8 @@ def review_check(revision, record=False):
                          and rehearsed['first_cell_cleanup_verified'] is True and not rehearsed['source_leaked'])
     if not receipt['passed']:
         print(refused['stderr_tail'], file=sys.stderr)
-    destination = ROOT / f'reports/stagnation_supervision_runtime_v2_review_check_r{revision}.json'
+    suffix = '' if attempt == 1 else f'_a{attempt}'  # a later attempt never replaces a retained receipt
+    destination = ROOT / f'reports/stagnation_supervision_runtime_v2_review_check_r{revision}{suffix}.json'
     if record:
         comparable = {k: v for k, v in receipt.items()}
         if destination.exists():
@@ -168,6 +172,7 @@ def main():
     parser.add_argument('command', choices=['review-build', 'review-check', 'launch-build'])
     parser.add_argument('--revision', type=int, default=1)
     parser.add_argument('--record', action='store_true')
+    parser.add_argument('--attempt', type=int, default=1)
     args = parser.parse_args()
     if args.command == 'review-build':
         from research.stagnation_supervision_runtime_v2.notebook import build_review
@@ -175,7 +180,7 @@ def main():
         print(json.dumps({k: v for k, v in lock.items() if k != 'bindings'}, indent=1))
         return 0
     if args.command == 'review-check':
-        receipt = review_check(args.revision, args.record)
+        receipt = review_check(args.revision, args.record, args.attempt)
         print(json.dumps(receipt, indent=1))
         return 0 if receipt['passed'] else 1
     from research.stagnation_supervision_runtime_v2.authority import LiveRefused
