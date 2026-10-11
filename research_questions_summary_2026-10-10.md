@@ -1,6 +1,6 @@
 # ARC-AGI-3 research questions and results so far
 
-**Snapshot: October 10, 2026.** Completed experiments, closed research decisions and prepared studies are distinguished below. Technical completion means the execution and evidence checks passed; it does not mean the research hypothesis succeeded. Private evidence, account details and seed values are excluded.
+**Updated: October 11, 2026.** Completed experiments, qualified study closure and prepared studies are distinguished below. Technical completion means the execution and evidence checks passed; it does not mean the research hypothesis succeeded. Closing a study with a qualification does not waive a failed certification. Private evidence, account details and seed values are excluded.
 
 ## Overall research question
 
@@ -52,10 +52,38 @@ Comprehension v2 and v3 answered all **8,004** and **6,054** scheduled calls res
 
 | Track | Research question | Work completed | Current scientific status |
 |---|---|---|---|
-| **1 — Structured hypothesis testing** | Does explicit hypothesis → discriminating action → feedback improve action selection and completed levels? | Baseline/candidate runner, token audit, CPU checks and connected game-engine rehearsal prepared on the verified runtime. | **Not run scientifically.** Free-text format and early-abort decisions remain open. Three exposed development games limit the claim. [Protocol][track1] |
-| **2 — Evidence-linked memory** | Does deterministic, evidence-linked memory preserve accessible facts beyond recent history, better than state-keyed raw retrieval at a common budget? | Two-session design, scoring and pooled analysis; decoder compatibility repair; review-document checks. Latest r7 implements mandatory-probe reconciliation and preserves the retired first draw. | **No GPU study.** The eight-answer schema was chosen after draw 1, so that draw was retired before execution. Final design re-frozen; fresh owner draw and replacement sets pending. Latest fixes are implemented, not independently cleared by this summary. [Record][track2] |
+| **1 — Structured hypothesis testing** | Does explicit hypothesis → discriminating action → feedback improve action selection and completed levels? | Two RTX PRO 6000 sessions, each with 145 model requests and 144 offline actions; pooled analysis and post-fix evidence audit. Original setup failure and all consumed attempts preserved. | **Closed with technical qualification (recorded owner decision).** No demonstrated solving improvement; action selection inconclusive. Original evaluator passed both sessions; post-fix certification fails F1 because finalization evidence is missing. Blocks were identical, not independent replicates. [Results][track1], [Audit][track1audit], [Closure][trackstatus] |
+| **2 — Evidence-linked memory** | Does deterministic, evidence-linked memory preserve accessible facts beyond recent history, better than state-keyed raw retrieval at a common budget? | Draw 2 used after the final design freeze; two technically valid RTX PRO 6000 sessions answered all **5,760** study calls; registered pooled analysis completed once. Draw 1 retired and preserved. | **Stage 1 complete.** Memory preserves access versus recent history; no advantage over state-keyed retrieval demonstrated. Unsupported-claim margin and comprehension floor met. Owner nonce publication remains outstanding for reproducibility. [Results][track2] |
 | **3 — Stagnation supervision** | Does reflection at detected stagnation improve recovery compared with continuation and equally budgeted periodic reflection? | Frozen detector, three-arm design, independent evaluator, CPU checks and scripted engine rehearsals. | **No successor GPU study.** The selected controls cannot certify the proposed false-interruption claim; claim scope and audit decisions remain open. Earlier failed attempt preserved. [Protocol][track3], [Limits][track3limits] |
 | **4 — Change, progress and subgoals** | Can the model distinguish observed change, confirmed progress and unsupported causal/subgoal claims; does a safeguard help? | One RTX PRO 6000 attempt; all **5,852** questionnaire calls answered; independent evaluation, cleanup and final deadline passed in **1,091 s**. | **Complete; neither arm qualifies for memory or supervision.** Safeguard effects were mixed. One consumed attempt preserved. [Results][track4] |
+
+**Progress:** Tracks 2 and 4 completed; Track 1 closed with a technical qualification; Track 3 remains pending. No new GPU attempt follows from closure.
+
+## Track 1: findings and closure qualifications
+
+| Question / check | Result | Brief reading |
+|---|---|---|
+| Does the treatment improve solving? | Zero levels in every game, arm and block. | No solving claim on these three exposed development games. |
+| Does it improve action selection? | Only ls20 differs: untested action-type rate **0.316 baseline / 0.125 candidate**. | Frozen comparison is inconclusive; the candidate explored less in that game. |
+| Are candidate predictions accurate? | **0.000** in all three games. | Structured procedure did not establish accurate effect prediction. |
+| Are the two blocks independent evidence? | Actions and raw responses match exactly across sessions. | A determinism check, not an independent replicate. |
+| Does retained evidence pass the repaired checks? | Operator's post-fix audit passes request reconstruction, event accounting, canary bounds and F2–F6; scientific aggregates unchanged. | This summary reports that audit; it does not independently reproduce it. |
+| Is the lifecycle technically certified? | Original evaluator: complete. Post-fix evaluator: **incomplete (F1)**, missing guarded finalization evidence. | Recorded margins over 2,400 s make an overrun unlikely; they do not certify finalization. |
+| What does closure mean? | Owner recorded closure with the qualifications above. | Preserve the findings and all attempts; do not relabel the post-fix certification as passed or authorize another run. |
+
+## Track 2: completed Stage 1 comparison
+
+| Measure | Result | Brief reading |
+|---|---|---|
+| Old-evidence accuracy: recent / retrieval / memory / full history | **0.000 / 0.900 / 0.892 / 1.000** | Availability explains most of the difference; memory is near its 0.900 exact-reader ceiling. |
+| Memory minus recent history | **+0.892**, 95% CI **[+0.875, +0.900]** | Preserves access to old evidence. |
+| Memory minus state-keyed retrieval | **−0.008**, 95% CI **[−0.025, 0.000]** | No advantage demonstrated; not proof of equivalence. |
+| Unsupported claims: memory minus recent | **−0.012**, 95% CI **[−0.016, −0.010]** | Both frozen margin thresholds met. |
+| Reading accuracy when evidence is available | **0.979–0.997**, floor **0.80** | Comprehension floor met. |
+| Repeat stability | **576/576** identical answers. | Stable under deterministic decoding. |
+| Reproducibility handoff | Withheld nonce publication still outstanding. | Owner action; no seed value is included here. |
+
+The registered verdict is **`memory_preserves_access_not_shown_over_retrieval`**. This synthetic reading study does not establish improved game solving.
 
 ## Track 4: what the completed comparison found
 
@@ -77,7 +105,7 @@ These are one model-artifact attempt on synthetic instances. Equality of its wei
 | Question | Work completed | Current boundary |
 |---|---|---|
 | Can experiments use an exact, reproducible offline runtime? | Pinned-image CPU installation checks; direct-publisher GPU smoke test; mounted-wheel hashing, hash-pinned installation and model-tree verification. | Verified for the reviewed runtime and private scope, not arbitrary environments. |
-| Can timeout/interruption evidence be trusted? | Protected spawn-to-ownership registration; installer/import descendant process-group cleanup; final deadlines covering cleanup, evidence finalization and temporary-environment removal; regression reproductions retained. | Overruns fail the attempt; emergency cleanup remains possible. |
+| Can timeout/interruption evidence be trusted? | Protected spawn-to-ownership registration; installer/import descendant process-group cleanup; bounded finalization with a pending barrier and interruption regressions; public r8/private r9 review snapshots rebuilt. | Repaired controller fails overruns while allowing emergency cleanup. Track 1's earlier runs lack the new finalization certification. |
 | Can the proposed wheel bundle be redistributed? | 174-artifact inventory; CUTLASS/NVIDIA evidence, Apache NOTICE checks, native-library tracing, metadata checks, worksheet revisions and per-row suggestions. | **174 redistribution decisions remain unresolved.** Private direct-publisher use is a separately scoped assessment. [Worksheet][worksheet], [Decisions][decisions] |
 | Can study results be independently reconstructed? | Hash-bound packages, protocols and evaluators; retained failed attempts; archive replay; CPU rehearsals; mandatory runtime-probe checks. | CPU rehearsal is not model evidence. A completed run does not establish a successful intervention. |
 | Have we demonstrated general solving improvement? | Development comparisons and synthetic diagnostics identified concrete weaknesses and some interface improvements. | **No.** No qualified new architecture has demonstrated an unexposed-game advantage; production certification remains open. |
@@ -87,10 +115,11 @@ These are one model-artifact attempt on synthetic instances. Equality of its wei
 | Collection | Revision used |
 |---|---|
 | Historical studies, comprehension, runtime and observation probes | `wheelhouse-replacement-audit` — `5a21dd3` |
-| Track 1 preparation | `track1-successor-runtime-v1` — `078bf4d` |
-| Track 2 latest design and draw retirement | `track2-successor-runtime-v1` — `2cd1bdb` |
+| Track 1 results, post-fix audit and qualifications | `track1-successor-runtime-v1` — `abb97ed` |
+| Track 2 completed Stage 1 analysis and corrected interpretation | `track2-successor-runtime-v1` — `e5b0830` |
 | Track 3 preparation | `track3-successor-runtime-v1` — `12adf90` |
 | Track 4 completed result | `track4-successor-runtime-v1` — `37748fe` |
+| Four-track status and recorded qualified closure | `track-resumption-v1` — `510a180` |
 
 [p0]: https://github.com/dcw06/ARC-AGI-3/blob/5a21dd339d22ec6e13307722b42dcef0882f6829/reports/phase0_status.md
 [m0]: https://github.com/dcw06/ARC-AGI-3/blob/5a21dd339d22ec6e13307722b42dcef0882f6829/reports/phase0f_m0_status.md
@@ -113,8 +142,10 @@ These are one model-artifact attempt on synthetic instances. Equality of its wei
 [ec2]: https://github.com/dcw06/ARC-AGI-3/blob/5a21dd339d22ec6e13307722b42dcef0882f6829/reports/evidence_comprehension_v2_results.md
 [ec3]: https://github.com/dcw06/ARC-AGI-3/blob/5a21dd339d22ec6e13307722b42dcef0882f6829/reports/evidence_comprehension_v3_results.md
 [probes]: https://github.com/dcw06/ARC-AGI-3/blob/5a21dd339d22ec6e13307722b42dcef0882f6829/reports/control_interface_action_selection_v1_v2_results_2026-10-08.md
-[track1]: https://github.com/dcw06/ARC-AGI-3/blob/078bf4dce772ba98e6686a6434559be91336b706/reports/feedback_action_v1_protocol_v2_r1.md
-[track2]: https://github.com/dcw06/ARC-AGI-3/blob/2cd1bdb29ab2e50c039362d0f4d5d4baf0e961a3/reports/evidence_memory_v1_successor/README.md
+[track1]: https://github.com/dcw06/ARC-AGI-3/blob/abb97ed30312fb35fdcc47ff098f797628d2c67a/reports/feedback_action_v1_results.md
+[track1audit]: https://github.com/dcw06/ARC-AGI-3/blob/abb97ed30312fb35fdcc47ff098f797628d2c67a/reports/feedback_action_v1_post_fix_audit.md
+[trackstatus]: https://github.com/dcw06/ARC-AGI-3/blob/510a180704f0ad7573c12e7e096ccb5ccc83b6bd/reports/four_track_resumption/status_2026-10-09.md
+[track2]: https://github.com/dcw06/ARC-AGI-3/blob/e5b0830e7c7dddfad366fc52aabed35079a9f1a6/reports/evidence_memory_v1_stage1_results.md
 [track3]: https://github.com/dcw06/ARC-AGI-3/blob/12adf90c9047f40bfab183304034a79ff457b756/reports/stagnation_supervision_v1_protocol_v2.md
 [track3limits]: https://github.com/dcw06/ARC-AGI-3/blob/12adf90c9047f40bfab183304034a79ff457b756/reports/stagnation_supervision_runtime_v2_owner_questions.md
 [track4]: https://github.com/dcw06/ARC-AGI-3/blob/37748fec1551eda1b7706a8814e46b5d75a3ae13/reports/progress_subgoal_v1_runtime2_attempt1_results.md
