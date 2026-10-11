@@ -10,7 +10,15 @@ Records (all under reports/stagnation_supervision_runtime_v2_authority/, none pr
   source_approval.json, compute_authorization.json, launch_approval.json   separate human decisions
   account_attachment.json, use_permission.json, byte_verification.json, model_verification.json   evidence
   execution_lock.json, reservation.json, launch_claim.json, launch_receipt.json   one attempt per session
+
+r2 (lessons from Tracks 1, 2 and 4): on the repository side the reviewed lock must bind the complete computed payload
+closure, its bindings must equal the reviewed notebook's embedded inventory (so a deleted file cannot leave with its
+lock entry), and it must bind the review documents: the frozen protocol text and the import closure of the
+independent evaluators, with no unresolved repository module. Inside the runtime payload those documents are not
+embedded, so the in-payload gate (`require`) checks the embedded bindings only. A session-2 attempt must bind a
+technically complete, accepted session-1 evaluation by SHA-256.
 """
+import ast
 import hashlib
 import json
 import os
@@ -42,6 +50,9 @@ REQUIRED_SOURCE = {PACKAGE + '/' + n for n in (
     'launch.py', 'supervisor.py', 'worker.py', 'host.py', 'monitor.py', 'resources.py', 'publisher_install.py',
     'publisher_preflight.py', 'publisher_process.py', 'publisher_host.py', 'proposal.json', 'trusted_manifest.json',
     'trusted_requirements.lock')}
+# Review documents (r2): bound in the lock's `review_documents` with the evaluators' import closure. The list is data
+# (review_documents.json), so the payload closure scan does not embed the evaluators.
+REVIEW_LIST = Path(__file__).with_name('review_documents.json')
 
 
 class LiveRefused(PermissionError):
@@ -116,17 +127,67 @@ def review_lock(root):
     return locks[-1].relative_to(root).as_posix()
 
 
-def check_sources(root, lock_name):
+def payload_inventory(root):
+    """Every embedded file: the computed closure of the runtime entry points (closure.py); none unresolved."""
+    from research.stagnation_supervision_runtime_v2.closure import closure
+    value = closure(root)
+    if value['unresolved_project_imports'] or value['missing_data']:
+        raise ValueError('payload closure incomplete: ' + ', '.join(value['unresolved_project_imports'] + value['missing_data']))
+    return sorted(set(value['files']) | REQUIRED_SOURCE)
+
+
+def review_inventory(root):
+    """The review documents and the strict import closure of the independent evaluators; none unresolved."""
+    from research.stagnation_supervision_runtime_v2.closure import closure
+    listed = json.loads(resolve(root, REVIEW_LIST.relative_to(ROOT).as_posix()).read_bytes())
+    value = closure(root, entries=tuple(listed['evaluation_entries']), files=tuple(listed['evaluation_files']),
+                    explicit=tuple(listed['documents']))
+    if value['unresolved_project_imports'] or value['missing_data']:
+        raise ValueError('evaluation closure incomplete: '
+                         + ', '.join(value['unresolved_project_imports'] + value['missing_data']))
+    return value['files']
+
+
+def frozen_inventory(root, lock_name, lock):
+    """The embedded inventory of the reviewed notebook (its code cell's `bindings`), after its artifacts match the lock."""
+    folder = resolve(root, lock_name).parent
+    artifacts = lock.get('artifacts') or {}
+    if 'profile.ipynb' not in artifacts:
+        raise ValueError('review lock does not bind the reviewed notebook')
+    for name, digest in artifacts.items():
+        if sha256(folder / name) != digest:
+            raise ValueError('review artifact drift: ' + name)
+    cell = json.loads((folder / 'profile.ipynb').read_bytes())['cells'][1]['source']
+    lines = [line for line in cell.splitlines() if line.startswith('    bindings = ')]
+    if len(lines) != 1:
+        raise ValueError('reviewed notebook has no single embedded inventory')
+    return ast.literal_eval(lines[0].split(' = ', 1)[1])
+
+
+def check_sources(root, lock_name, review_documents=True):
+    """The reviewed sources by hash and, unless inside the runtime payload, the complete payload closure, the
+    reviewed notebook's embedded inventory and the review documents."""
     lock = read_json(root, lock_name)
     if lock.get('scope') != SCOPE or lock.get('gpu_enabled') is not False:
         raise ValueError('review lock is outside this GPU-disabled source-review scope')
     bindings = lock.get('bindings', {})
-    missing = sorted(REQUIRED_SOURCE - set(bindings))
+    required = set(payload_inventory(root)) if review_documents else REQUIRED_SOURCE
+    missing = sorted(required - set(bindings))
     if missing:
         raise ValueError('reviewed sources incomplete: ' + ', '.join(missing))
     for name, digest in bindings.items():
         if sha256(resolve(root, name)) != digest:
             raise ValueError('source drift: ' + name)
+    if review_documents:
+        if frozen_inventory(root, lock_name, lock) != bindings:
+            raise ValueError("lock bindings differ from the reviewed notebook's embedded inventory")
+        listed = lock.get('review_documents') or {}
+        missing = sorted(set(review_inventory(root)) - set(listed))
+        if missing:
+            raise ValueError('review documents incomplete: ' + ', '.join(missing))
+        for name, digest in sorted(listed.items()):
+            if sha256(resolve(root, name)) != digest:
+                raise ValueError('review document drift: ' + name)
     return lock
 
 
@@ -256,7 +317,28 @@ def check_reservation(root, lock_name, protocol, session):
         raise ValueError('reservation missing, consumed or not bound to the execution lock')
     if read_json(root, LAUNCH).get('reservation_sha256') != sha256(resolve(root, RESERVATION)):
         raise ValueError('launch decision not bound to the reservation')
+    session_dependencies(root, execution)
     return execution
+
+
+def session_dependencies(root, execution):
+    """r2: the session-1 evaluation a session-2 attempt depends on (embedded in its launch package); else nothing.
+    It must be the independent live evaluation of session 1, technically complete and accepted, made in a checkout
+    whose review lock verified."""
+    dependency = execution.get('session1_evaluation')
+    if execution.get('session') != '2':
+        if dependency is not None:
+            raise ValueError('only a session-2 attempt binds a session-1 evaluation')
+        return []
+    if not isinstance(dependency, dict) or set(dependency) != {'path', 'sha256'}:
+        raise ValueError('session 2 requires the session-1 evaluation bound by path and SHA-256')
+    if sha256(resolve(root, dependency['path'])) != dependency['sha256']:
+        raise ValueError('session-1 evaluation drift')
+    record = read_json(root, dependency['path'])
+    if (record.get('session') != '1' or record.get('mode') != 'live' or record.get('technically_complete') is not True
+            or record.get('target_accepted') is not True or (record.get('review_lock') or {}).get('verified') is not True):
+        raise ValueError('session 2 requires a technically complete, accepted live session-1 evaluation')
+    return [dependency['path']]
 
 
 def check_claim(root, execution):
@@ -268,9 +350,10 @@ def check_claim(root, execution):
     return claim
 
 
-def require_live(root=None, need_claim=True):
+def require_live(root=None, need_claim=True, review_documents=True):
     """Every live condition, checked before installation, model, GPU or provider activity. Raises LiveRefused with
-    all reasons found; returns (protocol, execution) only when the attempt may run."""
+    all reasons found; returns (protocol, execution) only when the attempt may run. `review_documents=False` is
+    used only inside the runtime payload, where the review documents and the reviewed notebook are not embedded."""
     root = ROOT if root is None else Path(root)
     reasons = []
     try:
@@ -283,7 +366,7 @@ def require_live(root=None, need_claim=True):
     execution = None
     try:
         lock_name = review_lock(root)
-        check_sources(root, lock_name)
+        check_sources(root, lock_name, review_documents)
         _, _, _, session = check_decisions(root, lock_name, protocol)
         check_evidence(root, lock_name, protocol, session)
         execution = check_reservation(root, lock_name, protocol, session)
@@ -298,7 +381,7 @@ def require_live(root=None, need_claim=True):
 
 def require(root=None):
     """The process-level gate used by every live entry point: returns the bound execution lock or refuses."""
-    return require_live(root)[1]
+    return require_live(root, review_documents=False)[1]  # inside the runtime payload
 
 
 def consume_runtime(working, root=None):

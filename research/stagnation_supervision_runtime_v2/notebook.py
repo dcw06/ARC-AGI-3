@@ -48,7 +48,8 @@ try:
     receipt = notebook_entry(source, started, MODE, SESSION)  # the runtime v2 gate runs first and refuses without authority
     print(json.dumps({{k: receipt.get(k) for k in ('study_status', 'error', 'elapsed_seconds', 'installation')}}))
 finally:
-    shutil.rmtree(source)
+    if source.exists():  # normally removed inside the charged lifecycle (launch r2)
+        shutil.rmtree(source)
 '''
 
 
@@ -133,6 +134,7 @@ def build_review(output, root=ROOT, revision=1):
         (output / name).write_bytes(data)
     lock = {'status': 'review_snapshot_not_approved_not_compute_authority', 'scope': A.SCOPE, 'revision': f'r{revision}',
             'bindings': bindings, 'artifacts': {n: hashlib.sha256(d).hexdigest() for n, d in artifacts.items()},
+            'review_documents': {n: A.sha256(Path(root) / n) for n in A.review_inventory(root)},
             'unresolved_placeholders': pending, 'gpu_enabled': False, 'authorized_seconds': 0,
             'gpu_launch_authorized': False,
             'closure': {'method': 'research/stagnation_supervision_runtime_v2/closure.py', 'code_files': len(inventory['code']),
@@ -151,7 +153,8 @@ def launch_artifacts(root=ROOT):
     for name, digest in lock['artifacts'].items():
         if A.sha256(folder / name) != digest:
             raise ValueError('reviewed artifact drift: ' + name)
-    names = (lock_name, A.SOURCE, A.COMPUTE, A.LAUNCH, A.EXECUTION, A.RESERVATION, A.CLAIM, *A.evidence_names(root))
+    names = (lock_name, A.SOURCE, A.COMPUTE, A.LAUNCH, A.EXECUTION, A.RESERVATION, A.CLAIM, *A.evidence_names(root),
+             *A.session_dependencies(root, execution))
     sidecars = {n: (Path(root) / n).read_bytes() for n in names}
     hashes = {n: hashlib.sha256(d).hexdigest() for n, d in sidecars.items()}
     injection = (f'    sidecars = {{n: base64.b64decode(v) for n, v in '

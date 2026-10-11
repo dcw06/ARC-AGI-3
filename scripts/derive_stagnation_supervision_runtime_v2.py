@@ -114,7 +114,20 @@ TRACK3 = {
          f'from {CL} import evaluate as trajectories\nfrom {CL}.model_service import validate_ready\n'
          f'from {CL}.server_config import validate as validate_configuration', 1),
         ("VERSION = 'stagnation_supervision_target_evaluation_r1'",
-         "VERSION = 'stagnation_supervision_target_evaluation_runtime_v2'", 1),
+         "VERSION = 'stagnation_supervision_target_evaluation_runtime_v2_r2'", 1),
+        # r2: certify the fail-closed finalization and the protected startup ownership independently (Track 1 lessons).
+        ("    require(first['study_status'] == outer['status'] == 'study_complete_pending_independent_evaluation', 'lifecycle status')\n",
+         "    require(first['study_status'] == outer['status'] == 'study_complete_pending_independent_evaluation',\n"
+         "            'lifecycle status')\n"
+         "    pending = root / 'control/finalization-pending.json'\n"
+         "    require(first.get('finalization_guard_version') == 1 and first.get('lifecycle_finalized') is True\n"
+         "            and not pending.exists() and not pending.is_symlink()\n"
+         "            and (mode != 'live' or first.get('extracted_source_removed') is True),\n"
+         "            'lifecycle finalization/source removal not certified')\n", 1),
+        ("    require(cleanup['drain_finished'] is True and cleanup['returncode'] == 0 and cleanup['errors'] == [], 'first-cell process/log cleanup')\n",
+         "    require(cleanup['drain_finished'] is True and cleanup['returncode'] == 0 and cleanup['errors'] == []\n"
+         "            and cleanup.get('ownership') == 'registered' and cleanup.get('groups_absent') is True,\n"
+         "            'first-cell process/log cleanup')\n", 1),
         ('    from .authority import SESSION_LIMITS\n    from .evidence import load_verified',
          f'    from {RT}.authority import SESSION_LIMITS\n    from {CL}.evidence import load_verified', 1),
         ('        from .bridge import session_spec\n        from .runner import protocol',
@@ -130,9 +143,89 @@ TRACK3 = {
         ("ROOT = Path(__file__).resolve().parents[1]\nOUTPUT_NAME = 'stagnation-supervision-v1'",
          "ROOT = Path(__file__).resolve().parents[2]\nOUTPUT_NAME = 'stagnation-supervision-v1-runtime-v2'", 1),
         (f"'{CL}.supervisor'", f"'{RT}.supervisor'", 1),
+        # r2 (Track 1 lessons, 3aeeb65): protect startup ownership and retain a cleanup receipt even when startup,
+        # registration or log retention is interrupted; an uncertain spawn never claims that the groups are absent.
+        ('    """Own the supervisor\'s session and every group it records; verify all are gone."""\n',
+         '    """Protect startup ownership and retain cleanup even if startup or logging is interrupted (r2)."""\n'
+         f'    from {RT}.publisher_process import defer_startup_signals  # stdlib only\n', 1),
+        ('    errors, retained = [], bytearray()\n',
+         '    errors, retained, cleanup = [], bytearray(), {}\n'
+         "    process, thread, ownership = None, None, 'never_spawned'\n", 1),
+        ("    env['PYTHONNOUSERSITE'] = '1'\n    env['MPLBACKEND'] = 'Agg'\n"
+         '    process = spawn(command, cwd=root, env=env, start_new_session=True, stdout=subprocess.PIPE, '
+         'stderr=subprocess.STDOUT)\n',
+         "    env['PYTHONNOUSERSITE'], env['MPLBACKEND'] = '1', 'Agg'\n", 1),
+        ('    thread = threading.Thread(target=drain, daemon=True)\n    thread.start()\n    cleanup = {}\n    try:\n',
+         '    try:\n'
+         '        with defer_startup_signals():\n'
+         "            ownership = 'uncertain'  # entering Popen does not prove that no child was created\n"
+         '            process = spawn(command, cwd=root, env=env, start_new_session=True,\n'
+         '                            stdout=subprocess.PIPE, stderr=subprocess.STDOUT)\n'
+         '            # start_new_session fixes ownership to this PID, including a leader that exits early.\n'
+         '            cleanup[str(process.pid)] = False\n'
+         "            ownership = 'registered'\n"
+         '        thread = threading.Thread(target=drain, daemon=True)\n'
+         '        thread.start()\n', 1),
+        ('    finally:\n'
+         '        groups = [process.pid]\n'
+         '        try:\n'
+         '            groups = _owned_groups(output, process.pid)\n'
+         '        except Exception as exc:\n'
+         "            errors.append('ownership evidence: ' + type(exc).__name__)\n"
+         '        for pgid in groups:\n'
+         '            try:\n'
+         '                cleanup[str(pgid)] = _stop_group(pgid)\n'
+         '            except Exception as exc:\n'
+         "                cleanup[str(pgid)] = type(exc).__name__ + ': ' + str(exc)[:128]\n"
+         '        try:\n'
+         '            process.wait(timeout=5)\n'
+         '        except Exception as exc:\n'
+         "            errors.append('supervisor reap: ' + type(exc).__name__)\n"
+         '        thread.join(timeout=3)\n'
+         "        control.save('first-cell-supervisor-cleanup.json', {'groups': cleanup, 'drain_finished': not thread.is_alive(),\n"
+         "                                                            'returncode': process.returncode, 'errors': errors,\n"
+         "                                                            'checked_monotonic': time.monotonic()})\n",
+         '    finally:\n'
+         '        # Handled signals cannot skip a kill, reap or receipt during emergency cleanup.\n'
+         '        with defer_startup_signals():\n'
+         '            if process is not None:\n'
+         '                groups = [process.pid]\n'
+         '                try:\n'
+         '                    groups = _owned_groups(output, process.pid)\n'
+         '                except BaseException as exc:\n'
+         "                    errors.append('ownership evidence: ' + type(exc).__name__)\n"
+         '                for pgid in groups:\n'
+         '                    try:\n'
+         '                        cleanup[str(pgid)] = _stop_group(pgid)\n'
+         '                    except BaseException as exc:\n'
+         "                        cleanup[str(pgid)] = type(exc).__name__ + ': ' + str(exc)[:128]\n"
+         '                        try:\n'
+         '                            os.killpg(pgid, signal.SIGKILL)\n'
+         '                            cleanup[str(pgid)] = _group_exited(pgid)\n'
+         '                        except BaseException:\n'
+         '                            pass\n'
+         '                try:\n'
+         '                    process.wait(timeout=5)\n'
+         '                except BaseException as exc:\n'
+         "                    errors.append('supervisor reap: ' + type(exc).__name__)\n"
+         '                if thread is not None and thread.ident is not None:\n'
+         '                    thread.join(timeout=3)\n'
+         '                elif process.stdout is not None:\n'
+         '                    process.stdout.close()\n'
+         "            absent = ownership == 'never_spawned' or (ownership == 'registered' and bool(cleanup)\n"
+         '                                                      and all(v is True for v in cleanup.values()))\n'
+         "            if ownership == 'uncertain':\n"
+         "                errors.append('spawn ownership uncertain; group absence cannot be verified')\n"
+         '            drained = thread is None or not thread.is_alive()\n'
+         "            control.save('first-cell-supervisor-cleanup.json', {\n"
+         "                'ownership': ownership, 'groups': cleanup, 'groups_absent': absent, 'drain_finished': drained,\n"
+         "                'returncode': process.returncode if process else None, 'errors': errors,\n"
+         "                'checked_monotonic': time.monotonic()})\n", 1),
+        ("    report['first_cell_cleanup_verified'] = not errors and not thread.is_alive() and all(v is True for v in cleanup.values())\n",
+         "    report['first_cell_cleanup_verified'] = absent and drained and not errors\n", 1),
         ("def run(output, working, *, started, root=ROOT, mode='live', internal_seconds=None, fault='none', session=None):",
          "def run(output, working, *, started, root=ROOT, mode='live', internal_seconds=None, fault='none', session=None,\n"
-         "        staged_inputs=None, install_seconds=None):", 1),
+         "        staged_inputs=None, install_seconds=None, source_cleanup=None):", 1),
         # The notebook (image) interpreter has no game packages: importing the supervisor module here pulls
         # agent -> arcengine into it (found by the staged CPU rehearsal on a base CPython 3.12 interpreter; the
         # action-effect-history v1 launcher that ran live never imported it). The values are identical.
@@ -161,18 +254,91 @@ TRACK3 = {
         ("                pair = prepare(rootdir, output, wheelhouse, mount / 'arc_agi_3_wheels', manifest, started)",
          "                pair = prepare(rootdir, output, wheelhouse, mount / 'arc_agi_3_wheels', manifest, started,\n"
          "                               root=root, install_seconds=install_seconds)", 1),
+        ('    except Exception as exc:\n        error = type(exc).__name__ + \': \' + str(exc)[:256]\n',
+         '    except BaseException as exc:  # r2: an interruption is recorded, never a silent exit\n'
+         '        error = type(exc).__name__ + \': \' + str(exc)[:256]\n', 1),
         ("               'provider_reconciliation_required': mode == 'live', 'phase4_complete': False}",
          "               'provider_reconciliation_required': mode == 'live', 'phase4_complete': False,\n"
          "               'installation': ('target' if mode == 'live' else\n"
          "                                'staged_rehearsal' if staged_inputs is not None else 'none'),\n"
          "               'runtime_binding': 'stagnation-supervision-v1-runtime-v2'}", 1),
+        # r2 (Track 1 lessons, 3aeeb65 and cfda982): fail-closed finalization. A durable barrier makes every receipt
+        # provisional until a bounded transaction completes; source removal and the final writes are charged to the
+        # first-cell clock; any interruption or overrun revokes certification. The evaluator checks it independently.
+        ("    control.save('notebook-cost.json', receipt)\n    return receipt\n",
+         "    from research.stagnation_supervision_runtime_v2.publisher_process import defer_startup_signals\n"
+         "    pending = control.save('finalization-pending.json', {'scope': 'first_cell_finalization', 'pending': True})\n"
+         "    receipt.update(lifecycle_finalized=False, extracted_source_removed=None, finalization_guard_version=1)\n"
+         "    control.save('notebook-cost.json', receipt)\n"
+         "    try:\n"
+         "        if source_cleanup is not None:\n"
+         "            source_cleanup()\n"
+         "            receipt['extracted_source_removed'] = True\n"
+         "    except BaseException as exc:\n"
+         "        receipt['extracted_source_removed'] = False\n"
+         "        receipt['error'] = receipt['error'] or 'source cleanup: ' + type(exc).__name__\n"
+         "    receipt['elapsed_seconds'] = time.monotonic() - started\n"
+         "    if receipt['elapsed_seconds'] >= internal_seconds:\n"
+         "        receipt['error'] = receipt['error'] or 'first-cell hard deadline exceeded during finalization'\n"
+         "    try:\n"
+         "        # Handled cutoff/interrupt signals are replayed inside this try, after the write and checks.\n"
+         "        with defer_startup_signals():\n"
+         "            receipt['lifecycle_finalized'] = True\n"
+         "            control.save('notebook-cost.json', receipt)\n"
+         "            receipt['elapsed_seconds'] = time.monotonic() - started\n"
+         "            if receipt['elapsed_seconds'] >= internal_seconds:\n"
+         "                raise TimeoutError('first-cell hard deadline exceeded during final evidence write')\n"
+         "            if receipt['error'] is None:\n"
+         "                pending.unlink()\n"
+         "                # Removing the barrier is charged too; any interruption/overrun revokes certification.\n"
+         "                receipt['elapsed_seconds'] = time.monotonic() - started\n"
+         "                if receipt['elapsed_seconds'] >= internal_seconds:\n"
+         "                    raise TimeoutError('first-cell hard deadline exceeded during finalization commit')\n"
+         "    except BaseException as exc:\n"
+         "        receipt['lifecycle_finalized'] = False\n"
+         "        receipt['elapsed_seconds'] = time.monotonic() - started\n"
+         "        receipt['error'] = receipt['error'] or 'finalization: ' + type(exc).__name__ + ': ' + str(exc)[:192]\n"
+         "        with defer_startup_signals():\n"
+         "            # Invalidate first, before emergency writes: failed storage must not leave a passing receipt.\n"
+         "            (output / 'control/notebook-cost.json').unlink(missing_ok=True)\n"
+         "            control.save('finalization-pending.json', {'scope': 'first_cell_finalization', 'pending': True})\n"
+         "            control.save('notebook-cost.json', receipt)\n"
+         "    return receipt\n", 1),
+        ('    """Called by the notebook cell after source extraction and hash verification."""\n',
+         '    """Called by the notebook cell after source extraction and hash verification. r2: the extracted source is\n'
+         '    removed inside the charged lifecycle; only a tree carrying the cell\'s extraction prefix is ever removed\n'
+         '    (in live mode any other tree fails finalization; a rehearsal from a checkout removes nothing)."""\n'
+         '    import shutil\n'
+         "    extracted = Path(source).name.startswith('stagnation-supervision-runtime-v2-source-')\n"
+         '\n'
+         '    def remove_source():\n'
+         '        if not extracted:\n'
+         "            raise ValueError('refusing to remove a tree that is not the extracted payload')\n"
+         '        shutil.rmtree(source)\n', 1),
+        ("        receipt = run(working / OUTPUT_NAME, working, started=started, root=source, mode='live', session=session)",
+         "        receipt = run(working / OUTPUT_NAME, working, started=started, root=source, mode='live', session=session,\n"
+         "                      source_cleanup=remove_source)", 1),
         (f'        from {CL}.authority import require\n        require(source)',
          f'        from {RT}.authority import require\n        require(source)', 1),
         ("                      fault=os.environ.get('SSV_REHEARSAL_FAULT', 'none'))",
          "                      fault=os.environ.get('SSV_REHEARSAL_FAULT', 'none'),\n"
          "                      staged_inputs=os.environ.get('SSV_RUNTIME_V2_STAGED_INPUTS') or None,\n"
          "                      install_seconds=(int(os.environ['SSV_RUNTIME_V2_REHEARSAL_INSTALL_SECONDS'])\n"
-         "                                       if os.environ.get('SSV_RUNTIME_V2_REHEARSAL_INSTALL_SECONDS') else None))", 1)]),
+         "                                       if os.environ.get('SSV_RUNTIME_V2_REHEARSAL_INSTALL_SECONDS') else None),\n"
+         "                      source_cleanup=remove_source if extracted else None)", 1)]),
+}
+
+# r2 behavioural repairs (lessons from Tracks 1, 2 and 4; reports/stagnation_supervision_runtime_v2_gap_checklist_r2.md).
+# They are the only replacements that change behaviour rather than rebind runtime paths: each source-text prefix below
+# names exactly one replacement, and the tests exempt exactly these from the runtime-path rule.
+R2_REPAIRS = {
+    'launch.py': (
+        '    """Own the supervisor', '    errors, retained = [], bytearray()', "    env['PYTHONNOUSERSITE'] = '1'",
+        '    thread = threading.Thread(target=drain', '    finally:\n        groups = [process.pid]',
+        "    report['first_cell_cleanup_verified']", '    except Exception as exc:\n        error =',
+        "    control.save('notebook-cost.json', receipt)\n    return receipt", '    """Called by the notebook cell',
+        "        receipt = run(working / OUTPUT_NAME, working, started=started, root=source, mode='live', session=session)"),
+    'target_evaluate.py': ("    require(first['study_status']", "    require(cleanup['drain_finished']"),
 }
 
 # Unchanged Track 3 science and lifecycle files the successor imports; their hashes are bound in the protocol.
@@ -359,7 +525,9 @@ def derive(read_reference):
               'reference': {'branch': REFERENCE_BRANCH, 'commit': REFERENCE_COMMIT, 'inputs': inputs},
               'track3': {'branch': TRACK3_BRANCH, 'commit': TRACK3_COMMIT},
               'files': records, 'protocol_sha256': sha(outputs['protocol.json']),
-              'note': ('Runtime bindings only. The science files listed in protocol.json are imported unchanged. '
+              'note': ('Runtime bindings plus the r2 behavioural repairs named in R2_REPAIRS (startup ownership and '
+                       'fail-closed finalization, with their independent checks). The science files listed in '
+                       'protocol.json are imported unchanged. '
                        'Hand-written successor modules (authority, model_binding, mounts, prepare, closure, notebook, '
                        'launch_tooling, provider_preflight, verification) are not derived and are reviewed directly.')}
     for row in records:

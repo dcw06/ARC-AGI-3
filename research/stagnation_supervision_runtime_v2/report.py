@@ -10,11 +10,28 @@ evaluator). This module only arranges them so that the quantities the protocol k
   realised_cost              calls, tokens and latency per arm;
 and adds the descriptive ls20 display/oscillation report required by the 2026-10-02 retention decision. Nothing
 here feeds a decision rule; display-driven novelty cannot become recovery or solving credit.
+
+r2 (Track 1 lesson): in live mode the evaluating checkout must be the reviewed one, under exactly the launch gate's
+source rules (authority.check_sources with the review documents: scope, GPU-disabled status, the complete payload
+closure, the reviewed notebook's embedded inventory, and the review documents with the evaluators' strict import
+closure). A checkout that fails is recorded as such and the run is not technically complete under this evaluation.
 """
 from pathlib import Path
 
 
-def study_report(output, spec, *, mode='live', session='1', internal_seconds=None):
+def checkout_review_lock(root=None):
+    """(record, problems) for the evaluating checkout against its newest review lock, under the gate's rules."""
+    from research.stagnation_supervision_runtime_v2 import authority as A
+    root = A.ROOT if root is None else Path(root)
+    try:
+        name = A.review_lock(root)
+        A.check_sources(root, name, review_documents=True)
+        return {'lock': name, 'sha256': A.sha256(root / name), 'verified': True}, []
+    except (OSError, ValueError, KeyError, TypeError, SyntaxError) as exc:
+        return {'verified': False}, [f'evaluating checkout review lock: {type(exc).__name__}: {exc}']
+
+
+def study_report(output, spec, *, mode='live', session='1', internal_seconds=None, root=None, verify_checkout=None):
     from research.stagnation_supervision_runtime_v2.target_evaluate import evaluate_target
     from research.stagnation_supervision_runtime_v2.verification import display_report
     target = evaluate_target(output, spec, mode=mode, session=session, internal_seconds=internal_seconds)
@@ -46,9 +63,13 @@ def study_report(output, spec, *, mode='live', session='1', internal_seconds=Non
                 ls20.append({'episode_id': episode['episode_id'], 'arm': episode['arm'], **display_report(raws)})
     except Exception as exc:  # the report is descriptive; its failure never changes the technical verdict
         ls20 = [{'error': f'{type(exc).__name__}: {str(exc)[:200]}'}]
-    return {'version': 'stagnation_supervision_runtime_v2_study_report_v1', 'mode': mode, 'session': session,
-            'technically_complete': target['technically_complete'], 'target_accepted': target['target_accepted'],
-            'lifecycle_verified': target['lifecycle_verified'], 'problems': target['problems'],
+    verify_checkout = mode == 'live' if verify_checkout is None else verify_checkout
+    lock, lock_problems = checkout_review_lock(root) if verify_checkout else (None, [])
+    accepted = not lock_problems
+    return {'version': 'stagnation_supervision_runtime_v2_study_report_v2', 'mode': mode, 'session': session,
+            'technically_complete': target['technically_complete'] and accepted,
+            'target_accepted': target['target_accepted'] and accepted, 'review_lock': lock,
+            'lifecycle_verified': target['lifecycle_verified'], 'problems': target['problems'] + lock_problems,
             'endpoints': endpoints if target['trajectory'].get('technically_complete') else None,
             'endpoints_withheld_reason': None if target['trajectory'].get('technically_complete') else
             'a technically incomplete run reports no outcome result (protocol v2 section 9)',

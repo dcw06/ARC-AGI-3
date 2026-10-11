@@ -15,7 +15,7 @@ from research.stagnation_supervision_v1.closed_loop import evaluate as trajector
 from research.stagnation_supervision_v1.closed_loop.model_service import validate_ready
 from research.stagnation_supervision_v1.closed_loop.server_config import validate as validate_configuration
 
-VERSION = 'stagnation_supervision_target_evaluation_runtime_v2'
+VERSION = 'stagnation_supervision_target_evaluation_runtime_v2_r2'
 
 
 def require(condition, message):
@@ -94,7 +94,13 @@ def lifecycle(root, spec, *, mode, session, internal_seconds):
     require(first['scope'] == 'stagnation_supervision_first_cell' and outer['scope'] == 'stagnation_supervision_' + mode,
             'lifecycle scope')
     require(first['error'] is None and outer['error'] is None and not outer.get('cleanup_error'), 'lifecycle error')
-    require(first['study_status'] == outer['status'] == 'study_complete_pending_independent_evaluation', 'lifecycle status')
+    require(first['study_status'] == outer['status'] == 'study_complete_pending_independent_evaluation',
+            'lifecycle status')
+    pending = root / 'control/finalization-pending.json'
+    require(first.get('finalization_guard_version') == 1 and first.get('lifecycle_finalized') is True
+            and not pending.exists() and not pending.is_symlink()
+            and (mode != 'live' or first.get('extracted_source_removed') is True),
+            'lifecycle finalization/source removal not certified')
     require(all(outer.get(k) is True for k in ('worker_released', 'process_groups_exited',
                     'independent_gpu_cleanup_verified', 'scratch_removed')) and first['first_cell_cleanup_verified'] is True,
             'lifecycle closure claims')
@@ -102,7 +108,9 @@ def lifecycle(root, spec, *, mode, session, internal_seconds):
             and first.get('installation') in (('target',) if mode == 'live' else ('none', 'staged_rehearsal')),
             'runtime v2 installation class')
     require(first['dependency_trees_removed'] is (True if first['installation'] != 'none' else None), 'dependency cleanup')
-    require(cleanup['drain_finished'] is True and cleanup['returncode'] == 0 and cleanup['errors'] == [], 'first-cell process/log cleanup')
+    require(cleanup['drain_finished'] is True and cleanup['returncode'] == 0 and cleanup['errors'] == []
+            and cleanup.get('ownership') == 'registered' and cleanup.get('groups_absent') is True,
+            'first-cell process/log cleanup')
     groups = cleanup['groups']
     require(type(groups) is dict and len(groups) == 3 and all(v is True for v in groups.values())
             and all(k.isdigit() and int(k) > 0 for k in groups), 'owned group closure inventory')

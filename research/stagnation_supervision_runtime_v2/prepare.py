@@ -84,12 +84,14 @@ def prepare(scratch, output, wheelhouse, game_wheels, manifest, started, *, root
         (scratch / 'model').mkdir(exist_ok=False)
         runtime = protocol['runtime']['model']
         log = evidence / 'model' / 'install.log'
+        # Kaggle notebooks set MPLBACKEND to the Jupyter inline backend (module://matplotlib_inline.backend_inline),
+        # which no installed interpreter has; it broke Track 1's installation checks (session 1, attempt 1).
         model = install(wheelhouse, scratch / 'model' / 'venv', runtime, deadline, log, python=sys.executable,
-                        processes=processes)
+                        environment={**os.environ, 'MPLBACKEND': 'Agg'}, processes=processes)
         receipt['model_install'] = {k: model.get(k) for k in ('install_seconds', 'versions', 'imports', 'torch_cuda_build')}
         env = {k: v for k, v in os.environ.items() if k not in ('PYTHONPATH', 'PYTHONHOME', 'VIRTUAL_ENV')}
         env.update(PYTHONNOUSERSITE='1', CUDA_VISIBLE_DEVICES='', VLLM_NO_USAGE_STATS='1', USE_TF='0',
-                   TRANSFORMERS_NO_TF='1')
+                   TRANSFORMERS_NO_TF='1', MPLBACKEND='Agg')
         _run([model['python'], '-I', '-c', ISOLATION_CHECK + MODEL_METADATA_EXTRA], log, deadline, env,
              'model metadata and isolation', processes)
         check()

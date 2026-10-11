@@ -1,0 +1,430 @@
+{
+ "schema": "stagnation_supervision_structured_outputs_check_v1",
+ "gpu_used": false,
+ "model_calls": 0,
+ "versions": {
+  "vllm": "0.19.0",
+  "xgrammar": "0.1.34",
+  "llguidance": "1.3.0",
+  "transformers": "4.57.6"
+ },
+ "configured_backend": "auto",
+ "disable_any_whitespace": false,
+ "schemas_input_sha256": "109027cb8f7d694b7bb59d46aa5a576262167440ebf0c6be1966f0dab7682d83",
+ "legal_sets": {
+  "ar25": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "wa30": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "ls20": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "s5i5": [
+   6
+  ],
+  "canary": [
+   6
+  ]
+ },
+ "schemas": {
+  "ar25": {
+   "request_schema_sha256": "0100a4574344e5aca6fb542b360508e7b9b28abf2f314a5a5ec0907408a33877",
+   "validated": true,
+   "backend": "xgrammar"
+  },
+  "wa30": {
+   "request_schema_sha256": "28f4acfae0ceff47eb123c88cdbc1929debc111161679e27726c658d0dd9cc8b",
+   "validated": true,
+   "backend": "xgrammar"
+  },
+  "ls20": {
+   "request_schema_sha256": "f1682da2b42709f465bc7944268a350c4e2abad0622c490d195effe334866a29",
+   "validated": true,
+   "backend": "xgrammar"
+  },
+  "s5i5": {
+   "request_schema_sha256": "6fff0eb119697c24c4e40fd999fce8aaa49cd916fa67bd6924127d765cdb60ec",
+   "validated": true,
+   "backend": "xgrammar"
+  },
+  "canary": {
+   "request_schema_sha256": "6fff0eb119697c24c4e40fd999fce8aaa49cd916fa67bd6924127d765cdb60ec",
+   "validated": true,
+   "backend": "xgrammar"
+  }
+ },
+ "cases": [
+  {
+   "schema": "ar25",
+   "label": "simple action",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "ar25",
+   "label": "ACTION6 at the corner",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "ar25",
+   "label": "ACTION6 at the origin",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "ar25",
+   "label": "ACTION7",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "ar25",
+   "label": "reset action 0",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "ar25",
+   "label": "ACTION6 x out of range",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "ar25",
+   "label": "ACTION6 missing y",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "ar25",
+   "label": "simple action with data",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "ar25",
+   "label": "extra key",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "ar25",
+   "label": "boolean id",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "wa30",
+   "label": "simple action",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "wa30",
+   "label": "ACTION6 at the corner",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "wa30",
+   "label": "ACTION6 at the origin",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "wa30",
+   "label": "ACTION7",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "wa30",
+   "label": "reset action 0",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "wa30",
+   "label": "ACTION6 x out of range",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "wa30",
+   "label": "ACTION6 missing y",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "wa30",
+   "label": "simple action with data",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "wa30",
+   "label": "extra key",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "wa30",
+   "label": "boolean id",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "ls20",
+   "label": "simple action",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "ls20",
+   "label": "ACTION6 at the corner",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "ls20",
+   "label": "ACTION6 at the origin",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "ls20",
+   "label": "ACTION7",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "ls20",
+   "label": "reset action 0",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "ls20",
+   "label": "ACTION6 x out of range",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "ls20",
+   "label": "ACTION6 missing y",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "ls20",
+   "label": "simple action with data",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "ls20",
+   "label": "extra key",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "ls20",
+   "label": "boolean id",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "s5i5",
+   "label": "simple action",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "s5i5",
+   "label": "ACTION6 at the corner",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "s5i5",
+   "label": "ACTION6 at the origin",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "s5i5",
+   "label": "ACTION7",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "s5i5",
+   "label": "reset action 0",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "s5i5",
+   "label": "ACTION6 x out of range",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "s5i5",
+   "label": "ACTION6 missing y",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "s5i5",
+   "label": "simple action with data",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "s5i5",
+   "label": "extra key",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "s5i5",
+   "label": "boolean id",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "canary",
+   "label": "simple action",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "canary",
+   "label": "ACTION6 at the corner",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "canary",
+   "label": "ACTION6 at the origin",
+   "decoder_admits": true,
+   "study_valid": true,
+   "agree": true
+  },
+  {
+   "schema": "canary",
+   "label": "ACTION7",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "canary",
+   "label": "reset action 0",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "canary",
+   "label": "ACTION6 x out of range",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "canary",
+   "label": "ACTION6 missing y",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "canary",
+   "label": "simple action with data",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "canary",
+   "label": "extra key",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  },
+  {
+   "schema": "canary",
+   "label": "boolean id",
+   "decoder_admits": false,
+   "study_valid": false,
+   "agree": true
+  }
+ ],
+ "all_schemas_accepted": true,
+ "backends": [
+  "xgrammar"
+ ],
+ "decoder_admits_a_study_invalid_answer": [],
+ "decoder_rejects_a_study_valid_answer": [],
+ "passed": true
+}

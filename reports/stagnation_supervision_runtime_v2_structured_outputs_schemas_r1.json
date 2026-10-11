@@ -1,0 +1,904 @@
+{
+ "schemas": {
+  "ar25": {
+   "type": "object",
+   "properties": {
+    "action": {
+     "anyOf": [
+      {
+       "type": "object",
+       "properties": {
+        "action_id": {
+         "type": "integer",
+         "enum": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7
+         ]
+        },
+        "action_data": {
+         "type": "object",
+         "properties": {},
+         "additionalProperties": false
+        }
+       },
+       "required": [
+        "action_id",
+        "action_data"
+       ],
+       "additionalProperties": false
+      },
+      {
+       "type": "object",
+       "properties": {
+        "action_id": {
+         "type": "integer",
+         "enum": [
+          6
+         ]
+        },
+        "action_data": {
+         "type": "object",
+         "properties": {
+          "x": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 63
+          },
+          "y": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 63
+          }
+         },
+         "required": [
+          "x",
+          "y"
+         ],
+         "additionalProperties": false
+        }
+       },
+       "required": [
+        "action_id",
+        "action_data"
+       ],
+       "additionalProperties": false
+      }
+     ]
+    }
+   },
+   "required": [
+    "action"
+   ],
+   "additionalProperties": false
+  },
+  "wa30": {
+   "type": "object",
+   "properties": {
+    "action": {
+     "anyOf": [
+      {
+       "type": "object",
+       "properties": {
+        "action_id": {
+         "type": "integer",
+         "enum": [
+          1,
+          2,
+          3,
+          4,
+          5
+         ]
+        },
+        "action_data": {
+         "type": "object",
+         "properties": {},
+         "additionalProperties": false
+        }
+       },
+       "required": [
+        "action_id",
+        "action_data"
+       ],
+       "additionalProperties": false
+      }
+     ]
+    }
+   },
+   "required": [
+    "action"
+   ],
+   "additionalProperties": false
+  },
+  "ls20": {
+   "type": "object",
+   "properties": {
+    "action": {
+     "anyOf": [
+      {
+       "type": "object",
+       "properties": {
+        "action_id": {
+         "type": "integer",
+         "enum": [
+          1,
+          2,
+          3,
+          4
+         ]
+        },
+        "action_data": {
+         "type": "object",
+         "properties": {},
+         "additionalProperties": false
+        }
+       },
+       "required": [
+        "action_id",
+        "action_data"
+       ],
+       "additionalProperties": false
+      }
+     ]
+    }
+   },
+   "required": [
+    "action"
+   ],
+   "additionalProperties": false
+  },
+  "s5i5": {
+   "type": "object",
+   "properties": {
+    "action": {
+     "anyOf": [
+      {
+       "type": "object",
+       "properties": {
+        "action_id": {
+         "type": "integer",
+         "enum": [
+          6
+         ]
+        },
+        "action_data": {
+         "type": "object",
+         "properties": {
+          "x": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 63
+          },
+          "y": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 63
+          }
+         },
+         "required": [
+          "x",
+          "y"
+         ],
+         "additionalProperties": false
+        }
+       },
+       "required": [
+        "action_id",
+        "action_data"
+       ],
+       "additionalProperties": false
+      }
+     ]
+    }
+   },
+   "required": [
+    "action"
+   ],
+   "additionalProperties": false
+  },
+  "canary": {
+   "type": "object",
+   "properties": {
+    "action": {
+     "anyOf": [
+      {
+       "type": "object",
+       "properties": {
+        "action_id": {
+         "type": "integer",
+         "enum": [
+          6
+         ]
+        },
+        "action_data": {
+         "type": "object",
+         "properties": {
+          "x": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 63
+          },
+          "y": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 63
+          }
+         },
+         "required": [
+          "x",
+          "y"
+         ],
+         "additionalProperties": false
+        }
+       },
+       "required": [
+        "action_id",
+        "action_data"
+       ],
+       "additionalProperties": false
+      }
+     ]
+    }
+   },
+   "required": [
+    "action"
+   ],
+   "additionalProperties": false
+  }
+ },
+ "legal_sets": {
+  "ar25": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "wa30": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "ls20": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "s5i5": [
+   6
+  ],
+  "canary": [
+   6
+  ]
+ },
+ "cases": [
+  {
+   "schema": "ar25",
+   "label": "simple action",
+   "answer": {
+    "action": {
+     "action_id": 1,
+     "action_data": {}
+    }
+   },
+   "study_valid": true
+  },
+  {
+   "schema": "ar25",
+   "label": "ACTION6 at the corner",
+   "answer": {
+    "action": {
+     "action_id": 6,
+     "action_data": {
+      "x": 63,
+      "y": 0
+     }
+    }
+   },
+   "study_valid": true
+  },
+  {
+   "schema": "ar25",
+   "label": "ACTION6 at the origin",
+   "answer": {
+    "action": {
+     "action_id": 6,
+     "action_data": {
+      "x": 0,
+      "y": 0
+     }
+    }
+   },
+   "study_valid": true
+  },
+  {
+   "schema": "ar25",
+   "label": "ACTION7",
+   "answer": {
+    "action": {
+     "action_id": 7,
+     "action_data": {}
+    }
+   },
+   "study_valid": true
+  },
+  {
+   "schema": "ar25",
+   "label": "reset action 0",
+   "answer": {
+    "action": {
+     "action_id": 0,
+     "action_data": {}
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "ar25",
+   "label": "ACTION6 x out of range",
+   "answer": {
+    "action": {
+     "action_id": 6,
+     "action_data": {
+      "x": 64,
+      "y": 0
+     }
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "ar25",
+   "label": "ACTION6 missing y",
+   "answer": {
+    "action": {
+     "action_id": 6,
+     "action_data": {
+      "x": 1
+     }
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "ar25",
+   "label": "simple action with data",
+   "answer": {
+    "action": {
+     "action_id": 1,
+     "action_data": {
+      "x": 1
+     }
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "ar25",
+   "label": "extra key",
+   "answer": {
+    "action": {
+     "action_id": 1,
+     "action_data": {}
+    },
+    "note": "x"
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "ar25",
+   "label": "boolean id",
+   "answer": {
+    "action": {
+     "action_id": true,
+     "action_data": {}
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "wa30",
+   "label": "simple action",
+   "answer": {
+    "action": {
+     "action_id": 1,
+     "action_data": {}
+    }
+   },
+   "study_valid": true
+  },
+  {
+   "schema": "wa30",
+   "label": "ACTION6 at the corner",
+   "answer": {
+    "action": {
+     "action_id": 6,
+     "action_data": {
+      "x": 63,
+      "y": 0
+     }
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "wa30",
+   "label": "ACTION6 at the origin",
+   "answer": {
+    "action": {
+     "action_id": 6,
+     "action_data": {
+      "x": 0,
+      "y": 0
+     }
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "wa30",
+   "label": "ACTION7",
+   "answer": {
+    "action": {
+     "action_id": 7,
+     "action_data": {}
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "wa30",
+   "label": "reset action 0",
+   "answer": {
+    "action": {
+     "action_id": 0,
+     "action_data": {}
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "wa30",
+   "label": "ACTION6 x out of range",
+   "answer": {
+    "action": {
+     "action_id": 6,
+     "action_data": {
+      "x": 64,
+      "y": 0
+     }
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "wa30",
+   "label": "ACTION6 missing y",
+   "answer": {
+    "action": {
+     "action_id": 6,
+     "action_data": {
+      "x": 1
+     }
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "wa30",
+   "label": "simple action with data",
+   "answer": {
+    "action": {
+     "action_id": 1,
+     "action_data": {
+      "x": 1
+     }
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "wa30",
+   "label": "extra key",
+   "answer": {
+    "action": {
+     "action_id": 1,
+     "action_data": {}
+    },
+    "note": "x"
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "wa30",
+   "label": "boolean id",
+   "answer": {
+    "action": {
+     "action_id": true,
+     "action_data": {}
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "ls20",
+   "label": "simple action",
+   "answer": {
+    "action": {
+     "action_id": 1,
+     "action_data": {}
+    }
+   },
+   "study_valid": true
+  },
+  {
+   "schema": "ls20",
+   "label": "ACTION6 at the corner",
+   "answer": {
+    "action": {
+     "action_id": 6,
+     "action_data": {
+      "x": 63,
+      "y": 0
+     }
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "ls20",
+   "label": "ACTION6 at the origin",
+   "answer": {
+    "action": {
+     "action_id": 6,
+     "action_data": {
+      "x": 0,
+      "y": 0
+     }
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "ls20",
+   "label": "ACTION7",
+   "answer": {
+    "action": {
+     "action_id": 7,
+     "action_data": {}
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "ls20",
+   "label": "reset action 0",
+   "answer": {
+    "action": {
+     "action_id": 0,
+     "action_data": {}
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "ls20",
+   "label": "ACTION6 x out of range",
+   "answer": {
+    "action": {
+     "action_id": 6,
+     "action_data": {
+      "x": 64,
+      "y": 0
+     }
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "ls20",
+   "label": "ACTION6 missing y",
+   "answer": {
+    "action": {
+     "action_id": 6,
+     "action_data": {
+      "x": 1
+     }
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "ls20",
+   "label": "simple action with data",
+   "answer": {
+    "action": {
+     "action_id": 1,
+     "action_data": {
+      "x": 1
+     }
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "ls20",
+   "label": "extra key",
+   "answer": {
+    "action": {
+     "action_id": 1,
+     "action_data": {}
+    },
+    "note": "x"
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "ls20",
+   "label": "boolean id",
+   "answer": {
+    "action": {
+     "action_id": true,
+     "action_data": {}
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "s5i5",
+   "label": "simple action",
+   "answer": {
+    "action": {
+     "action_id": 1,
+     "action_data": {}
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "s5i5",
+   "label": "ACTION6 at the corner",
+   "answer": {
+    "action": {
+     "action_id": 6,
+     "action_data": {
+      "x": 63,
+      "y": 0
+     }
+    }
+   },
+   "study_valid": true
+  },
+  {
+   "schema": "s5i5",
+   "label": "ACTION6 at the origin",
+   "answer": {
+    "action": {
+     "action_id": 6,
+     "action_data": {
+      "x": 0,
+      "y": 0
+     }
+    }
+   },
+   "study_valid": true
+  },
+  {
+   "schema": "s5i5",
+   "label": "ACTION7",
+   "answer": {
+    "action": {
+     "action_id": 7,
+     "action_data": {}
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "s5i5",
+   "label": "reset action 0",
+   "answer": {
+    "action": {
+     "action_id": 0,
+     "action_data": {}
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "s5i5",
+   "label": "ACTION6 x out of range",
+   "answer": {
+    "action": {
+     "action_id": 6,
+     "action_data": {
+      "x": 64,
+      "y": 0
+     }
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "s5i5",
+   "label": "ACTION6 missing y",
+   "answer": {
+    "action": {
+     "action_id": 6,
+     "action_data": {
+      "x": 1
+     }
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "s5i5",
+   "label": "simple action with data",
+   "answer": {
+    "action": {
+     "action_id": 1,
+     "action_data": {
+      "x": 1
+     }
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "s5i5",
+   "label": "extra key",
+   "answer": {
+    "action": {
+     "action_id": 1,
+     "action_data": {}
+    },
+    "note": "x"
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "s5i5",
+   "label": "boolean id",
+   "answer": {
+    "action": {
+     "action_id": true,
+     "action_data": {}
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "canary",
+   "label": "simple action",
+   "answer": {
+    "action": {
+     "action_id": 1,
+     "action_data": {}
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "canary",
+   "label": "ACTION6 at the corner",
+   "answer": {
+    "action": {
+     "action_id": 6,
+     "action_data": {
+      "x": 63,
+      "y": 0
+     }
+    }
+   },
+   "study_valid": true
+  },
+  {
+   "schema": "canary",
+   "label": "ACTION6 at the origin",
+   "answer": {
+    "action": {
+     "action_id": 6,
+     "action_data": {
+      "x": 0,
+      "y": 0
+     }
+    }
+   },
+   "study_valid": true
+  },
+  {
+   "schema": "canary",
+   "label": "ACTION7",
+   "answer": {
+    "action": {
+     "action_id": 7,
+     "action_data": {}
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "canary",
+   "label": "reset action 0",
+   "answer": {
+    "action": {
+     "action_id": 0,
+     "action_data": {}
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "canary",
+   "label": "ACTION6 x out of range",
+   "answer": {
+    "action": {
+     "action_id": 6,
+     "action_data": {
+      "x": 64,
+      "y": 0
+     }
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "canary",
+   "label": "ACTION6 missing y",
+   "answer": {
+    "action": {
+     "action_id": 6,
+     "action_data": {
+      "x": 1
+     }
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "canary",
+   "label": "simple action with data",
+   "answer": {
+    "action": {
+     "action_id": 1,
+     "action_data": {
+      "x": 1
+     }
+    }
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "canary",
+   "label": "extra key",
+   "answer": {
+    "action": {
+     "action_id": 1,
+     "action_data": {}
+    },
+    "note": "x"
+   },
+   "study_valid": false
+  },
+  {
+   "schema": "canary",
+   "label": "boolean id",
+   "answer": {
+    "action": {
+     "action_id": true,
+     "action_data": {}
+    }
+   },
+   "study_valid": false
+  }
+ ]
+}

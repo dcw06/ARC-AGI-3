@@ -41,10 +41,10 @@ def resolved_protocol(root):
 
 
 def source_tree(root):
-    """Copy the payload closure and the bound science files into `root`."""
+    """Copy the payload closure, the bound science files and the review documents (r2) into `root`."""
     root = Path(root)
     protocol = json.loads((A.ROOT / A.PROTOCOL).read_bytes())
-    names = set(closure(A.ROOT)['files']) | set(protocol['science']['files'])
+    names = set(closure(A.ROOT)['files']) | set(protocol['science']['files']) | set(A.review_inventory(A.ROOT))
     for name in names:
         target = root / name
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -52,8 +52,9 @@ def source_tree(root):
     return sorted(names)
 
 
-def authority_tree(root, *, session='1', claim=True, review=True):
-    """A complete synthetic authority set over a placeholder-free copy of the successor sources."""
+def authority_tree(root, *, session='1', claim=True, review=True, session1_evaluation=None):
+    """A complete synthetic authority set over a placeholder-free copy of the successor sources. r2: a session-2
+    attempt binds `session1_evaluation` (a synthetic record written to private/session1-evaluation.json)."""
     from research.stagnation_supervision_runtime_v2.notebook import build_review
     root = Path(root)
     source_tree(root)
@@ -101,9 +102,12 @@ def authority_tree(root, *, session='1', claim=True, review=True):
                                           'source_approval_sha256': source_sha, 'protocol_sha256': sha(root / A.PROTOCOL),
                                           'sessions': {session: limits}, 'dataset': protocol['dataset'],
                                           'model_source': MODEL, 'consumed_attempts_acknowledged': protocol['consumed_attempts']})
-    execution_sha = write(root, A.EXECUTION, {'review_lock': lock, 'review_sha256': lock_sha, 'scope': A.SCOPE,
-                                              'source_approval_sha256': source_sha, 'compute_authorization_sha256': compute_sha,
-                                              'session': session, 'attempt_id': ATTEMPT})
+    execution = {'review_lock': lock, 'review_sha256': lock_sha, 'scope': A.SCOPE, 'source_approval_sha256': source_sha,
+                 'compute_authorization_sha256': compute_sha, 'session': session, 'attempt_id': ATTEMPT}
+    if session1_evaluation is not None:
+        name = 'private/session1-evaluation.json'
+        execution['session1_evaluation'] = {'path': name, 'sha256': write(root, name, session1_evaluation)}
+    execution_sha = write(root, A.EXECUTION, execution)
     reservation_sha = write(root, A.RESERVATION, {'status': 'reserved', 'attempt_id': ATTEMPT, 'events': ['reserve'],
                                                   'execution_sha256': execution_sha,
                                                   'seconds': A.SESSION_LIMITS[session]['authorized_seconds']})

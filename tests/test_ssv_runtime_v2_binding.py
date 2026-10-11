@@ -56,10 +56,19 @@ class Derivation(unittest.TestCase):
                              r'runtime_binding|stagnation-supervision-v1-runtime-v2|SESSION_LIMITS|'
                              r'target_evaluation_runtime_v2|dependency_trees_removed|notebook interpreter|'
                              r'rehearsal-only|SSV_RUNTIME_V2|runtime v2|LIVE_INTERNAL_SECONDS|import prepare)')
+        from scripts.derive_stagnation_supervision_runtime_v2 import R2_REPAIRS
+        used = {}
         for row in RECORD['files']:
+            name = row['derived'].rsplit('/', 1)[1]
             for old, new, _ in row['replacements']:
+                repairs = [p for p in R2_REPAIRS.get(name, ()) if old.startswith(p)]
+                if repairs:  # r2: a named behavioural repair (gap checklist r2), not a runtime-path rebinding
+                    for p in repairs:
+                        used[(name, p)] = used.get((name, p), 0) + 1
+                    continue
                 with self.subTest(row['derived'], old=old[:60]):
                     self.assertRegex(new, allowed)
+        self.assertEqual(used, {(n, p): 1 for n, prefixes in R2_REPAIRS.items() for p in prefixes})
 
 
 class Protocol(unittest.TestCase):

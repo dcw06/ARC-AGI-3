@@ -55,10 +55,12 @@ def _owned_groups(output, supervisor_pid):
 
 def run_supervisor(output, working, game_python, model_python, games, *, started, mode, internal_seconds,
                    fault='none', root=ROOT, spawn=subprocess.Popen, session=None):
-    """Own the supervisor's session and every group it records; verify all are gone."""
+    """Protect startup ownership and retain cleanup even if startup or logging is interrupted (r2)."""
+    from research.stagnation_supervision_runtime_v2.publisher_process import defer_startup_signals  # stdlib only
     root, output = Path(root), Path(output)
     log, control = EvidenceStore(output, 'logs'), EvidenceStore(output, 'control')
-    errors, retained = [], bytearray()
+    errors, retained, cleanup = [], bytearray(), {}
+    process, thread, ownership = None, None, 'never_spawned'
     command = [str(game_python), '-m', 'research.stagnation_supervision_runtime_v2.supervisor', '--output', str(output),
                '--working', str(working), '--game-python', str(game_python), '--model-python', str(model_python),
                '--environments', str(games), '--started', str(started), '--mode', mode,
@@ -71,9 +73,7 @@ def run_supervisor(output, working, game_python, model_python, games, *, started
         env.pop('PYTHONPATH', None)
     else:
         env['PYTHONPATH'] = str(root)
-    env['PYTHONNOUSERSITE'] = '1'
-    env['MPLBACKEND'] = 'Agg'
-    process = spawn(command, cwd=root, env=env, start_new_session=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    env['PYTHONNOUSERSITE'], env['MPLBACKEND'] = '1', 'Agg'
 
     def drain():
         try:
@@ -87,10 +87,16 @@ def run_supervisor(output, working, game_python, model_python, games, *, started
         finally:
             process.stdout.close()
 
-    thread = threading.Thread(target=drain, daemon=True)
-    thread.start()
-    cleanup = {}
     try:
+        with defer_startup_signals():
+            ownership = 'uncertain'  # entering Popen does not prove that no child was created
+            process = spawn(command, cwd=root, env=env, start_new_session=True,
+                            stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            # start_new_session fixes ownership to this PID, including a leader that exits early.
+            cleanup[str(process.pid)] = False
+            ownership = 'registered'
+        thread = threading.Thread(target=drain, daemon=True)
+        thread.start()
         while process.poll() is None:
             if errors:
                 raise RuntimeError('supervisor log retention failed: ' + errors[0])
@@ -98,34 +104,51 @@ def run_supervisor(output, working, game_python, model_python, games, *, started
                 raise TimeoutError('first-cell supervisor deadline')
             time.sleep(.05)
     finally:
-        groups = [process.pid]
-        try:
-            groups = _owned_groups(output, process.pid)
-        except Exception as exc:
-            errors.append('ownership evidence: ' + type(exc).__name__)
-        for pgid in groups:
-            try:
-                cleanup[str(pgid)] = _stop_group(pgid)
-            except Exception as exc:
-                cleanup[str(pgid)] = type(exc).__name__ + ': ' + str(exc)[:128]
-        try:
-            process.wait(timeout=5)
-        except Exception as exc:
-            errors.append('supervisor reap: ' + type(exc).__name__)
-        thread.join(timeout=3)
-        control.save('first-cell-supervisor-cleanup.json', {'groups': cleanup, 'drain_finished': not thread.is_alive(),
-                                                            'returncode': process.returncode, 'errors': errors,
-                                                            'checked_monotonic': time.monotonic()})
+        # Handled signals cannot skip a kill, reap or receipt during emergency cleanup.
+        with defer_startup_signals():
+            if process is not None:
+                groups = [process.pid]
+                try:
+                    groups = _owned_groups(output, process.pid)
+                except BaseException as exc:
+                    errors.append('ownership evidence: ' + type(exc).__name__)
+                for pgid in groups:
+                    try:
+                        cleanup[str(pgid)] = _stop_group(pgid)
+                    except BaseException as exc:
+                        cleanup[str(pgid)] = type(exc).__name__ + ': ' + str(exc)[:128]
+                        try:
+                            os.killpg(pgid, signal.SIGKILL)
+                            cleanup[str(pgid)] = _group_exited(pgid)
+                        except BaseException:
+                            pass
+                try:
+                    process.wait(timeout=5)
+                except BaseException as exc:
+                    errors.append('supervisor reap: ' + type(exc).__name__)
+                if thread is not None and thread.ident is not None:
+                    thread.join(timeout=3)
+                elif process.stdout is not None:
+                    process.stdout.close()
+            absent = ownership == 'never_spawned' or (ownership == 'registered' and bool(cleanup)
+                                                      and all(v is True for v in cleanup.values()))
+            if ownership == 'uncertain':
+                errors.append('spawn ownership uncertain; group absence cannot be verified')
+            drained = thread is None or not thread.is_alive()
+            control.save('first-cell-supervisor-cleanup.json', {
+                'ownership': ownership, 'groups': cleanup, 'groups_absent': absent, 'drain_finished': drained,
+                'returncode': process.returncode if process else None, 'errors': errors,
+                'checked_monotonic': time.monotonic()})
     report_path = output / 'control/outer.json'
     if report_path.is_symlink() or not report_path.is_file() or report_path.stat().st_size > 65536:
         raise RuntimeError('missing or oversized supervisor report')
     report = json.loads(report_path.read_bytes())
-    report['first_cell_cleanup_verified'] = not errors and not thread.is_alive() and all(v is True for v in cleanup.values())
+    report['first_cell_cleanup_verified'] = absent and drained and not errors
     return report
 
 
 def run(output, working, *, started, root=ROOT, mode='live', internal_seconds=None, fault='none', session=None,
-        staged_inputs=None, install_seconds=None):
+        staged_inputs=None, install_seconds=None, source_cleanup=None):
     """Installation, supervisor, evidence and cleanup all charged to `started`."""
     from research.stagnation_supervision_runtime_v2.authority import SESSION_LIMITS  # stdlib-only closure in the notebook interpreter
     LIVE_INTERNAL_SECONDS = {s: v['internal_seconds'] for s, v in SESSION_LIMITS.items()}  # 5100 / 4500
@@ -176,7 +199,7 @@ def run(output, working, *, started, root=ROOT, mode='live', internal_seconds=No
             report = run_supervisor(output, working, sys.executable, sys.executable, games,
                                     started=started, mode=mode, internal_seconds=internal_seconds, fault=fault, root=root,
                                     session=session)
-    except Exception as exc:
+    except BaseException as exc:  # r2: an interruption is recorded, never a silent exit
         error = type(exc).__name__ + ': ' + str(exc)[:256]
     elapsed = time.monotonic() - started
     if elapsed >= internal_seconds:
@@ -190,17 +213,63 @@ def run(output, working, *, started, root=ROOT, mode='live', internal_seconds=No
                'installation': ('target' if mode == 'live' else
                                 'staged_rehearsal' if staged_inputs is not None else 'none'),
                'runtime_binding': 'stagnation-supervision-v1-runtime-v2'}
+    from research.stagnation_supervision_runtime_v2.publisher_process import defer_startup_signals
+    pending = control.save('finalization-pending.json', {'scope': 'first_cell_finalization', 'pending': True})
+    receipt.update(lifecycle_finalized=False, extracted_source_removed=None, finalization_guard_version=1)
     control.save('notebook-cost.json', receipt)
+    try:
+        if source_cleanup is not None:
+            source_cleanup()
+            receipt['extracted_source_removed'] = True
+    except BaseException as exc:
+        receipt['extracted_source_removed'] = False
+        receipt['error'] = receipt['error'] or 'source cleanup: ' + type(exc).__name__
+    receipt['elapsed_seconds'] = time.monotonic() - started
+    if receipt['elapsed_seconds'] >= internal_seconds:
+        receipt['error'] = receipt['error'] or 'first-cell hard deadline exceeded during finalization'
+    try:
+        # Handled cutoff/interrupt signals are replayed inside this try, after the write and checks.
+        with defer_startup_signals():
+            receipt['lifecycle_finalized'] = True
+            control.save('notebook-cost.json', receipt)
+            receipt['elapsed_seconds'] = time.monotonic() - started
+            if receipt['elapsed_seconds'] >= internal_seconds:
+                raise TimeoutError('first-cell hard deadline exceeded during final evidence write')
+            if receipt['error'] is None:
+                pending.unlink()
+                # Removing the barrier is charged too; any interruption/overrun revokes certification.
+                receipt['elapsed_seconds'] = time.monotonic() - started
+                if receipt['elapsed_seconds'] >= internal_seconds:
+                    raise TimeoutError('first-cell hard deadline exceeded during finalization commit')
+    except BaseException as exc:
+        receipt['lifecycle_finalized'] = False
+        receipt['elapsed_seconds'] = time.monotonic() - started
+        receipt['error'] = receipt['error'] or 'finalization: ' + type(exc).__name__ + ': ' + str(exc)[:192]
+        with defer_startup_signals():
+            # Invalidate first, before emergency writes: failed storage must not leave a passing receipt.
+            (output / 'control/notebook-cost.json').unlink(missing_ok=True)
+            control.save('finalization-pending.json', {'scope': 'first_cell_finalization', 'pending': True})
+            control.save('notebook-cost.json', receipt)
     return receipt
 
 
 def notebook_entry(source, started, mode, session):
-    """Called by the notebook cell after source extraction and hash verification."""
+    """Called by the notebook cell after source extraction and hash verification. r2: the extracted source is
+    removed inside the charged lifecycle; only a tree carrying the cell's extraction prefix is ever removed
+    (in live mode any other tree fails finalization; a rehearsal from a checkout removes nothing)."""
+    import shutil
+    extracted = Path(source).name.startswith('stagnation-supervision-runtime-v2-source-')
+
+    def remove_source():
+        if not extracted:
+            raise ValueError('refusing to remove a tree that is not the extracted payload')
+        shutil.rmtree(source)
     if mode == 'live':
         from research.stagnation_supervision_runtime_v2.authority import require
         require(source)
         working = Path('/kaggle/working')
-        receipt = run(working / OUTPUT_NAME, working, started=started, root=source, mode='live', session=session)
+        receipt = run(working / OUTPUT_NAME, working, started=started, root=source, mode='live', session=session,
+                      source_cleanup=remove_source)
     elif mode == 'rehearsal':
         working = Path(os.environ['SSV_REHEARSAL_WORKING'])
         receipt = run(working / OUTPUT_NAME, working, started=started, root=source, mode='rehearsal', session=session,
@@ -208,7 +277,8 @@ def notebook_entry(source, started, mode, session):
                       fault=os.environ.get('SSV_REHEARSAL_FAULT', 'none'),
                       staged_inputs=os.environ.get('SSV_RUNTIME_V2_STAGED_INPUTS') or None,
                       install_seconds=(int(os.environ['SSV_RUNTIME_V2_REHEARSAL_INSTALL_SECONDS'])
-                                       if os.environ.get('SSV_RUNTIME_V2_REHEARSAL_INSTALL_SECONDS') else None))
+                                       if os.environ.get('SSV_RUNTIME_V2_REHEARSAL_INSTALL_SECONDS') else None),
+                      source_cleanup=remove_source if extracted else None)
     else:
         raise ValueError('mode')
     if receipt['error'] or receipt['study_status'] != 'study_complete_pending_independent_evaluation':
