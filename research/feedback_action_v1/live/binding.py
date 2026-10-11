@@ -3,6 +3,7 @@
 source approval, compute authorization bound to the runtime binding, the unchanged experiment protocol and the
 owner-gate record, account/permission/byte evidence for the publisher dataset, and an unconsumed single-attempt
 reservation for one session (session 2 also needs session 1's independent evaluation). Import is inert."""
+import ast
 import hashlib
 import json
 import os
@@ -114,6 +115,22 @@ def review_lock(root):
     return locks[-1].relative_to(root).as_posix()
 
 
+def frozen_inventory(root, lock_name, lock):
+    """The embedded inventory of the reviewed notebook (its first cell's `bindings`), after its artifacts match the lock."""
+    folder = resolve(root, lock_name).parent
+    artifacts = lock.get('artifacts') or {}
+    if 'profile.ipynb' not in artifacts:
+        raise ValueError('review lock does not bind the reviewed notebook')
+    for name, digest in artifacts.items():
+        if sha256(folder / name) != digest:
+            raise ValueError('review artifact drift: ' + name)
+    cell = json.loads((folder / 'profile.ipynb').read_bytes())['cells'][1]['source']
+    lines = [line for line in cell.splitlines() if line.startswith('    bindings = ')]
+    if len(lines) != 1:
+        raise ValueError('reviewed notebook has no single embedded inventory')
+    return ast.literal_eval(lines[0].split(' = ', 1)[1])
+
+
 def check_sources(root, lock_name, review_documents=True):
     """The reviewed runtime sources and, unless inside the runtime payload, the review documents, by hash."""
     lock = read_json(root, lock_name)
@@ -128,6 +145,10 @@ def check_sources(root, lock_name, review_documents=True):
         if sha256(resolve(root, name)) != digest:
             raise ValueError('source drift: ' + name)
     if review_documents:
+        # The inventory is anchored to the frozen payload: the reviewed notebook's embedded bindings, whose bytes the
+        # lock's artifact hashes bind, must equal the lock's bindings (a deleted file cannot leave with its entry).
+        if frozen_inventory(root, lock_name, lock) != lock['bindings']:
+            raise ValueError("lock bindings differ from the reviewed notebook's embedded inventory")
         listed = lock.get('review_documents') or {}
         missing = sorted(set(REVIEW_REQUIRED) - set(listed))
         if missing:

@@ -88,3 +88,28 @@ It is frozen in `reports/feedback_action_v1_protocol_v2_frozen.md` §16, and §1
 | Review snapshot r5 | lock `a32893cb63be0381e835770ac600f03e8760c94b1094f9dc52ed9eaba6e7c98d`; `profile.ipynb` and `kernel-metadata.json` byte-identical to r4's (only the frozen text, a review document, changed), so r4's review rehearsal covers this payload |
 | Review check r5 | refused at the live gate; no `nvidia-smi` call; no files left |
 | Derivations; successor suite | match; 32 tests passed |
+
+## Review snapshots r6 (October 11, 2026): the review's second P2 and P3
+
+**P2 finding (review of `93e3376`).** Deleting `live/policy.py` together with its lock entry still passed: the
+required inventory was rebuilt from the files present, and the closure builder silently skipped modules it could
+not find. The evaluation reported the review lock verified, technically complete and `session_2_permitted`.
+
+**Fix.**
+- `runtime.closure` rejects a missing repository module. A name that must be a module (an entry, a parent package,
+  `import X`, the module of `from X import ...`, a literal dynamic import) inside a repository top-level package must
+  exist as a file or a namespace directory; `X.Y` from `from X import Y` may still be an attribute. On the real
+  repository the inventory and role closures are unchanged (112 files; 21, 82 and 34 modules).
+- `binding.check_sources` (repository side, with the review documents) anchors the inventory to the frozen payload:
+  the lock's artifact hashes must match the reviewed notebook, and the lock's bindings must equal that notebook's
+  embedded inventory. The launch gate and the live evaluator share this check.
+
+**P3.** The package guide now points to the newest revision and explains the revisions; a superseded revision's
+review check fails on source drift by design (r5's now does).
+
+| Check | Result |
+|---|---|
+| Review snapshot r6 | lock `97ec8e1cb1bd898baa16761f22aef20e90ce95b5d31f21d47e4c71eee3d1768a`; review check refuses at the live gate, no `nvidia-smi` call; review rehearsal (new payload) technically complete |
+| Regressions | the deletion is refused by the launch gate (embedded-inventory mismatch; `source_names` names the missing `live.policy`) and by the live evaluator (not technically complete, session 2 not permitted); the closure rejects a missing module and accepts attribute imports |
+| Negative control: the deletion regression against `93e3376` | fails there (the review lock is reported verified), which reproduces the finding |
+| Derivations; targeted tests | match; 41 tests passed (successor suite and `LiveModeSourceLock`) |

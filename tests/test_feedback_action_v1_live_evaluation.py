@@ -252,7 +252,9 @@ class LiveModeSourceLock(unittest.TestCase):
         import shutil
         root = Path(tmp)
         lock = json.loads((LE.ROOT / self.lock_name).read_bytes())
-        for name in (self.lock_name, LE.HOLDOUT_LEDGER, *lock['bindings'], *lock['review_documents']):
+        folder = str(Path(self.lock_name).parent)
+        artifacts = [f'{folder}/{name}' for name in lock['artifacts']]
+        for name in (self.lock_name, *artifacts, LE.HOLDOUT_LEDGER, *lock['bindings'], *lock['review_documents']):
             (root / name).parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(LE.ROOT / name, root / name)
         return root, lock
@@ -284,6 +286,15 @@ class LiveModeSourceLock(unittest.TestCase):
         def change(root, lock):
             del lock['bindings'][policy]
             (root / policy).write_bytes((root / policy).read_bytes() + b'\n# changed after review\n')
+        self.assert_refused(self.tamper(change))
+
+    def test_a_deleted_source_and_its_binding_are_refused(self):
+        # Review P2 (second): delete live/policy.py and its lock entry; the inventory must not shrink with them.
+        policy = 'research/feedback_action_v1/live/policy.py'
+
+        def change(root, lock):
+            del lock['bindings'][policy]
+            (root / policy).unlink()
         self.assert_refused(self.tamper(change))
 
     def test_empty_runtime_bindings_are_refused(self):

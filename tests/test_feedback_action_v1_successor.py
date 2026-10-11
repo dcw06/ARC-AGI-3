@@ -24,11 +24,12 @@ SCIENCE = {'research/feedback_action_v1/adapter.py': '26a84909f6786dce8e9e66d5a5
            'research/feedback_action_v1/live/fake_server.py':
                'd80eb516f43e528d29d4474fd8b49a7264f8579518a0964c9ee0dea00d80b8a0'}
 VERIFIED_PROTOCOL_BLOB = '6061cbebb3f21ccd3ca698049f439b0546968f2f'  # control-interface v2 protocol.json at 5a21dd3
-REVIEW = ROOT / 'notebooks/feedback-action-v1-review-r5'  # r4 plus owner amendment A1 (one replacement attempt)
+REVIEW = ROOT / 'notebooks/feedback-action-v1-review-r6'  # r5 plus the frozen-inventory anchoring (review P2)
 RETAINED_REVIEW_LOCKS = {1: '4b5b7a0648c968c2ec497e0ba963e2cee42ad4f87c0ec6c204efbd0d7bedf0b5',  # history, unchanged
                          2: '9ebbc968f91e5f10b0627a617254ab7c52bb38954021e10b631d77244dd06468',
                          3: '180c33ee895b5af2aca4032b8d5f9f878dbaa57fabdb32a1e1e5b612ed2f415d',
-                         4: 'f0a5ad977b95d66fac91d0ddc482f3c02afe0b44bc3d8e954260796908817090'}
+                         4: 'f0a5ad977b95d66fac91d0ddc482f3c02afe0b44bc3d8e954260796908817090',
+                         5: 'a32893cb63be0381e835770ac600f03e8760c94b1094f9dc52ed9eaba6e7c98d'}
 
 
 def sha(path):
@@ -371,7 +372,9 @@ class ReviewSnapshot(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             lock = json.loads((ROOT / lock_name).read_bytes())
-            for name in (lock_name, *lock['bindings'], *lock['review_documents']):
+            folder = str(Path(lock_name).parent)
+            for name in (lock_name, *[f'{folder}/{a}' for a in lock['artifacts']], *lock['bindings'],
+                         *lock['review_documents']):
                 (root / name).parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(ROOT / name, root / name)
             B.check_sources(root, lock_name)
@@ -383,6 +386,40 @@ class ReviewSnapshot(unittest.TestCase):
             record, problems = LE.review_lock_status(root)
             self.assertIsNone(record)
             self.assertIn('review document drift', problems[0])
+
+    def test_a_deleted_source_and_its_binding_are_refused_by_the_gate(self):
+        # Review P2 (second): the inventory is anchored to the reviewed notebook's embedded bindings, and a missing
+        # repository module is an error; deleting a file together with its lock entry is refused either way.
+        lock_name = (REVIEW / 'review-source-lock.json').relative_to(ROOT).as_posix()
+        policy = 'research/feedback_action_v1/live/policy.py'
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            lock = json.loads((ROOT / lock_name).read_bytes())
+            folder = str(Path(lock_name).parent)
+            for name in (lock_name, *[f'{folder}/{a}' for a in lock['artifacts']], *lock['bindings'],
+                         *lock['review_documents']):
+                (root / name).parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / name, root / name)
+            B.check_sources(root, lock_name)  # the copy is the reviewed checkout
+            del lock['bindings'][policy]
+            (root / policy).unlink()
+            (root / lock_name).write_text(json.dumps(lock, indent=1, sort_keys=True) + '\n')
+            with self.assertRaisesRegex(ValueError, 'embedded inventory|missing'):
+                B.check_sources(root, lock_name)
+            with self.assertRaisesRegex(ValueError, 'repository modules imported but missing: .*live.policy'):
+                N.source_names(root)
+
+    def test_closure_refuses_missing_repository_modules_but_not_attribute_imports(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / 'pkg').mkdir()
+            (root / 'pkg/__init__.py').write_text('THING = 1\n')
+            (root / 'pkg/a.py').write_text('from pkg import THING\nfrom pkg.b import helper\n')
+            with self.assertRaisesRegex(ValueError, 'repository modules imported but missing: pkg.b'):
+                RT.closure(['pkg.a'], root)
+            (root / 'pkg/b.py').write_text('def helper():\n    return 1\n')
+            files, external = RT.closure(['pkg.a'], root)
+            self.assertEqual(files, ['pkg/__init__.py', 'pkg/a.py', 'pkg/b.py'])  # THING is an attribute, not a module
 
     def test_evaluator_review_check_imports_no_runner_policy_or_adapter(self):
         code = ('import sys\nfrom research.feedback_action_v1 import live_evaluation as LE\n'

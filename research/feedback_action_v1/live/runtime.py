@@ -192,8 +192,10 @@ def module_file(root, name):
 
 
 def _imports(path, module, lazy=True):
-    """Modules named by import statements, __import__('x') or importlib.import_module('x'). With lazy=False only
-    statements executed when the module is imported count (function bodies are skipped)."""
+    """(name, certain) for modules named by import statements, __import__('x') or importlib.import_module('x').
+    `certain` marks names that must be modules: `import X`, the module of `from X import ...` and literal dynamic
+    imports; `X.Y` from `from X import Y` may be an attribute. With lazy=False only statements executed when the
+    module is imported count (function bodies are skipped)."""
     tree = ast.parse(Path(path).read_bytes(), filename=str(path))
     package = module if path.name == '__init__.py' else module.rpartition('.')[0]
     names = []
@@ -201,7 +203,7 @@ def _imports(path, module, lazy=True):
     while pending:
         node = pending.pop()
         if isinstance(node, ast.Import):
-            names += [alias.name for alias in node.names]
+            names += [(alias.name, True) for alias in node.names]
         elif isinstance(node, ast.ImportFrom):
             if node.level:
                 parts = package.split('.')
@@ -209,14 +211,14 @@ def _imports(path, module, lazy=True):
                 stem = f'{base}.{node.module}' if node.module else base
             else:
                 stem = node.module
-            names.append(stem)
-            names += [f'{stem}.{alias.name}' for alias in node.names if alias.name != '*']
+            names.append((stem, True))
+            names += [(f'{stem}.{alias.name}', False) for alias in node.names if alias.name != '*']
         elif (isinstance(node, ast.Call) and node.args and isinstance(node.args[0], ast.Constant)
               and isinstance(node.args[0].value, str)):
             func = node.func
             called = func.id if isinstance(func, ast.Name) else func.attr if isinstance(func, ast.Attribute) else ''
             if called in ('__import__', 'import_module'):
-                names.append(node.args[0].value)
+                names.append((node.args[0].value, True))
         for child in ast.iter_child_nodes(node):
             if lazy or not isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
                 pending.append(child)
@@ -227,26 +229,34 @@ def closure(entries, root=ROOT, lazy=True):
     """(repository files, external top-level modules) reachable from `entries` by static import analysis.
 
     lazy=True over-approximates on purpose (imports inside functions count): every file an interpreter could import
-    is embedded. lazy=False follows only module-level imports: what importing the entries executes."""
+    is embedded. lazy=False follows only module-level imports: what importing the entries executes.
+
+    A name that must be a module (an entry, a parent package, `import X`, the module of `from X import ...`, a
+    literal dynamic import) inside a repository top-level package must exist as a file or a namespace directory.
+    A missing one raises ValueError: a deleted source never silently drops out of the inventory."""
     root = Path(root)
-    seen, files, external = set(), set(), set()
-    pending = list(entries)
+    seen, files, external, missing = set(), set(), set(), set()
+    pending = [(name, True) for name in entries]
     while pending:
-        name = pending.pop()
+        name, certain = pending.pop()
         if not name or name in seen:
             continue
-        seen.add(name)
         path = module_file(root, name)
         if path is None:
             top = name.split('.')[0]
             if module_file(root, top) is None and not (root / top).is_dir():
                 external.add(top)
+            elif certain and not root.joinpath(*name.split('.')).is_dir():
+                missing.add(name)
             continue
+        seen.add(name)
         files.add(path.relative_to(root).as_posix())
         parts = name.split('.')
         for i in range(1, len(parts)):  # parent packages execute their __init__ (and its imports) first
-            pending.append('.'.join(parts[:i]))
+            pending.append(('.'.join(parts[:i]), True))
         pending.extend(_imports(path, name, lazy))
+    if missing:
+        raise ValueError('repository modules imported but missing: ' + ', '.join(sorted(missing)))
     return sorted(files), sorted(external - set(sys.stdlib_module_names) - {'__future__'})
 
 

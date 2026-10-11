@@ -78,10 +78,31 @@ REVIEW_DOCUMENTS = ('reports/feedback_action_v1_protocol_v2_frozen.md', 'researc
 BINDING_REVIEW_REQUIRED = ('# Review documents every review lock must bind; every repository-side gate verifies them (never '
                            'in the payload).\nREVIEW_REQUIRED = (\n'
                            + ''.join(f'    {name!r},\n' for name in REVIEW_DOCUMENTS) + ')\n')
+BINDING_FROZEN_INVENTORY = '''def frozen_inventory(root, lock_name, lock):
+    \"\"\"The embedded inventory of the reviewed notebook (its first cell's `bindings`), after its artifacts match the lock.\"\"\"
+    folder = resolve(root, lock_name).parent
+    artifacts = lock.get('artifacts') or {}
+    if 'profile.ipynb' not in artifacts:
+        raise ValueError('review lock does not bind the reviewed notebook')
+    for name, digest in artifacts.items():
+        if sha256(folder / name) != digest:
+            raise ValueError('review artifact drift: ' + name)
+    cell = json.loads((folder / 'profile.ipynb').read_bytes())['cells'][1]['source']
+    lines = [line for line in cell.splitlines() if line.startswith('    bindings = ')]
+    if len(lines) != 1:
+        raise ValueError('reviewed notebook has no single embedded inventory')
+    return ast.literal_eval(lines[0].split(' = ', 1)[1])
+
+
+'''
 BINDING_CHECK_SOURCES_HEAD = '''def check_sources(root, lock_name, review_documents=True):
     """The reviewed runtime sources and, unless inside the runtime payload, the review documents, by hash."""
 '''
 BINDING_REVIEW_CHECK = """    if review_documents:
+        # The inventory is anchored to the frozen payload: the reviewed notebook's embedded bindings, whose bytes the
+        # lock's artifact hashes bind, must equal the lock's bindings (a deleted file cannot leave with its entry).
+        if frozen_inventory(root, lock_name, lock) != lock['bindings']:
+            raise ValueError("lock bindings differ from the reviewed notebook's embedded inventory")
         listed = lock.get('review_documents') or {}
         missing = sorted(set(REVIEW_REQUIRED) - set(listed))
         if missing:
@@ -184,7 +205,8 @@ BINDING = (
     ('reports/feedback_action_v1_package.md', 'reports/feedback_action_v1_successor_package.md', 1),
     # Freeze revision r2: the review documents.
     ("GATES = PACKAGE + '/owner_gates.json'\n", "GATES = PACKAGE + '/owner_gates.json'\n" + BINDING_REVIEW_REQUIRED, 1),
-    ("def check_sources(root, lock_name):\n", BINDING_CHECK_SOURCES_HEAD, 1),
+    ("import hashlib\n", "import ast\nimport hashlib\n", 1),
+    ("def check_sources(root, lock_name):\n", BINDING_FROZEN_INVENTORY + BINDING_CHECK_SOURCES_HEAD, 1),
     ("            raise ValueError('source drift: ' + name)\n    return lock\n",
      "            raise ValueError('source drift: ' + name)\n" + BINDING_REVIEW_CHECK + "    return lock\n", 1),
     ("def require_live(root=None, need_claim=True):\n",
