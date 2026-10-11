@@ -28,10 +28,10 @@ account-only. The study's outcomes come from `live_evaluation.evaluate_sessions`
 |---|---|
 | Review lock verified | private r7, `23cb7142c6e41ae408e05255f9f443b62e7a313de8c5c9da7e50c4c79908eb07` |
 | Technically complete | yes under the original evaluator: lifecycle passed, run evidence verified, replay passed, 0 problems. Under the post-fix evaluator: F1, technically incomplete (no finalization receipt), all evidence-level checks passing |
-| Failure rules F1–F6 | none fired; F2b decision-cap episodes 0 and 0 |
+| Failure rules F1–F6 | original evaluator: none fired; post-fix evaluator: F1 only (no finalization receipt). F2b decision-cap episodes 0 and 0 |
 | Free text | `ascii_only` (gate A); 0 blocks outside the option |
 | Carried statements | 72 checked (69 available), 0 mismatches |
-| `session_2_permitted` | **true** |
+| `session_2_permitted` | **true** under the original evaluator (session 2's gate used this record); false under the post-fix evaluator (F1) |
 | Retained record | `reports/feedback_action_v1/session1_evaluation.json` in the private checkout, SHA-256 `869f3aad30e1dff739548046d6a67db88dc823fe7f5c6c227d900cfab5831ce0` |
 
 ## Cost per arm (frozen protocol §2.1)

@@ -28,9 +28,10 @@ the candidate's predictions were never accurate.
 | 1 | attempt 1 `fa1-s1-8c598909…`: consumed during installation, no study data; replacement `fa1-s1r-d1bc3d6b…` (amendment A1) | 820.6 s | 145 (ceiling 193) | 144 (ceiling 144) | technically complete, permits session 2 / technically incomplete (F1: no finalization receipt) |
 | 2 | `fa1-s2-c1264812…` (one attempt, no replacement) | 862.2 s | 145 (ceiling 193) | 144 (ceiling 144) | technically complete / technically incomplete (F1: no finalization receipt) |
 
-Both ran on one RTX PRO 6000, bound before study execution. In each, all six episodes reached the 24-action cap, no
-F-rule fired, free text stayed within `ascii_only` (gate A), and all 72 carried statements were reconstructed with 0
-mismatches. The live independent evaluation verified the reviewed checkout (private lock `23cb7142…`) for both.
+Both ran on one RTX PRO 6000, bound before study execution. In each, all six episodes reached the 24-action cap,
+free text stayed within `ascii_only` (gate A), and all 72 carried statements were reconstructed with 0 mismatches.
+Under the original evaluator no F-rule fired, and its live evaluation verified the reviewed checkout (private lock
+`23cb7142…`) for both; under the post-fix evaluator only F1 fires (no finalization receipt).
 Two-session evaluation (private): SHA-256 `3e45a3d95142e967086d70e8487d34cc85bd829338c907cf23eb12b7569d4887`.
 
 ## Solving (§9.2): no solving claim
