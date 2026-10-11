@@ -76,3 +76,15 @@ installer is unchanged; the import checks and the supervisor launch already set 
 | Derivations; successor suite | match; 32 tests passed |
 
 Record: `reports/feedback_action_v1/kaggle_mplbackend_reproduction.json`. The frozen protocol text is unchanged.
+
+## Review snapshots r5 (October 11, 2026): owner amendment A1
+
+The owner adopted amendment A1: exactly one replacement session-1 attempt after attempt 1's setup-only failure,
+with attempt 1 consumed and preserved, the scientific design unchanged and no further replacement for any session.
+It is frozen in `reports/feedback_action_v1_protocol_v2_frozen.md` §16, and §12's retry row cites it.
+
+| Check | Result |
+|---|---|
+| Review snapshot r5 | lock `a32893cb63be0381e835770ac600f03e8760c94b1094f9dc52ed9eaba6e7c98d`; `profile.ipynb` and `kernel-metadata.json` byte-identical to r4's (only the frozen text, a review document, changed), so r4's review rehearsal covers this payload |
+| Review check r5 | refused at the live gate; no `nvidia-smi` call; no files left |
+| Derivations; successor suite | match; 32 tests passed |

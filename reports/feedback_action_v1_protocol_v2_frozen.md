@@ -1,7 +1,8 @@
 # Feedback-action v1: experiment protocol v2 (frozen)
 
-**Status: frozen on October 10, 2026, on the owner's decisions. Not authorized.** No reservation, approval, compute
-authorization, launch claim or model call exists. Nothing here approves compute.
+**Status: frozen on October 10, 2026, on the owner's decisions; amended by the owner on October 11, 2026 (amendment
+A1, §16).** This text approves no compute. Session 1's first attempt (`fa1-s1-8c598909…`) was authorized and
+consumed: it failed during installation, before any model call, game action or study data (§16).
 
 **The two owner gates are decided (§14), and this text records them:**
 - **Gate A, free-text format: `ascii_only`.** `hypothesis` and `if_different` are printable ASCII without quote
@@ -261,7 +262,7 @@ Rows from r1 are kept as recorded there; rows marked r2 were redone for this fre
 | Model startup ceiling | 900 s |
 | Admission cutoff | a pair only if ≥ 600 s remain; unadmitted pairs make the run incomplete |
 | Cleanup reserve | 300 s per session |
-| Retry policy | none. No call, episode, pair or session is retried |
+| Retry policy | none. No call, episode, pair or session is retried, except the one replacement session-1 attempt that owner amendment A1 permits after attempt 1's setup-only failure (§16) |
 
 **Proposed ceilings for each compute authorization** (decision packet, section 3; each authorization states its
 own):
@@ -327,3 +328,27 @@ the in-payload gate (inside the notebook) skips them.
 
 This closes, for Track 1, the defect the Track 4 review found in the shared runtime base: r1's lock bound none of
 these documents, so the evaluator that gates session 2 and computes the results could have changed after review.
+
+## 16. Owner amendment A1 (October 11, 2026): one replacement session-1 attempt
+
+**The owner's decision, verbatim:** "Exactly one replacement session-1 attempt is permitted because attempt 1
+(fa1-s1-8c598909…) failed during installation before any model call, game action or study data. Attempt 1 stays
+consumed and preserved. The scientific design (arms, prompts, schemas, seeds, schedule, scoring, F-rules, gates A
+and B) is unchanged. No further replacement is permitted for any session."
+
+**Why it was needed.** §12 forbids retrying any session, and a new attempt does not by itself satisfy that rule.
+Attempt 1 (`fa1-s1-8c598909fad24d9e96e71b7a482993eb`, submitted October 11, 2026 at 02:01:41 UTC) failed in the
+first cell after 136 s. The verified installer's package checks for the game interpreter exited 1 because the
+Kaggle notebook's `MPLBACKEND` (the Jupyter inline backend) reached the isolated game interpreter, whose package
+check imports matplotlib. The supervisor never started, so the attempt produced no evidence about the hypothesis.
+
+**What the amendment permits and requires.**
+- **One replacement attempt for session 1 only**, on a package that fixes the cause (review snapshots r4 on:
+  both installations run with `MPLBACKEND=Agg`; `reports/feedback_action_v1/kaggle_mplbackend_reproduction.json`).
+- **Its own approvals:** a source approval and a compute authorization bound to the fixed package's final private
+  lock. The replacement's execution lock names attempt 1 as the attempt it replaces.
+- **Attempt 1 preserved:** its claim, receipt, execution lock, reservation and collected evidence are kept and
+  reported as a consumed technical failure before study execution.
+- **No further replacement** for any session, whatever the cause. Session 2, if permitted by session 1's
+  independent evaluation, has exactly one attempt.
+- **Unchanged:** the scientific design; the evaluation and failure rules; the ceilings per attempt (§12).
