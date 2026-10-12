@@ -167,6 +167,51 @@ class ProcfsProbes(unittest.TestCase):
         self.assertGreater(pages, 0)
 
 
+@unittest.skipUnless(LINUX, '/proc')
+class CoherentCensus(unittest.TestCase):
+    """r9 (third review): a timeout snapshot is always one coherent publication, even if the caller times out between
+    the worker's two member updates."""
+
+    def test_a_timeout_between_the_member_updates_never_mixes_counts(self):
+        import threading
+        from research.stagnation_supervision_runtime_v2 import procfs
+        real = procfs._observe_member
+        paused = threading.Event()
+
+        def pause_between(state, member_state):  # the reviewer's controlled pause, between the two updates
+            state['member_states'][member_state] = state['member_states'].get(member_state, 0) + 1
+            paused.set()
+            time.sleep(.3)
+            state['members'] += 1
+        with mock.patch.object(procfs, '_observe_member', pause_between):
+            with self.assertRaises(procfs.ScanBudgetExceeded) as caught:
+                procfs.scan(os.getpgrp(), .05, listdir=lambda path: [str(os.getpid())])
+        self.assertTrue(paused.is_set())
+        census = caught.exception.census
+        self.assertEqual(sum(census['member_states'].values()), census['members'])  # never {"members": 0, {"S": 1}}
+        self.assertIs(census['complete'], False)
+        self.assertIs(procfs._observe_member, real)
+
+    def test_randomized_timeouts_always_publish_coherent_censuses(self):
+        import random
+        from research.stagnation_supervision_runtime_v2 import procfs
+        rng = random.Random(7)
+        pids = [str(os.getpid())] * 40
+
+        def jitter(pid):
+            time.sleep(rng.random() * .004)
+            return procfs.read_stat(pid)
+        for _ in range(60):
+            try:
+                members, census = procfs.scan(os.getpgrp(), rng.random() * .08 + .005, read=jitter,
+                                              listdir=lambda path: pids)
+            except procfs.ScanBudgetExceeded as exc:
+                census = exc.census
+            self.assertEqual(sum(census['member_states'].values()), census['members'])
+            self.assertLessEqual(census['stat_reads'], census['reads_started'])
+            self.assertLessEqual(census['reads_started'] - census['stat_reads'], 1)
+
+
 FAKE_SUPERVISOR = r'''
 import json, os, subprocess, sys, time
 control = os.path.join(sys.argv[1], 'control')

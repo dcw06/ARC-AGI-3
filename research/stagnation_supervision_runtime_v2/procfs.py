@@ -16,8 +16,10 @@ a result nobody reads. The worker is started with the low-level `_thread` primit
 depend on `threading.Thread` (whose start an interrupted logging thread must not disable); if no thread can be
 created at all, the probe raises and the caller fails closed. A scan that exceeds its budget raises ScanBudgetExceeded with a snapshot of the census; it never returns a
 partial, estimated or zero result. The census holds counts and timings only (never process names, command lines or
-identifiers of other processes); `members` and `member_states` are updated together as members are observed, and
-`complete` and `phase` say whether, and where, the scan stopped.
+identifiers of other processes). The worker changes only its own private state and, after each step, publishes a
+new census by replacing one reference; a published census is never modified, so the caller's snapshot is always one
+coherent publication (r9, third review), with no lock held during a read that may block. `members` always equals the
+sum of `member_states`, and `complete` and `phase` say whether, and where, the scan stopped.
 """
 import _thread
 import os
@@ -45,11 +47,14 @@ def read_stat(pid):
     return fields[0].decode('ascii', 'replace'), int(fields[2]), int(fields[21])
 
 
-def _snapshot(census, began, clock):
-    copy = dict(census)
-    copy['member_states'] = dict(census['member_states'])
-    copy['elapsed_seconds'] = clock() - began
-    return copy
+def _observe_member(state, member_state):
+    """Record one observed member in the worker's private state (published afterwards, never partially)."""
+    state['member_states'][member_state] = state['member_states'].get(member_state, 0) + 1
+    state['members'] += 1
+
+
+def _publication(state):
+    return {**state, 'member_states': dict(state['member_states'])}  # a fresh object; never modified afterwards
 
 
 def scan(pgid, budget, *, clock=time.monotonic, read=None, listdir=None):
@@ -62,9 +67,10 @@ def scan(pgid, budget, *, clock=time.monotonic, read=None, listdir=None):
     read = read or read_stat  # looked up at call time, so tests can substitute the module's reader
     listdir = listdir or os.listdir
     began = clock()
-    census = {'budget_seconds': budget, 'phase': 'listing', 'complete': False, 'entries': None, 'stat_reads': 0,
-              'reads_started': 0, 'vanished': 0, 'members': 0, 'member_states': {}, 'slowest_read_seconds': 0.0,
-              'list_seconds': None, 'elapsed_seconds': None}
+    state = {'budget_seconds': budget, 'phase': 'listing', 'complete': False, 'entries': None, 'stat_reads': 0,
+             'reads_started': 0, 'vanished': 0, 'members': 0, 'member_states': {}, 'slowest_read_seconds': 0.0,
+             'list_seconds': None, 'elapsed_seconds': None}
+    published = [_publication(state)]  # replaced, never mutated; one reference assignment publishes a whole census
     outcome = {}
     finished = _thread.allocate_lock()
     finished.acquire()
@@ -72,25 +78,28 @@ def scan(pgid, budget, *, clock=time.monotonic, read=None, listdir=None):
     def work():
         try:
             names = [name for name in listdir('/proc') if name.isdigit()]
-            census['entries'], census['list_seconds'], census['phase'] = len(names), clock() - began, 'stat reads'
+            state.update(entries=len(names), list_seconds=clock() - began, phase='stat reads')
+            published[0] = _publication(state)
             members = []
             for name in names:
                 if clock() - began > budget:
                     return
-                census['reads_started'] += 1
+                state['reads_started'] += 1
+                published[0] = _publication(state)  # a stalled read shows as reads_started > stat_reads
                 started = clock()
                 row = read(int(name))
-                census['slowest_read_seconds'] = max(census['slowest_read_seconds'], clock() - started)
-                census['stat_reads'] += 1
+                state['slowest_read_seconds'] = max(state['slowest_read_seconds'], clock() - started)
+                state['stat_reads'] += 1
                 if row is None:
-                    census['vanished'] += 1
-                    continue
-                state, group, pages = row
-                if group == pgid:
-                    members.append((state, pages))
-                    census['member_states'][state] = census['member_states'].get(state, 0) + 1
-                    census['members'] = len(members)
-            census['phase'], census['complete'] = 'complete', True
+                    state['vanished'] += 1
+                else:
+                    member_state, group, pages = row
+                    if group == pgid:
+                        members.append((member_state, pages))
+                        _observe_member(state, member_state)
+                published[0] = _publication(state)
+            state.update(phase='complete', complete=True)
+            published[0] = _publication(state)
             outcome['members'] = members
         except BaseException as exc:  # handed to the caller, never swallowed
             outcome['error'] = exc
@@ -101,13 +110,14 @@ def scan(pgid, budget, *, clock=time.monotonic, read=None, listdir=None):
     done = finished.acquire(timeout=budget)
     if 'error' in outcome:
         raise outcome['error']
-    if not done or 'members' not in outcome or clock() - began > budget:
-        snapshot = _snapshot(census, began, clock)
+    snapshot = dict(published[0])  # one coherent publication
+    snapshot['member_states'] = dict(snapshot['member_states'])
+    snapshot['elapsed_seconds'] = clock() - began
+    if not done or 'members' not in outcome or snapshot['elapsed_seconds'] > budget:
         snapshot['stalled'] = not done and (snapshot['entries'] is None or snapshot['reads_started'] > snapshot['stat_reads'])
         raise ScanBudgetExceeded(f"/proc scan exceeded {budget} s ({snapshot['phase']})", snapshot)
-    result = _snapshot(census, began, clock)
-    result['stalled'] = False
-    return outcome['members'], result
+    snapshot['stalled'] = False
+    return outcome['members'], snapshot
 
 
 def group_rss(pgid, budget=RSS_BUDGET_SECONDS, **kwargs):

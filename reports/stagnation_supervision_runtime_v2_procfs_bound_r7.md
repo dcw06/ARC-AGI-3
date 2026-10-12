@@ -23,3 +23,17 @@ group checks during cleanup also failed and the run was not certified.
 budget. The deadline bound and the census are unchanged. If no thread can be created at all, the probe raises and the
 caller fails closed. All 35 prelaunch, repair and monitor regressions pass, including the stalled-read and stalled-listing
 bounds.
+
+## r9: timeout snapshots are always coherent (third review)
+
+**The race.** The worker updated `member_states` and `members` with two separate assignments, and a caller timing out
+between them could copy `{"members": 0, "member_states": {"S": 1}}`. The reviewer reproduced this with a controlled
+scheduling pause. It affected diagnostics only: the timeout still failed closed.
+
+**The change.** The worker now changes only its private state and, after each step, publishes a new census object by
+replacing one reference. A published census is never modified afterwards, and the caller copies one publication. No
+lock is held while a read may block.
+
+**Regressions** (`CoherentCensus`):
+- a timeout during an injected pause between the two member updates yields a coherent census;
+- 60 randomized timeouts all yield coherent censuses, with at most one read in flight.
