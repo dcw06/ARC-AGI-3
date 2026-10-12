@@ -84,7 +84,7 @@
   },
   {
    "derived": "research/stagnation_supervision_runtime_v2/supervisor.py",
-   "derived_sha256": "b3a87a77063d62c66cecf47ea07853a7b13b19fbcc279bcdde60ea00fb104a36",
+   "derived_sha256": "5c64e5299fc3db48b3c19c24966a2bf6d5f1945613d47a2e21e365eb0b22843e",
    "kind": "python",
    "replacements": [
     [
@@ -160,6 +160,11 @@
     [
      "        finally:\n            for fd in (rfd, wfd):\n                if fd is not None:\n                    os.close(fd)\n            from scripts.run_grounded_action_v1_engine_local import terminate_group, group_exited\n            cleanup_errors = []\n            for process in processes:\n                try:\n                    terminate_group(process, grace=.5, verification_seconds=3)\n                except Exception as exc:\n                    cleanup_errors.append(type(exc).__name__ + ': ' + str(exc)[:128])\n            try:\n                report['process_groups_exited'] = not cleanup_errors and all(group_exited(p.pid) for p in processes)\n            except Exception as exc:\n                cleanup_errors.append(type(exc).__name__ + ': ' + str(exc)[:128])\n            try:\n                probes = probes_for(mode)(processes[0].pid if processes else 1, scratch)\n                if uuid is None:\n                    uuid = validate_binding(probes.bind())\n                receipt = independent_cleanup(probes, expected_uuid=uuid, groups_absent=report['process_groups_exited'],\n                                              deadline=started + internal_seconds - 2)\n                control.save('gpu-cleanup.json', receipt)\n                report['independent_gpu_cleanup_verified'] = receipt['gpu_cleanup_verified']\n            except Exception as exc:\n                report['cleanup_error'] = type(exc).__name__ + ': ' + str(exc)[:256]\n            for thread in drains:\n                thread.join(timeout=2)\n            if cleanup_errors or log_errors or any(t.is_alive() for t in drains):\n                report['error'] = report['error'] or 'process/log cleanup failure'\n",
      "        finally:\n            with defer_startup_signals():\n                for fd in (rfd, wfd):\n                    if fd is not None:\n                        os.close(fd)\n                report['process_groups_exited'], cleanup_errors = owners.stop()\n                report['child_ownership_verified'] = report['process_groups_exited']\n                try:\n                    probes = probes_for(mode)(processes[0].pid if processes else 1, scratch)\n                    if uuid is None:\n                        uuid = validate_binding(probes.bind())\n                    receipt = independent_cleanup(probes, expected_uuid=uuid, groups_absent=report['process_groups_exited'],\n                                                  deadline=started + internal_seconds - 2)\n                    control.save('gpu-cleanup.json', receipt)\n                    report['independent_gpu_cleanup_verified'] = receipt['gpu_cleanup_verified']\n                except Exception as exc:\n                    report['cleanup_error'] = type(exc).__name__ + ': ' + str(exc)[:256]\n                for thread in drains:\n                    if thread.ident is not None:\n                        thread.join(timeout=2)\n                for process, thread in zip(processes, drains):\n                    if thread.ident is None and process.stdout is not None:\n                        process.stdout.close()\n                if cleanup_errors or log_errors or any(t.is_alive() for t in drains):\n                    report['error'] = report['error'] or 'process/log cleanup failure'\n",
+     1
+    ],
+    [
+     "            from scripts.run_grounded_action_v1_engine_local import terminate_group\n            terminate_group(worker, grace=.5, verification_seconds=3)\n",
+     "            from research.stagnation_supervision_runtime_v2.launch import _stop_group  # r6: /proc checks, no ps\n            if not _stop_group(worker.pid):\n                raise RuntimeError('owned worker group still has live members after SIGKILL')\n            worker.wait(timeout=3)\n",
      1
     ]
    ],
@@ -277,7 +282,7 @@
   },
   {
    "derived": "research/stagnation_supervision_runtime_v2/monitor.py",
-   "derived_sha256": "29072c1de60b922975f0f8e1036fe1975dd1b62a74fc324c4f20902d0eb7135d",
+   "derived_sha256": "3ab848af8b2e942228731836f9e0806eb4a56e574d89ea9439ad645a192a14b8",
    "kind": "python",
    "replacements": [
     [
@@ -292,7 +297,12 @@
     ],
     [
      "        state['monitor_started_seconds'] = clock() - started\n",
-     "        warm = clock()  # one untimed call of each probe absorbs first-call costs before the sampling clock\n        probes.sample(uuid)\n        probes.rss(worker_pid)\n        probes.scratch_bytes()\n        context['probe_warmup_seconds'] = clock() - warm\n        state['monitor_started_seconds'] = clock() - started\n",
+     "        # One untimed call of each probe before the sampling clock. r6 (attempt-2 review): each warm-up call records\n        # its own phase and elapsed time on an exception-safe path, so a failed warm-up names the probe.\n        context['warmup_probe_seconds'] = {}\n        for name, call in (('gpu', lambda: probes.sample(uuid)), ('rss', lambda: probes.rss(worker_pid)),\n                           ('scratch', probes.scratch_bytes)):\n            context['phase'] = 'warmup_' + name\n            began = clock()\n            try:\n                call()\n            finally:\n                context['warmup_probe_seconds'][name] = round(clock() - began, 6)\n        context['phase'] = 'sampling'\n        state['monitor_started_seconds'] = clock() - started\n",
+     1
+    ],
+    [
+     "        state.update(status='failed', error=type(exc).__name__ + ': ' + str(exc)[:256])\n",
+     "        state.update(status='failed', error=type(exc).__name__ + ': ' + str(exc)[:256])\n        census = getattr(exc, 'census', None)  # r6: a /proc scan over budget names its own cost\n        if isinstance(census, dict):\n            context['rss_census'] = {k: (round(v, 6) if type(v) is float else v) for k, v in census.items()}\n",
      1
     ]
    ],
@@ -303,7 +313,7 @@
   },
   {
    "derived": "research/stagnation_supervision_runtime_v2/resources.py",
-   "derived_sha256": "dfc71705eaed08f15e8dacab1ed9befb40c0d38359432aa2cc3c39df23847fd5",
+   "derived_sha256": "d4ce0fb927acbba9f7cb4d2f72bf8aa099fcca92fa0b69708fa63233687c94a1",
    "kind": "python",
    "replacements": [
     [
@@ -314,6 +324,11 @@
     [
      "        from .authority import rehearsal_gate\n",
      "        from research.stagnation_supervision_runtime_v2.authority import rehearsal_gate\n",
+     1
+    ],
+    [
+     "        from evaluation.phase4_runner import group_rss_bytes\n        return group_rss_bytes(pid)\n",
+     "        from research.stagnation_supervision_runtime_v2 import procfs  # r6: /proc, whole group, hard budget\n        try:\n            value, self.last_rss_census = procfs.group_rss(pid)\n        except procfs.ScanBudgetExceeded as exc:\n            self.last_rss_census = exc.census\n            raise\n        return value\n",
      1
     ]
    ],
@@ -385,7 +400,7 @@
   },
   {
    "derived": "research/stagnation_supervision_runtime_v2/launch.py",
-   "derived_sha256": "27ce87ce7b27fdf9a357db8a1e26ed40d246306f54650a2bb72a4a3cb8a233ea",
+   "derived_sha256": "e3753e319bc4f84e04c7a30a3c02dcb046630b06e40eb6808573b1638c933485",
    "kind": "python",
    "replacements": [
     [
@@ -516,6 +531,16 @@
     [
      "                'ownership': ownership, 'groups': cleanup, 'groups_absent': absent, 'drain_finished': drained,",
      "                'ownership': ownership, 'groups': cleanup, 'groups_absent': absent, 'drain_finished': drained,\n                'child_ownership_verified': inner_certain if process is not None else ownership == 'never_spawned',",
+     1
+    ],
+    [
+     "    result = subprocess.run(['ps', '-axo', 'pgid=,stat='], capture_output=True, text=True, timeout=2, check=True)\n    return not any(int(parts[0]) == pgid and not parts[1].startswith('Z') for line in result.stdout.splitlines()\n                   if len(parts := line.split()) >= 2 and parts[0].isdigit())\n",
+     "    from research.stagnation_supervision_runtime_v2.procfs import group_live  # r6: /proc, no ps subprocess\n    return not group_live(pgid)\n",
+     1
+    ],
+    [
+     "                groups = [process.pid]\n                inner_certain = False\n                try:\n                    # Freeze child creation before scanning recovery records. Undetached\n                    # bootstraps are still in this group; detached children registered first.\n                    cleanup[str(process.pid)] = _stop_group(process.pid)\n                    process.wait(timeout=5)\n                    from research.stagnation_supervision_runtime_v2.ownership import recovery_inventory\n                    groups, inner_certain = recovery_inventory(output, process.pid)\n                except BaseException as exc:\n                    errors.append('ownership evidence: ' + type(exc).__name__)\n                for pgid in groups:\n                    try:\n                        cleanup[str(pgid)] = _stop_group(pgid)\n                    except BaseException as exc:\n                        cleanup[str(pgid)] = type(exc).__name__ + ': ' + str(exc)[:128]\n                        try:\n                            os.killpg(pgid, signal.SIGKILL)\n                            cleanup[str(pgid)] = _group_exited(pgid)\n                        except BaseException:\n                            pass\n",
+     "                groups, inner_certain = [process.pid], False\n                # r6: each step is attempted on its own, so a failed inspection never skips termination or the\n                # recovery of the durable child ownership records. Stopping the supervisor group first freezes\n                # child creation (undetached bootstraps are still in it; detached children registered first).\n                try:\n                    cleanup[str(process.pid)] = _stop_group(process.pid)\n                except BaseException as exc:\n                    cleanup[str(process.pid)] = type(exc).__name__ + ': ' + str(exc)[:128]\n                    errors.append('supervisor group stop: ' + type(exc).__name__)\n                    try:\n                        os.killpg(process.pid, signal.SIGKILL)\n                    except BaseException:\n                        pass\n                try:\n                    process.wait(timeout=5)\n                except BaseException as exc:\n                    errors.append('supervisor reap: ' + type(exc).__name__)\n                try:\n                    from research.stagnation_supervision_runtime_v2.ownership import recovery_inventory\n                    groups, inner_certain = recovery_inventory(output, process.pid)\n                except BaseException as exc:\n                    errors.append('ownership evidence: ' + type(exc).__name__)\n                for pgid in groups:  # every verified owned group; a failed check still gets SIGKILL\n                    try:\n                        cleanup[str(pgid)] = _stop_group(pgid)\n                    except BaseException as exc:\n                        cleanup[str(pgid)] = type(exc).__name__ + ': ' + str(exc)[:128]\n                        errors.append('owned group stop: ' + type(exc).__name__)\n                        try:\n                            os.killpg(pgid, signal.SIGKILL)\n                        except BaseException:\n                            pass\n                        try:\n                            cleanup[str(pgid)] = _group_exited(pgid)\n                        except BaseException:\n                            pass\n",
      1
     ]
    ],

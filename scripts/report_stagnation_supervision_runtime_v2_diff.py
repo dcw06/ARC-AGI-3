@@ -1,6 +1,6 @@
 """Generate the machine-readable runtime-only diff between the R4/R6/R7 payloads and the runtime v2 payload.
 
-Deterministic, read-only over committed files; writes reports/stagnation_supervision_runtime_v2_runtime_diff_r5.json
+Deterministic, read-only over committed files; writes reports/stagnation_supervision_runtime_v2_runtime_diff_r6.json
 (the r1, r2 and r3 reports are retained unchanged as history).
     python -m scripts.report_stagnation_supervision_runtime_v2_diff [--check]
 """
@@ -13,7 +13,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-OUT = ROOT / 'reports/stagnation_supervision_runtime_v2_runtime_diff_r5.json'  # r5: attempt-1 monitor warm-up; earlier revisions retained
+OUT = ROOT / 'reports/stagnation_supervision_runtime_v2_runtime_diff_r6.json'  # r6: attempt-2 repairs; earlier revisions retained
 
 
 def sha(path):

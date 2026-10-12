@@ -117,8 +117,23 @@ class ChildOwners:
             return process
 
     def stop(self):
-        from scripts.run_grounded_action_v1_engine_local import terminate_group, group_exited
+        """Stop both children and every recovered owned group. r6 (attempt-2 review): group checks read /proc
+        (launch._group_exited via procfs, no ps subprocess); every step is attempted on its own, a failed check still
+        leads to SIGKILL of that owned group, and absence is certified only when every check succeeded."""
+        from research.stagnation_supervision_runtime_v2.launch import _group_exited, _stop_group
         errors = []
+
+        def stop_owned(pgid, label):
+            try:
+                if not _stop_group(pgid):
+                    errors.append(label + ': group remains')
+            except BaseException as exc:
+                errors.append(label + ': ' + type(exc).__name__)
+                try:
+                    os.killpg(pgid, signal.SIGKILL)
+                except BaseException:
+                    pass
+
         with defer_startup_signals():
             for role in ROLES:
                 process = self.processes.get(role)
@@ -129,19 +144,28 @@ class ChildOwners:
                         if process.poll() is None and os.getpgid(process.pid) != process.pid:
                             process.kill()
                             process.wait(timeout=5)
-                        terminate_group(process, grace=.5, verification_seconds=3)
                     except BaseException as exc:
-                        errors.append(role + ': ' + type(exc).__name__)
-            groups, certain = recovery_inventory(self.output, os.getpgrp())
+                        errors.append(role + ' bootstrap: ' + type(exc).__name__)
+                    if process.pid != os.getpgrp():
+                        stop_owned(process.pid, role)
+                    try:
+                        process.wait(timeout=3)
+                    except BaseException as exc:
+                        errors.append(role + ' reap: ' + type(exc).__name__)
+            groups, certain = [os.getpgrp()], False
+            try:
+                groups, certain = recovery_inventory(self.output, os.getpgrp())
+            except BaseException as exc:
+                errors.append('ownership evidence: ' + type(exc).__name__)
             # A Popen outcome without a handle can still have a durable child record.
-            from research.stagnation_supervision_runtime_v2.launch import _stop_group
             for pgid in groups[1:]:
-                try:
-                    if not _stop_group(pgid):
-                        errors.append('child group remains: ' + str(pgid))
-                except BaseException as exc:
-                    errors.append('child cleanup: ' + type(exc).__name__)
-            absent = certain and not errors and all(group_exited(p) for p in groups[1:])
+                stop_owned(pgid, 'child group ' + str(pgid))
+            try:
+                remaining = [p for p in groups[1:] if not _group_exited(p)]
+            except BaseException as exc:
+                errors.append('final group check: ' + type(exc).__name__)
+                remaining = None
+            absent = certain and not errors and remaining == []
         return absent, errors
 
 

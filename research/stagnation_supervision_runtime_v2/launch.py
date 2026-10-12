@@ -20,9 +20,8 @@ OUTPUT_NAME = 'stagnation-supervision-v1-runtime-v2'
 def _group_exited(pgid):
     if type(pgid) is not int or pgid <= 0 or pgid == os.getpgrp():
         raise ValueError('invalid owned process group')
-    result = subprocess.run(['ps', '-axo', 'pgid=,stat='], capture_output=True, text=True, timeout=2, check=True)
-    return not any(int(parts[0]) == pgid and not parts[1].startswith('Z') for line in result.stdout.splitlines()
-                   if len(parts := line.split()) >= 2 and parts[0].isdigit())
+    from research.stagnation_supervision_runtime_v2.procfs import group_live  # r6: /proc, no ps subprocess
+    return not group_live(pgid)
 
 
 def _stop_group(pgid):
@@ -99,24 +98,39 @@ def run_supervisor(output, working, game_python, model_python, games, *, started
         # Handled signals cannot skip a kill, reap or receipt during emergency cleanup.
         with defer_startup_signals():
             if process is not None:
-                groups = [process.pid]
-                inner_certain = False
+                groups, inner_certain = [process.pid], False
+                # r6: each step is attempted on its own, so a failed inspection never skips termination or the
+                # recovery of the durable child ownership records. Stopping the supervisor group first freezes
+                # child creation (undetached bootstraps are still in it; detached children registered first).
                 try:
-                    # Freeze child creation before scanning recovery records. Undetached
-                    # bootstraps are still in this group; detached children registered first.
                     cleanup[str(process.pid)] = _stop_group(process.pid)
+                except BaseException as exc:
+                    cleanup[str(process.pid)] = type(exc).__name__ + ': ' + str(exc)[:128]
+                    errors.append('supervisor group stop: ' + type(exc).__name__)
+                    try:
+                        os.killpg(process.pid, signal.SIGKILL)
+                    except BaseException:
+                        pass
+                try:
                     process.wait(timeout=5)
+                except BaseException as exc:
+                    errors.append('supervisor reap: ' + type(exc).__name__)
+                try:
                     from research.stagnation_supervision_runtime_v2.ownership import recovery_inventory
                     groups, inner_certain = recovery_inventory(output, process.pid)
                 except BaseException as exc:
                     errors.append('ownership evidence: ' + type(exc).__name__)
-                for pgid in groups:
+                for pgid in groups:  # every verified owned group; a failed check still gets SIGKILL
                     try:
                         cleanup[str(pgid)] = _stop_group(pgid)
                     except BaseException as exc:
                         cleanup[str(pgid)] = type(exc).__name__ + ': ' + str(exc)[:128]
+                        errors.append('owned group stop: ' + type(exc).__name__)
                         try:
                             os.killpg(pgid, signal.SIGKILL)
+                        except BaseException:
+                            pass
+                        try:
                             cleanup[str(pgid)] = _group_exited(pgid)
                         except BaseException:
                             pass

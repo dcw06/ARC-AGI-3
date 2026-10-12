@@ -39,8 +39,13 @@ class LiveProbes:
     def rss(self, pid):
         if type(pid) is not int or pid != self.worker_pid:
             raise ValueError('RSS probe is bound to the owned worker')
-        from evaluation.phase4_runner import group_rss_bytes
-        return group_rss_bytes(pid)
+        from research.stagnation_supervision_runtime_v2 import procfs  # r6: /proc, whole group, hard budget
+        try:
+            value, self.last_rss_census = procfs.group_rss(pid)
+        except procfs.ScanBudgetExceeded as exc:
+            self.last_rss_census = exc.census
+            raise
+        return value
 
     def scratch_bytes(self):
         if not self.scratch.is_dir() or self.scratch.is_symlink():

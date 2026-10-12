@@ -30,11 +30,18 @@ def observe(worker_pid, scratch, output, *, started, deadline, stop, nonce, mode
         binding = probes.bind()
         uuid = validate_binding(binding)
         state['gpu_binding'] = binding
-        warm = clock()  # one untimed call of each probe absorbs first-call costs before the sampling clock
-        probes.sample(uuid)
-        probes.rss(worker_pid)
-        probes.scratch_bytes()
-        context['probe_warmup_seconds'] = clock() - warm
+        # One untimed call of each probe before the sampling clock. r6 (attempt-2 review): each warm-up call records
+        # its own phase and elapsed time on an exception-safe path, so a failed warm-up names the probe.
+        context['warmup_probe_seconds'] = {}
+        for name, call in (('gpu', lambda: probes.sample(uuid)), ('rss', lambda: probes.rss(worker_pid)),
+                           ('scratch', probes.scratch_bytes)):
+            context['phase'] = 'warmup_' + name
+            began = clock()
+            try:
+                call()
+            finally:
+                context['warmup_probe_seconds'][name] = round(clock() - began, 6)
+        context['phase'] = 'sampling'
         state['monitor_started_seconds'] = clock() - started
         writer = AsyncTelemetry(store, {'nonce': nonce, 'worker_pid': worker_pid, 'monitor_pid': os.getpid(),
                                         'scope': state['scope'], 'gpu_binding': binding},
@@ -60,6 +67,9 @@ def observe(worker_pid, scratch, output, *, started, deadline, stop, nonce, mode
         store.save('monitor-result.json', {k: v for k, v in state.items() if k != 'samples'})
     except Exception as exc:
         state.update(status='failed', error=type(exc).__name__ + ': ' + str(exc)[:256])
+        census = getattr(exc, 'census', None)  # r6: a /proc scan over budget names its own cost
+        if isinstance(census, dict):
+            context['rss_census'] = {k: (round(v, 6) if type(v) is float else v) for k, v in census.items()}
         store.save('failure.json', failure_receipt(exc, context), failure_receipt=True)
     return {k: v for k, v in state.items() if k != 'samples'}
 

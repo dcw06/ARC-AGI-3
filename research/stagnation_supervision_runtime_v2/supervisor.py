@@ -171,8 +171,10 @@ def run(output, working, game_python, model_python, environments, *, started, mo
             report['worker_completed_seconds'] = time.monotonic() - started
             if worker.returncode != 0:
                 raise RuntimeError('game worker failed')
-            from scripts.run_grounded_action_v1_engine_local import terminate_group
-            terminate_group(worker, grace=.5, verification_seconds=3)
+            from research.stagnation_supervision_runtime_v2.launch import _stop_group  # r6: /proc checks, no ps
+            if not _stop_group(worker.pid):
+                raise RuntimeError('owned worker group still has live members after SIGKILL')
+            worker.wait(timeout=3)
             control.save('stop-monitor.json', {'worker_group_exited': True, 'elapsed_seconds': time.monotonic() - started})
             monitor.wait(timeout=max(.01, min(10, started + internal_seconds - 4 - time.monotonic())))
             if monitor.returncode != 0:

@@ -536,13 +536,119 @@ for _name, _replacements in PRELAUNCH_REPAIRS.items():
 # the 0.5-s interval and 1-s gap limits are unchanged, and a persistently slow probe still fails closed.
 ATTEMPT1_REPAIRS = {'monitor.py': [(
     "        state['monitor_started_seconds'] = clock() - started\n",
-    "        warm = clock()  # one untimed call of each probe absorbs first-call costs before the sampling clock\n"
-    "        probes.sample(uuid)\n"
-    "        probes.rss(worker_pid)\n"
-    "        probes.scratch_bytes()\n"
-    "        context['probe_warmup_seconds'] = clock() - warm\n"
+    "        # One untimed call of each probe before the sampling clock. r6 (attempt-2 review): each warm-up call records\n"
+    "        # its own phase and elapsed time on an exception-safe path, so a failed warm-up names the probe.\n"
+    "        context['warmup_probe_seconds'] = {}\n"
+    "        for name, call in (('gpu', lambda: probes.sample(uuid)), ('rss', lambda: probes.rss(worker_pid)),\n"
+    "                           ('scratch', probes.scratch_bytes)):\n"
+    "            context['phase'] = 'warmup_' + name\n"
+    "            began = clock()\n"
+    "            try:\n"
+    "                call()\n"
+    "            finally:\n"
+    "                context['warmup_probe_seconds'][name] = round(clock() - began, 6)\n"
+    "        context['phase'] = 'sampling'\n"
     "        state['monitor_started_seconds'] = clock() - started\n", 1)]}
 for _name, _replacements in ATTEMPT1_REPAIRS.items():
+    TRACK3[_name][1].extend(_replacements)
+    R2_REPAIRS[_name] = R2_REPAIRS.get(_name, ()) + tuple(old for old, _, _ in _replacements)
+
+# Session-1 attempt 2 (ssv1rt2-s1r-99405387) failed in the warm-up itself: `ps -axo pgid=,rss=` exceeded its 1-s
+# timeout, so the cost is not one-time. The independent review then reproduced a cleanup defect: if the first stop of
+# the supervisor group raised (for example a timed-out ps query), the child recovery records were never read and only
+# the supervisor group was signalled. r6: the RSS probe and every group check read /proc directly (procfs.py: same
+# coverage, a hard budget, a bounded census, never a partial or zero result); stopping, reaping and recovering are
+# each attempted on their own; every recovered owned group is signalled with a SIGKILL fallback; absence is never
+# certified under uncertainty; the monitor's failure receipt carries the probe census.
+ATTEMPT2_REPAIRS = {
+    'launch.py': [
+        ("    result = subprocess.run(['ps', '-axo', 'pgid=,stat='], capture_output=True, text=True, timeout=2, check=True)\n"
+         "    return not any(int(parts[0]) == pgid and not parts[1].startswith('Z') for line in result.stdout.splitlines()\n"
+         "                   if len(parts := line.split()) >= 2 and parts[0].isdigit())\n",
+         "    from research.stagnation_supervision_runtime_v2.procfs import group_live  # r6: /proc, no ps subprocess\n"
+         "    return not group_live(pgid)\n", 1),
+        ("                groups = [process.pid]\n"
+         "                inner_certain = False\n"
+         "                try:\n"
+         "                    # Freeze child creation before scanning recovery records. Undetached\n"
+         "                    # bootstraps are still in this group; detached children registered first.\n"
+         "                    cleanup[str(process.pid)] = _stop_group(process.pid)\n"
+         "                    process.wait(timeout=5)\n"
+         "                    from research.stagnation_supervision_runtime_v2.ownership import recovery_inventory\n"
+         "                    groups, inner_certain = recovery_inventory(output, process.pid)\n"
+         "                except BaseException as exc:\n"
+         "                    errors.append('ownership evidence: ' + type(exc).__name__)\n"
+         "                for pgid in groups:\n"
+         "                    try:\n"
+         "                        cleanup[str(pgid)] = _stop_group(pgid)\n"
+         "                    except BaseException as exc:\n"
+         "                        cleanup[str(pgid)] = type(exc).__name__ + ': ' + str(exc)[:128]\n"
+         "                        try:\n"
+         "                            os.killpg(pgid, signal.SIGKILL)\n"
+         "                            cleanup[str(pgid)] = _group_exited(pgid)\n"
+         "                        except BaseException:\n"
+         "                            pass\n",
+         "                groups, inner_certain = [process.pid], False\n"
+         "                # r6: each step is attempted on its own, so a failed inspection never skips termination or the\n"
+         "                # recovery of the durable child ownership records. Stopping the supervisor group first freezes\n"
+         "                # child creation (undetached bootstraps are still in it; detached children registered first).\n"
+         "                try:\n"
+         "                    cleanup[str(process.pid)] = _stop_group(process.pid)\n"
+         "                except BaseException as exc:\n"
+         "                    cleanup[str(process.pid)] = type(exc).__name__ + ': ' + str(exc)[:128]\n"
+         "                    errors.append('supervisor group stop: ' + type(exc).__name__)\n"
+         "                    try:\n"
+         "                        os.killpg(process.pid, signal.SIGKILL)\n"
+         "                    except BaseException:\n"
+         "                        pass\n"
+         "                try:\n"
+         "                    process.wait(timeout=5)\n"
+         "                except BaseException as exc:\n"
+         "                    errors.append('supervisor reap: ' + type(exc).__name__)\n"
+         "                try:\n"
+         "                    from research.stagnation_supervision_runtime_v2.ownership import recovery_inventory\n"
+         "                    groups, inner_certain = recovery_inventory(output, process.pid)\n"
+         "                except BaseException as exc:\n"
+         "                    errors.append('ownership evidence: ' + type(exc).__name__)\n"
+         "                for pgid in groups:  # every verified owned group; a failed check still gets SIGKILL\n"
+         "                    try:\n"
+         "                        cleanup[str(pgid)] = _stop_group(pgid)\n"
+         "                    except BaseException as exc:\n"
+         "                        cleanup[str(pgid)] = type(exc).__name__ + ': ' + str(exc)[:128]\n"
+         "                        errors.append('owned group stop: ' + type(exc).__name__)\n"
+         "                        try:\n"
+         "                            os.killpg(pgid, signal.SIGKILL)\n"
+         "                        except BaseException:\n"
+         "                            pass\n"
+         "                        try:\n"
+         "                            cleanup[str(pgid)] = _group_exited(pgid)\n"
+         "                        except BaseException:\n"
+         "                            pass\n", 1)],
+    'resources.py': [
+        ("        from evaluation.phase4_runner import group_rss_bytes\n        return group_rss_bytes(pid)\n",
+         "        from research.stagnation_supervision_runtime_v2 import procfs  # r6: /proc, whole group, hard budget\n"
+         "        try:\n"
+         "            value, self.last_rss_census = procfs.group_rss(pid)\n"
+         "        except procfs.ScanBudgetExceeded as exc:\n"
+         "            self.last_rss_census = exc.census\n"
+         "            raise\n"
+         "        return value\n", 1)],
+    'supervisor.py': [
+        ("            from scripts.run_grounded_action_v1_engine_local import terminate_group\n"
+         "            terminate_group(worker, grace=.5, verification_seconds=3)\n",
+         "            from research.stagnation_supervision_runtime_v2.launch import _stop_group  # r6: /proc checks, no ps\n"
+         "            if not _stop_group(worker.pid):\n"
+         "                raise RuntimeError('owned worker group still has live members after SIGKILL')\n"
+         "            worker.wait(timeout=3)\n", 1)],
+    'monitor.py': [
+        ("        state.update(status='failed', error=type(exc).__name__ + ': ' + str(exc)[:256])\n",
+         "        state.update(status='failed', error=type(exc).__name__ + ': ' + str(exc)[:256])\n"
+         "        census = getattr(exc, 'census', None)  # r6: a /proc scan over budget names its own cost\n"
+         "        if isinstance(census, dict):\n"
+         "            context['rss_census'] = {k: (round(v, 6) if type(v) is float else v) for k, v in census.items()}\n",
+         1)],
+}
+for _name, _replacements in ATTEMPT2_REPAIRS.items():
     TRACK3[_name][1].extend(_replacements)
     R2_REPAIRS[_name] = R2_REPAIRS.get(_name, ()) + tuple(old for old, _, _ in _replacements)
 
