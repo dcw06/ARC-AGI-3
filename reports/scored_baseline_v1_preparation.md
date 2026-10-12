@@ -25,17 +25,23 @@ for one hour; this does not establish current accelerator allocation or a submis
 | Proposed agent deadlines | 3,600 s authorized; 3,300 s internal; study admission closes at 3,000 s |
 | Proposed work ceilings | At most 110 games, 80 actions each; 8,800 policy generations and one canary; one scorecard, one scored submission |
 | Draft packaging | Private notebook, GPU/TPU/internet disabled; source approval false; version-pinned inputs and immutable image |
-| CPU checks | Four finalization tests passed in Linux with GPUs hidden and external networking disabled |
+| CPU checks | 15 scored-runtime/artifact tests pass on Linux; broader affected suite: 75 pass, one pre-existing registry-schema error, no skips |
 | Public review artifact | `notebooks/scored-baseline-one-hour-review/submission.ipynb`, with private bindings replaced by placeholders |
 | Artifact integrity | Canonical byte writer and a native Windows regression verify that saved artifacts match their review-lock hashes |
-| CPU scope | Late evidence write, missing source-removal certification, interruption after success write, final deadline checks |
-| Full production validation | Not performed for this draft; new lifecycle, gateway and 110-distinct-client checks remain required |
+| CPU scope | Bootstrap, bounded termination despite stalled census/handled interruption, absolute response deadline, late action refusal, finalization; four regressions fail on `ab202f3` |
+| Full production validation | Not performed for this draft; affected 110-client fixture passes, but actual scored package/gateway and pinned-image validation remain required |
 | Authority/operator | No scored-scope approval records, reservation, claim or uploader created |
 
 The draft has no publication or redistribution clearance. It has not been tested in the pinned Kaggle image and
 must not be represented as a certified production runtime. In particular, the approval flag is a draft refusal
 mechanism, not a substitute for real hash-bound source/use/compute/launch decisions. Runtime ownership, bounded
-cleanup and failure paths still need full review before that mechanism is replaced with an authorized launcher.
+cleanup and failure paths still need independent review before that mechanism is replaced with an authorized launcher.
+
+The four runtime findings from `ab202f3` are addressed and both disabled snapshots have been rebuilt. The public
+review lock is `51e06461f8400953162091476dbb6661e6a96dd27a14ca9eef3a406d78efcd0f`; all 163 embedded source
+hashes and saved artifact hashes verify. The exact saved cell refuses at the approval gate in a clean pre-install
+interpreter and removes its extraction tree. See [repair verification](scored_baseline_v1_runtime_repairs.md) for
+the before/after evidence and the existing broad-suite failure. No GPU or scored submission attempt was consumed.
 
 Next: establish a supported platform-side one-hour cap for the scored rerun, then finish the CPU and pinned-image
 validation, review the exact private source and scored use/output scope, and bind a single fresh attempt. Preserve

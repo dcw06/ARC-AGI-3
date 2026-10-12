@@ -11,6 +11,12 @@ The required one-hour cap covers the entire GPU job, including mounting and prov
 for the scored rerun has not been verified. Do not submit this notebook to test timeout inheritance. Full runtime,
 gateway and exact-package validation and proper approval records remain required.
 
+This rebuilt snapshot addresses the four `ab202f3` runtime findings: deferred game imports, bounded process
+termination, an absolute completion-response deadline, and action admission checks after inference and at the
+gateway boundary. All 163 embedded source hashes and artifact hashes verify. The exact saved cell refuses at the
+approval gate in a clean pre-install interpreter. These CPU checks do not clear the scored launch; see
+`reports/scored_baseline_v1_runtime_repairs.md` for the test results and remaining gates.
+
 The placeholder specification is in `private-bindings.example.json`. To generate a new review artifact in a fresh
 directory, run:
 

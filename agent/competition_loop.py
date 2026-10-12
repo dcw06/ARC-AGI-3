@@ -105,6 +105,12 @@ class CompetitionAgentLoop:
                     except Exception:
                         reason = "policy_failure_no_legal_fallback"
                         break
+                # Inference (including a failed call followed by fallback) may
+                # consume the remaining admission window.
+                if self.watchdog.stop_admission:
+                    self._diagnostic("finish_unresolved", phase="pre_transport", category="admission_closed")
+                    reason = "global_finalization_reserve"
+                    break
                 self._diagnostic("note_decision", decision)
                 try:
                     self.state.mark_pending_action(decision.decision_id)

@@ -1,7 +1,7 @@
 {
  "artifact_hashes": {
   "kernel-metadata.json": "40e98dbd2cb853428604d86c4b43d26962e486e74d876037a56c35f8c24ba905",
-  "submission.ipynb": "d1e519e82b6ea144214b855a2d10658d9cd209a9a78a9f24537f151a71490c38"
+  "submission.ipynb": "5bf114a1e378b97e25fbd38ef14b7abad7c30a7d04a3690f694031c495a15989"
  },
  "gpu_authorized": false,
  "private_bindings": {
@@ -12,17 +12,17 @@
  "schema": "scored_baseline_review_v1",
  "source_approved": false,
  "source_bindings": {
-  "agent/__init__.py": "b3eb0af7a0a461dde9fcc9cadf4987ccf282db7936d87fa49114d3fe2488eab0",
+  "agent/__init__.py": "536997757b151c6c2d4138da19142c5a242921e11979df086efed322be157a22",
   "agent/action.py": "f39c95a7b096830416bd1ea85d1d26ed7e8d52328291894863f66bfea4a4c23a",
   "agent/action_journal.py": "720203276ae1a452e74b5f2f61ff3a29b1ac3eeec85ecd5f35290d148fa30073",
-  "agent/competition_loop.py": "08bef472a29b01a0698cb8469683291c006fff6639cff04735e4857609f42284",
+  "agent/competition_loop.py": "5cf20c5948c89d313afd6b48cbda5a0e686998a5ce93cae92e04cc27ad024e28",
   "agent/config.py": "bfc392859e8460d855d53ceb1aaded7aec36532826a24a88a49fea63bbcda0d7",
   "agent/controller.py": "1382b598c3c633223dc901af560b0161837dea60c2293816f1edc535eea042b0",
   "agent/diagnostics.py": "14bd8686d57c9ba4091d93ceef3ba964238aa79576b123c0baadbf860c449d85",
   "agent/e1_policy.py": "f11b793608469fb75a4a8a5493908867340445a87babda210f31cc2b3f77932d",
   "agent/evidence.py": "01d98b290240341597b55d9f44d93b30e9d0f1b139d7e6759fb6d2ade9d054fd",
   "agent/feature_manifest.py": "ce99c04c7ed70b7eea383615172071984c57afe31efc21262eb49cee0256b26d",
-  "agent/framework_adapter.py": "3ac7848aecb2cadcab80f08d762a55114093151cee9d8c8e3ab824c6372218ef",
+  "agent/framework_adapter.py": "3f6d948e2629eaa336fe1a9c5252c011eb86ec7336c90955c80e31fb5ad09f8e",
   "agent/my_agent.py": "10aa6ccee94dad24190e03efa816cf0b71b1e7e505d6b0baffe71fb5dfe749f6",
   "agent/output_policy.py": "da0fff48fb2e233d50b95aaa19fc68fb82b3041817048fd2f403e83e55952a24",
   "agent/production_main.py": "91b1c417444236cf8b820c04ff3e7bd1fff5e5a2c5008a447a0ec48cb2d3f275",
@@ -31,8 +31,10 @@
   "agent/runtime_audit.py": "ecba26051855534233c8fd8d4c9fee0193f41535b092bd196cbafc3caffc913a",
   "agent/safe_operations.py": "6a59e0c4d7ab3f457daffcab579851b73b2038e968828a1877cd1ebb1c2c50f7",
   "agent/scheduler.py": "9b8a9961fc3e7eefe9755ac00dada154f1c98b3eca47faebcac45b6a90fcf7f7",
-  "agent/scored_runtime.py": "7c51bb6e773eedc777bd5a73d01c46172d2ea426dc97b2daaec49f22e21b6adc",
-  "agent/scored_worker.py": "11dede8a00495e6d98a61262a877995515b95d7c731d26544b1b0b42f737535e",
+  "agent/scored_process.py": "9744a67c580640d78e7a9403e33b87f265a55a974d8fcde538034c0a1fff3534",
+  "agent/scored_runtime.py": "bee309467727d0f3d949b74422fe7c21401e04d3cef75b6ae929ee4727bcb241",
+  "agent/scored_transport.py": "549949b41527a1f3b84630c53529cc7e03b2ba0326df49aaad9f73c7ef07444e",
+  "agent/scored_worker.py": "3074e2ba2ac23ce858ded4e50020af9c28939fe214aec1c61702166bd799c6e6",
   "agent/state.py": "c038905633455f77fb99582cac092809c29e2ee5de06d3666b53bd3c9bc754d7",
   "agent/watchdog.py": "180fa253d50e1c5848bf26bfe9d15514ebc748b9b7ed072da81ec178e8b47f31",
   "certification/phase4_closed_loop_v1/__init__.py": "ba9d210e8c6b4c0475ff24e6ff948dcc1d82f0002a2907450eb239362991ebfb",
@@ -91,7 +93,7 @@
   "config/phase4_execution_protocol_v2.json": "9140fcc07f736370310e4007e113953788e3a8f577f650c8459fc585811c912a",
   "config/phase4_preflight_lock.json": "b41f3ffbdf03835c3652e20c4864ca689005516c100fbf8021b1c29b38de0d56",
   "config/runtime_profiles.yaml": "23f0888b57a81f69b6319aef2c50365a5a2a8155ca3ce4c84147349de9afe2ff",
-  "config/scored_submission_v1.json": "64c2adddb49cd9a224c3b9931b625663bbcdf230ffc18949ffda813461fb4e72",
+  "config/scored_submission_v1.json": "eb9f8f4fb536d7e1fcf1b772e4b91fd1c1e99a94806e7b771c545d56d7f08f39",
   "evaluation/__init__.py": "3f4ca54eb60ba1c30c4ebd5921d8e961407f056b9d665d5b406b7a524dd9f619",
   "evaluation/m0_profile.py": "615cdfa0ec94d38d404d35d5f0ff51a7a6fccf46001b7544b0873a6f11246d24",
   "evaluation/metrics.py": "8a5ed5b0029126ecd255cbea425371745075d8a778ab458cc5569c5fd306a5a5",
@@ -176,7 +178,7 @@
  },
  "specification": {
   "account": "REPLACE_WITH_ACCOUNT",
-  "attempt_id": "scored-e1sr-0c374379861f4d509cc2caf897f1d524",
+  "attempt_id": "scored-e1sr-4b28fa47974a4c5e8dbb9ef756d95867",
   "authorized_seconds": 3600,
   "automatic_retries": 0,
   "internal_seconds": 3300,

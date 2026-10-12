@@ -13,17 +13,19 @@ import time
 def entry(root, started):
     root = Path(root)
     spec = json.loads((root/'config/scored_submission_v1.json').read_bytes())
+    if spec.get('source_approved') is not True:
+        raise PermissionError('the exact scored package has not been approved')
     if not os.environ.get('KAGGLE_IS_COMPETITION_RERUN'):
         # The ordinary saved version is an upload/validation artifact, never a model/GPU run.
         import pandas as pd
         pd.DataFrame([['1_0','1',True,1]],columns=['row_id','game_id','end_of_game','score']).to_parquet(
             '/kaggle/working/submission.parquet',index=False)
         return {'mode':'ordinary_version_placeholder_only', 'gpu_started':False}
-    if spec.get('source_approved') is not True:
-        raise PermissionError('the exact scored package has not been approved')
     if (spec['authorized_seconds'],spec['internal_seconds'],spec['study_cutoff_seconds']) != (3600,3300,3000):
         raise ValueError('scored runtime deadline drift')
-    from research.stagnation_supervision_runtime_v2.publisher_process import ModelServer, defer_startup_signals
+    from research.stagnation_supervision_runtime_v2.publisher_process import defer_startup_signals
+    from agent.scored_process import ModelServer, bounded_installation_processes
+    from agent.scored_transport import bounded_json_post
     from research.stagnation_supervision_runtime_v2.publisher_install import InstallationProcesses
     from research.stagnation_supervision_runtime_v2.prepare import prepare
     from research.stagnation_supervision_runtime_v2.model_binding import model_section
@@ -63,8 +65,9 @@ def entry(root, started):
         if not wheels.is_dir():
             wheels = Path('/kaggle/input')/proto['dataset']['ref'].split('/')[1]
         manifest = json.loads((root/proto['competition']['manifest']).read_bytes())
-        interpreters = prepare(scratch,scratch/'evidence',wheels,competition/'arc_agi_3_wheels',manifest,
-                               started,root=root)
+        with bounded_installation_processes():
+            interpreters = prepare(scratch,scratch/'evidence',wheels,competition/'arc_agi_3_wheels',manifest,
+                                   started,root=root)
         check()
         section = model_section(root)
         primary = replace(load_operational_primary(root),model_path=Path(section['mounted_path']),
@@ -79,12 +82,11 @@ def entry(root, started):
         model.start()
         receipt['gpu_started'] = True
         model.wait_ready(min(started+3000,time.monotonic()+900))
-        response = requests.post('http://127.0.0.1:8000/v1/chat/completions',json={
-            'model':section['model_id'],'messages':[{'role':'user','content':'Reply exactly OK.'}],
-            'temperature':0,'seed':0,'max_tokens':128,'chat_template_kwargs':{'enable_thinking':False}},
-            timeout=min(120,max(.01,started+3000-time.monotonic())),allow_redirects=False)
-        response.raise_for_status()
-        value = response.json()
+        with requests.Session() as canary_session:
+            value = bounded_json_post(canary_session,'http://127.0.0.1:8000/v1/chat/completions',{
+                'model':section['model_id'],'messages':[{'role':'user','content':'Reply exactly OK.'}],
+                'temperature':0,'seed':0,'max_tokens':128,'chat_template_kwargs':{'enable_thinking':False}},
+                deadline=started+3000)
         tokens = value['usage']['completion_tokens']
         if type(tokens) is not int or not 0 < tokens <= 128 or not value['choices'][0]['message']['content'].strip():
             raise ValueError('startup canary failed')
@@ -113,6 +115,8 @@ def entry(root, started):
                     if group is not None:
                         cleanup.append(group.stop(started+3300,1,3))
                 receipt['groups_absent'] = all(row['groups_absent'] for row in cleanup)
+                if any(row.get('error') or row.get('interrupted') for row in cleanup):
+                    receipt['error'] = receipt['error'] or 'server/worker cleanup not verified without errors'
                 try:
                     gpu = subprocess.run(['nvidia-smi','--query-compute-apps=pid','--format=csv,noheader'],
                                           capture_output=True,text=True,timeout=10)

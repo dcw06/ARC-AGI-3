@@ -8,7 +8,8 @@ import threading
 import time
 
 from agent.competition_loop import CompetitionOrchestrator
-from agent.e1_policy import E1Policy, OpenAICompatibleCompletionClient, binding_from_registry
+from agent.e1_policy import CompletionResult, E1Policy, OpenAICompatibleCompletionClient, binding_from_registry
+from agent.scored_transport import bounded_json_post
 from agent.feature_manifest import load_e1_feature_manifests
 from agent.framework_adapter import RemoteFrameworkAdapter
 from agent.runtime_audit import validate_mounted_runtime
@@ -23,12 +24,33 @@ class CountedClient(OpenAICompatibleCompletionClient):
 
     def complete(self, request):
         with self.lock:
+            if getattr(self, '_overdue', False) or getattr(self, '_inflight', False):
+                raise TimeoutError('overdue or active completion transport cannot be reused')
             if time.monotonic() >= self.deadline or self.entered >= self.maximum:
                 raise TimeoutError('scored request admission closed')
             type(self).entered += 1
+            self._inflight = True
         # No redirect or retry can turn one admitted generation into multiple calls.
-        self.timeout_seconds = min(120, max(.01, self.deadline-time.monotonic()))
-        return super().complete(request)
+        started = time.monotonic()
+        try:
+            value = bounded_json_post(self.session, f'{self.base_url}/v1/chat/completions', request,
+                                      deadline=self.deadline, timeout_seconds=min(120,self.timeout_seconds))
+            content = value['choices'][0]['message']['content']
+            if not isinstance(content, str):
+                raise ValueError('completion content must be text')
+            usage = value.get('usage') or {}
+            if time.monotonic() >= min(self.deadline, started+min(120,self.timeout_seconds)):
+                raise TimeoutError('completion response arrived after its absolute deadline')
+            return CompletionResult(content, usage.get('prompt_tokens'), usage.get('completion_tokens'),
+                                    time.monotonic()-started)
+        except BaseException as exc:
+            import requests
+            if isinstance(exc, (requests.Timeout, TimeoutError)) or not isinstance(exc, Exception):
+                self._overdue = True
+            raise
+        finally:
+            with self.lock:
+                self._inflight = False
 
 def main():
     root, started, result_path = Path(sys.argv[1]), float(sys.argv[2]), Path(sys.argv[3])
@@ -44,8 +66,9 @@ def main():
     CountedClient.entered = 0
     manifests = load_e1_feature_manifests(root/'config/e1_feature_manifests.yaml')
     binding = binding_from_registry(root/'config/e1_feature_manifests.yaml')
+    watchdog = DeadlineWatchdog(spec['internal_seconds'],300,started_monotonic=started)
     adapter = RemoteFrameworkAdapter(base_url='http://gateway:8001', api_key='test-key-123', competition_mode=True,
-                                     timeout_seconds=10)
+                                     timeout_seconds=10, action_admission=lambda: not watchdog.stop_admission)
     games = adapter.list_game_ids()
     if not games or len(games) > spec['maximum_games'] or len(set(games)) != len(games):
         raise ValueError('invalid or over-budget competition inventory')
@@ -57,14 +80,12 @@ def main():
         def factory(client):
             completion = CountedClient('http://127.0.0.1:8000/v1', timeout_seconds=120)
             # The transport itself also refuses redirects; the frozen E1 policy remains unchanged.
-            original = completion.session.post
-            completion.session.post = lambda *args, **kwargs: original(*args, **dict(kwargs, allow_redirects=False))
             clients.append(completion)
             return E1Policy(manifest=manifests['E1S-R'], binding=binding, client=completion, inference=executor,
                             max_new_tokens=128, seed=0, request_timeout_seconds=120)
         try:
             result = CompetitionOrchestrator(adapter, games, max_workers=8, max_actions=80,
-                watchdog=DeadlineWatchdog(remaining, 300), policy_factory=factory,
+                watchdog=watchdog, policy_factory=factory,
                 run_tag='e1s-r-one-hour-budget-limited').run()
         finally:
             for client in clients:

@@ -80,12 +80,14 @@ class RemoteFrameworkAdapter:
         competition_mode: bool = True,
         timeout_seconds: float = 10.0,
         session_factory: Any = _session_without_retries,
+        action_admission: Any = None,
     ) -> None:
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
         self.competition_mode = competition_mode
         self.timeout_seconds = timeout_seconds
         self._session_factory = session_factory
+        self._action_admission = action_admission
         self._master_session = session_factory()
         self._master_cookie_jar = RequestsCookieJar()
         self._cookie_lock = threading.Lock()
@@ -135,6 +137,10 @@ class RemoteFrameworkAdapter:
             card_id = str(response.json()["card_id"])
             if not card_id:
                 raise ValueError("empty card id")
+        except PreDispatchFailure as exc:
+            self.lifecycle_journal.mark_failed_pre_dispatch(entry.transaction_id, str(exc))
+            self._master_session.close()
+            raise
         except Exception as exc:
             self.lifecycle_journal.mark_outcome_unknown(entry.transaction_id, type(exc).__name__)
             self._master_session.close()
@@ -171,6 +177,10 @@ class RemoteFrameworkAdapter:
             observation = Observation.from_value(response.json())
             if observation.game_id and observation.game_id != game_id:
                 raise ValueError("bootstrap returned a different game id")
+        except PreDispatchFailure as exc:
+            journal.mark_failed_pre_dispatch(entry.transaction_id, str(exc))
+            session.close()
+            raise
         except Exception as exc:
             journal.mark_outcome_unknown(entry.transaction_id, type(exc).__name__)
             session.close()
@@ -216,6 +226,9 @@ class RemoteFrameworkAdapter:
             observation = Observation.from_value(response.json())
             if observation.guid != client.observation.guid:
                 raise ValueError("response guid does not match client session")
+        except PreDispatchFailure as exc:
+            client.journal.mark_failed_pre_dispatch(entry.transaction_id, str(exc))
+            raise
         except Exception as exc:
             client.action_requests += 1
             client.quarantined = True
@@ -253,6 +266,10 @@ class RemoteFrameworkAdapter:
             result = response.json()
             if not isinstance(result, dict):
                 raise ValueError("close response is not an object")
+        except PreDispatchFailure as exc:
+            self.lifecycle_journal.mark_failed_pre_dispatch(entry.transaction_id, str(exc))
+            self._master_session.close()
+            raise
         except Exception as exc:
             self.lifecycle_journal.mark_finalization_unknown(entry.transaction_id, type(exc).__name__)
             self._master_session.close()
@@ -278,10 +295,18 @@ class RemoteFrameworkAdapter:
         payload_bytes: bytes | None = None,
     ) -> requests.Response:
         target_journal = journal or self.lifecycle_journal
+        try:
+            with self._cookie_lock:
+                session.cookies.update(self._master_cookie_jar)
+            body = payload_bytes if payload_bytes is not None else wire_json_bytes(payload)
+            # Check after payload/cookie preparation, at the command transport
+            # boundary. Scorecard close remains available during the reserve.
+            if path.startswith("/api/cmd/"):
+                if self._action_admission is not None and not self._action_admission():
+                    raise PreDispatchFailure("action admission closed")
+        except Exception as exc:
+            raise PreDispatchFailure(str(exc)) from exc
         target_journal.mark_dispatched(transaction_id)
-        with self._cookie_lock:
-            session.cookies.update(self._master_cookie_jar)
-        body = payload_bytes if payload_bytes is not None else wire_json_bytes(payload)
         response = session.post(
             f"{self.base_url}{path}",
             data=body,
