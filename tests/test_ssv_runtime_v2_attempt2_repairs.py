@@ -1,4 +1,6 @@
-"""r6 repairs after session-1 attempt 2 and its independent review (CPU only; real POSIX processes; no GPU/provider).
+"""r6/r7 repairs after session-1 attempt 2 and its two independent reviews (CPU only; real POSIX processes; no GPU or
+provider). r7: the /proc budget bounds the caller's wait even when a listing or read stalls, cleanup reaches its SIGKILL
+fallback within a bound while every read is stalled, and an interrupted census stays internally consistent.
 
 1. procfs: /proc group probes with ps-equivalent coverage, a hard budget, a census, never a partial or zero result.
 2. launch cleanup: a failed cleanup query can no longer skip the recovery of detached children (reproduced P1).
@@ -78,14 +80,71 @@ class ProcfsProbes(unittest.TestCase):
         def slow(pid):
             time.sleep(.05)
             return procfs.read_stat(pid)
+        began = time.monotonic()
         with self.assertRaises(procfs.ScanBudgetExceeded) as caught:
-            procfs.group_rss(leader.pid, .01, read=slow)
+            procfs.group_rss(leader.pid, .12, read=slow)
+        self.assertLess(time.monotonic() - began, .6)
         census = caught.exception.census
         self.assertGreaterEqual(census['stat_reads'], 1)
         self.assertGreater(census['slowest_read_seconds'], .04)
-        self.assertGreater(census['elapsed_seconds'], .01)
-        self.assertEqual(set(census), {'budget_seconds', 'entries', 'stat_reads', 'vanished', 'members', 'member_states',
-                                       'slowest_read_seconds', 'list_seconds', 'elapsed_seconds'})
+        self.assertGreater(census['elapsed_seconds'], .12)
+        self.assertEqual(set(census), {'budget_seconds', 'phase', 'complete', 'entries', 'stat_reads', 'reads_started',
+                                       'vanished', 'members', 'member_states', 'slowest_read_seconds', 'list_seconds',
+                                       'elapsed_seconds', 'stalled'})
+        self.assertIs(census['complete'], False)
+
+    def test_a_stalled_read_returns_within_the_budget(self):
+        import threading
+        from research.stagnation_supervision_runtime_v2 import procfs
+        release = threading.Event()
+        self.addCleanup(release.set)
+
+        def stalled(pid):
+            release.wait(30)
+            return None
+        began = time.monotonic()
+        with self.assertRaises(procfs.ScanBudgetExceeded) as caught:
+            procfs.scan(os.getpgrp(), .05, read=stalled)
+        self.assertLess(time.monotonic() - began, .5)  # the reviewer's reproduction waited until the read returned
+        census = caught.exception.census
+        self.assertEqual((census['phase'], census['complete'], census['stalled']), ('stat reads', False, True))
+        self.assertEqual(census['reads_started'], census['stat_reads'] + 1)
+
+    def test_a_stalled_listing_returns_within_the_budget(self):
+        import threading
+        from research.stagnation_supervision_runtime_v2 import procfs
+        release = threading.Event()
+        self.addCleanup(release.set)
+
+        def stalled(path):
+            release.wait(30)
+            return []
+        began = time.monotonic()
+        with self.assertRaises(procfs.ScanBudgetExceeded) as caught:
+            procfs.scan(os.getpgrp(), .05, listdir=stalled)
+        self.assertLess(time.monotonic() - began, .5)
+        census = caught.exception.census
+        self.assertEqual((census['phase'], census['entries'], census['stalled']), ('listing', None, True))
+
+    def test_an_interrupted_census_counts_the_members_it_observed(self):
+        import threading
+        from research.stagnation_supervision_runtime_v2 import procfs
+        leader, _ = self.spawn_group(extra_session_child=False)
+        release = threading.Event()
+        self.addCleanup(release.set)
+
+        def first_then_stall(pid):
+            if pid == leader.pid:
+                return procfs.read_stat(pid)
+            release.wait(30)
+            return None
+        with self.assertRaises(procfs.ScanBudgetExceeded) as caught:
+            procfs.scan(leader.pid, .1, read=first_then_stall,
+                        listdir=lambda path: [str(leader.pid), str(os.getpid()), '1'])
+        census = caught.exception.census
+        self.assertEqual(census['members'], 1)
+        self.assertEqual(sum(census['member_states'].values()), census['members'])  # never {"members": 0, {"S": 1}}
+        self.assertIs(census['complete'], False)
 
     def test_zombies_are_not_live_members(self):
         from research.stagnation_supervision_runtime_v2 import procfs
@@ -189,6 +248,91 @@ class LaunchCleanupFaults(unittest.TestCase):
         self.assertTrue(all(v is True for v in receipt['groups'].values()))
         self.assertIs(receipt['groups_absent'], True)
         self.assertEqual(receipt['errors'], [])
+
+
+@unittest.skipUnless(LINUX, 'real POSIX process groups')
+class StalledProcCleanup(unittest.TestCase):
+    """r7: with every /proc read stalled, cleanup still reaches SIGKILL of every owned group within a bound."""
+
+    def stall_reads(self):
+        import threading
+        from research.stagnation_supervision_runtime_v2 import procfs
+        release = threading.Event()
+        real = procfs.read_stat
+
+        def stalled(pid):
+            release.wait(60)
+            return real(pid)
+        patcher = mock.patch.object(procfs, 'read_stat', stalled)
+        patcher.start()
+        return release, patcher
+
+    def test_launch_cleanup_reaches_termination_while_every_read_stalls(self):
+        from research.stagnation_supervision_runtime_v2 import launch, procfs
+        kids = {}
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / 'out'
+            output.mkdir()
+
+            def spawn(command, **kwargs):
+                process = subprocess.Popen([sys.executable, '-c', FAKE_SUPERVISOR, str(output)], **kwargs)
+                kids.update(json.loads(process.stdout.readline()))
+                return process
+            release, patcher = self.stall_reads()
+            began = time.monotonic()
+            try:
+                with self.assertRaises(TimeoutError):
+                    launch.run_supervisor(output, output, sys.executable, sys.executable, output,
+                                          started=began, mode='rehearsal', internal_seconds=7, session='1', spawn=spawn)
+                elapsed = time.monotonic() - began
+            finally:
+                patcher.stop()
+                release.set()
+            try:
+                # 2 s to the forced deadline, then at most two 2-s checks per owned group (supervisor, worker, monitor)
+                self.assertLess(elapsed, 2 + 3 * 2 * procfs.GROUP_BUDGET_SECONDS + 4)
+                receipt = json.loads((output / 'control/first-cell-supervisor-cleanup.json').read_bytes())
+                self.assertIs(receipt['groups_absent'], False)
+                self.assertTrue(receipt['errors'])
+                for pgid in kids.values():
+                    self.assertTrue(wait_until(lambda: not procfs.group_live(pgid)))  # SIGKILL reached them
+            finally:
+                for pgid in kids.values():
+                    kill_group(pgid)
+
+    def test_ownership_cleanup_reaches_termination_while_every_read_stalls(self):
+        from research.stagnation_supervision_runtime_v2 import ownership, procfs
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp)
+            owners = ownership.ChildOwners(output, 1.0, 'n' * 64)
+            kids = {}
+            try:
+                (output / 'control').mkdir(exist_ok=True)
+                for role in ownership.ROLES:
+                    code = 'import signal, time\nsignal.signal(signal.SIGTERM, signal.SIG_IGN)\ntime.sleep(120)\n'
+                    kids[role] = subprocess.Popen([sys.executable, '-c', code], start_new_session=True).pid
+                    (output / 'control' / f'ownership-{role}.json').write_text(json.dumps(
+                        {'role': role, 'pgid': kids[role], 'supervisor_pgid': os.getpgrp(), 'first_cell_monotonic': 1.0,
+                         'nonce': 'n' * 64}), encoding='utf-8')
+                    owners.journal['children'][role] = {'state': 'registered', 'pgid': kids[role]}
+                    owners.journal[role + '_pgid'] = kids[role]
+                owners.save()
+                release, patcher = self.stall_reads()
+                began = time.monotonic()
+                try:
+                    absent, errors = owners.stop()
+                    elapsed = time.monotonic() - began
+                finally:
+                    patcher.stop()
+                    release.set()
+                self.assertLess(elapsed, 3 * procfs.GROUP_BUDGET_SECONDS + 4)
+                self.assertFalse(absent)
+                self.assertTrue(errors)
+                for pgid in kids.values():
+                    self.assertTrue(wait_until(lambda: not procfs.group_live(pgid)))
+            finally:
+                for pgid in kids.values():
+                    kill_group(pgid)
 
 
 @unittest.skipUnless(LINUX, 'real POSIX process groups')
