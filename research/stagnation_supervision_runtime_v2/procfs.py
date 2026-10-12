@@ -9,16 +9,18 @@ cleanup paths used the same kind of `ps` scan. These probes read /proc directly 
 A scan lists /proc once and reads only /proc/<pid>/stat for each process: one small read, never cmdline, environ,
 status or maps (which take the target process's memory lock).
 
-The budget is a hard bound on the caller's wait (r7, second review): the scan runs in a daemon worker thread and the
-caller waits at most `budget` seconds, so a listing or read that stalls inside the kernel cannot hold the caller, and
-cleanup still reaches its SIGKILL fallback. A stalled worker is abandoned; it can only finish into a result nobody
-reads. A scan that exceeds its budget raises ScanBudgetExceeded with a snapshot of the census; it never returns a
+The budget is a hard bound on the caller's wait (r7, second review): the scan runs in a worker thread and the caller
+waits at most `budget` seconds on a lock the worker releases, so a listing or read that stalls inside the kernel cannot
+hold the caller, and cleanup still reaches its SIGKILL fallback. A stalled worker is abandoned; it can only finish into
+a result nobody reads. The worker is started with the low-level `_thread` primitive (r8), so the probe does not
+depend on `threading.Thread` (whose start an interrupted logging thread must not disable); if no thread can be
+created at all, the probe raises and the caller fails closed. A scan that exceeds its budget raises ScanBudgetExceeded with a snapshot of the census; it never returns a
 partial, estimated or zero result. The census holds counts and timings only (never process names, command lines or
 identifiers of other processes); `members` and `member_states` are updated together as members are observed, and
 `complete` and `phase` say whether, and where, the scan stopped.
 """
+import _thread
 import os
-import threading
 import time
 
 PAGE_BYTES = os.sysconf('SC_PAGE_SIZE') if hasattr(os, 'sysconf') else 4096
@@ -64,6 +66,8 @@ def scan(pgid, budget, *, clock=time.monotonic, read=None, listdir=None):
               'reads_started': 0, 'vanished': 0, 'members': 0, 'member_states': {}, 'slowest_read_seconds': 0.0,
               'list_seconds': None, 'elapsed_seconds': None}
     outcome = {}
+    finished = _thread.allocate_lock()
+    finished.acquire()
 
     def work():
         try:
@@ -90,16 +94,16 @@ def scan(pgid, budget, *, clock=time.monotonic, read=None, listdir=None):
             outcome['members'] = members
         except BaseException as exc:  # handed to the caller, never swallowed
             outcome['error'] = exc
+        finally:
+            finished.release()
 
-    worker = threading.Thread(target=work, name='procfs-scan', daemon=True)
-    worker.start()
-    worker.join(budget)
+    _thread.start_new_thread(work, ())  # raises if no thread can be created: the caller fails closed
+    done = finished.acquire(timeout=budget)
     if 'error' in outcome:
         raise outcome['error']
-    if worker.is_alive() or 'members' not in outcome or clock() - began > budget:
+    if not done or 'members' not in outcome or clock() - began > budget:
         snapshot = _snapshot(census, began, clock)
-        snapshot['stalled'] = worker.is_alive() and snapshot['reads_started'] > snapshot['stat_reads'] or (
-            worker.is_alive() and snapshot['entries'] is None)
+        snapshot['stalled'] = not done and (snapshot['entries'] is None or snapshot['reads_started'] > snapshot['stat_reads'])
         raise ScanBudgetExceeded(f"/proc scan exceeded {budget} s ({snapshot['phase']})", snapshot)
     result = _snapshot(census, began, clock)
     result['stalled'] = False

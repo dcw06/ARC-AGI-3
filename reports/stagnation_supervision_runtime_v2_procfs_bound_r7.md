@@ -11,3 +11,15 @@ frozen science, limits and derivation are unchanged.
 
 The reason the target's `ps` scan was slow remains unknown. A stalled `/proc` read on the target would now fail the
 probe within its budget, with a census naming the phase.
+
+## r8: the scan's worker no longer depends on `threading.Thread`
+
+**What failed.** CPU suite r11 (retained as failed: 298 tests, 1 failure) caught an interaction with the prelaunch
+regression `test_inner_logging_start_interruption_still_cleans_owned_child`. That test simulates an interrupted logging
+thread by making every `threading.Thread.start` raise. The r7 scan started its worker with `threading.Thread`, so the
+group checks during cleanup also failed and the run was not certified.
+
+**The change.** The worker now uses the low-level `_thread` primitive, and the caller waits on a lock with the same
+budget. The deadline bound and the census are unchanged. If no thread can be created at all, the probe raises and the
+caller fails closed. All 35 prelaunch, repair and monitor regressions pass, including the stalled-read and stalled-listing
+bounds.
