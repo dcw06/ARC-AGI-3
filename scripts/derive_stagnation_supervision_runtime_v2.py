@@ -686,7 +686,10 @@ SCIENCE = (
     'reports/stagnation_supervision_v1_ls20_decision.json',
     'reports/stagnation_supervision_v1_protocol_v2.md',
 )
-CONSUMED_ATTEMPTS = ('ssv1-r5-session1-reservation-001',)
+# Every consumed attempt, never reusable (r10, fourth review): the R6 attempt and session-1 attempts 1 and 2 of runtime
+# v2, both consumed by their single push (provider versions 2 and 3) and failed before readiness.
+CONSUMED_ATTEMPTS = ('ssv1-r5-session1-reservation-001', 'ssv1rt2-s1-c5ebca7f7b444bb3b63b6c90b3cf306b',
+                     'ssv1rt2-s1r-994053875c1c4a6ea06ab09be3e9c4bc')
 
 
 def sha(data):

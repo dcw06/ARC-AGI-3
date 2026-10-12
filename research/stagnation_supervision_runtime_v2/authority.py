@@ -43,6 +43,10 @@ RESERVATION = RECORDS + '/reservation.json'
 CLAIM = RECORDS + '/launch_claim.json'
 RECEIPT = RECORDS + '/launch_receipt.json'
 ATTEMPT = re.compile(r'ssv1rt2-[A-Za-z0-9-]{8,80}')
+# r10 (fourth review): the gate itself requires the complete consumed-attempt history, so a protocol that drops an
+# entry is refused rather than re-opening a spent attempt id.
+REQUIRED_CONSUMED = frozenset({'ssv1-r5-session1-reservation-001', 'ssv1rt2-s1-c5ebca7f7b444bb3b63b6c90b3cf306b',
+                               'ssv1rt2-s1r-994053875c1c4a6ea06ab09be3e9c4bc'})
 # Track 3 protocol v2 section 11, unchanged (the frozen R4 values; nothing here authorizes them).
 from research.stagnation_supervision_v1.closed_loop.authority import SESSION_LIMITS  # noqa: E402
 REQUIRED_SOURCE = {PACKAGE + '/' + n for n in (
@@ -93,7 +97,7 @@ def load_protocol(root=ROOT):
     drift = [n for n, d in protocol['science']['files'].items() if sha256(resolve(root, n)) != d]
     if drift:
         raise ValueError('frozen science drift: ' + ', '.join(sorted(drift)))
-    if set(protocol['kernel_ids']) != set(SESSION_LIMITS) or 'ssv1-r5-session1-reservation-001' not in protocol['consumed_attempts']:
+    if set(protocol['kernel_ids']) != set(SESSION_LIMITS) or not REQUIRED_CONSUMED <= set(protocol['consumed_attempts']):
         raise ValueError('session/attempt bindings')
     if type(protocol['dataset']['version']) is not int or protocol['dataset']['version'] < 1:
         raise ValueError('dataset version must be a positive integer')
