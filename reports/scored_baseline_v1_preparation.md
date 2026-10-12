@@ -26,6 +26,8 @@ for one hour; this does not establish current accelerator allocation or a submis
 | Proposed work ceilings | At most 110 games, 80 actions each; 8,800 policy generations and one canary; one scorecard, one scored submission |
 | Draft packaging | Private notebook, GPU/TPU/internet disabled; source approval false; version-pinned inputs and immutable image |
 | CPU checks | Four finalization tests passed in Linux with GPUs hidden and external networking disabled |
+| Public review artifact | `notebooks/scored-baseline-one-hour-review/submission.ipynb`, with private bindings replaced by placeholders |
+| Artifact integrity | Canonical byte writer and a native Windows regression verify that saved artifacts match their review-lock hashes |
 | CPU scope | Late evidence write, missing source-removal certification, interruption after success write, final deadline checks |
 | Full production validation | Not performed for this draft; new lifecycle, gateway and 110-distinct-client checks remain required |
 | Authority/operator | No scored-scope approval records, reservation, claim or uploader created |

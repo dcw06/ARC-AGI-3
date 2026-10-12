@@ -75,7 +75,8 @@ finally:
             'artifact_hashes':{n:sha((json.dumps(v,sort_keys=True,indent=1)+'\n').encode()) for n,v in artifacts.items()}}
     output.mkdir(parents=True,exist_ok=False)
     for name,value in {**artifacts,'review-lock.json':lock}.items():
-        (output/name).write_text(json.dumps(value,sort_keys=True,indent=1)+'\n',encoding='utf-8')
+        # Hash and write the same canonical bytes on Windows and Linux.
+        (output/name).write_bytes((json.dumps(value,sort_keys=True,indent=1)+'\n').encode('utf-8'))
     for name,data in raw.items():
         if name.endswith('.py'):
             compile(data,name,'exec')
