@@ -464,3 +464,37 @@ editing slip; it is not part of the seed.)
 no-restart rule, model and decoding, prompts, detector and trigger, intervention limits, labels, windows, primary
 endpoint, stop rules and runtime proposal. Masks, new games, computed control metadata and prompt revisions each
 remain separate amendments.
+
+## 14a. Amendment S2 (owner decision after both sessions, October 12, 2026)
+
+**Finding that prompted it.** Every block-2 episode exactly replayed its block-1 counterpart: the same policy request
+and response at every step, the same reflections and the same costs. Session 1's continuation repeats replayed block 1
+exactly as well. With game seed 0, request seed 0 and temperature 0 for both blocks (§5), and with each episode run in
+its own context, rotating arm order changed nothing, and serving was deterministic. The finding was recorded from
+request and response hashes only. It came before any outcome was inspected and before any pooled comparison was
+computed; the per-session evaluation records hold per-session endpoint values, which had not been read.
+
+**Decisions (owner answers, verbatim):**
+
+| Question | Answer |
+|---|---|
+| How should the pooled analysis handle exact block-2 replays? | "Both, dedup headline (Recommended)": run the frozen 24-episode analysis exactly as written and report it, labelled as overstating precision; also report the same analysis over the distinct trajectories, and use that as the headline for interpretation |
+| Should the self-review draw use distinct trajectories only? | "Distinct only (Recommended)": draw from the distinct main episodes only; block 2's exact copies are excluded; same seed, same quotas, same logic otherwise |
+
+**As implemented** (`pooled.py`, `selfreview.py`):
+- **Distinct trajectories.** A main episode whose timestamp-free trajectory equals that of an episode earlier in
+  (session, episode) order is an exact duplicate and is excluded. The trajectory is every step's observed facts; the
+  supervision events' index, outcome and delivered text; the suggestion tests in force; levels; and stop reason.
+  Repeats stay excluded as before. An episode that differs in any of these is kept.
+- **Self-review.** The S1 draw (same seed, strata and quotas) over distinct trajectories, with the exclusions bound in
+  the sample. With no duplicates it equals the S1 draw.
+- **Pooled evaluation.** `pooled` is computed exactly as frozen and reported, labelled as overstating precision when
+  duplicates exist. `pooled_distinct` reports the same quantities over distinct trajectories and is the interpretive
+  headline; its intervals reflect variation between games only. The §8.6 verdict is not recomputed: it remains the
+  frozen one, inconclusive by construction (§8.3).
+- **Session-1 record under a later lock.** These changes make a new review lock. Session 1's evaluation is re-run
+  read-only under it. The session-2 execution lock binds the launch-time record, which may be replaced by the
+  re-evaluation only when the two are equal apart from the evaluating lock.
+
+**Unchanged:** the arms, games, horizon, labels, windows, primary endpoint, detector, trigger, stop rules, the S1
+scope and every mechanical endpoint definition. No session is rerun and no GPU run follows from this amendment.

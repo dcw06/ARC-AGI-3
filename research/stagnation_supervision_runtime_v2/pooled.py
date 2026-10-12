@@ -25,6 +25,16 @@ evaluate one session at a time. The protocol's comparisons pool both blocks. Thi
      repeated episodes identical; intervals over identical episodes then overstate precision;
    - each §8.6 advancement condition and the verdict ("inconclusive" unless all hold; the gate condition cannot
      hold in this study).
+
+Amendment S2 (owner decision, October 12, 2026, frozen protocol §14), recorded after the sessions ran (block 2 replayed
+block 1 exactly), before any outcome was inspected and before any pooled comparison was computed:
+- the self-review sample is drawn over distinct trajectories only (selfreview.sample_for);
+- `pooled` is computed exactly as frozen and reported, labelled as overstating precision when exact duplicates exist;
+- `pooled_distinct` computes the same quantities over distinct trajectories only (exact duplicates excluded, the
+  copy earliest in (session, episode) order kept) and is the interpretive headline. The §8.6 verdict is not
+  recomputed there; it is the frozen one, inconclusive by construction (§8.3);
+- a session-1 evaluation re-run under a later review lock may stand in for the one the session-2 execution lock
+  binds, if the bound launch-time record is supplied and the two are equal apart from the evaluating lock.
 """
 import hashlib
 import json
@@ -287,10 +297,44 @@ def compute(episodes, trigger_spec, horizon):
     }
 
 
+def compute_distinct(episodes, trigger_spec, horizon):
+    """Amendment S2: the frozen quantities over distinct trajectories only (the interpretive headline)."""
+    kept, excluded = SR.distinct(episodes)
+    primary_main = [e for e in kept if e['game'] in PRIMARY_GAMES]
+    primary = recovery(primary_main, trigger_spec, horizon)
+    by_game = {g: recovery([e for e in kept if e['game'] == g], trigger_spec, horizon) for g in GAMES}
+    blind = [e for e in kept if e['game'] == BLIND_SPOT]
+    return {
+        'rule': SR.DISTINCT_RULE,
+        'episodes': [[e['session'], e['episode']] for e in kept], 'duplicates_excluded': excluded,
+        'primary': {'games': list(PRIMARY_GAMES), 'by_arm': primary, 'differences': differences(primary),
+                    'unit': 'distinct trajectory; repeats and exact duplicates excluded; s5i5 reported separately'},
+        'by_game': {g: {'by_arm': r, 'differences': differences(r)} for g, r in by_game.items()},
+        'suggestion_following': suggestion_following(kept, trigger_spec, horizon),
+        'solving': {'completed_levels_primary_games': {arm: sum(e['levels_completed'] for e in primary_main if e['arm'] == arm)
+                                                       for arm in ARMS},
+                    'completed_levels_s5i5': {arm: sum(e['levels_completed'] for e in blind if e['arm'] == arm) for arm in ARMS}},
+        'false_interruptions': {arm: O.interruptions(kept, arm) for arm in ('triggered', 'periodic')},
+        'false_interruptions_calls': {arm: O.interruptions(kept, arm, what='calls') for arm in ('triggered', 'periodic')},
+        'realised_cost': O.realised_cost(kept),
+        'reliability': reliability(primary_main),
+        'blind_spot_s5i5': {'by_arm': recovery(blind, trigger_spec, horizon),
+                            'scope': 'declared blind-spot case; never pooled into the primary comparison (§4)'},
+        'advancement': ('not recomputed: the §8.6 verdict is the frozen one in `pooled`, inconclusive by construction '
+                        'because the false-interruption gate is not certifiable (§8.3)'),
+    }
+
+
+def _without_lock(record):
+    return {k: v for k, v in record.items() if k != 'review_lock'}
+
+
 def evaluate_sessions(outputs, records, *, annotations, annotations_sha256, mode='live', specs=None,
                       internal_seconds=None, session2_execution=None, root=None, trigger_spec=None,
-                      annotations_commitment=None):
+                      annotations_commitment=None, session1_launch_record=None):
     """outputs / records: {'1': path, '2': path} (target output folders; retained study-report JSON files).
+    session1_launch_record: the session-1 evaluation the session-2 execution lock binds, when records['1'] is a
+    re-evaluation under a later review lock (amendment S2).
     Returns the pooled evaluation; comparisons are withheld (None) unless every binding check passes."""
     from research.stagnation_supervision_v1 import thresholds as S
     from research.stagnation_supervision_v1.closed_loop.bridge import session_spec
@@ -322,11 +366,19 @@ def evaluate_sessions(outputs, records, *, annotations, annotations_sha256, mode
             problems.append('session-2 execution lock not supplied')
         else:
             bound = (json.loads(Path(session2_execution).read_bytes()).get('session1_evaluation') or {}).get('sha256')
-            if bound != sessions['1']['record_sha256']:
-                problems.append('session-2 execution lock does not bind the retained session-1 evaluation')
+            if session1_launch_record is None:
+                if bound != sessions['1']['record_sha256']:
+                    problems.append('session-2 execution lock does not bind the retained session-1 evaluation')
+            elif bound != sha256_file(session1_launch_record):
+                problems.append('session-2 execution lock does not bind the supplied launch-time session-1 evaluation')
+            elif (canonical(_without_lock(json.loads(Path(session1_launch_record).read_bytes())))
+                  != canonical(_without_lock(json.loads(Path(records['1']).read_bytes())))):
+                problems.append('session-1 re-evaluation differs from the launch-time evaluation beyond the evaluating lock')
+            else:
+                sessions['1']['launch_record_sha256'] = bound
     result = {'version': VERSION, 'mode': mode, 'problems': problems,
               'sessions': {s: {k: v for k, v in r.items() if k != 'spec'} for s, r in sessions.items()},
-              'self_review': None, 'pooled': None}
+              'self_review': None, 'pooled': None, 'pooled_distinct': None}
     if problems:
         result['withheld_reason'] = 'binding or technical checks failed; no pooled comparison is computed'
         return result
@@ -336,7 +388,7 @@ def evaluate_sessions(outputs, records, *, annotations, annotations_sha256, mode
     episodes = []
     for s in ('1', '2'):
         episodes += session_episodes(Path(outputs[s]) / 'worker/run', sessions[s]['spec'], trigger_spec, s)
-    sample = SR.draw(SR.candidates(episodes, trigger_spec, horizon), inputs=inputs_digest(episodes))
+    sample = SR.sample_for(episodes, trigger_spec, horizon, inputs=inputs_digest(episodes))
     try:
         commitment = None
         if sha256_file(annotations) != annotations_sha256:
@@ -350,13 +402,24 @@ def evaluate_sessions(outputs, records, *, annotations, annotations_sha256, mode
         return result
     result['self_review'] = {**review, 'annotations_sha256': annotations_sha256, 'private_commitment': commitment}
     result['pooled'] = compute(episodes, trigger_spec, horizon)
+    result['pooled_distinct'] = compute_distinct(episodes, trigger_spec, horizon)
+    duplicates = len(result['pooled_distinct']['duplicates_excluded'])
+    result['headline'] = {
+        'section': 'pooled_distinct',
+        'amendment': 'S2 (owner decision, October 12, 2026)',
+        'pooled_precision': (f'{duplicates} main episodes exactly duplicate an earlier one; the frozen `pooled` intervals '
+                             'count each copy as an independent episode and overstate precision' if duplicates else
+                             'no main episode exactly duplicates another; `pooled` and `pooled_distinct` use the same '
+                             'episodes')}
     result['limitations'] = [
         'exposed development games and one model; not real-game or generalisation evidence',
         'behavioural recovery is loop exit, not learning or solving; completed levels are reported separately',
         'ls20 is retained with its display-driven novelty limitation and is exploratory for the gate',
         'the false-interruption gate is not certifiable with one qualified control (wa30)',
         'the self-review is the sole researcher\'s unblinded inspection, not an independent audit',
-        'deterministic decoding can make repeated episodes identical; intervals then overstate precision']
+        'deterministic decoding can make repeated episodes identical; intervals then overstate precision',
+        'amendment S2: exact duplicates are excluded from `pooled_distinct`; with one distinct trajectory per game and '
+        'arm, its intervals reflect variation between games only, not run-to-run variation']
     return result
 
 

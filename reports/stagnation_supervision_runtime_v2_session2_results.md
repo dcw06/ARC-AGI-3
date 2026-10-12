@@ -39,7 +39,7 @@ platform delay.
 | Evaluating checkout's review lock | verified (private r14, the same lock as session 1's re-evaluation) |
 | Retained record | `reports/stagnation_supervision_runtime_v2_results/session2_evaluation.json` in the private checkout, SHA-256 `f4f0b49e67cabb7b8f1629c4e235fc353e48b9610d1cad919c368207e3664257` |
 
-## Reproducibility finding (hashes only; no outcome was computed or inspected)
+## Reproducibility finding (hashes only; no outcome was inspected)
 
 Every block-2 episode exactly replays its block-1 counterpart, for all 12 game-and-arm pairs:
 - the same policy request and response at each of the 40 steps;
@@ -57,7 +57,8 @@ rotates. Each episode runs in its own context, so arm order cannot change an epi
 **Consequence for the pooled analysis.** The frozen analysis treats each episode as an independent cluster for the
 bootstrap. Applied as written, it would count every trajectory twice and report intervals narrower than the evidence
 supports.
-- This finding was recorded before any outcome was computed.
+- This finding was recorded before any outcome was inspected and before any pooled comparison was computed. The
+  per-session evaluation records hold per-session endpoint values, which have not been read.
 - How to handle it is an owner decision, taken before the self-review and the pooled evaluation. No analysis change
   has been made.
 

@@ -6,6 +6,8 @@
 
 Each record is the retained output of scripts/evaluate_stagnation_supervision_runtime_v2.py for that session; both
 are recomputed and must match. Comparisons are computed only after the amendment-S1 self-review annotations verify.
+When --record1 is a re-evaluation under a later review lock, --session1-launch-record supplies the session-1
+evaluation the session-2 execution lock binds; the two must be equal apart from the evaluating lock (amendment S2).
 """
 import argparse
 import json
@@ -27,11 +29,14 @@ def main():
     parser.add_argument('--annotations-sha256', required=True)
     parser.add_argument('--annotations-commitment', required=True, type=Path,
                         help='private receipt of the prior immutable annotation/sample Git commit')
+    parser.add_argument('--session1-launch-record', type=Path,
+                        help='the session-1 evaluation bound by the session-2 execution lock, if --record1 is a re-evaluation')
     args = parser.parse_args()
     result = evaluate_sessions({'1': args.session1, '2': args.session2}, {'1': args.record1, '2': args.record2},
                                annotations=args.annotations, annotations_sha256=args.annotations_sha256,
                                session2_execution=args.session2_execution,
-                               annotations_commitment=args.annotations_commitment)
+                               annotations_commitment=args.annotations_commitment,
+                               session1_launch_record=args.session1_launch_record)
     print(json.dumps(result, indent=1, allow_nan=False, default=str))
     return 0 if result['pooled'] is not None else 1
 

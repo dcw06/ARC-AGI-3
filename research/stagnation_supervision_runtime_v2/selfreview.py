@@ -19,6 +19,11 @@ depends only on the seed and the candidate lists, never on their order or on any
 Order (protocol §7): the sample is drawn and annotated, and the annotations are committed and hashed, before any
 pooled comparison is computed (`pooled.evaluate_sessions` refuses otherwise). The 20% disagreement rule is reported
 descriptively only; the false-interruption gate is not certifiable in any case (§8.3).
+
+Amendment S2 (owner decision, October 12, 2026, frozen protocol §14): the draw uses distinct trajectories only
+(`sample_for`). A main episode whose timestamp-free trajectory equals that of an episode earlier in (session,
+episode) order is an exact duplicate and is excluded before the candidate lists are built; the exclusions are bound
+in the sample. With no duplicates, the strata equal the S1 draw's.
 """
 import hashlib
 import json
@@ -47,6 +52,10 @@ FIELDS = {
     'recovery': ('more_than_a_changed_action',),
 }
 MAX_NOTE = 1000
+DISTINCT_RULE = ('amendment S2: a main episode whose timestamp-free trajectory (every step\'s observed facts, the '
+                 'supervision events\' index, outcome and delivered text, the suggestion tests in force, levels and '
+                 'stop reason) equals that of an episode earlier in (session, episode) order is an exact duplicate and '
+                 'is excluded; continuation repeats stay excluded as before')
 
 
 def canonical(value):
@@ -88,7 +97,35 @@ def candidates(episodes, trigger_spec, horizon):
     return out
 
 
-def draw(lists, seed=SEED, inputs=None):
+def trajectory_signature(e):
+    """Timestamp-free identity of a rebuilt episode (amendment S2)."""
+    events = (e.get('reflection_evidence') or {}).get('events', [])
+    return O.digest({'game': e['game'], 'arm': e['arm'], 'steps': [O._facts(r) for r in e['records']],
+                     'events': [[x.get('action_index'), x.get('outcome'), x.get('delivered')] for x in events],
+                     'delivered': e['delivered'], 'first_tests': e.get('first_tests'),
+                     'levels_completed': e.get('levels_completed'), 'stop_reason': e.get('stop_reason')})
+
+
+def distinct(episodes):
+    """Amendment S2: the main episodes without exact duplicates, and the excluded duplicates with what they repeat."""
+    kept, excluded, seen = [], [], {}
+    for e in sorted((e for e in episodes if not e['repeat']), key=lambda e: (e['session'], e['episode'])):
+        signature = trajectory_signature(e)
+        if signature in seen:
+            excluded.append({'session': e['session'], 'episode': e['episode'], 'duplicate_of': seen[signature]})
+        else:
+            seen[signature] = {'session': e['session'], 'episode': e['episode']}
+            kept.append(e)
+    return kept, excluded
+
+
+def sample_for(episodes, trigger_spec, horizon, inputs=None, seed=SEED):
+    """The amendment-S2 sample: the S1 draw over distinct trajectories, with the exclusions bound."""
+    kept, excluded = distinct(episodes)
+    return draw(candidates(kept, trigger_spec, horizon), seed=seed, inputs=inputs, excluded=excluded)
+
+
+def draw(lists, seed=SEED, inputs=None, excluded=None):
     """The deterministic sample (see module docstring) and its canonical digest."""
     ordered = {name: sorted(rows, key=lambda r: _rank(seed, name, r['key'])) for name, rows in lists.items()}
     strata = {}
@@ -116,6 +153,8 @@ def draw(lists, seed=SEED, inputs=None):
               'quotas': {'label_per_stratum': LABEL_QUOTA, 'reflections': REFLECTION_QUOTA, 'recoveries': RECOVERY_QUOTA},
               'inputs': inputs, 'strata': strata, 'shortfall': shortfall,
               'scope': 'unblinded descriptive self-review by the sole researcher; not an independent audit'}
+    if excluded is not None:
+        sample['amendment_s2'] = {'rule': DISTINCT_RULE, 'duplicates_excluded': excluded}
     return {**sample, 'sample_sha256': digest(sample)}
 
 

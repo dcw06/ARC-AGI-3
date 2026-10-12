@@ -1,0 +1,23 @@
+{
+  "version": "stagnation_supervision_v1_amendment_s2_decision",
+  "date": "2026-10-12",
+  "finding": "every block-2 episode replays its block-1 counterpart exactly (request, response and reflection hashes); session-1 continuation repeats replay block 1 exactly",
+  "finding_basis": "request/response hashes only; recorded before any outcome was inspected and before any pooled comparison was computed; per-session endpoint values in the evaluation records had not been read",
+  "decisions": [
+    {
+      "question": "How should the pooled analysis handle exact block-2 replays?",
+      "user_response": "Both, dedup headline (Recommended)",
+      "meaning": "run and report the frozen 24-episode analysis, labelled as overstating precision; report the same quantities over distinct trajectories as the interpretive headline"
+    },
+    {
+      "question": "Should the self-review draw use distinct trajectories only?",
+      "user_response": "Distinct only (Recommended)",
+      "meaning": "draw from distinct main episodes only; exact block-2 copies excluded; same seed, quotas and logic otherwise"
+    }
+  ],
+  "protocol_section": "reports/stagnation_supervision_v1_protocol_v2_frozen.md §14a",
+  "verdict_rule_changed": false,
+  "endpoint_definitions_changed": false,
+  "rerun_authorized": false,
+  "compute_authorization_granted": false
+}

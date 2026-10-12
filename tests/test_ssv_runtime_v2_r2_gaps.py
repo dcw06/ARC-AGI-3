@@ -522,7 +522,7 @@ class PooledRehearsal(unittest.TestCase):
         episodes = []
         for s in ('1', '2'):
             episodes += P.session_episodes(self.outputs[s] / 'worker/run', self.specs[s], trigger, s)
-        sample = SR.draw(SR.candidates(episodes, trigger, 20), inputs=P.inputs_digest(episodes))
+        sample = SR.sample_for(episodes, trigger, 20, inputs=P.inputs_digest(episodes))  # amendment S2
         record = SR.template(sample)
         for name, items in record['annotations'].items():
             for item in items:
@@ -561,6 +561,9 @@ class PooledRehearsal(unittest.TestCase):
             self.assertEqual(row['recovered_exits'], row['with_suggestion_in_force'] + row['without_suggestion_in_force'])
             self.assertLessEqual(row['exit_equals_first_test_action'], row['with_suggestion_in_force'])
         self.assertEqual(result['self_review']['label_disagreement']['gate_eligible']['disagreement_rate'], None)
+        distinct = result['pooled_distinct']  # amendment S2: every main episode is kept once or excluded as a copy
+        self.assertEqual(len(distinct['episodes']) + len(distinct['duplicates_excluded']), 6)
+        self.assertEqual(result['headline']['section'], 'pooled_distinct')
 
     def test_stale_or_edited_session_records_are_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
