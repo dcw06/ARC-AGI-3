@@ -1,0 +1,20 @@
+CPU checks on 2026-10-13
+
+python -m research.conditional_transfer_v1.build --check
+{"check":true,"clusters":48,"duplicate_aliases":1830,"probes":5184,"unique_requests":3354,"variants":144,"verified":true}
+
+python -m research.conditional_transfer_v1.replay
+{"cases":144,"clusters":48,"verified":true}
+
+python -m research.evidence_memory_stress_v1.build --check
+Verified 6 development artifacts: reports/evidence_memory_stress_v1
+
+uv pip check --python .venv/bin/python
+Checked 56 packages
+All installed packages are compatible
+
+New-file whitespace checks
+Zero errors
+
+git diff --exit-code HEAD
+Exit 0; existing tracked files unchanged

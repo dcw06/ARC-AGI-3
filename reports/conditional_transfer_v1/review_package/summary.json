@@ -1,0 +1,419 @@
+{
+  "by_arm": {
+    "1024/conditional_memory": {
+      "contradiction_update_category_accuracy": 0.0,
+      "probes": 864,
+      "reader_errors": 0,
+      "reference_coverage_against_package": 1.0,
+      "reference_coverage_against_source": 0.4861111111111111,
+      "reference_precision_against_package": 1.0,
+      "reference_precision_against_source": 0.5347222222222222,
+      "selection_category_losses": 360,
+      "selection_reference_losses": 486,
+      "supported_claim_precision": null,
+      "supported_reuse_coverage": 0.0,
+      "transfer_by_delay": {
+        "0": 0.4583333333333333,
+        "24": 0.4583333333333333,
+        "8": 0.4583333333333333
+      },
+      "transfer_by_family": {
+        "appearance_match": 0.3333333333333333,
+        "contradiction": 0.3333333333333333,
+        "coordinate_change": 0.6666666666666666,
+        "distractor_history": 0.3333333333333333,
+        "layout_change": 0.6666666666666666,
+        "level_reset_boundary": 0.3333333333333333,
+        "state_dependent_rule": 0.6666666666666666,
+        "unknown_outcome": 0.3333333333333333
+      },
+      "transfer_category_accuracy": 0.4583333333333333,
+      "unsupported_transfer_denominator": 96,
+      "unsupported_transfer_numerator": 0,
+      "unsupported_transfer_rate": 0.0,
+      "validity": 1.0,
+      "variants": 144,
+      "writer_category_losses": 0,
+      "writer_reference_losses": 0
+    },
+    "1024/recent_history": {
+      "contradiction_update_category_accuracy": 0.9,
+      "probes": 864,
+      "reader_errors": 0,
+      "reference_coverage_against_package": 1.0,
+      "reference_coverage_against_source": 0.6566358024691359,
+      "reference_precision_against_package": 1.0,
+      "reference_precision_against_source": 0.7141203703703703,
+      "selection_category_losses": 180,
+      "selection_reference_losses": 358,
+      "supported_claim_precision": 1.0,
+      "supported_reuse_coverage": 0.2708333333333333,
+      "transfer_by_delay": {
+        "0": 0.75,
+        "24": 0.7291666666666666,
+        "8": 0.7291666666666666
+      },
+      "transfer_by_family": {
+        "appearance_match": 0.8333333333333334,
+        "contradiction": 0.8333333333333334,
+        "coordinate_change": 0.6666666666666666,
+        "distractor_history": 0.5,
+        "layout_change": 0.6666666666666666,
+        "level_reset_boundary": 0.6666666666666666,
+        "state_dependent_rule": 1.0,
+        "unknown_outcome": 0.7222222222222222
+      },
+      "transfer_category_accuracy": 0.7361111111111112,
+      "unsupported_transfer_denominator": 96,
+      "unsupported_transfer_numerator": 0,
+      "unsupported_transfer_rate": 0.0,
+      "validity": 1.0,
+      "variants": 144,
+      "writer_category_losses": 0,
+      "writer_reference_losses": 0
+    },
+    "1024/retrieved_evidence": {
+      "contradiction_update_category_accuracy": 0.9,
+      "probes": 864,
+      "reader_errors": 0,
+      "reference_coverage_against_package": 1.0,
+      "reference_coverage_against_source": 0.6566358024691359,
+      "reference_precision_against_package": 1.0,
+      "reference_precision_against_source": 0.7141203703703703,
+      "selection_category_losses": 180,
+      "selection_reference_losses": 358,
+      "supported_claim_precision": 1.0,
+      "supported_reuse_coverage": 0.2708333333333333,
+      "transfer_by_delay": {
+        "0": 0.75,
+        "24": 0.7291666666666666,
+        "8": 0.7291666666666666
+      },
+      "transfer_by_family": {
+        "appearance_match": 0.8333333333333334,
+        "contradiction": 0.8333333333333334,
+        "coordinate_change": 0.6666666666666666,
+        "distractor_history": 0.5,
+        "layout_change": 0.6666666666666666,
+        "level_reset_boundary": 0.6666666666666666,
+        "state_dependent_rule": 1.0,
+        "unknown_outcome": 0.7222222222222222
+      },
+      "transfer_category_accuracy": 0.7361111111111112,
+      "unsupported_transfer_denominator": 96,
+      "unsupported_transfer_numerator": 0,
+      "unsupported_transfer_rate": 0.0,
+      "validity": 1.0,
+      "variants": 144,
+      "writer_category_losses": 0,
+      "writer_reference_losses": 0
+    },
+    "1536/conditional_memory": {
+      "contradiction_update_category_accuracy": 1.0,
+      "probes": 864,
+      "reader_errors": 0,
+      "reference_coverage_against_package": 1.0,
+      "reference_coverage_against_source": 0.8101851851851852,
+      "reference_precision_against_package": 1.0,
+      "reference_precision_against_source": 0.8425925925925926,
+      "selection_category_losses": 56,
+      "selection_reference_losses": 178,
+      "supported_claim_precision": 1.0,
+      "supported_reuse_coverage": 1.0,
+      "transfer_by_delay": {
+        "0": 1.0,
+        "24": 1.0,
+        "8": 1.0
+      },
+      "transfer_by_family": {
+        "appearance_match": 1.0,
+        "contradiction": 1.0,
+        "coordinate_change": 1.0,
+        "distractor_history": 1.0,
+        "layout_change": 1.0,
+        "level_reset_boundary": 1.0,
+        "state_dependent_rule": 1.0,
+        "unknown_outcome": 1.0
+      },
+      "transfer_category_accuracy": 1.0,
+      "unsupported_transfer_denominator": 96,
+      "unsupported_transfer_numerator": 0,
+      "unsupported_transfer_rate": 0.0,
+      "validity": 1.0,
+      "variants": 144,
+      "writer_category_losses": 0,
+      "writer_reference_losses": 0
+    },
+    "1536/recent_history": {
+      "contradiction_update_category_accuracy": 0.9,
+      "probes": 864,
+      "reader_errors": 0,
+      "reference_coverage_against_package": 1.0,
+      "reference_coverage_against_source": 0.8001543209876544,
+      "reference_precision_against_package": 1.0,
+      "reference_precision_against_source": 0.8576388888888888,
+      "selection_category_losses": 66,
+      "selection_reference_losses": 303,
+      "supported_claim_precision": 1.0,
+      "supported_reuse_coverage": 0.9375,
+      "transfer_by_delay": {
+        "0": 0.9583333333333334,
+        "24": 0.9583333333333334,
+        "8": 0.9583333333333334
+      },
+      "transfer_by_family": {
+        "appearance_match": 1.0,
+        "contradiction": 1.0,
+        "coordinate_change": 1.0,
+        "distractor_history": 0.6666666666666666,
+        "layout_change": 1.0,
+        "level_reset_boundary": 1.0,
+        "state_dependent_rule": 1.0,
+        "unknown_outcome": 1.0
+      },
+      "transfer_category_accuracy": 0.9583333333333334,
+      "unsupported_transfer_denominator": 96,
+      "unsupported_transfer_numerator": 0,
+      "unsupported_transfer_rate": 0.0,
+      "validity": 1.0,
+      "variants": 144,
+      "writer_category_losses": 0,
+      "writer_reference_losses": 0
+    },
+    "1536/retrieved_evidence": {
+      "contradiction_update_category_accuracy": 0.9,
+      "probes": 864,
+      "reader_errors": 0,
+      "reference_coverage_against_package": 1.0,
+      "reference_coverage_against_source": 0.8001543209876544,
+      "reference_precision_against_package": 1.0,
+      "reference_precision_against_source": 0.8576388888888888,
+      "selection_category_losses": 66,
+      "selection_reference_losses": 303,
+      "supported_claim_precision": 1.0,
+      "supported_reuse_coverage": 0.9375,
+      "transfer_by_delay": {
+        "0": 0.9583333333333334,
+        "24": 0.9583333333333334,
+        "8": 0.9583333333333334
+      },
+      "transfer_by_family": {
+        "appearance_match": 1.0,
+        "contradiction": 1.0,
+        "coordinate_change": 1.0,
+        "distractor_history": 0.6666666666666666,
+        "layout_change": 1.0,
+        "level_reset_boundary": 1.0,
+        "state_dependent_rule": 1.0,
+        "unknown_outcome": 1.0
+      },
+      "transfer_category_accuracy": 0.9583333333333334,
+      "unsupported_transfer_denominator": 96,
+      "unsupported_transfer_numerator": 0,
+      "unsupported_transfer_rate": 0.0,
+      "validity": 1.0,
+      "variants": 144,
+      "writer_category_losses": 0,
+      "writer_reference_losses": 0
+    }
+  },
+  "clusters": 48,
+  "full_source_answer_counts": {
+    "conditions": {
+      "match": 120,
+      "mismatch": 24
+    },
+    "contradiction": {
+      "not_observed": 114,
+      "present": 30
+    },
+    "evidence": {
+      "records": 144
+    },
+    "target_support": {
+      "contradicted": 30,
+      "supported": 48,
+      "unobserved": 66
+    },
+    "transfer": {
+      "contradicted": 30,
+      "not_applicable": 24,
+      "supported_local": 48,
+      "unestablished": 42
+    },
+    "update": {
+      "narrow": 18,
+      "retain": 114,
+      "retire": 12
+    }
+  },
+  "label": "CPU scripted construction, not model results",
+  "probes": 5184,
+  "shortcut_resistant_transfer_accuracy": {
+    "1024/conditional_memory": 1.0,
+    "1024/recent_history": 1.0,
+    "1024/retrieved_evidence": 1.0,
+    "1536/conditional_memory": 1.0,
+    "1536/recent_history": 1.0,
+    "1536/retrieved_evidence": 1.0
+  },
+  "shortcuts": {
+    "always_reuse": {
+      "category_accuracy": 0.6805555555555556,
+      "reference_coverage": 0.2013888888888889,
+      "reference_precision": 0.2013888888888889,
+      "supported_reuse_coverage": 1.0,
+      "transfer_accuracy": 0.3333333333333333,
+      "transfer_accuracy_by_family": {
+        "appearance_match": 0.3333333333333333,
+        "contradiction": 0.3333333333333333,
+        "coordinate_change": 0.3333333333333333,
+        "distractor_history": 0.3333333333333333,
+        "layout_change": 0.3333333333333333,
+        "level_reset_boundary": 0.3333333333333333,
+        "state_dependent_rule": 0.3333333333333333,
+        "unknown_outcome": 0.3333333333333333
+      },
+      "transfer_wrong_variants": 96,
+      "unsupported_transfer_rate": 1.0
+    },
+    "always_unknown": {
+      "category_accuracy": 0.3888888888888889,
+      "reference_coverage": 0.2013888888888889,
+      "reference_precision": 0.2013888888888889,
+      "supported_reuse_coverage": 0.0,
+      "transfer_accuracy": 0.2916666666666667,
+      "transfer_accuracy_by_family": {
+        "appearance_match": 0.3333333333333333,
+        "contradiction": 0.3333333333333333,
+        "coordinate_change": 0.0,
+        "distractor_history": 0.3333333333333333,
+        "layout_change": 0.3333333333333333,
+        "level_reset_boundary": 0.3333333333333333,
+        "state_dependent_rule": 0.3333333333333333,
+        "unknown_outcome": 0.3333333333333333
+      },
+      "transfer_wrong_variants": 102,
+      "unsupported_transfer_rate": 0.0
+    },
+    "ignore_boundaries": {
+      "category_accuracy": 0.9097222222222222,
+      "reference_coverage": 0.96875,
+      "reference_precision": 0.9270833333333334,
+      "supported_reuse_coverage": 1.0,
+      "transfer_accuracy": 0.7916666666666666,
+      "transfer_accuracy_by_family": {
+        "appearance_match": 1.0,
+        "contradiction": 0.6666666666666666,
+        "coordinate_change": 1.0,
+        "distractor_history": 0.6666666666666666,
+        "layout_change": 1.0,
+        "level_reset_boundary": 0.6666666666666666,
+        "state_dependent_rule": 0.6666666666666666,
+        "unknown_outcome": 0.6666666666666666
+      },
+      "transfer_wrong_variants": 30,
+      "unsupported_transfer_rate": 0.3125
+    },
+    "ignore_coordinates": {
+      "category_accuracy": 0.9444444444444444,
+      "reference_coverage": 0.9930555555555556,
+      "reference_precision": 0.9629629629629629,
+      "supported_reuse_coverage": 1.0,
+      "transfer_accuracy": 0.9166666666666666,
+      "transfer_accuracy_by_family": {
+        "appearance_match": 1.0,
+        "contradiction": 1.0,
+        "coordinate_change": 0.3333333333333333,
+        "distractor_history": 1.0,
+        "layout_change": 1.0,
+        "level_reset_boundary": 1.0,
+        "state_dependent_rule": 1.0,
+        "unknown_outcome": 1.0
+      },
+      "transfer_wrong_variants": 12,
+      "unsupported_transfer_rate": 0.0625
+    },
+    "latest_entry": {
+      "category_accuracy": 0.5833333333333334,
+      "reference_coverage": 0.4861111111111111,
+      "reference_precision": 0.5347222222222222,
+      "supported_reuse_coverage": 0.0,
+      "transfer_accuracy": 0.4583333333333333,
+      "transfer_accuracy_by_family": {
+        "appearance_match": 0.3333333333333333,
+        "contradiction": 0.3333333333333333,
+        "coordinate_change": 0.6666666666666666,
+        "distractor_history": 0.3333333333333333,
+        "layout_change": 0.6666666666666666,
+        "level_reset_boundary": 0.3333333333333333,
+        "state_dependent_rule": 0.6666666666666666,
+        "unknown_outcome": 0.3333333333333333
+      },
+      "transfer_wrong_variants": 78,
+      "unsupported_transfer_rate": 0.0
+    },
+    "never_reuse": {
+      "category_accuracy": 0.2777777777777778,
+      "reference_coverage": 0.2013888888888889,
+      "reference_precision": 0.2013888888888889,
+      "supported_reuse_coverage": 0.0,
+      "transfer_accuracy": 0.16666666666666666,
+      "transfer_accuracy_by_family": {
+        "appearance_match": 0.0,
+        "contradiction": 0.0,
+        "coordinate_change": 0.6666666666666666,
+        "distractor_history": 0.0,
+        "layout_change": 0.3333333333333333,
+        "level_reset_boundary": 0.0,
+        "state_dependent_rule": 0.3333333333333333,
+        "unknown_outcome": 0.0
+      },
+      "transfer_wrong_variants": 120,
+      "unsupported_transfer_rate": 0.0
+    },
+    "repeated_support_is_certainty": {
+      "category_accuracy": 0.9166666666666666,
+      "reference_coverage": 0.96875,
+      "reference_precision": 0.9479166666666666,
+      "supported_reuse_coverage": 1.0,
+      "transfer_accuracy": 0.5,
+      "transfer_accuracy_by_family": {
+        "appearance_match": 0.3333333333333333,
+        "contradiction": 0.3333333333333333,
+        "coordinate_change": 1.0,
+        "distractor_history": 0.3333333333333333,
+        "layout_change": 0.6666666666666666,
+        "level_reset_boundary": 0.3333333333333333,
+        "state_dependent_rule": 0.6666666666666666,
+        "unknown_outcome": 0.3333333333333333
+      },
+      "transfer_wrong_variants": 72,
+      "unsupported_transfer_rate": 0.75
+    },
+    "support_without_corrections": {
+      "category_accuracy": 0.8611111111111112,
+      "reference_coverage": 0.8668981481481481,
+      "reference_precision": 0.8888888888888888,
+      "supported_reuse_coverage": 1.0,
+      "transfer_accuracy": 0.7916666666666666,
+      "transfer_accuracy_by_family": {
+        "appearance_match": 0.6666666666666666,
+        "contradiction": 0.6666666666666666,
+        "coordinate_change": 1.0,
+        "distractor_history": 0.6666666666666666,
+        "layout_change": 1.0,
+        "level_reset_boundary": 0.6666666666666666,
+        "state_dependent_rule": 1.0,
+        "unknown_outcome": 0.6666666666666666
+      },
+      "transfer_wrong_variants": 30,
+      "unsupported_transfer_rate": 0.125
+    }
+  },
+  "strongest_declared_transfer_shortcut": "ignore_coordinates",
+  "strongest_shortcut_wrong_variants": 12,
+  "variants": 144,
+  "writer_integrity_faults": 0,
+  "writer_updates": 2160
+}

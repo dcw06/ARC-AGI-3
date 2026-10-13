@@ -1,0 +1,333 @@
+{
+  "analysis": {
+    "averaging": "mean delays within scenario; equal scenario weights; paired arm differences",
+    "cluster": "family plus underlying scenario, all questions/delays/arms dependent",
+    "confidence": "10000 paired scenario bootstrap samples, seed 20261013; 95 percent interval",
+    "failure_to_reuse_denominator": "full-source supported_local cases",
+    "invalid_policy": "count as incorrect and as unsupported risk in safety denominator",
+    "primary": [
+      "transfer category accuracy",
+      "unsupported supported_local claims",
+      "contradiction and update category accuracy on counterexamples"
+    ],
+    "secondary": [
+      "supported reuse coverage",
+      "reference precision",
+      "reference coverage",
+      "validity",
+      "condition/coordinate fidelity",
+      "writer and selection loss",
+      "tokens",
+      "completion tokens",
+      "latency"
+    ],
+    "shortcut_resistant": "report strongest declared full-source shortcut wrong subset; no exclusion",
+    "unsupported_denominator": "all full-source transfer answers other than supported_local"
+  },
+  "arms": [
+    "recent_history",
+    "retrieved_evidence",
+    "conditional_memory"
+  ],
+  "ceilings": [
+    1024,
+    1536
+  ],
+  "development": {
+    "clusters": 48,
+    "delays": [
+      0,
+      8,
+      24
+    ],
+    "groups": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "seed": "conditional-transfer-v1-development-2026-10-13",
+    "variants": 144
+  },
+  "diagnostics": [
+    "full_source",
+    "unbounded_memory"
+  ],
+  "enable_thinking": false,
+  "evaluation": {
+    "clusters": 48,
+    "delays": [
+      0,
+      8,
+      24
+    ],
+    "groups": [
+      100,
+      101,
+      102,
+      103,
+      104,
+      105
+    ],
+    "identical_request_policy": "one call per exact digest; retain all dependent aliases",
+    "passes": 1,
+    "primary_probes_before_dedup": 2592,
+    "request_order": "sort SHA256(seed + request_digest), no answer-aware ordering",
+    "retries": 0,
+    "same_scenario_all_variants_same_split": true,
+    "seed": "fresh private seed registered before generation; never development seed",
+    "status": "reserved_not_generated"
+  },
+  "execution_authorized": false,
+  "gpu_enabled": false,
+  "limits": [
+    "synthetic visible-evidence study, not model learning or real-game solving",
+    "Mac CPU checks do not certify Linux/Kaggle install, decoding schema or supervision",
+    "development requests cannot become final held-out evaluation",
+    "full history/unbounded memory are diagnostic, not budgeted competitors"
+  ],
+  "model": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+  "output_cap": 256,
+  "primary_ceiling": 1536,
+  "prior_protocol_reference": {
+    "commit": "e5b0830e7c7dddfad366fc52aabed35079a9f1a6",
+    "path": "reports/evidence_memory_v1_protocol_v2_frozen.md",
+    "sha256": "6f96dbe7a235ba9ef131984541eecde56583ff28ef1025b0ac0efe525cfa5133"
+  },
+  "response_schemas": {
+    "conditions": {
+      "additionalProperties": false,
+      "properties": {
+        "answer": {
+          "enum": [
+            "match",
+            "mismatch",
+            "unknown"
+          ],
+          "type": "string"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "type": "array"
+        }
+      },
+      "required": [
+        "answer",
+        "evidence_ids"
+      ],
+      "type": "object"
+    },
+    "contradiction": {
+      "additionalProperties": false,
+      "properties": {
+        "answer": {
+          "enum": [
+            "present",
+            "not_observed"
+          ],
+          "type": "string"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "type": "array"
+        }
+      },
+      "required": [
+        "answer",
+        "evidence_ids"
+      ],
+      "type": "object"
+    },
+    "evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "answer": {
+          "enum": [
+            "records",
+            "no_evidence"
+          ],
+          "type": "string"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "type": "array"
+        }
+      },
+      "required": [
+        "answer",
+        "evidence_ids"
+      ],
+      "type": "object"
+    },
+    "target_support": {
+      "additionalProperties": false,
+      "properties": {
+        "answer": {
+          "enum": [
+            "supported",
+            "contradicted",
+            "unobserved"
+          ],
+          "type": "string"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "type": "array"
+        }
+      },
+      "required": [
+        "answer",
+        "evidence_ids"
+      ],
+      "type": "object"
+    },
+    "transfer": {
+      "additionalProperties": false,
+      "properties": {
+        "answer": {
+          "enum": [
+            "supported_local",
+            "unestablished",
+            "not_applicable",
+            "contradicted"
+          ],
+          "type": "string"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "type": "array"
+        }
+      },
+      "required": [
+        "answer",
+        "evidence_ids"
+      ],
+      "type": "object"
+    },
+    "update": {
+      "additionalProperties": false,
+      "properties": {
+        "answer": {
+          "enum": [
+            "retain",
+            "narrow",
+            "retire"
+          ],
+          "type": "string"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "type": "array"
+        }
+      },
+      "required": [
+        "answer",
+        "evidence_ids"
+      ],
+      "type": "object"
+    }
+  },
+  "review_thresholds": {
+    "contradiction_update_accuracy_min": 0.9,
+    "reference_coverage_min": 0.9,
+    "reference_precision_min": 0.95,
+    "supported_reuse_coverage_min": 0.8,
+    "transfer_accuracy_min": 0.85,
+    "transfer_family_floor": 0.7,
+    "unsupported_cluster_interval_upper_max": 0.1,
+    "unsupported_rate_max": 0.05,
+    "validity_min": 0.98
+  },
+  "revision": "d9748a51",
+  "seed": 0,
+  "selection": "task-blind current-state/recency; recent last six; atomic memory rules; prefix stop",
+  "shortcuts": [
+    "always_reuse",
+    "never_reuse",
+    "always_unknown",
+    "latest_entry",
+    "ignore_coordinates",
+    "ignore_boundaries",
+    "repeated_support_is_certainty",
+    "support_without_corrections"
+  ],
+  "source_contract": "transition_evidence_v2",
+  "status": "frozen_cpu_development_specification",
+  "stop_rules": [
+    "no model execution until package review and separate compute authorization",
+    "abort on digest/tokenizer/schema mismatch or any request over a cap",
+    "abort if invalid output exceeds 2 percent after the first 50 calls per arm",
+    "no automatic retries, repair, selective exclusions or additional calls",
+    "preserve every attempted request, failure and partial output"
+  ],
+  "system_prompt": "Judge supplied evidence only. A rule remains a hypothesis; matching conditions do not prove transfer. Require exact action including coordinates and named preconditions. Target trials must match current state, level and segment. Only acknowledged effects count; failed/unknown is not no-change. A differing effect within original scope or the matching target is a counter; counters remain active. Transfer: mismatch=not_applicable; missing conditions=unestablished; relevant counter=contradicted; matching acknowledged target support=supported_local; otherwise unestablished. Update: original-scope counter=retire; only outside-scope target counter=narrow; otherwise retain. Contradiction absent means not_observed, not proof of absence. Evidence task lists all original-scope or current-context qualified records including unknown receipts. Other tasks cite sufficient records: conditions and transfer cite target observation; supported/contradicted cite a deciding trial; unobserved cites unknown receipt if present; update cites counter or original support if present. Return only the strict JSON answer and evidence_ids, at most 8 distinct visible references.",
+  "tasks": {
+    "conditions": [
+      "match",
+      "mismatch",
+      "unknown"
+    ],
+    "contradiction": [
+      "present",
+      "not_observed"
+    ],
+    "evidence": [
+      "records",
+      "no_evidence"
+    ],
+    "target_support": [
+      "supported",
+      "contradicted",
+      "unobserved"
+    ],
+    "transfer": [
+      "supported_local",
+      "unestablished",
+      "not_applicable",
+      "contradicted"
+    ],
+    "update": [
+      "retain",
+      "narrow",
+      "retire"
+    ]
+  },
+  "temperature": 0,
+  "tokenizer_sha256": {
+    "chat_template.json": "2c1437f11fc16ab501b984c000f6e291c599f0d28d2c9c6bf2c4533e65429b42",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "tokenizer.json": "ba85e4e5222d9f53d4bd00b303ef7e9743c8ac3d07e3c23f8498dbe17baa9a2d",
+    "vocab.json": "7a0cfa95c65792d7510205839f80cfd8a3c8f6b1fdad5132d95cee481800374d"
+  },
+  "version": "conditional_transfer_v1",
+  "workload": {
+    "cleanup": "no runtime created; future runtime and cleanup budget require review",
+    "gpu_time_limit": "not authorized; must be specified before connected execution",
+    "reader_calls": "exact unique schedule in token_audit.json",
+    "reader_max_completion_per_call": 256,
+    "runtime_installation": "not measured on Linux; mandatory separate reviewed receipt",
+    "startup_schema_probes": "six prepared in schema_probes.jsonl.gz; none executed; separately budgeted",
+    "writer_cpu_updates": "one per source transition, counted in summary.json",
+    "writer_model_calls": 0
+  }
+}

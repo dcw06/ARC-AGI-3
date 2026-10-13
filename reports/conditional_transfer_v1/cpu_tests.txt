@@ -1,0 +1,33 @@
+test_boundary_update_policy (tests.test_conditional_transfer_v1_fixtures.Fixtures.test_boundary_update_policy) ... ok
+test_contract_continuity (tests.test_conditional_transfer_v1_fixtures.Fixtures.test_contract_continuity) ... ok
+test_coordinates_and_conditions_are_distinct (tests.test_conditional_transfer_v1_fixtures.Fixtures.test_coordinates_and_conditions_are_distinct) ... ok
+test_failed_and_unknown_do_not_counter (tests.test_conditional_transfer_v1_fixtures.Fixtures.test_failed_and_unknown_do_not_counter) ... ok
+test_forged_evidence_rejected_after_updating_records_and_hash (tests.test_conditional_transfer_v1_fixtures.Fixtures.test_forged_evidence_rejected_after_updating_records_and_hash) ... ok
+test_independent_keys_all_families_and_delays (tests.test_conditional_transfer_v1_fixtures.Fixtures.test_independent_keys_all_families_and_delays) ... ok
+test_independent_keys_reject_wrong_target_annotation (tests.test_conditional_transfer_v1_fixtures.Fixtures.test_independent_keys_reject_wrong_target_annotation) ... ok
+test_intermediate_change_not_no_change (tests.test_conditional_transfer_v1_fixtures.Fixtures.test_intermediate_change_not_no_change) ... ok
+test_matching_appearance_does_not_prove_transfer (tests.test_conditional_transfer_v1_fixtures.Fixtures.test_matching_appearance_does_not_prove_transfer) ... ok
+test_split_reservations_and_cluster_identity (tests.test_conditional_transfer_v1_fixtures.Fixtures.test_split_reservations_and_cluster_identity) ... ok
+test_faithful_writer_preserves_all_qualifications_and_counters (tests.test_conditional_transfer_v1_components.Components.test_faithful_writer_preserves_all_qualifications_and_counters) ... ok
+test_hypothesis_never_automatically_becomes_observation (tests.test_conditional_transfer_v1_components.Components.test_hypothesis_never_automatically_becomes_observation) ... ok
+test_invalid_responses_not_repaired (tests.test_conditional_transfer_v1_components.Components.test_invalid_responses_not_repaired) ... ok
+test_omitted_correction_and_broadened_scope_writer_faults (tests.test_conditional_transfer_v1_components.Components.test_omitted_correction_and_broadened_scope_writer_faults) ... ok
+test_precision_and_coverage_distinct (tests.test_conditional_transfer_v1_components.Components.test_precision_and_coverage_distinct) ... ok
+test_reader_parses_rendered_request_only (tests.test_conditional_transfer_v1_components.Components.test_reader_parses_rendered_request_only) ... ok
+test_real_lossy_store_selector_and_reader_faults_coexist (tests.test_conditional_transfer_v1_components.Components.test_real_lossy_store_selector_and_reader_faults_coexist) ... ok
+test_simultaneous_writer_selector_reader_faults (tests.test_conditional_transfer_v1_components.Components.test_simultaneous_writer_selector_reader_faults) ... ok
+test_wrong_coords_and_unresolved_claims_rejected (tests.test_conditional_transfer_v1_components.Components.test_wrong_coords_and_unresolved_claims_rejected) ... ok
+test_atomic_correction_survives_when_group_fits (tests.test_conditional_transfer_v1_selection.Selection.test_atomic_correction_survives_when_group_fits) ... ok
+test_final_rendered_token_caps_and_completion (tests.test_conditional_transfer_v1_selection.Selection.test_final_rendered_token_caps_and_completion) ... ok
+test_hidden_labels_cannot_change_selection (tests.test_conditional_transfer_v1_selection.Selection.test_hidden_labels_cannot_change_selection) ... ok
+test_latest_and_unknown_shortcuts_fail_positive_controls (tests.test_conditional_transfer_v1_selection.Selection.test_latest_and_unknown_shortcuts_fail_positive_controls) ... ok
+test_oversized_recent_record_stops_prefix (tests.test_conditional_transfer_v1_selection.Selection.test_oversized_recent_record_stops_prefix) ... ok
+test_cpu_package_has_no_execution_authority (tests.test_conditional_transfer_v1_package.Package.test_cpu_package_has_no_execution_authority) ... ok
+test_duplicates_preserve_all_dependent_aliases (tests.test_conditional_transfer_v1_package.Package.test_duplicates_preserve_all_dependent_aliases) ... ok
+test_hidden_fields_never_reach_request (tests.test_conditional_transfer_v1_package.Package.test_hidden_fields_never_reach_request) ... ok
+test_manifest_does_not_legitimise_forged_request (tests.test_conditional_transfer_v1_package.Package.test_manifest_does_not_legitimise_forged_request) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 31.966s
+
+OK
