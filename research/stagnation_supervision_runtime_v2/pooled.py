@@ -26,15 +26,24 @@ evaluate one session at a time. The protocol's comparisons pool both blocks. Thi
    - each §8.6 advancement condition and the verdict ("inconclusive" unless all hold; the gate condition cannot
      hold in this study).
 
-Amendment S2 (owner decision, October 12, 2026, frozen protocol §14), recorded after the sessions ran (block 2 replayed
+Amendment S2 (owner decision, October 12, 2026, frozen protocol §14a), recorded after the sessions ran (block 2 replayed
 block 1 exactly), before any outcome was inspected and before any pooled comparison was computed:
-- the self-review sample is drawn over distinct trajectories only (selfreview.sample_for);
+- one identity, selfreview.trajectory_signature (policy and reflection call hashes, statuses and tokens; steps;
+  supervision events; tests; levels; stop reason; timing and identifiers excluded), defines an identical trajectory for
+  the self-review draw, `pooled.reproducibility` and `pooled_distinct`;
+- the self-review sample is drawn over distinct trajectories only (selfreview.sample_for; a sample committed under the
+  first rule text is accepted only if the corrected rule draws it exactly, selfreview.committed_sample);
 - `pooled` is computed exactly as frozen and reported, labelled as overstating precision when exact duplicates exist;
-- `pooled_distinct` computes the same quantities over distinct trajectories only (exact duplicates excluded, the
-  copy earliest in (session, episode) order kept) and is the interpretive headline. The §8.6 verdict is not
-  recomputed there; it is the frozen one, inconclusive by construction (§8.3);
+- `pooled_distinct` reports the quantities listed in §14a over distinct trajectories only (exact duplicates excluded,
+  the copy earliest in (session, episode) order kept) and is the interpretive headline; `not_reported_here` names
+  what it omits and why. The §8.6 verdict is the frozen one, inconclusive by construction (§8.3);
+- `spend` reports actual spend over every executed episode (repeats and duplicates included), apart from
+  `pooled.realised_cost` (frozen: main episodes) and `pooled_distinct.analysis_cost` (distinct trajectories only);
+  `cost_denominators` labels all three;
 - a session-1 evaluation re-run under a later review lock may stand in for the one the session-2 execution lock
-  binds, if the bound launch-time record is supplied and the two are equal apart from the evaluating lock.
+  binds, if the bound launch-time record is supplied and the two have the same `content_sha256` (equal apart from the
+  evaluating lock). Each retained record, the execution lock and the launch-time record is read once; its hash and
+  its comparison use those bytes, and an unreadable or malformed file is a reported problem, not a crash.
 """
 import hashlib
 import json
@@ -106,7 +115,12 @@ def session_episodes(run_folder, spec, trigger_spec, session):
                     'evidence_inventory_sha256': evidence_sha256,
                     'reflection_evidence': episode.get('supervision'),
                     'delivered': [e['action_index'] for e in events
-                                  if e.get('outcome') == 'called' and e.get('delivered') is not None]})
+                                  if e.get('outcome') == 'called' and e.get('delivered') is not None],
+                    # Timestamp-free call projections for the shared trajectory signature and actual spend; not part
+                    # of inputs_digest, so a committed sample's evidence binding is unchanged.
+                    'policy_calls': [SR.call_projection(c, SR.POLICY_CALL_FIELDS) for c in episode.get('calls') or []],
+                    'reflection_calls': [SR.call_projection(c, SR.REFLECTION_CALL_FIELDS)
+                                         for c in episode.get('reflections') or []]})
     return out
 
 
@@ -175,12 +189,11 @@ def suggestion_following(episodes, trigger_spec, horizon):
     return {'by_arm': out, 'status': 'preregistered descriptive measure; never the primary endpoint, gate or advancement'}
 
 
-def _signature(records):
-    return O.digest([[f['action'], f['after'], f['dispatch']] for f in map(O._facts, records)])
-
-
 def reproducibility(episodes, trigger_spec, horizon):
+    """Repeats and block-2 twins compared by the shared identity (SR.trajectory_signature), the same definition the
+    distinct-trajectory section and the self-review draw use."""
     by_id = {e['episode']: e for e in episodes}
+    _signature = SR.trajectory_signature
 
     def rate(e):
         statuses = [o['status'] for o in _opportunities(e, trigger_spec, horizon)['opportunities']]
@@ -193,7 +206,7 @@ def reproducibility(episodes, trigger_spec, horizon):
             original = by_id[e['repeat_of']]
             a, b = rate(original), rate(e)
             repeats.append({'repeat': e['episode'], 'original': original['episode'],
-                            'identical_trajectory': _signature(e['records']) == _signature(original['records']),
+                            'identical_trajectory': _signature(e) == _signature(original),
                             'original_rate': a, 'repeat_rate': b,
                             'absolute_difference': None if a is None or b is None else abs(a - b)})
     blocks = []
@@ -202,15 +215,16 @@ def reproducibility(episodes, trigger_spec, horizon):
             twin = by_id.get(e['episode'].replace('b2-', 'b1-', 1))
             if twin is not None:
                 blocks.append({'block_2': e['episode'], 'block_1': twin['episode'],
-                               'identical_trajectory': _signature(e['records']) == _signature(twin['records'])})
+                               'identical_trajectory': _signature(e) == _signature(twin)})
     distinct = {}
     for game in GAMES:
         for arm in ARMS:
-            sigs = {_signature(e['records']) for e in episodes
+            sigs = {_signature(e) for e in episodes
                     if not e['repeat'] and e['game'] == game and e['arm'] == arm}
             distinct[f'{game}/{arm}'] = len(sigs)
     spreads = [r['absolute_difference'] for r in repeats if r['absolute_difference'] is not None]
     return {'repeats': repeats, 'block_2_vs_block_1': blocks, 'distinct_main_trajectories': distinct,
+            'identity': SR.SIGNATURE_VERSION,
             'repeat_episode_spread': max(spreads) if spreads else None,
             'note': ('temperature 0 and seed 0 make episodes with identical inputs replay identically unless the serving '
                      'stack is nondeterministic; identical episodes are reproductions, not independent replicates, and '
@@ -266,67 +280,128 @@ def advancement(primary, by_block, gate, levels, reliable, spread):
                      'continuation control, so the gate is not certifiable (owner decision, frozen protocol §8.3)')}
 
 
-def compute(episodes, trigger_spec, horizon):
-    """Every pooled quantity from verified episodes (no binding checks; `evaluate_sessions` performs them first)."""
-    main = [e for e in episodes if not e['repeat']]
+def _quantities(main, trigger_spec, horizon, unit):
+    """The quantities `compute` and `compute_distinct` share, over one set of main episodes."""
     primary_main = [e for e in main if e['game'] in PRIMARY_GAMES]
     primary = recovery(primary_main, trigger_spec, horizon)
-    by_block = {str(b): {g: recovery([e for e in main if e['block'] == b and e['game'] == g], trigger_spec, horizon)
-                         for g in GAMES} for b in (1, 2)}
-    levels = {arm: sum(e['levels_completed'] for e in primary_main if e['arm'] == arm) for arm in ARMS}
-    gate = {arm: O.interruptions(main, arm) for arm in ('triggered', 'periodic')}
-    reliable = reliability(primary_main)
-    variance = reproducibility(episodes, trigger_spec, horizon)
     blind = [e for e in main if e['game'] == BLIND_SPOT]
+    levels = {arm: sum(e['levels_completed'] for e in primary_main if e['arm'] == arm) for arm in ARMS}
     return {
-        'primary': {'games': list(PRIMARY_GAMES), 'by_arm': primary, 'differences': differences(primary),
-                    'unit': 'episode; repeats excluded; s5i5 reported separately'},
-        'by_block_and_game': {b: {g: {'by_arm': r, 'differences': differences(r)} for g, r in rows.items()}
-                              for b, rows in by_block.items()},
+        'primary': {'games': list(PRIMARY_GAMES), 'by_arm': primary, 'differences': differences(primary), 'unit': unit},
         'suggestion_following': suggestion_following(main, trigger_spec, horizon),
         'solving': {'completed_levels_primary_games': levels,
                     'completed_levels_s5i5': {arm: sum(e['levels_completed'] for e in blind if e['arm'] == arm) for arm in ARMS}},
-        'false_interruptions': gate,
+        'false_interruptions': {arm: O.interruptions(main, arm) for arm in ('triggered', 'periodic')},
         'false_interruptions_calls': {arm: O.interruptions(main, arm, what='calls') for arm in ('triggered', 'periodic')},
-        'realised_cost': O.realised_cost(main),
-        'reliability': reliable,
-        'reproducibility': variance,
-        'blind_spot_s5i5': {'by_arm': recovery(blind, trigger_spec, horizon),
-                            'scope': 'declared blind-spot case; never pooled into the primary comparison (§4)'},
-        'advancement': advancement(primary, by_block, gate, levels, reliable, variance['repeat_episode_spread']),
-    }
-
-
-def compute_distinct(episodes, trigger_spec, horizon):
-    """Amendment S2: the frozen quantities over distinct trajectories only (the interpretive headline)."""
-    kept, excluded = SR.distinct(episodes)
-    primary_main = [e for e in kept if e['game'] in PRIMARY_GAMES]
-    primary = recovery(primary_main, trigger_spec, horizon)
-    by_game = {g: recovery([e for e in kept if e['game'] == g], trigger_spec, horizon) for g in GAMES}
-    blind = [e for e in kept if e['game'] == BLIND_SPOT]
-    return {
-        'rule': SR.DISTINCT_RULE,
-        'episodes': [[e['session'], e['episode']] for e in kept], 'duplicates_excluded': excluded,
-        'primary': {'games': list(PRIMARY_GAMES), 'by_arm': primary, 'differences': differences(primary),
-                    'unit': 'distinct trajectory; repeats and exact duplicates excluded; s5i5 reported separately'},
-        'by_game': {g: {'by_arm': r, 'differences': differences(r)} for g, r in by_game.items()},
-        'suggestion_following': suggestion_following(kept, trigger_spec, horizon),
-        'solving': {'completed_levels_primary_games': {arm: sum(e['levels_completed'] for e in primary_main if e['arm'] == arm)
-                                                       for arm in ARMS},
-                    'completed_levels_s5i5': {arm: sum(e['levels_completed'] for e in blind if e['arm'] == arm) for arm in ARMS}},
-        'false_interruptions': {arm: O.interruptions(kept, arm) for arm in ('triggered', 'periodic')},
-        'false_interruptions_calls': {arm: O.interruptions(kept, arm, what='calls') for arm in ('triggered', 'periodic')},
-        'realised_cost': O.realised_cost(kept),
         'reliability': reliability(primary_main),
         'blind_spot_s5i5': {'by_arm': recovery(blind, trigger_spec, horizon),
                             'scope': 'declared blind-spot case; never pooled into the primary comparison (§4)'},
-        'advancement': ('not recomputed: the §8.6 verdict is the frozen one in `pooled`, inconclusive by construction '
-                        'because the false-interruption gate is not certifiable (§8.3)'),
     }
+
+
+def compute(episodes, trigger_spec, horizon):
+    """Every pooled quantity from verified episodes (no binding checks; `evaluate_sessions` performs them first)."""
+    main = [e for e in episodes if not e['repeat']]
+    out = _quantities(main, trigger_spec, horizon, 'episode; repeats excluded; s5i5 reported separately')
+    by_block = {str(b): {g: recovery([e for e in main if e['block'] == b and e['game'] == g], trigger_spec, horizon)
+                         for g in GAMES} for b in (1, 2)}
+    variance = reproducibility(episodes, trigger_spec, horizon)
+    out.update(
+        by_block_and_game={b: {g: {'by_arm': r, 'differences': differences(r)} for g, r in rows.items()}
+                           for b, rows in by_block.items()},
+        realised_cost=O.realised_cost(main),
+        reproducibility=variance,
+        advancement=advancement(out['primary']['by_arm'], by_block, out['false_interruptions'],
+                                out['solving']['completed_levels_primary_games'], out['reliability'],
+                                variance['repeat_episode_spread']))
+    return out
+
+
+DISTINCT_NOT_REPORTED = {
+    'by_block_and_game': 'block 1 and block 2 coincide when block 2 is excluded as duplicates; see `pooled`',
+    'reproducibility': 'reported once, in `pooled`, with the same shared identity',
+    'advancement': ('not recomputed: the §8.6 verdict is the frozen one in `pooled`, inconclusive by construction because '
+                    'the false-interruption gate is not certifiable (§8.3)'),
+    'realised_cost': 'replaced by `analysis_cost` (distinct trajectories only); actual spend is the top-level `spend`',
+}
+
+
+def compute_distinct(episodes, trigger_spec, horizon, split=None):
+    """Amendment S2: the shared quantities over distinct trajectories only (the interpretive headline). `split` is a
+    precomputed SR.distinct(episodes)."""
+    kept, excluded = split if split is not None else SR.distinct(episodes)
+    out = _quantities(kept, trigger_spec, horizon,
+                      'distinct trajectory; repeats and exact duplicates excluded; s5i5 reported separately')
+    per_cell = {f'{g}/{arm}': sum(e['game'] == g and e['arm'] == arm for e in kept) for g in GAMES for arm in ARMS}
+    out.update(
+        rule=SR.DISTINCT_RULE, identity=SR.SIGNATURE_VERSION,
+        episodes=[[e['session'], e['episode']] for e in kept], duplicates_excluded=excluded,
+        distinct_trajectories_per_game_and_arm=per_cell,
+        by_game={g: {'by_arm': r, 'differences': differences(r)}
+                 for g, r in ((g, recovery([e for e in kept if e['game'] == g], trigger_spec, horizon)) for g in GAMES)},
+        analysis_cost={**O.realised_cost(kept),
+                       'denominator': ('distinct trajectories only (repeats and exact duplicates excluded): the reflection '
+                                       'cost of the analysed trajectories, not actual spend')},
+        advancement=DISTINCT_NOT_REPORTED['advancement'],
+        not_reported_here=DISTINCT_NOT_REPORTED)
+    return out
+
+
+CHARGED_POLICY = ('valid', 'invalid_output', 'received')  # the frozen evaluator's charging rule (evaluate_report)
+CHARGED_REFLECTION = ('received',)
+
+
+def spend(episodes):
+    """Actual spend: every executed episode of both sessions, including continuation repeats and exact duplicates.
+    Canary calls (one per session) are not episode calls and are not included."""
+    out = {'denominator': ('every executed episode of both sessions: main episodes, continuation repeats and exact '
+                           'duplicates; canary calls excluded'),
+           'episodes': len(episodes), 'repeats': sum(bool(e['repeat']) for e in episodes)}
+    for name, field, charged in (('policy', 'policy_calls', CHARGED_POLICY),
+                                 ('reflection', 'reflection_calls', CHARGED_REFLECTION)):
+        rows = [c for e in episodes for c in e.get(field) or []]
+        out[name] = {'calls': len(rows),
+                     'charged_prompt_tokens': sum(c.get('server_prompt_tokens') or 0 for c in rows if c.get('status') in charged),
+                     'charged_completion_tokens': sum(c.get('server_completion_tokens') or 0 for c in rows
+                                                      if c.get('status') in charged)}
+    out['reflection_by_arm'] = O.realised_cost(episodes)
+    return out
+
+
+def distinct_limitation(per_cell):
+    """The S2 limitation, derived from the observed distinct-trajectory counts per game and arm."""
+    counts = sorted(per_cell.values())
+    total = sum(counts)
+    if counts and counts[0] == counts[-1] == 1:
+        return (f'amendment S2: `pooled_distinct` holds one distinct trajectory per game and arm ({total} in all); its '
+                'intervals reflect variation between games only, not run-to-run variation')
+    if not counts or counts[-1] == 0:
+        return 'amendment S2: `pooled_distinct` holds no trajectories'
+    return (f'amendment S2: `pooled_distinct` holds {counts[0]} to {counts[-1]} distinct trajectories per game and arm '
+            f'({total} in all); its intervals combine variation between games with variation between distinct runs')
 
 
 def _without_lock(record):
     return {k: v for k, v in record.items() if k != 'review_lock'}
+
+
+def content_sha256(record):
+    """A study record's digest without the evaluating checkout's review lock. The historical session-2 execution lock
+    binds the whole launch-time file; a re-evaluation under a later lock is tied to it through this digest."""
+    return hashlib.sha256(canonical(_without_lock(record)).encode()).hexdigest()
+
+
+def _load_json(path, what, problems):
+    """Read a JSON object once; return (bytes, value), or (None, None) with an explicit problem recorded."""
+    try:
+        raw = Path(path).read_bytes()
+        value = json.loads(raw)
+        if not isinstance(value, dict):
+            raise ValueError('not a JSON object')
+        return raw, value
+    except (OSError, ValueError, TypeError) as exc:
+        problems.append(f'{what} unreadable or malformed ({type(exc).__name__})')
+        return None, None
 
 
 def evaluate_sessions(outputs, records, *, annotations, annotations_sha256, mode='live', specs=None,
@@ -348,34 +423,45 @@ def evaluate_sessions(outputs, records, *, annotations, annotations_sha256, mode
     problems, sessions = [], {}
     if mode == 'live' and (specs is not None or internal_seconds is not None):
         raise ValueError('live pooling uses the frozen session schedules and lifecycle')
+    stored_records = {}
     for s in ('1', '2'):
         spec = specs[s] if specs is not None else session_spec(protocol(), s)
         recomputed = study_report(outputs[s], spec, mode=mode, session=s,
                                   internal_seconds=None if internal_seconds is None else internal_seconds[s],
                                   root=root)
-        stored = json.loads(Path(records[s]).read_bytes())
-        if canonical(recomputed) != canonical(stored):
+        raw, stored = _load_json(records[s], f'session {s}: retained evaluation', problems)
+        stored_records[s] = stored
+        if stored is not None and canonical(recomputed) != canonical(stored):
             problems.append(f'session {s}: retained evaluation differs from its recomputation (stale or edited)')
         complete = recomputed['technically_complete'] and (mode != 'live' or recomputed['target_accepted'])
         if not complete:
             problems.append(f'session {s}: not technically complete')
-        sessions[s] = {'record_sha256': sha256_file(records[s]), 'technically_complete': recomputed['technically_complete'],
+        sessions[s] = {'record_sha256': None if raw is None else hashlib.sha256(raw).hexdigest(),
+                       'technically_complete': recomputed['technically_complete'],
                        'target_accepted': recomputed['target_accepted'], 'spec': spec}
-    if mode == 'live':
+    if session1_launch_record is not None or mode == 'live':
+        # The session-1 binding is checked in live mode and, whenever a launch-time record is supplied, in either mode.
+        execution = None
         if session2_execution is None:
             problems.append('session-2 execution lock not supplied')
         else:
-            bound = (json.loads(Path(session2_execution).read_bytes()).get('session1_evaluation') or {}).get('sha256')
+            _, execution = _load_json(session2_execution, 'session-2 execution lock', problems)
+        if execution is not None:
+            bound = (execution.get('session1_evaluation') or {}).get('sha256')
             if session1_launch_record is None:
                 if bound != sessions['1']['record_sha256']:
                     problems.append('session-2 execution lock does not bind the retained session-1 evaluation')
-            elif bound != sha256_file(session1_launch_record):
-                problems.append('session-2 execution lock does not bind the supplied launch-time session-1 evaluation')
-            elif (canonical(_without_lock(json.loads(Path(session1_launch_record).read_bytes())))
-                  != canonical(_without_lock(json.loads(Path(records['1']).read_bytes())))):
-                problems.append('session-1 re-evaluation differs from the launch-time evaluation beyond the evaluating lock')
             else:
-                sessions['1']['launch_record_sha256'] = bound
+                raw, launch = _load_json(session1_launch_record, 'session-1 launch-time evaluation', problems)
+                if launch is None:
+                    pass
+                elif bound != hashlib.sha256(raw).hexdigest():  # the same bytes that are parsed and compared
+                    problems.append('session-2 execution lock does not bind the supplied launch-time session-1 evaluation')
+                elif stored_records['1'] is None or content_sha256(launch) != content_sha256(stored_records['1']):
+                    problems.append('session-1 re-evaluation differs from the launch-time evaluation beyond the evaluating lock')
+                else:
+                    sessions['1'].update(launch_record_sha256=bound, launch_record_content_sha256=content_sha256(launch),
+                                         record_content_sha256=content_sha256(stored_records['1']))
     result = {'version': VERSION, 'mode': mode, 'problems': problems,
               'sessions': {s: {k: v for k, v in r.items() if k != 'spec'} for s, r in sessions.items()},
               'self_review': None, 'pooled': None, 'pooled_distinct': None}
@@ -388,21 +474,33 @@ def evaluate_sessions(outputs, records, *, annotations, annotations_sha256, mode
     episodes = []
     for s in ('1', '2'):
         episodes += session_episodes(Path(outputs[s]) / 'worker/run', sessions[s]['spec'], trigger_spec, s)
-    sample = SR.sample_for(episodes, trigger_spec, horizon, inputs=inputs_digest(episodes))
+    split = SR.distinct(episodes)  # computed once; the sample and the distinct-trajectory section share it
     try:
         commitment = None
-        if sha256_file(annotations) != annotations_sha256:
+        raw, given = _load_json(annotations, 'self-review annotations', [])
+        if raw is None:
+            raise ValueError('annotations unreadable or malformed')
+        if hashlib.sha256(raw).hexdigest() != annotations_sha256:
             raise ValueError('annotations differ from the committed hash')
+        sample, sample_rule = SR.committed_sample(given.get('sample_sha256'), episodes, trigger_spec, horizon,
+                                                  inputs=inputs_digest(episodes), split=split)
         if mode == 'live' or annotations_commitment is not None:
             commitment = SR.verify_commitment(annotations_commitment, sample, annotations, annotations_sha256)
-        review = SR.validate(sample, json.loads(Path(annotations).read_bytes()))
+        review = SR.validate(sample, given)
     except (OSError, ValueError, KeyError, TypeError) as exc:
         result['problems'].append(f'self-review (amendment S1): {type(exc).__name__}: {exc}')
         result['withheld_reason'] = 'the self-review must be drawn, annotated and committed before pooled comparison'
         return result
-    result['self_review'] = {**review, 'annotations_sha256': annotations_sha256, 'private_commitment': commitment}
+    result['self_review'] = {**review, 'annotations_sha256': annotations_sha256, 'private_commitment': commitment,
+                             'sample_rule': sample_rule}
     result['pooled'] = compute(episodes, trigger_spec, horizon)
-    result['pooled_distinct'] = compute_distinct(episodes, trigger_spec, horizon)
+    result['pooled_distinct'] = compute_distinct(episodes, trigger_spec, horizon, split=split)
+    result['spend'] = spend(episodes)
+    result['cost_denominators'] = {
+        'spend': result['spend']['denominator'],
+        'pooled.realised_cost': ('main episodes of both sessions (continuation repeats excluded; exact duplicates '
+                                 'counted): the frozen definition; reflection cost only'),
+        'pooled_distinct.analysis_cost': result['pooled_distinct']['analysis_cost']['denominator']}
     duplicates = len(result['pooled_distinct']['duplicates_excluded'])
     result['headline'] = {
         'section': 'pooled_distinct',
@@ -418,8 +516,7 @@ def evaluate_sessions(outputs, records, *, annotations, annotations_sha256, mode
         'the false-interruption gate is not certifiable with one qualified control (wa30)',
         'the self-review is the sole researcher\'s unblinded inspection, not an independent audit',
         'deterministic decoding can make repeated episodes identical; intervals then overstate precision',
-        'amendment S2: exact duplicates are excluded from `pooled_distinct`; with one distinct trajectory per game and '
-        'arm, its intervals reflect variation between games only, not run-to-run variation']
+        distinct_limitation(result['pooled_distinct']['distinct_trajectories_per_game_and_arm'])]
     return result
 
 

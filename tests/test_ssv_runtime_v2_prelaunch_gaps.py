@@ -67,7 +67,8 @@ class ReportingRegressions(unittest.TestCase):
 
     def test_supplied_hash_does_not_establish_prior_annotation_commitment(self):
         eps = label_population()
-        sample = SR.draw(SR.candidates(eps, SPEC, 40), inputs=P.inputs_digest(eps))
+        # The amendment-S2 draw, exactly as evaluate_sessions redraws it, so only the commitment is missing.
+        sample = SR.sample_for(eps, SPEC, 40, inputs=P.inputs_digest(eps))
         annotations = SR.template(sample)
         for name, rows in annotations['annotations'].items():
             for row in rows:
@@ -92,7 +93,8 @@ class ReportingRegressions(unittest.TestCase):
                 value = P.evaluate_sessions({'1': folder, '2': folder}, paths, annotations=ann,
                     annotations_sha256=P.sha256_file(ann), session2_execution=execution)
             self.assertIsNone(value['pooled'])
-            self.assertTrue(any('commit' in p for p in value['problems']))
+            self.assertEqual(value['problems'], ['self-review (amendment S1): ValueError: prior private annotation '
+                                                 'commitment required'])
 
 
 @unittest.skipUnless(sys.platform == 'linux', 'real process ownership and connected evidence')

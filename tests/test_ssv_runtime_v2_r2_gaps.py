@@ -561,9 +561,34 @@ class PooledRehearsal(unittest.TestCase):
             self.assertEqual(row['recovered_exits'], row['with_suggestion_in_force'] + row['without_suggestion_in_force'])
             self.assertLessEqual(row['exit_equals_first_test_action'], row['with_suggestion_in_force'])
         self.assertEqual(result['self_review']['label_disagreement']['gate_eligible']['disagreement_rate'], None)
-        distinct = result['pooled_distinct']  # amendment S2: every main episode is kept once or excluded as a copy
-        self.assertEqual(len(distinct['episodes']) + len(distinct['duplicates_excluded']), 6)
         self.assertEqual(result['headline']['section'], 'pooled_distinct')
+        self.assert_replays_detected(result)
+
+    def assert_replays_detected(self, result):
+        """Amendment S2 on real rehearsal evidence: a block-2 episode is excluded exactly when its raw policy and
+        reflection request/response hashes replay its block-1 twin, checked here independently of the signature."""
+        from research.stagnation_supervision_v1 import thresholds as S
+        trigger = S.load()
+        episodes = {}
+        for s in ('1', '2'):
+            for e in P.session_episodes(self.outputs[s] / 'worker/run', self.specs[s], trigger, s):
+                episodes[e['episode']] = e
+
+        def hashes(e):
+            return ([(c['request_sha256'], c['response_sha256']) for c in e['policy_calls']],
+                    [(c['request_sha256'], c['response_sha256'], c['status']) for c in e['reflection_calls']])
+        replayed = {name for name, e in episodes.items() if name.startswith('b2-')
+                    and hashes(e) == hashes(episodes[name.replace('b2-', 'b1-', 1)])}
+        distinct = result['pooled_distinct']
+        excluded = {row['episode'] for row in distinct['duplicates_excluded']}
+        self.assertEqual(excluded, replayed)
+        self.assertEqual(len(replayed), 3)  # the scripted model replays all three block-2 episodes
+        self.assertTrue(all(e['policy_calls'] for e in episodes.values()))
+        self.assertEqual(len(distinct['episodes']), 3)
+        self.assertEqual({row['block_2'] for row in result['pooled']['reproducibility']['block_2_vs_block_1']
+                          if row['identical_trajectory']}, excluded)  # the shared identity agrees
+        self.assertEqual(result['spend']['episodes'], 7)  # 3 + 3 main episodes and the repeat
+        self.assertEqual(result['limitations'][-1], P.distinct_limitation(distinct['distinct_trajectories_per_game_and_arm']))
 
     def test_stale_or_edited_session_records_are_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:

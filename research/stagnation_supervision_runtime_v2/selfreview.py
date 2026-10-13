@@ -20,10 +20,17 @@ Order (protocol §7): the sample is drawn and annotated, and the annotations are
 pooled comparison is computed (`pooled.evaluate_sessions` refuses otherwise). The 20% disagreement rule is reported
 descriptively only; the false-interruption gate is not certifiable in any case (§8.3).
 
-Amendment S2 (owner decision, October 12, 2026, frozen protocol §14): the draw uses distinct trajectories only
-(`sample_for`). A main episode whose timestamp-free trajectory equals that of an episode earlier in (session,
-episode) order is an exact duplicate and is excluded before the candidate lists are built; the exclusions are bound
-in the sample. With no duplicates, the strata equal the S1 draw's.
+Amendment S2 (owner decision, October 12, 2026, frozen protocol §14a): the draw uses distinct trajectories only
+(`sample_for`). A main episode whose `trajectory_signature` equals that of an episode earlier in (session, episode)
+order is an exact duplicate and is excluded before the candidate lists are built; the exclusions are bound in the
+sample. With no duplicates, the strata equal the S1 draw's. `trajectory_signature` is the one definition of an
+identical trajectory, shared with `pooled` (reproducibility and the distinct-trajectory section).
+
+The sample's top-level `amendment` stays 'S1' (the self-review exists under S1); the distinct-trajectory draw is marked
+by `amendment_s2`, whose `rule` names the identity rule. The first S2 sample was drawn and committed under
+`DISTINCT_RULE_V1`, a weaker identity (code review, October 13, 2026). `committed_sample` accepts such a sample only if
+the corrected rule draws exactly the same sample apart from that description, so a committed review is never redrawn
+and never silently reinterpreted.
 """
 import hashlib
 import json
@@ -52,10 +59,32 @@ FIELDS = {
     'recovery': ('more_than_a_changed_action',),
 }
 MAX_NOTE = 1000
-DISTINCT_RULE = ('amendment S2: a main episode whose timestamp-free trajectory (every step\'s observed facts, the '
-                 'supervision events\' index, outcome and delivered text, the suggestion tests in force, levels and '
-                 'stop reason) equals that of an episode earlier in (session, episode) order is an exact duplicate and '
-                 'is excluded; continuation repeats stay excluded as before')
+# The rule text the first S2 sample was drawn and committed under (kept verbatim: it is part of that sample's digest).
+DISTINCT_RULE_V1 = ('amendment S2: a main episode whose timestamp-free trajectory (every step\'s observed facts, the '
+                    'supervision events\' index, outcome and delivered text, the suggestion tests in force, levels and '
+                    'stop reason) equals that of an episode earlier in (session, episode) order is an exact duplicate '
+                    'and is excluded; continuation repeats stay excluded as before')
+SIGNATURE_VERSION = 'trajectory_signature_v2'
+DISTINCT_RULE = ('amendment S2 (' + SIGNATURE_VERSION + '): a main episode whose trajectory signature equals that of an '
+                 'episode earlier in (session, episode) order is an exact duplicate and is excluded; continuation repeats '
+                 'stay excluded as before. The signature covers the game and arm; every step\'s observed facts; every '
+                 'policy call\'s request and response hashes, status, finish reason, size and token counts; every '
+                 'reflection call\'s request and response hashes, status, finish reason, size and token counts; the '
+                 'evaluator\'s reflection rows (status, validity, tokens); every supervision event\'s index, outcome, '
+                 'due flag, delivered text, call request hash, call error and validity; the suggestion tests in force; '
+                 'levels; and the stop reason. It excludes timing and identifiers (SIGNATURE_EXCLUDES)')
+SIGNATURE_EXCLUDES = {
+    'timing': ['policy and reflection call started_at, returned_at and latency_s', 'step dispatch_started_at and '
+               'returned_at', 'supervision event call latency_s', 'episode started_at and ended_at'],
+    'identifiers': ['session', 'episode id', 'pair id', 'block', 'repeat_of', 'supervision record ids', 'journal '
+                    'decision and transaction ids and sequence numbers', 'evidence inventory digest (per-session file '
+                    'paths and timings)'],
+}
+POLICY_CALL_FIELDS = ('request_sha256', 'response_sha256', 'status', 'finish_reason', 'response_bytes',
+                      'response_truncated', 'server_prompt_tokens', 'server_completion_tokens', 'tokenizer_prompt_tokens',
+                      'pre_hash')
+REFLECTION_CALL_FIELDS = ('request_sha256', 'response_sha256', 'status', 'finish_reason', 'response_bytes',
+                          'server_prompt_tokens', 'server_completion_tokens', 'tokenizer_prompt_tokens')
 
 
 def canonical(value):
@@ -97,13 +126,26 @@ def candidates(episodes, trigger_spec, horizon):
     return out
 
 
+def call_projection(row, fields):
+    """A call row without timing or identifiers (SIGNATURE_EXCLUDES)."""
+    return {k: row.get(k) for k in fields}
+
+
 def trajectory_signature(e):
-    """Timestamp-free identity of a rebuilt episode (amendment S2)."""
+    """The one definition of an identical trajectory (DISTINCT_RULE; shared with `pooled`). `policy_calls` and
+    `reflection_calls` are the raw call rows that `pooled.session_episodes` attaches, already projected."""
     events = (e.get('reflection_evidence') or {}).get('events', [])
-    return O.digest({'game': e['game'], 'arm': e['arm'], 'steps': [O._facts(r) for r in e['records']],
-                     'events': [[x.get('action_index'), x.get('outcome'), x.get('delivered')] for x in events],
-                     'delivered': e['delivered'], 'first_tests': e.get('first_tests'),
-                     'levels_completed': e.get('levels_completed'), 'stop_reason': e.get('stop_reason')})
+    return O.digest({
+        'version': SIGNATURE_VERSION, 'game': e['game'], 'arm': e['arm'],
+        'steps': [O._facts(r) for r in e['records']],
+        'policy_calls': e.get('policy_calls'), 'reflection_calls': e.get('reflection_calls'),
+        'reflections': [{k: r.get(k) for k in ('status', 'valid', 'input_tokens', 'output_tokens')}
+                        for r in e.get('reflections') or []],
+        'events': [[x.get('action_index'), x.get('outcome'), x.get('due'), x.get('delivered'),
+                    (x.get('call') or {}).get('request_sha256'), (x.get('call') or {}).get('error'),
+                    ((x.get('call') or {}).get('parsed') or {}).get('valid')] for x in events],
+        'delivered': e['delivered'], 'first_tests': e.get('first_tests'),
+        'levels_completed': e.get('levels_completed'), 'stop_reason': e.get('stop_reason')})
 
 
 def distinct(episodes):
@@ -119,13 +161,29 @@ def distinct(episodes):
     return kept, excluded
 
 
-def sample_for(episodes, trigger_spec, horizon, inputs=None, seed=SEED):
-    """The amendment-S2 sample: the S1 draw over distinct trajectories, with the exclusions bound."""
-    kept, excluded = distinct(episodes)
-    return draw(candidates(kept, trigger_spec, horizon), seed=seed, inputs=inputs, excluded=excluded)
+def sample_for(episodes, trigger_spec, horizon, inputs=None, seed=SEED, rule=DISTINCT_RULE, split=None):
+    """The amendment-S2 sample: the S1 draw over distinct trajectories, with the exclusions bound. `split` is a
+    precomputed `distinct(episodes)`."""
+    kept, excluded = split if split is not None else distinct(episodes)
+    return draw(candidates(kept, trigger_spec, horizon), seed=seed, inputs=inputs, excluded=excluded, rule=rule)
 
 
-def draw(lists, seed=SEED, inputs=None, excluded=None):
+def committed_sample(bound_sha256, episodes, trigger_spec, horizon, inputs=None, split=None):
+    """The redrawn sample that annotations bound to `bound_sha256` may use, and the rule text it carries.
+    The corrected rule's draw is used directly. A sample committed under DISTINCT_RULE_V1 is accepted only if the
+    corrected selection, carrying the V1 description, reproduces its digest exactly; otherwise the corrected draw is
+    returned and the annotations fail to bind."""
+    split = split if split is not None else distinct(episodes)
+    current = sample_for(episodes, trigger_spec, horizon, inputs=inputs, split=split)
+    if bound_sha256 != current['sample_sha256']:
+        legacy = sample_for(episodes, trigger_spec, horizon, inputs=inputs, rule=DISTINCT_RULE_V1, split=split)
+        if bound_sha256 == legacy['sample_sha256']:
+            return legacy, 'v1 rule text (committed before the October 13 correction); the corrected signature ' \
+                           'selects exactly the same sample and exclusions'
+    return current, SIGNATURE_VERSION
+
+
+def draw(lists, seed=SEED, inputs=None, excluded=None, rule=DISTINCT_RULE):
     """The deterministic sample (see module docstring) and its canonical digest."""
     ordered = {name: sorted(rows, key=lambda r: _rank(seed, name, r['key'])) for name, rows in lists.items()}
     strata = {}
@@ -154,7 +212,7 @@ def draw(lists, seed=SEED, inputs=None, excluded=None):
               'inputs': inputs, 'strata': strata, 'shortfall': shortfall,
               'scope': 'unblinded descriptive self-review by the sole researcher; not an independent audit'}
     if excluded is not None:
-        sample['amendment_s2'] = {'rule': DISTINCT_RULE, 'duplicates_excluded': excluded}
+        sample['amendment_s2'] = {'rule': rule, 'duplicates_excluded': excluded}
     return {**sample, 'sample_sha256': digest(sample)}
 
 

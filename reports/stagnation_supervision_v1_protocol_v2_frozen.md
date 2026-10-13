@@ -498,3 +498,46 @@ computed; the per-session evaluation records hold per-session endpoint values, w
 
 **Unchanged:** the arms, games, horizon, labels, windows, primary endpoint, detector, trigger, stop rules, the S1
 scope and every mechanical endpoint definition. No session is rerun and no GPU run follows from this amendment.
+
+**Correction after code review (October 13, 2026).** The text above records the October 12 implementation and is kept
+as written. A code review found that implementation weaker or vaguer than this amendment intends. The corrected
+implementation is as follows, and the old and corrected analyses are both reproduced in
+`reports/stagnation_supervision_runtime_v2_review_fixes_r13.md`.
+- **One identity** (`selfreview.trajectory_signature`, `trajectory_signature_v2`) defines an identical trajectory for
+  the self-review draw, `pooled.reproducibility` and `pooled_distinct`. The October 12 code used two different,
+  weaker definitions.
+  - **It covers:** the game and arm; every step's observed facts; every policy call's request and response hashes,
+    status, finish reason, response size and token counts; every reflection call's request and response hashes,
+    status, finish reason, response size and token counts; the evaluator's reflection rows (status, validity,
+    tokens); every supervision event's index, outcome, due flag, delivered text, call request hash, call error and
+    validity; the suggestion tests in force; levels; and stop reason.
+  - **It excludes timing:** call `started_at`, `returned_at` and `latency_s`; step `dispatch_started_at` and
+    `returned_at`; episode start and end times.
+  - **It excludes identifiers:** session, episode and pair ids, block, `repeat_of`, supervision record ids, journal
+    decision and transaction ids and sequence numbers, and the evidence-inventory digest.
+- **The committed sample.** It was drawn under the first rule text. It is accepted only if the corrected identity
+  draws exactly the same sample and exclusions, differing only in the rule's description. A committed review is never
+  redrawn.
+- **`pooled_distinct` reports exactly the following**, over distinct main trajectories (repeats and exact duplicates
+  excluded):
+  - `primary`: per-arm counts, rates, both intervals and differences over ar25, wa30 and ls20;
+  - `by_game`: the same per game, for all four games;
+  - `suggestion_following`;
+  - `solving`: completed levels in the primary games and in s5i5;
+  - `false_interruptions` and `false_interruptions_calls`;
+  - `reliability`: the primary games;
+  - `blind_spot_s5i5`;
+  - `analysis_cost`: the reflection cost of the analysed trajectories, not actual spend;
+  - the counts it rests on: `distinct_trajectories_per_game_and_arm`, `episodes` and `duplicates_excluded`.
+- **`pooled_distinct` omits, and says why in `not_reported_here`:**
+  - `by_block_and_game`: the blocks coincide;
+  - `reproducibility`: reported once, in `pooled`;
+  - `advancement`: the frozen verdict only;
+  - `realised_cost`: replaced by `analysis_cost`.
+- **Spend.** The top-level `spend` reports actual spend over every executed episode, including repeats and exact
+  duplicates (canaries excluded). `cost_denominators` labels it, `pooled.realised_cost` (frozen: main episodes) and
+  `pooled_distinct.analysis_cost`.
+- **The limitation statement** is derived from the observed distinct-trajectory counts per game and arm.
+- **The launch-time record.** It, the session-2 execution lock and each retained record are read once; the hash and
+  the comparison use the same bytes. A missing or malformed file is a reported validation failure. The chain is
+  checked whenever a launch-time record is supplied, in either mode.
