@@ -8,6 +8,7 @@ import io
 import json
 import os
 from pathlib import Path
+import re
 import secrets
 import subprocess
 import tempfile
@@ -18,6 +19,75 @@ import zipfile
 GAMES = ('ls20', 's5i5', 'cd82', 'ft09', 'ka59', 'sc25')
 FIELDS = ('objects', 'controls', 'goal', 'rules', 'strategy', 'similarity', 'transfer')
 KINDS = ('controlled_object', 'target', 'obstacle', 'control', 'other')
+
+
+def validate_regions(regions, case):
+    """Verify explicit coordinate sets and their hierarchy against the recorded board."""
+    if not isinstance(regions, list) or len(regions) > 128:
+        raise ValueError('at most 128 object regions per entry')
+    cleaned, by_id, total = [], {}, 0
+    required = {'id', 'label', 'kind', 'frame_index', 'grid_sha256', 'parent_id', 'geometry', 'target_points'}
+    for region in regions:
+        if not isinstance(region, dict) or not required <= set(region) or set(region)-required-{'bbox_xyxy'}:
+            raise ValueError('invalid object region')
+        rid = region['id']
+        if not isinstance(rid, str) or not re.fullmatch(r'[A-Za-z0-9_.-]{1,80}', rid) or rid in by_id:
+            raise ValueError('object region IDs must be distinct')
+        if not isinstance(region['label'], str) or not 1 <= len(region['label'].strip()) <= 120 or region['kind'] not in KINDS:
+            raise ValueError('name the region and choose its role')
+        index = region['frame_index']
+        if type(index) is not int or not 0 <= index < len(case['frames']):
+            raise ValueError('unknown object-region frame')
+        if region['grid_sha256'] != case['frames'][index]['grid_sha256']:
+            raise ValueError('object region refers to a different board')
+        points = region['target_points']
+        if not isinstance(points, list) or not 1 <= len(points) <= 4096:
+            raise ValueError('each object region needs 1 to 4096 target coordinates')
+        if any(not isinstance(p, list) or len(p) != 2 or any(type(v) is not int or not 0 <= v < 64 for v in p) for p in points):
+            raise ValueError('object-region coordinates must be integer pairs inside the board')
+        cells = {tuple(p) for p in points}
+        if len(cells) != len(points):
+            raise ValueError('duplicate target coordinates in an object region')
+        total += len(cells)
+        if total > 65536:
+            raise ValueError('at most 65536 target coordinates per entry')
+        bounds = [min(x for x,y in cells), min(y for x,y in cells), max(x for x,y in cells), max(y for x,y in cells)]
+        if 'bbox_xyxy' in region and (region['bbox_xyxy'] != bounds or any(type(v) is not int for v in region['bbox_xyxy'])):
+            raise ValueError('object-region bounds do not match its coordinates')
+        geometry = region['geometry']
+        if geometry not in ('point', 'rectangle', 'mask', 'group'):
+            raise ValueError('invalid object-region geometry')
+        if geometry == 'point' and len(cells) != 1:
+            raise ValueError('point geometry must contain exactly one coordinate')
+        if geometry == 'rectangle' and len(cells) != (bounds[2]-bounds[0]+1)*(bounds[3]-bounds[1]+1):
+            raise ValueError('rectangle must contain every cell in its inclusive bounds')
+        if region['parent_id'] is not None and not isinstance(region['parent_id'], str):
+            raise ValueError('invalid parent object ID')
+        item = deepcopy(region)
+        item['target_points'] = [list(p) for p in sorted(cells, key=lambda p: (p[1], p[0]))]
+        item['bbox_xyxy'] = bounds
+        cleaned.append(item)
+        by_id[rid] = (item, cells)
+    for rid, (region, cells) in by_id.items():
+        parent_id, seen = region['parent_id'], {rid}
+        if parent_id is not None:
+            if parent_id not in by_id:
+                raise ValueError('parent object region is missing')
+            parent, parent_cells = by_id[parent_id]
+            if parent['frame_index'] != region['frame_index'] or not cells <= parent_cells:
+                raise ValueError('child target coordinates must lie within its parent on the same board')
+        while parent_id is not None:
+            if parent_id not in by_id:
+                raise ValueError('parent object region is missing')
+            if parent_id in seen:
+                raise ValueError('object hierarchy contains a cycle')
+            seen.add(parent_id)
+            parent_id = by_id[parent_id][0]['parent_id']
+        if region['geometry'] == 'group':
+            children = [pts for child, pts in by_id.values() if child['parent_id'] == rid]
+            if not children or set().union(*children) != cells:
+                raise ValueError('group target coordinates must equal the union of its child objects')
+    return cleaned
 
 
 def canonical(value):
@@ -163,13 +233,16 @@ class Worksheet:
             self.document = json.loads(self.path.read_bytes())
             if self.document.get('context_sha256') != self.context_hash:
                 raise ValueError('existing answers belong to different logs; use a new private data folder')
+            for key, answer in self.document['cases'].items():
+                answer.setdefault('regions', [])
+                answer['regions'] = validate_regions(answer['regions'], self.cases[key])
         else:
             self.document = {'schema': 'human_strategy_annotations_v1', 'context_sha256': self.context_hash,
                 'scope': 'first three levels of six exposed public development games',
                 'qualification': 'owner recollections and proposed annotations; not independently validated ground truth',
                 'sources': self.sources, 'revision': 0, 'updated_utc': None,
                 'cases': {key: {'revision': 0, 'status': 'draft', 'answers': {field: '' for field in FIELDS},
-                                'marks': []} for key in self.cases}}
+                                'marks': [], 'regions': []} for key in self.cases}}
             atomic_write(self.path, self.document)
         atomic_write(self.folder/'cases.json', self.cases)
         atomic_write(self.folder/'provenance.json', {'context_sha256': self.context_hash, 'sources': self.sources})
@@ -214,11 +287,13 @@ class Worksheet:
                     raise ValueError('unknown recorded frame')
                 if mark['grid_sha256'] != self.cases[key]['frames'][mark['frame_index']]['grid_sha256']:
                     raise ValueError('object point refers to a different board')
+            # Older pages omit this field: retain regions rather than dropping new geometry.
+            regions = validate_regions(value.get('regions', current.get('regions', [])), self.cases[key])
             document = deepcopy(self.document)
             document['revision'] += 1
             document['updated_utc'] = utc()
             document['cases'][key] = {'revision': current['revision']+1, 'status': status,
-                                      'answers': answers, 'marks': marks}
+                                      'answers': answers, 'marks': marks, 'regions': regions}
             # Immutable snapshots preserve earlier answers. The current file is the commit point.
             atomic_write(self.folder/f'answers-revision-{document["revision"]:06d}.json', document)
             atomic_write(self.path, document)
@@ -238,7 +313,8 @@ class Worksheet:
                 archive.writestr('README.txt', 'Private development annotations. First three levels only.\n'
                     'Only the final returned frame per input is shown; animations are omitted.\n'
                     'Completion inputs are retained; following-level boards are omitted.\n'
-                    'Answers/point labels need independent review. Points are not object masks or proven hit regions.\n')
+                    'Answers/labels need independent review. Regions contain explicit target_points and parent IDs.\n'
+                    'These are localization/reference coordinates, not proof of legal clicks or game effects.\n')
             return 'human-strategy-test-data.zip', 'application/zip', memory.getvalue()
 
 
@@ -296,7 +372,7 @@ def handler_for(workspace, token):
                 if self.headers.get('X-Local-Token') != token:
                     raise PermissionError('local page token required')
                 size = int(self.headers.get('Content-Length', '0'))
-                if not 0 < size <= 300000:
+                if not 0 < size <= 2000000:
                     raise ValueError('invalid request size')
                 value = json.loads(self.rfile.read(size))
                 if self.path != '/api/save':

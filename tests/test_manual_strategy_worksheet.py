@@ -12,6 +12,7 @@ import zipfile
 
 from scripts.serve_manual_strategy_worksheet import (
     FIELDS, GAMES, Worksheet, build_cases, handler_for, private_directory,
+    validate_regions,
 )
 
 
@@ -137,6 +138,67 @@ class WorksheetTests(unittest.TestCase):
     def test_tracked_output_is_refused(self):
         with self.assertRaises(ValueError):
             private_directory(Path(__file__).resolve().parents[1]/'reports/worksheet-not-private')
+
+    def region(self, rid='tile', box=(4, 2, 9, 7), parent=None):
+        x0,y0,x1,y1 = box
+        return {'id': rid, 'label': rid, 'kind': 'target', 'frame_index': 0,
+                'grid_sha256': self.workspace.cases['ls20.level1']['frames'][0]['grid_sha256'],
+                'parent_id': parent, 'geometry': 'rectangle',
+                'target_points': [[x,y] for y in range(y0,y1+1) for x in range(x0,x1+1)]}
+
+    def test_36_point_cells_and_324_point_group_persist_and_export(self):
+        children = [self.region(f'cell{r}{c}', (4+8*c,2+8*r,9+8*c,7+8*r), 'grid')
+                    for r in range(3) for c in range(3)]
+        parent = self.region('grid')
+        parent['geometry'] = 'group'
+        parent['target_points'] = [p for child in children for p in child['target_points']]
+        value = self.value()
+        value['regions'] = [parent, *children]
+        saved = self.workspace.save(value)
+        self.assertEqual(len(saved['regions'][0]['target_points']), 324)
+        self.assertTrue(all(len(r['target_points']) == 36 for r in saved['regions'][1:]))
+        self.assertEqual(saved['regions'][0]['bbox_xyxy'], [4,2,25,23])
+        restarted = Worksheet(self.folder, self.paths)
+        exported = json.loads(restarted.export()[2])
+        self.assertEqual(exported['cases']['ls20.level1']['regions'], saved['regions'])
+        # An older browser omitting regions must not erase them.
+        old_page = self.value()
+        old_page['expected_revision'] = 1
+        self.assertEqual(restarted.save(old_page)['regions'], saved['regions'])
+
+    def test_masks_exclude_holes_and_reject_invalid_geometry(self):
+        ring = self.region(box=(10,10,12,12))
+        ring['geometry'] = 'mask'
+        ring['target_points'].remove([11,11])
+        clean = validate_regions([ring], self.workspace.cases['ls20.level1'])
+        self.assertEqual(len(clean[0]['target_points']), 8)
+        invalid = deepcopy(ring)
+        invalid['geometry'] = 'rectangle'
+        with self.assertRaisesRegex(ValueError, 'every cell'):
+            validate_regions([invalid], self.workspace.cases['ls20.level1'])
+        for point in ([True,10], [64,10], [10,-1]):
+            invalid = deepcopy(ring)
+            invalid['target_points'][0] = point
+            with self.assertRaises(ValueError):
+                validate_regions([invalid], self.workspace.cases['ls20.level1'])
+        invalid = deepcopy(ring)
+        invalid['target_points'].append(invalid['target_points'][0])
+        with self.assertRaisesRegex(ValueError, 'duplicate'):
+            validate_regions([invalid], self.workspace.cases['ls20.level1'])
+
+    def test_hierarchy_and_board_identity_are_enforced(self):
+        parent = self.region('parent', (0,0,20,20))
+        child = self.region('child', parent='parent')
+        for mutation in ('outside', 'missing', 'cycle', 'frame', 'stale', 'false_group'):
+            p,c = deepcopy(parent), deepcopy(child)
+            if mutation == 'outside': c['target_points'] = [[30,30]]; c['geometry'] = 'point'
+            if mutation == 'missing': c['parent_id'] = 'absent'
+            if mutation == 'cycle': p['parent_id'] = 'child'
+            if mutation == 'frame': c['frame_index'] = 1
+            if mutation == 'stale': c['grid_sha256'] = 'stale board'
+            if mutation == 'false_group': p['geometry'] = 'group'
+            with self.subTest(mutation=mutation), self.assertRaises(ValueError):
+                validate_regions([p,c], self.workspace.cases['ls20.level1'])
 
     def test_http_refuses_missing_token_and_cross_origin(self):
         server = ThreadingHTTPServer(('127.0.0.1', 0), handler_for(self.workspace, 'unit-test-only'))

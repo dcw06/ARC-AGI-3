@@ -20,11 +20,24 @@ Kaggle, GPU or live-game call is made.
 
 Hovering over the board shows live zero-based `(x, y)` coordinates and the cell color, using the rendered content
 area rather than the CSS border. Hover does not select a point or save an answer. Clicking selects a reference
-point; subsequent hovering updates the readout without changing that selection. A named point can identify the intended object/control on that exact
-frame; its coordinates and board hash are retained. Such a point is **not a complete object mask or a proven
-clickable region**. References for segmentation, similarity and functional claims still need independent review.
+point or region; subsequent hovering updates the readout without changing that selection. Object regions store
+every coordinate in `target_points`, their inclusive `bbox_xyxy`, a board hash, a role and an optional `parent_id`.
+Use **Rectangle: two corners** for all enclosed cells, or **Mask: click cells to toggle** for irregular shapes
+and holes. Name and save the object, or check existing objects and choose **Group checked objects** to create a
+parent from their union. Selecting an object displays its full region and coordinate count; child objects remain
+separately editable. Older single-point markers remain in their own collapsed section.
 
-Answers autosave locally, with explicit Save now, per-entry optimistic revision checks, atomic current-file
+For ft09 level 1, each of the four tile arrangements has **nine 6x6 child objects, each with 36 target points**.
+The central diagram is a child object too. Each parent has **324 unique points**, excluding the gaps between
+cells. Full initial-board regions were also added for the other games; original owner notes and point markers
+were retained. ls20's owner-supplied interval pairs are interpreted as x ranges and y ranges for rectangles;
+its five-pixel white cross and separate blue foreground masks are preserved explicitly.
+
+These coordinate sets define localization/reference targets. They do **not** establish that clicking is legal,
+that a click changes selection, or that a proposed role is correct. References and semantic labels still need
+independent review. A rectangle can include background; a shape mask retains only its annotated pixels.
+
+Answers and regions autosave locally, with explicit Save now, per-entry optimistic revision checks, atomic current-file
 writes and immutable revision snapshots. A browser-local draft is retained until a save succeeds. Navigation
 saves first; network/conflict errors retain the draft. Empty entries remain drafts. All seven fields require
 text (including “unknown”/“not applicable”) before an entry can be marked ready for review. Ready is not approved.
@@ -44,8 +57,11 @@ Origin, requires a page token for saves, and serves no arbitrary filesystem path
 annotation aid. Human first-level success does not certify agent success; the later agent baseline must actually
 complete each first level within its separately agreed budget. No frozen protocol or compute approval changes.
 
-Verification: nine automated persistence/scope/provenance/HTTP checks passed, plus 15 browser checks using
-the six real logs in an isolated test-answer folder. Browser checks covered all 18 entries, initially empty
-fields, autosave, live hover coordinates without selection/saving, separate hover/selected coordinates,
-named point coordinates, entry separation, ready status, reload, explicit draft recovery and
-JSON/ZIP downloads. Automated test text is excluded from the owner's answer folder.
+Verification: 12 automated persistence/scope/provenance/HTTP/geometry checks passed. They include 36-point cells,
+324-point groups, exact mask holes, duplicate/out-of-board/type rejection, parent containment, cycle rejection,
+frame/hash binding, restart/export and preservation when an older browser omits regions. Thirteen browser
+checks passed for rectangle selection, full-coordinate saving, grouping, mask editing, hover, navigation,
+older-draft restoration and JSON/ZIP downloads. Test answers are isolated from the owner's folder.
+
+All imported real ft09 groups were additionally checked for nine 36-point children and a 324-point parent.
+Existing text and single-point markers were compared before and after import; levels 2–3 were unchanged.

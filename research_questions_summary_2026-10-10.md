@@ -125,7 +125,7 @@ choice against each observation's available controls. Full questions, retained a
 
 | Development step | Scope | Status |
 |---|---|---|
-| Owner-supplied strategy annotations | ls20, s5i5, cd82, ft09, ka59 and sc25; first three levels each | Private local worksheet prepared with recorded boards, hover coordinates, named points, seven answer fields and JSON/ZIP export. Answers remain owner-authored drafts for independent review. |
+| Strategy annotations and object regions | ls20, s5i5, cd82, ft09, ka59 and sc25; first three levels each | Private worksheet with recorded boards, hover coordinates, full target-coordinate sets, parent/child objects, seven answer fields and JSON/ZIP export. Level-1 draft regions added; ft09 has nine 36-point cells per 324-point parent. Owner answers and assistant-proposed regions remain drafts for independent review. |
 | Proposed agent baseline | Identify objects, consider legal controls, verify intended effects, infer working rules and actually complete level 1 | Acceptance criteria and budgets still to be finalized. Human success and questionnaire accuracy do not establish agent completion. No model or GPU run launched. |
 
 The [worksheet guide](reports/manual_strategy_worksheet.md) describes annotation provenance and limitations.
