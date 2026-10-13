@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'">
+<title>Qwen agent · retained public-game replay</title>
+<style>
+:root{color-scheme:light;font-family:system-ui,sans-serif;color:#172d37;background:#edf2f2}*{box-sizing:border-box}
+body{max-width:1160px;margin:30px auto;padding:0 22px}h1{font-size:30px;margin:10px 0}p{line-height:1.5;color:#46606c}
+.tag{display:inline-block;background:#dcece9;color:#28594c;padding:5px 10px;border-radius:6px;font-size:13px}
+.panel{background:white;padding:18px;border:1px solid #d8e2e4;border-radius:12px;margin:16px 0}
+.controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}button,select{font:inherit;border:1px solid #a6b8c0;border-radius:6px;background:white;padding:9px;cursor:pointer}button:disabled{opacity:.4;cursor:default}
+button#play{background:#216957;color:white;border-color:#216957}input[type=range]{flex:1;min-width:180px;accent-color:#216957}
+.boards{display:grid;grid-template-columns:1fr 1fr;gap:20px}.boards h2{font-size:16px;margin:0 0 10px}canvas{display:block;width:100%;height:auto;image-rendering:pixelated;background:#e5e9e9;border:1px solid #bccbd1;border-radius:5px}
+.metrics{display:flex;gap:28px;flex-wrap:wrap;margin-top:14px}.metric label{display:block;color:#607580;font-size:12px;margin-bottom:5px}.metric strong{font-size:18px}
+#action{font:600 18px ui-monospace,monospace;margin:0 0 8px}#detail{font-size:14px}.note{font-size:13px;color:#5b7079}footer{font:12px ui-monospace,monospace;overflow-wrap:anywhere;color:#607580;margin:20px 0}
+@media(max-width:650px){.boards{grid-template-columns:1fr}body{margin-top:14px}h1{font-size:24px}}
+</style></head><body>
+<span class="tag">Private offline replay · retained real model actions</span>
+<h1>Watch the Qwen agent act</h1>
+<p id="provenance"></p><p class="note" id="qualification"></p>
+<div class="panel controls"><label for="episode">Public game</label><select id="episode"></select>
+<button id="prev" aria-label="Previous action">← Previous</button><button id="play">Play</button><button id="next">Next →</button>
+<label for="speed">Interval</label><select id="speed"><option value="1000">1 second</option><option value="500">½ second</option><option value="2000">2 seconds</option></select></div>
+<div class="panel"><div class="controls"><label for="step" id="position"></label><input id="step" type="range" min="0" value="0"></div>
+<p class="note">Action 0 shows the initial board. Use the arrow keys to step through actions. The white cross marks a recorded ACTION6 click.</p>
+<p id="action"></p><div id="detail"></div>
+<div class="metrics"><div class="metric"><label>Levels completed</label><strong id="levels"></strong></div><div class="metric"><label>Changed cells in selected returned frame</label><strong id="changes"></strong></div><div class="metric"><label>Recorded model latency</label><strong id="latency"></strong></div><div class="metric"><label>Episode stop reason</label><strong id="stop"></strong></div></div>
+</div>
+<div class="panel boards"><section><h2>Before action <span id="hover" class="note"></span></h2><canvas id="before" width="512" height="512" aria-label="Board before the recorded action"></canvas></section>
+<section><div class="controls"><h2>Returned observation</h2><select id="returned" aria-label="Returned frame"></select></div><canvas id="after" width="512" height="512" aria-label="Board after the recorded action"></canvas></section></div>
+<p class="note">A changed board does not itself establish progress. Levels and states are the retained engine observations. Playback speed is a viewing control, not measured agent speed.</p>
+<footer id="receipt"></footer><script type="application/json" id="replay-data">__RETAINED_DATA__</script>
+<script>
+'use strict';
+const D=JSON.parse(document.getElementById('replay-data').textContent);
+const palette=['#FFFFFF','#CCCCCC','#999999','#666666','#333333','#000000','#E53AA3','#FF7BCC','#F93C31','#1E93FF','#88D8F1','#FFDC00','#FF851B','#921231','#4FCC30','#A356D6'];
+const $=id=>document.getElementById(id);let timer=null,view=null;
+$('provenance').textContent=D.provenance;$('qualification').textContent=D.qualification;
+D.episodes.forEach((e,i)=>{const o=document.createElement('option');o.value=i;o.textContent=`${e.game} · ${e.arm} · block ${e.block} · ${e.steps.length} actions`;$('episode').append(o)});
+$('receipt').textContent=`Evidence manifest SHA256: ${D.manifest_sha256} · No network, model requests or new attempts.`;
+function ep(){return D.episodes[Number($('episode').value)]}
+function pause(){clearInterval(timer);timer=null;$('play').textContent='Play'}
+function board(id,key,click){const f=D.frames[key],c=$(id),ctx=c.getContext('2d');c.height=Math.round(512*f.h/f.w);const scale=c.width/f.w;
+for(let y=0;y<f.h;y++)for(let x=0;x<f.w;x++){ctx.fillStyle=palette[parseInt(f.cells[y*f.w+x],16)];ctx.fillRect(x*scale,y*scale,Math.ceil(scale),Math.ceil(scale))}
+if(click&&Number.isInteger(click.x)&&Number.isInteger(click.y)){const x=(click.x+.5)*scale,y=(click.y+.5)*scale,r=Math.max(7,scale);ctx.strokeStyle='#152b36';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(x-r,y);ctx.lineTo(x+r,y);ctx.moveTo(x,y-r);ctx.lineTo(x,y+r);ctx.stroke();ctx.strokeStyle='white';ctx.lineWidth=2;ctx.stroke()}}
+function render(resetFrames=true){const e=ep(),i=Number($('step').value),s=e.steps[i-1];$('position').textContent=`Action ${i} / ${e.steps.length}`;$('prev').disabled=i===0;$('next').disabled=i===e.steps.length;$('stop').textContent=e.stop_reason;
+if(resetFrames){$('returned').replaceChildren();const keys=s?s.after:[e.initial];keys.forEach((key,n)=>{const o=document.createElement('option');o.value=n;o.textContent=`Frame ${n+1} / ${keys.length}`;$('returned').append(o)});$('returned').value=keys.length-1}
+const n=Number($('returned').value),a=s?s.action:null;
+$('action').textContent=a?`ACTION${a.action_id}${a.action_id===6?` · click (${a.action_data.x}, ${a.action_data.y})`:''}`:'Initial observation';
+$('detail').textContent=s?`Acknowledged by the engine · state ${s.state} · ${s.after.length} returned frame(s) · transport ${s.dispatch_seconds.toFixed(3)} s`:'The initial board before any policy action.';
+$('levels').textContent=s?`${s.level_before} → ${s.level_after}`:e.initial_levels;$('changes').textContent=s?s.changed_cells[n]:'—';$('latency').textContent=s?`${s.call_seconds.toFixed(3)} s`:'—';
+view={before:s?s.before:e.initial,after:s?s.after[n]:e.initial};board('before',view.before,a&&a.action_id===6?a.action_data:null);board('after',view.after,null)}
+function choose(){pause();$('step').max=ep().steps.length;$('step').value=0;render()}
+function move(delta){const next=Math.max(0,Math.min(ep().steps.length,Number($('step').value)+delta));$('step').value=next;render();if(next===ep().steps.length)pause()}
+function play(){if(timer){pause();return}if(Number($('step').value)===ep().steps.length)$('step').value=0;render();$('play').textContent='Pause';timer=setInterval(()=>move(1),Number($('speed').value))}
+$('episode').onchange=choose;$('step').oninput=()=>{pause();render()};$('prev').onclick=()=>{pause();move(-1)};$('next').onclick=()=>{pause();move(1)};$('play').onclick=play;$('returned').onchange=()=>render(false);$('speed').onchange=()=>{if(timer){pause();play()}};
+document.addEventListener('keydown',e=>{if(e.target.matches('input,select'))return;if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();pause();move(e.key==='ArrowRight'?1:-1)}});
+for(const id of ['before','after'])$(id).onmousemove=e=>{const f=D.frames[view[id]],rect=$(id).getBoundingClientRect(),x=Math.floor((e.clientX-rect.left)/rect.width*f.w),y=Math.floor((e.clientY-rect.top)/rect.height*f.h);if(x>=0&&x<f.w&&y>=0&&y<f.h)$('hover').textContent=`(${x}, ${y}) = ${parseInt(f.cells[y*f.w+x],16)}`};
+choose();document.documentElement.dataset.replayReady='true';
+</script></body></html>

@@ -52,3 +52,8 @@ The owner has reconfirmed the full-job cap and chosen the Kaggle-support path. T
 inspection of the installed SDK also found a kernel-session cancellation request, but did not establish control
 of a scoring rerun or guaranteed termination; a local watcher is not accepted as the cap. No scored launch is
 authorized to test timeout inheritance. The current source and review snapshots are unchanged.
+
+For the owner's immediate goal of seeing actions, a [private replay of retained real Qwen runs](retained_public_game_replay.md)
+has been built and opened locally: four public games, 160 acknowledged actions, with before/after boards and playback.
+This uses no fresh compute and does not create an official score or resolve the scored-job cap. Only the replay
+builder/template and aggregate description are published; raw observations and the generated viewer stay local.
