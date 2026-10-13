@@ -1,6 +1,6 @@
 # ARC-AGI-3 research questions and results so far
 
-**Updated: October 11, 2026.** Completed experiments, qualified study closure and prepared studies are distinguished below. Technical completion means the execution and evidence checks passed; it does not mean the research hypothesis succeeded. Closing a study with a qualification does not waive a failed certification. Private evidence, account details and seed values are excluded.
+**Historical results snapshot: October 11, 2026. New research proposal: October 12, 2026.** Completed experiments, qualified study closure and prepared studies are distinguished below. Technical completion means the execution and evidence checks passed; it does not mean the research hypothesis succeeded. Closing a study with a qualification does not waive a failed certification. Private evidence, account details and seed values are excluded.
 
 ## Overall research question
 
@@ -109,6 +109,17 @@ These are one model-artifact attempt on synthetic instances. Equality of its wei
 | Can the proposed wheel bundle be redistributed? | 174-artifact inventory; CUTLASS/NVIDIA evidence, Apache NOTICE checks, native-library tracing, metadata checks, worksheet revisions and per-row suggestions. | **174 redistribution decisions remain unresolved.** Private direct-publisher use is a separately scoped assessment. [Worksheet][worksheet], [Decisions][decisions] |
 | Can study results be independently reconstructed? | Hash-bound packages, protocols and evaluators; retained failed attempts; archive replay; CPU rehearsals; mandatory runtime-probe checks. | CPU rehearsal is not model evidence. A completed run does not establish a successful intervention. |
 | Have we demonstrated general solving improvement? | Development comparisons and synthetic diagnostics identified concrete weaknesses and some interface improvements. | **No.** No qualified new architecture has demonstrated an unexposed-game advantage; production certification remains open. |
+
+## New proposal: object grounding and similarity (October 12, 2026)
+
+| Draft research question | Brief purpose | Status |
+|---|---|---|
+| Can the agent localize a specified object and choose legal actions that affect it using observed feedback? | Separate apparent background clicks from control-selection and mechanic-understanding failures. | Proposal only; no new experiment authorized. |
+| Can it find objects with matching visual structure across position, color or orientation changes? | Test matching with explicit rules and distractors; distinguish appearance from shared function. | Proposal only; references and protocol still to be defined. |
+
+The replay used directional action IDs in two games; s5i5 offered only clicks. The draft therefore evaluates control
+choice against each observation's available controls. Full questions, retained action counts and proposed measurements:
+[object grounding and similarity proposal](research_questions_object_grounding_similarity_2026-10-12.md).
 
 ## Source snapshot
 
