@@ -18,7 +18,14 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-GAMES = ('ar25-0c556536','wa30-ee6fef47','ls20-9607627b','s5i5-18d95033')
+# Exact public-development versions retained in the manifest-verified archive.
+# Keep the original four first so existing users retain their menu order.
+GAMES = (
+    'ar25-0c556536','wa30-ee6fef47','ls20-9607627b','s5i5-18d95033',
+    'cd82-fb555c5d','ft09-0d8bbf25','g50t-5849a774','ka59-38d34dbb',
+    'lf52-271a04aa','sc25-635fd71a','sk48-d8078629','sp80-589a99af',
+    'su15-1944f8ab','tr87-cd924810','vc33-5430563c',
+)
 
 
 def utc():
@@ -79,7 +86,7 @@ class ManualPlayer:
     def start(self, game):
         with self.lock:
             if game not in GAMES:
-                raise ValueError('choose one of the four public development games')
+                raise ValueError('choose one of the listed public development games')
             self.current = None
             self.sequence = 0
             self.failed = False
