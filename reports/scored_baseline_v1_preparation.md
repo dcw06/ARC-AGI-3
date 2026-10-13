@@ -46,3 +46,9 @@ the before/after evidence and the existing broad-suite failure. No GPU or scored
 Next: establish a supported platform-side one-hour cap for the scored rerun, then finish the CPU and pinned-image
 validation, review the exact private source and scored use/output scope, and bind a single fresh attempt. Preserve
 all existing research attempts. No further authorization is inferred from this draft.
+
+The owner has reconfirmed the full-job cap and chosen the Kaggle-support path. The
+[support request](scored_baseline_v1_platform_cap_support_request.md) is prepared but **not sent**. Read-only
+inspection of the installed SDK also found a kernel-session cancellation request, but did not establish control
+of a scoring rerun or guaranteed termination; a local watcher is not accepted as the cap. No scored launch is
+authorized to test timeout inheritance. The current source and review snapshots are unchanged.
