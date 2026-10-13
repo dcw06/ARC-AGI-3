@@ -121,6 +121,16 @@ The replay used directional action IDs in two games; s5i5 offered only clicks. T
 choice against each observation's available controls. Full questions, retained action counts and proposed measurements:
 [object grounding and similarity proposal](research_questions_object_grounding_similarity_2026-10-12.md).
 
+## Human reference collection (October 13, 2026)
+
+| Development step | Scope | Status |
+|---|---|---|
+| Owner-supplied strategy annotations | ls20, s5i5, cd82, ft09, ka59 and sc25; first three levels each | Private local worksheet prepared with recorded boards, hover coordinates, named points, seven answer fields and JSON/ZIP export. Answers remain owner-authored drafts for independent review. |
+| Proposed agent baseline | Identify objects, consider legal controls, verify intended effects, infer working rules and actually complete level 1 | Acceptance criteria and budgets still to be finalized. Human success and questionnaire accuracy do not establish agent completion. No model or GPU run launched. |
+
+The [worksheet guide](reports/manual_strategy_worksheet.md) describes annotation provenance and limitations.
+Private logs, boards and answers are excluded from this report and GitHub.
+
 ## Source snapshot
 
 | Collection | Revision used |
