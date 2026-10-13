@@ -18,6 +18,13 @@ Each written rule contains rule ID, structured statement, support IDs, exact act
 
 The existing faithful writer and independent fidelity evaluator run unchanged as an additional source-contract audit. The new audit checks every original observation and every qualified claim/revision. Independent answer keys rederive visual effects and boundaries from raw frames and receipts without importing the writer, reader or selection code.
 
+Before construction, tokenizer reference verification must match every uniquely identified reference probe, with
+zero mismatches; its count and reference-file hash are retained. Project-source bindings cover the transitive static
+import closure, including imports inside functions and existing package initializers. Retained inputs bind this
+protocol, the tokenizer reference audit, and the archive locks and archive bytes used by that audit. A change to
+those sources or inputs is refused by package checking and replay even if current fixture outputs are unchanged.
+Dynamic project imports require explicitly extending the binding discovery before use.
+
 ## Six separate tasks and update policy
 
 | Task | Answers | Decision rule |
@@ -51,7 +58,7 @@ The existing `readers._fit` priority-prefix selector is reused, including stoppi
 
 ## Attribution and endpoints
 
-Each probe retains full-source, full-store, selected-package and response verdicts. The existing memory-stress `diagnostics.attribution` is reused through a one-to-one task-category adapter, with new strict provenance scoring layered on it. Category loss and reference loss are separate flags. Writer integrity is independent of answer-changing writer loss. Writer, selection and reader faults may coexist. A package-correct reader can still be source-incorrect when its package omitted evidence.
+Each probe retains full-source, full-store, selected-package and response verdicts. The existing memory-stress `diagnostics.attribution` is reused through a one-to-one task-category adapter, with new strict provenance scoring layered on it. Category loss and reference loss are separate flags. Reference loss compares only required reference alternatives/groups and eligible IDs, not the answer category; ordering of alternatives is irrelevant. Overall stage distortion still includes either category or reference changes. Writer integrity is independent of answer-changing writer loss. Writer, selection and reader faults may coexist. A package-correct reader can still be source-incorrect when its package omitted evidence.
 
 Primary endpoints are transfer category accuracy, unsupported `supported_local` claims, and contradiction/update accuracy on counterexamples. Report supported reuse coverage, per-family accuracy, condition/coordinate fidelity, source-relative reference precision and coverage, validity, stage losses and cost separately. Invalid responses are incorrect, remain in denominators and count as risk in the unsupported safety endpoint. The older recall protocol used a different invalid-output convention; this study declares its own conservative safety convention.
 

@@ -4,6 +4,12 @@ from research.evidence_memory_v1 import readers as RD
 from . import schema as S, score as SC
 
 
+def reference_requirements(key):
+    """Reference alternatives and groups are sets; answer categories are separate."""
+    return (frozenset(frozenset(group) for group in key['required_groups']),
+            frozenset(key['eligible_ids']))
+
+
 def evaluate(truth, store, package, output, task, allowed_ids, writer_faults=False):
     # Injective category adapter: all new task vocabularies have <=4 categories.
     # This is internal scoring only, never a reader-visible factual-recall task.
@@ -26,7 +32,7 @@ def evaluate(truth, store, package, output, task, allowed_ids, writer_faults=Fal
             'selection_loss_or_distortion': package != store,
             'correct_truth': end['correct'],
             'correct_package': scored['correct'], 'reader_error': not scored['correct'],
-            'writer_reference_loss_or_distortion': store != truth,
-            'selection_reference_loss_or_distortion': package != store,
+            'writer_reference_loss_or_distortion': reference_requirements(store) != reference_requirements(truth),
+            'selection_reference_loss_or_distortion': reference_requirements(package) != reference_requirements(store),
             'full_source': truth, 'full_store': store, 'selected_package': package,
             'response': output, 'end_to_end_category_correct': end['category_correct']}

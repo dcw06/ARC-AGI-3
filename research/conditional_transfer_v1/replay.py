@@ -32,6 +32,8 @@ def verify_directory(path):
             raise ValueError('unsafe manifest path')
         if hashlib.sha256((root / name).read_bytes()).hexdigest() != expected:
             raise ValueError('manifest mismatch: ' + name)
+    from . import dependencies as D
+    D.verify_bindings(root, Path(__file__).resolve().parents[2])
     cases = json.loads(gzip.decompress((root / 'benchmark.json.gz').read_bytes()))
     for case in cases:
         validate_case(case)

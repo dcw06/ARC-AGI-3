@@ -8,7 +8,8 @@ from pathlib import Path
 
 from research.evidence_memory_v1 import tokens
 from . import (schema as S, fixtures as FX, writer as W, independent_keys as IK, score as SC,
-               render as R, selection as SE, attribution as A, shortcuts as SH, protocol as P, replay as RP)
+               render as R, selection as SE, attribution as A, shortcuts as SH, protocol as P, replay as RP,
+               dependencies as D)
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT = ROOT / 'reports/conditional_transfer_v1/review_package'
@@ -61,8 +62,9 @@ def summarize(rows):
 
 
 def artifacts(tokenizer=None):
+    sources, inputs = D.source_hashes(ROOT), D.input_hashes(ROOT)
     t = tokenizer or tokens.Tokenizer()
-    tokens.verify_against_ws3_audit(t)
+    reference = D.verify_tokenizer_reference(t, ROOT, tokens.verify_against_ws3_audit)
     cases, keys, decisions, requests, aliases, costs = FX.generate(), [], [], {}, [], []
     shortcut_rows = defaultdict(list)
     full_answer_counts = defaultdict(Counter)
@@ -175,7 +177,8 @@ def artifacts(tokenizer=None):
                       'request': R.request(cases[0], task, [])} for task in S.TASKS]
     schema_probe_keys = [{'request_id': entry['request_id'], 'expected': json.loads(SC.scripted_reader(entry['request']))}
                          for entry in schema_probes]
-    audit = {'tokenizer_sha256': tokens.PINNED, 'verified_against_existing_audit': True,
+    audit = {'tokenizer_sha256': tokens.PINNED, 'verified_against_existing_audit': reference['verified'],
+             'reference_verification': reference,
              'probes': len(aliases), 'unique_requests': len(unique), 'duplicate_aliases': len(aliases)-len(unique),
              'duplicates_policy': 'execute unique digests once; retain aliases; cluster dependencies',
              'max_prompt_tokens': max(c['prompt_tokens'] for c in costs),
@@ -190,13 +193,8 @@ def artifacts(tokenizer=None):
                   'unique_requests': len({c['request_id'] for c in costs if c['ceiling'] == cap}),
                   'max_prompt_tokens': max(c['prompt_tokens'] for c in costs if c['ceiling'] == cap)} for cap in S.CEILINGS},
              'leakage_forbidden_fields_checked': sorted(forbidden), 'rows': costs}
-    dependencies = [ROOT / 'research/evidence_memory_v1' / (n + '.py')
-                    for n in ('schema', 'writers', 'fidelity', 'render', 'readers', 'tokens', 'protocol', 'stage1')]
-    dependencies += [ROOT / 'research/evidence_memory_stress_v1/diagnostics.py',
-                     ROOT / 'research/transition_evidence_v1/transition.py',
-                     ROOT / 'research/transition_evidence_v2/transition.py']
-    sources = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
-               for p in sorted(list(Path(__file__).parent.glob('*.py')) + dependencies)}
+    if D.source_hashes(ROOT) != sources or D.input_hashes(ROOT) != inputs:
+        raise ValueError('source or reference inputs changed during construction')
     files = {'benchmark.json.gz': gzip.compress(S.compact(cases).encode(), mtime=0),
              'independent_keys.json': _json(keys), 'protocol.json': _json(P.specification()),
              'summary.json': _json(summary), 'token_audit.json': _json(audit),
@@ -204,7 +202,7 @@ def artifacts(tokenizer=None):
              'schema_probes.jsonl.gz': _lines(schema_probes), 'schema_probe_keys.json': _json(schema_probe_keys),
              'attribution.jsonl.gz': _lines(decisions),
              'shortcuts.jsonl.gz': _lines([{'shortcut': n, **r} for n, rows in shortcut_rows.items() for r in rows]),
-             'source_hashes.json': _json(sources)}
+             'source_hashes.json': _json(sources), 'input_hashes.json': _json(inputs)}
     files['manifest.json'] = _json({'version': S.VERSION, 'gpu_enabled': False, 'execution_authorized': False,
                                   'sha256': {k: hashlib.sha256(v).hexdigest() for k, v in sorted(files.items())}})
     return files, summary, audit
@@ -212,6 +210,8 @@ def artifacts(tokenizer=None):
 
 def build(path=DEFAULT, check=False):
     path = Path(path)
+    if check:
+        D.verify_bindings(path, ROOT)
     files, summary, audit = artifacts()
     if check:
         failures = [name for name, data in files.items() if not (path/name).is_file() or (path/name).read_bytes() != data]

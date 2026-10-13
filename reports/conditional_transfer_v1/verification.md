@@ -1,5 +1,8 @@
 # Conditional transfer CPU verification
 
+Historical receipt for the original `97c4c3c` package. Local review repairs and rebuilt-package verification are
+recorded separately in `review_fixes.md`; the original logs below remain unchanged.
+
 Verified October 13, 2026, on native macOS arm64 using Python 3.12.15 in the Track 2 `.venv`. Branch: `teammate/mac-conditional-transfer-v1`, based on `b39bfd237f2754598cd6e5fac0f983693a8dda86`. Package manifest SHA-256: `ecad0661ba05c51fe69c981b2ed5baa74e7a5bd8ca6c91831ea5cc7283f7fdf6`.
 
 | Check | Result |

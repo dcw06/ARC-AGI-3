@@ -38,8 +38,11 @@ python -m research.conditional_transfer_v1.replay
 | `summary.json` | Arm, family, delay and shortcut measurements |
 | `token_audit.json` | Final prompt and completion bounds, selection IDs and schedule costs |
 | `protocol.json` | Frozen prompts, response schemas, sampling, endpoints and stop rules |
-| `source_hashes.json`, `manifest.json` | Source/dependency bindings and artifact integrity |
+| `source_hashes.json`, `input_hashes.json`, `manifest.json` | Transitive project-source bindings, retained reference/protocol inputs and artifact integrity |
 
 All compressed files are ordinary gzip, readable with Python's standard library. Reader requests contain no evaluator keys or fixture-family metadata. Keys and attribution remain evaluator-side files and must never be sent to a model.
 
 There is no network client, launch command, approval, reservation, model download or runtime in this package. Mac CPU verification establishes construction behaviour; it does not establish Linux/Kaggle compatibility or model performance. Frozen Track 1–3 files and archived evidence remain unchanged.
+
+The local review repairs are described in [review_fixes.md](review_fixes.md). The earlier verification receipt and
+test logs describe the original `97c4c3c` package; they are retained as history, not evidence for rebuilt bytes.
