@@ -19,8 +19,8 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-OUT = ROOT / 'reports/stagnation_supervision_runtime_v2_local_checks_r17.json'
-PREVIOUS = 'reports/stagnation_supervision_runtime_v2_local_checks_r16.json'  # passed for the r12 package
+OUT = ROOT / 'reports/stagnation_supervision_runtime_v2_local_checks_r18.json'
+PREVIOUS = 'reports/stagnation_supervision_runtime_v2_local_checks_r17.json'  # passed for the r13 package
 HISTORICAL_RECEIPT_COMMIT = 'b39f9e6ebcb2ea11a2a0c6173254e8cea5dcf1fb'
 # The first run (r1) is retained as failed: discovery used the repository as top level, which breaks the R4 suite's
 # own `from test_stagnation_supervision_v1_connected import ...`, and one runtime v2 test predated the r1 snapshot.
@@ -117,8 +117,8 @@ def run():
     if sources != source_bindings() or tests != test_bindings():
         raise ValueError('tested source changed while the suite ran')
     passed = not totals['failures'] and not totals['errors'] and all(h['returncode'] == 0 for h in historical)
-    value = {'version': 'stagnation_supervision_runtime_v2_local_checks_r17', 'supersedes_failed_run': FAILED_R1,
-             'previous_receipt': PREVIOUS, 'package_revision': 'r13 (code-review fixes: one shared trajectory identity, spend denominators, read-once validated bindings; payload unchanged)',
+    value = {'version': 'stagnation_supervision_runtime_v2_local_checks_r18', 'supersedes_failed_run': FAILED_R1,
+             'previous_receipt': PREVIOUS, 'package_revision': 'r14 (second review: nested bindings validated, non-finite numbers rejected before comparison; payload unchanged)',
              'status': 'passed_cpu_scope' if passed else 'failed', **totals, 'suites': suites,
              'replaced_legacy_tests': REPLACEMENTS,
              'historical_and_receipt_checks': historical, 'elapsed_seconds': round(time.monotonic() - started, 3),

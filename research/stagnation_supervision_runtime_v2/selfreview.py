@@ -34,6 +34,7 @@ and never silently reinterpreted.
 """
 import hashlib
 import json
+import math
 
 from research.stagnation_supervision_v1 import outcomes as O
 
@@ -89,6 +90,23 @@ REFLECTION_CALL_FIELDS = ('request_sha256', 'response_sha256', 'status', 'finish
 
 def canonical(value):
     return json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False)
+
+
+def _finite(text):
+    value = float(text)
+    if not math.isfinite(value):
+        raise ValueError('non-finite number')
+    return value
+
+
+def _non_finite(name):
+    raise ValueError(f'non-finite constant {name}')
+
+
+def strict_json(raw):
+    """JSON with NaN, Infinity and numbers that overflow to infinity rejected: such values cannot be compared
+    canonically, so a record carrying them is malformed input, never a comparison that crashes."""
+    return json.loads(raw, parse_constant=_non_finite, parse_float=_finite)
 
 
 def digest(value):
@@ -228,6 +246,8 @@ def template(sample):
 def validate(sample, annotations):
     """Every sampled item annotated exactly once, in order, with allowed answers. Returns the descriptive summary;
     raises ValueError on any incomplete or mismatched record."""
+    if not isinstance(sample, dict) or not isinstance(annotations, dict):
+        raise ValueError('sample and annotations must be JSON objects')
     body = {k: v for k, v in sample.items() if k != 'sample_sha256'}
     if sample.get('sample_sha256') != digest(body):
         raise ValueError('sample digest')
@@ -240,7 +260,9 @@ def validate(sample, annotations):
     for name, row in sample['strata'].items():
         fields = FIELDS[row['kind']]
         items = given[name]
-        if not isinstance(items, list) or [i.get('key') for i in items] != [s['key'] for s in row['selected']]:
+        if not isinstance(items, list) or any(not isinstance(i, dict) for i in items):
+            raise ValueError(f'{name}: annotations must be a list of objects')
+        if [i.get('key') for i in items] != [s['key'] for s in row['selected']]:
             raise ValueError(f'{name}: annotated keys differ from the sample')
         counts = {f: dict.fromkeys(ANSWERS, 0) for f in fields}
         for item in items:
@@ -281,8 +303,11 @@ def verify_commitment(receipt, sample, annotations, digest):
     path = Path(receipt)
     if path.is_symlink() or not path.is_file() or path.stat().st_size > 8192:
         raise ValueError('invalid private annotation commitment receipt')
-    record = json.loads(path.read_bytes())
-    commit = record.get('commit', '')
+    record = strict_json(path.read_bytes())
+    if (not isinstance(record, dict) or not isinstance(record.get('commit'), str)
+            or not isinstance(record.get('repository'), str)):
+        raise ValueError('invalid private annotation commitment receipt')
+    commit = record['commit']
     repository = Path(record['repository']).resolve()
     if record.get('scope') != 'stagnation_supervision_private_annotations_v1' or not re.fullmatch('[0-9a-f]{40}', commit):
         raise ValueError('invalid private annotation commitment')
@@ -306,9 +331,9 @@ def verify_commitment(receipt, sample, annotations, digest):
             or committed_annotations != Path(annotations).read_bytes()
             or record.get('annotations_sha256') != digest
             or record.get('sample_sha256') != sample['sample_sha256']
-            or json.loads(committed_sample) != sample):
+            or strict_json(committed_sample) != sample):
         raise ValueError('private annotation commit does not bind these exact evidence inputs and annotations')
-    validate(sample, json.loads(committed_annotations))
+    validate(sample, strict_json(committed_annotations))
     return {'commit': commit, 'annotations_sha256': digest, 'sample_sha256': sample['sample_sha256']}
 
 

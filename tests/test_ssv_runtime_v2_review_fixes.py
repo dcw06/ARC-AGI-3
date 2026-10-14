@@ -172,7 +172,8 @@ class Evaluate(unittest.TestCase):
         path = write(self.folder / 'annotations.json', record)
         return path, P.sha256_file(path)
 
-    def run_evaluate(self, *, mode='live', execution=None, launch=None, annotations=None, digest='0' * 64):
+    def run_evaluate(self, *, mode='live', execution=None, launch=None, annotations=None, digest='0' * 64,
+                     commitment=None):
         session1 = [e for e in self.episodes if e['session'] == '1']
         session2 = [e for e in self.episodes if e['session'] == '2']
         rehearsal = {} if mode == 'live' else {'specs': {s: {'limits': {'actions_per_episode': 40}} for s in '12'},
@@ -184,7 +185,7 @@ class Evaluate(unittest.TestCase):
             return P.evaluate_sessions({'1': self.folder, '2': self.folder}, self.records, mode=mode,
                                        annotations=annotations or self.folder / 'missing-annotations.json',
                                        annotations_sha256=digest, session2_execution=execution,
-                                       session1_launch_record=launch, **rehearsal)
+                                       session1_launch_record=launch, annotations_commitment=commitment, **rehearsal)
 
     def binding(self, result):
         return [p for p in result['problems'] if 'session' in p and 'self-review' not in p]
@@ -238,6 +239,82 @@ class LaunchRecordReading(Evaluate):
                       result['problems'])
         result = self.run_evaluate(mode='rehearsal', launch=self.launch)
         self.assertIn('session-2 execution lock not supplied', result['problems'])
+
+
+class MalformedNestedInputs(Evaluate):
+    """Second review (October 13): malformed nested fields and non-finite numbers are reported validation failures,
+    never crashes, and no pooled result is produced."""
+
+    def withheld(self, result, problem):
+        self.assertIn(problem, result['problems'])
+        self.assertIsNone(result['pooled'])
+        self.assertIsNone(result['pooled_distinct'])
+
+    def test_execution_binding_must_be_an_object_holding_a_digest(self):
+        message = 'session-2 execution lock: session1_evaluation is not an object with a SHA-256 digest'
+        for value in ([1], None, 'abc', {}, {'sha256': 5}, {'sha256': 'f' * 63}, {'sha256': 'F' * 64}, {'sha256': [1]}):
+            for launch in (self.launch, None):
+                with self.subTest(value=value, launch=launch is not None):
+                    execution = write(self.folder / 'execution.json', {'session1_evaluation': value})
+                    self.withheld(self.run_evaluate(execution=execution, launch=launch), message)
+
+    def test_non_finite_numbers_are_rejected_before_any_comparison(self):
+        good = json.dumps(self.current)
+        for token in ('NaN', 'Infinity', '-Infinity', '1e999', '-1e999'):
+            bad = good[:-1] + f', "extra": {token}}}'
+            for name, what in (('1.json', 'session 1: retained evaluation'), ('2.json', 'session 2: retained evaluation'),
+                               ('launch.json', 'session-1 launch-time evaluation'),
+                               ('execution.json', 'session-2 execution lock')):
+                with self.subTest(token=token, file=name):
+                    for path in self.records.values():
+                        write(path, good)
+                    write(self.launch, dict(self.current, review_lock={'sha256': 'a' * 64}))
+                    execution = self.execution(P.sha256_file(self.launch))
+                    if name == 'execution.json':
+                        write(execution, json.dumps({'session1_evaluation': {'sha256': P.sha256_file(self.launch)}})[:-1]
+                              + f', "extra": {token}}}')
+                    else:
+                        write(self.folder / name, bad)
+                    self.withheld(self.run_evaluate(execution=execution, launch=self.launch),
+                                  f'{what} unreadable or malformed (ValueError)')
+
+    def test_malformed_annotations_and_commitment_receipts_are_reported(self):
+        execution = self.execution(P.sha256_file(self.launch))
+        sample = SR.sample_for(self.episodes, SPEC, 40, inputs=P.inputs_digest(
+            [e for e in self.episodes if e['session'] == '1'] + [e for e in self.episodes if e['session'] == '2']))
+        path, _ = self.annotations(sample)
+        record = json.loads(path.read_bytes())
+        for broken in ({**record, 'annotations': {name: [1] * len(items) for name, items in record['annotations'].items()}},
+                       [record], {**record, 'reviewer': float('nan')}):
+            with self.subTest(broken=type(broken).__name__):
+                text = json.dumps(broken)  # NaN is written as the bare token, which the strict reader refuses
+                write(path, text)
+                result = self.run_evaluate(mode='rehearsal', annotations=path, digest=P.sha256_file(path))
+                self.assertIsNone(result['pooled'])
+                self.assertTrue(any(p.startswith('self-review (amendment S1): ValueError') for p in result['problems']))
+        write(path, json.dumps(record))
+        for receipt in ([1], {'commit': 5, 'repository': '/x'}, {'commit': 'a' * 40, 'repository': ['x']},
+                        '{"commit": NaN}'):
+            with self.subTest(receipt=receipt):
+                receipt_path = write(self.folder / 'receipt.json', receipt)
+                result = self.run_evaluate(execution=execution, launch=self.launch, annotations=path,
+                                           digest=P.sha256_file(path), commitment=receipt_path)
+                self.assertIsNone(result['pooled'])
+                self.assertTrue(any(p.startswith('self-review (amendment S1): ValueError') for p in result['problems']),
+                                result['problems'])
+
+    def test_validate_and_the_strict_reader_directly(self):
+        sample = SR.sample_for(self.episodes, SPEC, 40)
+        record = SR.template(sample)
+        name = next(iter(record['annotations']))
+        record['annotations'][name] = [1]
+        for annotations in (record, [record], None):
+            with self.assertRaises(ValueError):
+                SR.validate(sample, annotations)
+        for token in ('NaN', 'Infinity', '-Infinity', '1e999'):
+            with self.assertRaises(ValueError):
+                SR.strict_json('{"x": %s}' % token)
+        self.assertEqual(SR.strict_json('{"x": 1.5, "y": 1e300, "z": 10}'), {'x': 1.5, 'y': 1e300, 'z': 10})
 
 
 class CommittedSample(Evaluate):

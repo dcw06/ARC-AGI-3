@@ -43,11 +43,14 @@ block 1 exactly), before any outcome was inspected and before any pooled compari
 - a session-1 evaluation re-run under a later review lock may stand in for the one the session-2 execution lock
   binds, if the bound launch-time record is supplied and the two have the same `content_sha256` (equal apart from the
   evaluating lock). Each retained record, the execution lock and the launch-time record is read once; its hash and
-  its comparison use those bytes, and an unreadable or malformed file is a reported problem, not a crash.
+  its comparison use those bytes, and an unreadable or malformed file is a reported problem, not a crash. Malformed
+  includes non-finite numbers (NaN, Infinity, overflow), which cannot be compared canonically, and an execution lock
+  whose `session1_evaluation` is not an object holding a SHA-256 digest.
 """
 import hashlib
 import json
 from pathlib import Path
+import re
 
 from research.stagnation_supervision_v1 import intervention as I, outcomes as O
 from research.transition_evidence_v2 import vocabulary as V
@@ -59,6 +62,7 @@ PRIMARY_GAMES = ('ar25', 'wa30', 'ls20')
 BLIND_SPOT = 's5i5'
 GAMES = PRIMARY_GAMES + (BLIND_SPOT,)
 PAIRS = (('triggered', 'continuation'), ('triggered', 'periodic'), ('periodic', 'continuation'))
+SHA256 = re.compile('[0-9a-f]{64}')
 
 
 def canonical(value):
@@ -392,10 +396,11 @@ def content_sha256(record):
 
 
 def _load_json(path, what, problems):
-    """Read a JSON object once; return (bytes, value), or (None, None) with an explicit problem recorded."""
+    """Read a JSON object once, rejecting non-finite numbers (SR.strict_json); return (bytes, value), or (None, None)
+    with an explicit problem recorded."""
     try:
         raw = Path(path).read_bytes()
-        value = json.loads(raw)
+        value = SR.strict_json(raw)
         if not isinstance(value, dict):
             raise ValueError('not a JSON object')
         return raw, value
@@ -446,8 +451,11 @@ def evaluate_sessions(outputs, records, *, annotations, annotations_sha256, mode
             problems.append('session-2 execution lock not supplied')
         else:
             _, execution = _load_json(session2_execution, 'session-2 execution lock', problems)
-        if execution is not None:
-            bound = (execution.get('session1_evaluation') or {}).get('sha256')
+        binding = execution.get('session1_evaluation') if execution is not None else None
+        bound = binding.get('sha256') if isinstance(binding, dict) else None
+        if execution is not None and not (isinstance(bound, str) and SHA256.fullmatch(bound)):
+            problems.append('session-2 execution lock: session1_evaluation is not an object with a SHA-256 digest')
+        elif execution is not None:
             if session1_launch_record is None:
                 if bound != sessions['1']['record_sha256']:
                     problems.append('session-2 execution lock does not bind the retained session-1 evaluation')
