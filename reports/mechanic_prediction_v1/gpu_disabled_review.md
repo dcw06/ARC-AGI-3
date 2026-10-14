@@ -1,6 +1,6 @@
 # GPU-Disabled Review Package
 
-Status: assembled for independent review; not yet independently reviewed, approved, or authorized for model/GPU execution.
+Status: review findings 1-4 remediated on a follow-up branch; assembled for independent review; not yet independently reviewed, approved, or authorized for model/GPU execution.
 
 ## Included
 
@@ -8,6 +8,8 @@ Status: assembled for independent review; not yet independently reviewed, approv
 - Eight-family synthetic fixtures, separate independent keys, shortcut report, request schedule, token/byte audit, and SHA-256 manifest under `research/mechanic_prediction_v1/`.
 - Builder, finite-space oracle, independent key derivation, prompt/schema, shortcuts, scorer, grounding diagnostics, replay verifier, and focused tests.
 - Stage C experiment-selection and Stage D transfer proposals.
+- Hypotheses and their deterministic rules are visible in both model arms; model results would test rule application/prediction, not latent hypothesis discovery.
+- Review archive text contents and bindings are LF-normalized; CPU tests verify all 26 manifest entries against packaged bytes.
 
 ## Explicit Exclusions
 

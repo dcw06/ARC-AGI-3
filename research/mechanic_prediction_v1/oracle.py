@@ -3,6 +3,7 @@ import json
 
 
 STATUSES = {"acknowledged", "dispatch_failed", "outcome_unknown"}
+PREDICTIONS = {"no_change", "changed", "delayed_change", "transient_change"}
 
 
 def action_key(action):
@@ -24,12 +25,42 @@ def _status(record):
     return record.get("dispatch_status", record.get("status"))
 
 
+def predict_from_rules(mechanism, action, observation):
+    """Apply a fully visible, ordered rule list to one action and observation."""
+    data = action["action_data"]
+    signals = observation.get("signals", {})
+    target = signals.get("target")
+    coordinates = [data.get("x"), data.get("y")] if set(data) == {"x", "y"} else None
+    for rule in mechanism["rules"]:
+        if rule["action_id"] is not None and rule["action_id"] != action["action_id"]:
+            continue
+        if rule["mode"] != "any" and rule["mode"] != signals.get("mode"):
+            continue
+        relation = rule["coordinate_relation"]
+        if relation == "none" and coordinates is not None:
+            continue
+        if relation == "target" and coordinates != target:
+            continue
+        if relation == "adjacent":
+            if coordinates is None or target is None or abs(coordinates[0] - target[0]) + abs(coordinates[1] - target[1]) != 1:
+                continue
+        if relation not in {"any", "none", "target", "adjacent"}:
+            raise ValueError("unknown declared coordinate relation")
+        if rule["outcome"] not in PREDICTIONS:
+            raise ValueError("unknown declared outcome category")
+        return rule["outcome"]
+    default = mechanism["default_outcome"]
+    if default not in PREDICTIONS:
+        raise ValueError("unknown declared default outcome")
+    return default
+
+
 def adjudicate(mechanisms, history, proposed_action, proposed_observation=None):
     """Return the evidence-supported prediction over the declared mechanism set.
 
-    Mechanisms map canonical action JSON to observable outcome values. Failed or
-    unobserved dispatches constrain no mechanism. A repeated proposed action is
-    rejected so the scored prediction cannot be answered by exact recall.
+    Each mechanism is an executable rule set shown to both model arms. Failed or
+    unobserved dispatches constrain no mechanism. A repeated proposed action/state
+    pair is rejected so the scored prediction cannot be answered by exact recall.
     """
     if type(mechanisms) is not list or len(mechanisms) < 2:
         raise ValueError("at least two declared mechanisms are required")
@@ -39,7 +70,7 @@ def adjudicate(mechanisms, history, proposed_action, proposed_observation=None):
         status = _status(record) if type(record) is dict else None
         if type(record) is not dict or status not in STATUSES:
             raise ValueError("invalid history dispatch status")
-        key = action_key(record.get("action"))
+        key = query_key(record.get("action"), record.get("pre_observation"))
         history_keys.add(key)
         if status == "acknowledged":
             if "observed_outcome" not in record:
@@ -47,38 +78,34 @@ def adjudicate(mechanisms, history, proposed_action, proposed_observation=None):
         elif "observed_outcome" in record:
             raise ValueError("unobserved dispatch cannot carry an observed outcome")
     if proposal_key in history_keys:
-        raise ValueError("proposed action-coordinate pair is not novel")
+        raise ValueError("proposed action-coordinate and state pair is not novel")
 
     compatible = []
     for mechanism in mechanisms:
-        if (type(mechanism) is not dict or not {"mechanism_id", "outcomes"} <= set(mechanism)
-            or set(mechanism) - {"mechanism_id", "outcomes", "explanation"}
-                or type(mechanism["mechanism_id"]) is not str
-                or type(mechanism["outcomes"]) is not dict):
+        required = {"hypothesis_id", "explanation", "rules", "default_outcome"}
+        if (type(mechanism) is not dict or set(mechanism) != required
+                or type(mechanism["hypothesis_id"]) is not str
+                or type(mechanism["explanation"]) is not str
+                or type(mechanism["rules"]) is not list):
             raise ValueError("invalid declared mechanism")
-        outcomes = mechanism["outcomes"]
         consistent = True
         for record in history:
             if _status(record) != "acknowledged":
                 continue
-            key = query_key(record["action"], record.get("pre_observation"))
-            if key not in outcomes or outcomes[key] != record["observed_outcome"]:
+            if predict_from_rules(mechanism, record["action"], record["pre_observation"]) != record["observed_outcome"]:
                 consistent = False
                 break
         if consistent:
             compatible.append(mechanism)
     if not compatible:
         raise ValueError("no declared mechanism is consistent with the supplied evidence")
-    if any(proposal_key not in mechanism["outcomes"] for mechanism in compatible):
-        raise ValueError("a compatible mechanism lacks a proposed-action prediction")
-
-    predictions = {json.dumps(m["outcomes"][proposal_key], sort_keys=True, separators=(",", ":"))
-                   for m in compatible}
+    predictions = {json.dumps(predict_from_rules(m, proposed_action, proposed_observation or {}),
+                              sort_keys=True, separators=(",", ":")) for m in compatible}
     determined = len(predictions) == 1
     prediction = json.loads(next(iter(predictions))) if determined else None
     return {
         "status": "determined" if determined else "not_determined",
         "prediction": prediction,
-        "compatible_mechanism_ids": [m["mechanism_id"] for m in compatible],
+        "compatible_mechanism_ids": [m["hypothesis_id"] for m in compatible],
         "declared_mechanism_count": len(mechanisms),
     }

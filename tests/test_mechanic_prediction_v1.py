@@ -1,4 +1,5 @@
 import copy
+import hashlib
 import inspect
 import tempfile
 import unittest
@@ -6,7 +7,9 @@ import zipfile
 from pathlib import Path
 
 from research.mechanic_prediction_v1 import fixtures
-from research.mechanic_prediction_v1.build import make_bundle, scripted_rehearsal, write_review_package, _schedule
+from research.mechanic_prediction_v1.build import (
+    make_bundle, portable_file_bytes, scripted_rehearsal, write_review_package, _schedule,
+)
 from research.mechanic_prediction_v1.diagnostics import diagnostic_answer, grounding_answers, score_grounding
 from research.mechanic_prediction_v1.independent_keys import derive
 from research.mechanic_prediction_v1.oracle import action_key, adjudicate
@@ -79,18 +82,29 @@ class FixtureAndKeyTests(unittest.TestCase):
     def test_later_contradiction_eliminates_an_earlier_explanation(self):
         scenario = next(s for s in SCENARIOS if s["family"] == "contradiction")
         trace = KEYS[scenario["scenario_id"]]["compatibility_trace"]
-        self.assertIn("rule_a", trace[0]["remaining"])
-        self.assertNotIn("rule_a", trace[1]["remaining"])
-        self.assertEqual(trace[1]["remaining"], ["rule_b", "rule_c"])
+        self.assertIn("H1", trace[0]["remaining"])
+        self.assertNotIn("H1", trace[1]["remaining"])
+        self.assertEqual(trace[1]["remaining"], ["H2", "H3"])
 
-    def test_shortcuts_cannot_solve_determinate_evaluation_set(self):
+    def test_position_only_shortcut_is_counterbalanced_and_cannot_solve_evaluation(self):
+        positions = {}
+        for scenario in SCENARIOS:
+            key = KEYS[scenario["scenario_id"]]
+            position = (scenario["initial_observation"]["signals"]["target"])
+            positions.setdefault(tuple(position), set()).add((key["status"], key["prediction"]))
+        self.assertEqual(len(positions), 4)
+        expected = {("not_determined", None)} | {
+            ("determined", outcome) for outcome in fixtures.OUTCOMES
+        }
+        self.assertTrue(all(labels == expected for labels in positions.values()))
         report = make_bundle()["shortcuts"]
         self.assertEqual(report["strongest_selection_split"], "development")
-        self.assertEqual(report["strongest_declared_shortcut"], "always_no_change")
-        self.assertEqual(report["shortcuts"]["always_no_change"]["development_summary"]["prediction_accuracy_on_determinable"], 1)
-        self.assertEqual(report["strongest_evaluation_summary"]["prediction_accuracy_on_determinable"], 0)
+        self.assertEqual(report["position_only_fit_scope"], "development_split_only")
+        position_only = report["shortcuts"]["position_only"]["evaluation_summary"]
+        self.assertLess(position_only["prediction_accuracy_on_determinable"], 1)
+        self.assertLessEqual(position_only["unsupported_certainty_on_underdetermined"], 0.5)
         self.assertTrue(report["strongest_wrong_determinable_scenarios"])
-        self.assertEqual(len(report["strongest_wrong_determinable_scenarios"]), 8)
+        self.assertLess(report["strongest_evaluation_summary"]["prediction_accuracy_on_determinable"], 1)
         self.assertEqual(report["shortcuts"]["always_unknown"]["summary"]["prediction_accuracy_on_determinable"], 0)
 
 
@@ -104,16 +118,35 @@ class RequestAndSchemaTests(unittest.TestCase):
             self.assertEqual(ref_user.encode(), cand_user.encode())
             self.assertEqual(candidate["messages"][0]["content"],
                              reference["messages"][0]["content"] + " " + CANDIDATE_PROCEDURE)
-            for leaked in (scenario["family"], scenario["scenario_id"], "observed_outcome", "mechanisms", "explanation", scenario["split"]):
+            for leaked in (scenario["family"], scenario["scenario_id"], "observed_outcome", '"mechanisms"', scenario["split"]):
                 self.assertNotIn(leaked, ref_user)
             self.assertIn("returned_frames", ref_user)
             self.assertIn("available_actions", ref_user)
+            self.assertIn("candidate_hypotheses", ref_user)
+            self.assertIn("coordinate_relation", ref_user)
+            self.assertIn("default_outcome", ref_user)
+
+    def test_answer_rules_are_public_and_change_request_bytes(self):
+        import copy
+        import json
+
+        scenario = SCENARIOS[0]
+        public = json.loads(render_request(scenario, "reference")["messages"][1]["content"])["evidence"]
+        self.assertEqual(public["candidate_hypotheses"], scenario["mechanisms"])
+        self.assertTrue(all("outcomes" not in hypothesis for hypothesis in public["candidate_hypotheses"]))
+        changed = copy.deepcopy(scenario)
+        changed["mechanisms"][0]["rules"][1]["outcome"] = "no_change"
+        before = render_request(scenario, "reference")["messages"][1]["content"]
+        after = render_request(changed, "reference")["messages"][1]["content"]
+        self.assertNotEqual(before.encode(), after.encode())
+        self.assertNotEqual(derive(scenario)["status"], derive(changed)["status"])
 
     def test_grounding_probes_are_separate_and_identity_conservative(self):
         scenario = next(s for s in SCENARIOS if s["family"] == "object_correspondence")
         answers = grounding_answers(scenario)
-        self.assertEqual(answers["observed_region_movements"][0]["from_bbox"], [2, 2, 3, 3])
-        self.assertEqual(answers["observed_region_movements"][0]["to_bbox"], [3, 2, 4, 3])
+        source = answers["observed_region_movements"][0]["from_bbox"]
+        destination = answers["observed_region_movements"][0]["to_bbox"]
+        self.assertEqual(destination, [source[0] + 1, source[1], source[2] + 1, source[3]])
         self.assertFalse(answers["exact_proposed_action_coordinate_in_history"])
         request = render_grounding_request(scenario, "marked_region_movement")
         self.assertIn("do not claim persistent object identity", request)
@@ -206,6 +239,15 @@ class ReplayTests(unittest.TestCase):
                 manifest = archive.read("reports/mechanic_prediction_v1/gpu_disabled_review/review_manifest.json").decode()
                 self.assertIn('"gpu_enabled":false', manifest)
                 self.assertIn('"old_authorizations_reused":false', manifest)
+                bindings = __import__("json").loads(manifest)["files"]
+                self.assertEqual(len(bindings), 26)
+                for name, digest in bindings.items():
+                    with self.subTest(path=name):
+                        packaged = archive.read(name)
+                        self.assertEqual(hashlib.sha256(packaged).hexdigest(), digest)
+                        self.assertEqual(packaged, portable_file_bytes(repo_root / name))
+                        if Path(name).suffix.lower() in {".css", ".html", ".js", ".json", ".md", ".py", ".toml", ".yaml", ".yml"}:
+                            self.assertNotIn(b"\r\n", packaged)
 
 
 if __name__ == "__main__":

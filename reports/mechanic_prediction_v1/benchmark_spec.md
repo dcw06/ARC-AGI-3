@@ -1,16 +1,16 @@
 # Mechanic Prediction Benchmark v1
 
-Status: CPU construction complete; model execution, independent review, tokenizer lock, and compute authorization are not complete.
+Status: CPU construction and four-issue review remediation complete; model execution, independent review, tokenizer lock, and compute authorization are not complete.
 
 ## Research Claim
 
-The benchmark asks whether an agent can predict the observable effect of a proposed action that is absent from the supplied action history. For each scenario, the evaluator filters a finite, declared set of mechanisms against acknowledged observations. The answer is `determined` only if every surviving mechanism predicts the same outcome category. If consistent mechanisms disagree, the answer is `not_determined`.
+The benchmark asks whether an agent can predict the observable effect of a proposed action that is absent from the supplied action history, conditional on a finite declared hypothesis space. Each hypothesis exposes its explanation, action/mode/coordinate rules, and default outcome to both arms. The evaluator and an independent derivation separately apply those same visible rules to acknowledged observations. The answer is `determined` only if every compatible hypothesis predicts the same outcome category. If compatible hypotheses disagree, the answer is `not_determined`.
 
-This answer is scoped to the scenario's declared mechanism space. A hidden simulator rule is not evidence the agent received, and this benchmark does not enumerate every real-world explanation.
+The revised Stage B comparison tests applying competing visible hypotheses to a novel action; it does **not** test latent hypothesis generation or discovery. That inference question requires a separate intervention. Certainty is scoped to the visible declared rule space, not a hidden table or every real-world explanation. Editing an evaluator hypothesis changes the rendered request bytes as well as the key.
 
 ## Coverage and Evidence
 
-The construction contains 32 synthetic scenarios: two development and two evaluation scenarios in each of eight families.
+The construction contains 32 synthetic scenarios: two development and two evaluation scenarios in each of eight families. The four marker locations are fully crossed with underdetermination and all four determined effect categories: every marker position occurs with each label. Marker position is generated independently of hypothesis ambiguity and outcome.
 
 | Family | Distinction represented |
 | --- | --- |
@@ -29,11 +29,11 @@ Fixtures use small synthetic 8x8 integer grids and synthetic action IDs; they ar
 
 ## Keys and Shortcuts
 
-The evaluator oracle and `independent_keys.py` independently derive compatibility and answer status. The build fails if these derivations disagree. There are 16 determinable and 16 underdetermined scenarios. The public request omits scenario/family/split labels, mechanism explanations, answer categories derived from frames, and keys.
+The evaluator oracle and `independent_keys.py` independently apply the visible rules to derive compatibility and answer status. The build fails if these derivations disagree. There are 16 determinable and 16 underdetermined scenarios. The public request omits scenario/family/split labels and evaluator-derived frame outcome labels; it includes the declared candidate hypotheses required to make the uncertainty key observable.
 
-Eight shortcuts are scored before any model execution: repeat last outcome, ignore coordinates, assume available means effective, failed dispatch means no change, use final frame only, always no change, always unknown, and apply the most recent outcome everywhere. On the determinable set, their accuracies are 18.75%, 37.5%, 0%, 18.75%, 18.75%, 50%, 0%, and 18.75%, respectively. Always-unknown has 0% accuracy on determinable cases; always-no-change is overconfident on every underdetermined case. The strongest shortcut is wrong on eight determinable cases, all in the current evaluation split.
+Nine shortcuts are scored before any model execution, including a position-only predictor fitted on development. Position-only achieves 0% accuracy on determinable evaluation scenarios; position is crossed with both determination states and every determined outcome. Always-unknown has 0% accuracy on determinable cases. The development-selected strongest shortcut is `final_frame_only`; it reaches 37.5% on determinable evaluation scenarios and cannot solve the benchmark.
 
-The strongest shortcut is selected on development data only. `always_no_change` is 100% accurate on development's eight determinable scenarios, then 0% accurate on evaluation's eight determinable scenarios (all eight are wrong). These are construction-time baseline results, not model results. The evaluation split is small and synthetic; it is a milestone check, not a generalization estimate.
+Shortcut selection uses development data only. These are construction-time baseline results, not model results. The evaluation split is small and synthetic; it is a milestone check, not a generalization estimate. See the generated [shortcut report](shortcut_report.md) for all split-specific metrics.
 
 ## Endpoints and Unit
 

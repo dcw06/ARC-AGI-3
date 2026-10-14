@@ -1,8 +1,8 @@
 {
   "status": "passed",
   "command": "python -m unittest tests.test_mechanic_prediction_v1 tests.test_mechanic_prediction_v1_oracle -v",
-  "interpreter": "Python 3.10.4",
-  "test_count": 20,
+  "interpreter": "Python 3.12.10",
+  "test_count": 21,
   "failures": 0,
   "errors": 0,
   "gpu_enabled": false,
@@ -14,6 +14,9 @@
     "dispatch failure versus unknown outcome versus acknowledged no-change",
     "intermediate and transient frame changes",
     "oracle and independent-key agreement within the declared mechanism space",
+    "visible candidate rules in both arms; evaluator answers derived only from those rules",
+    "position, ambiguity, and all determined outcome categories fully counterbalanced",
+    "development-fitted position-only shortcut fails on evaluation",
     "development-selected shortcuts and evaluation failures",
     "matched evidence bytes and no answer/family-label leakage",
     "separate perception and grounding diagnostics",
@@ -21,6 +24,7 @@
     "duplicate request, UTF-8 byte cap, and completion cap checks",
     "scripted reader parses only rendered requests",
     "forged evidence rejected despite a modified manifest",
+    "all 26 review-package hashes bind LF-normalized archived bytes",
     "GPU-disabled review archive reproducibility"
   ]
 }

@@ -12,9 +12,10 @@ SYSTEM_PROMPT = (
     "does not distinguish possible outcomes. Return one JSON object matching the response schema."
 )
 CANDIDATE_PROCEDURE = (
-    "Before answering, check at least two explanations that fit the observations. "
-    "Report a specific effect only when every surviving explanation predicts that same effect; "
-    "otherwise use unknown and not_determined. Do not invent explanations or evidence."
+    "First eliminate candidate hypotheses contradicted by acknowledged observations. "
+    "Then apply every surviving visible rule to the proposed action and current signals. "
+    "Report a specific effect only when all surviving rules agree; otherwise use unknown and "
+    "not_determined. Failed and unknown dispatches are not observed no-change outcomes."
 )
 RESPONSE_SCHEMA = {
     "type": "object", "additionalProperties": False,
@@ -31,7 +32,7 @@ def _user_evidence(scenario):
     public = public_scenario(scenario)
     question = {
         "evidence": public,
-        "question": "Predict the observable effect category of proposed_action before its transition is revealed.",
+        "question": "Use candidate_hypotheses to identify rules consistent with acknowledged history, then predict the observable effect category of proposed_action before its transition is revealed. The visible finite rule set defines this benchmark's uncertainty scope.",
         "response_schema": RESPONSE_SCHEMA,
     }
     return json.dumps(question, ensure_ascii=True, sort_keys=True, separators=(",", ":"))

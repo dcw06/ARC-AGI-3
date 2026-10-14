@@ -1,9 +1,6 @@
 """Generated visual trajectories for the finite mechanic-prediction benchmark."""
 import copy
 
-from research.mechanic_prediction_v1.oracle import action_key, query_key
-
-
 OUTCOMES = ("no_change", "changed", "delayed_change", "transient_change")
 FAMILIES = (
     "click_grounding", "movement_constraints", "delayed_effects", "transient_effects",
@@ -102,10 +99,91 @@ def _events(family, x, y):
     raise ValueError("unknown challenge family")
 
 
+def _rule(action_id, mode, coordinate_relation, outcome):
+    return {"action_id": action_id, "mode": mode,
+            "coordinate_relation": coordinate_relation, "outcome": outcome}
+
+
+def _hypothesis(hypothesis_id, explanation, rules):
+    return {"hypothesis_id": hypothesis_id, "explanation": explanation,
+            "rules": rules, "default_outcome": "no_change"}
+
+
+def _hypotheses(family, family_index, index, proposal_outcomes):
+    first, second = proposal_outcomes
+    if family == "click_grounding":
+        return [
+            _hypothesis("H1", "An exact-target click and an adjacent click can have different effects.",
+                        [_rule(6, "any", "target", "no_change"), _rule(6, "any", "adjacent", first)]),
+            _hypothesis("H2", "Clicks on this marked region do not alter the returned grid.",
+                        [_rule(6, "any", "target", "no_change"), _rule(6, "any", "adjacent", second)]),
+        ]
+    if family == "movement_constraints":
+        return [
+            _hypothesis("H1", "Action 2 is ineffective here; action 3 has the first listed effect.",
+                        [_rule(2, "any", "none", "no_change"), _rule(3, "any", "none", first)]),
+            _hypothesis("H2", "Action 2 is ineffective here; action 3 has the second listed effect.",
+                        [_rule(2, "any", "none", "no_change"), _rule(3, "any", "none", second)]),
+        ]
+    if family == "delayed_effects":
+        return [
+            _hypothesis("H1", "Action 5 returns a delayed change; action 3 follows the first listed rule.",
+                        [_rule(5, "any", "none", "delayed_change"), _rule(3, "any", "none", first)]),
+            _hypothesis("H2", "Action 5 returns a delayed change; action 3 follows the second listed rule.",
+                        [_rule(5, "any", "none", "delayed_change"), _rule(3, "any", "none", second)]),
+        ]
+    if family == "transient_effects":
+        return [
+            _hypothesis("H1", "Action 4 is transient; a neighboring click follows the first listed rule.",
+                        [_rule(4, "any", "none", "transient_change"), _rule(6, "any", "adjacent", first)]),
+            _hypothesis("H2", "Action 4 is transient; a neighboring click follows the second listed rule.",
+                        [_rule(4, "any", "none", "transient_change"), _rule(6, "any", "adjacent", second)]),
+        ]
+    if family == "object_correspondence":
+        return [
+            _hypothesis("H1", "Action 1 changed the marked region; a neighboring click follows the first rule.",
+                        [_rule(1, "any", "none", "changed"), _rule(6, "any", "adjacent", first)]),
+            _hypothesis("H2", "Action 1 changed the marked region; a neighboring click follows the second rule.",
+                        [_rule(1, "any", "none", "changed"), _rule(6, "any", "adjacent", second)]),
+        ]
+    if family == "state_dependence":
+        alternate = OUTCOMES[(OUTCOMES.index(second) + 1) % len(OUTCOMES)]
+        return [
+            _hypothesis("H1", "An adjacent click has the same effect in active and inactive modes.",
+                        [_rule(6, "active", "target", "changed"), _rule(6, "inactive", "target", "changed"),
+                         _rule(6, "any", "adjacent", first)]),
+            _hypothesis("H2", "An adjacent click has different effects in active and inactive modes.",
+                        [_rule(6, "active", "target", "changed"), _rule(6, "active", "adjacent", alternate),
+                         _rule(6, "inactive", "adjacent", second)]),
+        ]
+    if family == "coordinate_specificity":
+        return [
+            _hypothesis("H1", "Any coordinate click has the first listed effect after the observed target click.",
+                        [_rule(6, "active", "target", "changed"), _rule(6, "active", "adjacent", first)]),
+            _hypothesis("H2", "Only the exact marked coordinate has the second listed effect.",
+                        [_rule(6, "active", "target", "changed"), _rule(6, "active", "adjacent", second)]),
+        ]
+    if family == "contradiction":
+        return [
+            _hypothesis("H1", "Action 5 always leaves the frame unchanged.",
+                        [_rule(5, "any", "none", "no_change")]),
+            _hypothesis("H2", "Action 5 changes by mode; action 3 follows the first listed rule.",
+                        [_rule(5, "active", "none", "no_change"), _rule(5, "inactive", "none", "changed"),
+                         _rule(3, "inactive", "none", first)]),
+            _hypothesis("H3", "Action 5 changes by mode; action 3 follows the second listed rule.",
+                        [_rule(5, "active", "none", "no_change"), _rule(5, "inactive", "none", "changed"),
+                         _rule(3, "inactive", "none", second)]),
+            _hypothesis("H4", "Action 5 always changes the frame.",
+                        [_rule(5, "any", "none", "changed")]),
+        ]
+    raise ValueError("unknown challenge family")
+
+
 def _scenario(family, index):
-    x = 2 + index % 3
-    y = 2 + (index // 2)
-    initial = {"frames": [_grid(x, y)], "signals": {"mode": "active"}}
+    family_index = FAMILIES.index(family)
+    position = ((1, 1), (5, 1), (1, 5), (5, 5))[(index + family_index) % 4]
+    x, y = position
+    initial = {"frames": [_grid(x, y)], "signals": {"mode": "active", "target": [x, y]}}
     events, proposal = _events(family, x, y)
     history = []
     current = copy.deepcopy(initial)
@@ -123,59 +201,23 @@ def _scenario(family, index):
         }
         if status == "acknowledged":
             record["returned_frames"] = _frames(before["frames"][-1], outcome, x, y)
-            record["returned_signals"] = {"mode": next_mode}
+            record["returned_signals"] = {"mode": next_mode, "target": [x, y]}
             record["observed_outcome"] = visible_outcome(before["frames"][-1], record["returned_frames"])
             current = {"frames": [copy.deepcopy(record["returned_frames"][-1])],
-                       "signals": copy.deepcopy(record["returned_signals"])}
+                       "signals": {**copy.deepcopy(record["returned_signals"]), "target": [x, y]}}
         else:
             current = copy.deepcopy(before)
         history.append(record)
         previous_status = status
 
-    underdetermined = index in (0, 2)
-    determinate_outcome = "no_change" if index == 1 else "delayed_change"
-    proposal_outcomes = ("changed", "no_change") if underdetermined else (determinate_outcome, determinate_outcome)
-    if family == "contradiction":
-        mechanisms = [
-            {"mechanism_id": "rule_a", "explanation": "The same control has the same effect in every observed state.", "outcomes": {}},
-            {"mechanism_id": "rule_b", "explanation": "The effect depends on the exposed mode.", "outcomes": {}},
-            {"mechanism_id": "rule_c", "explanation": "A second state-conditioned rule fits the observations.", "outcomes": {}},
-            {"mechanism_id": "rule_d", "explanation": "The first no-change record was not representative.", "outcomes": {}},
-        ]
-    else:
-        descriptions = {
-            "click_grounding": ("The click affects only the exact marked coordinate.", "The click is ineffective in this state."),
-            "movement_constraints": ("A barrier blocks the path despite an otherwise legal movement.", "The earlier action was unavailable, while a different legal direction can move."),
-            "delayed_effects": ("The action schedules a later visible change.", "The action can be followed by an unrelated later change."),
-            "transient_effects": ("The action briefly changes the frame and then restores it.", "A separate frame refresh caused the temporary difference."),
-            "object_correspondence": ("The later action still addresses the same moving object.", "A visually similar region may be a replacement object."),
-            "state_dependence": ("The click works in either exposed mode.", "The click works only in the active mode."),
-            "coordinate_specificity": ("The effect is tied to one exact coordinate.", "The effect also applies to nearby coordinates."),
-        }
-        first, second = descriptions[family]
-        mechanisms = [
-            {"mechanism_id": "rule_a", "explanation": first, "outcomes": {}},
-            {"mechanism_id": "rule_b", "explanation": second, "outcomes": {}},
-        ]
-
-    for mechanism in mechanisms:
-        for record in history:
-            if record["dispatch_status"] == "acknowledged":
-                mechanism["outcomes"][query_key(record["action"], record["pre_observation"])] = record["observed_outcome"]
-
     proposal_context = copy.deepcopy(current)
-    proposal_key = query_key(proposal, proposal_context)
-    if family == "contradiction":
-        first_record, second_record = history
-        mechanisms[0]["outcomes"][query_key(second_record["action"], second_record["pre_observation"])] = "no_change"
-        mechanisms[3]["outcomes"][query_key(first_record["action"], first_record["pre_observation"])] = "changed"
-        mechanisms[0]["outcomes"][proposal_key] = proposal_outcomes[0]
-        mechanisms[1]["outcomes"][proposal_key] = proposal_outcomes[0]
-        mechanisms[2]["outcomes"][proposal_key] = proposal_outcomes[1]
-        mechanisms[3]["outcomes"][proposal_key] = proposal_outcomes[1]
+    underdetermined = index in (0, 2)
+    if underdetermined:
+        pair = (("changed", "no_change"), ("delayed_change", "transient_change"))[(family_index + index // 2) % 2]
     else:
-        mechanisms[0]["outcomes"][proposal_key] = proposal_outcomes[0]
-        mechanisms[1]["outcomes"][proposal_key] = proposal_outcomes[1]
+        outcome = OUTCOMES[(family_index // 4) * 2 + (family_index % 4) // 2]
+        pair = (outcome, outcome)
+    mechanisms = _hypotheses(family, family_index, index, pair)
 
     return {
         "scenario_id": f"S{FAMILIES.index(family) + 1:02d}-{index + 1:02d}",
@@ -197,6 +239,7 @@ def all_scenarios():
 def public_scenario(scenario):
     public = {key: copy.deepcopy(value) for key, value in scenario.items()
               if key not in {"scenario_id", "split", "family", "mechanisms"}}
+    public["candidate_hypotheses"] = copy.deepcopy(scenario["mechanisms"])
     for record in public["history"]:
         record.pop("observed_outcome", None)
     return public

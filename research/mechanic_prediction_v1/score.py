@@ -62,11 +62,15 @@ def _rate(numerator, denominator):
 
 
 def shortcut_report(scenarios, keys):
-    from research.mechanic_prediction_v1.shortcuts import SHORTCUTS, response
+    from research.mechanic_prediction_v1.shortcuts import SHORTCUTS, fit_position_only, response
 
     reports = {}
+    development_scenarios = [scenario for scenario in scenarios if scenario["split"] == "development"]
+    position_map = fit_position_only(development_scenarios, keys)
     for shortcut in SHORTCUTS:
-        outputs = {scenario["scenario_id"]: response(scenario, shortcut) for scenario in scenarios}
+        outputs = {scenario["scenario_id"]: (response_position(scenario, position_map)
+                                               if shortcut == "position_only" else response(scenario, shortcut))
+                   for scenario in scenarios}
         summary = score(scenarios, keys, outputs)
         rows = {row["scenario_id"]: row for row in summary["scenario_rows"]}
         evaluation_ids = {scenario_id for scenario_id, row in rows.items()
@@ -81,4 +85,14 @@ def shortcut_report(scenarios, keys):
     strongest = max(SHORTCUTS, key=lambda name: reports[name]["development_summary"]["prediction_accuracy_on_determinable"] or 0)
     return {"shortcuts": reports, "strongest_declared_shortcut": strongest,
             "strongest_wrong_determinable_scenarios": reports[strongest]["wrong_determinable_scenarios"],
-            "strongest_selection_split": "development", "strongest_evaluation_summary": reports[strongest]["evaluation_summary"]}
+            "strongest_selection_split": "development", "strongest_evaluation_summary": reports[strongest]["evaluation_summary"],
+            "position_only_fit_scope": "development_split_only", "position_only_fit_positions": len(position_map)}
+
+
+def response_position(scenario, position_map):
+    from research.mechanic_prediction_v1.shortcuts import _acknowledged, position_key
+
+    status, category = position_map.get(position_key(scenario), ("determined", "no_change"))
+    records = _acknowledged(scenario)
+    evidence_ids = [records[-1]["record_id"]] if records else [scenario["history"][-1]["record_id"]]
+    return {"prediction": category, "evidence_ids": evidence_ids, "status": status}

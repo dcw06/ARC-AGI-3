@@ -15,6 +15,7 @@ from research.mechanic_prediction_v1 import shortcuts
 
 REQUEST_BYTE_CEILING = 16_384
 ARMS = ("reference", "candidate")
+TEXT_SUFFIXES = {".css", ".html", ".js", ".json", ".md", ".py", ".toml", ".yaml", ".yml"}
 
 
 def canonical_bytes(value):
@@ -23,6 +24,15 @@ def canonical_bytes(value):
 
 def sha256(value):
     return hashlib.sha256(canonical_bytes(value)).hexdigest()
+
+
+def portable_file_bytes(path):
+    """Return clean-checkout bytes independent of Windows CRLF worktree settings."""
+    path = Path(path)
+    data = path.read_bytes()
+    if path.suffix.lower() in TEXT_SUFFIXES:
+        return data.replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return data
 
 
 def _public_artifact(scenarios):
@@ -177,7 +187,7 @@ def write_review_package(repo_root=None, output_dir=None):
         "reports/mechanic_prediction_v1/shortcut_report.md",
         "reports/mechanic_prediction_v1/cpu_test_receipt.json",
     ]
-    files = {name: hashlib.sha256((repo_root / name).read_bytes()).hexdigest()
+    files = {name: hashlib.sha256(portable_file_bytes(repo_root / name)).hexdigest()
              for name in include if (repo_root / name).is_file()}
     manifest = {
         "status": "ready_for_independent_review",
@@ -193,8 +203,9 @@ def write_review_package(repo_root=None, output_dir=None):
     archive_path = output_dir.parent / "mechanic_prediction_v1_gpu_disabled_review.zip"
     with zipfile.ZipFile(archive_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
         for name in files:
-            archive.write(repo_root / name, arcname=name)
-        archive.write(manifest_path, arcname="reports/mechanic_prediction_v1/gpu_disabled_review/review_manifest.json")
+            archive.writestr(name, portable_file_bytes(repo_root / name))
+        archive.writestr("reports/mechanic_prediction_v1/gpu_disabled_review/review_manifest.json",
+                         portable_file_bytes(manifest_path))
     return {"status": manifest["status"], "file_count": len(files), "archive": str(archive_path)}
 
 

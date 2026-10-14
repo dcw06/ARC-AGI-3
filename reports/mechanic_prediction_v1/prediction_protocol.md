@@ -6,10 +6,10 @@ Status: offline protocol specification; not an execution authorization.
 
 | Arm | Receives |
 | --- | --- |
-| Reference | Common system instructions, evidence, proposed action, response schema |
-| Candidate | Byte-identical user evidence/question/schema plus a short procedure to compare explanations and preserve uncertainty |
+| Reference | Common system instructions, raw evidence, the complete visible candidate-hypothesis rules, proposed action, response schema |
+| Candidate | Byte-identical user evidence/question/schema and candidate-hypothesis rules, plus a short procedure to test compatibility and preserve uncertainty |
 
-The candidate procedure does not enumerate the scenario's correct explanations or answer. Model, model revision, tokenizer, chat template, and actual model tokenization remain unresolved and must be locked before any call. Do not run an arm until an independent review and separate resource authorization are recorded.
+The finite rule set is visible and identical in both arms; it contains no oracle compatibility flags or answer label. The candidate procedure does not add hypotheses or reveal the key. This isolates rule checking/prediction from latent hypothesis discovery, which is outside this protocol. Model, model revision, tokenizer, chat template, and actual model tokenization remain unresolved and must be locked before any call. Do not run an arm until an independent review and separate resource authorization are recorded.
 
 ## Matched Request Constants
 
@@ -34,7 +34,7 @@ Rendered request sizes are currently 2,563-3,414 UTF-8 bytes (mean 2,907.375) ag
 
 `unknown` must pair with `not_determined`; a determined category must pair with `determined`. Evidence references must exist in the rendered history, be unique, and be supported by acknowledged records. Invalid JSON or schema output is rejected without repair.
 
-The proposed transition is never included in the request. Answers are evaluated against full returned-frame sequences, not only the final frame. Dispatch failure and unknown outcome are not no-change observations.
+The proposed transition is never included in the request. Every supplied hypothesis consists of ordered action-ID, mode, and coordinate-relation rules plus a default category; both answer keys execute those rules against the visible history and proposed action. Answers are evaluated against full returned-frame sequences, not only the final frame. Dispatch failure and unknown outcome are not no-change observations.
 
 ## Analysis
 

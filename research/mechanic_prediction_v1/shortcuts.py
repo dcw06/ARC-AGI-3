@@ -5,7 +5,7 @@ from research.mechanic_prediction_v1.fixtures import visible_outcome
 SHORTCUTS = (
     "repeat_last_observed_outcome", "ignore_coordinates", "assume_available_means_effective",
     "failed_dispatch_means_no_change", "final_frame_only", "always_no_change",
-    "always_unknown", "most_recent_rule_everywhere",
+    "always_unknown", "most_recent_rule_everywhere", "position_only",
 )
 
 
@@ -20,6 +20,28 @@ def _last_category(scenario):
         return "no_change"
     record = records[-1]
     return visible_outcome(record["pre_observation"]["frames"][-1], record["returned_frames"])
+
+
+def position_key(scenario):
+    grid = scenario["initial_observation"]["frames"][-1]
+    cells = [(x, y) for y, row in enumerate(grid) for x, value in enumerate(row) if value == 1]
+    if not cells:
+        raise ValueError("position-only baseline needs a visible marker")
+    return min(x for x, _ in cells), min(y for _, y in cells)
+
+
+def fit_position_only(development_scenarios, keys):
+    """Fit a majority label from visible marker position using development only."""
+    from collections import Counter
+
+    counts = {}
+    for scenario in development_scenarios:
+        key = keys[scenario["scenario_id"]]
+        category = key["prediction"] if key["status"] == "determined" else "unknown"
+        label = (key["status"], category)
+        counts.setdefault(position_key(scenario), Counter())[label] += 1
+    return {position: max(sorted(labels), key=lambda label: labels[label])
+            for position, labels in counts.items()}
 
 
 def _category(scenario, name):
@@ -59,6 +81,8 @@ def _category(scenario, name):
 def response(scenario, shortcut):
     if shortcut not in SHORTCUTS:
         raise ValueError("unknown shortcut baseline")
+    if shortcut == "position_only":
+        raise ValueError("position-only baseline needs development-fitted labels")
     category = _category(scenario, shortcut)
     records = _acknowledged(scenario)
     evidence_ids = [records[-1]["record_id"]] if records else [scenario["history"][-1]["record_id"]]
