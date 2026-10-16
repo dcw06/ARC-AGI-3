@@ -166,8 +166,10 @@ Full-job GPU-cap enforcement remains unresolved.
 and [design r1](reports/internvl_object_identification_v1_protocol_r1.md) now bind the six-request
 worker/supervisor/replay candidate. A tiny synthetic checkpoint load/generate check and six-prompt
 token audit pass; 77 Linux tests pass. The private packet rebuilds identically and refuses before
-GPU queries; scoped-use approval is a draft. Provider cap confirmation, exact live-package approval
-and fresh GPU authority remain outstanding. No pretrained image response or object score exists.
+GPU queries. The owner approved scoped private use and the proposed GPU scope; a pending
+local reservation is recorded. The provider cap remains unverified and the final live
+artifact is not yet built/bound, so the reservation is inactive and no GPU was launched.
+No pretrained image response or object score exists.
 
 ## Source snapshot
 

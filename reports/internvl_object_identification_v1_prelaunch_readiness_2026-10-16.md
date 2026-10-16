@@ -15,7 +15,7 @@ during this preparation. Both earlier CPU attempts remain consumed and preserved
 | Actual prompt/token audit | Passed locally for all six inputs: 601 prompt tokens each, including 256 image-context tokens; EOS 151645; 601+4096 fits the pinned 40,960-token context; no weights loaded |
 | Linux regressions | 77 tests passed, no failures/skips: original probe/privacy/mount/install/finalization groups plus twelve inference/admission/replay/refusal tests |
 | Private review candidate | Built and audited: all artifact/source hashes match, independent rebuild byte-identical, exact image/dataset bindings and retained CPU evidence; notebook and supervisor refuse before GPU queries or model imports |
-| Licence/use packet | Draft prepared privately: 23 retained wheel-use texts, two model licence texts and timm licence, with hashes/provenance; account-only facts carried over; new permission outcome and reconfirmation left blank |
+| Licence/use packet | Prepared privately: 23 retained wheel-use texts, two model licence texts and timm licence, with hashes/provenance. The owner subsequently approved scoped private use; approval is retained separately and the locked draft remains unchanged. |
 
 The candidate notebook is GPU/TPU/internet off and contains a first-cell refusal.
 It is a review artifact, **not the final executable live notebook**. The full worker,
@@ -27,8 +27,13 @@ changed live artifact automatically.
 | Still required | Why this cannot be marked complete |
 |---|---|
 | Provider-enforced whole-job cap | The owner's requirement is 3,600 s from GPU allocation through release, including setup and mounts. The [official CLI reference](https://github.com/Kaggle/kaggle-cli/blob/main/skills/references/kernels.md) documents a runtime timeout, without establishing this full coverage. No provider confirmation is retained. The [support request](internvl_object_identification_v1_platform_cap_support_request.md) is ready and remains unsent. |
-| Scoped-use outcome and exact live source approval | The current private draft is reviewable, but historical CPU/Qwen approvals are not a new permission decision or approval of changed GPU source/configuration. |
-| Fresh GPU authorization and one-use claim | One RTX PRO 6000, ≤3,600 s full-job cap, ≤6 generations, ≤24,576 generated tokens, zero actions/scorecards, one attempt and no retries are proposed; none is authorized for this test. A fresh read-only availability/configuration preflight follows approval. |
+| Final live source binding | The owner approved scoped use and the reviewed candidate. No final operational live artifact exists yet, so no approval of its exact hash can be claimed. The operational release must be bound and reviewed after provider enforcement is established. |
+| Effective GPU authorization and one-use claim | The owner approved the proposed scope: one RTX PRO 6000, ≤3,600 s entire-job cap, ≤6 generations, ≤24,576 generated tokens, zero actions/scorecards, one attempt, no retries. A local reservation is held pending provider-cap proof and final artifact binding. It allocates no hardware, is unconsumed, and is not a launch claim. A fresh read-only availability/configuration preflight is still required. |
+
+The approval is bound to the existing private review-only candidate and retained
+verbatim outside it. It does not waive the provider cap or certify a nonexistent
+final live artifact. No live-authority bundle was created, no provider call was made,
+and no attempt was submitted or consumed by recording approval.
 
 This test's full pretrained checkpoint loading and GPU execution remain untested;
 the real attempt would exercise them. No pre-test GPU trial is authorized. The

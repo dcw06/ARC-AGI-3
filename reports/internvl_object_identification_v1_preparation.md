@@ -307,6 +307,9 @@ have 601 tokens including 256 image-context tokens; no real image was inferred. 
 combined Linux group passes 77 tests with no failures/skips, and the candidate rebuilds
 byte-identically. No new provider call, upload, approval, reservation or GPU job occurred.
 
-Remaining are provider confirmation of the full-job cap, scoped-use/live-package review
-and fresh GPU authorization/claim. The current candidate is not a final live notebook;
-its operational release must be reviewed once the provider mechanism is known.
+The owner has approved scoped use, the reviewed candidate and the proposed GPU
+budget. Those records are retained separately from the immutable candidate. A local
+reservation is pending; no hardware is allocated. Provider-cap proof and final live
+artifact/authority binding remain outstanding. The current candidate is not a final
+live notebook; its operational release must be reviewed once the provider mechanism
+is known. No launch claim or submission was made.
