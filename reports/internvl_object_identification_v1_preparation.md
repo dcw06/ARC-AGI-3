@@ -1,8 +1,8 @@
 # InternVL3.5-8B: object and obstacle-candidate identification probe
 
-Updated October 16, 2026. One private CPU byte-verification job completed; a separate
-owner-approved CPU installation check was submitted once and is running. No pretrained-model
-result or GPU run.
+Updated October 16, 2026. Both the private CPU byte-verification job and the separate
+owner-approved CPU installation check completed successfully, once each. No pretrained-model
+identification result or GPU run. [CPU installation results](internvl_object_identification_v1_cpu_install_results.md).
 
 ## Question and evidence limits
 
@@ -50,7 +50,7 @@ Optional FlashAttention/Apex imports are not treated as mandatory dependencies.
 | Actual board preprocessing | All six images yield finite `[1,3,448,448]` BF16 tensors; previews and tensor hashes retained; images were not passed through the model |
 | Local model bytes | All 24 files match the pinned publisher tree; this is not a Kaggle mounted-byte receipt |
 | Checkpoint structure and tokenizer | All 745 indexed BF16 tensors present across four shards; embedding dimensions agree with config; tokenizer/image-token IDs load offline and fit the vocabulary |
-| Exact Kaggle image | Byte-verification job's saved configuration matches the immutable image; isolated installation remains untested there |
+| Exact Kaggle image | Both CPU jobs' saved configurations match the immutable image; isolated hash-pinned installation and tiny CPU model rehearsal passed there |
 | CUDA kernels and full checkpoint loading | Not validated; the local rehearsal uses CPU wheels and synthetic weights |
 
 One full-frame tile is the proposed input policy; it differs from the publisher's default
@@ -169,13 +169,13 @@ SHA256, including all 174 existing publisher wheels and their three metadata fil
 | Model source bytes | Private model version 1 requested; all 27 mounted files match the reviewed hashes, including 24 unchanged pinned upstream files |
 | Input attachment | Private version 2 requested; all 12 mounted files match the corrected input inventory |
 | Original publisher wheels | All 174 mounted wheel hashes and three metadata hashes match the unchanged trusted inputs |
-| Exact target runtime | Image binding and mounted bytes verified; separate isolated installation check submitted once, result pending; full loading and GPU compatibility unverified |
+| Exact target runtime | Isolated installation, all 175 package versions, tokenizer/classes and tiny CPU model execution pass on the pinned Kaggle image; full loading and GPU compatibility unverified |
 | Enforced 3,600-second entire-job cap | Unresolved; owner reports no provider confirmation |
 | GPU launch package and authority | Not prepared or approved; probe review notebook always refuses; separate CPU-only verification completed once |
 
-Actual inference remains blocked until the private model/input attachments and compatible
-runtime are verified, and provider enforcement covers the entire GPU job, including mounting
-and platform setup. The installed ordinary-notebook API does send a session timeout, but
+Mounted bytes and isolated CPU installation are verified. Actual pretrained inference still
+needs a reviewed GPU runtime/package and provider enforcement covering the entire GPU job,
+including mounting and platform setup. The installed ordinary-notebook API sends a session timeout, but
 does not define its pre-cell coverage or GPU-release bound. A worker deadline or a timeout
 field alone does not establish the owner's requirement. This is distinct from the earlier
 scored-rerun timeout-inheritance question.
@@ -187,8 +187,9 @@ Keep the run account-holder-only. Any launch package must bind its exact source,
 total requests including runtime checks, fresh authorization and single-use attempt record.
 The six study requests do not silently include unbudgeted canaries or polling.
 
-The next step is source/runtime and full-job-cap validation, not an attempted GPU launch to
-discover whether a cap works. Existing consumed attempts and prior study results stay intact.
+Next are provider-cap confirmation and preparation/review of the GPU inference package.
+CPU checks do not establish full checkpoint loading or GPU behavior. Existing consumed
+attempts and prior study results stay intact.
 
 The separate Linux CPU byte checker in `research/object_identification_v1/mount_check.py`
 uses only the standard library. It checks exact inventories, rejects symlinks and unsafe
@@ -241,13 +242,14 @@ an assertion that the timeout covers provider setup.
 - The pinned image reports Python 3.12.13/glibc 2.35 and host package metadata for
   Transformers 5.0.0, timm 1.0.26 and torch 2.10.0+cu128. The proposed isolated runtime
   pins Transformers 4.57.6 and timm 1.0.20; the host environment must not be treated as
-  that validated environment. A separate installation/import check is still required.
+  that validated environment. The separate installation/import check subsequently passed
+  with all 175 versions matched; see the completed-check section below.
 - Pretrained study calls: **0**. Game actions: **0**. GPU jobs: **0**. One separately
   approved CPU byte-verification notebook was submitted and completed. The
   original preflight refusal sent no save and consumed no compute attempt; the first
   actual submission is preserved and cannot be retried automatically.
 
-## CPU installation check (authorized; submitted once; result pending)
+## CPU installation check (completed once; passed)
 
 The completed byte-only authorization is consumed. It did not authorize installs.
 The owner approved the new private packet for one additional CPU-only job, with GPU, TPU and
@@ -258,8 +260,11 @@ Execution sent exactly one guarded save, accepted as version 1 with no rejected
 sources or provider error. Read-back confirmed the exact reviewed source and image,
 private access, accelerator `None`, GPU/TPU/internet off and the three attachment
 identities. The provider generated the notebook slug from its approved title; the
-returned identity is retained privately. Status is RUNNING; there is no installation
-pass verdict yet. The attempt is consumed and will not be retried automatically.
+returned identity is retained privately. Final status is COMPLETE. Independent collection
+and re-audit verify the final witness and cleanup; all 216 mounted hashes and 175 package
+versions match. The worker took 423.856 seconds (7m 4s), including environment removal
+and receipt writing, rather than total provider job time. The attempt is consumed and
+will not be retried automatically. [Retained result summary](internvl_object_identification_v1_cpu_install_results.md).
 
 | Stage | Bound behavior |
 |---|---|
@@ -268,7 +273,7 @@ pass verdict yet. The attempt is consumed and will not be retried automatically.
 | Dependencies | Unchanged 174 hash-pinned original wheels plus the separately pinned timm wheel; no index/cache, binary-only installation; pip check and all 175 distribution versions must match |
 | Model code | Import the pinned InternVL classes and unchanged tokenizer; one tiny random-weight CPU forward with synthetic input; six real images are preprocessed only |
 | Scope | No pretrained-weight loading, study/model requests, game actions or scorecards; account-only notebook and raw evidence |
-| Proposed budget | Session-runtime timeout 1,800 s; worker 1,700 s, including 120 s reserved for cleanup; one attempt, no automatic retries |
+| Approved budget | Requested session-runtime timeout 1,800 s; worker 1,700 s, including 120 s reserved for cleanup; one attempt, no automatic retries |
 | Cleanup and verdict | Own/reap installation and import-check process groups; remove temporary venv/cache before the final deadline checks; receipt remains provisional until independent collection verifies provider COMPLETE and the post-write cell-output witness |
 
 The source extraction is retained as reviewed evidence. Temporary installation files are

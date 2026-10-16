@@ -144,8 +144,9 @@ whole-region/part localization scoring and obstacle candidates explicitly distin
 behavior. The model revision is pinned; public code uses synthetic tests and private references stay git-ignored.
 The timm supplement is now hash-pinned, a tiny random-model CPU rehearsal passes, and all 24 pinned model files
 (17.07 GB) are verified locally. All six actual images pass preprocessing checks; no pretrained inference result
-is available. The chosen Kaggle route retains the enforced one-hour full-job cap. Exact Kaggle runtime validation,
-provider enforcement and inference-runtime validation remain unresolved. The corrected input
+is available. The chosen Kaggle route retains the enforced one-hour full-job cap. Isolated installation
+and CPU execution pass on the pinned Kaggle image; provider enforcement, full checkpoint loading and
+GPU inference remain unverified. The corrected input
 dataset is private and ready at version 2 (version 1 preserved); private model version 1 is also ready. Provider
 privacy/name/size checks pass. The owner-approved CPU-only check completed once: **216 mounted file hashes match**,
 including all 174 original wheels; worker verification took **185.1 s**. Reviewed source/private/offline/accelerator
@@ -155,8 +156,11 @@ A support question is drafted but not sent; no GPU job or pretrained-model infer
 It rehashes all mounts, installs the unchanged 174 pins plus timm into a fresh offline venv,
 checks dependency versions/imports, and exercises only a tiny random model on CPU. Proposed limit:
 1,800 s session timeout, 1,700 s worker including 120 s cleanup reserve, one attempt, no retries.
-Read-back confirms the exact source/image and CPU/private/offline settings; status is RUNNING,
-with installation and cleanup verdicts pending. The single attempt is consumed, with no retries.
+Read-back confirms the exact source/image and CPU/private/offline settings; final status is COMPLETE.
+All 216 mounted hashes and 175 installed versions match; tiny random-model CPU execution and
+cleanup pass, with a post-write witness and independent audit. Worker time: 423.9 s (7m 4s),
+not total job time. The single attempt is consumed, with no retries.
+[CPU installation results](reports/internvl_object_identification_v1_cpu_install_results.md).
 Full-job GPU-cap enforcement remains unresolved.
 
 ## Source snapshot
