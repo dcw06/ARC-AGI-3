@@ -1,0 +1,80 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Private object boundary review</title>
+<style>
+body{font:16px system-ui;background:#111827;color:#e5e7eb;margin:24px}h1{font-size:25px}h2{font-size:19px}
+.layout{display:grid;grid-template-columns:minmax(300px,480px) minmax(300px,650px);gap:24px}canvas{width:min(100%,448px);height:auto;image-rendering:pixelated;touch-action:none;border:1px solid #9ca3af;cursor:crosshair}
+button,select,input,textarea{font:inherit;padding:7px;margin:5px 3px 5px 0}button{cursor:pointer}input[type=text],textarea{width:95%}textarea{height:75px}
+label{display:block;margin:8px 0}p{line-height:1.45}#coords{font-family:monospace;min-height:24px}#message{color:#fcd34d;min-height:24px}.note{color:#cbd5e1;font-size:14px}section{background:#1f2937;padding:16px;border-radius:10px}#objects{width:100%}
+@media(max-width:850px){.layout{grid-template-columns:1fr}body{margin:12px}}
+</style>
+<h1>Review exact object cells — six development boards</h1>
+<p>This is a private reference-label editor. No model predictions are shown. Existing target rectangles are drafts for this new boundary study.
+Use the mouse to inspect (x,y), paint cells, or add connected color fragments to a multicolor object. Save progress by exporting the review file.</p>
+<div id="message"></div><label>Board <select id="frames"></select></label><p id="progress"></p>
+<div class="layout"><section>
+<canvas id="board" width="448" height="448"></canvas><p id="coords">Hover to see board coordinates</p>
+<label>Editing tool <select id="tool"><option value="inspect">Inspect only</option><option value="add">Paint cells</option><option value="erase">Erase cells</option><option value="componentAdd">Add edge-connected color region</option><option value="componentErase">Remove edge-connected color region</option></select></label>
+<button id="undo">Undo mask edit</button><button id="original">Restore source mask</button>
+<label><input id="overlay" type="checkbox" checked>Show selected mask</label>
+<p id="maskInfo"></p><p class="note">The displayed image is unchanged. Green cells are the selected label; white edge cells show its boundary. Diagonal contact alone does not join color fragments. Neither this overlay nor the labels will be given to the discovery model.</p>
+</section><section>
+<h2>Objects and parts</h2><select id="objects" size="8"></select><button id="addObject">Add missing object / part</button>
+<p id="identity"></p><label>Label <input id="label" type="text"></label>
+<label>Parent object <select id="parent"></select></label>
+<label>Reference disposition <select id="disposition"><option value="include">Include as visible object / part</option><option value="ignore">Ignore under the inventory policy</option><option value="ambiguous">Ambiguous — preserve for review</option></select></label>
+<label>Membership / hole / grouping notes <textarea id="notes"></textarea></label>
+<button id="confirmMask">I reviewed this object's cells and disposition</button><p id="reviewStatus"></p>
+<label>Frame inventory policy <textarea id="policy"></textarea></label>
+<label>Reviewer label <input id="reviewer" type="text" placeholder="Your name or reviewer label"></label>
+<label><input id="exhaustive" type="checkbox">I reviewed all visible objects under this policy; this inventory is complete</label>
+<p class="note">Completeness requires every region reviewed and no unresolved ambiguous region. Whole objects and parts are scored separately. This records your reference review, not agent success.</p>
+</section></div>
+<p><button id="export">Download review JSON</button><button id="import">Import saved review JSON</button><input id="file" type="file" accept="application/json" hidden></p>
+<p class="note">Changes are backed up in this browser when local storage is available. Download JSON to retain a portable copy. No network writes, model calls or game actions occur here.</p>
+<script>
+const BOOT=__BOUNDARY_REVIEW_DATA__, initial=structuredClone(BOOT.review),palette=BOOT.palette;
+const $=id=>document.getElementById(id),key='arc3-boundary-review/'+initial.source_preparation_manifest_sha256;
+let doc=structuredClone(initial),fi=0,ri=0,painting=false,undo=[];
+function checkImport(value){if(value.schema!==initial.schema||value.source_preparation_manifest_sha256!==initial.source_preparation_manifest_sha256||!Array.isArray(value.frames)||value.frames.length!==initial.frames.length)throw Error('Different review/source schema');
+for(let i=0;i<initial.frames.length;i++){const f=value.frames[i],old=initial.frames[i];if(f.case_id!==old.case_id||f.grid_sha256!==old.grid_sha256||JSON.stringify(f.grid)!==JSON.stringify(old.grid)||!Array.isArray(f.regions)||f.regions.length>256)throw Error('Frame/source grid changed');
+const ids=new Set();for(const r of f.regions){if(typeof r.id!=='string'||!r.id||ids.has(r.id)||!Array.isArray(r.cells))throw Error('Invalid object identity/mask');ids.add(r.id);const seen=new Set();for(const p of r.cells){if(!Array.isArray(p)||p.length!==2||p.some(v=>!Number.isInteger(v)||v<0||v>=64)||seen.has(p.join(',')))throw Error('Invalid/duplicate cell');seen.add(p.join(','));}}
+}}
+try{const saved=localStorage.getItem(key);if(saved){const value=JSON.parse(saved);checkImport(value);doc=value;$('message').textContent='Restored this browser’s saved draft. Export it to retain a portable copy.';}}catch(e){$('message').textContent='Browser draft not restored: '+e.message;}
+const frame=()=>doc.frames[fi],region=()=>frame().regions[ri];
+function save(){try{localStorage.setItem(key,JSON.stringify(doc));}catch(e){$('message').textContent='Browser backup unavailable. Download JSON to save progress.';}}
+function invalidate(){region().mask_reviewed=false;frame().reference_exhaustive_confirmed=false;save();}
+function option(select,value,text){const o=document.createElement('option');o.value=value;o.textContent=text;select.append(o);}
+function cellSet(){return new Set(region().cells.map(p=>p.join(',')));}
+function setCells(values){region().cells=[...values].map(v=>v.split(',').map(Number)).sort((a,b)=>a[1]-b[1]||a[0]-b[0]);invalidate();render();}
+function remember(){undo.push(structuredClone(region().cells));if(undo.length>50)undo.shift();}
+function draw(){const c=$('board').getContext('2d'),f=frame(),s=cellSet();c.clearRect(0,0,448,448);
+for(let y=0;y<64;y++)for(let x=0;x<64;x++){c.fillStyle='rgb('+palette[f.grid[y][x]].join(',')+')';c.fillRect(x*7,y*7,7,7);}
+if($('overlay').checked){c.fillStyle='rgba(40,255,90,.35)';for(const v of s){const[x,y]=v.split(',').map(Number);c.fillRect(x*7,y*7,7,7);}
+c.strokeStyle='rgba(255,255,255,.8)';c.lineWidth=1;for(const v of s){const[x,y]=v.split(',').map(Number);for(const[dx,dy,ax,ay,bx,by]of [[-1,0,0,0,0,7],[1,0,7,0,7,7],[0,-1,0,0,7,0],[0,1,0,7,7,7]])if(!s.has([x+dx,y+dy].join(','))){c.beginPath();c.moveTo(x*7+ax,y*7+ay);c.lineTo(x*7+bx,y*7+by);c.stroke();}}}}
+function render(){const f=frame(),r=region();$('objects').replaceChildren();f.regions.forEach((v,i)=>option($('objects'),i,(v.mask_reviewed?'✓ ':'○ ')+v.label+' · '+v.disposition));$('objects').value=ri;
+$('parent').replaceChildren();option($('parent'),'','Whole / top-level object');f.regions.filter(v=>v.id!==r.id).forEach(v=>option($('parent'),v.id,v.label));$('parent').value=r.parent_id||'';
+$('identity').textContent=r.id+' · original geometry: '+(r.source_geometry||'new annotation');$('label').value=r.label;$('disposition').value=r.disposition;$('notes').value=r.notes||'';
+$('policy').value=f.inventory_policy;$('reviewer').value=f.reviewer||'';$('exhaustive').checked=f.reference_exhaustive_confirmed===true;
+$('reviewStatus').textContent=r.mask_reviewed?'Reviewed by you in this boundary draft.':'Pending boundary review.';
+$('maskInfo').textContent=r.cells.length+' selected cells'+(r.cells.length>1000?' — large mask: check background and gaps.':'');
+$('progress').textContent=f.regions.filter(v=>v.mask_reviewed).length+'/'+f.regions.length+' regions reviewed on this board · '+doc.frames.filter(v=>v.reference_exhaustive_confirmed).length+'/6 inventories confirmed complete';draw();}
+function boardLocation(e){const b=$('board').getBoundingClientRect(),x=Math.floor((e.clientX-b.left)*64/b.width),y=Math.floor((e.clientY-b.top)*64/b.height);return x>=0&&x<64&&y>=0&&y<64?[x,y]:null;}
+function component(x,y){const f=frame(),color=f.grid[y][x],seen=new Set([[x,y].join(',')]),todo=[[x,y]];while(todo.length){const[a,b]=todo.pop();for(const[c,d]of [[a-1,b],[a+1,b],[a,b-1],[a,b+1]])if(c>=0&&c<64&&d>=0&&d<64&&f.grid[d][c]===color&&!seen.has([c,d].join(','))){seen.add([c,d].join(','));todo.push([c,d]);}}return seen;}
+function edit(pos){const mode=$('tool').value;if(!pos||mode==='inspect')return;const s=cellSet(),v=pos.join(',');if(mode==='add')s.add(v);if(mode==='erase')s.delete(v);if(mode==='componentAdd')for(const p of component(...pos))s.add(p);if(mode==='componentErase')for(const p of component(...pos))s.delete(p);setCells(s);}
+$('board').onpointerdown=e=>{if($('tool').value==='inspect')return;remember();painting=true;$('board').setPointerCapture(e.pointerId);edit(boardLocation(e));};
+$('board').onpointermove=e=>{const p=boardLocation(e);if(p)$('coords').textContent=`Board (x,y): (${p[0]}, ${p[1]}) · palette index ${frame().grid[p[1]][p[0]]}`;if(painting&&['add','erase'].includes($('tool').value))edit(p);};
+$('board').onpointerup=()=>painting=false;$('board').onpointercancel=()=>painting=false;$('board').onpointerleave=()=>{if(!painting)$('coords').textContent='Hover to see board coordinates';};
+$('frames').onchange=()=>{fi=Number($('frames').value);ri=0;undo=[];render();};$('objects').onchange=()=>{ri=Number($('objects').value);undo=[];render();};$('overlay').onchange=draw;
+$('undo').onclick=()=>{if(undo.length){region().cells=undo.pop();invalidate();render();}};
+$('original').onclick=()=>{const original=initial.frames[fi].regions.find(v=>v.id===region().id);if(original){remember();region().cells=structuredClone(original.cells);invalidate();render();}};
+$('label').onchange=()=>{region().label=$('label').value;invalidate();render();};$('notes').onchange=()=>{region().notes=$('notes').value;invalidate();render();};
+$('parent').onchange=()=>{const old=region().parent_id;region().parent_id=$('parent').value||null;try{let id=region().parent_id,seen=new Set([region().id]);while(id){if(seen.has(id))throw Error('Parent cycle');seen.add(id);id=frame().regions.find(v=>v.id===id)?.parent_id;}}catch(e){region().parent_id=old;$('message').textContent=e.message;render();return;}invalidate();render();};
+$('disposition').onchange=()=>{region().disposition=$('disposition').value;invalidate();render();};
+$('policy').onchange=()=>{frame().inventory_policy=$('policy').value;frame().reference_exhaustive_confirmed=false;save();render();};$('reviewer').onchange=()=>{frame().reviewer=$('reviewer').value;frame().reference_exhaustive_confirmed=false;save();render();};
+$('confirmMask').onclick=()=>{if(!region().cells.length){$('message').textContent='A reviewed region needs at least one cell; mark irrelevant existing regions ignored.';return;}region().mask_reviewed=true;frame().reference_exhaustive_confirmed=false;save();render();};
+$('exhaustive').onchange=()=>{const f=frame(),ok=f.regions.every(r=>r.mask_reviewed&&r.disposition!=='ambiguous')&&f.reviewer.trim()&&f.inventory_policy.trim();if($('exhaustive').checked&&!ok){$('message').textContent='Review every mask/disposition, resolve ambiguity, and enter reviewer/policy first.';$('exhaustive').checked=false;return;}f.reference_exhaustive_confirmed=$('exhaustive').checked;save();render();};
+$('addObject').onclick=()=>{const f=frame();if(f.regions.length>=256)return;let n=1,id;do{id=f.case_id+'.new-'+n++;}while(f.regions.some(r=>r.id===id));f.regions.push({id,label:'New object',parent_id:null,cells:[],source_geometry:'new',mask_reviewed:false,disposition:'include'});ri=f.regions.length-1;f.reference_exhaustive_confirmed=false;undo=[];save();render();};
+$('export').onclick=()=>{doc.exported_at_utc=new Date().toISOString();const blob=new Blob([JSON.stringify(doc,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='arc3-object-boundary-review.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+$('import').onclick=()=>$('file').click();$('file').onchange=async()=>{try{const file=$('file').files[0];if(!file)return;if(file.size>8000000)throw Error('Review file too large');const value=JSON.parse(await file.text());checkImport(value);doc=value;fi=0;ri=0;undo=[];save();render();$('frames').value=0;$('message').textContent='Imported your review; source grids match.';}catch(e){$('message').textContent=e.message;}};
+doc.frames.forEach((f,i)=>option($('frames'),i,f.case_id+' · '+(f.regions[0]?.id.split('.')[0]||'board')));render();
+</script>

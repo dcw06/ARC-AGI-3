@@ -1,0 +1,67 @@
+{
+  "GPU_jobs": 0,
+  "actual_game_actions": 0,
+  "actual_new_model_calls": 0,
+  "browser_boot_checks": {
+    "GPU_jobs": 0,
+    "coordinates_element": true,
+    "exit_code": 0,
+    "frame_choices": 6,
+    "initial_progress": true,
+    "loopback_HTTP_200": true,
+    "new_model_calls": 0,
+    "review_pending": true,
+    "selected_cells": true
+  },
+  "browser_control_checks": {
+    "add_missing": true,
+    "changed_grid_import_refused": true,
+    "color_component": true,
+    "frame_switch": true,
+    "hover_xy": true,
+    "incomplete_inventory_refused": true,
+    "mask_edit": true,
+    "review_control": true,
+    "undo_invalidates": true
+  },
+  "post_frontend_fix_python_tests": {
+    "already_included_in_distinct_50": true,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 6
+  },
+  "provider_calls": 0,
+  "python_tests": {
+    "errors": 0,
+    "failures": 0,
+    "groups": [
+      "test_object_boundary_reference_audit",
+      "test_object_discovery_boundaries",
+      "test_object_boundary_preparation",
+      "test_molmopoint_identification",
+      "test_molmopoint_point_sequences"
+    ],
+    "skipped": 0,
+    "tests": 50
+  },
+  "qualification": "Synthetic geometry tests and isolated CPU-only browser checks; no discovery/segmentation model performance claim or owner reference approval.",
+  "schema": "object_discovery_boundaries_cpu_validation_v1",
+  "source_sha256": {
+    "research/object_discovery_boundaries_v1/__init__.py": "c9d4cb562039f41307258915a480cec16e377e352b1d5ec30d1d28b602d72d4e",
+    "research/object_discovery_boundaries_v1/decoding.py": "44ccfeff30c179c0618236489caa0559328719e07be02f84d0f80c62b2663dc6",
+    "research/object_discovery_boundaries_v1/evaluation.py": "cc11cb4bdaa1011d70f0550ba34c212deb5ce662f1033ea82dfd8d8db6713f7b",
+    "research/object_discovery_boundaries_v1/masks.py": "dc1976e60ac4f881fd0404b482ae246f53682bc752f07d417b087302ad3614ad",
+    "research/object_discovery_boundaries_v1/prepare.py": "c4014000a1b9c2f613370171e645730de8c861b7bc6813663749deed02e9c6fa",
+    "research/object_discovery_boundaries_v1/reference_audit.py": "820a3097ac8dcbdae740ff147758d9f05fcb94332e123696b697a45b22fa49d8",
+    "research/object_discovery_boundaries_v1/scoring.py": "36219110e1de4f48902edd31cdd92bb84af2f6d4e898319960ff02f554eb5732",
+    "scripts/audit_object_boundary_references.py": "7ce785fe41e1adaf82e1f713a4c3eb22fb3e7dfb122677376915b34e4d11a6fd",
+    "scripts/build_object_boundary_review.py": "29bb7734c365f1331a4ab0abf9354d7abf487922ecdca1f729a94c491209a361",
+    "scripts/evaluate_object_boundaries.py": "51847397a44d9fafdbcb84799b63efccd2008bad8662a1c8ab28bf4b3a81c721",
+    "scripts/object_boundary_review.html": "574c1f2703838789890a5f677edc2eb442bc1cac439f0cca7083e075679c48ef",
+    "scripts/prepare_object_discovery_boundaries.py": "fb67c732725ce25b7d5924d7294ab55a608848942a94b2f523da399f1716146c",
+    "tests/test_object_boundary_preparation.py": "5de2dd7b92ee61db1f6914b52051784d91f22c2cc7d1489db2b93b416f658595",
+    "tests/test_object_boundary_reference_audit.py": "1f79561ab295f3552ebf40a949f2024bd23190c2c22159bbb960a3996a4caef9",
+    "tests/test_object_discovery_boundaries.py": "81dd0e3cacd7967bfa49dbf65f4226e2f33ea92f32665f0d3d56660dc5755883"
+  }
+}

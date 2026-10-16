@@ -20,10 +20,11 @@ six-call authorization is consumed and cannot cover this study.
 | Hierarchy | The same visible evidence | Whole-object/part relationships where the method supports them | Whole objects and parts evaluated separately; parent and child credit never summed as independent discoveries |
 | Output inspection | Retained outputs and private reference masks, after inference | Board overlays and error categories | Missing objects, merged objects, split objects, background leakage and boundary misses remain visible |
 
-**Working assumption for this draft:** independence permits the agent's pixel
-processing tools, while withholding human object hints and answers. The owner
-has been asked whether tools are acceptable or MolmoPoint must supply boundaries
-alone. That choice is not frozen. The reference audit below is useful either way.
+**Working implementation:** following the recommendation and the owner's request
+to continue, independence permits the agent's pixel-processing tools while
+withholding human object hints and answers. This remains a draft design rather
+than a frozen inference protocol. The reference audit is useful under either
+tool-assisted or model-only investigation.
 
 The verified MolmoPoint interface decodes **points**, so a point is not treated
 as a segmentation mask. If tools are allowed, the first transparent boundary
@@ -87,11 +88,14 @@ Before scoring discovery or boundaries:
 | Frozen reference seed + boundary tool, CPU only | Separate boundary diagnostic | Uses privileged seeds; cannot count as independent discovery or agent performance |
 | Later whole-object component grouping, if implemented | Test composite-object extent estimation | Separate condition, fixed procedure; not an unnoticed repair of the first condition |
 
-Keep the native point decoder's fragment, sentinel, coordinate and truncation
-checks. The earlier **single-target scorer must not be reused** for an inventory
-response: several points are expected here. Duplicate/over-cap/malformed masks
-need an explicit new validation contract. Empty detections must stay in the
-denominator. No clipping, nearest-object snapping or test-time retries.
+The new input draft uses six generic whole-object requests, each proposing at
+most 4,096 new tokens and 96 decoded points. Its separate inventory decoder
+preserves full-sequence fragment, sentinel, coordinate and truncation checks.
+The completed single-target decoder keeps its original 1,024-token contract.
+The single-target scorer is not reused. Mask validation rejects invalid or
+duplicate cells, empty individual masks, duplicate IDs and more than 96 objects.
+Duplicate detections with distinct IDs remain and cannot earn repeated credit.
+Empty inventories remain in the denominator. No clipping, snapping or retries.
 
 | Metric | Required interpretation |
 |---|---|
@@ -103,8 +107,10 @@ denominator. No clipping, nearest-object snapping or test-time retries.
 | Merge/split errors | Reported explicitly; a large enclosing mask cannot stand in for several objects |
 | Whole objects vs parts | Separate matching and denominators; no combined 94-object success rate |
 
-For mask association, freeze a one-to-one maximum-IoU matching rule and its
-minimum match threshold before inference. Report per-object macro results and
+The implemented diagnostic matching maximizes eligible one-to-one matches,
+then summed IoU. Its default match threshold is 0.5; this is distinct from an
+advancement criterion and needs confirmation in the frozen protocol.
+Report per-object macro results and
 per-frame/per-game results so large panels cannot hide small-object failures.
 Passing thresholds and the allowed object inventory must be fixed after the
 reference review and before model outputs; this draft supplies no automatic
@@ -131,15 +137,19 @@ then report those same frames as held-out success.
 |---|---|
 | Preserve completed cued-point result and its consumed attempt | Done |
 | Audit retained geometry, masks, hierarchy and source hashes | Implemented and run locally; 5 synthetic audit checks pass |
-| Confirm tools-versus-model-only boundary scope | Owner preference requested; this remains a draft |
+| Tools-versus-model-only boundary scope | Proceeding with recommended model + pixel tools; not a frozen protocol |
 | Complete exact masks and exhaustive inventory review | Outstanding |
 | Freeze prompts, inventory granularity, mask contract, matching and thresholds | Outstanding |
-| Implement the separate discovery worker, mask baseline and evaluator | Outstanding; completed six-target runtime remains unchanged |
-| Rehearse with synthetic missing/split/merged/multicolor/hole cases | Outstanding for the new evaluator |
-| Bound generations, output points, tokens, optional grouping and total lifecycle | Outstanding; do not silently carry the old single-target limits into an inventory run |
+| Prepare separate uncued inputs, inventory decoder, mask baseline and geometric evaluator | Implemented locally; completed six-target runtime remains unchanged |
+| Rehearse synthetic geometry failures and source bindings | 50 relevant Python checks and 9 isolated browser control checks pass |
+| Provide an exact-mask / exhaustive-inventory editor | Implemented: hover coordinates, cell/component editing, hierarchy and JSON export/import |
+| Integrate new model-loading worker, admissions, lifecycle and raw-token replay | Outstanding; geometry scoring alone does not certify a model run |
+| Bound generations, output points, tokens, grouping and lifecycle | Draft proposes six generations × 4,096 tokens and 96 points; full runtime budget and grouping remain unfrozen |
 | Build/review the exact new private package and source/use bindings | Outstanding |
 | Fresh compute authorization, reservation, preflight and one submission | Not authorized by this draft |
 
 No model request, game action, upload or GPU launch occurred while preparing
 this draft. Public artifacts contain methods and aggregate audit counts only;
 boards, masks and detailed audit records stay in the git-ignored workspace.
+
+[Local implementation and review handoff](reports/object_discovery_boundaries_v1_preparation_2026-10-16.md).

@@ -227,10 +227,13 @@ board, find visible objects and produce exact cell masks, with whole objects
 and parts scored separately. A local reference audit found 75 rectangles,
 15 explicit masks and four groups among the 94 existing regions. Exact mask
 membership and exhaustive inventories still need review; current click targets
-must not automatically become boundary ground truth. Five synthetic audit checks
-pass. Tool-assisted versus model-only boundary scope is awaiting the owner's
-preference. The new model worker, evaluator and launch package are not built;
-no additional GPU compute is authorized or launched.
+must not automatically become boundary ground truth. The separate generic inputs,
+inventory decoder, component-mask baseline and geometric scorer are prepared
+locally; 50 relevant Python checks and nine isolated browser control checks pass.
+The private editor provides hover coordinates, exact-mask editing, hierarchy,
+inventory review and JSON export. Work proceeds with model + pixel tools; the
+new GPU worker, lifecycle/replay integration and launch package remain outstanding.
+No additional GPU compute is authorized or launched.
 
 ## Source snapshot
 
