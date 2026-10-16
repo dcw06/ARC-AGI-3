@@ -1,9 +1,10 @@
 """Offline GPU supervisor candidate. Review packages refuse before any GPU query.
 
-This supplies no provider launcher. A later private operational revision needs
-provider-cap evidence, scoped use, fresh source/compute approval and a consumed claim.
+This supplies no provider launcher. Live operation requires the owner's accepted
+session/worker time policy, scoped use, fresh approval and a consumed claim.
 """
 import csv
+from contextlib import contextmanager
 import hashlib
 import json
 import os
@@ -18,7 +19,8 @@ from certification.direct_publisher_smoke_v1.install import InstallationProcesse
 from .install_check import install_commands, requirement_pins
 from .mount_check import canonical, find_mount, verify_files
 
-SCOPE = {'gpu_count': 1, 'gpu_name_contains': 'RTX PRO 6000', 'whole_job_seconds': 3600,
+SCOPE = {'gpu_count': 1, 'gpu_name_contains': 'RTX PRO 6000', 'session_timeout_seconds': 3600,
+         'whole_job_cap_seconds': None, 'provider_overhead_may_exceed_one_hour': True,
          'worker_seconds': 3300, 'work_seconds': 3000, 'cleanup_reserve_seconds': 300,
          'installation_seconds': 900, 'model_load_seconds': 900,
          'per_generation_seconds': 180, 'generation_requests': 6,
@@ -35,9 +37,9 @@ def readiness(protocol, evidence):
     if protocol.get('live_runs_enabled') is not True:
         problems.append('review-only package: live runs disabled')
     if not evidence:
-        problems.append('provider cap, scoped use, approvals and consumed launch claim missing')
+        problems.append('accepted time policy, scoped use, approvals and consumed launch claim missing')
         return problems
-    required = ('provider_cap', 'scoped_use', 'source_approval', 'compute_authorization', 'launch_claim')
+    required = ('time_policy', 'scoped_use', 'source_approval', 'compute_authorization', 'launch_claim')
     for name in required:
         if type(evidence.get(name)) is not dict:
             problems.append(name+' missing')
@@ -47,11 +49,13 @@ def readiness(protocol, evidence):
     for name in required:
         if evidence[name].get('review_lock_sha256') != pin or not pin:
             problems.append(name+' is not bound to this review lock')
-    cap = evidence['provider_cap']
-    if (cap.get('approved') is not True or cap.get('covers_allocation_through_release') is not True
-            or type(cap.get('maximum_seconds')) is not int or not 0 < cap['maximum_seconds'] <= 3600
-            or not cap.get('provider_reply_sha256') or not cap.get('enforcement_configuration_sha256')):
-        problems.append('provider-enforced entire-job cap not established')
+    policy = evidence['time_policy']
+    if (policy.get('approved') is not True or policy.get('accepted_provider_overhead') is not True
+            or type(policy.get('session_timeout_seconds')) is not int or policy['session_timeout_seconds'] != 3600
+            or type(policy.get('worker_seconds')) is not int or policy['worker_seconds'] != 3300
+            or policy.get('provider_full_job_cap_verified') is not False
+            or not policy.get('owner_amendment_sha256')):
+        problems.append('owner-accepted session/worker time policy not established')
     for name in ('scoped_use', 'source_approval', 'compute_authorization'):
         record = evidence[name]
         if record.get('approved') is not True or not record.get('owner_answer'):
@@ -59,7 +63,7 @@ def readiness(protocol, evidence):
     if canonical(evidence['compute_authorization'].get('scope')) != canonical(SCOPE):
         problems.append('compute authorization scope mismatch')
     bound = {name: hashlib.sha256(canonical(evidence[name])).hexdigest()
-             for name in ('provider_cap', 'scoped_use')}
+             for name in ('time_policy', 'scoped_use')}
     if evidence['source_approval'].get('scope_evidence_sha256') != bound:
         problems.append('source approval does not bind current scope evidence')
     if evidence['compute_authorization'].get('source_approval_sha256') != hashlib.sha256(
@@ -82,7 +86,8 @@ def readiness(protocol, evidence):
 
 def verify_packet(packet):
     packet = Path(packet).resolve()
-    raw = (packet/'review-lock.json').read_bytes()
+    runtime_lock = packet/'runtime-lock.json'
+    raw = (runtime_lock if runtime_lock.exists() else packet/'review-lock.json').read_bytes()
     lock = json.loads(raw)
     for name, digest in lock['artifacts'].items():
         path = packet/name
@@ -114,6 +119,22 @@ def finish(result, output, started, deadline):
     return result
 
 
+@contextmanager
+def lifecycle_alarm(deadline):
+    """Keep the worker alarm active through cleanup and final evidence writes."""
+    def expired(*_):
+        raise TimeoutError('inference worker alarm expired')
+    handlers = {s: signal.signal(s, expired) for s in (signal.SIGALRM, signal.SIGTERM, signal.SIGHUP)}
+    previous = signal.setitimer(signal.ITIMER_REAL, max(.001, deadline-time.monotonic()))
+    try:
+        yield
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, 0)
+        for signum, handler in handlers.items():
+            signal.signal(signum, handler)
+        signal.setitimer(signal.ITIMER_REAL, *previous)
+
+
 def run(packet, *, input_root='/kaggle/input', output='/kaggle/working/internvl-object-identification-v1'):
     # Approval checks precede imports of inference/model libraries and GPU commands.
     packet = Path(packet).resolve()
@@ -122,8 +143,8 @@ def run(packet, *, input_root='/kaggle/input', output='/kaggle/working/internvl-
     authority_path = packet/'live-authority.json'
     authority = json.loads(authority_path.read_bytes()) if authority_path.exists() else {}
     problems = readiness(protocol, authority)
-    if authority and authority.get('review_lock_sha256') != pin:
-        problems.append('authority names a different package')
+    if authority and authority.get('runtime_lock_sha256', authority.get('review_lock_sha256')) != pin:
+        problems.append('authority names a different runtime package')
     for digest, relative in authority.get('retained_evidence', {}).items():
         path = packet/relative
         if (path.is_symlink() or not path.resolve().is_relative_to(packet)
@@ -132,6 +153,11 @@ def run(packet, *, input_root='/kaggle/input', output='/kaggle/working/internvl-
     if problems:
         raise SystemExit('REVIEW ONLY: '+'; '.join(problems))
     started = time.monotonic()
+    with lifecycle_alarm(started+3300):
+        return _execute(packet, protocol, authority, pin, input_root, output, started)
+
+
+def _execute(packet, protocol, authority, pin, input_root, output, started):
     deadline, work_deadline = started+3300, started+3000
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)
@@ -142,7 +168,8 @@ def run(packet, *, input_root='/kaggle/input', output='/kaggle/working/internvl-
     if len(pins) != 175:
         raise ValueError('175 unchanged hashed package pins required')
     processes, sandbox, gpu = InstallationProcesses(), None, None
-    result = {'status': 'inference_incomplete', 'review_lock_sha256': pin, 'scope': SCOPE,
+    result = {'status': 'inference_incomplete', 'runtime_lock_sha256': pin,
+              'review_lock_sha256': authority['review_lock_sha256'], 'scope': SCOPE,
               'started_at_monotonic': started, 'work_deadline_monotonic': work_deadline,
               'datasets': {}, 'gpu': None, 'generation_requests': None,
               'game_actions': 0, 'scorecards': 0, 'provider_completion_required': True}
@@ -165,10 +192,7 @@ def run(packet, *, input_root='/kaggle/input', output='/kaggle/working/internvl-
         if len(report.stdout) > 16384:
             raise ValueError('oversized GPU census')
         return [row for row in csv.reader(report.stdout.strip().splitlines()) if row]
-    def expired(*_):
-        raise TimeoutError('inference worker alarm expired')
-    handlers = {s: signal.signal(s, expired) for s in (signal.SIGALRM, signal.SIGTERM, signal.SIGHUP)}
-    old_timer = signal.setitimer(signal.ITIMER_REAL, max(.001, work_deadline-time.monotonic()))
+    signal.setitimer(signal.ITIMER_REAL, max(.001, work_deadline-time.monotonic()))
     try:
         rows = query(['uuid', 'name'])
         if len(rows) != 1 or len(rows[0]) != 2 or 'RTX PRO 6000' not in rows[0][1]:
@@ -207,7 +231,7 @@ def run(packet, *, input_root='/kaggle/input', output='/kaggle/working/internvl-
         failure = error
         result.update(error_type=type(error).__name__, error=str(error)[:1000])
     finally:
-        signal.setitimer(signal.ITIMER_REAL, 0)
+        signal.setitimer(signal.ITIMER_REAL, max(.001, deadline-time.monotonic()))
         try:
             cleanup = processes.stop(deadline)
             result['cleanup'] = cleanup
@@ -229,11 +253,11 @@ def run(packet, *, input_root='/kaggle/input', output='/kaggle/working/internvl-
             failure = failure or error
             result['cleanup_error'] = type(error).__name__+': '+str(error)[:1000]
             # A census started during cleanup must also be terminated after failure.
+            signal.setitimer(signal.ITIMER_REAL, 0)
             result['emergency_cleanup'] = processes.stop(deadline)
         finally:
-            for signum, handler in handlers.items():
-                signal.signal(signum, handler)
-            signal.setitimer(signal.ITIMER_REAL, *old_timer)
+            remaining = deadline-time.monotonic()
+            signal.setitimer(signal.ITIMER_REAL, max(.001, remaining) if remaining > 0 else 0)
     if failure is None and time.monotonic() < deadline:
         result['status'] = 'provisional_complete'
     result['output_sha256'] = {p.relative_to(output).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()

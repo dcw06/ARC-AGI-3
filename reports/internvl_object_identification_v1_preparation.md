@@ -4,6 +4,13 @@ Updated October 16, 2026. Both the private CPU byte-verification job and the sep
 owner-approved CPU installation check completed successfully, once each. No pretrained-model
 identification result or GPU run. [CPU installation results](internvl_object_identification_v1_cpu_install_results.md).
 
+**Current time/launch status:** the owner now accepts a requested 3,600-second session timeout
+and a 3,300-second worker limit, with provider overhead possibly exceeding an hour.
+[Protocol r2](internvl_object_identification_v1_protocol_r2.md) supersedes the historical whole-job
+cap below. The final private live template has passed 84 Linux tests and a byte-identical rebuild;
+[readiness](internvl_object_identification_v1_prelaunch_readiness_2026-10-16.md) records the remaining
+exact-hash approval/preflight steps. No GPU run is authorized or launched by this preparation.
+
 ## Question and evidence limits
 
 Can `OpenGVLab/InternVL3_5-8B` identify and coarsely localize distinct visible objects and
@@ -290,10 +297,10 @@ skips**; the native copy avoids WSL's inability to resolve Windows worktree Git 
 for the repository-privacy test. These checks are not a target-image installation result.
 
 The requested 1,800-second CPU session timeout does not establish provider setup-time
-coverage. The owner's separate enforced 3,600-second **entire GPU job** cap remains
-unresolved; this preparation does not waive it or authorize a GPU attempt.
+coverage. The former entire-job GPU cap was unresolved at that stage. It has now been replaced by
+the owner's session/worker policy in r2; the CPU evidence establishes no entire-job cap.
 
-## Review-only inference candidate (October 16)
+## Historical review-only inference candidate (October 16; superseded by final live template)
 
 The remaining local preparation is recorded in the
 [prelaunch readiness report](internvl_object_identification_v1_prelaunch_readiness_2026-10-16.md)

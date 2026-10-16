@@ -1,5 +1,8 @@
 """Synthetic inference-contract/admission/gating tests; no pretrained weights or GPU."""
 import json
+import signal
+import sys
+import time
 from pathlib import Path
 import tempfile
 from types import SimpleNamespace
@@ -136,30 +139,29 @@ class InferenceContract(unittest.TestCase):
 
 
 class ReviewGate(unittest.TestCase):
-    def test_authority_chain_needs_current_evidence_and_retained_provider_proof(self):
+    def test_authority_chain_needs_current_evidence_and_retained_time_amendment(self):
         pin = 'a'*64
-        cap = {'review_lock_sha256': pin, 'approved': True, 'covers_allocation_through_release': True,
-               'maximum_seconds': 3600, 'provider_reply_sha256': I.digest(b'synthetic provider fixture'),
-               'enforcement_configuration_sha256': I.digest(b'synthetic configuration fixture')}
+        cap = {'review_lock_sha256': pin, 'approved': True, 'accepted_provider_overhead': True,
+               'session_timeout_seconds': 3600, 'worker_seconds': 3300, 'provider_full_job_cap_verified': False,
+               'owner_amendment_sha256': I.digest(b'synthetic owner amendment')}
         use = {'review_lock_sha256': pin, 'approved': True, 'owner_answer': 'synthetic test approval'}
         source = {'review_lock_sha256': pin, 'approved': True, 'owner_answer': 'synthetic test approval',
-                  'scope_evidence_sha256': {'provider_cap': I.digest(I.canonical(cap)),
+                  'scope_evidence_sha256': {'time_policy': I.digest(I.canonical(cap)),
                                             'scoped_use': I.digest(I.canonical(use))}}
         compute = {'review_lock_sha256': pin, 'approved': True, 'owner_answer': 'synthetic test approval',
                    'scope': S.SCOPE, 'source_approval_sha256': I.digest(I.canonical(source))}
         claim = {'review_lock_sha256': pin, 'consumed': True, 'attempt_id': 'synthetic-attempt',
                  'authorization_sha256': I.digest(I.canonical(compute))}
-        evidence = {'review_lock_sha256': pin, 'provider_cap': cap, 'scoped_use': use,
+        evidence = {'review_lock_sha256': pin, 'time_policy': cap, 'scoped_use': use,
                     'source_approval': source, 'compute_authorization': compute, 'launch_claim': claim,
-                    'retained_evidence': {cap['provider_reply_sha256']: 'synthetic-reply.txt',
-                        cap['enforcement_configuration_sha256']: 'synthetic-config.json',
+                    'retained_evidence': {cap['owner_amendment_sha256']: 'synthetic-amendment.txt',
                         compute['source_approval_sha256']: 'synthetic-source.json',
                         claim['authorization_sha256']: 'synthetic-compute.json'}}
         protocol = {'scope': S.SCOPE, 'live_runs_enabled': True}
         self.assertEqual(S.readiness(protocol, evidence), [])
-        evidence['retained_evidence'].pop(cap['provider_reply_sha256'])
+        evidence['retained_evidence'].pop(cap['owner_amendment_sha256'])
         self.assertTrue(S.readiness(protocol, evidence))
-        cap['maximum_seconds'] = 3601
+        cap['accepted_provider_overhead'] = False
         self.assertTrue(S.readiness(protocol, evidence))
 
     def test_disabled_review_refuses_before_process_registry_or_gpu_query(self):
@@ -174,13 +176,21 @@ class ReviewGate(unittest.TestCase):
                 processes.assert_not_called()
             self.assertFalse((root/'result.json').exists())
 
-    def test_boolean_cap_or_timeout_field_does_not_supply_provider_evidence(self):
-        for evidence in ({}, {'provider_cap': {'approved': True, 'session_timeout_seconds': 3600}},
+    def test_timeout_field_does_not_supply_owner_approval(self):
+        for evidence in ({}, {'time_policy': {'approved': True, 'session_timeout_seconds': 3600}},
                          {'review_lock_sha256': 'fake', **{name: {} for name in (
-                             'provider_cap', 'scoped_use', 'source_approval',
+                             'time_policy', 'scoped_use', 'source_approval',
                              'compute_authorization', 'launch_claim')}}):
             with self.subTest(evidence=evidence):
                 self.assertTrue(S.readiness({'scope': S.SCOPE, 'live_runs_enabled': True}, evidence))
+
+    @unittest.skipUnless(sys.platform == 'linux', 'Linux worker alarm required')
+    def test_lifecycle_alarm_interrupts_stalled_finalization_and_restores_handler(self):
+        previous = signal.getsignal(signal.SIGALRM)
+        with self.assertRaisesRegex(TimeoutError, 'worker alarm'):
+            with S.lifecycle_alarm(time.monotonic()+.03):
+                time.sleep(1)
+        self.assertEqual(signal.getsignal(signal.SIGALRM), previous)
 
     def test_artifact_mutation_is_refused(self):
         with tempfile.TemporaryDirectory() as tmp:

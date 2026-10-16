@@ -144,9 +144,9 @@ whole-region/part localization scoring and obstacle candidates explicitly distin
 behavior. The model revision is pinned; public code uses synthetic tests and private references stay git-ignored.
 The timm supplement is now hash-pinned, a tiny random-model CPU rehearsal passes, and all 24 pinned model files
 (17.07 GB) are verified locally. All six actual images pass preprocessing checks; no pretrained inference result
-is available. The chosen Kaggle route retains the enforced one-hour full-job cap. Isolated installation
-and CPU execution pass on the pinned Kaggle image; provider enforcement, full checkpoint loading and
-GPU inference remain unverified. The corrected input
+is available. The owner has amended the Kaggle time policy: requested 3,600-second session timeout and
+a 3,300-second worker limit, accepting provider overhead beyond one hour. Isolated installation
+and CPU execution pass on the pinned Kaggle image; full checkpoint loading and GPU inference remain unverified. The corrected input
 dataset is private and ready at version 2 (version 1 preserved); private model version 1 is also ready. Provider
 privacy/name/size checks pass. The owner-approved CPU-only check completed once: **216 mounted file hashes match**,
 including all 174 original wheels; worker verification took **185.1 s**. Reviewed source/private/offline/accelerator
@@ -161,15 +161,18 @@ All 216 mounted hashes and 175 installed versions match; tiny random-model CPU e
 cleanup pass, with a post-write witness and independent audit. Worker time: 423.9 s (7m 4s),
 not total job time. The single attempt is consumed, with no retries.
 [CPU installation results](reports/internvl_object_identification_v1_cpu_install_results.md).
-Full-job GPU-cap enforcement remains unresolved.
-**Prelaunch preparation:** [readiness report](reports/internvl_object_identification_v1_prelaunch_readiness_2026-10-16.md)
-and [design r1](reports/internvl_object_identification_v1_protocol_r1.md) now bind the six-request
-worker/supervisor/replay candidate. A tiny synthetic checkpoint load/generate check and six-prompt
-token audit pass; 77 Linux tests pass. The private packet rebuilds identically and refuses before
-GPU queries. The owner approved scoped private use and the proposed GPU scope; a pending
-local reservation is recorded. The provider cap remains unverified and the final live
-artifact is not yet built/bound, so the reservation is inactive and no GPU was launched.
-No pretrained image response or object score exists.
+**Final live preparation (October 16):** [readiness report](reports/internvl_object_identification_v1_prelaunch_readiness_2026-10-16.md)
+and [time amendment/design r2](reports/internvl_object_identification_v1_protocol_r2.md) bind the
+six-request worker, supervisor and replay. All 84 native Linux tests pass, including the active
+finalization timer and exact outgoing-notebook/settings guards. The private live template rebuilds
+byte-identically with the same image and versioned sources; it refuses before installation or GPU
+queries until approval is bound to its exact review hash. Only a declared literal authority-data
+cell may be populated after approval; the program, metadata and runtime remain fixed.
+The earlier scoped-use approval and pending reservation are preserved, not relabelled as approval
+or an active reservation for this new package. The old full-job-cap support draft remains unsent;
+provider confirmation is no longer required by the amended budget. Exact-hash source/compute
+approval, fresh reservation/claim and current read-only provider preflight remain outstanding.
+No upload, new CPU job, GPU launch, pretrained image response or object score occurred.
 
 ## Source snapshot
 

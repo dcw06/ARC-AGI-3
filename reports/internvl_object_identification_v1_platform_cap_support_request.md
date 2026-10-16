@@ -9,6 +9,11 @@ inheritance issue. Do not transfer that issue to an ordinary run without checkin
 Submit through [Kaggle Support](https://www.kaggle.com/contact). No credentials,
 private boards, model files or private dataset identifiers are needed for this question.
 
+**Historical draft:** the owner subsequently accepted a 3,600-second session timeout and
+3,300-second worker limit with provider overhead beyond one hour. This request remains unsent
+and is no longer a prerequisite for this probe; it is not provider confirmation. See
+[time amendment r2](internvl_object_identification_v1_protocol_r2.md).
+
 ## Subject
 
 Does a notebook session timeout include RTX PRO 6000 allocation and pre-cell mounting?

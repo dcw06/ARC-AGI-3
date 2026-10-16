@@ -1,42 +1,41 @@
-# InternVL identification: preparation before the real model test
+# InternVL identification: final live package readiness
 
-October 16, 2026. **Local preparation complete for a review-only candidate. Not ready
-for GPU submission.** No new Kaggle call, upload, reservation or inference occurred
-during this preparation. Both earlier CPU attempts remain consumed and preserved.
+October 16, 2026. **Final private live template prepared; exact-hash launch approval pending.**
+No Kaggle call, upload, reservation consumption or GPU launch was made in this preparation.
+The two completed CPU attempts and all historical candidates/approval records remain preserved.
 
-| Preparation step | Status and evidence |
+| Step | Current evidence |
 |---|---|
-| Trusted inputs and isolated installation | Complete: both previously authorized Kaggle CPU checks passed; 216 mounted hashes, 175 installed versions, tokenizer/classes and cleanup verified on the pinned image. [CPU result](internvl_object_identification_v1_cpu_install_results.md) |
-| Scientific design | [Design r1](internvl_object_identification_v1_protocol_r1.md) records six fixed first-level image cases, partial hierarchical references, preprocessing, prompt/template, raw-output policy, scoring and inference limits |
-| Inference worker candidate | Implemented: verify frozen requests independently; exact isolated runtime; local-only BF16 load; one RTX PRO 6000; greedy generation with strict admission and token caps; preserve raw tokens and both decodings, no JSON repair or retries |
-| Supervision candidate | Implemented: owned groups for installation, GPU queries and model worker; work/model/per-request deadlines, post-termination GPU census, temporary environment removal and provisional finalization witness |
-| Independent replay | Implemented: reconstruct template/tokenization from pinned metadata/code without loading weights; compare requests, image hashes, prompt tokens, generated token decoding, responses and counters before scientific scoring |
-| Pinned API rehearsal | Passed locally: save/load a 46,416-parameter synthetic checkpoint with the intended loading kwargs; pinned custom generation returns a four-token continuation with structured generation output; no target checkpoint or real board inference |
-| Actual prompt/token audit | Passed locally for all six inputs: 601 prompt tokens each, including 256 image-context tokens; EOS 151645; 601+4096 fits the pinned 40,960-token context; no weights loaded |
-| Linux regressions | 77 tests passed, no failures/skips: original probe/privacy/mount/install/finalization groups plus twelve inference/admission/replay/refusal tests |
-| Private review candidate | Built and audited: all artifact/source hashes match, independent rebuild byte-identical, exact image/dataset bindings and retained CPU evidence; notebook and supervisor refuse before GPU queries or model imports |
-| Licence/use packet | Prepared privately: 23 retained wheel-use texts, two model licence texts and timm licence, with hashes/provenance. The owner subsequently approved scoped private use; approval is retained separately and the locked draft remains unchanged. |
+| Inputs and installation | Two authorized Kaggle CPU jobs passed: all 216 mounted hashes, all 175 isolated package versions, tokenizer/classes, tiny random-weight CPU execution and cleanup. [CPU result](internvl_object_identification_v1_cpu_install_results.md) |
+| Scientific design | Six fixed first-level images, partial hierarchical references, identical prompt/preprocessing/raw-output policy and scoring. [Design r1](internvl_object_identification_v1_protocol_r1.md) retained; [r2](internvl_object_identification_v1_protocol_r2.md) amends only time policy |
+| Owner's time amendment | Requested 3,600-second session timeout, 3,300-second worker limit including finalization; 3,000-second work cutoff and 300-second cleanup reserve. Provider allocation/setup/mounting/release may add time beyond one hour. No verified entire-job cap is claimed |
+| Runtime | Owned process groups, isolated hash-pinned install, strict model/generation admission, active worker alarm through evidence writing, GPU census, temporary-environment removal and provisional completion witness |
+| Offline API evidence | Tiny synthetic checkpoint load/generate passes; six real prompts audit to 601 tokens each including 256 image tokens. No real checkpoint inference |
+| Current Linux checks | 84 tests, zero failures/skips: probe/privacy/mount/install/lifecycle/replay plus authority sealing, actual outgoing settings and finalization timer checks |
+| Exact private template | Artifact/current-source/builder hashes, decoded runtime payload and all dataset inventories verified; independent rebuild byte-identical. Exact notebook, supervisor and seal all refuse missing approval before GPU use |
+| Immutable bindings | Same private account, digest-pinned image and exact requested model/input/publisher dataset versions as the CPU preparation. Actual mounted bytes are hashed again before installing |
+| Scope | One RTX PRO 6000, six generations, <=4,096 tokens each / <=24,576 total, zero game actions/scorecards, private account-only access, internet/TPU off, one attempt and no automatic retries |
+| Scoped use and history | Prior private scoped-use approval and 26 retained licence texts preserved. Prior pending reservation remains inactive; none of those records is relabelled as new final-hash compute approval |
 
-The candidate notebook is GPU/TPU/internet off and contains a first-cell refusal.
-It is a review artifact, **not the final executable live notebook**. The full worker,
-supervisor, replay and dataset bindings are present for source review. When the
-provider mechanism is known, the operational release must be built and reviewed
-with its exact live configuration; the present candidate lock cannot approve a
-changed live artifact automatically.
+The review hash binds the executable notebook template, metadata, runtime capsule, evidence
+and an explicit late-binding contract. Its sole unfilled slot is a literal `AUTHORITY = None`
+assignment. After exact-hash approval, only this data cell may be populated with lock-bound
+approval/evidence and the consumed one-use claim. Every other cell, metadata field and runtime
+byte must match review. The sealed execution notebook also gets its own retained hash before
+any save. The offline outgoing-request guard rejects alternate GPUs, changed timeout, sources,
+privacy, internet settings or code. Preparing GPU-enabled metadata does not submit it.
 
-| Still required | Why this cannot be marked complete |
+| Remaining step | Required before submission |
 |---|---|
-| Provider-enforced whole-job cap | The owner's requirement is 3,600 s from GPU allocation through release, including setup and mounts. The [official CLI reference](https://github.com/Kaggle/kaggle-cli/blob/main/skills/references/kernels.md) documents a runtime timeout, without establishing this full coverage. No provider confirmation is retained. The [support request](internvl_object_identification_v1_platform_cap_support_request.md) is ready and remains unsent. |
-| Final live source binding | The owner approved scoped use and the reviewed candidate. No final operational live artifact exists yet, so no approval of its exact hash can be claimed. The operational release must be bound and reviewed after provider enforcement is established. |
-| Effective GPU authorization and one-use claim | The owner approved the proposed scope: one RTX PRO 6000, ≤3,600 s entire-job cap, ≤6 generations, ≤24,576 generated tokens, zero actions/scorecards, one attempt, no retries. A local reservation is held pending provider-cap proof and final artifact binding. It allocates no hardware, is unconsumed, and is not a launch claim. A fresh read-only availability/configuration preflight is still required. |
+| Exact final source/compute approval | Owner approval naming the new private review hash and amended scope. The time amendment explicitly withholds launch authorization |
+| Fresh reservation and preflight | Preserve old records; create a matching one-use reservation only after approval; read-only check target/account, source inventories, quota and current accelerator availability |
+| Claim and exact request | Consume one claim before a single no-retry save; seal only the declared authority slot and retain execution hash; validate the actual outgoing request |
+| Actual GPU loading/inference | Untested until the authorized attempt. No trial launch is implied by CPU checks |
 
-The approval is bound to the existing private review-only candidate and retained
-verbatim outside it. It does not waive the provider cap or certify a nonexistent
-final live artifact. No live-authority bundle was created, no provider call was made,
-and no attempt was submitted or consumed by recording approval.
+Collection still requires provider COMPLETE, exact saved source/image/settings, output hashes,
+post-write witness/marker, cleanup verification and independent token/request replay before
+scientific scoring. There are zero pretrained image responses or object-identification scores.
 
-This test's full pretrained checkpoint loading and GPU execution remain untested;
-the real attempt would exercise them. No pre-test GPU trial is authorized. The
-CPU synthetic check is API compatibility evidence, not object-identification evidence.
-There are still **zero pretrained image responses**, so no detection score or
-obstacle-mechanics claim can be reported.
+The [old support draft](internvl_object_identification_v1_platform_cap_support_request.md) remains
+unsent. Entire-job-cap confirmation is no longer a prerequisite under the owner's revised policy;
+the separate scored-competition timeout question is not resolved by this ordinary-notebook change.
