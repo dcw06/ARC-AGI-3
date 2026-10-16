@@ -146,8 +146,9 @@ The timm supplement is now hash-pinned, a tiny random-model CPU rehearsal passes
 (17.07 GB) are verified locally. All six actual images pass preprocessing checks; no pretrained inference result
 is available. The chosen Kaggle route retains the enforced one-hour full-job cap. Exact Kaggle runtime validation,
 notebook attachment/mounted-byte verification and provider enforcement remain unresolved. The corrected input
-dataset is private and ready at version 2 (version 1 preserved); model upload is in progress. A CPU-only byte
-checker is prepared and tested. A support question is drafted but not sent; no notebook or GPU job is launched.
+dataset is private and ready at version 2 (version 1 preserved); private model version 1 is also ready. Provider
+privacy/name/size checks pass; mounted bytes remain unverified. A CPU-only byte-check review packet is prepared
+and tested, awaiting approval. A support question is drafted but not sent; no notebook or GPU job is launched.
 
 ## Source snapshot
 

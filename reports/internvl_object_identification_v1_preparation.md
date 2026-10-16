@@ -152,12 +152,14 @@ the future runner must retain actual requests, model-tree identity, usage and fi
 The owner chose a private Kaggle test **keeping the enforced one-hour full-job cap**.
 The local probe review notebook requests no accelerator and always refuses; it has not
 been uploaded. The input dataset has been created privately, with version 1 preserved
-and corrected version 2 verified ready. The model upload is in progress.
+and corrected version 2 verified ready. The private model dataset is ready at version 1.
+Read-only provider checks confirm privacy and exact filenames/sizes for all 27 model
+files and 12 input files. These are not mounted-byte receipts.
 
 | Requirement | Current status |
 |---|---|
 | Missing timm dependency | Supplemental wheel pinned and CPU rehearsal passes |
-| Model source bytes | Verified locally; private model upload in progress; no notebook attachment verified |
+| Model source bytes | Verified locally; private model version 1 ready, provider privacy/name/size checks pass; mounted bytes and notebook attachment unverified |
 | Input attachment | Private version 2 ready; provider privacy/name/size checks pass; mounted bytes and notebook attachment unverified |
 | Exact target runtime | CPU rehearsal only; Kaggle image, full loading and GPU compatibility remain unverified |
 | Enforced 3,600-second entire-job cap | Unresolved; owner reports no provider confirmation |
@@ -183,11 +185,15 @@ discover whether a cap works. Existing consumed attempts and prior study results
 The separate Linux CPU byte checker in `research/object_identification_v1/mount_check.py`
 uses only the standard library. It checks exact inventories, rejects symlinks and unsafe
 filenames, and streams SHA256 with deadline checks before/after each chunk and at the end.
-A proposed GPU/TPU/internet-off notebook will check the model and input files, all 174
+A prepared GPU/TPU/internet-off notebook will check the model and input files, all 174
 publisher wheels and their three metadata files. It will install nothing and execute no
 dataset code, pretrained inference or game action. Its reviewed manifest and provider
 COMPLETE status are required alongside the byte receipt; file hashes alone do not certify
-session termination. This proposal is not a CPU or GPU launch authorization.
+session termination. The private CPU review packet binds the verifier, immutable image,
+three intended dataset versions, manifest and provider receipts. It proposes one attempt,
+a 1,200-second session-runtime timeout and a 1,100-second worker budget; approval is
+pending and no notebook has been submitted. This is not a GPU launch authorization or
+an assertion that the timeout covers provider setup.
 
 ## CPU verification record
 
@@ -201,6 +207,10 @@ session termination. This proposal is not a CPU or GPU launch authorization.
   imports, and preserve a failed CPU receipt rather than overwrite it on a later attempt.
 - The three mount-check tests cover same-size byte mutation, extra files/path traversal,
   and a deadline expiring at the final check after the last file read.
+- A Linux end-to-end rehearsal of the CPU byte checker passed on tiny synthetic files.
+  The exact private CPU review packet's hashes, embedded source/manifest, disabled GPU/TPU/
+  internet flags, proposed limits and 216-file inventory also pass local review. Neither
+  check reads actual Kaggle mounts or establishes compatibility of the inference runtime.
 - The real private r174 snapshot builds six images and retains all 94 reference regions.
   Every image round-trips to its original grid; the bundle hash verification passes.
 - The exact generated private notebook's first code cell was executed on CPU: it refused
