@@ -1,0 +1,47 @@
+{
+  "GPU_calls": 0,
+  "baseline_adapter_sha256": "2878d4ccb2efeca860f47d4448091a20bcaa36232912252700bf740c9ec0ee77",
+  "baseline_bug_reproduced_with_pinned_upstream_decoder": true,
+  "baseline_commit": "52273442461846260868cf726988e1aeb0aadcbe",
+  "baseline_failed_assertions_including_subtests": 18,
+  "baseline_regression_methods": 10,
+  "exact_Kaggle_image_validated": false,
+  "exact_recommended_environment_validated": false,
+  "input_policy": "448px nearest-neighbor, 7px per cell; no overlay or external crop",
+  "linux_relevant_tests": {
+    "errors": 0,
+    "failures": 0,
+    "model_generations": 0,
+    "modules": [
+      "tests.test_molmopoint_identification",
+      "tests.test_molmopoint_point_sequences",
+      "tests.test_object_identification_v1",
+      "tests.test_object_identification_inference",
+      "tests.test_object_identification_deployment"
+    ],
+    "passed": true,
+    "provider_calls": 0,
+    "skipped": 0,
+    "tests_run": 63
+  },
+  "live_package_ready": false,
+  "model_generations": 0,
+  "model_weights_loaded": false,
+  "new_input_draft_has_identical_images_prompts_targets_and_arrays": true,
+  "prior_drafts_and_receipts_preserved": true,
+  "private_preparation_manifest_sha256": "fcd6cd02ba4383b25f4c02e5f32a283fdcb9c5c20d80fc91a49d9e25dc7bb8aa",
+  "private_real_processor_receipt_sha256": "852f3a8461f488f51c097d9699fd98040e092bd95de70f60f1b698874bd515f7",
+  "private_upstream_check_receipt_sha256": "a25a6b5de182d3062a3a9ea9bc16bef163abbfa809778a922649c77a70863ff9",
+  "provider_calls": 0,
+  "real_metadata_sentinel_index": 725,
+  "real_processor_cases_revalidated": 6,
+  "schema": "molmopoint_point_sequence_fix_validation_v1",
+  "source_sha256": {
+    "research/molmopoint_identification_v1/adapter.py": "8eaed47ae00d1cf500c8156b56d4eee59c0a5bddd4c785be13b9142cb2ce5c90",
+    "scripts/check_molmopoint_point_sequences.py": "4f074d6f30c978914a5105ccc7ddceafc1b0385bd51e797662fe99ef7c8ada94",
+    "tests/test_molmopoint_identification.py": "d027b957788d78de16d64a6de5f4b10350b6af06d103515fc9f4f980f0b8c624",
+    "tests/test_molmopoint_point_sequences.py": "bb808a5084ba1f66fe3d5246962d32bc9ade489cbb0ddf6a994a516ecef9e359"
+  },
+  "upstream_decoder_sha256": "aaf4f863dfb717f498e503b8e39f82c0effaded743fdfecc64271f26f08fcb01",
+  "windows_molmopoint_tests_passed": 26
+}

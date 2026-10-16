@@ -46,8 +46,9 @@ class CoordinateTests(unittest.TestCase):
 
 class NativeInterfaceTests(unittest.TestCase):
     def components(self):
-        metadata = {'token_pooling':'pool','subpatch_mapping':'map','image_sizes':[(512,512)]}
-        model = SimpleNamespace(config=SimpleNamespace(model_type='molmo_point'),
+        metadata = {'token_pooling':SimpleNamespace(shape=(4,4)),'subpatch_mapping':'map','image_sizes':[(512,512)]}
+        model = SimpleNamespace(config=SimpleNamespace(model_type='molmo_point',
+            no_more_points_class=True,patch_location='3x3'),
             build_logit_processor_from_inputs=lambda x:['native-constraint'],
             extract_image_points=lambda *args:[[0,0,20.0,28.0]])
         processor = SimpleNamespace(apply_chat_template=lambda *args,**kwargs:{'metadata':dict(metadata),'input_ids':'ids'})

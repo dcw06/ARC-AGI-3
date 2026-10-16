@@ -205,10 +205,12 @@ adapter for `allenai/MolmoPoint-8B`, pinned to `188130f961c8e0888a34e11121a1423c
 Decoded original-image pixels map deterministically to board cells. The owner chose
 **plain 448-by-448 nearest-neighbor images with no overlay** for the first test:
 six predeclared visual targets, seven pixels per cell and exact occupied-cell hits.
-Sixteen local tests and the real processor/synthetic-decoder CPU check pass; no weights
-or model answers were produced. The gameplay policy is unchanged, and there is no
+The incomplete-point decoder gap is fixed and reproduced against `5227344`;
+26 MolmoPoint tests, 63 relevant Linux tests and all six real-processor CPU checks
+pass. No weights or model answers were produced. The gameplay policy is unchanged, and there is no
 live package or new compute authority. [Current targeted input draft](reports/molmopoint_targeted448_draft_2026-10-16.md),
 [integration and limits](reports/molmopoint_identification_v1_integration_2026-10-16.md).
+[Decoder fix and regressions](reports/molmopoint_decoder_sequence_fix_2026-10-16.md).
 
 ## Source snapshot
 

@@ -27,7 +27,7 @@ for the observed grounding failure, not evidence that it works on ARC games.
 | Local acquisition | 25 non-weight files, 28,805,306 bytes, checked against the pinned tree; eight weight shards are absent |
 | Snapshot verifier | Requires the complete expected local files, sizes/hashes and Python source set before custom code loading; does not download or load anything |
 | Processor interface | One local image, native chat template, `return_pointing_metadata=True`; require original image dimensions and a nonempty native pointing logit processor |
-| Native decoding | Retain generated IDs and special tokens; use `extract_image_points`, verify decoded point count against complete point triples; truncated/oversized completions invalid |
+| Native decoding | Retain generated IDs and special tokens; validate every point sequence and metadata-derived sentinel before `extract_image_points`; still check complete-point counts; fragments/truncated/oversized outputs invalid |
 | Coordinate conversion | Publisher rows are `[object_id, image_index, pixel_x, pixel_y]`; validate then compute `floor(pixel_x / original_width * 64)` and the analogous y coordinate |
 | Refusal | Reject nonfinite, negative, outside-image or wrong-image points; never clamp, round to a nearby object or repair an answer |
 | Point-hit scoring | Maximum-cardinality one-to-one matching against exact owner-labelled occupied cells, with whole regions and parts separate |
@@ -42,6 +42,12 @@ image dimensions, not internal crop dimensions. The selected supplied images are
 extra margins. MolmoPoint still uses its own native processor internally.
 
 ## Validation and limits
+
+The subsequent [decoder repair](molmopoint_decoder_sequence_fix_2026-10-16.md)
+reproduces the incomplete-fragment gap on `5227344` and closes it with ten new
+regression methods. Current counts are 26 MolmoPoint tests and 63 relevant Linux
+tests passing, plus six real-processor CPU checks. The earlier integration counts
+and receipts below describe their original source versions.
 
 Sixteen local behavioral tests cover every board cell, x/y orientation,
 rectangular image dimensions, boundaries, invalid values and caps, native metadata

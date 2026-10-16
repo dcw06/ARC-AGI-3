@@ -5,6 +5,12 @@ with no visible grid overlay**. This supersedes the initial 512px generic-invent
 draft for the first test. All earlier drafts, results and consumed attempts remain
 preserved. No model answers, uploads or GPU jobs were produced by this revision.
 
+**Decoder repair:** [full sequence validation](molmopoint_decoder_sequence_fix_2026-10-16.md)
+now rejects incomplete pointing fragments while preserving valid no-more-points
+sentinels. The input draft was rebuilt with new source hashes and identical
+images/prompts/targets; earlier CPU receipts below are retained as historical.
+Current validation: 26 MolmoPoint tests and 63 relevant Linux tests pass.
+
 | Setting | Selected input draft |
 |---|---|
 | Model | `allenai/MolmoPoint-8B`, revision `188130f961c8e0888a34e11121a1423c461a01ba` |
