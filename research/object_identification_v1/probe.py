@@ -29,9 +29,9 @@ supplied. Do not invent game rules, a solution, or hidden objects.
 
 Use integer board coordinates: x is column, y is row, origin at the top-left;
 both range from 0 through 63. Bounding boxes are [left, top, right, bottom],
-inclusive, in board cells, not rendered image pixels. One board cell is an
-8-by-8 block in the supplied 512-by-512 image. No crop or coordinate overlay is
-applied. Give separate entries for distinct objects, and optionally their
+inclusive, in board cells, not rendered image pixels. The full image represents
+the entire 64-by-64 board; report board-cell coordinates regardless of image
+resizing. No crop or coordinate overlay is applied. Give separate entries for distinct objects, and optionally their
 visually meaningful components; do not duplicate the same region.
 
 Return only one JSON object with the key "objects" containing at most 96 entries.

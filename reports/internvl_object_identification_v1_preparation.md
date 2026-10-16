@@ -1,7 +1,7 @@
 # InternVL3.5-8B: object and obstacle-candidate identification probe
 
-October 15, 2026. Local preparation and CPU compatibility checks; no pretrained-model
-result, Kaggle upload, reservation or GPU run.
+October 15, 2026. Private dataset staging and local CPU compatibility checks; no
+pretrained-model result, notebook submission, reservation or GPU run.
 
 ## Question and evidence limits
 
@@ -55,6 +55,12 @@ One full-frame tile is the proposed input policy; it differs from the publisher'
 dynamic tiling and must be bound in any executable launch package. Runtime/dependency and
 mounted-byte checks remain necessary before inference. An identifier in a response does
 not prove its origin.
+
+The prompt now specifies board-cell coordinates independently of image resizing. Its
+earlier 8-pixel cell-size instruction described the original 512px rendering but could
+mislead after the 448px preprocessing step. The corrected private input dataset is
+version 2; version 1 is preserved. Image and wheel bytes are unchanged, and no pretrained
+inference used either prompt.
 
 The tokenizer check triggered Transformers 4.57.6's Mistral-regex warning on the local
 InternVL/Qwen configuration (`transformers_version: null`). Inspection of the installed
@@ -144,13 +150,15 @@ the future runner must retain actual requests, model-tree identity, usage and fi
 ## Kaggle readiness
 
 The owner chose a private Kaggle test **keeping the enforced one-hour full-job cap**.
-The local review notebook requests no accelerator and always refuses. Nothing is uploaded.
+The local probe review notebook requests no accelerator and always refuses; it has not
+been uploaded. The input dataset has been created privately, with version 1 preserved
+and corrected version 2 verified ready. The model upload is in progress.
 
 | Requirement | Current status |
 |---|---|
 | Missing timm dependency | Supplemental wheel pinned and CPU rehearsal passes |
-| Model source bytes | Verified locally; no private Kaggle model dataset created or attached |
-| Input attachment | Six boards and supplemental wheel packaged locally; not uploaded or attached |
+| Model source bytes | Verified locally; private model upload in progress; no notebook attachment verified |
+| Input attachment | Private version 2 ready; provider privacy/name/size checks pass; mounted bytes and notebook attachment unverified |
 | Exact target runtime | CPU rehearsal only; Kaggle image, full loading and GPU compatibility remain unverified |
 | Enforced 3,600-second entire-job cap | Unresolved; owner reports no provider confirmation |
 | Executable launch package and authority | Not prepared or approved; current notebook always refuses |
@@ -172,15 +180,27 @@ The six study requests do not silently include unbudgeted canaries or polling.
 The next step is source/runtime and full-job-cap validation, not an attempted GPU launch to
 discover whether a cap works. Existing consumed attempts and prior study results stay intact.
 
+The separate Linux CPU byte checker in `research/object_identification_v1/mount_check.py`
+uses only the standard library. It checks exact inventories, rejects symlinks and unsafe
+filenames, and streams SHA256 with deadline checks before/after each chunk and at the end.
+A proposed GPU/TPU/internet-off notebook will check the model and input files, all 174
+publisher wheels and their three metadata files. It will install nothing and execute no
+dataset code, pretrained inference or game action. Its reviewed manifest and provider
+COMPLETE status are required alongside the byte receipt; file hashes alone do not certify
+session termination. This proposal is not a CPU or GPU launch authorization.
+
 ## CPU verification record
 
-- 26 tests passed across `tests.test_object_identification_v1` and
+- 29 tests passed across `tests.test_object_identification_v1`,
+  `tests.test_object_identification_mount_check` and
   `tests.test_manual_strategy_worksheet` on Python 3.11.9.
 - Checks include matching reassignment, one-to-one credit, full-board-box rejection for
   small objects, strict outputs, partial/hierarchical references, missing answers, wrong
   request/revision bindings, mutated images/source snapshots and refusal to overwrite.
   Additional checks reject a modified supplemental wheel and modified model code before
   imports, and preserve a failed CPU receipt rather than overwrite it on a later attempt.
+- The three mount-check tests cover same-size byte mutation, extra files/path traversal,
+  and a deadline expiring at the final check after the last file read.
 - The real private r174 snapshot builds six images and retains all 94 reference regions.
   Every image round-trips to its original grid; the bundle hash verification passes.
 - The exact generated private notebook's first code cell was executed on CPU: it refused
@@ -189,4 +209,5 @@ discover whether a cap works. Existing consumed attempts and prior study results
 - CPU setup history is retained: an initial temporary environment disappeared, and a
   float32 synthetic tensor failed against BF16 vision weights. The persistent environment
   and dtype correction then passed. These are CPU preparation records, not GPU attempts.
-- Pretrained study calls: **0**. Game actions: **0**. GPU jobs and Kaggle uploads: **0**.
+- Pretrained study calls: **0**. Game actions: **0**. GPU/CPU Kaggle jobs and notebook
+  uploads: **0**. Dataset staging is separate from compute authorization.
