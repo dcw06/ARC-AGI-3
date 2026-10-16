@@ -127,6 +127,11 @@ class Lifecycle(unittest.TestCase):
                 S.finish(result,root,0,3300)
             marker=output.call_args.args[0]
             self.assertTrue(validate_completion(root,'COMPLETE',marker,'pin'))
+            with self.assertRaisesRegex(ValueError,'mounted bytes'):
+                validate_completion(root,'COMPLETE',marker,'pin',
+                    expected_files={'wheelhouse':177,'model':34,'inputs':9})
+            self.assertTrue(validate_completion(root,'COMPLETE',marker,'pin',
+                expected_files={'wheelhouse':177,'model':33,'inputs':9}))
             for status,stdout,pin in [('ERROR',marker,'pin'),('COMPLETE','','pin'),('COMPLETE',marker,'other')]:
                 with self.assertRaises(ValueError):
                     validate_completion(root,status,stdout,pin)

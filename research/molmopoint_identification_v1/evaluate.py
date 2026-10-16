@@ -11,7 +11,7 @@ from .scoring import score_target
 from research.object_identification_v1.mount_check import canonical
 
 
-def validate_completion(output, provider_status, cell_stdout, runtime_lock_sha256):
+def validate_completion(output, provider_status, cell_stdout, runtime_lock_sha256, *, expected_files=None):
     """A saved success receipt alone never certifies a finished lifecycle."""
     output = Path(output)
     raw = (output/'result.json').read_bytes()
@@ -34,7 +34,12 @@ def validate_completion(output, provider_status, cell_stdout, runtime_lock_sha25
               if p.is_file() and p.name not in ('result.json','completion-witness.json')}
     if actual != result['output_sha256']:
         raise ValueError('retained output files differ from lifecycle manifest')
-    counts={'wheelhouse':177,'model':33,'inputs':9}
+    # Production collection supplies counts from its verified review protocol.
+    # Retained review-r1 fixtures remain readable with their original inventory.
+    counts={'wheelhouse':177,'model':33,'inputs':9} if expected_files is None else expected_files
+    if (set(counts)!={'wheelhouse','model','inputs'} or
+            any(type(n) is not int or not 0<n<=1000 for n in counts.values())):
+        raise ValueError('bound dataset file counts required')
     if (set(result['datasets'])!=set(counts) or any(
             result['datasets'][k]['files_checked']!=n or
             result['datasets'][k]['all_sha256_matched'] is not True for k,n in counts.items())

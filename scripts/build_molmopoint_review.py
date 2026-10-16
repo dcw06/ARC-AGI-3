@@ -85,6 +85,10 @@ def build(model,preparation,dependencies,publisher_protocol,validation,output):
         dict(name=n,sha256=h,bytes=(model/n).stat().st_size) for n,h in sorted(verified['files_sha256'].items())]),
         dict(kind='inputs',ref=inputs_ref,version=1,files=[
             dict(name=n,sha256=sha(raw),bytes=len(raw)) for n,raw in sorted(upload.items())])]
+    # Upstream's 33-file snapshot names Apache-2.0 but has no full licence file.
+    # Preserve the snapshot and accompany its private hosted copy with the text.
+    model_licence=(ROOT/'research/molmopoint_identification_v1/LICENSE-APACHE-2.0.txt').read_bytes()
+    datasets[1]['files'].append(dict(name='LICENSE-APACHE-2.0.txt',sha256=sha(model_licence),bytes=len(model_licence)))
     protocol=dict(schema='molmopoint_targeted448_v1',scope=SCOPE,model=MODEL,revision=REVISION,
         intended_private_account='daichongwei06',intended_live_notebook='daichongwei06/arc3-molmopoint-targeted448-v1',
         live_runs_enabled=False,source_bindings_confirmed=False,datasets=datasets,
@@ -139,6 +143,7 @@ def build(model,preparation,dependencies,publisher_protocol,validation,output):
     files.update(validation_files)
     files['validation/verification.json']=validation.read_bytes()
     files['model-card.md']=(model/'README.md').read_bytes()
+    files['model-dataset-extra/LICENSE-APACHE-2.0.txt']=model_licence
     files['review.md']=('''# MolmoPoint six-board review candidate
 
 Review only. No authority, reservation, upload or model inference is recorded.

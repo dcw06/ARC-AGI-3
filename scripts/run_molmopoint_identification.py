@@ -32,9 +32,11 @@ if __name__ == '__main__':
         if bool(args.provider_status)!=bool(args.cell_stdout):
             raise ValueError('provider status and saved cell stdout must be supplied together')
         if args.provider_status:
+            protocol=json.loads((Path(args.packet)/'runtime/protocol.json').read_bytes())
             validate_completion(Path(args.worker).parent,args.provider_status,
                 Path(args.cell_stdout).read_text(encoding='utf-8'),
-                sha((Path(args.packet)/'runtime/runtime-lock.json').read_bytes()))
+                sha((Path(args.packet)/'runtime/runtime-lock.json').read_bytes()),
+                expected_files={d['kind']:len(d['files']) for d in protocol['datasets']})
             result['lifecycle_certified']=True
         with Path(args.output).open('x',encoding='utf-8') as stream:
             json.dump(result,stream,indent=2,sort_keys=True)
