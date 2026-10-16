@@ -1,0 +1,25 @@
+{
+  "CPU_processor_cases_passed": 6,
+  "cuda_initialized": false,
+  "exact_Kaggle_image_validated": false,
+  "exact_recommended_environment_validated": false,
+  "live_package_ready": false,
+  "model_generations": 0,
+  "network_attempts_during_CPU_check": 0,
+  "private_CPU_receipt_sha256": "dc7e23952bd73aca80480979482f4a1b90a0ed870971429a599c57fcf8c4032b",
+  "project_adapter_with_real_processor_and_asymmetric_synthetic_decode_passed": true,
+  "recommended_transformers": "4.57.1",
+  "revision": "188130f961c8e0888a34e11121a1423c461a01ba",
+  "schema": "molmopoint_cpu_integration_validation_v1",
+  "source_sha256": {
+    "adapter.py": "7abb139efdd2feab1f8fa9e0f98e8a71d2b1f9ad8ec4ba7b3b8af4f14e9fac04",
+    "model_pin.json": "863e8aa0b259049f4ff6ae14e19d2adbd5310776c5f9ac205a7a69c72a1533fd",
+    "prepare.py": "eb66d57dfc5a940945add22066360226190b9b9d3a78c660e9caa155251d32c7",
+    "scoring.py": "26e511b86541bffda8aa6bfa1e187cc2f403283b43c6ea47d545da9d69e81d63"
+  },
+  "torch": "2.10.0+cpu",
+  "transformers": "4.57.6",
+  "unit_tests_passed": 12,
+  "weights_downloaded": false,
+  "weights_loaded": false
+}

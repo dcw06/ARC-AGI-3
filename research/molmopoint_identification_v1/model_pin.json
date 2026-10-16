@@ -1,0 +1,192 @@
+{
+  "checkpoint_dtype": "float32",
+  "files": [
+    {
+      "bytes": 1570,
+      "git_blob_sha1": "52373fe24473b1aa44333d318f578ae6bf04b49b",
+      "name": ".gitattributes"
+    },
+    {
+      "bytes": 5618,
+      "git_blob_sha1": "746a93ad91b6336a1baf7e2ef48f4ebc8cc355a1",
+      "name": "README.md",
+      "reviewed_sha256": "7a9a05c8c063dde21a5db403bcccb5a2ee77076235a9ac45270caaadba0abfd2"
+    },
+    {
+      "bytes": 845536,
+      "git_blob_sha1": "bedc3e0fde5d80d80400f1eaf4bca55bd5f94f7f",
+      "name": "added_tokens.json"
+    },
+    {
+      "bytes": 3169,
+      "git_blob_sha1": "c1149ea803d36a1b379786becf193259356464b5",
+      "name": "chat_template.jinja"
+    },
+    {
+      "bytes": 3122,
+      "git_blob_sha1": "e07081943753a54d52d056677c31628beb26fe89",
+      "name": "config.json",
+      "reviewed_sha256": "c7c7969a1992a465088f0ccbcec642deb1733269b47cfb2d425953396dea197f"
+    },
+    {
+      "bytes": 13905,
+      "git_blob_sha1": "27c6275330a17d159d2827ebe55ae3b5d0c09d82",
+      "name": "configuration_molmo2.py",
+      "reviewed_sha256": "1405b6760579de537521829b9641c8362d5d50e7ef2bdbe3434d2de4a2fc6416"
+    },
+    {
+      "bytes": 9066,
+      "git_blob_sha1": "2e2ed6ed8460ea612d0d99d71125bd2406005d2c",
+      "name": "configuration_molmo_point.py",
+      "reviewed_sha256": "b22b9c7b3d2e45463a6e3a93a84084c8fa82202050cba11e34b115be27642fd7"
+    },
+    {
+      "bytes": 20801,
+      "git_blob_sha1": "64a0180d76a82547e2da2aec734d1128e4686a0d",
+      "name": "convert_molmo2_to_hf.py"
+    },
+    {
+      "bytes": 18090,
+      "git_blob_sha1": "b6152d27cf7fb63e42a0caa49f090aa0e6c4512c",
+      "name": "convert_molmo_point_to_hf.py"
+    },
+    {
+      "bytes": 117,
+      "git_blob_sha1": "d72db99246d536c0a73892e4090c19644924053d",
+      "name": "generation_config.json",
+      "reviewed_sha256": "103506d168927632c8f627d470611ec14e5bc38246470173713b5c28762026b0"
+    },
+    {
+      "bytes": 22169,
+      "git_blob_sha1": "8563827a5a77e6fed72247ece2a6b062f64d22a3",
+      "name": "image_processing_molmo2.py",
+      "reviewed_sha256": "22fcc160210a3a648b6d618171686c40b900f512107f532c266af7792ac00511"
+    },
+    {
+      "bytes": 1671853,
+      "git_blob_sha1": "31349551d90c7606f325fe0f11bbb8bd5fa0d7c7",
+      "name": "merges.txt"
+    },
+    {
+      "bytes": 4974567112,
+      "name": "model-00001-of-00008.safetensors",
+      "upstream_sha256": "19ab63a529d72b101000396a03df34f2dc32e8d744b0c5cec50f0542eea6b8db"
+    },
+    {
+      "bytes": 4630720272,
+      "name": "model-00002-of-00008.safetensors",
+      "upstream_sha256": "19fbea500ac2cb32175131e3009b4aebfc3c373e48b07ea51783b1049df34761"
+    },
+    {
+      "bytes": 4630720296,
+      "name": "model-00003-of-00008.safetensors",
+      "upstream_sha256": "c66ec2e00cd832d67a5f24ace0e4330e13627b82444784986062df6a2a973ac4"
+    },
+    {
+      "bytes": 4630720320,
+      "name": "model-00004-of-00008.safetensors",
+      "upstream_sha256": "20b4298b55a145d9ccdef463ffe3c344cbfd90e7fa67d0778d50f66688dacd27"
+    },
+    {
+      "bytes": 4630720320,
+      "name": "model-00005-of-00008.safetensors",
+      "upstream_sha256": "eeac368f9670bad559e45aceea971ff78db86fafee604f17e28c1e58932a27de"
+    },
+    {
+      "bytes": 4630720320,
+      "name": "model-00006-of-00008.safetensors",
+      "upstream_sha256": "3738d142536fdc8e9217e7a853240006aff3fe5c157d982cff3e52addb05f011"
+    },
+    {
+      "bytes": 4091925052,
+      "name": "model-00007-of-00008.safetensors",
+      "upstream_sha256": "b0af4940b1b827e995397de33114310c838b8edece415819de119d4f403d420f"
+    },
+    {
+      "bytes": 2491416816,
+      "name": "model-00008-of-00008.safetensors",
+      "upstream_sha256": "b87b59f8beb9a114e4867e522e3ec5116d05442f199901b48b1beb4fda6962d1"
+    },
+    {
+      "bytes": 67904,
+      "git_blob_sha1": "99e3fc9242c99eb96a859f99e5e7c9c269d429ac",
+      "name": "model.safetensors.index.json",
+      "reviewed_sha256": "2ec4ec268051299d387aae82f887a1011e651b9e4ee48a2a8160f6096e508db8"
+    },
+    {
+      "bytes": 71559,
+      "git_blob_sha1": "5f2744a077b6ee49abaf78cca7f08ade7a4ce4fa",
+      "name": "modeling_molmo2.py",
+      "reviewed_sha256": "d3cafcb5300dee41dc9b6d6e8b59e7d3b710bce0408672e8fd78a3bcb28669ce"
+    },
+    {
+      "bytes": 81968,
+      "git_blob_sha1": "54a554d812ecaff010e49200a301901fb4adf51c",
+      "name": "modeling_molmo_point.py",
+      "reviewed_sha256": "aaf4f863dfb717f498e503b8e39f82c0effaded743fdfecc64271f26f08fcb01"
+    },
+    {
+      "bytes": 556,
+      "git_blob_sha1": "f568400c31bcd7fde810c38d19f8757a67b66867",
+      "name": "preprocessor_config.json",
+      "reviewed_sha256": "55095e6b866bc23016b010af76125ca6f6fc3360057a193f888294a4a5030b04"
+    },
+    {
+      "bytes": 18224,
+      "git_blob_sha1": "5a177f65f57375b4df15bb97e9a115e598498ecb",
+      "name": "processing_molmo2.py",
+      "reviewed_sha256": "73fee7d5cc24e64fdecff90b07e2fea1985113394ffaaf9b87f42e40f3fb4aeb"
+    },
+    {
+      "bytes": 17058,
+      "git_blob_sha1": "127a45c7f866f75864939f051d879cc68db88661",
+      "name": "processing_molmo_point.py",
+      "reviewed_sha256": "caa6a157bf1c7cfaabd6091859d2c67db353426cdd69760a90467c8dc0418639"
+    },
+    {
+      "bytes": 346,
+      "git_blob_sha1": "452d296420a26310a8ab67560f1de0814aade769",
+      "name": "processor_config.json",
+      "reviewed_sha256": "90f6eea70ac5ee31221d5a83790f20ed6f4240521d5aba8ba776746e2600c6f4"
+    },
+    {
+      "bytes": 7989,
+      "git_blob_sha1": "8af95517823d17f047fa8a0930eb310c79bf48a6",
+      "name": "special_tokens_map.json"
+    },
+    {
+      "bytes": 17417468,
+      "name": "tokenizer.json",
+      "upstream_sha256": "2f437033cf8ca3315943460f7b7681d01130795107d9a99dc124fd9d6898e932"
+    },
+    {
+      "bytes": 5691741,
+      "git_blob_sha1": "39df3eff6d4f1d943df80c2af5c0fc995752c5b5",
+      "name": "tokenizer_config.json"
+    },
+    {
+      "bytes": 984,
+      "git_blob_sha1": "4fd951126c70ebefe790d137d3999f0a88ad6bcd",
+      "name": "video_preprocessor_config.json"
+    },
+    {
+      "bytes": 37660,
+      "git_blob_sha1": "9ee19037077d2e65a0e847a057a0bca747feaad2",
+      "name": "video_processing_molmo2.py",
+      "reviewed_sha256": "aaeffabdee0b11f93fb380093df1738964340ea072ba6352bd3f371cc0df835e"
+    },
+    {
+      "bytes": 2776833,
+      "git_blob_sha1": "4783fe10ac3adce15ac8f358ef5462739852c569",
+      "name": "vocab.json"
+    }
+  ],
+  "license_metadata": "apache-2.0",
+  "recommended_transformers": "4.57.1",
+  "repository": "allenai/MolmoPoint-8B",
+  "revision": "188130f961c8e0888a34e11121a1423c461a01ba",
+  "schema": "molmopoint_snapshot_pin_v1",
+  "source": "https://huggingface.co/allenai/MolmoPoint-8B/tree/188130f961c8e0888a34e11121a1423c461a01ba",
+  "status": "metadata_and_selected_source_review_only_no_runtime_or_use_clearance",
+  "weight_bytes_total": 34711510508
+}
