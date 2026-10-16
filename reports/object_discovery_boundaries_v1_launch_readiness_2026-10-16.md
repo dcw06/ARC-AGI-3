@@ -1,0 +1,38 @@
+# Uncued discovery/boundary pilot: launch preparation
+
+The separate six-board package is assembled and checked. This preparation
+does not establish object-discovery or segmentation performance. The completed
+cued-point attempt remains consumed and unchanged.
+
+| Item | Verified state |
+|---|---|
+| Owner reference review | 94 unchanged masks, six complete inventories: 37 whole objects and 57 parts; original export and separate attestation preserved privately |
+| Model input | Six plain 448px boards and one generic whole-object prompt; no target descriptions, counts, masks or roles |
+| Dataset reuse | Existing checkpoint, publisher wheels and runtime extras; no new dataset upload needed |
+| Isolation | Seven uncued artifacts embedded and staged separately; prior target prompts are not passed to the worker or model |
+| Boundary procedure | Native predicted point followed by its same-color four-connected region; retain background seeds, duplicates, splits and merges |
+| Scoring | Whole objects primary, one-to-one IoU 0.5 diagnostic matching; no automatic advancement verdict |
+| Independent replay | Rebuild frozen requests, processor tokens/metadata, native points and pixel masks; reject tampering and retain invalid cases |
+| Completion | Provider COMPLETE, post-write witness/cell marker, exact file inventory, bounded calls and verified process/GPU cleanup required |
+| Linux CPU suite | 178 distinct tests passed; zero failures, errors or skips, including real descendant-process cleanup checks |
+| Native API rehearsal | Six generic prompts preprocessed; one tiny random CPU generation and BF16 checkpoint-load check; no pretrained generation |
+| Exact package | Source and embedded payload match; reference data remains outside executable payload; missing authority refuses before extraction or GPU queries |
+
+Review-lock SHA256:
+`870802de51d256b0a6f4c6511bfe789764c8daf6a4d5431b114efa24a438ff56`
+
+Proposed/requested launch scope: exactly one RTX PRO 6000, one attempt, six
+generations, at most 4,096 new tokens each and 96 decoded points each. Requested
+session timeout 3,600 seconds; worker 3,300, work cutoff 3,000, cleanup reserve
+300. The retained owner time-policy amendment accepts provider overhead beyond
+one hour. Private account-only notebook and raw outputs; sanitized summaries
+only. Internet/TPU off, zero game actions and scorecards, no automatic retries.
+
+The private package includes the applicable retained licence texts and current
+dataset inventory/access observations. Fresh preflight, lock-bound authority
+and a single-use consumed claim are required before one provider submission.
+At this preparation checkpoint no new GPU submission has occurred.
+
+These are exposed development boards, not held-out examples. Color components
+are a transparent tool baseline and may not equal semantic object boundaries.
+No model-only segmentation, gameplay or generalization claim follows.

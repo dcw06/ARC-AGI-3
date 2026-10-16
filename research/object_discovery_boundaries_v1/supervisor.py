@@ -290,13 +290,12 @@ def _execute(packet, protocol, authority, pin, input_root, output, started):
         for phase, argv in install_commands(sys.executable, venv, mounts['wheelhouse'],
                                              mounts['inputs'], sandbox/'requirements.lock'):
             processes.command(argv, log, min(started+900, work_deadline), env, phase)
-        # The mounted dataset also contains two installation wheels. Give the
-        # model worker only the seven approved image/request artifacts.
+        # Reuse the old mounted dataset for its two installation wheels only.
+        # The generic uncued artifacts come from the immutable runtime packet;
+        # old target prompts are never staged or read by the inference worker.
         agent_inputs = sandbox/'agent-inputs'
-        model_rows = [row for item in protocol['datasets'] if item['kind']=='inputs'
-                      for row in item['files']]
         result['agent_input_staging'] = stage_agent_inputs(
-            mounts['inputs'], agent_inputs, model_rows, check)
+            packet/'agent-inputs', agent_inputs, protocol['agent_input_files'], check)
         env.update(CUDA_VISIBLE_DEVICES=gpu, NVIDIA_VISIBLE_DEVICES=gpu)
         worker = ('import json,sys; sys.path.insert(0,sys.argv[1]); '
                   'from research.object_discovery_boundaries_v1.inference import run; '

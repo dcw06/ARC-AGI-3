@@ -234,8 +234,10 @@ locally; 50 relevant Python checks and nine isolated browser control checks pass
 The private editor provides hover coordinates, exact-mask editing, hierarchy,
 inventory review and JSON export. Work proceeds with model + pixel tools; the
 separate GPU worker/lifecycle candidate now has 15 additional synthetic checks.
-Independent raw-token/mask replay and the exact launch package remain outstanding.
-No additional GPU compute is authorized or launched.
+Independent raw-token/mask replay and the exact private template are now built;
+[launch preparation](reports/object_discovery_boundaries_v1_launch_readiness_2026-10-16.md)
+records 178 Linux CPU checks passing without skips. Fresh authority, preflight
+and a single-use claim precede submission; no uncued GPU result exists yet.
 
 ## Source snapshot
 

@@ -19,7 +19,7 @@ No model requests, game actions, uploads or GPU jobs occurred. The completed
 | Automatic passing verdict | None; geometry scoring supplies no model-run certification or advancement approval |
 | Private editor | Hover coordinates, cell brush/eraser, component union/subtraction, parent/disposition selection, undo and JSON export/import |
 | Verification | 50 relevant Python tests and 9 isolated browser control checks passed |
-| Actual agent inference | Not executed; separate worker/lifecycle candidate implemented, independent replay and exact launch package outstanding |
+| Actual agent inference | Not executed; separate runtime, independent replay and exact private template now prepared; see launch preparation below |
 
 The existing 94 regions comprise 75 rectangles, 15 explicit masks and four
 groups. They are not promoted into exhaustive segmentation truth automatically.
@@ -69,11 +69,13 @@ metadata/code files. That check loaded no weights, generated no answers and
 attempted no network connections. It does not validate inference in Kaggle's
 exact image. [Source-bound CPU test record](object_discovery_boundaries_v1_runtime_candidate_cpu_validation_2026-10-16.json).
 
-This is a preparation candidate, not a launch-ready reviewed package. Still
-needed: independent raw-token/mask replay and lifecycle validation for this
-condition, the exact private package and attachment bindings, review, and fresh
-compute authorization. Reference confirmation supplies none of those approvals.
-No new dataset upload, model generation or GPU job was performed.
+The subsequent [launch preparation](object_discovery_boundaries_v1_launch_readiness_2026-10-16.md)
+adds independent raw-token/mask replay, lifecycle validation and the exact
+private template, with 178 Linux CPU tests passing without skips. Existing
+datasets supply runtime dependencies; seven embedded uncued artifacts are
+staged separately. Lock-bound authority and fresh preflight still precede any
+submission. Reference confirmation supplies no compute approval. No new
+dataset upload or pretrained model generation occurred during preparation.
 
 A same-color region can be only part of a multicolor object, or can join objects
 that touch. Background seeds and duplicate masks are retained. Semantic

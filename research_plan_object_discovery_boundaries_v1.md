@@ -139,13 +139,13 @@ then report those same frames as held-out success.
 | Audit retained geometry, masks, hierarchy and source hashes | Implemented and run locally; 5 synthetic audit checks pass |
 | Tools-versus-model-only boundary scope | Proceeding with recommended model + pixel tools; not a frozen protocol |
 | Complete exact masks and exhaustive inventory review | Owner confirmed all 94 unchanged masks and six complete inventories; original export and separate attestation preserved privately |
-| Freeze prompts, inventory granularity, mask contract, matching and thresholds | Outstanding |
+| Freeze prompts, inventory granularity, mask contract, matching and thresholds | Diagnostic pilot prompt, whole-object granularity, mask procedure and IoU matching bound by the private package; no advancement verdict |
 | Prepare separate uncued inputs, inventory decoder, mask baseline and geometric evaluator | Implemented locally; completed six-target runtime remains unchanged |
 | Rehearse synthetic geometry failures and source bindings | 50 relevant Python checks and 9 isolated browser control checks pass |
 | Provide an exact-mask / exhaustive-inventory editor | Implemented: hover coordinates, cell/component editing, hierarchy and JSON export/import |
-| Integrate new model-loading worker, admissions, lifecycle and raw-token replay | Separate worker/lifecycle candidate implemented with 15 synthetic checks; independent raw-token/mask replay remains outstanding |
+| Integrate new model-loading worker, admissions, lifecycle and raw-token replay | Implemented; expanded Linux suite passes all 178 checks without skips |
 | Bound generations, output points, tokens, grouping and lifecycle | Draft proposes six generations × 4,096 tokens and 96 points; full runtime budget and grouping remain unfrozen |
-| Build/review the exact new private package and source/use bindings | Outstanding |
+| Build/review the exact new private package and source/use bindings | Private template assembled and checked; existing attachments unchanged; current lock and limits in launch preparation report |
 | Fresh compute authorization, reservation, preflight and one submission | Not authorized by this draft |
 
 No model request, game action, upload or GPU launch occurred while preparing
