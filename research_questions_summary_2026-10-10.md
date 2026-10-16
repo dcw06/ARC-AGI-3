@@ -236,8 +236,11 @@ inventory review and JSON export. Work proceeds with model + pixel tools; the
 separate GPU worker/lifecycle candidate now has 15 additional synthetic checks.
 Independent raw-token/mask replay and the exact private template are now built;
 [launch preparation](reports/object_discovery_boundaries_v1_launch_readiness_2026-10-16.md)
-records 178 Linux CPU checks passing without skips. Fresh authority, preflight
-and a single-use claim precede submission; no uncued GPU result exists yet.
+records 178 Linux CPU checks passing without skips. One owner-requested attempt
+was submitted once and reported RUNNING. Kaggle returned a title-derived slug,
+so the deployment identity warning remains open; separate readback verified
+the sealed source and other privacy/hardware configuration fields. The attempt
+is consumed, with no retry; uncued results await independent evaluation.
 
 ## Source snapshot
 

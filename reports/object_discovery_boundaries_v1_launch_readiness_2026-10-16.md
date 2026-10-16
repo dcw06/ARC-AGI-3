@@ -36,3 +36,27 @@ At this preparation checkpoint no new GPU submission has occurred.
 These are exposed development boards, not held-out examples. Color components
 are a transparent tool baseline and may not equal semantic object boundaries.
 No model-only segmentation, gameplay or generalization claim follows.
+
+## One submitted attempt; identity warning retained
+
+Exactly one SaveKernel was forwarded. Kaggle accepted it without errors or
+invalid sources, created version 1 and reported RUNNING in a subsequent
+read-only check (23:33 UTC). The reservation and send claim are consumed and
+preserved. No retry or additional submission was made.
+
+Kaggle returned a title-derived notebook slug instead of the explicitly
+requested slug. The operator correctly stopped at its identity check; the
+original failed deployment receipt remains unchanged. This is not recorded as
+a cleared deployment gate.
+
+A separate read-only inspection of the returned, same-owner notebook verified
+the exact sealed source and all other available privacy, RTX PRO 6000, image
+and attachment fields. That comparison explicitly excluded the mismatching
+identity and retains both expected and actual values privately. Provider
+readback does not echo the requested timeout or numeric attachment-version
+labels. Runtime hashes and GPU identity checks still apply before inference.
+Physical allocation and model results are not yet independently verified.
+
+No source approval was rewritten to hide the mismatch, and no attempt was
+reset. Scientific results await collection and independent replay; the
+deployment-identity qualification must accompany that assessment.
