@@ -176,12 +176,14 @@ close request serialization/target, preflight binding, one-use consumption and r
 All 20 operator regressions pass on Linux and with optimized Python, in addition to the
 84 retained runtime/lifecycle cases. The approved notebook/runtime hash is unchanged.
 A fresh passing preflight and single-use claim still precede any future submission.
-**Launch update (October 16, 07:08 UTC):** the owner-authorized private package was
-submitted once. Saved source/configuration verification passed; provider status was
-RUNNING at the initial read-only check. The reservation and send claim are consumed,
-with no automatic retries. The requested hardware is one RTX PRO 6000; actual allocated
-hardware remains unverified until the guarded runtime census. No pretrained response
-or object-identification score has been collected yet.
+**Attempt 1 outcome:** the single authorized submission is now ERROR. Saved source and
+requested configuration match review, but the first GPU identity command exited 12 because
+`libnvidia-ml.so` was unavailable to it. Dataset verification, installation, model loading
+and generations never began. The environment omits `LD_LIBRARY_PATH`; a synthetic CPU
+loader reproduction supports that failure mechanism, without proving the actual provider
+driver was present. Tracked child cleanup passed; GPU cleanup and allocated hardware
+remain unverified. The attempt is consumed and preserved, with no retries and no object
+score. [Failure record](reports/internvl_object_identification_v1_attempt1_failure.md).
 
 ## Source snapshot
 

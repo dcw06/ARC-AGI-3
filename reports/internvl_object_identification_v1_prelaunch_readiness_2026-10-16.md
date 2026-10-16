@@ -1,9 +1,10 @@
 # InternVL identification: final live package readiness
 
-October 16, 2026. **One authorized attempt submitted and saved package verified; RUNNING
-at the initial 07:08 UTC status check.** Requested RTX PRO 6000 configuration is verified;
-actual GPU allocation and pretrained inference are not yet established. The reservation
-and single-send claim are consumed. No automatic retries.
+October 16, 2026. **Attempt 1 is ERROR and consumed.** The first GPU identity query
+could not load NVML; no installation/model loading/generation began. Requested saved
+configuration is verified, but actual GPU allocation and GPU cleanup are unverified.
+[Failure and diagnosis](internvl_object_identification_v1_attempt1_failure.md).
+No automatic retries; the earlier RUNNING observation below is retained as history.
 The sections below retain preparation evidence. Repair work used only read-only provider
 checks; the subsequent owner-requested launch sent exactly one SaveKernel.
 The two completed CPU attempts and all historical candidates/approval records remain preserved.
