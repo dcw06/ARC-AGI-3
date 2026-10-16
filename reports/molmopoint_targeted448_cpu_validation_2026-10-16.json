@@ -1,0 +1,41 @@
+{
+  "CPU_processor_cases_passed": 6,
+  "cuda_initialized": false,
+  "exact_Kaggle_image_validated": false,
+  "exact_recommended_environment_validated": false,
+  "input_policy": "448x448 nearest-neighbor, uniform 7x7 cells; no overlay, labels, margins or external crop",
+  "live_package_ready": false,
+  "max_new_tokens_each": 1024,
+  "native_decoder_verified_with_asymmetric_synthetic_points": true,
+  "network_attempts_during_CPU_check": 0,
+  "new_model_generations": 0,
+  "private_CPU_receipt_sha256": "a72b81244b6baba892bdb42a699250b49f32ea3e771ca0d00ddf0a7748959d5a",
+  "private_preparation_manifest_sha256": "df72eb7b6b118b8108f3b7627c8ec46fea06cd8024d814705b34f16108a18092",
+  "private_target_plan_sha256": "1b9f598936f1deceb7524aa649873631745a2dd07b0ad27668a7d849c7f78442",
+  "prompt_tokens": [
+    771,
+    777,
+    775,
+    776,
+    774,
+    781
+  ],
+  "proposed_generation_requests": 6,
+  "real_model_and_logit_processor_loaded": false,
+  "recommended_transformers": "4.57.1",
+  "revision": "188130f961c8e0888a34e11121a1423c461a01ba",
+  "schema": "molmopoint_targeted448_cpu_validation_v1",
+  "scientific_limit": "Different prompt, metric and pixel interpolation from the prior InternVL inventory; not a model-only comparison.",
+  "source_sha256": {
+    "adapter.py": "2878d4ccb2efeca860f47d4448091a20bcaa36232912252700bf740c9ec0ee77",
+    "model_pin.json": "863e8aa0b259049f4ff6ae14e19d2adbd5310776c5f9ac205a7a69c72a1533fd",
+    "prepare.py": "3b4f3753d35e9ee0b25415b4bf80c75d6bb8fba6358ef1a52e55a655fdb39812",
+    "scoring.py": "5d0b08fbf4522912c5b5b122cbfe0f55d74fb629c9009dce9be1743288bafc8f"
+  },
+  "task": "cued single-object localization",
+  "torch": "2.10.0+cpu",
+  "transformers": "4.57.6",
+  "unit_tests_passed": 16,
+  "weights_downloaded": false,
+  "weights_loaded": false
+}

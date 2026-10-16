@@ -42,3 +42,17 @@ def score_case(reference, points, task):
     return {'case_id':reference['case_id'],'task':task,'localization':strata,
             'exhaustive_precision':None,'collision_accuracy':None,'full_mask_accuracy':None,
             'qualification':'Partial references. A point hit does not prove object extent, identity, role or blocking behavior.'}
+
+
+def score_target(reference, target_region_id, points):
+    """A cued single-object query earns credit only for its declared target."""
+    refs = [r for r in reference['regions'] if r['id'] == target_region_id]
+    if len(refs) != 1:
+        raise ValueError('one predeclared target reference required')
+    matches = match_points(refs,points)
+    valid = len(points) <= 1
+    return {'case_id':reference['case_id'],'target_region_id':target_region_id,
+            'response_valid':valid,'point_count':len(points),
+            'target_hit':valid and len(matches) == 1,
+            'response_error':None if valid else 'multiple points for single-target prompt',
+            'qualification':'Exact labelled-cell containment; center accuracy, click execution and gameplay untested.'}

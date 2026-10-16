@@ -11,5 +11,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source-bundle',type=Path,required=True)
     parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--targets',type=Path,required=True,help='private query-to-reference plan, outside model inputs')
     args = parser.parse_args()
-    print(json.dumps(prepare(args.source_bundle,args.output),indent=2))
+    print(json.dumps(prepare(args.source_bundle,args.output,args.targets),indent=2))

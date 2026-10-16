@@ -2,8 +2,11 @@
 
 October 16, 2026. Added a separate experimental native-pointing adapter and input
 preparation command for `allenai/MolmoPoint-8B`. The gameplay policy and completed
-InternVL study are unchanged. The owner's coordinate-grid choice remains pending;
-this draft uses the original plain board images. No model weights were downloaded,
+InternVL study are unchanged. The owner has now selected plain 448px nearest-neighbor
+boards with no overlay for the first targeted test.
+[Current input draft](molmopoint_targeted448_draft_2026-10-16.md) supersedes the initial
+512px generic-inventory candidate; its earlier receipts remain preserved.
+No model weights were downloaded,
 no model answers generated, and no Kaggle upload or job was started.
 
 ## Why this model
@@ -28,23 +31,23 @@ for the observed grounding failure, not evidence that it works on ARC games.
 | Coordinate conversion | Publisher rows are `[object_id, image_index, pixel_x, pixel_y]`; validate then compute `floor(pixel_x / original_width * 64)` and the analogous y coordinate |
 | Refusal | Reject nonfinite, negative, outside-image or wrong-image points; never clamp, round to a nearby object or repair an answer |
 | Point-hit scoring | Maximum-cardinality one-to-one matching against exact owner-labelled occupied cells, with whole regions and parts separate |
-| Input draft | Six anonymous original first-level boards; generic object and barrier-candidate requests, 12 proposed calls total, each at most 1,024 new tokens, zero actions |
-| Reference isolation | Partial owner references retained separately from model inputs; no target names, locations, masks or annotations in prompts |
+| Current input draft | Six plain 448px nearest-neighbor boards, no overlay; six predeclared appearance-cued target prompts, each at most 1,024 new tokens, zero actions |
+| Reference isolation | Expected target IDs, masks and annotations retained separately from inputs; only the visible target description is in each prompt |
 | Production integration | No active-policy change, action dispatch, model loading entry point or live notebook; native point helpers are for a separately reviewed future worker |
 
 The image processor's crop and resize transforms are handled by the publisher's
 decoder before our cell conversion. The adapter must receive the **original**
-image dimensions, not internal crop dimensions. The current draft uses unchanged
-512-by-512 full-board images, so each original cell occupies eight pixels. It
-does not impose InternVL's 448-by-448 preprocessing on MolmoPoint.
+image dimensions, not internal crop dimensions. The selected supplied images are
+448-by-448 full boards, so each original cell occupies seven pixels; there are no
+extra margins. MolmoPoint still uses its own native processor internally.
 
 ## Validation and limits
 
-Twelve local behavioral tests cover every board cell, x/y orientation,
+Sixteen local behavioral tests cover every board cell, x/y orientation,
 rectangular image dimensions, boundaries, invalid values and caps, native metadata
 and special-token handling, decoder omissions, wrong architecture, output
 truncation, occupied-cell holes, duplicate coverage and partial references.
-The pinned real processor also passed preprocessing on all six boards and a
+The initial 512px pinned-processor check passed preprocessing on all six boards and a
 synthetic native-decoder check locally on CPU, with 772 prompt tokens and
 725-by-4 pooling metadata per object prompt. It used PyTorch 2.10.0+cpu and
 Transformers 4.57.6, no weights, no generations, no network and no CUDA. This
@@ -52,8 +55,10 @@ validates processor/decoder interfaces only, not visual recognition or generatio
 A follow-up used the project adapter with that real processor and an asymmetric
 synthetic decoded point, verifying x/y order through the full helper interface;
 the model and its logit processor were stand-ins, not loaded weights.
-The [aggregate CPU record](molmopoint_identification_v1_cpu_validation_2026-10-16.json)
-pins the private receipt and current source hashes. Unit fixtures are not model results.
+The [initial aggregate CPU record](molmopoint_identification_v1_cpu_validation_2026-10-16.json)
+pins the private receipt and source at `f98b0a8`; it is historical evidence for that
+version. The [current 448px CPU record](molmopoint_targeted448_cpu_validation_2026-10-16.json)
+binds the revised source and six target-prompt inputs. Unit fixtures are not model results.
 
 The publisher recommends Transformers 4.57.1, whereas the retained InternVL
 environment uses 4.57.6. That difference must be resolved and tested in a separate
@@ -87,5 +92,5 @@ test. No previous attempt or approval is reset or reused.
 Local preparation command (no downloads, inference or launches):
 
 ```text
-python scripts/prepare_molmopoint_identification.py --source-bundle <retained-private-bundle> --output <new-private-directory>
+python scripts/prepare_molmopoint_identification.py --source-bundle <retained-private-bundle> --targets <private-target-plan.json> --output <new-private-directory>
 ```

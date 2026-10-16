@@ -202,11 +202,13 @@ the attempt is technically complete, with no repair or additional generation.
 
 **MolmoPoint integration draft (October 16):** added the separate native-pointing
 adapter for `allenai/MolmoPoint-8B`, pinned to `188130f961c8e0888a34e11121a1423c461a01ba`.
-Decoded original-image pixels map deterministically to board cells. Twelve local
-tests and the real processor/synthetic-decoder CPU check pass; no weights or model
-answers were produced. Six plain boards have object/barrier-candidate input drafts.
-The grid choice remains pending, the gameplay policy is unchanged, and there is no
-live package or new compute authority. [Integration and limits](reports/molmopoint_identification_v1_integration_2026-10-16.md).
+Decoded original-image pixels map deterministically to board cells. The owner chose
+**plain 448-by-448 nearest-neighbor images with no overlay** for the first test:
+six predeclared visual targets, seven pixels per cell and exact occupied-cell hits.
+Sixteen local tests and the real processor/synthetic-decoder CPU check pass; no weights
+or model answers were produced. The gameplay policy is unchanged, and there is no
+live package or new compute authority. [Current targeted input draft](reports/molmopoint_targeted448_draft_2026-10-16.md),
+[integration and limits](reports/molmopoint_identification_v1_integration_2026-10-16.md).
 
 ## Source snapshot
 

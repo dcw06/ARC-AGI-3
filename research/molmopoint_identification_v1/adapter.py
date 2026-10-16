@@ -71,7 +71,7 @@ def points_to_cells(points, image_size):
             raise ValueError('decoded pixel point outside original image; never clamp or repair')
         result.append({'object_id':int(oid),'image_index':0,
                        'pixel_xy':[float(px),float(py)],
-                       'cell_xy':[math.floor(float(px)/width*64),math.floor(float(py)/height*64)]})
+                       'cell_xy':[math.floor(float(px)/(width/64)),math.floor(float(py)/(height/64))]})
     return result
 
 
@@ -79,11 +79,18 @@ def prepare_inputs(model, processor, image, task):
     """Use the publisher's metadata/pointing mechanism; caller owns compute limits."""
     if task not in PROMPTS:
         raise ValueError('unknown pointing task')
+    return prepare_prompt_inputs(model,processor,image,PROMPTS[task])
+
+
+def prepare_prompt_inputs(model, processor, image, prompt):
+    """Prepare one prompt from a frozen request plan, using original-image metadata."""
+    if type(prompt) is not str or not 1 <= len(prompt) <= 1000:
+        raise ValueError('bounded pointing prompt required')
     if getattr(getattr(model,'config',None),'model_type',None) != 'molmo_point':
         raise ValueError('expected the pinned MolmoPoint architecture')
     image_size = dimensions(image.size)
     messages = [{'role':'user','content':[
-        {'type':'text','text':PROMPTS[task]}, {'type':'image','image':image}]}]
+        {'type':'text','text':prompt}, {'type':'image','image':image}]}]
     inputs = processor.apply_chat_template(messages, tokenize=True, add_generation_prompt=True,
         return_tensors='pt', return_dict=True, padding=True, return_pointing_metadata=True)
     metadata = inputs.pop('metadata')
