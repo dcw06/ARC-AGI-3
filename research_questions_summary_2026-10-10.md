@@ -162,6 +162,12 @@ cleanup pass, with a post-write witness and independent audit. Worker time: 423.
 not total job time. The single attempt is consumed, with no retries.
 [CPU installation results](reports/internvl_object_identification_v1_cpu_install_results.md).
 Full-job GPU-cap enforcement remains unresolved.
+**Prelaunch preparation:** [readiness report](reports/internvl_object_identification_v1_prelaunch_readiness_2026-10-16.md)
+and [design r1](reports/internvl_object_identification_v1_protocol_r1.md) now bind the six-request
+worker/supervisor/replay candidate. A tiny synthetic checkpoint load/generate check and six-prompt
+token audit pass; 77 Linux tests pass. The private packet rebuilds identically and refuses before
+GPU queries; scoped-use approval is a draft. Provider cap confirmation, exact live-package approval
+and fresh GPU authority remain outstanding. No pretrained image response or object score exists.
 
 ## Source snapshot
 

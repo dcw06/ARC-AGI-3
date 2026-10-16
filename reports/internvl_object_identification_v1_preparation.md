@@ -292,3 +292,21 @@ for the repository-privacy test. These checks are not a target-image installatio
 The requested 1,800-second CPU session timeout does not establish provider setup-time
 coverage. The owner's separate enforced 3,600-second **entire GPU job** cap remains
 unresolved; this preparation does not waive it or authorize a GPU attempt.
+
+## Review-only inference candidate (October 16)
+
+The remaining local preparation is recorded in the
+[prelaunch readiness report](internvl_object_identification_v1_prelaunch_readiness_2026-10-16.md)
+and [design r1](internvl_object_identification_v1_protocol_r1.md). The new private candidate
+binds the exact model/input/wheel inventories, source, scoring/replay, image and CPU
+evidence. Its notebook and supervisor refuse before model imports or GPU queries.
+A private licence-use draft retains 26 licence texts; its new permission outcome is blank.
+
+The local tiny-checkpoint loading/generation API rehearsal passes. All six real prompts
+have 601 tokens including 256 image-context tokens; no real image was inferred. The
+combined Linux group passes 77 tests with no failures/skips, and the candidate rebuilds
+byte-identically. No new provider call, upload, approval, reservation or GPU job occurred.
+
+Remaining are provider confirmation of the full-job cap, scoped-use/live-package review
+and fresh GPU authorization/claim. The current candidate is not a final live notebook;
+its operational release must be reviewed once the provider mechanism is known.

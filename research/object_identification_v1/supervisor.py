@@ -1,0 +1,241 @@
+"""Offline GPU supervisor candidate. Review packages refuse before any GPU query.
+
+This supplies no provider launcher. A later private operational revision needs
+provider-cap evidence, scoped use, fresh source/compute approval and a consumed claim.
+"""
+import csv
+import hashlib
+import json
+import os
+from pathlib import Path
+import shutil
+import signal
+import sys
+import tempfile
+import time
+
+from certification.direct_publisher_smoke_v1.install import InstallationProcesses
+from .install_check import install_commands, requirement_pins
+from .mount_check import canonical, find_mount, verify_files
+
+SCOPE = {'gpu_count': 1, 'gpu_name_contains': 'RTX PRO 6000', 'whole_job_seconds': 3600,
+         'worker_seconds': 3300, 'work_seconds': 3000, 'cleanup_reserve_seconds': 300,
+         'installation_seconds': 900, 'model_load_seconds': 900,
+         'per_generation_seconds': 180, 'generation_requests': 6,
+         'max_tokens_per_generation': 4096, 'max_generated_tokens': 24576,
+         'game_actions': 0, 'scorecards': 0, 'automatic_retries': 0, 'attempts': 1,
+         'access': 'account_holder_only', 'internet': False}
+
+
+def readiness(protocol, evidence):
+    """No booleans masquerading as evidence: records bind exact scope and bytes."""
+    problems = []
+    if canonical(protocol.get('scope')) != canonical(SCOPE):
+        problems.append('scope differs from frozen six-request design')
+    if protocol.get('live_runs_enabled') is not True:
+        problems.append('review-only package: live runs disabled')
+    if not evidence:
+        problems.append('provider cap, scoped use, approvals and consumed launch claim missing')
+        return problems
+    required = ('provider_cap', 'scoped_use', 'source_approval', 'compute_authorization', 'launch_claim')
+    for name in required:
+        if type(evidence.get(name)) is not dict:
+            problems.append(name+' missing')
+    if problems:
+        return problems
+    pin = evidence.get('review_lock_sha256')
+    for name in required:
+        if evidence[name].get('review_lock_sha256') != pin or not pin:
+            problems.append(name+' is not bound to this review lock')
+    cap = evidence['provider_cap']
+    if (cap.get('approved') is not True or cap.get('covers_allocation_through_release') is not True
+            or type(cap.get('maximum_seconds')) is not int or not 0 < cap['maximum_seconds'] <= 3600
+            or not cap.get('provider_reply_sha256') or not cap.get('enforcement_configuration_sha256')):
+        problems.append('provider-enforced entire-job cap not established')
+    for name in ('scoped_use', 'source_approval', 'compute_authorization'):
+        record = evidence[name]
+        if record.get('approved') is not True or not record.get('owner_answer'):
+            problems.append(name+' not personally approved')
+    if canonical(evidence['compute_authorization'].get('scope')) != canonical(SCOPE):
+        problems.append('compute authorization scope mismatch')
+    bound = {name: hashlib.sha256(canonical(evidence[name])).hexdigest()
+             for name in ('provider_cap', 'scoped_use')}
+    if evidence['source_approval'].get('scope_evidence_sha256') != bound:
+        problems.append('source approval does not bind current scope evidence')
+    if evidence['compute_authorization'].get('source_approval_sha256') != hashlib.sha256(
+            canonical(evidence['source_approval'])).hexdigest():
+        problems.append('compute authorization does not bind source approval')
+    if evidence['launch_claim'].get('authorization_sha256') != hashlib.sha256(
+            canonical(evidence['compute_authorization'])).hexdigest():
+        problems.append('claim does not bind authorization')
+    if evidence['launch_claim'].get('consumed') is not True or not evidence['launch_claim'].get('attempt_id'):
+        problems.append('single-use launch claim not consumed')
+    # Every receipt named by an authority must be retained alongside it and hashed.
+    retained = evidence.get('retained_evidence', {})
+    for name in required:
+        for field, digest in evidence[name].items():
+            if field.endswith('_sha256') and field not in ('review_lock_sha256', 'scope_evidence_sha256'):
+                if digest not in retained:
+                    problems.append(name+' missing retained '+field)
+    return problems
+
+
+def verify_packet(packet):
+    packet = Path(packet).resolve()
+    raw = (packet/'review-lock.json').read_bytes()
+    lock = json.loads(raw)
+    for name, digest in lock['artifacts'].items():
+        path = packet/name
+        if (path.is_symlink() or not path.resolve().is_relative_to(packet)
+                or hashlib.sha256(path.read_bytes()).hexdigest() != digest):
+            raise ValueError('private packet artifact differs: '+name)
+    return hashlib.sha256(raw).hexdigest()
+
+
+def finish(result, output, started, deadline):
+    """A provisional receipt needs post-write witness AND provider COMPLETE."""
+    result['elapsed_before_receipt_write_seconds'] = time.monotonic()-started
+    raw = canonical(result)
+    destination = Path(output)/'result.json'
+    with destination.open('xb') as stream:
+        stream.write(raw)
+    if time.monotonic() >= deadline or result['status'] != 'provisional_complete':
+        raise RuntimeError('inference lifecycle failed or exceeded deadline; preserve evidence')
+    witness = canonical({'result_sha256': hashlib.sha256(raw).hexdigest(),
+                         'elapsed_after_receipt_write_seconds': time.monotonic()-started,
+                         'provider_COMPLETE_required': True})
+    with (Path(output)/'completion-witness.json').open('xb') as stream:
+        stream.write(witness)
+    if time.monotonic() >= deadline:
+        raise TimeoutError('inference finalization overrun')
+    print('OBJECT_IDENTIFICATION_RETURNED '+hashlib.sha256(witness).hexdigest(), flush=True)
+    if time.monotonic() >= deadline:
+        raise TimeoutError('completion-output finalization overrun')
+    return result
+
+
+def run(packet, *, input_root='/kaggle/input', output='/kaggle/working/internvl-object-identification-v1'):
+    # Approval checks precede imports of inference/model libraries and GPU commands.
+    packet = Path(packet).resolve()
+    pin = verify_packet(packet)
+    protocol = json.loads((packet/'protocol.json').read_bytes())
+    authority_path = packet/'live-authority.json'
+    authority = json.loads(authority_path.read_bytes()) if authority_path.exists() else {}
+    problems = readiness(protocol, authority)
+    if authority and authority.get('review_lock_sha256') != pin:
+        problems.append('authority names a different package')
+    for digest, relative in authority.get('retained_evidence', {}).items():
+        path = packet/relative
+        if (path.is_symlink() or not path.resolve().is_relative_to(packet)
+                or hashlib.sha256(path.read_bytes()).hexdigest() != digest):
+            problems.append('retained authority evidence differs')
+    if problems:
+        raise SystemExit('REVIEW ONLY: '+'; '.join(problems))
+    started = time.monotonic()
+    deadline, work_deadline = started+3300, started+3000
+    output = Path(output)
+    output.mkdir(parents=True, exist_ok=False)
+    root = Path(__file__).resolve().parents[2]
+    requirements = (root/'certification/direct_publisher_smoke_v1/trusted_requirements.lock').read_bytes()+b'\n'+(
+        Path(__file__).with_name('runtime_requirements_extra.lock')).read_bytes()
+    pins = requirement_pins(requirements)
+    if len(pins) != 175:
+        raise ValueError('175 unchanged hashed package pins required')
+    processes, sandbox, gpu = InstallationProcesses(), None, None
+    result = {'status': 'inference_incomplete', 'review_lock_sha256': pin, 'scope': SCOPE,
+              'started_at_monotonic': started, 'work_deadline_monotonic': work_deadline,
+              'datasets': {}, 'gpu': None, 'generation_requests': None,
+              'game_actions': 0, 'scorecards': 0, 'provider_completion_required': True}
+    failure = None
+    env = {'PATH': os.defpath, 'PYTHONNOUSERSITE': '1', 'PIP_NO_INDEX': '1',
+           'PIP_CONFIG_FILE': os.devnull, 'PIP_DISABLE_PIP_VERSION_CHECK': '1',
+           'HF_HUB_OFFLINE': '1', 'TRANSFORMERS_OFFLINE': '1', 'HF_HUB_DISABLE_TELEMETRY': '1',
+           'MPLBACKEND': 'Agg', 'TOKENIZERS_PARALLELISM': 'false'}
+    log = output/'processes.log'
+    def check():
+        if time.monotonic() >= work_deadline:
+            raise TimeoutError('inference work deadline exceeded')
+    def query(fields, apps=False):
+        binary = shutil.which('nvidia-smi')
+        if not binary:
+            raise ValueError('nvidia-smi unavailable')
+        flag = '--query-compute-apps=' if apps else '--query-gpu='
+        report = processes.command([binary, flag+','.join(fields), '--format=csv,noheader,nounits'],
+            log, min(deadline, time.monotonic()+5), env, 'GPU process census' if apps else 'GPU identity')
+        if len(report.stdout) > 16384:
+            raise ValueError('oversized GPU census')
+        return [row for row in csv.reader(report.stdout.strip().splitlines()) if row]
+    def expired(*_):
+        raise TimeoutError('inference worker alarm expired')
+    handlers = {s: signal.signal(s, expired) for s in (signal.SIGALRM, signal.SIGTERM, signal.SIGHUP)}
+    old_timer = signal.setitimer(signal.ITIMER_REAL, max(.001, work_deadline-time.monotonic()))
+    try:
+        rows = query(['uuid', 'name'])
+        if len(rows) != 1 or len(rows[0]) != 2 or 'RTX PRO 6000' not in rows[0][1]:
+            raise ValueError('expected exactly one RTX PRO 6000; no fallback allowed')
+        gpu = rows[0][0].strip()
+        result['gpu'] = {'uuid': gpu, 'name': rows[0][1].strip()}
+        if any(row[0].strip() == gpu for row in query(['gpu_uuid', 'pid'], True)):
+            raise ValueError('GPU already has a compute process')
+        mounts = {}
+        for item in protocol['datasets']:
+            mount = find_mount(input_root, item['ref'])
+            result['datasets'][item['kind']] = verify_files(mount, item['files'], check)
+            mounts[item['kind']] = mount
+        sandbox = Path(tempfile.mkdtemp(prefix='internvl-identification-'))
+        (sandbox/'requirements.lock').write_bytes(requirements)
+        env.update(HOME=str(sandbox), TMPDIR=str(sandbox), HF_HOME=str(sandbox/'hf'),
+                   CUDA_VISIBLE_DEVICES='', NVIDIA_VISIBLE_DEVICES='void')
+        venv = sandbox/'venv'
+        for phase, argv in install_commands(sys.executable, venv, mounts['publisher_wheels'],
+                                             mounts['inputs'], sandbox/'requirements.lock'):
+            processes.command(argv, log, min(started+900, work_deadline), env, phase)
+        env.update(CUDA_VISIBLE_DEVICES=gpu, NVIDIA_VISIBLE_DEVICES=gpu)
+        worker = ('import json,sys; sys.path.insert(0,sys.argv[1]); '
+                  'from research.object_identification_v1.inference import run; '
+                  'run(sys.argv[2],sys.argv[3],sys.argv[4],json.loads(sys.argv[5]),float(sys.argv[6]))')
+        processes.command([str(venv/'bin/python'), '-I', '-c', worker, str(root), str(mounts['model']),
+            str(mounts['inputs']), str(output/'worker'),
+            json.dumps({name: row['version'] for name, row in pins.items()}), str(work_deadline)],
+            log, work_deadline, env, 'six-case GPU worker')
+        summary = json.loads((output/'worker/worker.json').read_bytes())
+        result['generation_requests'] = summary['generation_requests']
+        if summary['generation_requests'] != 6:
+            raise ValueError('six responses required')
+        check()
+    except BaseException as error:
+        failure = error
+        result.update(error_type=type(error).__name__, error=str(error)[:1000])
+    finally:
+        signal.setitimer(signal.ITIMER_REAL, 0)
+        try:
+            cleanup = processes.stop(deadline)
+            result['cleanup'] = cleanup
+            if not cleanup['groups_absent'] or cleanup['error'] or cleanup['interrupted']:
+                raise ValueError('process-group cleanup not verified')
+            if gpu is None or any(row[0].strip() == gpu for row in query(['gpu_uuid', 'pid'], True)):
+                raise ValueError('GPU cleanup not verified')
+            devices = query(['uuid', 'name'])
+            if len(devices) != 1 or devices[0][0].strip() != gpu or 'RTX PRO 6000' not in devices[0][1]:
+                raise ValueError('bound GPU identity unavailable at cleanup')
+            result['gpu_cleanup_verified'] = True
+            result['cleanup'] = processes.stop(deadline)
+            if result['cleanup']['error'] or result['cleanup']['interrupted'] or not result['cleanup']['groups_absent']:
+                raise ValueError('final GPU census group cleanup failed')
+            if sandbox is not None:
+                shutil.rmtree(sandbox)
+            result['temporary_environment_removed'] = sandbox is None or not sandbox.exists()
+        except BaseException as error:
+            failure = failure or error
+            result['cleanup_error'] = type(error).__name__+': '+str(error)[:1000]
+            # A census started during cleanup must also be terminated after failure.
+            result['emergency_cleanup'] = processes.stop(deadline)
+        finally:
+            for signum, handler in handlers.items():
+                signal.signal(signum, handler)
+            signal.setitimer(signal.ITIMER_REAL, *old_timer)
+    if failure is None and time.monotonic() < deadline:
+        result['status'] = 'provisional_complete'
+    result['output_sha256'] = {p.relative_to(output).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
+                              for p in output.rglob('*') if p.is_file()}
+    return finish(result, output, started, deadline)

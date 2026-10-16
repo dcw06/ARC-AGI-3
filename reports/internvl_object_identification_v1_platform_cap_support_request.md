@@ -1,6 +1,6 @@
 # Kaggle support draft: full-job cap for an ordinary private notebook
 
-October 15, 2026. **Draft only; not sent. No GPU launch or upload is authorized here.**
+Updated October 16, 2026. **Draft only; not sent. No GPU launch or upload is authorized here.**
 
 This question concerns the InternVL identification probe's ordinary notebook run, not
 the earlier scored competition rerun. The latter has a separate unresolved timeout-
@@ -54,6 +54,9 @@ The [official CLI kernel reference](https://github.com/Kaggle/kaggle-cli/blob/ma
 documents a timeout for notebook pushes. Installed source inspection confirms the field
 is sent to the provider. Neither source establishes pre-cell coverage or release latency.
 No GPU experiment has been used to infer enforcement.
+The official CLI reference was rechecked on October 16; it still describes a run-time
+limit without specifying allocation-through-release coverage. The two successful
+GPU-disabled CPU checks establish mounted bytes and isolated installation, not this cap.
 
 Keep the gate unresolved until a supported mechanism's coverage and termination bound
 meet the full-job requirement. Expected short runtime, a worker timer, successful runs
