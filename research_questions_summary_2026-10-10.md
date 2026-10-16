@@ -145,10 +145,12 @@ behavior. The model revision is pinned; public code uses synthetic tests and pri
 The timm supplement is now hash-pinned, a tiny random-model CPU rehearsal passes, and all 24 pinned model files
 (17.07 GB) are verified locally. All six actual images pass preprocessing checks; no pretrained inference result
 is available. The chosen Kaggle route retains the enforced one-hour full-job cap. Exact Kaggle runtime validation,
-notebook attachment/mounted-byte verification and provider enforcement remain unresolved. The corrected input
+provider enforcement and inference-runtime validation remain unresolved. The corrected input
 dataset is private and ready at version 2 (version 1 preserved); private model version 1 is also ready. Provider
-privacy/name/size checks pass; mounted bytes remain unverified. A CPU-only byte-check review packet is prepared
-and tested, awaiting approval. A support question is drafted but not sent; no notebook or GPU job is launched.
+privacy/name/size checks pass. The owner-approved CPU-only check completed once: **216 mounted file hashes match**,
+including all 174 original wheels; worker verification took **185.1 s**. Reviewed source/private/offline/accelerator
+and image settings match. The pull API omits dataset-version labels; intended versions and actual bytes match.
+A support question is drafted but not sent; no GPU job or pretrained-model inference is launched.
 
 ## Source snapshot
 

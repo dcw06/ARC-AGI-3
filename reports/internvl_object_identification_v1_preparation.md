@@ -151,19 +151,23 @@ the future runner must retain actual requests, model-tree identity, usage and fi
 
 The owner chose a private Kaggle test **keeping the enforced one-hour full-job cap**.
 The local probe review notebook requests no accelerator and always refuses; it has not
-been uploaded. The input dataset has been created privately, with version 1 preserved
+been uploaded. A separate CPU-only byte-verification notebook was owner-approved and
+submitted once; its source and CPU/offline/private settings match the reviewed package.
+It finished COMPLETE and its mounted-byte check passed in 185.1 seconds. The input dataset has been created privately, with version 1 preserved
 and corrected version 2 verified ready. The private model dataset is ready at version 1.
 Read-only provider checks confirm privacy and exact filenames/sizes for all 27 model
-files and 12 input files. These are not mounted-byte receipts.
+files and 12 input files. The separate CPU run subsequently verified every mounted file's
+SHA256, including all 174 existing publisher wheels and their three metadata files.
 
 | Requirement | Current status |
 |---|---|
 | Missing timm dependency | Supplemental wheel pinned and CPU rehearsal passes |
-| Model source bytes | Verified locally; private model version 1 ready, provider privacy/name/size checks pass; mounted bytes and notebook attachment unverified |
-| Input attachment | Private version 2 ready; provider privacy/name/size checks pass; mounted bytes and notebook attachment unverified |
+| Model source bytes | Private model version 1 requested; all 27 mounted files match the reviewed hashes, including 24 unchanged pinned upstream files |
+| Input attachment | Private version 2 requested; all 12 mounted files match the corrected input inventory |
+| Original publisher wheels | All 174 mounted wheel hashes and three metadata hashes match the unchanged trusted inputs |
 | Exact target runtime | CPU rehearsal only; Kaggle image, full loading and GPU compatibility remain unverified |
 | Enforced 3,600-second entire-job cap | Unresolved; owner reports no provider confirmation |
-| Executable launch package and authority | Not prepared or approved; current notebook always refuses |
+| GPU launch package and authority | Not prepared or approved; probe review notebook always refuses; separate CPU-only verification completed once |
 
 Actual inference remains blocked until the private model/input attachments and compatible
 runtime are verified, and provider enforcement covers the entire GPU job, including mounting
@@ -191,8 +195,14 @@ dataset code, pretrained inference or game action. Its reviewed manifest and pro
 COMPLETE status are required alongside the byte receipt; file hashes alone do not certify
 session termination. The private CPU review packet binds the verifier, immutable image,
 three intended dataset versions, manifest and provider receipts. It proposes one attempt,
-a 1,200-second session-runtime timeout and a 1,100-second worker budget; approval is
-pending and no notebook has been submitted. This is not a GPU launch authorization or
+a 1,200-second session-runtime timeout and a 1,100-second worker budget. The owner approved
+that exact CPU packet, and one CPU submission finished COMPLETE; its single attempt is
+consumed and preserved, with no automatic retry.
+Its pulled source, private/offline settings, accelerator `None` and immutable image match.
+Requested dataset versions were accepted, but the pull API omits their version suffixes;
+the locked byte check established contents, but did not independently verify provider
+attachment version labels. Collection verified the saved notebook is version 1, its source
+matches review and all 216 mounted hashes match. This is not a GPU launch authorization or
 an assertion that the timeout covers provider setup.
 
 ## CPU verification record
@@ -219,5 +229,16 @@ an assertion that the timeout covers provider setup.
 - CPU setup history is retained: an initial temporary environment disappeared, and a
   float32 synthetic tensor failed against BF16 vision weights. The persistent environment
   and dtype correction then passed. These are CPU preparation records, not GPU attempts.
-- Pretrained study calls: **0**. Game actions: **0**. GPU/CPU Kaggle jobs and notebook
-  uploads: **0**. Dataset staging is separate from compute authorization.
+- The actual Kaggle CPU run finished COMPLETE. All **216 files** passed streamed SHA256:
+  27 model files (17,072,819,052 bytes), 12 input files (2,544,006 bytes) and 177 publisher
+  files (5,186,017,389 bytes, including 174 wheels). Worker verification took **185.1 s**.
+  Installed-package metadata is recorded as host facts only; no package imports,
+  installation, pretrained weight loading or inference were tested on Kaggle.
+- The pinned image reports Python 3.12.13/glibc 2.35 and host package metadata for
+  Transformers 5.0.0, timm 1.0.26 and torch 2.10.0+cu128. The proposed isolated runtime
+  pins Transformers 4.57.6 and timm 1.0.20; the host environment must not be treated as
+  that validated environment. A separate installation/import check is still required.
+- Pretrained study calls: **0**. Game actions: **0**. GPU jobs: **0**. One separately
+  approved CPU byte-verification notebook was submitted and completed. The
+  original preflight refusal sent no save and consumed no compute attempt; the first
+  actual submission is preserved and cannot be retried automatically.
