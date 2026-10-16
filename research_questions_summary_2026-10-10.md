@@ -151,6 +151,11 @@ privacy/name/size checks pass. The owner-approved CPU-only check completed once:
 including all 174 original wheels; worker verification took **185.1 s**. Reviewed source/private/offline/accelerator
 and image settings match. The pull API omits dataset-version labels; intended versions and actual bytes match.
 A support question is drafted but not sent; no GPU job or pretrained-model inference is launched.
+**October 16 update:** a separate private CPU installation-check packet is prepared for fresh approval.
+It rehashes all mounts, installs the unchanged 174 pins plus timm into a fresh offline venv,
+checks dependency versions/imports, and exercises only a tiny random model on CPU. Proposed limit:
+1,800 s session timeout, 1,700 s worker including 120 s cleanup reserve, one attempt, no retries.
+It has not been uploaded or executed. Full-job GPU-cap enforcement remains unresolved.
 
 ## Source snapshot
 

@@ -1,7 +1,7 @@
 # InternVL3.5-8B: object and obstacle-candidate identification probe
 
-October 15, 2026. Private dataset staging and local CPU compatibility checks; no
-pretrained-model result, notebook submission, reservation or GPU run.
+Updated October 16, 2026. One private CPU byte-verification job completed; a separate
+CPU installation check is prepared for approval. No pretrained-model result or GPU run.
 
 ## Question and evidence limits
 
@@ -49,7 +49,8 @@ Optional FlashAttention/Apex imports are not treated as mandatory dependencies.
 | Actual board preprocessing | All six images yield finite `[1,3,448,448]` BF16 tensors; previews and tensor hashes retained; images were not passed through the model |
 | Local model bytes | All 24 files match the pinned publisher tree; this is not a Kaggle mounted-byte receipt |
 | Checkpoint structure and tokenizer | All 745 indexed BF16 tensors present across four shards; embedding dimensions agree with config; tokenizer/image-token IDs load offline and fit the vocabulary |
-| Exact Kaggle image, CUDA kernels and full checkpoint loading | Not validated; CPU wheels are not the target CUDA runtime |
+| Exact Kaggle image | Byte-verification job's saved configuration matches the immutable image; isolated installation remains untested there |
+| CUDA kernels and full checkpoint loading | Not validated; the local rehearsal uses CPU wheels and synthetic weights |
 
 One full-frame tile is the proposed input policy; it differs from the publisher's default
 dynamic tiling and must be bound in any executable launch package. Runtime/dependency and
@@ -125,8 +126,10 @@ python -m unittest tests.test_object_identification_v1
 
 Use a CPU-only environment for the compatibility rehearsal. It verifies pinned source
 before importing custom code, disables Hub access and refuses socket connections. Its
-receipt binds the validator/source hashes and installed versions. It deliberately refuses
-CUDA builds; it cannot be used to claim validation of Kaggle's CUDA image.
+receipt binds the validator/source hashes and installed versions. By default it refuses
+CUDA builds. The separate installation worker explicitly permits CUDA-linked wheels for
+CPU execution with devices hidden, refuses initialized CUDA, and verifies all parameters
+remain on CPU. Neither mode establishes GPU-kernel compatibility.
 
 ```sh
 python scripts/object_identification_v1.py cpu-runtime-check --source "<pinned-model-code-folder>" --cache "<private-HF-cache>" --inputs "<private-bundle>/inputs" --previews "<new-preview-folder>" --output "<new-CPU-receipt.json>"
@@ -165,7 +168,7 @@ SHA256, including all 174 existing publisher wheels and their three metadata fil
 | Model source bytes | Private model version 1 requested; all 27 mounted files match the reviewed hashes, including 24 unchanged pinned upstream files |
 | Input attachment | Private version 2 requested; all 12 mounted files match the corrected input inventory |
 | Original publisher wheels | All 174 mounted wheel hashes and three metadata hashes match the unchanged trusted inputs |
-| Exact target runtime | CPU rehearsal only; Kaggle image, full loading and GPU compatibility remain unverified |
+| Exact target runtime | Image binding and mounted bytes verified; separate isolated installation check prepared, not executed; full loading and GPU compatibility unverified |
 | Enforced 3,600-second entire-job cap | Unresolved; owner reports no provider confirmation |
 | GPU launch package and authority | Not prepared or approved; probe review notebook always refuses; separate CPU-only verification completed once |
 
@@ -242,3 +245,38 @@ an assertion that the timeout covers provider setup.
   approved CPU byte-verification notebook was submitted and completed. The
   original preflight refusal sent no save and consumed no compute attempt; the first
   actual submission is preserved and cannot be retried automatically.
+
+## Next CPU installation check (prepared; not authorized or submitted)
+
+The completed byte-only authorization is consumed. It did not authorize installs.
+The new private packet proposes one additional CPU-only job, with GPU, TPU and
+internet off, on the same immutable image and three byte-verified dataset inventories.
+It is built locally by `scripts/build_object_identification_cpu_install.py` and is
+separate from any GPU launch package. No provider calls are made by that builder.
+
+| Stage | Bound behavior |
+|---|---|
+| Before installation | Stream SHA256 of all 216 mounted files again, including every original wheel |
+| Environment | New venv without ensurepip; host pip manages that interpreter; host site-packages are excluded |
+| Dependencies | Unchanged 174 hash-pinned original wheels plus the separately pinned timm wheel; no index/cache, binary-only installation; pip check and all 175 distribution versions must match |
+| Model code | Import the pinned InternVL classes and unchanged tokenizer; one tiny random-weight CPU forward with synthetic input; six real images are preprocessed only |
+| Scope | No pretrained-weight loading, study/model requests, game actions or scorecards; account-only notebook and raw evidence |
+| Proposed budget | Session-runtime timeout 1,800 s; worker 1,700 s, including 120 s reserved for cleanup; one attempt, no automatic retries |
+| Cleanup and verdict | Own/reap installation and import-check process groups; remove temporary venv/cache before the final deadline checks; receipt remains provisional until independent collection verifies provider COMPLETE and the post-write cell-output witness |
+
+The source extraction is retained as reviewed evidence. Temporary installation files are
+removed. The independent collection rule rejects late finalization, missing/stale witnesses,
+provider ERROR/RUNNING, scope violations and unverified cleanup. A result file by itself
+does not certify successful lifecycle completion.
+
+Local validation: the updated tiny CPU model/tokenizer rehearsal passes with no CUDA
+initialization or pretrained loading. The emitted packet's artifact/source hashes, embedded
+source/manifest, CPU/offline/private settings and exact image match, and its independent
+rebuild is byte-identical. Linux installation descendant, startup-interruption and deadline
+regressions pass. The combined native Linux group passed **65 tests, zero failures or
+skips**; the native copy avoids WSL's inability to resolve Windows worktree Git pointers
+for the repository-privacy test. These checks are not a target-image installation result.
+
+The requested 1,800-second CPU session timeout does not establish provider setup-time
+coverage. The owner's separate enforced 3,600-second **entire GPU job** cap remains
+unresolved; this preparation does not waive it or authorize a GPU attempt.

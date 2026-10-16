@@ -8,7 +8,20 @@ from pathlib import Path
 import socket
 import time
 
-from .probe import MODEL, MODEL_REVISION
+# Keep this rehearsal importable without the annotation/evaluation dependencies.
+MODEL = 'OpenGVLab/InternVL3_5-8B'
+MODEL_REVISION = '9bb6a56ad9cc69db95e2d4eeb15a52bbcac4ef79'
+
+
+def require_cpu_execution(torch, allow_cuda_build=False):
+    """A CUDA-linked wheel may be tested on CPU, never with an initialized GPU."""
+    if torch.cuda.is_initialized():
+        raise ValueError('CPU rehearsal refuses an initialized CUDA runtime')
+    if torch.version.cuda is not None and not allow_cuda_build:
+        raise ValueError('this rehearsal requires CPU-only PyTorch, not a CUDA build')
+    if allow_cuda_build and (os.environ.get('CUDA_VISIBLE_DEVICES') != ''
+                             or os.environ.get('NVIDIA_VISIBLE_DEVICES') != 'void'):
+        raise ValueError('CUDA-built CPU rehearsal requires hidden GPU devices')
 
 
 def verify_model_code(folder):
@@ -46,7 +59,7 @@ def prepare_pixels(image, dtype):
     return pixels, preview.getvalue()
 
 
-def cpu_check(folder, cache, inputs=None, previews=None):
+def cpu_check(folder, cache, inputs=None, previews=None, *, allow_cuda_build=False):
     """Exercise imports and a reduced random-weight model with networking disabled.
 
     This tests the actual pinned model classes against installed CPU libraries.
@@ -73,11 +86,10 @@ def cpu_check(folder, cache, inputs=None, previews=None):
     socket.create_connection = refuse_network
     try:
         import torch
-        if torch.version.cuda is not None or torch.cuda.is_initialized():
-            raise ValueError('this rehearsal requires CPU-only PyTorch, not a CUDA build')
+        require_cpu_execution(torch, allow_cuda_build)
         import torchvision
         import timm
-        from transformers import AutoConfig, AutoModel
+        from transformers import AutoConfig, AutoModel, AutoTokenizer
 
         torch.set_num_threads(2)
         torch.manual_seed(0)
@@ -110,8 +122,16 @@ def cpu_check(folder, cache, inputs=None, previews=None):
             raise ValueError('unexpected multimodal rehearsal shapes')
         if not torch.isfinite(result.logits).all().item():
             raise ValueError('non-finite multimodal logits')
-        if connections:
-            raise ValueError('a blocked network request was attempted')
+        if any(p.device.type != 'cpu' for p in model.parameters()):
+            raise ValueError('synthetic model left CPU')
+        tokenizer = AutoTokenizer.from_pretrained(
+            str(folder), trust_remote_code=True, local_files_only=True, fix_mistral_regex=False)
+        image_tokens = {token: tokenizer.convert_tokens_to_ids(token) for token in
+                        ('<img>', '</img>', '<IMG_CONTEXT>')}
+        if len(set(image_tokens.values())) != 3 or any(
+                type(index) is not int or not 0 <= index < len(tokenizer)
+                or index == tokenizer.unk_token_id for index in image_tokens.values()):
+            raise ValueError('invalid image tokenizer tokens')
         prepared_images = []
         if inputs is not None:
             destination = Path(previews).resolve() if previews else None
@@ -130,6 +150,9 @@ def cpu_check(folder, cache, inputs=None, previews=None):
                     (destination/image.name).write_bytes(preview)
             if len(prepared_images) != 6:
                 raise ValueError('expected six actual board preprocessing checks')
+        require_cpu_execution(torch, allow_cuda_build)
+        if connections:
+            raise ValueError('a blocked network request was attempted')
         return {
             'status': 'cpu_compatibility_rehearsal_passed_not_model_or_gpu_results',
             'model': MODEL, 'revision': MODEL_REVISION, 'source_files': pin['files'],
@@ -143,7 +166,10 @@ def cpu_check(folder, cache, inputs=None, previews=None):
             'actual_image_preprocessing': prepared_images,
             'synthetic_parameters': sum(p.numel() for p in model.parameters()),
             'vision_features_shape': list(features.shape), 'logits_shape': list(result.logits.shape),
-            'elapsed_seconds': time.monotonic()-started, 'cpu_only_torch': True,
+            'elapsed_seconds': time.monotonic()-started, 'cpu_only_torch': torch.version.cuda is None,
+            'torch_cuda_build': torch.version.cuda, 'execution_device': 'cpu',
+            'tokenizer': {'class': type(tokenizer).__name__, 'size': len(tokenizer),
+                          'image_tokens': image_tokens, 'fix_mistral_regex': False},
             'cuda_initialized': torch.cuda.is_initialized(), 'network_attempts': len(connections),
             'pretrained_weights_loaded': False, 'study_requests': 0, 'game_actions': 0,
             'kaggle_image_validated': False, 'gpu_runtime_validated': False,
