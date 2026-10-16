@@ -206,9 +206,13 @@ Decoded original-image pixels map deterministically to board cells. The owner ch
 **plain 448-by-448 nearest-neighbor images with no overlay** for the first test:
 six predeclared visual targets, seven pixels per cell and exact occupied-cell hits.
 The incomplete-point decoder gap is fixed and reproduced against `5227344`;
-26 MolmoPoint tests, 63 relevant Linux tests and all six real-processor CPU checks
-pass. No weights or model answers were produced. The gameplay policy is unchanged, and there is no
-live package or new compute authority. [Current targeted input draft](reports/molmopoint_targeted448_draft_2026-10-16.md),
+38 MolmoPoint tests and 87 relevant Linux tests pass. All 33 pinned checkpoint files, including
+the eight weight shards, are now acquired and verified. A separate 48-package runtime lock and
+bounded six-generation worker, native decoder, replay and scoring path are prepared. Real CPU
+processor checks and tiny-random-model generation/BF16 loading pass; full 8B inference and an
+isolated CUDA installation remain untested. The private review-only candidate refuses execution;
+its proposed dataset bindings, scoped use and fresh live approval are still outstanding. No new
+GPU job or gameplay integration occurred. [Runtime preparation](reports/molmopoint_targeted448_runtime_preparation_2026-10-16.md). [Current targeted input draft](reports/molmopoint_targeted448_draft_2026-10-16.md),
 [integration and limits](reports/molmopoint_identification_v1_integration_2026-10-16.md).
 [Decoder fix and regressions](reports/molmopoint_decoder_sequence_fix_2026-10-16.md).
 
