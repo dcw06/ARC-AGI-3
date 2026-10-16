@@ -1,6 +1,6 @@
 # RQ2, RQ4 and RQ5: current-agent baseline plan
 
-October 15, 2026 · Draft v1 · Preparation and evaluation design; no execution authorization.
+October 15, 2026 · Draft v2 · Preparation and evaluation design; no execution authorization.
 
 ## Objective and scope
 
@@ -8,7 +8,8 @@ Determine whether the current agent can discover and correctly use controls, inf
 the first level of each of six public development games: **ls20, s5i5, cd82, ft09, ka59 and sc25**.
 Measure the existing agent before changing its prompts, perception, memory, tools or planning. The primary
 acceptance criterion is **engine-confirmed first-level completion in all six games within fixed budgets**.
-Diagnostic scores explain failures; they do not substitute for completing a level.
+Diagnostic scores help investigate failures; they do not uniquely identify their causes or substitute for
+completing a level. Completion establishes success in the observed attempt, not a particular internal strategy.
 
 The owner has reviewed the six level-1 worksheet entries. The retained private snapshot contains seven answer
 fields per game and 94 annotated regions, including overlapping parent/child regions. It is an owner-reviewed
@@ -18,11 +19,24 @@ in the private workspace; public deliverables contain methods and sanitized summ
 
 | Question | Operational question | Required output |
 | --- | --- | --- |
-| RQ2: controls and execution | Can the agent choose a legal, appropriate control, ground it to the intended object when needed, and verify its effect? | Proposed action, execution receipt and evidence-based effect classification |
-| RQ4: rule discovery | Can it predict action effects from available evidence, choose informative probes and revise contradicted rules? | A short testable hypothesis, evidence references, prediction and update |
+| RQ2: controls and execution | Can the agent choose an appropriate control, execute the proposal faithfully and recognize the resulting effect? | Separate proposal, dispatch and effect-recognition results; supplied-target tests are component diagnostics |
+| RQ4: rule discovery | Can it interpret evidence, reason about supplied possibilities, discover useful relationships during play and use them? | Separate conditional-inference scores, naturally occurring discovery evidence and subsequent behavioral consistency |
 | RQ5: solving strategy | Can it combine perception, controls, rules and goal recognition into a successful bounded episode? | Actual first-level transition and a technically complete retained episode |
 
 Levels 2–3 and cross-layout transfer belong to the later RQ7 study. They are excluded here.
+
+### Separate evaluation conditions
+
+| Condition | Inputs and behavior | Permitted conclusion |
+| --- | --- | --- |
+| Unchanged-agent gameplay | Existing observations, prompts, tools, history, output format and fallbacks; passive recording only | How the current agent actually acts and whether these episodes succeed |
+| Prompted component tests | Explicit target, prediction, hypothesis or effect questions, using frozen diagnostic prompts | Performance on those supplied tasks; not unchanged-agent gameplay or autonomous discovery |
+| Assisted gameplay | Additional masks, control explanations or curated history supplied as a separately reviewed intervention | The effect of that assistance under the tested conditions; not a unique cause of baseline failure |
+
+Keep prompts, manifests, budgets and results distinct across these conditions. Shared model weights do not make
+different prompts or information conditions the same agent baseline. Diagnostic answers must never enter the
+gameplay context or persistent agent memory. Do not tune the baseline on diagnostic results before its frozen
+gameplay is collected. Additional comparisons need their own review and authorization.
 
 ## 1. Responsibilities and interfaces
 
@@ -47,6 +61,12 @@ sharing is separately chosen. No account credentials, model weights or package c
 | 2.5 Construct cases | Build the RQ2/RQ4 inventory below and identify unavailable case types. | Case IDs, applicability, expected answers and denominators are fixed. |
 | 2.6 Freeze evaluation | Pin agent commit, model/runtime, prompts, schemas, history policy, decoding, graders, budgets and stop rules. | Reviewable package and immutable case/answer manifests exist. |
 
+Classify each reference claim as a directly observed fact, an independently tested relationship, or a remaining
+interpretation, and retain its scope and supporting evidence. A successful human sequence does not establish
+that every step was necessary or that the narrated rule is universal. Cross-review should look for alternative
+valid actions, strategies and explanations, rather than only confirm the proposed answer. Do not make matching
+the human route a scoring requirement. Unsupported interpretations remain unscored or explicitly ambiguous.
+
 Specific checks: sc25's moving piece starts on the right and its fixed goal is on the left. In ft09 level 1,
 three groups are reference examples and the lower-right group is editable. Retain all nine 36-coordinate cells
 within each annotated 324-coordinate group, while preserving their different roles.
@@ -64,6 +84,12 @@ observations, engine source and answer keys must be inaccessible to the agent.
 These six exposed games and reused trajectories support development diagnosis. Even a frozen case list does
 not establish unexposed-game generalization. Repeated frames from one trajectory are correlated observations.
 
+Keep human-selected-state diagnostics separate from evidence collected on states reached by the agent itself.
+Record state/history provenance, selection and mode in each case. A good score on a human prefix does not show
+that the agent retained or understood the relevant evidence in its own episode. After collecting the baseline,
+inspect its encountered states for failure analysis. New cases motivated by those failures are exploratory;
+they do not enter the original frozen score or become confirmatory tests of an improvement trained on them.
+
 ## 3. RQ2: control discovery, grounding and execution
 
 ### Case design
@@ -78,9 +104,11 @@ supported rather than inventing a control or scoring an unavailable action type 
 | Grounding/context, four items | A specified intended object/control and current selection/state | Use a legal action; use the intended frame-bound interaction region for clicks; handle selection, directional or pattern controls as applicable |
 | Effect verification, four items | Before observation, acknowledged action and after observation | Identify the affected object and classify the intended effect as shown, not shown or unresolvable from the supplied evidence |
 
-Providing a legal-action list makes enumeration a consistency check. Discovery is measured by choosing controls
-and establishing their effects. Click-only games use click controls; directional-only games must not be forced
-into a click-targeting task. Case applicability and the final category counts are reported per game.
+Providing a legal-action list makes enumeration a consistency check. Supplied-target and supplied-transition
+questions measure conditional grounding and evidence interpretation. Autonomous control discovery needs
+evidence from the agent's own choices and observed effects. Click-only games use click controls;
+directional-only games must not be forced into a click-targeting task. Case applicability and the final
+category counts are reported per game.
 
 Include representative failure contrasts where evidence permits:
 
@@ -94,28 +122,62 @@ Include representative failure contrasts where evidence permits:
 
 ### Action contract and scoring
 
-Before dispatch record the intended object ID, chosen legal action, coordinates if required, predicted effect
-and evidence reference. Then retain the actual request, acknowledgement and resulting observation. Validate
-strict coordinate types/ranges and action payloads immediately before dispatch. An invalid proposal counts
-against the policy even when a guard prevents it from reaching the engine. Preserve the existing agent's
-fallback behavior if it is part of the pinned baseline, and report when it supplies the action.
+For unchanged-agent gameplay, passively retain the original policy output before dispatch, the actual request,
+acknowledgement and resulting observation. Preserve the existing prompts, history and output contract. Record
+intended objects, predictions and evidence references only if the baseline already emits them; otherwise mark
+them unobserved. An evaluator's inferred target is an attribution, not a recorded agent intention. Do not add
+model calls, required rationale fields or reference object IDs to obtain otherwise unavailable information.
+
+Prompted component tests may explicitly request a target, prediction or evidence reference. Record those
+answers before revealing the outcome, and identify the extra task and information. If a controlled execution
+check dispatches a proposal, use the actual interface and pinned engine from a reproducible state, and retain:
+
+| Stage | Check | What is not established by this stage alone |
+| --- | --- | --- |
+| Proposal | The proposed action is legal and appropriate for the supplied task and evidence | That the interface executed it |
+| Dispatch | The submitted action matches the proposal, and the engine accepted or rejected it | That the intended object effect occurred |
+| Effect and recognition | Compare the engine outcome with the task; separately score the agent's interpretation | A correct supplied-transition answer does not establish execution ability |
+
+Controlled execution checks are separate from the six primary episodes; they cannot repair, restart or supply
+history to those attempts. Their actions and model requests need separately bounded, reviewed accounting.
+If they are absent, report RQ2 execution as assessed only through gameplay, not through static answers.
+
+Validate strict coordinate types/ranges and action payloads immediately before dispatch. An invalid proposal
+fails the policy's proposal-validity check even when a guard blocks it. Preserve the existing baseline fallback
+and identify every action it supplies; distinguish policy proposals from fallback and dispatched actions.
 
 | Measure | Denominator / interpretation |
 | --- | --- |
 | Legal proposal rate | All required action proposals, including malformed/invalid ones |
 | Target-coordinate hit rate | Applicable click cases with a specified target; score against the correct coordinate set |
-| Verified intended-effect rate | Applicable effect cases; acknowledgement alone earns no effect credit |
+| Proposal-to-dispatch fidelity | Actual execution checks; report policy, fallback and dispatched payloads separately |
+| Verified intended-effect rate | Executed cases with a stated task or recorded intention; acknowledgement alone earns no effect credit |
 | Selection/mode correctness | Cases where the current target or mode changes the meaning of an action |
 | Effect-classification accuracy | All required effect judgments, including unknown/ambiguous cases |
-| Repeated ineffective-action rate | Live repeated state/action pairs without a new supported reason or relevant state change |
+| Repeated ineffective-action rate | Recorded repeats with no relevant observed effect; interpret using mode/history and report uncertainty about unobserved intent |
 
 A repeat can be useful for lengthening, movement or a genuinely new test. The repetition diagnostic must account
-for those cases. Do not classify every repeated action as stagnation.
+for those cases. An ineffective action can still provide useful information. Do not classify every repeat as
+stagnation, or accept an asserted reason alone as proof that it was a useful experiment.
 
 Report geometry and semantic failures separately. Parent and child masks can overlap; a hit on a parent does
 not automatically satisfy a question that specified one child.
 
 ## 4. RQ4: rule inference and hypothesis testing
+
+### Separate the capabilities being measured
+
+| Capability | Evidence required | Interpretation limit |
+| --- | --- | --- |
+| Evidence interpretation | Correctly identifies changes in a supplied transition | Does not show the agent noticed or retained them during play |
+| Conditional inference | Predicts effects or discriminates and updates supplied hypotheses | Does not establish autonomous hypothesis generation |
+| Autonomous discovery | During unchanged gameplay, identifies an uncertainty and investigates it where the baseline exposes that behavior | If no such record exists, discovery is unobserved; do not invent a rationale from a successful action |
+| Operational use | Later choices and predictions respond consistently to relevant evidence and changed conditions | Behavioral consistency supports use of a relationship, not proof of an internal reasoning mechanism |
+
+The static inventory below primarily tests the first two capabilities. Assess the latter two from existing
+gameplay outputs and behavior where the evidence permits. Do not add a hypothesis planner to make them visible.
+A missing verbal rule does not establish absence of useful behavioral knowledge, and a correct verbal rule
+does not establish that the policy follows it.
 
 ### Case design
 
@@ -131,7 +193,15 @@ judgments and two uncertainty judgments. Freeze the actual supported inventory b
 
 Probe items require independently checked alternative outcomes. A single retained successful trajectory may
 not contain such contrasts. Prepare them with bounded CPU-only engine checks after the case design is agreed,
-or mark the item unsupported. A legal action that merely changes the screen is not necessarily informative.
+or mark the item unsupported. Preserve the relevant engine state and history when constructing contrasts;
+similar-looking screenshots do not guarantee equivalent selection, mode or hidden state. Accept alternative
+probes that satisfy the same discrimination criterion. A legal action that merely changes the screen is not
+necessarily informative.
+
+Keep probe informativeness separate from its usefulness for the current goal. An informative probe may waste
+scarce actions, and advancing the goal can be reasonable without resolving every rule. Report whether relevant
+uncertainty was reduced, whether that information mattered to the decision, and its observed resource cost.
+Do not require complete game-rule knowledge when sufficient knowledge already supports an appropriate action.
 
 Keep evidence-reading controls alongside inference cases. Otherwise a prediction error could come from failing
 to read the supplied transition rather than failing to infer a rule. Use frame-specific object tracking to
@@ -139,7 +209,8 @@ separate target movement from animation, view changes and interface updates.
 
 ### Hypothesis record
 
-Use short structured statements; do not require or score an elaborate internal reasoning narrative.
+Use short structured statements in prompted component tests; do not require or score an elaborate internal
+reasoning narrative. In unchanged gameplay, retain only the hypothesis fields already produced by the agent.
 
 ```json
 {
@@ -155,6 +226,8 @@ Use short structured statements; do not require or score an elaborate internal r
 
 This illustrates a record format; it is not a game action recommendation or final response schema. Freeze the
 executable schema separately, and check structured-output support against the pinned serving runtime on CPU.
+Treat every statement as a reported claim. Compare prospective predictions with outcomes and later choices;
+do not treat a plausible explanation as proof of the cause of an earlier action.
 
 ### Measures
 
@@ -169,6 +242,9 @@ executable schema separately, and check structured-output support against the pi
 
 Allow multiple accepted hypotheses when the evidence does not identify a unique rule. Also test resolvable
 cases so that answering unknown on everything cannot perform well. Report every score per game and task type.
+Distinguish factual correctness from evidential support: a correct guess can be unsupported, while a justified
+uncertainty judgment need not supply the hidden true rule. Never grade a broader rule as established solely
+because it agrees with the reference narrative.
 
 ## 5. RQ5: actual first-level completion
 
@@ -194,19 +270,23 @@ finish every permitted request in the allotted time. An action cap and a time ca
 limits and the exact total request ceiling must be frozen after CPU checks and a latency estimate, before
 any model episode. Six episodes permit at most 576 policy decisions, with runtime probes counted additionally.
 
+This primary condition measures solving without recovery through resets. A reset can be a legitimate learning
+or recovery action in another task, so an attempt-ending reset does not establish a general inability to learn.
+Do not silently introduce a recovery condition or a replacement attempt after observing failure.
+
 ### Decision loop
 
-1. Receive the current observation and legal controls.
-2. Identify the relevant current object/target and its role using the existing agent pipeline.
-3. Select a task: pursue the goal, test an unresolved rule, or revise a contradicted rule.
-4. Record a legal proposed action, intended target and short predicted effect.
-5. Validate and dispatch through the bounded existing execution interface.
-6. Read the acknowledgement and next observation; verify the relevant effect.
-7. Update the evidence history and working hypothesis if that capability already belongs to the baseline.
-8. Stop on the first-level transition, a budget limit, technical failure or explicit attempt-ending reset.
+1. Supply the current observation and legal controls through the unchanged baseline interface.
+2. Run the existing policy with its existing prompts, tools, history and output contract.
+3. Passively retain its original output and any naturally emitted targets, predictions or hypotheses.
+4. Apply the bounded execution guard, preserve the existing fallback behavior, and record what is dispatched.
+5. Retain the acknowledgement and next observation; independently assess the resulting effect.
+6. Update only the history or other state that the baseline already maintains, using its existing rules.
+7. Stop on the first-level transition, a budget limit, technical failure or explicit attempt-ending reset.
 
-This describes the behavior to assess. Do not add a new hypothesis ledger or planner before measuring the
-current agent. Preserve and document its existing history, fallback, tool and prompting behavior.
+The evaluator may investigate object selection, exploration, rule revision and effect recognition from this
+trace, but must mark unobserved intentions or hypotheses as such. Evaluator annotations never feed back to the
+policy. Do not add a new hypothesis ledger, planner or prediction request before measuring the current agent.
 
 The unassisted baseline receives permitted observations and action-effect history, without the teacher's
 solution, reference masks or engine source. If correct masks or control descriptions are supplied as a separate
@@ -233,6 +313,9 @@ Separate these result fields:
 Retain an observed level transition even if cleanup/finalization later fails, but do not award a baseline pass
 to that episode. Report requests/actions to completion, ineffective inputs, guard refusals and repeated states.
 Missing episodes are not successes and must not disappear from the six-game report.
+Six successful episodes meet this development acceptance criterion; they do not establish a stable success
+rate across repeated attempts, new initial states or unseen games. A level transition alone also does not
+establish that the agent discovered a particular rule rather than found a successful action sequence.
 
 ## 6. Scoring and decisions before improvements
 
@@ -244,11 +327,23 @@ An item earns a correct result only when all of its required fields satisfy the 
 field scores as additional diagnostics. Keep missing, malformed, refused and technically interrupted responses
 visible against the planned inventory; do not improve the apparent score by dropping them from the denominator.
 
+Report distinct layers rather than interpreting every failed item as a cognitive error:
+
+| Layer | Required reporting |
+| --- | --- |
+| Technical availability | Planned, attempted, completed and missing cases, with infrastructure/refusal/interruption reasons |
+| Response validity | Parseable outputs and field-contract failures, distinguishing policy output from transport failures |
+| Semantic correctness | Per-field and whole-item correctness among available valid answers, with those denominators explicit |
+| Overall acceptance | Fully correct items against the complete planned inventory; unavailable cases remain visible and cannot earn credit |
+
+Conditional semantic accuracy does not replace the overall acceptance score or demonstrate full coverage.
+Mixed field failures and infrastructure losses must remain distinguishable when selecting an improvement.
+
 | Component | Proposed target | Interpretation |
 | --- | --- | --- |
-| RQ2 static diagnosis | At least 11/12 correct per game; also report each metric and applicable denominator | Control/grounding/effect understanding is sufficiently consistent for this development pass |
+| RQ2 static diagnosis | At least 11/12 correct per game; also report each metric and applicable denominator | Meets the supplied-task engineering target; actual execution and autonomous control discovery need separate evidence |
 | Execution guard | Zero invalid payloads dispatched | A harness invariant; separately report invalid proposals that it blocked |
-| RQ4 static diagnosis | At least 10/12 correct per game, including both determinate and uncertainty items | Working inference target; individual task failures remain visible |
+| RQ4 static diagnosis | At least 10/12 correct per game, including both determinate and uncertainty items | Meets the conditional-inference target; not certification of autonomous discovery or behavioral use |
 | RQ5 primary baseline | 6/6 technically complete first-level passes within budget | Meets the owner's six-game development baseline |
 
 RQ2/RQ4 scores are diagnostic engineering targets. They should not cause selective omission of low-scoring
@@ -260,30 +355,46 @@ is safe or correct. Conversely, a static failure can be useful even when a game 
 | Wrong target despite a sensible control | Review object identification, role labeling, coordinates and stale masks |
 | Right object but wrong control or mode | Review control semantics, selection handling and effect verification |
 | RQ2 strong, RQ4 weak | Review evidence reading, probe informativeness and rule updating |
-| RQ2/RQ4 strong, RQ5 weak | Review goal predicates, action ordering, budget use and integration of the individual capabilities |
+| RQ2/RQ4 strong, RQ5 weak | Compare supplied information and human-selected states with the actual episode before investigating goals, ordering, budgets or integration |
 | Baseline strong across all six | Prepare RQ7 transfer cases before claiming general solving ability |
 
-After baseline measurement, a correct-location assisted comparison can diagnose perception failures, while a
-correct-control/effect-history comparison can diagnose semantic/inference failures. Change one input/component
-at a time, retain the original baseline, and compare at matched budgets. Assistance demonstrates its own effect;
-it does not establish unaided capability.
+These patterns generate competing explanations; none uniquely locates a failed component. RQ2 and RQ4 share
+perception, evidence reading and response-format demands, so their aggregate scores are not independent skill
+measurements. Resolve interpretations using individual transitions, errors and information conditions.
+
+After baseline measurement, separately reviewed assistance can test whether added locations, control
+descriptions or history improve performance. Retain the original baseline and record all extra information,
+prompt changes and costs. Masks may reveal relevance or roles; curated histories may bypass memory and
+discovery. Compare equivalent pre-action states/histories and matched resource limits where feasible, and
+inspect information differences beyond token counts. Whole-episode assistance can change which states are
+visited, so its aggregate effect cannot isolate one component. Improvement shows the assistance helped;
+non-improvement does not rule out the targeted weakness when other bottlenecks remain. Neither result uniquely
+establishes the cause of the original failure or demonstrates unaided capability.
 
 ## 7. Evidence and implementation requirements
 
 | Artifact | Required contents |
 | --- | --- |
-| Case record | ID, game/version, level, RQ/task, frame/source references, allowed inputs, expected structured result, applicability and scoring rule |
-| Annotation provenance | Owner/assistant origin, review status, object/interaction masks, ambiguity and amended labels |
-| Baseline lock | Agent/model/runtime versions, prompts, tools, schemas, history policy, decoding, budgets, graders and case manifest |
-| Per-decision record | Observation, legal controls, proposed/dispatched action, intended object, prediction, evidence IDs, acknowledgement, post-observation and counters |
+| Case record | ID, evaluation condition, human/agent-state provenance, game/version, level, RQ/task, state/history references, allowed inputs, accepted alternatives, applicability and scoring rule |
+| Annotation provenance | Owner/assistant origin, review status, observed/tested/interpreted claim status, scope, object/interaction masks, ambiguity and amended labels |
+| Baseline lock | Unchanged agent/model/runtime versions, prompts, tools, schemas, history policy, decoding and fallbacks; separate diagnostic/assistance manifests, budgets and graders |
+| Per-decision record | Original policy output, observation, legal controls, fallback and dispatched actions, acknowledgement, post-observation and counters; naturally emitted intentions/predictions distinguished from evaluator attributions and unobserved fields |
 | Per-episode record | Initial state, full event sequence, engine completion evidence, stop reason, actual counts/time, cleanup and finalization |
-| Independent evaluation | Replay-derived totals, contract checks, goal/cap checks, exact input hashes and per-game diagnostic scores |
-| Report | All six outcomes, exact denominators, missing/ambiguous cases, failure examples and limits on claims |
+| Independent evaluation | Event-derived totals and contract/goal/cap checks; separate engine-state replay findings, exact input hashes and scores by evaluation condition |
+| Report | All six outcomes, coverage/validity/semantic/acceptance denominators, missing/ambiguous cases, exploratory analyses, failure examples and limits on claims |
 
 CPU checks should exercise mask boundaries/holes, parent-child overlap, unavailable controls, strict payload
 types, stale selections, acknowledgement loss, status-only changes, contradictory rule evidence and forged
 completion summaries. The evaluator must reject altered/stale inputs and reconstruct totals from events.
 Review the exact package built from the latest audited fixes; do not reuse a stale source lock.
+
+Distinguish record validation from engine-state validation. Hashes, contracts and event-derived totals establish
+record consistency, not that the recorded observations truly followed from those actions. Where reproducible,
+independently replay dispatched actions through the pinned engine from the retained initial state/seed and
+compare observations, progression and relevant state, preserving timing/randomness inputs where needed.
+Unexplained divergence prevents an independently engine-verified result even if the summary matches. Preserve
+the original evidence. If replay cannot reproduce a case, report what was and was not independently verified;
+record-only validation must not be presented as engine-state validation.
 
 Use the already audited process/deadline machinery. The bounded lifecycle includes installation, startup,
 policy/game work, evidence writing, temporary-environment removal and cleanup. Late/interrupted finalization
@@ -299,13 +410,23 @@ reservation, live game action or compute request, and changes no previous study'
 
 | Order | Deliverable | Planning effort |
 | --- | --- | --- |
-| 1 | Agree on the schemas, game/agent pins, semantic corrections and proposed pilot limits | 1–2 hours |
-| 2 | Teammate object/goal/similarity references; your executable RQ2/RQ4 case inventory | 2–4 hours in parallel |
-| 3 | CPU graders, fault checks and baseline runner integration | 2–4 hours |
+| 1 | Agree on the separate evaluation conditions, unchanged baseline interface, claim limits, schemas, pins and proposed pilot limits | Re-estimate after checking existing baseline outputs |
+| 2 | Teammate object/goal/similarity references; your RQ2/RQ4 cases with claim provenance and accepted alternatives | Depends on independent contrast checks and supported inventory |
+| 3 | CPU graders, controlled execution checks, passive baseline recording, engine replay and fault checks | Estimate after inspecting reusable audited components |
 | 4 | Review concrete static/gameplay packages and their exact budgets | Depends on remaining runtime/provider checks |
-| 5 | Separately authorized model evaluation, collection and independent replay | Runtime estimated after setup/latency measurements |
-| 6 | Six-game report and evidence-based improvement choice | 1–2 hours |
+| 5 | Separately authorized unchanged gameplay and isolated component evaluation, collection and independent validation | Runtime estimated after setup/latency measurements |
+| 6 | Six-game report, explicitly exploratory diagnosis on encountered states and evidence-based improvement choice | Depends on missing evidence and adjudication needs |
 
-Allow approximately one to two focused working days for preparation/integration/analysis with parallel teammate
-work. This is a planning range, not a compute-time promise. Finish this baseline before advancing to later-level
-transfer or presenting improvements as established.
+The previous one-to-two-day estimate is not a commitment for the expanded validation work. Re-estimate after
+checking reusable tooling and unsupported cases. Finish the unchanged baseline before feeding diagnostic
+findings into agent improvements, advancing to later-level transfer or presenting improvements as established.
+
+## 9. Draft v2 review changes
+
+This revision separates unchanged gameplay, prompted diagnostics and assisted comparisons; removes new
+intention/hypothesis requirements from the baseline; connects proposals to dispatch and effects; distinguishes
+conditional inference from discovery and use; qualifies reference claims and accepts alternative solutions;
+separates human and agent state distributions, reported claims and behavior, and technical versus semantic
+scores; limits causal claims from assistance; and distinguishes record checks from engine replay. It also
+makes the no-reset and single-attempt interpretation limits explicit. This is a planning revision only and
+authorizes no implementation, upload, model evaluation, game action or compute.
