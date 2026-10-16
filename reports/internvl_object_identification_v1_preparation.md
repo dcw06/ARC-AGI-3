@@ -1,7 +1,8 @@
 # InternVL3.5-8B: object and obstacle-candidate identification probe
 
 Updated October 16, 2026. One private CPU byte-verification job completed; a separate
-CPU installation check is prepared for approval. No pretrained-model result or GPU run.
+owner-approved CPU installation check was submitted once and is running. No pretrained-model
+result or GPU run.
 
 ## Question and evidence limits
 
@@ -168,7 +169,7 @@ SHA256, including all 174 existing publisher wheels and their three metadata fil
 | Model source bytes | Private model version 1 requested; all 27 mounted files match the reviewed hashes, including 24 unchanged pinned upstream files |
 | Input attachment | Private version 2 requested; all 12 mounted files match the corrected input inventory |
 | Original publisher wheels | All 174 mounted wheel hashes and three metadata hashes match the unchanged trusted inputs |
-| Exact target runtime | Image binding and mounted bytes verified; separate isolated installation check prepared, not executed; full loading and GPU compatibility unverified |
+| Exact target runtime | Image binding and mounted bytes verified; separate isolated installation check submitted once, result pending; full loading and GPU compatibility unverified |
 | Enforced 3,600-second entire-job cap | Unresolved; owner reports no provider confirmation |
 | GPU launch package and authority | Not prepared or approved; probe review notebook always refuses; separate CPU-only verification completed once |
 
@@ -246,13 +247,19 @@ an assertion that the timeout covers provider setup.
   original preflight refusal sent no save and consumed no compute attempt; the first
   actual submission is preserved and cannot be retried automatically.
 
-## Next CPU installation check (prepared; not authorized or submitted)
+## CPU installation check (authorized; submitted once; result pending)
 
 The completed byte-only authorization is consumed. It did not authorize installs.
-The new private packet proposes one additional CPU-only job, with GPU, TPU and
+The owner approved the new private packet for one additional CPU-only job, with GPU, TPU and
 internet off, on the same immutable image and three byte-verified dataset inventories.
 It is built locally by `scripts/build_object_identification_cpu_install.py` and is
 separate from any GPU launch package. No provider calls are made by that builder.
+Execution sent exactly one guarded save, accepted as version 1 with no rejected
+sources or provider error. Read-back confirmed the exact reviewed source and image,
+private access, accelerator `None`, GPU/TPU/internet off and the three attachment
+identities. The provider generated the notebook slug from its approved title; the
+returned identity is retained privately. Status is RUNNING; there is no installation
+pass verdict yet. The attempt is consumed and will not be retried automatically.
 
 | Stage | Bound behavior |
 |---|---|
