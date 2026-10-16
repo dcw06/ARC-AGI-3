@@ -1,7 +1,11 @@
 # InternVL identification: final live package readiness
 
-October 16, 2026. **Final private package approved; external operator repairs validated. No launch during repairs.**
-Read-only provider checks were made. No upload, reservation consumption or GPU launch occurred.
+October 16, 2026. **One authorized attempt submitted and saved package verified; RUNNING
+at the initial 07:08 UTC status check.** Requested RTX PRO 6000 configuration is verified;
+actual GPU allocation and pretrained inference are not yet established. The reservation
+and single-send claim are consumed. No automatic retries.
+The sections below retain preparation evidence. Repair work used only read-only provider
+checks; the subsequent owner-requested launch sent exactly one SaveKernel.
 The two completed CPU attempts and all historical candidates/approval records remain preserved.
 
 | Step | Current evidence |
@@ -45,3 +49,10 @@ closes the five reviewed operational guard gaps and documents the new CLI. Use i
 closed-field request wrapper, immutable preflight revisions, shared consumption registry
 and post-save readback. Do not resume the superseded private v1 operation. Preparing
 or dry-checking a proposed authority envelope does not consume a real claim.
+
+Launch receipt: one provider save accepted, saved version 1. The operator independently
+read back the exact source, private/GPU/offline settings, pinned image, requested shape
+and source identities. Dataset version-label and session-timeout echoes are unavailable
+in the installed SDK and are not claimed; the outgoing versioned sources and requested
+3,600-second timeout were validated at send time. Raw provider evidence remains private.
+No results or technical-completion verdict are inferred from RUNNING.

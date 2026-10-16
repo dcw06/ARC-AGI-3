@@ -176,7 +176,12 @@ close request serialization/target, preflight binding, one-use consumption and r
 All 20 operator regressions pass on Linux and with optimized Python, in addition to the
 84 retained runtime/lifecycle cases. The approved notebook/runtime hash is unchanged.
 A fresh passing preflight and single-use claim still precede any future submission.
-No upload, new CPU job, GPU launch, pretrained image response or object score occurred.
+**Launch update (October 16, 07:08 UTC):** the owner-authorized private package was
+submitted once. Saved source/configuration verification passed; provider status was
+RUNNING at the initial read-only check. The reservation and send claim are consumed,
+with no automatic retries. The requested hardware is one RTX PRO 6000; actual allocated
+hardware remains unverified until the guarded runtime census. No pretrained response
+or object-identification score has been collected yet.
 
 ## Source snapshot
 
