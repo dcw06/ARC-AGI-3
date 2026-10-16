@@ -221,6 +221,17 @@ It is not a controlled model comparison with the different InternVL inventory ta
 [integration and limits](reports/molmopoint_identification_v1_integration_2026-10-16.md).
 [Decoder fix and regressions](reports/molmopoint_decoder_sequence_fix_2026-10-16.md).
 
+**Next: independent discovery and boundaries (October 16, draft):**
+[Study plan](research_plan_object_discovery_boundaries_v1.md). Given only the
+board, find visible objects and produce exact cell masks, with whole objects
+and parts scored separately. A local reference audit found 75 rectangles,
+15 explicit masks and four groups among the 94 existing regions. Exact mask
+membership and exhaustive inventories still need review; current click targets
+must not automatically become boundary ground truth. Five synthetic audit checks
+pass. Tool-assisted versus model-only boundary scope is awaiting the owner's
+preference. The new model worker, evaluator and launch package are not built;
+no additional GPU compute is authorized or launched.
+
 ## Source snapshot
 
 | Collection | Revision used |
