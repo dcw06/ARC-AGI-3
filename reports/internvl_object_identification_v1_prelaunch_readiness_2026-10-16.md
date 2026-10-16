@@ -1,6 +1,8 @@
 # InternVL identification: final live package readiness
 
-October 16, 2026. **Attempt 1 is ERROR and consumed.** The first GPU identity query
+October 16, 2026. **Attempt 1 is ERROR and consumed. A repaired successor is prepared
+for exact-hash review, not authorized to launch.**
+[Repair and validation](internvl_object_identification_v1_driver_env_fix_2026-10-16.md). The first GPU identity query
 could not load NVML; no installation/model loading/generation began. Requested saved
 configuration is verified, but actual GPU allocation and GPU cleanup are unverified.
 [Failure and diagnosis](internvl_object_identification_v1_attempt1_failure.md).
@@ -57,3 +59,9 @@ and source identities. Dataset version-label and session-timeout echoes are unav
 in the installed SDK and are not claimed; the outgoing versioned sources and requested
 3,600-second timeout were validated at send time. Raw provider evidence remains private.
 No results or technical-completion verdict are inferred from RUNNING.
+
+The successor preserves the platform's absolute LD_LIBRARY_PATH entries and records
+driver-loader diagnostics before querying the GPU. Its review hash, private notebook
+binding and consumed-attempt history are new; source/compute approval and a fresh
+one-use reservation are absent. All 108 Linux tests and a byte-identical rebuild pass.
+The old consumed approval/reservation must never be reset or reused for it.

@@ -1,6 +1,9 @@
 """Synthetic inference-contract/admission/gating tests; no pretrained weights or GPU."""
 import json
+import os
+import shutil
 import signal
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -10,6 +13,69 @@ import unittest
 from unittest.mock import patch
 
 from research.object_identification_v1 import inference as I, supervisor as S, replay as R
+
+
+class DriverEnvironment(unittest.TestCase):
+    def test_only_absolute_library_paths_survive_and_other_host_variables_do_not(self):
+        path = str(Path(tempfile.gettempdir()).resolve())
+        host = {'LD_LIBRARY_PATH': os.pathsep.join([path, '', '.', 'relative', path]),
+                'PYTHONPATH': 'host-packages', 'LD_PRELOAD': 'unreviewed-library', 'KAGGLE_API_TOKEN': 'synthetic-secret'}
+        env = S.subprocess_environment(host)
+        self.assertEqual(env['LD_LIBRARY_PATH'], path)
+        for key in ('PYTHONPATH', 'LD_PRELOAD', 'KAGGLE_API_TOKEN'):
+            self.assertNotIn(key, env)
+        self.assertEqual(env['MPLBACKEND'], 'Agg')
+        self.assertEqual(env['PIP_NO_INDEX'], '1')
+        self.assertNotIn('LD_LIBRARY_PATH', S.subprocess_environment({}))
+
+    def test_invalid_driver_path_is_refused(self):
+        for value in (True, 'x\0y', 'x\ny', 'a'*16385, os.pathsep.join(['.']*65)):
+            with self.subTest(value=str(value)[:20]), self.assertRaises(ValueError):
+                S.subprocess_environment({'LD_LIBRARY_PATH': value})
+
+    @unittest.skipUnless(sys.platform == 'linux' and shutil.which('cc'), 'Linux CPU shared-library compiler required')
+    def test_stripped_loader_fails_but_preserved_driver_path_loads_CPU_fixture(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root/'fixture.c'
+            source.write_text('int probe(void) { return 42; }\n')
+            subprocess.run([shutil.which('cc'), '-shared', '-fPIC', str(source), '-o', str(root/'libinternvl_driver_fixture.so')],
+                           check=True, capture_output=True, timeout=20)
+            program = 'import ctypes; assert ctypes.CDLL("libinternvl_driver_fixture.so").probe() == 42'
+            baseline = subprocess.run([sys.executable, '-I', '-c', program], env={'PATH': os.defpath},
+                                      capture_output=True, text=True, timeout=10)
+            corrected = subprocess.run([sys.executable, '-I', '-c', program],
+                                      env=S.subprocess_environment({'LD_LIBRARY_PATH': tmp}),
+                                      capture_output=True, text=True, timeout=10)
+            self.assertNotEqual(baseline.returncode, 0)
+            self.assertIn('cannot open shared object', baseline.stderr)
+            self.assertEqual(corrected.returncode, 0, corrected.stderr)
+
+    @unittest.skipUnless(sys.platform == 'linux', 'Linux supervisor signals required')
+    def test_real_query_receives_driver_path_and_failure_keeps_diagnostics(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            seen = []
+            def command(argv, log, deadline, env, phase):
+                seen.append(dict(env))
+                raise RuntimeError('synthetic NVML unavailable')
+            registry = SimpleNamespace(command=command, stop=lambda deadline: {
+                'groups_absent': True, 'error': None, 'interrupted': [], 'groups': []})
+            with patch.dict(S.os.environ, {'LD_LIBRARY_PATH': tmp, 'PYTHONPATH': 'not-forwarded'}), \
+                    patch.object(S, 'InstallationProcesses', return_value=registry), \
+                    patch.object(S.shutil, 'which', return_value='/opt/bin/nvidia-smi'), \
+                    patch.object(S.signal, 'setitimer'), patch.object(S, 'finish', side_effect=lambda result, *args: result):
+                result = S._execute(root, {}, {'review_lock_sha256': 'synthetic'}, 'synthetic', root,
+                                    root/'output', time.monotonic())
+            self.assertEqual(len(seen), 1)
+            self.assertEqual(seen[0]['LD_LIBRARY_PATH'], tmp)
+            self.assertNotIn('PYTHONPATH', seen[0])
+            diagnostic = json.loads((root/'output/driver-loader.json').read_bytes())
+            self.assertEqual(diagnostic['driver_search_paths'], [tmp])
+            self.assertFalse(diagnostic['driver_load_tested_by_this_record'])
+            self.assertEqual(result['status'], 'inference_incomplete')
+            self.assertIn('GPU cleanup not verified', result['cleanup_error'])
+            self.assertNotIn('gpu_cleanup_verified', result)
 
 
 class InferenceContract(unittest.TestCase):

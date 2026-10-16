@@ -3,6 +3,7 @@ import argparse
 import base64
 import json
 from pathlib import Path
+import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -13,7 +14,7 @@ from research.object_identification_v1.supervisor import SCOPE
 from scripts.serve_manual_strategy_worksheet import private_directory
 
 
-def build(base, previous, output):
+def build(base, previous, output, *, validation=None, kernel_id=None, title=None, prior_attempt=None):
     base, previous, output = map(Path, (base, previous, output))
     if output.exists():
         raise FileExistsError('preserve every earlier private package')
@@ -27,9 +28,10 @@ def build(base, previous, output):
             or amendment['session_timeout_seconds'] != 3600 or amendment['worker_seconds'] != 3300
             or amendment['gpu_launch_authorized'] is not False):
         raise ValueError('owner time amendment not established, or mislabelled as launch authority')
-    validation_path = base/'live-package-linux-checks-r1.json'
+    validation_path = Path(validation) if validation else base/'live-package-linux-checks-r1.json'
+    validation_log = validation_path.with_suffix('.log')
     validation = json.loads(validation_path.read_bytes())
-    if validation['returncode'] != 0 or validation['log_sha256'] != digest((base/'live-package-linux-checks-r1.log').read_bytes()):
+    if validation['returncode'] != 0 or validation['log_sha256'] != digest(validation_log.read_bytes()):
         raise ValueError('current Linux checks not passed')
     for name, pin in validation['source_sha256'].items():
         if digest((ROOT/name).read_bytes()) != pin:
@@ -40,6 +42,13 @@ def build(base, previous, output):
         if name.startswith('reviewed-source/') and name.endswith('/__init__.py'):
             runtime[name] = (previous/name).read_bytes()
     protocol = json.loads((previous/'protocol.json').read_bytes())
+    owner = protocol['intended_private_account']
+    target = kernel_id or protocol['intended_live_notebook']
+    target_title = title or 'ARC3 InternVL Object Identification V1'
+    if (not target.startswith(owner+'/') or target.count('/') != 1
+            or re.sub('[^a-z0-9]+', '-', target_title.lower()).strip('-') != target.split('/')[1]):
+        raise ValueError('notebook owner/title/slug binding differs')
+    protocol['intended_live_notebook'] = target
     protocol.update(schema='internvl_object_identification_live_v2', live_runs_enabled=True, scope=SCOPE,
         time_policy={'mode': 'owner_accepted_session_and_worker_limits',
                      'owner_amendment_sha256': digest(amendment_raw),
@@ -62,9 +71,8 @@ def build(base, previous, output):
                   {'cell_type': 'code', 'id': 'bootstrap', 'metadata': {},
                    'execution_count': None, 'outputs': [], 'source': bootstrap(payload).splitlines(keepends=True)}]}
     metadata = json.loads((previous/'kernel-metadata.json').read_bytes())
-    owner = protocol['intended_private_account']
-    metadata.update(id=owner+'/arc3-internvl-object-identification-v1',
-        title='ARC3 InternVL Object Identification V1', enable_gpu=True, enable_tpu=False,
+    metadata.update(id=target,
+        title=target_title, enable_gpu=True, enable_tpu=False,
         enable_internet=False, is_private=True, machine_shape='NvidiaRtxPro6000', session_timeout_seconds=3600)
     save = {'slug': metadata['id'], 'new_title': metadata['title'], 'is_private': True,
         'enable_gpu': True, 'enable_tpu': False, 'enable_internet': False,
@@ -73,6 +81,26 @@ def build(base, previous, output):
         'dataset_data_sources': metadata['dataset_sources'], 'competition_data_sources': metadata.get('competition_sources', []),
         'kernel_data_sources': [], 'model_data_sources': [], 'language': 'python', 'kernel_type': 'notebook'}
     files = {'runtime/'+name: raw for name, raw in runtime.items()}
+    spent = []
+    for slot in sorted((base/'gpu-reservation-registry-v2').glob('*')):
+        if slot.is_symlink() or not slot.is_dir():
+            raise ValueError('uncertain consumed-attempt registry entry')
+        raw = (slot/'claim.json').read_bytes()
+        claim = json.loads(raw)
+        if claim.get('consumed') is not True or claim.get('attempt_id') != slot.name:
+            raise ValueError('invalid consumed-attempt record')
+        files['history/'+slot.name+'/claim.json'] = raw
+        spent.append(claim)
+    if spent:
+        if prior_attempt is None:
+            raise ValueError('consumed attempts require their retained terminal evidence')
+        prior_raw = Path(prior_attempt).read_bytes()
+        prior = json.loads(prior_raw)
+        if (prior.get('attempt_consumed') is not True or prior.get('provider_status') != 'ERROR'
+                or prior.get('runtime_result', {}).get('review_lock_sha256') not in {
+                    row['review_lock_sha256'] for row in spent}):
+            raise ValueError('prior failed-attempt evidence does not match consumed registry')
+        files['history/prior-failed-attempt-collection.json'] = prior_raw
     for name in old_lock['artifacts']:
         if name.startswith(('evidence/', 'licences/')) or name == 'evaluation_binding.json':
             files['review-evidence/'+name] = (previous/name).read_bytes()
@@ -84,7 +112,7 @@ def build(base, previous, output):
         'time-policy-amendment.json': amendment_raw,
         'scoped-use-approval-basis.json': (base/'gpu-owner-approval-r1/scoped_use_approval.json').read_bytes(),
         'validation/linux-checks.json': validation_path.read_bytes(),
-        'validation/linux-checks.log': (base/'live-package-linux-checks-r1.log').read_bytes(),
+        'validation/linux-checks.log': validation_log.read_bytes(),
         'late-binding-contract.json': canonical({'schema': 'internvl_authority_slot_v1',
             'cell_index': 0, 'cell_id': 'launch-authority', 'permitted_change': 'one literal AUTHORITY dictionary assignment',
             'all_other_notebook_and_metadata_changes_forbidden': True,
@@ -94,12 +122,13 @@ def build(base, previous, output):
             'source_approval': None, 'compute_authorization': None, 'launch_claim': None,
             'provider_full_job_cap_verified': False, 'time_policy_amendment_recorded': True,
             'scoped_use_approval_basis_retained': True, 'CPU_attempts_consumed_and_preserved': 2,
-            'GPU_attempts_consumed_for_this_probe': 0, 'provider_calls': 0})})
-    files['review.md'] = '''# Final private InternVL live package
+            'GPU_attempts_consumed_for_this_probe': len(spent), 'provider_calls_during_this_build': 0})})
+    files['review.md'] = ('''# Final private InternVL live package
 
-Prepared only. No upload, saved Kaggle version, allocation, launch claim or GPU launch.
+Prepared only. This successor has not been uploaded, saved, allocated or launched.
 The owner's time amendment is recorded; it explicitly does not authorize launch.
 Two consumed CPU attempts and all earlier candidates/approvals/reservations remain intact.
+Earlier consumed GPU attempts: %d. Their claims and terminal evidence are bound in history/.
 
 One RTX PRO 6000 under the account in kernel-metadata.json, private notebook/raw outputs,
 TPU and internet off. Requested Kaggle session timeout 3,600 seconds; worker 3,300 seconds
@@ -131,7 +160,12 @@ Collection requires provider COMPLETE, exact saved source/image/settings, manife
 witness/marker verification, process/GPU cleanup and token/request replay before scoring.
 Human reference labels are excluded from the notebook/runtime. Runtime source is retained
 as declared evidence; temporary installation/cache files are removed.
-'''.encode()
+
+The supervisor preserves only absolute LD_LIBRARY_PATH entries from the host for its
+otherwise isolated child environment. It writes bounded driver-loader.json evidence
+before the first GPU query. CPU loader regressions do not prove the real Kaggle driver
+is available. Exact hardware and successful GPU cleanup remain mandatory at runtime.
+''' % len(spent)).encode()
     lock = {'schema': 'internvl_final_live_review_v1',
         'artifacts': {name: digest(raw) for name, raw in sorted(files.items())},
         'source_sha256': {name: digest((ROOT/name).read_bytes()) for name in source_names},
@@ -154,5 +188,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('base', 'previous', 'output'):
         parser.add_argument('--'+name, type=Path, required=True)
+    parser.add_argument('--validation', type=Path)
+    parser.add_argument('--kernel-id')
+    parser.add_argument('--title')
+    parser.add_argument('--prior-attempt', type=Path)
     args = parser.parse_args()
-    print(json.dumps(build(args.base, args.previous, args.output), indent=2))
+    print(json.dumps(build(args.base, args.previous, args.output, validation=args.validation,
+                           kernel_id=args.kernel_id, title=args.title, prior_attempt=args.prior_attempt), indent=2))

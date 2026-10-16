@@ -29,6 +29,40 @@ SCOPE = {'gpu_count': 1, 'gpu_name_contains': 'RTX PRO 6000', 'session_timeout_s
          'access': 'account_holder_only', 'internet': False}
 
 
+def subprocess_environment(host=None):
+    """Keep isolation, but retain the platform's absolute driver-library paths."""
+    host = os.environ if host is None else host
+    value = host.get('LD_LIBRARY_PATH', '')
+    if type(value) is not str or len(value) > 16384 or '\0' in value or '\n' in value:
+        raise ValueError('invalid driver-library search path')
+    parts = value.split(os.pathsep)
+    if len(parts) > 64:
+        raise ValueError('too many driver-library search paths')
+    paths = list(dict.fromkeys(part for part in parts if part and os.path.isabs(part)))
+    env = {'PATH': os.defpath, 'PYTHONNOUSERSITE': '1', 'PIP_NO_INDEX': '1',
+           'PIP_CONFIG_FILE': os.devnull, 'PIP_DISABLE_PIP_VERSION_CHECK': '1',
+           'HF_HUB_OFFLINE': '1', 'TRANSFORMERS_OFFLINE': '1', 'HF_HUB_DISABLE_TELEMETRY': '1',
+           'MPLBACKEND': 'Agg', 'TOKENIZERS_PARALLELISM': 'false'}
+    if paths:
+        env['LD_LIBRARY_PATH'] = os.pathsep.join(paths)
+    return env
+
+
+def driver_loader_evidence(env):
+    """Filesystem-only diagnostics: no driver load, GPU query or broad env dump."""
+    selected = env.get('LD_LIBRARY_PATH', '').split(os.pathsep) if env.get('LD_LIBRARY_PATH') else []
+    candidates = list(dict.fromkeys(selected+[
+        '/usr/local/nvidia/lib', '/usr/local/nvidia/lib64', '/usr/lib/x86_64-linux-gnu', '/opt/lib']))
+    libraries = {}
+    for folder in candidates:
+        for name in ('libnvidia-ml.so', 'libnvidia-ml.so.1', 'libcuda.so.1'):
+            path = Path(folder)/name
+            libraries[str(path)] = path.is_file()
+    return {'LD_LIBRARY_PATH_retained': bool(selected), 'driver_search_paths': selected,
+            'nvidia_smi_resolved': shutil.which('nvidia-smi'), 'library_paths_present': libraries,
+            'actual_GPU_allocation_verified': False, 'driver_load_tested_by_this_record': False}
+
+
 def readiness(protocol, evidence):
     """No booleans masquerading as evidence: records bind exact scope and bytes."""
     problems = []
@@ -174,10 +208,7 @@ def _execute(packet, protocol, authority, pin, input_root, output, started):
               'datasets': {}, 'gpu': None, 'generation_requests': None,
               'game_actions': 0, 'scorecards': 0, 'provider_completion_required': True}
     failure = None
-    env = {'PATH': os.defpath, 'PYTHONNOUSERSITE': '1', 'PIP_NO_INDEX': '1',
-           'PIP_CONFIG_FILE': os.devnull, 'PIP_DISABLE_PIP_VERSION_CHECK': '1',
-           'HF_HUB_OFFLINE': '1', 'TRANSFORMERS_OFFLINE': '1', 'HF_HUB_DISABLE_TELEMETRY': '1',
-           'MPLBACKEND': 'Agg', 'TOKENIZERS_PARALLELISM': 'false'}
+    env = {}
     log = output/'processes.log'
     def check():
         if time.monotonic() >= work_deadline:
@@ -194,6 +225,11 @@ def _execute(packet, protocol, authority, pin, input_root, output, started):
         return [row for row in csv.reader(report.stdout.strip().splitlines()) if row]
     signal.setitimer(signal.ITIMER_REAL, max(.001, work_deadline-time.monotonic()))
     try:
+        env.update(subprocess_environment())
+        result['driver_loader'] = driver_loader_evidence(env)
+        with (output/'driver-loader.json').open('xb') as stream:
+            stream.write(canonical(result['driver_loader']))
+        check()
         rows = query(['uuid', 'name'])
         if len(rows) != 1 or len(rows[0]) != 2 or 'RTX PRO 6000' not in rows[0][1]:
             raise ValueError('expected exactly one RTX PRO 6000; no fallback allowed')

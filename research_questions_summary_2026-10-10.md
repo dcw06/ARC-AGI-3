@@ -184,6 +184,12 @@ loader reproduction supports that failure mechanism, without proving the actual 
 driver was present. Tracked child cleanup passed; GPU cleanup and allocated hardware
 remain unverified. The attempt is consumed and preserved, with no retries and no object
 score. [Failure record](reports/internvl_object_identification_v1_attempt1_failure.md).
+**Repair prepared:** [driver environment fix](reports/internvl_object_identification_v1_driver_env_fix_2026-10-16.md)
+retains the required absolute loader paths and adds startup diagnostics. A CPU-only
+probe fails through the consumed supervisor and succeeds through the corrected one.
+All 108 Linux tests pass; the private successor rebuilds identically and preserves the
+consumed history. It still needs new hash-bound approval and fresh one-attempt authority;
+no new GPU run or identification result exists.
 
 ## Source snapshot
 
