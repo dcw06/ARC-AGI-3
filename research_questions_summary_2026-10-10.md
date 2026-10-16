@@ -131,6 +131,10 @@ choice against each observation's available controls. Full questions, retained a
 The [worksheet guide](reports/manual_strategy_worksheet.md) describes annotation provenance and limitations.
 Private logs, boards and answers are excluded from this report and GitHub.
 
+**Next baseline plan (October 15, 2026):** [RQ2 controls, RQ4 rule discovery and RQ5 first-level solving](research_plan_rq2_rq4_rq5_v1.md).
+It defines the proposed cases, budgets, scoring, team handoffs and failure diagnosis for the six reviewed first
+levels. This is a draft study design; no model run or launch is authorized by the plan.
+
 ## Source snapshot
 
 | Collection | Revision used |
