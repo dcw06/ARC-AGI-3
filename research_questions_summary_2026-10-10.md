@@ -170,8 +170,12 @@ queries until approval is bound to its exact review hash. Only a declared litera
 cell may be populated after approval; the program, metadata and runtime remain fixed.
 The earlier scoped-use approval and pending reservation are preserved, not relabelled as approval
 or an active reservation for this new package. The old full-job-cap support draft remains unsent;
-provider confirmation is no longer required by the amended budget. Exact-hash source/compute
-approval, fresh reservation/claim and current read-only provider preflight remain outstanding.
+provider confirmation is no longer required by the amended budget. Exact-hash source/compute approval is now recorded, with its reservation unconsumed.
+[External operator repairs](reports/internvl_object_identification_v1_operator_fixes_2026-10-16.md)
+close request serialization/target, preflight binding, one-use consumption and readback gaps.
+All 20 operator regressions pass on Linux and with optimized Python, in addition to the
+84 retained runtime/lifecycle cases. The approved notebook/runtime hash is unchanged.
+A fresh passing preflight and single-use claim still precede any future submission.
 No upload, new CPU job, GPU launch, pretrained image response or object score occurred.
 
 ## Source snapshot
