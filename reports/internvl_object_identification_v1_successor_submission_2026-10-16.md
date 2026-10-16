@@ -1,5 +1,10 @@
 # InternVL identification successor: one submission
 
+Follow-up: the attempt is COMPLETE. Runtime evidence verifies the RTX PRO 6000,
+six generations and cleanup, but all six responses fail the coordinate contract.
+See the [completed results](internvl_object_identification_v1_results_2026-10-16.md).
+The initial submission observations below are preserved.
+
 October 16, 2026, 16:52 UTC. The owner approved successor review lock
 `03248a0d5566b9aad4831ee82e05997c288c5acab0ed86e9efc49283198189a3`
 and one fresh RTX PRO 6000 attempt. This is separate from the consumed, failed

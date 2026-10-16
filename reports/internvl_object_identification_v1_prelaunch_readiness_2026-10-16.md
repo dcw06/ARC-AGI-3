@@ -1,7 +1,9 @@
 # InternVL identification: final live package readiness
 
 October 16, 2026. **Attempt 1 is ERROR and consumed. The repaired successor was
-separately approved and submitted once; its initial status is RUNNING.**
+separately approved, submitted once and is COMPLETE. All six responses fail the
+frozen coordinate contract.**
+[Completed results](internvl_object_identification_v1_results_2026-10-16.md).
 [Successor submission and checks](internvl_object_identification_v1_successor_submission_2026-10-16.md).
 The remaining preparation/first-launch narrative below is historical; the successor
 record gives the current approval and consumption status.
@@ -68,4 +70,7 @@ driver-loader diagnostics before querying the GPU. Its new review hash received 
 source/compute approval. Fresh read-only preflight and SDK dry checks passed, and its
 unique reservation was consumed for exactly one accepted submission. All 108 Linux
 tests and a byte-identical rebuild pass. Both consumed GPU claims remain preserved;
-neither can be reset or reused. Actual hardware, inference and cleanup remain pending.
+neither can be reset or reused. The successor's retained evidence now verifies the
+actual RTX PRO 6000, six pretrained generations and cleanup. Scientific scoring
+rejects all six responses for out-of-range board coordinates; the results report
+records the separate offline replay status.

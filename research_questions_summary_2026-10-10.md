@@ -192,8 +192,13 @@ All 108 Linux tests pass; the private successor rebuilds identically and preserv
 consumed history. **Successor submitted once (October 16, 16:51 UTC):** fresh exact-hash
 approval, read-only preflight, SDK dry check and a unique single-use claim passed.
 Saved version 1 matches the sealed package and requested private RTX configuration;
-initial status is RUNNING. Actual hardware, inference, cleanup and identification results
-remain unverified. [Submission record](reports/internvl_object_identification_v1_successor_submission_2026-10-16.md).
+the attempt is now COMPLETE. Retained evidence verifies one actual RTX PRO 6000,
+six pretrained generations, all mounted hashes and cleanup in about 511 worker seconds.
+**Identification result: 0/6 valid responses.** Each includes out-of-range coordinates;
+the frozen scorer rejects each whole response. This does not establish usable object
+localization or obstacle mechanics. Independent token replay passes for all six calls;
+the attempt is technically complete, with no repair or additional generation.
+[Completed results](reports/internvl_object_identification_v1_results_2026-10-16.md).
 
 ## Source snapshot
 
