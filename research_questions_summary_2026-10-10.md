@@ -225,14 +225,16 @@ It is not a controlled model comparison with the different InternVL inventory ta
 [Study plan](research_plan_object_discovery_boundaries_v1.md). Given only the
 board, find visible objects and produce exact cell masks, with whole objects
 and parts scored separately. A local reference audit found 75 rectangles,
-15 explicit masks and four groups among the 94 existing regions. Exact mask
-membership and exhaustive inventories still need review; current click targets
-must not automatically become boundary ground truth. The separate generic inputs,
+15 explicit masks and four groups among the 94 existing regions. The owner
+has now confirmed inspection of all 94 unchanged masks and six complete inventories:
+37 whole objects and 57 parts. The original export and a separate attestation
+are preserved privately; this does not claim independent second review. The separate generic inputs,
 inventory decoder, component-mask baseline and geometric scorer are prepared
 locally; 50 relevant Python checks and nine isolated browser control checks pass.
 The private editor provides hover coordinates, exact-mask editing, hierarchy,
 inventory review and JSON export. Work proceeds with model + pixel tools; the
-new GPU worker, lifecycle/replay integration and launch package remain outstanding.
+separate GPU worker/lifecycle candidate now has 15 additional synthetic checks.
+Independent raw-token/mask replay and the exact launch package remain outstanding.
 No additional GPU compute is authorized or launched.
 
 ## Source snapshot

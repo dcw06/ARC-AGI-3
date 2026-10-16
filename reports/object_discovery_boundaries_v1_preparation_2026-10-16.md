@@ -19,13 +19,61 @@ No model requests, game actions, uploads or GPU jobs occurred. The completed
 | Automatic passing verdict | None; geometry scoring supplies no model-run certification or advancement approval |
 | Private editor | Hover coordinates, cell brush/eraser, component union/subtraction, parent/disposition selection, undo and JSON export/import |
 | Verification | 50 relevant Python tests and 9 isolated browser control checks passed |
-| Actual agent inference | Not executed; new worker/lifecycle/replay integration and launch package outstanding |
+| Actual agent inference | Not executed; separate worker/lifecycle candidate implemented, independent replay and exact launch package outstanding |
 
 The existing 94 regions comprise 75 rectangles, 15 explicit masks and four
 groups. They are not promoted into exhaustive segmentation truth automatically.
 Every new mask review and inventory-completeness flag starts unconfirmed.
 Edits invalidate confirmations. Browser tests use a throwaway profile and do
 not create owner review evidence. Test pages are kept outside the served folder.
+
+## Owner confirmation and runtime preparation
+
+The owner subsequently confirmed: “I confirm that I've inspected everything.”
+That confirmation is retained against the exact exported file in a separate
+private attestation. A derived reference records all 94 masks reviewed and all
+six inventories complete. The original export is preserved byte for byte;
+cells, region IDs, parents and dispositions are unchanged. This is one owner's
+review, without an independent second-review claim.
+
+| Board | Whole objects | Parts | Complete inventory confirmed |
+|---|---:|---:|---|
+| ls20 | 3 | 3 | Yes |
+| s5i5 | 7 | 4 | Yes |
+| cd82 | 5 | 4 | Yes |
+| ft09 | 6 | 36 | Yes |
+| ka59 | 10 | 0 | Yes |
+| sc25 | 6 | 10 | Yes |
+| Total | 37 | 57 | Six boards |
+
+A separate uncued worker candidate now wires the generic prompt to the native
+processor, generation, full-sequence decoder and deterministic component masks.
+It retains admissions and raw tokens before decoding. Its supervisor reuses
+the completed cued test's unchanged dependency lock and process ownership
+implementation, and adds staging of only the seven board/request files for the
+worker. Installation wheels and reference files are not staged there. The
+notebook bootstrap and supervisor refuse missing authority before extraction,
+installation or GPU queries.
+
+Fifteen new synthetic tests cover the new wiring, no retries, admission and
+finalization deadlines, unchanged dependency pins, reference-free input
+staging, and masks derived only from pixels and predicted seeds. Multicolor
+splits, background masks and duplicates remain visible errors rather than
+being repaired from the references.
+
+The expanded relevant suite passed all 107 tests under Linux/Python 3.12 with
+no skips. Windows passed 105 with two dependency-related skips. The retained
+pinned processor (Transformers 4.57.1, CPU Torch 2.10.0) also preprocessed all
+six exact generic prompts and 448px images successfully, after verifying 25
+metadata/code files. That check loaded no weights, generated no answers and
+attempted no network connections. It does not validate inference in Kaggle's
+exact image. [Source-bound CPU test record](object_discovery_boundaries_v1_runtime_candidate_cpu_validation_2026-10-16.json).
+
+This is a preparation candidate, not a launch-ready reviewed package. Still
+needed: independent raw-token/mask replay and lifecycle validation for this
+condition, the exact private package and attachment bindings, review, and fresh
+compute authorization. Reference confirmation supplies none of those approvals.
+No new dataset upload, model generation or GPU job was performed.
 
 A same-color region can be only part of a multicolor object, or can join objects
 that touch. Background seeds and duplicate masks are retained. Semantic
