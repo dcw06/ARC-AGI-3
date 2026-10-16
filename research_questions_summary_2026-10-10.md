@@ -54,10 +54,10 @@ Comprehension v2 and v3 answered all **8,004** and **6,054** scheduled calls res
 |---|---|---|---|
 | **1 — Structured hypothesis testing** | Does explicit hypothesis → discriminating action → feedback improve action selection and completed levels? | Two RTX PRO 6000 sessions, each with 145 model requests and 144 offline actions; pooled analysis and post-fix evidence audit. Original setup failure and all consumed attempts preserved. | **Closed with technical qualification (recorded owner decision).** No demonstrated solving improvement; action selection inconclusive. Original evaluator passed both sessions; post-fix certification fails F1 because finalization evidence is missing. Blocks were identical, not independent replicates. [Results][track1], [Audit][track1audit], [Closure][trackstatus] |
 | **2 — Evidence-linked memory** | Does deterministic, evidence-linked memory preserve accessible facts beyond recent history, better than state-keyed raw retrieval at a common budget? | Draw 2 used after the final design freeze; two technically valid RTX PRO 6000 sessions answered all **5,760** study calls; registered pooled analysis completed once. Draw 1 retired and preserved. | **Stage 1 complete.** Memory preserves access versus recent history; no advantage over state-keyed retrieval demonstrated. Unsupported-claim margin and comprehension floor met. Owner nonce publication remains outstanding for reproducibility. [Results][track2] |
-| **3 — Stagnation supervision** | Does reflection at detected stagnation improve recovery compared with continuation and equally budgeted periodic reflection? | Frozen detector, three-arm design, independent evaluator, CPU checks and scripted engine rehearsals. | **No successor GPU study.** The selected controls cannot certify the proposed false-interruption claim; claim scope and audit decisions remain open. Earlier failed attempt preserved. [Protocol][track3], [Limits][track3limits] |
+| **3 — Stagnation supervision** | Does reflection at detected stagnation improve recovery compared with continuation and equally budgeted periodic reflection? | Two technically complete, accepted RTX PRO 6000 sessions: 1,080 policy calls/actions, 40 reflections and two canaries; pooled analysis and subsequent code-review checks completed. Earlier failed attempts preserved. | **Complete; inconclusive.** No levels completed; no demonstrated triggered-reflection advantage. The false-interruption gate is not certifiable, one apparent recovery was a display-counter artifact, and repeated blocks were identical trajectories. [Results][track3results], [Status][trackstatus] |
 | **4 — Change, progress and subgoals** | Can the model distinguish observed change, confirmed progress and unsupported causal/subgoal claims; does a safeguard help? | One RTX PRO 6000 attempt; all **5,852** questionnaire calls answered; independent evaluation, cleanup and final deadline passed in **1,091 s**. | **Complete; neither arm qualifies for memory or supervision.** Safeguard effects were mixed. One consumed attempt preserved. [Results][track4] |
 
-**Progress:** Tracks 2 and 4 completed; Track 1 closed with a technical qualification; Track 3 remains pending. No new GPU attempt follows from closure.
+**Progress:** Tracks 2, 3 and 4 completed; Track 1 closed with a technical qualification. Track 3's outcome is inconclusive. Completion does not establish an intervention benefit or authorize another GPU attempt.
 
 ## Track 1: findings and closure qualifications
 
@@ -138,6 +138,13 @@ semantic failures, and record validation from engine replay. Diagnostic scores a
 explanations without uniquely identifying a cause. The six-game acceptance target and 60/20/20 workload split
 are retained. This is a draft study design; no model run or launch is authorized by the plan.
 
+**InternVL identification probe (October 15, 2026):** [Preparation and scoring design](reports/internvl_object_identification_v1_preparation.md).
+Six private initial-board image requests are prepared as a prompted component test, with separate
+whole-region/part localization scoring and obstacle candidates explicitly distinguished from verified collision
+behavior. The model revision is pinned; public code uses synthetic tests and private references stay git-ignored.
+No InternVL inference result is available. The chosen Kaggle route retains the enforced one-hour full-job cap;
+runtime validation, model/input attachments and provider enforcement remain unresolved. Nothing is uploaded or launched.
+
 ## Source snapshot
 
 | Collection | Revision used |
@@ -145,7 +152,7 @@ are retained. This is a draft study design; no model run or launch is authorized
 | Historical studies, comprehension, runtime and observation probes | `wheelhouse-replacement-audit` — `5a21dd3` |
 | Track 1 results, post-fix audit and qualifications | `track1-successor-runtime-v1` — `abb97ed` |
 | Track 2 completed Stage 1 analysis and corrected interpretation | `track2-successor-runtime-v1` — `e5b0830` |
-| Track 3 preparation | `track3-successor-runtime-v1` — `12adf90` |
+| Track 3 completed analysis and post-review verification | `track3-successor-runtime-v1` — `f5c7bae` |
 | Track 4 completed result | `track4-successor-runtime-v1` — `37748fe` |
 | Four-track status and recorded qualified closure | `track-resumption-v1` — `510a180` |
 
@@ -172,10 +179,11 @@ are retained. This is a draft study design; no model run or launch is authorized
 [probes]: https://github.com/dcw06/ARC-AGI-3/blob/5a21dd339d22ec6e13307722b42dcef0882f6829/reports/control_interface_action_selection_v1_v2_results_2026-10-08.md
 [track1]: https://github.com/dcw06/ARC-AGI-3/blob/abb97ed30312fb35fdcc47ff098f797628d2c67a/reports/feedback_action_v1_results.md
 [track1audit]: https://github.com/dcw06/ARC-AGI-3/blob/abb97ed30312fb35fdcc47ff098f797628d2c67a/reports/feedback_action_v1_post_fix_audit.md
-[trackstatus]: https://github.com/dcw06/ARC-AGI-3/blob/510a180704f0ad7573c12e7e096ccb5ccc83b6bd/reports/four_track_resumption/status_2026-10-09.md
+[trackstatus]: https://github.com/dcw06/ARC-AGI-3/blob/a7ef60b3dda93f6daf0eab408bf8476138f87fe2/reports/four_track_resumption/status_2026-10-09.md
 [track2]: https://github.com/dcw06/ARC-AGI-3/blob/e5b0830e7c7dddfad366fc52aabed35079a9f1a6/reports/evidence_memory_v1_stage1_results.md
 [track3]: https://github.com/dcw06/ARC-AGI-3/blob/12adf90c9047f40bfab183304034a79ff457b756/reports/stagnation_supervision_v1_protocol_v2.md
 [track3limits]: https://github.com/dcw06/ARC-AGI-3/blob/12adf90c9047f40bfab183304034a79ff457b756/reports/stagnation_supervision_runtime_v2_owner_questions.md
+[track3results]: https://github.com/dcw06/ARC-AGI-3/blob/f5c7bae/reports/stagnation_supervision_v1_results.md
 [track4]: https://github.com/dcw06/ARC-AGI-3/blob/37748fec1551eda1b7706a8814e46b5d75a3ae13/reports/progress_subgoal_v1_runtime2_attempt1_results.md
 [worksheet]: https://github.com/dcw06/ARC-AGI-3/blob/5a21dd339d22ec6e13307722b42dcef0882f6829/reports/wheelhouse_redistribution_decision_worksheet_r4.md
 [decisions]: https://github.com/dcw06/ARC-AGI-3/blob/5a21dd339d22ec6e13307722b42dcef0882f6829/reports/wheelhouse_redistribution_decisions.csv
