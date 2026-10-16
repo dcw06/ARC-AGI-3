@@ -207,7 +207,7 @@ Boxes test coarse localization, not exact masks. Obstacle roles remain unverifie
 <main>''' + ''.join(sections) + '</main>').encode('utf-8')
 
 
-def prepare(snapshot, output):
+def prepare(snapshot, output, runtime_extra=None):
     snapshot, output = Path(snapshot).resolve(), Path(output).resolve()
     if output.exists():
         raise ValueError('output already exists; preserve every earlier preparation')
@@ -259,9 +259,33 @@ def prepare(snapshot, output):
             entry.compress_type = zipfile.ZIP_DEFLATED
             zipped.writestr(entry, files[name])
     files['model-inputs-only.zip'] = archive.getvalue()
+    if runtime_extra is not None:
+        extra = Path(runtime_extra).resolve()
+        wheel_name = 'timm-1.0.20-py3-none-any.whl'
+        wheel = (extra/wheel_name).read_bytes()
+        expected = 'f6e62f780358476691996c47aa49de87b95cc507edf923c3042f74a07e45b7fe'
+        if sha(wheel) != expected:
+            raise ValueError('supplemental timm wheel hash mismatch')
+        files['runtime-extra/'+wheel_name] = wheel
+        files['runtime-extra/requirements-extra.lock'] = Path(__file__).with_name(
+            'runtime_requirements_extra.lock').read_bytes()
+        files['runtime-extra/acquisition-manifest.json'] = (extra/'manifest.json').read_bytes()
+        # The immutable wheel itself retains its licence. Include the inspected
+        # text for review without installing or executing this wheel here.
+        license_text = (extra/'retained-licenses/LICENSE').read_bytes()
+        if sha(license_text) != '71b111620fa32c17a80ccd6db2da759d31a591e497d8b5f382174f59d1b59d49':
+            raise ValueError('supplemental timm licence hash mismatch')
+        files['runtime-extra/LICENSE'] = license_text
+        archive = io.BytesIO()
+        with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED) as zipped:
+            for name in sorted(n for n in files if n.startswith(('inputs/', 'runtime-extra/'))):
+                entry = zipfile.ZipInfo(name, date_time=(2026, 10, 15, 0, 0, 0))
+                entry.compress_type = zipfile.ZIP_DEFLATED
+                zipped.writestr(entry, files[name])
+        files['kaggle-inputs.zip'] = archive.getvalue()
     model_pin = {'repository': MODEL, 'revision': MODEL_REVISION,
                  'source': 'https://huggingface.co/api/models/' + MODEL,
-                 'weights_downloaded': False, 'runtime_validated': False}
+                 'weights_manifest_bound': False, 'runtime_validated': False}
     files['model_pin.json'] = canonical(model_pin)
     files['STATUS.json'] = canonical({
         'status': 'prepared_only_no_model_results', 'planned_model_requests': len(prepared),
@@ -284,7 +308,7 @@ def prepare(snapshot, output):
                  'raise SystemExit("REVIEW ONLY: provider full-job cap, mounted model bytes, '
                  'runtime validation and exact launch authority are not bound. No inference started.")\n']},
             {'cell_type': 'markdown', 'id': 'inputs', 'metadata': {}, 'source': [
-                'The future model-facing dataset must contain only model-inputs-only.zip contents.\n',
+                'A future input attachment may contain inputs/ and the separately pinned runtime-extra/ only.\n',
                 'Keep references/, review.html and evaluator results outside the model sandbox.\n',
                 'A worker timer or notebook timeout field alone is not evidence of the full-job cap.\n',
                 'Retain raw completions and exact input bindings; do not repair or retry invalid answers.\n']},
@@ -304,6 +328,7 @@ def prepare(snapshot, output):
         'intended_accelerator': 'one NVIDIA RTX PRO 6000',
         'whole_job_cap_seconds': 3600, 'provider_cap_verified': False,
         'model_mount_bound': False, 'input_mount_bound': False, 'runtime_validated': False,
+        'supplemental_runtime_wheel_bound': runtime_extra is not None,
         'planned_generation_requests': 6, 'max_output_tokens_per_request': MAX_OUTPUT_TOKENS,
         'automatic_retries': 0, 'game_actions': 0,
         'note': 'The six requests exclude any future separately budgeted runtime canaries or polls.',
@@ -317,6 +342,9 @@ def prepare(snapshot, output):
         'source_sha256': {path.relative_to(Path(__file__).parents[2]).as_posix(): sha(path.read_bytes())
                           for path in (Path(__file__),
                                        Path(__file__).parents[2] / 'scripts/object_identification_v1.py',
+                                       Path(__file__).with_name('runtime.py'),
+                                       Path(__file__).with_name('runtime_source_pin.json'),
+                                       Path(__file__).with_name('runtime_requirements_extra.lock'),
                                        Path(__file__).parents[2] / 'scripts/serve_manual_strategy_worksheet.py',
                                        Path(__file__).parents[2] / 'certification/phase4_multimodal_preflight_v3/images.py')},
     }

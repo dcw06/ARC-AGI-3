@@ -142,8 +142,11 @@ are retained. This is a draft study design; no model run or launch is authorized
 Six private initial-board image requests are prepared as a prompted component test, with separate
 whole-region/part localization scoring and obstacle candidates explicitly distinguished from verified collision
 behavior. The model revision is pinned; public code uses synthetic tests and private references stay git-ignored.
-No InternVL inference result is available. The chosen Kaggle route retains the enforced one-hour full-job cap;
-runtime validation, model/input attachments and provider enforcement remain unresolved. Nothing is uploaded or launched.
+The timm supplement is now hash-pinned, a tiny random-model CPU rehearsal passes, and all 24 pinned model files
+(17.07 GB) are verified locally. All six actual images pass preprocessing checks; no pretrained inference result
+is available. The chosen Kaggle route retains the enforced one-hour full-job cap. Exact Kaggle runtime validation,
+model/input attachments and provider enforcement remain unresolved. A support question is drafted but not sent;
+nothing is uploaded or launched.
 
 ## Source snapshot
 

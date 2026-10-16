@@ -1,6 +1,8 @@
 """Behavioral checks for private probe separation and honest localization scoring."""
 import json
 from pathlib import Path
+import subprocess
+import sys
 import tempfile
 import unittest
 import zipfile
@@ -167,6 +169,39 @@ class BundleTests(unittest.TestCase):
     def test_preparation_never_overwrites_an_existing_attempt(self):
         with self.assertRaisesRegex(ValueError, 'already exists'):
             prepare(self.source, self.bundle)
+
+    def test_tampered_extra_wheel_is_refused_before_bundle_is_written(self):
+        extra = self.root/'extra'
+        extra.mkdir()
+        (extra/'timm-1.0.20-py3-none-any.whl').write_bytes(b'altered wheel')
+        with self.assertRaisesRegex(ValueError, 'wheel hash mismatch'):
+            prepare(self.source, self.root/'with-extra', extra)
+        self.assertFalse((self.root/'with-extra').exists())
+
+    def test_model_source_mismatch_is_refused_before_import(self):
+        from research.object_identification_v1.runtime import verify_model_code
+        code = self.root/'model-code'
+        code.mkdir()
+        (code/'config.json').write_bytes(b'changed')
+        with self.assertRaisesRegex(ValueError, 'model code hash mismatch'):
+            verify_model_code(code)
+
+    def test_cpu_check_records_failure_and_preserves_earlier_receipt(self):
+        code = self.root/'bad-code'
+        code.mkdir()
+        (code/'config.json').write_bytes(b'changed')
+        output = self.root/'cpu-failure.json'
+        root = Path(__file__).resolve().parents[1]
+        command = [sys.executable, str(root/'scripts/object_identification_v1.py'),
+                   'cpu-runtime-check', '--source', str(code), '--cache', str(self.root/'cache'),
+                   '--output', str(output)]
+        result = subprocess.run(command, cwd=root, capture_output=True, text=True, timeout=30)
+        self.assertEqual(result.returncode, 1)
+        receipt = output.read_bytes()
+        self.assertEqual(json.loads(receipt)['status'], 'cpu_compatibility_rehearsal_failed')
+        again = subprocess.run(command, cwd=root, capture_output=True, text=True, timeout=30)
+        self.assertNotEqual(again.returncode, 0)
+        self.assertEqual(output.read_bytes(), receipt)
 
 
 if __name__ == '__main__':
