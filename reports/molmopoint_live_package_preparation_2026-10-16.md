@@ -2,8 +2,9 @@
 
 Prepared a model-specific private package builder and one-use external operator.
 The six plain-448 inputs, prompts, point decoder and scientific scoring are
-unchanged. The first private GPU attempt has now been submitted once; inference
-and target-hit results are pending.
+unchanged. The first private GPU attempt completed once, with independent replay
+and lifecycle certification: **six valid responses and six exact target hits**.
+[Completed results](molmopoint_targeted448_results_2026-10-16.md).
 
 | Check | Result |
 |---|---|
@@ -20,8 +21,8 @@ and target-hit results are pending.
 | Fresh read-only preflight | Passed account, quota, absent target, versions, privacy and all inventories |
 | Reservation / notebook submission | One reservation consumed; exactly one submission, no retry |
 | Provider response / readback | Accepted without invalid sources; exact saved source and available settings verified |
-| Last observed status | RUNNING |
-| Actual hardware and scientific results | Runtime evidence pending |
+| Last observed status | COMPLETE |
+| Actual hardware and scientific results | One RTX PRO 6000 Blackwell; 6/6 valid responses, 6/6 target hits |
 
 The builder requires retained provider receipts matching the frozen model and
 input manifests. It refuses changed hashes, shared/unverified datasets and
@@ -33,10 +34,11 @@ evidence of a MolmoPoint installation check.
 
 The model card, two new wheel licences and inherited wheel-term provenance can
 be retained for the owner's scoped review. Earlier InternVL approval does not
-approve MolmoPoint. No claim is made that the full CUDA installation or full
-checkpoint loading has been tested. All earlier attempts and packages remain
-preserved. Exact hardware, cleanup, post-write witness and independent replay
-remain mandatory for completion.
+approve MolmoPoint. The owner subsequently approved this final package and its
+private scope. Full isolated CUDA installation and pretrained checkpoint loading
+succeeded in the completed attempt. All earlier attempts and packages remain
+preserved. Actual hardware, cleanup, post-write witness and independent replay
+have now been verified for this attempt.
 
 Final private review-lock SHA256:
 `b30d8fe9916192fc8d5ed92bf8c6e8330bac4c57a51bcfd0107a9411a472be9c`.

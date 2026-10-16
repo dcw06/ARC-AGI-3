@@ -200,19 +200,24 @@ localization or obstacle mechanics. Independent token replay passes for all six 
 the attempt is technically complete, with no repair or additional generation.
 [Completed results](reports/internvl_object_identification_v1_results_2026-10-16.md).
 
-**MolmoPoint integration draft (October 16):** added the separate native-pointing
+**MolmoPoint completed cued-localization test (October 16):** added the separate native-pointing
 adapter for `allenai/MolmoPoint-8B`, pinned to `188130f961c8e0888a34e11121a1423c461a01ba`.
 Decoded original-image pixels map deterministically to board cells. The owner chose
 **plain 448-by-448 nearest-neighbor images with no overlay** for the first test:
 six predeclared visual targets, seven pixels per cell and exact occupied-cell hits.
 The incomplete-point decoder gap is fixed and reproduced against `5227344`;
-38 MolmoPoint tests and 87 relevant Linux tests pass. All 33 pinned checkpoint files, including
-the eight weight shards, are now acquired and verified. A separate 48-package runtime lock and
-bounded six-generation worker, native decoder, replay and scoring path are prepared. Real CPU
-processor checks and tiny-random-model generation/BF16 loading pass; full 8B inference and an
-isolated CUDA installation remain untested. The private review-only candidate refuses execution;
-its proposed dataset bindings, scoped use and fresh live approval are still outstanding. No new
-GPU job or gameplay integration occurred. [Runtime preparation](reports/molmopoint_targeted448_runtime_preparation_2026-10-16.md). [Current targeted input draft](reports/molmopoint_targeted448_draft_2026-10-16.md),
+117 relevant Linux tests pass. All 33 pinned checkpoint files, including the eight weight
+shards, were acquired and verified; the hosted copy also retains the full Apache text.
+The private datasets, final package and scoped approval were completed, then one authorized
+RTX PRO 6000 attempt ran with an isolated 48-package runtime. All 220 mounted hashes matched.
+**Result: 6/6 valid responses and 6/6 exact target hits**, with six normal single-point outputs,
+148 completion tokens and a 307.486-second worker lifecycle. Independent CPU replay,
+post-write finalization and process/GPU cleanup all pass. The attempt is consumed and preserved;
+no retry or game action occurred. This establishes cued localization on these exposed frames;
+object discovery, similar-object grouping, obstacle mechanics and gameplay remain untested.
+It is not a controlled model comparison with the different InternVL inventory task.
+[Completed results](reports/molmopoint_targeted448_results_2026-10-16.md).
+[Runtime preparation](reports/molmopoint_targeted448_runtime_preparation_2026-10-16.md). [Targeted input design](reports/molmopoint_targeted448_draft_2026-10-16.md),
 [integration and limits](reports/molmopoint_identification_v1_integration_2026-10-16.md).
 [Decoder fix and regressions](reports/molmopoint_decoder_sequence_fix_2026-10-16.md).
 
