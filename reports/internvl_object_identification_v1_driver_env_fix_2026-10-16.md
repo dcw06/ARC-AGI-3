@@ -1,8 +1,9 @@
 # InternVL driver-library environment repair and successor
 
 October 16, 2026. Attempt 1 remains consumed and ERROR; it was not retried.
-This repair prepares a successor for review only. No new GPU/CPU provider job,
-reservation, launch claim, upload or model request was created.
+The repair preparation below created no provider job. Subsequently the owner approved
+the exact successor hash and one fresh attempt; it was submitted once and initially
+reported RUNNING. [Submission record](internvl_object_identification_v1_successor_submission_2026-10-16.md).
 
 | Change | Behavior |
 |---|---|
@@ -18,10 +19,11 @@ The changed private review lock is:
 
 `03248a0d5566b9aad4831ee82e05997c288c5acab0ed86e9efc49283198189a3`
 
-It has no source/compute approval, reservation or claim. Its declared authority cell
-is still None and refuses before installation or GPU queries. Prior approval of the
-consumed package does not authorize this successor. The scope proposed for a fresh
-attempt remains one RTX PRO 6000, requested session timeout 3,600 s, worker 3,300 s,
+The immutable review template's authority cell remains None and refuses before
+installation or GPU queries. Fresh source/compute approval and a unique consumed
+claim were sealed only into its declared authority-data slot in a separate execution
+copy. Prior approval of the consumed package was not reused. The approved fresh
+attempt specifies one RTX PRO 6000, requested session timeout 3,600 s, worker 3,300 s,
 six generations of at most 4,096 tokens each, zero game actions/scorecards, owner-only
 access, internet/TPU off and no automatic retries. Provider overhead may exceed one hour.
 

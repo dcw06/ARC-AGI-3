@@ -1,7 +1,10 @@
 # InternVL identification: final live package readiness
 
-October 16, 2026. **Attempt 1 is ERROR and consumed. A repaired successor is prepared
-for exact-hash review, not authorized to launch.**
+October 16, 2026. **Attempt 1 is ERROR and consumed. The repaired successor was
+separately approved and submitted once; its initial status is RUNNING.**
+[Successor submission and checks](internvl_object_identification_v1_successor_submission_2026-10-16.md).
+The remaining preparation/first-launch narrative below is historical; the successor
+record gives the current approval and consumption status.
 [Repair and validation](internvl_object_identification_v1_driver_env_fix_2026-10-16.md). The first GPU identity query
 could not load NVML; no installation/model loading/generation began. Requested saved
 configuration is verified, but actual GPU allocation and GPU cleanup are unverified.
@@ -18,11 +21,11 @@ The two completed CPU attempts and all historical candidates/approval records re
 | Owner's time amendment | Requested 3,600-second session timeout, 3,300-second worker limit including finalization; 3,000-second work cutoff and 300-second cleanup reserve. Provider allocation/setup/mounting/release may add time beyond one hour. No verified entire-job cap is claimed |
 | Runtime | Owned process groups, isolated hash-pinned install, strict model/generation admission, active worker alarm through evidence writing, GPU census, temporary-environment removal and provisional completion witness |
 | Offline API evidence | Tiny synthetic checkpoint load/generate passes; six real prompts audit to 601 tokens each including 256 image tokens. No real checkpoint inference |
-| Current Linux checks | 84 retained runtime/lifecycle cases, plus 20 external operator cases passing on Linux and with optimized Python: probe/privacy/mount/install/lifecycle/replay plus authority sealing, actual outgoing settings and finalization timer checks |
+| Current Linux checks | All 108 successor checks pass on Linux: 84 retained runtime/lifecycle cases, 20 external operator cases and four driver-environment regressions |
 | Exact private template | Artifact/current-source/builder hashes, decoded runtime payload and all dataset inventories verified; independent rebuild byte-identical. Exact notebook, supervisor and seal all refuse missing approval before GPU use |
 | Immutable bindings | Same private account, digest-pinned image and exact requested model/input/publisher dataset versions as the CPU preparation. Actual mounted bytes are hashed again before installing |
 | Scope | One RTX PRO 6000, six generations, <=4,096 tokens each / <=24,576 total, zero game actions/scorecards, private account-only access, internet/TPU off, one attempt and no automatic retries |
-| Scoped use and history | Prior private scoped-use approval and 26 retained licence texts preserved. Exact-hash owner approval and a matching unconsumed local reservation are now recorded separately; earlier records stay unchanged |
+| Scoped use and history | Prior private scoped-use approval and 26 retained licence texts preserved. Successor exact-hash approval is recorded separately; its fresh reservation is consumed by one submission. Earlier records stay unchanged |
 
 The review hash binds the executable notebook template, metadata, runtime capsule, evidence
 and an explicit late-binding contract. Its sole unfilled slot is a literal `AUTHORITY = None`
@@ -32,11 +35,11 @@ byte must match review. The sealed execution notebook also gets its own retained
 any save. The offline outgoing-request guard rejects alternate GPUs, changed timeout, sources,
 privacy, internet settings or code. Preparing GPU-enabled metadata does not submit it.
 
-| Remaining step | Required before submission |
+| Launch sequence | Current status |
 |---|---|
-| Exact final source/compute approval | Recorded for the unchanged private review hash and amended scope; it is not permission to launch during this repair task |
-| Fresh reservation and preflight | Preserve old records; create a matching one-use reservation only after approval; read-only check target/account, source inventories, quota and current accelerator availability |
-| Claim and exact request | Consume one claim before a single no-retry save; seal only the declared authority slot and retain execution hash; validate the actual outgoing request |
+| Exact final source/compute approval | Successor hash approved for one fresh attempt under the amended scope |
+| Fresh reservation and preflight | Unique reservation created after approval; read-only account/target, inventories, private access and generic quota checks passed. Actual hardware remains a runtime gate |
+| Claim and exact request | One fresh claim consumed for one accepted save; only the authority slot changed and actual outgoing request validated; saved source/configuration read back independently |
 | Actual GPU loading/inference | Untested until the authorized attempt. No trial launch is implied by CPU checks |
 
 Collection still requires provider COMPLETE, exact saved source/image/settings, output hashes,
@@ -61,7 +64,8 @@ in the installed SDK and are not claimed; the outgoing versioned sources and req
 No results or technical-completion verdict are inferred from RUNNING.
 
 The successor preserves the platform's absolute LD_LIBRARY_PATH entries and records
-driver-loader diagnostics before querying the GPU. Its review hash, private notebook
-binding and consumed-attempt history are new; source/compute approval and a fresh
-one-use reservation are absent. All 108 Linux tests and a byte-identical rebuild pass.
-The old consumed approval/reservation must never be reset or reused for it.
+driver-loader diagnostics before querying the GPU. Its new review hash received fresh
+source/compute approval. Fresh read-only preflight and SDK dry checks passed, and its
+unique reservation was consumed for exactly one accepted submission. All 108 Linux
+tests and a byte-identical rebuild pass. Both consumed GPU claims remain preserved;
+neither can be reset or reused. Actual hardware, inference and cleanup remain pending.

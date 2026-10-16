@@ -170,7 +170,8 @@ queries until approval is bound to its exact review hash. Only a declared litera
 cell may be populated after approval; the program, metadata and runtime remain fixed.
 The earlier scoped-use approval and pending reservation are preserved, not relabelled as approval
 or an active reservation for this new package. The old full-job-cap support draft remains unsent;
-provider confirmation is no longer required by the amended budget. Exact-hash source/compute approval is now recorded, with its reservation unconsumed.
+provider confirmation is no longer required by the amended budget. The first launch's
+exact-hash approval and consumed reservation are retained with its failure evidence.
 [External operator repairs](reports/internvl_object_identification_v1_operator_fixes_2026-10-16.md)
 close request serialization/target, preflight binding, one-use consumption and readback gaps.
 All 20 operator regressions pass on Linux and with optimized Python, in addition to the
@@ -188,8 +189,11 @@ score. [Failure record](reports/internvl_object_identification_v1_attempt1_failu
 retains the required absolute loader paths and adds startup diagnostics. A CPU-only
 probe fails through the consumed supervisor and succeeds through the corrected one.
 All 108 Linux tests pass; the private successor rebuilds identically and preserves the
-consumed history. It still needs new hash-bound approval and fresh one-attempt authority;
-no new GPU run or identification result exists.
+consumed history. **Successor submitted once (October 16, 16:51 UTC):** fresh exact-hash
+approval, read-only preflight, SDK dry check and a unique single-use claim passed.
+Saved version 1 matches the sealed package and requested private RTX configuration;
+initial status is RUNNING. Actual hardware, inference, cleanup and identification results
+remain unverified. [Submission record](reports/internvl_object_identification_v1_successor_submission_2026-10-16.md).
 
 ## Source snapshot
 
