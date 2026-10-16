@@ -137,16 +137,21 @@ then report those same frames as held-out success.
 |---|---|
 | Preserve completed cued-point result and its consumed attempt | Done |
 | Audit retained geometry, masks, hierarchy and source hashes | Implemented and run locally; 5 synthetic audit checks pass |
-| Tools-versus-model-only boundary scope | Proceeding with recommended model + pixel tools; not a frozen protocol |
+| Tools-versus-model-only boundary scope | Pilot executed with model + pixel tools; model-only masks not tested |
 | Complete exact masks and exhaustive inventory review | Owner confirmed all 94 unchanged masks and six complete inventories; original export and separate attestation preserved privately |
 | Freeze prompts, inventory granularity, mask contract, matching and thresholds | Diagnostic pilot prompt, whole-object granularity, mask procedure and IoU matching bound by the private package; no advancement verdict |
 | Prepare separate uncued inputs, inventory decoder, mask baseline and geometric evaluator | Implemented locally; completed six-target runtime remains unchanged |
 | Rehearse synthetic geometry failures and source bindings | 50 relevant Python checks and 9 isolated browser control checks pass |
 | Provide an exact-mask / exhaustive-inventory editor | Implemented: hover coordinates, cell/component editing, hierarchy and JSON export/import |
 | Integrate new model-loading worker, admissions, lifecycle and raw-token replay | Implemented; expanded Linux suite passes all 178 checks without skips |
-| Bound generations, output points, tokens, grouping and lifecycle | Draft proposes six generations × 4,096 tokens and 96 points; full runtime budget and grouping remain unfrozen |
+| Bound generations, output points, tokens, grouping and lifecycle | Executed six-generation pilot: ≤4,096 tokens and 96 points each; 3,300-second worker, requested 3,600-second session; no semantic grouping condition |
 | Build/review the exact new private package and source/use bindings | Private template assembled and checked; existing attachments unchanged; current lock and limits in launch preparation report |
-| Fresh compute authorization, reservation, preflight and one submission | Not authorized by this draft |
+| Fresh compute authorization, reservation, preflight and one submission | One owner-requested attempt consumed and complete; identity warning preserved; no retry or additional attempt authorized |
+
+The [completed pilot](reports/object_discovery_boundaries_v1_results_2026-10-16.md)
+has five valid outputs, 7/37 IoU-matching whole-object masks and 3/37 exact
+masks. Runtime/replay checks pass separately from the failed provider-identity
+gate. It does not yet demonstrate reliable independent boundaries.
 
 No model request, game action, upload or GPU launch occurred while preparing
 this draft. Public artifacts contain methods and aggregate audit counts only;

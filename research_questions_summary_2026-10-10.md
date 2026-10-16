@@ -221,26 +221,28 @@ It is not a controlled model comparison with the different InternVL inventory ta
 [integration and limits](reports/molmopoint_identification_v1_integration_2026-10-16.md).
 [Decoder fix and regressions](reports/molmopoint_decoder_sequence_fix_2026-10-16.md).
 
-**Next: independent discovery and boundaries (October 16, draft):**
-[Study plan](research_plan_object_discovery_boundaries_v1.md). Given only the
-board, find visible objects and produce exact cell masks, with whole objects
-and parts scored separately. A local reference audit found 75 rectangles,
-15 explicit masks and four groups among the 94 existing regions. The owner
-has now confirmed inspection of all 94 unchanged masks and six complete inventories:
-37 whole objects and 57 parts. The original export and a separate attestation
-are preserved privately; this does not claim independent second review. The separate generic inputs,
-inventory decoder, component-mask baseline and geometric scorer are prepared
-locally; 50 relevant Python checks and nine isolated browser control checks pass.
-The private editor provides hover coordinates, exact-mask editing, hierarchy,
-inventory review and JSON export. Work proceeds with model + pixel tools; the
-separate GPU worker/lifecycle candidate now has 15 additional synthetic checks.
-Independent raw-token/mask replay and the exact private template are now built;
-[launch preparation](reports/object_discovery_boundaries_v1_launch_readiness_2026-10-16.md)
-records 178 Linux CPU checks passing without skips. One owner-requested attempt
-was submitted once and reported RUNNING. Kaggle returned a title-derived slug,
-so the deployment identity warning remains open; separate readback verified
-the sealed source and other privacy/hardware configuration fields. The attempt
-is consumed, with no retry; uncued results await independent evaluation.
+**Independent discovery and boundaries: completed pilot (October 16):**
+[Results](reports/object_discovery_boundaries_v1_results_2026-10-16.md).
+Can the model find whole objects without target cues, and can a pixel tool
+recover their occupied cells? One attempt used six plain 448px development
+boards, native pointing and same-color connected-component masks.
+
+| Measure | Result |
+|---|---|
+| Valid outputs | 5/6; ls20 reached the 4,096-token cap and receives no partial credit |
+| Whole-object masks matching at IoU ≥ 0.5 | 7/37 (18.9% recall); 7/22 proposals match |
+| Exact whole-object masks | 3/37 (8.1%) |
+| Seed containment, post-hoc diagnostic | Distinct valid seeds inside 18/37 listed whole objects; not boundary correctness |
+| Runtime | COMPLETE on one RTX PRO 6000; 490.145-second worker lifecycle; cleanup and independent replay pass |
+| Qualification | Provider-generated slug differs from requested identity; the deployment warning remains failed and preserved |
+
+The 37 whole objects and 57 parts came from the owner's confirmation of all
+94 unchanged masks and six inventories; one owner review, not independently
+established universal object truth. Parts are not pooled into the whole-object
+score. This pipeline does not yet demonstrate reliable independent boundaries.
+Discovery coverage, semantic grouping and the ls20 length-limited output need
+work. The consumed attempt remains preserved; no retry or further GPU attempt
+is authorized by these results. [Study plan](research_plan_object_discovery_boundaries_v1.md).
 
 ## Source snapshot
 

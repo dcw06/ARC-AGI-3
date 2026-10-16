@@ -60,3 +60,17 @@ Physical allocation and model results are not yet independently verified.
 No source approval was rewritten to hide the mismatch, and no attempt was
 reset. Scientific results await collection and independent replay; the
 deployment-identity qualification must accompany that assessment.
+
+## Completed and independently replayed
+
+The same attempt is now COMPLETE. Its worker lifecycle was 490.145 seconds on
+one RTX PRO 6000, with cleanup verified. All 220 mounted hashes and seven
+uncued staging hashes matched. CPU replay verified the full checkpoint bytes,
+frozen requests, processor metadata/tokens, native points and derived masks.
+
+Five responses are valid; ls20 reached the token cap. The primary masks match
+7/37 owner-listed whole objects at IoU ≥ 0.5, with 3/37 exact. The deployment
+identity failure is still preserved separately; it has not been rewritten as
+a passing gate. See the [qualified results](object_discovery_boundaries_v1_results_2026-10-16.md).
+The one attempt is consumed. No retry or new GPU run was launched during
+collection or analysis.
