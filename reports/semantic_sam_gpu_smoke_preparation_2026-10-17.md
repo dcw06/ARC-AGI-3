@@ -1,5 +1,10 @@
 # Semantic-SAM: bounded one-image GPU smoke package
 
+**Launch update:** the owner-authorized final private r2 package was submitted
+exactly once. The [submission record](semantic_sam_gpu_smoke_attempt1_status_2026-10-17.md)
+reports RUNNING and verifies the saved source, immutable image, private/offline
+settings and requested RTX PRO 6000. Actual CUDA/mask results remain pending.
+
 The mounted CPU transport check passed. A separate one-image GPU wrapper now
 packages the verified decoder, portable interpreter and existing reference-free
 segmentation worker. This preparation report does not claim a CUDA result.
@@ -65,6 +70,11 @@ exact saved source/settings and raw mask replay; a receipt alone is provisional.
   paths, then its checkout-source check refused after a supervisor wiring update.
   The draft and its logs are preserved. Its result is not final-package
   certification; the corrected frozen snapshot gets its own local rehearsal.
+- The corrected frozen r2 snapshot completed that fresh offline rehearsal in
+  **166.296 seconds**: all transport/original hashes matched, safe runtime/source
+  extraction and both planning paths passed, both child groups were reaped,
+  temporary files were removed, and the final review/source lock still matched.
+  No model load, inference, GPU or provider call occurred in that rehearsal.
 
 Private locks, source/use/compute records, account bindings and provider evidence
 remain git-ignored. The final submission record will name the exact consumed
