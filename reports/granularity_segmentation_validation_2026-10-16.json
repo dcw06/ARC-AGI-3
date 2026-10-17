@@ -1,0 +1,94 @@
+{
+  "Kaggle_calls": 0,
+  "groups": [
+    "test_object_boundary_granularity",
+    "test_object_boundary_sam21",
+    "test_object_discovery_boundaries",
+    "test_object_boundary_reference_audit",
+    "test_object_boundary_preparation",
+    "test_object_boundary_runtime",
+    "test_object_boundary_live_evaluation",
+    "test_object_boundary_live_builder",
+    "test_object_boundary_deployment"
+  ],
+  "linux_CLI_missing_source_check": {
+    "expected_refusal": true,
+    "model_loaded": false,
+    "process_groups_absent": true,
+    "worker_success_receipt_written": false
+  },
+  "new_GPU_jobs": 0,
+  "platform": "linux",
+  "post_test_formatting": "Source-pin JSON line endings normalized to LF; parsed pins unchanged.",
+  "python": "3.12.3",
+  "qualifications": [
+    "Synthetic adapter outputs only",
+    "No checkpoint acquired or loaded",
+    "GPU environment qualification pending"
+  ],
+  "real_model_inference_calls": 0,
+  "schema": "granularity_segmentation_integration_validation_v1",
+  "semantic_channel_map_matches_pinned_upstream": true,
+  "source_revisions": {
+    "semantic_sam_l": "e11f8b518539faea731e2744cc3e44c24572e30d",
+    "unsamv2": "f4ec1136ce5ce2c38061dfbe3dc8233ea90dd53a",
+    "unsamv2_plus": "f4ec1136ce5ce2c38061dfbe3dc8233ea90dd53a"
+  },
+  "source_sha256": {
+    "research/object_discovery_boundaries_v1/granularity.py": "95f669ac065361fec079769d1342f4a2db59d961d777bab4a741f12c7b0d6aaf",
+    "research/object_discovery_boundaries_v1/granularity_backends.py": "8f2d9259e2e09b625328ef60f48af40e61b50a3fc7e525072d06bf87fe3b54db",
+    "research/object_discovery_boundaries_v1/granularity_runtime.py": "615f6d0cf71c73d697c6e558594ced26d563b9115e9bd1e44c9e778b34d92620",
+    "research/object_discovery_boundaries_v1/granularity_sources.json": "b2c8297274dc2ad694f805a523506d968bb7fe9d87df388e3a3425ec1623bd42",
+    "research/object_discovery_boundaries_v1/granularity_worker.py": "52a6daf05d5972cb36504984e5aa6d2a586fb5e140b9a4f9545a54129923c690",
+    "scripts/evaluate_granularity_segmentation.py": "d16334d27cded0192132f6410e89b1a605b89604ee04b892296f0f6f0add0adf",
+    "scripts/run_granularity_segmentation.py": "a5219a9f4f42962d76466711f11b4b18fde284ba5cad4a95719ce30e8b5b2dc8",
+    "tests/test_object_boundary_granularity.py": "fecbdc8b7cf44bd30e47a949ad1604ec8520326c9838c0145def6c5e2820546a"
+  },
+  "test_log_sha256": "97175650a989a0dc7536563603ac8039aadc44be517d22e718f2a65d1707e444",
+  "tests": {
+    "errors": 0,
+    "failures": 0,
+    "run": 87,
+    "skipped": 0
+  },
+  "upstream_api_checks": [
+    {
+      "entrypoint": "SAM2ImagePredictor.predict",
+      "matched": true,
+      "required_parameters": [
+        "point_coords",
+        "point_labels",
+        "multimask_output",
+        "return_logits",
+        "gra"
+      ]
+    },
+    {
+      "entrypoint": "SAM2AutomaticMaskGenerator.generate",
+      "matched": true,
+      "required_parameters": [
+        "image",
+        "gra"
+      ]
+    },
+    {
+      "entrypoint": "SemanticSAMPredictor.predict",
+      "matched": true,
+      "required_parameters": [
+        "image_ori",
+        "image",
+        "point"
+      ]
+    },
+    {
+      "entrypoint": "SemanticSamAutomaticMaskGenerator.__init__",
+      "matched": true,
+      "required_parameters": [
+        "level",
+        "points_per_side",
+        "points_per_batch",
+        "output_mode"
+      ]
+    }
+  ]
+}

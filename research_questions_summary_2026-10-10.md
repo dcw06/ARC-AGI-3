@@ -260,6 +260,15 @@ The [empty-mask scoring integration fix](reports/sam21_empty_mask_scoring_fix_20
 preserves failed empty proposals in the denominator. Its 73 Linux checks pass;
 all original nonempty-mask scores are unchanged, with no new inference.
 
+**Controllable-granularity segmentation (October 16):**
+[Implementation and remaining runtime work](reports/granularity_segmentation_integration_2026-10-16.md).
+UnSAMv2 / UnSAMv2+ and Semantic-SAM now have separate retained-point and
+automatic whole-image adapters. Each granularity is evaluated separately;
+automatic discovery processes ls20 without requiring MolmoPoint seeds.
+Raw-mask replay and the existing whole-object scorer are connected. Synthetic
+CPU checks do not establish model accuracy: checkpoint acquisition, isolated
+runtime qualification and real inference remain pending. No new GPU job ran.
+
 ## Source snapshot
 
 | Collection | Revision used |
