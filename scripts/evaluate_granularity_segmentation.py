@@ -11,9 +11,10 @@ from research.object_discovery_boundaries_v1.granularity_backends import binary_
 from research.object_discovery_boundaries_v1.granularity_runtime import file_sha
 from research.object_discovery_boundaries_v1.granularity_worker import inputs_for, write_json
 from research.object_discovery_boundaries_v1.scoring import score_frame
+from research.object_discovery_boundaries_v1.experiment import verified_references
 
 
-def evaluate(frames_dir, inputs, references, *, smoke_case=None):
+def evaluate(frames_dir, inputs, references, *, experiment_manifest,experiment_manifest_sha256,smoke_case=None):
     import numpy as np
     frames_dir = Path(frames_dir)
     manifest = json.loads((frames_dir/'worker-manifest.json').read_bytes())
@@ -35,7 +36,9 @@ def evaluate(frames_dir, inputs, references, *, smoke_case=None):
         expected_scope=dict(purpose='one_image_runtime_smoke',cases=[smoke_case])
     if scope != expected_scope:
         raise ValueError('one-image smoke output cannot be treated as a full comparison')
-    refs = json.loads(Path(references).read_bytes())['frames']
+    reviewed,freeze=verified_references(references,experiment_manifest,experiment_manifest_sha256,
+        input_manifest=Path(inputs)/'manifest.json',input_kind='seed_inputs')
+    refs = reviewed['frames']
     if [f['case_id'] for f in refs] != [f['case_id'] for f in seeds]:
         raise ValueError('reference/input order differs')
     if smoke_case is not None:
@@ -86,7 +89,7 @@ def evaluate(frames_dir, inputs, references, *, smoke_case=None):
         result.append(dict(case_id=name,whole=score_frame(saved['objects'],ref),
                            raw_proposal_count=saved.get('raw_proposal_count',0),
                            discarded_by_proposal_budget=saved.get('discarded_by_proposal_budget',0)))
-    return dict(policy=policy,scope=scope,reference_sha256=file_sha(references),
+    return dict(policy=policy,scope=scope,reference_sha256=freeze['reference_sha256'],experiment=freeze,
                 worker_manifest_sha256=file_sha(frames_dir/'worker-manifest.json'),frames=result,
                 qualification=('One-image runtime smoke only; not a six-board comparison. ' if smoke_case else '')+
                 'One separate development condition on owner-reviewed retained frames. No best-level selection, gameplay, or GPU lifecycle certification.',
@@ -95,8 +98,9 @@ def evaluate(frames_dir, inputs, references, *, smoke_case=None):
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
-    for arg in ('frames','inputs','references','output'):
+    for arg in ('frames','inputs','references','output','experiment-manifest','experiment-manifest-sha256'):
         parser.add_argument('--'+arg,required=True)
     parser.add_argument('--smoke-case',choices=[f'board-{i:02d}' for i in range(1,7)])
     args=parser.parse_args()
-    write_json(args.output,evaluate(args.frames,args.inputs,args.references,smoke_case=args.smoke_case))
+    write_json(args.output,evaluate(args.frames,args.inputs,args.references,smoke_case=args.smoke_case,
+        experiment_manifest=args.experiment_manifest,experiment_manifest_sha256=args.experiment_manifest_sha256))

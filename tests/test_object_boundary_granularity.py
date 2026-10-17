@@ -10,6 +10,7 @@ from pathlib import Path
 import tempfile
 import time
 import unittest
+from tests.object_boundary_experiment_fixture import frozen
 
 from research.object_discovery_boundaries_v1 import granularity as G
 from research.object_discovery_boundaries_v1.granularity_runtime import verify_sources
@@ -235,8 +236,17 @@ class AdapterIntegration(unittest.TestCase):
             write_json(refs,dict(frames=[dict(case_id=f['case_id'],grid=[[5]*64 for _ in range(64)],
                 inventory_policy='synthetic',reference_exhaustive_confirmed=True,
                 regions=[dict(id='object',parent_id=None,cells=[[2,4]],mask_reviewed=True,disposition='include')]) for f in frames]))
-            result=evaluate(output,inputs,refs)
+            result=evaluate(output,inputs,refs,**frozen(refs,seed_inputs=inputs))
             self.assertEqual([f['whole']['matched_count'] for f in result['frames']],[0,1,1,1,1,1])
+            # Reference edits used to change scores even after updating local
+            # hashes. The separately held experiment digest must reject them.
+            authority=frozen(refs,seed_inputs=inputs)
+            original=refs.read_bytes();changed=json.loads(original)
+            changed['frames'][1]['regions'][0]['cells']=[[4,2]]
+            refs.write_text(json.dumps(changed))
+            with self.assertRaisesRegex(ValueError,'reference differs from frozen'):
+                evaluate(output,inputs,refs,**authority)
+            refs.write_bytes(original)
             file=output/'board-02.json';saved=json.loads(file.read_bytes())
             saved['objects'][0]['cells']=[[4,2]]
             file.write_text(json.dumps(saved))
@@ -244,7 +254,7 @@ class AdapterIntegration(unittest.TestCase):
             pins[file.name]=hashlib.sha256(file.read_bytes()).hexdigest()
             manifest.write_text(json.dumps(pins))
             with self.assertRaisesRegex(ValueError,'raw mask replay'):
-                evaluate(output,inputs,refs)
+                evaluate(output,inputs,refs,**frozen(refs,seed_inputs=inputs))
 
     def test_evaluator_handles_empty_automatic_and_fixed_semantic_channel(self):
         from scripts.evaluate_granularity_segmentation import evaluate
@@ -269,7 +279,7 @@ class AdapterIntegration(unittest.TestCase):
             for mode in ('automatic','seeded'):
                 output=folder/mode
                 run_frames(Backend(),inputs,output,G.condition('semantic_sam_l',mode,1),time.monotonic()+120)
-                result=evaluate(output,inputs,refs)
+                result=evaluate(output,inputs,refs,**frozen(refs,seed_inputs=inputs))
                 if mode=='automatic':
                     self.assertEqual([f['whole']['prediction_count'] for f in result['frames']],[1]*6)
                     self.assertEqual([f['whole']['matched_count'] for f in result['frames']],[0]*6)
@@ -293,16 +303,16 @@ class AdapterIntegration(unittest.TestCase):
             self.assertEqual(result['cases'],['board-06'])
             self.assertEqual(result['purpose'],'one_image_runtime_smoke')
             with self.assertRaisesRegex(ValueError,'cannot be treated as a full comparison'):
-                evaluate(folder/'output',inputs,folder/'unused-references.json')
+                evaluate(folder/'output',inputs,folder/'unused-references.json',experiment_manifest=None,experiment_manifest_sha256=None)
             refs=folder/'references.json'
             write_json(refs,dict(frames=[dict(case_id=f['case_id'],grid=[[5]*64 for _ in range(64)],
                 inventory_policy='synthetic',reference_exhaustive_confirmed=True,
                 regions=[dict(id='object',parent_id=None,cells=[[2,4]],mask_reviewed=True,disposition='include')]) for f in frames]))
-            replay=evaluate(folder/'output',inputs,refs,smoke_case='board-06')
+            replay=evaluate(folder/'output',inputs,refs,smoke_case='board-06',**frozen(refs,seed_inputs=inputs))
             self.assertEqual(replay['scope']['purpose'],'one_image_runtime_smoke')
             self.assertEqual([f['case_id'] for f in replay['frames']],['board-06'])
             with self.assertRaises(ValueError):
-                evaluate(folder/'output',inputs,refs,smoke_case='board-05')
+                evaluate(folder/'output',inputs,refs,smoke_case='board-05',**frozen(refs,seed_inputs=inputs))
             with self.assertRaisesRegex(ValueError,'actually exercise inference'):
                 run_frames(backend,inputs,folder/'skipped',G.condition('unsamv2','seeded',.1),
                            time.monotonic()+120,smoke_case='board-01')

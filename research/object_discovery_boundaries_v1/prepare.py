@@ -60,7 +60,7 @@ def prepare(source,output):
     files['references/source-audit.json']=canonical(inspected)
     root=Path(__file__).resolve().parents[2]
     names=['research/object_discovery_boundaries_v1/'+name+'.py' for name in (
-        '__init__','reference_audit','prepare','masks','decoding','scoring','evaluation')]+[
+        '__init__','reference_audit','prepare','masks','decoding','scoring','evaluation','experiment')]+[
         'research/molmopoint_identification_v1/adapter.py','certification/phase4_multimodal_preflight_v3/images.py']
     files['protocol.json']=canonical(dict(schema='object_discovery_boundaries_preparation_v1',
         live_runs_enabled=False,approved=False,model=MODEL,revision=REVISION,condition='uncued_whole_inventory',

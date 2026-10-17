@@ -7,6 +7,7 @@ from research.object_discovery_boundaries_v1.prepare import prepare,requests_for
 from research.object_discovery_boundaries_v1.evaluation import evaluate
 from research.object_discovery_boundaries_v1.sam21 import proposal
 from scripts.build_object_boundary_review import build
+from tests.object_boundary_experiment_fixture import frozen
 
 
 class Preparation(unittest.TestCase):
@@ -32,7 +33,18 @@ class Preparation(unittest.TestCase):
 
     def score(self):
         a=self.base/'review.json';b=self.base/'pred.json';a.write_bytes(canonical(self.review));b.write_bytes(canonical(self.pred))
-        return evaluate(self.prep,a,b)
+        return evaluate(self.prep,a,b,**frozen(a,preparation=self.prep))
+
+    def test_changed_mask_or_ignore_policy_refuses_before_scoring(self):
+        a=self.base/'review.json';b=self.base/'pred.json'
+        a.write_bytes(canonical(self.review));b.write_bytes(canonical(self.pred))
+        authority=frozen(a,preparation=self.prep)
+        evaluate(self.prep,a,b,**authority)
+        for field,value in [('cells',[[3,2]]),('disposition','ignore')]:
+            changed=copy.deepcopy(self.review);changed['frames'][0]['regions'][0][field]=value
+            a.write_bytes(canonical(changed))
+            with self.assertRaisesRegex(ValueError,'reference differs from frozen'):
+                evaluate(self.prep,a,b,**authority)
 
     def test_inputs_have_one_generic_prompt_no_reference_metadata(self):
         requests=requests_for(self.prep/'inputs')

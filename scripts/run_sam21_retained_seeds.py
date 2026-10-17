@@ -12,6 +12,7 @@ import time
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from research.object_discovery_boundaries_v1 import sam21 as S
+from research.object_discovery_boundaries_v1.granularity_worker import inputs_for
 from research.object_identification_v1.mount_check import canonical
 
 
@@ -30,17 +31,9 @@ def run(inputs,checkpoint,acquisition_path,policy_path,output):
         raise ValueError('frozen comparison policy differs')
     manifest_raw=(inputs/'manifest.json').read_bytes();manifest=json.loads(manifest_raw)
     if sha(manifest_raw)!=policy['seed_manifest_sha256']:raise ValueError('seed manifest differs')
-    if {p.name for p in inputs.iterdir()}!=set(manifest)|{'manifest.json'}:raise ValueError('unexpected seed input file')
-    for name,pin in manifest.items():
-        path=inputs/name
-        if path.is_symlink() or not path.resolve().is_relative_to(inputs.resolve()) or sha(path.read_bytes())!=pin:
-            raise ValueError('seed input differs')
-    frames=json.loads((inputs/'seeds.json').read_bytes())['frames']
-    if [f['case_id'] for f in frames]!=[f'board-{i:02d}' for i in range(1,7)]:raise ValueError('six ordered frames required')
-    for f in frames:
-        S.point_prompts(f['points'])
-        if type(f['source_response_valid']) is not bool or not f['source_response_valid'] and f['points']:
-            raise ValueError('invalid source response must not supply seeds')
+    # Shared strict inventory, streamed file hash and frame-to-PNG checks.
+    # Updating the local manifest cannot rebind a seed frame to another board.
+    frames=inputs_for(inputs)
     acquisition_raw=Path(acquisition_path).read_bytes();acquisition=json.loads(acquisition_raw)
     if sha(acquisition_raw)!=policy['checkpoint_acquisition_sha256'] or acquisition['revision']!=S.REVISION:
         raise ValueError('checkpoint pin differs')

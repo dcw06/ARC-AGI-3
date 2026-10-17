@@ -4,6 +4,7 @@ from pathlib import Path
 from .reference_audit import canonical,digest,validate_grid
 from .scoring import score_frame
 from .prepare import requests_for
+from .experiment import verified_references
 
 
 def verified_preparation(preparation):
@@ -47,10 +48,13 @@ def validate_review(review,source):
     return True
 
 
-def evaluate(preparation,review_path,prediction_path,*,levels=('whole',),match_iou=.5):
+def evaluate(preparation,review_path,prediction_path,*,experiment_manifest,experiment_manifest_sha256,
+             levels=('whole',),match_iou=.5):
     preparation=Path(preparation)
+    review,freeze=verified_references(review_path,experiment_manifest,experiment_manifest_sha256,
+        input_manifest=preparation/'preparation-manifest.json',input_kind='preparation',levels=levels,match_iou=match_iou)
     source=verified_preparation(preparation)
-    review_raw=Path(review_path).read_bytes();review=json.loads(review_raw);validate_review(review,source)
+    validate_review(review,source)
     raw=Path(prediction_path).read_bytes();predictions=json.loads(raw)
     if predictions.get('schema')!='object_boundary_predictions_v1':raise ValueError('prediction schema differs')
     rows=predictions['frames'];by_case={f['case_id']:f for f in rows}
@@ -74,7 +78,7 @@ def evaluate(preparation,review_path,prediction_path,*,levels=('whole',),match_i
     return dict(schema='object_boundary_evaluation_v1',frames=results,
         format_failure_frames=[r['case_id'] for r in results if r['format_failure']],
         invalid_response_policy='zero objects found; kept in all denominators and listed as a format failure',
-        review_sha256=digest(review_raw),prediction_sha256=digest(raw),
+        review_sha256=freeze['reference_sha256'],experiment=freeze,prediction_sha256=digest(raw),
         preparation_manifest_sha256=digest((preparation/'preparation-manifest.json').read_bytes()),
         passing_verdict=None,model_calls=0,provider_calls=0,
         qualification='Geometry evaluation of supplied predictions. Does not certify a model run or invent reference/advancement approval.')
