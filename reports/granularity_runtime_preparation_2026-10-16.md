@@ -1,5 +1,10 @@
 # Granularity segmentation: checkpoint preparation and one-image checks
 
+**Current CPU result:** the [first mounted transport check is verified COMPLETE](semantic_transport_cpu_attempt1_results_2026-10-17.md).
+All 21 mounted files and 12 reconstructed originals match; cleanup and evidence
+finalization pass. Worker duration: 144.189 seconds. The consumed CPU attempt is
+preserved; the separate final GPU package and CUDA inference remain pending.
+
 **October 17 transport update:** the replacement owner-only transport dataset
 is verified, including all 21 downloaded files and 12 reconstructed originals.
 The production decoder also passed a complete local Linux restoration and

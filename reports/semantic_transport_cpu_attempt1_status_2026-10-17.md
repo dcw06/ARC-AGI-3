@@ -1,5 +1,10 @@
 # Semantic transport CPU check: first submitted attempt
 
+**Completed:** provider status COMPLETE; mounted hashes, reconstruction, cleanup
+and finalization pass collection and independent offline audit. The worker took
+144.189 seconds. See the [verified results](semantic_transport_cpu_attempt1_results_2026-10-17.md).
+The submission-stage observations below are preserved chronologically.
+
 After the owner approved CPU review r2, fresh read-only preflight passed and
 exactly one private CPU notebook version was submitted. It was accepted without
 provider error or rejected sources. The last retained status is **RUNNING**;
