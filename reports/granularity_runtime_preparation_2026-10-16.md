@@ -1,5 +1,10 @@
 # Granularity segmentation: checkpoint preparation and one-image checks
 
+**Corrected r3 launch:** after the competition-binding repair and the owner's
+RTX menu confirmation, [a separately authorized second GPU attempt](semantic_sam_gpu_smoke_attempt2_status_2026-10-17.md)
+was submitted once as version 3. It is RUNNING; no new inference results are
+claimed. The earlier consumed failure and completed CPU check remain preserved.
+
 **GPU attempt update:** the first one-image Semantic-SAM attempt [failed before
 model loading](semantic_sam_gpu_smoke_attempt1_failure_2026-10-17.md): actual
 hardware was two Tesla T4 devices despite the saved requested RTX PRO 6000 shape.

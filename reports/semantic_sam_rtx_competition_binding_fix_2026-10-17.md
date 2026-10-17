@@ -1,5 +1,11 @@
 # Semantic-SAM notebook: restore the RTX competition association
 
+**Subsequent owner confirmation:** the owner reports RTX PRO 6000 now appears
+in this notebook's menu. After fresh r3 authorization, [one new attempt was
+submitted as version 3](semantic_sam_gpu_smoke_attempt2_status_2026-10-17.md).
+Its last retained status is RUNNING. The menu observation is owner-reported;
+actual allocation still requires the worker's runtime identity guard.
+
 The failed Semantic-SAM notebook omitted the ARC-AGI-3 competition attachment.
 Earlier retained RTX-configured smoke and object-identification notebooks attach
 that competition while using the same immutable image. The owner's editor photo
