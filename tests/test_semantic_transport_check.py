@@ -2,6 +2,8 @@ import copy
 import json
 from pathlib import Path
 import shutil
+import subprocess
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -66,8 +68,8 @@ class Lifecycle(unittest.TestCase):
             shutil.rmtree(path)
             self.clock[0] = 1101.0
         with self.assertRaises(TimeoutError): self.run_check(remove=slow_remove)
-        result = json.loads((self.output / 'result.json').read_bytes())
-        self.assertEqual(result['status'], 'failed')
+        # Once the final deadline expires, even failure-receipt writing stops.
+        self.assertFalse((self.output / 'result.json').exists())
         self.assertFalse((self.output / 'completion-witness.json').exists())
 
     def test_receipt_write_overrun_cannot_produce_completion_witness(self):
@@ -102,6 +104,83 @@ class Lifecycle(unittest.TestCase):
         # A valid witness and marker alone never establish a pass. The saved
         # provider run must COMPLETE rather than ERROR after this final check.
         self.assertTrue((self.output / 'completion-witness.json').exists())
+
+
+@unittest.skipUnless(sys.platform == 'linux', 'real Linux ITIMER_REAL deadline checks')
+class RealAlarms(unittest.TestCase):
+    def probe(self, stage):
+        # An isolated child keeps a broken timer from hanging the test process.
+        code = r'''
+import json, pathlib, signal, tempfile, time
+from unittest.mock import patch
+from research.object_discovery_boundaries_v1 import transport_check as C
+from tests.archive_transport_fixture import build
+with tempfile.TemporaryDirectory() as tmp:
+    root = pathlib.Path(tmp); inputs = root / 'inputs'; inputs.mkdir()
+    _, pin, original, _ = build(inputs / 'dataset')
+    scope = dict(C.SCOPE, worker_seconds=.18,
+                 cleanup_reserve_seconds=0 if STAGE == 'hard_work' else .10)
+    protocol = dict(schema='semantic_transport_cpu_check_v1', scope=scope,
+        dataset_ref='owner/dataset', dataset_version=1,
+        transport_manifest_sha256=pin, original_manifest_sha256=original)
+    authority = dict(approved=True, owner_answer='Synthetic local alarm regression',
+        review_lock_sha256='1'*64, runtime_lock_sha256='2'*64,
+        protocol_sha256=C.digest(C.canonical(protocol)), scope=scope,
+        claim_consumed=True, attempt_id='synthetic-only')
+    observations = {}
+    def work(*args, **kwargs):
+        if STAGE in ('work_timeout', 'hard_work'): time.sleep(.5)
+        raise ValueError('synthetic work failure')
+    def remove(path):
+        observations['cleanup_timer'] = signal.getitimer(signal.ITIMER_REAL)[0]
+        if STAGE != 'writer': time.sleep(.5)
+        else: __import__('shutil').rmtree(path)
+    def writer(path, raw):
+        observations['writer_entered'] = True
+        time.sleep(.5)
+    started = time.monotonic()
+    with patch.object(C, 'SCOPE', scope), patch.object(C, 'restore', side_effect=work):
+        try: C.run(protocol, authority, input_root=inputs, output=root/'output',
+                   remove=remove, writer=writer)
+        except BaseException as error: observations['exception'] = type(error).__name__
+    observations['elapsed'] = time.monotonic() - started
+    observations['timer_after'] = signal.getitimer(signal.ITIMER_REAL)[0]
+    observations['witness_exists'] = (root/'output/completion-witness.json').exists()
+    print(json.dumps(observations))
+'''
+        result = subprocess.run([sys.executable, '-c', 'STAGE = ' + repr(stage) + '\n' + code],
+                                capture_output=True, text=True, timeout=5, check=True)
+        return json.loads(result.stdout)
+
+    def test_work_alarm_reserves_cleanup_and_final_alarm_interrupts_stalled_cleanup(self):
+        result = self.probe('work_timeout')
+        self.assertGreater(result['cleanup_timer'], 0)
+        self.assertEqual(result['exception'], 'LifecycleDeadline')
+        self.assertLess(result['elapsed'], .40)
+        self.assertNotIn('writer_entered', result)
+        self.assertFalse(result['witness_exists'])
+        self.assertEqual(result['timer_after'], 0)
+
+    def test_early_failure_still_has_a_non_swallowable_cleanup_alarm(self):
+        result = self.probe('early_failure')
+        self.assertGreater(result['cleanup_timer'], 0)
+        self.assertEqual(result['exception'], 'LifecycleDeadline')
+        self.assertLess(result['elapsed'], .40)
+        self.assertNotIn('writer_entered', result)
+
+    def test_final_alarm_interrupts_evidence_write_after_failed_work(self):
+        result = self.probe('writer')
+        self.assertTrue(result['writer_entered'])
+        self.assertEqual(result['exception'], 'LifecycleDeadline')
+        self.assertLess(result['elapsed'], .40)
+        self.assertFalse(result['witness_exists'])
+
+    def test_final_deadline_during_work_does_not_begin_cleanup(self):
+        result = self.probe('hard_work')
+        self.assertEqual(result['exception'], 'LifecycleDeadline')
+        self.assertNotIn('cleanup_timer', result)
+        self.assertNotIn('writer_entered', result)
+        self.assertLess(result['elapsed'], .40)
 
 
 if __name__ == '__main__': unittest.main()

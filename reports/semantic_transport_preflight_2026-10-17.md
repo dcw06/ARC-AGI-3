@@ -1,5 +1,9 @@
 # Semantic-SAM transport and preflight preparation
 
+**Alarm review update:** the [two-stage alarm fix and Linux regressions](semantic_transport_alarm_fix_2026-10-17.md)
+supersede the original r1 CPU proposal. Private r2 binds the corrected runtime,
+rebuilds identically and remains unauthorized. No remote job has started.
+
 The replacement private transport dataset has passed downloaded-byte checks.
 The production decoder now also passes a full local Linux restoration rehearsal.
 The next proposed remote step is a CPU-only mounted-file check, not GPU inference.

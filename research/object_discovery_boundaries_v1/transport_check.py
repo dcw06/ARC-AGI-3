@@ -33,19 +33,40 @@ def authority_check(protocol, authority):
         raise ValueError('exact scope, protocol and single-use claim required')
 
 
+class LifecycleDeadline(TimeoutError):
+    """The final deadline must escape work/cleanup failure recording."""
+
+
 @contextmanager
-def alarm(deadline):
-    def expired(*unused):
-        raise TimeoutError('CPU transport lifecycle deadline reached')
+def alarm(deadline, work_deadline):
     started = time.monotonic()
     previous = signal.getitimer(signal.ITIMER_REAL)
     if previous[0] > 0:
         deadline = min(deadline, started + previous[0])
+    work_deadline = min(work_deadline, deadline)
+    phase = 'work'
+
+    def final_phase():
+        nonlocal phase
+        phase = 'final'
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise LifecycleDeadline('CPU transport final lifecycle deadline reached')
+        signal.setitimer(signal.ITIMER_REAL, remaining)
+
+    def expired(number, unused):
+        if phase == 'final' or time.monotonic() >= deadline:
+            raise LifecycleDeadline('CPU transport final lifecycle deadline reached')
+        # The one-shot work timer is already gone. Arm the separate remaining
+        # cleanup budget BEFORE raising the recoverable work/cancellation error.
+        final_phase()
+        raise TimeoutError('CPU transport work deadline or termination reached')
+
     handlers = {number: signal.signal(number, expired) for number in
                 (signal.SIGALRM, signal.SIGTERM, signal.SIGHUP)}
-    signal.setitimer(signal.ITIMER_REAL, max(.001, deadline - time.monotonic()))
+    signal.setitimer(signal.ITIMER_REAL, max(.001, work_deadline - time.monotonic()))
     try:
-        yield
+        yield final_phase
     finally:
         signal.setitimer(signal.ITIMER_REAL, 0)
         for number, handler in handlers.items():
@@ -72,18 +93,21 @@ def run(protocol, authority, *, input_root='/kaggle/input',
     deadline = started + SCOPE['worker_seconds']
     work_deadline = deadline - SCOPE['cleanup_reserve_seconds']
     if use_alarm:
-        with alarm(time.monotonic() + SCOPE['worker_seconds']):
-            return _run(protocol, authority, input_root, output, started, deadline, work_deadline, now, remove, writer)
+        real_deadline = time.monotonic() + SCOPE['worker_seconds']
+        with alarm(real_deadline, real_deadline - SCOPE['cleanup_reserve_seconds']) as final_phase:
+            return _run(protocol, authority, input_root, output, started, deadline, work_deadline,
+                        now, remove, writer, final_phase)
     return _run(protocol, authority, input_root, output, started, deadline, work_deadline, now, remove, writer)
 
 
-def _run(protocol, authority, input_root, output, started, deadline, work_deadline, now, remove, writer):
+def _run(protocol, authority, input_root, output, started, deadline, work_deadline, now, remove, writer,
+         final_phase=lambda: None):
     def check_work():
         if now() >= work_deadline:
             raise TimeoutError('CPU transport work deadline reached')
     def check_final():
         if now() >= deadline:
-            raise TimeoutError('CPU transport cleanup/finalization deadline reached')
+            raise LifecycleDeadline('CPU transport cleanup/finalization deadline reached')
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)
     workspace = output / 'transport-restore-tmp'  # own the path before mkdir can be interrupted
@@ -107,23 +131,31 @@ def _run(protocol, authority, input_root, output, started, deadline, work_deadli
             protocol['transport_manifest_sha256'], protocol['original_manifest_sha256'], check_work)
         check_work()
         result['restoration']['actual_mount'] = str(mounts[0])
+    except LifecycleDeadline:
+        raise
     except BaseException as error:
         failure = error
         result.update(error_type=type(error).__name__, error=str(error)[:1000])
-    finally:
-        try:
-            if workspace.exists():
-                if workspace.is_symlink() or workspace.resolve().parent != output.resolve():
-                    raise ValueError('temporary workspace escaped expected output')
-                remove(workspace)
-            result['temporary_workspace_removed'] = workspace is None or not workspace.exists()
-            if not result['temporary_workspace_removed']:
-                raise ValueError('temporary originals were not removed')
-            check_final()
-        except BaseException as error:
-            failure = failure or error
-            result['cleanup_error'] = type(error).__name__ + ': ' + str(error)[:1000]
-            result['temporary_workspace_removed'] = workspace is None or not workspace.exists()
+    # No finally block: expiration of the hard deadline must not start another
+    # cleanup or evidence write. Ordinary work failure still enters this reserve.
+    final_phase()
+    check_final()
+    try:
+        if workspace.exists():
+            if workspace.is_symlink() or workspace.resolve().parent != output.resolve():
+                raise ValueError('temporary workspace escaped expected output')
+            remove(workspace)
+        result['temporary_workspace_removed'] = not workspace.exists()
+        if not result['temporary_workspace_removed']:
+            raise ValueError('temporary originals were not removed')
+        check_final()
+    except LifecycleDeadline:
+        raise
+    except BaseException as error:
+        failure = failure or error
+        result['cleanup_error'] = type(error).__name__ + ': ' + str(error)[:1000]
+        result['temporary_workspace_removed'] = not workspace.exists()
+    check_final()
     if failure is None:
         result['status'] = 'provisional_complete'
     else:

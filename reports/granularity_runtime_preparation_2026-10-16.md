@@ -7,6 +7,8 @@ cleanup rehearsal. A CPU-only mounted-file review packet is prepared, awaiting
 separate compute approval. See the [current transport preflight record](semantic_transport_preflight_2026-10-17.md).
 The earlier upload failures below remain historical; actual Semantic-SAM CUDA
 inference and the final GPU package are still pending.
+The [separate work/final alarm repair](semantic_transport_alarm_fix_2026-10-17.md)
+is verified with 101 Linux tests; private CPU review r2 supersedes r1.
 
 **October 17 evaluation update:** the [owner-policy integration, external reference freeze and retained board audit](granularity_evaluation_integrity_fixes_2026-10-17.md)
 are complete. Replayed results are unchanged; this reference freeze is explicitly

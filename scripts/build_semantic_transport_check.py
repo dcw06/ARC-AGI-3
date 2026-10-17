@@ -201,6 +201,12 @@ Requested session timeout 1,200 seconds; worker 1,100 seconds, with a 120-second
 cleanup reserve. One attempt, no automatic retries. Provider setup/release time
 is not certified by the worker deadline. This is not GPU authorization.
 
+A work alarm ends restoration before the reserve. A separate absolute final
+deadline remains armed during cleanup and evidence writes, and its exception
+escapes failure handling. At that deadline, no new cleanup or receipt write is
+started; an interrupted attempt can leave temporary originals for the provider
+to remove when disposing of the session. Such an attempt cannot pass.
+
 Read the 21 version-1 mounted files, verify their independently pinned manifest,
 and reconstruct the 12 original files into one temporary directory. Validate
 every part and original hash, and cross-check the restored original manifest.
