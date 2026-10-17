@@ -71,7 +71,10 @@ receipts and attempt folders remain in the private git-ignored workspace.
 
 ## Remaining gates
 
-1. Finish Semantic-SAM's isolated dependencies and native extension builds.
+1. Finish Semantic-SAM's native extension builds. The isolated Python dependency
+   check passes; a [two-line native API compatibility fix](semantic_sam_native_build_compatibility_2026-10-16.md)
+   compiles the deformable-attention extension successfully. Detectron2 and
+   runtime import checks are still pending.
 2. Run its seeded and automatic one-image checks on suitable CUDA hardware;
    inspect masks on the bound board and replay the saved outputs independently.
 3. Proceed to the six-board comparison only after both backends' runtime checks
