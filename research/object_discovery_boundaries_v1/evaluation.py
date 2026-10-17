@@ -62,12 +62,18 @@ def evaluate(preparation,review_path,prediction_path,*,levels=('whole',),match_i
     for frame in review['frames']:
         pred=by_case[frame['case_id']]
         if pred['grid_sha256']!=frame['grid_sha256']:raise ValueError('prediction frame hash differs')
-        if pred.get('model_response_valid') is not True:
-            raise ValueError('invalid model response; retain as technical/format failure, not a scored inventory')
+        valid=pred.get('model_response_valid')
+        if type(valid) is not bool:raise ValueError('explicit model_response_valid boolean required')
+        # An invalid response counts as zero objects found and stays in the totals (owner decision, October 16,
+        # 2026); it is also reported as a format failure. It may not carry salvaged objects.
+        if not valid and pred.get('objects')!=[]:raise ValueError('invalid model response supplies objects')
         if any(p.get('level') not in levels for p in pred['objects']):
             raise ValueError('prediction includes undeclared hierarchy level')
-        results.append(dict(case_id=frame['case_id'],strata={level:score_frame(pred['objects'],frame,level=level,match_iou=match_iou) for level in levels}))
+        results.append(dict(case_id=frame['case_id'],response_valid=valid,format_failure=not valid,
+            strata={level:score_frame(pred['objects'],frame,level=level,match_iou=match_iou) for level in levels}))
     return dict(schema='object_boundary_evaluation_v1',frames=results,
+        format_failure_frames=[r['case_id'] for r in results if r['format_failure']],
+        invalid_response_policy='zero objects found; kept in all denominators and listed as a format failure',
         review_sha256=digest(review_raw),prediction_sha256=digest(raw),
         preparation_manifest_sha256=digest((preparation/'preparation-manifest.json').read_bytes()),
         passing_verdict=None,model_calls=0,provider_calls=0,
