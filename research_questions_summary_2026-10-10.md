@@ -280,7 +280,9 @@ and byte-pinned; Semantic-SAM's isolated dependencies, native extension builds
 and offline imports now pass. Its portable runtime also passes clean-prefix
 relocation, native imports and all 99 version checks. Model construction and CUDA inference remain
 pending. The six-board comparison has not started. The Linux CPU suite passes
-101 tests without failures or skips; no GPU job or Kaggle upload was launched.
+101 tests without failures or skips; no GPU job was launched. The owner has
+approved one private staging upload only, now in progress. Provider creation,
+inventory verification and final GPU-package review remain pending.
 
 ## Source snapshot
 

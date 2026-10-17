@@ -4,7 +4,10 @@ The UnSAMv2 and UnSAMv2+ seeded and automatic **CPU runtime smoke checks pass**.
 Semantic-SAM's checkpoint is acquired; its isolated CUDA environment, both native
 extension builds and offline imports now pass. Its real GPU inference is still
 pending. The six-board comparison has not started.
-No GPU job, Kaggle upload, game action or scorecard was created in this preparation.
+No GPU job, game action or scorecard was created in this preparation. After local
+qualification, the owner separately approved one private staging upload only.
+That single upload is in progress; provider creation and inventory verification
+are not yet complete. No GPU authorization is inferred from that approval.
 
 ## Checkpoints and environments
 
@@ -69,6 +72,15 @@ or granularities and do not supersede the earlier SAM 2.1 comparison.
 
 Raw masks, images, acquired model files, installation/build logs, provenance
 receipts and attempt folders remain in the private git-ignored workspace.
+
+The exact staged source and input archives also pass both seeded and automatic
+one-image planning checks in the isolated interpreter, without model loading,
+inference or provider calls. The approved private upload contains 12 payload
+files totaling 10,576,715,298 bytes. Its uploader permits new private dataset
+creation only, has a consumed single-use upload claim and disables automatic
+retries. A separate read-only collector will check private version 1, zero
+collaborators and the exact filename/size inventory after processing. Dataset
+creation, completed upload and mounted byte verification are **not yet claimed**.
 
 ## Remaining gates
 
