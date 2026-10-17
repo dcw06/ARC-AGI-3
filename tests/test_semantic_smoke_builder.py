@@ -37,6 +37,7 @@ class Builder(unittest.TestCase):
             temporary_originals_removed=True,mounted_transport_files_checked=21,restored_originals_checked=12)
         receipt_raw=B.canonical(receipt); (self.root/'cpu.json').write_bytes(receipt_raw)
         self.protocol=dict(schema='semantic_sam_gpu_smoke_protocol_v1',scope=S.SCOPE,
+            competition_sources=['arc-prize-2026-arc-agi-3'],
             dataset_version=1,dataset_ref='daichongwei06/synthetic-dataset',notebook_ref='daichongwei06/synthetic-smoke',
             docker_image='gcr.io/kaggle-private-byod/python@sha256:'+'3'*64,
             transport_manifest_sha256=B.digest(manifest_raw),original_manifest_sha256=original,
@@ -64,6 +65,7 @@ class Builder(unittest.TestCase):
         self.assertTrue(B.validate_save(body,self.root/'review',authority))
         for changed in ({'machine_shape':'NvidiaTeslaT4'},{'enable_tpu':True},{'enable_internet':True},
                         {'session_timeout_seconds':7200},{'dataset_data_sources':[]},
+                        {'competition_data_sources':[]},
                         {'id':1},{'kernel_execution_type':True},{'text':json.dumps(dict(cells=[]))}):
             with self.subTest(changed=changed),self.assertRaises((ValueError,KeyError,IndexError)):
                 B.validate_save(dict(body,**changed),self.root/'review',authority)
@@ -77,6 +79,37 @@ class Builder(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'CPU receipt'): self.build()
         self.protocol['scope']=dict(S.SCOPE,granularity=2)
         with self.assertRaisesRegex(ValueError,'scope'): self.build()
+
+    def test_protocol_cannot_omit_or_substitute_competition_binding(self):
+        for index,value in enumerate((None,[],['another-competition'])):
+            if value is None: self.protocol.pop('competition_sources',None)
+            else: self.protocol['competition_sources']=value
+            with self.subTest(value=value),self.assertRaisesRegex(ValueError,'competition'):
+                self.build('missing-competition-'+str(index))
+
+    def test_competition_binding_reaches_live_notebook_and_actual_launch_spec(self):
+        self.build()
+        packet=self.root/'review'
+        metadata=json.loads((packet/'kernel-metadata.json').read_bytes())
+        spec=json.loads((packet/'launch-spec.json').read_bytes())
+        self.assertEqual(metadata['competition_sources'],['arc-prize-2026-arc-agi-3'])
+        self.assertEqual(spec['save_fields']['competition_data_sources'],metadata['competition_sources'])
+
+    def test_disabled_competition_review_save_rejects_execution_or_accelerator(self):
+        self.build()
+        packet=self.root/'review'
+        book=json.loads((packet/'review-notebook.ipynb').read_bytes())
+        spec=json.loads((packet/'review-save-spec.json').read_bytes())
+        body=dict(spec['save_fields'],kernel_execution_type='QUICK_SAVE',text=json.dumps(book))
+        self.assertTrue(B.validate_review_save(body,packet))
+        self.assertIsNone(B.CPU.authority_from(book))
+        self.assertFalse(book['metadata']['kaggle']['isGpuEnabled'])
+        for changed in ({'enable_gpu':True},{'machine_shape':'NvidiaRtxPro6000'},
+                        {'enable_tpu':True},{'enable_internet':True},{'kernel_execution_type':1},
+                        {'kernel_execution_type':True},{'competition_data_sources':[]},
+                        {'dataset_data_sources':[]},{'text':json.dumps(dict(book,cells=[]))}):
+            with self.subTest(changed=changed),self.assertRaises((ValueError,KeyError,IndexError)):
+                B.validate_review_save(dict(body,**changed),packet)
 
 
 @unittest.skipUnless(__import__('sys').platform=='linux','fixed Linux temporary-prefix cleanup policy')

@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from scripts import build_semantic_transport_check as CPU
 from research.object_discovery_boundaries_v1.archive_transport import canonical,digest,manifest
-from research.object_discovery_boundaries_v1.semantic_smoke import SCOPE,authority_check
+from research.object_discovery_boundaries_v1.semantic_smoke import SCOPE,COMPETITION,authority_check
 
 
 def verify_review(package): return CPU.verify_review(package)
@@ -46,12 +46,38 @@ def validate_save(body,package,authority):
     return True
 
 
+def validate_review_save(body,package):
+    """Save only the disabled review version; never requests a cell execution."""
+    package = Path(package)
+    verify_review(package)
+    def field(name):
+        parts=name.split('_'); camel=parts[0]+''.join(part.title() for part in parts[1:])
+        if name!=camel and name in body and camel in body: raise ValueError('ambiguous review field')
+        return body.get(camel,body.get(name))
+    spec=json.loads((package/'review-save-spec.json').read_bytes())
+    for name,expected in spec['save_fields'].items():
+        if canonical(field(name))!=canonical(expected): raise ValueError('review save differs: '+name)
+    execution=field('kernel_execution_type')
+    if not ((type(execution) is int and execution==3) or type(execution) is str and execution in
+            ('QUICK_SAVE','quickSave','QuickSave')):
+        raise ValueError('review requires QUICK_SAVE; no execution allowed')
+    if field('id') is not None or field('priority') is not None or field('category_ids') not in (None,[]):
+        raise ValueError('review target override refused')
+    book=json.loads(field('text'))
+    if canonical(book)!=canonical(json.loads((package/'review-notebook.ipynb').read_bytes())):
+        raise ValueError('disabled review notebook differs')
+    if CPU.authority_from(book) is not None: raise ValueError('review authority must be absent')
+    return True
+
+
 def build(protocol_path,transport_path,cpu_receipt_path,worker_archive,output):
     output = Path(output)
     if output.exists(): raise FileExistsError('preserve previous GPU packets')
     protocol = json.loads(Path(protocol_path).read_bytes())
     if protocol.get('schema')!='semantic_sam_gpu_smoke_protocol_v1' or canonical(protocol.get('scope'))!=canonical(SCOPE):
         raise ValueError('exact one-image GPU scope required')
+    if protocol.get('competition_sources') != [COMPETITION]:
+        raise ValueError('exact ARC-AGI-3 competition binding required for RTX smoke')
     if protocol.get('dataset_version')!=1 or type(protocol['dataset_version']) is not int:
         raise ValueError('version-1 dataset required')
     if not __import__('re').fullmatch('daichongwei06/[A-Za-z0-9_-]+',protocol['notebook_ref']):
@@ -103,12 +129,19 @@ def build(protocol_path,transport_path,cpu_receipt_path,worker_archive,output):
                dict(id='run',cell_type='code',metadata={},execution_count=None,outputs=[],source=bootstrap.splitlines(keepends=True))])
     metadata = dict(id=protocol['notebook_ref'],title='ARC3 Semantic SAM One Image Smoke V1',code_file='profile.ipynb',
         language='python',kernel_type='notebook',is_private=True,enable_gpu=True,enable_tpu=False,enable_internet=False,
-        dataset_sources=[protocol['dataset_ref']+'/1'],kernel_sources=[],model_sources=[],competition_sources=[],
+        dataset_sources=[protocol['dataset_ref']+'/1'],kernel_sources=[],model_sources=[],competition_sources=[COMPETITION],
         docker_image=protocol['docker_image'],docker_image_pinning_type='original')
     save = dict(slug=metadata['id'],new_title=metadata['title'],language='python',kernel_type='notebook',
         is_private=True,enable_gpu=True,enable_tpu=False,enable_internet=False,machine_shape='NvidiaRtxPro6000',
         session_timeout_seconds=3600,docker_image=metadata['docker_image'],docker_image_pinning_type='original',
-        dataset_data_sources=metadata['dataset_sources'],kernel_data_sources=[],model_data_sources=[],competition_data_sources=[])
+        dataset_data_sources=metadata['dataset_sources'],kernel_data_sources=[],model_data_sources=[],competition_data_sources=[COMPETITION])
+    # Review-saving changes only association/settings, never allocates compute.
+    # It deliberately clears the consumed live authority in the earlier version.
+    review_book=json.loads(canonical(book))
+    review_book['metadata']['kaggle']=dict(accelerator='none',isGpuEnabled=False,isInternetEnabled=False,
+                                         language='python',sourceType='notebook')
+    review_metadata=dict(metadata,code_file='review-notebook.ipynb',enable_gpu=False)
+    review_save=dict(save,enable_gpu=False,machine_shape=None,session_timeout_seconds=1200)
     guide = '''# Private one-image Semantic-SAM GPU smoke review
 
 One requested RTX PRO 6000, one attempt, no automatic retries. Private/account-only;
@@ -124,6 +157,17 @@ separate fresh interpreters. Use the retained MolmoPoint seeds unchanged, plain
 16 by 16/batch 16 and at most 96 selected proposals. Retain all raw masks and quality
 scores. No new MolmoPoint generation, model HTTP request, game action or scorecard.
 Reference masks and owner answers never enter inference. No six-board comparison.
+
+Both live and GPU-disabled review metadata attach arc-prize-2026-arc-agi-3.
+RTX availability is competition-scoped; the attachment is needed for the notebook's
+legitimate ARC-AGI-3 runtime experiment association. Competition files are not read,
+used as installation inputs, played or submitted for scoring. The disabled review
+snapshot may be QUICK_SAVEd with GPU/TPU/internet off and AUTHORITY=None; it must
+never use SAVE_AND_RUN_ALL. Save-time HTML rendering is distinct from cell execution.
+After saving, verify the association and have the owner inspect the Accelerator
+menu without starting a session. Attachment or requested shape alone is not proof
+that RTX is offered or will be allocated. Keep a fresh live launch blocked until
+the visible menu is confirmed and a changed-package launch is authorized.
 
 Verify one RTX PRO 6000 and no existing GPU compute process before any model load;
 refuse any accelerator mismatch. Register every child before Popen, use isolated
@@ -142,6 +186,8 @@ and a fresh single-use claim. All previous attempts remain preserved.
     artifacts = {'runtime/'+name:raw for name,raw in runtime.items()}
     artifacts.update({'profile.ipynb':canonical(book),'kernel-metadata.json':canonical(metadata),
         'launch-spec.json':canonical(dict(save_fields=save,kernel_execution_type='SAVE_AND_RUN_ALL')),
+        'review-notebook.ipynb':canonical(review_book),'review-kernel-metadata.json':canonical(review_metadata),
+        'review-save-spec.json':canonical(dict(save_fields=review_save,kernel_execution_type='QUICK_SAVE')),
         'scope.json':canonical(SCOPE),'review.md':guide.encode(),'evidence/cpu-verification.json':receipt_raw})
     source_names = sorted(set(names+['scripts/build_semantic_smoke.py','scripts/build_semantic_transport_check.py']))
     lock = dict(schema='semantic_sam_gpu_smoke_review_v1',artifacts={name:digest(raw) for name,raw in sorted(artifacts.items())},

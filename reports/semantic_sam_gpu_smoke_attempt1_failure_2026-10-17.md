@@ -1,5 +1,10 @@
 # Semantic-SAM GPU smoke attempt 1: accelerator mismatch
 
+**Subsequent configuration finding:** the [RTX competition-binding repair](semantic_sam_rtx_competition_binding_fix_2026-10-17.md)
+addresses an omitted ARC-AGI-3 attachment. Earlier RTX notebooks had this binding;
+this failed notebook did not. The repair still requires visible-menu confirmation
+and does not prove future hardware allocation. Attempt 1 remains consumed.
+
 The first authorized attempt ended with provider status **ERROR**. Read-only
 collection and a separate offline audit establish that the initial GPU identity
 guard refused **two Tesla T4 devices**, before transport restoration or model

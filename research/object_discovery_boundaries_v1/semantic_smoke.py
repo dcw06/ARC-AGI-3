@@ -25,6 +25,7 @@ SCOPE = dict(gpu_count=1, gpu_name_contains='RTX PRO 6000', session_timeout_seco
     game_actions=0, scorecards=0, whole_job_cap_seconds=None,
     provider_overhead_may_exceed_one_hour=True)
 PREFIX = Path('/tmp/arc3-semantic-runtime-r1')
+COMPETITION = 'arc-prize-2026-arc-agi-3'
 
 
 def check(deadline):
@@ -165,6 +166,8 @@ def authority_check(protocol, authority):
             not authority.get('attempt_id') or authority.get('protocol_sha256') != digest(canonical(protocol)) or
             canonical(authority.get('scope')) != canonical(SCOPE)):
         raise PermissionError('actual scoped GPU approval and single-use claim required')
+    if protocol.get('competition_sources') != [COMPETITION]:
+        raise PermissionError('RTX smoke requires the exact ARC-AGI-3 competition binding')
     for name in ('review_lock_sha256','runtime_lock_sha256'):
         if not __import__('re').fullmatch('[0-9a-f]{64}',str(authority.get(name,''))):
             raise PermissionError('exact GPU package authority required')
