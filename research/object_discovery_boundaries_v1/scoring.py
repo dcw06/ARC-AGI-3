@@ -54,6 +54,8 @@ def score_frame(predictions,frame,*,level='whole',match_iou=.5):
         raise ValueError('frozen IoU match threshold required')
     if level not in ('whole','parts'):raise ValueError('explicit hierarchy level required')
     masks=validate_predictions(predictions)
+    # Explicit empty predictions remain failed proposals in this denominator.
+    # References are nonempty, so their IoU is zero and they cannot match.
     selected=[(p,m) for p,m in zip(predictions,masks) if p['level']==level]
     refs=[(r,m) for r,m in reviewed_regions(frame) if (r.get('parent_id') is None)==(level=='whole')]
     exhaustive=frame.get('reference_exhaustive_confirmed') is True

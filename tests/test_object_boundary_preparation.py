@@ -5,6 +5,7 @@ from certification.phase4_multimodal_preflight_v3.images import png
 from research.object_discovery_boundaries_v1.reference_audit import canonical,digest
 from research.object_discovery_boundaries_v1.prepare import prepare,requests_for,PROMPT
 from research.object_discovery_boundaries_v1.evaluation import evaluate
+from research.object_discovery_boundaries_v1.sam21 import proposal
 from scripts.build_object_boundary_review import build
 
 
@@ -51,6 +52,18 @@ class Preparation(unittest.TestCase):
         result=self.score();self.assertIsNone(result['passing_verdict'])
         self.assertTrue(all(f['strata']['whole']['exact_mask_fraction']==1 for f in result['frames']))
         self.assertEqual(result['model_calls'],0)
+
+    def test_empty_SAM_masks_reach_full_evaluation_without_losing_denominator(self):
+        for frame in self.pred['frames']:
+            frame['objects'].append(proposal(2,dict(pixel_xy=[14.1,14.1],cell_xy=[2,2]),[],[.7,.2,.1],0))
+        result=self.score()
+        for frame in result['frames']:
+            score=frame['strata']['whole']
+            self.assertEqual(score['prediction_count'],2)
+            self.assertEqual(score['matched_count'],1)
+            self.assertEqual(score['detection_precision'],.5)
+            self.assertEqual(score['false_positive_count'],1)
+            self.assertEqual(score['detection_recall'],1)
 
     def test_cross_frame_hash_or_changed_grid_refuses(self):
         self.pred['frames'][0]['grid_sha256']=self.pred['frames'][1]['grid_sha256']

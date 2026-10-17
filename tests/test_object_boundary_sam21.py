@@ -2,6 +2,8 @@
 import copy
 import unittest
 from research.object_discovery_boundaries_v1 import sam21 as S
+from research.object_discovery_boundaries_v1.masks import validate_predictions
+from research.object_discovery_boundaries_v1.scoring import score_frame
 
 
 class SAM21(unittest.TestCase):
@@ -45,6 +47,58 @@ class SAM21(unittest.TestCase):
         r=S.proposal(1,self.points()[0],[],[.2,.5,.3],1)
         self.assertTrue(r['empty_mask']);self.assertEqual(r['cells'],[]);self.assertIsNone(r['bbox_xyxy'])
         self.assertFalse(r['semantic_object_boundary_certified'])
+
+    def reference(self,*,complete=True,regions=True):
+        return dict(inventory_policy='Synthetic whole objects',reference_exhaustive_confirmed=complete,
+            regions=[dict(id='target',parent_id=None,cells=[[2,4]],mask_reviewed=True,disposition='include')] if regions else [])
+
+    def test_empty_SAM_proposal_reaches_scoring_and_remains_in_denominator(self):
+        exact=S.proposal(1,self.points()[0],[[2,4]],[.7,.4,.2],0)
+        failed=S.proposal(2,self.points()[1],[],[.2,.5,.3],1)
+        result=score_frame([exact,failed],self.reference())
+        self.assertEqual(result['prediction_count'],2)
+        self.assertEqual(result['matched_count'],1)
+        self.assertEqual(result['detection_precision'],.5)
+        self.assertEqual(result['false_positive_count'],1)
+        self.assertEqual(result['detection_recall'],1)
+        self.assertEqual(result['exact_mask_fraction'],1)
+        self.assertEqual([m['prediction_id'] for m in result['matches']],['candidate-001'])
+
+    def test_all_empty_proposals_score_zero_without_exceptions(self):
+        failed=[S.proposal(i,p,[],[.2,.5,.3],1) for i,p in enumerate(self.points(),1)]
+        result=score_frame(failed,self.reference())
+        self.assertEqual((result['prediction_count'],result['matched_count'],result['false_positive_count']),(2,0,2))
+        for key in ('detection_precision','detection_recall','mean_iou_over_all_labelled_objects',
+                    'exact_mask_fraction','boundary_f1_over_all_labelled_objects'):
+            self.assertEqual(result[key],0)
+        empty_reference=score_frame(failed,self.reference(regions=False))
+        self.assertEqual(empty_reference['prediction_count'],2)
+        self.assertEqual(empty_reference['detection_precision'],0)
+        self.assertIsNone(empty_reference['detection_recall'])
+
+    def test_empty_proposals_respect_incomplete_inventory_and_hierarchy(self):
+        failed=S.proposal(1,self.points()[0],[],[.2,.5,.3],1)
+        result=score_frame([failed],self.reference(complete=False))
+        self.assertEqual(result['prediction_count'],1)
+        self.assertIsNone(result['detection_precision'])
+        self.assertIsNone(result['false_positive_count'])
+        self.assertEqual(result['unadjudicated_unmatched_predictions'],1)
+        failed['level']='parts'
+        self.assertEqual(score_frame([failed],self.reference(),level='whole')['prediction_count'],0)
+
+    def test_empty_flag_must_be_explicit_boolean_and_consistent(self):
+        empty=S.proposal(1,self.points()[0],[],[.2,.5,.3],1)
+        cases=[]
+        unmarked=copy.deepcopy(empty);del unmarked['empty_mask'];cases.append(unmarked)
+        for value in (False,1,'true',None):
+            cases.append(dict(empty,empty_mask=value))
+        cases.extend([dict(empty,cells=[[2,4]]),dict(empty,bbox_xyxy=[2,4,2,4]),
+                      dict(empty,boundary_cells=[[2,4]])])
+        for invalid in cases:
+            with self.subTest(invalid=invalid),self.assertRaises(ValueError):validate_predictions([invalid])
+        nonempty=S.proposal(1,self.points()[0],[[2,4]],[.7,.4,.2],0)
+        self.assertEqual(validate_predictions([nonempty]),[{(2,4)}])
+        self.assertEqual(validate_predictions([empty]),[set()])
 
     def test_disconnected_mask_and_hole_preserved(self):
         r=S.proposal(2,self.points()[0],[[2,3],[4,3],[2,5]],[.9,.4,.2],0)

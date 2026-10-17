@@ -256,6 +256,9 @@ replay passed. A loader-only failed CPU attempt is preserved. ls20 remains
 invalid, ft09 remains at zero matches, and missing seeds cannot be recovered
 by replacing the mask extractor. This improves boundary extraction on these
 exposed development frames; reliable object discovery and gameplay remain unshown.
+The [empty-mask scoring integration fix](reports/sam21_empty_mask_scoring_fix_2026-10-16.md)
+preserves failed empty proposals in the denominator. Its 73 Linux checks pass;
+all original nonempty-mask scores are unchanged, with no new inference.
 
 ## Source snapshot
 

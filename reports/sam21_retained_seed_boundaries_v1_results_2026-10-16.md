@@ -103,3 +103,13 @@ Raw masks, seed coordinates and the interactive reference/component/SAM viewer
 remain git-ignored. Source: [adapter](../research/object_discovery_boundaries_v1/sam21.py),
 [CPU runner](../scripts/run_sam21_retained_seeds.py),
 [pinned file hashes](../research/object_discovery_boundaries_v1/sam21_model_pin.json).
+
+## Subsequent scoring integration correction
+
+The shared scorer originally rejected empty SAM proposals despite the adapter
+marking them as failures. The [integration fix](sam21_empty_mask_scoring_fix_2026-10-16.md)
+now retains explicitly marked empties in the proposal denominator without
+crediting a match. All 22 masks in this reported run were nonempty. Re-scoring
+the retained masks in the original Linux/Python 3.12 environment yields
+identical SAM and baseline score dictionaries for every frame; the results
+above and their original receipts remain unchanged.

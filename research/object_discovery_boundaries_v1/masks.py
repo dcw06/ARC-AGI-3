@@ -53,9 +53,14 @@ def validate_predictions(predictions):
     for p in predictions:
         if type(p) is not dict or type(p.get('id')) is not str or not p['id'] or p.get('level') not in ('whole','parts'):
             raise ValueError('mask identity/level required')
-        ids.append(p['id']);mask=cells(p['cells'])
+        if 'empty_mask' in p and type(p['empty_mask']) is not bool:
+            raise ValueError('empty-mask flag must be boolean')
+        explicitly_empty=p.get('empty_mask') is True
+        ids.append(p['id']);mask=cells(p['cells'],empty=explicitly_empty)
+        if 'empty_mask' in p and p['empty_mask'] != (not mask):
+            raise ValueError('empty-mask flag differs from occupied cells')
         if 'bbox_xyxy' in p and p['bbox_xyxy']!=envelope(mask): raise ValueError('mask envelope differs')
-        if 'boundary_cells' in p and cells(p['boundary_cells'])!=boundary(mask): raise ValueError('mask boundary differs')
+        if 'boundary_cells' in p and cells(p['boundary_cells'],empty=explicitly_empty)!=boundary(mask): raise ValueError('mask boundary differs')
         result.append(mask)
     if len(ids)!=len(set(ids)): raise ValueError('duplicate prediction IDs')
     return result
