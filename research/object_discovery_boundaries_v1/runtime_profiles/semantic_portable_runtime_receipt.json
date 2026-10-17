@@ -1,0 +1,39 @@
+{
+  "archive": {
+    "archive_format": "uncompressed tar",
+    "bytes": 9649203200,
+    "destination_prefix": "/tmp/arc3-semantic-runtime-r1",
+    "filename": "semantic-runtime-py310-cu128-r1.tar",
+    "includes_compiler_toolchain": true,
+    "includes_python": true,
+    "model_inference_verified": false,
+    "native_imports_verified": true,
+    "package_tool_sha256": "4ac43dbb5b5a1ee6f10df27f83fd227bfdd8a99cb2acbe6d05f1e5a0a681d307",
+    "seconds": 493.8047737479999,
+    "sha256": "066d046b68c622693fd164f40169461134f8e38c7e6ca9df34069888cb6ce365"
+  },
+  "exact_version_count": 99,
+  "gpu_inference_verified": false,
+  "independent_windows_reread_matches": true,
+  "pip_check_pass": true,
+  "relocated_full_semantic_imports_pass": true,
+  "relocated_native_hashes": {
+    "MultiScaleDeformableAttention": {
+      "file": "MultiScaleDeformableAttention.cpython-310-x86_64-linux-gnu.so",
+      "sha256": "fb6a92eeedb70026bd5a31128e5e96032e38a3320b45e6fc0004942849c360b8"
+    },
+    "detectron2._C": {
+      "file": "_C.cpython-310-x86_64-linux-gnu.so",
+      "sha256": "441491525cf1f251b7e4bed64f358a8e3364c4d1e223f68d3afc213579278330"
+    }
+  },
+  "relocation": {
+    "archive_sha256": "066d046b68c622693fd164f40169461134f8e38c7e6ca9df34069888cb6ce365",
+    "extraction_seconds": 114.32861597200008,
+    "model_constructed": false,
+    "model_inference": false,
+    "native_imports_pass": true,
+    "relocated_prefix": "/tmp/arc3-semantic-runtime-r1"
+  },
+  "uploaded": false
+}

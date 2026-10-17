@@ -50,6 +50,15 @@ at the same versions used for compilation; stale replaced records were archived
 privately after verifying every replacement package file exists. Archive checks
 were not disabled.
 
+The portable runtime archive is **9,649,203,200 bytes**, SHA256
+`066d046b68c622693fd164f40169461134f8e38c7e6ca9df34069888cb6ce365`.
+An independent Windows reread matches the Linux-produced archive hash.
+Extraction into the fresh `/tmp/arc3-semantic-runtime-r1` prefix passes native
+imports, full offline Semantic-SAM helper imports, all 99 exact package-version
+checks and `pip check`. Both native module hashes match their original installed
+binaries. The [portable receipt](../research/object_discovery_boundaries_v1/runtime_profiles/semantic_portable_runtime_receipt.json)
+binds these checks; the archive itself remains private and has not been uploaded.
+
 This validates compilation and imports, **not model construction or inference**.
 The inspected machine reports CUDA unavailable and zero devices. The unchanged
 upstream constructor allocates CUDA tensors, so a real load-and-inference check

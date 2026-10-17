@@ -277,7 +277,8 @@ now record real UnSAMv2 / UnSAMv2+ seeded and automatic CPU inference on sc25 at
 granularity 0.1: all four runtime checks and saved-output replays pass, but none
 matches a reviewed whole object at IoU ≥ 0.5. All three checkpoints are acquired
 and byte-pinned; Semantic-SAM's isolated dependencies, native extension builds
-and offline imports now pass, while model construction and CUDA inference remain
+and offline imports now pass. Its portable runtime also passes clean-prefix
+relocation, native imports and all 99 version checks. Model construction and CUDA inference remain
 pending. The six-board comparison has not started. The Linux CPU suite passes
 101 tests without failures or skips; no GPU job or Kaggle upload was launched.
 

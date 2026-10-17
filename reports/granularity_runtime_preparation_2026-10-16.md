@@ -72,8 +72,9 @@ receipts and attempt folders remain in the private git-ignored workspace.
 
 ## Remaining gates
 
-1. Finish portable-runtime packaging and relocation checks. Semantic-SAM's
-   isolated dependencies, both native builds and offline imports pass; a
+1. Prepare and review the exact private GPU smoke package and attachments.
+   [Portable-runtime packaging and relocation checks](../research/object_discovery_boundaries_v1/runtime_profiles/semantic_portable_runtime_receipt.json)
+   now pass. Semantic-SAM's isolated dependencies, both native builds and offline imports pass; a
    [two-line native API compatibility fix](semantic_sam_native_build_compatibility_2026-10-16.md)
    was needed for the deformable-attention extension. Build and dependency pins
    are recorded; actual CUDA execution remains unverified.
