@@ -42,14 +42,24 @@ runtime and one-image seeded/automatic scientific scope remain in place.
   SDK's QUICK_SAVE serialization passes the offline request guard.
 
 All prior private packages, failure evidence and the consumed GPU reservation
-remain preserved. A GPU-disabled save-only update of the same notebook is the
-next configuration step. It clears the consumed authority in the new saved
-version while retaining historical version 1. No new GPU launch is authorized
-by this repair; no training or segmentation generation is used as a probe.
+remain preserved. One GPU-disabled QUICK_SAVE of the same notebook completed
+successfully as **version 2**. It clears the consumed authority in the new saved
+version while retaining historical failed version 1. No new GPU launch is
+authorized by this repair; no training or segmentation generation was used as
+a probe.
 
-After the save, independently verify its private/offline settings, exact source,
-competition and input attachments. Then require the owner to reopen the notebook
-and inspect the Accelerator menu with None selected. **Visible RTX availability
+Read-only pullback verifies the exact r3 review source, empty authority, private
+access, GPU/TPU/internet off, unchanged image/input attachment and the added
+competition association. The final provider status is COMPLETE. Its six log
+entries contain nbconvert HTML conversion and dependency syntax warnings, no
+cell/model output; there are no output files. The save requested no cell
+execution. A separate offline audit matches the actual request/claim hash and
+saved source, confirms that the scientific scope is unchanged and that all
+staging/cleanup functions are identical to the prior snapshot. The final private
+review lock, provider evidence and consumed save claim remain git-ignored.
+
+The owner must now reopen the updated notebook and inspect the Accelerator
+menu with None selected. **Visible RTX availability
 remains unverified until that observation is supplied.** Even then, any future
 launch needs fresh lock-bound approval and a new single-use claim, and must
 retain the actual-device guard. A requested machine-shape label is insufficient.
