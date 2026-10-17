@@ -47,6 +47,11 @@ attachment verification plus the matching result, witness and final cell marker.
 - Private CPU review **r2** and its independent rebuild are byte-identical and
   refuse missing authority. Both bind the fixed source. The r1 proposal is
   preserved and superseded; its lock cannot authorize the changed runtime.
+- The exact r2 packet also completed a full local Linux rehearsal in **123.799
+  seconds** with the two-stage alarm active: all 21 actual transport files and
+  12 reconstructed originals matched, temporary originals were removed, and
+  the final receipt/witness/marker were checked. Authority was explicitly a
+  synthetic local fixture, not a real owner approval or provider reservation.
 
 The proposed CPU scope is unchanged: private, account-only; GPU, TPU and
 internet off; requested session timeout 1,200 seconds; worker 1,100 seconds,
