@@ -271,7 +271,13 @@ runtime qualification and real inference remain pending. No new GPU job ran.
 The [upstream contract corrections](reports/granularity_upstream_contract_fixes_2026-10-16.md)
 validate the four pinned legacy links, enforce UnSAMv2's single returned mask,
 and disable redundant Semantic-SAM backbone downloads. One-image smoke mode
-is implemented; actual checkpoint loading and inference are still pending.
+is implemented. [Checkpoint preparation and one-image results](reports/granularity_runtime_preparation_2026-10-16.md)
+now record real UnSAMv2 / UnSAMv2+ seeded and automatic CPU inference on sc25 at
+granularity 0.1: all four runtime checks and saved-output replays pass, but none
+matches a reviewed whole object at IoU ≥ 0.5. All three checkpoints are acquired
+and byte-pinned; Semantic-SAM's isolated native runtime and inference remain
+pending. The six-board comparison has not started. The Linux CPU suite passes
+101 tests without failures or skips; no GPU job or Kaggle upload was launched.
 
 ## Source snapshot
 

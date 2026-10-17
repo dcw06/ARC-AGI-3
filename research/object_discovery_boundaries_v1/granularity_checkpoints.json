@@ -1,0 +1,42 @@
+{
+  "semantic_sam_l": {
+    "bytes": 895495739,
+    "independent_reread_matches": true,
+    "model": "semantic_sam_l",
+    "publisher_digest_available": false,
+    "qualification": "HTTPS acquisition, locally pinned digest; no publisher digest supplied",
+    "sha256": "f85bee1faa64154831a75598048d133e345874dbd7ef87d00b6446c1ae772956",
+    "source": {
+      "publisher_bytes": 895495739,
+      "publisher_sha256": null,
+      "release_asset_id": 116602044,
+      "url": "https://github.com/UX-Decoder/Semantic-SAM/releases/download/checkpoint/swinl_only_sam_many2many.pth"
+    }
+  },
+  "unsamv2": {
+    "bytes": 188689844,
+    "independent_reread_matches": true,
+    "model": "unsamv2",
+    "publisher_digest_available": false,
+    "qualification": "HTTPS acquisition, locally pinned digest; no publisher digest supplied",
+    "sha256": "d1f5b587b979918f0dd5e7e6623b3165997efc9b48bb22bdb9f3700c6b348e62",
+    "source": {
+      "publisher_sha256": null,
+      "url": "https://drive.google.com/file/d/1iYmYFeJxY4aI1lG5F2ZFL8tzzyGkCgX0/view"
+    }
+  },
+  "unsamv2_plus": {
+    "bytes": 188689844,
+    "independent_reread_matches": true,
+    "model": "unsamv2_plus",
+    "publisher_digest_available": true,
+    "qualification": "Publisher digest match",
+    "sha256": "4067a6966b06df984828f537da0f02389ff28655a8985a1e1f4a3e1de4077195",
+    "source": {
+      "publisher_sha256": "4067a6966b06df984828f537da0f02389ff28655a8985a1e1f4a3e1de4077195",
+      "repository": "yujunwei04/UnSAMv2 (publisher Space)",
+      "revision": "675a2bceabf284b69d5d537a3aa798b53c50a8ff",
+      "url": "https://huggingface.co/spaces/yujunwei04/UnSAMv2/resolve/675a2bceabf284b69d5d537a3aa798b53c50a8ff/sam2/checkpoints/unsamv2_plus_ckpt.pt"
+    }
+  }
+}
