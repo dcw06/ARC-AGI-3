@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ARC 本地闯关 · Play & Record</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/"><span class="brand-mark"><i></i><i></i><i></i><i></i></span><span>ARC<span class="brand-sub">PLAY & RECORD</span></span></a>
+    <div class="sidebar-heading">游戏库 <span>10</span></div>
+    <p class="sidebar-hint">从前三个开始，慢慢探索。</p>
+    <nav id="games" aria-label="选择游戏"><p class="loading">正在读取本地游戏…</p></nav>
+    <div class="sidebar-bottom"><span class="status-dot"></span> 本地引擎 · 无需登录<div>每一步，都有迹可循。</div></div>
+  </aside>
+  <div class="main-shell">
+    <header class="topbar"><div class="breadcrumb">工作台 <span>/</span> <strong id="breadcrumb-game">ar25</strong></div><span class="local-pill"><span class="status-dot"></span> LOCALHOST</span></header>
+    <main>
+      <section class="page-heading">
+        <div><div class="eyebrow">INTERACTIVE REASONING LAB</div><h1>观察，尝试，再进一步<span class="title-dot">.</span></h1><p>亲自发现游戏规则。过程自动记录，随时带走你的探索日志。</p></div>
+        <button id="download" class="button primary" disabled><span aria-hidden="true">↓</span> 下载日志 <span class="button-tag">JSON</span></button>
+      </section>
+      <div id="error" class="error" role="alert" hidden></div>
+      <div class="workspace">
+        <section class="play-area">
+          <div class="game-toolbar"><div class="game-title"><span id="game-title">ar25</span><span id="game-badge" class="muted-pill">准备开始</span></div><a id="official-link" href="https://arcprize.org/tasks/ar25" target="_blank" rel="noopener noreferrer">官方游戏 ↗</a></div>
+          <div class="board-card">
+            <div class="board-meta"><span id="board-status"><span class="status-dot"></span> 等待你的第一步</span><span id="coordinates">64 × 64</span></div>
+            <div class="canvas-stage" id="canvas-stage">
+              <canvas id="board" width="64" height="64" tabindex="0" aria-label="ARC 游戏画面；方向键移动，鼠标点击，空格动作，Z 撤销，R 重置"></canvas>
+              <div id="hover-cell" class="hover-cell" aria-hidden="true" hidden></div>
+              <div id="hover-coordinates" class="hover-coordinates" aria-hidden="true" hidden></div>
+              <div id="selected-region" class="selected-region" aria-hidden="true" hidden></div>
+              <div id="welcome" class="welcome"><div class="pixel-symbol"><span></span><span></span><span></span><span></span><span></span></div><h2>一个新世界，等你发现</h2><p>没有现成的规则说明。<br>通过行动，观察世界如何回应。</p><button id="start" class="button primary">开始 ar25 <span>→</span></button><small>仅本地练习，不提交排行榜</small></div>
+            </div>
+            <div class="board-footer"><span><span class="keycap">↑ ↓ ← →</span> / WASD</span><span><span class="keycap">空格</span> 动作</span><span><span class="keycap">点击</span> 交互</span><button id="replay" class="text-button" disabled>↻ 回放这一步</button></div>
+          </div>
+          <div id="completion" class="completion" hidden><div><strong id="completion-title">完成！</strong><p id="completion-text"></p></div><button id="completion-download" class="button primary">下载本轮日志 ↓</button></div>
+          <div class="under-board"><div><span class="status-dot"></span> <span id="save-status">开始后自动保存到本机</span></div><button id="new-round" class="text-button">新开一轮 ↗</button></div>
+          <section class="recent-card"><div class="section-title">最近的探索 <button id="refresh-recent" class="text-button">刷新</button></div><div id="recent" class="recent-list"><span class="empty-copy">还没有记录，开始你的第一轮吧。</span></div></section>
+        </section>
+        <aside class="inspector">
+          <section class="panel progress-panel"><div class="section-title">本轮进度 <span id="state-label" class="muted-pill">未开始</span></div><div class="level-number"><strong id="levels">0</strong><span>/ <span id="total-levels">—</span> 关</span></div><div id="level-dots" class="level-dots"></div><div class="stats"><div><span>操作次数</span><strong id="actions">0</strong></div><div><span>探索时间</span><strong id="elapsed">00:00</strong></div></div><small class="panel-caption">操作次数包含重置与撤销。</small></section>
+          <section class="panel controls-panel"><div class="section-title">操作台 <span class="tiny-label">一步一动</span></div><div class="dpad"><button class="control up" data-action="1" aria-label="向上">↑</button><button class="control left" data-action="3" aria-label="向左">←</button><button class="control down" data-action="2" aria-label="向下">↓</button><button class="control right" data-action="4" aria-label="向右">→</button></div><button class="wide-control" data-action="5">动作 <kbd>SPACE</kbd></button><div class="control-pair"><button class="wide-control" data-action="7">撤销 <kbd>Z</kbd></button><button class="wide-control" data-action="0">重置 <kbd>R</kbd></button></div><p id="click-hint" class="control-hint">仅亮起的操作可用。点击画面时，会记录精确坐标。</p></section>
+          <section id="ls20-guide" class="panel ls20-guide" hidden><div class="section-title">Objects and roles <span class="tiny-label">ls20 第一关</span></div><p class="control-hint">初始画面坐标参考；移动后不代表当前位置。边界含两端，x 为列、y 为行。</p><div id="ls20-objects"></div></section>
+          <section class="panel annotation-panel"><div class="section-title">物体坐标与矩阵索引</div><p id="cell-inspector" class="cell-inspector">悬停画面查看坐标、矩阵索引与颜色编号。</p><label class="annotation-toggle"><input id="annotation-mode" type="checkbox"> 框选模式（不执行游戏动作）</label><input id="object-name" class="object-name" maxlength="100" placeholder="物体名称，例如：绿色长方形" aria-label="物体名称"><p id="selection-info" class="control-hint">启用框选后，依次点击区域的两个角。</p><div class="annotation-buttons"><button id="save-region" class="button" disabled>保存区域索引</button><button id="clear-region" class="text-button">清除框选</button></div><ul id="annotations" class="annotation-list"></ul><small class="panel-caption">0 起算：matrix[y][x]；框选边界含两端。名称为人工标注。</small></section>
+          <section class="panel notes-panel"><label class="section-title" for="note">我的观察 <span class="tiny-label">随日志导出</span></label><textarea id="note" maxlength="4000" placeholder="发生了什么？你猜测的规则是什么？"></textarea><div class="note-footer"><span id="note-status">留住此刻的想法</span><button id="save-note" class="text-button" disabled>保存笔记 ↗</button></div></section>
+          <section class="panel history-panel"><div class="section-title">动作记录 <span class="tiny-label">最近 12 步</span></div><ol id="history"><li class="empty-copy">你的探索会出现在这里。</li></ol></section>
+          <button id="finish" class="finish-button" disabled>结束本轮并下载 ZIP ↓</button>
+        </aside>
+      </div>
+      <footer class="page-footer"><span>ARC HUMAN PLAY <span class="footer-divider">/</span> 本地探索工具</span><span>完整画面 · 精确坐标 · 关卡变化 · 个人笔记</span></footer>
+    </main>
+  </div>
+  <div id="toast" role="status" class="toast" hidden></div>
+</body>
+</html>
