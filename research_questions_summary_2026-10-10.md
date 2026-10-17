@@ -281,8 +281,10 @@ and offline imports now pass. Its portable runtime also passes clean-prefix
 relocation, native imports and all 99 version checks. Model construction and CUDA inference remain
 pending. The six-board comparison has not started. The Linux CPU suite passes
 101 tests without failures or skips; no GPU job was launched. The owner has
-approved one private staging upload only, now in progress. Provider creation,
-inventory verification and final GPU-package review remain pending.
+approved private staging only. The first upload was interrupted after WSL
+restarted and is preserved; a separately authorized second attempt is now running
+natively on Windows with no automatic retry. Provider creation, inventory
+verification and final GPU-package review remain pending.
 
 ## Source snapshot
 
