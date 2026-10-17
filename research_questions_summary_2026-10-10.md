@@ -244,6 +244,19 @@ Discovery coverage, semantic grouping and the ls20 length-limited output need
 work. The consumed attempt remains preserved; no retry or further GPU attempt
 is authorized by these results. [Study plan](research_plan_object_discovery_boundaries_v1.md).
 
+**SAM 2.1 extractor comparison (October 16):**
+[Results](reports/sam21_retained_seed_boundaries_v1_results_2026-10-16.md).
+Keeping the same 22 valid MolmoPoint seeds and the same reviewed images/masks,
+SAM 2.1 Hiera-Large improved mask matching from **7/37 to 12/37** and exact
+masks from **3/37 to 6/37**. Highest SAM-predicted quality selected the mask;
+references were used only afterward for scoring. Original pixel seeds were
+not rounded or corrected. No new MolmoPoint generations or GPU jobs occurred:
+five image forwards completed locally on CPU in 104.247 seconds, and saved-logit
+replay passed. A loader-only failed CPU attempt is preserved. ls20 remains
+invalid, ft09 remains at zero matches, and missing seeds cannot be recovered
+by replacing the mask extractor. This improves boundary extraction on these
+exposed development frames; reliable object discovery and gameplay remain unshown.
+
 ## Source snapshot
 
 | Collection | Revision used |

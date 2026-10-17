@@ -111,3 +111,12 @@ length-limited inventory output. Any changed reference is a new revision;
 any changed prompt or mask method is a new condition. No further GPU attempt
 is authorized by this result. Gameplay, controls and first-level completion
 remain outside this test.
+
+## Subsequent extractor comparison
+
+The separate [SAM 2.1 comparison](sam21_retained_seed_boundaries_v1_results_2026-10-16.md)
+keeps these 22 valid seeds and references unchanged. It improves IoU matches
+from 7/37 to 12/37 and exact masks from 3/37 to 6/37. The original results
+above remain the component baseline; the new CPU result is not a rerun or
+retroactive repair of this attempt. No additional MolmoPoint generation or
+GPU job was used, and invalid ls20 was not salvaged.

@@ -153,6 +153,13 @@ has five valid outputs, 7/37 IoU-matching whole-object masks and 3/37 exact
 masks. Runtime/replay checks pass separately from the failed provider-identity
 gate. It does not yet demonstrate reliable independent boundaries.
 
+The subsequent [SAM 2.1 retained-seed comparison](reports/sam21_retained_seed_boundaries_v1_results_2026-10-16.md)
+tests a separate extractor condition without new pointing calls. On the same
+22 valid seeds, whole-object IoU matches improve to 12/37 and exact masks to
+6/37. The original baseline, invalid ls20 response and provider-identity
+qualification remain preserved. SAM's CPU run and saved-logit replay do not
+establish a validated Kaggle/GPU integration or better object discovery.
+
 No model request, game action, upload or GPU launch occurred while preparing
 this draft. Public artifacts contain methods and aggregate audit counts only;
 boards, masks and detailed audit records stay in the git-ignored workspace.
