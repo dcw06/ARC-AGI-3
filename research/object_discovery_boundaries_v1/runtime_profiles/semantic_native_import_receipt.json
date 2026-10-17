@@ -1,0 +1,41 @@
+{
+  "checkpoint_sha256": "f85bee1faa64154831a75598048d133e345874dbd7ef87d00b6446c1ae772956",
+  "cuda_available": false,
+  "cuda_build": "12.8",
+  "detectron2_revision": "42121d75e10d9f858f3a91b6a39f5722c02868f0",
+  "device_count": 0,
+  "imports_pass": true,
+  "model_construction_verified": false,
+  "model_inference_verified": false,
+  "native_modules": {
+    "MultiScaleDeformableAttention": {
+      "file": "MultiScaleDeformableAttention.cpython-310-x86_64-linux-gnu.so",
+      "sha256": "fb6a92eeedb70026bd5a31128e5e96032e38a3320b45e6fc0004942849c360b8"
+    },
+    "detectron2._C": {
+      "file": "_C.cpython-310-x86_64-linux-gnu.so",
+      "sha256": "441491525cf1f251b7e4bed64f358a8e3364c4d1e223f68d3afc213579278330"
+    }
+  },
+  "native_wheels": [
+    {
+      "bytes": 1108335,
+      "filename": "detectron2-0.6-cp310-cp310-linux_x86_64.whl",
+      "name": "detectron2",
+      "sha256": "cef97384625881707582c65f3636fb95c384e97b85582ba8c9ad2494a5777a63",
+      "version": "0.6"
+    },
+    {
+      "bytes": 236599,
+      "filename": "multiscaledeformableattention-1.0-cp310-cp310-linux_x86_64.whl",
+      "name": "multiscaledeformableattention",
+      "sha256": "83f6f39cb124268ce02c94c36a97722221a642721d2c80da9d4b3f12e6a12452",
+      "version": "1.0"
+    }
+  ],
+  "network_disabled": true,
+  "scope": "offline native imports only; no model construction or inference",
+  "seconds": 11.833633885999916,
+  "source_revision": "e11f8b518539faea731e2744cc3e44c24572e30d",
+  "torch": "2.10.0+cu128"
+}

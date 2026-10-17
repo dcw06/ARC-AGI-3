@@ -30,7 +30,28 @@ include directories must be supplied through `CPATH`; its library directories
 must be supplied through `LIBRARY_PATH`. Earlier header-path build failures and
 the original API failure are preserved, with no overwritten build logs.
 
-This validates compilation only. Detectron2 is being built separately; native
-imports, checkpoint construction and real CUDA inference have not yet passed.
-There was no GPU execution, Kaggle job or upload. The six-board comparison stays
-blocked on the remaining one-image backend checks.
+Detectron2 also compiled successfully in 250.617 seconds, without a source patch.
+Its pinned revision is `42121d75e10d9f858f3a91b6a39f5722c02868f0`.
+The resulting `detectron2-0.6-cp310-cp310-linux_x86_64.whl` has SHA256
+`cef97384625881707582c65f3636fb95c384e97b85582ba8c9ad2494a5777a63`.
+
+Both compiled extensions, Semantic-SAM and its seeded/automatic helpers now
+**pass offline native import qualification**, with socket connections disabled.
+The [import receipt](../research/object_discovery_boundaries_v1/runtime_profiles/semantic_native_import_receipt.json)
+also records the installed native binary hashes. `pip check` passes after native
+installation. The [Python pins](../research/object_discovery_boundaries_v1/runtime_profiles/semantic_cuda_requirements.lock),
+[installed versions](../research/object_discovery_boundaries_v1/runtime_profiles/semantic_cuda_versions.json)
+and [explicit conda toolchain pins](../research/object_discovery_boundaries_v1/runtime_profiles/semantic_conda_toolchain.lock)
+are retained publicly, with [SHA256 records for all 73 conda packages](../research/object_discovery_boundaries_v1/runtime_profiles/semantic_conda_package_manifest.json).
+The worker's environment verifier matches all 99 installed distributions,
+including pip and the
+conda-managed build tools. Setuptools and wheel were reconciled to conda packages
+at the same versions used for compilation; stale replaced records were archived
+privately after verifying every replacement package file exists. Archive checks
+were not disabled.
+
+This validates compilation and imports, **not model construction or inference**.
+The inspected machine reports CUDA unavailable and zero devices. The unchanged
+upstream constructor allocates CUDA tensors, so a real load-and-inference check
+requires suitable GPU hardware. No GPU execution, Kaggle job or upload occurred.
+The six-board comparison stays blocked on the remaining one-image backend checks.

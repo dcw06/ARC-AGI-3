@@ -1,8 +1,9 @@
 # Granularity segmentation: checkpoint preparation and one-image checks
 
 The UnSAMv2 and UnSAMv2+ seeded and automatic **CPU runtime smoke checks pass**.
-Semantic-SAM's checkpoint is acquired; its isolated CUDA environment and native
-extensions are still being prepared. The six-board comparison has not started.
+Semantic-SAM's checkpoint is acquired; its isolated CUDA environment, both native
+extension builds and offline imports now pass. Its real GPU inference is still
+pending. The six-board comparison has not started.
 No GPU job, Kaggle upload, game action or scorecard was created in this preparation.
 
 ## Checkpoints and environments
@@ -18,7 +19,7 @@ byte identity, not independent publisher authentication.
 |---|---:|---|---|
 | UnSAMv2 | 188,689,844 | Official model-zoo link; locally pinned SHA256 | Clean Python 3.12 / Torch 2.10 CPU environment; seeded and automatic inference complete |
 | UnSAMv2+ | 188,689,844 | Pinned publisher Space revision and matching publisher SHA256 | Same isolated CPU environment; seeded and automatic inference complete |
-| Semantic-SAM L | 895,495,739 | Official release asset; locally pinned SHA256 | Separate Python 3.10 / CUDA 12.8 compiler environment; inference pending |
+| Semantic-SAM L | 895,495,739 | Official release asset; locally pinned SHA256 | Separate Python 3.10 / Torch 2.10 CUDA 12.8 environment; both native extensions compiled for sm_120 and offline imports pass; inference pending |
 
 The UnSAM environment has no inherited site packages. Its 23 installation wheels
 are hash-pinned in the [CPU requirements](../research/object_discovery_boundaries_v1/runtime_profiles/unsam_cpu_requirements.lock);
@@ -71,10 +72,11 @@ receipts and attempt folders remain in the private git-ignored workspace.
 
 ## Remaining gates
 
-1. Finish Semantic-SAM's native extension builds. The isolated Python dependency
-   check passes; a [two-line native API compatibility fix](semantic_sam_native_build_compatibility_2026-10-16.md)
-   compiles the deformable-attention extension successfully. Detectron2 and
-   runtime import checks are still pending.
+1. Finish portable-runtime packaging and relocation checks. Semantic-SAM's
+   isolated dependencies, both native builds and offline imports pass; a
+   [two-line native API compatibility fix](semantic_sam_native_build_compatibility_2026-10-16.md)
+   was needed for the deformable-attention extension. Build and dependency pins
+   are recorded; actual CUDA execution remains unverified.
 2. Run its seeded and automatic one-image checks on suitable CUDA hardware;
    inspect masks on the bound board and replay the saved outputs independently.
 3. Proceed to the six-board comparison only after both backends' runtime checks
