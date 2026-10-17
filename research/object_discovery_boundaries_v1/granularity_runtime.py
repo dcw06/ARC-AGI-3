@@ -11,6 +11,7 @@ import os
 from pathlib import Path
 import sys
 import copy
+import re
 
 from .granularity import MODELS
 
@@ -119,8 +120,11 @@ def verify_environment(lock):
     the later runtime qualification. It does not claim a deployable GPU image.
     """
     expected = json.loads(Path(lock).read_bytes())
-    if type(expected) is not dict or not {'torch', 'torchvision', 'numpy', 'Pillow'} <= set(expected):
+    if type(expected) is not dict or any(type(name) is not str or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]*',name) for name in expected):
         raise ValueError('backend environment version lock required')
+    normalized=[re.sub(r'[-_.]+','-',name).lower() for name in expected]
+    if len(set(normalized)) != len(normalized) or not {'torch','torchvision','numpy','pillow'} <= set(normalized):
+        raise ValueError('unique backend distribution names and required package versions needed')
     for name, version in expected.items():
         if type(version) is not str or importlib.metadata.version(name) != version:
             raise ValueError('backend environment version differs: ' + name)

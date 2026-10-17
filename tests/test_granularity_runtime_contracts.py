@@ -4,6 +4,7 @@ import hashlib
 import importlib
 import importlib.util
 import os
+import json
 from pathlib import Path
 import tempfile
 from types import SimpleNamespace
@@ -12,6 +13,25 @@ from unittest.mock import patch
 from collections import OrderedDict
 
 from research.object_discovery_boundaries_v1 import granularity_runtime as R
+
+
+class EnvironmentNames(unittest.TestCase):
+    def verify(self,root,versions):
+        lock=root/'lock.json';lock.write_text(json.dumps(versions))
+        def installed(name):return versions[name]
+        with patch.object(R.importlib.metadata,'version',side_effect=installed):
+            return R.verify_environment(lock)
+
+    def test_lowercase_wheel_metadata_names_are_valid(self):
+        for pillow in ('pillow','Pillow','PILLOW'):
+            with self.subTest(name=pillow),tempfile.TemporaryDirectory() as path:
+                self.verify(Path(path),{'torch':'2.10.0+cpu','torchvision':'0.25.0+cpu','numpy':'2.5.4',pillow:'12.2.0'})
+
+    def test_alias_duplicates_and_missing_required_packages_refuse(self):
+        for versions in ({'torch':'1','torchvision':'1','numpy':'1'},
+                         {'torch':'1','torchvision':'1','numpy':'1','pillow':'1','Pillow':'1'}):
+            with tempfile.TemporaryDirectory() as path,self.assertRaises(ValueError):
+                self.verify(Path(path),versions)
 
 
 class SourceLinks(unittest.TestCase):
