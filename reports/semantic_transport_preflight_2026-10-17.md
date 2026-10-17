@@ -1,5 +1,10 @@
 # Semantic-SAM transport and preflight preparation
 
+**CPU operation update:** the owner subsequently approved r2, and [one private
+CPU attempt was submitted](semantic_transport_cpu_attempt1_status_2026-10-17.md).
+Its last retained status is RUNNING; completion is not claimed. The preparation
+and alarm-fix records below describe the earlier stages.
+
 **Alarm review update:** the [two-stage alarm fix and Linux regressions](semantic_transport_alarm_fix_2026-10-17.md)
 supersede the original r1 CPU proposal. Private r2 binds the corrected runtime,
 rebuilds identically and remains unauthorized. No remote job has started.

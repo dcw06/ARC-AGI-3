@@ -1,5 +1,10 @@
 # Semantic transport CPU check: separate work and final alarms
 
+**Subsequent CPU operation:** after the fix and owner approval, the first r2
+CPU-only attempt was submitted once. Its [operation status](semantic_transport_cpu_attempt1_status_2026-10-17.md)
+supersedes the pre-approval status below. Fix validation itself made no provider
+call; GPU inference remains pending.
+
 The cleanup deadline finding on `8d25d65` is reproduced and fixed. No Kaggle
 call, upload, notebook job, GPU job, reservation or launch was made. All earlier
 proposals, local evidence and provider attempts remain preserved.
