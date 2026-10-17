@@ -1,5 +1,10 @@
 # Semantic-SAM one-image GPU smoke: attempt 1 submitted
 
+**Terminal update:** provider ERROR. The [retained failure analysis](semantic_sam_gpu_smoke_attempt1_failure_2026-10-17.md)
+shows two actual Tesla T4 devices despite the saved requested RTX PRO 6000 shape.
+The guard refused before staging/model loading; the attempt is consumed, with no
+retry. Submission-stage observations below are retained chronologically.
+
 After the owner's instruction to launch, the final private r2 package passed
 fresh read-only preflight and was submitted **once**. Provider status is RUNNING;
 no completed model load, inference or mask result is claimed yet.

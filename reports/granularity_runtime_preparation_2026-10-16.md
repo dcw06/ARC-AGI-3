@@ -1,5 +1,11 @@
 # Granularity segmentation: checkpoint preparation and one-image checks
 
+**GPU attempt update:** the first one-image Semantic-SAM attempt [failed before
+model loading](semantic_sam_gpu_smoke_attempt1_failure_2026-10-17.md): actual
+hardware was two Tesla T4 devices despite the saved requested RTX PRO 6000 shape.
+The guard refused; the consumed attempt is preserved. No automatic retry or
+Semantic-SAM inference result is claimed. The mounted CPU check remains verified.
+
 **Current CPU result:** the [first mounted transport check is verified COMPLETE](semantic_transport_cpu_attempt1_results_2026-10-17.md).
 All 21 mounted files and 12 reconstructed originals match; cleanup and evidence
 finalization pass. Worker duration: 144.189 seconds. The consumed CPU attempt is

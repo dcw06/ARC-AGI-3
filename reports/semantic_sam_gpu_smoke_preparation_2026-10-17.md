@@ -1,5 +1,10 @@
 # Semantic-SAM: bounded one-image GPU smoke package
 
+**Attempt 1 outcome:** [failed at the accelerator guard](semantic_sam_gpu_smoke_attempt1_failure_2026-10-17.md).
+Kaggle allocated two Tesla T4 devices; the runtime refused them before staging
+or model loading. No CUDA inference result exists. The attempt is consumed and
+preserved; no retry was launched.
+
 **Launch update:** the owner-authorized final private r2 package was submitted
 exactly once. The [submission record](semantic_sam_gpu_smoke_attempt1_status_2026-10-17.md)
 reports RUNNING and verifies the saved source, immutable image, private/offline
