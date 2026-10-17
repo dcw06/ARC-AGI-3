@@ -1,5 +1,13 @@
 # Granularity segmentation: checkpoint preparation and one-image checks
 
+**October 17 transport update:** the replacement owner-only transport dataset
+is verified, including all 21 downloaded files and 12 reconstructed originals.
+The production decoder also passed a complete local Linux restoration and
+cleanup rehearsal. A CPU-only mounted-file review packet is prepared, awaiting
+separate compute approval. See the [current transport preflight record](semantic_transport_preflight_2026-10-17.md).
+The earlier upload failures below remain historical; actual Semantic-SAM CUDA
+inference and the final GPU package are still pending.
+
 **October 17 evaluation update:** the [owner-policy integration, external reference freeze and retained board audit](granularity_evaluation_integrity_fixes_2026-10-17.md)
 are complete. Replayed results are unchanged; this reference freeze is explicitly
 retrospective and grants no launch authority.
