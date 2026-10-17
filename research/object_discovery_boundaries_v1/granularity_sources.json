@@ -121,10 +121,6 @@
       "sam2/sam2/modeling/sam/transformer.py": "9cdf66a0077d384633bf9902c42298993a1634e6bd2bc25f701e42c4ca45d520",
       "sam2/sam2/modeling/sam2_base.py": "d8716ebb68d41f1f7b8c15b59327d69954f6ef44e1476987a943e0076efceadc",
       "sam2/sam2/modeling/sam2_utils.py": "c0e0de8d3d8a973d038eba284291e29e672b15190e5bf9bf76cc58a75f699667",
-      "sam2/sam2/sam2_hiera_b+.yaml": "212887bd5b1d90c07a3439a911593ec6ec8a586cce0b12799f1ebec38bbe401d",
-      "sam2/sam2/sam2_hiera_l.yaml": "0e313563f8f467c382c81192a0e2aff4624dda2b23218f1a78df30ebe4b4eb1a",
-      "sam2/sam2/sam2_hiera_s.yaml": "6fff1ab952d4ff7bc4bf8bb480f6283bcf12a763057f5bb697b25151a20f7608",
-      "sam2/sam2/sam2_hiera_t.yaml": "4ba0a249a1da9a6cc4070d47894808f206f67249d0c6fda21c6280af692dd77e",
       "sam2/sam2/sam2_image_predictor.py": "3e97ef24b648e44fc2c176a031711569addb66c297b5c67dcabe8c3c7690df72",
       "sam2/sam2/sam2_video_predictor.py": "c17ea1ce443c91983270d421f818c1f1d7187c45190b3c2632242aec8b091692",
       "sam2/sam2/sam2_video_predictor_legacy.py": "e0c054112f21bfa63620f2026c8bb2e0f4e284b138d09426a08d39f2e882c3f2",
@@ -160,6 +156,29 @@
     "runtime_directories": [
       "sam2/sam2",
       "sam2/training"
-    ]
+    ],
+    "source_snapshot_policy": "Exact four tracked legacy symlinks, or ZIP link-text placeholders at those paths; targets remain absent as in pinned upstream. All other runtime links refused.",
+    "symlinks": {
+      "sam2/sam2/sam2_hiera_b+.yaml": {
+        "link_text_sha256": "212887bd5b1d90c07a3439a911593ec6ec8a586cce0b12799f1ebec38bbe401d",
+        "target": "configs/sam2/sam2_hiera_b+.yaml",
+        "target_state": "absent_in_pinned_tree"
+      },
+      "sam2/sam2/sam2_hiera_l.yaml": {
+        "link_text_sha256": "0e313563f8f467c382c81192a0e2aff4624dda2b23218f1a78df30ebe4b4eb1a",
+        "target": "configs/sam2/sam2_hiera_l.yaml",
+        "target_state": "absent_in_pinned_tree"
+      },
+      "sam2/sam2/sam2_hiera_s.yaml": {
+        "link_text_sha256": "6fff1ab952d4ff7bc4bf8bb480f6283bcf12a763057f5bb697b25151a20f7608",
+        "target": "configs/sam2/sam2_hiera_s.yaml",
+        "target_state": "absent_in_pinned_tree"
+      },
+      "sam2/sam2/sam2_hiera_t.yaml": {
+        "link_text_sha256": "4ba0a249a1da9a6cc4070d47894808f206f67249d0c6fda21c6280af692dd77e",
+        "target": "configs/sam2/sam2_hiera_t.yaml",
+        "target_state": "absent_in_pinned_tree"
+      }
+    }
   }
 }

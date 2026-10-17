@@ -1,5 +1,9 @@
 # UnSAMv2 / UnSAMv2+ and Semantic-SAM integration
 
+**Review correction:** the [upstream contract fixes](granularity_upstream_contract_fixes_2026-10-16.md)
+supersede the original symlink, three-mask and backbone-loading assumptions.
+The historical 87-test receipt is retained; it was not a real-model smoke test.
+
 October 16, 2026. **Development adapters and a local comparison runner are implemented.**
 No checkpoint from either project has been loaded or run. No Kaggle save,
 upload, reservation or GPU job was made. Existing attempts, references and
@@ -7,7 +11,7 @@ SAM 2.1 results are preserved. This is not an approved live package.
 
 | Backend | Pinned upstream source | Retained-point mode | Whole-image mode |
 |---|---|---|---|
-| UnSAMv2 / UnSAMv2+ | `f4ec1136ce5ce2c38061dfbe3dc8233ea90dd53a` | Original floating-point pixel coordinates; `predict(..., gra=...)`; highest predicted quality of three masks, earliest tie | `generate(image, gra=...)`, independent of MolmoPoint seeds |
+| UnSAMv2 / UnSAMv2+ | `f4ec1136ce5ce2c38061dfbe3dc8233ea90dd53a` | Original floating-point pixel coordinates; `predict(..., gra=...)`; single returned granularity mask and score | `generate(image, gra=...)`, independent of MolmoPoint seeds |
 | Semantic-SAM Swin-L | `e11f8b518539faea731e2744cc3e44c24572e30d` | Normalized original pixel coordinates; raw `predict()` masks; fixed decoder channel for each requested granularity | `SemanticSamAutomaticMaskGenerator(..., level=[...])`, independent of MolmoPoint seeds |
 
 The inspected [UnSAMv2 notebooks](https://github.com/yujunwei04/UnSAMv2/tree/f4ec1136ce5ce2c38061dfbe3dc8233ea90dd53a/sam2/notebooks)
@@ -52,7 +56,7 @@ this static-image implementation does not test temporal change or gameplay.
 |---|---|
 | `research/object_discovery_boundaries_v1/granularity.py` | Separate conditions, strict geometry, quality-only proposal budget |
 | `granularity_backends.py` in that directory | Both real upstream API adapters and original-frame conversion |
-| `granularity_sources.json` in that directory | SHA256 pins for 56 UnSAMv2 and 83 Semantic-SAM runtime/config files |
+| `granularity_sources.json` in that directory | Pins for 52 regular UnSAMv2 files, four exact legacy links and 83 Semantic-SAM runtime/config files |
 | `granularity_runtime.py` in that directory | Reject missing/changed sources, wrong checkpoint bytes, version drift or imported fork collisions |
 | `granularity_worker.py` in that directory | Reference-free six-frame worker and durable raw outputs |
 | `scripts/run_granularity_segmentation.py` | Planning or explicit, bounded Linux development execution |

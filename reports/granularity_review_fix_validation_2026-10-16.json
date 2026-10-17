@@ -1,0 +1,66 @@
+{
+  "Kaggle_calls": 0,
+  "actual_runtime_readiness": {
+    "installed": {
+      "detectron2": false,
+      "hydra": false,
+      "sam2": false,
+      "semantic_sam": false
+    },
+    "model_checkpoint_files": [],
+    "torch": "2.10.0+cpu",
+    "torch_cuda_build": null
+  },
+  "actual_upstream_decoder_forward_executed": true,
+  "baseline_commit": "cdfd69e",
+  "baseline_reproductions": {
+    "pinned_checkout_symlinks": "symlink in upstream runtime",
+    "single_decoder_mask": "UnSAMv2 multimask response differs",
+    "undeclared_backbone_preload": "cold offline backbone cache"
+  },
+  "baseline_source_sha256": {
+    "granularity_backends.py": "8f2d9259e2e09b625328ef60f48af40e61b50a3fc7e525072d06bf87fe3b54db",
+    "granularity_runtime.py": "615f6d0cf71c73d697c6e558594ced26d563b9115e9bd1e44c9e778b34d92620",
+    "granularity_sources.json": "b2c8297274dc2ad694f805a523506d968bb7fe9d87df388e3a3425ec1623bd42"
+  },
+  "exact_pinned_archive_and_four_real_symlinks_verified": true,
+  "groups": [
+    "test_granularity_runtime_contracts",
+    "test_object_boundary_granularity",
+    "test_object_boundary_sam21",
+    "test_object_discovery_boundaries",
+    "test_object_boundary_reference_audit",
+    "test_object_boundary_preparation",
+    "test_object_boundary_runtime",
+    "test_object_boundary_live_evaluation",
+    "test_object_boundary_live_builder",
+    "test_object_boundary_deployment"
+  ],
+  "log_sha256": "bbe66c36d5d8522ca30b827d9ad64074d3dcabab63a40eb74f86345862a63e4d",
+  "new_GPU_jobs": 0,
+  "one_image_smoke_plans_prepared": 6,
+  "platform": "linux",
+  "python": "3.12.3",
+  "real_checkpoint_loads": 0,
+  "real_model_inference_calls": 0,
+  "reproduction_script_sha256": "6085832cd324a8e7e4e3b9c9a1b97212ff92dc1cf29a40bd7272d7c222a1e3fa",
+  "schema": "granularity_review_fix_validation_v1",
+  "source_sha256": {
+    "research/object_discovery_boundaries_v1/granularity.py": "ad92b890c1e168edf8bedd76babf665e095f6deaaea770a1901c511a35e12f91",
+    "research/object_discovery_boundaries_v1/granularity_backends.py": "808e257f73fe9191b5fd17d097862ee7ebff25fa4c2a0555982fd19e3e7c3ce8",
+    "research/object_discovery_boundaries_v1/granularity_runtime.py": "b56e7c9cda817f543e763fedb897cc201d83bd399d9896ad10174d266eb778ab",
+    "research/object_discovery_boundaries_v1/granularity_sources.json": "b12bca79ccecf0c1160f515c344cf7d83c7bfa095e1ada7038dc9cff229666b8",
+    "research/object_discovery_boundaries_v1/granularity_worker.py": "c643265711a9a3e04fcfe8fee7abe24c2a0ae4435e0794ed946553ba32d39708",
+    "scripts/evaluate_granularity_segmentation.py": "377f056611ab232fb67b8a40d56de9b89362c598fad47caf05d68ec3cf7502d3",
+    "scripts/run_granularity_segmentation.py": "8d7988635c71147cc299c146a65a4d9d057fab2549ad1232f8ba11e30ebb09c7",
+    "tests/test_granularity_runtime_contracts.py": "b15f625931c674b5a47738241f06fe5cd810e3b2b52c37aa22476439ac9374e9",
+    "tests/test_object_boundary_granularity.py": "8593c7d6ababe39f6e5a343d28ecb2f59d565f6a5941596099562a171c8fcaae"
+  },
+  "tests": {
+    "errors": 0,
+    "failures": 0,
+    "run": 97,
+    "skipped": 0
+  },
+  "torch": "2.10.0+cpu"
+}

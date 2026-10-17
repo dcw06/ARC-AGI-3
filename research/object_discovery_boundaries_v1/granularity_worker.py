@@ -35,7 +35,7 @@ def inputs_for(directory):
     return frames
 
 
-def run_frames(backend, inputs, output, policy, deadline):
+def run_frames(backend, inputs, output, policy, deadline, *, smoke_case=None):
     """Persist all masks before reference-free quality selection/projection.
 
     One granularity per invocation prevents hindsight selection across levels.
@@ -47,9 +47,17 @@ def run_frames(backend, inputs, output, policy, deadline):
     if policy != condition(policy['model'], policy['mode'], policy['granularity']):
         raise ValueError('comparison policy differs')
     frames = inputs_for(inputs)
+    if smoke_case is not None:
+        if smoke_case not in [frame['case_id'] for frame in frames]:
+            raise ValueError('unknown one-image smoke case')
+        frames = [frame for frame in frames if frame['case_id']==smoke_case]
+        if policy['mode']=='seeded' and (not frames[0]['source_response_valid'] or not frames[0]['points']):
+            raise ValueError('seeded runtime smoke must actually exercise inference')
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)
     write_json(output/'policy.json', policy)
+    write_json(output/'worker-scope.json', dict(purpose='one_image_runtime_smoke' if smoke_case else 'six_board_comparison',
+                                               cases=[frame['case_id'] for frame in frames]))
     for frame in frames:
         if time.monotonic() >= deadline:
             raise TimeoutError('granularity worker deadline reached')
@@ -82,6 +90,8 @@ def run_frames(backend, inputs, output, policy, deadline):
     if time.monotonic() >= deadline:
         raise TimeoutError('granularity manifest finalization overrun')
     return dict(state='worker_output_collected', policy=policy,
+                purpose='one_image_runtime_smoke' if smoke_case else 'six_board_comparison',
+                cases=[frame['case_id'] for frame in frames],
                 worker_manifest_sha256=file_sha(output/'worker-manifest.json'),
                 requires_external_lifecycle_verification=True,
                 new_MolmoPoint_generations=0, game_actions=0, scorecards=0)

@@ -27,6 +27,9 @@ def evaluate(frames_dir, inputs, references):
     if policy != condition(policy['model'],policy['mode'],policy['granularity']):
         raise ValueError('retained policy differs')
     seeds = inputs_for(inputs)
+    scope=json.loads((frames_dir/'worker-scope.json').read_bytes())
+    if scope != dict(purpose='six_board_comparison',cases=[frame['case_id'] for frame in seeds]):
+        raise ValueError('one-image smoke output cannot be treated as a full comparison')
     refs = json.loads(Path(references).read_bytes())['frames']
     if [f['case_id'] for f in refs] != [f['case_id'] for f in seeds]:
         raise ValueError('reference/input order differs')
@@ -53,10 +56,14 @@ def evaluate(frames_dir, inputs, references):
                 masks, qualities = arrays['raw_masks'], arrays['raw_qualities']
                 if policy['mode']=='seeded':
                     if policy['model']=='semantic_sam_l':
+                        if masks.shape != (len(seed['points']),6,640,640) or qualities.shape != (len(seed['points']),6):
+                            raise ValueError('Semantic-SAM raw decoder contract differs')
                         channel=SEMANTIC_CHANNEL[policy['granularity']]
                         selected=[channel]*len(seed['points'])
                     else:
-                        selected=np.argmax(qualities,axis=1).tolist()
+                        if masks.shape != (len(seed['points']),1,448,448) or qualities.shape != (len(seed['points']),1):
+                            raise ValueError('UnSAMv2 raw single-mask contract differs')
+                        selected=[0]*len(seed['points'])
                     chosen=np.stack([mask[i] for mask,i in zip(masks,selected)])
                     qualities=[float(score[i]) for score,i in zip(qualities,selected)]
                 else:

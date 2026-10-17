@@ -33,6 +33,8 @@ def arguments():
     parser.add_argument('--python', default=sys.executable)
     parser.add_argument('--device', choices=('cpu','cuda'), default='cpu')
     parser.add_argument('--seconds', type=int, default=1200)
+    parser.add_argument('--smoke-case',choices=[f'board-{i:02d}' for i in range(1,7)],
+                        help='load and exercise one image only; never a six-board comparison')
     parser.add_argument('--plan', action='store_true')
     parser.add_argument('--execute', action='store_true')
     parser.add_argument('--worker', action='store_true', help=argparse.SUPPRESS)
@@ -44,7 +46,11 @@ def main():
     args = arguments()
     level = int(args.granularity) if args.model == 'semantic_sam_l' else float(args.granularity)
     policy = condition(args.model, args.mode, level)
-    inputs_for(args.inputs)
+    frames = inputs_for(args.inputs)
+    if args.smoke_case and args.mode=='seeded':
+        selected=next(frame for frame in frames if frame['case_id']==args.smoke_case)
+        if not selected['source_response_valid'] or not selected['points']:
+            raise ValueError('seeded runtime smoke needs valid retained seeds')
     if args.plan:
         if args.execute or args.worker:
             raise ValueError('planning cannot execute')
@@ -52,6 +58,8 @@ def main():
         output.mkdir(parents=True, exist_ok=False)
         write_json(output/'policy.json', policy)
         write_json(output/'readiness.json', dict(state='development_plan_only',
+            purpose='one_image_runtime_smoke' if args.smoke_case else 'six_board_comparison',
+            smoke_case=args.smoke_case,
             inference_executed=False, models_loaded=False, Kaggle_calls=0,
             outstanding=['checkpoint acquisition/byte verification', 'isolated dependency lock and real model-load qualification',
                          'GPU image qualification and exact launch review if GPU compute is proposed'],
@@ -86,7 +94,7 @@ def main():
                 [Path(__file__).resolve(),*(ROOT/'research/object_discovery_boundaries_v1').glob('granularity*.py')]}))
         backend = load_backend(args.source,args.checkpoint,args.model,args.device)
         from research.object_discovery_boundaries_v1.granularity_worker import run_frames
-        result = run_frames(backend,args.inputs,Path(args.output)/'frames',policy,args.deadline)
+        result = run_frames(backend,args.inputs,Path(args.output)/'frames',policy,args.deadline,smoke_case=args.smoke_case)
         write_json(Path(args.output)/'worker-result.json', result)
         if time.monotonic() >= args.deadline:
             raise TimeoutError('worker result write overrun')
@@ -105,6 +113,8 @@ def main():
         for key in ('model','mode','granularity','inputs','source','checkpoint','checkpoint_receipt','runtime_lock','device','seconds'):
             argv.extend(['--'+key.replace('_','-'), str(getattr(args,key))])
         argv.extend(['--output',str(output)])
+        if args.smoke_case:
+            argv.extend(['--smoke-case',args.smoke_case])
         # A file log avoids pipe/thread startup and inherited-pipe EOF hangs.
         owner.command(argv,output/'worker.log',deadline,dict(os.environ),'granularity segmentation')
         completed = True

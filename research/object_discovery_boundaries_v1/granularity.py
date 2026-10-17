@@ -26,6 +26,8 @@ def condition(model, mode, granularity):
     return dict(model=model, mode=mode, granularity=granularity,
                 image_size_wh=[448, 448], board_size_wh=[64, 64],
                 semantic_resize_wh=[640, 640] if model == 'semantic_sam_l' else None,
+                seeded_decoder_masks=6 if model == 'semantic_sam_l' else 1,
+                semantic_backbone_preload=False,
                 projection='25 of 49 pixels per original cell',
                 max_scored_proposals=MAX_OBJECTS,
                 automatic_selection='predicted quality descending; original index on tie',

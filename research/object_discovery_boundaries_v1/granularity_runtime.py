@@ -10,6 +10,7 @@ import json
 import os
 from pathlib import Path
 import sys
+import copy
 
 from .granularity import MODELS
 
@@ -22,22 +23,81 @@ def file_sha(path):
     return digest.hexdigest()
 
 
-def verify_sources(source, model):
+def source_pin(model):
     if model not in MODELS:
         raise ValueError('unknown model')
-    source = Path(source).resolve()
-    entry = json.loads(Path(__file__).with_name('granularity_sources.json').read_text())[
+    return json.loads(Path(__file__).with_name('granularity_sources.json').read_text())[
         'semantic_sam' if model == 'semantic_sam_l' else 'unsamv2']
+
+
+def verify_sources(source, model):
+    source = Path(source).resolve()
+    entry = source_pin(model)
+    links = entry.get('symlinks', {})
+    expected = {**entry['files'], **{name: link['link_text_sha256'] for name,link in links.items()}}
     actual = {}
     for folder in entry['runtime_directories']:
+        # rglob does not reliably traverse symlinked directories on all Python
+        # versions. Refuse them explicitly, including each runtime root.
+        for parent in (source/folder, *(source/folder).parents):
+            if parent == source:
+                break
+            if parent.is_symlink():
+                raise ValueError('symlinked upstream runtime directory')
         for path in (source/folder).rglob('*'):
+            name = path.relative_to(source).as_posix()
+            if name in links:
+                link = links[name]
+                if path.is_symlink():
+                    matches = os.readlink(path) == link['target']
+                else:
+                    # GitHub ZIPs store symlinks as regular files containing
+                    # link text. This explicitly pinned archive representation
+                    # is accepted only for the four unused legacy config links.
+                    matches = path.is_file() and path.read_bytes() == link['target'].encode()
+                target = path.parent/link['target']
+                if (not matches or not target.resolve().is_relative_to(source) or
+                        target.exists() or target.is_symlink() or link['target_state'] != 'absent_in_pinned_tree'):
+                    raise ValueError('pinned upstream legacy symlink differs')
+                actual[name] = hashlib.sha256(link['target'].encode()).hexdigest()
+                continue
             if path.is_symlink():
-                raise ValueError('symlink in upstream runtime')
+                raise ValueError('unlisted upstream symlink')
             if path.is_file() and path.suffix in ('.py', '.yaml', '.yml', '.json') and '__pycache__' not in path.parts:
-                actual[path.relative_to(source).as_posix()] = file_sha(path)
-    if actual != entry['files']:
+                actual[name] = file_sha(path)
+    if actual != expected:
         raise ValueError('upstream runtime source missing, added or changed')
     return entry
+
+
+def build_semantic_offline(source, checkpoint, upstream):
+    """Build without the redundant Swin URL preload; require full model weights.
+
+    The upstream convenience builder loads backbone weights before loading the
+    segmentation checkpoint. Override only that initialization dependency,
+    without modifying upstream files or relying on a populated download cache.
+    """
+    import torch
+    loader = importlib.import_module('utils.arguments').load_opt_from_config_file
+    wrapper = importlib.import_module('semantic_sam.BaseModel').BaseModel
+    config = copy.deepcopy(loader(str(Path(source)/'configs/semantic_sam_only_sa-1b_swinL.yaml')))
+    config['MODEL']['BACKBONE']['LOAD_PRETRAINED'] = False
+    config['MODEL']['BACKBONE']['PRETRAINED'] = ''
+    network = upstream.build_model(config)
+    checkpoint_state = torch.load(checkpoint, map_location='cpu', weights_only=True)
+    if not isinstance(checkpoint_state,dict):
+        raise ValueError('Semantic-SAM state dictionary required')
+    state = checkpoint_state.get('model', checkpoint_state)
+    if not isinstance(state,dict):
+        raise ValueError('Semantic-SAM model dictionary required')
+    # Match the pinned BaseModel.from_pretrained prefix convention, but refuse
+    # missing parameters rather than relying on backbone pretraining to fill them.
+    weights = {key[6:]:value for key,value in state.items() if isinstance(key,str) and key.startswith('model.')}
+    required = network.state_dict()
+    if not required or any(key not in weights or required[key].shape != weights[key].shape for key in required):
+        raise ValueError('segmentation checkpoint must cover every model/backbone tensor')
+    network.load_state_dict({key:weights[key] for key in required}, strict=True)
+    return wrapper(config,network).eval().cuda()
 
 
 def verify_checkpoint(checkpoint, receipt, model):
@@ -99,13 +159,7 @@ def load_backend(source, checkpoint, model, device):
     upstream = importlib.import_module('semantic_sam')
     if not Path(upstream.__file__).resolve().is_relative_to(source):
         raise ValueError('a different Semantic-SAM was imported')
-    # Upstream build helper resolves config filenames relative to its checkout.
-    previous = Path.cwd()
-    try:
-        os.chdir(source)
-        network = upstream.build_semantic_sam(model_type='L', ckpt=str(checkpoint))
-    finally:
-        os.chdir(previous)
+    network = build_semantic_offline(source, checkpoint, upstream)
 
     def image_tensor(image):
         # Same BICUBIC 640-short-edge preprocessing as prepare_image(); the

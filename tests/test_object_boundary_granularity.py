@@ -83,10 +83,9 @@ class AdapterIntegration(unittest.TestCase):
             def set_image(self,image):calls.append(('image',image.shape))
             def predict(self,**kw):
                 calls.append(kw)
-                masks=np.full((3,448,448),-1.)
-                masks[1,28:35,14:21]=1
-                masks[2,:,:]=1
-                return masks,np.asarray([.1,.8,.8]),np.zeros((3,256,256))
+                masks=np.full((1,448,448),-1.)
+                masks[0,28:35,14:21]=1
+                return masks,np.asarray([.8]),np.zeros((1,256,256))
         raw=UnSAMv2Backend(None,Predictor,None).seeded(self.image,[self.point],.3)
         self.assertEqual(calls[1]['point_coords'].tolist(),[[14.25,28.75]])
         self.assertEqual(calls[1]['gra'],.3)
@@ -94,7 +93,17 @@ class AdapterIntegration(unittest.TestCase):
         self.assertNotIn('mask_input',calls[1])
         result=G.assemble(raw,G.condition('unsamv2_plus','seeded',.3),[self.point])
         self.assertEqual(result['objects'][0]['cells'],[[2,4]])
-        self.assertEqual(raw['raw_masks'].shape,(1,3,448,448))
+        self.assertEqual(raw['raw_masks'].shape,(1,1,448,448))
+
+    def test_unsam_unexpected_three_mask_contract_is_refused(self):
+        from research.object_discovery_boundaries_v1.granularity_backends import UnSAMv2Backend
+        np=self.np
+        class Predictor:
+            def __init__(self,model):pass
+            def set_image(self,image):pass
+            def predict(self,**kw):return np.zeros((3,448,448)),np.array([.1,.8,.8]),np.zeros((3,256,256))
+        with self.assertRaisesRegex(ValueError,'single granularity-mask'):
+            UnSAMv2Backend(None,Predictor,None).seeded(self.image,[self.point],.1)
 
     def test_semantic_seeded_uses_raw_predict_not_visualization_and_channel_map(self):
         from research.object_discovery_boundaries_v1.granularity_backends import SemanticSAMBackend
@@ -174,8 +183,8 @@ class AdapterIntegration(unittest.TestCase):
                             raw_masks=np.zeros((0,448,448),dtype=bool),raw_qualities=np.array([]))
             def seeded(self,image,points,level):
                 self.calls+=1
-                mask=np.full((1,3,448,448),-1.);mask[0,0,28:35,14:21]=1.
-                return dict(masks=mask[:,0]>0,qualities=[.9],metadata={},raw_masks=mask,raw_qualities=np.array([[.9,.2,.1]]))
+                mask=np.full((1,1,448,448),-1.);mask[0,0,28:35,14:21]=1.
+                return dict(masks=mask[:,0]>0,qualities=[.9],metadata={},raw_masks=mask,raw_qualities=np.array([[.9]]))
         with tempfile.TemporaryDirectory() as path:
             folder=Path(path);inputs,_=self.fixture(folder)
             for mode,count in [('automatic',6),('seeded',5)]:
@@ -195,8 +204,8 @@ class AdapterIntegration(unittest.TestCase):
         np=self.np
         class Backend:
             def seeded(self,image,points,level):
-                raw=np.full((1,3,448,448),-1.);raw[0,0,28:35,14:21]=1.
-                return dict(masks=raw[:,0]>0,qualities=[.9],metadata={},raw_masks=raw,raw_qualities=np.array([[.9,.2,.1]]))
+                raw=np.full((1,1,448,448),-1.);raw[0,0,28:35,14:21]=1.
+                return dict(masks=raw[:,0]>0,qualities=[.9],metadata={},raw_masks=raw,raw_qualities=np.array([[.9]]))
         with tempfile.TemporaryDirectory() as path:
             folder=Path(path);inputs,frames=self.fixture(folder)
             output=folder/'frames'
@@ -245,6 +254,28 @@ class AdapterIntegration(unittest.TestCase):
                     self.assertEqual([f['whole']['matched_count'] for f in result['frames']],[0]*6)
                 else:
                     self.assertEqual([f['whole']['matched_count'] for f in result['frames']],[0,1,1,1,1,1])
+
+    def test_one_image_smoke_calls_backend_once_and_cannot_be_scored_as_six_boards(self):
+        from scripts.evaluate_granularity_segmentation import evaluate
+        np=self.np
+        class Backend:
+            calls=0
+            def automatic(self,image,level):
+                self.calls+=1
+                raw=np.zeros((0,448,448),dtype=bool)
+                return dict(masks=raw,qualities=[],metadata=[],raw_masks=raw,raw_qualities=np.array([]))
+        with tempfile.TemporaryDirectory() as path:
+            folder=Path(path);inputs,_=self.fixture(folder);backend=Backend()
+            result=run_frames(backend,inputs,folder/'output',G.condition('unsamv2','automatic',.1),
+                              time.monotonic()+120,smoke_case='board-06')
+            self.assertEqual(backend.calls,1)
+            self.assertEqual(result['cases'],['board-06'])
+            self.assertEqual(result['purpose'],'one_image_runtime_smoke')
+            with self.assertRaisesRegex(ValueError,'cannot be treated as a full comparison'):
+                evaluate(folder/'output',inputs,folder/'unused-references.json')
+            with self.assertRaisesRegex(ValueError,'actually exercise inference'):
+                run_frames(backend,inputs,folder/'skipped',G.condition('unsamv2','seeded',.1),
+                           time.monotonic()+120,smoke_case='board-01')
 
 
 if __name__=='__main__':unittest.main()

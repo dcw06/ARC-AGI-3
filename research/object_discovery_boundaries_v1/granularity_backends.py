@@ -66,14 +66,18 @@ class UnSAMv2Backend:
                 point_coords=np.asarray([point['pixel_xy']], dtype=np.float32),
                 point_labels=np.asarray([1], dtype=np.int32), multimask_output=True,
                 return_logits=True, gra=granularity)
-            masks, scores = np.asarray(masks), np.asarray(scores)
-            if masks.shape != (3, 448, 448) or scores.shape != (3,) or not np.isfinite(scores).all():
-                raise ValueError('UnSAMv2 multimask response differs')
+            masks, scores, logits = np.asarray(masks), np.asarray(scores), np.asarray(logits)
+            # MaskDecoderGra.forward returns the granularity mask alone, even
+            # when multimask_output=True. Its SAM candidates stay internal.
+            if (masks.shape != (1, 448, 448) or scores.shape != (1,) or
+                    logits.shape != (1,256,256) or not np.isfinite(scores).all() or
+                    not np.isfinite(logits).all()):
+                raise ValueError('UnSAMv2 single granularity-mask response differs')
             raw_masks.append(masks); raw_scores.append(scores); raw_logits.append(logits)
-            selected.append(int(np.argmax(scores)))
+            selected.append(0)
         if not points:
             return dict(masks=np.zeros((0,448,448), dtype=bool), qualities=[], metadata=[],
-                        raw_masks=np.zeros((0,3,448,448)), raw_qualities=np.zeros((0,3)))
+                        raw_masks=np.zeros((0,1,448,448)), raw_qualities=np.zeros((0,1)))
         chosen = np.stack([m[i] for m,i in zip(raw_masks, selected)])
         return dict(masks=binary_original(chosen, logits=True),
                     qualities=[float(s[i]) for s,i in zip(raw_scores,selected)],

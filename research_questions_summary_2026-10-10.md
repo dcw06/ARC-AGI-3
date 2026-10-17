@@ -268,6 +268,10 @@ automatic discovery processes ls20 without requiring MolmoPoint seeds.
 Raw-mask replay and the existing whole-object scorer are connected. Synthetic
 CPU checks do not establish model accuracy: checkpoint acquisition, isolated
 runtime qualification and real inference remain pending. No new GPU job ran.
+The [upstream contract corrections](reports/granularity_upstream_contract_fixes_2026-10-16.md)
+validate the four pinned legacy links, enforce UnSAMv2's single returned mask,
+and disable redundant Semantic-SAM backbone downloads. One-image smoke mode
+is implemented; actual checkpoint loading and inference are still pending.
 
 ## Source snapshot
 
