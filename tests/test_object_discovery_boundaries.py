@@ -82,6 +82,42 @@ class Scoring(unittest.TestCase):
             expected=max(sum(weights[i][j] for i,j in enumerate(order)) for order in itertools.permutations(range(len(weights))))
             self.assertAlmostEqual(sum(weights[i][j] for i,j in assignment(weights)),expected)
 
+    def ignore(self,ref,cells,rid='ig',parent=None):
+        ref['regions'].append(dict(id=rid,parent_id=parent,cells=cells,mask_reviewed=True,disposition='ignore'))
+        return ref
+
+    def test_prediction_on_an_ignore_region_is_neutral(self):
+        result=score_frame(prediction([[[1,1]],[[4,4]]]),self.ignore(reference([[[1,1]]]),[[4,4]]))
+        self.assertEqual((result['matched_count'],result['prediction_count'],result['raw_prediction_count']),(1,1,2))
+        self.assertEqual((result['detection_precision'],result['false_positive_count'],result['detection_recall']),(1,0,1))
+        self.assertEqual(result['ignored_region_matches'],[dict(region_id='ig',prediction_id='p1',iou=1.0)])
+        self.assertEqual(result['ignored_region_count'],1)
+
+    def test_included_references_are_matched_before_ignore_regions(self):
+        # The prediction matches the included object (IoU 1) and the overlapping ignore region (IoU 0.5).
+        result=score_frame(prediction([[[1,1]]]),self.ignore(reference([[[1,1]]]),[[1,1],[2,1]]))
+        self.assertEqual(result['matched_count'],1);self.assertEqual(result['ignored_region_matches'],[])
+        self.assertEqual(result['detection_precision'],1)
+
+    def test_duplicates_and_low_overlap_on_an_ignore_region_still_count(self):
+        result=score_frame(prediction([[[4,4]],[[4,4]]]),self.ignore(reference([]),[[4,4]]))
+        self.assertEqual(len(result['ignored_region_matches']),1)  # one-to-one, like included references
+        self.assertEqual((result['prediction_count'],result['false_positive_count']),(1,1))
+        result=score_frame(prediction([[[4,4]]]),self.ignore(reference([]),[[4,4],[5,4],[6,4]]))  # IoU 1/3
+        self.assertEqual((result['ignored_region_matches'],result['false_positive_count']),([],1))
+
+    def test_ignore_regions_follow_the_hierarchy_level(self):
+        ref=self.ignore(reference([[[1,1],[2,1],[4,4]]]),[[4,4]],parent='r0')  # an ignored part, not a whole object
+        result=score_frame(prediction([[[1,1],[2,1],[4,4]],[[4,4]]]),ref)
+        self.assertEqual((result['ignored_region_matches'],result['false_positive_count']),([],1))
+        parts=score_frame([dict(id='q',level='parts',cells=[[4,4]])],ref,level='parts')
+        self.assertEqual(len(parts['ignored_region_matches']),1);self.assertEqual(parts['prediction_count'],0)
+
+    def test_ignore_regions_with_an_incomplete_inventory(self):
+        result=score_frame(prediction([[[1,1]],[[4,4]],[[6,6]]]),self.ignore(reference([[[1,1]]],complete=False),[[4,4]]))
+        self.assertIsNone(result['false_positive_count'])
+        self.assertEqual((result['unadjudicated_unmatched_predictions'],result['prediction_count']),(1,2))
+
     def test_empty_denominators_do_not_manufacture_perfect_detection(self):
         result=score_frame([],reference([]))
         self.assertIsNone(result['detection_precision']);self.assertIsNone(result['detection_recall'])

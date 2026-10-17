@@ -65,6 +65,26 @@ class Preparation(unittest.TestCase):
             self.assertEqual(score['false_positive_count'],1)
             self.assertEqual(score['detection_recall'],1)
 
+    def test_invalid_response_counts_as_zero_found_and_is_listed(self):
+        self.pred['frames'][0].update(model_response_valid=False,objects=[])
+        result=self.score()
+        first=result['frames'][0];score=first['strata']['whole']
+        self.assertEqual((first['response_valid'],first['format_failure']),(False,True))
+        self.assertEqual((score['reference_count'],score['prediction_count'],score['matched_count']),(1,0,0))
+        self.assertEqual(score['detection_recall'],0);self.assertIsNone(score['detection_precision'])
+        self.assertEqual(result['format_failure_frames'],['board-01'])
+        self.assertTrue(all(f['response_valid'] and f['strata']['whole']['detection_recall']==1 for f in result['frames'][1:]))
+        self.assertEqual(sum(f['strata']['whole']['reference_count'] for f in result['frames']),6)  # stays in the totals
+
+    def test_invalid_response_with_objects_or_unstated_validity_refuses(self):
+        self.pred['frames'][0]['model_response_valid']=False  # still carries its candidate object
+        with self.assertRaisesRegex(ValueError,'invalid model response supplies objects'):self.score()
+        for value in (None,1,'false'):
+            self.pred['frames'][0]['model_response_valid']=value
+            with self.assertRaisesRegex(ValueError,'explicit model_response_valid boolean'):self.score()
+        del self.pred['frames'][0]['model_response_valid']
+        with self.assertRaisesRegex(ValueError,'explicit model_response_valid boolean'):self.score()
+
     def test_cross_frame_hash_or_changed_grid_refuses(self):
         self.pred['frames'][0]['grid_sha256']=self.pred['frames'][1]['grid_sha256']
         with self.assertRaisesRegex(ValueError,'prediction frame'):self.score()
