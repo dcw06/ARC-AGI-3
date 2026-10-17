@@ -1,5 +1,10 @@
 # SAM 2.1 Hiera-Large: retained MolmoPoint seed comparison
 
+**October 17 audit:** [board binding, independent raw replay and frozen-reference rescoring](granularity_evaluation_integrity_fixes_2026-10-17.md)
+pass for the retained evidence. The 12/37 and 6/37 SAM totals are unchanged under
+the integrated owner scoring policy. The reference freeze is retrospective;
+historical packages and evaluations remain preserved.
+
 October 16, 2026. **SAM 2.1 improved mask extraction with the same retained
 MolmoPoint seeds:** 12/37 reviewed whole objects match at IoU ≥ 0.5, versus
 7/37 for same-color components. Exact masks improved from 3/37 to 6/37.

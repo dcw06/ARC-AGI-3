@@ -88,7 +88,7 @@ def build(previous,preparation,reference_bundle,context_path,validation_path,out
             'review-evidence/prior-wheel-use-provenance-not-current-approval.json'):
             files[name]=(previous/name).read_bytes()
     operator_names=['research/object_discovery_boundaries_v1/'+n+'.py' for n in (
-        'deployment','operations','operator','kaggle_operator','live_evaluation','evaluation','scoring')]
+        'deployment','operations','operator','kaggle_operator','live_evaluation','evaluation','scoring','experiment')]
     source_names=sorted(set(names+operator_names+['scripts/build_object_boundary_live.py']))
     if not set(source_names)<=set(validation['source_sha256']):raise ValueError('verification does not cover complete source')
     files['evaluation-binding.json']=canonical(dict(match_iou=.5,primary_level='whole',passing_verdict=None,

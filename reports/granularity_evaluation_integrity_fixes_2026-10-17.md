@@ -56,8 +56,45 @@ claiming prospective evaluation). Pass its retained digest to either evaluator:
 - **73 Linux CPU tests pass, zero failures, errors or skips**, covering scoring,
   preparation, real Torch adapter contracts, replay, source links, frozen
   reference substitution and SAM input binding. No real model inference runs.
-- Retained SAM board audit and rescoring under the new external freeze follow
-  as separate audit outputs. Historical scores are not silently overwritten.
+- The broader boundary suite runs **134 tests: 132 pass, 2 SDK-dependent skips,
+  zero failures/errors**. Both skipped tests then pass in the installed Linux
+  operator interpreter, using synthetic serialization/transport with no provider
+  calls. This covers the package-builder source-binding change as well.
+- The old live-package builder also binds the new `experiment.py` evaluator
+  dependency in newly built review locks. Existing packages are not rewritten.
+
+## Retained evidence audit
+
+The [aggregate audit receipt](granularity_retained_evidence_audit_2026-10-17.json)
+records all six actual board hashes and their matching seed, original request,
+original preparation and reviewed-grid bindings. All pass. Five admitted SAM
+frames additionally match their retained admission image hashes and seed lists;
+invalid ls20 remains skipped, with zero proposals and no partial salvage.
+Independent replay of every retained SAM logit tensor, quality-based channel
+selection and mask-to-cell projection also passes.
+
+Both scorers were rerun against the committed manifest and independently retained
+digest after its commit, using refreshed offline evaluation bindings. The
+original files and earlier evaluations were preserved. Results are unchanged:
+
+| Retained condition | Raw / scored proposals | Whole-object matches | Exact masks | Neutral ignore matches |
+|---|---:|---:|---:|---:|
+| Same-color components | 22 / 22 | 7/37 | 3/37 | 0 |
+| SAM 2.1 | 22 / 22 | 12/37 | 6/37 | 0 |
+| UnSAMv2+ seeded smoke | 3 / 3 | 0/6 | 0/6 | 0 |
+| UnSAMv2+ automatic smoke | 96 / 96 | 0/6 | 0/6 | 0 |
+| UnSAMv2 seeded smoke | 3 / 3 | 0/6 | 0/6 | 0 |
+| UnSAMv2 automatic smoke | 96 / 96 | 0/6 | 0/6 | 0 |
+
+No prediction in these retained cases matched an ignore region, which is why
+the corrected policy does not change their totals. Invalid ls20 stays in the
+all-board reference denominator and is reported as a format failure. This audit
+establishes consistency of retained evidence and current replay, without claiming
+the old runtime performed the newly added validation during inference.
+
+The separate granularity-evaluator reference-mutation reproduction also fails
+as expected against `5c72610`: it accepts the changed reference instead of refusing.
+Its regression now passes against the integrated evaluator.
 
 No GPU job, notebook save, upload retry or new compute authorization was made.
 The separately staged Semantic-SAM payload predates these fixes. Its approval

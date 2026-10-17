@@ -1,5 +1,9 @@
 # Granularity segmentation: checkpoint preparation and one-image checks
 
+**October 17 evaluation update:** the [owner-policy integration, external reference freeze and retained board audit](granularity_evaluation_integrity_fixes_2026-10-17.md)
+are complete. Replayed results are unchanged; this reference freeze is explicitly
+retrospective and grants no launch authority.
+
 The UnSAMv2 and UnSAMv2+ seeded and automatic **CPU runtime smoke checks pass**.
 Semantic-SAM's checkpoint is acquired; its isolated CUDA environment, both native
 extension builds and offline imports now pass. Its real GPU inference is still
@@ -9,9 +13,10 @@ qualification, the owner separately approved private staging only. Upload
 attempt 1 was interrupted after WSL restarted: no completion receipt was written,
 and a complete authenticated owner catalogue did not list the target dataset.
 The owner then authorized one fresh upload attempt of the same payload. Attempt 2
-is running natively on Windows, independent of WSL, as a one-off hidden task with
-no recurring trigger or automatic retries. Provider creation and inventory
-verification are not yet complete. Neither upload approval authorizes GPU compute.
+transferred all 12 files and received `CreateDataset` status `Ok` on Windows.
+Post-create and fresh read-only checks returned 403; the complete owner catalogue
+did not list the dataset. It stopped without retry. Privacy, version and file
+inventory remain unverified. Neither upload approval authorizes GPU compute.
 
 ## Checkpoints and environments
 

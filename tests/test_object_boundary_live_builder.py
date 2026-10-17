@@ -50,6 +50,8 @@ class Builder(unittest.TestCase):
         a=self.build('a');b=self.build('b');self.assertEqual(a['review_lock_sha256'],b['review_lock_sha256'])
         package=self.root/'a';payload=json.loads((package/'runtime-payload.json').read_bytes())
         self.assertFalse(any('references' in n or 'scoring' in n or 'evaluation' in n for n in payload))
+        binding=json.loads((package/'evaluation-binding.json').read_bytes())
+        self.assertIn('research/object_discovery_boundaries_v1/experiment.py',binding['source_sha256'])
         self.assertEqual(sum(n.startswith('agent-inputs/') for n in payload),7)
         self.assertNotIn('reviewed-source/research/molmopoint_identification_v1/inference.py',payload)
         requests=base64.b64decode(payload['agent-inputs/requests.jsonl'])

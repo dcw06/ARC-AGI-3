@@ -1,0 +1,46 @@
+{
+  "baseline": "5c72610",
+  "baseline_granularity": {
+    "baseline": "5c72610",
+    "errors": 0,
+    "failures": 1,
+    "tests": 1
+  },
+  "baseline_reference_and_ignore_reproductions": {
+    "baseline": "5c72610",
+    "errors": 3,
+    "expected_failures": true,
+    "failures": 2,
+    "tests": 3
+  },
+  "broader_linux": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 2,
+    "tests": 134
+  },
+  "gpu_jobs": 0,
+  "logs_sha256": {
+    "baseline-granularity-reproduction.log": "a65942b6157e5bb3d6e96d8c68ba3c49ce7ca6df5086d0f1c209dbe01485ed17",
+    "baseline-reproductions-complete.log": "183e7940c73dcf1b5cfa199cecc38edf4c64744f1bf74e351990ce8150dec1fd",
+    "linux-validation-r2.log": "30640c2edb6f9347546fe2add770b3dded14de1ea7dc85f5e79c180e46421ffe",
+    "linux-validation.log": "ed05edf1149aac0f826ba9bc3bf354cc414fdd644bafca8e352357e912e187d6",
+    "operator-integration-validation.log": "f66d71f8e37e31ef154a2c29ab1890b2e5e3ddac89cc5d16cdf6bc0fb2a16c06",
+    "retained-audit-r2.log": "e5961fc853c7bebb7f2347bddd3ac38c1417943d0f7c93d780130cadecc7b3cb"
+  },
+  "new_model_inference": false,
+  "operator_integration": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 2
+  },
+  "provider_calls": 0,
+  "reference_audit_manifest_sha256": "aa9d49422f9b44efa0a4dc504bcaecaa55236b2281be37adb12e6bef3a4348ad",
+  "targeted_linux": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 73
+  }
+}

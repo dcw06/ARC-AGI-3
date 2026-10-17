@@ -282,9 +282,18 @@ relocation, native imports and all 99 version checks. Model construction and CUD
 pending. The six-board comparison has not started. The Linux CPU suite passes
 101 tests without failures or skips; no GPU job was launched. The owner has
 approved private staging only. The first upload was interrupted after WSL
-restarted and is preserved; a separately authorized second attempt is now running
-natively on Windows with no automatic retry. Provider creation, inventory
-verification and final GPU-package review remain pending.
+restarted and is preserved. The separately authorized Windows attempt transferred
+all 12 files and received a successful creation response, but verification still
+returns 403 and the dataset is absent from the owner catalogue. It stopped
+without retry; attachment verification and final GPU-package review remain pending.
+
+**October 17 scoring audit:** the [three evaluation fixes and retained-evidence audit](reports/granularity_evaluation_integrity_fixes_2026-10-17.md)
+integrate the owner scoring policy, require an externally pinned reference
+manifest and bind SAM seed frames to actual PNG bytes. All six retained SAM
+boards pass the evidence audit; saved logits and all four UnSAM smoke outputs
+replay under the committed retrospective freeze. Totals remain SAM 12/37 matches
+and 6 exact, components 7/37 and 3 exact, and each UnSAM smoke 0/6. No new inference
+or GPU work occurred; the audit does not make the historical freeze prospective.
 
 ## Source snapshot
 
