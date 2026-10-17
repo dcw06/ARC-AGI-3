@@ -13,7 +13,7 @@ from research.object_discovery_boundaries_v1.granularity_worker import inputs_fo
 from research.object_discovery_boundaries_v1.scoring import score_frame
 
 
-def evaluate(frames_dir, inputs, references):
+def evaluate(frames_dir, inputs, references, *, smoke_case=None):
     import numpy as np
     frames_dir = Path(frames_dir)
     manifest = json.loads((frames_dir/'worker-manifest.json').read_bytes())
@@ -28,11 +28,19 @@ def evaluate(frames_dir, inputs, references):
         raise ValueError('retained policy differs')
     seeds = inputs_for(inputs)
     scope=json.loads((frames_dir/'worker-scope.json').read_bytes())
-    if scope != dict(purpose='six_board_comparison',cases=[frame['case_id'] for frame in seeds]):
+    expected_scope=dict(purpose='six_board_comparison',cases=[frame['case_id'] for frame in seeds])
+    if smoke_case is not None:
+        if smoke_case not in expected_scope['cases']:
+            raise ValueError('unknown explicit smoke case')
+        expected_scope=dict(purpose='one_image_runtime_smoke',cases=[smoke_case])
+    if scope != expected_scope:
         raise ValueError('one-image smoke output cannot be treated as a full comparison')
     refs = json.loads(Path(references).read_bytes())['frames']
     if [f['case_id'] for f in refs] != [f['case_id'] for f in seeds]:
         raise ValueError('reference/input order differs')
+    if smoke_case is not None:
+        seeds=[frame for frame in seeds if frame['case_id']==smoke_case]
+        refs=[frame for frame in refs if frame['case_id']==smoke_case]
     result = []
     for seed, ref in zip(seeds, refs):
         name = seed['case_id']
@@ -78,9 +86,10 @@ def evaluate(frames_dir, inputs, references):
         result.append(dict(case_id=name,whole=score_frame(saved['objects'],ref),
                            raw_proposal_count=saved.get('raw_proposal_count',0),
                            discarded_by_proposal_budget=saved.get('discarded_by_proposal_budget',0)))
-    return dict(policy=policy,reference_sha256=file_sha(references),
+    return dict(policy=policy,scope=scope,reference_sha256=file_sha(references),
                 worker_manifest_sha256=file_sha(frames_dir/'worker-manifest.json'),frames=result,
-                qualification='One separate development condition on owner-reviewed retained frames. No best-level selection, gameplay, or GPU lifecycle certification.',
+                qualification=('One-image runtime smoke only; not a six-board comparison. ' if smoke_case else '')+
+                'One separate development condition on owner-reviewed retained frames. No best-level selection, gameplay, or GPU lifecycle certification.',
                 passing_verdict=None)
 
 
@@ -88,5 +97,6 @@ if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     for arg in ('frames','inputs','references','output'):
         parser.add_argument('--'+arg,required=True)
+    parser.add_argument('--smoke-case',choices=[f'board-{i:02d}' for i in range(1,7)])
     args=parser.parse_args()
-    write_json(args.output,evaluate(args.frames,args.inputs,args.references))
+    write_json(args.output,evaluate(args.frames,args.inputs,args.references,smoke_case=args.smoke_case))

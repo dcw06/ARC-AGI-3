@@ -1,4 +1,5 @@
 """Lazy upstream API adapters; importing this module never loads a checkpoint."""
+import math
 from .granularity import condition, normalized_semantic_point, SEMANTIC_CHANNEL
 from .sam21 import point_prompts
 
@@ -43,10 +44,23 @@ def automatic_result(records, resolution):
     if masks.shape != (len(records), resolution, resolution):
         raise ValueError('automatic masks differ from declared image frame')
     qualities = [float(r['predicted_iou']) for r in records]
+    if not all(math.isfinite(q) for q in qualities):
+        raise ValueError('nonfinite predicted mask quality')
+    stability = [float(r['stability_score']) for r in records]
+    metadata=[]
+    for index,record in enumerate(records):
+        row={k:record[k] for k in ('predicted_iou','stability_score','point_coords','crop_box','area')}
+        if not math.isfinite(stability[index]):
+            # Upstream computes 0/0 for some empty masks when stability
+            # filtering is disabled. Preserve the failed proposal and the
+            # original NaN in the NPZ, without emitting nonstandard JSON.
+            if not math.isnan(stability[index]) or masks[index].any():
+                raise ValueError('undefined stability is permitted only for an empty raw mask')
+            row.update(stability_score=None,stability_score_state='undefined_empty_mask')
+        metadata.append(row)
     return dict(masks=binary_original(masks, logits=False), qualities=qualities,
                 raw_masks=masks, raw_qualities=np.asarray(qualities),
-                metadata=[{k: r[k] for k in ('predicted_iou', 'stability_score', 'point_coords', 'crop_box', 'area')}
-                          for r in records])
+                raw_stability_scores=np.asarray(stability),metadata=metadata)
 
 
 class UnSAMv2Backend:

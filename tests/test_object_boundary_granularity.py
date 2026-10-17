@@ -140,6 +140,27 @@ class AdapterIntegration(unittest.TestCase):
         self.assertEqual(calls[0]['level'],[2]);self.assertEqual(calls[1],{})
         self.assertEqual(raw['masks'].shape,(0,448,448))
 
+    def test_empty_automatic_nan_stability_is_retained_with_strict_JSON(self):
+        from research.object_discovery_boundaries_v1.granularity_backends import automatic_result
+        row=dict(segmentation=self.np.zeros((448,448),dtype=bool),predicted_iou=.8,
+                 stability_score=float('nan'),point_coords=[[10.,20.]],crop_box=[0,0,448,448],area=0)
+        raw=automatic_result([row],448)
+        self.assertTrue(self.np.isnan(raw['raw_stability_scores'][0]))
+        self.assertEqual(raw['metadata'][0]['stability_score_state'],'undefined_empty_mask')
+        json.dumps(raw['metadata'],allow_nan=False)
+        converted=G.assemble(raw,G.condition('unsamv2','automatic',.1))
+        self.assertEqual(converted['scored_proposal_count'],1)
+        self.assertTrue(converted['objects'][0]['empty_mask'])
+
+    def test_nonempty_undefined_stability_and_nonfinite_quality_refuse(self):
+        from research.object_discovery_boundaries_v1.granularity_backends import automatic_result
+        row=dict(segmentation=self.np.zeros((448,448),dtype=bool),predicted_iou=.8,
+                 stability_score=float('nan'),point_coords=[[10.,20.]],crop_box=[0,0,448,448],area=0)
+        row['segmentation'][0,0]=True
+        with self.assertRaises(ValueError):automatic_result([row],448)
+        row['segmentation'][0,0]=False;row['predicted_iou']=float('nan')
+        with self.assertRaises(ValueError):automatic_result([row],448)
+
     def test_projection_resizes_640_to_448_before_7_pixel_cell_mapping(self):
         from research.object_discovery_boundaries_v1.granularity_backends import binary_original
         mask=self.np.zeros((1,640,640),dtype=bool)
@@ -265,7 +286,7 @@ class AdapterIntegration(unittest.TestCase):
                 raw=np.zeros((0,448,448),dtype=bool)
                 return dict(masks=raw,qualities=[],metadata=[],raw_masks=raw,raw_qualities=np.array([]))
         with tempfile.TemporaryDirectory() as path:
-            folder=Path(path);inputs,_=self.fixture(folder);backend=Backend()
+            folder=Path(path);inputs,frames=self.fixture(folder);backend=Backend()
             result=run_frames(backend,inputs,folder/'output',G.condition('unsamv2','automatic',.1),
                               time.monotonic()+120,smoke_case='board-06')
             self.assertEqual(backend.calls,1)
@@ -273,6 +294,15 @@ class AdapterIntegration(unittest.TestCase):
             self.assertEqual(result['purpose'],'one_image_runtime_smoke')
             with self.assertRaisesRegex(ValueError,'cannot be treated as a full comparison'):
                 evaluate(folder/'output',inputs,folder/'unused-references.json')
+            refs=folder/'references.json'
+            write_json(refs,dict(frames=[dict(case_id=f['case_id'],grid=[[5]*64 for _ in range(64)],
+                inventory_policy='synthetic',reference_exhaustive_confirmed=True,
+                regions=[dict(id='object',parent_id=None,cells=[[2,4]],mask_reviewed=True,disposition='include')]) for f in frames]))
+            replay=evaluate(folder/'output',inputs,refs,smoke_case='board-06')
+            self.assertEqual(replay['scope']['purpose'],'one_image_runtime_smoke')
+            self.assertEqual([f['case_id'] for f in replay['frames']],['board-06'])
+            with self.assertRaises(ValueError):
+                evaluate(folder/'output',inputs,refs,smoke_case='board-05')
             with self.assertRaisesRegex(ValueError,'actually exercise inference'):
                 run_frames(backend,inputs,folder/'skipped',G.condition('unsamv2','seeded',.1),
                            time.monotonic()+120,smoke_case='board-01')
