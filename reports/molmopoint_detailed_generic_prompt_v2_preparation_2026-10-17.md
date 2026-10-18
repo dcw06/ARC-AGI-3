@@ -1,5 +1,9 @@
 # MolmoPoint: detailed generic discovery instruction, prepared
 
+**Subsequent launch update:** after explicit approval of the hash below and one
+fresh attempt, [version 1 was submitted once and observed RUNNING](molmopoint_detailed_generic_v2_attempt1_submission_2026-10-17.md).
+The preparation-time state below is preserved; no model-performance result is claimed.
+
 The owner's eight-rule generic instruction is retained verbatim in
 [`prompts.py`](../research/object_discovery_boundaries_v1/prompts.py), with only
 Markdown line-break escapes represented as ordinary line breaks. All six
