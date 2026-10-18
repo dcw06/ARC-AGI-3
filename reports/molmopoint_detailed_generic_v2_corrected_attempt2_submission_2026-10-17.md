@@ -1,5 +1,11 @@
 # MolmoPoint detailed prompt: corrected package submitted once
 
+**Terminal update:** the [completed run and independent replay](molmopoint_detailed_generic_v2_attempt2_results_2026-10-17.md)
+pass on the actual RTX PRO 6000, with a 294.849-second worker lifecycle and
+verified cleanup. All six responses end normally, but yield **zero native
+points and 0/37 whole-object coverage**. There is no token-cap exhaustion or
+successful discovery result. This submission-time record is preserved.
+
 The owner approved the corrected package and one fresh attempt under the same
 limits. That reply is retained verbatim against the corrected review/runtime
 hashes, protocol and account-only scope. A new reservation and single-use claim
