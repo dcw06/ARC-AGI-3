@@ -113,7 +113,14 @@ data and introduced no automatic retry. Exactly one SaveKernel send encountered
 `SSLError`. A read-only follow-up again found the target absent, and the status
 lookup raised ValueError. Both sets of private receipts remain preserved.
 
-The attempt-2 notebook is 57,967,905 bytes. Both failures occurred during its
-submission, but this does not establish that payload size caused the SSL EOF.
-The transport failure needs investigation before spending further attempts;
-there is no confirmed model execution or performance result to analyze.
+The attempt-2 notebook is 57,967,905 bytes. Subsequent
+[read-only SSL diagnosis](initial_geometry_ssl_diagnosis_2026-10-18.md)
+reproduced a size-dependent body-write SSL failure after verified TLS: 8 MiB
+succeeded, while 58 MiB failed. A headers-only request declaring the exact
+57,968,799-byte attempt-2 body received HTTP 400 before sending any body; the
+small control received HTTP 100 Continue. Embedded game wheels account for
+99.4% of the payload ZIP. Oversized request rejection is the leading diagnosis;
+the original SaveKernel HTTP status and exact limit remain unconfirmed.
+The approved package is unchanged. A smaller, freshly reviewed successor is
+needed before another attempt; there is no confirmed model execution or
+performance result to analyze. Diagnosis made no notebook save or GPU launch.

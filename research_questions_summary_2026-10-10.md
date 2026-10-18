@@ -307,6 +307,11 @@ runner and private review r4 are prepared and approved. Two separately
 authorized submissions each failed with SSL EOF after fresh preflight, including
 one through WSL. Both consumed reservations are preserved; no automatic retry
 was made. No notebook/run is confirmed.
+The [read-only SSL diagnosis](reports/initial_geometry_ssl_diagnosis_2026-10-18.md)
+strongly implicates oversized request rejection: embedded game wheels expand
+the submission to about 58 MB. Smaller metadata calls and verified TLS pass;
+large read-only probes reproduce rejection/SSL failure. No new save, GPU job
+or attempt occurred. The unchanged r4 package needs a smaller reviewed successor.
 [Review fixes](reports/initial_geometry_assistance_v1_preparation_2026-10-18.md#review-fixes-october-18)
 now record deadline and exception stops, keep a completion observed before the
 deadline, report supplied-geometry click rates and pin the game receipt. 41

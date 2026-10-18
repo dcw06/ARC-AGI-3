@@ -8,6 +8,12 @@ Both uncertain attempts and reservations remain consumed, with no automatic retr
 Source/use approval remains recorded; another attempt needs fresh compute
 authorization and preflight. Earlier consumed attempts remain unchanged.
 
+[Read-only diagnosis](initial_geometry_ssl_diagnosis_2026-10-18.md) now strongly
+implicates oversized request rejection: the notebook's embedded wheels expand
+its JSON submission to about 58 MB. Verified TLS and small metadata calls pass;
+large read-only requests reproduce rejection/SSL failure. No exact SaveKernel
+size limit was established. The approved r4 package was not changed or resent.
+
 ## Historical check before the live implementation
 
 At this earlier check, the study lacked an executable live package.
