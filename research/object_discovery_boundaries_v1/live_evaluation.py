@@ -123,7 +123,7 @@ def evaluate(preparation, worker, model_folder, review_package):
     owner_review = json.loads((review_package/'references/confirmed-review.json').read_bytes())
     validate_review(owner_review,verified_preparation(preparation))
     protocol = json.loads((review_package/'runtime/protocol.json').read_bytes())
-    requests = requests_for(preparation/'inputs')
+    requests = requests_for(preparation/'inputs',prompt_profile=protocol.get('prompt_profile','legacy_whole_v1'))
     expected_outputs = {'worker.json'} | {r['case_id']+suffix+'.json' for r in requests for suffix in ('','-raw','-admission')}
     if {p.relative_to(worker).as_posix() for p in worker.rglob('*') if p.is_file()} != expected_outputs:
         raise ValueError('exactly six admissions, raw outputs and finalized cases required')

@@ -128,7 +128,7 @@ def native_generate(model, processor, image, request, until, torch, stopping, ra
     return result
 
 
-def run(model_folder, inputs, output, expected_versions, work_deadline):
+def run(model_folder, inputs, output, expected_versions, work_deadline, *, prompt_profile='legacy_whole_v1'):
     """Supervisor has verified all model/wheel/input hashes before this import."""
     import torch
     from PIL import Image
@@ -140,7 +140,7 @@ def run(model_folder, inputs, output, expected_versions, work_deadline):
         raise ValueError('isolated installed runtime differs from the separate MolmoPoint lock')
     if torch.cuda.device_count() != 1 or 'RTX PRO 6000' not in torch.cuda.get_device_name(0):
         raise ValueError('expected exactly one RTX PRO 6000')
-    requests = requests_for(inputs)
+    requests = requests_for(inputs,prompt_profile=prompt_profile)
     attempted = []
     def refuse(*args,**kwargs):
         attempted.append(True)

@@ -20,6 +20,7 @@ from research.object_identification_v1.install_check import install_commands, re
 from research.object_identification_v1.mount_check import canonical, find_mount, verify_files
 from research.molmopoint_identification_v1.adapter import MODEL, REVISION
 from .prepare import requests_for
+from .prompts import select_prompt
 
 SCOPE = {'gpu_count': 1, 'gpu_name_contains': 'RTX PRO 6000', 'session_timeout_seconds': 3600,
          'whole_job_cap_seconds': None, 'provider_overhead_may_exceed_one_hour': True,
@@ -68,6 +69,10 @@ def driver_loader_evidence(env):
 def readiness(protocol, evidence):
     """No booleans masquerading as evidence: records bind exact scope and bytes."""
     problems = []
+    try:
+        select_prompt(protocol.get('prompt_profile','legacy_whole_v1'),'')
+    except ValueError:
+        problems.append('unknown frozen object-discovery prompt profile')
     if canonical(protocol.get('scope')) != canonical(SCOPE):
         problems.append('scope differs from frozen six-request design')
     if protocol.get('live_runs_enabled') is not True:
@@ -207,7 +212,7 @@ def run(packet, *, input_root='/kaggle/input', output='/kaggle/working/object-di
         return _execute(packet, protocol, authority, pin, input_root, output, started)
 
 
-def stage_agent_inputs(mount, destination, rows, check):
+def stage_agent_inputs(mount, destination, rows, check, *, prompt_profile='legacy_whole_v1'):
     """Expose generic requests and board images only, after mounted-byte checks."""
     names = {'requests.jsonl'} | {f'board-{i:02d}.png' for i in range(1, 7)}
     selected = [row for row in rows if row['name'] in names]
@@ -219,7 +224,7 @@ def stage_agent_inputs(mount, destination, rows, check):
         check()
         shutil.copyfile(Path(mount)/row['name'], destination/row['name'])
     receipt = verify_files(destination, selected, check)
-    requests_for(destination)
+    requests_for(destination,prompt_profile=prompt_profile)
     return receipt
 
 
@@ -295,14 +300,16 @@ def _execute(packet, protocol, authority, pin, input_root, output, started):
         # old target prompts are never staged or read by the inference worker.
         agent_inputs = sandbox/'agent-inputs'
         result['agent_input_staging'] = stage_agent_inputs(
-            packet/'agent-inputs', agent_inputs, protocol['agent_input_files'], check)
+            packet/'agent-inputs', agent_inputs, protocol['agent_input_files'], check,
+            prompt_profile=protocol.get('prompt_profile','legacy_whole_v1'))
         env.update(CUDA_VISIBLE_DEVICES=gpu, NVIDIA_VISIBLE_DEVICES=gpu)
         worker = ('import json,sys; sys.path.insert(0,sys.argv[1]); '
                   'from research.object_discovery_boundaries_v1.inference import run; '
-                  'run(sys.argv[2],sys.argv[3],sys.argv[4],json.loads(sys.argv[5]),float(sys.argv[6]))')
+                  'run(sys.argv[2],sys.argv[3],sys.argv[4],json.loads(sys.argv[5]),float(sys.argv[6]),prompt_profile=sys.argv[7])')
         processes.command([str(venv/'bin/python'), '-I', '-c', worker, str(root), str(mounts['model']),
             str(agent_inputs), str(output/'worker'),
-            json.dumps({name: row['version'] for name, row in pins.items()}), str(work_deadline)],
+            json.dumps({name: row['version'] for name, row in pins.items()}), str(work_deadline),
+            protocol.get('prompt_profile','legacy_whole_v1')],
             log, work_deadline, env, 'uncued whole-object GPU worker')
         summary = json.loads((output/'worker/worker.json').read_bytes())
         result['generation_requests'] = summary['generation_requests']

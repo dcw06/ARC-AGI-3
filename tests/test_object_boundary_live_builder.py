@@ -65,6 +65,22 @@ class Builder(unittest.TestCase):
         self.write(self.refs/'confirmed-review.json',b'{}')
         with self.assertRaisesRegex(ValueError,'reference manifest'):self.build()
 
+    def test_detailed_profile_is_bound_in_runtime_and_replay(self):
+        from research.object_discovery_boundaries_v1.prepare import prepare,requests_for
+        from research.object_discovery_boundaries_v1.prompts import DETAILED_PROFILE,DETAILED_PROMPT
+        detailed=self.fixture.base/'detailed-preparation'
+        prepare(self.fixture.base/'source',detailed,prompt_profile=DETAILED_PROFILE)
+        self.fixture.prep=detailed
+        self.build('detailed')
+        package=self.root/'detailed'
+        protocol=json.loads((package/'runtime/protocol.json').read_bytes())
+        self.assertEqual(protocol['prompt_profile'],DETAILED_PROFILE)
+        self.assertEqual({r['prompt'] for r in requests_for(package/'runtime/agent-inputs',prompt_profile=DETAILED_PROFILE)},
+                         {DETAILED_PROMPT})
+        self.assertTrue((package/'runtime/reviewed-source/research/object_discovery_boundaries_v1/prompts.py').is_file())
+        self.assertEqual(json.loads((package/'kernel-metadata.json').read_bytes())['title'],
+                         'ARC3 MolmoPoint Generic Discovery V2')
+
     def test_changed_source_validation_is_refused(self):
         validation=json.loads(self.validation.read_bytes());validation['source_sha256']['scripts/build_object_boundary_live.py']='a'*64
         self.write(self.validation,B.canonical(validation))

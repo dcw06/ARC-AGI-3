@@ -16,9 +16,9 @@ def verified_preparation(preparation):
             raise ValueError('prepared artifact differs: '+name)
     required={'protocol.json','references/review-draft.json','inputs/requests.jsonl'}
     if not required<=set(manifest):raise ValueError('required preparation artifacts not bound')
-    requests_for(preparation/'inputs')
     root=Path(__file__).resolve().parents[2]
     protocol=json.loads((preparation/'protocol.json').read_bytes())
+    requests_for(preparation/'inputs',prompt_profile=protocol.get('prompt_profile','legacy_whole_v1'))
     if not protocol.get('source_sha256'):raise ValueError('preparation source binding missing')
     for name,pin in protocol['source_sha256'].items():
         p=root/name

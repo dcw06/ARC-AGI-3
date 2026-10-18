@@ -18,7 +18,10 @@ def build(previous,preparation,reference_bundle,context_path,validation_path,out
     previous,preparation,reference_bundle,output=map(Path,(previous,preparation,reference_bundle,output))
     if output.exists():raise FileExistsError('preserve every earlier package')
     previous_pin=D.verify_review(previous)
-    source=verified_preparation(preparation);requests_for(preparation/'inputs')
+    source=verified_preparation(preparation)
+    preparation_protocol=json.loads((preparation/'protocol.json').read_bytes())
+    prompt_profile=preparation_protocol.get('prompt_profile','legacy_whole_v1')
+    requests_for(preparation/'inputs',prompt_profile=prompt_profile)
     refs={p.name:p.read_bytes() for p in reference_bundle.iterdir() if p.is_file()}
     manifest=json.loads(refs['manifest.json'])
     for name,pin in manifest.items():
@@ -52,10 +55,11 @@ def build(previous,preparation,reference_bundle,context_path,validation_path,out
         agent_input_files=[dict(name=n,bytes=len(raw),sha256=D.digest(raw)) for n,raw in sorted(agent.items())],
         input_policy='Seven embedded uncued artifacts only. Existing input dataset reused for installation wheels; previous target prompts never enter worker staging or model context.',
         generation='Six greedy uncued whole-object inventories; native constraints; 4096 new tokens maximum each',
-        condition='uncued_whole_inventory',boundary_method='seed_color_component_4',match_iou=.5,
+        condition='uncued_whole_inventory',prompt_profile=prompt_profile,
+        boundary_method='seed_color_component_4',match_iou=.5,
         passing_verdict=None,pretrained_weights_dtype='bfloat16')
     names=['research/object_discovery_boundaries_v1/'+n+'.py' for n in (
-        '__init__','supervisor','inference','prepare','decoding','masks','reference_audit')]+[
+        '__init__','supervisor','inference','prepare','prompts','decoding','masks','reference_audit')]+[
         'research/molmopoint_identification_v1/'+n for n in ('__init__.py','adapter.py','model_pin.json','runtime_requirements.lock')]+[
         'research/object_identification_v1/'+n+'.py' for n in ('__init__','mount_check','install_check')]+[
         'certification/direct_publisher_smoke_v1/'+n+'.py' for n in ('__init__','install','server')]+[
@@ -73,6 +77,8 @@ def build(previous,preparation,reference_bundle,context_path,validation_path,out
     book['cells'][-1]['source']=D.bootstrap(payload).splitlines(keepends=True)
     metadata=json.loads((previous/'kernel-metadata.json').read_bytes())
     metadata.update(id=context['new_target'],title='ARC3 Uncued Object Discovery and Boundaries V1')
+    if prompt_profile=='detailed_whole_v2':
+        metadata['title']='ARC3 MolmoPoint Generic Discovery V2'
     save=json.loads((previous/'launch-spec.json').read_bytes())
     save['save_fields'].update(slug=metadata['id'],new_title=metadata['title'])
     files={'runtime/'+n:raw for n,raw in runtime.items()}
@@ -124,7 +130,7 @@ independently reconstructed masks. Original cued attempt remains consumed.
 Only AUTHORITY literal may change after approval. Missing authority refuses
 before extraction, install or GPU query. Fresh read-only preflight and a
 single-use reservation/claim precede the single provider SaveKernel.
-''').encode()
+'''+('\nPrompt profile: '+prompt_profile+'. The exact instruction is bound in agent-inputs/requests.jsonl.\n')).encode()
     lock=dict(schema='uncued_object_boundary_live_review_v1',artifacts={n:D.digest(raw) for n,raw in sorted(files.items())},
         source_sha256={n:D.digest((ROOT/n).read_bytes()) for n in source_names},
         builder_sha256=D.digest(Path(__file__).read_bytes()),scope=SCOPE,
