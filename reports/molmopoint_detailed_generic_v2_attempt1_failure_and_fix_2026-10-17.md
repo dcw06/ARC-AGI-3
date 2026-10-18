@@ -1,5 +1,10 @@
 # MolmoPoint detailed prompt: failed input guard, corrected before another run
 
+**Subsequent authorized launch:** after fresh approval of corrected hash
+`c7c3d890…`, [one new attempt was submitted in a separate notebook](molmopoint_detailed_generic_v2_corrected_attempt2_submission_2026-10-17.md)
+and observed RUNNING. The failure and preparation-time records below are
+preserved. No model-performance result is claimed yet.
+
 The first detailed-instruction attempt is ERROR and remains consumed. It ran on
 the requested RTX PRO 6000, installed successfully and loaded the model, then
 failed before its first pretrained generation. This is a local integration
