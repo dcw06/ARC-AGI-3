@@ -295,6 +295,13 @@ replay under the committed retrospective freeze. Totals remain SAM 12/37 matches
 and 6 exact, components 7/37 and 3 exact, and each UnSAM smoke 0/6. No new inference
 or GPU work occurred; the audit does not make the historical freeze prospective.
 
+**October 18 next experiment:** [initial geometry assistance](reports/initial_geometry_assistance_v1_preparation_2026-10-18.md)
+compares retained automatic geometry with owner-reviewed starting geometry in
+short paired episodes. All six initial boards and 12 two-action CPU rehearsals
+replay exactly; 30 regressions and 24 native Qwen CPU processor checks pass.
+These use a scripted policy, with no LLM gameplay results. The bounded live
+launcher, final private package and fresh gameplay authorization remain pending.
+
 ## Source snapshot
 
 | Collection | Revision used |
