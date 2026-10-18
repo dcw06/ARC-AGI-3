@@ -1,5 +1,7 @@
 # MolmoPoint plus SAM 2.1: requested detailed-prompt repeat
 
+**Terminal update:** [completed and independently replayed](molmopoint_sam21_detailed_repeat_results_2026-10-17.md): actual RTX PRO 6000, verified cleanup, zero native points on all six boards; SAM skipped for lack of seeds. This submission-time record remains preserved.
+
 October 17, 2026. The owner explicitly requested a fresh submission of the
 pipeline behind the earlier **6/37 exact SAM masks**, with the revised prompt
 and token limit. One private GPU notebook was submitted once, without retries.
