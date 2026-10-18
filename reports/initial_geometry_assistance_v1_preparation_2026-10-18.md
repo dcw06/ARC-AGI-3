@@ -9,7 +9,7 @@ attempts. No earlier attempt, approval or scientific result is replaced.
 | Research question | Proposed comparison | Interpretation limit |
 |---|---|---|
 | Does better starting object geometry improve first-level completion? | Retained automatic MolmoPoint + SAM 2.1 geometry versus owner-reviewed whole-object geometry, using one shared action policy | Tests the complete starting representation, including inventory omissions and boundaries; not boundary accuracy alone |
-| Does assistance improve initial click localization? | First policy action, when it is ACTION6: does its point occupy a reviewed whole-object cell? | Object containment does not establish a correct interaction region, mechanic or intended target; later clicks cannot use stale initial labels |
+| Does assistance improve initial click localization? | First policy action, when it is ACTION6: does its point occupy a reviewed whole-object cell? Also reported: whether it lies in the arm's own supplied masks, and whether it is exactly one of the arm's supplied anchors | Object containment does not establish a correct interaction region, mechanic or intended target; later clicks cannot use stale initial labels. The reviewed arm receives the reviewed masks and an anchor for each, so its reviewed-object rate cannot separate localization from use of the supplied geometry; compare it only beside both supplied-geometry rates |
 | Can the shared policy predict visible consequences? | Record yes/no/unknown before dispatch and compare with the next final image | Includes counters and interface changes; not evidence that a game rule or causal mechanism was learned |
 
 ## Paired design
@@ -60,7 +60,7 @@ fixed hashes before reading reference or automatic-mask content.
 | Starting-board binding | All 12 episode starts reproduce the reviewed board exactly |
 | Scripted rehearsal | 12 two-action episodes; 24 scripted decisions, **zero model calls** |
 | Fresh independent engine replay | All 12 traces reproduce every observation and transition |
-| CPU action accounting, including replay | 48 policy dispatches + 24 bootstrap resets = 72 offline actions; 24 local scorecards; zero online calls or leaderboard submissions |
+| CPU action accounting, including replay | 24 scripted rehearsal dispatches + 24 replay dispatches + 24 bootstrap resets = 72 offline actions; 24 local scorecards; zero online calls or leaderboard submissions (corrected October 18: first published as "48 policy dispatches") |
 | Native Qwen multimodal preparation | 24 real CPU processor calls, step 0 and synthetic step 23 for both arms on all six boards |
 | Token agreement | Native processor count equals independently expanded image-token count in every case; maximum 4,609 input tokens |
 | Required server image allowance | Six images per request, to accommodate initial/current and two historical before/after pairs |
@@ -89,6 +89,34 @@ timeout. Its exact remaining installer child was stopped. A Linux temporary
 installation succeeded. WSL cleared that temporary interpreter before a later
 command, so the successful final preparation ran installation and rehearsal in
 one WSL lifetime. These are CPU setup records, not consumed GPU attempts.
+
+## Review fixes, October 18
+
+A review of `49475e8` found three problems in the public code. Branch
+`initial-geometry-fixes-v1` (commit `591a281`) fixes them:
+
+| Problem | Fix |
+|---|---|
+| A deadline or exception stop wrote no summary, so the audit rejected the record. A level completed on the last admitted action was also lost if the deadline passed while its record was written. | Every episode now ends with `closed` and `summary` records, including `deadline` and `exception` stops, which are re-raised afterwards. The stop test runs before each deadline check, so an observed completion is kept. A failing engine close is recorded and no longer replaces the error that stopped the episode. The audit classifies cut-off records: it checks the retained prefix, allows one unfinished trailing step, credits nothing beyond the last retained observation, and reports any unconfirmed model call or engine dispatch. A failed close is still refused. |
+| The first-click measure scores containment in reviewed masks, which the reviewed arm receives with a ready-made anchor for each object. | The audit also reports whether the first click lies in the arm's own supplied masks and whether it is exactly one of its supplied anchors. The interpretation limit above now says so. |
+| The rehearsal checked the game environment only against its own unpinned `receipt.json`, and nothing checked the requirements lock listed below. | `--game-receipt-sha256` is now required and checked before the receipt is read. The lock must match the receipt's `requirements_sha256`, every file under `environment_files` must be a verified member, and the rehearsal receipt records both hashes. |
+
+| Check on the fixed code | Result |
+|---|---|
+| Regressions | 41 pass on Windows (Python 3.11) and Linux (Python 3.12), no skips. Ten of the 11 new tests fail on `49475e8`; the eleventh guards the new audit against tampered stop reasons |
+| Game receipt pin | Established from content, not from the file itself: all 43 verified members equal the committed `reports/phase4_v2_offline_package.json`, and its lock hash is `9cbd701f…` |
+| Real-engine rehearsal r3 | Fresh offline install, run in an unshared network namespace. All 12 episodes pass the audit and fresh engine replay. Every trace is identical to r2 apart from elapsed time, and every r2 result field is unchanged |
+| Native Qwen processor audit | Not re-run: request construction is unchanged |
+
+Protocol r1 is unchanged, so the prepared inputs keep their manifest. The next
+protocol revision should list the two new click rates among the secondary
+measures.
+
+**Still open.** The automatic arm's source file (`sam-comparison-evaluation-r1.json`,
+`baaf83…`) is produced by code that is not in the repository, and preparation
+trusts the verification flags it carries. Its hash pin proves the bytes are
+unchanged, not how the 22 masks were made. That code should be committed before
+the package is frozen.
 
 ## Remaining live preparation and proposed authorization scope
 
@@ -133,6 +161,7 @@ paired-study verdict. All attempts and partial evidence must remain on record.
 | Private geometry input manifest | `95fa2d57de3cf9d40732a731d49aeebf9c57bf896ec97f4b5e4e02f14502b8bd` |
 | Draft protocol r1 | `ea17c055100d62100e5dcd95a0ee280d6fdd208dcaf09ef5c88309610df9969b` |
 | Game requirements lock | `9cbd701f16f3e3441692d9328f57b1f3c15c168a7e227431223cf9a3ddb1eb7d` |
+| Game environment receipt (added October 18) | `01b85c78457386896777692a3790c998ed9fd917b7bd90ac89f60af2dfa5292e` |
 
 Private inputs, masks, traces and processor receipts remain git-ignored. Public
 code provides preparation, a CPU-only scripted rehearsal, native prompt auditing

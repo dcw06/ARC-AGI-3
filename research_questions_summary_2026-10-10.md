@@ -301,6 +301,11 @@ short paired episodes. All six initial boards and 12 two-action CPU rehearsals
 replay exactly; 30 regressions and 24 native Qwen CPU processor checks pass.
 These use a scripted policy, with no LLM gameplay results. The bounded live
 launcher, final private package and fresh gameplay authorization remain pending.
+[Review fixes](reports/initial_geometry_assistance_v1_preparation_2026-10-18.md#review-fixes-october-18)
+now record deadline and exception stops, keep a completion observed before the
+deadline, report supplied-geometry click rates and pin the game receipt. 41
+regressions pass, and the real-engine rehearsal reproduces all 12 r2 traces with
+the fixed code. The automatic arm's source file still lacks committed producer code.
 
 ## Source snapshot
 
