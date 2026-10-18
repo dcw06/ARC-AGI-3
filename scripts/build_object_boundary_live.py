@@ -79,6 +79,13 @@ def build(previous,preparation,reference_bundle,context_path,validation_path,out
     metadata.update(id=context['new_target'],title='ARC3 Uncued Object Discovery and Boundaries V1')
     if prompt_profile=='detailed_whole_v2':
         metadata['title']='ARC3 MolmoPoint Generic Discovery V2'
+    if 'new_title' in context:
+        import re
+        title=context['new_title']
+        if (type(title) is not str or not title.strip() or
+                re.sub('[^a-z0-9]+','-',title.lower()).strip('-')!=metadata['id'].split('/')[-1]):
+            raise ValueError('new notebook title must match its intended slug')
+        metadata['title']=title
     save=json.loads((previous/'launch-spec.json').read_bytes())
     save['save_fields'].update(slug=metadata['id'],new_title=metadata['title'])
     files={'runtime/'+n:raw for n,raw in runtime.items()}

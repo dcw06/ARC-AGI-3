@@ -1,5 +1,11 @@
 # MolmoPoint detailed generic instruction: one authorized attempt submitted
 
+**Terminal update:** the attempt is ERROR. The [retained failure and correction](molmopoint_detailed_generic_v2_attempt1_failure_and_fix_2026-10-17.md)
+show an inherited 1,000-character input guard rejecting the owner's
+3,290-character prompt before the first generation. Actual RTX allocation,
+installation and cleanup are verified. The consumed attempt remains preserved;
+no object-identification result or automatic retry is claimed.
+
 The owner approved the prepared exact package and one fresh private GPU attempt.
 The approval was retained verbatim and bound to the review hash, runtime,
 protocol, unchanged account-only use scope and accepted session/worker time

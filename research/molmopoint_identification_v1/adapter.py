@@ -85,9 +85,11 @@ def prepare_inputs(model, processor, image, task):
     return prepare_prompt_inputs(model,processor,image,PROMPTS[task])
 
 
-def prepare_prompt_inputs(model, processor, image, prompt):
+def prepare_prompt_inputs(model, processor, image, prompt, *, max_prompt_characters=1000):
     """Prepare one prompt from a frozen request plan, using original-image metadata."""
-    if type(prompt) is not str or not 1 <= len(prompt) <= 1000:
+    if type(max_prompt_characters) is not int or max_prompt_characters not in (1000,4096):
+        raise ValueError('frozen input-prompt character limit required')
+    if type(prompt) is not str or not 1 <= len(prompt) <= max_prompt_characters:
         raise ValueError('bounded pointing prompt required')
     if getattr(getattr(model,'config',None),'model_type',None) != 'molmo_point':
         raise ValueError('expected the pinned MolmoPoint architecture')

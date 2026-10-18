@@ -4,6 +4,11 @@
 fresh attempt, [version 1 was submitted once and observed RUNNING](molmopoint_detailed_generic_v2_attempt1_submission_2026-10-17.md).
 The preparation-time state below is preserved; no model-performance result is claimed.
 
+**Terminal/fix update:** that attempt failed before generation because the
+adapter's inherited 1,000-character input guard rejected the long instruction.
+The [failure audit, corrected input limit and new review hash](molmopoint_detailed_generic_v2_attempt1_failure_and_fix_2026-10-17.md)
+supersede this candidate. No replacement run has been launched.
+
 The owner's eight-rule generic instruction is retained verbatim in
 [`prompts.py`](../research/object_discovery_boundaries_v1/prompts.py), with only
 Markdown line-break escapes represented as ordinary line breaks. All six

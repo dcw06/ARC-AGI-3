@@ -4,7 +4,7 @@ from pathlib import Path
 from certification.phase4_multimodal_preflight_v3.images import grid_from_png
 from research.molmopoint_identification_v1.adapter import MODEL,REVISION
 from .reference_audit import audit,canonical,digest
-from .prompts import LEGACY_PROFILE, select_prompt
+from .prompts import LEGACY_PROFILE, DETAILED_PROFILE, select_prompt
 
 PROMPT=('Point to each distinct visible whole object in this game image. '
         'Treat a composite object as one object, without also listing its internal parts. '
@@ -15,12 +15,15 @@ MAX_NEW_TOKENS=4096
 def request_for(case,image,*,prompt_profile=LEGACY_PROFILE):
     grid=grid_from_png(image,cell=7)
     if len(grid)!=64 or any(len(row)!=64 for row in grid):raise ValueError('plain 448px board required')
-    return dict(case_id=case,request_id=case+'.uncued_whole_inventory',task='uncued_whole_inventory',
+    request=dict(case_id=case,request_id=case+'.uncued_whole_inventory',task='uncued_whole_inventory',
         image='inputs/'+case+'.png',image_sha256=digest(image),grid_sha256=digest(canonical(grid)),
         model=MODEL,revision=REVISION,prompt=select_prompt(prompt_profile,PROMPT),max_new_tokens=MAX_NEW_TOKENS,
         do_sample=False,num_beams=1,original_image_size_wh=[448,448],board_shape=[64,64],cell_pixels=7,
         max_points=96,return_pointing_metadata=True,native_logit_processor_required=True,
         boundary_method='seed_color_component_4',game_actions=0)
+    if prompt_profile==DETAILED_PROFILE:
+        request['max_prompt_characters']=4096
+    return request
 
 
 def requests_for(inputs,*,prompt_profile=LEGACY_PROFILE):

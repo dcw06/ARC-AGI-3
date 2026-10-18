@@ -25,6 +25,7 @@ class PromptProfiles(unittest.TestCase):
         self.assertEqual(len(requests),6)
         self.assertEqual({r['prompt'] for r in requests},{DETAILED_PROMPT})
         self.assertTrue(all(r['max_new_tokens']==4096 for r in requests))
+        self.assertTrue(all(r['max_prompt_characters']==4096 for r in requests))
         self.assertTrue(DETAILED_PROMPT.startswith('Examine this pixel-based game image'))
         self.assertTrue(DETAILED_PROMPT.endswith('do not repeat the inventory or continue counting.'))
         self.assertEqual(DETAILED_PROMPT.count('\n1.'),1)
@@ -35,6 +36,7 @@ class PromptProfiles(unittest.TestCase):
 
     def test_legacy_requests_are_unchanged(self):
         self.assertEqual({r['prompt'] for r in requests_for(self.legacy/'inputs')},{PROMPT})
+        self.assertTrue(all('max_prompt_characters' not in r for r in requests_for(self.legacy/'inputs')))
         self.assertEqual(select_prompt('legacy_whole_v1',PROMPT),PROMPT)
         for profile in ('',None,'detailed_whole_v3'):
             with self.assertRaises(ValueError):select_prompt(profile,PROMPT)
@@ -64,6 +66,49 @@ class PromptProfiles(unittest.TestCase):
                          requests_for(inputs,prompt_profile=DETAILED_PROFILE))
         with self.assertRaisesRegex(ValueError,'contract differs'):
             stage_agent_inputs(inputs,self.base/'wrong-profile',rows,lambda:None)
+
+    def test_exact_long_prompt_passes_actual_adapter_and_worker_wiring(self):
+        from types import SimpleNamespace
+        from unittest.mock import patch
+        from research.object_discovery_boundaries_v1 import inference as worker
+        from research.molmopoint_identification_v1.adapter import prepare_prompt_inputs
+        seen=[]
+        model=SimpleNamespace(config=SimpleNamespace(model_type='molmo_point'),
+            build_logit_processor_from_inputs=lambda value:['native-constraint'])
+        def template(messages,**options):
+            seen.append(messages[0]['content'][0]['text'])
+            return dict(input_ids='synthetic',metadata=dict(token_pooling='synthetic',
+                subpatch_mapping='synthetic',image_sizes=[(448,448)]))
+        processor=SimpleNamespace(apply_chat_template=template)
+        image=SimpleNamespace(size=(448,448))
+        with self.assertRaisesRegex(ValueError,'bounded pointing prompt'):
+            prepare_prompt_inputs(model,processor,image,DETAILED_PROMPT)
+        output=prepare_prompt_inputs(model,processor,image,DETAILED_PROMPT,max_prompt_characters=4096)
+        self.assertEqual(seen,[DETAILED_PROMPT])
+        self.assertEqual(output[0],{'input_ids':'synthetic'})
+        for limit in (True,0,1001,4097,999999):
+            with self.assertRaises(ValueError):
+                prepare_prompt_inputs(model,processor,image,DETAILED_PROMPT,max_prompt_characters=limit)
+        with self.assertRaisesRegex(ValueError,'bounded pointing prompt'):
+            prepare_prompt_inputs(model,processor,image,'x'*4097,max_prompt_characters=4096)
+        class ReachedRealAdapter(Exception):pass
+        def adapter(*args,**kwargs):
+            actual=prepare_prompt_inputs(*args,**kwargs)
+            self.assertEqual(kwargs['max_prompt_characters'],4096)
+            self.assertEqual(actual[2],['native-constraint'])
+            raise ReachedRealAdapter
+        request=requests_for(self.detailed/'inputs',prompt_profile=DETAILED_PROFILE)[0]
+        with patch.object(worker,'prepare_prompt_inputs',side_effect=adapter):
+            with self.assertRaises(ReachedRealAdapter):
+                worker.native_generate(model,processor,image,request,float('inf'),None,None)
+
+    def test_character_bound_is_frozen_with_the_new_request(self):
+        path=self.detailed/'inputs/requests.jsonl'
+        rows=[json.loads(line) for line in path.read_bytes().splitlines()]
+        del rows[0]['max_prompt_characters']
+        path.write_bytes(b''.join(canonical(r) for r in rows))
+        with self.assertRaisesRegex(ValueError,'contract differs'):
+            requests_for(self.detailed/'inputs',prompt_profile=DETAILED_PROFILE)
 
 
 if __name__=='__main__':unittest.main()

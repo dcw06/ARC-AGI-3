@@ -91,5 +91,17 @@ class Builder(unittest.TestCase):
         self.write(self.context,B.canonical(context))
         with self.assertRaisesRegex(ValueError,'privacy/readiness'):self.build()
 
+    def test_explicit_successor_title_must_match_new_target(self):
+        context=json.loads(self.context.read_bytes())
+        context.update(new_target='owner/generic-v2-r2',new_title='Generic V2 R2')
+        self.write(self.context,B.canonical(context))
+        self.build('successor')
+        package=self.root/'successor'
+        self.assertEqual(json.loads((package/'kernel-metadata.json').read_bytes())['title'],'Generic V2 R2')
+        context['new_title']='An unrelated title'
+        self.write(self.context,B.canonical(context))
+        with self.assertRaisesRegex(ValueError,'title must match'):
+            self.build('mismatched')
+
 
 if __name__=='__main__':unittest.main()

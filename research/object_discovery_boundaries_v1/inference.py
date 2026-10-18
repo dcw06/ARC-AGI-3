@@ -88,7 +88,8 @@ def execute_cases(requests, generate, output, deadline, now=time.monotonic):
 def native_generate(model, processor, image, request, until, torch, stopping, raw_sink=None):
     """Publisher's full-image API, preserving raw IDs even for invalid points."""
     started = time.monotonic()
-    inputs, metadata, logits = prepare_prompt_inputs(model, processor, image, request['prompt'])
+    inputs, metadata, logits = prepare_prompt_inputs(model, processor, image, request['prompt'],
+        max_prompt_characters=request.get('max_prompt_characters',1000))
     prompt_ids = inputs['input_ids'][0].tolist()
     inputs = {key:value.to('cuda:0') for key,value in inputs.items()}
     if time.monotonic() >= until:
