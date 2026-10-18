@@ -1,0 +1,20 @@
+{
+  "automatic_masks_sha256": "baaf83f11b36343580a80e996c166e23bd2ece31a561173dbf02ace9d8290408",
+  "control_files_sha256": {
+    "comparison-policy-r1.json": "d04d7c235d42d67f0820cc22950c746b7982b5fcc1bb37ee6497ec25f05857ba",
+    "control-independent-evaluation-r1.json": "32eae91f0e49ad7da71e87e2b82b24f16d1dba440fe115522b47d1d5d53600ff",
+    "cpu-segmentation-attempt1/completion-witness.json": "d8708452a06aafc4124cc7b69f7eaf81ffe2b3a21993d1f589ad04a0029e7d05",
+    "cpu-segmentation-attempt1/result.json": "3f99b746dfc70be24932f714ce283ab696747a1827b420617b708a32f79d685e",
+    "gpu-attempt1-terminal-collection-r1/collection-manifest.json": "422b5318433f9e2f385bd56bdfceeeaa618c96d96e08a5481577f7b246b5561e",
+    "gpu-live-review-r1/review-lock.json": "6f5f2611163b10ee91f583d9a68edb244f5d2fc04dec646a8b470a48ebacc3c2",
+    "preparation-r1/preparation-manifest.json": "5adb9fb2d417ee291377c48d8deca180902794701eb826477aa71c6173fbb91b",
+    "sam-cpu-operator-receipt-r1.json": "7a4ea286b923f868c0a5fdc0c0d4690507c7e69e72b421678f6bd5139d2c2c84",
+    "sam-cpu.stdout.log": "e7de1552ef1a5977f7aebaaa75607c7347b8e718945f3c4f5be975c5f448e999",
+    "sam21-postprocessing-plan-r1.json": "22018d31508909dcaef5bbc4e46d84e53b9783caaca291340cd0bd442226324b",
+    "seed-inputs-r1/manifest.json": "526f9bb47c8101b95494c57fc8af8d7a1229a80b68fb3260e21ecd8f75c0c135"
+  },
+  "qualification": "Retrospective provenance freeze of retained evidence; no new inference or prospective claim.",
+  "sam_checkpoint_acquisition_sha256": "a0420932c204e1300f84e93d4fa55b515a3f44e65158cb768c83540c75c7d562",
+  "schema": "retained_automatic_evidence_provenance_v1",
+  "source_evaluation_sha256": "32eae91f0e49ad7da71e87e2b82b24f16d1dba440fe115522b47d1d5d53600ff"
+}

@@ -1,15 +1,60 @@
 {
-  "schema": "initial_geometry_assistance_v1_draft_r1",
+  "schema": "initial_geometry_assistance_v1_draft_r2",
   "live_runs_enabled": false,
   "question": "Does owner-reviewed starting geometry improve first-level progress over retained automatic geometry under the same short-episode policy?",
-  "arms": ["automatic", "reviewed"],
+  "arms": [
+    "automatic",
+    "reviewed"
+  ],
   "cases": [
-    {"case_id": "board-01", "game_id": "ls20-9607627b", "order": ["automatic", "reviewed"]},
-    {"case_id": "board-02", "game_id": "s5i5-18d95033", "order": ["reviewed", "automatic"]},
-    {"case_id": "board-03", "game_id": "cd82-fb555c5d", "order": ["automatic", "reviewed"]},
-    {"case_id": "board-04", "game_id": "ft09-0d8bbf25", "order": ["reviewed", "automatic"]},
-    {"case_id": "board-05", "game_id": "ka59-38d34dbb", "order": ["automatic", "reviewed"]},
-    {"case_id": "board-06", "game_id": "sc25-635fd71a", "order": ["reviewed", "automatic"]}
+    {
+      "case_id": "board-01",
+      "game_id": "ls20-9607627b",
+      "order": [
+        "automatic",
+        "reviewed"
+      ]
+    },
+    {
+      "case_id": "board-02",
+      "game_id": "s5i5-18d95033",
+      "order": [
+        "reviewed",
+        "automatic"
+      ]
+    },
+    {
+      "case_id": "board-03",
+      "game_id": "cd82-fb555c5d",
+      "order": [
+        "automatic",
+        "reviewed"
+      ]
+    },
+    {
+      "case_id": "board-04",
+      "game_id": "ft09-0d8bbf25",
+      "order": [
+        "reviewed",
+        "automatic"
+      ]
+    },
+    {
+      "case_id": "board-05",
+      "game_id": "ka59-38d34dbb",
+      "order": [
+        "automatic",
+        "reviewed"
+      ]
+    },
+    {
+      "case_id": "board-06",
+      "game_id": "sc25-635fd71a",
+      "order": [
+        "reviewed",
+        "automatic"
+      ]
+    }
   ],
   "seed": 0,
   "geometry": "Only initial-frame occupied cells, inclusive bounding boxes and occupied centroid-nearest anchors; no labels, roles, functions, strategies or source method names",
@@ -53,9 +98,24 @@
     "controls": "Only legal action IDs and the common ACTION6 coordinate API; no game-specific meanings",
     "initial_geometry_repeated_as": "Explicit immutable step-0 evidence, never a current-position claim"
   },
-  "stops": ["first_level_complete", "game_over", "action_cap", "invalid_answer", "deadline", "exception"],
+  "stops": [
+    "first_level_complete",
+    "game_over",
+    "action_cap",
+    "invalid_answer",
+    "deadline",
+    "exception"
+  ],
   "primary": "Per-game paired first-level completion within 24 policy actions; retain all six pairs, including invalid automatic ls20",
-  "secondary": ["actions to first completion, censored at cap", "first-action ACTION6 point inside any owner whole-object cell; other actions not applicable", "pre-action visible-change prediction accuracy and abstention coverage, including UI changes"],
+  "secondary": [
+    "actions to first completion, censored at cap",
+    "first-action ACTION6 point inside any owner whole-object cell; other actions not applicable",
+    "pre-action visible-change prediction accuracy and abstention coverage, including UI changes"
+  ],
   "interpretation": "Six exposed development starting states, one pair per game; no hidden-game generalization, no treating steps as independent samples; a null result under this cap does not establish impossibility",
-  "authority": "No source approval, GPU authorization, reservation or claim exists for this new study. Prior zero-action approvals and Track 1 attempts do not cover it."
+  "authority": "No source approval, GPU authorization, reservation or claim exists for this new study. Prior zero-action approvals and Track 1 attempts do not cover it.",
+  "automatic_masks_sha256": "baaf83f11b36343580a80e996c166e23bd2ece31a561173dbf02ace9d8290408",
+  "automatic_provenance_manifest_sha256": "42ffc04a09778d8b8733e991afd1cff9e6a333820c1c1b2683ee1984031dade4",
+  "automatic_replay_producer": "scripts/replay_initial_geometry_automatic_v1.py",
+  "automatic_replay_requirement": "Recompute native source/deployment/lifecycle and raw SAM masks before preparing either arm; recorded verification flags are not authority."
 }

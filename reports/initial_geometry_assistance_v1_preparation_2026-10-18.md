@@ -2,6 +2,13 @@
 
 **Status: CPU preparation verified; live launcher and final GPU package pending. No LLM gameplay results.**
 
+**Provenance correction:** the r1 admission used a hash-pinned private comparison
+without a committed producer. [Preparation r2](initial_geometry_automatic_provenance_fix_2026-10-18.md)
+now reproduces native pointing/deployment evidence and raw SAM masks through
+committed code before admitting either arm. The original masks and the r1
+receipts below are preserved; r2 has its own protocol, input manifest and review
+snapshot. Recorded success flags alone no longer admit the automatic arm.
+
 The owner chose short gameplay with geometry supplied only for the initial
 frame. This is a new development experiment, separate from Track 1's consumed
 attempts. No earlier attempt, approval or scientific result is replaced.

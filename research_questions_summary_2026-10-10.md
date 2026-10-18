@@ -299,6 +299,9 @@ or GPU work occurred; the audit does not make the historical freeze prospective.
 compares retained automatic geometry with owner-reviewed starting geometry in
 short paired episodes. All six initial boards and 12 two-action CPU rehearsals
 replay exactly; 30 regressions and 24 native Qwen CPU processor checks pass.
+The [r2 provenance correction](reports/initial_geometry_automatic_provenance_fix_2026-10-18.md)
+adds committed reconstruction of the automatic arm from native pointing and raw
+SAM evidence, with protocol-bound hashes and 43 passing CPU regressions.
 These use a scripted policy, with no LLM gameplay results. The bounded live
 launcher, final private package and fresh gameplay authorization remain pending.
 

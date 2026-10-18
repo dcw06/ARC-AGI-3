@@ -5,6 +5,7 @@ from pathlib import Path
 
 from certification.phase4_multimodal_preflight_v3.images import grid_from_png, png
 from .geometry import canonical, check_grid, digest, inventory
+from .automatic_replay import replay_comparison
 
 REFERENCE_SHA = '5304e35b1f0ee17e0ffd77293ac4fba260bbfa08755c2d48e914ed72ac9cec63'
 AUTOMATIC_SHA = 'baaf83f11b36343580a80e996c166e23bd2ece31a561173dbf02ace9d8290408'
@@ -18,17 +19,22 @@ def pinned(path, expected):
     return json.loads(raw)
 
 
-def build_inputs(reference, automatic, source_evaluation, image_dir, output):
+def build_inputs(reference, automatic, source_evaluation, image_dir, output, *,
+                 control_root, molmopoint_checkpoint, sam_acquisition):
     # Check independently fixed pins BEFORE deriving either arm.
+    protocol_path = Path(__file__).with_name('protocol.json')
+    protocol = json.loads(protocol_path.read_bytes())
+    if (protocol['reference_sha256'] != REFERENCE_SHA or protocol['automatic_masks_sha256'] != AUTOMATIC_SHA
+            or protocol['automatic_source_evaluation_sha256'] != SOURCE_EVALUATION_SHA):
+        raise ValueError('protocol evidence pins differ')
     refs = pinned(reference, REFERENCE_SHA)
-    auto = pinned(automatic, AUTOMATIC_SHA)
+    claimed = pinned(automatic, protocol['automatic_masks_sha256'])
     source = pinned(source_evaluation, SOURCE_EVALUATION_SHA)
-    if not all(source[k] is True for k in ('replay_verified', 'lifecycle_certified', 'deployment_guard_passed')):
-        raise ValueError('automatic source not independently verified')
-    if not (auto['reference_sha256'] == REFERENCE_SHA and auto['source_evaluation_sha256'] == SOURCE_EVALUATION_SHA
-            and auto['source_deployment_verified'] is True and auto['masks_replayed_without_model_inference'] is True):
-        raise ValueError('automatic lineage differs')
-    protocol = json.loads(Path(__file__).with_name('protocol.json').read_bytes())
+    # The supplied yes/no fields never grant admission. Recompute their evidence
+    # and every object, then require the entire historical artifact to reproduce.
+    auto = replay_comparison(control_root, molmopoint_checkpoint, sam_acquisition)
+    if canonical(auto) != canonical(claimed):
+        raise ValueError('stored automatic comparison differs from evidence replay')
     expected_ids = [c['case_id'] for c in protocol['cases']]
     if not (expected_ids == [f['case_id'] for f in refs['frames']] == [f['case_id'] for f in auto['frames']]
             == [c['case_id'] for c in source['cases']]):
@@ -69,7 +75,12 @@ def build_inputs(reference, automatic, source_evaluation, image_dir, output):
             stream.write(raw)
     manifest = {'schema': 'initial_geometry_input_manifest_v1', 'reference_sha256': REFERENCE_SHA,
                 'automatic_masks_sha256': AUTOMATIC_SHA, 'automatic_source_evaluation_sha256': SOURCE_EVALUATION_SHA,
+                'automatic_provenance_manifest_sha256': protocol['automatic_provenance_manifest_sha256'],
+                'automatic_replay_sources_sha256': {
+                    'research/initial_geometry_assistance_v1/'+name: hashlib.sha256(
+                        Path(__file__).with_name(name).read_bytes()).hexdigest()
+                    for name in ('automatic_replay.py', 'automatic_provenance.json', 'prepare.py')},
                 'files': {n: hashlib.sha256(raw).hexdigest() for n, raw in files.items()},
-                'protocol_sha256': hashlib.sha256(Path(__file__).with_name('protocol.json').read_bytes()).hexdigest()}
+                'protocol_sha256': hashlib.sha256(protocol_path.read_bytes()).hexdigest()}
     (output / 'manifest.json').write_bytes(canonical(manifest))
     return manifest
