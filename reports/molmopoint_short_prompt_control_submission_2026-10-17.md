@@ -1,5 +1,7 @@
 # MolmoPoint: exact original short-prompt control submitted once
 
+**Terminal update:** [completed and independently replayed](molmopoint_short_prompt_control_results_2026-10-17.md): 22 native points, 12/37 SAM matches and 6/37 exact masks. Actual RTX PRO 6000 and cleanup verified; ls20 remains invalid at the token cap. This submission record remains preserved.
+
 October 17, 2026. The owner approved proceeding after the recommendation to
 restore the original short prompt as a control. **One six-board control was
 submitted once.** No additional prompt variant or retry is covered or launched.
