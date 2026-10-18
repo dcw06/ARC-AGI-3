@@ -7,7 +7,7 @@ from urllib.parse import urlparse
 
 class Provider:
     READS = {'IntrospectToken', 'ListKernels', 'GetDataset', 'GetDatasetMetadata', 'GetDatasetStatus',
-             'ListDatasetFiles', 'GetAcceleratorQuotaStatistics', 'GetKernel', 'GetKernelSessionStatus'}
+             'ListDatasetFiles', 'GetAcceleratorQuotaStatistics', 'GetKernel', 'GetKernelSessionStatus', 'ListDataFiles'}
 
     def __init__(self, token_file, *, boundary=None):
         import requests
@@ -110,6 +110,19 @@ class Provider:
         return {'ref': response.ref, 'url': response.url, 'version': response.version_number,
                 'error': bool(response.error), 'invalid_sources': {name: getattr(response, name) for name in
                 ('invalid_dataset_sources', 'invalid_competition_sources', 'invalid_kernel_sources', 'invalid_model_sources')}}
+
+    def competition_files(self, ref):
+        files, token = {}, None
+        for _ in range(20):
+            listing = self.api.competition_list_files(ref, page_size=1000, page_token=token)
+            for row in listing.files:
+                if row.name in files:
+                    raise ValueError('duplicate competition file')
+                files[row.name] = row.total_bytes
+            token = listing.next_page_token
+            if not token:
+                return files
+        raise ValueError('competition pagination incomplete')
 
     def saved(self, target):
         from kagglesdk.kernels.types.kernels_api_service import ApiGetKernelRequest

@@ -1,12 +1,17 @@
 # Initial geometry gameplay: launch preflight, October 18
 
-**Updated: r4 was approved; two separately authorized submissions each passed
-fresh preflight and failed with SSL EOF. No notebook/run is confirmed.** Seventy
-CPU tests pass. The implementation,
-package hash and current gates are recorded in the [live-runtime report](initial_geometry_live_runtime_2026-10-18.md).
+**Updated: [smaller r5](initial_geometry_small_package_r5_2026-10-18.md) is prepared,
+not authorized or launched.** Its 343,350-byte notebook uses the existing
+competition wheel mount. Eighty-one Linux tests and a fresh exact-payload CPU
+installation/12-episode replay pass. Seven read-only preflight checks passed
+at 16:25:19 UTC; a future launch requires fresh checks and authority for r5.
+
+Previously, r4 was approved; two separately authorized submissions each passed
+fresh preflight and failed with SSL EOF. No notebook/run is confirmed. The
+history is retained in the [live-runtime report](initial_geometry_live_runtime_2026-10-18.md).
 Both uncertain attempts and reservations remain consumed, with no automatic retry.
-Source/use approval remains recorded; another attempt needs fresh compute
-authorization and preflight. Earlier consumed attempts remain unchanged.
+Source/use approval for r4 remains historical; r5 needs its own source/use and
+compute approval, reservation and claim. Earlier consumed attempts remain unchanged.
 
 [Read-only diagnosis](initial_geometry_ssl_diagnosis_2026-10-18.md) now strongly
 implicates oversized request rejection: the notebook's embedded wheels expand

@@ -13,7 +13,7 @@ import time
 from certification.direct_publisher_smoke_v1 import host
 from certification.direct_publisher_smoke_v1.install import install, verify_bundle
 from certification.direct_publisher_smoke_v1.server import ModelServer, defer_startup_signals
-from .engine import verify_game_environment
+from .game_wheels import verify_mounted_game
 from .geometry import canonical, digest
 from .live_io import sha, write_new
 from .live_resources import HardDeadline, Processes, environment
@@ -136,7 +136,8 @@ def run(source, authority, lock_sha256, *, started, bootstrap_guard):
         if query(['gpu_uuid', 'pid'], kind='apps'):
             raise ValueError('GPU already has compute processes before this attempt')
         verify_inputs(source/'inputs', runtime['input_manifest_sha256'])
-        verify_game_environment(source/'game', runtime['game_receipt_sha256'])
+        game_wheels, facts['game_wheels'] = verify_mounted_game(
+            source/'game', runtime['game_receipt_sha256'], runtime['game_wheel_source'], check=check)
         facts['model'] = host.verify_model(runtime['model'], check)
         model_path = facts['model']['mounted_path']
         bundle = host.dataset_mount(runtime['dataset']['ref'], runtime['dataset']['version'])
@@ -148,7 +149,7 @@ def run(source, authority, lock_sha256, *, started, bootstrap_guard):
         facts['model_install'] = install(bundle, temporary/'model', runtime['runtime'], install_deadline,
                                          output/'model-install.log', environment=env, processes=processes,
                                          requirements=source/'certification/direct_publisher_smoke_v1/trusted_requirements.lock')
-        facts['game_install'] = install(source/'game/wheels', temporary/'game', runtime['game_runtime'],
+        facts['game_install'] = install(game_wheels, temporary/'game', runtime['game_runtime'],
                                         install_deadline, output/'game-install.log',
                                         environment=dict(env, CUDA_VISIBLE_DEVICES='', NVIDIA_VISIBLE_DEVICES='void'),
                                         requirements=source/'game/game_requirements.lock', processes=processes)

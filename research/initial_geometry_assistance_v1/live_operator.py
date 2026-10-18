@@ -8,6 +8,15 @@ from .geometry import canonical
 from .live_io import sha, write_new
 from .live_package import check_notebook
 from .live_runtime import check_authority
+from .game_wheels import GAME_WHEEL_SOURCE
+
+MAX_SAVE_BODY_BYTES = 1_000_000  # Conservative local budget, not a provider-limit assertion.
+
+
+def check_request_size(raw):
+    if len(raw) > MAX_SAVE_BODY_BYTES:
+        raise ValueError('SaveKernel request exceeds conservative local size budget')
+    return len(raw)
 
 
 def verify_review(review, source):
@@ -65,6 +74,16 @@ def preflight(review, source, provider, output):
                                 set(wheels) == set(expected_wheels) | metadata_names and model == expected_model)
         if not all(checks.values()):
             raise ValueError('dataset identities, privacy or inventories differ')
+        if runtime.get('game_wheel_source') != GAME_WHEEL_SOURCE:
+            raise ValueError('mounted game wheel binding differs')
+        listing = provider.competition_files(GAME_WHEEL_SOURCE['competition'])
+        prefix = GAME_WHEEL_SOURCE['directory']+'/'
+        expected_game = {prefix+name: info['bytes'] for name, info in lock['game_wheels'].items()}
+        observed_game = {name: size for name, size in listing.items() if name.startswith(prefix)}
+        checks['competition_game_wheels'] = len(expected_game) == 31 and observed_game == expected_game
+        observations['competition_game_wheels'] = observed_game
+        if not checks['competition_game_wheels']:
+            raise ValueError('competition wheel filename/size inventory differs; bytes still require runtime verification')
         verify_review(review, source)
     except BaseException as exc:
         error = type(exc).__name__+': '+str(exc)
@@ -85,6 +104,10 @@ def serialize(lock, notebook):
         setattr(request, key, value)
     request.text = json.dumps(notebook)
     request.kernel_execution_type = KernelExecutionType.SAVE_AND_RUN_ALL
+    import requests
+    raw = requests.Request('POST', 'https://api.kaggle.com/v1/kernels.KernelsApiService/SaveKernel',
+                           json=ApiSaveKernelRequest.to_dict(request)).prepare().body
+    check_request_size(raw)
     return request, json.loads(request.to_json())
 
 
@@ -169,7 +192,8 @@ class Boundary:
             raise ValueError('package drift or provider write already attempted')
         record = json.loads(self.preflight.read_bytes())
         age = (datetime.now(timezone.utc)-datetime.fromisoformat(record['checked_at_utc'])).total_seconds()
-        required = ('account', 'target_absent', 'quota', 'dataset_versions', 'inventories', 'model_private_account_only')
+        required = ('account', 'target_absent', 'quota', 'dataset_versions', 'inventories', 'model_private_account_only',
+                    'competition_game_wheels')
         if (record.get('review_lock_sha256') != pin or not 0 <= age < 300 or
                 record.get('provider_writes') != 0 or not all(record.get('checks', {}).get(k) is True for k in required)):
             raise ValueError('fresh exact-scope preflight missing')
@@ -181,6 +205,7 @@ class Boundary:
         if json.loads(consumed.read_bytes()) != self.authority:
             raise ValueError('single-use reservation receipt differs')
         validate_send(body, self.lock, self.book, pin)
+        check_request_size(raw)
         # Exclusive write BEFORE forwarding. A network failure consumes this send.
         write_new(registry/(self.authority['reservation']+'-sent.json'), {
             'review_lock_sha256': pin, 'notebook_sha256': sha(self.launch/'launch.ipynb'),

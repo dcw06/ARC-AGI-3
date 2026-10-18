@@ -6,9 +6,11 @@ from pathlib import Path
 from .policy import check_observation
 
 
-def verify_game_environment(root, receipt_sha256):
+def verify_game_environment(root, receipt_sha256, *, wheels=None, check=lambda: None):
     """Check the game environment against an independently supplied receipt hash."""
     root = Path(root)
+    wheels = Path(wheels) if wheels is not None else root/'wheels'
+    check()
     raw = (root/'receipt.json').read_bytes()
     if hashlib.sha256(raw).hexdigest() != receipt_sha256:
         raise ValueError('game environment receipt differs')
@@ -17,9 +19,25 @@ def verify_game_environment(root, receipt_sha256):
     if lock != receipt['requirements_sha256']:
         raise ValueError('game requirements lock differs')
     members = receipt['verified_members']
+    expected_wheels = {name.split('/', 1)[1] for name in members if name.startswith('wheels/')}
+    if wheels.is_symlink() or not wheels.is_dir() or {p.name for p in wheels.iterdir()} != expected_wheels:
+        raise ValueError('game wheel inventory differs')
     for name, info in members.items():
-        data = (root/name).read_bytes()
-        if hashlib.sha256(data).hexdigest() != info['sha256'] or len(data) != info['bytes']:
+        parts = Path(name).parts
+        if (not parts or Path(name).is_absolute() or '..' in parts or '\\' in name or ':' in name or
+                parts[0] not in ('wheels', 'environment_files') or
+                (parts[0] == 'wheels' and len(parts) != 2)):
+            raise ValueError('unsafe game environment member')
+        path = wheels/parts[1] if parts[0] == 'wheels' else root/name
+        if path.is_symlink() or any(p.is_symlink() for p in path.parents) or not path.is_file():
+            raise ValueError('unsafe game environment file')
+        digest = hashlib.sha256()
+        with path.open('rb') as stream:
+            for block in iter(lambda: stream.read(1024*1024), b''):
+                check()
+                digest.update(block)
+        check()
+        if digest.hexdigest() != info['sha256'] or path.stat().st_size != info['bytes']:
             raise ValueError('game environment differs')
     # Every game file the engine can load must be a verified member.
     games = {p.relative_to(root).as_posix() for p in (root/'environment_files').rglob('*') if p.is_file()}

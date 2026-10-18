@@ -10,10 +10,13 @@ import zipfile
 
 from .engine import verify_game_environment
 from .geometry import canonical
+from .game_wheels import GAME_WHEEL_SOURCE
 from .live_io import sha, write_new
 from .live_runtime import SCOPE, check_authority, verify_inputs
 
 EMPTY_LOCK = '0'*64
+# Conservative local packaging budget; not a claim about Kaggle's exact limit.
+MAX_NOTEBOOK_BYTES = 900_000
 
 
 def normalized(notebook):
@@ -59,6 +62,8 @@ def build(root, inputs, input_pin, game, game_pin, runtime, output, *, scope_rev
             raise ValueError('provenance producer changed since full replay')
     if runtime['input_manifest_sha256'] != input_pin or runtime['game_receipt_sha256'] != game_pin:
         raise ValueError('runtime input/environment pins differ')
+    if runtime.get('game_wheel_source') != GAME_WHEEL_SOURCE:
+        raise ValueError('runtime must bind the frozen mounted competition wheels')
     sources = set()
     for folder in ('agent', 'research/initial_geometry_assistance_v1'):
         sources.update(p.relative_to(root).as_posix() for p in (root/folder).glob('*.py'))
@@ -67,7 +72,8 @@ def build(root, inputs, input_pin, game, game_pin, runtime, output, *, scope_rev
                     'certification/phase4_multimodal_preflight_v3/images.py'])
     sources.update(['scripts/build_initial_geometry_live_v1.py', 'scripts/rehearse_initial_geometry_live_v1.py',
                     'scripts/audit_initial_geometry_prompts_v1.py', 'tests/test_initial_geometry_live.py',
-                    'tests/test_initial_geometry_assistance_v1.py', 'tests/test_initial_geometry_automatic_provenance.py'])
+                    'tests/test_initial_geometry_assistance_v1.py', 'tests/test_initial_geometry_automatic_provenance.py',
+                    'tests/test_initial_geometry_mounted_wheels.py'])
     sources.update('certification/direct_publisher_smoke_v1/'+name for name in
                    ('__init__.py', 'host.py', 'install.py', 'server.py', 'client.py', 'accounting.py', 'preflight.py',
                     'proposal.json', 'trusted_manifest.json', 'trusted_requirements.lock'))
@@ -78,7 +84,8 @@ def build(root, inputs, input_pin, game, game_pin, runtime, output, *, scope_rev
         files['inputs/'+name] = (inputs/name).read_bytes()
     game_receipt = json.loads((game/'receipt.json').read_bytes())
     for name in [*game_receipt['verified_members'], 'receipt.json', 'game_requirements.lock']:
-        files['game/'+name] = (game/name).read_bytes()
+        if not name.startswith('wheels/'):
+            files['game/'+name] = (game/name).read_bytes()
     files['runtime.json'] = canonical(runtime)
     payload_members = {name: hashlib.sha256(raw).hexdigest() for name, raw in sorted(files.items())}
     files['payload-manifest.json'] = canonical(payload_members)
@@ -160,6 +167,8 @@ run(_source, AUTHORITY, REVIEW_LOCK_SHA256, started=_started, bootstrap_guard=_g
                 'competition_sources': ['arc-prize-2026-arc-agi-3'], 'model_sources': []}
     lock = {'schema': 'initial_geometry_live_review_lock_v1', 'scope': SCOPE, 'kernel_id': runtime['kernel_id'],
             'input_manifest_sha256': input_pin, 'game_receipt_sha256': game_pin,
+            'game_wheels': {name.split('/', 1)[1]: info for name, info in game_receipt['verified_members'].items()
+                            if name.startswith('wheels/')},
             'runtime_sha256': hashlib.sha256(canonical(runtime)).hexdigest(), 'payload_sha256': payload_pin,
             'payload_bytes': len(payload), 'payload_files': payload_members,
             'notebook_template_sha256': hashlib.sha256(canonical(normalized(notebook))).hexdigest(),
@@ -182,6 +191,8 @@ run(_source, AUTHORITY, REVIEW_LOCK_SHA256, started=_started, bootstrap_guard=_g
     lock_pin = hashlib.sha256(canonical(lock)).hexdigest()
     notebook['cells'][2]['source'] = notebook['cells'][2]['source'].replace(repr(EMPTY_LOCK), repr(lock_pin), 1)
     check_notebook(notebook, lock, lock_pin, live=False)
+    if len(canonical(notebook)) > MAX_NOTEBOOK_BYTES:
+        raise ValueError('notebook exceeds conservative local source-size budget')
     output.mkdir(exist_ok=False)
     write_new(output/'review-lock.json', lock)
     write_new(output/'review.ipynb', notebook)

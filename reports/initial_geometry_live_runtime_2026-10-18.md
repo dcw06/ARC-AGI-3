@@ -1,5 +1,13 @@
 # Initial-geometry gameplay: bounded live runtime and private review
 
+**Current successor: [smaller private r5](initial_geometry_small_package_r5_2026-10-18.md)
+is built and checked, awaiting fresh source/use and compute approval.** Its
+343,350-byte review notebook reads the same 31 hash-pinned game wheels from
+the already attached competition. Eighty-one Linux CPU tests and a fresh exact
+payload installation/12-episode rehearsal pass; the snapshot rebuilds byte for
+byte. No new reservation, submission or GPU job was created. The r4 history
+below and both consumed attempts remain preserved.
+
 The missing executable runner is implemented. Private review r4 is sealed with
 lock SHA256 `e0452a412ecc0fe2be93c954547fbf88ad824272cc3f4ee36dadb75f04af6476`.
 The owner approved r4's source/use and then separately authorized two fresh

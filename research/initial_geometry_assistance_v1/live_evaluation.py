@@ -88,6 +88,11 @@ def evaluate(output, inputs, review_lock, provider, *, token_audit=None, replay_
         raise ValueError('GPU cleanup incomplete')
     if 'RTX PRO 6000' not in result['GPU']['name']:
         raise ValueError('allocated accelerator differs')
+    from .game_wheels import GAME_WHEEL_SOURCE
+    wheels = result.get('game_wheels', {})
+    if (wheels.get('source') != GAME_WHEEL_SOURCE or wheels.get('wheel_count') != 31 or
+            wheels.get('game_environment_receipt_sha256') != lock['game_receipt_sha256']):
+        raise ValueError('mounted game wheel verification missing or differs')
     for name, pin in result['evidence_sha256'].items():
         if Path(name).is_absolute() or '..' in Path(name).parts or sha(output/name) != pin:
             raise ValueError('retained run evidence changed')

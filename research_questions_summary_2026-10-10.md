@@ -312,6 +312,12 @@ strongly implicates oversized request rejection: embedded game wheels expand
 the submission to about 58 MB. Smaller metadata calls and verified TLS pass;
 large read-only probes reproduce rejection/SSL failure. No new save, GPU job
 or attempt occurred. The unchanged r4 package needs a smaller reviewed successor.
+The [smaller r5 successor](reports/initial_geometry_small_package_r5_2026-10-18.md)
+is now prepared: 343,350-byte notebook, same pinned game wheels resolved from
+the existing competition attachment, 81 passing Linux CPU tests, and fresh
+offline installation with 12 scripted episodes and 12 independent replays.
+The snapshot rebuilds byte for byte. No new reservation or launch was made;
+fresh source/use and compute approval for r5 remain pending.
 [Review fixes](reports/initial_geometry_assistance_v1_preparation_2026-10-18.md#review-fixes-october-18)
 now record deadline and exception stops, keep a completion observed before the
 deadline, report supplied-geometry click rates and pin the game receipt. 41

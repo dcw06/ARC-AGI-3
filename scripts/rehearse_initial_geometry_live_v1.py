@@ -37,10 +37,18 @@ def main():
     parser.add_argument('--game-environment', type=Path, required=True)
     parser.add_argument('--game-pin', required=True)
     parser.add_argument('--game-python', type=Path, required=True)
+    parser.add_argument('--competition-input', type=Path,
+                        help='CPU fixture of the provider input root for the mounted-wheel successor')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     verify_inputs(args.inputs, args.input_pin)
-    verify_game_environment(args.game_environment, args.game_pin)
+    if args.competition_input is None:
+        verify_game_environment(args.game_environment, args.game_pin)
+    else:
+        from research.initial_geometry_assistance_v1.game_wheels import verify_mounted_game
+        runtime = json.loads((ROOT/'runtime.json').read_bytes())
+        verify_mounted_game(args.game_environment, args.game_pin, runtime['game_wheel_source'],
+                            base=args.competition_input)
     archive = ROOT/'evidence/phase4-multimodal-preflight-v3-processor-inputs.zip'
     if sha(archive) != 'af5aebbe4761d80b50effd5758fbadac13f80edacbf37a1f0591baa473c913d1':
         raise ValueError('processor archive pin differs')
