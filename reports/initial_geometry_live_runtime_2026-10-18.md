@@ -2,8 +2,12 @@
 
 The missing executable runner is implemented. Private review r4 is sealed with
 lock SHA256 `e0452a412ecc0fe2be93c954547fbf88ad824272cc3f4ee36dadb75f04af6476`.
-No approval, reservation, claim, provider save or GPU run was created for this
-study. Existing attempts and private raw evidence remain unchanged.
+The owner approved r4's source, scoped use and exactly one GPU attempt. Fresh
+preflight passed and one reservation/claim was consumed. The single SaveKernel
+call ended in an SSL EOF with no provider response. Read-only reconciliation
+found no target notebook among 73 owner notebooks at 15:22:37 UTC on October 18.
+No run is confirmed. The uncertain attempt stays consumed; no retry occurred.
+Existing attempts and private raw evidence remain unchanged.
 
 | Component | Implemented behavior |
 |---|---|
@@ -71,8 +75,25 @@ approval for this changed gameplay package. The automatic-arm provenance,
 input, game receipt, protocol, source and scope-evidence hashes are bound by
 the review lock. No credentials, weights or owner semantic answers are embedded.
 
-Next: review and approve this exact lock and scoped use, authorize one attempt
-within the ceilings, then create a single-use reservation/claim and rerun a
-fresh read-only preflight. Stop on package drift, failed gates or a different
-accelerator. This follows the bound `check_authority()` guard; it does not
-replace unresolved redistribution decisions with approval labels.
+## Authorized attempt 1: transport failure
+
+| Stage | Retained result |
+|---|---|
+| Owner approval | Exact message retained privately, bound to r4, its scope and the three source/use/compute records |
+| Fresh preflight | Account, quota, target absence, dataset versions, inventories and account-only private model access all pass |
+| Reservation / claim | Fresh, single-use; consumed before provider transport; preserved |
+| Package | Original r4 unchanged outside its declared authority-data cell; SDK source, timeout, accelerator and attachment fields checked again at send time |
+| SaveKernel | Exactly one send; SSL EOF (`SSLError`), no returned version or HTTP status; no automatic retry |
+| Reconciliation | Read-only owner catalogue has 73 notebooks and excludes the target; status lookup raises ValueError; no confirmed Kaggle run |
+| Evidence | Approval, preflight, reservation, claim, execution lock, HTTP events, failure receipt and reconciliation retained privately |
+
+The SSL exception's urllib3 "Max retries exceeded" wording does not establish
+multiple sends: the transport explicitly sets zero retries and the retained
+ledger contains exactly one SaveKernel event. The connection failure does not
+establish its underlying cause or prove that a server-side effect could never
+appear later. The reservation is therefore not recycled.
+
+Source and scoped-use approval remain recorded for unchanged r4. Another send
+requires fresh compute authorization, a new single-use reservation and fresh
+read-only reconciliation/preflight. No new authorization is inferred from this
+failed attempt. No model-performance or runtime-compatibility conclusion follows.

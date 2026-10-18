@@ -1,10 +1,11 @@
 # Initial geometry assistance: paired short-gameplay preparation
 
-**Status: bounded live runner and private review r4 prepared; source/use/compute
-approval and single-use launch records pending. No LLM gameplay results.** See
+**Status: r4 approved; the single authorized submission encountered SSL EOF
+after fresh preflight. No Kaggle run is confirmed; attempt consumed, no retry.
+No LLM gameplay results.** See
 the [live-runtime checks](initial_geometry_live_runtime_2026-10-18.md): 70 Linux
 regressions, connected real-engine replay, pinned native processor checks and
-read-only provider preflight. No GPU job has been submitted for this study.
+read-only provider preflight and the retained attempt reconciliation.
 
 **Provenance correction:** the r1 admission used a hash-pinned private comparison
 without a committed producer. [Preparation r2](initial_geometry_automatic_provenance_fix_2026-10-18.md)

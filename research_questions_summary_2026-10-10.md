@@ -303,8 +303,9 @@ The [r2 provenance correction](reports/initial_geometry_automatic_provenance_fix
 adds committed reconstruction of the automatic arm from native pointing and raw
 SAM evidence, with protocol-bound hashes and 43 passing CPU regressions.
 These use a scripted policy, with no LLM gameplay results. The bounded live
-runner and private review r4 are now prepared; fresh lock-bound gameplay
-approval and single-use launch authority remain pending.
+runner and private review r4 are prepared and approved. The one authorized
+submission failed with SSL EOF after fresh preflight; the consumed reservation
+is preserved and no retry was made. No notebook/run is confirmed.
 [Review fixes](reports/initial_geometry_assistance_v1_preparation_2026-10-18.md#review-fixes-october-18)
 now record deadline and exception stops, keep a completion observed before the
 deadline, report supplied-geometry click rates and pin the game receipt. 41
@@ -316,8 +317,9 @@ also connect actual HTTP, native token accounting and the isolated game
 interpreter: 12 episodes and independent engine replays pass with scripted
 replies. The pinned Transformers 4.57.6 audit passes 24 prompts with at most
 six images and 4,609 input tokens. SDK dry checks and read-only account,
-quota, dataset-version, inventory and privacy checks pass. No GPU submission,
-reservation or claim has been made for this experiment.
+quota, dataset-version, inventory and privacy checks pass. Read-only follow-up
+found no target notebook after the failed send. Another attempt requires fresh
+compute authorization; source and scoped-use approval remain on record.
 
 ## Source snapshot
 
