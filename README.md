@@ -3,6 +3,10 @@
 This repository implements the transaction-safe ARC-AGI-3 agent and experiment
 program described by `docs/ARC-AGI-3_Project_Plan_8.md`.
 
+[View the six level-1 development boards](https://dcw06.github.io/ARC-AGI-3/)
+used in our visual perception tests, with enlargement, downloads and hover coordinates.
+The [gallery source and image manifest](docs/development-gallery/README.md) are retained here.
+
 Phase 0 and the Phase 0F/M0 evidence-and-model-viability milestone are complete.
 Plan 8 is active. Phase 1 implementation, experiment parameters, target-RTX
 profiling, and the September 10 control availability/license decisions are

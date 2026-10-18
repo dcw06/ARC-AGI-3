@@ -1,0 +1,122 @@
+{
+  "schema": "arc3_development_board_gallery_v1",
+  "boards": [
+    {
+      "game": "ls20",
+      "game_id": "ls20-9607627b",
+      "level": 1,
+      "case_id": "board-01",
+      "image": "images/ls20-level-1.png",
+      "image_sha256": "f530414e155ee08ae5712e675bb51b52661f95f8bef9302c0389a6f43b8e8c57",
+      "image_bytes": 2449,
+      "image_size_wh": [
+        448,
+        448
+      ],
+      "original_board_size_wh": [
+        64,
+        64
+      ],
+      "pixels_per_cell": 7,
+      "observation": "retained initial level-1 frame"
+    },
+    {
+      "game": "s5i5",
+      "game_id": "s5i5-18d95033",
+      "level": 1,
+      "case_id": "board-02",
+      "image": "images/s5i5-level-1.png",
+      "image_sha256": "5cf48c8a5df4e2611215cedbd3970e8574cb9cc8218173edc92e3ebaa5b0b5bb",
+      "image_bytes": 1303,
+      "image_size_wh": [
+        448,
+        448
+      ],
+      "original_board_size_wh": [
+        64,
+        64
+      ],
+      "pixels_per_cell": 7,
+      "observation": "retained initial level-1 frame"
+    },
+    {
+      "game": "cd82",
+      "game_id": "cd82-fb555c5d",
+      "level": 1,
+      "case_id": "board-03",
+      "image": "images/cd82-level-1.png",
+      "image_sha256": "a1c2c3e269d48661d1e91a7a68d47788d14e01686cafd4597bdd927541ff0b19",
+      "image_bytes": 1496,
+      "image_size_wh": [
+        448,
+        448
+      ],
+      "original_board_size_wh": [
+        64,
+        64
+      ],
+      "pixels_per_cell": 7,
+      "observation": "retained initial level-1 frame"
+    },
+    {
+      "game": "ft09",
+      "game_id": "ft09-0d8bbf25",
+      "level": 1,
+      "case_id": "board-04",
+      "image": "images/ft09-level-1.png",
+      "image_sha256": "13e2dadabaf5e2d0bb188d2b366177e62d1212ce05a5e7466967cccd9a20aed7",
+      "image_bytes": 2723,
+      "image_size_wh": [
+        448,
+        448
+      ],
+      "original_board_size_wh": [
+        64,
+        64
+      ],
+      "pixels_per_cell": 7,
+      "observation": "retained initial level-1 frame"
+    },
+    {
+      "game": "ka59",
+      "game_id": "ka59-38d34dbb",
+      "level": 1,
+      "case_id": "board-05",
+      "image": "images/ka59-level-1.png",
+      "image_sha256": "ffcd578ac55d982e039036058556e15f2c2235927cff8d5bd69d3a0c350c4b0a",
+      "image_bytes": 2007,
+      "image_size_wh": [
+        448,
+        448
+      ],
+      "original_board_size_wh": [
+        64,
+        64
+      ],
+      "pixels_per_cell": 7,
+      "observation": "retained initial level-1 frame"
+    },
+    {
+      "game": "sc25",
+      "game_id": "sc25-635fd71a",
+      "level": 1,
+      "case_id": "board-06",
+      "image": "images/sc25-level-1.png",
+      "image_sha256": "d3ef3611d70bb1010833e93cb2400f779d7c49da48a558f9235e655e5bb2c126",
+      "image_bytes": 1970,
+      "image_size_wh": [
+        448,
+        448
+      ],
+      "original_board_size_wh": [
+        64,
+        64
+      ],
+      "pixels_per_cell": 7,
+      "observation": "retained initial level-1 frame"
+    }
+  ],
+  "scope": "The same six exposed development frames used in the perception tests; no claim of new or held-out evaluation.",
+  "rendering": "Original 64 x 64 colors preserved in uniform 7 x 7 blocks; no overlays, crop or margin.",
+  "attribution": "Game visuals: ARC-AGI-3 / ARC Prize. Independent research gallery."
+}
