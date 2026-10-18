@@ -333,6 +333,14 @@ applying the one-month guide's Days 6–14 to the repeated-action finding. First
 audit retained feedback on CPU; then compare recent history with a deterministic,
 evidence-linked attempt/outcome record, keeping reviewed initial geometry and
 the policy budget fixed. This is a draft, not implementation or GPU authorization.
+
+The [retained feedback audit](reports/feedback_availability_audit_2026-10-18.md)
+is complete with zero new inference/actions: 154 decisions repeated an action
+whose earlier unchanged-grid outcome was already in the prompt; 123 also
+matched an identical pre-observation. Older-only evidence occurred on 23
+decisions. The next draft comparison therefore adds explicit summaries of
+the same recent feedback first; longer memory is a separate follow-up. Nine
+synthetic audit tests pass; all original r5 evidence remains unchanged.
 [Review fixes](reports/initial_geometry_assistance_v1_preparation_2026-10-18.md#review-fixes-october-18)
 now record deadline and exception stops, keep a completion observed before the
 deadline, report supplied-geometry click rates and pin the game receipt. 41

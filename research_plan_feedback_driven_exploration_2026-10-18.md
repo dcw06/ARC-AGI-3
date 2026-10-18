@@ -5,12 +5,19 @@ Draft recommendation based on the owner's one-month study guide and the
 This is a plan, not an implemented policy or authorization for model requests,
 game actions, uploads or GPU compute. All previous attempts remain preserved.
 
+**Update after the CPU audit:** [feedback availability results](reports/feedback_availability_audit_2026-10-18.md)
+show that 154 repeated-action decisions already had a previous unchanged-grid
+outcome visible; 123 also matched the current pre-observation. Only 23 decisions
+had an older same-action unchanged example with none in the recent window.
+The first comparison below is therefore narrowed to summaries of the same
+recent evidence. Longer memory becomes a separate follow-up.
+
 **Next research question:** Does an explicit, factual record of attempted
 controls and observed outcomes help the same agent change ineffective actions
 and complete a first level, compared with its current recent-history interface?
 
-The immediate task is a CPU-only audit of feedback available in retained logs,
-followed by a frozen, small comparison of decision interfaces. Larger planning
+The CPU-only retained-log audit is complete. Next is a frozen, small comparison
+of decision interfaces. Larger planning
 systems should follow evidence that the agent can use feedback in this simpler
 setting.
 
@@ -70,7 +77,7 @@ Deliverable: a per-game feedback/repetition table and a few private before/after
 examples. Audit classification should distinguish “evidence missing” from
 “evidence present but the action repeated.” No new GPU is needed for this step.
 
-## Step 2 — Test one evidence interface
+## Step 2 — Test explicit presentation of recent feedback
 
 Keep **reviewed initial geometry in both arms** to hold this source of variation
 fixed. Use the same model/revision, rendering, legal-action contract, decoding,
@@ -80,15 +87,19 @@ as step-0 information; it is not silently updated to current positions.
 | Arm | Information available |
 |---|---|
 | A: recent history | Current shared policy interface with the last two transitions |
-| B: explicit attempt/outcome record | The same interface plus a bounded deterministic table of earlier full actions, source steps, observed changes and repeat counts |
+| B: explicit recent-outcome record | The same interface plus a deterministic table of the same last two full actions, source steps, changed cells/regions and observation-field changes; no older evidence |
 
-The additional table is built from past observations only. It cannot contain
+The additional table is built from the already displayed past observations only.
+Present all recent action outcomes before choosing, without access to the future
+chosen action or its outcome. A later, separately frozen comparison can add
+older attempts. The table cannot contain
 human solutions, object functions, hidden engine state, a known winning action
 or an unsupported claim that a control never works. Record current matches as
 observational matches, not proof of identical underlying state. Freeze table
-selection, truncation and token budgets before inference; record actual input
+selection and token budgets before inference; record actual input
 tokens because the table adds information and processing cost. The result
-would estimate the whole interface's effect, not separate wording from memory.
+would estimate the feedback-summary interface's effect, not prove that a
+particular wording or numerical field caused it.
 
 Retain the action/output contract initially. Do not simultaneously add a
 reflection call, new planner, compulsory prediction, hard action override or
