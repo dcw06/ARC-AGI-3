@@ -12,6 +12,13 @@ had an older same-action unchanged example with none in the recent window.
 The first comparison below is therefore narrowed to summaries of the same
 recent evidence. Longer memory becomes a separate follow-up.
 
+**CPU prototype prepared:** [implementation and validation](reports/recent_feedback_v1_preparation_2026-10-18.md).
+The optional summary, episode adapter and independent checker are implemented
+outside the sealed r5 sources. 104 Linux tests and 12 scripted-engine replays
+pass. All 288 matched retained-context requests pass the pinned native processor;
+summaries add 56–229 input tokens. No neural inference or GPU launch occurred.
+The exact bounded live package and prospective limits remain to be finalized.
+
 **Next research question:** Does an explicit, factual record of attempted
 controls and observed outcomes help the same agent change ineffective actions
 and complete a first level, compared with its current recent-history interface?

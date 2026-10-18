@@ -1,0 +1,34 @@
+{
+  "schema": "recent_feedback_comparison_draft_v1",
+  "status": "CPU preparation only; not a live launch package or compute authorization",
+  "question": "Does an explicit deterministic summary of already displayed recent feedback improve first-level completion and action adaptation?",
+  "variants": ["recent_raw", "recent_summary"],
+  "geometry": "owner-reviewed initial geometry in both variants; explicitly historical",
+  "history_transitions": 2,
+  "summary": {
+    "source": "Only the raw prompt's last two transition images and metadata, before choosing the next action",
+    "max_UTF8_bytes": 4096,
+    "fields": ["historical_step", "action", "before_state", "after_state", "after_levels_completed", "changed_cell_count", "changed_bbox_xyxy_inclusive", "before_grid_equals_current", "after_grid_equals_current"],
+    "excluded": ["older transitions", "future action or outcome", "historical legal-action lists", "undisplayed before-level counts", "object roles", "game rules", "usefulness or progress labels", "action recommendations", "hard action bans"]
+  },
+  "games": ["ls20-9607627b", "s5i5-18d95033", "cd82-fb555c5d", "ft09-0d8bbf25", "ka59-38d34dbb", "sc25-635fd71a"],
+  "candidate_order": [
+    ["recent_raw", "recent_summary"], ["recent_summary", "recent_raw"],
+    ["recent_raw", "recent_summary"], ["recent_summary", "recent_raw"],
+    ["recent_raw", "recent_summary"], ["recent_summary", "recent_raw"]
+  ],
+  "model": "Qwen/Qwen3-VL-30B-A3B-Instruct-FP8",
+  "revision": "d9748a51ae66354c4dad665aab2c71f26cf2c8cd",
+  "temperature": 0,
+  "seed": 0,
+  "max_policy_generations_per_episode": 24,
+  "max_new_tokens_per_policy_generation": 256,
+  "context_tokens": 32768,
+  "image_pixels": [448, 448],
+  "max_images_per_request": 6,
+  "output_contract": "unchanged action_id, action_data, predicted_visible_change; unknown allowed",
+  "primary": "Per-game paired first-level completion within 24 actions",
+  "secondary": ["Repeated full actions after observed unchanged results, stratified by observational context", "Distinct action types and targets", "Prediction coverage and accuracy conditional on assertion", "Input/output tokens, elapsed time, invalid outputs"],
+  "interpretation": "Six exposed development starts, one pair per game. The summary exposes computed visual facts and adds tokens; a benefit would concern the whole interface, not unaided visual understanding. Diversity alone is not solving.",
+  "prerequisites": ["Prospective token ceilings and operational metric definitions", "Connected scripted-engine rehearsal", "Exact bounded live package and independent evaluator review", "Fresh scoped-use and source approval, compute authorization and single-use reservation"]
+}

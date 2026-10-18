@@ -341,6 +341,14 @@ matched an identical pre-observation. Older-only evidence occurred on 23
 decisions. The next draft comparison therefore adds explicit summaries of
 the same recent feedback first; longer memory is a separate follow-up. Nine
 synthetic audit tests pass; all original r5 evidence remains unchanged.
+
+The [recent-feedback comparison core](reports/recent_feedback_v1_preparation_2026-10-18.md)
+is implemented for CPU preparation: raw versus summarized versions of the same
+recent evidence, both with reviewed initial geometry. 104 Linux tests pass;
+12 four-action scripted episodes and 12 independent engine replays pass.
+All 288 prepared requests pass pinned native token checks (maximum 4,816 prompt
+tokens; summary adds 56–229). No new model inference, Kaggle write or GPU job
+occurred. This is not yet a reviewed live launch package or performance result.
 [Review fixes](reports/initial_geometry_assistance_v1_preparation_2026-10-18.md#review-fixes-october-18)
 now record deadline and exception stops, keep a completion observed before the
 deadline, report supplied-geometry click rates and pin the game receipt. 41
