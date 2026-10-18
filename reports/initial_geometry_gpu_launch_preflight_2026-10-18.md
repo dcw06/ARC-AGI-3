@@ -1,6 +1,14 @@
 # Initial geometry gameplay: launch preflight, October 18
 
-**No GPU submission was made. The study still lacks an executable live package.**
+**Updated: bounded live code and private review r4 are prepared; 70 tests and
+read-only provider checks pass. No GPU submission was made.** The implementation,
+package hash and current gates are recorded in the [live-runtime report](initial_geometry_live_runtime_2026-10-18.md).
+Fresh approval records, a single-use reservation/claim and a new pre-send
+preflight are still required. Earlier consumed attempts remain unchanged.
+
+## Historical check before the live implementation
+
+At this earlier check, the study lacked an executable live package.
 The owner's new launch request triggered this check. It did not cause an old
 zero-action MolmoPoint notebook to be reused for gameplay or a CPU rehearsal to
 be presented as model inference.

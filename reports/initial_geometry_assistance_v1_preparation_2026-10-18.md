@@ -1,6 +1,10 @@
 # Initial geometry assistance: paired short-gameplay preparation
 
-**Status: CPU preparation verified; live launcher and final GPU package pending. No LLM gameplay results.**
+**Status: bounded live runner and private review r4 prepared; source/use/compute
+approval and single-use launch records pending. No LLM gameplay results.** See
+the [live-runtime checks](initial_geometry_live_runtime_2026-10-18.md): 70 Linux
+regressions, connected real-engine replay, pinned native processor checks and
+read-only provider preflight. No GPU job has been submitted for this study.
 
 **Provenance correction:** the r1 admission used a hash-pinned private comparison
 without a committed producer. [Preparation r2](initial_geometry_automatic_provenance_fix_2026-10-18.md)
