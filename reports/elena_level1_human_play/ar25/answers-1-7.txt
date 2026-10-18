@@ -1,0 +1,23 @@
+AR25 — LEVEL 1
+Evidence: saved human-play session 3a3cec6a6045455b854f765c3ba94598 from 14 October 2026, actions 1–17. Coordinates are zero-based (x,y) = (column,row).
+
+1. Objects and roles
+The initial board has a black L-shaped object containing five white dots at x18–26, y15–23; a dark-gray L at x36–44, y15–23; and a yellow L at x51–59, y45–53. The white dots distinguish the black moving shape. A cyan divider occupies x30–32; a yellow strip is at the right edge and a black strip at the bottom. The gray shape behaves as the shape to align with the yellow region in this successful trial. Exact bounds describe the initial frame only. The meanings of the edge strips were not independently tested.
+
+2. Available controls and execution
+The environment advertises actions 1–7. This level-1 segment uses only RIGHT (action 4), LEFT (3), and DOWN (2). RIGHT moves the white-dot shape right by 3 pixels and the gray shape left by 3 (sequence 1). LEFT reverses their horizontal directions (sequences 2–7). DOWN moves both downward by 3 pixels in the pre-completion frames (sequences 8–16). The effects were verified by comparing returned frames. No clicks, RESET, or unchanged final frames occur in this segment. UP, SPACE, CLICK and Z were available but untested here; their effects cannot be established from this log.
+
+3. Goal and confirmation
+The successful sequence brings the gray L toward the yellow L: immediately before the final DOWN the gray bounding box is x51–59, y42–50, while the initial yellow region is x51–59, y45–53. Matching the gray and yellow shapes is the supported goal hypothesis for this trial. Definitive completion evidence is sequence 17: levels_completed changes from 0 to 1 and the board advances. This is level completion, not the entire game's WIN state.
+
+4. Rules and supporting evidence
+Sequence 1 tests RIGHT: the white-dot shape shifts +3 in x while the gray L shifts -3. Sequence 2 tests LEFT and returns both to their initial horizontal positions. Further LEFT actions repeat that opposite horizontal movement. DOWN shifts both downward together. These observations support opposite horizontal coupling and shared vertical movement for this level. The original notes do not establish predictions made before each test. The opposite horizontal movement requires a coupled-control model rather than assuming that both objects follow the same direction. No claim about untested controls or later levels is made.
+
+5. Successful strategy
+Recorded sequence: RIGHT ×1, LEFT ×6, DOWN ×10. The first LEFT reverses the initial RIGHT, giving a net five LEFT moves before descending. This places the gray shape at x51–59; descending aligns it with the yellow shape and completes level 1. The initial RIGHT/LEFT pair cancels in position. The log establishes the reversal, but does not establish whether it was intended as a test or a correction. No reset occurred in this segment.
+
+6. Similar objects and relationships
+The black/white-dot, dark-gray and yellow shapes share an L silhouette and a 9×9 bounding box in the initial frame. Color and the white markers distinguish them. Similar appearance does not imply identical control response: the black/white-dot and gray shapes move in opposite horizontal directions, but the same vertical direction. Alignment with the yellow shape matters in the successful trial; a broader rule beyond this level has not been tested.
+
+7. Prior expectations
+The log contains no written statement of prior expectations. A natural starting model is that directional controls move the visible shapes in the same direction. The first RIGHT/LEFT pair instead shows opposite horizontal movement, while subsequent DOWN actions move them in the same vertical direction. A useful working model is therefore coupled horizontal movement with opposite signs and shared vertical movement. Matching the L silhouettes provides a goal hypothesis, and completion supports aligning the gray shape with the yellow region. This describes the model supported by the record without assuming an unrecorded personal belief. No later-level rules are used.
