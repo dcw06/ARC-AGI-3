@@ -327,6 +327,12 @@ games; all 288 predictions abstain, and repeated actions limit exploration.
 This supports no completion advantage in this short test, not a general claim
 against geometry assistance. All three attempts are consumed; no further launch
 is authorized. Raw evidence stays private.
+
+**Next recommended study:** [feedback-driven exploration](research_plan_feedback_driven_exploration_2026-10-18.md),
+applying the one-month guide's Days 6–14 to the repeated-action finding. First
+audit retained feedback on CPU; then compare recent history with a deterministic,
+evidence-linked attempt/outcome record, keeping reviewed initial geometry and
+the policy budget fixed. This is a draft, not implementation or GPU authorization.
 [Review fixes](reports/initial_geometry_assistance_v1_preparation_2026-10-18.md#review-fixes-october-18)
 now record deadline and exception stops, keep a completion observed before the
 deadline, report supplied-geometry click rates and pin the game receipt. 41
