@@ -1,14 +1,16 @@
 # Initial-geometry gameplay: bounded live runtime and private review
 
 **Current successor: [smaller private r5](initial_geometry_small_package_r5_2026-10-18.md)
-was approved and submitted exactly once; Kaggle reports RUNNING.** Its
+is COMPLETE and independently validated; [results](initial_geometry_r5_attempt3_results_2026-10-18.md)
+show 0/6 first-level completions in each arm.** Its
 343,350-byte review notebook reads the same 31 hash-pinned game wheels from
 the already attached competition. Eighty-one Linux CPU tests and a fresh exact
 payload installation/12-episode rehearsal pass; the snapshot rebuilds byte for
 byte. Fresh preflight passed at 17:05:01 UTC, one new claim was consumed and
 SaveKernel returned HTTP 200/version 1. The pulled source/settings match r5.
-Actual accelerator allocation and runtime results remain pending. The r4
-history below and both consumed attempts remain preserved; no retry occurred.
+The actual accelerator was an RTX PRO 6000; the 537.543 s lifecycle, all
+289 token counts, all 12 engine replays and cleanup pass. All three attempts
+remain consumed and preserved; no retry or new GPU job occurred in validation.
 
 The missing executable runner is implemented. Private review r4 is sealed with
 lock SHA256 `e0452a412ecc0fe2be93c954547fbf88ad824272cc3f4ee36dadb75f04af6476`.

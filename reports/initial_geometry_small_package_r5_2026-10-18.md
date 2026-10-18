@@ -1,12 +1,19 @@
 # Initial-geometry smaller successor r5 — October 18, 2026
 
+**Completed and independently validated:** [results](initial_geometry_r5_attempt3_results_2026-10-18.md).
+Neither arm completed a first level (0/6 each); all 12 episodes reached the
+24-action cap. The notebook lifecycle was 537.543 s on an RTX PRO 6000,
+with verified cleanup. This attempt and both earlier uncertain attempts remain
+consumed. The preparation/submission record below is retained.
+
 The submission-size repair is implemented. The r5 review notebook is
 **343,350 bytes**, down from r4 attempt 2's **57,967,905 bytes** (about 99.4%
 smaller). The actual SDK JSON body for the authority-free review is
 **344,232 bytes**. The owner subsequently approved r5; one fresh authorized
 submission succeeded with HTTP 200 and created version 1. Kaggle reported
-RUNNING immediately afterward. Both uncertain r4 attempts remain consumed and
-preserved. Runtime results and actual accelerator allocation are not yet verified.
+RUNNING immediately afterward and later COMPLETE. Both uncertain r4 attempts
+remain consumed and preserved. The completed run's accelerator, evidence and
+independent replay are now verified in the results report.
 
 | Package item | r5 |
 |---|---|
@@ -132,5 +139,5 @@ the observed SSL upload failure for this send, not the untested live study.
 The runtime still must verify mounted wheel bytes and the exact accelerator.
 Raw approval, preflight, claim, provider response, HTTP event and saved-source
 records remain private under `gpu-execution-r5-attempt3/`. No automatic retry
-or subsequent submission is authorized. Next is read-only status/collection
-and independent evaluation after completion.
+or subsequent submission is authorized. Read-only collection and independent
+evaluation are complete; their records remain private.

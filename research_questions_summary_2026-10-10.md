@@ -318,8 +318,15 @@ the existing competition attachment, 81 passing Linux CPU tests, and fresh
 offline installation with 12 scripted episodes and 12 independent replays.
 The snapshot rebuilds byte for byte. The owner then approved r5; fresh preflight
 passed at 17:05:01 UTC and one new consumed attempt was submitted successfully
-(HTTP 200/version 1). Saved source and settings match r5; Kaggle reports RUNNING.
-Actual GPU allocation, gameplay results and independent evaluation remain pending.
+(HTTP 200/version 1). The run is now COMPLETE and
+[independently validated](reports/initial_geometry_r5_attempt3_results_2026-10-18.md):
+537.543 s on an RTX PRO 6000, all 289 native token counts and all 12 real-engine
+replays pass, cleanup verified. **First-level completion: 0/6 in each arm.**
+First-click object contact is 4/5 automatic versus 5/5 reviewed among applicable
+games; all 288 predictions abstain, and repeated actions limit exploration.
+This supports no completion advantage in this short test, not a general claim
+against geometry assistance. All three attempts are consumed; no further launch
+is authorized. Raw evidence stays private.
 [Review fixes](reports/initial_geometry_assistance_v1_preparation_2026-10-18.md#review-fixes-october-18)
 now record deadline and exception stops, keep a completion observed before the
 deadline, report supplied-geometry click rates and pin the game receipt. 41

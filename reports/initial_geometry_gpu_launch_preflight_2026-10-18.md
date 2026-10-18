@@ -1,12 +1,16 @@
 # Initial geometry gameplay: launch preflight, October 18
 
 **Updated: [smaller r5](initial_geometry_small_package_r5_2026-10-18.md) was approved
-and submitted once; Kaggle reports RUNNING.** Its 343,350-byte review notebook uses the existing
+and submitted once; the run is COMPLETE and independently validated.**
+[Results](initial_geometry_r5_attempt3_results_2026-10-18.md): no first-level
+completion in either arm (0/6 each), all 12 episodes at the 24-action cap;
+537.543 s lifecycle on an RTX PRO 6000, all 289 token counts and 12 engine
+replays verified, cleanup passed. Its 343,350-byte review notebook uses the existing
 competition wheel mount. Eighty-one Linux tests and a fresh exact-payload CPU
 installation/12-episode replay pass. All seven fresh preflight checks passed
 at 17:05:01 UTC. One new reservation/claim was consumed; SaveKernel returned
-HTTP 200/version 1. Saved source/settings match r5, including the RTX PRO 6000
-request; actual allocation and runtime results remain pending.
+HTTP 200/version 1. Saved source/settings match r5; actual allocation and
+runtime evidence have now passed independent evaluation.
 
 Previously, r4 was approved; two separately authorized submissions each passed
 fresh preflight and failed with SSL EOF. No notebook/run is confirmed. The
