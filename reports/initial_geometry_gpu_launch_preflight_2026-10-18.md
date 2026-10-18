@@ -1,10 +1,10 @@
 # Initial geometry gameplay: launch preflight, October 18
 
-**Updated: r4 was approved and one submission attempted after fresh preflight;
-the single send failed with SSL EOF. No notebook/run is confirmed.** Seventy
+**Updated: r4 was approved; two separately authorized submissions each passed
+fresh preflight and failed with SSL EOF. No notebook/run is confirmed.** Seventy
 CPU tests pass. The implementation,
 package hash and current gates are recorded in the [live-runtime report](initial_geometry_live_runtime_2026-10-18.md).
-The uncertain attempt and its reservation remain consumed, with no retry.
+Both uncertain attempts and reservations remain consumed, with no automatic retry.
 Source/use approval remains recorded; another attempt needs fresh compute
 authorization and preflight. Earlier consumed attempts remain unchanged.
 

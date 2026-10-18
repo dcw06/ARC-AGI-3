@@ -2,11 +2,12 @@
 
 The missing executable runner is implemented. Private review r4 is sealed with
 lock SHA256 `e0452a412ecc0fe2be93c954547fbf88ad824272cc3f4ee36dadb75f04af6476`.
-The owner approved r4's source, scoped use and exactly one GPU attempt. Fresh
-preflight passed and one reservation/claim was consumed. The single SaveKernel
-call ended in an SSL EOF with no provider response. Read-only reconciliation
-found no target notebook among 73 owner notebooks at 15:22:37 UTC on October 18.
-No run is confirmed. The uncertain attempt stays consumed; no retry occurred.
+The owner approved r4's source/use and then separately authorized two fresh
+single-use attempts. Both passed fresh preflight, consumed distinct claims and
+made one SaveKernel call each. Both calls ended in SSL EOF without a provider
+response, including attempt 2 through WSL HTTPS. Read-only reconciliation still
+found no target notebook among 73 owner notebooks at 15:32:21 UTC on October 18.
+No run is confirmed. Both uncertain attempts stay consumed; no automatic retry occurred.
 Existing attempts and private raw evidence remain unchanged.
 
 | Component | Implemented behavior |
@@ -97,3 +98,22 @@ Source and scoped-use approval remain recorded for unchanged r4. Another send
 requires fresh compute authorization, a new single-use reservation and fresh
 read-only reconciliation/preflight. No new authorization is inferred from this
 failed attempt. No model-performance or runtime-compatibility conclusion follows.
+
+## Separately authorized attempt 2: same transport failure
+
+The owner said "Now you may try again." Its private record binds that exact
+message to the unchanged r4 lock and inherited ceilings. Source/use records
+were retained; only compute authorization and single-use attempt data were new.
+Attempt 1's consumed claim and send receipt were checked and left intact.
+
+Fresh preflight again passed all six checks, including absence of a delayed
+attempt-1 notebook. The external operator used WSL Python HTTPS through the same
+reviewed provider boundary; this changed no notebook source outside authority
+data and introduced no automatic retry. Exactly one SaveKernel send encountered
+`SSLError`. A read-only follow-up again found the target absent, and the status
+lookup raised ValueError. Both sets of private receipts remain preserved.
+
+The attempt-2 notebook is 57,967,905 bytes. Both failures occurred during its
+submission, but this does not establish that payload size caused the SSL EOF.
+The transport failure needs investigation before spending further attempts;
+there is no confirmed model execution or performance result to analyze.

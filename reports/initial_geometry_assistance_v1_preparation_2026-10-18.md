@@ -1,7 +1,7 @@
 # Initial geometry assistance: paired short-gameplay preparation
 
-**Status: r4 approved; the single authorized submission encountered SSL EOF
-after fresh preflight. No Kaggle run is confirmed; attempt consumed, no retry.
+**Status: r4 approved; two separately authorized submissions encountered SSL EOF
+after fresh preflight. No Kaggle run is confirmed; both consumed, no automatic retry.
 No LLM gameplay results.** See
 the [live-runtime checks](initial_geometry_live_runtime_2026-10-18.md): 70 Linux
 regressions, connected real-engine replay, pinned native processor checks and

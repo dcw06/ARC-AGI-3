@@ -303,9 +303,10 @@ The [r2 provenance correction](reports/initial_geometry_automatic_provenance_fix
 adds committed reconstruction of the automatic arm from native pointing and raw
 SAM evidence, with protocol-bound hashes and 43 passing CPU regressions.
 These use a scripted policy, with no LLM gameplay results. The bounded live
-runner and private review r4 are prepared and approved. The one authorized
-submission failed with SSL EOF after fresh preflight; the consumed reservation
-is preserved and no retry was made. No notebook/run is confirmed.
+runner and private review r4 are prepared and approved. Two separately
+authorized submissions each failed with SSL EOF after fresh preflight, including
+one through WSL. Both consumed reservations are preserved; no automatic retry
+was made. No notebook/run is confirmed.
 [Review fixes](reports/initial_geometry_assistance_v1_preparation_2026-10-18.md#review-fixes-october-18)
 now record deadline and exception stops, keep a completion observed before the
 deadline, report supplied-geometry click rates and pin the game receipt. 41
