@@ -1,7 +1,31 @@
 """Lazy imports keep preparation usable before the pinned game install."""
+import hashlib
+import json
 from pathlib import Path
 
 from .policy import check_observation
+
+
+def verify_game_environment(root, receipt_sha256):
+    """Check the game environment against an independently supplied receipt hash."""
+    root = Path(root)
+    raw = (root/'receipt.json').read_bytes()
+    if hashlib.sha256(raw).hexdigest() != receipt_sha256:
+        raise ValueError('game environment receipt differs')
+    receipt = json.loads(raw)
+    lock = hashlib.sha256((root/'game_requirements.lock').read_bytes()).hexdigest()
+    if lock != receipt['requirements_sha256']:
+        raise ValueError('game requirements lock differs')
+    members = receipt['verified_members']
+    for name, info in members.items():
+        data = (root/name).read_bytes()
+        if hashlib.sha256(data).hexdigest() != info['sha256'] or len(data) != info['bytes']:
+            raise ValueError('game environment differs')
+    # Every game file the engine can load must be a verified member.
+    games = {p.relative_to(root).as_posix() for p in (root/'environment_files').rglob('*') if p.is_file()}
+    if games != {name for name in members if name.startswith('environment_files/')}:
+        raise ValueError('game environment inventory differs')
+    return {'game_environment_receipt_sha256': receipt_sha256, 'game_requirements_sha256': lock}
 
 
 class OfflineEngine:

@@ -16,7 +16,7 @@ import time
 os.environ.update(MPLBACKEND='Agg', CUDA_VISIBLE_DEVICES='', NVIDIA_VISIBLE_DEVICES='void')
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from research.initial_geometry_assistance_v1.audit import audit_episode
-from research.initial_geometry_assistance_v1.engine import OfflineEngine
+from research.initial_geometry_assistance_v1.engine import OfflineEngine, verify_game_environment
 from research.initial_geometry_assistance_v1.episodes import episode
 from research.initial_geometry_assistance_v1.geometry import canonical, digest
 from research.initial_geometry_assistance_v1.policy import request_for
@@ -31,6 +31,7 @@ def main():
     parser.add_argument('--inputs', type=Path, required=True)
     parser.add_argument('--manifest-sha256', required=True)
     parser.add_argument('--game-environment', type=Path, required=True)
+    parser.add_argument('--game-receipt-sha256', required=True)
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
     socket.socket.connect = socket.create_connection = no_network
@@ -51,11 +52,7 @@ def main():
     versions = {n: importlib.metadata.version(n) for n in ('arc-agi', 'arcengine', 'numpy')}
     if versions != {'arc-agi': '0.9.8', 'arcengine': '0.9.3', 'numpy': '2.4.4'}:
         raise ValueError('pinned game interpreter differs')
-    game_receipt = json.loads((args.game_environment/'receipt.json').read_bytes())
-    for name, info in game_receipt['verified_members'].items():
-        raw = (args.game_environment/name).read_bytes()
-        if hashlib.sha256(raw).hexdigest() != info['sha256'] or len(raw) != info['bytes']:
-            raise ValueError('game environment differs')
+    game = verify_game_environment(args.game_environment, args.game_receipt_sha256)
     cases = json.loads((args.inputs/'cases.json').read_bytes())['cases']
     if [(c['case_id'], c['game_id'], c['order']) for c in cases] != [
             (c['case_id'], c['game_id'], c['order']) for c in protocol['cases']]:
@@ -96,7 +93,7 @@ def main():
             maximum_history_bytes = max(maximum_history_bytes, len(canonical(body)))
     receipt = {'schema': 'initial_geometry_CPU_rehearsal_v1', 'scientific_results': False, 'real_model_calls': 0,
                'GPU_jobs': 0, 'online_game_calls': 0, 'online_scorecards': 0, 'leaderboard_submissions': 0,
-               'engine_versions': versions, 'input_manifest_sha256': args.manifest_sha256,
+               'engine_versions': versions, **game, 'input_manifest_sha256': args.manifest_sha256,
                'per_episode_action_cap_for_this_rehearsal_only': 2, 'episodes': len(rows),
                'starting_board_checks': len(rows), 'independent_engine_replay_checks': len(rows),
                'rehearsal_dispatches': sum(r['dispatches'] for r in rows), 'bootstrap_resets': len(rows),

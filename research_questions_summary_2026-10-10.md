@@ -304,6 +304,14 @@ adds committed reconstruction of the automatic arm from native pointing and raw
 SAM evidence, with protocol-bound hashes and 43 passing CPU regressions.
 These use a scripted policy, with no LLM gameplay results. The bounded live
 launcher, final private package and fresh gameplay authorization remain pending.
+[Review fixes](reports/initial_geometry_assistance_v1_preparation_2026-10-18.md#review-fixes-october-18)
+now record deadline and exception stops, keep a completion observed before the
+deadline, report supplied-geometry click rates and pin the game receipt. 41
+regressions pass, and the real-engine rehearsal reproduces all 12 r2 traces with
+the fixed code. Both branches are now integrated: 54 combined CPU regressions
+pass, and a fresh 12-episode rehearsal with provenance-checked r2 inputs replays
+exactly. The [launch preflight](reports/initial_geometry_gpu_launch_preflight_2026-10-18.md)
+still refuses a GPU launch because an executable bounded live package is absent.
 
 ## Source snapshot
 
