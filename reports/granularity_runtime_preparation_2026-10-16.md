@@ -1,5 +1,12 @@
 # Granularity segmentation: checkpoint preparation and one-image checks
 
+**Completed Semantic-SAM GPU smoke:** corrected r3 version 3 is independently
+verified COMPLETE on an actual RTX PRO 6000 Blackwell, with cleanup and raw-mask
+replay passing. Worker duration is 113.496 seconds. Seeded mode produced three
+masks and automatic mode one; both match **0/6 whole objects** on sc25 at fixed
+granularity 1. [Results, visual findings and scope limits](semantic_sam_gpu_smoke_attempt2_results_2026-10-17.md).
+The six-board comparison remains unstarted. Entries below preserve earlier stages.
+
 **Corrected r3 launch:** after the competition-binding repair and the owner's
 RTX menu confirmation, [a separately authorized second GPU attempt](semantic_sam_gpu_smoke_attempt2_status_2026-10-17.md)
 was submitted once as version 3. It is RUNNING; no new inference results are

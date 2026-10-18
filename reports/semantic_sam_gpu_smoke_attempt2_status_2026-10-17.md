@@ -1,5 +1,10 @@
 # Semantic-SAM corrected r3: second authorized attempt submitted
 
+**Terminal update:** version 3 is COMPLETE. The [independent results audit](semantic_sam_gpu_smoke_attempt2_results_2026-10-17.md)
+confirms an actual RTX PRO 6000, 113.496-second worker lifecycle, cleanup and raw
+mask replay. Seeded and automatic modes each match **0/6 whole objects** on sc25.
+The submission-time record below is preserved; no further attempt was launched.
+
 After the owner reported that RTX PRO 6000 appeared in this notebook's menu and
 authorized corrected r3, exactly one fresh GPU attempt was submitted. Kaggle
 accepted **version 3** without error or rejected sources. The last retained
