@@ -3,9 +3,10 @@
 The submission-size repair is implemented. The r5 review notebook is
 **343,350 bytes**, down from r4 attempt 2's **57,967,905 bytes** (about 99.4%
 smaller). The actual SDK JSON body for the authority-free review is
-**344,232 bytes**. No notebook was saved or uploaded, no GPU job was launched,
-and no new authority, reservation or claim was created. Both uncertain r4
-attempts remain consumed and preserved.
+**344,232 bytes**. The owner subsequently approved r5; one fresh authorized
+submission succeeded with HTTP 200 and created version 1. Kaggle reported
+RUNNING immediately afterward. Both uncertain r4 attempts remain consumed and
+preserved. Runtime results and actual accelerator allocation are not yet verified.
 
 | Package item | r5 |
 |---|---|
@@ -14,7 +15,7 @@ attempts remain consumed and preserved.
 | Game dependencies | Same 31 exact wheels, now resolved from the already attached competition's `arc_agi_3_wheels` directory |
 | Embedded game content | Unchanged game receipt, hash-pinned requirements and six development-game sources; no wheel binaries |
 | Dataset attachments | Unchanged publisher wheel dataset v1 and private model dataset v1; no additional upload |
-| Source/use/compute approval for r5 | Pending; r4 approval is retained as historical authority for its consumed attempts |
+| Source/use/compute approval for r5 | Recorded from the owner's “Approve gpu run” reply to this exact package, under the unchanged reviewed scope; old authority and attempts preserved |
 
 ## What changed
 
@@ -57,9 +58,10 @@ verification and the CPU rehearsal path.
 | Privacy | Account-only notebook and raw outputs; sanitized summaries only; internet and TPU off |
 
 The accepted time policy still allows provider allocation, mounting, setup and
-GPU release to extend total elapsed time beyond one hour. No fresh attempt is
-authorized by preparing this successor. Current quota and requested shape do
-not prove actual allocation; the runtime retains its exact accelerator refusal.
+GPU release to extend total elapsed time beyond one hour. Preparation alone
+authorized no attempt; the subsequent owner approval authorized exactly one.
+Current quota and requested shape do not prove actual allocation; the runtime
+retains its exact accelerator refusal.
 
 ## Validation
 
@@ -112,6 +114,23 @@ The surrounding directory retains the build, inventory, source comparison,
 read-only preflight and CPU receipts. Private raw inputs and evidence are not
 published with this report.
 
-Next: review this exact r5 package and scope, record fresh lock-bound approval
-and compute authorization, then create one new reservation and claim only after
-fresh reconciliation/preflight. Do not reuse either consumed r4 reservation.
+## Owner-authorized submission
+
+| Stage | Result |
+|---|---|
+| Owner statement | “Approve gpu run”, replying to the exact r5 lock and request for fresh approval; original scope/ceilings retained verbatim as context |
+| Fresh preflight | All seven checks pass at 17:05:01 UTC, including target absence and all 31 competition wheel filenames/sizes |
+| Authority | New source/use/compute records bound to r5, the protocol and scoped-use evidence |
+| Reservation / claim | Fresh, exclusive and consumed; neither r4 attempt reused |
+| Submission | Exactly one SaveKernel; HTTP 200; version 1; no provider error or invalid source |
+| Saved package | Pulled source/authority, private setting, pinned image, RTX PRO 6000 request and attachments match the approved package |
+| Provider echoes | Dataset version labels and session timeout were not echoed; exact versioned sources and requested timeout remain bound at send time |
+| Initial status | RUNNING; actual GPU allocation and study results still pending |
+
+The smaller package crossed the submission boundary successfully. This resolves
+the observed SSL upload failure for this send, not the untested live study.
+The runtime still must verify mounted wheel bytes and the exact accelerator.
+Raw approval, preflight, claim, provider response, HTTP event and saved-source
+records remain private under `gpu-execution-r5-attempt3/`. No automatic retry
+or subsequent submission is authorized. Next is read-only status/collection
+and independent evaluation after completion.

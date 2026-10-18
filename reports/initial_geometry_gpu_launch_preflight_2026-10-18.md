@@ -1,17 +1,20 @@
 # Initial geometry gameplay: launch preflight, October 18
 
-**Updated: [smaller r5](initial_geometry_small_package_r5_2026-10-18.md) is prepared,
-not authorized or launched.** Its 343,350-byte notebook uses the existing
+**Updated: [smaller r5](initial_geometry_small_package_r5_2026-10-18.md) was approved
+and submitted once; Kaggle reports RUNNING.** Its 343,350-byte review notebook uses the existing
 competition wheel mount. Eighty-one Linux tests and a fresh exact-payload CPU
-installation/12-episode replay pass. Seven read-only preflight checks passed
-at 16:25:19 UTC; a future launch requires fresh checks and authority for r5.
+installation/12-episode replay pass. All seven fresh preflight checks passed
+at 17:05:01 UTC. One new reservation/claim was consumed; SaveKernel returned
+HTTP 200/version 1. Saved source/settings match r5, including the RTX PRO 6000
+request; actual allocation and runtime results remain pending.
 
 Previously, r4 was approved; two separately authorized submissions each passed
 fresh preflight and failed with SSL EOF. No notebook/run is confirmed. The
 history is retained in the [live-runtime report](initial_geometry_live_runtime_2026-10-18.md).
 Both uncertain attempts and reservations remain consumed, with no automatic retry.
-Source/use approval for r4 remains historical; r5 needs its own source/use and
-compute approval, reservation and claim. Earlier consumed attempts remain unchanged.
+Source/use approval for r4 remains historical. Fresh r5 source/use and compute
+records, reservation and claim are retained privately. Earlier consumed attempts
+remain unchanged. No additional attempt or automatic retry is authorized.
 
 [Read-only diagnosis](initial_geometry_ssl_diagnosis_2026-10-18.md) now strongly
 implicates oversized request rejection: the notebook's embedded wheels expand
