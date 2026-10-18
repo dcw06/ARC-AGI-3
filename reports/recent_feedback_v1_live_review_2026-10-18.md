@@ -73,3 +73,19 @@ It must stop on drift, refusal or network uncertainty. This does not imply that
 the owner personally inspected a newly generated hash. Allocation, mounting,
 setup and GPU release can extend total provider time beyond one hour, as previously
 accepted. No prior reservation or attempt is reused.
+
+## Submission record
+
+After this review, one fresh reservation was consumed and exactly one provider
+save-and-run call created private version 1. Fresh preflight passed all seven
+checks, with no rejected attachments or provider error. A read-only pull verified
+the exact authorized notebook, private settings, pinned image, requested RTX PRO
+6000 and sources. Kaggle reported RUNNING at collection of the submission receipt.
+All 112 retained earlier-attempt files still matched their hashes. There was no
+automatic retry.
+
+This is a submission-status record, not a completed experiment or a claim that
+the requested GPU was already observed by the runtime. Raw approvals, reservation,
+request, provider response and saved-source receipts remain private. Collection,
+independent native-token checking, engine replay and provider lifecycle validation
+are required after the run finishes.
