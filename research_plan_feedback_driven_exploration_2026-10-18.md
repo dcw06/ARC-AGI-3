@@ -5,6 +5,13 @@ Draft recommendation based on the owner's one-month study guide and the
 This is a plan, not an implemented policy or authorization for model requests,
 game actions, uploads or GPU compute. All previous attempts remain preserved.
 
+**October 19 update:** the recent-feedback comparison has now
+[completed and passed independent validation](reports/recent_feedback_v1_results_2026-10-18.md).
+Both arms completed 0/6 first levels; the explicit summary did not reduce
+repetition. The active next preparation is the
+[fixed-checkpoint feedback-to-probe diagnostic](research_plan_feedback_probe_v1_2026-10-19.md).
+The earlier preparation status below is retained as history.
+
 **Update after the CPU audit:** [feedback availability results](reports/feedback_availability_audit_2026-10-18.md)
 show that 154 repeated-action decisions already had a previous unchanged-grid
 outcome visible; 123 also matched the current pre-observation. Only 23 decisions
