@@ -1,5 +1,22 @@
 # Feedback-probe live preparation and source-lock repair
 
+**Submission update:** One authorized attempt was accepted, but Kaggle generated
+the notebook slug from its title and returned a target different from the sealed
+binding. The saved code, privacy and requested RTX PRO 6000 settings matched;
+post-save target verification failed. The attempt is consumed and preserved,
+with no resubmission. Cancellation was requested through the owner UI because
+the inspected APIs did not expose the session ID required by the cancellation
+endpoint; cancellation is not established by this report.
+
+The local fix derives the creation title from a canonical ASCII target slug and
+checks agreement among the review target, metadata and exact SaveKernel fields
+before submission. The exact post-save target check remains in place. The
+original send-boundary reproduction passes the mismatched title on `d22dfb3`
+and is refused by the fix. **23 targeted source/package/operator tests pass.**
+The worker, inference requests and scientific checkpoint inventory are unchanged.
+A corrected private review snapshot needs its own approval before any replacement;
+the already-consumed attempt supplies no authority for a retry.
+
 The source-lock repair and dedicated live implementation address the review of
 `e1e2349`. The research design and eight selected checkpoints are unchanged.
 No GPU inference, upload, reservation or launch is authorized by this report.
@@ -51,7 +68,7 @@ timeout, as already accepted for the project's notebook path.
 | Payload inspection | 44 execution members; no reference-key files, tests or scripted answer server |
 | Prior evidence | Certified source run and previously consumed attempts unchanged |
 
-Final private review-lock SHA256:
+Original private review-lock SHA256, now a preserved consumed package:
 `5bd2da72e378a499fb04a9b555d81a9f71af7680c11f6ca11ae72e997541a70b`.
 The package has 64 review-source members and a 429,944-byte review notebook.
 The historical scientific input manifest remains unchanged; the inference-only

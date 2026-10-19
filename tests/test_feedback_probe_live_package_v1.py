@@ -5,7 +5,8 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from research.feedback_probe_v1.live_package import check_runtime
+from research.feedback_probe_v1.live_package import check_runtime, creation_title, validate_creation_binding, validate_target_binding
+from research.feedback_probe_v1.live_operator import validate_send
 from research.feedback_probe_v1.live_runtime import finalize
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -20,6 +21,39 @@ def runtime():
 
 
 class ProbePackageChecks(unittest.TestCase):
+    def test_creation_title_reproduces_exact_bound_slug(self):
+        target = 'daichongwei06/arc3-feedback-probe-diagnostic-v1'
+        title = creation_title(target)
+        self.assertEqual(title.lower().replace(' ', '-'), target.split('/')[1])
+        validate_creation_binding({'slug': target, 'new_title': title})
+        with self.assertRaisesRegex(ValueError, 'different bound slug'):
+            validate_creation_binding({'slug': target, 'new_title': 'ARC3 Feedback Probe Checkpoint Diagnostic V1'})
+
+    def test_ambiguous_creation_slug_is_refused_before_save(self):
+        for slug in ('arc3--probe', '-arc3-probe', 'arc3-probe-', 'arc3_probe', 'arc3-PrObE'):
+            with self.subTest(slug=slug), self.assertRaises(ValueError):
+                creation_title('daichongwei06/'+slug)
+
+    def test_original_mismatch_refuses_at_send_boundary_before_any_SDK_use(self):
+        fields = {'slug': 'daichongwei06/arc3-feedback-probe-diagnostic-v1',
+                  'new_title': 'ARC3 Feedback Probe Checkpoint Diagnostic V1'}
+        with self.assertRaisesRegex(ValueError, 'different bound slug'):
+            validate_send({}, {'save_fields': fields}, None, 'a'*64)
+
+    def test_review_preflight_and_send_must_name_the_same_target(self):
+        slug = 'daichongwei06/arc3-feedback-probe-diagnostic-v1'
+        fields = {'slug': slug, 'new_title': creation_title(slug)}
+        lock = {'kernel_id': slug, 'save_fields': fields}
+        metadata = {'id': slug, 'title': fields['new_title']}
+        validate_target_binding(lock, metadata)
+        for target in ('review', 'metadata', 'title'):
+            changed_lock, changed_metadata = deepcopy(lock), deepcopy(metadata)
+            if target == 'review': changed_lock['kernel_id'] += '-other'
+            elif target == 'metadata': changed_metadata['id'] += '-other'
+            else: changed_metadata['title'] += ' Other'
+            with self.subTest(target=target), self.assertRaises(ValueError):
+                validate_target_binding(changed_lock, changed_metadata)
+
     def test_private_bindings_cannot_change_verified_runtime(self):
         original = runtime()
         check_runtime(original)

@@ -22,6 +22,34 @@ EMPTY_LOCK = '0'*64
 MAX_NOTEBOOK_BYTES = 900_000
 
 
+def creation_title(kernel_id):
+    """Use a creation title whose generated Kaggle slug matches the binding.
+
+    A new notebook can take its slug from new_title even when SaveKernel also
+    carries a slug. Restrict this path to a simple ASCII round-trip; post-save
+    target verification remains mandatory and is never relaxed to an alias.
+    """
+    if type(kernel_id) is not str or not re.fullmatch(
+            r'daichongwei06/[a-z0-9]+(?:-[a-z0-9]+)*', kernel_id):
+        raise ValueError('notebook slug cannot round-trip through its creation title')
+    return kernel_id.split('/', 1)[1].replace('-', ' ').title()
+
+
+def validate_creation_binding(fields):
+    if fields.get('new_title') != creation_title(fields.get('slug')):
+        raise ValueError('new-notebook creation title generates a different bound slug')
+
+
+def validate_target_binding(lock, metadata=None):
+    fields = lock['save_fields']
+    validate_creation_binding(fields)
+    if lock.get('kernel_id') != fields['slug']:
+        raise ValueError('review and save target identities differ')
+    if metadata is not None and (metadata.get('id') != fields['slug'] or
+                                 metadata.get('title') != fields['new_title']):
+        raise ValueError('metadata and save target/title identities differ')
+
+
 def check_runtime(runtime):
     """Keep the verified runtime fixed while binding this new private notebook.
 
@@ -197,7 +225,7 @@ finally:
                            'source': 'Private paired feedback-probe gameplay study. Review only: refuses before setup without fresh lock-bound authority.'},
                           {'cell_type': 'code', 'id': 'bounded-runner', 'metadata': {}, 'source': bootstrap,
                            'outputs': [], 'execution_count': None}]}
-    metadata = {'id': runtime['kernel_id'], 'title': 'ARC3 Feedback Probe Checkpoint Diagnostic V1', 'code_file': 'review.ipynb',
+    metadata = {'id': runtime['kernel_id'], 'title': creation_title(runtime['kernel_id']), 'code_file': 'review.ipynb',
                 'language': 'python', 'kernel_type': 'notebook', 'is_private': True, 'enable_gpu': False,
                 'enable_tpu': False, 'enable_internet': False, 'machine_shape': 'NvidiaRtxPro6000',
                 'docker_image': runtime['kaggle_image']['docker_image'], 'docker_image_pinning_type': 'original',
@@ -222,7 +250,9 @@ finally:
                    'docker_image': metadata['docker_image'], 'docker_image_pinning_type': 'original',
                    'dataset_data_sources': metadata['dataset_sources'], 'competition_data_sources': metadata['competition_sources'],
                    'kernel_data_sources': [], 'model_data_sources': [], 'session_timeout_seconds': 3600}
+    validate_creation_binding(save_fields)
     lock['save_fields'] = save_fields
+    validate_target_binding(lock, metadata)
     scope_review = Path(scope_review)
     scope_files = {p.relative_to(scope_review).as_posix(): p.read_bytes() for p in scope_review.rglob('*') if p.is_file()}
     if not scope_files or any(p.is_symlink() for p in scope_review.rglob('*')):

@@ -11,7 +11,7 @@ import zipfile
 
 from research.initial_geometry_assistance_v1.geometry import canonical
 from research.initial_geometry_assistance_v1.live_io import sha, write_new
-from .live_package import check_notebook, check_runtime
+from .live_package import check_notebook, check_runtime, validate_target_binding
 from .live_runtime import check_authority
 from .source_closure import source_inventory, verify_source_inventory, safe_member
 from research.initial_geometry_assistance_v1.game_wheels import GAME_WHEEL_SOURCE
@@ -29,6 +29,7 @@ def verify_review(review, source):
     review, source = Path(review), Path(source)
     lock = json.loads((review/'review-lock.json').read_bytes())
     pin = sha(review/'review-lock.json')
+    validate_target_binding(lock, json.loads((review/'kernel-metadata.json').read_bytes()))
     for name, expected in lock['review_sources'].items():
         if sha(source/name) != expected:
             raise ValueError('reviewed source changed: '+name)
@@ -152,6 +153,7 @@ def serialize(lock, notebook):
 
 
 def validate_send(body, lock, notebook, pin, *, live=True):
+    validate_target_binding(lock)
     aliases = {key: key for key in [*lock['save_fields'], 'text', 'kernel_execution_type']}
     aliases.update({key.split('_')[0]+''.join(p.title() for p in key.split('_')[1:]): key for key in list(aliases)})
     normalized = {}
