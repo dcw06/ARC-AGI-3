@@ -89,3 +89,13 @@ the requested GPU was already observed by the runtime. Raw approvals, reservatio
 request, provider response and saved-source receipts remain private. Collection,
 independent native-token checking, engine replay and provider lifecycle validation
 are required after the run finishes.
+
+## Completed validation
+
+Version 1 subsequently completed and passed independent lifecycle, frozen-request,
+native-token and real-engine replay checks. The actual GPU was one RTX PRO 6000
+Blackwell; the bounded notebook lifecycle took 561.32 s, with cleanup verified.
+Both arms completed 0/6 first levels. See the
+[completed results](recent_feedback_v1_results_2026-10-18.md) for the frozen
+metric breakdown and qualifications. Collection and analysis launched no new GPU
+job, and the used reservation remains consumed.
