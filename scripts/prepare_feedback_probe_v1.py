@@ -13,6 +13,7 @@ from research.recent_feedback_v1.live_contract import verify_inputs
 from research.feedback_probe_v1.checkpoints import checked_checkpoint, select_checkpoints
 from research.feedback_probe_v1.interface import VARIANTS, policy_request, recognition_key, recognition_request
 from research.feedback_probe_v1.preparation import verify_prepared
+from research.feedback_probe_v1.source_closure import source_inventory
 
 
 def main():
@@ -79,7 +80,7 @@ def main():
     sources.update(['research/feedback_probe_v1/protocol.json', 'scripts/prepare_feedback_probe_v1.py',
                     'scripts/rehearse_feedback_probe_v1.py', 'scripts/audit_feedback_probe_tokens_v1.py'])
     snapshot = {'schema': 'feedback_probe_CPU_draft_lock_v1', 'live_launch_package': False,
-        'manifest_sha256': sha(args.output/'manifest.json'), 'sources': {n: sha(ROOT/n) for n in sorted(sources)},
+        'manifest_sha256': sha(args.output/'manifest.json'), 'sources': source_inventory(ROOT, sources),
         'source_review_lock_sha256': pin, 'new_model_generations': 0, 'new_game_actions': 0,
         'provider_writes': 0, 'GPU_jobs': 0}
     write_new(args.output/'draft-lock.json', snapshot)

@@ -1,7 +1,8 @@
 # Next diagnostic: feedback to an alternative experiment
 
-**CPU preparation, October 19, 2026.** No real model responses, live package,
-uploads, approval, reservation or GPU launch are established by this document.
+**Preparation, October 19, 2026.** The live worker, package builder and independent
+evaluator are implemented; see the [repair and validation report](reports/feedback_probe_v1_live_preparation_2026-10-19.md).
+No real model responses, uploads, approval, reservation or GPU launch are established by this document.
 All earlier attempts remain consumed and preserved.
 
 **CPU checks completed:** [preparation results](reports/feedback_probe_v1_preparation_2026-10-19.md):
@@ -136,8 +137,9 @@ the full requests, prefix observations, actions, terminal reasons and totals.
 Independent engine replay adds its own CPU-only actions and scorecards; those
 are not hidden in the study totals. The prospective 16 scorecards exceed the old
 attempt's 12-card scope. No previous authorization or consumed reservation covers
-this experiment. The live runner, immutable image, mounted inputs, exact package
-review and new compute authorization remain future work.
+this experiment. The live package seals the immutable image and versioned input
+bindings. Actual provider attachment/access checks, final package approval and
+new compute authorization are required before launch.
 
 Current source includes strict recognition scoring, injectable continuations,
 an independent content auditor, source/input sealing, a scripted loopback HTTP
