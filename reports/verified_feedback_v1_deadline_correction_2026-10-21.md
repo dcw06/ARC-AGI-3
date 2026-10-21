@@ -1,102 +1,165 @@
-# Verified-feedback review corrections
+# Verified-feedback study: corrected interpretation and deadline fixes
 
-The review reproduced. The completed attempt and its original package remain
-unchanged. The results report now separates the repeated-action and other-action
-forecasts and compares the repeated action with persistence. Its net gain does
-not demonstrate prediction beyond that baseline. See the
+The review led to two corrections:
+
+1. **The forecast gain does not show improvement beyond a simple rule:** predict that an action will have the same effect as last time.
+2. **The code now handles the time limit correctly:** it preserves completed work and reports unfinished work without calling the study complete.
+
+The completed GPU run remains technically valid. Its original data and software
+package are unchanged. The deadline bug did not affect that run; the code fix is
+for future use.
+
+## What the forecast results mean
+
+The study compared two settings: the existing summary alone, and the same
+summary plus verified feedback about the previous action. Each setting was
+tested at eight checkpoints.
+
+At each checkpoint, the model chose between two actions and predicted the effect
+of each. It then made a second decision with the same two options. In every
+case, it chose its first action again. The feedback block told it what that
+action had just done.
+
+Overall, second-decision forecasts were correct **6/16 times with the summary
+alone** and **8/16 times with feedback**. Splitting those forecasts by action
+shows where the difference came from:
+
+| Second-decision measure | Summary alone | With verified feedback |
+| --- | --- | --- |
+| Predicted the same effect as last time for the repeated action | 5/8 | 8/8 |
+| Correctly predicted the repeated action's next effect | 3/8 | 5/8 |
+| Correctly predicted the other action's effect | 3/8 | 3/8 |
+| Simple baseline: predict the repeated action's effect will stay the same | 5/8 | 5/8 |
+
+**The feedback setting's 5/8 score on the repeated action exactly matches that
+simple baseline.** There was no net accuracy gain on the other action, and no
+change in the selected actions. The results are consistent with copying the
+previous effect into the next forecast. They do not establish better prediction
+beyond that rule, better action selection, or an internal reasoning mechanism.
+
+This breakdown was added after the run to explain the existing results. It does
+not change any answers or scores, replace the original analysis, or count as a
+new test planned before the experiment. See the
 [corrected results report](verified_feedback_v1_attempt1_results_2026-10-21.md).
 
-| Second-decision measure | Summary only | Verified feedback |
-| --- | --- | --- |
-| Repeated-action forecast equals its preceding observed effect | 5/8 | 8/8 |
-| Repeated-action forecast correct | 3/8 | 5/8 |
-| Other-action forecast correct | 3/8 | 3/8 |
-| Persistence forecast correct for the repeated action | 5/8 | 5/8 |
+## What was wrong with the deadline handling
 
-These values were recomputed from the unchanged independent evaluation
-`440b7078d88e13c2bab1c1dc15623382d61f996b7937ccd692419ad9d7bb6de5`
-and evaluated run inventory
-`41acebe93924ccf1e4e34d3fc1b072bd2505a539fb66d27428741a1e6e2f5634`.
-This is a post-run interpretation correction, not a replacement analysis or new
-preregistered endpoint. The original run remains technically valid.
+The runner has two time limits:
 
-## Deadline behavior corrected for future reuse
+- **At 3,000 seconds:** stop allowing new model requests and game actions.
+- **By 3,300 seconds:** finish shutting down processes, cleaning up the GPU,
+  removing temporary files and saving the final evidence.
 
-Previously, a check after the last action or during engine closure could relabel
-a completed condition as a deadline failure. Unlimited-time replay then refused
-the resulting evidence. A genuine partial prefix also conflicted with the
-worker's full-schedule aggregate assumptions.
+The old code could check the first limit after the last action had already
+finished, or while closing the game engine. It could then incorrectly label a
+finished trial as a deadline failure. Here, a *trial* means one checkpoint run
+under one of the two settings.
 
-| Case | Corrected behavior |
+The independent evaluator also assumed a complete history. It could reject the
+whole evaluation when a trial stopped partway through, instead of reporting the
+work that had finished and clearly marking what was missing.
+
+## How the corrected code behaves
+
+| Situation | Corrected behavior |
 | --- | --- |
-| Both decisions/actions finish before the next admission check | Preserve the natural action-cap or terminal reason |
-| Admission closes before another request or action | Record the precise failed check boundary and retain the complete observed prefix |
-| A request or dispatch intent was journaled but not admitted | Retain the intent; do not count it as an actual HTTP request or engine action |
-| Too little headroom remains to start another condition | Retain each remaining scheduled slot as `not_admitted`, without creating an engine |
-| Partial schedule has a valid lifecycle | Return its scored report with `study_schedule_complete=False` and `technically_complete=False` |
-| Transport, journal, engine-close or hard-lifecycle failure | Remain a failure; no generic timeout is converted into a graceful stop |
+| A trial finishes its two actions or reaches a game stopping condition | Keep the actual stopping reason; do not relabel it because the new-work cutoff passes during cleanup |
+| The cutoff arrives before another request or action | Stop new work and save the exact point where it stopped, along with everything already observed |
+| The log records a planned request or action that was never sent | Keep the log entry, but do not count it as work performed |
+| Too little time remains to start another trial | Mark each remaining trial as `not_admitted`; do not start its game engine |
+| Only part of the study finishes, but shutdown and cleanup succeed | Score the available evidence and mark the study incomplete: `study_schedule_complete=False` and `technically_complete=False` |
+| A request, evidence write, engine shutdown or final deadline check fails | Keep the failure; do not treat it as an ordinary stop at the new-work cutoff |
 
-Independent replay reproduces the recorded admission-check boundary and compares
-every preceding event, request, answer, forecast commitment and fresh engine
-observation. Missing or malformed stop receipts, forged boundaries and work
-resuming after schedule admission stops are refused. All 32 scheduled answer
-slots remain in the denominator. Actual resets, restored actions, continuation
-actions, HTTP requests and closes are derived from retained admitted work.
+The independent evaluator replays the saved history using fresh CPU game
+engines. It checks the requests, answers, original forecasts saved before each
+action, and resulting observations. It also verifies exactly where new work
+stopped. Missing or altered stop records, inconsistent stopping points, and work
+that restarts after admission has stopped are rejected.
 
-The action/HTTP admission cutoff stays at 3,000 seconds. Engine closure can use
-the separate cleanup reserve; it cannot reopen bootstrap or dispatch afterward.
-The supervisor keeps its independent 3,300-second hard watchdog through worker
-closure, group/GPU cleanup, source/environment removal and finalization. A late
-finalization witness or failed cleanup still cannot certify a run. The frozen
-scientific protocol, candidates, prompts, model and numerical resource ceilings
+All **32 planned study-answer slots** remain in the results, including missing
+ones. Counts of resets, replayed setup actions, new actions, model requests and
+engine closures come from the work actually recorded as performed.
+
+Cleanup may use the time between the two limits, but it cannot allow new game
+actions to start. A separate watchdog process enforces the final 3,300-second
+deadline. Failed cleanup or late final evidence still prevents certification.
+The scientific protocol, candidate actions, prompts, model and resource limits
 are unchanged.
 
-## Validation
+## Checks performed
 
 | Check | Result |
 | --- | --- |
-| Old-code reproductions | Both retained completion/close-cutoff regressions fail on `149c9e2` |
-| Final exact-source Linux suite | **156 passed, 0 failures/errors/skips** |
-| New regression coverage | Nine tests, including partial prefixes, unissued intents, unstarted conditions, false stop records, transport failures, cleanup admission and incomplete-status certification |
-| Derivation check | All 15 derived files reproduce from their pinned parents |
-| Real CPU engine cutoff check | Expired action refused; bootstrap and close only, no dispatch; scorecard closed and process reaped inside the cleanup reserve |
-| Scripted real-game rehearsal | 33 loopback HTTP requests; all 32 scheduled phases reached and valid; maximum prompt count 5,282/8,192 |
-| Independent rehearsal replay | 80 engine boots/closes and 308 dispatches, including reference branches |
-| Rehearsal reuse binding | Final snapshot has exactly the same execution-source inventory and decompressed payload-member hashes as the rehearsed snapshot; final evaluator/status changes were tested separately on final source |
-| Exact review notebook | Refuses under Python `-S` before optional imports, with no created files |
-| Missing launch authority | Refused before any reservation/claim or launch directory is created |
-| SDK serialization | Checked offline; no send |
-| Historical preservation | Original package, completed attempt and older evidence retained and hash-checked |
-| New GPU jobs / neural generations / Kaggle calls | **0 / 0 / 0** |
+| Reproduce the old deadline bugs | Both saved regression tests fail on `149c9e2` |
+| Test the final corrected source on Linux | **156 tests passed; no failures, errors or skips** |
+| Cover the new behavior | Nine regression tests cover partly finished trials, logged but unsent work, unstarted trials, false stop records, request failures, cleanup limits and incomplete-study status |
+| Rebuild generated source files | All 15 files match the versions generated from their fixed parent files |
+| Test the cutoff with a real CPU game engine | The late action was refused; no game action was sent. The scorecard closed and the engine process exited during the cleanup reserve |
+| Rehearse with real games and a local scripted answer server | 33 local API requests; all 32 study answers completed and had valid format; largest prompt was 5,282 of 8,192 tokens |
+| Independently replay the rehearsal | 80 engine starts, 80 closures and 308 actions, including the alternative-action checks used for scoring |
 
-The isolated CPU rehearsals and final tests verified their owned-process cleanup
-and temporary-environment removal. An initial local final-test harness lacked a
-multiprocessing main guard. That check was interrupted, its failed watchdog
-record was retained, and its output was not accepted as passing evidence. The
-corrected harness used a fresh evidence directory and passed with its hard
-watchdog running and cleanup verified.
+The final snapshot has the same execution-source files and the same unpacked
+payload contents as the snapshot used for that rehearsal. This was checked by
+file hash. The final evaluator changes were tested on the final source.
 
-## Review snapshot, not launch authority
+Additional package and preservation checks passed:
 
-| Final review artifact | SHA256 |
+| Check | Result |
 | --- | --- |
-| GPU-refusing correction review lock | `67883a145cfb8917f2bb252f1f1c630c5d5b94678a403111966a21376d97b28a` |
+| Run the exact review notebook without authorization | It refuses before loading optional dependencies, including under Python `-S`, and creates no files |
+| Try to build a launch without authorization | It refuses before creating a reservation, launch claim or launch directory |
+| Check the Kaggle SDK request format | Checked offline; nothing sent |
+| Check earlier evidence | The original package, completed run and older evidence are preserved and still match their recorded hashes |
+| New GPU jobs, model generations or Kaggle calls during this correction | **Zero** |
+
+The CPU checks also verified that their child processes were stopped and their
+temporary environments removed. One local test attempt could not start its
+watchdog because the test harness was missing the Python startup guard needed
+for child processes. That attempt was stopped and its failure record kept; it
+was not counted as a pass. After the harness was fixed, the checks passed in a
+fresh evidence directory with the watchdog running and cleanup verified.
+
+## Current status
+
+The corrected package is **for review only**. Its notebook refuses to run
+without authorization. No new approval, reservation or launch claim was created,
+and no GPU run was started.
+
+The snapshot still refers to the notebook used by the completed attempt, for
+comparison purposes. It therefore cannot pass the launch check that requires an
+unused notebook target. The old attempt's approval does not cover the changed
+code.
+
+Two builds of the final review package were identical. The final snapshot was
+built on Linux and the earlier correction snapshot on Windows. The ZIP payloads
+embedded in their notebooks differ, but all files inside those payloads have
+matching hashes. Those matching execution files justify reusing the rehearsal.
+The evaluator changes were tested separately on the final source.
+
+## Evidence and file identifiers
+
+The result breakdown was checked against these unchanged records:
+
+| Record | SHA256 |
+| --- | --- |
+| Independent evaluation | `440b7078d88e13c2bab1c1dc15623382d61f996b7937ccd692419ad9d7bb6de5` |
+| Evaluated run's file inventory | `41acebe93924ccf1e4e34d3fc1b072bd2505a539fb66d27428741a1e6e2f5634` |
+
+The final correction snapshot is identified by:
+
+| Artifact | SHA256 |
+| --- | --- |
+| Review lock identifying the exact correction package | `67883a145cfb8917f2bb252f1f1c630c5d5b94678a403111966a21376d97b28a` |
 | Review notebook | `999197300402e095705866a1cf2abc3380e9b6f596372bde71cbad08a9f517a5` |
-| Exact final CPU source archive | `e1ec0027d7481a8663e8d15632ee1e99281762ff1c3f89f61f1a720fa40cf860` |
+| Final CPU source archive | `e1ec0027d7481a8663e8d15632ee1e99281762ff1c3f89f61f1a720fa40cf860` |
 
-Two final review builds matched byte for byte. The original attempt's review
-lock `3a1aa3e4…` remains preserved with its source archive and receipts. It does
-not authorize this changed code. The correction snapshot retains the already
-used notebook binding for comparison, so it cannot pass an unused-target launch
-preflight. Its authority slot is empty; no new reservation or claim exists.
+The original attempt's review lock, `3a1aa3e4...`, remains preserved with its
+source archive and evidence records.
 
-The final snapshot was built on Linux; the earlier correction snapshot was built
-on Windows. Their compressed payload containers differ, while every decompressed
-payload member has the same hash. Rehearsal reuse is based on verified member
-contents, not an assertion that the two compressed ZIP files are identical.
+Private correction records are in the git-ignored directory
+`.cache/github-review/verified-feedback-corrections-2026-10-21/`:
 
-Private correction receipts are under the git-ignored
-`.cache/github-review/verified-feedback-corrections-2026-10-21/`. Final tests are
-in `final-tests-r2/`; the final review is in `stage-r2/review-only/`. The earlier
-correction snapshot is retained as superseded, not launch-approved. This work
-does not authorize or imply another GPU attempt.
+- `final-tests-r2/` contains the final test evidence.
+- `stage-r2/review-only/` contains the final review package.
+- The earlier correction snapshot is retained as superseded and was never
+  approved for launch.
