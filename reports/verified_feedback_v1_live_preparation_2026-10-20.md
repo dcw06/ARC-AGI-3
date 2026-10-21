@@ -1,5 +1,9 @@
 # Verified executed feedback v1: bounded live-package preparation
 
+Subsequent status: the owner authorized this exact package and one attempt was
+submitted after fresh preflight. See the [launch record](verified_feedback_v1_attempt1_launch_2026-10-20.md).
+The preparation account below preserves the state before that authorization.
+
 The bounded runner, independent evaluator and exact private review package are
 implemented and checked. **No upload, GPU launch, reservation, claim or new
 authorization was created.** The review notebook remains GPU-disabled and
