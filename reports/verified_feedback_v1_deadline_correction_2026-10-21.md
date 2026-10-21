@@ -42,6 +42,148 @@ not change any answers or scores, replace the original analysis, or count as a
 new test planned before the experiment. See the
 [corrected results report](verified_feedback_v1_attempt1_results_2026-10-21.md).
 
+## Agent answer log from the completed run
+
+Below are all **32 study answers** from the original completed GPU run: two
+decisions under each setting at all eight checkpoints. These are the agent's
+actual structured answers, not examples or outputs from the corrected runner.
+No new inference was performed to create this log.
+
+Each row preserves every answer field. The candidate actions and actual changed-
+cell counts are added from the verified event log to make the answers easier to
+follow. Counts include interface pixels and do not measure progress toward
+solving the game. Action IDs are shown as recorded, without assuming what each
+control means in a particular game.
+
+Forecast categories mean: `none` = 0 changed cells, `1_to_4` = 1–4,
+`5_to_64` = 5–64, and `65_plus` = 65 or more. `not_applicable` is required
+on decision 1 because there is no preceding study action to check. On decision
+2, the two previous-action fields refer to decision 1. The final column instead
+shows what happened **after the action in that row**.
+
+The feedback setting is given the preceding action's effect and forecast check
+before decision 2. Repeating those supplied values is a consistency check, not
+evidence of independent understanding. Both settings repeat the same selected
+action at decision 2 in every checkpoint.
+
+Open a game below to read its four answers. For the original answer text, see
+the [downloadable JSON log](verified_feedback_v1_attempt1_agent_answers_2026-10-21.json).
+That file includes all 32 model replies verbatim, plus the same action facts.
+Private provider logs, dataset details, credentials and image payloads are
+excluded from this public excerpt.
+
+<details>
+<summary>ls20 — board-01-step02</summary>
+
+**Candidate A:** ID 2. **Candidate B:** ID 1.
+
+| Setting | Decision | Forecast A | Forecast B | Chosen action | Reports previous change | Checks previous forecast | Actual changed cells after action |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Summary alone | 1 | `5_to_64` | `5_to_64` | A (ID 2) | `not_applicable` | `not_applicable` | 2 |
+| Summary alone | 2 | `5_to_64` | `none` | A (ID 2) | `unknown` | `unknown` | 2 |
+| With feedback | 1 | `5_to_64` | `5_to_64` | A (ID 2) | `not_applicable` | `not_applicable` | 2 |
+| With feedback | 2 | `1_to_4` | `65_plus` | A (ID 2) | `yes` | `mismatched` | 2 |
+
+</details>
+
+<details>
+<summary>s5i5 — board-02-step02</summary>
+
+**Candidate A:** ID 6 at (31, 63). **Candidate B:** ID 6 at (52, 9).
+
+| Setting | Decision | Forecast A | Forecast B | Chosen action | Reports previous change | Checks previous forecast | Actual changed cells after action |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Summary alone | 1 | `1_to_4` | `1_to_4` | A (ID 6 at (31, 63)) | `not_applicable` | `not_applicable` | 1 |
+| Summary alone | 2 | `1_to_4` | `1_to_4` | A (ID 6 at (31, 63)) | `unknown` | `unknown` | 1 |
+| With feedback | 1 | `1_to_4` | `1_to_4` | A (ID 6 at (31, 63)) | `not_applicable` | `not_applicable` | 1 |
+| With feedback | 2 | `1_to_4` | `1_to_4` | A (ID 6 at (31, 63)) | `yes` | `matched` | 1 |
+
+</details>
+
+<details>
+<summary>cd82 — board-03-step02</summary>
+
+**Candidate A:** ID 1. **Candidate B:** ID 6 at (31, 28).
+
+| Setting | Decision | Forecast A | Forecast B | Chosen action | Reports previous change | Checks previous forecast | Actual changed cells after action |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Summary alone | 1 | `none` | `none` | A (ID 1) | `not_applicable` | `not_applicable` | 1 |
+| Summary alone | 2 | `none` | `1_to_4` | A (ID 1) | `unknown` | `unknown` | 1 |
+| With feedback | 1 | `none` | `none` | A (ID 1) | `not_applicable` | `not_applicable` | 1 |
+| With feedback | 2 | `1_to_4` | `none` | A (ID 1) | `yes` | `mismatched` | 1 |
+
+</details>
+
+<details>
+<summary>cd82 — board-03-step03</summary>
+
+**Candidate A:** ID 1. **Candidate B:** ID 6 at (31, 28).
+
+| Setting | Decision | Forecast A | Forecast B | Chosen action | Reports previous change | Checks previous forecast | Actual changed cells after action |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Summary alone | 1 | `none` | `1_to_4` | B (ID 6 at (31, 28)) | `not_applicable` | `not_applicable` | 1 |
+| Summary alone | 2 | `1_to_4` | `1_to_4` | B (ID 6 at (31, 28)) | `unknown` | `unknown` | 0 |
+| With feedback | 1 | `none` | `1_to_4` | B (ID 6 at (31, 28)) | `not_applicable` | `not_applicable` | 1 |
+| With feedback | 2 | `1_to_4` | `1_to_4` | B (ID 6 at (31, 28)) | `yes` | `matched` | 0 |
+
+</details>
+
+<details>
+<summary>ft09 — board-04-step02</summary>
+
+**Candidate A:** ID 6 at (31, 63). **Candidate B:** ID 6 at (14, 12).
+
+| Setting | Decision | Forecast A | Forecast B | Chosen action | Reports previous change | Checks previous forecast | Actual changed cells after action |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Summary alone | 1 | `none` | `none` | A (ID 6 at (31, 63)) | `not_applicable` | `not_applicable` | 0 |
+| Summary alone | 2 | `none` | `none` | A (ID 6 at (31, 63)) | `no` | `matched` | 0 |
+| With feedback | 1 | `none` | `none` | A (ID 6 at (31, 63)) | `not_applicable` | `not_applicable` | 0 |
+| With feedback | 2 | `none` | `none` | A (ID 6 at (31, 63)) | `no` | `matched` | 0 |
+
+</details>
+
+<details>
+<summary>ka59 — board-05-step02</summary>
+
+**Candidate A:** ID 6 at (31, 31). **Candidate B:** ID 1.
+
+| Setting | Decision | Forecast A | Forecast B | Chosen action | Reports previous change | Checks previous forecast | Actual changed cells after action |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Summary alone | 1 | `1_to_4` | `none` | A (ID 6 at (31, 31)) | `not_applicable` | `not_applicable` | 1 |
+| Summary alone | 2 | `1_to_4` | `none` | A (ID 6 at (31, 31)) | `unknown` | `unknown` | 1 |
+| With feedback | 1 | `1_to_4` | `none` | A (ID 6 at (31, 31)) | `not_applicable` | `not_applicable` | 1 |
+| With feedback | 2 | `1_to_4` | `none` | A (ID 6 at (31, 31)) | `yes` | `matched` | 1 |
+
+</details>
+
+<details>
+<summary>ka59 — board-05-step03</summary>
+
+**Candidate A:** ID 1. **Candidate B:** ID 6 at (31, 31).
+
+| Setting | Decision | Forecast A | Forecast B | Chosen action | Reports previous change | Checks previous forecast | Actual changed cells after action |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Summary alone | 1 | `none` | `1_to_4` | B (ID 6 at (31, 31)) | `not_applicable` | `not_applicable` | 1 |
+| Summary alone | 2 | `1_to_4` | `1_to_4` | B (ID 6 at (31, 31)) | `unknown` | `unknown` | 0 |
+| With feedback | 1 | `none` | `1_to_4` | B (ID 6 at (31, 31)) | `not_applicable` | `not_applicable` | 1 |
+| With feedback | 2 | `1_to_4` | `1_to_4` | B (ID 6 at (31, 31)) | `yes` | `matched` | 0 |
+
+</details>
+
+<details>
+<summary>sc25 — board-06-step02</summary>
+
+**Candidate A:** ID 1. **Candidate B:** ID 6 at (15, 54).
+
+| Setting | Decision | Forecast A | Forecast B | Chosen action | Reports previous change | Checks previous forecast | Actual changed cells after action |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Summary alone | 1 | `none` | `none` | A (ID 1) | `not_applicable` | `not_applicable` | 8 |
+| Summary alone | 2 | `none` | `1_to_4` | A (ID 1) | `unknown` | `unknown` | 4 |
+| With feedback | 1 | `none` | `none` | A (ID 1) | `not_applicable` | `not_applicable` | 8 |
+| With feedback | 2 | `5_to_64` | `none` | A (ID 1) | `yes` | `mismatched` | 4 |
+
+</details>
+
 ## What was wrong with the deadline handling
 
 The runner has two time limits:

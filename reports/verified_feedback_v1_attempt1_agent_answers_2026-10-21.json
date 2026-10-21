@@ -1,0 +1,1200 @@
+{
+  "schema": "verified_feedback_public_agent_answers_v1",
+  "source_evaluation_sha256": "440b7078d88e13c2bab1c1dc15623382d61f996b7937ccd692419ad9d7bb6de5",
+  "source_run_evidence_sha256": "41acebe93924ccf1e4e34d3fc1b072bd2505a539fb66d27428741a1e6e2f5634",
+  "qualification": "Whitelisted public excerpt of the original completed run. All 32 study answers retained verbatim; excludes private provider/runtime logs, images, bindings and credentials. Observed effects are post-action measurements, not model predictions or game-progress labels.",
+  "study_answers": [
+    {
+      "game": "ls20",
+      "checkpoint_id": "board-01-step02",
+      "setting": "summary_only",
+      "decision": 1,
+      "candidate_actions": {
+        "A": {
+          "action_data": {},
+          "action_id": 2
+        },
+        "B": {
+          "action_data": {},
+          "action_id": 1
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"5_to_64\", \"B\": \"5_to_64\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"not_applicable\", \"previous_prediction_check\": \"not_applicable\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "5_to_64",
+          "B": "5_to_64"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "not_applicable",
+        "previous_prediction_check": "not_applicable"
+      },
+      "executed_action": {
+        "action_data": {},
+        "action_id": 2
+      },
+      "observed_changed_cells": 2,
+      "observed_effect_category": "1_to_4"
+    },
+    {
+      "game": "ls20",
+      "checkpoint_id": "board-01-step02",
+      "setting": "summary_only",
+      "decision": 2,
+      "candidate_actions": {
+        "A": {
+          "action_data": {},
+          "action_id": 2
+        },
+        "B": {
+          "action_data": {},
+          "action_id": 1
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"5_to_64\", \"B\": \"none\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"unknown\", \"previous_prediction_check\": \"unknown\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "5_to_64",
+          "B": "none"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "unknown",
+        "previous_prediction_check": "unknown"
+      },
+      "executed_action": {
+        "action_data": {},
+        "action_id": 2
+      },
+      "observed_changed_cells": 2,
+      "observed_effect_category": "1_to_4"
+    },
+    {
+      "game": "ls20",
+      "checkpoint_id": "board-01-step02",
+      "setting": "verified_feedback",
+      "decision": 1,
+      "candidate_actions": {
+        "A": {
+          "action_data": {},
+          "action_id": 2
+        },
+        "B": {
+          "action_data": {},
+          "action_id": 1
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"5_to_64\", \"B\": \"5_to_64\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"not_applicable\", \"previous_prediction_check\": \"not_applicable\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "5_to_64",
+          "B": "5_to_64"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "not_applicable",
+        "previous_prediction_check": "not_applicable"
+      },
+      "executed_action": {
+        "action_data": {},
+        "action_id": 2
+      },
+      "observed_changed_cells": 2,
+      "observed_effect_category": "1_to_4"
+    },
+    {
+      "game": "ls20",
+      "checkpoint_id": "board-01-step02",
+      "setting": "verified_feedback",
+      "decision": 2,
+      "candidate_actions": {
+        "A": {
+          "action_data": {},
+          "action_id": 2
+        },
+        "B": {
+          "action_data": {},
+          "action_id": 1
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"1_to_4\", \"B\": \"65_plus\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"yes\", \"previous_prediction_check\": \"mismatched\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "1_to_4",
+          "B": "65_plus"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "yes",
+        "previous_prediction_check": "mismatched"
+      },
+      "executed_action": {
+        "action_data": {},
+        "action_id": 2
+      },
+      "observed_changed_cells": 2,
+      "observed_effect_category": "1_to_4"
+    },
+    {
+      "game": "s5i5",
+      "checkpoint_id": "board-02-step02",
+      "setting": "summary_only",
+      "decision": 1,
+      "candidate_actions": {
+        "A": {
+          "action_data": {
+            "x": 31,
+            "y": 63
+          },
+          "action_id": 6
+        },
+        "B": {
+          "action_data": {
+            "x": 52,
+            "y": 9
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"1_to_4\", \"B\": \"1_to_4\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"not_applicable\", \"previous_prediction_check\": \"not_applicable\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "1_to_4",
+          "B": "1_to_4"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "not_applicable",
+        "previous_prediction_check": "not_applicable"
+      },
+      "executed_action": {
+        "action_data": {
+          "x": 31,
+          "y": 63
+        },
+        "action_id": 6
+      },
+      "observed_changed_cells": 1,
+      "observed_effect_category": "1_to_4"
+    },
+    {
+      "game": "s5i5",
+      "checkpoint_id": "board-02-step02",
+      "setting": "summary_only",
+      "decision": 2,
+      "candidate_actions": {
+        "A": {
+          "action_data": {
+            "x": 31,
+            "y": 63
+          },
+          "action_id": 6
+        },
+        "B": {
+          "action_data": {
+            "x": 52,
+            "y": 9
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"1_to_4\", \"B\": \"1_to_4\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"unknown\", \"previous_prediction_check\": \"unknown\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "1_to_4",
+          "B": "1_to_4"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "unknown",
+        "previous_prediction_check": "unknown"
+      },
+      "executed_action": {
+        "action_data": {
+          "x": 31,
+          "y": 63
+        },
+        "action_id": 6
+      },
+      "observed_changed_cells": 1,
+      "observed_effect_category": "1_to_4"
+    },
+    {
+      "game": "s5i5",
+      "checkpoint_id": "board-02-step02",
+      "setting": "verified_feedback",
+      "decision": 1,
+      "candidate_actions": {
+        "A": {
+          "action_data": {
+            "x": 31,
+            "y": 63
+          },
+          "action_id": 6
+        },
+        "B": {
+          "action_data": {
+            "x": 52,
+            "y": 9
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"1_to_4\", \"B\": \"1_to_4\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"not_applicable\", \"previous_prediction_check\": \"not_applicable\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "1_to_4",
+          "B": "1_to_4"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "not_applicable",
+        "previous_prediction_check": "not_applicable"
+      },
+      "executed_action": {
+        "action_data": {
+          "x": 31,
+          "y": 63
+        },
+        "action_id": 6
+      },
+      "observed_changed_cells": 1,
+      "observed_effect_category": "1_to_4"
+    },
+    {
+      "game": "s5i5",
+      "checkpoint_id": "board-02-step02",
+      "setting": "verified_feedback",
+      "decision": 2,
+      "candidate_actions": {
+        "A": {
+          "action_data": {
+            "x": 31,
+            "y": 63
+          },
+          "action_id": 6
+        },
+        "B": {
+          "action_data": {
+            "x": 52,
+            "y": 9
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"1_to_4\", \"B\": \"1_to_4\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"yes\", \"previous_prediction_check\": \"matched\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "1_to_4",
+          "B": "1_to_4"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "yes",
+        "previous_prediction_check": "matched"
+      },
+      "executed_action": {
+        "action_data": {
+          "x": 31,
+          "y": 63
+        },
+        "action_id": 6
+      },
+      "observed_changed_cells": 1,
+      "observed_effect_category": "1_to_4"
+    },
+    {
+      "game": "cd82",
+      "checkpoint_id": "board-03-step02",
+      "setting": "summary_only",
+      "decision": 1,
+      "candidate_actions": {
+        "A": {
+          "action_data": {},
+          "action_id": 1
+        },
+        "B": {
+          "action_data": {
+            "x": 31,
+            "y": 28
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"none\", \"B\": \"none\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"not_applicable\", \"previous_prediction_check\": \"not_applicable\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "none",
+          "B": "none"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "not_applicable",
+        "previous_prediction_check": "not_applicable"
+      },
+      "executed_action": {
+        "action_data": {},
+        "action_id": 1
+      },
+      "observed_changed_cells": 1,
+      "observed_effect_category": "1_to_4"
+    },
+    {
+      "game": "cd82",
+      "checkpoint_id": "board-03-step02",
+      "setting": "summary_only",
+      "decision": 2,
+      "candidate_actions": {
+        "A": {
+          "action_data": {},
+          "action_id": 1
+        },
+        "B": {
+          "action_data": {
+            "x": 31,
+            "y": 28
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"none\", \"B\": \"1_to_4\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"unknown\", \"previous_prediction_check\": \"unknown\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "none",
+          "B": "1_to_4"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "unknown",
+        "previous_prediction_check": "unknown"
+      },
+      "executed_action": {
+        "action_data": {},
+        "action_id": 1
+      },
+      "observed_changed_cells": 1,
+      "observed_effect_category": "1_to_4"
+    },
+    {
+      "game": "cd82",
+      "checkpoint_id": "board-03-step02",
+      "setting": "verified_feedback",
+      "decision": 1,
+      "candidate_actions": {
+        "A": {
+          "action_data": {},
+          "action_id": 1
+        },
+        "B": {
+          "action_data": {
+            "x": 31,
+            "y": 28
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"none\", \"B\": \"none\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"not_applicable\", \"previous_prediction_check\": \"not_applicable\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "none",
+          "B": "none"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "not_applicable",
+        "previous_prediction_check": "not_applicable"
+      },
+      "executed_action": {
+        "action_data": {},
+        "action_id": 1
+      },
+      "observed_changed_cells": 1,
+      "observed_effect_category": "1_to_4"
+    },
+    {
+      "game": "cd82",
+      "checkpoint_id": "board-03-step02",
+      "setting": "verified_feedback",
+      "decision": 2,
+      "candidate_actions": {
+        "A": {
+          "action_data": {},
+          "action_id": 1
+        },
+        "B": {
+          "action_data": {
+            "x": 31,
+            "y": 28
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"1_to_4\", \"B\": \"none\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"yes\", \"previous_prediction_check\": \"mismatched\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "1_to_4",
+          "B": "none"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "yes",
+        "previous_prediction_check": "mismatched"
+      },
+      "executed_action": {
+        "action_data": {},
+        "action_id": 1
+      },
+      "observed_changed_cells": 1,
+      "observed_effect_category": "1_to_4"
+    },
+    {
+      "game": "cd82",
+      "checkpoint_id": "board-03-step03",
+      "setting": "summary_only",
+      "decision": 1,
+      "candidate_actions": {
+        "A": {
+          "action_data": {},
+          "action_id": 1
+        },
+        "B": {
+          "action_data": {
+            "x": 31,
+            "y": 28
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"none\", \"B\": \"1_to_4\"}, \"selected_candidate\": \"B\", \"observed_previous_change\": \"not_applicable\", \"previous_prediction_check\": \"not_applicable\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "none",
+          "B": "1_to_4"
+        },
+        "selected_candidate": "B",
+        "observed_previous_change": "not_applicable",
+        "previous_prediction_check": "not_applicable"
+      },
+      "executed_action": {
+        "action_data": {
+          "x": 31,
+          "y": 28
+        },
+        "action_id": 6
+      },
+      "observed_changed_cells": 1,
+      "observed_effect_category": "1_to_4"
+    },
+    {
+      "game": "cd82",
+      "checkpoint_id": "board-03-step03",
+      "setting": "summary_only",
+      "decision": 2,
+      "candidate_actions": {
+        "A": {
+          "action_data": {},
+          "action_id": 1
+        },
+        "B": {
+          "action_data": {
+            "x": 31,
+            "y": 28
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"1_to_4\", \"B\": \"1_to_4\"}, \"selected_candidate\": \"B\", \"observed_previous_change\": \"unknown\", \"previous_prediction_check\": \"unknown\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "1_to_4",
+          "B": "1_to_4"
+        },
+        "selected_candidate": "B",
+        "observed_previous_change": "unknown",
+        "previous_prediction_check": "unknown"
+      },
+      "executed_action": {
+        "action_data": {
+          "x": 31,
+          "y": 28
+        },
+        "action_id": 6
+      },
+      "observed_changed_cells": 0,
+      "observed_effect_category": "none"
+    },
+    {
+      "game": "cd82",
+      "checkpoint_id": "board-03-step03",
+      "setting": "verified_feedback",
+      "decision": 1,
+      "candidate_actions": {
+        "A": {
+          "action_data": {},
+          "action_id": 1
+        },
+        "B": {
+          "action_data": {
+            "x": 31,
+            "y": 28
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"none\", \"B\": \"1_to_4\"}, \"selected_candidate\": \"B\", \"observed_previous_change\": \"not_applicable\", \"previous_prediction_check\": \"not_applicable\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "none",
+          "B": "1_to_4"
+        },
+        "selected_candidate": "B",
+        "observed_previous_change": "not_applicable",
+        "previous_prediction_check": "not_applicable"
+      },
+      "executed_action": {
+        "action_data": {
+          "x": 31,
+          "y": 28
+        },
+        "action_id": 6
+      },
+      "observed_changed_cells": 1,
+      "observed_effect_category": "1_to_4"
+    },
+    {
+      "game": "cd82",
+      "checkpoint_id": "board-03-step03",
+      "setting": "verified_feedback",
+      "decision": 2,
+      "candidate_actions": {
+        "A": {
+          "action_data": {},
+          "action_id": 1
+        },
+        "B": {
+          "action_data": {
+            "x": 31,
+            "y": 28
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"1_to_4\", \"B\": \"1_to_4\"}, \"selected_candidate\": \"B\", \"observed_previous_change\": \"yes\", \"previous_prediction_check\": \"matched\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "1_to_4",
+          "B": "1_to_4"
+        },
+        "selected_candidate": "B",
+        "observed_previous_change": "yes",
+        "previous_prediction_check": "matched"
+      },
+      "executed_action": {
+        "action_data": {
+          "x": 31,
+          "y": 28
+        },
+        "action_id": 6
+      },
+      "observed_changed_cells": 0,
+      "observed_effect_category": "none"
+    },
+    {
+      "game": "ft09",
+      "checkpoint_id": "board-04-step02",
+      "setting": "summary_only",
+      "decision": 1,
+      "candidate_actions": {
+        "A": {
+          "action_data": {
+            "x": 31,
+            "y": 63
+          },
+          "action_id": 6
+        },
+        "B": {
+          "action_data": {
+            "x": 14,
+            "y": 12
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"none\", \"B\": \"none\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"not_applicable\", \"previous_prediction_check\": \"not_applicable\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "none",
+          "B": "none"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "not_applicable",
+        "previous_prediction_check": "not_applicable"
+      },
+      "executed_action": {
+        "action_data": {
+          "x": 31,
+          "y": 63
+        },
+        "action_id": 6
+      },
+      "observed_changed_cells": 0,
+      "observed_effect_category": "none"
+    },
+    {
+      "game": "ft09",
+      "checkpoint_id": "board-04-step02",
+      "setting": "summary_only",
+      "decision": 2,
+      "candidate_actions": {
+        "A": {
+          "action_data": {
+            "x": 31,
+            "y": 63
+          },
+          "action_id": 6
+        },
+        "B": {
+          "action_data": {
+            "x": 14,
+            "y": 12
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"none\", \"B\": \"none\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"no\", \"previous_prediction_check\": \"matched\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "none",
+          "B": "none"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "no",
+        "previous_prediction_check": "matched"
+      },
+      "executed_action": {
+        "action_data": {
+          "x": 31,
+          "y": 63
+        },
+        "action_id": 6
+      },
+      "observed_changed_cells": 0,
+      "observed_effect_category": "none"
+    },
+    {
+      "game": "ft09",
+      "checkpoint_id": "board-04-step02",
+      "setting": "verified_feedback",
+      "decision": 1,
+      "candidate_actions": {
+        "A": {
+          "action_data": {
+            "x": 31,
+            "y": 63
+          },
+          "action_id": 6
+        },
+        "B": {
+          "action_data": {
+            "x": 14,
+            "y": 12
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"none\", \"B\": \"none\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"not_applicable\", \"previous_prediction_check\": \"not_applicable\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "none",
+          "B": "none"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "not_applicable",
+        "previous_prediction_check": "not_applicable"
+      },
+      "executed_action": {
+        "action_data": {
+          "x": 31,
+          "y": 63
+        },
+        "action_id": 6
+      },
+      "observed_changed_cells": 0,
+      "observed_effect_category": "none"
+    },
+    {
+      "game": "ft09",
+      "checkpoint_id": "board-04-step02",
+      "setting": "verified_feedback",
+      "decision": 2,
+      "candidate_actions": {
+        "A": {
+          "action_data": {
+            "x": 31,
+            "y": 63
+          },
+          "action_id": 6
+        },
+        "B": {
+          "action_data": {
+            "x": 14,
+            "y": 12
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"none\", \"B\": \"none\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"no\", \"previous_prediction_check\": \"matched\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "none",
+          "B": "none"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "no",
+        "previous_prediction_check": "matched"
+      },
+      "executed_action": {
+        "action_data": {
+          "x": 31,
+          "y": 63
+        },
+        "action_id": 6
+      },
+      "observed_changed_cells": 0,
+      "observed_effect_category": "none"
+    },
+    {
+      "game": "ka59",
+      "checkpoint_id": "board-05-step02",
+      "setting": "summary_only",
+      "decision": 1,
+      "candidate_actions": {
+        "A": {
+          "action_data": {
+            "x": 31,
+            "y": 31
+          },
+          "action_id": 6
+        },
+        "B": {
+          "action_data": {},
+          "action_id": 1
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"1_to_4\", \"B\": \"none\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"not_applicable\", \"previous_prediction_check\": \"not_applicable\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "1_to_4",
+          "B": "none"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "not_applicable",
+        "previous_prediction_check": "not_applicable"
+      },
+      "executed_action": {
+        "action_data": {
+          "x": 31,
+          "y": 31
+        },
+        "action_id": 6
+      },
+      "observed_changed_cells": 1,
+      "observed_effect_category": "1_to_4"
+    },
+    {
+      "game": "ka59",
+      "checkpoint_id": "board-05-step02",
+      "setting": "summary_only",
+      "decision": 2,
+      "candidate_actions": {
+        "A": {
+          "action_data": {
+            "x": 31,
+            "y": 31
+          },
+          "action_id": 6
+        },
+        "B": {
+          "action_data": {},
+          "action_id": 1
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"1_to_4\", \"B\": \"none\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"unknown\", \"previous_prediction_check\": \"unknown\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "1_to_4",
+          "B": "none"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "unknown",
+        "previous_prediction_check": "unknown"
+      },
+      "executed_action": {
+        "action_data": {
+          "x": 31,
+          "y": 31
+        },
+        "action_id": 6
+      },
+      "observed_changed_cells": 1,
+      "observed_effect_category": "1_to_4"
+    },
+    {
+      "game": "ka59",
+      "checkpoint_id": "board-05-step02",
+      "setting": "verified_feedback",
+      "decision": 1,
+      "candidate_actions": {
+        "A": {
+          "action_data": {
+            "x": 31,
+            "y": 31
+          },
+          "action_id": 6
+        },
+        "B": {
+          "action_data": {},
+          "action_id": 1
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"1_to_4\", \"B\": \"none\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"not_applicable\", \"previous_prediction_check\": \"not_applicable\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "1_to_4",
+          "B": "none"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "not_applicable",
+        "previous_prediction_check": "not_applicable"
+      },
+      "executed_action": {
+        "action_data": {
+          "x": 31,
+          "y": 31
+        },
+        "action_id": 6
+      },
+      "observed_changed_cells": 1,
+      "observed_effect_category": "1_to_4"
+    },
+    {
+      "game": "ka59",
+      "checkpoint_id": "board-05-step02",
+      "setting": "verified_feedback",
+      "decision": 2,
+      "candidate_actions": {
+        "A": {
+          "action_data": {
+            "x": 31,
+            "y": 31
+          },
+          "action_id": 6
+        },
+        "B": {
+          "action_data": {},
+          "action_id": 1
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"1_to_4\", \"B\": \"none\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"yes\", \"previous_prediction_check\": \"matched\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "1_to_4",
+          "B": "none"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "yes",
+        "previous_prediction_check": "matched"
+      },
+      "executed_action": {
+        "action_data": {
+          "x": 31,
+          "y": 31
+        },
+        "action_id": 6
+      },
+      "observed_changed_cells": 1,
+      "observed_effect_category": "1_to_4"
+    },
+    {
+      "game": "ka59",
+      "checkpoint_id": "board-05-step03",
+      "setting": "summary_only",
+      "decision": 1,
+      "candidate_actions": {
+        "A": {
+          "action_data": {},
+          "action_id": 1
+        },
+        "B": {
+          "action_data": {
+            "x": 31,
+            "y": 31
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"none\", \"B\": \"1_to_4\"}, \"selected_candidate\": \"B\", \"observed_previous_change\": \"not_applicable\", \"previous_prediction_check\": \"not_applicable\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "none",
+          "B": "1_to_4"
+        },
+        "selected_candidate": "B",
+        "observed_previous_change": "not_applicable",
+        "previous_prediction_check": "not_applicable"
+      },
+      "executed_action": {
+        "action_data": {
+          "x": 31,
+          "y": 31
+        },
+        "action_id": 6
+      },
+      "observed_changed_cells": 1,
+      "observed_effect_category": "1_to_4"
+    },
+    {
+      "game": "ka59",
+      "checkpoint_id": "board-05-step03",
+      "setting": "summary_only",
+      "decision": 2,
+      "candidate_actions": {
+        "A": {
+          "action_data": {},
+          "action_id": 1
+        },
+        "B": {
+          "action_data": {
+            "x": 31,
+            "y": 31
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"1_to_4\", \"B\": \"1_to_4\"}, \"selected_candidate\": \"B\", \"observed_previous_change\": \"unknown\", \"previous_prediction_check\": \"unknown\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "1_to_4",
+          "B": "1_to_4"
+        },
+        "selected_candidate": "B",
+        "observed_previous_change": "unknown",
+        "previous_prediction_check": "unknown"
+      },
+      "executed_action": {
+        "action_data": {
+          "x": 31,
+          "y": 31
+        },
+        "action_id": 6
+      },
+      "observed_changed_cells": 0,
+      "observed_effect_category": "none"
+    },
+    {
+      "game": "ka59",
+      "checkpoint_id": "board-05-step03",
+      "setting": "verified_feedback",
+      "decision": 1,
+      "candidate_actions": {
+        "A": {
+          "action_data": {},
+          "action_id": 1
+        },
+        "B": {
+          "action_data": {
+            "x": 31,
+            "y": 31
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"none\", \"B\": \"1_to_4\"}, \"selected_candidate\": \"B\", \"observed_previous_change\": \"not_applicable\", \"previous_prediction_check\": \"not_applicable\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "none",
+          "B": "1_to_4"
+        },
+        "selected_candidate": "B",
+        "observed_previous_change": "not_applicable",
+        "previous_prediction_check": "not_applicable"
+      },
+      "executed_action": {
+        "action_data": {
+          "x": 31,
+          "y": 31
+        },
+        "action_id": 6
+      },
+      "observed_changed_cells": 1,
+      "observed_effect_category": "1_to_4"
+    },
+    {
+      "game": "ka59",
+      "checkpoint_id": "board-05-step03",
+      "setting": "verified_feedback",
+      "decision": 2,
+      "candidate_actions": {
+        "A": {
+          "action_data": {},
+          "action_id": 1
+        },
+        "B": {
+          "action_data": {
+            "x": 31,
+            "y": 31
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"1_to_4\", \"B\": \"1_to_4\"}, \"selected_candidate\": \"B\", \"observed_previous_change\": \"yes\", \"previous_prediction_check\": \"matched\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "1_to_4",
+          "B": "1_to_4"
+        },
+        "selected_candidate": "B",
+        "observed_previous_change": "yes",
+        "previous_prediction_check": "matched"
+      },
+      "executed_action": {
+        "action_data": {
+          "x": 31,
+          "y": 31
+        },
+        "action_id": 6
+      },
+      "observed_changed_cells": 0,
+      "observed_effect_category": "none"
+    },
+    {
+      "game": "sc25",
+      "checkpoint_id": "board-06-step02",
+      "setting": "summary_only",
+      "decision": 1,
+      "candidate_actions": {
+        "A": {
+          "action_data": {},
+          "action_id": 1
+        },
+        "B": {
+          "action_data": {
+            "x": 15,
+            "y": 54
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"none\", \"B\": \"none\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"not_applicable\", \"previous_prediction_check\": \"not_applicable\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "none",
+          "B": "none"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "not_applicable",
+        "previous_prediction_check": "not_applicable"
+      },
+      "executed_action": {
+        "action_data": {},
+        "action_id": 1
+      },
+      "observed_changed_cells": 8,
+      "observed_effect_category": "5_to_64"
+    },
+    {
+      "game": "sc25",
+      "checkpoint_id": "board-06-step02",
+      "setting": "summary_only",
+      "decision": 2,
+      "candidate_actions": {
+        "A": {
+          "action_data": {},
+          "action_id": 1
+        },
+        "B": {
+          "action_data": {
+            "x": 15,
+            "y": 54
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"none\", \"B\": \"1_to_4\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"unknown\", \"previous_prediction_check\": \"unknown\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "none",
+          "B": "1_to_4"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "unknown",
+        "previous_prediction_check": "unknown"
+      },
+      "executed_action": {
+        "action_data": {},
+        "action_id": 1
+      },
+      "observed_changed_cells": 4,
+      "observed_effect_category": "1_to_4"
+    },
+    {
+      "game": "sc25",
+      "checkpoint_id": "board-06-step02",
+      "setting": "verified_feedback",
+      "decision": 1,
+      "candidate_actions": {
+        "A": {
+          "action_data": {},
+          "action_id": 1
+        },
+        "B": {
+          "action_data": {
+            "x": 15,
+            "y": 54
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"none\", \"B\": \"none\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"not_applicable\", \"previous_prediction_check\": \"not_applicable\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "none",
+          "B": "none"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "not_applicable",
+        "previous_prediction_check": "not_applicable"
+      },
+      "executed_action": {
+        "action_data": {},
+        "action_id": 1
+      },
+      "observed_changed_cells": 8,
+      "observed_effect_category": "5_to_64"
+    },
+    {
+      "game": "sc25",
+      "checkpoint_id": "board-06-step02",
+      "setting": "verified_feedback",
+      "decision": 2,
+      "candidate_actions": {
+        "A": {
+          "action_data": {},
+          "action_id": 1
+        },
+        "B": {
+          "action_data": {
+            "x": 15,
+            "y": 54
+          },
+          "action_id": 6
+        }
+      },
+      "raw_model_answer": "{\"candidate_predictions\": {\"A\": \"5_to_64\", \"B\": \"none\"}, \"selected_candidate\": \"A\", \"observed_previous_change\": \"yes\", \"previous_prediction_check\": \"mismatched\"}",
+      "parsed_answer": {
+        "candidate_predictions": {
+          "A": "5_to_64",
+          "B": "none"
+        },
+        "selected_candidate": "A",
+        "observed_previous_change": "yes",
+        "previous_prediction_check": "mismatched"
+      },
+      "executed_action": {
+        "action_data": {},
+        "action_id": 1
+      },
+      "observed_changed_cells": 4,
+      "observed_effect_category": "1_to_4"
+    }
+  ]
+}
