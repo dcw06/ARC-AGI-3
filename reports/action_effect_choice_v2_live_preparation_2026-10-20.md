@@ -82,7 +82,13 @@ regressions are reviewed directly. The builder, worker, evaluator and operator
 are part of the exact source lock. The previous CPU phase/schema derivation also
 continues to match its three pinned parents.
 
-## Remaining owner/provider steps
+## Owner/provider steps at preparation time
+
+Subsequent update: the single approved pilot was submitted and independently
+certified technically complete, with 8/8 valid study phases. See the
+[results](action_effect_choice_v2_attempt1_results_2026-10-20.md).
+The following preparation-time requirements remain recorded as history; they
+do not describe an outstanding authorization for this consumed attempt.
 
 Fresh approval must name the exact lock and scoped use, with one fresh RTX PRO
 6000 attempt under the limits above. The authorization gate rejects older or

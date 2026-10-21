@@ -1,5 +1,9 @@
 # Action-effect choice v2: first format-pilot submission
 
+Completion update: the [independent results](action_effect_choice_v2_attempt1_results_2026-10-20.md)
+certify technical completion and 8/8 valid study phases. The submission-time
+observations below are retained as history.
+
 One authorized attempt was submitted exactly once. The immediate read-only
 status check reported **RUNNING**. There are no inference results yet.
 
