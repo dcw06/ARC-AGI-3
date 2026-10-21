@@ -1,6 +1,36 @@
 # ls20 level-1 instructed VLM pilot: preparation
 
-**Status: implemented and CPU-validated; no GPU attempt authorized or submitted.**
+**Latest status: one authorized private attempt submitted; Kaggle reported RUNNING
+at 22:52 UTC on October 21, 2026 (6:52 p.m. New York time). Results pending.**
+
+Preparation and CPU checks below preceded approval. The owner subsequently
+approved the exact final lock, scoped use and one attempt with the listed limits.
+
+## Authorized submission
+
+| Check | Result |
+| --- | --- |
+| Executed source | `086bba44c486066f6b069d876534bd535e1740d5`; all 64 review-source hashes match the pushed commit |
+| Final review lock | `25f3a023249f5a880628069ba07ae67fda36392661a756a259b7c7ec3dea2fa3` |
+| Fresh preflight | Account, quota, unused target, dataset versions/inventories, private model access and game wheels passed |
+| Approval, reservation and claim | Recorded privately; one single-use attempt |
+| Written launch | Only the declared authority data slot differs from the review notebook |
+| Provider writes | Exactly one SaveKernel call and one durable send intent; no retry |
+| Provider response | Version 1; no provider error or rejected sources |
+| Saved package | Source, authority, privacy, offline settings, immutable image, requested GPU and attachment names verified |
+| Requested accelerator | Exactly one RTX PRO 6000; actual allocation remains for the runtime to verify |
+| Previous evidence | 696 retained files rechecked unchanged; no prior attempt overwritten |
+
+The provider does not echo dataset version labels or the requested session
+timeout in this saved-source response. The outgoing versioned request was
+checked, the fresh preflight verified the source versions, and runtime byte
+verification remains mandatory. The 3,600-second session timeout is requested;
+the worker enforces its separate 3,300-second limit. Provider overhead may extend
+the total time, as approved.
+
+No result is claimed before collection, lifecycle checks and independent replay.
+No watcher or automatic resubmission was started. Approval and launch records,
+private bindings and raw outputs remain off GitHub.
 
 The user chose **controls and rules explained; the agent plans the actions**.
 This test asks whether the existing Qwen VLM can complete ls20's first level with
@@ -75,7 +105,7 @@ uses the previously pinned Qwen model-copy, immutable image and dependencies.
 Every mounted publisher wheel must still be hash-verified before installation;
 the prior byte receipt is historical evidence, not a replacement for that check.
 
-## Proposed launch scope — approval still required
+## Authorized launch scope
 
 | Resource | Ceiling |
 | --- | --- |
@@ -90,9 +120,10 @@ the prior byte receipt is historical evidence, not a replacement for that check.
 | Attempts / automatic retries | One / zero |
 | Access and network | Private, account-only; internet and TPU off |
 
-Fresh lock-bound source/use approval and compute authorization are still needed.
-After approval, a fresh read-only preflight must pass before a single-use
-reservation/claim and one submission. Previous attempts remain preserved. A
-changed package, failed gate or different accelerator must stop the launch.
+Lock-bound source/use approval, compute authorization, fresh preflight and the
+single-use reservation/claim were completed for this submission. It consumes the
+one authorized attempt; no automatic retry is permitted. Previous attempts remain
+preserved. A different accelerator must stop the runtime before inference. A new
+attempt requires fresh authorization.
 
 Implementation: [runner and protocol](../research/ls20_instruction_v1/README.md).
