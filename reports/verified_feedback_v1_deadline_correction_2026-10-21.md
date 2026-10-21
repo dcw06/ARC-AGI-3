@@ -66,11 +66,15 @@ before decision 2. Repeating those supplied values is a consistency check, not
 evidence of independent understanding. Both settings repeat the same selected
 action at decision 2 in every checkpoint.
 
-Open a game below to read its four answers. For the original answer text, see
+Open a checkpoint below to see its four answers, animated replay, and before/after
+images. Pink rings mark recorded click coordinates; yellow cells in the
+difference maps show every changed cell. These annotations were added for the
+report and were not shown to the model. Original unannotated 448 × 448 frames
+are linked too. For the original answer text, see
 the [downloadable JSON log](verified_feedback_v1_attempt1_agent_answers_2026-10-21.json).
 That file includes all 32 model replies verbatim, plus the same action facts.
-Private provider logs, dataset details, credentials and image payloads are
-excluded from this public excerpt.
+Private provider logs, dataset details and credentials are excluded. Only the
+verified game frames requested for this visual log are published alongside the answers.
 
 <details>
 <summary>ls20 — board-01-step02</summary>
@@ -83,6 +87,22 @@ excluded from this public excerpt.
 | Summary alone | 2 | `5_to_64` | `none` | A (ID 2) | `unknown` | `unknown` | 2 |
 | With feedback | 1 | `5_to_64` | `5_to_64` | A (ID 2) | `not_applicable` | `not_applicable` | 2 |
 | With feedback | 2 | `1_to_4` | `65_plus` | A (ID 2) | `yes` | `mismatched` | 2 |
+
+**Visual replay of the executed actions**
+
+Both settings produced identical before/after frames and actions here, so these images show their shared trajectory.
+
+![Animated replay for ls20 at board-01-step02](verified_feedback_v1_attempt1_visuals/board-01-step02-replay.gif)
+
+[Original starting frame](verified_feedback_v1_attempt1_visuals/board-01-step02-state0.png) · [After decision 1](verified_feedback_v1_attempt1_visuals/board-01-step02-state1.png) · [After decision 2](verified_feedback_v1_attempt1_visuals/board-01-step02-state2.png)
+
+**Decision 1:** Action ID 2; 2 cells changed.
+
+![Before, after and changed-cell map for ls20 decision 1](verified_feedback_v1_attempt1_visuals/board-01-step02-decision1.png)
+
+**Decision 2:** Action ID 2; 2 cells changed.
+
+![Before, after and changed-cell map for ls20 decision 2](verified_feedback_v1_attempt1_visuals/board-01-step02-decision2.png)
 
 </details>
 
@@ -98,6 +118,22 @@ excluded from this public excerpt.
 | With feedback | 1 | `1_to_4` | `1_to_4` | A (ID 6 at (31, 63)) | `not_applicable` | `not_applicable` | 1 |
 | With feedback | 2 | `1_to_4` | `1_to_4` | A (ID 6 at (31, 63)) | `yes` | `matched` | 1 |
 
+**Visual replay of the executed actions**
+
+Both settings produced identical before/after frames and actions here, so these images show their shared trajectory.
+
+![Animated replay for s5i5 at board-02-step02](verified_feedback_v1_attempt1_visuals/board-02-step02-replay.gif)
+
+[Original starting frame](verified_feedback_v1_attempt1_visuals/board-02-step02-state0.png) · [After decision 1](verified_feedback_v1_attempt1_visuals/board-02-step02-state1.png) · [After decision 2](verified_feedback_v1_attempt1_visuals/board-02-step02-state2.png)
+
+**Decision 1:** Action ID 6 at (31, 63); 1 cells changed.
+
+![Before, after and changed-cell map for s5i5 decision 1](verified_feedback_v1_attempt1_visuals/board-02-step02-decision1.png)
+
+**Decision 2:** Action ID 6 at (31, 63); 1 cells changed.
+
+![Before, after and changed-cell map for s5i5 decision 2](verified_feedback_v1_attempt1_visuals/board-02-step02-decision2.png)
+
 </details>
 
 <details>
@@ -111,6 +147,22 @@ excluded from this public excerpt.
 | Summary alone | 2 | `none` | `1_to_4` | A (ID 1) | `unknown` | `unknown` | 1 |
 | With feedback | 1 | `none` | `none` | A (ID 1) | `not_applicable` | `not_applicable` | 1 |
 | With feedback | 2 | `1_to_4` | `none` | A (ID 1) | `yes` | `mismatched` | 1 |
+
+**Visual replay of the executed actions**
+
+Both settings produced identical before/after frames and actions here, so these images show their shared trajectory.
+
+![Animated replay for cd82 at board-03-step02](verified_feedback_v1_attempt1_visuals/board-03-step02-replay.gif)
+
+[Original starting frame](verified_feedback_v1_attempt1_visuals/board-03-step02-state0.png) · [After decision 1](verified_feedback_v1_attempt1_visuals/board-03-step02-state1.png) · [After decision 2](verified_feedback_v1_attempt1_visuals/board-03-step02-state2.png)
+
+**Decision 1:** Action ID 1; 1 cells changed.
+
+![Before, after and changed-cell map for cd82 decision 1](verified_feedback_v1_attempt1_visuals/board-03-step02-decision1.png)
+
+**Decision 2:** Action ID 1; 1 cells changed.
+
+![Before, after and changed-cell map for cd82 decision 2](verified_feedback_v1_attempt1_visuals/board-03-step02-decision2.png)
 
 </details>
 
@@ -126,6 +178,22 @@ excluded from this public excerpt.
 | With feedback | 1 | `none` | `1_to_4` | B (ID 6 at (31, 28)) | `not_applicable` | `not_applicable` | 1 |
 | With feedback | 2 | `1_to_4` | `1_to_4` | B (ID 6 at (31, 28)) | `yes` | `matched` | 0 |
 
+**Visual replay of the executed actions**
+
+Both settings produced identical before/after frames and actions here, so these images show their shared trajectory.
+
+![Animated replay for cd82 at board-03-step03](verified_feedback_v1_attempt1_visuals/board-03-step03-replay.gif)
+
+[Original starting frame](verified_feedback_v1_attempt1_visuals/board-03-step03-state0.png) · [After decision 1](verified_feedback_v1_attempt1_visuals/board-03-step03-state1.png) · [After decision 2](verified_feedback_v1_attempt1_visuals/board-03-step03-state2.png)
+
+**Decision 1:** Action ID 6 at (31, 28); 1 cells changed.
+
+![Before, after and changed-cell map for cd82 decision 1](verified_feedback_v1_attempt1_visuals/board-03-step03-decision1.png)
+
+**Decision 2:** Action ID 6 at (31, 28); 0 cells changed.
+
+![Before, after and changed-cell map for cd82 decision 2](verified_feedback_v1_attempt1_visuals/board-03-step03-decision2.png)
+
 </details>
 
 <details>
@@ -139,6 +207,22 @@ excluded from this public excerpt.
 | Summary alone | 2 | `none` | `none` | A (ID 6 at (31, 63)) | `no` | `matched` | 0 |
 | With feedback | 1 | `none` | `none` | A (ID 6 at (31, 63)) | `not_applicable` | `not_applicable` | 0 |
 | With feedback | 2 | `none` | `none` | A (ID 6 at (31, 63)) | `no` | `matched` | 0 |
+
+**Visual replay of the executed actions**
+
+Both settings produced identical before/after frames and actions here, so these images show their shared trajectory.
+
+![Animated replay for ft09 at board-04-step02](verified_feedback_v1_attempt1_visuals/board-04-step02-replay.gif)
+
+[Original starting frame](verified_feedback_v1_attempt1_visuals/board-04-step02-state0.png) · [After decision 1](verified_feedback_v1_attempt1_visuals/board-04-step02-state1.png) · [After decision 2](verified_feedback_v1_attempt1_visuals/board-04-step02-state2.png)
+
+**Decision 1:** Action ID 6 at (31, 63); 0 cells changed.
+
+![Before, after and changed-cell map for ft09 decision 1](verified_feedback_v1_attempt1_visuals/board-04-step02-decision1.png)
+
+**Decision 2:** Action ID 6 at (31, 63); 0 cells changed.
+
+![Before, after and changed-cell map for ft09 decision 2](verified_feedback_v1_attempt1_visuals/board-04-step02-decision2.png)
 
 </details>
 
@@ -154,6 +238,22 @@ excluded from this public excerpt.
 | With feedback | 1 | `1_to_4` | `none` | A (ID 6 at (31, 31)) | `not_applicable` | `not_applicable` | 1 |
 | With feedback | 2 | `1_to_4` | `none` | A (ID 6 at (31, 31)) | `yes` | `matched` | 1 |
 
+**Visual replay of the executed actions**
+
+Both settings produced identical before/after frames and actions here, so these images show their shared trajectory.
+
+![Animated replay for ka59 at board-05-step02](verified_feedback_v1_attempt1_visuals/board-05-step02-replay.gif)
+
+[Original starting frame](verified_feedback_v1_attempt1_visuals/board-05-step02-state0.png) · [After decision 1](verified_feedback_v1_attempt1_visuals/board-05-step02-state1.png) · [After decision 2](verified_feedback_v1_attempt1_visuals/board-05-step02-state2.png)
+
+**Decision 1:** Action ID 6 at (31, 31); 1 cells changed.
+
+![Before, after and changed-cell map for ka59 decision 1](verified_feedback_v1_attempt1_visuals/board-05-step02-decision1.png)
+
+**Decision 2:** Action ID 6 at (31, 31); 1 cells changed.
+
+![Before, after and changed-cell map for ka59 decision 2](verified_feedback_v1_attempt1_visuals/board-05-step02-decision2.png)
+
 </details>
 
 <details>
@@ -168,6 +268,22 @@ excluded from this public excerpt.
 | With feedback | 1 | `none` | `1_to_4` | B (ID 6 at (31, 31)) | `not_applicable` | `not_applicable` | 1 |
 | With feedback | 2 | `1_to_4` | `1_to_4` | B (ID 6 at (31, 31)) | `yes` | `matched` | 0 |
 
+**Visual replay of the executed actions**
+
+Both settings produced identical before/after frames and actions here, so these images show their shared trajectory.
+
+![Animated replay for ka59 at board-05-step03](verified_feedback_v1_attempt1_visuals/board-05-step03-replay.gif)
+
+[Original starting frame](verified_feedback_v1_attempt1_visuals/board-05-step03-state0.png) · [After decision 1](verified_feedback_v1_attempt1_visuals/board-05-step03-state1.png) · [After decision 2](verified_feedback_v1_attempt1_visuals/board-05-step03-state2.png)
+
+**Decision 1:** Action ID 6 at (31, 31); 1 cells changed.
+
+![Before, after and changed-cell map for ka59 decision 1](verified_feedback_v1_attempt1_visuals/board-05-step03-decision1.png)
+
+**Decision 2:** Action ID 6 at (31, 31); 0 cells changed.
+
+![Before, after and changed-cell map for ka59 decision 2](verified_feedback_v1_attempt1_visuals/board-05-step03-decision2.png)
+
 </details>
 
 <details>
@@ -181,6 +297,22 @@ excluded from this public excerpt.
 | Summary alone | 2 | `none` | `1_to_4` | A (ID 1) | `unknown` | `unknown` | 4 |
 | With feedback | 1 | `none` | `none` | A (ID 1) | `not_applicable` | `not_applicable` | 8 |
 | With feedback | 2 | `5_to_64` | `none` | A (ID 1) | `yes` | `mismatched` | 4 |
+
+**Visual replay of the executed actions**
+
+Both settings produced identical before/after frames and actions here, so these images show their shared trajectory.
+
+![Animated replay for sc25 at board-06-step02](verified_feedback_v1_attempt1_visuals/board-06-step02-replay.gif)
+
+[Original starting frame](verified_feedback_v1_attempt1_visuals/board-06-step02-state0.png) · [After decision 1](verified_feedback_v1_attempt1_visuals/board-06-step02-state1.png) · [After decision 2](verified_feedback_v1_attempt1_visuals/board-06-step02-state2.png)
+
+**Decision 1:** Action ID 1; 8 cells changed.
+
+![Before, after and changed-cell map for sc25 decision 1](verified_feedback_v1_attempt1_visuals/board-06-step02-decision1.png)
+
+**Decision 2:** Action ID 1; 4 cells changed.
+
+![Before, after and changed-cell map for sc25 decision 2](verified_feedback_v1_attempt1_visuals/board-06-step02-decision2.png)
 
 </details>
 

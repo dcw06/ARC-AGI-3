@@ -1,0 +1,317 @@
+{
+  "schema": "verified_feedback_public_visual_log_v1",
+  "source_evaluation_sha256": "440b7078d88e13c2bab1c1dc15623382d61f996b7937ccd692419ad9d7bb6de5",
+  "source_run_evidence_sha256": "41acebe93924ccf1e4e34d3fc1b072bd2505a539fb66d27428741a1e6e2f5634",
+  "frames_cell_scale": 7,
+  "original_frame_size": [
+    448,
+    448
+  ],
+  "transitions": [
+    {
+      "checkpoint_id": "board-01-step02",
+      "decision": 1,
+      "action": {
+        "action_data": {},
+        "action_id": 2
+      },
+      "changed_cells": 2,
+      "before_grid_sha256": "ba47ade4b07e26d3d1cbfedd90e7b0c922a5180d637e4dba72d6cdafb8ca4d40",
+      "after_grid_sha256": "0a69fd107568c205486403804e7b2258f85b119c74d9631e22da9120c95680f4",
+      "same_trajectory_both_settings": true,
+      "before_matches_exact_model_input_png": true,
+      "visual_file": "board-01-step02-decision1.png"
+    },
+    {
+      "checkpoint_id": "board-01-step02",
+      "decision": 2,
+      "action": {
+        "action_data": {},
+        "action_id": 2
+      },
+      "changed_cells": 2,
+      "before_grid_sha256": "0a69fd107568c205486403804e7b2258f85b119c74d9631e22da9120c95680f4",
+      "after_grid_sha256": "9918e2c46aaf7c84b99bd220d1cfa2c133dd464329b6be4eb365f90598a225e1",
+      "same_trajectory_both_settings": true,
+      "before_matches_exact_model_input_png": true,
+      "visual_file": "board-01-step02-decision2.png"
+    },
+    {
+      "checkpoint_id": "board-02-step02",
+      "decision": 1,
+      "action": {
+        "action_data": {
+          "x": 31,
+          "y": 63
+        },
+        "action_id": 6
+      },
+      "changed_cells": 1,
+      "before_grid_sha256": "42ea69189db4d1b158623f88dea2d9967b7c1e2ef00db69b03146c561b728149",
+      "after_grid_sha256": "abb4b9b4675f6dd939ff6c3bd84598f20379fce245005619d3fc1ed7a053d0ca",
+      "same_trajectory_both_settings": true,
+      "before_matches_exact_model_input_png": true,
+      "visual_file": "board-02-step02-decision1.png"
+    },
+    {
+      "checkpoint_id": "board-02-step02",
+      "decision": 2,
+      "action": {
+        "action_data": {
+          "x": 31,
+          "y": 63
+        },
+        "action_id": 6
+      },
+      "changed_cells": 1,
+      "before_grid_sha256": "abb4b9b4675f6dd939ff6c3bd84598f20379fce245005619d3fc1ed7a053d0ca",
+      "after_grid_sha256": "a17642b0233fa3edb151fc3e2bfd1122f5629e064214770f6cfe6622ee10084c",
+      "same_trajectory_both_settings": true,
+      "before_matches_exact_model_input_png": true,
+      "visual_file": "board-02-step02-decision2.png"
+    },
+    {
+      "checkpoint_id": "board-03-step02",
+      "decision": 1,
+      "action": {
+        "action_data": {},
+        "action_id": 1
+      },
+      "changed_cells": 1,
+      "before_grid_sha256": "9a39ac056cd36bbb9e7d9c44b0c7c1af8a97fe2c2c8ee22fbeee96c6ae418225",
+      "after_grid_sha256": "65f82d1f3589a958dc3c07649a5c048333e8dc4cf0ae4dd7c45015a04d59c82f",
+      "same_trajectory_both_settings": true,
+      "before_matches_exact_model_input_png": true,
+      "visual_file": "board-03-step02-decision1.png"
+    },
+    {
+      "checkpoint_id": "board-03-step02",
+      "decision": 2,
+      "action": {
+        "action_data": {},
+        "action_id": 1
+      },
+      "changed_cells": 1,
+      "before_grid_sha256": "65f82d1f3589a958dc3c07649a5c048333e8dc4cf0ae4dd7c45015a04d59c82f",
+      "after_grid_sha256": "7e65d2f9fa22bbc4756f98040553095b6fa67ebbdc57d4dbcabc55cbcbd5b3e0",
+      "same_trajectory_both_settings": true,
+      "before_matches_exact_model_input_png": true,
+      "visual_file": "board-03-step02-decision2.png"
+    },
+    {
+      "checkpoint_id": "board-03-step03",
+      "decision": 1,
+      "action": {
+        "action_data": {
+          "x": 31,
+          "y": 28
+        },
+        "action_id": 6
+      },
+      "changed_cells": 1,
+      "before_grid_sha256": "65f82d1f3589a958dc3c07649a5c048333e8dc4cf0ae4dd7c45015a04d59c82f",
+      "after_grid_sha256": "7e65d2f9fa22bbc4756f98040553095b6fa67ebbdc57d4dbcabc55cbcbd5b3e0",
+      "same_trajectory_both_settings": true,
+      "before_matches_exact_model_input_png": true,
+      "visual_file": "board-03-step03-decision1.png"
+    },
+    {
+      "checkpoint_id": "board-03-step03",
+      "decision": 2,
+      "action": {
+        "action_data": {
+          "x": 31,
+          "y": 28
+        },
+        "action_id": 6
+      },
+      "changed_cells": 0,
+      "before_grid_sha256": "7e65d2f9fa22bbc4756f98040553095b6fa67ebbdc57d4dbcabc55cbcbd5b3e0",
+      "after_grid_sha256": "7e65d2f9fa22bbc4756f98040553095b6fa67ebbdc57d4dbcabc55cbcbd5b3e0",
+      "same_trajectory_both_settings": true,
+      "before_matches_exact_model_input_png": true,
+      "visual_file": "board-03-step03-decision2.png"
+    },
+    {
+      "checkpoint_id": "board-04-step02",
+      "decision": 1,
+      "action": {
+        "action_data": {
+          "x": 31,
+          "y": 63
+        },
+        "action_id": 6
+      },
+      "changed_cells": 0,
+      "before_grid_sha256": "835ad13ac5f6777f4d503a34bc202c73ab38de7d5fbd5f829263b6451cf6c8fd",
+      "after_grid_sha256": "835ad13ac5f6777f4d503a34bc202c73ab38de7d5fbd5f829263b6451cf6c8fd",
+      "same_trajectory_both_settings": true,
+      "before_matches_exact_model_input_png": true,
+      "visual_file": "board-04-step02-decision1.png"
+    },
+    {
+      "checkpoint_id": "board-04-step02",
+      "decision": 2,
+      "action": {
+        "action_data": {
+          "x": 31,
+          "y": 63
+        },
+        "action_id": 6
+      },
+      "changed_cells": 0,
+      "before_grid_sha256": "835ad13ac5f6777f4d503a34bc202c73ab38de7d5fbd5f829263b6451cf6c8fd",
+      "after_grid_sha256": "835ad13ac5f6777f4d503a34bc202c73ab38de7d5fbd5f829263b6451cf6c8fd",
+      "same_trajectory_both_settings": true,
+      "before_matches_exact_model_input_png": true,
+      "visual_file": "board-04-step02-decision2.png"
+    },
+    {
+      "checkpoint_id": "board-05-step02",
+      "decision": 1,
+      "action": {
+        "action_data": {
+          "x": 31,
+          "y": 31
+        },
+        "action_id": 6
+      },
+      "changed_cells": 1,
+      "before_grid_sha256": "ee7d83e920e01cb7771873447c66387c7d85b21e6fa8963b1843c572da58b4e3",
+      "after_grid_sha256": "ebee7e88cacd9816eccd5671c40c80afb85bc16a64eb654673e59d5e3801299e",
+      "same_trajectory_both_settings": true,
+      "before_matches_exact_model_input_png": true,
+      "visual_file": "board-05-step02-decision1.png"
+    },
+    {
+      "checkpoint_id": "board-05-step02",
+      "decision": 2,
+      "action": {
+        "action_data": {
+          "x": 31,
+          "y": 31
+        },
+        "action_id": 6
+      },
+      "changed_cells": 1,
+      "before_grid_sha256": "ebee7e88cacd9816eccd5671c40c80afb85bc16a64eb654673e59d5e3801299e",
+      "after_grid_sha256": "54a5fdbd9e80ce17c6234c5f0ba4a4d727b0d659603366c3376c80cca8bb30bb",
+      "same_trajectory_both_settings": true,
+      "before_matches_exact_model_input_png": true,
+      "visual_file": "board-05-step02-decision2.png"
+    },
+    {
+      "checkpoint_id": "board-05-step03",
+      "decision": 1,
+      "action": {
+        "action_data": {
+          "x": 31,
+          "y": 31
+        },
+        "action_id": 6
+      },
+      "changed_cells": 1,
+      "before_grid_sha256": "ebee7e88cacd9816eccd5671c40c80afb85bc16a64eb654673e59d5e3801299e",
+      "after_grid_sha256": "54a5fdbd9e80ce17c6234c5f0ba4a4d727b0d659603366c3376c80cca8bb30bb",
+      "same_trajectory_both_settings": true,
+      "before_matches_exact_model_input_png": true,
+      "visual_file": "board-05-step03-decision1.png"
+    },
+    {
+      "checkpoint_id": "board-05-step03",
+      "decision": 2,
+      "action": {
+        "action_data": {
+          "x": 31,
+          "y": 31
+        },
+        "action_id": 6
+      },
+      "changed_cells": 0,
+      "before_grid_sha256": "54a5fdbd9e80ce17c6234c5f0ba4a4d727b0d659603366c3376c80cca8bb30bb",
+      "after_grid_sha256": "54a5fdbd9e80ce17c6234c5f0ba4a4d727b0d659603366c3376c80cca8bb30bb",
+      "same_trajectory_both_settings": true,
+      "before_matches_exact_model_input_png": true,
+      "visual_file": "board-05-step03-decision2.png"
+    },
+    {
+      "checkpoint_id": "board-06-step02",
+      "decision": 1,
+      "action": {
+        "action_data": {},
+        "action_id": 1
+      },
+      "changed_cells": 8,
+      "before_grid_sha256": "e79405dea01a4c03685a3383453507f6b4bca29f1388eaddae719a9374d54174",
+      "after_grid_sha256": "8d34b7820b3936a20297bf25b8f9480cd1a0e472ecb60cabc258424a73676664",
+      "same_trajectory_both_settings": true,
+      "before_matches_exact_model_input_png": true,
+      "visual_file": "board-06-step02-decision1.png"
+    },
+    {
+      "checkpoint_id": "board-06-step02",
+      "decision": 2,
+      "action": {
+        "action_data": {},
+        "action_id": 1
+      },
+      "changed_cells": 4,
+      "before_grid_sha256": "8d34b7820b3936a20297bf25b8f9480cd1a0e472ecb60cabc258424a73676664",
+      "after_grid_sha256": "27173822d4507aef394629f63beb4a517ea508bfd9b2ef6452d32f429db98ea8",
+      "same_trajectory_both_settings": true,
+      "before_matches_exact_model_input_png": true,
+      "visual_file": "board-06-step02-decision2.png"
+    }
+  ],
+  "assets_sha256": {
+    "board-01-step02-state0.png": "6585e78e08088d31f93aaf8c853635f36140a7bc3b2862336afd20254c20b0b4",
+    "board-01-step02-state1.png": "8505a3066c2f40d88fc0ade29aec438cd071b104f3f39e2e7637bd3d6eef223b",
+    "board-01-step02-state2.png": "74d64c8d9b9754bc03599f9bc17940da6f4c0055ae8c71ce84c4dd28fa676e0a",
+    "board-01-step02-decision1.png": "a7b895451106f37af334705bf6abf00bca13b7c0f3f01212645f72312c4a3a49",
+    "board-01-step02-decision2.png": "1b30035f213f7ff8c7e6b2a93b1846542bb86afbbc35c13ebcb91f36b8895702",
+    "board-01-step02-replay.gif": "f536699ebcb6c2955d9a165e5402c187d4c481db5cbc0148c7f1dfe667b2af9e",
+    "board-02-step02-state0.png": "fc446e3ace2cf830e96fdd6b41adfdbee743a2fc187bbf345c7e0983267bd037",
+    "board-02-step02-state1.png": "6ed4b06a68dbcbb957ccd2af1524be3204f2f38d8b68d9746d449bdf5be7ccf5",
+    "board-02-step02-state2.png": "ee2908860b3be0fbb80aa2495198cfd5398ae316017b8bebf131a35276ad0ac7",
+    "board-02-step02-decision1.png": "c5f892c405c8f0ac06480e2cab81e00bdafbd9b248b6164b939a0865b13fd12b",
+    "board-02-step02-decision2.png": "619ac3d7a8dedf8258f3f55ec482290749f5c9983a9ef3db9102266f746e1b9e",
+    "board-02-step02-replay.gif": "b97b74b146a9ece4e31380b02c8cc8fb70fb969a4e17893af757c2eb9f83f917",
+    "board-03-step02-state0.png": "29da091edbd57d964b2214aaaf21980a7b436b32691ed6606f31b777b132c530",
+    "board-03-step02-state1.png": "1438c081770004b4f131c581f5df2d24d12c481ed781c5176454b6f9c9ffa24a",
+    "board-03-step02-state2.png": "18f081b06e4d7e1360349774589a62f4b49d07a96caf93ac48456311594e6199",
+    "board-03-step02-decision1.png": "f8a686befc1fc657b05e8504ec3be64cbd46d3b43e9cee8570b29398e28dc9eb",
+    "board-03-step02-decision2.png": "5a1eb6e56631add4b2d668faa302a86ecb4e3d1f0943c292d84ecf16d1f71755",
+    "board-03-step02-replay.gif": "969c965dcfc624ea04993ec32a22aeef0f3a33d9711c1509a3661cb7f72b5007",
+    "board-03-step03-state0.png": "1438c081770004b4f131c581f5df2d24d12c481ed781c5176454b6f9c9ffa24a",
+    "board-03-step03-state1.png": "18f081b06e4d7e1360349774589a62f4b49d07a96caf93ac48456311594e6199",
+    "board-03-step03-state2.png": "18f081b06e4d7e1360349774589a62f4b49d07a96caf93ac48456311594e6199",
+    "board-03-step03-decision1.png": "c19eb56eaef403b7c4263755d94cdbeb3cc838ed77a2d7306a8301306e7e253d",
+    "board-03-step03-decision2.png": "c93e0ec5966745ef8da1648a2c84644bed178ffdd97f8c1b5e84f00e067bcc06",
+    "board-03-step03-replay.gif": "e45ba0eb2dc35acfe2705b3f30dbec741f02dc515fac0c3c1399244caa030352",
+    "board-04-step02-state0.png": "13e2dadabaf5e2d0bb188d2b366177e62d1212ce05a5e7466967cccd9a20aed7",
+    "board-04-step02-state1.png": "13e2dadabaf5e2d0bb188d2b366177e62d1212ce05a5e7466967cccd9a20aed7",
+    "board-04-step02-state2.png": "13e2dadabaf5e2d0bb188d2b366177e62d1212ce05a5e7466967cccd9a20aed7",
+    "board-04-step02-decision1.png": "cb0b9298d0b2504233268324b92da37e292368688b73357f11700b095fcd18fe",
+    "board-04-step02-decision2.png": "62a9967240f1ef0f02afc644006228e5807308c4a11cab313d725ee186f1fef8",
+    "board-04-step02-replay.gif": "480b605872f6eb1641de281da770867f16d1cdbf611b6b3081d26117a26e7705",
+    "board-05-step02-state0.png": "600af81cf213fc59570d574c89841bc6a02b665fe883c35e1e86102ac8ff0c2c",
+    "board-05-step02-state1.png": "359900fb9c9e7d9bdd12f8dc4b413b169ff7a619a908a4768be66d4db2940dca",
+    "board-05-step02-state2.png": "5843216ba46d0a23a94d54093fbe0c9cefba1f3add1edade711ee758f9e0721f",
+    "board-05-step02-decision1.png": "2d7c5da2d437814d7a0edb372909734321713dc499e4b2cdd945cf1578900ca8",
+    "board-05-step02-decision2.png": "018d62181444b99033150f4348bbb7b26fe8eb8650eda23f621f060af5244d6a",
+    "board-05-step02-replay.gif": "3e78e8dc40e12f7b1367e78a417f282fde797dc71f1d683321ff363bbb6b1818",
+    "board-05-step03-state0.png": "359900fb9c9e7d9bdd12f8dc4b413b169ff7a619a908a4768be66d4db2940dca",
+    "board-05-step03-state1.png": "5843216ba46d0a23a94d54093fbe0c9cefba1f3add1edade711ee758f9e0721f",
+    "board-05-step03-state2.png": "5843216ba46d0a23a94d54093fbe0c9cefba1f3add1edade711ee758f9e0721f",
+    "board-05-step03-decision1.png": "e1656ef09177776e11126adbf5d1ed59065ddcee2b9cf4d7f25596ba8e2bd887",
+    "board-05-step03-decision2.png": "e93ff495054742e8351219eceaab48b7014b5ad2ba321c6e411a68368dbded1b",
+    "board-05-step03-replay.gif": "dab9899e8eb14c69a54aec1a06311325965d0a4ad1c231bedf3ebc3c260a0863",
+    "board-06-step02-state0.png": "d3ef3611d70bb1010833e93cb2400f779d7c49da48a558f9235e655e5bb2c126",
+    "board-06-step02-state1.png": "f4e6c1d8f4f72aa816ea26e61cfbfe0b24629c380cc65b7b7fd55024d99d08b1",
+    "board-06-step02-state2.png": "9fff24f00a4dc7011f8a34c9a12e4c4f00616ade0d70bf20fde20dedd2474149",
+    "board-06-step02-decision1.png": "351d8a3f9de293ca4edd7774ef65ecc46b695a0fd3b1dce385c96490bf338989",
+    "board-06-step02-decision2.png": "fcf9a99c1067b7c1b8872c976df3e02b9345d8ebbc1fe1fc2c831402be3ec26b",
+    "board-06-step02-replay.gif": "19a53e9b278508be08d738337350db7dbca1d6d99d4430f6d2dd28ec7f446c4c"
+  },
+  "qualification": "Images derived from original completed observations, not new gameplay. Model-input palette preserved. All eight cross-setting trajectories checked identical before sharing images. Click annotations and yellow change maps are report additions; not model inputs or object masks."
+}
