@@ -1,10 +1,13 @@
 # Verified executed feedback v1: attempt 1 results
 
-**Technically complete and independently validated.** Explicit verified feedback
-changed some forecasts: second-decision candidate-effect accuracy was **8/16**
-with feedback versus **6/16** with the existing summary. The selected second
-action was unchanged in all eight matched pairs. These are descriptive results
-on eight correlated, exposed development checkpoints, not an advancement claim.
+**Technically complete and independently validated; forecast interpretation
+corrected after review.** Second-decision candidate-effect accuracy was **8/16**
+with feedback versus **6/16** with the existing summary. The entire net gain
+concerns the action just executed, whose previous effect is supplied in the
+feedback block. Its 5/8 accuracy exactly matches a simple persistence rule:
+predict that action's next effect will be the same as its last effect. The
+selected second action was unchanged in all eight matched pairs. These results
+do not establish improved prediction beyond that rule or improved action choice.
 
 ## Research question and comparison
 
@@ -45,6 +48,35 @@ full actions differed in zero of eight. Changing a forecast or repeating an
 action is not itself evidence of a better choice; reference effects measure
 pixel-change extent, not usefulness or progress toward a solution.
 
+### Per-action split and persistence baseline
+
+The two candidates are unchanged across both decisions, and every condition
+repeats its first selected full action. Consequently, one of the two scored
+second-decision forecasts concerns the same action whose preceding outcome is
+explicitly supplied. The backward-looking copying caveat therefore also applies
+to this component of the headline forward-looking measure.
+
+| Second-decision forecast measure | Summary only | Verified feedback |
+| --- | --- | --- |
+| Repeated-action forecast equals its preceding observed effect | 5/8 | 8/8 |
+| Repeated-action forecast correct on its next execution | 3/8 | 5/8 |
+| Other-action forecast correct | 3/8 | 3/8 |
+| Persistence baseline correct for the repeated action | 5/8 | 5/8 |
+
+In all three cases whose forecasts change, the repeated-action forecast moves
+to the supplied label. Two become correct; one remains wrong because that
+action's effect changed at the next state. Forecasts for the other action have
+one gain and one loss. Thus the whole net increase is accounted for by the
+repeated-action component, with no accuracy advantage over persistence on that
+component and no net gain on the other action. The evidence is consistent with
+copying the observed-effect label; it does not identify an internal mechanism.
+
+This split is a post-run interpretive audit, not a newly preregistered endpoint
+or a change to the original forecasts, scoring or attempt status. A future
+design should report the other-action forecasts separately and use new second-
+decision candidates when testing transfer beyond repeating an observed effect.
+It would need its own review and authorization.
+
 | Game | Checkpoint | Correct second forecasts: summary | Correct second forecasts: verified | Second action differs between conditions? |
 | --- | --- | --- | --- | --- |
 | ls20 | board-01-step02 | 0/2 | 1/2 | No |
@@ -67,8 +99,9 @@ These fields are supplied in the intervention receipt. Their scores are
 copying/consistency diagnostics only and earn **no model-understanding credit**.
 The summary-only condition answered unknown on both fields in seven cases;
 ft09 was correct in both conditions. The intervention therefore established
-that the model can repeat the supplied labels, alongside a small descriptive
-change in future forecasts. It did not change the observed action selections.
+that the model can repeat the supplied labels. The forward-looking per-action
+audit above shows why the small aggregate change also does not establish
+prediction beyond persistence. It did not change the observed action selections.
 
 ## Runtime and independent validation
 
