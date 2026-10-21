@@ -1,7 +1,9 @@
 # ls20 level-1 instructed VLM pilot: preparation
 
-**Latest status: one authorized private attempt submitted; Kaggle reported RUNNING
-at 22:52 UTC on October 21, 2026 (6:52 p.m. New York time). Results pending.**
+**Latest status: attempt 1 completed and independently validated. Level 1 was
+not passed: 40 valid moves, zero completed levels.**
+
+[Read the completed results](ls20_instructed_level1_v1_attempt1_results_2026-10-21.md).
 
 Preparation and CPU checks below preceded approval. The owner subsequently
 approved the exact final lock, scoped use and one attempt with the listed limits.
@@ -18,7 +20,7 @@ approved the exact final lock, scoped use and one attempt with the listed limits
 | Provider writes | Exactly one SaveKernel call and one durable send intent; no retry |
 | Provider response | Version 1; no provider error or rejected sources |
 | Saved package | Source, authority, privacy, offline settings, immutable image, requested GPU and attachment names verified |
-| Requested accelerator | Exactly one RTX PRO 6000; actual allocation remains for the runtime to verify |
+| Accelerator | Exactly one RTX PRO 6000 requested; the completed run confirmed RTX PRO 6000 Blackwell Server Edition |
 | Previous evidence | 696 retained files rechecked unchanged; no prior attempt overwritten |
 
 The provider does not echo dataset version labels or the requested session
@@ -28,9 +30,10 @@ verification remains mandatory. The 3,600-second session timeout is requested;
 the worker enforces its separate 3,300-second limit. Provider overhead may extend
 the total time, as approved.
 
-No result is claimed before collection, lifecycle checks and independent replay.
-No watcher or automatic resubmission was started. Approval and launch records,
-private bindings and raw outputs remain off GitHub.
+Collection, lifecycle checks, native-token validation and independent replay are
+now complete. The technical run passed; the first-level gameplay criterion did
+not. No watcher or automatic resubmission was started. Approval and launch
+records, private bindings and raw outputs remain off GitHub.
 
 The user chose **controls and rules explained; the agent plans the actions**.
 This test asks whether the existing Qwen VLM can complete ls20's first level with
@@ -67,7 +70,7 @@ the pinned offline engine.
 | Launch build without authority | Refuses; no reservation or claim created |
 | SDK serialization | Exact private RTX PRO 6000/image/attachments request checks pass; no request sent |
 | Read-only Kaggle readiness | Account, quota, unused notebook target, dataset versions/inventories, private model access and game wheels pass |
-| Actual GPU allocation | Not yet checked; runtime must refuse a different accelerator |
+| Actual GPU allocation | Unverified at preparation; subsequently confirmed in the completed run |
 
 ### Real-engine software positive control
 
