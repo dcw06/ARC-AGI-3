@@ -1,5 +1,9 @@
 # Verified executed feedback v1: attempt 1 submitted
 
+Subsequent status: the attempt completed and passed independent validation.
+See the [results report](verified_feedback_v1_attempt1_results_2026-10-21.md).
+The following records the status observed at submission.
+
 The owner authorized the final reviewed package and one GPU attempt. One private
 submission created version 1; the provider status read after submission was
 **RUNNING**. Results and technical completion have not yet been evaluated.
