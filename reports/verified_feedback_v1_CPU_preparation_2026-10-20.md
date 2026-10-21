@@ -110,3 +110,8 @@ reference-branch scoring, missing-phase denominators and exact run binding.
 Then verify the production request/backend path, build and review the exact
 private package and scope, and obtain fresh lock-bound compute authorization
 and a single-use reservation. Earlier authorizations remain consumed.
+
+Subsequent update: the bounded runner, independent evaluator and exact local
+private package are now [implemented and checked](verified_feedback_v1_live_preparation_2026-10-20.md).
+Fresh authorization, reservation and launch remain unperformed. This CPU
+preparation record and its source/input pins are preserved unchanged.
