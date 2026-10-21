@@ -76,6 +76,11 @@ These are preparation recommendations. No successor runtime, prompt, schema,
 protocol or source lock was changed by this diagnosis. No new compute or launch
 is authorized by the consumed pilot attempt.
 
+Subsequent CPU-only work implements the proposed receipt and request comparison
+in a separate namespace. See the [successor preparation report](verified_feedback_v1_CPU_preparation_2026-10-20.md)
+for its checks and remaining live-integration requirements. The completed pilot
+and this diagnosis remain unchanged scientific evidence.
+
 ## Evidence and preservation
 
 The read-only audit checked all four second-phase request/response pairs against
