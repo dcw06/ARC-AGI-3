@@ -6,6 +6,7 @@ performed here. Reference outcomes never enter the inference payload.
 from collections import Counter
 from copy import deepcopy
 import json
+import math
 from pathlib import Path
 
 from research.verified_feedback_v1.flow import run_case
@@ -34,12 +35,18 @@ def independent_commit(cp, pair, variant, events, texts):
         'study_decision_index': 0, 'game_action_index': len(cp['prefix']),
         'before_observation_sha256': digest(cp['current']), 'candidates': pair, 'answer': answer}
     wanted = {'kind': 'forecast_commit', 'forecast': envelope, 'forecast_sha256': digest(envelope)}
+    if not commits:
+        # Exact prefix replay below proves admission stopped before commitment.
+        if any(e.get('kind') == 'dispatch_intent' and e['decision'] == 0 for e in events):
+            raise ValueError('dispatch without immutable forecast commitment')
+        return None
     if len(commits) != 1 or digest(commits[0]) != digest(wanted):
         raise ValueError('independent pre-dispatch forecast commitment differs')
     response = next(i for i,e in enumerate(events) if e.get('kind')=='response' and e['decision']==0)
     commit = next(i for i,e in enumerate(events) if e.get('kind')=='forecast_commit')
-    dispatch = next(i for i,e in enumerate(events) if e.get('kind')=='dispatch_intent' and e['decision']==0)
-    if not response < commit < dispatch: raise ValueError('forecast not journaled before dispatch')
+    dispatch = next((i for i,e in enumerate(events) if e.get('kind')=='dispatch_intent' and e['decision']==0), None)
+    if not response < commit or (dispatch is not None and not commit < dispatch):
+        raise ValueError('forecast not journaled before dispatch')
     for event in events:
         if event.get('kind')=='transition' and event.get('transition_sha256')!=digest(event.get('record')):
             raise ValueError('independent executed transition commitment differs')
@@ -89,6 +96,35 @@ def audit_case(cp, pair, variant, events, replay_engine):
     emitted, originals = [], [e for e in events if e.get('kind') == 'request']
     texts = [e['text'] for e in events if e.get('kind') == 'response']
     position = 0
+    if events and events[0].get('kind') == 'not_admitted':
+        stop = events[0]
+        remaining = stop.get('remaining_seconds')
+        if (set(stop) != {'kind', 'remaining_seconds', 'headroom_seconds'} or
+                type(stop['headroom_seconds']) is not int or stop['headroom_seconds'] != 120 or
+                type(remaining) not in (int, float) or not math.isfinite(remaining) or
+                not -300 < remaining < 120 or replay_engine is not None):
+            raise ValueError('unstarted condition admission receipt differs')
+        result = dict(checkpoint_id=cp['checkpoint_id'], condition=variant, reason='not_admitted',
+                      error=None, model_calls=0, new_dispatches=0, final_observation=None, lifecycle_certified=False)
+        if events != [stop, {'kind': 'summary', **result}]:
+            raise ValueError('unstarted condition contains work or false summary')
+        return result
+    stops = [e for e in events if e.get('kind') == 'admission_stop']
+    if len(stops) > 1:
+        raise ValueError('multiple admission stop receipts')
+    stop = stops[0] if stops else None
+    if stop is not None and (set(stop) != {'kind', 'check_index', 'overrun_seconds'} or
+            type(stop['check_index']) is not int or stop['check_index'] < 1 or
+            type(stop['overrun_seconds']) not in (int, float) or not math.isfinite(stop['overrun_seconds']) or
+            not 0 <= stop['overrun_seconds'] < 300):
+        raise ValueError('admission stop receipt exceeds cleanup reserve or differs')
+    checks = 0
+    def replay_clock():
+        nonlocal checks
+        checks += 1
+        # Reproduce the precise admission boundary; every earlier event, full
+        # request and actual observation must still match a fresh engine replay.
+        return stop['overrun_seconds'] if stop is not None and checks == stop['check_index'] else -1
 
     def complete(body):
         nonlocal position
@@ -112,11 +148,15 @@ def audit_case(cp, pair, variant, events, replay_engine):
         position += 1
         return text
 
-    result = run_case(cp, pair, variant, replay_engine, complete, emitted.append,
-                      deadline=float('inf'), now=lambda: 0)
-    if digest(emitted) != digest(events) or position != len(originals) or position != len(texts):
+    try:
+        result = run_case(cp, pair, variant, replay_engine, complete, emitted.append,
+                          deadline=0, now=replay_clock)
+    except (TimeoutError, IndexError, StopIteration) as exc:
+        raise ValueError('retained prefix cannot be independently replayed') from exc
+    if digest(emitted) != digest(events) or position != len(texts):
         raise ValueError('retained events/stop reason/final state differ from exact game replay')
-    if result['reason'] in ('deadline', 'exception') or result['model_calls'] > 2:
+    if (result['reason'] == 'exception' or result['model_calls'] > 2 or
+            (result['reason'] == 'deadline') != bool(stop)):
         raise ValueError('incomplete condition or scope exceeded')
     independent_commit(cp,pair,variant,events,texts)
     return result
@@ -132,21 +172,34 @@ def audit_study(output, inputs, *, token_audit, replay_factory):
     pairs = {r['checkpoint_id']: r['candidates'] for r in loads((inputs/'candidate-pairs.json').read_bytes())}
     expected, responses, sequence = {'canary': canary()}, {}, [('HTTP', 'canary')]
     summaries, rows = [], []
+    schedule_stopped, previous_remaining = False, float('inf')
     prefix_dispatches = new_dispatches = 0
     for cp in checkpoints:
         identity, pair = cp['checkpoint_id'], pairs[cp['checkpoint_id']]
         for variant in cp['order']:
             name = identity+'-'+variant
             events = lines(output/(name+'.jsonl'))
-            result = audit_case(cp, pair, variant, events, replay_factory(cp, name+'-replay'))
+            unstarted = bool(events and events[0].get('kind') == 'not_admitted')
+            if schedule_stopped and not unstarted:
+                raise ValueError('work resumed after schedule admission stopped')
+            if unstarted:
+                remaining = events[0].get('remaining_seconds')
+                if type(remaining) not in (int, float) or remaining > previous_remaining:
+                    raise ValueError('unstarted condition clock moved backwards')
+                previous_remaining = remaining
+            result = audit_case(cp, pair, variant, events,
+                                None if unstarted else replay_factory(cp, name+'-replay'))
             summaries.append(result)
-            prefix_dispatches += len(cp['prefix'])
+            schedule_stopped |= result['reason'] in ('deadline', 'not_admitted')
+            prefix_dispatches += sum(e['kind'] == 'restored_transition' for e in events)
             transitions = [e['record'] for e in events if e['kind'] == 'transition']
             texts = [e['text'] for e in events if e['kind'] == 'response']
             new_dispatches += len(transitions)
-            for event in events:
+            for index, event in enumerate(events):
                 kind = event['kind']
                 if kind == 'request':
+                    if event['decision'] >= len(texts):
+                        continue  # retained intent, refused before model admission
                     request_id = identity+'/'+variant+'/'+str(event['decision'])
                     if request_id in expected: raise ValueError('duplicate condition decision')
                     expected[request_id] = event['body']
@@ -154,6 +207,12 @@ def audit_study(output, inputs, *, token_audit, replay_factory):
                 elif kind == 'response':
                     responses[identity+'/'+variant+'/'+str(event['decision'])] = event['text']
                 elif kind in ('bootstrap_intent', 'restore_dispatch_intent', 'dispatch_intent', 'closed'):
+                    completion = {'bootstrap_intent': 'initial', 'restore_dispatch_intent': 'restored_transition',
+                                  'dispatch_intent': 'transition'}.get(kind)
+                    if completion is not None and (index+1 >= len(events) or events[index+1]['kind'] != completion):
+                        # Exact prefix replay proves the final intent was not
+                        # admitted; an engine transport failure is never salvaged.
+                        continue
                     sequence.append(('engine', name, 'bootstrap' if kind == 'bootstrap_intent' else
                                      'close' if kind == 'closed' else 'dispatch'))
             previous = None
@@ -184,9 +243,11 @@ def audit_study(output, inputs, *, token_audit, replay_factory):
                     previous_effect=None if prior_record is None else effect_size(prior_record['before'], before))
                 if scored['valid']:
                     answer = parse_choice(texts[decision], first=decision == 0)
-                    if decision >= len(transitions) or not _same(
+                    if decision < len(transitions) and not _same(
                             references[answer['selected_candidate']]['after'], transitions[decision]['after']):
                         raise ValueError('actual selected transition differs from fresh reference branch')
+                    if decision >= len(transitions) and result['reason'] != 'deadline':
+                        raise ValueError('missing selected transition without witnessed admission stop')
                     previous = answer
                 retrospective = {field: scored.pop(field) for field in (
                     'previous_observation_correct','previous_check_correct','previous_forecast_was_known')}
@@ -237,7 +298,9 @@ def audit_study(output, inputs, *, token_audit, replay_factory):
                 not _number(entry['seconds'], 0, 30.001)):
             raise ValueError('worker HTTP ledger entry differs')
     plan = {item['id'] for item in request_plan(checkpoints)}
-    if (resets != 16 or closes != 16 or prefix_dispatches != 36 or len(summaries) != 16 or len(rows) != 32 or
+    started = sum(s['reason'] != 'not_admitted' for s in summaries)
+    if (not 0 <= resets <= started <= 16 or closes != started or not 0 <= prefix_dispatches <= 36 or
+            len(summaries) != 16 or len(rows) != 32 or
             not 0 <= new_dispatches <= 32 or dispatches != prefix_dispatches+new_dispatches or
             resets+dispatches > 84 or len(calls) != 1+len(responses) or len(calls) > 33 or
             any(c['id'] not in plan for c in calls)):
@@ -247,6 +310,7 @@ def audit_study(output, inputs, *, token_audit, replay_factory):
     paired = paired_context(checkpoints, rows, output)
     return dict(format_only=False, phase_coverage=coverage,
         format_coverage_complete=coverage['reached']==coverage['valid']==32, paired_context=paired,
+        study_schedule_complete=not any(s['reason'] in ('deadline', 'not_admitted') for s in summaries),
         retrospective_understanding_claim_permitted=False,
         schema='verified_feedback_independent_content_v1', content_replay_passed=True,
         lifecycle_certified=False, outcome_claim_permitted=False, decisions=rows, conditions=summaries,

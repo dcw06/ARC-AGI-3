@@ -10,13 +10,23 @@ from .feedback import freeze_forecast
 from .interface import CONDITIONS, make_request
 
 
+class AdmissionClosed(TimeoutError):
+    """A witnessed refusal of new work; transport and cleanup failures differ."""
+
+
 def run_case(checkpoint, pair, condition, engine, complete, sink, *, deadline, now=time.monotonic):
     failure = None; reason = error = current = None
     calls = 0; transitions = []; previous = frozen = forecast_pin = None
     trajectory = checkpoint['checkpoint_id']+'-'+condition
-    def check():
-        if now() >= deadline: raise TimeoutError('verified-feedback admission closed')
     def emit(kind, **fields): sink(deepcopy(dict(kind=kind, **fields)))
+    checks = 0
+    def check():
+        nonlocal checks
+        checks += 1
+        observed = now()
+        if observed >= deadline:
+            emit('admission_stop', check_index=checks, overrun_seconds=observed-deadline)
+            raise AdmissionClosed('verified-feedback admission closed')
     try:
         if condition not in CONDITIONS: raise ValueError('unknown feedback condition')
         checked_pair(pair, checkpoint['current']['legal_actions']); check()
@@ -53,21 +63,20 @@ def run_case(checkpoint, pair, condition, engine, complete, sink, *, deadline, n
                       'predicted_visible_change': 'unknown' if forecast == 'unknown' else 'no' if forecast == 'none' else 'yes'}
             emit('transition', decision=decision, record=record, transition_sha256=digest(record), answer=answer)
             transitions.append(deepcopy(record)); history.append(deepcopy(record)); current = after; previous = answer
-        check()
         reason = reason or terminal(current) or 'action_cap'
+    except AdmissionClosed:
+        # Preserve the exact observed prefix. The enclosing lifecycle still
+        # enforces the separate hard deadline through cleanup/finalization.
+        reason = 'deadline'
     except BaseException as exc:
         failure, error = exc, type(exc).__name__+': '+str(exc)
         reason = 'deadline' if isinstance(exc, TimeoutError) else 'exception'
     try: emit('closed', receipt=engine.close())
     except BaseException as exc:
         if failure is None: failure, error, reason = exc, str(exc), 'exception'
-    try: check()
-    except BaseException as exc:
-        if failure is None: failure, error, reason = exc, str(exc), 'deadline'
     result = {'checkpoint_id': checkpoint['checkpoint_id'], 'condition': condition, 'reason': reason, 'error': error,
               'model_calls': calls, 'new_dispatches': len(transitions), 'final_observation': current,
               'lifecycle_certified': False}
     emit('summary', **result)
     if failure is not None: raise failure
-    check()
     return result

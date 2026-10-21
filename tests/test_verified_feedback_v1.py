@@ -202,8 +202,9 @@ class Flow(unittest.TestCase):
             cp=selected();engine=FakeEngine(cp);clock=Clock()
             def sink(event):
                 if event['kind']==point:clock.value=10
-            with self.subTest(point=point),self.assertRaises(TimeoutError):
-                run_case(cp,candidates(cp,0),'verified_feedback',engine,lambda b:answer(),sink,deadline=10,now=clock)
+            with self.subTest(point=point):
+                result=run_case(cp,candidates(cp,0),'verified_feedback',engine,lambda b:answer(),sink,deadline=10,now=clock)
+                self.assertEqual(result['reason'],'deadline')
             self.assertEqual(len(engine.actions),len(cp['prefix']));self.assertEqual(engine.close_calls,1)
 
     def test_invalid_answer_not_repaired_or_retried(self):

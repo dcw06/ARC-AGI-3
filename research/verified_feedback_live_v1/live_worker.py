@@ -14,7 +14,7 @@ import time
 
 from certification.direct_publisher_smoke_v1.accounting import Clock, Ledger
 from certification.direct_publisher_smoke_v1.client import Client
-from research.initial_geometry_assistance_v1.engine_bridge import BridgeEngine
+from .engine import FeedbackEngine as BridgeEngine
 from research.initial_geometry_assistance_v1.geometry import digest
 from research.initial_geometry_assistance_v1.live_io import Journal, sha, write_new
 from research.initial_geometry_assistance_v1.live_resources import environment
@@ -88,20 +88,28 @@ def study(config, output, *, token_audit, engine_factory=None, headroom=120):
             raise ValueError('model HTTP status '+str(status))
         return validate_reply(body, json.loads(raw), count)
 
-    def admission():
-        if deadline-time.monotonic() < headroom:
-            raise TimeoutError('checkpoint condition admission headroom not met')
-
     try:
         if complete('canary', canary()).strip() != 'ok':
             raise ValueError('startup canary content differs')
         for checkpoint in checkpoints:
             identity = checkpoint['checkpoint_id']
-            admission()
             for variant in checkpoint['order']:
-                admission()
                 name = identity+'-'+variant
                 events = Journal(output/(name+'.jsonl'))
+                remaining = deadline-time.monotonic()
+                if remaining < headroom:
+                    # Retain every scheduled slot without creating an engine.
+                    item = {'checkpoint_id': identity, 'condition': variant, 'reason': 'not_admitted',
+                            'error': None, 'model_calls': 0, 'new_dispatches': 0,
+                            'final_observation': None, 'lifecycle_certified': False}
+                    try:
+                        events({'kind': 'not_admitted', 'remaining_seconds': remaining,
+                                'headroom_seconds': headroom})
+                        events({'kind': 'summary', **item})
+                        completed.append(item)
+                    finally:
+                        events.close()
+                    continue
                 local_step = 0
 
                 def response(request):
@@ -132,7 +140,7 @@ def study(config, output, *, token_audit, engine_factory=None, headroom=120):
                               BridgeEngine(config['game_python'], checkpoint['game_id'], config['games'],
                                            output/(name+'-recordings'), output/(name+'-engine.log'), deadline,
                                            env=dict(environment(), PYTHONPATH=str(Path(__file__).resolve().parents[2])),
-                                           on_effect=effect))
+                                           on_effect=effect, cleanup_deadline=config['started']+WORKER_SECONDS))
 
                     def retain(event):
                         nonlocal closed_scorecards

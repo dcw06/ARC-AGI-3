@@ -161,11 +161,15 @@ def run(source, authority, lock_sha256, *, started, bootstrap_guard):
         worker_entry = processes.spawn([python, '-m', 'research.verified_feedback_live_v1.live_worker',
                                          '--config', str(output/'worker-config.json'), '--output', str(output)],
                                         output/'worker.log', worker_env, 'model/game worker')
-        code = worker_entry['group'].process.wait(timeout=max(0.001, admission-time.monotonic()))
+        # The worker refuses new actions/HTTP at admission, then closes its
+        # engines and journals within the independently enforced hard deadline.
+        signal.setitimer(signal.ITIMER_REAL, max(0.001, deadline-time.monotonic()))
+        code = worker_entry['group'].process.wait(timeout=max(0.001, deadline-time.monotonic()))
         facts['worker_exit'] = code
         if code:
             raise RuntimeError('study worker failed, see retained worker log')
-        check()
+        if time.monotonic() >= deadline:
+            raise TimeoutError('worker lifecycle deadline')
         worker = json.loads((output/'worker-result.json').read_bytes())
         if (worker['error'] is not None or len(worker['conditions']) != 16):
             raise ValueError('study schedule incomplete')

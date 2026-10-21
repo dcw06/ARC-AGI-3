@@ -182,7 +182,7 @@ def evaluate(output, inputs, review_lock, provider, *, token_audit=None, replay_
     if saved['authority']['attempt_id'] != result.get('attempt_id'):
         raise ValueError('provider authority names another attempt')
     content = audit_study(output, inputs, token_audit=token_audit, replay_factory=replay_factory)
-    return {**content, 'schema': 'verified_feedback_independent_evaluation_v1', 'technically_complete': True,
+    return {**content, 'schema': 'verified_feedback_independent_evaluation_v1', 'technically_complete': content['study_schedule_complete'],
             'lifecycle_certified': True, 'outcome_claim_permitted': False, 'review_lock_sha256': pin,
             'input_manifest_sha256': lock['input_manifest_sha256'],
             'source_inventory_sha256': lock['source_inventory_sha256'],

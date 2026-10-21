@@ -25,13 +25,44 @@ def derive():
             text=text.replace('from research.action_effect_choice_v2.flow import run_case','from research.verified_feedback_v1.flow import run_case')
             for a,b in [('len(ids) > 9','len(ids) > 33'),('super().__init__(plan, 9, clock)','super().__init__(plan, 33, clock)'),
                         ('resets >= 4','resets >= 16'),('dispatches >= 16','dispatches >= 68'),('closes >= 4','closes >= 16')]:text=change(text,a,b)
+            text=change(text,'from research.initial_geometry_assistance_v1.engine_bridge import BridgeEngine',
+                'from .engine import FeedbackEngine as BridgeEngine')
+            text=change(text,"    def admission():\n        if deadline-time.monotonic() < headroom:\n            raise TimeoutError('checkpoint condition admission headroom not met')\n\n",'')
+            text=change(text,"            admission()\n            for variant in checkpoint['order']:\n                admission()\n                name = identity+'-'+variant\n                events = Journal(output/(name+'.jsonl'))\n                local_step = 0", """            for variant in checkpoint['order']:
+                name = identity+'-'+variant
+                events = Journal(output/(name+'.jsonl'))
+                remaining = deadline-time.monotonic()
+                if remaining < headroom:
+                    # Retain every scheduled slot without creating an engine.
+                    item = {'checkpoint_id': identity, 'condition': variant, 'reason': 'not_admitted',
+                            'error': None, 'model_calls': 0, 'new_dispatches': 0,
+                            'final_observation': None, 'lifecycle_certified': False}
+                    try:
+                        events({'kind': 'not_admitted', 'remaining_seconds': remaining,
+                                'headroom_seconds': headroom})
+                        events({'kind': 'summary', **item})
+                        completed.append(item)
+                    finally:
+                        events.close()
+                    continue
+                local_step = 0""")
+            text=change(text,"                                           on_effect=effect))",
+                "                                           on_effect=effect, cleanup_deadline=config['started']+WORKER_SECONDS))")
         elif leaf=='live_runtime.py':
             for a,b in [("'generations': 9, 'counted_HTTP_requests': 9","'generations': 33, 'counted_HTTP_requests': 33"),
                 ("'checkpoints': 2, 'policy_conditions': 4","'checkpoints': 8, 'policy_conditions': 16"),
                 ("'policy_actions': 8, 'prefix_dispatches': 8, 'bootstrap_resets': 4, 'offline_engine_actions': 20",
                  "'policy_actions': 32, 'prefix_dispatches': 36, 'bootstrap_resets': 16, 'offline_engine_actions': 84"),
                 ("'local_scorecards': 4","'local_scorecards': 16"),("len(worker['conditions']) != 4","len(worker['conditions']) != 16")]:text=change(text,a,b)
+            text=change(text,"        code = worker_entry['group'].process.wait(timeout=max(0.001, admission-time.monotonic()))",
+                """        # The worker refuses new actions/HTTP at admission, then closes its
+        # engines and journals within the independently enforced hard deadline.
+        signal.setitimer(signal.ITIMER_REAL, max(0.001, deadline-time.monotonic()))
+        code = worker_entry['group'].process.wait(timeout=max(0.001, deadline-time.monotonic()))""")
+            text=change(text,"        check()\n        worker = json.loads((output/'worker-result.json').read_bytes())",
+                "        if time.monotonic() >= deadline:\n            raise TimeoutError('worker lifecycle deadline')\n        worker = json.loads((output/'worker-result.json').read_bytes())")
         elif leaf=='live_evaluation.py':
+            text=change(text,"'technically_complete': True,", "'technically_complete': content['study_schedule_complete'],")
             text=change(text,'Four exposed compatibility conditions; phase-specific format coverage only. No arm advantage, forecast accuracy or gameplay advancement claim.',
                 'Eight correlated exposed checkpoints; descriptive feedback-presentation comparison only. Supplied retrospective labels earn no understanding credit. No advancement or generalization claim.')
         elif leaf=='live_package.py':
