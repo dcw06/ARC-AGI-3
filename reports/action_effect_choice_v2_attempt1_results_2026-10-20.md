@@ -96,3 +96,9 @@ original downloaded files remain under `.cache/aec2result1/`.
 The next useful analysis is a read-only diagnosis of why the second-phase
 replies abstained despite available feedback. The larger eight-checkpoint
 comparison has not run and is not authorized by this consumed pilot attempt.
+
+That [read-only diagnosis](action_effect_choice_v2_feedback_diagnosis_2026-10-20.md)
+is now complete: the exact counts and unchanged prior forecasts were supplied
+and correctly bound in all four second-phase prompts. The model's internal
+reason for abstaining remains unestablished. No experiment or completed score
+was changed.
