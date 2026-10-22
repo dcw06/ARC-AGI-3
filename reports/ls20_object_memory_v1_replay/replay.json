@@ -1,0 +1,1772 @@
+{
+  "frames": [
+    {
+      "action": "Initial board",
+      "center": [
+        36,
+        47
+      ],
+      "encounter_count": 0,
+      "encounters": [],
+      "goal": null,
+      "image": "frames/000.png",
+      "level": 0,
+      "phase": "Initial observation",
+      "step": 0
+    },
+    {
+      "action": "LEFT",
+      "center": [
+        31,
+        47
+      ],
+      "encounter_count": 0,
+      "encounters": [],
+      "goal": "cross:20,31,22,33",
+      "image": "frames/001.png",
+      "level": 0,
+      "phase": "seek new object",
+      "step": 1
+    },
+    {
+      "action": "LEFT",
+      "center": [
+        26,
+        47
+      ],
+      "encounter_count": 0,
+      "encounters": [],
+      "goal": "cross:20,31,22,33",
+      "image": "frames/002.png",
+      "level": 0,
+      "phase": "seek new object",
+      "step": 2
+    },
+    {
+      "action": "LEFT",
+      "center": [
+        21,
+        47
+      ],
+      "encounter_count": 0,
+      "encounters": [],
+      "goal": "cross:20,31,22,33",
+      "image": "frames/003.png",
+      "level": 0,
+      "phase": "seek new object",
+      "step": 3
+    },
+    {
+      "action": "UP",
+      "center": [
+        21,
+        42
+      ],
+      "encounter_count": 0,
+      "encounters": [],
+      "goal": "cross:20,31,22,33",
+      "image": "frames/004.png",
+      "level": 0,
+      "phase": "seek new object",
+      "step": 4
+    },
+    {
+      "action": "UP",
+      "center": [
+        21,
+        37
+      ],
+      "encounter_count": 0,
+      "encounters": [],
+      "goal": "cross:20,31,22,33",
+      "image": "frames/005.png",
+      "level": 0,
+      "phase": "seek new object",
+      "step": 5
+    },
+    {
+      "action": "UP",
+      "center": [
+        21,
+        32
+      ],
+      "encounter_count": 1,
+      "encounters": [
+        "cross:20,31,22,33"
+      ],
+      "goal": "cross:20,31,22,33",
+      "image": "frames/006.png",
+      "level": 0,
+      "phase": "seek new object",
+      "step": 6
+    },
+    {
+      "action": "UP",
+      "center": [
+        21,
+        27
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "destination:33,9,39,15",
+      "image": "frames/007.png",
+      "level": 0,
+      "phase": "seek new object",
+      "step": 7
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        26,
+        27
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "destination:33,9,39,15",
+      "image": "frames/008.png",
+      "level": 0,
+      "phase": "seek new object",
+      "step": 8
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        31,
+        27
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "destination:33,9,39,15",
+      "image": "frames/009.png",
+      "level": 0,
+      "phase": "seek new object",
+      "step": 9
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        36,
+        27
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "destination:33,9,39,15",
+      "image": "frames/010.png",
+      "level": 0,
+      "phase": "seek new object",
+      "step": 10
+    },
+    {
+      "action": "UP",
+      "center": [
+        36,
+        22
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "destination:33,9,39,15",
+      "image": "frames/011.png",
+      "level": 0,
+      "phase": "seek new object",
+      "step": 11
+    },
+    {
+      "action": "UP",
+      "center": [
+        36,
+        17
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "destination:33,9,39,15",
+      "image": "frames/012.png",
+      "level": 0,
+      "phase": "seek new object",
+      "step": 12
+    },
+    {
+      "action": "UP",
+      "center": [
+        31,
+        42
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": null,
+      "image": "frames/013.png",
+      "level": 1,
+      "phase": "Level completed; next board shown",
+      "step": 13
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        36,
+        42
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "unknown:40,51,42,53",
+      "image": "frames/014.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 14
+    },
+    {
+      "action": "UP",
+      "center": [
+        36,
+        37
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "unknown:40,51,42,53",
+      "image": "frames/015.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 15
+    },
+    {
+      "action": "UP",
+      "center": [
+        36,
+        32
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "unknown:40,51,42,53",
+      "image": "frames/016.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 16
+    },
+    {
+      "action": "UP",
+      "center": [
+        36,
+        27
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "unknown:40,51,42,53",
+      "image": "frames/017.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 17
+    },
+    {
+      "action": "UP",
+      "center": [
+        36,
+        22
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "unknown:40,51,42,53",
+      "image": "frames/018.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 18
+    },
+    {
+      "action": "UP",
+      "center": [
+        36,
+        17
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "unknown:40,51,42,53",
+      "image": "frames/019.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 19
+    },
+    {
+      "action": "UP",
+      "center": [
+        36,
+        12
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "unknown:40,51,42,53",
+      "image": "frames/020.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 20
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        41,
+        12
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "unknown:40,51,42,53",
+      "image": "frames/021.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 21
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        46,
+        12
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "unknown:40,51,42,53",
+      "image": "frames/022.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 22
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        46,
+        17
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "unknown:40,51,42,53",
+      "image": "frames/023.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 23
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        51,
+        17
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "unknown:40,51,42,53",
+      "image": "frames/024.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 24
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        22
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "unknown:40,51,42,53",
+      "image": "frames/025.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 25
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        27
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "unknown:40,51,42,53",
+      "image": "frames/026.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 26
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        32
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "unknown:40,51,42,53",
+      "image": "frames/027.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 27
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        37
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "unknown:40,51,42,53",
+      "image": "frames/028.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 28
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        42
+      ],
+      "encounter_count": 1,
+      "encounters": [],
+      "goal": "unknown:40,51,42,53",
+      "image": "frames/029.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 29
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        47
+      ],
+      "encounter_count": 2,
+      "encounters": [
+        "cross:50,46,52,48"
+      ],
+      "goal": "unknown:40,51,42,53",
+      "image": "frames/030.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 30
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        52
+      ],
+      "encounter_count": 2,
+      "encounters": [],
+      "goal": "unknown:40,51,42,53",
+      "image": "frames/031.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 31
+    },
+    {
+      "action": "LEFT",
+      "center": [
+        46,
+        52
+      ],
+      "encounter_count": 2,
+      "encounters": [],
+      "goal": "unknown:40,51,42,53",
+      "image": "frames/032.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 32
+    },
+    {
+      "action": "LEFT",
+      "center": [
+        41,
+        52
+      ],
+      "encounter_count": 3,
+      "encounters": [
+        "unknown:40,51,42,53"
+      ],
+      "goal": "unknown:40,51,42,53",
+      "image": "frames/033.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 33
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        46,
+        52
+      ],
+      "encounter_count": 3,
+      "encounters": [],
+      "goal": "unknown:15,16,17,18",
+      "image": "frames/034.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 34
+    },
+    {
+      "action": "UP",
+      "center": [
+        46,
+        47
+      ],
+      "encounter_count": 3,
+      "encounters": [],
+      "goal": "unknown:15,16,17,18",
+      "image": "frames/035.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 35
+    },
+    {
+      "action": "UP",
+      "center": [
+        46,
+        42
+      ],
+      "encounter_count": 3,
+      "encounters": [],
+      "goal": "unknown:15,16,17,18",
+      "image": "frames/036.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 36
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        51,
+        42
+      ],
+      "encounter_count": 3,
+      "encounters": [],
+      "goal": "unknown:15,16,17,18",
+      "image": "frames/037.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 37
+    },
+    {
+      "action": "UP",
+      "center": [
+        51,
+        37
+      ],
+      "encounter_count": 3,
+      "encounters": [],
+      "goal": "unknown:15,16,17,18",
+      "image": "frames/038.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 38
+    },
+    {
+      "action": "UP",
+      "center": [
+        51,
+        32
+      ],
+      "encounter_count": 3,
+      "encounters": [],
+      "goal": "unknown:15,16,17,18",
+      "image": "frames/039.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 39
+    },
+    {
+      "action": "UP",
+      "center": [
+        51,
+        27
+      ],
+      "encounter_count": 3,
+      "encounters": [],
+      "goal": "unknown:15,16,17,18",
+      "image": "frames/040.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 40
+    },
+    {
+      "action": "UP",
+      "center": [
+        51,
+        22
+      ],
+      "encounter_count": 3,
+      "encounters": [],
+      "goal": "unknown:15,16,17,18",
+      "image": "frames/041.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 41
+    },
+    {
+      "action": "UP",
+      "center": [
+        51,
+        17
+      ],
+      "encounter_count": 3,
+      "encounters": [],
+      "goal": "unknown:15,16,17,18",
+      "image": "frames/042.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 42
+    },
+    {
+      "action": "LEFT",
+      "center": [
+        46,
+        17
+      ],
+      "encounter_count": 3,
+      "encounters": [],
+      "goal": "unknown:15,16,17,18",
+      "image": "frames/043.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 43
+    },
+    {
+      "action": "UP",
+      "center": [
+        46,
+        12
+      ],
+      "encounter_count": 3,
+      "encounters": [],
+      "goal": "unknown:15,16,17,18",
+      "image": "frames/044.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 44
+    },
+    {
+      "action": "LEFT",
+      "center": [
+        41,
+        12
+      ],
+      "encounter_count": 3,
+      "encounters": [],
+      "goal": "unknown:15,16,17,18",
+      "image": "frames/045.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 45
+    },
+    {
+      "action": "LEFT",
+      "center": [
+        36,
+        12
+      ],
+      "encounter_count": 3,
+      "encounters": [],
+      "goal": "unknown:15,16,17,18",
+      "image": "frames/046.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 46
+    },
+    {
+      "action": "LEFT",
+      "center": [
+        31,
+        12
+      ],
+      "encounter_count": 3,
+      "encounters": [],
+      "goal": "unknown:15,16,17,18",
+      "image": "frames/047.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 47
+    },
+    {
+      "action": "LEFT",
+      "center": [
+        26,
+        12
+      ],
+      "encounter_count": 3,
+      "encounters": [],
+      "goal": "unknown:15,16,17,18",
+      "image": "frames/048.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 48
+    },
+    {
+      "action": "LEFT",
+      "center": [
+        21,
+        12
+      ],
+      "encounter_count": 3,
+      "encounters": [],
+      "goal": "unknown:15,16,17,18",
+      "image": "frames/049.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 49
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        21,
+        17
+      ],
+      "encounter_count": 3,
+      "encounters": [],
+      "goal": "unknown:15,16,17,18",
+      "image": "frames/050.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 50
+    },
+    {
+      "action": "LEFT",
+      "center": [
+        16,
+        17
+      ],
+      "encounter_count": 4,
+      "encounters": [
+        "unknown:15,16,17,18"
+      ],
+      "goal": "unknown:15,16,17,18",
+      "image": "frames/051.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 51
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        21,
+        17
+      ],
+      "encounter_count": 4,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/052.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 52
+    },
+    {
+      "action": "UP",
+      "center": [
+        21,
+        12
+      ],
+      "encounter_count": 4,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/053.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 53
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        26,
+        12
+      ],
+      "encounter_count": 4,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/054.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 54
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        31,
+        12
+      ],
+      "encounter_count": 4,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/055.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 55
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        36,
+        12
+      ],
+      "encounter_count": 4,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/056.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 56
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        41,
+        12
+      ],
+      "encounter_count": 4,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/057.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 57
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        46,
+        12
+      ],
+      "encounter_count": 4,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/058.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 58
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        46,
+        17
+      ],
+      "encounter_count": 4,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/059.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 59
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        51,
+        17
+      ],
+      "encounter_count": 4,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/060.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 60
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        22
+      ],
+      "encounter_count": 4,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/061.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 61
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        27
+      ],
+      "encounter_count": 4,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/062.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 62
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        32
+      ],
+      "encounter_count": 4,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/063.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 63
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        37
+      ],
+      "encounter_count": 4,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/064.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 64
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        42
+      ],
+      "encounter_count": 4,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/065.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 65
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        47
+      ],
+      "encounter_count": 5,
+      "encounters": [
+        "cross:50,46,52,48"
+      ],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/066.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 66
+    },
+    {
+      "action": "UP",
+      "center": [
+        51,
+        42
+      ],
+      "encounter_count": 5,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/067.png",
+      "level": 1,
+      "phase": "leave known object",
+      "step": 67
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        47
+      ],
+      "encounter_count": 6,
+      "encounters": [
+        "cross:50,46,52,48"
+      ],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/068.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 68
+    },
+    {
+      "action": "UP",
+      "center": [
+        51,
+        42
+      ],
+      "encounter_count": 6,
+      "encounters": [],
+      "goal": "destination:13,39,19,45",
+      "image": "frames/069.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 69
+    },
+    {
+      "action": "UP",
+      "center": [
+        51,
+        37
+      ],
+      "encounter_count": 6,
+      "encounters": [],
+      "goal": "destination:13,39,19,45",
+      "image": "frames/070.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 70
+    },
+    {
+      "action": "UP",
+      "center": [
+        51,
+        32
+      ],
+      "encounter_count": 6,
+      "encounters": [],
+      "goal": "destination:13,39,19,45",
+      "image": "frames/071.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 71
+    },
+    {
+      "action": "UP",
+      "center": [
+        51,
+        27
+      ],
+      "encounter_count": 6,
+      "encounters": [],
+      "goal": "destination:13,39,19,45",
+      "image": "frames/072.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 72
+    },
+    {
+      "action": "UP",
+      "center": [
+        31,
+        42
+      ],
+      "encounter_count": 6,
+      "encounters": [],
+      "goal": "destination:13,39,19,45",
+      "image": "frames/073.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 73
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        36,
+        42
+      ],
+      "encounter_count": 6,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/074.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 74
+    },
+    {
+      "action": "UP",
+      "center": [
+        36,
+        37
+      ],
+      "encounter_count": 6,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/075.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 75
+    },
+    {
+      "action": "UP",
+      "center": [
+        36,
+        32
+      ],
+      "encounter_count": 6,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/076.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 76
+    },
+    {
+      "action": "UP",
+      "center": [
+        36,
+        27
+      ],
+      "encounter_count": 6,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/077.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 77
+    },
+    {
+      "action": "UP",
+      "center": [
+        36,
+        22
+      ],
+      "encounter_count": 6,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/078.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 78
+    },
+    {
+      "action": "UP",
+      "center": [
+        36,
+        17
+      ],
+      "encounter_count": 6,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/079.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 79
+    },
+    {
+      "action": "UP",
+      "center": [
+        36,
+        12
+      ],
+      "encounter_count": 6,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/080.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 80
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        41,
+        12
+      ],
+      "encounter_count": 6,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/081.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 81
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        46,
+        12
+      ],
+      "encounter_count": 6,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/082.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 82
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        46,
+        17
+      ],
+      "encounter_count": 6,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/083.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 83
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        51,
+        17
+      ],
+      "encounter_count": 6,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/084.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 84
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        22
+      ],
+      "encounter_count": 6,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/085.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 85
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        27
+      ],
+      "encounter_count": 6,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/086.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 86
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        32
+      ],
+      "encounter_count": 6,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/087.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 87
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        37
+      ],
+      "encounter_count": 6,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/088.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 88
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        42
+      ],
+      "encounter_count": 6,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/089.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 89
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        47
+      ],
+      "encounter_count": 7,
+      "encounters": [
+        "cross:50,46,52,48"
+      ],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/090.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 90
+    },
+    {
+      "action": "UP",
+      "center": [
+        51,
+        42
+      ],
+      "encounter_count": 7,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/091.png",
+      "level": 1,
+      "phase": "leave known object",
+      "step": 91
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        47
+      ],
+      "encounter_count": 8,
+      "encounters": [
+        "cross:50,46,52,48"
+      ],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/092.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 92
+    },
+    {
+      "action": "UP",
+      "center": [
+        51,
+        42
+      ],
+      "encounter_count": 8,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/093.png",
+      "level": 1,
+      "phase": "leave known object",
+      "step": 93
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        47
+      ],
+      "encounter_count": 9,
+      "encounters": [
+        "cross:50,46,52,48"
+      ],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/094.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 94
+    },
+    {
+      "action": "UP",
+      "center": [
+        31,
+        42
+      ],
+      "encounter_count": 9,
+      "encounters": [],
+      "goal": "destination:13,39,19,45",
+      "image": "frames/095.png",
+      "level": 1,
+      "phase": "seek new object",
+      "step": 95
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        36,
+        42
+      ],
+      "encounter_count": 9,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/096.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 96
+    },
+    {
+      "action": "UP",
+      "center": [
+        36,
+        37
+      ],
+      "encounter_count": 9,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/097.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 97
+    },
+    {
+      "action": "UP",
+      "center": [
+        36,
+        32
+      ],
+      "encounter_count": 9,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/098.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 98
+    },
+    {
+      "action": "UP",
+      "center": [
+        36,
+        27
+      ],
+      "encounter_count": 9,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/099.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 99
+    },
+    {
+      "action": "UP",
+      "center": [
+        36,
+        22
+      ],
+      "encounter_count": 9,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/100.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 100
+    },
+    {
+      "action": "UP",
+      "center": [
+        36,
+        17
+      ],
+      "encounter_count": 9,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/101.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 101
+    },
+    {
+      "action": "UP",
+      "center": [
+        36,
+        12
+      ],
+      "encounter_count": 9,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/102.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 102
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        41,
+        12
+      ],
+      "encounter_count": 9,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/103.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 103
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        46,
+        12
+      ],
+      "encounter_count": 9,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/104.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 104
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        46,
+        17
+      ],
+      "encounter_count": 9,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/105.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 105
+    },
+    {
+      "action": "RIGHT",
+      "center": [
+        51,
+        17
+      ],
+      "encounter_count": 9,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/106.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 106
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        22
+      ],
+      "encounter_count": 9,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/107.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 107
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        27
+      ],
+      "encounter_count": 9,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/108.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 108
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        32
+      ],
+      "encounter_count": 9,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/109.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 109
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        37
+      ],
+      "encounter_count": 9,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/110.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 110
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        42
+      ],
+      "encounter_count": 9,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/111.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 111
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        47
+      ],
+      "encounter_count": 10,
+      "encounters": [
+        "cross:50,46,52,48"
+      ],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/112.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 112
+    },
+    {
+      "action": "UP",
+      "center": [
+        51,
+        42
+      ],
+      "encounter_count": 10,
+      "encounters": [],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/113.png",
+      "level": 1,
+      "phase": "leave known object",
+      "step": 113
+    },
+    {
+      "action": "DOWN",
+      "center": [
+        51,
+        47
+      ],
+      "encounter_count": 11,
+      "encounters": [
+        "cross:50,46,52,48"
+      ],
+      "goal": "cross:50,46,52,48",
+      "image": "frames/114.png",
+      "level": 1,
+      "phase": "revisit required control",
+      "step": 114
+    }
+  ],
+  "summary": {
+    "GPU_jobs": 0,
+    "encounter_count": 11,
+    "encounters": [
+      {
+        "after_move": 6,
+        "index": 0,
+        "kind": "cross",
+        "level": 1,
+        "object_id": "cross:20,31,22,33",
+        "visible_yellow_cells_after": 74,
+        "visible_yellow_cells_before": 74
+      },
+      {
+        "after_move": 30,
+        "index": 1,
+        "kind": "cross",
+        "level": 2,
+        "object_id": "cross:50,46,52,48",
+        "visible_yellow_cells_after": 16,
+        "visible_yellow_cells_before": 20
+      },
+      {
+        "after_move": 33,
+        "index": 2,
+        "kind": "unknown",
+        "level": 2,
+        "object_id": "unknown:40,51,42,53",
+        "visible_yellow_cells_after": 84,
+        "visible_yellow_cells_before": 8
+      },
+      {
+        "after_move": 51,
+        "index": 3,
+        "kind": "unknown",
+        "level": 2,
+        "object_id": "unknown:15,16,17,18",
+        "visible_yellow_cells_after": 84,
+        "visible_yellow_cells_before": 16
+      },
+      {
+        "after_move": 66,
+        "index": 4,
+        "kind": "cross",
+        "level": 2,
+        "object_id": "cross:50,46,52,48",
+        "visible_yellow_cells_after": 24,
+        "visible_yellow_cells_before": 28
+      },
+      {
+        "after_move": 68,
+        "index": 5,
+        "kind": "cross",
+        "level": 2,
+        "object_id": "cross:50,46,52,48",
+        "visible_yellow_cells_after": 16,
+        "visible_yellow_cells_before": 20
+      },
+      {
+        "after_move": 90,
+        "index": 6,
+        "kind": "cross",
+        "level": 2,
+        "object_id": "cross:50,46,52,48",
+        "visible_yellow_cells_after": 16,
+        "visible_yellow_cells_before": 20
+      },
+      {
+        "after_move": 92,
+        "index": 7,
+        "kind": "cross",
+        "level": 2,
+        "object_id": "cross:50,46,52,48",
+        "visible_yellow_cells_after": 8,
+        "visible_yellow_cells_before": 12
+      },
+      {
+        "after_move": 94,
+        "index": 8,
+        "kind": "cross",
+        "level": 2,
+        "object_id": "cross:50,46,52,48",
+        "visible_yellow_cells_after": 0,
+        "visible_yellow_cells_before": 4
+      },
+      {
+        "after_move": 112,
+        "index": 9,
+        "kind": "cross",
+        "level": 2,
+        "object_id": "cross:50,46,52,48",
+        "visible_yellow_cells_after": 16,
+        "visible_yellow_cells_before": 20
+      },
+      {
+        "after_move": 114,
+        "index": 10,
+        "kind": "cross",
+        "level": 2,
+        "object_id": "cross:50,46,52,48",
+        "visible_yellow_cells_after": 8,
+        "visible_yellow_cells_before": 12
+      }
+    ],
+    "independently_replayed": true,
+    "level_results": [
+      {
+        "level": 1,
+        "moves": 13,
+        "passed": true
+      },
+      {
+        "level": 2,
+        "moves": 101,
+        "passed": false
+      },
+      {
+        "level": 3,
+        "moves": 0,
+        "passed": false,
+        "reached": false
+      }
+    ],
+    "levels_gained": 1,
+    "levels_observed": 2,
+    "moves": 114,
+    "neural_generations": 0,
+    "observed_relocations": 2,
+    "qualification": "Deterministic supplied-rule controller. Level 1 passed; level 2 not completed; level 3 not reached.",
+    "reason": "cross_contact_cap",
+    "requested_levels": 3,
+    "source_commit": "caf0b92ce3cfd5c220e887e947a879408dbc5204",
+    "source_events_sha256": "326aac236e864dac18b7379e4369416c71deeeeb8d900994694a0495e31c57ba",
+    "source_result_sha256": "8b9a406943364e24372f644d8439b0aae944a4d9622a7869dbd729add655f8c8",
+    "success": false
+  }
+}

@@ -8,6 +8,8 @@ requires the engine's completed-level counter to increase.
 **Current real-engine result:** level 1 completes; both new level-2 rings are
 encountered and saved, but level 2 does not yet complete. Level 3 was not reached.
 See the [CPU results and remaining limitation](../../reports/ls20_object_memory_v1_CPU_results_2026-10-22.md).
+The [published replay](../../reports/ls20_object_memory_v1_replay/README.md) includes
+GIFs, all 115 board frames, the action log and a downloadable interactive viewer.
 
 | Situation | Behavior |
 | --- | --- |

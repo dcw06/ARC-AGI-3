@@ -11,6 +11,20 @@ observation, object inventory, memory checkpoint, plan, action and outcome.
 | 2 | 101 | 2 | 8 | previously traversed color hypothesis | Stopped without a pass |
 | 3 | — | — | — | — | Not reached |
 
+## Watch the agent
+
+**Level 1: passed in 13 moves.** The final frame shows the next board appearing.
+
+![Level 1 replay](ls20_object_memory_v1_replay/level-1.gif)
+
+**Level 2: both new rings encountered; level not completed.**
+
+![Level 2 replay](ls20_object_memory_v1_replay/level-2.gif)
+
+[Replay downloads, individual frames and saved encounters](ls20_object_memory_v1_replay/README.md)
+include a self-contained interactive HTML viewer and a frame-by-frame action
+log. GitHub displays the GIFs and PNGs; download the HTML to use its controls.
+
 Arrival counts are observed entries, not counts of inferred object functions.
 Completion comes from the engine counter, rather than pattern alignment,
 coordinate arrival or a model's assertion. No action resets the game between
@@ -142,6 +156,9 @@ preserved.
 The [integration guide](../research/ls20_object_memory_v1/README.md) explains the
 memory semantics and assumptions. The
 [CPU runner](../scripts/run_ls20_object_memory_v1.py) accepts a pinned existing
-offline game environment and performs the fresh replay. Raw observations,
-encounter records and the interactive visual replay stay private. CPU content
-validation and lifecycle checks do not authorize a new GPU deployment.
+offline game environment and performs the fresh replay. At the user's request,
+the 115 observed board images, action/encounter metadata and interactive replay
+are now published in the linked replay folder. Full private event journals,
+installation and audit records, approvals and provider-operation records remain
+local. The original retained evidence is unchanged. CPU content validation and
+lifecycle checks do not authorize a new GPU deployment.
