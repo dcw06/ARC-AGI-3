@@ -1,6 +1,36 @@
 # ls20 explicit six-move VLM probe: preparation
 
-**Prepared and CPU-validated; no new model inference or GPU launch.**
+**Latest status: one authorized private GPU attempt submitted. Kaggle reported
+RUNNING at 8:21 p.m. New York time on October 21, 2026. Results pending.**
+
+## Authorized submission
+
+The owner approved the exact final review lock, its scoped private use and one
+fresh attempt. The frozen prompt and limits below are unchanged.
+
+| Launch check | Result |
+| --- | --- |
+| Executed source | `764773ab7e723a3fd256e8328224dccc0a342d68`; all 64 review-source hashes match the pushed commit |
+| Final review lock | `3e8afbcb386f0d17e40f94d658ebcd3d52817b27af34da28b78c94678a77fdab` |
+| Fresh preflight | Account, quota, unused target, dataset versions/inventories, private model access and game wheels passed |
+| Approval and attempt records | Source/use/compute approval, one reservation and one consumed launch claim retained privately |
+| Written launch | Only the declared authority data slot changed |
+| Provider write | Exactly one SaveKernel call and one durable send intent; no retry |
+| Provider response | Version 1; no error or rejected sources |
+| Saved package | Source, authority, privacy, offline settings, pinned image, requested accelerator and attachment names verified |
+| Requested accelerator | One RTX PRO 6000; actual allocation remains for the runtime to check before inference |
+| Prior attempts | Preserved; previous instructed pilot still COMPLETE |
+
+The provider does not echo dataset version labels or the requested session
+timeout in its saved-source response. The outgoing versioned request and fresh
+source preflight were checked; runtime byte verification remains required. The
+3,600-second session timeout is requested, and the worker enforces its separate
+3,300-second limit. Provider overhead may extend total time, as approved.
+
+No watcher or automatic resubmission was started. The attempt is consumed and
+preserved. Raw outputs, private bindings and approval records stay off GitHub.
+Command following and execution agreement remain unmeasured until collection
+and independent replay; this is not a first-level-solving test.
 
 The user requested: **move left three times, then up three times**. The exact
 requested action sequence is `3, 3, 3, 1, 1, 1` (left is action 3; up is action 1).
@@ -21,7 +51,7 @@ grounding, autonomous route planning or first-level solving. The six moves are
 not a complete level solution. Wrong actions are retained rather than corrected
 to make the test appear successful.
 
-## Validation
+## Prelaunch validation
 
 | Check | Result |
 | --- | --- |
@@ -35,7 +65,7 @@ to make the test appear successful.
 | Native prompt maximum | 1708 tokens; below 8,192 |
 | CPU cleanup | Owned groups absent and temporary environment removed |
 | Read-only Kaggle readiness | Account, quota, unused target, source versions/inventories, private access and game wheels pass |
-| Neural generations / GPU jobs / provider writes | Zero / zero / zero |
+| Neural generations / GPU jobs / provider writes during preparation | Zero / zero / zero |
 
 The CPU positive control reproduces the retained human demonstration's first six
 transitions. Scripted replies are only a software check; they do not establish
@@ -64,9 +94,9 @@ in the protocol. The explicitly requested route is intentionally included.
 | Attempts / automatic retries | One / zero |
 | Access and network | Private, account-only; internet and TPU off |
 
-Fresh source/use approval and compute authorization must bind this lock. A fresh
-read-only preflight and single-use reservation/claim follow approval. There is no
-launch authority yet, and all previous attempts remain preserved. The runtime
-must refuse a different accelerator.
+Source/use approval, compute authorization, fresh preflight and the single-use
+reservation/claim were completed for this submission. All previous attempts
+remain preserved. The runtime must refuse a different accelerator. Any new
+attempt requires fresh authorization; no automatic retry is permitted.
 
 [Probe implementation](../research/ls20_six_move_v1/README.md).
