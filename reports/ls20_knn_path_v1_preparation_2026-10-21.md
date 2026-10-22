@@ -1,6 +1,8 @@
 # ls20 k=4 floor-color and cross-navigation pilot
 
-**One authorized private GPU attempt submitted and verified as version 1. Results pending.**
+**The single authorized GPU attempt completed and independently validated. The
+starting-floor estimate matched the exposed pixels, but the VLM did not reach
+the cross within 24 moves.** See the [completed results](ls20_knn_path_v1_attempt1_results_2026-10-21.md).
 
 The proposed test uses kNN to estimate the color beneath the player, asks the
 VLM to judge the path color, then lets it choose actions toward the white cross.
@@ -76,8 +78,8 @@ remain preserved; no automatic retry or watcher was started. [Implementation](..
 | Provider writes | One SaveKernel call and one durable send intent; no retry |
 | Provider response | Version 1; no provider error or rejected source |
 | Saved notebook | Exact source, authority, privacy, offline settings, immutable image, requested shape and attachments verified |
-| Requested GPU | One RTX PRO 6000; actual allocation must pass the runtime guard before inference |
-| Run result | Pending; no VLM color or navigation outcome asserted |
+| GPU | Runtime verified one NVIDIA RTX PRO 6000 Blackwell Server Edition |
+| Run result | Technically complete with cleanup verified; VLM chose color 3 but cross arrival failed at the 24-action cap |
 
 The provider does not echo the dataset version labels or requested session
 timeout in its saved-source response. Versioned outgoing bindings and fresh
