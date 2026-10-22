@@ -1,7 +1,8 @@
 # ls20 explicit six-move VLM probe: preparation
 
-**Latest status: one authorized private GPU attempt submitted. Kaggle reported
-RUNNING at 8:21 p.m. New York time on October 21, 2026. Results pending.**
+**Latest status: the single authorized attempt completed. All six requested
+commands were followed, and independent replay verified all six resulting game
+states. Cleanup was verified.** See the [completed results](ls20_six_move_v1_attempt1_results_2026-10-21.md).
 
 ## Authorized submission
 
@@ -18,7 +19,7 @@ fresh attempt. The frozen prompt and limits below are unchanged.
 | Provider write | Exactly one SaveKernel call and one durable send intent; no retry |
 | Provider response | Version 1; no error or rejected sources |
 | Saved package | Source, authority, privacy, offline settings, pinned image, requested accelerator and attachment names verified |
-| Requested accelerator | One RTX PRO 6000; actual allocation remains for the runtime to check before inference |
+| Accelerator | Requested one RTX PRO 6000; runtime verified one NVIDIA RTX PRO 6000 Blackwell Server Edition before inference |
 | Prior attempts | Preserved; previous instructed pilot still COMPLETE |
 
 The provider does not echo dataset version labels or the requested session
@@ -29,8 +30,8 @@ source preflight were checked; runtime byte verification remains required. The
 
 No watcher or automatic resubmission was started. The attempt is consumed and
 preserved. Raw outputs, private bindings and approval records stay off GitHub.
-Command following and execution agreement remain unmeasured until collection
-and independent replay; this is not a first-level-solving test.
+Collection and independent replay are complete: command following and execution
+agreement both passed. This is not a first-level-solving test.
 
 The user requested: **move left three times, then up three times**. The exact
 requested action sequence is `3, 3, 3, 1, 1, 1` (left is action 3; up is action 1).
