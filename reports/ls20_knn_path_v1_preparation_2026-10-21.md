@@ -1,6 +1,6 @@
 # ls20 k=4 floor-color and cross-navigation pilot
 
-**Prepared and CPU-validated; no new GPU run or VLM generations.**
+**One authorized private GPU attempt submitted and verified as version 1. Results pending.**
 
 The proposed test uses kNN to estimate the color beneath the player, asks the
 VLM to judge the path color, then lets it choose actions toward the white cross.
@@ -59,5 +59,29 @@ including reset, one local scorecard. Canary max16 new tokens; other replies
 max256. Zero online calls/submissions; private account-only, internet/TPU off,
 no automatic retries. Provider overhead may extend total beyond one hour.
 
-No fresh approval, reservation, claim or GPU launch exists. Earlier attempts
-remain consumed and preserved. [Implementation](../research/ls20_knn_path_v1/README.md).
+Lock-bound source/use and compute approval, fresh preflight, and a single-use
+reservation/claim were completed. The claim is consumed. All earlier attempts
+remain preserved; no automatic retry or watcher was started. [Implementation](../research/ls20_knn_path_v1/README.md).
+
+
+## Authorized submission
+
+| Check | Result |
+| --- | --- |
+| Executed source | `0176ffc851b4f54fd986031efa49a1d3ca9642cb`; all 65 review-source hashes match the published commit |
+| Approved private review lock | `e603c754197474550ecbb47e40dc7f59c2b5d0907a1a49fcbdd912e02fd48328` |
+| Owner approval | Exact response retained privately, bound to source, use and compute scope |
+| Fresh preflight | Account, quota, unused target, source versions/inventories, private model access and game wheels pass |
+| Written notebook | Only the declared authority data slot changed |
+| Provider writes | One SaveKernel call and one durable send intent; no retry |
+| Provider response | Version 1; no provider error or rejected source |
+| Saved notebook | Exact source, authority, privacy, offline settings, immutable image, requested shape and attachments verified |
+| Requested GPU | One RTX PRO 6000; actual allocation must pass the runtime guard before inference |
+| Run result | Pending; no VLM color or navigation outcome asserted |
+
+The provider does not echo the dataset version labels or requested session
+timeout in its saved-source response. Versioned outgoing bindings and fresh
+source inventories were checked. Runtime wheel/model checks still apply.
+The 3,600-second timeout is requested and the worker enforces 3,300 seconds;
+provider overhead may extend total time, as approved. This attempt is consumed
+and preserved, even if it fails. No further attempt is authorized.
