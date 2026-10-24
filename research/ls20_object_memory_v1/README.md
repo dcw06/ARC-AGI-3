@@ -11,6 +11,10 @@ See the [CPU results and remaining limitation](../../reports/ls20_object_memory_
 The [published replay](../../reports/ls20_object_memory_v1_replay/README.md) includes
 GIFs, all 115 board frames, the action log and a downloadable interactive viewer.
 
+The [unchanged-agent transfer check on ka59](../../reports/ls20_transfer_ka59_v1_CPU_results_2026-10-24.md)
+stopped before the first move because the ls20 recognizers do not support its
+layout. The same environment reproduced the 13-move ls20 level-1 pass.
+
 | Situation | Behavior |
 | --- | --- |
 | A new board appears | Recognize its player, panels, cross and additional visible marks; clear old routes and blocked edges |
