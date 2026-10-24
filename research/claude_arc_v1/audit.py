@@ -24,9 +24,12 @@ def check_observation(value):
 def audit(folder):
     root = Path(folder)
     summary = strict_json((root / 'summary.json').read_bytes())
+    if summary.get('report_revision') != 2:
+        raise ValueError('report revision 2 required for coverage and final-state checks')
     previous, sequence, acknowledged, initial, current = '0' * 64, 0, {}, {}, {}
     pending, card, closed, calls, responses = None, None, False, 0, 0
     config = recorded_summary = None
+    attempted, selected, last_dispatch = set(), None, {}
     for line in (root / 'events.jsonl').read_text(encoding='utf-8').splitlines():
         row = strict_json(line)
         actual = row.pop('sha256')
@@ -36,10 +39,21 @@ def audit(folder):
             raise ValueError('event-chain corruption')
         previous = actual
         kind, game = row['kind'], row.get('game_id')
+        if pending is not None and kind in ('make_entered', 'model_entered'):
+            raise ValueError('continued after unresolved dispatch')
         if kind == 'configuration':
             if config is not None:
                 raise ValueError('multiple configurations')
             config = row['config']
+        elif kind == 'inventory':
+            if selected is not None or len(set(row['selected'])) != len(row['selected']):
+                raise ValueError('duplicate inventory or selected games')
+            selected = row['selected']
+        elif kind == 'make_entered':
+            if selected is None or game not in selected or game in attempted:
+                raise ValueError('unselected or duplicate game initialization attempt')
+            attempted.add(game)
+            last_dispatch[game] = 'not_attempted'
         elif kind == 'summary':
             if recorded_summary is not None:
                 raise ValueError('multiple summary events')
@@ -49,12 +63,14 @@ def audit(folder):
                 raise ValueError('multiple scorecards')
             card = row['card_id']
         elif kind == 'initial_observation':
-            if game in current:
+            if game not in attempted or game in current:
                 raise ValueError('duplicate game initialization')
             check_observation(row['observation'])
             current[game] = row['observation']
             initial[game] = row['observation']['levels_completed']
         elif kind == 'model_entered':
+            if game not in current:
+                raise ValueError('model call without an initialized game')
             calls += 1
         elif kind == 'model_returned':
             responses += 1
@@ -72,6 +88,12 @@ def audit(folder):
             elif data:
                 raise ValueError('arguments on a non-coordinate action')
             pending = game, action
+            last_dispatch[game] = 'outcome_unknown'
+        elif kind == 'dispatch_not_sent':
+            if pending is None or pending[0] != game:
+                raise ValueError('pre-dispatch rejection without a pending dispatch')
+            pending = None
+            last_dispatch[game] = 'not_sent'
         elif kind == 'transition':
             check_observation(row['before'])
             check_observation(row['after'])
@@ -93,6 +115,7 @@ def audit(folder):
                     raise ValueError('prediction score mismatch')
             current[game], pending = row['after'], None
             acknowledged[game] = acknowledged.get(game, 0) + 1
+            last_dispatch[game] = 'acknowledged'
         elif kind == 'scorecard_close_acknowledged':
             closed = True
     if config is None or recorded_summary is None:
@@ -113,16 +136,34 @@ def audit(folder):
         seen.add(game)
         if row['actions_acknowledged'] != acknowledged.get(game, 0):
             raise ValueError('summary action mismatch')
+        uncertain = int(pending is not None and pending[0] == game)
+        if type(row['actions_uncertain']) is not int or row['actions_uncertain'] != uncertain:
+            raise ValueError('summary uncertain-action mismatch')
         if row['actions_acknowledged'] + row['actions_uncertain'] > config['max_actions_per_game']:
             raise ValueError('action cap exceeded')
         if row['levels_completed'] is not None and row['levels_completed'] != current[game]['levels_completed'] - initial[game]:
             raise ValueError('summary completion mismatch')
+        expected_state = current[game]['state'] if game in current else None
+        if row.get('final_state') != expected_state:
+            raise ValueError('summary final-state mismatch')
+        if row.get('last_dispatch_status') != last_dispatch.get(game):
+            raise ValueError('summary last-dispatch status mismatch')
+        if row['stop_reason'] in ('win', 'game_over') and row['stop_reason'] != (expected_state or '').lower():
+            raise ValueError('terminal stop reason contradicts final state')
+        if row['stop_reason'] == 'action_cap' and expected_state in ('WIN', 'GAME_OVER'):
+            raise ValueError('terminal final state mislabeled as action_cap')
+    if seen != attempted:
+        raise ValueError('attempted-game coverage mismatch')
+    if selected is not None and (summary['selected_games'] != selected
+            or summary['games_not_started'] != [g for g in selected if g not in attempted]):
+        raise ValueError('selected/unstarted game accounting mismatch')
     if card != summary['scorecard_id']:
         raise ValueError('scorecard binding mismatch')
     if summary['full_lifecycle_complete'] and (summary['problems'] or not closed or pending is not None):
         raise ValueError('successful receipt contradicts evidence')
     return {'record_integrity_verified': True, 'events': sequence, 'model_requests_entered': calls,
             'model_responses_recorded': responses, 'actions_acknowledged': sum(acknowledged.values()),
+            'actions_uncertain': int(pending is not None), 'games_attempted': len(attempted),
             'levels_recorded': sum(r['levels_completed'] or 0 for r in summary['games']),
             'engine_replay_verified': False, 'provider_billing_verified': False}
 

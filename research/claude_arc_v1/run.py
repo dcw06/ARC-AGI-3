@@ -4,10 +4,22 @@ import json
 import os
 from pathlib import Path
 import time
+from contextlib import contextmanager
 
-from agent.framework_adapter import OutcomeUnknown
-from .backends import BudgetExceeded
+from agent.framework_adapter import PreDispatchFailure
 from .policy import Policy, observation_value
+
+
+@contextmanager
+def _commit_acknowledgement():
+    """Keep a returned observation's event and counters coherent across real POSIX interrupts."""
+    import signal
+    previous = signal.pthread_sigmask(signal.SIG_BLOCK, {signal.SIGINT, signal.SIGTERM}) if hasattr(signal, 'pthread_sigmask') else None
+    try:
+        yield
+    finally:
+        if previous is not None:
+            signal.pthread_sigmask(signal.SIG_SETMASK, previous)
 
 
 class Evidence:
@@ -68,14 +80,20 @@ def evaluate(config, backend, adapter, evidence, *, now=time.monotonic, started_
             policy = Policy(config)  # deliberately fresh for each independent game
             row = {'game_id': game, 'actions_acknowledged': 0, 'actions_uncertain': 0,
                    'levels_completed': None, 'stop_reason': 'action_cap', 'same_action_unchanged_final_repeats': 0,
-                   'prediction_scored': 0, 'prediction_correct': 0, 'prediction_abstained_or_unobservable': 0}
+                   'prediction_scored': 0, 'prediction_correct': 0, 'prediction_abstained_or_unobservable': 0,
+                   'final_state': None, 'last_dispatch_status': 'not_attempted'}
+            # Register the attempted game before any operation that can be interrupted.
+            # The same row is updated in place, never appended only on the success path.
+            rows.append(row)
             client = None
             previous_action = None
+            dispatch_pending = False
             try:
                 evidence.write('make_entered', game_id=game)
                 client = adapter.bootstrap(game)
                 initial = client.observation.levels_completed
                 row['levels_completed'] = 0
+                row['final_state'] = client.observation.state.name
                 evidence.write('initial_observation', game_id=game, observation=observation_value(client.observation))
                 for index in range(config.max_actions_per_game):
                     if client.observation.state.name in ('WIN', 'GAME_OVER'):
@@ -94,41 +112,55 @@ def evaluate(config, backend, adapter, evidence, *, now=time.monotonic, started_
                     decision, answer = policy.parse(result.content, before)
                     if remaining() <= 0:
                         raise TimeoutError('no action after study cutoff')
+                    dispatch_pending = True
                     evidence.write('dispatch_entered', game_id=game, action_index=index,
                                    action={'action_id': decision.action_id, 'action_data': dict(decision.action_data)})
                     try:
                         after = adapter.dispatch(client, decision)
-                    except OutcomeUnknown:
-                        row['actions_uncertain'] += 1
+                    except PreDispatchFailure:
+                        # Proven pre-transport rejection is not an uncertain executed input.
+                        dispatch_pending = False
+                        row['last_dispatch_status'] = 'not_sent'
+                        evidence.write('dispatch_not_sent', game_id=game, action_index=index)
                         raise
-                    row['actions_acknowledged'] += 1
                     transition = policy.observe(before, decision, after, answer)
-                    row['levels_completed'] = after.levels_completed - initial
-                    if previous_action == transition['action'] and transition['observed']['final_frame_changed'] is False:
-                        row['same_action_unchanged_final_repeats'] += 1
-                    previous_action = transition['action']
-                    for check in transition['prediction_checks'].values():
-                        if check['correct'] is None:
-                            row['prediction_abstained_or_unobservable'] += 1
-                        else:
-                            row['prediction_scored'] += 1
-                            row['prediction_correct'] += check['correct']
-                    evidence.write('transition', game_id=game, **transition)
-                row['levels_completed'] = client.observation.levels_completed - initial
-                if row['levels_completed'] < 0:
-                    raise ValueError('level counter decreased')
-            except Exception as exc:
+                    with _commit_acknowledgement():
+                        evidence.write('transition', game_id=game, **transition)
+                        row['actions_acknowledged'] += 1
+                        row['last_dispatch_status'] = 'acknowledged'
+                        row['levels_completed'] = after.levels_completed - initial
+                        row['final_state'] = after.state.name
+                        if previous_action == transition['action'] and transition['observed']['final_frame_changed'] is False:
+                            row['same_action_unchanged_final_repeats'] += 1
+                        previous_action = transition['action']
+                        for check in transition['prediction_checks'].values():
+                            if check['correct'] is None:
+                                row['prediction_abstained_or_unobservable'] += 1
+                            else:
+                                row['prediction_scored'] += 1
+                                row['prediction_correct'] += check['correct']
+                        dispatch_pending = False
+                    if row['levels_completed'] < 0:
+                        raise ValueError('level counter decreased')
+                    # A terminal result on the final permitted action still takes precedence over action_cap.
+                    if row['final_state'] in ('WIN', 'GAME_OVER'):
+                        row['stop_reason'] = row['final_state'].lower()
+                        break
+            except BaseException as exc:
+                if dispatch_pending:
+                    row['actions_uncertain'] += 1
+                    row['last_dispatch_status'] = 'outcome_unknown'
+                    # final_state and levels_completed remain the last acknowledged observation;
+                    # an adapter mutating its client before interruption is not a returned observation.
                 row['stop_reason'] = type(exc).__name__
-                evidence.write('game_failed', game_id=game, error_type=type(exc).__name__,
-                               backend_record=backend.last_record)
-                # Unknown model billing, invalid output or uncertain game execution stops the entire attempt.
                 problems.append(game + ': ' + type(exc).__name__)
-                rows.append(row)
+                evidence.write('game_failed', game_id=game, error_type=type(exc).__name__,
+                               dispatch_unresolved=dispatch_pending, backend_record=backend.last_record)
+                # Unknown model billing, invalid output or uncertain game execution stops the entire attempt.
                 break
             finally:
                 if client is not None:
                     adapter.finalize_client(client)
-            rows.append(row)
     except BaseException as exc:
         problems.append('controller: ' + type(exc).__name__)
     finally:
@@ -148,7 +180,7 @@ def evaluate(config, backend, adapter, evidence, *, now=time.monotonic, started_
                     evidence.write('scorecard_close_acknowledged', result=close_result)
                 except BaseException as exc:
                     problems.append('close_result_log: ' + type(exc).__name__)
-    summary = {'schema': 'claude_arc_v1', 'mode': config.mode, 'stage': config.stage, 'backend': config.backend,
+    summary = {'schema': 'claude_arc_v1', 'report_revision': 2, 'mode': config.mode, 'stage': config.stage, 'backend': config.backend,
         'model': config.model, 'exposure': config.exposure, 'games': rows, 'problems': problems,
         'scorecard_id': card, 'scorecard_url': 'https://arcprize.org/scorecards/' + card if card else None,
         'official_scorecard': close_result, 'budget': backend.budget.report(), 'elapsed_seconds': now() - start,

@@ -124,6 +124,21 @@ unknown answers are allowed. Per-game memory starts empty; claims are cleared
 on a level increase to avoid automatically carrying layout-specific coordinates.
 Automatic selective cross-level rule transfer remains future work.
 
+**History-size risk (CPU measurement, no Claude token count).** With six
+transitions of synthetic 64x64 one-digit grids and one frame per observation,
+the rendered request contains 113,859 characters. With three frames per
+observation it contains 330,231. Two-digit grids are larger. These are character
+and UTF-8 byte measurements, not token counts and not proof that the 32,768-token
+input cap is sufficient or exceeded. The existing preflight refuses an over-cap
+request; it does not shorten history. Before a live history-enabled condition,
+measure exact backend counts on representative frames under separate authorized
+access, or explicitly review a smaller history limit / revised budget. Do not
+silently change selection or token caps during an attempt. Reproduce locally:
+
+```sh
+.venv/bin/python -m research.claude_arc_v1.history_probe
+```
+
 World-model checking here is a small declarative prediction checker, **not** an
 executable learned simulator. Planning is model-proposed bounded text, not a
 verified search planner. Generated Python is never executed. These additions
@@ -211,6 +226,14 @@ terms and your own sharing scope before publishing even sanitized material.
 
 The audit checks the event hash chain, observations, dispatch legality, continuity,
 derived changes/predictions, action/level counts, caps and summary consistency.
+Report revision 2 additionally checks every initialization attempt has a game
+row, unresolved dispatches count as uncertain, and final state / terminal stop
+reasons agree with the last acknowledged observation. An interrupted game is not
+listed as unstarted. `final_state` means the last acknowledged state, not an
+inferred remote state after uncertain execution. A win or GAME_OVER on the last
+allowed action is still terminal, rather than `action_cap`. The new auditor
+requires revision 2; preserve revision-1 artifacts and use their original
+evaluator if reviewing them, rather than silently rewriting historical evidence.
 It is a **record audit**, not an independent replay of a remote engine or a
 provider invoice. Hashes are tamper evidence only relative to a retained trusted
 copy/digest; they do not authenticate arbitrary rewritten histories.
