@@ -1,0 +1,42 @@
+{
+  "schema": "claude_arc_v1_cpu_checks",
+  "date": "2026-10-23",
+  "checkout_base": "47329b9",
+  "scope": "uncommitted additive local implementation; existing Python environment, not a fresh-clone receipt",
+  "python": "3.12.13",
+  "platform": "macOS arm64",
+  "command": "MPLBACKEND=Agg python -m unittest tests.test_claude_arc_v1 tests.test_phase1 tests.test_phase4_v12_action_contract tests.test_phase4_v13_action_contract",
+  "tests_run": 82,
+  "new_tests": 27,
+  "existing_regression_tests": 55,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "elapsed_seconds": 3.440,
+  "plan_command": "python -m research.claude_arc_v1.cli",
+  "plan_result": "plan_only_no_network",
+  "whitespace_check": "git diff --check passed",
+  "paid_model_calls": 0,
+  "arc_api_calls": 0,
+  "scorecards_created": 0,
+  "gpu_runs": 0,
+  "source_hashes": {
+    "research/claude_arc_v1/__init__.py": "863f2ef511a725aa2b944111951d617ef230168733385502a872b72f85aab601",
+    "research/claude_arc_v1/arc.py": "7d5564975f0834df920b6b3b473e38c32a05ecb9d7f73bcce8babbc4c7c1533d",
+    "research/claude_arc_v1/audit.py": "f8d22dbea7e35ffc2befe2544a12a57a1855a9b04b2773dba2a9a23f0c2fa514",
+    "research/claude_arc_v1/backends.py": "34ae247b6d8b2e5b373ec77d87088d9232a8a019b375cbce856b0e7100cca1a8",
+    "research/claude_arc_v1/cli.py": "15550acaafafe34fa37fe3cf86cfdd079e4c08c98549b3247485180d6b01bd1a",
+    "research/claude_arc_v1/config.py": "cc1484dc27f1a9d0660f1cf5f6d67063e92cb63ea005dec44ab207cc87249dca",
+    "research/claude_arc_v1/policy.py": "6705f97c4b5795f6aa9073790cb8e50c5adf559507d3d959fad36e0f73a70cd8",
+    "research/claude_arc_v1/run.py": "631669203fc68f03a85bb06eb406d184676b9c35d7c866c9c4338d29e783c7b0",
+    "research/claude_arc_v1/transport.py": "70aa250846c41be2e1d61b82a85cda74cf76445dfedcc0a902c3c4adfaf52e41",
+    "tests/test_claude_arc_v1.py": "cfd77521f97b2e8ee9b32a9cc21741d4684d498c3926a557d0227cf8ee8fb80d"
+  },
+  "limitations": [
+    "External HTTP transports and game operations were scripted stand-ins; only owned-worker timeout tests used real subprocesses.",
+    "API model availability is documented but account-specific access and live wire compatibility are not tested.",
+    "No model performance, engine replay, leaderboard result or provider billing guarantee is established.",
+    "World-model checks are declarative observable predicates, not a learned executable simulator.",
+    "Previously tested games remain exposed development data; no new holdout has been claimed."
+  ]
+}
