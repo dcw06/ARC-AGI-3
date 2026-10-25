@@ -1,0 +1,624 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Mac M1 evidence snapshot (structural; load verifies reconstruction)",
+  "type": "object",
+  "properties": {
+    "version": {
+      "const": "ls20_discovery_mac_m1_v1"
+    },
+    "episode_id": {
+      "type": "string"
+    },
+    "initial": {
+      "type": "object",
+      "properties": {
+        "frames": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 15
+              },
+              "minItems": 1
+            },
+            "minItems": 1
+          }
+        },
+        "state": {
+          "type": "string"
+        },
+        "levels_completed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "legal_actions": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7
+          }
+        },
+        "full_reset": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "frames",
+        "state",
+        "levels_completed",
+        "legal_actions",
+        "full_reset"
+      ],
+      "additionalProperties": false
+    },
+    "transitions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "episode_id": {
+            "type": "string"
+          },
+          "segment": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "action": {
+            "type": "object",
+            "properties": {
+              "action_id": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 7
+              },
+              "action_data": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "action_id",
+              "action_data"
+            ],
+            "additionalProperties": false
+          },
+          "outcome": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "const": "acknowledged"
+                  },
+                  "post": {
+                    "type": "object",
+                    "properties": {
+                      "frames": {
+                        "type": "array",
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "type": "array",
+                            "items": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 15
+                            },
+                            "minItems": 1
+                          },
+                          "minItems": 1
+                        }
+                      },
+                      "state": {
+                        "type": "string"
+                      },
+                      "levels_completed": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "legal_actions": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 7
+                        }
+                      },
+                      "full_reset": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "frames",
+                      "state",
+                      "levels_completed",
+                      "legal_actions",
+                      "full_reset"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "status",
+                  "post"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "const": "dispatch_failed"
+                  },
+                  "error": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "status",
+                  "error"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "const": "outcome_unknown"
+                  },
+                  "reason": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "status",
+                  "reason"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "elapsed_seconds": {
+            "type": "number",
+            "minimum": 0
+          },
+          "before_observation_id": {
+            "type": "string"
+          },
+          "before_sha256": {
+            "type": "string"
+          },
+          "after_sha256": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "effect": {
+            "type": "object"
+          },
+          "after_observation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "episode_id",
+          "segment",
+          "action",
+          "outcome",
+          "elapsed_seconds",
+          "before_observation_id",
+          "before_sha256",
+          "after_sha256",
+          "effect",
+          "after_observation_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "const": "raw_observation"
+          },
+          "segment": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "transition_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "grid": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 15
+              },
+              "minItems": 1
+            },
+            "minItems": 1
+          },
+          "sha256": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "segment",
+          "transition_id",
+          "grid",
+          "sha256"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "scenes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "observation_id": {
+            "type": "string"
+          },
+          "regions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "observation_id": {
+                  "type": "string"
+                },
+                "color": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 15
+                },
+                "cells": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "minItems": 2,
+                    "maxItems": 2
+                  }
+                },
+                "bbox": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "minItems": 4,
+                  "maxItems": 4
+                },
+                "shape": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "minItems": 2,
+                    "maxItems": 2
+                  }
+                },
+                "crop": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 15
+                    },
+                    "minItems": 1
+                  },
+                  "minItems": 1
+                },
+                "kind": {
+                  "const": "computed_region_proposal"
+                }
+              },
+              "required": [
+                "id",
+                "observation_id",
+                "color",
+                "cells",
+                "bbox",
+                "shape",
+                "crop",
+                "kind"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "relations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "const": "boundary_adjacent"
+                },
+                "regions": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 2,
+                  "maxItems": 2
+                }
+              },
+              "required": [
+                "kind",
+                "regions"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "observation_id",
+          "regions",
+          "relations"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "identity_candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "before": {
+            "type": "string"
+          },
+          "after": {
+            "type": "string"
+          },
+          "same_shape": {
+            "type": "boolean"
+          },
+          "overlap": {
+            "type": "boolean"
+          },
+          "translation": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "status": {
+            "const": "unresolved"
+          },
+          "alternatives": {
+            "const": [
+              "same_entity",
+              "different_entities"
+            ]
+          }
+        },
+        "required": [
+          "before",
+          "after",
+          "same_shape",
+          "overlap",
+          "translation",
+          "status",
+          "alternatives"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "kind": {
+                "const": "computed_change"
+              },
+              "transition_id": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "before": {
+                "type": "string"
+              },
+              "after": {
+                "type": "string"
+              },
+              "changes": {
+                "anyOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "minItems": 4,
+                      "maxItems": 4
+                    }
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "dimensions_changed": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "transition_id",
+              "before",
+              "after",
+              "changes",
+              "dimensions_changed"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "kind": {
+                "const": "context_dependent_outcome"
+              },
+              "transition_id": {
+                "type": "string"
+              },
+              "conflicting_transition_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "id",
+              "kind",
+              "transition_id",
+              "conflicting_transition_ids"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "hypotheses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "const": "role_hypothesis"
+          },
+          "role": {
+            "const": "possible_controlled_entity"
+          },
+          "proposal_id": {
+            "type": "string"
+          },
+          "evidence_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "status": {
+            "const": "tentative"
+          },
+          "alternatives": {
+            "const": [
+              "autonomous_change",
+              "identity_mismatch"
+            ]
+          },
+          "confidence_kind": {
+            "const": "uncalibrated_heuristic"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "role",
+          "proposal_id",
+          "evidence_ids",
+          "status",
+          "alternatives",
+          "confidence_kind"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "suspended": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "version",
+    "episode_id",
+    "initial",
+    "transitions",
+    "observations",
+    "scenes",
+    "identity_candidates",
+    "events",
+    "hypotheses",
+    "suspended"
+  ],
+  "additionalProperties": false
+}
