@@ -1,0 +1,29 @@
+{
+  "version": "ls20_windows_w1_trace_v1",
+  "m1_producer_commit": "c920f5d69ceb50239325738f9a188bb055ebdebd",
+  "memory_kind": "pinned_mac_m1",
+  "matched_fixed_actions": true,
+  "conditions": {
+    "immediate": {
+      "attempts": 10,
+      "scored": 8,
+      "singleton_forecasts": 4,
+      "correct_singleton_forecasts": 2,
+      "incorrect_singleton_forecasts": 2,
+      "disagreements": 0
+    },
+    "competing": {
+      "attempts": 10,
+      "scored": 8,
+      "singleton_forecasts": 3,
+      "correct_singleton_forecasts": 2,
+      "incorrect_singleton_forecasts": 1,
+      "disagreements": 1
+    }
+  },
+  "model_calls": 0,
+  "gpu_jobs": 0,
+  "real_game_actions": 0,
+  "trace_sha256": "055428c61168c57e163b65b2f1d2a0045c6ac8ec70acf4f1ecb7206ec6195ef3",
+  "interpretation": "Constructed diagnostics only; no gameplay, causal identification, held-out evaluation, or statistical advantage claim."
+}

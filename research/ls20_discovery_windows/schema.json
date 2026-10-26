@@ -1,0 +1,381 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:arc-agi-3:windows-w1:1",
+  "title": "Windows W1 checkpoint: prediction or W2/M2 handoff",
+  "description": "Observed appearance hypotheses with explicit unknown alternatives; raw evidence bindings and semantic consistency require M1View/replay_step. Not a winning-condition or executable-world-model schema.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/prediction"
+    },
+    {
+      "$ref": "#/$defs/handoff"
+    }
+  ],
+  "$defs": {
+    "action": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "action_id": {
+              "const": 6
+            },
+            "action_data": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 63
+                },
+                "y": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 63
+                }
+              },
+              "required": [
+                "x",
+                "y"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "action_id",
+            "action_data"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "action_id": {
+              "enum": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                7
+              ]
+            },
+            "action_data": {
+              "type": "object",
+              "properties": {},
+              "required": [],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "action_id",
+            "action_data"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "label": {
+      "enum": [
+        "no_visible_change",
+        "visible_change",
+        "transient_change",
+        "dimensions_changed"
+      ]
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "episode_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "segment": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "next_step": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "before_observation_id": {
+          "type": "string",
+          "pattern": "^o[0-9]+$"
+        },
+        "before_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "before_frame_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "legal_actions": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7
+          },
+          "uniqueItems": true
+        },
+        "suspended": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "episode_id",
+        "segment",
+        "next_step",
+        "before_observation_id",
+        "before_sha256",
+        "before_frame_sha256",
+        "legal_actions",
+        "suspended"
+      ],
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "episode_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "segment": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "kind": {
+          "const": "transition"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^t[0-9]+$"
+        }
+      },
+      "required": [
+        "episode_id",
+        "segment",
+        "kind",
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "hypothesis": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^wh[0-9]+$"
+        },
+        "family": {
+          "const": "observational_effect"
+        },
+        "scope": {
+          "type": "object",
+          "properties": {
+            "segment": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "action": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/action"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "state": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "segment",
+            "action",
+            "state"
+          ],
+          "additionalProperties": false
+        },
+        "predicted_label": {
+          "$ref": "#/$defs/label"
+        },
+        "status": {
+          "enum": [
+            "tentative",
+            "supported",
+            "contradicted"
+          ]
+        },
+        "confidence_kind": {
+          "const": "uncalibrated_heuristic"
+        },
+        "supporting_evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "minItems": 1
+        },
+        "counterexamples": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "family",
+        "scope",
+        "predicted_label",
+        "status",
+        "confidence_kind",
+        "supporting_evidence",
+        "counterexamples"
+      ],
+      "additionalProperties": false
+    },
+    "prediction": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": "ls20_windows_w1_v1"
+        },
+        "m1_producer_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "context": {
+          "$ref": "#/$defs/context"
+        },
+        "unknown_alternative": {
+          "const": true
+        },
+        "objective_hypotheses": {
+          "const": []
+        },
+        "candidate_targets": {
+          "const": []
+        },
+        "mode": {
+          "enum": [
+            "competing",
+            "immediate"
+          ]
+        },
+        "snapshot_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "action": {
+          "$ref": "#/$defs/action"
+        },
+        "candidate_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^wh[0-9]+$"
+          },
+          "uniqueItems": true,
+          "maxItems": 4
+        },
+        "omitted_candidate_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "predicted_labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/label"
+          },
+          "uniqueItems": true,
+          "maxItems": 4
+        },
+        "status": {
+          "enum": [
+            "no_candidates",
+            "candidate_agreement",
+            "candidate_disagreement"
+          ]
+        },
+        "confidence_kind": {
+          "const": "uncalibrated_heuristic"
+        },
+        "prediction_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "version",
+        "m1_producer_commit",
+        "context",
+        "unknown_alternative",
+        "objective_hypotheses",
+        "candidate_targets",
+        "mode",
+        "snapshot_sha256",
+        "action",
+        "candidate_ids",
+        "omitted_candidate_count",
+        "predicted_labels",
+        "status",
+        "confidence_kind",
+        "prediction_id"
+      ],
+      "additionalProperties": false
+    },
+    "handoff": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": "ls20_windows_w1_v1"
+        },
+        "m1_producer_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "context": {
+          "$ref": "#/$defs/context"
+        },
+        "unknown_alternative": {
+          "const": true
+        },
+        "objective_hypotheses": {
+          "const": []
+        },
+        "candidate_targets": {
+          "const": []
+        },
+        "hypotheses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/hypothesis"
+          }
+        }
+      },
+      "required": [
+        "version",
+        "m1_producer_commit",
+        "context",
+        "unknown_alternative",
+        "objective_hypotheses",
+        "candidate_targets",
+        "hypotheses"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

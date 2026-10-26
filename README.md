@@ -3,6 +3,11 @@
 This repository implements the transaction-safe ARC-AGI-3 agent and experiment
 program described by `docs/ARC-AGI-3_Project_Plan_8.md`.
 
+Windows rule-discovery checkpoint: [W1 module and Mac interface](research/ls20_discovery_windows/README.md)
+and [recorded CPU results](reports/ls20_windows_w1_v1/README.md). This branch is
+based on the team's frozen ls20 research baseline; the new checkpoint uses no
+model or game engine and makes no gameplay improvement claim.
+
 [View the six level-1 development boards](https://dcw06.github.io/ARC-AGI-3/)
 used in our visual perception tests, with enlargement, downloads and hover coordinates.
 The [gallery source and image manifest](docs/development-gallery/README.md) are retained here.

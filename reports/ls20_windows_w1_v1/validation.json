@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-25",
+  "timezone": "America/Los_Angeles",
+  "python": "3.12.10",
+  "platform": "Windows",
+  "source_base_commit": "1ad910bcd3a541279c4a6f224cce15368bec74aa",
+  "suites": {
+    "windows_w1": {
+      "passed": 36,
+      "skipped": 0
+    },
+    "frozen_portable": {
+      "passed": 102,
+      "skipped": 0
+    },
+    "mac_original": {
+      "passed": 26,
+      "skipped": 0
+    },
+    "mac_fixed": {
+      "passed": 31,
+      "skipped": 0
+    }
+  },
+  "integration": {
+    "fixed": {
+      "producer_commit": "f4bf522e96b1642bed8772c29f153bfe44f98bd5",
+      "replayed_attempts": 20,
+      "m1_payload_schema_checks": 40,
+      "mac_memory_restorations": 6,
+      "runtime_source_hashes": "matched"
+    },
+    "original": {
+      "producer_commit": "c920f5d69ceb50239325738f9a188bb055ebdebd",
+      "replayed_attempts": 20,
+      "m1_payload_schema_checks": 40,
+      "mac_memory_restorations": 6,
+      "runtime_source_hashes": "matched"
+    }
+  },
+  "archived_cohort_attempts": 40,
+  "total_development_demo_attempts": 100,
+  "unarchived_development_attempts": 60,
+  "repeat_interpretation": "development/verification reruns, not independent trials",
+  "test_only_packages": {
+    "attrs": "26.1.0",
+    "jsonschema": "4.26.0",
+    "jsonschema-specifications": "2025.9.1",
+    "referencing": "0.37.0",
+    "rpds-py": "2026.9.1",
+    "typing_extensions": "4.16.0"
+  },
+  "model_calls": 0,
+  "gpu_jobs": 0,
+  "real_game_actions": 0
+}
