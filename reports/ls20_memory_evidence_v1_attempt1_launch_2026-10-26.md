@@ -1,5 +1,9 @@
 # ls20 evidence-memory pilot: attempt 1 submitted
 
+Subsequent status: the attempt completed and passed independent validation; level 1
+was not completed. See the [results report](ls20_memory_evidence_v1_attempt1_results_2026-10-26.md).
+The following records the status observed at submission.
+
 The owner approved review lock `e4c14554…` for one attempt. One private submission
 created version 1; the provider status read after submission was **RUNNING**.
 Results and technical completion have not yet been evaluated. This is a launch
