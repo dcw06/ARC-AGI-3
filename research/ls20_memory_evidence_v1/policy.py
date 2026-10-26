@@ -16,8 +16,12 @@ NOTE = ('Deterministic evidence memory over observed frames only. Regions are sa
         'components; x and y are inclusive native column and row ranges; colour IDs map to the RGB values '
         'in rendered_palette, as drawn in the images. A moved region is a tentative '
         'match between consecutive frames in which both copies contain changed cells; it is not a verified '
-        'object, role or cause. Displacement counts are per moved region, so one action can add several. '
-        'Changes are not evidence of progress.')
+        'object, role or cause. Each moved region lists its position after the move and its displacement '
+        'dx, dy in native cells. changed_cells and any_change count every changed cell, including interface '
+        'cells such as a budget bar, so they can be non-zero when nothing moved; region_moved counts moves in '
+        'which some region moved. displacements lists [dx, dy, count], counted per moved region, so one action '
+        'can add several. recent_steps_without_moved_region is the number of latest consecutive moves in which '
+        'no region moved. Changes are not evidence of progress.')
 RECENT = 6
 
 __all__ = ['make_request', 'parse', 'evidence']
