@@ -1,0 +1,35 @@
+name: Windows W1 portable CPU checks
+
+on:
+  push:
+    branches: [teammate/windows-rule-discovery]
+  pull_request:
+    paths:
+      - '.github/workflows/windows-w1.yml'
+      - '.gitattributes'
+      - 'research/ls20_discovery_windows/**'
+      - 'research/action_effect_v1/records.py'
+      - 'scripts/demo_ls20_discovery_windows_w1.py'
+      - 'tests/*ls20*windows*'
+      - 'reports/ls20_windows_w1_v1/**'
+
+permissions:
+  contents: read
+
+jobs:
+  w1:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test-only JSON Schema validator
+        run: python -m pip install -r research/ls20_discovery_windows/requirements-test.txt
+      - name: Check W1 contracts and replay both pinned Mac traces
+        run: python -m unittest tests.test_ls20_discovery_windows_w1 tests.test_ls20_discovery_windows_schema tests.test_ls20_discovery_windows_replay -v
