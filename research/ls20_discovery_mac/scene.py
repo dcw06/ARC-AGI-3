@@ -45,24 +45,40 @@ def extract_scene(grid, observation_id):
 def identity_candidates(previous_scenes, current):
     """Keep all compatible predecessors; never equate a proposal ID with a true object.
 
-    Historical matches permit reappearance after occlusion. Overlap permits splits,
-    merges and partial masks. This is a permissive heuristic, not data association.
+    Every proposal is compared with the immediately preceding scene. A proposal with
+    no compatible region there (an appearance, or a reappearance after occlusion) is
+    compared with progressively older scenes and linked to the most recent one that
+    has a compatible region. Links to older copies of a continuously visible region
+    are implied by the chain of consecutive links, so growth stays linear in history.
+    Overlap permits splits, merges and partial masks. This is a permissive heuristic,
+    not data association.
     """
+    links, pending = [], list(current['regions'])
+    for scene in reversed(previous_scenes):
+        if not pending:
+            break
+        found = _compatible(scene, pending)
+        links.extend(found)
+        matched = {link['after'] for link in found}
+        pending = [region for region in pending if region['id'] not in matched]
+    return links
+
+
+def _compatible(scene, regions):
     links = []
-    for scene in previous_scenes:
-        for old in scene['regions']:
-            old_cells = {tuple(p) for p in old['cells']}
-            for new in current['regions']:
-                if old['color'] != new['color']:
-                    continue
-                overlap = bool(old_cells.intersection(map(tuple, new['cells'])))
-                same_shape = old['shape'] == new['shape']
-                if not (overlap or same_shape):
-                    continue
-                links.append({'before': old['id'], 'after': new['id'],
-                              'same_shape': same_shape, 'overlap': overlap,
-                              'translation': [new['bbox'][i]-old['bbox'][i] for i in (0, 1)]
-                              if same_shape else None,
-                              'status': 'unresolved',
-                              'alternatives': ['same_entity', 'different_entities']})
+    for old in scene['regions']:
+        old_cells = {tuple(p) for p in old['cells']}
+        for new in regions:
+            if old['color'] != new['color']:
+                continue
+            overlap = bool(old_cells.intersection(map(tuple, new['cells'])))
+            same_shape = old['shape'] == new['shape']
+            if not (overlap or same_shape):
+                continue
+            links.append({'before': old['id'], 'after': new['id'],
+                          'same_shape': same_shape, 'overlap': overlap,
+                          'translation': [new['bbox'][i]-old['bbox'][i] for i in (0, 1)]
+                          if same_shape else None,
+                          'status': 'unresolved',
+                          'alternatives': ['same_entity', 'different_entities']})
     return links

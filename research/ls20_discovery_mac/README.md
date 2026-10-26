@@ -83,7 +83,9 @@ always retain the alternative that the regions are different entities. Level/res
 boundaries do not reuse geometry. Different-sized frames are not compared cellwise.
 
 A translated candidate after an action generates only a tentative control-role
-hypothesis linked to its change event. Autonomous motion and identity mismatch
+hypothesis linked to its change event, and only when both the earlier and the later
+region contain changed cells. Identical static marks and newly appearing copies
+therefore produce no hint. Autonomous motion and identity mismatch
 remain explicit alternatives. Even background motion can generate such a candidate;
 there is no promotion to a confirmed role or causation claim in this milestone.
 W1 should test these suggestions rather than treat them as discovered mechanics.
@@ -108,9 +110,11 @@ This is the smallest M1 evidence checkpoint, not completion of all M1 requiremen
 - Boundary adjacency is geometric evidence, not a verified encounter. Failed-edge
   inference, terrain layers, role promotion/retraction, and contact-effect inference
   need additional evidence and a shared W1 interface.
-- Persistent memory is unbounded and identity candidates compare against all prior
-  same-segment scenes. Storage and matching can grow quadratically with history;
-  this version is for short CPU fixtures, not a long live run.
+- Identity candidates compare each proposal with the previous scene, and search
+  older scenes only for proposals unmatched there, stopping at the most recent
+  compatible scene. Matching therefore grows linearly with history. Persistent
+  memory is still unbounded: every frame keeps its raw grid and full region masks
+  (about 140 KB per frame on real ls20 boards).
 - Hidden-mode tests prove old evidence remains accessible; the evaluator supplies
   the cue-to-action rule. They do not demonstrate learning or a policy advantage.
 - No W1 prospective prediction comparison, engine integration, game completion,

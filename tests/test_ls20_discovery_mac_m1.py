@@ -157,6 +157,45 @@ class MemoryTests(unittest.TestCase):
         self.assertEqual(m.snapshot()['events'][0]['changes'], [])
         self.assertEqual(m.snapshot()['hypotheses'], [])
 
+    def test_identical_static_marks_give_no_control_hint(self):
+        m = EvidenceMemory('e', obs([[2, 0, 2]]))
+        step(m, [[2, 0, 2]])
+        self.assertEqual(m.snapshot()['events'][0]['changes'], [])
+        self.assertEqual(m.snapshot()['hypotheses'], [])
+
+    def test_only_the_moved_copy_receives_a_control_hint(self):
+        # A static mark at column 0 and an identical mark moving from column 2 to 4.
+        m = EvidenceMemory('e', obs([[2, 0, 2, 0, 0]]))
+        step(m, [[2, 0, 0, 0, 2]])
+        hints = m.snapshot()['hypotheses']
+        self.assertEqual([h['proposal_id'] for h in hints], ['o1:r2'])
+        link = next(x for x in m.snapshot()['identity_candidates']
+                    if x['before'] == 'o0:r2' and x['after'] == 'o1:r2')
+        self.assertEqual(link['translation'], [0, 2])
+
+    def test_newly_appearing_copy_is_not_a_moved_entity(self):
+        m = EvidenceMemory('e', obs([[2, 0, 0]]))
+        step(m, [[2, 0, 2]])
+        self.assertTrue(any(x['before'] == 'o0:r0' and x['after'] == 'o1:r2'
+                            for x in m.snapshot()['identity_candidates']))
+        self.assertEqual(m.snapshot()['hypotheses'], [])
+
+    def test_continuously_visible_region_links_only_to_previous_frame(self):
+        m = EvidenceMemory('e', obs([[2]]))
+        for _ in range(5):
+            step(m, [[2]])
+        links = m.snapshot()['identity_candidates']
+        self.assertEqual([(x['before'], x['after']) for x in links],
+                         [(f'o{i}:r0', f'o{i+1}:r0') for i in range(5)])
+
+    def test_reappearance_after_long_occlusion_links_to_last_sighting(self):
+        m = EvidenceMemory('e', obs([[2, 0, 0]]))
+        for _ in range(3):
+            step(m, [[0, 0, 0]])
+        step(m, [[0, 0, 2]])
+        links = [x for x in m.snapshot()['identity_candidates'] if x['after'] == 'o4:r1']
+        self.assertEqual([(x['before'], x['translation']) for x in links], [('o0:r0', [0, 2])])
+
     def test_failed_dispatch_retained_but_not_noop(self):
         m = EvidenceMemory('e', obs([[0]]))
         t = m.append(action(), dict(status='dispatch_failed', error='rejected before delivery'))

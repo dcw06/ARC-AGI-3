@@ -88,9 +88,16 @@ class EvidenceMemory:
                              changes=changes, dimensions_changed=not comparable)
                 self._events.append(event)
                 # Association is not control, causation, or proof of persistent identity.
+                # Both the earlier and later region must contain changed cells, so an
+                # identical static mark or a newly appearing copy is not a moved entity.
+                changed = {(r, c) for r, c, _, _ in changes or ()}
+                old_cells = {r['id']: r['cells'] for r in self._scenes[-1]['regions']}
+                new_cells = {r['id']: r['cells'] for r in scene['regions']}
                 for link in links:
                     if (transition_id is not None and link['before'].startswith(previous['id']+':')
-                            and link['translation'] is not None and any(link['translation'])):
+                            and link['translation'] is not None and any(link['translation'])
+                            and changed.intersection(map(tuple, old_cells[link['before']]))
+                            and changed.intersection(map(tuple, new_cells[link['after']]))):
                         self._hypotheses.append(dict(id=f'h{len(self._hypotheses)}',
                             kind='role_hypothesis', role='possible_controlled_entity',
                             proposal_id=link['after'], evidence_ids=[event['id']],

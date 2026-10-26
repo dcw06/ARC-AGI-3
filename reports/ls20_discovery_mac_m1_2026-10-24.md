@@ -114,3 +114,33 @@ predictions before observation, and compare short history versus persistent
 memory on held-out toy variants. Only then use model failures to choose the next
 M1 refinement and an M2 planning prototype. No rule discovery, ls20 solving or
 cross-game transfer has been established by these tests.
+
+## Review fixes, October 25
+
+A review of `c920f5d` ran the memory on real ls20 boards. The 115 frames of the
+object-memory replay published at `cbed437` are exact `png(grid, cell=7)` renders,
+so `grid_from_png(raw, cell=7)` recovers the real 64x64 grids without the asset
+handoff. Two problems appeared and are fixed on `mac-world-model-fixes-v1`:
+
+- **Control hints were mostly noise.** Any same-colour, same-shape match to the
+  previous frame with a non-zero offset produced a hint, including identical static
+  marks, even after an action that changed nothing. A hint now also requires
+  changed cells in both the earlier and the later region.
+- **Identity matching grew quadratically.** Every proposal was compared with every
+  earlier frame of the level. It is now compared with the previous frame, and only
+  proposals unmatched there search back to their most recent compatible frame, so
+  reappearance after occlusion is still linked. This supersedes the remaining-scope
+  note above about a bounded candidate index.
+
+| Real ls20 run, 114 moves | `c920f5d` | Fixed |
+|---|---:|---:|
+| Control hints / on the player | 1,189 / 113 | 226 / 113 |
+| Identity links | 161,589 | 3,572 |
+| Mean time per move, first / last ten | 0.033 / 0.234 s | 0.024 / 0.038 s |
+| Snapshot / save / load | 45 MB / 7.1 s / 20.1 s | 16 MB / 4.4 s / 8.0 s |
+
+Player positions come from the replay's recorded centres; this is a check of the
+hint filter, not evidence that the memory identifies the player. All 31 tests pass
+on Linux (Python 3.12); four of the five new ones fail on `c920f5d`, and the fifth
+guards reappearance after a three-frame occlusion. CPU only: no model, GPU or game
+action.
