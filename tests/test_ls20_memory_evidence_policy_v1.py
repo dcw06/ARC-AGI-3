@@ -45,6 +45,12 @@ class EvidenceRequest(unittest.TestCase):
             dict(action_id=1, taken=1, any_change=1, region_moved=1, displacements=[[0, -5, 1]]),
             dict(action_id=3, taken=2, any_change=0, region_moved=0, displacements=[])])
 
+    def test_colour_ids_come_with_the_rendered_palette(self):
+        from certification.phase4_multimodal_preflight_v3.images import PALETTE
+        block = evidence(START, HISTORY)
+        self.assertEqual(block['rendered_palette'], {str(i): list(rgb) for i, rgb in enumerate(PALETTE)})
+        self.assertTrue(all(str(r['color']) in block['rendered_palette'] for r in block['current_regions']))
+
     def test_block_is_a_function_of_observed_history_only(self):
         self.assertEqual(make_request(START, MOVED, HISTORY, 'Synthetic rules'),
                          make_request(START, MOVED, json.loads(json.dumps(HISTORY)), 'Synthetic rules'))

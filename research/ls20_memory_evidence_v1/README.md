@@ -15,7 +15,7 @@ concurrent control: one episode cannot attribute a difference to the block.
 | Game | `ls20-9607627b`, seed 0, first level only |
 | Request | The instructed pilot's request, byte for byte, plus one text item inserted third |
 | Evidence block | Rebuilt each step by `research/ls20_discovery_mac` (commit `f4bf522`) from the initial board and observed transitions |
-| Block contents | Current same-colour region proposals, the last six transitions' changed-cell counts and moved regions, per-action tallies, and the current run of moves with no moved region |
+| Block contents | Current same-colour region proposals, the last six transitions' changed-cell counts and moved regions, per-action tallies, the current run of moves with no moved region, and the colour-ID-to-RGB legend used to draw the images |
 | Excluded information | Solved route, object labels or roles, coordinate masks, future observations and replay answers |
 | Success | Engine completed-level counter rises from 0 to at least 1, confirmed by independent replay |
 | Stop | First completed level, game over, 40 moves, invalid answer or deadline |

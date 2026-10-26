@@ -7,12 +7,14 @@ a moved region is a tentative match between consecutive frames.
 """
 from collections import Counter
 import json
+from certification.phase4_multimodal_preflight_v3.images import PALETTE
 from research.ls20_discovery_mac import EvidenceMemory
 from research.ls20_instruction_v1.policy import make_request as instructed_request, parse
 
 LABEL = 'Evidence memory computed from the observed frames (tentative; it can be wrong):'
 NOTE = ('Deterministic evidence memory over observed frames only. Regions are same-colour connected '
-        'components; x and y are inclusive native column and row ranges. A moved region is a tentative '
+        'components; x and y are inclusive native column and row ranges; colour IDs map to the RGB values '
+        'in rendered_palette, as drawn in the images. A moved region is a tentative '
         'match between consecutive frames in which both copies contain changed cells; it is not a verified '
         'object, role or cause. Displacement counts are per moved region, so one action can add several. '
         'Changes are not evidence of progress.')
@@ -69,6 +71,7 @@ def evidence(initial, history):
             break
         streak += 1
     return dict(schema='m1_evidence_memory_v1', note=NOTE, transitions_recorded=len(steps),
+                rendered_palette={str(i): list(rgb) for i, rgb in enumerate(PALETTE)},
                 current_regions=[_box(r) for r in s['scenes'][-1]['regions']],
                 recent_transitions=steps[-RECENT:],
                 action_summary=[dict(action_id=a, taken=v['taken'], any_change=v['any_change'],
