@@ -1,0 +1,167 @@
+{
+  "version": "mac_m1_m2_diagnostic_v1",
+  "training_attempts": 8,
+  "comparison": [
+    {
+      "mode": "reactive",
+      "moves": 4,
+      "success": false,
+      "covered": 4,
+      "correct": 4,
+      "expansions": 0,
+      "verification": {
+        "verified_steps": 4
+      }
+    },
+    {
+      "mode": "prediction_only",
+      "moves": 4,
+      "success": false,
+      "covered": 4,
+      "correct": 4,
+      "expansions": 0,
+      "verification": {
+        "verified_steps": 4
+      }
+    },
+    {
+      "mode": "bounded_planning",
+      "moves": 1,
+      "success": true,
+      "covered": 1,
+      "correct": 1,
+      "expansions": 2,
+      "verification": {
+        "verified_steps": 1
+      }
+    }
+  ],
+  "memory_comparison": [
+    {
+      "view": "current_only",
+      "status": "unknown",
+      "transition_count": 0,
+      "snapshot_bytes": 1019
+    },
+    {
+      "view": "last_two",
+      "status": "unknown",
+      "transition_count": 2,
+      "snapshot_bytes": 6850
+    },
+    {
+      "view": "persistent",
+      "status": "supported_prediction",
+      "transition_count": 8,
+      "snapshot_bytes": 23833
+    }
+  ],
+  "counterexample": {
+    "prediction_sha256": "b0c76898d4e7158ab79582438f830acc095239d3a797f3793081fc75694e1d0e",
+    "outcome_status": "acknowledged",
+    "scored": true,
+    "correct": false,
+    "plan_invalidated": true,
+    "object_scores": [],
+    "next_action": "request_probe"
+  },
+  "revised_plan": {
+    "version": "mac_bounded_plan_v1",
+    "snapshot_sha256": "a4246c9bb47441daa6baf151a9f04441e25a1095f5be84f0c8697a4d8dbe2f48",
+    "objective": {
+      "kind": "supplied_diagnostic_goal",
+      "state_key": "6b0b3c436e79e65221facdca7cc3dcbe1c454136957d8880d4ec2de067bdacc6"
+    },
+    "status": "request_probe",
+    "actions": [],
+    "model_ids": [],
+    "expansions": 2,
+    "horizon": 4,
+    "max_expansions": 100,
+    "execute_prefix_length": 0,
+    "rollout_kind": "imagined_from_observed_edges"
+  },
+  "translation_results": [
+    {
+      "prediction_sha256": "ad0b9f43a76730b4187b95f704791572d82070517cbb5e8a91d2e4931bff4d06",
+      "outcome_status": "acknowledged",
+      "scored": false,
+      "correct": false,
+      "plan_invalidated": false,
+      "object_scores": [],
+      "next_action": "request_probe"
+    },
+    {
+      "prediction_sha256": "3246ad9f73ac9b20b62d95698f22a74fa83272074d99f5c8cece43418a333950",
+      "outcome_status": "acknowledged",
+      "scored": false,
+      "correct": false,
+      "plan_invalidated": false,
+      "object_scores": [],
+      "next_action": "request_probe"
+    },
+    {
+      "prediction_sha256": "5de3a930c88ab982490f30d8ebd713b1d15277738813c7f1f3389c9a6d40469a",
+      "outcome_status": "acknowledged",
+      "scored": false,
+      "correct": false,
+      "plan_invalidated": false,
+      "object_scores": [
+        {
+          "before_region_id": "before:r1",
+          "scored": true,
+          "correct": true
+        }
+      ],
+      "next_action": "request_probe"
+    },
+    {
+      "prediction_sha256": "42ca01e11d48a600baaeb9337c913b3b36e427fa295c3c7791719ed765602b70",
+      "outcome_status": "acknowledged",
+      "scored": false,
+      "correct": false,
+      "plan_invalidated": false,
+      "object_scores": [
+        {
+          "before_region_id": "before:r1",
+          "scored": true,
+          "correct": false
+        }
+      ],
+      "next_action": "request_probe"
+    }
+  ],
+  "contradicted_translation_candidates": 1,
+  "verification": {
+    "training": {
+      "verified_steps": 8
+    },
+    "counterexample": {
+      "verified_steps": 1
+    },
+    "translation": {
+      "verified_steps": 4
+    }
+  },
+  "elapsed_seconds": 0.12662025005556643,
+  "model_calls": 0,
+  "gpu_jobs": 0,
+  "real_game_actions": 0,
+  "assistance": [
+    "scripted training actions",
+    "supplied diagnostic goal",
+    "exact visible-state graph"
+  ],
+  "limitations": "Constructed demonstration, not autonomous exploration, held-out benchmark or game solving.",
+  "total_synthetic_dispatches": 22,
+  "source_sha256": {
+    "research/action_effect_v1/records.py": "a3df922e908bf91f551f677308e1b9778f04a3d85e1a38a228e672c10c7cb586",
+    "research/ls20_discovery_mac/__init__.py": "04be788da3395690b1828a1d41ca6b924ea5460b9ccf55efcdf7bd2247768388",
+    "research/ls20_discovery_mac/memory.py": "eb83502229cfc436326b44a4ac12f308bf9506445c1ffc1c02a50dd7fca555b8",
+    "research/ls20_discovery_mac/models.py": "93ffc2c8acf11589ae58723705004a888631ac86c004f02aa31853c5cbdf3e1b",
+    "research/ls20_discovery_mac/object_effects.py": "ad783e44b2770bc3ec48d0ee4dea3a9372ceaa8e7bb56b2154de22dd8e25e25d",
+    "research/ls20_discovery_mac/prospective.py": "596db87430ab9116f4cd85c08e90030f4b3cd899d36d50f2cc32b6f0afe9ee2c",
+    "research/ls20_discovery_mac/scene.py": "e57d339241cadcd29d1feea1797e90840657054ce52f6490b1f3bd4cd70dadf5",
+    "scripts/demo_ls20_discovery_mac_m2.py": "bb489219c9923096058124fb636ba6e557f298c8cf5a465aa6936a6880c93b3e"
+  }
+}

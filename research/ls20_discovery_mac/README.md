@@ -3,7 +3,9 @@
 First milestone for the Mac assignment in the supplied team plan (pages 7 and 10).
 Built on `1ad910bcd3a541279c4a6f224cce15368bec74aa`, branch
 `teammate/mac-world-model`. This is a CPU evidence library, not a game-playing agent.
-M2 is deliberately not implemented before a useful M1 checkpoint.
+The original delivery below is the first M1 checkpoint. The subsequent
+[M1 object-effects / M2 prototype](M1_M2_CHECKPOINT.md) adds prospective
+predictions, counterexample retirement and bounded planning in separate modules.
 
 ## Run
 

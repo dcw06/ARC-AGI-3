@@ -1,0 +1,311 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Mac M2 prototype outputs; separate from Windows W1 schema",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": "mac_m2_prediction_v1"
+        },
+        "episode_id": {
+          "type": "string"
+        },
+        "snapshot_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "step": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "action": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "action_id": {
+                  "enum": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    7
+                  ]
+                },
+                "action_data": {
+                  "type": "object",
+                  "properties": {},
+                  "required": [],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "action_id",
+                "action_data"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "action_id": {
+                  "const": 6
+                },
+                "action_data": {
+                  "type": "object",
+                  "properties": {
+                    "x": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 63
+                    },
+                    "y": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 63
+                    }
+                  },
+                  "required": [
+                    "x",
+                    "y"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "action_id",
+                "action_data"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "model_id": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "predicted_state": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "supported_prediction",
+            "unknown"
+          ]
+        },
+        "unknown_alternative": {
+          "const": true
+        },
+        "object_predictions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "before_region_id": {
+                "type": "string"
+              },
+              "model_id": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              "displacement": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "identity_conditional": {
+                "const": true
+              }
+            },
+            "required": [
+              "before_region_id",
+              "model_id",
+              "displacement",
+              "identity_conditional"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "version",
+        "episode_id",
+        "snapshot_sha256",
+        "step",
+        "action",
+        "model_id",
+        "predicted_state",
+        "status",
+        "unknown_alternative",
+        "object_predictions"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "version": {
+          "const": "mac_bounded_plan_v1"
+        },
+        "snapshot_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "objective": {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "supplied_diagnostic_goal"
+            },
+            "state_key": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "kind",
+            "state_key"
+          ],
+          "additionalProperties": false
+        },
+        "status": {
+          "enum": [
+            "request_probe",
+            "goal_reached",
+            "plan_found",
+            "budget_exhausted"
+          ]
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "action_id": {
+                    "enum": [
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      7
+                    ]
+                  },
+                  "action_data": {
+                    "type": "object",
+                    "properties": {},
+                    "required": [],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "action_id",
+                  "action_data"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "action_id": {
+                    "const": 6
+                  },
+                  "action_data": {
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 63
+                      },
+                      "y": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 63
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "action_id",
+                  "action_data"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "model_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "expansions": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "horizon": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 32
+        },
+        "max_expansions": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "execute_prefix_length": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "rollout_kind": {
+          "const": "imagined_from_observed_edges"
+        }
+      },
+      "required": [
+        "version",
+        "snapshot_sha256",
+        "objective",
+        "status",
+        "actions",
+        "model_ids",
+        "expansions",
+        "horizon",
+        "max_expansions",
+        "execute_prefix_length",
+        "rollout_kind"
+      ],
+      "additionalProperties": false
+    }
+  ]
+}
