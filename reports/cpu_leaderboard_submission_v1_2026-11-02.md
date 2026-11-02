@@ -2,8 +2,8 @@
 
 Prepared November 2, 2026, following the owner's explicit request for an
 **official leaderboard submission**, rather than a private ls20 demonstration.
-The validated notebook was submitted once for official scoring; its score is
-pending as of the status observation below.
+The validated notebook was submitted once for official scoring. That submission
+ended with Kaggle's generic system error and returned no score.
 
 The competition evaluates unseen games. The memorized public ls20 route does
 not establish a nonzero hidden-game score. This package uses the existing E0
@@ -90,7 +90,8 @@ attempts and the earlier scored submission are preserved.
 | Saved-package check | Source, immutable image, competition attachment, CPU/offline settings and version match the review lock |
 | Validation outcome | COMPLETE, checked at 19:40:47 UTC |
 | Official submission | **57919767**, accepted at 19:41:08 UTC; exact notebook version 1 |
-| Scoring status | **PENDING**, checked at 19:41:35 UTC; no score or error returned yet |
+| Initial scoring status | PENDING at 19:41:35 UTC |
+| Terminal scoring status | **ERROR**, checked at 20:30:00 UTC; no score returned |
 | Writes / retries | One validation save and one scored submission; zero retries |
 
 [Private notebook](https://www.kaggle.com/code/daichongwei06/arc3-cpu-ls20-e0-submission-v1)
@@ -99,5 +100,31 @@ is available to the owner; the submitted version is 1.
 shows the official scoring status for submission 57919767 when signed in.
 
 Validation completion is not an official score. The hidden-game scoring rerun
-is a separate provider job. Today's one scored-submission slot is consumed;
-the operator records its send intent before transport and will not repeat it.
+is a separate provider job. The local single-use submission intent is consumed;
+the operator will not repeat it automatically.
+
+## System-error diagnosis
+
+Kaggle returned: "A system error. Please try resubmitting to resolve the error
+and contact Kaggle Support if it persists."
+
+Read-only checks after the error established:
+
+- The validation notebook remains COMPLETE. Its source, settings and version
+  still match the reviewed package at 20:33:29 UTC.
+- Its retained log confirms 48 tests passed, the validation placeholder was
+  written, and the CPU lifecycle finished with cleanup in 17.4 seconds. These
+  are validation results, not evidence that the scoring worker ran.
+- The scoring API exposes no episodes for submission 57919767. Its submission
+  record gives no scoring-session ID or detailed traceback. The cause is
+  therefore unresolved; the generic message does not establish a code fault
+  or prove that failure happened before execution.
+- Kaggle's submission-limits endpoint reports `numAllowedNow = 1`. The earlier
+  assumption that this failure consumed the daily allowance is corrected:
+  Kaggle currently permits one submission, while the original local attempt
+  remains consumed and preserved.
+
+No source fix, provider write or fresh attempt was made during diagnosis. A
+fresh submission would use the exact existing version and needs a new explicit
+instruction because the accepted attempt allowed no automatic retry. Raw API
+records and logs remain in the private operational workspace.
