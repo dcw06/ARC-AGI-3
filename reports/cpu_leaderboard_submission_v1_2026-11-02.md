@@ -41,6 +41,9 @@ inheritance. The worker's own deadline bounds its code after execution starts.
 
 - 48 Linux tests passed with no failures or skips: 25 competition contracts,
   six packaging/deadline checks and 17 fitted-policy regressions.
+- The final audit corrected a stale test fixture so the late-worker check
+  actually advances its simulated clock. All 48 tests passed again; the
+  deployed runtime was unchanged.
 - Fresh offline installation of the 31 CPU dependencies passed, followed by
   all 48 tests. Local rehearsals caught a pip-less helper interpreter and a
   working-directory import collision before any provider write; both are
@@ -70,9 +73,9 @@ submission file or failed scorecard finalization makes the scored run fail.
 - [Builder](../scripts/build_cpu_competition_v1.py)
 
 Final package review-lock SHA256:
-`66c632afcfc2b12dcc2db7e68c011b012b5e536b23e10ac8ab263a6bc2f706e2`.
+`5a2153e2b7f9f466d7eed0ce51bd32f3142c213aa7467ebc5e45ed98da6026e4`.
 Notebook SHA256:
-`88ebe3ebedfaf79c23fe861c0c67c7b3c57b30846fb0897d55eda57bb6423b92`.
+`f91197a4ac85b88f91058994514bdc14651d32fb364a8ff942d9fd932c73cef9`.
 
 Account tokens, raw provider responses, operation intents and collected private
 outputs stay outside Git in the local operational workspace. Prior research

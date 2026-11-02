@@ -68,7 +68,7 @@ class LifecycleFixture(unittest.TestCase):
                 fixture.commands.append(dict(argv=argv, deadline=deadline, label=label))
                 if fixture.fail_command == index:
                     raise RuntimeError('synthetic installation failure')
-                if 'research.cpu_competition_v1.runtime' in argv and fixture.worker_finish is not None:
+                if label == 'Single-scorecard CPU competition agent' and fixture.worker_finish is not None:
                     fixture.clock = fixture.worker_finish
                 return SimpleNamespace(stdout='synthetic worker output')
 
@@ -120,6 +120,7 @@ class LifecycleFixture(unittest.TestCase):
             self.assertLess(self.clock, self.watch.deadline)
 
         self.invoke(callback)
+        self.assertEqual(self.clock, self.worker_finish)
         self.assertEqual(calls, [True])
         self.assertFalse(self.watch.active)
 
