@@ -3,7 +3,8 @@
 No package installs, model inference, game dispatches or network requests occur.
 The only real timer test interrupts a mocked requests method sleeping locally.
 """
-from contextlib import ExitStack
+from contextlib import ExitStack, redirect_stdout
+import io
 import json
 from pathlib import Path
 import signal
@@ -40,7 +41,7 @@ class LifecycleFixture(unittest.TestCase):
         self.fail_command = None
         self.worker_finish = None
 
-    def invoke(self, callback, *, scored=True):
+    def invoke(self, callback, *, scored=True, diagnostics=None):
         fixture = self
 
         class Watchdog:
@@ -64,6 +65,8 @@ class LifecycleFixture(unittest.TestCase):
 
             def command(self, argv, log, deadline, env, label):
                 fixture.assertTrue(fixture.watch.active)
+                with Path(log).open('ab') as stream:
+                    stream.write(b'synthetic retained diagnostic\n')
                 index = len(fixture.commands)
                 fixture.commands.append(dict(argv=argv, deadline=deadline, label=label))
                 if fixture.fail_command == index:
@@ -79,13 +82,16 @@ class LifecycleFixture(unittest.TestCase):
                 return dict(groups_absent=True, error=None, interrupted=False)
 
         with ExitStack() as stack:
+            # Mock-clock lifecycle receipts are test internals, not run telemetry.
+            stack.enter_context(redirect_stdout(io.StringIO()))
             stack.enter_context(patch.object(live_resources, 'HardDeadline', Watchdog))
             stack.enter_context(patch.object(live_resources, 'Processes', Processes))
             stack.enter_context(patch.object(live_resources, 'environment', return_value={}))
             stack.enter_context(patch.object(supervisor.sys, 'version_info', (3, 12, 0)))
             stack.enter_context(patch.object(supervisor.time, 'monotonic', lambda: self.clock))
             stack.enter_context(patch.object(supervisor.tempfile, 'mkdtemp', return_value=str(self.runtime_temp)))
-            supervisor.entry(self.root, self.wheels, scored=scored, finalize=callback)
+            supervisor.entry(self.root, self.wheels, scored=scored, finalize=callback,
+                             diagnostics=diagnostics)
 
     def test_worker_keeps_cleanup_reserve_and_callback_runs_inside_watchdog(self):
         def callback(completed):
@@ -166,6 +172,29 @@ class LifecycleFixture(unittest.TestCase):
         self.assertEqual(len(self.commands), 1)
         self.assertFalse(self.watch.active)
         self.assertEqual(self.transitions, ['watch-start', 'process-stop', 'watch-close'])
+
+    def test_failure_retains_bounded_log_before_removing_temporary_runtime(self):
+        self.fail_command = 0
+        diagnostics = self.base / 'diagnostics'
+        with self.assertRaisesRegex(RuntimeError, 'installation failure'):
+            self.invoke(lambda completed: self.assertFalse(completed), diagnostics=diagnostics)
+        self.assertFalse(self.runtime_temp.exists())
+        self.assertIn('synthetic retained diagnostic', (diagnostics / 'worker.log').read_text())
+        record = json.loads((diagnostics / 'worker-cleanup.json').read_bytes())
+        self.assertFalse(record['worker_completed'])
+        self.assertEqual(record['failure_type'], 'RuntimeError')
+        self.assertEqual(record['phase'], 'environment_creation')
+        self.assertTrue(record['cleanup']['groups_absent'])
+        self.assertEqual(record['final_lifecycle_verdict'], 'not_certified_by_this_diagnostic')
+
+    def test_prior_diagnostics_are_never_overwritten(self):
+        diagnostics = self.base / 'diagnostics'
+        diagnostics.mkdir()
+        (diagnostics / 'worker.log').write_text('previous attempt')
+        with self.assertRaises(FileExistsError):
+            self.invoke(lambda completed: None, diagnostics=diagnostics)
+        self.assertEqual((diagnostics / 'worker.log').read_text(), 'previous attempt')
+        self.assertEqual(self.commands, [])
 
 
 @unittest.skipUnless(hasattr(signal, 'setitimer'), 'requires POSIX interval timers')

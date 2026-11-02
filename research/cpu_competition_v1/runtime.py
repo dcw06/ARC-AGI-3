@@ -71,8 +71,57 @@ class _AdmissionClosed(Exception):
     pass
 
 
+def wait_for_inventory(adapter, *, deadline, now=time.monotonic, sleep=time.sleep, log=None):
+    """Poll only the safe inventory GET while the internal gateway starts.
+
+    The production adapter's callbacks narrow its absolute HTTP deadline for
+    this phase. No scorecard, bootstrap or action POST is retried here.
+    """
+    bound = min(deadline, now()+600.0)
+    attempts = 0
+    if log is not None:
+        log(dict(phase='gateway_readiness_start', maximum_seconds=max(0, bound-now())))
+    begin = getattr(adapter, 'begin_readiness', None)
+    end = getattr(adapter, 'end_readiness', None)
+    if begin is not None:
+        begin(bound)
+    try:
+        while True:
+            if now() >= bound:
+                raise TimeoutError('gateway readiness deadline')
+            attempts += 1
+            try:
+                games = adapter.list_game_ids()
+            except requests.HTTPError as exc:
+                response = exc.response
+                status = None if response is None else response.status_code
+                if response is not None:
+                    response.close()
+                if status not in (429, 500, 502, 503, 504):
+                    raise
+                error_type = 'HTTPError'
+            except (requests.ConnectionError, requests.Timeout, TimeoutError) as exc:
+                error_type = type(exc).__name__
+            else:
+                if now() >= bound:
+                    raise TimeoutError('gateway inventory arrived after readiness deadline')
+                if log is not None:
+                    log(dict(phase='gateway_ready', GET_attempts=attempts))
+                return games
+            if log is not None:
+                log(dict(phase='gateway_readiness_retry', GET_attempts=attempts,
+                         error_type=error_type))
+            remaining = bound-now()
+            if remaining <= 0:
+                raise TimeoutError('gateway readiness deadline')
+            sleep(min(1.0, remaining))
+    finally:
+        if end is not None:
+            end()
+
+
 def run(adapter, program, *, work_deadline, now=time.monotonic,
-        max_games=110, max_actions=80, gate=None):
+        max_games=110, max_actions=80, gate=None, sleep=time.sleep, log=None):
     """One scorecard and one bootstrap per game; ambiguous work is never retried."""
     if (type(max_games) is not int or not 1 <= max_games <= 110 or
             type(max_actions) is not int or not 1 <= max_actions <= 80):
@@ -84,7 +133,7 @@ def run(adapter, program, *, work_deadline, now=time.monotonic,
         if now() >= work_deadline:
             raise _AdmissionClosed()
     admit()
-    games = adapter.list_game_ids()
+    games = wait_for_inventory(adapter, deadline=work_deadline, now=now, sleep=sleep, log=log)
     if (not isinstance(games, (list, tuple)) or not games or len(games) > max_games or
             any(type(game) is not str or not game.strip() for game in games) or
             len(games) != len(set(games))):
@@ -196,14 +245,22 @@ def main():
         raise ValueError('CPU deadline envelope differs')
     started = time.monotonic()
     work_deadline, final_deadline = started + args.work_seconds, started + args.final_seconds
-    phase = {'cleanup': False}
-    deadline = lambda: final_deadline if phase['cleanup'] else work_deadline
+    phase = {'cleanup': False, 'readiness_deadline': work_deadline}
+    deadline = lambda: final_deadline if phase['cleanup'] else min(work_deadline, phase['readiness_deadline'])
     adapter = RemoteFrameworkAdapter(base_url='http://gateway:8001',
         api_key='test-key-123', competition_mode=True,
         session_factory=lambda: DeadlineSession(deadline))
     adapter.begin_cleanup = lambda: phase.update(cleanup=True)
+    adapter.begin_readiness = lambda bound: phase.update(readiness_deadline=bound)
+    adapter.end_readiness = lambda: phase.update(readiness_deadline=work_deadline)
+    def milestone(value):
+        print(json.dumps(value, sort_keys=True), flush=True)
     try:
-        result = run(adapter, json.loads(args.program.read_bytes()), work_deadline=work_deadline)
+        result = run(adapter, json.loads(args.program.read_bytes()), work_deadline=work_deadline,
+                     log=milestone)
+    except BaseException as exc:
+        milestone(dict(phase='CPU_worker_error', error_type=type(exc).__name__))
+        raise
     finally:
         adapter._master_session.close()
     result['elapsed_seconds'] = time.monotonic() - started

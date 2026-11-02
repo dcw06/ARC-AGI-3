@@ -21,7 +21,8 @@ def build(output, kernel):
     entries=['research/cpu_competition_v1/supervisor.py','research/cpu_competition_v1/runtime.py',
         'research/cpu_competition_v1/wheels.json','research/cpu_competition_v1/requirements.lock',
         'research/ls20_overfit_v1/policy_seed0.json','tests/test_cpu_competition_v1.py',
-        'tests/test_cpu_competition_packaging_v1.py','tests/test_ls20_overfit_v1.py']
+        'tests/test_cpu_competition_packaging_v1.py','tests/test_cpu_gateway_readiness_v1.py',
+        'tests/test_cpu_competition_gateway_v1.py','tests/test_ls20_overfit_v1.py']
     inventory=source_inventory(ROOT,entries)
     payload={name:base64.b64encode((ROOT/name).read_bytes()).decode() for name in inventory}
     code=f'''import base64, hashlib, json, os, pathlib, shutil, sys, tempfile
@@ -64,7 +65,8 @@ try:
                     print('Validation only: no game calls; placeholder is not a leaderboard score.',flush=True)
         finally:
             shutil.rmtree(source)
-    entry(source,available[0],scored=scored,finalize=finish)
+    diagnostics = working/('cpu-scoring-diagnostics' if scored else 'cpu-validation-diagnostics')
+    entry(source,available[0],scored=scored,finalize=finish,diagnostics=diagnostics)
 finally:
     if source.exists():
         shutil.rmtree(source)

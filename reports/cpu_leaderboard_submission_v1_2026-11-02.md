@@ -2,9 +2,9 @@
 
 Prepared November 2, 2026, following the owner's explicit request for an
 **official leaderboard submission**, rather than a private ls20 demonstration.
-The first official submission ended with Kaggle's generic system error and
-returned no score. A separately authorized fresh submission of the unchanged
-version is now pending scoring.
+Both official submissions ended with Kaggle's generic system error and
+returned no score. A corrected successor is being reviewed in the
+[comprehensive preflight report](cpu_leaderboard_preflight_r2_2026-11-02.md).
 
 The competition evaluates unseen games. The memorized public ls20 route does
 not establish a nonzero hidden-game score. This package uses the existing E0
@@ -67,12 +67,14 @@ submission file or failed scorecard finalization makes the scored run fail.
 
 ## Package
 
-- [Private notebook source](../notebooks/cpu-leaderboard-ls20-e0-v1/submission.ipynb)
-- [Metadata](../notebooks/cpu-leaderboard-ls20-e0-v1/kernel-metadata.json)
-- [Review lock](../notebooks/cpu-leaderboard-ls20-e0-v1/review-lock.json)
-- [Competition runtime](../research/cpu_competition_v1/runtime.py)
-- [Offline installer and supervisor](../research/cpu_competition_v1/supervisor.py)
-- [Builder](../scripts/build_cpu_competition_v1.py)
+These links are pinned to the source used by both original submissions:
+
+- [Private notebook source](https://github.com/dcw06/ARC-AGI-3/blob/993397d/notebooks/cpu-leaderboard-ls20-e0-v1/submission.ipynb)
+- [Metadata](https://github.com/dcw06/ARC-AGI-3/blob/993397d/notebooks/cpu-leaderboard-ls20-e0-v1/kernel-metadata.json)
+- [Review lock](https://github.com/dcw06/ARC-AGI-3/blob/993397d/notebooks/cpu-leaderboard-ls20-e0-v1/review-lock.json)
+- [Competition runtime](https://github.com/dcw06/ARC-AGI-3/blob/993397d/research/cpu_competition_v1/runtime.py)
+- [Offline installer and supervisor](https://github.com/dcw06/ARC-AGI-3/blob/993397d/research/cpu_competition_v1/supervisor.py)
+- [Builder](https://github.com/dcw06/ARC-AGI-3/blob/993397d/scripts/build_cpu_competition_v1.py)
 
 Final package review-lock SHA256:
 `5a2153e2b7f9f466d7eed0ce51bd32f3142c213aa7467ebc5e45ed98da6026e4`.
@@ -98,8 +100,7 @@ attempts and the earlier scored submission are preserved.
 [Private notebook](https://www.kaggle.com/code/daichongwei06/arc3-cpu-ls20-e0-submission-v1)
 is available to the owner; the submitted version is 1.
 [Competition submissions](https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3/submissions)
-shows both submissions when signed in. The current submission is **57920889**;
-the original failed submission **57919767** remains preserved.
+shows both failed submissions when signed in. Both remain preserved.
 
 Validation completion is not an official score. The hidden-game scoring rerun
 is a separate provider job. The local single-use submission intent is consumed;
@@ -144,7 +145,8 @@ An independent static review checked the new single-use request guard.
 | --- | --- |
 | Submission | **57920889**, accepted at 20:36:23 UTC, November 2 |
 | Source | Same validated notebook version 1; same review lock `5a2153e2…` |
-| Latest status | **PENDING**, checked at 20:36:53 UTC; no score or error yet |
+| Initial status | PENDING at 20:36:53 UTC |
+| Terminal status | **ERROR**, checked at 21:42:15 UTC; same generic system error, no score |
 | New provider writes | Exactly one scored-submission request; no notebook save or validation rerun |
 | Automatic retries | Zero; its separate send intent is consumed |
 
