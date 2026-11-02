@@ -2,7 +2,8 @@
 
 Prepared November 2, 2026, following the owner's explicit request for an
 **official leaderboard submission**, rather than a private ls20 demonstration.
-Provider submission status will be recorded below after the actual calls.
+The validated notebook was submitted once for official scoring; its score is
+pending as of the status observation below.
 
 The competition evaluates unseen games. The memorized public ls20 route does
 not establish a nonzero hidden-game score. This package uses the existing E0
@@ -83,4 +84,20 @@ attempts and the earlier scored submission are preserved.
 
 ## Provider status
 
-Not uploaded or submitted at the time of this preparation record.
+| Event | Retained observation |
+| --- | --- |
+| Validation save | One Save & Run All at 19:39:14 UTC, November 2; private version 1; no rejected sources |
+| Saved-package check | Source, immutable image, competition attachment, CPU/offline settings and version match the review lock |
+| Validation outcome | COMPLETE, checked at 19:40:47 UTC |
+| Official submission | **57919767**, accepted at 19:41:08 UTC; exact notebook version 1 |
+| Scoring status | **PENDING**, checked at 19:41:35 UTC; no score or error returned yet |
+| Writes / retries | One validation save and one scored submission; zero retries |
+
+[Private notebook](https://www.kaggle.com/code/daichongwei06/arc3-cpu-ls20-e0-submission-v1)
+is available to the owner; the submitted version is 1.
+[Competition submissions](https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3/submissions)
+shows the official scoring status for submission 57919767 when signed in.
+
+Validation completion is not an official score. The hidden-game scoring rerun
+is a separate provider job. Today's one scored-submission slot is consumed;
+the operator records its send intent before transport and will not repeat it.
