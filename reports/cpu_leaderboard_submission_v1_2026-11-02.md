@@ -2,8 +2,9 @@
 
 Prepared November 2, 2026, following the owner's explicit request for an
 **official leaderboard submission**, rather than a private ls20 demonstration.
-Both official submissions ended with Kaggle's generic system error and
-returned no score. A corrected successor is being reviewed in the
+Both original official submissions ended with Kaggle's generic system error
+and returned no score. Corrected version 2 passed its expanded validation and
+was submitted as **57922501**; see the
 [comprehensive preflight report](cpu_leaderboard_preflight_r2_2026-11-02.md).
 
 The competition evaluates unseen games. The memorized public ls20 route does

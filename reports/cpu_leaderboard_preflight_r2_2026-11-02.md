@@ -71,4 +71,21 @@ that a new official job will succeed.
 
 ## Successor execution status
 
-Not uploaded or submitted at the time of this preparation record.
+| Check or event | Retained result |
+| --- | --- |
+| Corrected source commit | `0d6b3f3`, pushed before validation |
+| Private validation save | One Save & Run All, creating version 2; no rejected sources |
+| Provider source review | Exact reviewed source, image, attachments and private CPU/offline settings verified after save and again before scoring |
+| Kaggle validation | COMPLETE, checked at 21:59:57 UTC, November 2 |
+| Validation log audit | All **63 tests passed**; final CPU lifecycle closed; worker log, worker/cleanup diagnostic and validation parquet retained |
+| Startup diagnostic | The missing-`wrapt` sitecustomize message also appeared in this validation; execution continued and all checks above completed |
+| Fresh scoring preflight | Correct account and competition entry; both prior attempts still ERROR; no unexpected submission; provider allowance available; before deadline |
+| Official submission | **57922501**, accepted at 22:00:53 UTC, using exact notebook version 2 |
+| Latest scoring status | **PENDING**, checked at 22:01:22 UTC; no score or error yet |
+| Attempts | One successor validation and one successor scored submission; no automatic retries |
+
+[Monitor official submissions](https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3/submissions)
+or open the
+[private notebook](https://www.kaggle.com/code/daichongwei06/arc3-cpu-ls20-e0-submission-v1).
+Version 1 and both failed official submissions remain untouched. Private
+operation intents, raw provider responses and validation logs stay outside Git.
