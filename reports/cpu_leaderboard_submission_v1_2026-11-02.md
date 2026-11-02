@@ -2,8 +2,9 @@
 
 Prepared November 2, 2026, following the owner's explicit request for an
 **official leaderboard submission**, rather than a private ls20 demonstration.
-The validated notebook was submitted once for official scoring. That submission
-ended with Kaggle's generic system error and returned no score.
+The first official submission ended with Kaggle's generic system error and
+returned no score. A separately authorized fresh submission of the unchanged
+version is now pending scoring.
 
 The competition evaluates unseen games. The memorized public ls20 route does
 not establish a nonzero hidden-game score. This package uses the existing E0
@@ -92,12 +93,13 @@ attempts and the earlier scored submission are preserved.
 | Official submission | **57919767**, accepted at 19:41:08 UTC; exact notebook version 1 |
 | Initial scoring status | PENDING at 19:41:35 UTC |
 | Terminal scoring status | **ERROR**, checked at 20:30:00 UTC; no score returned |
-| Writes / retries | One validation save and one scored submission; zero retries |
+| Initial writes / retries | One validation save and one scored submission; zero automatic retries |
 
 [Private notebook](https://www.kaggle.com/code/daichongwei06/arc3-cpu-ls20-e0-submission-v1)
 is available to the owner; the submitted version is 1.
 [Competition submissions](https://www.kaggle.com/competitions/arc-prize-2026-arc-agi-3/submissions)
-shows the official scoring status for submission 57919767 when signed in.
+shows both submissions when signed in. The current submission is **57920889**;
+the original failed submission **57919767** remains preserved.
 
 Validation completion is not an official score. The hidden-game scoring rerun
 is a separate provider job. The local single-use submission intent is consumed;
@@ -124,7 +126,27 @@ Read-only checks after the error established:
   Kaggle currently permits one submission, while the original local attempt
   remains consumed and preserved.
 
-No source fix, provider write or fresh attempt was made during diagnosis. A
-fresh submission would use the exact existing version and needs a new explicit
-instruction because the accepted attempt allowed no automatic retry. Raw API
-records and logs remain in the private operational workspace.
+No source fix, provider write or fresh attempt was made during diagnosis. The
+owner then explicitly authorized one fresh CPU submission, recorded below.
+Raw API records and logs remain in the private operational workspace.
+
+## Separately authorized fresh submission
+
+The owner's instruction was: "Authorize one fresh CPU submission."
+
+The fresh preflight confirmed the unchanged version-1 source and review lock,
+private CPU/offline settings, immutable image and competition-only attachment.
+It also confirmed the original attempt was ERROR, no other submission had been
+made today, competition entry was valid, and one submission was still allowed.
+An independent static review checked the new single-use request guard.
+
+| Event | Retained observation |
+| --- | --- |
+| Submission | **57920889**, accepted at 20:36:23 UTC, November 2 |
+| Source | Same validated notebook version 1; same review lock `5a2153e2…` |
+| Latest status | **PENDING**, checked at 20:36:53 UTC; no score or error yet |
+| New provider writes | Exactly one scored-submission request; no notebook save or validation rerun |
+| Automatic retries | Zero; its separate send intent is consumed |
+
+Both submission attempts and their independent operation records are retained.
+No additional submission follows automatically if this attempt fails.
