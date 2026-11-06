@@ -6,7 +6,10 @@ from pathlib import Path
 import time
 from contextlib import contextmanager
 
+from agent.action import ActionDecision
 from agent.framework_adapter import PreDispatchFailure
+from .backends import BudgetExceeded
+from .transport import TransportFailure
 from .policy import Policy, observation_value
 
 
@@ -34,6 +37,8 @@ class Evidence:
         self.sequence = 0
 
     def write(self, kind, **value):
+        if {'sequence', 'previous_sha256', 'sha256'} & value.keys():
+            raise ValueError('event payload uses a reserved chain field')
         self.sequence += 1
         body = {'sequence': self.sequence, 'previous_sha256': self.previous, 'kind': kind, **value}
         raw = json.dumps(body, sort_keys=True, separators=(',', ':'), allow_nan=False)
@@ -46,7 +51,8 @@ class Evidence:
         self.stream.close()
 
 
-def evaluate(config, backend, adapter, evidence, *, now=time.monotonic, started_at=None):
+def evaluate(config, backend, adapter, evidence, *, now=time.monotonic, started_at=None, sleep=time.sleep,
+             on_scorecard=None):
     start, rows, problems = now() if started_at is None else started_at, [], []
     card, close_result, selected = None, None, []
     def remaining():
@@ -72,6 +78,12 @@ def evaluate(config, backend, adapter, evidence, *, now=time.monotonic, started_
         evidence.write('scorecard_open_entered')
         card = adapter.open_scorecard(tags=['claude-arc-v1', config.stage, config.mode])
         evidence.write('scorecard_open_acknowledged', card_id=card)
+        if on_scorecard is not None:
+            try:
+                on_scorecard('https://arcprize.org/scorecards/' + card)
+            except Exception:
+                pass  # a display problem must never affect the run
+        games_without_actions = 0
         for game in selected:
             if remaining() <= 0:
                 problems.append('study_deadline')
@@ -88,6 +100,8 @@ def evaluate(config, backend, adapter, evidence, *, now=time.monotonic, started_
             client = None
             previous_action = None
             dispatch_pending = False
+            model_stage = False
+            replied = False
             try:
                 evidence.write('make_entered', game_id=game)
                 client = adapter.bootstrap(game)
@@ -95,21 +109,56 @@ def evaluate(config, backend, adapter, evidence, *, now=time.monotonic, started_
                 row['levels_completed'] = 0
                 row['final_state'] = client.observation.state.name
                 evidence.write('initial_observation', game_id=game, observation=observation_value(client.observation))
+                resets_used = 0
+                if config.resets_per_game:
+                    row['level_resets'] = 0
                 for index in range(config.max_actions_per_game):
-                    if client.observation.state.name in ('WIN', 'GAME_OVER'):
-                        row['stop_reason'] = client.observation.state.name.lower()
+                    state = client.observation.state.name
+                    if state == 'WIN' or (state == 'GAME_OVER' and resets_used >= config.resets_per_game):
+                        row['stop_reason'] = state.lower()
                         break
                     if remaining() <= 0:
                         row['stop_reason'] = 'study_deadline'
                         break
                     before = client.observation
-                    request = policy.request(before)
-                    backend.budget.check()
-                    evidence.write('model_entered', game_id=game, action_index=index, request=request)
-                    result = backend.complete(request)
-                    evidence.write('model_returned', game_id=game, content=result.content,
-                                   metadata=backend.last_record, elapsed_seconds=result.elapsed_seconds)
-                    decision, answer = policy.parse(result.content, before)
+                    if state == 'GAME_OVER':
+                        # Controller-issued level reset: no model call; the model's notes are carried forward.
+                        resets_used += 1
+                        row['level_resets'] = resets_used
+                        decision = ActionDecision(0, {}, source='controller_level_reset')
+                        answer = {'action': {'action_id': 0, 'action_data': {}}, 'hypotheses': list(policy.hypotheses)}
+                    else:
+                        decision, answer = None, None
+                    request = policy.request(before) if decision is None else None
+                    model_stage = decision is None
+                    for attempt in range(1 + config.model_retries_per_action if model_stage else 0):
+                        if attempt and remaining() <= 0:
+                            raise TimeoutError('study deadline during model retry')
+                        backend.budget.check()
+                        evidence.write('model_entered', game_id=game, action_index=index, request=request,
+                                       **({'attempt': attempt} if config.model_retries_per_action else {}))
+                        replied = False
+                        try:
+                            result = backend.complete(request)
+                            evidence.write('model_returned', game_id=game, content=result.content,
+                                           metadata=backend.last_record, elapsed_seconds=result.elapsed_seconds)
+                            replied = True
+                            decision, answer = policy.parse(result.content, before)
+                            break
+                        except Exception as exc:
+                            # No game action has been sent for this request, so another request is safe.
+                            if attempt == config.model_retries_per_action or isinstance(exc, (BudgetExceeded, PermissionError)):
+                                raise
+                            evidence.write('model_failed_retrying', game_id=game, action_index=index, attempt=attempt,
+                                           error_type=type(exc).__name__, error=str(exc)[:500],
+                                           backend_record=backend.last_record)
+                            if isinstance(exc, TransportFailure):
+                                # No reply (CLI error, timeout, network): wait, then resend the same request.
+                                sleep(max(0, min(config.model_retry_backoff_seconds, remaining())))
+                            elif replied:
+                                # A received but rejected reply: tell the model why, so the retry can correct it.
+                                request = policy.request(before, rejection='%s: %s' % (type(exc).__name__, exc))
+                    model_stage = False
                     if remaining() <= 0:
                         raise TimeoutError('no action after study cutoff')
                     dispatch_pending = True
@@ -143,7 +192,9 @@ def evaluate(config, backend, adapter, evidence, *, now=time.monotonic, started_
                     if row['levels_completed'] < 0:
                         raise ValueError('level counter decreased')
                     # A terminal result on the final permitted action still takes precedence over action_cap.
-                    if row['final_state'] in ('WIN', 'GAME_OVER'):
+                    # GAME_OVER continues only when a level reset remains and an action remains to send it.
+                    if row['final_state'] == 'WIN' or (row['final_state'] == 'GAME_OVER' and (
+                            resets_used >= config.resets_per_game or index == config.max_actions_per_game - 1)):
                         row['stop_reason'] = row['final_state'].lower()
                         break
             except BaseException as exc:
@@ -154,13 +205,24 @@ def evaluate(config, backend, adapter, evidence, *, now=time.monotonic, started_
                     # an adapter mutating its client before interruption is not a returned observation.
                 row['stop_reason'] = type(exc).__name__
                 problems.append(game + ': ' + type(exc).__name__)
-                evidence.write('game_failed', game_id=game, error_type=type(exc).__name__,
+                evidence.write('game_failed', game_id=game, error_type=type(exc).__name__, error=str(exc)[:500],
                                dispatch_unresolved=dispatch_pending, backend_record=backend.last_record)
-                # Unknown model billing, invalid output or uncertain game execution stops the entire attempt.
+                # With next_game, only an unusable reply ends just this game. An infrastructure failure
+                # (TransportFailure: usage limit, login, network, CLI) would fail every later game too, so it stops
+                # the attempt instead of initializing and discarding the remaining environments.
+                if (config.on_model_failure == 'next_game' and model_stage and not dispatch_pending
+                        and isinstance(exc, Exception)
+                        and not isinstance(exc, (BudgetExceeded, PermissionError, TimeoutError, TransportFailure))):
+                    games_without_actions = games_without_actions + 1 if row['actions_acknowledged'] == 0 else 0
+                    if games_without_actions < 3:
+                        continue
+                    problems.append('stopped: three consecutive games ended before any action')
+                # Otherwise unknown model billing, invalid output or uncertain game execution stops the entire attempt.
                 break
             finally:
                 if client is not None:
                     adapter.finalize_client(client)
+            games_without_actions = 0  # reached only by a game that ended without failing
     except BaseException as exc:
         problems.append('controller: ' + type(exc).__name__)
     finally:

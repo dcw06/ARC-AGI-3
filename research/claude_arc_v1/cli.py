@@ -13,7 +13,7 @@ import uuid
 from .config import Config
 
 
-def validate_live(config, *, execute, confirm_paid, confirm_online, confirm_competition, environ):
+def validate_live(config, *, execute, confirm_paid, confirm_online, confirm_competition, environ, confirm_subscription=False):
     if not execute:
         return
     if not config.live_enabled or not confirm_online:
@@ -22,6 +22,8 @@ def validate_live(config, *, execute, confirm_paid, confirm_online, confirm_comp
         raise PermissionError('live worker ownership protection requires POSIX; use WSL on Windows')
     if config.backend == 'anthropic' and (not confirm_paid or config.spend_limit_usd <= 0 or not environ.get('ANTHROPIC_API_KEY')):
         raise PermissionError('paid API consent, positive spending cap and ANTHROPIC_API_KEY are required')
+    if config.backend == 'claude_code' and not confirm_subscription:
+        raise PermissionError('the claude_code backend uses your Claude subscription allowance: pass --confirm-subscription-usage')
     if not environ.get('ARC_API_KEY'):
         raise PermissionError('ARC_API_KEY is required; anonymous key acquisition is disabled')
     if config.mode == 'competition' and not confirm_competition:
@@ -37,11 +39,13 @@ def main(argv=None):
     parser.add_argument('--confirm-paid-api', action='store_true')
     parser.add_argument('--confirm-online-arc', action='store_true')
     parser.add_argument('--confirm-competition', action='store_true')
+    parser.add_argument('--confirm-subscription-usage', action='store_true')
     parser.add_argument('--output', type=Path)
     args = parser.parse_args(argv)
     config = Config.load(args.config)
     validate_live(config, execute=args.execute, confirm_paid=args.confirm_paid_api, confirm_online=args.confirm_online_arc,
-                  confirm_competition=args.confirm_competition, environ=os.environ)
+                  confirm_competition=args.confirm_competition, environ=os.environ,
+                  confirm_subscription=args.confirm_subscription_usage)
     if not args.execute:
         print(json.dumps({'status': 'plan_only_no_network', 'config': config.public(),
             'model_http_request_ceiling': config.max_model_calls * 2,
@@ -49,11 +53,15 @@ def main(argv=None):
             'billing_note': 'client reservation is not a provider-enforced billing limit; set provider account limits too'}))
         return 0
     # Import SDK-dependent code only after authorization checks; never load .env implicitly.
-    from .backends import APIBackend, Budget
+    from .backends import APIBackend, Budget, ClaudeCodeBackend
     from .arc import make_adapter
     from .run import Evidence, evaluate
     if importlib.metadata.version('arc-agi') != '0.9.9':
         raise ValueError('this adapter path is pinned to arc-agi 0.9.9; review a migration before upgrading')
+    budget = Budget(config)
+    if config.backend == 'claude_code':
+        # Constructed before any evidence or scorecard: an old CLI or missing login fails here, offline.
+        backend = ClaudeCodeBackend(config, budget)
     output = args.output or Path('.cache/claude_arc_runs') / uuid.uuid4().hex
     root = Path(__file__).resolve().parents[2]
     resolved = output.resolve()
@@ -63,18 +71,24 @@ def main(argv=None):
     started = time.monotonic()
     evidence = Evidence(resolved)
     sources = list((root / 'agent').glob('*.py')) + list(Path(__file__).parent.glob('*.py'))
-    evidence.write('source_bindings', sha256={str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest()
+    evidence.write('source_bindings', files_sha256={str(p.relative_to(root)): hashlib.sha256(p.read_bytes()).hexdigest()
                     for p in sorted(sources)}, config_sha256=hashlib.sha256(Path(args.config).read_bytes()).hexdigest(),
                     packages={p: importlib.metadata.version(p) for p in ('arc-agi', 'arcengine', 'numpy', 'requests')})
-    budget = Budget(config)
     remaining = lambda: config.run_seconds - (time.monotonic() - started)
-    backend = APIBackend(config, budget, timeout=lambda: min(config.request_timeout_seconds, remaining() - config.cleanup_seconds))
+    timeout = lambda: min(config.request_timeout_seconds, remaining() - config.cleanup_seconds)
+    if config.backend == 'claude_code':
+        backend.timeout = timeout
+        evidence.write('backend_binding', backend='claude_code', cli_version='.'.join(map(str, backend.version)),
+                       cli_sha256=hashlib.sha256(Path(backend.executable).resolve().read_bytes()).hexdigest())
+    else:
+        backend = APIBackend(config, budget, timeout=timeout)
     adapter = make_adapter(config, os.environ['ARC_API_KEY'], remaining)
     def interrupted(signum, frame):
         raise KeyboardInterrupt()
     previous = signal.signal(signal.SIGTERM, interrupted)
     try:
-        result = evaluate(config, backend, adapter, evidence, started_at=started)
+        result = evaluate(config, backend, adapter, evidence, started_at=started,
+                          on_scorecard=lambda url: print('Scorecard opened (watch live): ' + url, flush=True))
     finally:
         signal.signal(signal.SIGTERM, previous)
         evidence.close()

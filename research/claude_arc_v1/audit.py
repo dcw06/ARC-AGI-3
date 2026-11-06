@@ -29,7 +29,7 @@ def audit(folder):
     previous, sequence, acknowledged, initial, current = '0' * 64, 0, {}, {}, {}
     pending, card, closed, calls, responses = None, None, False, 0, 0
     config = recorded_summary = None
-    attempted, selected, last_dispatch = set(), None, {}
+    attempted, selected, last_dispatch, resets = set(), None, {}, {}
     for line in (root / 'events.jsonl').read_text(encoding='utf-8').splitlines():
         row = strict_json(line)
         actual = row.pop('sha256')
@@ -78,11 +78,17 @@ def audit(folder):
             if pending is not None:
                 raise ValueError('dispatch after unresolved outcome')
             action = row['action']
-            if (type(action['action_id']) is not int or not 1 <= action['action_id'] <= 7
+            data = action['action_data']
+            if action['action_id'] == 0 and type(action['action_id']) is int:
+                # Controller level reset: only from GAME_OVER, without arguments, within the configured count.
+                resets[game] = resets.get(game, 0) + 1
+                if (current[game]['state'] != 'GAME_OVER' or data
+                        or resets[game] > config.get('resets_per_game', 0)):
+                    raise ValueError('illegal level reset')
+            elif (type(action['action_id']) is not int or not 1 <= action['action_id'] <= 7
                     or action['action_id'] not in current[game]['available_actions']):
                 raise ValueError('illegal dispatched action')
-            data = action['action_data']
-            if action['action_id'] == 6:
+            elif action['action_id'] == 6:
                 if set(data) != {'x', 'y'} or any(type(v) is not int or not 0 <= v <= 63 for v in data.values()):
                     raise ValueError('invalid click')
             elif data:
