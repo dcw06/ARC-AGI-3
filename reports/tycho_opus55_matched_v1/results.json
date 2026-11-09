@@ -240,5 +240,143 @@
     "replay_scorecard_url": "https://arcprize.org/scorecards/ac6e3999-e5e4-4488-b981-9d6d80eff73f",
     "replay_mode": "competition",
     "replay_card_score_note": "card score averages all 25 competition games; 23 unplayed games count as 0"
+  },
+  "bp35_continuation": {
+    "method": "Continued the same bp35 trajectory from Tycho exact checkpoints (journal replay + actor/workspace restore; validated at zero cost). Only budget values changed, recorded in run_spec_override.json: TYCHO_MAX_GAME_ACTIONS 100 -> 0 (official 5x human baseline per-level cutoff applies), then TYCHO_MAX_INFERENCE_COST_PER_GAME 100 -> 115.",
+    "cap100": {
+      "start_action": 100,
+      "stop_reason": "inference_cost_game_limit",
+      "total_actions": 427,
+      "levels_completed": 8,
+      "score": 80.0,
+      "resets": 6,
+      "level_actions": [
+        15,
+        49,
+        34,
+        23,
+        35,
+        68,
+        54,
+        57,
+        92
+      ],
+      "cumulative_cost_usd_list_price": 100.1,
+      "cumulative_usage": {
+        "cache_read": 38636914,
+        "cache_write": 1555058,
+        "tokens_in": 18387768,
+        "tokens_out": 552107
+      },
+      "llm_calls_by_type_in_record": {
+        "animation_summary": 31,
+        "freeform": 591,
+        "level_summary": 11,
+        "builder": 41
+      },
+      "builder_invocations": 1,
+      "run_spec_override": [
+        [
+          "reasoning",
+          "TYCHO_MAX_GAME_ACTIONS",
+          "100",
+          "0"
+        ]
+      ],
+      "official_replay": {
+        "scorecard_id": "6e61d25b-0acf-4800-b2ce-d458b1f2b2b8",
+        "scorecard_url": "https://arcprize.org/scorecards/6e61d25b-0acf-4800-b2ce-d458b1f2b2b8",
+        "guid": "a8d9ab0a-653c-4e47-8f29-d932551cdd4d",
+        "replay_url": "https://arcprize.org/replay/a8d9ab0a-653c-4e47-8f29-d932551cdd4d",
+        "state": "GAME_OVER",
+        "score": 80.0,
+        "actions": 427,
+        "level_actions": [
+          15,
+          49,
+          34,
+          23,
+          35,
+          68,
+          54,
+          57,
+          92
+        ]
+      }
+    },
+    "cap115": {
+      "start_action": 427,
+      "stop_reason": "win",
+      "total_actions": 474,
+      "levels_completed": 9,
+      "score": 100.0,
+      "resets": 6,
+      "level_actions": [
+        15,
+        49,
+        34,
+        23,
+        35,
+        68,
+        54,
+        57,
+        139
+      ],
+      "cumulative_cost_usd_list_price": 107.66,
+      "cumulative_usage": {
+        "cache_read": 44953313,
+        "cache_write": 1938558,
+        "tokens_in": 19450893,
+        "tokens_out": 558762
+      },
+      "llm_calls_by_type_in_record": {
+        "freeform": 55
+      },
+      "builder_invocations": 1,
+      "run_spec_override": [
+        [
+          "reasoning",
+          "TYCHO_MAX_INFERENCE_COST_PER_GAME",
+          "100",
+          "115"
+        ]
+      ],
+      "official_replay": {
+        "scorecard_id": "ce45da24-957f-42a3-b0d0-54c12d81e93e",
+        "scorecard_url": "https://arcprize.org/scorecards/ce45da24-957f-42a3-b0d0-54c12d81e93e",
+        "guid": "b642c1f4-99b6-491f-8e84-813ca4634314",
+        "replay_url": "https://arcprize.org/replay/b642c1f4-99b6-491f-8e84-813ca4634314",
+        "state": "WIN",
+        "score": 100.0,
+        "actions": 474,
+        "level_actions": [
+          15,
+          49,
+          34,
+          23,
+          35,
+          68,
+          54,
+          57,
+          139
+        ]
+      }
+    },
+    "reference_full_solves": {
+      "gpt6_astra_provider_adapter_actions_by_effort": {
+        "max": 430,
+        "xhigh": 479,
+        "high": 488,
+        "medium": 458,
+        "low": 516,
+        "none": 470
+      },
+      "tycho_paper_opus5_orchestrator_xhigh": {
+        "actions": 467,
+        "cost_usd_opus5_list": 302.96
+      },
+      "human_baseline_sum": 651,
+      "claude_opus5_arc_standard_harness_high": "0/9 levels (level 1 cutoff at 105 actions), replay ea232c70-c129-495d-b3e7-da1759333aeb"
+    }
   }
 }

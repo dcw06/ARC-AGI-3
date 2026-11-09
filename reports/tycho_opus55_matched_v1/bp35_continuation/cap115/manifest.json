@@ -1,0 +1,347 @@
+{
+  "approach": "tycho",
+  "arcade_operation_mode": "normal",
+  "backend": "anthropic",
+  "compute_s": 236.0,
+  "context_config": {
+    "cache_rolling_every": 8,
+    "emergency_compaction": true,
+    "emergency_keep_turns": 6,
+    "emergency_recent_actions": 24,
+    "emergency_soft_tokens": 850000,
+    "emergency_tool_results": 4,
+    "evict_each_llm_call": false,
+    "grid_keep": 3,
+    "history": "tail_evict",
+    "image_cap": 4,
+    "image_evict_mult": 2,
+    "image_keep": 3,
+    "prompt_caching": true,
+    "reasoning_keep": 3,
+    "text_keep": 0
+  },
+  "coordinator_git_version": "f68912a-dirty-cac7a5467e3e",
+  "effort": "high",
+  "games": [
+    "bp35"
+  ],
+  "git_version": "f68912a-dirty-cac7a5467e3e",
+  "mean_rhae": 100.0,
+  "mean_rhae_clean": 100.0,
+  "mode": "orchestrator",
+  "model": "claude-opus-5-5",
+  "n_finished": 1,
+  "n_partial": 0,
+  "n_pending": 0,
+  "n_reportable": 1,
+  "n_requested": 1,
+  "parallelism_x": 1.0,
+  "pending_games": [],
+  "per_game": {
+    "bp35": {
+      "completed_level_actions": 474,
+      "inference_budget": {
+        "cost_usd": 107.66226460000001,
+        "level_cost_usd": 24.779375400000006,
+        "max_cost_per_game_usd": 115.0,
+        "max_cost_per_level_usd": 0.0,
+        "model": "claude-opus-5-5",
+        "price_schedule": "public-list-2026-07-13",
+        "stop_reason": null,
+        "usage": {
+          "cache_read": 44953313,
+          "cache_write": 1938558,
+          "tokens_in": 19450893,
+          "tokens_out": 558762
+        }
+      },
+      "levels": 9,
+      "mode": "solved",
+      "rhae": 100.0,
+      "stop_reason": "win",
+      "total_actions": 474,
+      "total_actions_including_unfinished": 474,
+      "unfinished_level_actions": 0,
+      "unfinished_level_index": null,
+      "wall_clock_s": 235.96,
+      "wm_activity": {
+        "builder_fires": 0,
+        "completed_levels": 9,
+        "final_simulation_accuracy": null,
+        "outcome_verified": null,
+        "plan_levels": 0,
+        "steps_with_plan": 0,
+        "wm_correct_levels": 0,
+        "wm_strict_exact_levels": 0
+      }
+    }
+  },
+  "requested_games": [
+    "bp35"
+  ],
+  "run_config": {
+    "by_section": {
+      "context": {
+        "TYCHO_CACHE_ROLLING_EVERY": {
+          "source": "file",
+          "value": "8"
+        },
+        "TYCHO_CONTEXT_EMERGENCY_COMPACTION": {
+          "source": "default",
+          "value": "1"
+        },
+        "TYCHO_CONTEXT_EMERGENCY_KEEP_TURNS": {
+          "source": "default",
+          "value": "6"
+        },
+        "TYCHO_CONTEXT_EMERGENCY_RECENT_ACTIONS": {
+          "source": "default",
+          "value": "24"
+        },
+        "TYCHO_CONTEXT_EMERGENCY_SOFT_TOKENS": {
+          "source": "file",
+          "value": "850000"
+        },
+        "TYCHO_CONTEXT_EMERGENCY_TOOL_RESULTS": {
+          "source": "default",
+          "value": "4"
+        },
+        "TYCHO_EVICT_EACH_LLM_CALL": {
+          "source": "default",
+          "value": "0"
+        },
+        "TYCHO_GRID_KEEP": {
+          "source": "file",
+          "value": "3"
+        },
+        "TYCHO_HISTORY": {
+          "source": "file",
+          "value": "tail_evict"
+        },
+        "TYCHO_IMAGE_CAP": {
+          "source": "file",
+          "value": "4"
+        },
+        "TYCHO_IMAGE_EVICT_MULT": {
+          "source": "file",
+          "value": "2"
+        },
+        "TYCHO_IMAGE_KEEP": {
+          "source": "file",
+          "value": "3"
+        },
+        "TYCHO_PROMPT_CACHING": {
+          "source": "file",
+          "value": "1"
+        },
+        "TYCHO_REASONING_KEEP": {
+          "source": "file",
+          "value": "3"
+        },
+        "TYCHO_TEXT_KEEP": {
+          "source": "default",
+          "value": "0"
+        }
+      },
+      "dev": {
+        "TYCHO_META_REFLECT": {
+          "source": "file",
+          "value": "1"
+        }
+      },
+      "model": {
+        "ANTHROPIC_CACHE_TTL": {
+          "source": "default",
+          "value": ""
+        },
+        "ANTHROPIC_THINKING": {
+          "source": "file",
+          "value": "adaptive"
+        },
+        "LLM_BACKEND": {
+          "source": "resolved",
+          "value": "anthropic"
+        },
+        "LLM_EFFORT": {
+          "source": "file",
+          "value": "high"
+        },
+        "LLM_MODEL": {
+          "source": "resolved",
+          "value": "claude-opus-5-5"
+        },
+        "OPENAI_REASONING_CONTINUITY": {
+          "source": "default",
+          "value": ""
+        },
+        "OPENAI_STATELESS_REASONING": {
+          "source": "default",
+          "value": ""
+        }
+      },
+      "orchestration": {
+        "TYCHO_AGENT_GRAPH": {
+          "source": "default",
+          "value": ""
+        },
+        "TYCHO_BUILDER_MAX_STEPS": {
+          "source": "default",
+          "value": "40"
+        },
+        "TYCHO_EDIT_FUNC": {
+          "source": "default",
+          "value": ""
+        },
+        "TYCHO_MODE": {
+          "source": "file",
+          "value": "orchestrator"
+        },
+        "TYCHO_WM_MIN_COVERAGE": {
+          "source": "default",
+          "value": "0.75"
+        }
+      },
+      "reasoning": {
+        "TYCHO_EFFORT": {
+          "source": "file",
+          "value": "high"
+        },
+        "TYCHO_MAX_GAME_ACTIONS": {
+          "source": "env",
+          "value": "0"
+        },
+        "TYCHO_MAX_INFERENCE_COST_PER_GAME": {
+          "source": "env",
+          "value": "115"
+        },
+        "TYCHO_MAX_INFERENCE_COST_PER_LEVEL": {
+          "source": "default",
+          "value": "0"
+        },
+        "TYCHO_MAX_LLM_CALLS": {
+          "source": "file",
+          "value": "3500"
+        },
+        "TYCHO_MAX_TOKENS": {
+          "source": "file",
+          "value": "24000"
+        },
+        "TYCHO_MAX_TOKENS_RETRY": {
+          "source": "default",
+          "value": "0"
+        },
+        "TYCHO_MAX_TOOL_STEPS": {
+          "source": "file",
+          "value": "40"
+        }
+      },
+      "runtime": {
+        "TYCHO_PER_GAME_WALLCLOCK_BUDGET_SECONDS": {
+          "source": "default",
+          "value": "0"
+        },
+        "TYCHO_SANDBOX_IMAGE": {
+          "source": "default",
+          "value": "tycho-python-sandbox:0.2"
+        },
+        "TYCHO_SANDBOX_RUNTIME": {
+          "source": "env",
+          "value": "docker"
+        },
+        "TYCHO_WALLCLOCK_BUDGET_SECONDS": {
+          "source": "default",
+          "value": "0"
+        }
+      },
+      "vision": {
+        "TYCHO_ANIMATION_EVIDENCE_KEEP_PER_LEVEL": {
+          "source": "default",
+          "value": "50"
+        },
+        "TYCHO_ANIMATION_SUMMARY": {
+          "source": "default",
+          "value": "1"
+        },
+        "TYCHO_ANIMATION_SUMMARY_INCLUDE_GAME_OVER": {
+          "source": "default",
+          "value": "1"
+        },
+        "TYCHO_ANIMATION_SUMMARY_MAX_KEYFRAMES": {
+          "source": "default",
+          "value": "6"
+        },
+        "TYCHO_ANIMATION_SUMMARY_MAX_PER_LEVEL": {
+          "source": "default",
+          "value": "5"
+        },
+        "TYCHO_ANIMATION_SUMMARY_MAX_TOKENS": {
+          "source": "default",
+          "value": "700"
+        },
+        "TYCHO_ANIMATION_SUMMARY_VIDEO": {
+          "source": "default",
+          "value": "1"
+        },
+        "TYCHO_ANIMATION_SUMMARY_VIDEO_FORMAT": {
+          "source": "default",
+          "value": "images"
+        },
+        "TYCHO_GRID_FORMAT": {
+          "source": "default",
+          "value": "spaced_grid8"
+        },
+        "TYCHO_RENDER_SCALE": {
+          "source": "default",
+          "value": ""
+        },
+        "TYCHO_TEXT_GRID": {
+          "source": "file",
+          "value": "full"
+        },
+        "TYCHO_TOOL_FLAVOR": {
+          "source": "default",
+          "value": ""
+        },
+        "TYCHO_VISION": {
+          "source": "file",
+          "value": "1"
+        }
+      }
+    }
+  },
+  "run_spec_fingerprint": "8c1bac9fc1530ec155cb4965c9fb7987d7bde34da6d5ac53c818ee7d0bdcaf78",
+  "seed": 0,
+  "throughput": {
+    "cache_read": 6316399,
+    "cache_write": 383500,
+    "decode_tok_s_aggregate": 27.9,
+    "decode_tok_s_per_stream": 28.2,
+    "length_stops": 0,
+    "max_tokens_out": 0,
+    "mean_call_latency_s": 2.2,
+    "mean_out_tokens_per_call": 121,
+    "model_calls": 55,
+    "peak_prompt_tokens_max": 153249,
+    "peak_prompt_tokens_per_game": {
+      "bp35": 153249
+    },
+    "prefill_decode_ratio": 159.7,
+    "prefix_cache_hit_rate": 0.814,
+    "tokens_in": 1063125,
+    "tokens_out": 6655
+  },
+  "vision": {
+    "lossless_cells": false,
+    "note": "claude/opus or unknown: image resized \u2192 treat as lossy per-cell",
+    "render_scale": 6
+  },
+  "wall_clock_s": 238.7,
+  "wm_plan_coverage": {
+    "completed_levels": 9,
+    "plan_frac": 0.0,
+    "plan_levels": 0,
+    "wm_correct_frac": 0.0,
+    "wm_correct_levels": 0
+  },
+  "workers": 2
+}

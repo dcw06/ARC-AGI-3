@@ -49,6 +49,23 @@ case ${1:-} in
     exec env -i "${RENV[@]}" .venv/bin/python -m tycho.harness.submission_replay replay \
       --trace "$REP/trace.json" --out-dir "$REP" --mode competition --competition \
       --tag tycho --tag opus55-matched-100 ;;
+  continue)
+    # Continue an existing run in place from its exact per-game checkpoints (journal replay, then
+    # actor/workspace restore). Records are moved aside so --resume re-schedules the games.
+    NAME=${2:?run name}; OUT="$BASE/runs/$NAME"
+    [[ -f $OUT/run_spec.json ]] || { echo "no run_spec in $OUT" >&2; exit 2; }
+    mkdir -p "$OUT/superseded"
+    for f in "$OUT"/game_*.json(N); do mv "$f" "$OUT/superseded/"; done
+    exec env -i "${CLEAN[@]}" TYCHO_DIAGNOSTICS_DIR="$BASE/diagnostics/$NAME" ${=EXTRA_ENV:-} \
+      .venv/bin/python -m tycho.harness.run_parallel --approach tycho \
+      --games "${GAMES:-lf52-271a04aa,bp35-0a0ad940}" --out-dir "$OUT" \
+      --config "${CONFIG:-configs/local/opus55_orchestrator_matched.yaml}" \
+      --operation-mode normal --max-workers 2 --resume ${=EXTRA_ARGS:-} ;;
+  extend-spec)
+    # extend-spec <source-run> <new-run> '<games-json>'  (budget env vars via EXTRA_ENV)
+    SRC="$BASE/runs/${2:?source run}"; NEW="$BASE/runs/${3:?new run}"
+    exec env -i "${CLEAN[@]}" ${=EXTRA_ENV:-} .venv/bin/python "${0:A:h}/build_extend_spec.py" \
+      "$SRC/run_spec.json" "$NEW" "${CONFIG:-configs/local/opus55_orchestrator_matched.yaml}" "${4:?games json}" ;;
   probe)
     exec env -i "${CLEAN[@]}" .venv/bin/python "${0:A:h}/binding_probe.py" ;;
   run)

@@ -1,0 +1,100 @@
+{
+  "fingerprint": "ae529b7c725f7183309d90dd784045daead5e6d68454b9dfb3937dce09fa160c",
+  "initial_git_version": "f68912a-dirty-cac7a5467e3e",
+  "operational_config_keys": [
+    "LLM_HTTP_TIMEOUT",
+    "LLM_LOG",
+    "LLM_RETRY_BUDGET_S",
+    "RUN_HARDWARE"
+  ],
+  "policy": {
+    "approach": "tycho",
+    "config": {
+      "context": {
+        "TYCHO_CACHE_ROLLING_EVERY": "8",
+        "TYCHO_CONTEXT_EMERGENCY_COMPACTION": "1",
+        "TYCHO_CONTEXT_EMERGENCY_KEEP_TURNS": "6",
+        "TYCHO_CONTEXT_EMERGENCY_RECENT_ACTIONS": "24",
+        "TYCHO_CONTEXT_EMERGENCY_SOFT_TOKENS": "850000",
+        "TYCHO_CONTEXT_EMERGENCY_TOOL_RESULTS": "4",
+        "TYCHO_EVICT_EACH_LLM_CALL": "0",
+        "TYCHO_GRID_KEEP": "3",
+        "TYCHO_HISTORY": "tail_evict",
+        "TYCHO_IMAGE_CAP": "4",
+        "TYCHO_IMAGE_EVICT_MULT": "2",
+        "TYCHO_IMAGE_KEEP": "3",
+        "TYCHO_PROMPT_CACHING": "1",
+        "TYCHO_REASONING_KEEP": "3",
+        "TYCHO_TEXT_KEEP": "0"
+      },
+      "dev": {
+        "TYCHO_META_REFLECT": "1"
+      },
+      "model": {
+        "ANTHROPIC_CACHE_TTL": "",
+        "ANTHROPIC_THINKING": "adaptive",
+        "LLM_BACKEND": "anthropic",
+        "LLM_EFFORT": "high",
+        "LLM_MODEL": "claude-opus-5-5",
+        "OPENAI_REASONING_CONTINUITY": "",
+        "OPENAI_STATELESS_REASONING": ""
+      },
+      "orchestration": {
+        "TYCHO_AGENT_GRAPH": "",
+        "TYCHO_BUILDER_MAX_STEPS": "40",
+        "TYCHO_EDIT_FUNC": "",
+        "TYCHO_MODE": "orchestrator",
+        "TYCHO_WM_MIN_COVERAGE": "0.75"
+      },
+      "reasoning": {
+        "TYCHO_EFFORT": "high",
+        "TYCHO_MAX_GAME_ACTIONS": "0",
+        "TYCHO_MAX_INFERENCE_COST_PER_GAME": "100",
+        "TYCHO_MAX_INFERENCE_COST_PER_LEVEL": "0",
+        "TYCHO_MAX_LLM_CALLS": "3500",
+        "TYCHO_MAX_TOKENS": "24000",
+        "TYCHO_MAX_TOKENS_RETRY": "0",
+        "TYCHO_MAX_TOOL_STEPS": "40"
+      },
+      "runtime": {
+        "TYCHO_PER_GAME_WALLCLOCK_BUDGET_SECONDS": "0",
+        "TYCHO_SANDBOX_IMAGE": "tycho-python-sandbox:0.2",
+        "TYCHO_SANDBOX_RUNTIME": "docker",
+        "TYCHO_WALLCLOCK_BUDGET_SECONDS": "0"
+      },
+      "vision": {
+        "TYCHO_ANIMATION_EVIDENCE_KEEP_PER_LEVEL": "50",
+        "TYCHO_ANIMATION_SUMMARY": "1",
+        "TYCHO_ANIMATION_SUMMARY_INCLUDE_GAME_OVER": "1",
+        "TYCHO_ANIMATION_SUMMARY_MAX_KEYFRAMES": "6",
+        "TYCHO_ANIMATION_SUMMARY_MAX_PER_LEVEL": "5",
+        "TYCHO_ANIMATION_SUMMARY_MAX_TOKENS": "700",
+        "TYCHO_ANIMATION_SUMMARY_VIDEO": "1",
+        "TYCHO_ANIMATION_SUMMARY_VIDEO_FORMAT": "images",
+        "TYCHO_GRID_FORMAT": "spaced_grid8",
+        "TYCHO_RENDER_SCALE": "",
+        "TYCHO_TEXT_GRID": "full",
+        "TYCHO_TOOL_FLAVOR": "",
+        "TYCHO_VISION": "1"
+      }
+    },
+    "games": {
+      "bp35-0a0ad940": [
+        21,
+        48,
+        44,
+        38,
+        33,
+        87,
+        86,
+        131,
+        163
+      ]
+    },
+    "operation_mode": "normal",
+    "seed": 0,
+    "sources_sha256": "267b1c28f129d4492f1c82a9f503cf3eb5b47c9c836d55e8c8adb3c109eef242",
+    "viz": true
+  },
+  "schema": 1
+}

@@ -1,0 +1,512 @@
+[
+ {
+  "game": "lf52 (lf52-271a04aa, 10 levels). Levels below are numbered 1-3; Tycho's own files use 0-based level_0/1/2.",
+  "game_mechanics": "Peg solitaire spread across several boards joined by black wires (colour 5). Tycho's notes (level_0_insights.md, level_1_insights.md, world_model.md, actor_beliefs.md) describe it, and the frames confirm it.\n\n- **Board and pegs.** Cells are grey 4x4 squares spaced 6 pixels apart. A peg is a green 'e' plus shape made of 12 cells. Clicking a peg selects it with a dark-grey '3' ring, and the cells it can land on get a grey '2' outline. Clicking one of those cells jumps the peg over an orthogonally adjacent peg, and the jumped peg is removed. So each jump costs 2 actions.\n- **Goal.** One peg left across all boards. Level 1 is one L-shaped board.\n- **Carrier (from level 2).** A yellow/orange 6x6 box sitting on a wire. ACTION1-4 move it 6 pixels along the wire (up/down/left/right). When it sits one cell outside a board edge it acts as a board cell: a peg can jump into it, ride along the wire, and jump out onto another board.\n  - Level 2 needs this: the top 3x7 board can only get down to one peg, and the 2x2 board keeps its own peg. The fix is to jump a peg into the carrier docked at top cell (1,7), ride it to the bottom board's (1,0) side, and jump over the bottom peg.\n- **Level 3.** Two carriers. ACTION3/4 move both; ACTION1/2 move only the bottom one (actor_beliefs.md, step 72). The view scrolls right as a carrier moves, which reveals a board D that starts off-screen (animation summaries at steps 82-84).\n- **Stuck state.** When no legal jump remains and more than one peg is left, the pegs turn grey ('2'), and a purple key (colour f, rows 51-63, cols 2-12) slides in at the bottom left. The game state stays NOT_FINISHED; there is no GAME_OVER. Clicking the key dissolves and restores the level's starting layout; the row-0 counter keeps going.\n  - Confirmed: Tycho's step-16 frame, excluding row 0, is identical to the level-2 start frame. An API RESET also restores the layout and clears the counter (step 21).\n- **Row-0 counter.** Adds one cell per action. It is not a 64-action budget, as both agents guessed. In the baseline frames it wraps at 64 and starts refilling in colour 2 from t73, with no GAME_OVER.",
+  "level_narrative": [
+   {
+    "level": 1,
+    "tycho": "Solved in 8 actions, all ACTION6 clicks, 1 LLM call per action, no tools. The level_summary at step 8 wrote level_0_insights.md (peg solitaire, select then target, win = 1 peg).",
+    "baseline": "Solved in 8 actions. The click sequence is identical to Tycho's: (18,19),(30,19),(30,19),(42,19),(42,19),(42,31),(42,31),(42,43). Its first hypothesis at t1 already read the board as 'a peg-solitaire grid'.",
+    "key_steps": "Tycho steps 0-7 and baseline t1-t8 both win on click (42,43). Step 2 in Tycho had two take_action calls and only the first was applied, which its notes record."
+   },
+   {
+    "level": 2,
+    "tycho": "Solved in 53 actions: a 13-action first attempt, RESET, then 39 actions.\n\nThe level-2 start frame was identical to the baseline's (0 differing cells). Steps 8-15 made almost the same jumps as the baseline and reached the same dead end at step 15: one grey peg per board plus the purple key. The frame matches baseline t15 except the row-0 counter.\n\n- **Step 16:** an animation_summary call described the stuck transition: 'two green dots ... became a single gray dot ... A purple key-shaped object appeared at the bottom-left'. The actor's reasoning was 'A purple key has appeared ... the orange square in the center might be a lock. I'll try clicking the key', and it clicked (4,56).\n- **Step 17:** the animation summary reported a static/noise effect after which the pegs were restored. The actor concluded: 'Clicking the key reset the level, so the key seems to act as a reset button.'\n- **Step 19:** 9 run_python calls. wmlib.animation_index(level=1); wmlib.animation_grids on animation_008 (frames 20-26 change rows 51-63, cols 2-12, which is the key appearing); animation_009 (colour-5 noise climbs to 4032 cells, then 'e' pegs recover to 60); and the level_0 terminal.json. The actor concluded 'The noise effect looks like a reset transition, so the key click is probably a retry' and planned a cheap test: get stuck on purpose.\n- **Step 20:** a deliberate move that got stuck again. The step-21 summary confirmed grey pegs plus key, and the actor issued RESET.\n- **Step 22:** write_file of actor_beliefs.md: 'When no legal moves remain (and >1 peg total), pegs turn grey and a purple KEY appears ... clicking key = dissolve-reset ... Need cross-board interaction. Ideas untested: ACTION1-4 / ACTION7 effects'.\n- **Steps 25-26 (key mechanic found):** ACTION4 moved the orange box. Step-26 reasoning: 'the orange square as it slides one step right along the wire ... perhaps it acts as a cursor or a dock that carries pegs between the two boards, like an elevator.'\n- **Steps 26-33:** moved the carrier; the ACTION3 at step 33 docked it at top cell (1,7).\n- **Steps 35-40:** jumps 1->3 and 3->5, then 5 into the carrier. Step 40's response: 'Orange is a valid landing target. Jump in.'\n- **Steps 41-58:** 18 carrier moves.\n- **Step 59:** run_python print(grid[49:57,34:50]), then 'Docked. Click carrier peg to select.'\n- **Step 60:** final jump; levels_completed went to 2.\n\nTool use this level: 11 run_python, 1 write_file, 1 set_verbosity (step 47, grid off, diff summary).",
+    "baseline": "Reached level 2 at t8 and spent the remaining 92 actions there without solving it.\n\n**Into the dead end (t9-t15).** Nearly the same jumps as Tycho, ending in the same stuck state at t15. From t15 to t100 every frame has 0 green 'e' cells and 52 purple 'f' cells, so the pegs stayed frozen for 85 actions. The key was never clicked: no ACTION6 hit x 2-12, y 51-63. There were 0 GAME_OVERs, so the controller never auto-reset, and the model's schema (action_id 1-7) plus the system prompt line 'Never reset (action 0)' gave it no RESET of its own.\n\n**Actions in the stuck phase (t16-t100):**\n\n| Action | Count | What happened |\n|---|---|---|\n| ACTION1 | 11 | carrier moves or blocked |\n| ACTION2 | 10 | carrier moves or blocked |\n| ACTION3 | 21 | carrier moves or blocked |\n| ACTION4 | 20 | carrier moves or blocked |\n| ACTION6 (clicks) | 21 | all inert |\n| ACTION7 | 2 | inert |\n\nOf the 62 directional actions, 56 moved the carrier and 6 were blocked. 29 transitions changed at most 1 cell (the counter), and 46 consecutive action pairs were repeats. The carrier went around the loop: bottom dock (rows 51-54, cols 37-40) at t29-36, top dock (rows 15-18, cols 49-52) at t54-61, bottom dock again at t79-92, then partway back up.\n\n**Hypotheses over time:**\n- t9 H4: 'The colour-c box on the pipe may be a movable piece or a carrier between boards, possibly moved by actions 1-4. Not yet tested.' The baseline guessed the carrier from the start.\n- t16 H3: 'A full colour-2 peg might mean a special state, such as linked through the pipe, stuck, or selected.' H4: 'A new f-coloured object appeared at the bottom left (x2-12, y51-63) ... It may be a key or tool that actions 1-4 can move.' It then clicked the grey peg rather than the key.\n- t20 H3: 'A full colour-2 peg is inert'. H7: 'ACTION3 or ACTION4 may move something, such as the f object'. ACTION3 at t20 moved the carrier, and from then on it focused on the carrier.\n- t24-t26 H12: 'carry the block ... to the lower-right peg board or to the f structure'. The f object became a destination, not something to click.\n- t24: H1-H3 (board geometry, jump rule, one-peg win) were dropped once t15 left the 8-transition window.\n- t35 H19: 'click-based jumps into the block's cell are not valid moves'.\n- t37 H23: 'Both peg frames are completely full'. It now read empty '1' holes as pieces.\n- t60 H37 had the right mechanic: 'clicking the column-5 peg at (38,16) and then the b/c hole at (50,16) should make it jump'. At t62 it was marked 'contradicted' because the board was frozen. H39: 'All 21 positions are filled'.\n- t92 H71: 'The top grid is a full 8x3 grid of 1-pieces'. H76: 'Two-click moves ... do nothing visible'.\n- Final (t100): H80/H81/H38 on carrier moves, H5b 'counter, probably out of 64', H76 'Clicks on pieces or the cart only advance the row-0 counter.'",
+    "key_steps": "Tycho: step 15 = same stuck board; step 16 = key click; step 17 = reset understood; step 19 = 9 wmlib/animation queries; step 21 = RESET; step 22 = notes written; step 25 = carrier moves (ACTION4); step 33 = docked; step 40 = jump into carrier; step 60 = win.\n\nBaseline: t15 = stuck; t16 = clicked grey peg (H4 names the f object 'key or tool'); t20 = carrier moves; t24 = H1-H3 dropped; t29 / t54 = docked at bottom / top while frozen; t60-t62 = correct jump hypothesis H37 falsified by the frozen board; t100 = budget exhausted."
+   },
+   {
+    "level": 3,
+    "tycho": "Not finished: 39 actions before the 100-action cap, including 1 RESET.\n\n- **Step 61:** a level_summary wrote level_1_insights.md (carrier rules and the key/reset behaviour). The actor read the notes and dumped the full grid with run_python.\n- **Steps 61-70 (attempt 1):** step 62 run_python plus reasoning 'Both carriers are moving together with ACTION4'. The rest explored the bottom carrier's wire. Step 70: 'I've already spent nine actions on this, so I'm going to stop'. Step 71: RESET.\n- **Step 72:** wrote actor_beliefs.md: 'ACTION3/4 move BOTH carriers ... ACTION1/2 only bottom ... B can't be reduced alone'. One ACTION3 docked both carriers.\n- **Steps 73-80:** 4 legal jumps put a peg into the top carrier.\n- **Steps 81-83:** ACTION4 x3. The animation summaries at steps 82-84 reported 'The view scrolls gradually right ... reveals ... a tall vertical column of gray tiles ... with a green plus'. The actor: 'The view scrolled, which I didn't expect'. It printed the full grid at steps 82 and 84 to map the hidden board D.\n- **Steps 84-95:** 6 more legal jumps from the carrier into and across D.\n- **Steps 96-99:** moving the bottom carrier toward D's dock when the cap hit.\n\nNo stuck state occurred in level 3 (0 'f' cells in steps 61-99).",
+    "baseline": "Never reached level 3.",
+    "key_steps": "Tycho steps 61-62 (insights read; carriers move together), 71 (RESET), 72 (both carriers docked), 82-84 (animation summaries reveal the scroll and board D), 99 (cap reached)."
+   }
+  ],
+  "baseline_failure_mode": "The baseline got stuck in a dead-end board it never recognised as dead. It was not missing the right mechanic.\n\n**Same starting point.** Both harnesses played almost the same level-2 opening and reached a byte-identical dead end at their 15th/16th action (row 0 aside): two grey pegs on separate boards and a purple key at the bottom left. The game does not signal GAME_OVER there, so the baseline controller's auto-RESET never fired. The baseline's schema allows only action_id 1-7, and its system prompt says 'Never reset (action 0)'. Its only way out was clicking the in-game key, and in 85 actions (t16-t100) it never clicked anywhere in x 2-12, y 51-63.\n\n**It noticed the key but filed it wrong.** At t16 H4 called it 'an f-coloured object ... may be a key or tool that actions 1-4 can move'. So it tested directional actions instead of clicking it. ACTION3 at t20 moved the carrier, and from then on the carrier took all its attention. By t24-t26 the f object had become a destination for the carrier ('to the f structure').\n\n**It had the right ideas, but the frozen board falsified them.** At t9 it already guessed the carrier mechanic (H4). It docked the carrier at both boards (t29, t54, t79). At t60 it proposed the exact winning move type (H37: jump a peg into the carrier). Every click did nothing on the frozen board, so it marked the correct mechanic 'contradicted' (t62) and concluded clicks only advance the counter (H76).\n\n**The memory limits made this worse.**\n- Its prompt holds only the last 8 transitions (boards for the newest 3) and at most 8 hypotheses. At t24, as soon as the pre-stuck transitions left the window, it dropped H1-H3 (geometry, jump rule, one-peg goal).\n- With no memory of what live pegs looked like, it started reading empty '1' holes as pieces: t37 'Both peg frames are completely full', t62 'All 21 positions are filled', t92 'full 8x3 grid of 1-pieces'.\n- So it could never re-derive that the grey pegs at t15 meant a dead state.\n\n**What it did with the remaining actions.** It repeated itself: 62 directional actions (56 carrier moves) took the carrier around the same wire loop about 1.5 times, plus 21 inert clicks and 2 inert ACTION7s. It made 0 game-overs and 0 resets, and its hypotheses kept a wrong '64-action budget' idea.",
+  "feature_attribution": [
+   {
+    "feature": "Getting out of the stuck state: RESET in the action list, plus the actor prompt line 'When the current attempt is unwinnable ... prefer RESET' (baseline prompt: 'Never reset (action 0)'; schema allows only action_id 1-7)",
+    "evidence": "Tycho's first escape (step 16) was an in-game key click, which the baseline could also have made. Its second escape was an API RESET at step 21, and it reset again at step 71 in level 3. The baseline stayed frozen from t16 to t100 with 0 resets, and the controller's auto-RESET is tied to GAME_OVER, which never happened (all 100 states NOT_FINISHED). Whether the reset-friendly prompt made Tycho more willing to try a restart-like action is plausible but not shown.",
+    "strength": "helpful"
+   },
+   {
+    "feature": "Animation summaries (a separate LLM call that captions selected keyframe images)",
+    "evidence": "6 calls, at steps 16, 17, 21, 82, 83 and 84.\n\n- Step 16 caption: 'two green dots ... became a single gray dot ... A purple key-shaped object appeared at the bottom-left'. The actor's very next reasoning clicked the key. This was the moment the two runs split.\n- Step 17 caption: the static/noise reset. The actor: 'Clicking the key reset the level'.\n- Step 21 caption: confirmed the stuck state, leading to RESET.\n- Steps 82-84 captions: 'viewport panned right ... reveals ... green plus tiles', which uncovered the hidden board D in level 3.\n\nThe baseline saw only final frames (intermediate_frames_omitted) and still described the f object as a possible 'key or tool'. So whether the caption is what made Tycho click is plausible but not proven.",
+    "strength": "helpful"
+   },
+   {
+    "feature": "Persistent notes and level_summary insights carried across levels",
+    "evidence": "For level 2, level_0_insights.md (read at step 8) carried the peg-solitaire rules. The baseline carried equivalent hypotheses H2/H3 into t9 (clear_hypotheses_on_level=false), so the two were roughly even there.\n\nWithin level 2, actor_beliefs.md (step 22) recorded the stuck-state/key/reset rule and 'Ideas untested: ACTION1-4'. ACTION4 was tried 3 actions later.\n\nFor level 3, level_1_insights.md (step 61) carried the carrier and docking rules plus the key/reset fact. Tycho understood both carriers within 2 actions and never got stuck. This helped level-3 progress, but level 3 was not finished.",
+    "strength": "helpful"
+   },
+   {
+    "feature": "Multi-turn conversation within a level (vs the baseline's stateless 8-transition window and 8-hypothesis cap)",
+    "evidence": "Tycho kept a conversation for the whole level (tail_evict; grid_keep 3, image_keep 3, reasoning_keep 3); per-call input reached about 320k tokens by steps 51-60. It never lost the peg/hole reading or the key/reset fact.\n\nThe baseline dropped H1-H3 at t24, exactly when t15 left its window, and then misread holes as pieces (t37, t62, t92). It also had 8 hypotheses at t20 and pruned the f-object hypothesis at t21. This explains why it never worked out that it was stuck; it is a contributing cause rather than the trigger of the split.",
+    "strength": "helpful"
+   },
+   {
+    "feature": "run_python / wmlib evidence queries",
+    "evidence": "17 actor run_python calls.\n\n- Step 19: 9 calls (wmlib.animation_index; wmlib.animation_grids on the stuck animation_008 and key-click animation_009; level_0 terminal.json). These established the key click was a 'dissolve-reset' and led to a deliberate stuck test (step 20), then RESET.\n- Step 59: a grid slice to confirm docking before the winning jump.\n- Level 3: full-grid dumps at steps 61, 62, 71, 82 and 84 to map the boards, including board D after the scroll.\n\nThe two discoveries that mattered (key click at step 16, carrier movement at step 25) happened without any run_python. No solver or planner code was written, even though level_0_insights said 'Plan whole solution with a solver'.",
+    "strength": "helpful"
+   },
+   {
+    "feature": "Image (vision) input to the actor",
+    "evidence": "100 of 117 freeform calls carried an image. The actor's wording ('purple key', 'orange square', 'gray pegs') matches what vision would see, but the full text grid was also inlined until step 47, and the baseline found the same objects from text alone. No step shows information available only from the image driving a decision. The decisive visual description reached the actor through the animation-summary text.",
+    "strength": "unclear"
+   },
+   {
+    "feature": "More model calls and tool steps per action",
+    "evidence": "Tycho: 128 LLM calls for 100 actions (1.28 per action); 88 of 100 steps used a single call. The extra calls were mostly the step-19 investigation (10 calls) and the level and animation summaries. The baseline used more output tokens per action (152,809 total vs Tycho's 55,923). Apart from the step-19 burst, nothing shows extra deliberation per action mattered.",
+    "strength": "unclear"
+   },
+   {
+    "feature": "World-model builder subagent (invoke_builder)",
+    "evidence": "builder_invocations = 0; manifest wm_activity has builder_fires 0, plan_levels 0, steps_with_plan 0; no invoke_builder call in any response.",
+    "strength": "not_used"
+   },
+   {
+    "feature": "world_model.py / plan.py / verify.py",
+    "evidence": "plan.py and verify.py are byte-identical to the seed templates. world_model.py differs only by the template fill of {ACTIONS_LINE} with the action list. All three have the workspace-creation mtime (21:31). No run_python call imported them; the one 'world_model' match reads notes/world_model.md.",
+    "strength": "not_used"
+   }
+  ],
+  "compute": {
+   "tycho_llm_calls": 128,
+   "tycho_tool_calls": 120,
+   "baseline_model_calls": 100,
+   "tycho_tokens_in": 14807033,
+   "tycho_tokens_out": 55923,
+   "baseline_tokens_in": 1690260,
+   "baseline_tokens_out": 152809,
+   "notes": "**Tycho**\n- LLM calls by type: 117 freeform (actor), 5 level_summary, 6 animation_summary, 0 builder. 106 calls carried images (100 freeform, 6 animation).\n- tool_trace calls: 120 = 100 take_action + 17 run_python + 2 write_file + 1 set_verbosity. Another 4 tool calls ran inside level_summary calls (2 run_python, 2 Write) and are not in tool_trace. Step 2 also had one ignored extra take_action.\n- Token sums over every llm_calls entry match inference_budget.usage exactly: tokens_in (fresh, uncached) 3,493,741; cache_read 10,650,565; cache_write 662,727; tokens_out 55,923.\n- tycho_tokens_in above is the total input processed: fresh + cache_read + cache_write = 14,807,033.\n- Cost $20.537 at the locally patched opus-5-5 rates ($4 / $20 / $0.20 / $5 per million for input / output / cache read / cache write). tokens_in must be fresh-only for the formula to give $20.537172.\n- By level: level 1 about 0.50M input, $1.71; level 2 12.95M input, $15.86 (per-call context grew to about 320k at steps 51-60; step 19 alone was 1.05M); level 3 1.36M input, $2.97.\n- Wall clock 813 s.\n\n**Baseline (lf52 only)**\n- 100 model_entered and 100 model_returned events, all 'response_received'; no retries; num_turns 2 per call (claude_code CLI).\n- Fields summed from model_returned metadata.usage: input_tokens = 1,690,260; cache_creation_input_tokens = 0; cache_read_input_tokens = 0; output_tokens = 152,809, of which output_tokens_details.thinking_tokens = 94,832.\n- usage.iterations and model_usage give the same totals. notional_cost_usd = $9.817, the same $4/$20 rates.\n- By level: level 1: 8 calls, 102,320 in / 9,573 out; level 2: 92 calls, 1,587,940 in / 143,236 out. Summed call duration 1,565 s.\n\n**Ratios (Tycho / baseline):** total input 8.8x; output 0.37x; cost 2.09x; LLM calls 1.28x."
+  },
+  "world_model_use": "Not meaningfully used.\n\n- **world_model.py:** the only difference from seed_world_model.py.tmpl is line 80, where the harness filled the {ACTIONS_LINE} placeholder with the ACTION1-4/6/7 list.\n- **plan.py and verify.py:** byte-identical to seed_plan.py.tmpl and seed_verify.py.tmpl.\n- All three files carry the workspace-creation timestamp (21:31) and none was imported by any of the 17 run_python calls.\n- The builder subagent was never invoked: builder_invocations 0, and manifest wm_activity shows builder_fires 0, plan_levels 0, steps_with_plan 0, final_simulation_accuracy null.\n\nThe only world-model artifacts were prose notes: notes/world_model.md, written by the level_summary calls at steps 8 and 61 'for builder', and actor_beliefs.md. All solving was done in the model's own reasoning; no solver or planner script was written.",
+  "caveats": [
+   "Single run per harness on one game, and stochastic. The whole gap comes down to one action: at their 16th/17th action, Tycho clicked the purple key and the baseline clicked a grey peg. A rerun could easily go the other way. No repeat runs were analysed.",
+   "Possible familiarity with this public game. Both harnesses played an identical 8-click solution to level 1 and a nearly identical level-2 opening into the same dead end. The baseline predicted the carrier mechanic (t9 H4) before testing anything. Model priors from public game exposure probably affect both arms; the baseline run itself is labelled 'exposed_development'.",
+   "Separate runs and backends. Baseline: 2026-11-06, claude_code CLI backend, structured JSON output, max_output_tokens 32000. Tycho: 2026-11-09, Anthropic API directly, max_tokens 24000. Same model (claude-opus-5-5), same effort (high, adaptive thinking), same game version (lf52-271a04aa). The system prompts differ in substance: Tycho's says 'RESET is always available ... prefer RESET' and 'ACTION1-4 often directional'; the baseline's says 'Never reset' and 'Do not assume action names imply effects'. So the action space and prompt priors are not matched, only the model and the action budget.",
+   "Deliberate local patches to Tycho (git diff against f68912a): a 100-scored-action whole-game cap including RESETs (TYCHO_MAX_GAME_ACTIONS, harness.py); added opus-5-5 pricing ($4/$20/$0.20/$5 per million) in pricing.py; '(no text)' / '(no output)' placeholders for empty text blocks (the latter visible at step 8); and preserved-thinking binding handling (drop_block / strip reasoning after history edits) in public_backends.py and agent.py.",
+   "Thinking is not directly visible in either arm. Tycho's reasoning_text is a summarised thinking display (reasoning_kind 'summary'; many entries are empty). The baseline exposes only its JSON reply (action plus hypotheses). Quoted 'reasoning' is therefore a summary, and baseline intent is inferred from its hypotheses.",
+   "The causal attributions are interpretive. The data shows what Tycho read just before clicking the key (the animation-summary caption plus an image), but no counterfactual run isolates which feature caused the click. RESET availability was not needed for the first escape, which was an in-game click.",
+   "Tycho's level-3 progress (10 legal jumps, hidden board D found) did not produce a cleared level, so it does not explain the levels-cleared gap; only level 2 does. Scores come from different sources: Tycho's env_score was computed by its harness, the baseline's from the official scorecard."
+  ]
+ },
+ {
+  "game": "bp35 (bp35-0a0ad940), 9 levels, human baselines [21, 48, 44, 38, 33, 87, 86, 131, 163]. Notation: Tycho \"step i\" = trace[i] (0-based, turn = i+1). Tycho's notes number levels from 0, so \"level_1\" is the 2nd level. Baseline \"tN\" = transition_id. Below, \"Level k\" is 1-based.",
+  "game_mechanics": "bp35 is a scrolling maze with upward gravity on a 6-px tile grid. Sources are Tycho's notes/level_0_insights.md, level_1_insights.md, level_2_insights.md, world_model.md and actor_beliefs.md, cross-checked against frames and the baseline's own hypotheses.\n- Player: a 5x5 blue(9)/yellow(b) piece in cyan (a) corridors. Walls are black(5) with grey(3) dots.\n- ACTION3/ACTION4 move the piece one tile left/right.\n- After every action the piece floats up through open tiles until something blocks it. The camera scrolls so the piece stays near rows 37-41, which means click coordinates change after every rise.\n- ACTION6 on a green (e) block removes it. Greens also block sideways movement.\n- Purple (f) blocks with a b-0-b bottom hang from ceilings and act as spikes. If the piece rises into the tile directly under one, the result is GAME_OVER.\n- ACTION7 is undo and still costs an action.\n- Goal: reach the pink plus (7), by rising into it or moving onto it.\n- Row 63 is a purple action-counter bar.\n- Level 3 adds orange (c) toggles: clicking solid orange turns it into a small passable X, and clicking an X turns it back into a solid wall. Tycho used this both to open paths and to create ceilings that stop the rise below a spike.\n\nFrame confirmation (step 22): Tycho parsed the archived death animation attempts/level_1_attempt_000/level_1/animation_006_ACTION6_row_33_col_39/frame_*.txt cell by cell. The blue (9) cells rise from rows 37-40 to row 19, sit directly under f/b0b blocks in frames 15-16, and are gone from frame 17. The baseline independently stated the same rules: movement H1, green removal H2, float-up H6, goal H7 (t17-t18), undo H4 (t3) and spikes H12 at t25 / H14 at t50.",
+  "level_narrative": [
+   {
+    "level": 1,
+    "tycho": "Solved in 15 actions at steps 0-14 (5x ACTION3, 5x ACTION4, 5x ACTION6), under the human baseline of 21. Before any planning it called set_verbosity(grid off, diff summary) at step 2, so from then on its per-turn view was the image plus a diff summary. It dumped the grid with run_python at steps 4, 5, 10 and 11. The level_summary at step 15 wrote level_0_insights.md (float-up, green removal, goal is the pink plus).",
+    "baseline": "Solved in 17 actions (t1-t17). t1 was ACTION3 and t2 was an ACTION7 probe, which gave H4 'ACTION7 is undo' at t3. The remaining 15 actions followed the same route as Tycho: boards match at several checkpoints, e.g. after Tycho step 14 = after t17. The model kept H1/H2/H6/H7 into Level 2 because clear_hypotheses_on_level=false.",
+    "key_steps": "Matching boards (rows 0-62): Tycho steps 0-5 = baseline t3-t8, step 14 = t17. Level complete: Tycho step 14 (ACTION3), baseline t17 (ACTION3). On this level the two harnesses are effectively equivalent."
+   },
+   {
+    "level": 2,
+    "tycho": "Solved in 49 actions (human baseline 48).\n- Attempt 1 (steps 15-20, 6 actions): at step 20 it noted the purple items 'could be enemies or hazards' but still clicked (col 39, row 33) to rise into the room. The piece rose under a spike: GAME_OVER.\n- RESET at step 21.\n- Step 22, before acting: 8 LLM calls, 6 run_python, 1 write_file. wmlib.animation_index returned nothing and wmlib.animation_grids raised FileNotFoundError ('pruned'), so it parsed the archived animation frame files directly. It tracked the 9-cells, got the exact rule ('player ending directly under one -> GAME_OVER') and wrote notes/actor_beliefs.md with the rule plus a full route plan.\n- Steps 23-35: executed the plan cheaply (about 51-371 output tokens per step). At step 32 it ruled out clicking a purple hazard.\n- Step 42: 'Rising through the cyan rows at columns 25 to 29 would run straight into purple at rows 19 to 23, which is fatal. So I need to shift one column further left.'\n- Steps 43-45: tested ACTION7 and learned that it undoes.\n- Steps 47-48: located the player with np.argwhere(grid==9) and dumped a symbol-mapped full grid ('.#cgPpy0B'). It chose a 12-action detour: clear the green row at y37-41 rightward plus 2 greens above column 49, rise in the right shaft, then 'avoids the purple column at column 19, which is fatal'.\n- Steps 48-54: 7 clicks. Step 55: counted the bar (33 used). Steps 55-59: right x5 into the shaft. Step 60: grid dump to find the pink. Steps 60-62: left x3. Step 63: click (33,33), level complete.\nAction mix: ACTION6 24, ACTION4 14, ACTION3 9, RESET 1, ACTION7 1.",
+    "baseline": "Spent 83 actions and did not solve it: 40 ACTION6, 21 ACTION4, 17 ACTION3, 3 controller RESETs, 2 ACTION7. It died 3 times (t23, t48, t78).\n- A1 (t18-t23): t18 H10 already guessed 'f blocks ... are hazards' (tentative). The guess was dropped at t20-22 and t23 H11 said they 'could be the exit or a hazard'. Clicking (39,33) killed the piece, the same death as Tycho step 20.\n- A2 (t25-t48): t25 H12 (supported_locally, evidence t23) said 'rising into them causes GAME_OVER', and H13 described the same safe route Tycho used. H12 was downgraded at t33, merged into a route plan, and dropped at t36-t41. From t42 to t48 H14 read 'hazards or goals. Their role is unknown'. At t48 the piece moved left into x25-29 and rose under a spike: death. This is the exact move Tycho rejected at step 42.\n- A3 (t50-t78): t50 H14 'spikes ... dies if it rises directly beneath' (evidence t48). The A3 boards match Tycho's attempt 2 almost state for state, ending with t73 = Tycho step 47. At that point it clicked (21,33) a 4th time (t74) and rose into a pocket walled on both sides. At t75 H24 proposed the same right-hand corridor Tycho used, but it misread the board by one tile row (that row was wall in o74) and clicked a wall, a no-op. t76 clicked an open cell to test 'places an e block', which was contradicted. t77 retested ACTION7 right after a no-op, so it learned nothing. At t78 H23 doubted the spikes ('either ends the game or just stops the piece'), it clicked (21,33) and died.\n- A4 (t80-t100): t80 H30 'Rising in column x19 sends the piece into the f spike' (supported_locally). By t100 H30 was tentative and H42 planned to 'click the e tile at (21,33)' and rise in x19-23, the column that killed it at t78. Its last board equals t70 = Tycho step 42, the point before the decision.",
+    "key_steps": "Tycho:\n- step 20: GAME_OVER.\n- step 22: hazard rule confirmed by frame parsing (6 run_python calls); actor_beliefs.md written.\n- step 42: avoids the fatal column x25-29.\n- step 44: ACTION7 tested.\n- steps 47-48: argwhere query and symbol-map dump, right-shaft plan.\n- step 63: win.\n\nBaseline:\n- deaths at t23, t48, t78; controller RESETs at t24, t49, t79.\n- board-level no-ops: t31, t32, t75, t76, t77.\n- most repeated clicks: (33,33) x7, (39,33) x6, (21,33) x5.\n- the same 14-action opening is replayed at t50-t63 and t80-t93.\n- matching boards: Tycho steps 22-47 equal baseline t50-t73. The runs split at t74 vs step 48."
+   },
+   {
+    "level": 3,
+    "tycho": "Solved in 34 actions with no deaths (human baseline 44).\n- Step 64: the level_summary wrote level_1_insights.md, which includes 'HAZARD ... Plan rise columns to avoid purple columns' and 'ACTION7 = UNDO'. The actor's conversation was cleared at the level boundary, so it read level_1_insights.md and actor_beliefs.md with run_python. Its first action was a probe click on the unknown orange block (33,39).\n- Step 65: 'Clicking the orange removed the top one and left an X'.\n- Step 69, from a grid dump: 'moving left to column 31 and rising would run straight into the purple ... the X markers might turn into orange blocks when clicked, which could act as ceilings'. It then clicked the X at (33,33).\n- Step 70: 'The X has turned orange'. Steps 70-71: built ceilings at columns 27 and 21.\n- Step 76: compared earlier frames f[(2,1)] and f[(2,4)] with wmlib.frames() to confirm that orange and X toggle both ways.\n- Steps 85-88: further toggles.\n- Step 97: won with ACTION4 onto the pink plus, and wrote level_2_insights.md.\nAction mix: ACTION6 14, ACTION4 12, ACTION3 8.",
+    "baseline": "Never reached.",
+    "key_steps": "Step 64: notes read, probe click. Step 69: ceiling hypothesis. Step 70: confirmed. Step 76: wmlib.frames() check. Step 97: win."
+   },
+   {
+    "level": 4,
+    "tycho": "Unfinished. At step 98 it read the notes (5 run_python calls including wmlib.frames()), then took 2 ACTION4s (steps 98-99) before the 100-action cap stopped the game.",
+    "baseline": "Never reached.",
+    "key_steps": "stop_reason game_action_limit at total_actions_including_unfinished=100."
+   }
+  ],
+  "baseline_failure_mode": "The baseline did not stall because it misunderstood the game. By t25 it had the right movement, green-removal, float-up, goal and spike rules, and at t25 (H13) and t75 (H24) it had proposed the same routes Tycho used. In attempt A3 it reproduced Tycho's winning attempt board for board for 24 actions (t50-t73 = Tycho steps 22-47).\n\nIt failed for four reasons:\n\n1. **It forgot facts once their evidence left the 8-transition window, and its hypothesis slots churned.** There is a cap of 8 hypotheses, and old evidence is only citable by ID.\n   - The spike rule (H12, supported by t23) was downgraded at t33 and dropped at t36-t41. It came back at t42-t48 only as 'hazards or goals, role unknown'. That led to death 2 at t48, by moving under a spike in the exact column Tycho had just rejected at its step 42.\n   - The rule was then re-established (H14, t50) and lost again (t73, t75-t78). At t78 it reasoned that spike contact 'either ends the game or just stops the piece', which led to death 3.\n   - By t100 it again planned to rise in x19-23, the column that killed it at t78.\n   - 'ACTION7 is undo' (H4, supported t3-t23) was dropped at t29. It then retested ACTION7 twice (t32, t77), each time right after a no-op, so neither test could show anything.\n2. **It misread the board at the decisive state.** At the state equal to Tycho step 47 (t73) it over-clicked (21,33) at t74 into a pocket walled on both sides. At t75 it described that board incorrectly, one tile row off, and clicked a wall. In total it spent 5 board-level no-op actions (t31, t32, t75, t76, t77).\n3. **Each death cost a full replay.** Every death triggered a controller RESET plus a re-run of roughly 14-26 setup actions, so 3 deaths cost 3 RESETs and about 60 replayed actions.\n4. **The budget ran out.** After the third RESET only 21 actions remained, while Tycho's successful attempt needed 42, so the level was out of reach. A4 ended at t100 on the same board as Tycho's step 42.\n\nInference: deaths 2 and 3 both came right after the spike rule had left the active hypotheses or been downgraded. That points to memory and state-tracking, not discovery, as the binding limit.",
+  "feature_attribution": [
+   {
+    "feature": "multi-turn conversation within a level (vs stateless single-turn calls with an 8-transition history and 8 hypotheses)",
+    "evidence": "Tycho's actor conversation carried across the RESET inside the level. Step 22's prompt continues the same history (tokens_in 28,481), cache_read grows steadily from 4,894 to 88,839 through step 63, and context_compactions is 0. Only level boundaries clear it ('Your conversation was cleared at the boundary').\n- The spike rule derived at step 22 is cited at steps 32, 42, 44 and 48 ('avoids the purple column at column 19, which is fatal'). actor_beliefs.md was not re-read until step 64, so inside Level 2 the rule was kept by the conversation.\n- ACTION7=undo, learned at steps 44-45, was kept.\n- The plan from step 22 was executed over steps 23-35 at about 51-150 output tokens per step.\n- The baseline lost the spike rule (dropped t36-t41, 'role unknown' t42-t48, doubted at t78) and the undo rule (dropped t29). Both avoidable deaths (t48, t78) followed those losses.",
+    "strength": "decisive"
+   },
+   {
+    "feature": "persistent notes and level_summary insights carried across levels",
+    "evidence": "For Level 3: the conversation was cleared at the boundary, and step 64 read level_1_insights.md ('HAZARD ... Plan rise columns to avoid purple columns', 'ACTION7 = UNDO') and actor_beliefs.md. Step 69 applied the rule to motivate the orange-ceiling idea. Level 3 was solved with 0 deaths in 34 actions, with only 36 actions left in the cap.\n\nInference: with 36 actions left, one death plus a replay would probably have used up the budget.\n\nFor Level 2 this was not a differentiator. level_0_insights.md carried the basics, and the baseline kept the equivalent H1/H2/H6/H7 across the level change (clear_hypotheses_on_level=false).\n\nThe level_summary for level 1 admits it 'didn't open the terminal files'.",
+    "strength": "decisive"
+   },
+   {
+    "feature": "run_python grid/numpy queries (tool calls free for scoring)",
+    "evidence": "36 actor run_python calls, mostly full or partial grid dumps (steps 4, 5, 10, 11, 20, 36, 40, 41, 44, 48, 60, 63, 69, 70, 76, 85, 93).\n- At the decisive state (step 47 = baseline t73), np.argwhere(grid==9) found the player at [37,21]-[40,22]. A step-48 symbol-map dump of the whole grid led to the correct 12-action right-shaft plan.\n- At the same state the baseline over-clicked (t74) and then misread the hex board by one tile row (t75 H24), clicking a wall.\n- Step 55 counted the action bar with (grid[63]==15).sum().\n\nInference: precise queries may have been what decided the outcome at this branch point. Because the baseline formed the same corridor idea (H24), I rate this as helpful, not proven decisive.",
+    "strength": "helpful"
+   },
+   {
+    "feature": "wmlib evidence queries plus archived attempt and death frames",
+    "evidence": "Step 22: wmlib.animation_index(level=1,last=3) returned '(no output)', and wmlib.animation_grids raised FileNotFoundError ('not found or pruned'). The actor parsed attempts/level_1_attempt_000/.../frame_*.txt by hand and tracked the 9-cells frame by frame until they vanished under the f/b0b block (frame 17).\n- Step 76: wmlib.frames() comparison of turns 1 and 4 confirmed the orange/X toggle.\n- Step 50: wmlib.current_grid(). Step 98: wmlib.frames().\n\nThis gave a precise death rule, but the baseline inferred an equivalent rule from the bare GAME_OVER transition (t25 H12). The value was confirmation and precision, not discovery. The wmlib animation APIs themselves failed and the archived files did the work.",
+    "strength": "helpful"
+   },
+   {
+    "feature": "GAME_OVER evidence packaging (structured death prompt)",
+    "evidence": "The step-22 prompt gave the pre-fatal vs GAME_OVER diff, death_006_*.txt/json files, pre- and post-death PNGs, the path to the archived animation, and 'avoid equivalent actions unless deliberately probing'. The actor followed the archived-animation path at once.\n\nThe baseline only had the t23 transition in its history, and that evidence left its 8-step window by t32.",
+    "strength": "helpful"
+   },
+   {
+    "feature": "more model calls and tool steps per action",
+    "evidence": "156 LLM calls for 99 non-RESET actions, against the baseline's 97 calls for 97 actions. 73 of Tycho's 99 steps used a single call, and the median output per step was 135 tokens. Calls came in bursts at key states: step 22 (8 calls, 6 run_python and a note before acting), steps 15, 64 and 98 (5-8 calls).\n\nTotal output was lower for Tycho: 47,567 tokens vs 201,123 (the baseline's median was 1,345 per call). Cost was similar: $9.28 vs $9.81.\n\nThe advantage is the option to deliberate and query without spending actions at the few states that matter, not more compute overall.",
+    "strength": "helpful"
+   },
+   {
+    "feature": "image (vision) input",
+    "evidence": "99 of 135 actor calls carried an image. After set_verbosity(grid off, diff summary) at step 2, the image plus a diff summary (count and bbox) was the only per-turn inline observation, which is less precise than the baseline's full hex board. Reasoning mentions the image explicitly only at step 35 and step 58. Key decisions were made from run_python grid dumps. There is no evidence the image supplied information the text lacked.",
+    "strength": "unclear"
+   },
+   {
+    "feature": "animation summaries",
+    "evidence": "15 animation_summary calls, all on the fallback path ('The contextual summary call failed'; the cause is not recorded in the slim trace). 6 more were skipped by the per-level cap of 5, and 72 were filtered out as local_motion.\n- The content was mostly generic scroll description and sometimes wrong (step 4: 'ACTION4 moved the player upward').\n- The death summary at step 22 ('piece disappears ... game over') was superseded by the actor's own frame-by-frame analysis.\n- Cost: about $0.16.",
+    "strength": "unclear"
+   },
+   {
+    "feature": "world-model builder (invoke_builder) / world_model.py / plan.py / verify.py",
+    "evidence": "builder_invocations 0. The manifest's wm_activity shows builder_fires 0, plan_levels 0, steps_with_plan 0. invoke_builder was offered in the tool list and the system prompt but was never called. world_model.py, plan.py and verify.py were never edited (see world_model_use). The actor printed world_model.py once (step 15) and never ran it.",
+    "strength": "not_used"
+   }
+  ],
+  "compute": {
+   "tycho_llm_calls": 156,
+   "tycho_tool_calls": 144,
+   "tycho_tokens_in": 6617701,
+   "tycho_tokens_out": 47567,
+   "baseline_model_calls": 97,
+   "baseline_tokens_in": 1445794,
+   "baseline_tokens_out": 201123,
+   "notes": "TYCHO (sums over trace[*].reasoning.llm_calls; they equal inference_budget.usage).\n\nLLM calls by type:\n- 135 freeform actor calls: fresh in 1,589,494, cache_read 4,492,681, cache_write 151,976, out 38,603; about $8.79.\n- 15 animation_summary calls: in 9,352, out 5,960; about $0.16.\n- 6 level_summary calls (2 per completed level): in 51,380, cache_read 322,818, out 3,004; about $0.33.\n\nTotals: fresh tokens_in 1,650,226, cache_read 4,815,499, cache_write 151,976, tokens_out 47,567. tycho_tokens_in above is the sum of fresh + cache_read + cache_write (6,617,701), to make it comparable with the uncached baseline. The cost is $9.275 at the locally added Opus 5.5 list prices ($4 / $20 / $0.20 / $5 per M), which reproduces cost_usd.\n\nTool calls executed: 144.\n- In tool_trace (138): take_action 99, run_python 36, write_file 2, set_verbosity 1.\n- Inside level_summary calls (6): Write 5, run_python 1.\n- Not executed: 3 extra take_action calls emitted in one response at step 49 ('Only one action per turn executes').\n- invoke_builder: 0.\n\nPer level (level_summary cost is booked to the following level): L1 $1.47, L2 $5.46, L3 $2.04, L4 $0.31. Wall clock 704 s.\n\nBASELINE (bp35 lines streamed from events.jsonl): 97 model_returned events, one per non-RESET action, all attempt 0, all response_received. The 3 RESETs were issued by the controller without a model call.\n\nUsage fields summed from metadata.usage:\n- input_tokens 1,445,794\n- cache_creation_input_tokens 0\n- cache_read_input_tokens 0\n- output_tokens 201,123, which includes output_tokens_details.thinking_tokens 134,824\n\nmetadata.model_usage['claude-opus-5-5'].costUSD sums to $9.81, which equals input_tokens \u00d7 $4/M + output_tokens \u00d7 $20/M. notional_cost_usd is recorded as 0. Per level: L1 17 calls, $1.46; L2 80 calls, 1,209,523 in / 175,490 out, $8.35. Per call: mean input 14,905, median output 1,345. Total model time 2,037 s.\n\nBottom line: similar dollar cost. Tycho read about 4.6x more input (mostly cached) and wrote about 4.2x less output."
+  },
+  "world_model_use": "They were not meaningfully used.\n\n- **world_model.py** differs from seed_world_model.py.tmpl only at line 80. The template's `return {ACTIONS_LINE}` was replaced by the legal-action list `[ACTION3, ACTION4, ACTION6, ACTION7 with row/col None]`. That is the harness filling in the seed at workspace creation: its mtime (Nov 8 21:31:55) is identical to plan.py, verify.py and wmlib.py, before the first action.\n- **plan.py** and **verify.py** are byte-identical to seed_plan.py.tmpl and seed_verify.py.tmpl.\n- The actor printed world_model.py once (step 15, first 6000 chars) and never edited, imported or ran it, plan.py or verify.py.\n- builder_invocations is 0, and wm_activity shows builder_fires 0, plan_levels 0, steps_with_plan 0. That is despite the system prompt telling the actor to call invoke_builder once it had a hypothesis about the mechanics.\n- The only code file the agent wrote was animload.py (step 22, a parser for the frame .txt files). No later run_python call imports it.\n- notes/world_model.md was written by the level_summary calls, and its content is prose only.\n\nAll modeling was informal: natural-language notes plus ad-hoc grid queries.",
+  "caveats": [
+   "Single run per harness, one seed, with stochastic sampling (adaptive thinking, effort high). The outcome hinged on essentially one branch point: the same board at Tycho step 47 and baseline t73, followed by Tycho's step-48 detour vs the baseline's t74 over-click. A different sample on either side could plausibly flip the result.",
+   "The first Level-2 death was identical in both harnesses. Both models also independently formed the same hazard hypothesis and the same routes, so the advantage is in retaining and executing, not in discovering the mechanics.",
+   "bp35 is a public ARC-AGI-3 game. The baseline summary labels the run 'exposed_development'. Prior familiarity of Opus 5.5 with the game cannot be ruled out for either harness.",
+   "Tycho ran with deliberate local patches (git f68912a-dirty; configs/local/opus55_orchestrator_matched.yaml):\n- a TYCHO_MAX_GAME_ACTIONS=100 cap in harness.py that counts RESETs, including the automatic one after GAME_OVER;\n- an added opus-5-5 price ($4/$20/$0.20/$5 per M) in pricing.py;\n- '(no text)'/'(no output)' placeholders for empty Anthropic text blocks;\n- a preserved-thinking block_binding/drop_block patch, with thinking stripped after history edits.\nTycho's dollar figures depend on that local price table.",
+   "Thinking is shown summarized (reasoning_kind 'summary'), so the reasoning quoted here from Tycho is a summary, not the raw chain. The baseline's hypotheses are its structured JSON output; its 134,824 thinking tokens are not visible in the log.",
+   "The backends differ. Tycho used the Anthropic Messages API with prompt caching and max_tokens 24,000. The baseline used the Claude Code CLI 2.1.318 claude_code backend with structured output, max_output_tokens 32,000 and no caching. Both used claude-opus-5-5 at effort high with adaptive thinking.",
+   "The baseline stage was 'hypotheses' (history_limit 8, history_board_limit 3, at most 8 hypotheses, no plan field). Some of its memory loss is a design property of that configuration, not an intrinsic limit of the model.",
+   "Scores are not computed the same way. Tycho's env_score of 13.33 is computed locally and appears to give full credit for Level 2 at 49 actions vs a human 48 (perhaps excluding the RESET). The baseline's 2.22 comes from the official scorecard. The baseline scorecard lists state GAME_OVER while summary.games and t100 show NOT_FINISHED.",
+   "The game_bp35.json trace is slimmed (_slim=1). Some animation frames were pruned, which is why wmlib.animation_grids failed at step 22. All 15 animation summaries used the fallback path, and the cause of the failed contextual calls is not recorded.",
+   "Tycho's notes and the baseline's hypothesis text are model outputs and were treated as untrusted data. Mechanics claims were checked against the recorded frames where possible: matching boards and the frame-by-frame death trace.",
+   "Inside Level 2 the effects of multi-turn context, run_python precision and notes cannot be cleanly separated without ablations, so the strength ratings are evidence-based judgments, not causal estimates."
+  ]
+ },
+ {
+  "checks": [
+   {
+    "claim": "Level-2 start frames are identical across the two harnesses (0 differing cells). Tycho step 15 matches baseline t15 except row 0. Tycho step 16 (after the key click) matches the level-2 start except row 0. The RESET at step 21 restores the layout and clears the counter.",
+    "verdict": "confirmed",
+    "detail": "Recomputed. Tycho frame after step 7 vs baseline frame after t8: 0 differing cells. Tycho step 15 vs baseline t15: 1 differing cell, in row 0. Tycho step 16 vs level start: 0 differing cells outside row 0, and the row-0 counter kept going (9 cells). Tycho step 21 vs level start: 0 differing cells, counter cleared."
+   },
+   {
+    "claim": "Both solved level 1 in 8 actions with the same click sequence. The baseline's t1 H1 already called the board 'a peg-solitaire grid'. At step 2 Tycho issued two take_action calls, only the first was applied, and its notes record this.",
+    "verdict": "confirmed",
+    "detail": "The click lists match exactly. The step-2 response contains two take_action calls, but tool_trace holds one. level_0_insights.md ends with 'multiple take_action calls in one turn - only first applied apparently'."
+   },
+   {
+    "claim": "Step 16 is the split: the animation caption described the purple key, the actor reasoned 'key ... lock ... I'll try clicking the key', and it clicked (4,56). At step 17 the actor concluded the key acts as a reset button.",
+    "verdict": "confirmed",
+    "detail": "The quotes match. The step-16 actor prompt opens with the caption ('A purple key-shaped object appeared at the bottom-left'). One nuance is missing: the actor's reasoning reads 'Both boards have collapsed into single gray pegs, which seems to mean they're finished'. It clicked the key as a lock-and-key probe, not because it saw the board was dead or wanted a restart."
+   },
+   {
+    "claim": "Step 19 ran 9 run_python calls: animation_008 shows frames 20-26 changing rows 51-63, cols 2-12; animation_009 shows colour-5 noise climbing to 4032 cells and 'e' recovering to 60. These established that the key click was a dissolve-reset and led to a deliberate stuck test, then RESET.",
+    "verdict": "corrected",
+    "detail": "The tool results confirm the numbers (noise peaks at 4032 in frames 9-10; e=60 at frame 20). But the actor had already concluded 'Clicking the key reset the level' at step 17, before any run_python. Step 19 mainly asked whether the key was tied to failure. The resulting test (steps 19-20 to get stuck again, step 21 RESET) cost 3 actions to confirm what it already knew; level_1_insights calls this '13 wasted + RESET'."
+   },
+   {
+    "claim": "Step 22 wrote actor_beliefs.md with the stuck/key/reset rule and 'Ideas untested: ACTION1-4 / ACTION7'. ACTION4 at steps 25-26 found the carrier. ACTION3 at step 33 docked it at top (1,7). Steps 35-40 made the jumps, with step 40 saying 'Orange is a valid landing target. Jump in.' Steps 41-58 were 18 carrier moves. Step 59 sliced the grid and said 'Docked. Click carrier peg to select.' Step 60 won.",
+    "verdict": "confirmed",
+    "detail": "The text and actions match. Carrier-position tracking shows all 18 moves in steps 41-58 actually moved it. The ACTION1 at step 22 was blocked ('ACTION1 did nothing'). Level-2 tool counts are confirmed: 11 run_python (steps 8, 19 x9, 59), 1 write_file (step 22), 1 set_verbosity (step 47: grid off, diff summary)."
+   },
+   {
+    "claim": "The baseline was frozen from t15 to t100 (0 'e' cells, 52 'f' cells in every frame), never clicked x 2-12 / y 51-63, had 0 GAME_OVERs, a schema allowing only action_id 1-7, and the instruction 'Never reset (action 0)'.",
+    "verdict": "confirmed",
+    "detail": "Every frame from t15 to t100 has e=0 and f=52. No click falls in the key box. All 100 states are NOT_FINISHED. policy.py sets minimum 1 / maximum 7 for action_id and contains the 'Never reset' text. The controller resets only from GAME_OVER (run.py, audit.py)."
+   },
+   {
+    "claim": "Stuck-phase (t16-t100) action counts are A1 11, A2 10, A3 21, A4 20, A6 21, A7 2. Of the 62 directional actions, 56 moved the carrier and 6 were blocked. 29 transitions changed at most 1 cell.",
+    "verdict": "confirmed",
+    "detail": "Recomputed exactly. The blocked moves are t17, t19, t30, t35, t55 and t80. The transitions changing at most 1 cell are t16-19, t30-36, t55-61, t80-82 and t85-92, which totals 29."
+   },
+   {
+    "claim": "In the stuck phase, '46 consecutive action pairs were repeats'.",
+    "verdict": "corrected",
+    "detail": "46 counts exact repeats over the whole game (t1-t100), and that includes legitimate select-then-target repeats in level 1. Within t16-t100 there are 41 exact repeats (55 if only the action_id is compared)."
+   },
+   {
+    "claim": "The carrier went around the loop: bottom dock at t29-36, top dock at t54-61, bottom dock again at t79-92, about 1.5 times around the same wire loop.",
+    "verdict": "corrected",
+    "detail": "The dock positions and times are correct (it briefly left the bottom dock at t83-84). But the wire is a single path between the two docks, not a loop. The carrier shuttled end to end about 3 times: centre to bottom dock (t20-29), bottom to top (t37-54), top to bottom (t62-79), then partway back (t93-100)."
+   },
+   {
+    "claim": "The row-0 counter wraps at 64 and refills in colour 2 from t73, with no GAME_OVER. Both agents wrongly guessed a 64-action budget.",
+    "verdict": "confirmed",
+    "detail": "Row 0 is all '1' at t72, and t73 starts '2...'. Baseline H5 says '64-action budget'. level_0_insights and level_1_insights say 'Budget probably 64'."
+   },
+   {
+    "claim": "The baseline hypothesis quotes are accurate: t9 H4 (carrier), t16 H3/H4 ('key or tool that actions 1-4 can move'), t20 H3 'inert' and H7, t24-26 H12 'to the f structure', t35 H19, t37 H23 'completely full', t60/61 H37, H37 'contradicted' at t62 with H39 'All 21 positions are filled', t92 H71/H76, t100 H80/H81/H38/H5b/H76.",
+    "verdict": "confirmed",
+    "detail": "Each was checked against model_returned content; the quotes are faithful paraphrases. The baseline clicked the grey peg (32,16) at t16. At t20 there were 8 hypotheses (the cap), and the f-object mention (H7) was dropped at t21."
+   },
+   {
+    "claim": "At t24, H1-H3 (board geometry, jump rule, one-peg win) were dropped as soon as t15 left the 8-transition window; memory limits explain the failure.",
+    "verdict": "corrected",
+    "detail": "H1 (geometry plus 'Colour 1 marks empty holes') and H2 (jump rule) did vanish at t24, and the t24 prompt history was t16-t23. But the prompt held only 7 hypotheses and the model returned 5, so the cap was not forcing anything. More importantly, t23's H3 was 'A full colour-2 peg is inert', not the goal. The one-peg-win hypothesis was replaced at t16. At that point the t16 prompt still contained it, the history window (t8-t15) still included the t8 win, there were only 5 hypotheses, and the model's own H1 said exactly two pegs remained on separate boards. Dropping the goal was the model's choice, not a memory-limit eviction."
+   },
+   {
+    "claim": "With no memory of live pegs, it started reading empty '1' holes as pieces: t37, t62, t92.",
+    "verdict": "corrected",
+    "detail": "The misreading starts earlier: t32 H15 ('an 8x3 grid of 4x4 pegs') and t33 H17 ('Clicking the colour-1 peg'). That is 8 actions after H1's 'colour 1 = empty hole' was dropped at t24."
+   },
+   {
+    "claim": "The baseline never recognised the dead state.",
+    "verdict": "corrected",
+    "detail": "t16 H3 ('special state, such as linked through the pipe, stuck, or selected') and t17 H3 ('inert, stuck, or linked') explicitly list 'stuck'. It settled on 'inert' by t18 and never linked that to restarting or to the key."
+   },
+   {
+    "claim": "At t60 the baseline proposed the exact winning move type (H37: jump into the carrier), and the frozen board falsified it.",
+    "verdict": "corrected",
+    "detail": "Jumping into the carrier first appears at t33 (H17, at the bottom dock), with tests at t31-34. H37 rests on the misreading ('the b/c slot at column 7 is the only empty hole'). It clicks (38,16) to jump 'col 5 over col 6', but both cells were empty holes; the only peg was the grey one at c4. That move would have failed even if the board were live, so the falsification comes from the misreading as much as from the freeze."
+   },
+   {
+    "claim": "Feature: RESET availability plus the 'prefer RESET' prompt is rated helpful.",
+    "verdict": "corrected",
+    "detail": "The data support 'unclear', not 'helpful', for the score gap. The first escape was the in-game key click, which the baseline could also have made. At step 21 Tycho already knew the key reset the board, so RESET only additionally cleared the counter; it was substitutable at the same 1-action cost. The step-71 RESET was in level 3, which was never finished. Nothing shows RESET was needed for the level that separated the two runs."
+   },
+   {
+    "claim": "Animation summaries: 6 calls (steps 16, 17, 21, 82, 83, 84). The step-16 caption came right before the key click. The step 82-84 captions uncovered the hidden board D.",
+    "verdict": "corrected",
+    "detail": "The count, steps and quotes are confirmed. On step 16, the baseline also called the f object a 'key' from text alone, so the attribution is plausible but not shown. On board D: the scroll was a game effect after the ACTION4s at steps 81-83, while the top carrier held a peg. Because set_verbosity had turned the grid off, the caption plus image were the main inline signals, and the actor then dumped the grid with run_python. 'Flagged' fits better than 'uncovered'."
+   },
+   {
+    "claim": "Persistent notes: actor_beliefs.md at step 22 led to ACTION4 three actions later. For level 3, Tycho understood both carriers within 2 actions and never got stuck.",
+    "verdict": "corrected",
+    "detail": "The conversation carried across the step-21 RESET (step 23 cache_read is about 85k; there was no conversation reset), so the note file did not carry the ACTION1-4 idea; context did. The note helped at the level-3 boundary, where the conversation was cleared (step-61 prompt: 'Your conversation was cleared'). But the full carrier-coupling model (ACTION1/2 move only the bottom carrier) was written at step 72, after 10 exploratory actions and a RESET. Step 62 only saw 'both move with ACTION4'. 'Never got stuck' is confirmed (0 'f' cells)."
+   },
+   {
+    "claim": "run_python: 17 actor calls, with full-grid dumps at steps 61, 62, 71, 82 and 84. No solver was written.",
+    "verdict": "corrected",
+    "detail": "17 is confirmed (1 + 9 + 1 + 2 + 1 + 1 + 1 + 1), and no solver or planner was written. Step 62 printed only rows 0-1, 9-18 and 36-54, not the full grid. The 'helpful' rating is generous: the step-19 burst added no new decisive fact and led to a 3-action confirmation detour."
+   },
+   {
+    "claim": "Vision: 100 of 117 freeform calls carried an image; the text grid was inlined until step 47; no step shows image-only information driving a decision.",
+    "verdict": "corrected",
+    "detail": "The counts are confirmed. Missing: from step 48 through all of level 3, the actor prompts did not inline the grid ('The full grid is not inlined here (your set_verbosity choice)'). For about 52 of 100 steps, the image plus the diff summary (and occasional run_python dumps) were the per-step board view, so vision mattered more there than the analysis implies."
+   },
+   {
+    "claim": "world_model.py, plan.py and verify.py were unused, and the builder was never invoked.",
+    "verdict": "confirmed",
+    "detail": "cmp shows plan.py and verify.py identical to the seed templates. diff shows world_model.py differs only at line 80 (the {ACTIONS_LINE} fill). All three have mtime 21:31. No run_python imports them; the only 'world_model' hit reads notes/world_model.md. Manifest wm_activity: builder_fires 0, plan_levels 0, steps_with_plan 0, final_simulation_accuracy null. builder_invocations is 0."
+   },
+   {
+    "claim": "Tycho compute: 128 LLM calls (117 freeform, 5 level_summary, 6 animation_summary); 106 with images; 120 tool_trace calls (100 take_action, 17 run_python, 2 write_file, 1 set_verbosity); fresh input 3,493,741, cache read 10,650,565, cache write 662,727, output 55,923; total input 14,807,033; cost $20.537172 at $4 / $20 / $0.20 / $5; 88 single-call steps; step 19 about 1.05M; about 320k per call at steps 51-60; wall clock 813 s.",
+    "verdict": "confirmed",
+    "detail": "All recomputed exactly. pricing.py has 'opus-5-5': (4.0, 20.0, 0.20, 5.0). Step 19 totals 1,053,161. Per-call input runs from 320,173 (step 51) to 324,608 (step 60). The level_summary responses contain 2 run_python and 2 Write calls. status events show 128 llm_started/finished, with no errors."
+   },
+   {
+    "claim": "Tycho per-level split: level 1 0.50M / $1.71, level 2 12.95M / $15.86, level 3 1.36M / $2.97.",
+    "verdict": "corrected",
+    "detail": "These figures hold only if each level_summary call is reassigned to the level it summarises. By the harness's own step-level attribution the split is 0.30M / $1.05, 12.49M / $16.24 and 2.01M / $3.24. The manifest's level_cost_usd for the unfinished level 3 is $3.2416, not $2.97."
+   },
+   {
+    "claim": "Baseline compute: 100 calls, 1,690,260 input, 0 cache, 152,809 output (94,832 thinking), $9.81722, per-level 102,320 / 9,573 and 1,587,940 / 143,236, 1,565 s summed duration, num_turns 2. Ratios: 8.8x input, 0.37x output, 2.09x cost, 1.28x calls.",
+    "verdict": "confirmed",
+    "detail": "Recomputed exactly: usage, iterations and model_usage all agree; costUSD sums to 9.81722; all 100 calls have attempt 0 and response_received. Ratios: 8.76x, 0.366x, 2.092x, 1.28x. Note that the baseline used no prompt caching, so on fresh input alone Tycho/baseline is 3.49M / 1.69M = 2.07x."
+   },
+   {
+    "claim": "Level 3: steps 73-80 made 4 jumps putting a peg into the top carrier; steps 82-84 captions reported the scroll and board D; steps 84-95 made 6 more jumps; no stuck state; RESET at 71; step 72 notes say ACTION3/4 move both carriers and ACTION1/2 only the bottom one. Mechanics text: 'the view scrolls right as a carrier moves'.",
+    "verdict": "corrected",
+    "detail": "Peg counts confirm the jumps: 'e' falls 96\u219248 over steps 73-80 (carrier shows 'bceecb' at step 80), then 108\u219236 in 6 jumps over steps 85-95; 'f' is 0 throughout. The scroll claim is imprecise. In attempt 1 (steps 61-70) both carriers moved right with no scroll; the step-70 reasoning says 'The camera doesn't scroll'. The scroll happened only at steps 81-83, while the top carrier held a peg."
+   },
+   {
+    "claim": "Scores and levels: Tycho 2/10, 5.45, level actions [8, 53, 39 unfinished], 2 resets; baseline 1/10, 1.82, [8, 92], 0 resets. The baseline run is labelled exposed_development.",
+    "verdict": "confirmed",
+    "detail": "Matches game_lf52.json (env_score 5.4545, level_results, resets 2), the official scorecard (score 1.818, level_actions [8, 92, ...], resets 0) and summary.json exposure 'exposed_development'."
+   }
+  ],
+  "missing": [
+   "The one-peg-win goal hypothesis was dropped by the baseline at t16, not t24. At that point the t8 win was still in its history window and it held only 5 of 8 hypotheses, so this was the model's own choice, not memory pressure. This weakens the 'memory limits' explanation for the failure mode.",
+   "The baseline briefly considered 'stuck' at t16-t17 (H3), then settled on 'inert'.",
+   "Tycho also misread the stuck state: at step 16 it thought the grey pegs meant the boards were 'finished'. It clicked the key as a lock-and-key experiment. The split came from a willingness to click a new object, not from recognising a dead state.",
+   "Both harnesses found carrier movement soon after getting stuck: the baseline at t20 (5 actions after stuck), Tycho at step 25 (after RESET). Carrier discovery was not what separated them; escaping the frozen board was.",
+   "The baseline's first jump-into-carrier hypothesis was at t33 (H17, bottom dock). Its click tests at t31-34 and t59-61 aimed at empty holes it had misread as pegs, a misreading that began at t32.",
+   "From step 48 onward, including all of level 3, Tycho's actor had no inline text grid. It worked from the image, diff summaries and captions, with occasional run_python dumps. This matters for the vision and caption attributions.",
+   "Tycho's step-21 RESET could have been replaced by a key click, since Tycho already knew the key reset the board. So the RESET action was not needed for the level that decided the score gap.",
+   "Tycho's level-2 solve included about 16 wasted actions: the 3-action stuck test at steps 19-21 and exploratory clicks at steps 22-24, 32 and 34. Its own notes say '13 wasted + RESET ... could be ~22 optimal'.",
+   "Level-3 scrolling happened only while a carrier held a peg; there was no scroll in attempt 1.",
+   "The per-level cost split depends on how level_summary calls are attributed. The manifest's level_cost_usd for level 3 is $3.24.",
+   "The fresh-input ratio is 2.07x, compared with 8.8x for total processed input. The baseline reported 0 cache tokens."
+  ],
+  "corrected_compute": "Tycho (lf52): 128 LLM calls: 117 freeform, 5 level_summary, 6 animation_summary, 0 builder. 106 calls carried images. 120 tool_trace calls: 100 take_action, 17 run_python, 2 write_file, 1 set_verbosity. Another 4 tool calls ran inside level_summary calls (2 run_python, 2 Write). Tokens: fresh input 3,493,741; cache_read 10,650,565; cache_write 662,727; total input 14,807,033; output 55,923. Cost $20.537172 at $4 / $20 / $0.20 / $5 per million, with fresh-only input in the formula. Per level by harness step attribution: L1 0.303M / $1.05; L2 12.49M / $16.24; L3 2.01M / $3.24 (manifest level_cost_usd 3.2416). Reassigning level_summary calls to the level they summarise gives 0.50M / $1.71, 12.95M / $15.86 and 1.36M / $2.97. Step 19 alone used 1,053,161 input tokens; per-call input was 320k-325k at steps 51-60. Wall clock 813 s. Baseline (lf52): 100 calls, 1,690,260 input, 0 cache, 152,809 output (94,832 thinking), $9.81722; L1 102,320 / 9,573; L2 1,587,940 / 143,236; 1,564.6 s summed duration. Ratios Tycho / baseline: total input 8.76x; fresh input 2.07x; output 0.366x; cost 2.09x; calls 1.28x. Baseline stuck phase (t16-t100): 41 exact consecutive repeats (46 over all 100 actions)."
+ },
+ {
+  "checks": [
+   {
+    "claim": "Level 1: Tycho solved it in 15 actions at steps 0-14 (5 each of ACTION3, ACTION4 and ACTION6). It called set_verbosity(grid off, diff summary) at step 2, dumped the grid at steps 4, 5, 10 and 11, and the level_summary at step 15 wrote level_0_insights.md.",
+    "verdict": "confirmed",
+    "detail": "The trace action counts are 5/5/5. The level completes at step 14 (ACTION3, levels_completed=1). set_verbosity is called at step 2 with the response 'Reduce verbosity to save context'. Hex grid dumps appear at steps 4, 5, 10 and 11. The first level_summary call at step 15 wrote both level_0_insights.md and world_model.md."
+   },
+   {
+    "claim": "Level 1 baseline: 17 actions, t1 ACTION3, t2 ACTION7 giving H4 'undo' at t3. Rows 0-62 match Tycho steps 0-5 = t3-t8 and step 14 = t17. H1/H2/H6/H7 were carried into Level 2 because clear_hypotheses_on_level=false.",
+    "verdict": "confirmed",
+    "detail": "Board hashes match at those points and also at steps 9, 10, 12 and 13 (t12, t13, t15, t16). The configuration event shows clear_hypotheses_on_level false, history_limit 8 and history_board_limit 3. H1, H2, H4, H5, H6 and H7 are all present at t18."
+   },
+   {
+    "claim": "Level 2 Tycho attempt 1 (steps 15-20): at step 20 it said the purple 'could be enemies or hazards' and still clicked (39,33), which caused GAME_OVER. The baseline died identically at t23.",
+    "verdict": "confirmed",
+    "detail": "Step 20's reasoning contains 'they could be enemies or hazards' and 'I'll go ahead and see how they behave'. The pre-death board b9e0ce19 is the same for Tycho after step 19 and the baseline after t22. Both clicked (39,33) from that board and got GAME_OVER."
+   },
+   {
+    "claim": "Step 22: 8 LLM calls, 6 run_python, 1 write_file. animation_index returned nothing and animation_grids raised FileNotFoundError ('pruned'), so it parsed the frame .txt files by hand. The 9-cells rise from rows 37-40 to row 19, sit under the f/b0b block in frames 15-16 and are gone from frame 17. It then wrote actor_beliefs.md with the rule and a route plan.",
+    "verdict": "confirmed",
+    "detail": "The calls are 1 animation_summary plus 7 freeform. animation_index printed '(no output)'. animation_grids raised 'animation frame not found or pruned'. The per-frame argwhere shows rows 37-40 at frame 0, rows 19-22 at frame 15, rows 20-21 at frame 16 and None from frame 17. A one-row wall at row 18 separates the b0b at row 17 from the piece at row 19 (tile-adjacent). actor_beliefs.md holds the GAME_OVER rule and the same route as baseline H13."
+   },
+   {
+    "claim": "The GAME_OVER evidence prompt included the diff, the death_006 files, pre- and post-death PNGs, the archived animation path and 'avoid equivalent actions unless deliberately probing'. The actor followed the archive path at once.",
+    "verdict": "confirmed",
+    "detail": "All of these are in the step-22 prompt. The prompt also explicitly said 'or read the frame_*.txt/png files', so hand-parsing the frames was suggested by the harness, not invented by the actor."
+   },
+   {
+    "claim": "Steps 23-35 executed the plan at about 51-371 output tokens per step. The feature section says 51-150.",
+    "verdict": "corrected",
+    "detail": "The actual range is 51-371 (step 30 = 371, step 32 = 238, step 35 = 174). The '51-150' figure in the multi-turn feature evidence is wrong."
+   },
+   {
+    "claim": "Step 42: 'Rising through ... columns 25 to 29 would run straight into purple ... fatal. So I need to shift one column further left.' The baseline's t48 death was 'the exact move Tycho rejected at step 42'.",
+    "verdict": "corrected",
+    "detail": "The quote is correct. The two harnesses split one action earlier than claimed, from the same board 63afca6b (Tycho after step 40 = baseline after t46). Tycho moved left (step 41) and then refused to click the green above x25-29. The baseline clicked (27,33) at t47 to open x25-29 and then moved left into it at t48. That is the same fatal column reached by a different action sequence, not the identical move. At t48 the baseline's H15 explicitly predicted the piece 'should then rise until it reaches the f tile at x25-29 y19-23'."
+   },
+   {
+    "claim": "Steps 43-45: tested ACTION7 and learned it is undo.",
+    "verdict": "confirmed",
+    "detail": "Step 43 clicked (21,33). Step 44 used ACTION7, whose board equals the post-step-42 board. Step 45's reasoning says 'I undid the click... the bar still grew', and step 45 re-clicked. Unlike the baseline, Tycho tested undo right after an action that changed the board, so the test was informative. It cost 2 wasted actions."
+   },
+   {
+    "claim": "Steps 47-48: argwhere(grid==9) found the player at [37,21]-[40,22] at the decisive state (step 47 = t73). A step-48 symbol-map dump of the whole grid then led to the correct 12-action right-shaft plan.",
+    "verdict": "corrected",
+    "detail": "The argwhere ran at step 47, before step 47's own (21,33) click. It was therefore on the post-step-46 board (= t72), not the decisive post-step-47 board (= t73). The right-shaft idea already appears in step 44's reasoning ('a route up the right-hand column through the greens at rows 13-35'). At step 48 the first call, with only the image and diff summary, already formed the plan ('clearing the five green blocks along row 37, then the two above column 49 ... about twelve actions') before the symbol dump. The dump confirmed the plan rather than producing it."
+   },
+   {
+    "claim": "Steps 48-54 are 7 clicks. Step 55 counted the bar (33). Steps 55-59 move right x5. Step 60 dumps the grid to find the pink. Steps 60-62 move left x3. Step 63 clicks (33,33) to win. Level 2 action mix: A6 24, A4 14, A3 9, RESET 1, A7 1.",
+    "verdict": "confirmed",
+    "detail": "All of these match the trace. At step 49 the model emitted 4 take_action calls and only the first executed. The quote 'Only one action per turn executes' is the actor's own step-50 response, not a harness message."
+   },
+   {
+    "claim": "Baseline Level 2: 83 actions (40 A6, 21 A4, 17 A3, 3 RESET, 2 A7), deaths at t23, t48 and t78, RESETs at t24, t49 and t79, no-ops at t31, t32, t75, t76 and t77, most-repeated clicks (33,33)x7, (39,33)x6, (21,33)x5.",
+    "verdict": "confirmed",
+    "detail": "All of these were recomputed from the bp35 transitions. The click counts are Level 2 only; (33,33) is 8 across the whole game."
+   },
+   {
+    "claim": "A2: H12 (supported_locally, ev t23) at t25. Downgraded at t33 and merged into a route plan. Hazard content gone t36-t41. t42-t48 H14 'hazards or goals... role unknown'. H13 at t25 is the same route Tycho used.",
+    "verdict": "confirmed",
+    "detail": "H12 is supported_locally from t25 to t32 and tentative with a route plan at t33. From t36 the H12 statement contains only the route plan. H14 at t42-t48 matches the quote. H13 at t25 is essentially identical to Tycho's step-22 actor_beliefs plan."
+   },
+   {
+    "claim": "By t25 the baseline had the right movement, green-removal, float-up, goal and spike rules.",
+    "verdict": "corrected",
+    "detail": "Movement (H1), green removal (H2), float-up (H6) and spikes (H12) were present at t25. The goal hypothesis H7 ('reaching the 7-cross completes the level') was dropped at t25 and never restored, and undo (H4) had been downgraded to tentative at t25."
+   },
+   {
+    "claim": "'ACTION7 is undo' (H4, supported t3-t23) was dropped at t29. ACTION7 was retested at t32 and t77, each time right after a no-op.",
+    "verdict": "corrected",
+    "detail": "H4 was downgraded to tentative at t25 and removed at t29. At t32 H20 says ACTION7 'might flip gravity or undo'. At t77 H29 says ACTION7 has an 'unknown effect'. Both tests came right after board no-ops (t31 and t76), so they showed nothing."
+   },
+   {
+    "claim": "A3 boards match Tycho's attempt 2 'board for board for 24 actions (t50-t73 = Tycho steps 22-47)', and the runs split at t74 vs step 48.",
+    "verdict": "corrected",
+    "detail": "t50-t58 = steps 22-30 and t63-t73 = steps 35-47. However t59-t62 differ from steps 31-34 (different action order, same endpoint), and Tycho spent 26 actions (including the click and undo at 43-44) against the baseline's 24. The split point at t74 vs step 48 is correct. The baseline actually reached the decisive state 2 actions more cheaply than Tycho."
+   },
+   {
+    "claim": "t74 clicked (21,33) a 4th time into a pocket walled on both sides. At t75 H24 proposed the same right corridor but misread the board by one tile row (wall in o74) and clicked a wall (no-op). t76 tested 'places an e block' (contradicted). At t78 H23 said spike contact 'either ends the game or just stops the piece', clicked (21,33) and died.",
+    "verdict": "confirmed",
+    "detail": "In o74 the piece is at x19-23 y37-41 with wall at x13-17 and x25-29. The green row has moved to y43-47 and y37-41 is wall at x25-47. H24 says 'At y37-41 the cells right of the piece (x25-53) are e tiles', which is wrong. The t75 click on (27,39) changed nothing. H27 is contradicted at t77. The H23 text at t78 matches the quote."
+   },
+   {
+    "claim": "A4: t80 H30 'Rising in column x19 sends the piece into the f spike' (supported_locally). By t100 H30 was tentative and H42 planned to click (21,33) and rise in x19-23, 'the column that killed it at t78'. The last board equals t70 = Tycho step 42.",
+    "verdict": "corrected",
+    "detail": "The H30 status changes and the board match (f3fa3536) are correct. The framing is misleading, though. At this board, clicking (21,33) and rising in x19-23 is the correct, safe next move: Tycho made exactly this move at steps 43/45-47, and the baseline did so safely at t71. The t78 death came several clicks further up the same column. This is not evidence of a repeated mistake."
+   },
+   {
+    "claim": "Each death cost a RESET plus roughly 14-26 replayed setup actions, about 60 in total.",
+    "verdict": "corrected",
+    "detail": "Counted as actions until each attempt passed the furthest board reached by earlier attempts, the replay is A2 8 (t25-t32, including 2 no-ops), A3 19 (t50-t68) and A4 21 (t80-t100). That is about 48 replayed actions plus 3 RESETs, not about 60."
+   },
+   {
+    "claim": "After the third RESET only 21 actions remained, while Tycho's successful attempt needed 42.",
+    "verdict": "confirmed",
+    "detail": "t80-t100 is 21 actions. Tycho steps 22-63 is 42 actions."
+   },
+   {
+    "claim": "Inference: deaths 2 and 3 both came right after the spike rule left the active hypotheses or was downgraded, so memory, not discovery, was the binding limit.",
+    "verdict": "corrected",
+    "detail": "This holds well for death 2, where 'role unknown' at t42-t48 led to a knowing rise to the f tile. Death 3's root cause was the t74 over-click into a dead-end pocket, a planning or board-reading error made while H14 still warned of spikes. Once in the pocket, the only non-fatal exit was ACTION7 undo, which the baseline had forgotten. The forgotten undo rule, more than the spike doubt, is the memory failure that made A3 unrecoverable."
+   },
+   {
+    "claim": "Feature 'multi-turn conversation within a level' is decisive. The conversation carried across the RESET (tokens_in 28,481 at step 22, cache_read growing 4,894 to 88,839, 0 compactions). The rule was cited at steps 32, 42, 44 and 48, and actor_beliefs.md was not re-read until step 64.",
+    "verdict": "corrected",
+    "detail": "The facts check out: prompts keep growing across the RESET, context_compactions is 0, the rule is cited at 32, 42, 44 and 48, and notes are not read between steps 23 and 63. cache_read stays at 4,894-5,249 through step 22 and grows only from step 23. The manifest context_config is tail_evict with reasoning_keep=3, image_keep=3 and text_keep=0, so the step-22 thinking was stripped after 3 turns. Retention came through the append-only tool-call and tool-result text, including the write_file arguments that carried the hazard rule. Calling it 'decisive' is plausible for death 2 but goes beyond the evidence: the outcome hinged on the t74 vs step-48 branch, which the analysis attributes to run_python."
+   },
+   {
+    "claim": "Feature 'persistent notes/level_summary across levels' is decisive (Level 3 solved with 0 deaths in 34 actions with 36 left; step 64 read level_1_insights.md and actor_beliefs.md; step 69 applied the hazard rule).",
+    "verdict": "corrected",
+    "detail": "The facts are correct: the step-64 prompt says 'Your conversation was cleared at the boundary', the notes were read, and step 69 applied the hazard rule. The baseline never reached Level 3, so nothing differentiated the harnesses there, and the baseline also carries hypotheses across levels. Being decisive for Tycho's L3 credit is an untested counterfactual. 'Likely important' fits better than 'decisive'."
+   },
+   {
+    "claim": "Level 3: step 64 probe click on orange (33,39). Step 65 'left an X'. Step 69 ceiling hypothesis from a grid dump. Step 70 'The X has turned orange'. Steps 70-71 built ceilings. Step 76 used wmlib.frames() f[(2,1)]/f[(2,4)] 'to confirm that orange and X toggle both ways'. Step 97 won with ACTION4 and wrote level_2_insights.md. Mix A6 14, A4 12, A3 8.",
+    "verdict": "corrected",
+    "detail": "Everything is verified except the purpose of the step-76 check. Step 76 compared frames to re-check the orange-to-X click from turn 1. X-to-orange had already been observed at step 70. Tycho's own grasp of the toggle stayed shaky: at step 93 it said 'I'm not certain'. The step-98 level_summary wrongly says X-to-solid 'hasn't been tested yet', although the file it wrote states both directions. The step-97 file was overwritten by the step-98 level_summary."
+   },
+   {
+    "claim": "Animation summaries: 15 calls, all fallback; 6 skipped by the cap and 72 filtered as local_motion; about $0.16; content sometimes wrong (step 4: 'ACTION4 moved the player upward').",
+    "verdict": "corrected",
+    "detail": "The counts and cost are correct: 15 calls, 15 with 'contextual summary call failed', 6 cap-skipped, 72 local_motion, $0.157. The step-4 example is not an error. The ACTION4 at step 3 (= baseline t6) did make the piece float up through the channel (baseline H6 at t7 says 'When the piece lined up with the vertical a-channel, it rose'). At most the scroll size ('about 3 cells' against roughly 18 rows) is off."
+   },
+   {
+    "claim": "Image input: 99 of 135 actor calls had an image. The image was mentioned explicitly only at steps 35 and 58. There is no evidence it supplied information the text lacked.",
+    "verdict": "corrected",
+    "detail": "The counts and the step 35/58 mentions are right. However, the step-48 right-shaft plan was formed in a call whose only fresh observation was the image plus diff summary, before any new grid dump. The image plausibly contributed, though older dumps were also in context. 'Unclear' is fair; 'no evidence' is too strong."
+   },
+   {
+    "claim": "The world-model builder, world_model.py, plan.py and verify.py were not used: builder_invocations 0; wm_activity builder_fires/plan_levels/steps_with_plan 0; world_model.py differs from the template only at line 80; plan and verify are byte-identical; mtimes 21:31:55; printed once at step 15; animload.py was the only code file written and was never imported.",
+    "verdict": "confirmed",
+    "detail": "The diff shows only line 80 (ACTIONS_LINE filled). cmp shows plan.py and verify.py identical to the templates. The mtimes equal worker_started (05:31:55Z = 21:31:55 local), and the first action came at 21:31:59. invoke_builder is present in the tools and the system prompt but never called. No later code mentions animload."
+   },
+   {
+    "claim": "Tycho compute: 156 calls (135 freeform / 15 animation / 6 level_summary); fresh in 1,650,226, cache_read 4,815,499, cache_write 151,976, out 47,567; $9.275 at $4/$20/$0.20/$5; 144 tool calls; per-level $1.47/$5.46/$2.04/$0.31; 73 of 99 steps single-call; median out 135; wall 704 s.",
+    "verdict": "confirmed",
+    "detail": "Every figure was recomputed exactly from trace llm_calls. They match inference_budget and the status events (156 llm_finished, $9.2752). The tool_trace has 138 calls (99 take_action, 36 run_python, 2 write_file, 1 set_verbosity) and level_summary has 6 (5 Write, 1 run_python)."
+   },
+   {
+    "claim": "Baseline compute: 97 model_returned, all attempt 0 and response_received; input 1,445,794, cache 0, output 201,123 (thinking 134,824); costUSD $9.81 = in\u00d74 + out\u00d720 per M; notional_cost_usd recorded as 0; L1 17 calls $1.46, L2 80 calls 1,209,523/175,490 $8.35; mean in 14,905, median out 1,345; model time 2,037 s.",
+    "verdict": "corrected",
+    "detail": "Every number checks out except notional_cost_usd. metadata.notional_cost_usd is set on every call, equals costUSD, and sums to $9.8056. The only zero is summary.json budget.estimated_usd_known = '0'."
+   },
+   {
+    "claim": "Scoring caveat: Tycho's 13.33 is local and appears to give Level 2 full credit at 49 vs 48. The baseline's 2.22 is official. The scorecard says GAME_OVER while summary.games and t100 say NOT_FINISHED. The run is labelled exposed_development.",
+    "verdict": "confirmed",
+    "detail": "The scores are level-index weighted (weights 1..9, sum 45): 2.22 = 1/45 and 13.33 = 6/45. That requires full credit for L2. A linear 48/49 credit would give about 13.24. The scorecard run state is GAME_OVER, summary.games final_state is NOT_FINISHED, and exposure is 'exposed_development'."
+   },
+   {
+    "claim": "Backends: Tycho uses the Anthropic API with caching and max_tokens 24,000. The baseline uses Claude Code CLI 2.1.318, max 32,000, no caching. Both run opus-5-5 at effort high with adaptive thinking. TYCHO_MAX_GAME_ACTIONS=100 counts RESETs. git f68912a-dirty.",
+    "verdict": "confirmed",
+    "detail": "Manifest run_config: TYCHO_MAX_TOKENS 24000, TYCHO_MAX_GAME_ACTIONS 100, ANTHROPIC_THINKING adaptive, prompt_caching on, git f68912a-dirty-f7e31e506fc5, reset_actions_counted true. Baseline request max_tokens 32000, cli_version 2.1.318, cache tokens 0."
+   }
+  ],
+  "corrected_compute": "Tycho (all figures recomputed exactly): 156 LLM calls.\n- 135 freeform: fresh in 1,589,494, cache_read 4,492,681, cache_write 151,976, out 38,603, $8.789.\n- 15 animation_summary: in 9,352, out 5,960, $0.157.\n- 6 level_summary: in 51,380, cache_read 322,818, out 3,004, $0.330.\n- Totals: fresh in 1,650,226, cache_read 4,815,499, cache_write 151,976 (sum 6,617,701), out 47,567, $9.2752 at $4/$20/$0.20/$5 per M. This matches inference_budget and the status events.\n- Per level: L1 $1.468, L2 $5.461, L3 $2.041, L4 $0.305.\n- Tool calls: 144. The tool_trace has 138 (99 take_action, 36 run_python, 2 write_file, 1 set_verbosity) and level_summary calls made 6 (5 Write, 1 run_python). 3 more take_actions were emitted at step 49 and not executed. The 'Only one action per turn executes' line is the actor's own step-50 text, not a harness message.\n- 73 of 99 non-RESET steps used a single call; median output per step was 135. Wall clock 704.34 s.\n\nBaseline (bp35 only):\n- 97 model calls, all attempt 0 and response_received. input 1,445,794, cache 0/0, output 201,123 (thinking 134,824).\n- costUSD $9.8056 = in\u00d7$4/M + out\u00d7$20/M. metadata.notional_cost_usd is NOT 0: it is set per call, equals costUSD and sums to $9.8056. Only summary.json budget.estimated_usd_known is '0'.\n- L1: 17 calls, 236,271 in / 25,633 out, $1.458. L2: 80 calls, 1,209,523 in / 175,490 out, $8.348.\n- Mean input 14,905; median output 1,345 (mean 2,073). Model time 2,037 s.\n\nRatios: total input 4.58x (fresh-only input 1.14x); output 0.237x, i.e. Tycho wrote 4.23x less.\n\nReplay accounting: about 48 replayed actions (A2 8, A3 19, A4 21) plus 3 RESETs, not about 60.",
+  "missing": [
+   "Tycho's context policy matters for the 'decisive multi-turn conversation' claim. The manifest context_config is tail_evict with reasoning_keep=3, image_keep=3/cap 4 and text_keep=0. Model thinking was stripped after 3 turns, so inside Level 2 the spike rule survived through the append-only tool-call and tool-result text (for example the step-22 write_file arguments carrying the rule), not through retained reasoning.",
+   "Undo was the escape from the t74 trap. After t74 the only non-fatal move was ACTION7 back to o73, which would have restored the right-shaft option (H24). Losing H4 at t29, and then testing ACTION7 only after no-ops, made A3 unrecoverable. This is a more direct memory failure behind death 3 than the spike-rule doubt.",
+   "The goal hypothesis (H7) was also dropped at t25 and never restored.",
+   "Tycho made comparable mistakes at the same branch, and the margin was thin. At steps 43-45 it clicked, undid and re-clicked (2 wasted actions). Its step-46 plan ('rise to row 25 and then right to column 25') was essentially the baseline's H21 plan that led to the t74 over-click. It changed course only after re-examining the board at step 48.",
+   "The right-shaft idea first appears in Tycho's step-44 reasoning. At step 48 the 12-action plan was formed in the image-only first call, before the symbol dump. This weakens the 'symbol dump led to the plan' attribution and the 'no evidence for vision' claim.",
+   "In A3 the baseline reached the decisive state (t73) in 24 actions against Tycho's 26, so route execution efficiency was not the baseline's problem.",
+   "At t48 the baseline's H15 explicitly predicted the piece would 'rise until it reaches the f tile'. Death 2 was a knowing action under the 'role unknown' belief.",
+   "In A2 the baseline abandoned its own correct H13 plan at t27-t32. Detours and 2 no-ops cost about 6 actions before it resumed the route.",
+   "Tycho's own in-level memory was imperfect in Level 3. At step 93 it was 'not certain' about the orange/X toggle. The step-98 level_summary misreported the X-to-solid direction as untested.",
+   "Tycho wrote actor_beliefs.md only once (step 22) and never updated it for Level 3, despite the system prompt calling it 'your memory across turns'.",
+   "Scoring formula: scores are level-index weighted (1..9, sum 45), so Level 3 is worth 3x Level 1. Most of Tycho's score margin (5 of the 6/45) comes from Levels 2-3. An official-style 48/49 credit for L2 would give about 13.24, not 13.33."
+  ]
+ }
+]

@@ -1,0 +1,7 @@
+# Level 6 insights (solved: attempt 0 died at turn 9, attempt 1 won in 44 actions)
+- Map is tall (world rows ~-53..79), scrolls vertically. Left column (cols 1-5) is a stack of RED tiles, one per tile row; clicking any red flips gravity and that red turns cyan (consumed). Plenty of reds, so gravity flips are effectively unlimited (just click a visible red).
+- Death in attempt 0: rising up the k=7 right shaft (cols 55-59) with gravity up ends adjacent to a down-facing hazard at the top -> GAME_OVER. Hazard rule (tile adjacent to b0b face = death) held again.
+- Method that worked: build a stitched world map from all frames + animation frames (stitch.py: vertical-shift matching), classify 6px tiles (l6solver.py), BFS over (row,k,gravity,orange states) with clickable oranges limited to visible ones (l6bfs.py, staged with a restricted orange subset to keep the BFS small). The BFS plan executed exactly as predicted.
+- Win: fall (gravity down) into pink tile (pink at k=1, world ~row 73 in turn0 coords). Entering pink from any direction wins.
+- Route: R x3, red(down), click X under, red(up), R,R (up k6 shaft), L x4, red(down), click X, red(up), L,L (up to top room), R, red, R, click X, red, click 3 oranges, R, click orange, red, R, click X, red, R,R, red(down)-> down k7 shaft to bottom, L,L, red(up), L x4, red(down) onto pink.
+- Next level likely: even taller map, more oranges/hazards; reuse stitch.py + l6solver/l6bfs approach (re-derive map from attempt frames; the death animation reveals a lot of map cheaply).
