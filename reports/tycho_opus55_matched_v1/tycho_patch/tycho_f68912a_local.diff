@@ -1,0 +1,558 @@
+diff --git a/configs/local/opus55_orchestrator_matched.yaml b/configs/local/opus55_orchestrator_matched.yaml
+new file mode 100644
+index 0000000..1cf2afb
+--- /dev/null
++++ b/configs/local/opus55_orchestrator_matched.yaml
+@@ -0,0 +1,43 @@
++# Local comparison run: Tycho's published selected policy (configs/paper/opus5_orchestrator.yaml)
++# with only the model and effort changed to match the user's Opus 5.5 baseline
++# (claude-opus-5-5, effort high), plus the baseline's 100-action-per-game cap (reasoning.max_game_actions).
++model:
++  backend: anthropic
++  llm_model: claude-opus-5-5
++  effort: high
++  # Opus 5.5 thinking is always on; "adaptive" sends {type: adaptive} explicitly so block_binding can attach.
++  anthropic_thinking: adaptive
++  http_timeout: 1800
++  retry_budget_s: 3600
++
++reasoning:
++  effort: high
++  max_tokens: 24000
++  max_llm_calls: 3500
++  max_tool_steps: 40
++  # Per-game list-price ceiling (USD). Console promo credits $258.06 (expire 11/11 and 11/30);
++  # $100 x 2 games stays well under them, so purchased credits / auto-reload are never touched.
++  max_inference_cost_per_game: 100
++  # Matches the baseline: 100 scored actions per game, RESETs included (local patch, harness.py).
++  max_game_actions: 100
++
++vision:
++  vision: true
++  text_grid: full
++
++context:
++  prompt_caching: true
++  history: tail_evict
++  grid_keep: 3
++  image_keep: 3
++  image_evict_mult: 2
++  image_cap: 4
++  reasoning_keep: 3
++  cache_rolling_every: 8
++  context_emergency_soft_tokens: 850000
++
++orchestration:
++  mode: orchestrator
++
++dev:
++  meta_reflect: true
+diff --git a/tests/test_local_opus55_patches.py b/tests/test_local_opus55_patches.py
+new file mode 100644
+index 0000000..6433615
+--- /dev/null
++++ b/tests/test_local_opus55_patches.py
+@@ -0,0 +1,202 @@
++"""Tests for the local comparison-run patches (game action cap, Opus 5.5 pricing, thinking binding)."""
++from __future__ import annotations
++
++import io
++import os
++import urllib.error
++from types import SimpleNamespace
++
++import pytest
++from arcengine import GameAction, GameState
++
++from tycho.harness.agent import ActionChoice
++from tycho.harness.harness import run_env
++from tycho.serving import public_backends as backends
++from tycho.serving.pricing import price_for, usage_cost_usd
++
++
++# ---------------------------------------------------------------- whole-game action cap
++
++class _Env:
++    """Never wins; GAME_OVER on every 4th agent action so automatic RESETs are exercised."""
++
++    def __init__(self):
++        self.actions = []
++
++    def _frame(self, state=GameState.NOT_FINISHED):
++        return SimpleNamespace(frame=[[[0]]], levels_completed=0, state=state, available_actions=[1])
++
++    def reset(self):
++        return self._frame()
++
++    def step(self, action, data=None, reasoning=None):
++        self.actions.append(action)
++        if action is GameAction.RESET:
++            return self._frame()
++        n_agent = sum(1 for a in self.actions if a is not GameAction.RESET)
++        return self._frame(GameState.GAME_OVER if n_agent % 4 == 0 else GameState.NOT_FINISHED)
++
++
++class _Arcade:
++    def __init__(self):
++        self.env = _Env()
++
++    def make(self, game_id, seed=0, scorecard_id=None):
++        return self.env
++
++
++class _Agent:
++    calls = 0
++    max_calls = 10_000
++    builder = None
++
++    def reset(self, game_id, available_actions):
++        pass
++
++    def is_done(self, frames, latest_frame):
++        return False
++
++    def choose_action(self, frames, latest_frame, available_actions):
++        return ActionChoice(GameAction.ACTION1)
++
++    def note_external_reset(self, *a, **k):
++        pass
++
++
++@pytest.mark.parametrize("cap", [1, 7, 8, 100])
++def test_game_action_cap_counts_resets_and_stops_exactly(monkeypatch, cap):
++    monkeypatch.setenv("TYCHO_MAX_GAME_ACTIONS", str(cap))
++    arc = _Arcade()
++    rec = run_env(_Agent(), arc, "cap-game", [1000], keep_trace=True)
++    assert len(arc.env.actions) == cap  # RESETs included, never cap + 1
++    assert rec.stop_reason == "game_action_limit"
++    assert rec.total_actions_including_unfinished == cap
++    assert rec.resets == sum(1 for a in arc.env.actions if a is GameAction.RESET)
++
++
++def test_game_action_cap_off_by_default(monkeypatch):
++    monkeypatch.delenv("TYCHO_MAX_GAME_ACTIONS", raising=False)
++    arc = _Arcade()
++    rec = run_env(_Agent(), arc, "cap-game", [3], keep_trace=True)  # per-level budget 15 binds
++    assert rec.stop_reason == "level_action_budget"
++    assert len(arc.env.actions) == 15
++
++
++# ---------------------------------------------------------------- pricing
++
++def test_opus55_priced_separately_from_opus5():
++    assert price_for("claude-opus-5-5") == (4.0, 20.0, 0.20, 5.0)
++    assert price_for("claude-opus-5") == (5.0, 25.0, 0.50, 6.25)
++    one_m = {"tokens_in": 1_000_000, "tokens_out": 1_000_000, "cache_read": 1_000_000, "cache_write": 1_000_000}
++    assert usage_cost_usd(one_m, "claude-opus-5-5") == pytest.approx(29.2)
++    assert usage_cost_usd(one_m, "claude-opus-5") == pytest.approx(36.75)
++
++
++# ---------------------------------------------------------------- thinking binding
++
++def _cfg():
++    return SimpleNamespace(model="claude-opus-5-5", base_url="https://example.invalid/v1", api_key="k")
++
++
++def _ok_response():
++    return {"content": [{"type": "text", "text": "hi"}], "stop_reason": "end_turn",
++            "usage": {"input_tokens": 1, "output_tokens": 1},
++            "input_transformations": [{"type": "thinking_dropped", "reason": "prefix_binding_mismatch"}]}
++
++
++def _http_400(body: str):
++    exc = urllib.error.HTTPError("https://example.invalid/v1/messages", 400, "Bad Request", {}, io.BytesIO(b""))
++    exc._tycho_body = body
++    return exc
++
++
++@pytest.fixture
++def clean_binding(monkeypatch):
++    for k in ("ANTHROPIC_BLOCK_BINDING", "ANTHROPIC_BETA", "ANTHROPIC_THINKING_DISPLAY", "ANTHROPIC_EFFORT"):
++        monkeypatch.delenv(k, raising=False)
++    monkeypatch.setenv("ANTHROPIC_THINKING", "adaptive")
++    monkeypatch.setattr(backends, "_BINDING_AUTO", False)
++    yield
++    backends._BINDING_AUTO = False
++
++
++def test_binding_off_by_default_sends_upstream_shape(monkeypatch, clean_binding):
++    sent = []
++    monkeypatch.setattr(backends, "_post_json", lambda url, body, headers, t, r: sent.append((body, headers)) or _ok_response())
++    backends.anthropic_tools([{"role": "user", "content": "x"}], [], _cfg(), "sys", 100, 10, "high", None)
++    body, headers = sent[0]
++    assert body["thinking"] == {"type": "adaptive"}
++    assert "anthropic-beta" not in headers
++    assert body["output_config"] == {"effort": "high"}
++
++
++def test_binding_400_flips_to_drop_block_and_retries_once(monkeypatch, clean_binding):
++    sent = []
++
++    def post(url, body, headers, t, r):
++        sent.append((body, headers))
++        if len(sent) == 1:
++            raise _http_400("messages.5.content.0: Invalid `signature` in `thinking` block. The block is "
++                            "bound to a different conversation. Remove the block, or set ...")
++        return _ok_response()
++
++    monkeypatch.setattr(backends, "_post_json", post)
++    reply = backends.anthropic_tools([{"role": "user", "content": "x"}], [], _cfg(), "sys", 100, 10, "high", None)
++    assert len(sent) == 2
++    body, headers = sent[1]
++    assert body["thinking"] == {"type": "adaptive", "block_binding": {"prefix_mismatch_behavior": "drop_block"}}
++    assert backends._BINDING_BETA in headers["anthropic-beta"]
++    assert backends._binding_mode() == "drop_block"
++    assert reply["input_transformations"][0]["type"] == "thinking_dropped"
++    # Later requests in the process carry it from the start.
++    backends.anthropic_tools([{"role": "user", "content": "x"}], [], _cfg(), "sys", 100, 10, "high", None)
++    assert len(sent) == 3 and "block_binding" in sent[2][0]["thinking"]
++
++
++def test_other_400s_still_raise(monkeypatch, clean_binding):
++    def post(url, body, headers, t, r):
++        raise _http_400("messages: text content blocks must be non-empty")
++
++    monkeypatch.setattr(backends, "_post_json", post)
++    with pytest.raises(urllib.error.HTTPError):
++        backends.anthropic_tools([{"role": "user", "content": "x"}], [], _cfg(), "sys", 100, 10, "high", None)
++    assert backends._binding_mode() == ""
++
++
++def test_binding_forced_off_does_not_retry(monkeypatch, clean_binding):
++    monkeypatch.setenv("ANTHROPIC_BLOCK_BINDING", "off")
++
++    def post(url, body, headers, t, r):
++        raise _http_400("The block is bound to a different conversation.")
++
++    monkeypatch.setattr(backends, "_post_json", post)
++    with pytest.raises(urllib.error.HTTPError):
++        backends.anthropic_tools([{"role": "user", "content": "x"}], [], _cfg(), "sys", 100, 10, "high", None)
++
++
++def test_display_and_forced_binding(monkeypatch, clean_binding):
++    monkeypatch.setenv("ANTHROPIC_BLOCK_BINDING", "drop_block")
++    monkeypatch.setenv("ANTHROPIC_THINKING_DISPLAY", "summarized")
++    sent = []
++    monkeypatch.setattr(backends, "_post_json", lambda url, body, headers, t, r: sent.append((body, headers)) or _ok_response())
++    backends.anthropic_tools([{"role": "user", "content": "x"}], [], _cfg(), "sys", 100, 10, "high", None)
++    assert sent[0][0]["thinking"] == {"type": "adaptive", "display": "summarized",
++                                     "block_binding": {"prefix_mismatch_behavior": "drop_block"}}
++
++
++def test_empty_text_and_tool_output_get_placeholders():
++    history = [
++        {"role": "user", "content": "go"},
++        {"role": "assistant", "content": ""},
++        {"role": "user", "content": "again"},
++        {"role": "assistant", "content": "\n\n", "tool_calls": [{"id": "t1", "name": "x", "input": {}}]},
++        {"role": "tool", "results": [{"id": "t1", "output": " \n"}]},
++        {"role": "assistant", "content": "  "},
++    ]
++    msgs = backends._anthropic_history(history, None)
++    assert msgs[1]["content"] == [{"type": "text", "text": "(no text)"}]
++    assert [b["type"] for b in msgs[3]["content"]] == ["tool_use"]  # whitespace text dropped
++    assert msgs[4]["content"][0]["content"][0]["text"] == "(no output)"
++    assert msgs[5]["content"] == [{"type": "text", "text": "(no text)"}]
++    # Non-empty text passes through unchanged (upstream bytes).
++    assert backends._anthropic_history([{"role": "user", "content": "go"}], None)[0]["content"] == [{"type": "text", "text": "go"}]
+diff --git a/tycho/agent/agent.py b/tycho/agent/agent.py
+index aa6c1a1..04ef342 100644
+--- a/tycho/agent/agent.py
++++ b/tycho/agent/agent.py
+@@ -1670,6 +1670,11 @@ class TychoAgent(Agent):
+             self.context_emergency_keep_turns // (2 ** (self._context_compaction_streak - 1)),
+         )
+         suffix = self._context_rescue_suffix(keep_turns)
++        # Local patch (preserved thinking): retained blocks are bound to the removed prefix.
++        from tycho.serving.public_backends import _binding_mode
++        if _binding_mode():
++            for m in suffix:
++                _strip_reasoning(m)
+         if not suffix:
+             latest_frame_msg = self._latest_frame_user_message()
+             suffix = [latest_frame_msg] if latest_frame_msg is not None else []
+@@ -2273,12 +2278,15 @@ class TychoAgent(Agent):
+         """
+         keep = max(0, self.cache_image_keep)
+         threshold = max(keep + 1, keep * self.cache_image_evict_mult + 1)
++        n_media0 = _image_payload_count(self.history)  # local patch: detect earlier-turn edits
++        history_edited = False
+ 
+         # Grid prompt-embeds are huge request-body payloads; keep at most the latest one even in
+         # cache mode. Production configurations normally leave TYCHO_GRID_EMBEDS off.
+         emb_idx = [i for i, m in enumerate(self.history) if _has_grid_embeds(m)]
+         for i in emb_idx[:-1]:
+             _strip_grid_embeds(self.history[i])
++            history_edited = True
+ 
+         img_idx = [i for i, m in enumerate(self.history) if _has_image(m)]
+         if len(img_idx) >= threshold:
+@@ -2311,6 +2319,17 @@ class TychoAgent(Agent):
+             if len(big) > text_cap:
+                 for i in big[:len(big) - text_cap]:
+                     _elide_text(self.history[i])
++                history_edited = True
++
++        # Local patch (preserved thinking): once an earlier turn has been edited, every replayed
++        # thinking block is bound to a prefix that no longer exists. Under binding mode, remove all
++        # of them (a leading-run removal, which the API allows) instead of letting drop_block also
++        # discard the current turn's still-valid blocks on later calls. Inert unless binding is on.
++        if history_edited or _image_payload_count(self.history) < n_media0:
++            from tycho.serving.public_backends import _binding_mode
++            if _binding_mode():
++                for m in self.history:
++                    _strip_reasoning(m)
+ 
+         # Provider reasoning payloads are not prefix-cache-stable and dominate long contexts. Evict
+         # Anthropic raw_reasoning and GPT reasoning_items on the same policy in every context mode.
+diff --git a/tycho/config/run_config.py b/tycho/config/run_config.py
+index da5cd51..b2fc9b6 100644
+--- a/tycho/config/run_config.py
++++ b/tycho/config/run_config.py
+@@ -66,6 +66,7 @@ CONFIG_KEYS: list[ConfigKey] = [
+     ConfigKey("TYCHO_MAX_LLM_CALLS", "reasoning", "1100", "whole-game LLM-call ceiling"),
+     ConfigKey("TYCHO_MAX_INFERENCE_COST_PER_GAME", "reasoning", "0", "public-list USD-equivalent inference budget per game (0 = off)"),
+     ConfigKey("TYCHO_MAX_INFERENCE_COST_PER_LEVEL", "reasoning", "0", "public-list USD-equivalent inference budget per level (0 = off)"),
++    ConfigKey("TYCHO_MAX_GAME_ACTIONS", "reasoning", "0", "whole-game cap on scored actions incl. in-play RESETs (0 = off)"),
+     ConfigKey("TYCHO_MAX_TOOL_STEPS", "reasoning", "25", "cognitive tool calls/turn before forced action"),
+     ConfigKey("TYCHO_WALLCLOCK_BUDGET_SECONDS", "runtime", "0", "whole-run wall-clock guard"),
+     ConfigKey("TYCHO_PER_GAME_WALLCLOCK_BUDGET_SECONDS", "runtime", "0", "per-game wall-clock guard"),
+diff --git a/tycho/harness/harness.py b/tycho/harness/harness.py
+index c862ff6..9ea232d 100644
+--- a/tycho/harness/harness.py
++++ b/tycho/harness/harness.py
+@@ -36,6 +36,20 @@ ENV_DIR = REPO_ROOT / "environment_files"
+ RESULTS_DIR = REPO_ROOT / "results"
+ ACTION_BUDGET_MULTIPLIER = 5  # official eval cutoff: 5 * human_baseline per level
+ 
++
++def _max_game_actions() -> int:
++    """TYCHO_MAX_GAME_ACTIONS: whole-game cap on scored actions.
++
++    Counts every env.step() the play loop issues (ACTION1-7, agent RESETs, and the automatic
++    post-GAME_OVER RESET), i.e. what the ARC scorecard counts; the initial env.reset() is free, as
++    on the scorecard. Unset or 0 disables the cap (upstream behaviour).
++    """
++    raw = os.environ.get("TYCHO_MAX_GAME_ACTIONS", "").strip()
++    n = int(raw) if raw else 0
++    if n < 0:
++        raise ValueError(f"TYCHO_MAX_GAME_ACTIONS must be >= 0, got {n}")
++    return n
++
+ log = logging.getLogger("tycho.harness")
+ 
+ 
+@@ -259,6 +273,7 @@ def run_env(
+     """
+     keep_trace = keep_trace or keep_frames
+     n_levels = len(baselines)
++    max_game_actions = _max_game_actions()
+     env = arc.make(game_id, seed=seed, scorecard_id=scorecard_id)
+     t0 = time.time()
+ 
+@@ -361,6 +376,14 @@ def run_env(
+             _finish_replay(agent, snapshot, game_id)
+             resuming = False  # only once
+ 
++        # Whole-game action cap. turn == env.step() calls so far (replayed + live, RESETs included)
++        # == scorecard actions for this play. Checked before the GAME_OVER branch so action N+1
++        # (not even the automatic RESET) is never sent, and after _finish_replay so a resumed
++        # record carries the restored actor's inference budget.
++        if max_game_actions and turn >= max_game_actions:
++            stop_reason = "game_action_limit"
++            break
++
+         # A mid-game exception (for example a provider outage or an agent bug)
+         # must NOT discard the trace collected so far — break with a partial record
+         # instead of propagating. The caller persists what we have (overnight runs
+diff --git a/tycho/serving/pricing.py b/tycho/serving/pricing.py
+index b94eb81..f021d4f 100644
+--- a/tycho/serving/pricing.py
++++ b/tycho/serving/pricing.py
+@@ -15,6 +15,7 @@ USAGE_KEYS = ("tokens_in", "tokens_out", "cache_read", "cache_write")
+ # (fresh input, output, cache read, five-minute cache write), USD per million tokens.
+ PRICE_PER_1M = {
+     "fable-5": (10.0, 50.0, 1.0, 12.50),
++    "opus-5-5": (4.0, 20.0, 0.20, 5.0),
+     "opus-5": (5.0, 25.0, 0.50, 6.25),
+     "opus-4-8": (5.0, 25.0, 0.50, 6.25),
+     "opus-4-7": (5.0, 25.0, 0.50, 6.25),
+@@ -42,6 +43,8 @@ def price_for(model: str) -> tuple[float, float, float, float] | None:
+         return (0.0, 0.0, 0.0, 0.0)
+     if "fable-5" in name:
+         return PRICE_PER_1M["fable-5"]
++    if "opus-5-5" in name or "opus-5.5" in name:
++        return PRICE_PER_1M["opus-5-5"]
+     if "opus-5" in name or "opus-5.0" in name:
+         return PRICE_PER_1M["opus-5"]
+     if "opus-4-8" in name or "opus-4.8" in name:
+diff --git a/tycho/serving/public_backends.py b/tycho/serving/public_backends.py
+index fd7c49c..792c5f9 100644
+--- a/tycho/serving/public_backends.py
++++ b/tycho/serving/public_backends.py
+@@ -11,6 +11,7 @@ from __future__ import annotations
+ import base64
+ import copy
+ import json
++import logging
+ import os
+ import urllib.error
+ import urllib.request
+@@ -123,7 +124,9 @@ def _anthropic_part(part: dict) -> dict:
+ 
+ def _anthropic_content(content) -> list[dict]:
+     if isinstance(content, str):
+-        return [{"type": "text", "text": content}]
++        # Local patch: the Messages API rejects empty text blocks (e.g. a stored reply that had
++        # neither text nor tool_use after a length stop or refusal). Deterministic placeholder.
++        return [{"type": "text", "text": content if content.strip() else "(no text)"}]
+     blocks = [_anthropic_part(part) for part in content]
+     return blocks or [{"type": "text", "text": "(elided)"}]
+ 
+@@ -162,7 +165,8 @@ def _anthropic_history(history: list[dict], cache_anchor_index: int | None) -> l
+         if message["role"] == "tool":
+             results = []
+             for result in message["results"]:
+-                content = [{"type": "text", "text": str(result.get("output", ""))}]
++                output = str(result.get("output", ""))
++                content = [{"type": "text", "text": output if output.strip() else "(no output)"}]
+                 if result.get("image_png") is not None:
+                     content.append(_anthropic_part({"image_png": result["image_png"]}))
+                 results.append(
+@@ -171,7 +175,7 @@ def _anthropic_history(history: list[dict], cache_anchor_index: int | None) -> l
+             messages.append({"role": "user", "content": results})
+         elif message.get("tool_calls"):
+             content = list(message.get("raw_reasoning") or [])
+-            if message.get("content"):
++            if (message.get("content") or "").strip():  # local patch: skip whitespace-only text
+                 content.append({"type": "text", "text": message["content"]})
+             content.extend(
+                 {
+@@ -198,13 +202,77 @@ def _anthropic_history(history: list[dict], cache_anchor_index: int | None) -> l
+     return messages
+ 
+ 
+-def _anthropic_thinking(body: dict, effort: str, max_tokens: int) -> None:
++# Local patch: preserved-thinking conversation binding (Claude Opus 5.5 / Fable 5.1 and later).
++# Tycho edits earlier turns (image caps, eviction, emergency compaction), which invalidates every
++# later replayed thinking block. Accounts created on/after 2026-08-31 then get a 400. Auto mode
++# (ANTHROPIC_BLOCK_BINDING unset) leaves requests untouched until the first such 400, then retries
++# that request once with prefix_mismatch_behavior=drop_block and keeps it on for this process, so
++# non-enforced accounts keep upstream behaviour. "drop_block"/"error" force it; "off" disables it.
++_BINDING_BETA = "thinking-binding-controls-2026-08-01"
++_BINDING_AUTO = False
++BINDING_STATS = {"auto_enabled": 0, "requests_with_drops": 0, "dropped_blocks": 0, "allowed_mismatches": 0}
++_log = logging.getLogger("tycho.serving.binding")
++
++
++def _binding_mode() -> str:
++    v = os.environ.get("ANTHROPIC_BLOCK_BINDING", "").strip().lower()
++    if v in ("drop_block", "error"):
++        return v
++    if v in ("off", "0", "false", "none"):
++        return ""
++    return "drop_block" if _BINDING_AUTO else ""
++
++
++def _is_binding_error(exc) -> bool:
++    if not isinstance(exc, urllib.error.HTTPError) or exc.code != 400:
++        return False
++    body = getattr(exc, "_tycho_body", "") or ""
++    return "bound to a different conversation" in body or "prefix_mismatch_behavior" in body
++
++
++def _anthropic_headers(cfg, binding: str) -> dict:
++    headers = {
++        "Content-Type": "application/json",
++        "anthropic-version": os.environ.get("ANTHROPIC_VERSION", "2023-06-01"),
++        "x-api-key": cfg.api_key,
++    }
++    betas = [b.strip() for b in os.environ.get("ANTHROPIC_BETA", "").split(",") if b.strip()]
++    if binding and _BINDING_BETA not in betas:
++        betas.append(_BINDING_BETA)
++    if betas:
++        headers["anthropic-beta"] = ",".join(betas)
++    return headers
++
++
++def _note_transformations(items) -> None:
++    dropped = [i for i in items or [] if isinstance(i, dict) and i.get("type") == "thinking_dropped"]
++    allowed = [i for i in items or [] if isinstance(i, dict) and i.get("type") == "thinking_mismatch_allowed"]
++    if dropped:
++        BINDING_STATS["requests_with_drops"] += 1
++        BINDING_STATS["dropped_blocks"] += len(dropped)
++    BINDING_STATS["allowed_mismatches"] += len(allowed)
++    if dropped or allowed:
++        _log.info("binding transformations: dropped=%d allowed=%d stats=%s", len(dropped), len(allowed), BINDING_STATS)
++
++
++def _anthropic_thinking(body: dict, effort: str, max_tokens: int, binding: str = "") -> None:
+     effort = (os.environ.get("ANTHROPIC_EFFORT") or effort or "").lower()
+     if effort and effort not in ("off", "none", "0", "false"):
+         body["output_config"] = {"effort": effort}
+     mode = os.environ.get("ANTHROPIC_THINKING", "off").lower()
+     if mode in ("", "off", "none", "0", "false"):
+-        return
++        if not binding:
++            return
++        mode = "adaptive"
++    _anthropic_thinking_mode(body, mode, max_tokens)
++    display = os.environ.get("ANTHROPIC_THINKING_DISPLAY", "").strip().lower()
++    if display and body["thinking"].get("type") == "adaptive":
++        body["thinking"]["display"] = display
++    if binding:
++        body["thinking"]["block_binding"] = {"prefix_mismatch_behavior": binding}
++
++
++def _anthropic_thinking_mode(body: dict, mode: str, max_tokens: int) -> None:
+     if mode == "enabled":
+         budget = int(
+             os.environ.get(
+@@ -238,18 +306,25 @@ def anthropic_tools(history, tools, cfg, system, max_tokens, timeout, effort, re
+             if _anthropic_cache_on()
+             else system
+         )
+-    _anthropic_thinking(body, effort, max_tokens)
+-    headers = {
+-        "Content-Type": "application/json",
+-        "anthropic-version": os.environ.get("ANTHROPIC_VERSION", "2023-06-01"),
+-        "x-api-key": cfg.api_key,
+-    }
+-    beta = os.environ.get("ANTHROPIC_BETA", "")
+-    if beta:
+-        headers["anthropic-beta"] = beta
+-    response = _post_json(
+-        f"{cfg.base_url}/messages", body, headers, timeout, retry
+-    )
++    global _BINDING_AUTO
++    binding = _binding_mode()
++    _anthropic_thinking(body, effort, max_tokens, binding)
++    url = f"{cfg.base_url}/messages"
++    try:
++        response = _post_json(url, body, _anthropic_headers(cfg, binding), timeout, retry)
++    except urllib.error.HTTPError as exc:
++        forced_off = os.environ.get("ANTHROPIC_BLOCK_BINDING", "").strip().lower() in ("off", "0", "false", "none")
++        if binding or forced_off or not _is_binding_error(exc):
++            raise
++        _log.warning("thinking-binding 400 (enforced account); retrying with drop_block")
++        binding = "drop_block"
++        body.pop("thinking", None)
++        _anthropic_thinking(body, effort, max_tokens, binding)
++        response = _post_json(url, body, _anthropic_headers(cfg, binding), timeout, retry)
++        _BINDING_AUTO = True  # latch only after the retry succeeded; stays on for this process
++        BINDING_STATS["auto_enabled"] += 1
++    if binding:
++        _note_transformations(response.get("input_transformations"))
+     text, reasoning, calls, raw_reasoning = "", [], [], []
+     for block in response.get("content", []):
+         kind = block.get("type")
+@@ -270,6 +345,9 @@ def anthropic_tools(history, tools, cfg, system, max_tokens, timeout, effort, re
+         "reasoning": "\n".join(reasoning),
+         "raw_reasoning": raw_reasoning or None,
+         "usage": normalize_usage(response.get("usage")),
++        # Local patch: observability only (dropped thinking blocks, refusal details).
++        "input_transformations": response.get("input_transformations") or [],
++        "stop_details": response.get("stop_details"),
+     }
+ 
+ 

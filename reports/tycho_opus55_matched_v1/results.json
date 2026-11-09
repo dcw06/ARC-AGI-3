@@ -1,0 +1,244 @@
+{
+  "schema": "tycho_opus55_matched_v1.results",
+  "games": {
+    "lf52": {
+      "baseline": {
+        "game_id": "lf52-271a04aa",
+        "score": 1.8181818181818181,
+        "levels_completed": 1,
+        "level_count": 10,
+        "actions": 100,
+        "resets": 0,
+        "state": "NOT_FINISHED",
+        "level_actions": [
+          8,
+          92,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "level_baseline_actions": [
+          32,
+          81,
+          60,
+          71,
+          205,
+          148,
+          244,
+          109,
+          164,
+          225
+        ],
+        "level_scores": [
+          115.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "guid": "45a376b9-4f81-4b86-a203-56989ed42b18",
+        "replay_url": "https://arcprize.org/replay/45a376b9-4f81-4b86-a203-56989ed42b18"
+      },
+      "tycho": {
+        "game_id": "lf52-271a04aa",
+        "score": 5.454545454545454,
+        "levels_completed": 2,
+        "level_count": 10,
+        "actions": 100,
+        "resets": 2,
+        "state": "NOT_FINISHED",
+        "level_actions": [
+          8,
+          53,
+          39,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "level_baseline_actions": [
+          32,
+          81,
+          60,
+          71,
+          205,
+          148,
+          244,
+          109,
+          164,
+          225
+        ],
+        "level_scores": [
+          115.0,
+          115.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "guid": "6dae6784-7e76-4f57-bbdb-cc2e7448e1d1",
+        "replay_url": "https://arcprize.org/replay/6dae6784-7e76-4f57-bbdb-cc2e7448e1d1",
+        "inference_cost_usd_list_price": 20.54,
+        "usage": {
+          "cache_read": 10650565,
+          "cache_write": 662727,
+          "tokens_in": 3493741,
+          "tokens_out": 55923
+        },
+        "llm_calls_by_type": {
+          "freeform": 117,
+          "level_summary": 5,
+          "animation_summary": 6
+        },
+        "builder_invocations": 0,
+        "stop_reason": "game_action_limit",
+        "wall_clock_s": 813.4
+      }
+    },
+    "bp35": {
+      "baseline": {
+        "game_id": "bp35-0a0ad940",
+        "score": 2.2222222222222223,
+        "levels_completed": 1,
+        "level_count": 9,
+        "actions": 100,
+        "resets": 3,
+        "state": "GAME_OVER",
+        "level_actions": [
+          17,
+          83,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "level_baseline_actions": [
+          21,
+          48,
+          44,
+          38,
+          33,
+          87,
+          86,
+          131,
+          163
+        ],
+        "level_scores": [
+          115.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "guid": "32ee9606-b8b2-4670-8d98-2bb1796d785b",
+        "replay_url": "https://arcprize.org/replay/32ee9606-b8b2-4670-8d98-2bb1796d785b"
+      },
+      "tycho": {
+        "game_id": "bp35-0a0ad940",
+        "score": 13.333333333333334,
+        "levels_completed": 3,
+        "level_count": 9,
+        "actions": 100,
+        "resets": 1,
+        "state": "GAME_OVER",
+        "level_actions": [
+          15,
+          49,
+          34,
+          2,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "level_baseline_actions": [
+          21,
+          48,
+          44,
+          38,
+          33,
+          87,
+          86,
+          131,
+          163
+        ],
+        "level_scores": [
+          115.0,
+          95.96001665972511,
+          115.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "guid": "0e0b3223-4d8d-4891-8a16-dffcf3e4e156",
+        "replay_url": "https://arcprize.org/replay/0e0b3223-4d8d-4891-8a16-dffcf3e4e156",
+        "inference_cost_usd_list_price": 9.28,
+        "usage": {
+          "cache_read": 4815499,
+          "cache_write": 151976,
+          "tokens_in": 1650226,
+          "tokens_out": 47567
+        },
+        "llm_calls_by_type": {
+          "freeform": 135,
+          "animation_summary": 15,
+          "level_summary": 6
+        },
+        "builder_invocations": 0,
+        "stop_reason": "game_action_limit",
+        "wall_clock_s": 704.3
+      }
+    }
+  },
+  "baseline": {
+    "harness": "research/claude_arc_v1 (stage=hypotheses, Claude Code CLI backend, stateless per-action calls)",
+    "run": "opus55-competition-20261106T054112Z",
+    "scorecard_id": "09cc9d25-ec26-4f26-98f8-9cbd60ec69d7",
+    "scorecard_url": "https://arcprize.org/scorecards/09cc9d25-ec26-4f26-98f8-9cbd60ec69d7",
+    "mode": "competition",
+    "card_score_25_games": 23.16434009999123
+  },
+  "tycho": {
+    "repo": "https://github.com/NIMI-research/Tycho",
+    "commit": "f68912a764372ead0a610db2e1c011d41ce5197e",
+    "policy": "orchestrator (paper selected policy)",
+    "model": "claude-opus-5-5",
+    "effort": "high",
+    "thinking": "adaptive (display summarized)",
+    "max_game_actions": 100,
+    "max_inference_cost_per_game_usd": 100,
+    "play_mode": "normal (local engine), then trace replay",
+    "replay_scorecard_id": "ac6e3999-e5e4-4488-b981-9d6d80eff73f",
+    "replay_scorecard_url": "https://arcprize.org/scorecards/ac6e3999-e5e4-4488-b981-9d6d80eff73f",
+    "replay_mode": "competition",
+    "replay_card_score_note": "card score averages all 25 competition games; 23 unplayed games count as 0"
+  }
+}
