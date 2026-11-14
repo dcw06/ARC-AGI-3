@@ -13,7 +13,8 @@ from the saved frames, in this order of precedence, and are not yet reviewed by 
 
 "Changed" and "did nothing" ignore the step counter, estimated as in audit_repeats_masked.py.
 Games: only the seven already used for development (bp35, lf52, ls20 named in the protocol; tn36, cd82,
-ka59, vc33 used in Phase 1), so that the other 18 games stay untouched for the reserved sample.
+ka59, vc33 used in Phase 1), so that the other 18 games supply no development case. They are not
+untouched: Phase 1 measured every record of every game (see the exposure ledger).
 Every earlier record is at least 9 actions before its decision, outside what the saved agent could see.
 Choices among eligible candidates are random with a fixed seed, spread across games.
 

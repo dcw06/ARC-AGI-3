@@ -1,0 +1,3539 @@
+{
+ "date": "2026-11-14",
+ "source_run": "opus55-competition-20261106T054112Z",
+ "applies_to_every_game": [
+  "Saved stateless run of 100 actions exists; every request and frame is on disk (this is the source data).",
+  "Phase 1 size measurement formatted and token-counted every record and every decision (records.csv, decisions.csv, published). records.csv holds, per record, the action ID, frame count, level and the number of cells changed: outcome-derived values, used only in aggregate.",
+  "Repeat audits compared every board with every earlier board (per-game counts published).",
+  "Per-game outcome totals were printed and published: levels completed, last level-up action, actions that did nothing.",
+  "Loss audit of 2026-11-09 used public recordings of other agents on this game (action counts per level)."
+ ],
+ "statement": "No game is wholly untouched. The 18 games outside the development set have format-development exposure: automated measurement of every record, exact token counts on 8 sampled records each, and description sizes on 20 sampled decisions each. No person and no reviewer has inspected what specific actions did in those games, and no prediction target has been chosen or opened there. They may still supply reserved prediction cases if target answers stay concealed and unused, and the cases avoid the sampled records and decisions listed here.",
+ "games": {
+  "ar25": {
+   "tier": "format-exposed",
+   "opus_token_sample_records": [
+    {
+     "record": 2,
+     "paired_decision": 42
+    },
+    {
+     "record": 3,
+     "paired_decision": 8
+    },
+    {
+     "record": 9,
+     "paired_decision": 71
+    },
+    {
+     "record": 17,
+     "paired_decision": 96
+    },
+    {
+     "record": 23,
+     "paired_decision": 45
+    },
+    {
+     "record": 47,
+     "paired_decision": 71
+    },
+    {
+     "record": 59,
+     "paired_decision": 72
+    },
+    {
+     "record": 82,
+     "paired_decision": 98
+    }
+   ],
+   "scorer_sample_decisions": [
+    6,
+    11,
+    19,
+    22,
+    33,
+    51,
+    53,
+    56,
+    58,
+    59,
+    64,
+    66,
+    67,
+    72,
+    73,
+    78,
+    81,
+    86,
+    97,
+    100
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    56,
+    57,
+    58,
+    60,
+    62,
+    63,
+    64,
+    66,
+    68,
+    72,
+    74,
+    75,
+    77,
+    81,
+    82,
+    86,
+    93,
+    97
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [],
+   "development_cases": [],
+   "reading_packet_record_and_decision": null,
+   "specific_inspection": []
+  },
+  "bp35": {
+   "tier": "development",
+   "opus_token_sample_records": [
+    {
+     "record": 7,
+     "paired_decision": 89
+    },
+    {
+     "record": 13,
+     "paired_decision": 39
+    },
+    {
+     "record": 15,
+     "paired_decision": 29
+    },
+    {
+     "record": 17,
+     "paired_decision": 24
+    },
+    {
+     "record": 51,
+     "paired_decision": 68
+    },
+    {
+     "record": 66,
+     "paired_decision": 79
+    },
+    {
+     "record": 71,
+     "paired_decision": 77
+    },
+    {
+     "record": 77,
+     "paired_decision": 81
+    }
+   ],
+   "scorer_sample_decisions": [
+    23,
+    24,
+    35,
+    38,
+    41,
+    50,
+    53,
+    54,
+    55,
+    61,
+    62,
+    64,
+    67,
+    69,
+    76,
+    82,
+    83,
+    86,
+    91,
+    99
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65,
+    67,
+    68,
+    70,
+    72,
+    76,
+    78,
+    79,
+    81,
+    83,
+    84,
+    89,
+    93
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [
+    23,
+    24,
+    41,
+    54,
+    55,
+    64,
+    69,
+    99
+   ],
+   "development_cases": [
+    {
+     "case": "D06",
+     "type": "delayed",
+     "decision": 75,
+     "records": [
+      60
+     ],
+     "in_full_review_subset": true
+    }
+   ],
+   "reading_packet_record_and_decision": [
+    17,
+    24
+   ],
+   "specific_inspection": [
+    "Agent notes read at actions 60 and 98.",
+    "A local solver derived from the game source exists (earlier project work).",
+    "Earlier Tycho and arc-skill experiments on this game."
+   ]
+  },
+  "cd82": {
+   "tier": "development",
+   "opus_token_sample_records": [
+    {
+     "record": 2,
+     "paired_decision": 73
+    },
+    {
+     "record": 4,
+     "paired_decision": 69
+    },
+    {
+     "record": 39,
+     "paired_decision": 51
+    },
+    {
+     "record": 40,
+     "paired_decision": 97
+    },
+    {
+     "record": 64,
+     "paired_decision": 98
+    },
+    {
+     "record": 84,
+     "paired_decision": 99
+    },
+    {
+     "record": 87,
+     "paired_decision": 100
+    },
+    {
+     "record": 96,
+     "paired_decision": 100
+    }
+   ],
+   "scorer_sample_decisions": [
+    9,
+    26,
+    31,
+    34,
+    35,
+    36,
+    48,
+    49,
+    51,
+    53,
+    54,
+    62,
+    72,
+    79,
+    80,
+    85,
+    87,
+    88,
+    94,
+    97
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    27,
+    28,
+    29,
+    30,
+    32,
+    33,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    63,
+    66,
+    67,
+    68,
+    69,
+    70,
+    72,
+    75,
+    76,
+    77,
+    84,
+    86,
+    88
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [],
+   "development_cases": [
+    {
+     "case": "D08",
+     "type": "delayed",
+     "decision": 27,
+     "records": [
+      18
+     ],
+     "in_full_review_subset": false
+    },
+    {
+     "case": "D11",
+     "type": "conflicting",
+     "decision": 92,
+     "records": [
+      53,
+      68
+     ],
+     "in_full_review_subset": true
+    },
+    {
+     "case": "D14",
+     "type": "spatial",
+     "decision": 25,
+     "records": [
+      15
+     ],
+     "in_full_review_subset": true
+    },
+    {
+     "case": "D19",
+     "type": "ordinary",
+     "decision": 85,
+     "records": [
+      48
+     ],
+     "in_full_review_subset": false
+    }
+   ],
+   "reading_packet_record_and_decision": [
+    40,
+    97
+   ],
+   "specific_inspection": []
+  },
+  "cn04": {
+   "tier": "format-exposed",
+   "opus_token_sample_records": [
+    {
+     "record": 7,
+     "paired_decision": 52
+    },
+    {
+     "record": 34,
+     "paired_decision": 79
+    },
+    {
+     "record": 39,
+     "paired_decision": 95
+    },
+    {
+     "record": 56,
+     "paired_decision": 66
+    },
+    {
+     "record": 63,
+     "paired_decision": 88
+    },
+    {
+     "record": 65,
+     "paired_decision": 96
+    },
+    {
+     "record": 88,
+     "paired_decision": 95
+    },
+    {
+     "record": 90,
+     "paired_decision": 94
+    }
+   ],
+   "scorer_sample_decisions": [
+    7,
+    9,
+    16,
+    19,
+    21,
+    24,
+    28,
+    38,
+    46,
+    48,
+    49,
+    55,
+    61,
+    66,
+    72,
+    74,
+    76,
+    80,
+    83,
+    92
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    30,
+    31,
+    32,
+    33,
+    34,
+    36,
+    37,
+    38,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    53,
+    54,
+    56,
+    57,
+    58,
+    59,
+    60,
+    62,
+    64,
+    66,
+    73,
+    75,
+    76,
+    78,
+    80,
+    86
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [],
+   "development_cases": [],
+   "reading_packet_record_and_decision": null,
+   "specific_inspection": []
+  },
+  "dc22": {
+   "tier": "format-exposed",
+   "opus_token_sample_records": [
+    {
+     "record": 18,
+     "paired_decision": 89
+    },
+    {
+     "record": 22,
+     "paired_decision": 29
+    },
+    {
+     "record": 37,
+     "paired_decision": 78
+    },
+    {
+     "record": 43,
+     "paired_decision": 72
+    },
+    {
+     "record": 51,
+     "paired_decision": 53
+    },
+    {
+     "record": 88,
+     "paired_decision": 95
+    },
+    {
+     "record": 94,
+     "paired_decision": 100
+    },
+    {
+     "record": 98,
+     "paired_decision": 100
+    }
+   ],
+   "scorer_sample_decisions": [
+    14,
+    18,
+    22,
+    31,
+    36,
+    46,
+    49,
+    51,
+    53,
+    54,
+    55,
+    58,
+    59,
+    62,
+    63,
+    76,
+    78,
+    84,
+    87,
+    88
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    45,
+    46,
+    47,
+    48,
+    49,
+    51,
+    52,
+    54,
+    55,
+    56,
+    57,
+    58,
+    60,
+    61,
+    62,
+    64,
+    66,
+    68,
+    69,
+    72,
+    73,
+    74,
+    75,
+    76,
+    80,
+    83
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [],
+   "development_cases": [],
+   "reading_packet_record_and_decision": null,
+   "specific_inspection": []
+  },
+  "ft09": {
+   "tier": "format-exposed",
+   "opus_token_sample_records": [
+    {
+     "record": 10,
+     "paired_decision": 53
+    },
+    {
+     "record": 35,
+     "paired_decision": 75
+    },
+    {
+     "record": 41,
+     "paired_decision": 65
+    },
+    {
+     "record": 46,
+     "paired_decision": 60
+    },
+    {
+     "record": 51,
+     "paired_decision": 63
+    },
+    {
+     "record": 62,
+     "paired_decision": 65
+    },
+    {
+     "record": 68,
+     "paired_decision": 75
+    },
+    {
+     "record": 72,
+     "paired_decision": 74
+    }
+   ],
+   "scorer_sample_decisions": [
+    3,
+    4,
+    13,
+    15,
+    17,
+    18,
+    20,
+    26,
+    27,
+    34,
+    35,
+    36,
+    38,
+    46,
+    52,
+    60,
+    61,
+    64,
+    67,
+    70
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    45,
+    47,
+    51,
+    54,
+    57,
+    60,
+    61
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [],
+   "development_cases": [],
+   "reading_packet_record_and_decision": null,
+   "specific_inspection": []
+  },
+  "g50t": {
+   "tier": "format-exposed",
+   "opus_token_sample_records": [
+    {
+     "record": 7,
+     "paired_decision": 21
+    },
+    {
+     "record": 46,
+     "paired_decision": 50
+    },
+    {
+     "record": 54,
+     "paired_decision": 82
+    },
+    {
+     "record": 57,
+     "paired_decision": 99
+    },
+    {
+     "record": 67,
+     "paired_decision": 75
+    },
+    {
+     "record": 70,
+     "paired_decision": 86
+    },
+    {
+     "record": 85,
+     "paired_decision": 97
+    },
+    {
+     "record": 95,
+     "paired_decision": 100
+    }
+   ],
+   "scorer_sample_decisions": [
+    5,
+    6,
+    13,
+    18,
+    26,
+    29,
+    32,
+    37,
+    38,
+    40,
+    47,
+    63,
+    76,
+    77,
+    81,
+    86,
+    93,
+    95,
+    98,
+    100
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    45,
+    46,
+    49,
+    50,
+    52,
+    53,
+    57,
+    59,
+    60,
+    62,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69,
+    71,
+    72,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    82,
+    83,
+    84,
+    88,
+    90,
+    98
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [],
+   "development_cases": [],
+   "reading_packet_record_and_decision": null,
+   "specific_inspection": []
+  },
+  "ka59": {
+   "tier": "development",
+   "opus_token_sample_records": [
+    {
+     "record": 1,
+     "paired_decision": 47
+    },
+    {
+     "record": 4,
+     "paired_decision": 100
+    },
+    {
+     "record": 13,
+     "paired_decision": 83
+    },
+    {
+     "record": 21,
+     "paired_decision": 38
+    },
+    {
+     "record": 36,
+     "paired_decision": 53
+    },
+    {
+     "record": 37,
+     "paired_decision": 95
+    },
+    {
+     "record": 60,
+     "paired_decision": 69
+    },
+    {
+     "record": 95,
+     "paired_decision": 97
+    }
+   ],
+   "scorer_sample_decisions": [
+    6,
+    9,
+    10,
+    13,
+    15,
+    19,
+    23,
+    34,
+    35,
+    37,
+    38,
+    51,
+    58,
+    61,
+    64,
+    78,
+    82,
+    83,
+    88,
+    92
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    40,
+    41,
+    42,
+    44,
+    45,
+    46,
+    48,
+    49,
+    51,
+    52,
+    54,
+    55,
+    60,
+    61,
+    63,
+    65,
+    66,
+    68,
+    69,
+    77,
+    79,
+    80,
+    85,
+    87
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [],
+   "development_cases": [
+    {
+     "case": "D02",
+     "type": "level/reset",
+     "decision": 33,
+     "records": [
+      5
+     ],
+     "in_full_review_subset": true
+    },
+    {
+     "case": "D09",
+     "type": "conflicting",
+     "decision": 97,
+     "records": [
+      82,
+      83
+     ],
+     "in_full_review_subset": false
+    },
+    {
+     "case": "D12",
+     "type": "conflicting",
+     "decision": 95,
+     "records": [
+      73,
+      86
+     ],
+     "in_full_review_subset": true
+    },
+    {
+     "case": "D16",
+     "type": "spatial",
+     "decision": 81,
+     "records": [
+      56
+     ],
+     "in_full_review_subset": true
+    }
+   ],
+   "reading_packet_record_and_decision": [
+    36,
+    53
+   ],
+   "specific_inspection": []
+  },
+  "lf52": {
+   "tier": "development",
+   "opus_token_sample_records": [
+    {
+     "record": 10,
+     "paired_decision": 51
+    },
+    {
+     "record": 17,
+     "paired_decision": 98
+    },
+    {
+     "record": 19,
+     "paired_decision": 53
+    },
+    {
+     "record": 21,
+     "paired_decision": 67
+    },
+    {
+     "record": 48,
+     "paired_decision": 91
+    },
+    {
+     "record": 61,
+     "paired_decision": 63
+    },
+    {
+     "record": 87,
+     "paired_decision": 89
+    },
+    {
+     "record": 90,
+     "paired_decision": 96
+    }
+   ],
+   "scorer_sample_decisions": [
+    5,
+    10,
+    12,
+    14,
+    23,
+    26,
+    31,
+    40,
+    44,
+    46,
+    50,
+    56,
+    62,
+    74,
+    75,
+    77,
+    81,
+    84,
+    88,
+    96
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    40,
+    43,
+    44,
+    46,
+    47,
+    48,
+    49,
+    50,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    60,
+    61,
+    62,
+    63,
+    65,
+    67,
+    70,
+    72,
+    75,
+    76,
+    77,
+    81,
+    83,
+    84,
+    90
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [],
+   "development_cases": [
+    {
+     "case": "D05",
+     "type": "delayed",
+     "decision": 85,
+     "records": [
+      46
+     ],
+     "in_full_review_subset": true
+    }
+   ],
+   "reading_packet_record_and_decision": [
+    19,
+    53
+   ],
+   "specific_inspection": [
+    "Agent notes read at actions 30 and 99.",
+    "Earlier Tycho comparison on this game."
+   ]
+  },
+  "lp85": {
+   "tier": "format-exposed",
+   "opus_token_sample_records": [
+    {
+     "record": 27,
+     "paired_decision": 46
+    },
+    {
+     "record": 28,
+     "paired_decision": 69
+    },
+    {
+     "record": 31,
+     "paired_decision": 70
+    },
+    {
+     "record": 41,
+     "paired_decision": 96
+    },
+    {
+     "record": 50,
+     "paired_decision": 92
+    },
+    {
+     "record": 54,
+     "paired_decision": 65
+    },
+    {
+     "record": 66,
+     "paired_decision": 77
+    },
+    {
+     "record": 87,
+     "paired_decision": 94
+    }
+   ],
+   "scorer_sample_decisions": [
+    12,
+    13,
+    17,
+    24,
+    28,
+    31,
+    35,
+    36,
+    40,
+    41,
+    43,
+    44,
+    47,
+    58,
+    68,
+    71,
+    87,
+    92,
+    97,
+    99
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    41,
+    42,
+    43,
+    44,
+    46,
+    47,
+    48,
+    49,
+    51,
+    53,
+    55,
+    56,
+    58,
+    59,
+    61,
+    62,
+    63,
+    68,
+    69,
+    75,
+    84,
+    86,
+    88,
+    90,
+    94
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [],
+   "development_cases": [],
+   "reading_packet_record_and_decision": null,
+   "specific_inspection": []
+  },
+  "ls20": {
+   "tier": "development",
+   "opus_token_sample_records": [
+    {
+     "record": 12,
+     "paired_decision": 33
+    },
+    {
+     "record": 21,
+     "paired_decision": 92
+    },
+    {
+     "record": 32,
+     "paired_decision": 55
+    },
+    {
+     "record": 42,
+     "paired_decision": 65
+    },
+    {
+     "record": 67,
+     "paired_decision": 92
+    },
+    {
+     "record": 75,
+     "paired_decision": 80
+    },
+    {
+     "record": 78,
+     "paired_decision": 96
+    },
+    {
+     "record": 97,
+     "paired_decision": 100
+    }
+   ],
+   "scorer_sample_decisions": [
+    15,
+    18,
+    21,
+    23,
+    28,
+    29,
+    31,
+    34,
+    49,
+    56,
+    58,
+    59,
+    65,
+    67,
+    81,
+    82,
+    84,
+    96,
+    98,
+    100
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    41,
+    42,
+    43,
+    44,
+    45,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    60,
+    61,
+    62,
+    64,
+    65,
+    69,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    81,
+    85,
+    89
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [],
+   "development_cases": [
+    {
+     "case": "D01",
+     "type": "level/reset",
+     "decision": 82,
+     "records": [
+      10
+     ],
+     "in_full_review_subset": true
+    },
+    {
+     "case": "D13",
+     "type": "spatial",
+     "decision": 59,
+     "records": [
+      43
+     ],
+     "in_full_review_subset": false
+    },
+    {
+     "case": "D18",
+     "type": "ordinary",
+     "decision": 49,
+     "records": [
+      35
+     ],
+     "in_full_review_subset": false
+    }
+   ],
+   "reading_packet_record_and_decision": [
+    67,
+    92
+   ],
+   "specific_inspection": [
+    "Earlier project branches built ls20-specific agents (per project notes)."
+   ]
+  },
+  "m0r0": {
+   "tier": "format-exposed",
+   "opus_token_sample_records": [
+    {
+     "record": 3,
+     "paired_decision": 52
+    },
+    {
+     "record": 9,
+     "paired_decision": 88
+    },
+    {
+     "record": 18,
+     "paired_decision": 57
+    },
+    {
+     "record": 56,
+     "paired_decision": 92
+    },
+    {
+     "record": 65,
+     "paired_decision": 74
+    },
+    {
+     "record": 80,
+     "paired_decision": 100
+    },
+    {
+     "record": 92,
+     "paired_decision": 97
+    },
+    {
+     "record": 95,
+     "paired_decision": 97
+    }
+   ],
+   "scorer_sample_decisions": [
+    5,
+    14,
+    22,
+    27,
+    42,
+    43,
+    54,
+    57,
+    58,
+    61,
+    64,
+    67,
+    68,
+    73,
+    77,
+    78,
+    85,
+    89,
+    92,
+    93
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    61,
+    63,
+    65,
+    66,
+    69,
+    71,
+    74,
+    77,
+    79,
+    81,
+    82,
+    85,
+    86,
+    87
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [],
+   "development_cases": [],
+   "reading_packet_record_and_decision": null,
+   "specific_inspection": []
+  },
+  "r11l": {
+   "tier": "format-exposed",
+   "opus_token_sample_records": [
+    {
+     "record": 1,
+     "paired_decision": 10
+    },
+    {
+     "record": 23,
+     "paired_decision": 77
+    },
+    {
+     "record": 71,
+     "paired_decision": 87
+    },
+    {
+     "record": 77,
+     "paired_decision": 84
+    },
+    {
+     "record": 79,
+     "paired_decision": 85
+    },
+    {
+     "record": 83,
+     "paired_decision": 91
+    },
+    {
+     "record": 91,
+     "paired_decision": 96
+    },
+    {
+     "record": 98,
+     "paired_decision": 100
+    }
+   ],
+   "scorer_sample_decisions": [
+    4,
+    10,
+    12,
+    21,
+    23,
+    28,
+    31,
+    33,
+    35,
+    42,
+    50,
+    55,
+    57,
+    58,
+    63,
+    75,
+    81,
+    83,
+    90,
+    98
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    35,
+    41,
+    42,
+    43,
+    44,
+    45,
+    47,
+    48,
+    49,
+    50,
+    51,
+    54,
+    55,
+    56,
+    58,
+    59,
+    60,
+    61,
+    62,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    80,
+    81,
+    82,
+    94
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [
+    33
+   ],
+   "development_cases": [],
+   "reading_packet_record_and_decision": null,
+   "specific_inspection": []
+  },
+  "re86": {
+   "tier": "format-exposed",
+   "opus_token_sample_records": [
+    {
+     "record": 18,
+     "paired_decision": 72
+    },
+    {
+     "record": 27,
+     "paired_decision": 32
+    },
+    {
+     "record": 53,
+     "paired_decision": 82
+    },
+    {
+     "record": 63,
+     "paired_decision": 72
+    },
+    {
+     "record": 68,
+     "paired_decision": 78
+    },
+    {
+     "record": 79,
+     "paired_decision": 87
+    },
+    {
+     "record": 86,
+     "paired_decision": 100
+    },
+    {
+     "record": 97,
+     "paired_decision": 100
+    }
+   ],
+   "scorer_sample_decisions": [
+    9,
+    24,
+    25,
+    28,
+    32,
+    37,
+    39,
+    49,
+    53,
+    54,
+    55,
+    63,
+    67,
+    70,
+    71,
+    72,
+    85,
+    87,
+    93,
+    100
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    53,
+    54,
+    55,
+    58,
+    60,
+    61,
+    63,
+    64,
+    65,
+    67,
+    68,
+    69,
+    70,
+    72,
+    81,
+    83,
+    85,
+    90
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [],
+   "development_cases": [],
+   "reading_packet_record_and_decision": null,
+   "specific_inspection": []
+  },
+  "s5i5": {
+   "tier": "format-exposed",
+   "opus_token_sample_records": [
+    {
+     "record": 1,
+     "paired_decision": 5
+    },
+    {
+     "record": 7,
+     "paired_decision": 100
+    },
+    {
+     "record": 28,
+     "paired_decision": 43
+    },
+    {
+     "record": 40,
+     "paired_decision": 77
+    },
+    {
+     "record": 70,
+     "paired_decision": 74
+    },
+    {
+     "record": 75,
+     "paired_decision": 94
+    },
+    {
+     "record": 83,
+     "paired_decision": 91
+    },
+    {
+     "record": 92,
+     "paired_decision": 100
+    }
+   ],
+   "scorer_sample_decisions": [
+    6,
+    13,
+    14,
+    16,
+    22,
+    26,
+    33,
+    34,
+    35,
+    38,
+    59,
+    68,
+    75,
+    82,
+    83,
+    88,
+    90,
+    91,
+    94,
+    97
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    23,
+    24,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    55,
+    56,
+    57,
+    59,
+    60,
+    62,
+    63,
+    64,
+    67,
+    68,
+    70,
+    71,
+    72,
+    73,
+    74,
+    77,
+    79,
+    83,
+    86
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [],
+   "development_cases": [],
+   "reading_packet_record_and_decision": null,
+   "specific_inspection": []
+  },
+  "sb26": {
+   "tier": "format-exposed",
+   "opus_token_sample_records": [
+    {
+     "record": 7,
+     "paired_decision": 86
+    },
+    {
+     "record": 46,
+     "paired_decision": 63
+    },
+    {
+     "record": 48,
+     "paired_decision": 88
+    },
+    {
+     "record": 51,
+     "paired_decision": 54
+    },
+    {
+     "record": 65,
+     "paired_decision": 83
+    },
+    {
+     "record": 80,
+     "paired_decision": 86
+    },
+    {
+     "record": 96,
+     "paired_decision": 99
+    },
+    {
+     "record": 98,
+     "paired_decision": 100
+    }
+   ],
+   "scorer_sample_decisions": [
+    3,
+    9,
+    13,
+    15,
+    18,
+    36,
+    37,
+    48,
+    49,
+    58,
+    59,
+    69,
+    80,
+    81,
+    83,
+    85,
+    90,
+    91,
+    93,
+    94
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    65,
+    66,
+    70,
+    71,
+    72,
+    73,
+    74,
+    76,
+    78,
+    79,
+    81,
+    86,
+    87,
+    90
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [
+    91
+   ],
+   "development_cases": [],
+   "reading_packet_record_and_decision": null,
+   "specific_inspection": []
+  },
+  "sc25": {
+   "tier": "format-exposed",
+   "opus_token_sample_records": [
+    {
+     "record": 14,
+     "paired_decision": 62
+    },
+    {
+     "record": 17,
+     "paired_decision": 74
+    },
+    {
+     "record": 21,
+     "paired_decision": 35
+    },
+    {
+     "record": 30,
+     "paired_decision": 52
+    },
+    {
+     "record": 40,
+     "paired_decision": 67
+    },
+    {
+     "record": 54,
+     "paired_decision": 95
+    },
+    {
+     "record": 68,
+     "paired_decision": 85
+    },
+    {
+     "record": 100,
+     "paired_decision": 100
+    }
+   ],
+   "scorer_sample_decisions": [
+    3,
+    4,
+    5,
+    14,
+    21,
+    26,
+    29,
+    34,
+    37,
+    42,
+    50,
+    51,
+    54,
+    56,
+    57,
+    68,
+    69,
+    80,
+    84,
+    86
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    37,
+    38,
+    39,
+    40,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    52,
+    53,
+    55,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    69,
+    71
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [],
+   "development_cases": [],
+   "reading_packet_record_and_decision": null,
+   "specific_inspection": []
+  },
+  "sk48": {
+   "tier": "format-exposed",
+   "opus_token_sample_records": [
+    {
+     "record": 6,
+     "paired_decision": 50
+    },
+    {
+     "record": 10,
+     "paired_decision": 42
+    },
+    {
+     "record": 27,
+     "paired_decision": 44
+    },
+    {
+     "record": 32,
+     "paired_decision": 37
+    },
+    {
+     "record": 42,
+     "paired_decision": 77
+    },
+    {
+     "record": 45,
+     "paired_decision": 54
+    },
+    {
+     "record": 80,
+     "paired_decision": 97
+    },
+    {
+     "record": 99,
+     "paired_decision": 100
+    }
+   ],
+   "scorer_sample_decisions": [
+    5,
+    6,
+    8,
+    25,
+    26,
+    41,
+    42,
+    43,
+    57,
+    58,
+    63,
+    64,
+    66,
+    67,
+    69,
+    72,
+    73,
+    75,
+    91,
+    95
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    48,
+    49,
+    50,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    61,
+    63,
+    65,
+    66,
+    67,
+    69,
+    70,
+    71,
+    84,
+    85
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [],
+   "development_cases": [],
+   "reading_packet_record_and_decision": null,
+   "specific_inspection": []
+  },
+  "sp80": {
+   "tier": "format-exposed",
+   "opus_token_sample_records": [
+    {
+     "record": 17,
+     "paired_decision": 47
+    },
+    {
+     "record": 21,
+     "paired_decision": 91
+    },
+    {
+     "record": 28,
+     "paired_decision": 74
+    },
+    {
+     "record": 53,
+     "paired_decision": 98
+    },
+    {
+     "record": 72,
+     "paired_decision": 89
+    },
+    {
+     "record": 78,
+     "paired_decision": 80
+    },
+    {
+     "record": 83,
+     "paired_decision": 92
+    },
+    {
+     "record": 89,
+     "paired_decision": 97
+    }
+   ],
+   "scorer_sample_decisions": [
+    7,
+    12,
+    20,
+    25,
+    27,
+    28,
+    30,
+    33,
+    45,
+    46,
+    52,
+    54,
+    58,
+    65,
+    67,
+    69,
+    72,
+    83,
+    86,
+    97
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    31,
+    32,
+    33,
+    35,
+    36,
+    37,
+    38,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    50,
+    51,
+    52,
+    53,
+    54,
+    57,
+    58,
+    59,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    70,
+    73,
+    81,
+    93
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [],
+   "development_cases": [],
+   "reading_packet_record_and_decision": null,
+   "specific_inspection": []
+  },
+  "su15": {
+   "tier": "format-exposed",
+   "opus_token_sample_records": [
+    {
+     "record": 3,
+     "paired_decision": 37
+    },
+    {
+     "record": 9,
+     "paired_decision": 12
+    },
+    {
+     "record": 10,
+     "paired_decision": 75
+    },
+    {
+     "record": 31,
+     "paired_decision": 75
+    },
+    {
+     "record": 35,
+     "paired_decision": 49
+    },
+    {
+     "record": 44,
+     "paired_decision": 74
+    },
+    {
+     "record": 51,
+     "paired_decision": 69
+    },
+    {
+     "record": 67,
+     "paired_decision": 81
+    }
+   ],
+   "scorer_sample_decisions": [
+    11,
+    18,
+    22,
+    25,
+    26,
+    31,
+    35,
+    41,
+    42,
+    44,
+    45,
+    47,
+    51,
+    61,
+    70,
+    72,
+    78,
+    88,
+    90,
+    91
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    46,
+    49,
+    50,
+    53,
+    56,
+    57,
+    58,
+    60,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    68,
+    73,
+    78,
+    81,
+    82,
+    86
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [],
+   "development_cases": [],
+   "reading_packet_record_and_decision": null,
+   "specific_inspection": []
+  },
+  "tn36": {
+   "tier": "development",
+   "opus_token_sample_records": [
+    {
+     "record": 27,
+     "paired_decision": 35
+    },
+    {
+     "record": 38,
+     "paired_decision": 55
+    },
+    {
+     "record": 47,
+     "paired_decision": 64
+    },
+    {
+     "record": 64,
+     "paired_decision": 83
+    },
+    {
+     "record": 73,
+     "paired_decision": 96
+    },
+    {
+     "record": 83,
+     "paired_decision": 87
+    },
+    {
+     "record": 87,
+     "paired_decision": 93
+    },
+    {
+     "record": 97,
+     "paired_decision": 100
+    }
+   ],
+   "scorer_sample_decisions": [
+    5,
+    11,
+    13,
+    19,
+    20,
+    21,
+    22,
+    24,
+    33,
+    35,
+    45,
+    46,
+    50,
+    65,
+    68,
+    69,
+    71,
+    78,
+    79,
+    89
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    48,
+    49,
+    50,
+    53,
+    55,
+    57,
+    58,
+    59,
+    60,
+    62,
+    64,
+    66,
+    68,
+    69,
+    74,
+    87
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [],
+   "development_cases": [
+    {
+     "case": "D03",
+     "type": "level/reset",
+     "decision": 92,
+     "records": [
+      59
+     ],
+     "in_full_review_subset": false
+    },
+    {
+     "case": "D04",
+     "type": "level/reset",
+     "decision": 76,
+     "records": [
+      29
+     ],
+     "in_full_review_subset": true
+    },
+    {
+     "case": "D17",
+     "type": "ordinary",
+     "decision": 96,
+     "records": [
+      86
+     ],
+     "in_full_review_subset": false
+    }
+   ],
+   "reading_packet_record_and_decision": null,
+   "specific_inspection": [
+    "Frames and the agent's notes inspected in detail (tn36_case.py: all 26 \"run\" presses).",
+    "First and revised worked examples: decisions 54 and 97 with records 19, 39, 60.",
+    "Readability rehearsal: decision 46 with record 12; correct answers published; four Opus responses."
+   ]
+  },
+  "tr87": {
+   "tier": "format-exposed",
+   "opus_token_sample_records": [
+    {
+     "record": 24,
+     "paired_decision": 64
+    },
+    {
+     "record": 30,
+     "paired_decision": 52
+    },
+    {
+     "record": 39,
+     "paired_decision": 94
+    },
+    {
+     "record": 67,
+     "paired_decision": 80
+    },
+    {
+     "record": 69,
+     "paired_decision": 73
+    },
+    {
+     "record": 78,
+     "paired_decision": 91
+    },
+    {
+     "record": 83,
+     "paired_decision": 90
+    },
+    {
+     "record": 90,
+     "paired_decision": 96
+    }
+   ],
+   "scorer_sample_decisions": [
+    24,
+    26,
+    32,
+    34,
+    42,
+    47,
+    55,
+    58,
+    62,
+    63,
+    65,
+    66,
+    68,
+    73,
+    82,
+    85,
+    86,
+    94,
+    97,
+    99
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    52,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    64,
+    66,
+    68,
+    71,
+    72,
+    73,
+    77,
+    78,
+    80,
+    81,
+    84,
+    86,
+    87,
+    91
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [
+    62
+   ],
+   "development_cases": [],
+   "reading_packet_record_and_decision": null,
+   "specific_inspection": []
+  },
+  "tu93": {
+   "tier": "format-exposed",
+   "opus_token_sample_records": [
+    {
+     "record": 7,
+     "paired_decision": 17
+    },
+    {
+     "record": 41,
+     "paired_decision": 74
+    },
+    {
+     "record": 51,
+     "paired_decision": 66
+    },
+    {
+     "record": 61,
+     "paired_decision": 93
+    },
+    {
+     "record": 71,
+     "paired_decision": 94
+    },
+    {
+     "record": 73,
+     "paired_decision": 76
+    },
+    {
+     "record": 76,
+     "paired_decision": 95
+    },
+    {
+     "record": 96,
+     "paired_decision": 99
+    }
+   ],
+   "scorer_sample_decisions": [
+    6,
+    8,
+    11,
+    15,
+    18,
+    20,
+    27,
+    35,
+    37,
+    50,
+    54,
+    55,
+    59,
+    63,
+    66,
+    71,
+    80,
+    82,
+    92,
+    99
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    41,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    52,
+    53,
+    54,
+    55,
+    57,
+    58,
+    61,
+    62,
+    65,
+    69,
+    70,
+    71,
+    74,
+    75,
+    82,
+    85,
+    87,
+    88,
+    89,
+    92
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [],
+   "development_cases": [],
+   "reading_packet_record_and_decision": null,
+   "specific_inspection": []
+  },
+  "vc33": {
+   "tier": "development",
+   "opus_token_sample_records": [
+    {
+     "record": 9,
+     "paired_decision": 64
+    },
+    {
+     "record": 13,
+     "paired_decision": 76
+    },
+    {
+     "record": 17,
+     "paired_decision": 94
+    },
+    {
+     "record": 21,
+     "paired_decision": 42
+    },
+    {
+     "record": 39,
+     "paired_decision": 99
+    },
+    {
+     "record": 72,
+     "paired_decision": 91
+    },
+    {
+     "record": 82,
+     "paired_decision": 89
+    },
+    {
+     "record": 88,
+     "paired_decision": 99
+    }
+   ],
+   "scorer_sample_decisions": [
+    5,
+    6,
+    11,
+    16,
+    17,
+    32,
+    42,
+    43,
+    52,
+    59,
+    61,
+    64,
+    66,
+    71,
+    74,
+    76,
+    84,
+    85,
+    87,
+    92
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    18,
+    19,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    59,
+    60,
+    61,
+    62,
+    69,
+    71,
+    72,
+    73,
+    76,
+    80,
+    82,
+    84
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [],
+   "development_cases": [
+    {
+     "case": "D07",
+     "type": "delayed",
+     "decision": 97,
+     "records": [
+      86
+     ],
+     "in_full_review_subset": true
+    },
+    {
+     "case": "D10",
+     "type": "conflicting",
+     "decision": 43,
+     "records": [
+      25,
+      32
+     ],
+     "in_full_review_subset": true
+    },
+    {
+     "case": "D15",
+     "type": "spatial",
+     "decision": 66,
+     "records": [
+      54
+     ],
+     "in_full_review_subset": true
+    },
+    {
+     "case": "D20",
+     "type": "ordinary",
+     "decision": 72,
+     "records": [
+      63
+     ],
+     "in_full_review_subset": false
+    }
+   ],
+   "reading_packet_record_and_decision": [
+    88,
+    99
+   ],
+   "specific_inspection": []
+  },
+  "wa30": {
+   "tier": "format-exposed",
+   "opus_token_sample_records": [
+    {
+     "record": 5,
+     "paired_decision": 50
+    },
+    {
+     "record": 15,
+     "paired_decision": 73
+    },
+    {
+     "record": 22,
+     "paired_decision": 97
+    },
+    {
+     "record": 45,
+     "paired_decision": 68
+    },
+    {
+     "record": 55,
+     "paired_decision": 60
+    },
+    {
+     "record": 58,
+     "paired_decision": 63
+    },
+    {
+     "record": 78,
+     "paired_decision": 98
+    },
+    {
+     "record": 92,
+     "paired_decision": 99
+    }
+   ],
+   "scorer_sample_decisions": [
+    11,
+    24,
+    27,
+    28,
+    29,
+    35,
+    41,
+    50,
+    51,
+    54,
+    57,
+    63,
+    66,
+    68,
+    70,
+    71,
+    75,
+    77,
+    92,
+    99
+   ],
+   "scorer_sample_records": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    61,
+    62,
+    63,
+    64,
+    65,
+    68,
+    74,
+    75,
+    80,
+    87,
+    88,
+    89,
+    94
+   ],
+   "description_rule_check_decisions_over_limit_seen_individually": [],
+   "development_cases": [],
+   "reading_packet_record_and_decision": null,
+   "specific_inspection": []
+  }
+ }
+}

@@ -1,0 +1,72 @@
+== OLDER MEMORY ==
+Source: game bp35, saved run opus55-competition-20261106T054112Z, action 60 (transition t60). One record, selected by rule.
+In this pack "current" means the current board given above, observation o75.
+Boards are text. A board line "y:c*n,..." gives row y as runs: colour c (one hex digit) repeated n times, left to right; "a-b:" means rows a to b are identical. A change line "y:x1-x2=c" sets every cell in columns x1 to x2 of row y to colour c ("x=c" for one cell); "a-b:" applies it to rows a to b. A range may include cells that already had that colour. Row 0 is the top, column 0 the left; ACTION6 clicks (x=column, y=row). Frames are the boards returned by one action, in order. A frame header names its reference ("vs before": the board before the action; "vs previous": the previous frame) and counts the cells whose colour differs from that reference, which can be fewer than the cells the lines cover. A "net before>last" block is optional: it appears only when the last frame is "vs previous", and restates the change from the board before the action to the last frame. A record marked "start board: from current" does not print its board before the action. Its "before vs current: N cells" lines give that board relative to the current board named in the pack header: take the current board and apply the lines. N counts the cells that differ; every cell the lines do not set had the same colour as on the current board. "before: same as current" means no cell differs.
+
+M-ref-v2 record=bp35:opus55-competition-20261106T054112Z:e0060 event=60 reset=2 level=1 frames=5
+action=ACTION3
+start board: from current
+before vs current: 1424 cells
+1:13=5,14=3,15-19=5,20=3,21-25=5,26=3,27-29=5,37=5,38=3,39-43=5,44=3,45-49=5,50=3,51-53=5
+2-3:13-29=5,37-53=5
+4:13=3,14-17=5,19=3,20-23=5,25=3,26-29=5,37=3,38-41=5,43=3,44-47=5,49=3,50-53=5
+5:13-15=5,16=3,17-21=5,22=3,23-27=5,28=3,29=5,37-39=5,40=3,41-45=5,46=3,47-51=5,52=3,53=5
+7:13=5,14=3,15-19=5,20=3,21-25=5,26=3,27-30=5,31=3,32-34=E,35=3,36-37=5,38=3,39-43=5,44=3,45-49=5,50=3,51-53=5
+8-9:13-30=5,31-35=E,36-53=5
+10:13=3,14-18=5,19=3,20-24=5,25=3,26-30=5,31-35=E,36=5,37=3,38-41=5,43=3,44-47=5,49=3,50-53=5
+11:13-15=5,16=3,17-21=5,22=3,23-27=5,28=3,29-30=5,31=3,32-34=E,35=3,36-39=5,40=3,41-45=5,46=3,47-51=5,52=3,53=5
+12:31-41=5
+13-16:13-30=A,37=5,38-40=F,41=5,43=5,44-46=F,47=5,49=5,50-52=F,53=5
+17:13-30=A,37=5,38=B,39=0,40=B,41=5,43=5,44=B,45=0,46=B,47=5,49=5,50=B,51=0,52=B,53=5
+18:13-30=A,37-41=5,43-47=5,49-53=5
+19-24:13-29=A
+31:13=3,14-16=E,17=3,19=5,20=3,21-23=5,37=3,38-40=E,41=3,43=3,44-46=E,47=3
+32-33:13-17=E,19-23=5,37-41=E,43-47=E
+34:13-17=E,19=3,20-23=5,37-41=E,43-47=E
+35:13=3,14-16=E,17=3,19-21=5,22=3,23=5,37=3,38-40=E,41=3,43=3,44-46=E,47=3
+37:13-30=A,32=5,33=9,36-53=A
+38-39:13-30=A,32=B,33-34=9,36-53=A
+40:13-30=A,31=5,33=9,36-53=A
+41:13-31=A,34=5,35-53=A
+42:19-23=5,37-53=A
+43:13=3,14-16=E,17=3,19=3,20-22=E,23=3,37-53=A
+44-46:13-17=E,19-23=E,37-53=A
+47:13=3,14-16=E,17=3,19=3,20-22=E,23=3,37-53=A
+48:19-23=5,37-53=A
+49:19=5,20=3,21-23=5,37-53=A
+50-51:19-23=5,37-53=A
+52:19=3,20-23=5,37-53=A
+53:19-21=5,22=3,23=5,37-53=A
+54:19-23=5,37-53=A
+55:19=5,20-22=F,23=5,30=5,32=3,33-36=5,37-53=A
+56-57:19=5,20-22=F,23=5,30-36=5,37-53=A
+58:19=5,20-22=F,23=5,30=5,31=3,32-36=5,37-53=A
+59:19=5,20=B,21=0,22=B,23=5,30-33=5,34=3,36=5,37-53=A
+60:19-23=5,30-36=5,37-53=A
+61:30-31=5,32=3,33-36=5
+62:30-36=5
+63:10-25=0
+frame 1/5 vs before: 35 cells
+37:28-29=5,30=9,33-35=A
+38-39:28=5,29=B,30-31=9,32=5,33-35=A
+40:28-29=5,30=9,33-35=A
+41:29-31=5,32-34=A
+63:10=F
+frame 2/5 vs previous: 20 cells
+37:27=5,29=9,30=5,32=A
+38-39:27=5,28=B,29=9,31=5,32=A
+40:27=5,29=9,30=5,32=A
+41:28=5,31=A
+frame 3/5 vs previous: 30 cells
+37:25-26=5,27=9,29=5,30-31=A
+38-39:25=5,26=B,27-28=9,29=5,30-31=A
+40:25-26=5,27=9,29=5,30-31=A
+41:26-27=5,29-30=A
+frames 4-5/5: same as previous
+net before>last: 47 cells
+37:25-26=5,27=9,28-29=5,31-35=A
+38-39:25=5,26=B,27-28=9,29=5,31-35=A
+40:25-26=5,27=9,28-29=5,31-35=A
+41:26-28=5,32-34=A
+63:10=F
+result state=NOT_FINISHED level=1 legal=3,4,6,7

@@ -1,0 +1,98 @@
+== OLDER MEMORY ==
+Source: game cd82, saved run opus55-competition-20261106T054112Z, action 18 (transition t18). One record, selected by rule.
+In this pack "current" means the current board given above, observation o27.
+Boards are text. A board line "y:c*n,..." gives row y as runs: colour c (one hex digit) repeated n times, left to right; "a-b:" means rows a to b are identical. A change line "y:x1-x2=c" sets every cell in columns x1 to x2 of row y to colour c ("x=c" for one cell); "a-b:" applies it to rows a to b. A range may include cells that already had that colour. Row 0 is the top, column 0 the left; ACTION6 clicks (x=column, y=row). Frames are the boards returned by one action, in order. A frame header names its reference ("vs before": the board before the action; "vs previous": the previous frame) and counts the cells whose colour differs from that reference, which can be fewer than the cells the lines cover. A "net before>last" block is optional: it appears only when the last frame is "vs previous", and restates the change from the board before the action to the last frame. A record marked "start board: from current" does not print its board before the action. Its "before vs current: N cells" lines give that board relative to the current board named in the pack header: take the current board and apply the lines. N counts the cells that differ; every cell the lines do not set had the same colour as on the current board. "before: same as current" means no cell differs.
+
+M-ref-v2 record=cd82:opus55-competition-20261106T054112Z:e0018 event=18 reset=0 level=0 frames=15
+action=ACTION5
+start board: from current
+before vs current: 36 cells
+35:27=0,36=F
+36:27-28=0,35-36=F
+37:27-29=0,34-36=F
+38:27-30=0,33-36=F
+40:31=0
+41:30-31=0
+42:29-31=0
+43:28-31=0
+63:47-52=4
+frame 1/15 vs before: 1 cells
+63:52=5
+frame 2/15 vs previous: 40 cells
+24:25-38=5
+25:26-37=2
+32:26-37=0
+33:25=2,38=2
+frame 3/15 vs previous: 40 cells
+25:25-38=5
+26:26-37=2
+33:26-37=0
+34:25=2,38=2
+frame 4/15 vs previous: 40 cells
+26:25-38=5
+27:26-37=2
+34:26-37=0
+35:25=2,38=2
+frame 5/15 vs previous: 39 cells
+27:25-38=5
+28:26-37=2
+35:26-37=0
+36:25=2,38=2
+frame 6/15 vs previous: 38 cells
+28:25-38=5
+29:26-37=2
+36:26-37=0
+37:25=2,38=2
+frame 7/15 vs previous: 37 cells
+29:25-38=5
+30:26-37=2
+37:26-37=0
+38:25=2,38=2
+frame 8/15 vs previous: 36 cells
+30:25-38=5
+31:26-37=2
+38:26-37=0
+39:25=2,38=2
+frame 9/15 vs previous: 30 cells
+30:25-38=2
+31:26-37=0
+38:26=5,37=5
+39:25=5,38=5
+frame 10/15 vs previous: 30 cells
+29:25-38=2
+30:26-37=0
+37:26=5,37=5
+38:25=5,38=5
+frame 11/15 vs previous: 30 cells
+28:25-38=2
+29:26-37=0
+36:26=5,37=5
+37:25=5,38=5
+frame 12/15 vs previous: 30 cells
+27:25-38=2
+28:26-37=0
+35:26=5,37=5
+36:25=5,38=5
+frame 13/15 vs previous: 30 cells
+26:25-38=2
+27:26-37=0
+34:26=5,37=5
+35:25=5,38=5
+frame 14/15 vs previous: 40 cells
+25:25-38=2
+26:26-37=0
+33:26-37=5
+34:25=5,38=5
+frame 15/15 vs previous: 40 cells
+24:25-38=2
+25:26-37=0
+32:26-37=5
+33:25-38=5
+net before>last: 41 cells
+34:27-36=0
+35:28-36=0
+36:29-36=0
+37:30-36=0
+38:31-36=0
+63:52=5
+result state=NOT_FINISHED level=0 legal=1,2,3,4,5,6

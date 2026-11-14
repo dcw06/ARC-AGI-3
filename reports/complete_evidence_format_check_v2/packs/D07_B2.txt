@@ -1,0 +1,178 @@
+== OLDER MEMORY ==
+Source: game vc33, saved run opus55-competition-20261106T054112Z, action 86 (transition t86). One record, selected by rule.
+In this pack "current" means the current board given above, observation o97.
+Boards are text. A board line "y:c*n,..." gives row y as runs: colour c (one hex digit) repeated n times, left to right; "a-b:" means rows a to b are identical. A change line "y:x1-x2=c" sets every cell in columns x1 to x2 of row y to colour c ("x=c" for one cell); "a-b:" applies it to rows a to b. A range may include cells that already had that colour. Row 0 is the top, column 0 the left; ACTION6 clicks (x=column, y=row). Frames are the boards returned by one action, in order. A frame header names its reference ("vs before": the board before the action; "vs previous": the previous frame) and counts the cells whose colour differs from that reference, which can be fewer than the cells the lines cover. A "net before>last" block is optional: it appears only when the last frame is "vs previous", and restates the change from the board before the action to the last frame. A record marked "start board: from current" does not print its board before the action. Its "before vs current: N cells" lines give that board relative to the current board named in the pack header: take the current board and apply the lines. N counts the cells that differ; every cell the lines do not set had the same colour as on the current board. "before: same as current" means no cell differs.
+
+M-ref-v2 record=vc33:opus55-competition-20261106T054112Z:e0086 event=86 reset=0 level=4 frames=44
+action=ACTION6 x=30 y=50
+start board: from current
+before vs current: 893 cells
+0:56-59=7
+1-4:28-39=0
+5-6:24-25=4,26-27=E,28-39=0
+7-8:22-25=4,26-27=E,28-39=0
+9-10:24-25=4,26-27=E,28-39=0
+11-13:28-39=0
+14-16:28-39=1
+17:40-60=3
+18:30-60=3
+19-20:40-60=3
+21-22:36-60=3
+23-24:34-60=3
+25-26:36-60=3
+27-31:40-60=3
+35-46:37-51=0
+47:27-34=0,37-51=0
+48:37-51=0
+49-51:25-36=C
+52:31-36=3
+53:27-30=0,35-36=3
+54:31-36=3
+55-56:31-32=3,33-34=4,35-36=B
+57-58:31-34=4,35-36=B
+59-60:31-32=3,33-34=4,35-36=B
+61-63:31-36=3
+frame 1/44 vs before: 16 cells
+47:27-34=3
+53:27-34=3
+frame 2/44 vs previous: 6 cells
+49-51:24=C,36=3
+frame 3/44 vs previous: 6 cells
+49-51:23=C,35=3
+frame 4/44 vs previous: 6 cells
+49-51:22=C,34=3
+frame 5/44 vs previous: 6 cells
+49-51:21=C,33=3
+frame 6/44 vs previous: 6 cells
+49-51:20=C,32=3
+frame 7/44 vs previous: 6 cells
+49-51:19=C,31=3
+frame 8/44 vs previous: 6 cells
+49-51:18=C,30=3
+frame 9/44 vs previous: 6 cells
+49-51:17=C,29=3
+frame 10/44 vs previous: 6 cells
+49-51:16=C,28=3
+frame 11/44 vs previous: 6 cells
+49-51:15=C,27=3
+frame 12/44 vs previous: 6 cells
+49-51:14=C,26=3
+frame 13/44 vs previous: 6 cells
+49-51:13=C,25=3
+frame 14/44: same as previous
+frame 15/44 vs previous: 12 cells
+54:33-34=4,35-36=B
+56:31-32=4
+58:31-32=3
+60:33-36=3
+frame 16/44 vs previous: 12 cells
+53:33-34=4,35-36=B
+55:31-32=4
+57:31-32=3
+59:33-36=3
+frame 17/44 vs previous: 12 cells
+52:33-34=4,35-36=B
+54:31-32=4
+56:31-32=3
+58:33-36=3
+frame 18/44 vs previous: 12 cells
+51:33-34=4,35-36=B
+53:31-32=4
+55:31-32=3
+57:33-36=3
+frame 19/44 vs previous: 12 cells
+50:33-34=4,35-36=B
+52:31-32=4
+54:31-32=3
+56:33-36=3
+frame 20/44 vs previous: 12 cells
+49:33-34=4,35-36=B
+51:31-32=4
+53:31-32=3
+55:33-36=3
+frame 21/44 vs previous: 12 cells
+48:33-34=4,35-36=B
+50:31-32=4
+52:31-32=3
+54:33-36=3
+frame 22/44 vs previous: 12 cells
+47:33-34=4,35-36=B
+49:31-32=4
+51:31-32=3
+53:33-36=3
+frame 23/44 vs previous: 12 cells
+46:33-34=4,35-36=B
+48:31-32=4
+50:31-32=3
+52:33-36=3
+frame 24/44 vs previous: 12 cells
+45:33-34=4,35-36=B
+47:31-32=4
+49:31-32=3
+51:33-36=3
+frame 25/44 vs previous: 12 cells
+44:33-34=4,35-36=B
+46:31-32=4
+48:31-32=3
+50:33-36=3
+frame 26/44 vs previous: 12 cells
+43:33-34=4,35-36=B
+45:31-32=4
+47:31-32=3
+49:33-36=3
+frame 27/44 vs previous: 12 cells
+42:33-34=4,35-36=B
+44:31-32=4
+46:31-32=3
+48:33-36=3
+frame 28/44 vs previous: 12 cells
+41:33-34=4,35-36=B
+43:31-32=4
+45:31-32=3
+47:33-36=3
+frame 29/44 vs previous: 12 cells
+40:33-34=4,35-36=B
+42:31-32=4
+44:31-32=3
+46:33-36=3
+frame 30/44 vs previous: 12 cells
+39:33-34=4,35-36=B
+41:31-32=4
+43:31-32=3
+45:33-36=3
+frame 31/44: same as previous
+frame 32/44 vs previous: 6 cells
+49-51:13=5,25=C
+frame 33/44 vs previous: 6 cells
+49-51:14=E,26=C
+frame 34/44 vs previous: 6 cells
+49-51:15=E,27=C
+frame 35/44 vs previous: 6 cells
+49-51:16=5,28=C
+frame 36/44 vs previous: 6 cells
+49-51:17=5,29=C
+frame 37/44 vs previous: 6 cells
+49-51:18=5,30=C
+frame 38/44 vs previous: 6 cells
+49-51:19=5,31=C
+frame 39/44 vs previous: 6 cells
+49-51:20=5,32=C
+frame 40/44 vs previous: 6 cells
+49-51:21=5,33=C
+frame 41/44 vs previous: 6 cells
+49-51:22=5,34=C
+frame 42/44 vs previous: 6 cells
+49-51:23=5,35=C
+frame 43/44 vs previous: 6 cells
+49-51:24=5,36=C
+frame 44/44 vs previous: 16 cells
+47:27-34=0
+53:27-34=0
+net before>last: 56 cells
+39-40:33-34=4,35-36=B
+41-42:31-34=4,35-36=B
+43-44:33-34=4,35-36=B
+55-56:33-36=3
+57-58:31-36=3
+59-60:33-36=3
+result state=NOT_FINISHED level=4 legal=6

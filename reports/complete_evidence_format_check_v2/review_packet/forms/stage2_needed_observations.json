@@ -1,0 +1,25 @@
+{
+ "reviewer": "",
+ "case": "",
+ "stage": 2,
+ "stage1_file_was_saved_first": true,
+ "questions_added_after_seeing_history": [],
+ "per_question": [
+  {
+   "question_id": "Q1",
+   "can_the_history_answer_it": "yes | partly | no",
+   "needed_observations": [
+    {
+     "actions": [0],
+     "what_it_shows": "",
+     "status": "observed event | supported limited conclusion | unresolved hypothesis"
+    }
+   ],
+   "sufficient_groups": [[0]],
+   "already_in_decision_time_input": false,
+   "limits_of_the_conclusion": ""
+  }
+ ],
+ "not_a_memory_problem": "anything the player needs that no past record contains (never discovered, or a reasoning or planning gap)",
+ "notes": ""
+}

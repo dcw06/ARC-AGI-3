@@ -243,6 +243,132 @@ def q_key(initial_frame, legal_actions, done, window=2):
     return '\n'.join(lines)
 
 
+# ---- version 2 of B (M-ref-v2): every record states how its starting board is given ----
+
+NOTE_FROM_CURRENT_V3 = (
+    ' A record marked "start board: from current" does not print its board before the action. Its "before vs '
+    'current: N cells" lines give that board relative to the current board named in the pack header: take the '
+    'current board and apply the lines. N counts the cells that differ; every cell the lines do not set had '
+    'the same colour as on the current board. "before: same as current" means no cell differs.')
+NOTE_FULL_V3 = (' A record marked "start board: full" prints its board before the action in full, as board lines '
+                'under "before"; it does not depend on the current board.')
+
+
+def m_ref2(record, current):
+    """M-ref-v2: as M-ref-v1, plus a line saying whether the starting board is rebuilt from the current
+    board or printed in full. The rule for choosing between the two is unchanged (whichever is shorter)."""
+    before = record['before_frame']
+    block = _delta(current, before, 'before', 'current')
+    mode = 'full' if block[0].startswith('before %d' % before.shape[1]) else 'from current'
+    return '\n'.join(_head('M-ref-v2', record) + ['start board: ' + mode] + block
+                     + frame_lines(before, record['response_frames']) + _tail(record))
+
+
+def start_mode(text):
+    return text.split('\n')[2].split(': ', 1)[1]
+
+
+def pack_b2(game, run, decision, chosen, texts):
+    """Complete older-memory section for B version 2. Instructions name only the modes present; a pack
+    with both kinds of record carries both paragraphs, each tied to its own marker."""
+    events = [r['event_seq'] for r in chosen]
+    many = len(events) > 1
+    modes = {start_mode(t) for t in texts}
+    lines = ['== OLDER MEMORY ==',
+             'Source: game %s, saved run %s, action%s %s (transition%s %s). %s, selected by rule.' % (
+                 game, run, 's' if many else '', ' and '.join(map(str, events)), 's' if many else '',
+                 ', '.join('t%d' % e for e in events), '%d records' % len(events) if many else 'One record')]
+    if 'from current' in modes:
+        lines.append('In this pack "current" means the current board given above, observation o%d.' % decision)
+    note = NOTE_COMMON_V2 + (NOTE_FROM_CURRENT_V3 if 'from current' in modes else '') + (NOTE_FULL_V3 if 'full' in modes else '')
+    return '\n'.join(lines + [note, '', '\n\n'.join(texts)])
+
+
+# ---- Q-key-v2: lossless description with shift-coded changes (investigation; version 1 is unchanged) ----
+
+MAX_SHIFT = 8
+
+
+def shifted(board, dy, dx):
+    """`board` moved down by dy rows and right by dx columns; cells with no source keep their old value."""
+    out = board.copy()
+    h, w = board.shape
+    out[max(dy, 0):h + min(dy, 0), max(dx, 0):w + min(dx, 0)] = board[max(-dy, 0):h + min(-dy, 0), max(-dx, 0):w + min(-dx, 0)]
+    return out
+
+
+def _shift_from(header, reference):
+    found = re.search(r'shifted dx=(-?\d+) dy=(-?\d+)', header)
+    return shifted(reference, int(found.group(2)), int(found.group(1))) if found else reference
+
+
+def _delta_shift(reference, target, name, versus):
+    """Like _delta, but may first move the reference by a whole number of cells when that is shorter."""
+    best = _delta(reference, target, name, versus)
+    if reference is None or reference.shape != target.shape:
+        return best
+    plain = int((reference != target).sum())
+    if plain < 40:
+        return best
+    options = []
+    for dy in range(-MAX_SHIFT, MAX_SHIFT + 1):
+        for dx in range(-MAX_SHIFT, MAX_SHIFT + 1):
+            if dy or dx:
+                options.append((int((shifted(reference, dy, dx) != target).sum()), abs(dy) + abs(dx), dy, dx))
+    n, _, dy, dx = min(options)
+    if n < plain:
+        moved = shifted(reference, dy, dx)
+        lines = ['%s vs %s shifted dx=%d dy=%d: %d cells' % (name, versus, dx, dy, n)] + change_lines(moved, target)
+        if len('\n'.join(lines)) < len('\n'.join(best)):
+            return lines
+    return best
+
+
+def frame_lines_q2(before, frames, current):
+    """Frames for a recent response: each against the board before, the previous frame or the current
+    board, with or without a shift, whichever text is shortest."""
+    lines, previous, total, i = [], before, len(frames), 0
+    while i < total:
+        frame = frames[i]
+        if previous is not before and frame.shape == previous.shape and np.array_equal(frame, previous):
+            j = i  # a run of frames identical to the one before them is written once
+            while j + 1 < total and frames[j + 1].shape == previous.shape and np.array_equal(frames[j + 1], previous):
+                j += 1
+            lines.append(('frame %d/%d' % (i + 1, total) if i == j else 'frames %d-%d/%d' % (i + 1, j + 1, total))
+                         + ': same as previous')
+            i = j + 1
+            continue
+        name = 'frame %d/%d' % (i + 1, total)
+        if frame.shape == current.shape and np.array_equal(frame, current):
+            lines.append(name + ': same as current')
+        else:
+            options = [_delta_shift(before, frame, name, 'before'), _delta_shift(current, frame, name, 'current')]
+            if previous is not before:
+                options.append(_delta_shift(previous, frame, name, 'previous'))
+            lines += min(options, key=lambda o: len('\n'.join(o)))
+        previous = frame
+        i += 1
+    return lines
+
+
+def recent_q2(record, current):
+    before = record['before_frame']
+    return '\n'.join(_head('recent', record) + _delta_shift(current, before, 'before', 'current')
+                     + frame_lines_q2(before, record['response_frames'], current) + _tail(record))
+
+
+def q_key2(initial_frame, legal_actions, done, window=2):
+    current = done[-1]['response_frames'][-1] if done else initial_frame
+    level = done[-1]['level_after'] if done else 0
+    reset = done[-1]['reset_id'] if done else 0
+    lines = ['Q-key-v2 next_event=%d reset=%d level=%d' % (len(done) + 1, reset, level),
+             'legal_actions=' + ','.join(map(str, legal_actions)),
+             'current board %dx%d' % current.shape[::-1]] + board_lines(current, True)
+    for offset, record in enumerate(done[-window:] if window else [], -min(window, len(done))):
+        lines += ['recent %d:' % offset, recent_q2(record, current)]
+    return '\n'.join(lines)
+
+
 # ---- decoders, used only to check what a text preserves ----
 
 _FRAME = re.compile(r'^frames? (\d+)(?:-(\d+))?/(\d+)(.*)$')
@@ -252,7 +378,7 @@ def _blocks(text):
     """Split a record into (header line, body lines) blocks after the two head lines."""
     blocks = []
     for line in text.split('\n')[2:]:
-        if line.startswith(('before', 'frame', 'net ', 'window', 'state cells', 'result')):
+        if line.startswith(('before', 'frame', 'net ', 'window', 'state cells', 'result', 'start board')):
             blocks.append((line, []))
         else:
             blocks[-1][1].append(line)
@@ -271,7 +397,7 @@ def decode(text, current=None, shape=None):
             if 'same as current' in header:
                 before = current.copy()
             elif ' vs current' in header:
-                before = apply_lines(current, body)
+                before = apply_lines(_shift_from(header, current), body)
             else:
                 before = parse_board(body)
             known = np.ones(before.shape, dtype=bool)
@@ -301,10 +427,14 @@ def decode(text, current=None, shape=None):
                 frame = before
             elif 'same as previous' in rest:
                 frame = previous
+            elif 'same as current' in rest:
+                frame = current
             elif ' vs before' in rest:
-                frame = apply_lines(before, body)
+                frame = apply_lines(_shift_from(rest, before), body)
             elif ' vs previous' in rest:
-                frame = apply_lines(previous, body)
+                frame = apply_lines(_shift_from(rest, previous), body)
+            elif ' vs current' in rest:
+                frame = apply_lines(_shift_from(rest, current), body)
             else:
                 frame = parse_board(body)
             for _ in range(int(last or first) - int(first) + 1):

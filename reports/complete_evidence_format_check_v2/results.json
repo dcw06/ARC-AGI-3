@@ -1,0 +1,1234 @@
+{
+ "opus_model": "claude-opus-5-5",
+ "scorer": "BAAI/bge-reranker-v2-m3",
+ "scorer_revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+ "representation": "M-ref-v2 with reading instructions version 3 (pack_b2)",
+ "budgets_active": [
+  2048,
+  1024
+ ],
+ "budgets_retired_recorded_only": [
+  512
+ ],
+ "scorer_limits_provisional": {
+  "description": 4096,
+  "pair": 8192
+ },
+ "cases_file_sha256": "ed7da7392f356ca6a2e4db62fd6bc63940913e22956b3b218d8d18eba5b06247",
+ "counts_are_estimates": true,
+ "opus_generation_requests_sent": 0,
+ "cases": [
+  {
+   "case": "D01",
+   "type": "level/reset",
+   "game": "ls20",
+   "decision_after_actions": 82,
+   "reference_board": {
+    "observation": "o82",
+    "cells_sha256": "4edbe4b0c82b79f21de6bc558ea2c064d60ba76de662e49f84d861ef29052817"
+   },
+   "records": [
+    {
+     "event": 10,
+     "frames": 1,
+     "start_board": "full",
+     "share_of_board_differing_from_current": 0.427,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 876,
+     "scorer_record_tokens": 657,
+     "pair_tokens": {
+      "Q-key-v1": 1962,
+      "Q-key-v2": 1911
+     }
+    }
+   ],
+   "pack": {
+    "opus_tokens": 1274,
+    "modes": [
+     "full"
+    ],
+    "mixed_modes": false,
+    "records_opus_tokens": 876,
+    "fits_active": {
+     "2048": true,
+     "1024": false
+    },
+    "fits_retired_512": false,
+    "all_records_reconstruct": true,
+    "sha256": "9ba25a7dbeac2c6c6ce9b324724ded37457cf875064fb794b37df68e0c1f342a"
+   },
+   "first_check": {
+    "A_pack": 1229,
+    "B1_pack": 1335
+   },
+   "description": {
+    "Q-key-v1": 1301,
+    "Q-key-v2": 1250,
+    "Q-key-v2_lossless": true,
+    "Q-key-v2_uses_shift": false,
+    "fits_4096": {
+     "Q-key-v1": true,
+     "Q-key-v2": true
+    }
+   },
+   "pairs_fit_8192": {
+    "Q-key-v1": true,
+    "Q-key-v2": true
+   }
+  },
+  {
+   "case": "D02",
+   "type": "level/reset",
+   "game": "ka59",
+   "decision_after_actions": 33,
+   "reference_board": {
+    "observation": "o33",
+    "cells_sha256": "de1e1f10c47278ee928c3e840779d7443e23bcf3c9c04cab51eb5420a78556d5"
+   },
+   "records": [
+    {
+     "event": 5,
+     "frames": 1,
+     "start_board": "full",
+     "share_of_board_differing_from_current": 0.859,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 556,
+     "scorer_record_tokens": 465,
+     "pair_tokens": {
+      "Q-key-v1": 1684,
+      "Q-key-v2": 1631
+     }
+    }
+   ],
+   "pack": {
+    "opus_tokens": 954,
+    "modes": [
+     "full"
+    ],
+    "mixed_modes": false,
+    "records_opus_tokens": 556,
+    "fits_active": {
+     "2048": true,
+     "1024": true
+    },
+    "fits_retired_512": false,
+    "all_records_reconstruct": true,
+    "sha256": "59c06d4e920dc06bf4f5e31959c8e5d78440688d1f06aa032a16ab58f46eef14"
+   },
+   "first_check": {
+    "A_pack": 909,
+    "B1_pack": 1015
+   },
+   "description": {
+    "Q-key-v1": 1215,
+    "Q-key-v2": 1162,
+    "Q-key-v2_lossless": true,
+    "Q-key-v2_uses_shift": false,
+    "fits_4096": {
+     "Q-key-v1": true,
+     "Q-key-v2": true
+    }
+   },
+   "pairs_fit_8192": {
+    "Q-key-v1": true,
+    "Q-key-v2": true
+   }
+  },
+  {
+   "case": "D03",
+   "type": "level/reset",
+   "game": "tn36",
+   "decision_after_actions": 92,
+   "reference_board": {
+    "observation": "o92",
+    "cells_sha256": "43b710a4c43faefd781541123b33f25d282351f3bfc637166cf67a4463b550f6"
+   },
+   "records": [
+    {
+     "event": 59,
+     "frames": 1,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.008,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 164,
+     "scorer_record_tokens": 107,
+     "pair_tokens": {
+      "Q-key-v1": 966,
+      "Q-key-v2": 947
+     }
+    }
+   ],
+   "pack": {
+    "opus_tokens": 648,
+    "modes": [
+     "from current"
+    ],
+    "mixed_modes": false,
+    "records_opus_tokens": 164,
+    "fits_active": {
+     "2048": true,
+     "1024": true
+    },
+    "fits_retired_512": false,
+    "all_records_reconstruct": true,
+    "sha256": "e7702949357f2cc2d0fb3a358b567b4e205680b111fcc36364e59fc5e95c47d4"
+   },
+   "first_check": {
+    "A_pack": 1453,
+    "B1_pack": 622
+   },
+   "description": {
+    "Q-key-v1": 855,
+    "Q-key-v2": 836,
+    "Q-key-v2_lossless": true,
+    "Q-key-v2_uses_shift": false,
+    "fits_4096": {
+     "Q-key-v1": true,
+     "Q-key-v2": true
+    }
+   },
+   "pairs_fit_8192": {
+    "Q-key-v1": true,
+    "Q-key-v2": true
+   }
+  },
+  {
+   "case": "D04",
+   "type": "level/reset",
+   "game": "tn36",
+   "decision_after_actions": 76,
+   "reference_board": {
+    "observation": "o76",
+    "cells_sha256": "d5bc9cb0e317b234a580c2a3232400119c0e416d387bd6d451de621019c91401"
+   },
+   "records": [
+    {
+     "event": 29,
+     "frames": 1,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.009,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 190,
+     "scorer_record_tokens": 124,
+     "pair_tokens": {
+      "Q-key-v1": 981,
+      "Q-key-v2": 961
+     }
+    }
+   ],
+   "pack": {
+    "opus_tokens": 674,
+    "modes": [
+     "from current"
+    ],
+    "mixed_modes": false,
+    "records_opus_tokens": 190,
+    "fits_active": {
+     "2048": true,
+     "1024": true
+    },
+    "fits_retired_512": false,
+    "all_records_reconstruct": true,
+    "sha256": "ed8751e38211ff29555d60370550e6a1b786454308a824a114a99e092bddf907"
+   },
+   "first_check": {
+    "A_pack": 1453,
+    "B1_pack": 648
+   },
+   "description": {
+    "Q-key-v1": 853,
+    "Q-key-v2": 833,
+    "Q-key-v2_lossless": true,
+    "Q-key-v2_uses_shift": false,
+    "fits_4096": {
+     "Q-key-v1": true,
+     "Q-key-v2": true
+    }
+   },
+   "pairs_fit_8192": {
+    "Q-key-v1": true,
+    "Q-key-v2": true
+   }
+  },
+  {
+   "case": "D05",
+   "type": "delayed",
+   "game": "lf52",
+   "decision_after_actions": 85,
+   "reference_board": {
+    "observation": "o85",
+    "cells_sha256": "87292e5cccfcac76fc289d8596d9cda303a8e3d7201b5890990e04691e285b30"
+   },
+   "records": [
+    {
+     "event": 46,
+     "frames": 3,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.042,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 1130,
+     "scorer_record_tokens": 832,
+     "pair_tokens": {
+      "Q-key-v1": 2915,
+      "Q-key-v2": 2625
+     }
+    }
+   ],
+   "pack": {
+    "opus_tokens": 1614,
+    "modes": [
+     "from current"
+    ],
+    "mixed_modes": false,
+    "records_opus_tokens": 1130,
+    "fits_active": {
+     "2048": true,
+     "1024": false
+    },
+    "fits_retired_512": false,
+    "all_records_reconstruct": true,
+    "sha256": "06e32b46e4fe876d07e2c7036d532cad979364ea7b275766eb0da9633796fe20"
+   },
+   "first_check": {
+    "A_pack": 2891,
+    "B1_pack": 1588
+   },
+   "description": {
+    "Q-key-v1": 2079,
+    "Q-key-v2": 1789,
+    "Q-key-v2_lossless": true,
+    "Q-key-v2_uses_shift": false,
+    "fits_4096": {
+     "Q-key-v1": true,
+     "Q-key-v2": true
+    }
+   },
+   "pairs_fit_8192": {
+    "Q-key-v1": true,
+    "Q-key-v2": true
+   }
+  },
+  {
+   "case": "D06",
+   "type": "delayed",
+   "game": "bp35",
+   "decision_after_actions": 75,
+   "reference_board": {
+    "observation": "o75",
+    "cells_sha256": "1997f8d49fe16319e6ab74364a2d0f5eb1878b0072eb287f28aad7fa7ce0685f"
+   },
+   "records": [
+    {
+     "event": 60,
+     "frames": 5,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.348,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 1848,
+     "scorer_record_tokens": 1348,
+     "pair_tokens": {
+      "Q-key-v1": 10191,
+      "Q-key-v2": 4926
+     }
+    }
+   ],
+   "pack": {
+    "opus_tokens": 2332,
+    "modes": [
+     "from current"
+    ],
+    "mixed_modes": false,
+    "records_opus_tokens": 1848,
+    "fits_active": {
+     "2048": false,
+     "1024": false
+    },
+    "fits_retired_512": false,
+    "all_records_reconstruct": true,
+    "sha256": "9d071052474de1156bd695414ea79a22baf4b63521a692634a1d20e4a8092d60"
+   },
+   "first_check": {
+    "A_pack": 3864,
+    "B1_pack": 2306
+   },
+   "description": {
+    "Q-key-v1": 8839,
+    "Q-key-v2": 3574,
+    "Q-key-v2_lossless": true,
+    "Q-key-v2_uses_shift": true,
+    "fits_4096": {
+     "Q-key-v1": false,
+     "Q-key-v2": true
+    }
+   },
+   "pairs_fit_8192": {
+    "Q-key-v1": false,
+    "Q-key-v2": true
+   }
+  },
+  {
+   "case": "D07",
+   "type": "delayed",
+   "game": "vc33",
+   "decision_after_actions": 97,
+   "reference_board": {
+    "observation": "o97",
+    "cells_sha256": "bb1776778cca5749bc88d4516deed842a48d0a71e21200a564841e70890def06"
+   },
+   "records": [
+    {
+     "event": 86,
+     "frames": 44,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.218,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 2221,
+     "scorer_record_tokens": 1327,
+     "pair_tokens": {
+      "Q-key-v1": 3848,
+      "Q-key-v2": 3672
+     }
+    }
+   ],
+   "pack": {
+    "opus_tokens": 2705,
+    "modes": [
+     "from current"
+    ],
+    "mixed_modes": false,
+    "records_opus_tokens": 2221,
+    "fits_active": {
+     "2048": false,
+     "1024": false
+    },
+    "fits_retired_512": false,
+    "all_records_reconstruct": true,
+    "sha256": "6d0927a3fc70b088f0761bbefc97bd53a337081aa8069e7bc980ce747d9c7c63"
+   },
+   "first_check": {
+    "A_pack": 2666,
+    "B1_pack": 2679
+   },
+   "description": {
+    "Q-key-v1": 2517,
+    "Q-key-v2": 2341,
+    "Q-key-v2_lossless": true,
+    "Q-key-v2_uses_shift": false,
+    "fits_4096": {
+     "Q-key-v1": true,
+     "Q-key-v2": true
+    }
+   },
+   "pairs_fit_8192": {
+    "Q-key-v1": true,
+    "Q-key-v2": true
+   }
+  },
+  {
+   "case": "D08",
+   "type": "delayed",
+   "game": "cd82",
+   "decision_after_actions": 27,
+   "reference_board": {
+    "observation": "o27",
+    "cells_sha256": "9bfb1685bb8fe2dfe4d4b65a75e456abd295d7e78e2351ff7e55d98ca8733a46"
+   },
+   "records": [
+    {
+     "event": 18,
+     "frames": 15,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.009,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 1021,
+     "scorer_record_tokens": 584,
+     "pair_tokens": {
+      "Q-key-v1": 1613,
+      "Q-key-v2": 1448
+     }
+    }
+   ],
+   "pack": {
+    "opus_tokens": 1505,
+    "modes": [
+     "from current"
+    ],
+    "mixed_modes": false,
+    "records_opus_tokens": 1021,
+    "fits_active": {
+     "2048": true,
+     "1024": false
+    },
+    "fits_retired_512": false,
+    "all_records_reconstruct": true,
+    "sha256": "32ab7b900e872c6a354d6ca3416000433fce0b2b606449171ddb31d43e9d149d"
+   },
+   "first_check": {
+    "A_pack": 1802,
+    "B1_pack": 1479
+   },
+   "description": {
+    "Q-key-v1": 1025,
+    "Q-key-v2": 860,
+    "Q-key-v2_lossless": true,
+    "Q-key-v2_uses_shift": false,
+    "fits_4096": {
+     "Q-key-v1": true,
+     "Q-key-v2": true
+    }
+   },
+   "pairs_fit_8192": {
+    "Q-key-v1": true,
+    "Q-key-v2": true
+   }
+  },
+  {
+   "case": "D09",
+   "type": "conflicting",
+   "game": "ka59",
+   "decision_after_actions": 97,
+   "reference_board": {
+    "observation": "o97",
+    "cells_sha256": "ee2eaee3b6994e06e5dbfb0bcaaf0ba3c5d23c57d1b3039b01de2c28fdcd2371"
+   },
+   "records": [
+    {
+     "event": 82,
+     "frames": 1,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.02,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 262,
+     "scorer_record_tokens": 173,
+     "pair_tokens": {
+      "Q-key-v1": 1131,
+      "Q-key-v2": 1087
+     }
+    },
+    {
+     "event": 83,
+     "frames": 1,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.02,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 200,
+     "scorer_record_tokens": 130,
+     "pair_tokens": {
+      "Q-key-v1": 1088,
+      "Q-key-v2": 1044
+     }
+    }
+   ],
+   "pack": {
+    "opus_tokens": 950,
+    "modes": [
+     "from current"
+    ],
+    "mixed_modes": false,
+    "records_opus_tokens": 462,
+    "fits_active": {
+     "2048": true,
+     "1024": true
+    },
+    "fits_retired_512": false,
+    "all_records_reconstruct": true,
+    "sha256": "533ced749f120c3271f07da5bd10d090be6ccf03f8794a2e85ab535021d11354"
+   },
+   "first_check": {
+    "A_pack": 2241,
+    "B1_pack": 918
+   },
+   "description": {
+    "Q-key-v1": 954,
+    "Q-key-v2": 910,
+    "Q-key-v2_lossless": true,
+    "Q-key-v2_uses_shift": false,
+    "fits_4096": {
+     "Q-key-v1": true,
+     "Q-key-v2": true
+    }
+   },
+   "pairs_fit_8192": {
+    "Q-key-v1": true,
+    "Q-key-v2": true
+   }
+  },
+  {
+   "case": "D10",
+   "type": "conflicting",
+   "game": "vc33",
+   "decision_after_actions": 43,
+   "reference_board": {
+    "observation": "o43",
+    "cells_sha256": "75d514cec2179bf352cda4c0e1683e9c36ad9fcf4e8033b214491dcaeb243acc"
+   },
+   "records": [
+    {
+     "event": 25,
+     "frames": 1,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.073,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 524,
+     "scorer_record_tokens": 349,
+     "pair_tokens": {
+      "Q-key-v1": 1239,
+      "Q-key-v2": 1197
+     }
+    },
+    {
+     "event": 32,
+     "frames": 1,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.046,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 280,
+     "scorer_record_tokens": 182,
+     "pair_tokens": {
+      "Q-key-v1": 1072,
+      "Q-key-v2": 1030
+     }
+    }
+   ],
+   "pack": {
+    "opus_tokens": 1292,
+    "modes": [
+     "from current"
+    ],
+    "mixed_modes": false,
+    "records_opus_tokens": 804,
+    "fits_active": {
+     "2048": true,
+     "1024": false
+    },
+    "fits_retired_512": false,
+    "all_records_reconstruct": true,
+    "sha256": "ecde202145c53ea4801f12fcc04b256ea4f4a838496e6e0f100b43c8c5dbf577"
+   },
+   "first_check": {
+    "A_pack": 2425,
+    "B1_pack": 1260
+   },
+   "description": {
+    "Q-key-v1": 886,
+    "Q-key-v2": 844,
+    "Q-key-v2_lossless": true,
+    "Q-key-v2_uses_shift": false,
+    "fits_4096": {
+     "Q-key-v1": true,
+     "Q-key-v2": true
+    }
+   },
+   "pairs_fit_8192": {
+    "Q-key-v1": true,
+    "Q-key-v2": true
+   }
+  },
+  {
+   "case": "D11",
+   "type": "conflicting",
+   "game": "cd82",
+   "decision_after_actions": 92,
+   "reference_board": {
+    "observation": "o92",
+    "cells_sha256": "db20552f80a6564de8811b993ddf31a2ebcf64500a85e571394983a7d0bd9388"
+   },
+   "records": [
+    {
+     "event": 53,
+     "frames": 1,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.095,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 916,
+     "scorer_record_tokens": 620,
+     "pair_tokens": {
+      "Q-key-v1": 2358,
+      "Q-key-v2": 2141
+     }
+    },
+    {
+     "event": 68,
+     "frames": 1,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.082,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 634,
+     "scorer_record_tokens": 406,
+     "pair_tokens": {
+      "Q-key-v1": 2144,
+      "Q-key-v2": 1927
+     }
+    }
+   ],
+   "pack": {
+    "opus_tokens": 2038,
+    "modes": [
+     "from current"
+    ],
+    "mixed_modes": false,
+    "records_opus_tokens": 1550,
+    "fits_active": {
+     "2048": true,
+     "1024": false
+    },
+    "fits_retired_512": false,
+    "all_records_reconstruct": true,
+    "sha256": "79da9ce47ae1e1a12eb786759068da3b9d19a65b69b8064531a6880ca44e69be"
+   },
+   "first_check": {
+    "A_pack": 3401,
+    "B1_pack": 2006
+   },
+   "description": {
+    "Q-key-v1": 1734,
+    "Q-key-v2": 1517,
+    "Q-key-v2_lossless": true,
+    "Q-key-v2_uses_shift": false,
+    "fits_4096": {
+     "Q-key-v1": true,
+     "Q-key-v2": true
+    }
+   },
+   "pairs_fit_8192": {
+    "Q-key-v1": true,
+    "Q-key-v2": true
+   }
+  },
+  {
+   "case": "D12",
+   "type": "conflicting",
+   "game": "ka59",
+   "decision_after_actions": 95,
+   "reference_board": {
+    "observation": "o95",
+    "cells_sha256": "94635d9584ba3be819b1ea73ea0bdf221c4b7194edc8270b241ae900ba606b24"
+   },
+   "records": [
+    {
+     "event": 73,
+     "frames": 1,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.012,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 268,
+     "scorer_record_tokens": 177,
+     "pair_tokens": {
+      "Q-key-v1": 1103,
+      "Q-key-v2": 1081
+     }
+    },
+    {
+     "event": 86,
+     "frames": 1,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.024,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 244,
+     "scorer_record_tokens": 167,
+     "pair_tokens": {
+      "Q-key-v1": 1093,
+      "Q-key-v2": 1071
+     }
+    }
+   ],
+   "pack": {
+    "opus_tokens": 1000,
+    "modes": [
+     "from current"
+    ],
+    "mixed_modes": false,
+    "records_opus_tokens": 512,
+    "fits_active": {
+     "2048": true,
+     "1024": true
+    },
+    "fits_retired_512": false,
+    "all_records_reconstruct": true,
+    "sha256": "2939f52e283dcfc1900e75accd197acd28646ce90c9d12cc8d154eba275b58a8"
+   },
+   "first_check": {
+    "A_pack": 2195,
+    "B1_pack": 968
+   },
+   "description": {
+    "Q-key-v1": 922,
+    "Q-key-v2": 900,
+    "Q-key-v2_lossless": true,
+    "Q-key-v2_uses_shift": false,
+    "fits_4096": {
+     "Q-key-v1": true,
+     "Q-key-v2": true
+    }
+   },
+   "pairs_fit_8192": {
+    "Q-key-v1": true,
+    "Q-key-v2": true
+   }
+  },
+  {
+   "case": "D13",
+   "type": "spatial",
+   "game": "ls20",
+   "decision_after_actions": 59,
+   "reference_board": {
+    "observation": "o59",
+    "cells_sha256": "359278bf3d42c31c8b85ebdb17290b92d5948673b4420083db8075004a1c62f6"
+   },
+   "records": [
+    {
+     "event": 43,
+     "frames": 1,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.017,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 250,
+     "scorer_record_tokens": 165,
+     "pair_tokens": {
+      "Q-key-v1": 1253,
+      "Q-key-v2": 1217
+     }
+    }
+   ],
+   "pack": {
+    "opus_tokens": 734,
+    "modes": [
+     "from current"
+    ],
+    "mixed_modes": false,
+    "records_opus_tokens": 250,
+    "fits_active": {
+     "2048": true,
+     "1024": true
+    },
+    "fits_retired_512": false,
+    "all_records_reconstruct": true,
+    "sha256": "5feb4da287c4ee5148a347e2496f51bfcaf5a62e485b8c6571aef4a5d88f17e4"
+   },
+   "first_check": {
+    "A_pack": 1643,
+    "B1_pack": 708
+   },
+   "description": {
+    "Q-key-v1": 1084,
+    "Q-key-v2": 1048,
+    "Q-key-v2_lossless": true,
+    "Q-key-v2_uses_shift": false,
+    "fits_4096": {
+     "Q-key-v1": true,
+     "Q-key-v2": true
+    }
+   },
+   "pairs_fit_8192": {
+    "Q-key-v1": true,
+    "Q-key-v2": true
+   }
+  },
+  {
+   "case": "D14",
+   "type": "spatial",
+   "game": "cd82",
+   "decision_after_actions": 25,
+   "reference_board": {
+    "observation": "o25",
+    "cells_sha256": "0d699ae6757069387397871f7cc78f2ed168a98738f2c25173019eb210effcf1"
+   },
+   "records": [
+    {
+     "event": 15,
+     "frames": 1,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.071,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 788,
+     "scorer_record_tokens": 519,
+     "pair_tokens": {
+      "Q-key-v1": 1573,
+      "Q-key-v2": 1392
+     }
+    }
+   ],
+   "pack": {
+    "opus_tokens": 1272,
+    "modes": [
+     "from current"
+    ],
+    "mixed_modes": false,
+    "records_opus_tokens": 788,
+    "fits_active": {
+     "2048": true,
+     "1024": false
+    },
+    "fits_retired_512": false,
+    "all_records_reconstruct": true,
+    "sha256": "e7c167b8e06883ea0528a2f7c47b88c39695e2d50becf22d444be1e1327a9a84"
+   },
+   "first_check": {
+    "A_pack": 1409,
+    "B1_pack": 1246
+   },
+   "description": {
+    "Q-key-v1": 1050,
+    "Q-key-v2": 869,
+    "Q-key-v2_lossless": true,
+    "Q-key-v2_uses_shift": false,
+    "fits_4096": {
+     "Q-key-v1": true,
+     "Q-key-v2": true
+    }
+   },
+   "pairs_fit_8192": {
+    "Q-key-v1": true,
+    "Q-key-v2": true
+   }
+  },
+  {
+   "case": "D15",
+   "type": "spatial",
+   "game": "vc33",
+   "decision_after_actions": 66,
+   "reference_board": {
+    "observation": "o66",
+    "cells_sha256": "3dfe5ee2c0d9feee164c59685c857dc947bfedbf7b6dab0c4533a3ab82dfe9a0"
+   },
+   "records": [
+    {
+     "event": 54,
+     "frames": 1,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.103,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 286,
+     "scorer_record_tokens": 193,
+     "pair_tokens": {
+      "Q-key-v1": 878,
+      "Q-key-v2": 832
+     }
+    }
+   ],
+   "pack": {
+    "opus_tokens": 770,
+    "modes": [
+     "from current"
+    ],
+    "mixed_modes": false,
+    "records_opus_tokens": 286,
+    "fits_active": {
+     "2048": true,
+     "1024": true
+    },
+    "fits_retired_512": false,
+    "all_records_reconstruct": true,
+    "sha256": "c0f714f3514f2960ef7a1196a22445c5ef06429c4c8374668694b72c048aaec3"
+   },
+   "first_check": {
+    "A_pack": 1031,
+    "B1_pack": 744
+   },
+   "description": {
+    "Q-key-v1": 681,
+    "Q-key-v2": 635,
+    "Q-key-v2_lossless": true,
+    "Q-key-v2_uses_shift": false,
+    "fits_4096": {
+     "Q-key-v1": true,
+     "Q-key-v2": true
+    }
+   },
+   "pairs_fit_8192": {
+    "Q-key-v1": true,
+    "Q-key-v2": true
+   }
+  },
+  {
+   "case": "D16",
+   "type": "spatial",
+   "game": "ka59",
+   "decision_after_actions": 81,
+   "reference_board": {
+    "observation": "o81",
+    "cells_sha256": "e07644b74cf8cd6e7b47c63942c6383ebdf92aaad9948ebfa2fbcbf078b7c404"
+   },
+   "records": [
+    {
+     "event": 56,
+     "frames": 1,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.03,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 300,
+     "scorer_record_tokens": 200,
+     "pair_tokens": {
+      "Q-key-v1": 1295,
+      "Q-key-v2": 1237
+     }
+    }
+   ],
+   "pack": {
+    "opus_tokens": 784,
+    "modes": [
+     "from current"
+    ],
+    "mixed_modes": false,
+    "records_opus_tokens": 300,
+    "fits_active": {
+     "2048": true,
+     "1024": true
+    },
+    "fits_retired_512": false,
+    "all_records_reconstruct": true,
+    "sha256": "673c83fbb4d010f1dd2b712b60b13ba3c3537c47ffca891522281067265ad585"
+   },
+   "first_check": {
+    "A_pack": 1319,
+    "B1_pack": 758
+   },
+   "description": {
+    "Q-key-v1": 1091,
+    "Q-key-v2": 1033,
+    "Q-key-v2_lossless": true,
+    "Q-key-v2_uses_shift": false,
+    "fits_4096": {
+     "Q-key-v1": true,
+     "Q-key-v2": true
+    }
+   },
+   "pairs_fit_8192": {
+    "Q-key-v1": true,
+    "Q-key-v2": true
+   }
+  },
+  {
+   "case": "D17",
+   "type": "ordinary",
+   "game": "tn36",
+   "decision_after_actions": 96,
+   "reference_board": {
+    "observation": "o96",
+    "cells_sha256": "def743761e8d3aeeca4c5fad710f68d30f7e3ed130f753ef5cf02c00c2220425"
+   },
+   "records": [
+    {
+     "event": 86,
+     "frames": 1,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.009,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 200,
+     "scorer_record_tokens": 132,
+     "pair_tokens": {
+      "Q-key-v1": 1359,
+      "Q-key-v2": 1322
+     }
+    }
+   ],
+   "pack": {
+    "opus_tokens": 684,
+    "modes": [
+     "from current"
+    ],
+    "mixed_modes": false,
+    "records_opus_tokens": 200,
+    "fits_active": {
+     "2048": true,
+     "1024": true
+    },
+    "fits_retired_512": false,
+    "all_records_reconstruct": true,
+    "sha256": "fdd438651fa40bfac88e6534bcf389d5f888a1d6e97ec69335e7468fcde0a732"
+   },
+   "first_check": {
+    "A_pack": 1453,
+    "B1_pack": 658
+   },
+   "description": {
+    "Q-key-v1": 1223,
+    "Q-key-v2": 1186,
+    "Q-key-v2_lossless": true,
+    "Q-key-v2_uses_shift": false,
+    "fits_4096": {
+     "Q-key-v1": true,
+     "Q-key-v2": true
+    }
+   },
+   "pairs_fit_8192": {
+    "Q-key-v1": true,
+    "Q-key-v2": true
+   }
+  },
+  {
+   "case": "D18",
+   "type": "ordinary",
+   "game": "ls20",
+   "decision_after_actions": 49,
+   "reference_board": {
+    "observation": "o49",
+    "cells_sha256": "9f7ba26dbdad417efcc4dd2c3062e60753015092351bc6103d93987622bc5931"
+   },
+   "records": [
+    {
+     "event": 35,
+     "frames": 1,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.023,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 286,
+     "scorer_record_tokens": 196,
+     "pair_tokens": {
+      "Q-key-v1": 1437,
+      "Q-key-v2": 1396
+     }
+    }
+   ],
+   "pack": {
+    "opus_tokens": 770,
+    "modes": [
+     "from current"
+    ],
+    "mixed_modes": false,
+    "records_opus_tokens": 286,
+    "fits_active": {
+     "2048": true,
+     "1024": true
+    },
+    "fits_retired_512": false,
+    "all_records_reconstruct": true,
+    "sha256": "e9c9b127c262a3cbc700df8314c67afcf9d506584399117d767dcddc5f87645c"
+   },
+   "first_check": {
+    "A_pack": 1707,
+    "B1_pack": 744
+   },
+   "description": {
+    "Q-key-v1": 1237,
+    "Q-key-v2": 1196,
+    "Q-key-v2_lossless": true,
+    "Q-key-v2_uses_shift": false,
+    "fits_4096": {
+     "Q-key-v1": true,
+     "Q-key-v2": true
+    }
+   },
+   "pairs_fit_8192": {
+    "Q-key-v1": true,
+    "Q-key-v2": true
+   }
+  },
+  {
+   "case": "D19",
+   "type": "ordinary",
+   "game": "cd82",
+   "decision_after_actions": 85,
+   "reference_board": {
+    "observation": "o85",
+    "cells_sha256": "c1e46c22e400f04d7cd4d24b63cbff72fc22877c9ee8a916f2422d0166c34d2c"
+   },
+   "records": [
+    {
+     "event": 48,
+     "frames": 1,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.094,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 800,
+     "scorer_record_tokens": 523,
+     "pair_tokens": {
+      "Q-key-v1": 3936,
+      "Q-key-v2": 3871
+     }
+    }
+   ],
+   "pack": {
+    "opus_tokens": 1284,
+    "modes": [
+     "from current"
+    ],
+    "mixed_modes": false,
+    "records_opus_tokens": 800,
+    "fits_active": {
+     "2048": true,
+     "1024": false
+    },
+    "fits_retired_512": false,
+    "all_records_reconstruct": true,
+    "sha256": "396d85bc6b426d8596e3809688ad941bc2d4f91c99749c94de23d590df8b84e8"
+   },
+   "first_check": {
+    "A_pack": 1795,
+    "B1_pack": 1258
+   },
+   "description": {
+    "Q-key-v1": 3409,
+    "Q-key-v2": 3344,
+    "Q-key-v2_lossless": true,
+    "Q-key-v2_uses_shift": false,
+    "fits_4096": {
+     "Q-key-v1": true,
+     "Q-key-v2": true
+    }
+   },
+   "pairs_fit_8192": {
+    "Q-key-v1": true,
+    "Q-key-v2": true
+   }
+  },
+  {
+   "case": "D20",
+   "type": "ordinary",
+   "game": "vc33",
+   "decision_after_actions": 72,
+   "reference_board": {
+    "observation": "o72",
+    "cells_sha256": "215c9fe4b43000c79001064714669f844865a8c3749eb795710e0188517b9cec"
+   },
+   "records": [
+    {
+     "event": 63,
+     "frames": 1,
+     "start_board": "from current",
+     "share_of_board_differing_from_current": 0.066,
+     "reconstructs_all_frames": true,
+     "opus_tokens": 332,
+     "scorer_record_tokens": 218,
+     "pair_tokens": {
+      "Q-key-v1": 937,
+      "Q-key-v2": 894
+     }
+    }
+   ],
+   "pack": {
+    "opus_tokens": 816,
+    "modes": [
+     "from current"
+    ],
+    "mixed_modes": false,
+    "records_opus_tokens": 332,
+    "fits_active": {
+     "2048": true,
+     "1024": true
+    },
+    "fits_retired_512": false,
+    "all_records_reconstruct": true,
+    "sha256": "e86cbc93697b25d3d2d2374703b252e9c17cc857a35f663c9d272183abfba5f4"
+   },
+   "first_check": {
+    "A_pack": 1055,
+    "B1_pack": 790
+   },
+   "description": {
+    "Q-key-v1": 715,
+    "Q-key-v2": 672,
+    "Q-key-v2_lossless": true,
+    "Q-key-v2_uses_shift": false,
+    "fits_4096": {
+     "Q-key-v1": true,
+     "Q-key-v2": true
+    }
+   },
+   "pairs_fit_8192": {
+    "Q-key-v1": true,
+    "Q-key-v2": true
+   }
+  }
+ ]
+}

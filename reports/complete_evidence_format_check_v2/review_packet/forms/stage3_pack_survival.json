@@ -1,0 +1,24 @@
+{
+ "reviewer": "",
+ "case": "",
+ "stage": 3,
+ "stage2_file_was_saved_first": true,
+ "pack_records_overlap_with_my_needed_observations": "all | some | none",
+ "per_question": [
+  {
+   "question_id": "Q1",
+   "needed_observations_present_in_pack": [0],
+   "needed_observations_absent_from_pack": [0],
+   "for_each_present_observation": [
+    {
+     "action": 0,
+     "readable_from_the_pack_text_alone": "yes | partly | no",
+     "missing_or_misleading": ""
+    }
+   ],
+   "question_answerable_from_decision_input_plus_pack": "yes | partly | no"
+  }
+ ],
+ "does_the_pack_record_matter_for_any_question": "yes | no",
+ "notes": ""
+}

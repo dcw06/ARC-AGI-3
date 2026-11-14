@@ -31,8 +31,12 @@ human review.
 
 - **Source:** the saved stateless run `opus55-competition-20261106T054112Z`, one episode per game.
 - **Games:** only the seven already used for development (bp35, lf52, ls20 named in the protocol; tn36,
-  cd82, ka59, vc33 used in Phase 1). The other 18 games are untouched, so the reserved 12 decisions can
-  still come from separate episodes.
+  cd82, ka59, vc33 used in Phase 1). The other 18 games supply no development case, so the reserved 12
+  decisions can still come from separate episodes.
+  **Correction, 2026-11-14:** this line first said the other 18 games "are untouched". That was wrong. The
+  Phase 1 size benchmark measured every record of every game and token-counted 8 sampled records per game,
+  so those 18 games have format-development exposure. The exact exposure is in
+  `../complete_evidence_format_check_v2/exposure_ledger.json`. No result in this report changes.
 - **A case** is a decision plus the earlier record or records a reader would need. Every earlier record
   is at least 9 actions before its decision.
 - **Types** are assigned by fixed rules from the frames, in this order. No person has reviewed them.

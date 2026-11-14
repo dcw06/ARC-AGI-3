@@ -1,0 +1,6175 @@
+{
+ "summary": {
+  "decisions": 500,
+  "limit": 4096,
+  "q1_within_limit": 479,
+  "q2_within_limit": 489,
+  "q2_all_lossless": true,
+  "q2_using_shift": 18,
+  "q1_median_max": [
+   1305.5,
+   48315
+  ],
+  "q2_median_max": [
+   1231.0,
+   11659
+  ],
+  "q2_over_limit_by_game": {
+   "bp35": [
+    23,
+    24,
+    41,
+    54,
+    55,
+    64,
+    69,
+    99
+   ],
+   "r11l": [
+    33
+   ],
+   "sb26": [
+    91
+   ],
+   "tr87": [
+    62
+   ]
+  },
+  "q2_over_limit": [
+   {
+    "game": "sb26",
+    "decision": 91,
+    "recent_frames": [
+     7,
+     328
+    ],
+    "q1": 12530,
+    "q2": 11659,
+    "lossless": true,
+    "uses_shift": false
+   },
+   {
+    "game": "bp35",
+    "decision": 23,
+    "recent_frames": [
+     44,
+     28
+    ],
+    "q1": 48315,
+    "q2": 9243,
+    "lossless": true,
+    "uses_shift": true
+   },
+   {
+    "game": "bp35",
+    "decision": 54,
+    "recent_frames": [
+     5,
+     47
+    ],
+    "q1": 38189,
+    "q2": 7481,
+    "lossless": true,
+    "uses_shift": true
+   },
+   {
+    "game": "tr87",
+    "decision": 62,
+    "recent_frames": [
+     37,
+     1
+    ],
+    "q1": 9157,
+    "q2": 7010,
+    "lossless": true,
+    "uses_shift": false
+   },
+   {
+    "game": "bp35",
+    "decision": 55,
+    "recent_frames": [
+     47,
+     5
+    ],
+    "q1": 37210,
+    "q2": 6707,
+    "lossless": true,
+    "uses_shift": true
+   },
+   {
+    "game": "bp35",
+    "decision": 41,
+    "recent_frames": [
+     5,
+     28
+    ],
+    "q1": 21076,
+    "q2": 6316,
+    "lossless": true,
+    "uses_shift": true
+   },
+   {
+    "game": "bp35",
+    "decision": 24,
+    "recent_frames": [
+     28,
+     2
+    ],
+    "q1": 19091,
+    "q2": 6141,
+    "lossless": true,
+    "uses_shift": true
+   },
+   {
+    "game": "bp35",
+    "decision": 69,
+    "recent_frames": [
+     22,
+     5
+    ],
+    "q1": 18317,
+    "q2": 5417,
+    "lossless": true,
+    "uses_shift": true
+   },
+   {
+    "game": "bp35",
+    "decision": 99,
+    "recent_frames": [
+     22,
+     5
+    ],
+    "q1": 18317,
+    "q2": 5417,
+    "lossless": true,
+    "uses_shift": true
+   },
+   {
+    "game": "bp35",
+    "decision": 64,
+    "recent_frames": [
+     28,
+     5
+    ],
+    "q1": 20159,
+    "q2": 5382,
+    "lossless": true,
+    "uses_shift": true
+   },
+   {
+    "game": "r11l",
+    "decision": 33,
+    "recent_frames": [
+     23,
+     3
+    ],
+    "q1": 6453,
+    "q2": 4545,
+    "lossless": true,
+    "uses_shift": false
+   }
+  ]
+ },
+ "rows": [
+  {
+   "game": "ar25",
+   "decision": 6,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 867,
+   "q2": 717,
+   "lossless": true,
+   "uses_shift": true
+  },
+  {
+   "game": "ar25",
+   "decision": 11,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1224,
+   "q2": 1066,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ar25",
+   "decision": 19,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 3576,
+   "q2": 1952,
+   "lossless": true,
+   "uses_shift": true
+  },
+  {
+   "game": "ar25",
+   "decision": 22,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 4308,
+   "q2": 2332,
+   "lossless": true,
+   "uses_shift": true
+  },
+  {
+   "game": "ar25",
+   "decision": 33,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1209,
+   "q2": 1104,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ar25",
+   "decision": 51,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1985,
+   "q2": 1721,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ar25",
+   "decision": 53,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2082,
+   "q2": 1800,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ar25",
+   "decision": 56,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1568,
+   "q2": 1429,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ar25",
+   "decision": 58,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1508,
+   "q2": 1405,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ar25",
+   "decision": 59,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1478,
+   "q2": 1380,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ar25",
+   "decision": 64,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1322,
+   "q2": 1226,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ar25",
+   "decision": 66,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1355,
+   "q2": 1247,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ar25",
+   "decision": 67,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1307,
+   "q2": 1189,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ar25",
+   "decision": 72,
+   "recent_frames": [
+    1,
+    3
+   ],
+   "q1": 3821,
+   "q2": 2954,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ar25",
+   "decision": 73,
+   "recent_frames": [
+    3,
+    1
+   ],
+   "q1": 3104,
+   "q2": 2228,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ar25",
+   "decision": 78,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1557,
+   "q2": 1428,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ar25",
+   "decision": 81,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1349,
+   "q2": 1232,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ar25",
+   "decision": 86,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2048,
+   "q2": 1754,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ar25",
+   "decision": 97,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1559,
+   "q2": 1419,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ar25",
+   "decision": 100,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1933,
+   "q2": 1706,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "bp35",
+   "decision": 23,
+   "recent_frames": [
+    44,
+    28
+   ],
+   "q1": 48315,
+   "q2": 9243,
+   "lossless": true,
+   "uses_shift": true
+  },
+  {
+   "game": "bp35",
+   "decision": 24,
+   "recent_frames": [
+    28,
+    2
+   ],
+   "q1": 19091,
+   "q2": 6141,
+   "lossless": true,
+   "uses_shift": true
+  },
+  {
+   "game": "bp35",
+   "decision": 35,
+   "recent_frames": [
+    5,
+    5
+   ],
+   "q1": 3231,
+   "q2": 3041,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "bp35",
+   "decision": 38,
+   "recent_frames": [
+    5,
+    5
+   ],
+   "q1": 3157,
+   "q2": 2979,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "bp35",
+   "decision": 41,
+   "recent_frames": [
+    5,
+    28
+   ],
+   "q1": 21076,
+   "q2": 6316,
+   "lossless": true,
+   "uses_shift": true
+  },
+  {
+   "game": "bp35",
+   "decision": 50,
+   "recent_frames": [
+    2,
+    5
+   ],
+   "q1": 5600,
+   "q2": 3632,
+   "lossless": true,
+   "uses_shift": true
+  },
+  {
+   "game": "bp35",
+   "decision": 53,
+   "recent_frames": [
+    5,
+    5
+   ],
+   "q1": 3178,
+   "q2": 2939,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "bp35",
+   "decision": 54,
+   "recent_frames": [
+    5,
+    47
+   ],
+   "q1": 38189,
+   "q2": 7481,
+   "lossless": true,
+   "uses_shift": true
+  },
+  {
+   "game": "bp35",
+   "decision": 55,
+   "recent_frames": [
+    47,
+    5
+   ],
+   "q1": 37210,
+   "q2": 6707,
+   "lossless": true,
+   "uses_shift": true
+  },
+  {
+   "game": "bp35",
+   "decision": 61,
+   "recent_frames": [
+    5,
+    5
+   ],
+   "q1": 3243,
+   "q2": 3007,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "bp35",
+   "decision": 62,
+   "recent_frames": [
+    5,
+    5
+   ],
+   "q1": 3221,
+   "q2": 2988,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "bp35",
+   "decision": 64,
+   "recent_frames": [
+    28,
+    5
+   ],
+   "q1": 20159,
+   "q2": 5382,
+   "lossless": true,
+   "uses_shift": true
+  },
+  {
+   "game": "bp35",
+   "decision": 67,
+   "recent_frames": [
+    5,
+    10
+   ],
+   "q1": 8834,
+   "q2": 3735,
+   "lossless": true,
+   "uses_shift": true
+  },
+  {
+   "game": "bp35",
+   "decision": 69,
+   "recent_frames": [
+    22,
+    5
+   ],
+   "q1": 18317,
+   "q2": 5417,
+   "lossless": true,
+   "uses_shift": true
+  },
+  {
+   "game": "bp35",
+   "decision": 76,
+   "recent_frames": [
+    2,
+    2
+   ],
+   "q1": 2928,
+   "q2": 2888,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "bp35",
+   "decision": 82,
+   "recent_frames": [
+    5,
+    5
+   ],
+   "q1": 3200,
+   "q2": 2959,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "bp35",
+   "decision": 83,
+   "recent_frames": [
+    5,
+    10
+   ],
+   "q1": 7501,
+   "q2": 3380,
+   "lossless": true,
+   "uses_shift": true
+  },
+  {
+   "game": "bp35",
+   "decision": 86,
+   "recent_frames": [
+    5,
+    5
+   ],
+   "q1": 3191,
+   "q2": 3004,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "bp35",
+   "decision": 91,
+   "recent_frames": [
+    5,
+    5
+   ],
+   "q1": 3243,
+   "q2": 3007,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "bp35",
+   "decision": 99,
+   "recent_frames": [
+    22,
+    5
+   ],
+   "q1": 18317,
+   "q2": 5417,
+   "lossless": true,
+   "uses_shift": true
+  },
+  {
+   "game": "cd82",
+   "decision": 9,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1330,
+   "q2": 1116,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cd82",
+   "decision": 26,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 948,
+   "q2": 767,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cd82",
+   "decision": 31,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1473,
+   "q2": 1258,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cd82",
+   "decision": 34,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1520,
+   "q2": 1309,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cd82",
+   "decision": 35,
+   "recent_frames": [
+    1,
+    16
+   ],
+   "q1": 4550,
+   "q2": 3823,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cd82",
+   "decision": 36,
+   "recent_frames": [
+    16,
+    15
+   ],
+   "q1": 4445,
+   "q2": 3717,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cd82",
+   "decision": 48,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1989,
+   "q2": 1761,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cd82",
+   "decision": 49,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1558,
+   "q2": 1331,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cd82",
+   "decision": 51,
+   "recent_frames": [
+    1,
+    15
+   ],
+   "q1": 2037,
+   "q2": 1845,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cd82",
+   "decision": 53,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1727,
+   "q2": 1507,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cd82",
+   "decision": 54,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1491,
+   "q2": 1271,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cd82",
+   "decision": 62,
+   "recent_frames": [
+    15,
+    1
+   ],
+   "q1": 1541,
+   "q2": 1505,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cd82",
+   "decision": 72,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1635,
+   "q2": 1404,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cd82",
+   "decision": 79,
+   "recent_frames": [
+    15,
+    1
+   ],
+   "q1": 1772,
+   "q2": 1727,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cd82",
+   "decision": 80,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1796,
+   "q2": 1576,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cd82",
+   "decision": 85,
+   "recent_frames": [
+    1,
+    15
+   ],
+   "q1": 3409,
+   "q2": 3344,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cd82",
+   "decision": 87,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1710,
+   "q2": 1485,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cd82",
+   "decision": 88,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1562,
+   "q2": 1337,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cd82",
+   "decision": 94,
+   "recent_frames": [
+    15,
+    1
+   ],
+   "q1": 3477,
+   "q2": 3298,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cd82",
+   "decision": 97,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1715,
+   "q2": 1514,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cn04",
+   "decision": 7,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 546,
+   "q2": 509,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cn04",
+   "decision": 9,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 726,
+   "q2": 643,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cn04",
+   "decision": 16,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 634,
+   "q2": 557,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cn04",
+   "decision": 19,
+   "recent_frames": [
+    1,
+    3
+   ],
+   "q1": 1480,
+   "q2": 1066,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cn04",
+   "decision": 21,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 767,
+   "q2": 714,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cn04",
+   "decision": 24,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 775,
+   "q2": 720,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cn04",
+   "decision": 28,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 795,
+   "q2": 710,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cn04",
+   "decision": 38,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 821,
+   "q2": 742,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cn04",
+   "decision": 46,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 633,
+   "q2": 599,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cn04",
+   "decision": 48,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 713,
+   "q2": 656,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cn04",
+   "decision": 49,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 724,
+   "q2": 663,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cn04",
+   "decision": 55,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 660,
+   "q2": 575,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cn04",
+   "decision": 61,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 850,
+   "q2": 730,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cn04",
+   "decision": 66,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 704,
+   "q2": 620,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cn04",
+   "decision": 72,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 595,
+   "q2": 535,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cn04",
+   "decision": 74,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 615,
+   "q2": 563,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cn04",
+   "decision": 76,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 704,
+   "q2": 621,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cn04",
+   "decision": 80,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 734,
+   "q2": 652,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cn04",
+   "decision": 83,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 720,
+   "q2": 634,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "cn04",
+   "decision": 92,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 485,
+   "q2": 443,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "dc22",
+   "decision": 14,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 748,
+   "q2": 723,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "dc22",
+   "decision": 18,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 734,
+   "q2": 708,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "dc22",
+   "decision": 22,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 755,
+   "q2": 729,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "dc22",
+   "decision": 31,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 696,
+   "q2": 669,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "dc22",
+   "decision": 36,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 927,
+   "q2": 897,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "dc22",
+   "decision": 46,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1075,
+   "q2": 987,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "dc22",
+   "decision": 49,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 879,
+   "q2": 856,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "dc22",
+   "decision": 51,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 881,
+   "q2": 854,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "dc22",
+   "decision": 53,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 883,
+   "q2": 856,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "dc22",
+   "decision": 54,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 883,
+   "q2": 857,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "dc22",
+   "decision": 55,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 879,
+   "q2": 856,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "dc22",
+   "decision": 58,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1002,
+   "q2": 914,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "dc22",
+   "decision": 59,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 850,
+   "q2": 825,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "dc22",
+   "decision": 62,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 858,
+   "q2": 830,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "dc22",
+   "decision": 63,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 855,
+   "q2": 830,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "dc22",
+   "decision": 76,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 926,
+   "q2": 901,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "dc22",
+   "decision": 78,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 923,
+   "q2": 884,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "dc22",
+   "decision": 84,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 999,
+   "q2": 912,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "dc22",
+   "decision": 87,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 857,
+   "q2": 830,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "dc22",
+   "decision": 88,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 856,
+   "q2": 828,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ft09",
+   "decision": 3,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 918,
+   "q2": 892,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ft09",
+   "decision": 4,
+   "recent_frames": [
+    1,
+    2
+   ],
+   "q1": 2181,
+   "q2": 1857,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ft09",
+   "decision": 13,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 702,
+   "q2": 679,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ft09",
+   "decision": 15,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 721,
+   "q2": 698,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ft09",
+   "decision": 17,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 709,
+   "q2": 687,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ft09",
+   "decision": 18,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 719,
+   "q2": 697,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ft09",
+   "decision": 20,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 728,
+   "q2": 705,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ft09",
+   "decision": 26,
+   "recent_frames": [
+    2,
+    1
+   ],
+   "q1": 1540,
+   "q2": 997,
+   "lossless": true,
+   "uses_shift": true
+  },
+  {
+   "game": "ft09",
+   "decision": 27,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 640,
+   "q2": 617,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ft09",
+   "decision": 34,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 638,
+   "q2": 615,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ft09",
+   "decision": 35,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 641,
+   "q2": 618,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ft09",
+   "decision": 36,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 630,
+   "q2": 607,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ft09",
+   "decision": 38,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 636,
+   "q2": 613,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ft09",
+   "decision": 46,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1227,
+   "q2": 1208,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ft09",
+   "decision": 52,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1357,
+   "q2": 1273,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ft09",
+   "decision": 60,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1254,
+   "q2": 1230,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ft09",
+   "decision": 61,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1243,
+   "q2": 1219,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ft09",
+   "decision": 64,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1087,
+   "q2": 1040,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ft09",
+   "decision": 67,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1124,
+   "q2": 1078,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ft09",
+   "decision": 70,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1116,
+   "q2": 1065,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "g50t",
+   "decision": 5,
+   "recent_frames": [
+    7,
+    7
+   ],
+   "q1": 1109,
+   "q2": 1007,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "g50t",
+   "decision": 6,
+   "recent_frames": [
+    7,
+    1
+   ],
+   "q1": 897,
+   "q2": 835,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "g50t",
+   "decision": 13,
+   "recent_frames": [
+    7,
+    7
+   ],
+   "q1": 1184,
+   "q2": 1064,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "g50t",
+   "decision": 18,
+   "recent_frames": [
+    9,
+    9
+   ],
+   "q1": 1191,
+   "q2": 1087,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "g50t",
+   "decision": 26,
+   "recent_frames": [
+    7,
+    13
+   ],
+   "q1": 1835,
+   "q2": 1638,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "g50t",
+   "decision": 29,
+   "recent_frames": [
+    9,
+    9
+   ],
+   "q1": 1620,
+   "q2": 1447,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "g50t",
+   "decision": 32,
+   "recent_frames": [
+    15,
+    7
+   ],
+   "q1": 1801,
+   "q2": 1600,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "g50t",
+   "decision": 37,
+   "recent_frames": [
+    7,
+    7
+   ],
+   "q1": 1318,
+   "q2": 1183,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "g50t",
+   "decision": 38,
+   "recent_frames": [
+    7,
+    7
+   ],
+   "q1": 1319,
+   "q2": 1186,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "g50t",
+   "decision": 40,
+   "recent_frames": [
+    9,
+    7
+   ],
+   "q1": 2478,
+   "q2": 1736,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "g50t",
+   "decision": 47,
+   "recent_frames": [
+    7,
+    7
+   ],
+   "q1": 1498,
+   "q2": 1371,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "g50t",
+   "decision": 63,
+   "recent_frames": [
+    13,
+    95
+   ],
+   "q1": 3232,
+   "q2": 2914,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "g50t",
+   "decision": 76,
+   "recent_frames": [
+    9,
+    9
+   ],
+   "q1": 1735,
+   "q2": 1538,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "g50t",
+   "decision": 77,
+   "recent_frames": [
+    9,
+    9
+   ],
+   "q1": 1784,
+   "q2": 1576,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "g50t",
+   "decision": 81,
+   "recent_frames": [
+    9,
+    15
+   ],
+   "q1": 2235,
+   "q2": 2020,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "g50t",
+   "decision": 86,
+   "recent_frames": [
+    10,
+    10
+   ],
+   "q1": 1963,
+   "q2": 1771,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "g50t",
+   "decision": 93,
+   "recent_frames": [
+    10,
+    10
+   ],
+   "q1": 2040,
+   "q2": 1846,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "g50t",
+   "decision": 95,
+   "recent_frames": [
+    10,
+    10
+   ],
+   "q1": 2171,
+   "q2": 1931,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "g50t",
+   "decision": 98,
+   "recent_frames": [
+    59,
+    7
+   ],
+   "q1": 3147,
+   "q2": 2795,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "g50t",
+   "decision": 100,
+   "recent_frames": [
+    13,
+    15
+   ],
+   "q1": 2309,
+   "q2": 1953,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ka59",
+   "decision": 6,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 691,
+   "q2": 649,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ka59",
+   "decision": 9,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 611,
+   "q2": 596,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ka59",
+   "decision": 10,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 605,
+   "q2": 590,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ka59",
+   "decision": 13,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 599,
+   "q2": 584,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ka59",
+   "decision": 15,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 704,
+   "q2": 656,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ka59",
+   "decision": 19,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 673,
+   "q2": 628,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ka59",
+   "decision": 23,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 731,
+   "q2": 679,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ka59",
+   "decision": 34,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1207,
+   "q2": 1153,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ka59",
+   "decision": 35,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1204,
+   "q2": 1155,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ka59",
+   "decision": 37,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1153,
+   "q2": 1094,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ka59",
+   "decision": 38,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1124,
+   "q2": 1079,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ka59",
+   "decision": 51,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 977,
+   "q2": 915,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ka59",
+   "decision": 58,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1057,
+   "q2": 1006,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ka59",
+   "decision": 61,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 986,
+   "q2": 934,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ka59",
+   "decision": 64,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1009,
+   "q2": 958,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ka59",
+   "decision": 78,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 924,
+   "q2": 902,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ka59",
+   "decision": 82,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 999,
+   "q2": 941,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ka59",
+   "decision": 83,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 923,
+   "q2": 873,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ka59",
+   "decision": 88,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 999,
+   "q2": 952,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ka59",
+   "decision": 92,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1052,
+   "q2": 1000,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lf52",
+   "decision": 5,
+   "recent_frames": [
+    10,
+    2
+   ],
+   "q1": 2224,
+   "q2": 2020,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lf52",
+   "decision": 10,
+   "recent_frames": [
+    3,
+    2
+   ],
+   "q1": 1680,
+   "q2": 1574,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lf52",
+   "decision": 12,
+   "recent_frames": [
+    10,
+    2
+   ],
+   "q1": 2158,
+   "q2": 1969,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lf52",
+   "decision": 14,
+   "recent_frames": [
+    10,
+    2
+   ],
+   "q1": 2136,
+   "q2": 1940,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lf52",
+   "decision": 23,
+   "recent_frames": [
+    3,
+    3
+   ],
+   "q1": 2586,
+   "q2": 2204,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lf52",
+   "decision": 26,
+   "recent_frames": [
+    3,
+    3
+   ],
+   "q1": 2706,
+   "q2": 2197,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lf52",
+   "decision": 31,
+   "recent_frames": [
+    2,
+    3
+   ],
+   "q1": 1474,
+   "q2": 1442,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lf52",
+   "decision": 40,
+   "recent_frames": [
+    3,
+    3
+   ],
+   "q1": 2708,
+   "q2": 2231,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lf52",
+   "decision": 44,
+   "recent_frames": [
+    3,
+    3
+   ],
+   "q1": 2796,
+   "q2": 2292,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lf52",
+   "decision": 46,
+   "recent_frames": [
+    3,
+    3
+   ],
+   "q1": 2982,
+   "q2": 2527,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lf52",
+   "decision": 50,
+   "recent_frames": [
+    3,
+    3
+   ],
+   "q1": 3088,
+   "q2": 2574,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lf52",
+   "decision": 56,
+   "recent_frames": [
+    2,
+    3
+   ],
+   "q1": 1534,
+   "q2": 1502,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lf52",
+   "decision": 62,
+   "recent_frames": [
+    2,
+    3
+   ],
+   "q1": 2523,
+   "q2": 2120,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lf52",
+   "decision": 74,
+   "recent_frames": [
+    3,
+    3
+   ],
+   "q1": 2389,
+   "q2": 2036,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lf52",
+   "decision": 75,
+   "recent_frames": [
+    3,
+    3
+   ],
+   "q1": 2350,
+   "q2": 1995,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lf52",
+   "decision": 77,
+   "recent_frames": [
+    3,
+    3
+   ],
+   "q1": 2998,
+   "q2": 2456,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lf52",
+   "decision": 81,
+   "recent_frames": [
+    2,
+    2
+   ],
+   "q1": 1436,
+   "q2": 1396,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lf52",
+   "decision": 84,
+   "recent_frames": [
+    3,
+    3
+   ],
+   "q1": 2556,
+   "q2": 2097,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lf52",
+   "decision": 88,
+   "recent_frames": [
+    2,
+    3
+   ],
+   "q1": 1482,
+   "q2": 1450,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lf52",
+   "decision": 96,
+   "recent_frames": [
+    3,
+    3
+   ],
+   "q1": 2707,
+   "q2": 2231,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lp85",
+   "decision": 12,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1611,
+   "q2": 1477,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lp85",
+   "decision": 13,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1649,
+   "q2": 1515,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lp85",
+   "decision": 17,
+   "recent_frames": [
+    1,
+    2
+   ],
+   "q1": 3751,
+   "q2": 2323,
+   "lossless": true,
+   "uses_shift": true
+  },
+  {
+   "game": "lp85",
+   "decision": 24,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1326,
+   "q2": 1223,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lp85",
+   "decision": 28,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1284,
+   "q2": 1192,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lp85",
+   "decision": 31,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1279,
+   "q2": 1187,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lp85",
+   "decision": 35,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1941,
+   "q2": 1823,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lp85",
+   "decision": 36,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1772,
+   "q2": 1654,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lp85",
+   "decision": 40,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1869,
+   "q2": 1748,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lp85",
+   "decision": 41,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1867,
+   "q2": 1746,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lp85",
+   "decision": 43,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1946,
+   "q2": 1828,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lp85",
+   "decision": 44,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1849,
+   "q2": 1741,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lp85",
+   "decision": 47,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1841,
+   "q2": 1732,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lp85",
+   "decision": 58,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1237,
+   "q2": 1123,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lp85",
+   "decision": 68,
+   "recent_frames": [
+    1,
+    2
+   ],
+   "q1": 4837,
+   "q2": 3268,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lp85",
+   "decision": 71,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2222,
+   "q2": 2092,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lp85",
+   "decision": 87,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2175,
+   "q2": 2062,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lp85",
+   "decision": 92,
+   "recent_frames": [
+    1,
+    2
+   ],
+   "q1": 4716,
+   "q2": 4078,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lp85",
+   "decision": 97,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1054,
+   "q2": 980,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "lp85",
+   "decision": 99,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 895,
+   "q2": 868,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ls20",
+   "decision": 15,
+   "recent_frames": [
+    1,
+    2
+   ],
+   "q1": 2828,
+   "q2": 2296,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ls20",
+   "decision": 18,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1288,
+   "q2": 1250,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ls20",
+   "decision": 21,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1254,
+   "q2": 1219,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ls20",
+   "decision": 23,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1279,
+   "q2": 1240,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ls20",
+   "decision": 28,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1292,
+   "q2": 1254,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ls20",
+   "decision": 29,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1284,
+   "q2": 1246,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ls20",
+   "decision": 31,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1296,
+   "q2": 1255,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ls20",
+   "decision": 34,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1339,
+   "q2": 1259,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ls20",
+   "decision": 49,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1237,
+   "q2": 1196,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ls20",
+   "decision": 56,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1096,
+   "q2": 1061,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ls20",
+   "decision": 58,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1065,
+   "q2": 1030,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ls20",
+   "decision": 59,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1084,
+   "q2": 1048,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ls20",
+   "decision": 65,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1442,
+   "q2": 1404,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ls20",
+   "decision": 67,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1405,
+   "q2": 1368,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ls20",
+   "decision": 81,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1286,
+   "q2": 1249,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ls20",
+   "decision": 82,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1301,
+   "q2": 1250,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ls20",
+   "decision": 84,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1290,
+   "q2": 1241,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ls20",
+   "decision": 96,
+   "recent_frames": [
+    6,
+    1
+   ],
+   "q1": 1601,
+   "q2": 1513,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ls20",
+   "decision": 98,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1436,
+   "q2": 1397,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "ls20",
+   "decision": 100,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1444,
+   "q2": 1406,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "m0r0",
+   "decision": 5,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 525,
+   "q2": 481,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "m0r0",
+   "decision": 14,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 498,
+   "q2": 459,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "m0r0",
+   "decision": 22,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1654,
+   "q2": 1612,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "m0r0",
+   "decision": 27,
+   "recent_frames": [
+    1,
+    8
+   ],
+   "q1": 1788,
+   "q2": 1748,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "m0r0",
+   "decision": 42,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1653,
+   "q2": 1610,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "m0r0",
+   "decision": 43,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1638,
+   "q2": 1595,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "m0r0",
+   "decision": 54,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1617,
+   "q2": 1577,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "m0r0",
+   "decision": 57,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1646,
+   "q2": 1608,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "m0r0",
+   "decision": 58,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1606,
+   "q2": 1568,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "m0r0",
+   "decision": 61,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1639,
+   "q2": 1598,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "m0r0",
+   "decision": 64,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1644,
+   "q2": 1601,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "m0r0",
+   "decision": 67,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1635,
+   "q2": 1593,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "m0r0",
+   "decision": 68,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1616,
+   "q2": 1577,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "m0r0",
+   "decision": 73,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 786,
+   "q2": 745,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "m0r0",
+   "decision": 77,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 772,
+   "q2": 737,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "m0r0",
+   "decision": 78,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 748,
+   "q2": 714,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "m0r0",
+   "decision": 85,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 716,
+   "q2": 686,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "m0r0",
+   "decision": 89,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 730,
+   "q2": 700,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "m0r0",
+   "decision": 92,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 723,
+   "q2": 693,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "m0r0",
+   "decision": 93,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 683,
+   "q2": 660,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "r11l",
+   "decision": 4,
+   "recent_frames": [
+    1,
+    23
+   ],
+   "q1": 6110,
+   "q2": 3829,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "r11l",
+   "decision": 10,
+   "recent_frames": [
+    22,
+    1
+   ],
+   "q1": 2716,
+   "q2": 2368,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "r11l",
+   "decision": 12,
+   "recent_frames": [
+    3,
+    1
+   ],
+   "q1": 2491,
+   "q2": 1992,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "r11l",
+   "decision": 21,
+   "recent_frames": [
+    1,
+    3
+   ],
+   "q1": 2951,
+   "q2": 2410,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "r11l",
+   "decision": 23,
+   "recent_frames": [
+    1,
+    22
+   ],
+   "q1": 3168,
+   "q2": 2516,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "r11l",
+   "decision": 28,
+   "recent_frames": [
+    1,
+    3
+   ],
+   "q1": 2063,
+   "q2": 1844,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "r11l",
+   "decision": 31,
+   "recent_frames": [
+    3,
+    1
+   ],
+   "q1": 2103,
+   "q2": 1864,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "r11l",
+   "decision": 33,
+   "recent_frames": [
+    23,
+    3
+   ],
+   "q1": 6453,
+   "q2": 4545,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "r11l",
+   "decision": 35,
+   "recent_frames": [
+    1,
+    22
+   ],
+   "q1": 3524,
+   "q2": 2913,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "r11l",
+   "decision": 42,
+   "recent_frames": [
+    3,
+    1
+   ],
+   "q1": 2765,
+   "q2": 2314,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "r11l",
+   "decision": 50,
+   "recent_frames": [
+    1,
+    3
+   ],
+   "q1": 2294,
+   "q2": 1882,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "r11l",
+   "decision": 55,
+   "recent_frames": [
+    1,
+    3
+   ],
+   "q1": 2052,
+   "q2": 1799,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "r11l",
+   "decision": 57,
+   "recent_frames": [
+    1,
+    3
+   ],
+   "q1": 1989,
+   "q2": 1774,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "r11l",
+   "decision": 58,
+   "recent_frames": [
+    3,
+    1
+   ],
+   "q1": 1920,
+   "q2": 1705,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "r11l",
+   "decision": 63,
+   "recent_frames": [
+    3,
+    1
+   ],
+   "q1": 2471,
+   "q2": 2022,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "r11l",
+   "decision": 75,
+   "recent_frames": [
+    1,
+    3
+   ],
+   "q1": 2370,
+   "q2": 1965,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "r11l",
+   "decision": 81,
+   "recent_frames": [
+    3,
+    3
+   ],
+   "q1": 2958,
+   "q2": 2097,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "r11l",
+   "decision": 83,
+   "recent_frames": [
+    1,
+    3
+   ],
+   "q1": 1896,
+   "q2": 1709,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "r11l",
+   "decision": 90,
+   "recent_frames": [
+    1,
+    3
+   ],
+   "q1": 1877,
+   "q2": 1668,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "r11l",
+   "decision": 98,
+   "recent_frames": [
+    3,
+    1
+   ],
+   "q1": 2228,
+   "q2": 1833,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "re86",
+   "decision": 9,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 858,
+   "q2": 792,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "re86",
+   "decision": 24,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2315,
+   "q2": 2035,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "re86",
+   "decision": 25,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2190,
+   "q2": 1927,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "re86",
+   "decision": 28,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2442,
+   "q2": 2125,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "re86",
+   "decision": 32,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2525,
+   "q2": 2200,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "re86",
+   "decision": 37,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2274,
+   "q2": 2005,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "re86",
+   "decision": 39,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2274,
+   "q2": 2000,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "re86",
+   "decision": 49,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1344,
+   "q2": 1297,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "re86",
+   "decision": 53,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1366,
+   "q2": 1286,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "re86",
+   "decision": 54,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1425,
+   "q2": 1364,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "re86",
+   "decision": 55,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1419,
+   "q2": 1359,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "re86",
+   "decision": 63,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1195,
+   "q2": 1149,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "re86",
+   "decision": 67,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1200,
+   "q2": 1160,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "re86",
+   "decision": 70,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1167,
+   "q2": 1136,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "re86",
+   "decision": 71,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1131,
+   "q2": 1103,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "re86",
+   "decision": 72,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1996,
+   "q2": 1684,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "re86",
+   "decision": 85,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2324,
+   "q2": 2002,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "re86",
+   "decision": 87,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2263,
+   "q2": 1936,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "re86",
+   "decision": 93,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2415,
+   "q2": 2058,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "re86",
+   "decision": 100,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2307,
+   "q2": 1958,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "s5i5",
+   "decision": 6,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 865,
+   "q2": 819,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "s5i5",
+   "decision": 13,
+   "recent_frames": [
+    1,
+    2
+   ],
+   "q1": 3252,
+   "q2": 2380,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "s5i5",
+   "decision": 14,
+   "recent_frames": [
+    2,
+    1
+   ],
+   "q1": 2652,
+   "q2": 1764,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "s5i5",
+   "decision": 16,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1222,
+   "q2": 1167,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "s5i5",
+   "decision": 22,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1411,
+   "q2": 1306,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "s5i5",
+   "decision": 26,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1309,
+   "q2": 1236,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "s5i5",
+   "decision": 33,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1244,
+   "q2": 1190,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "s5i5",
+   "decision": 34,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1234,
+   "q2": 1177,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "s5i5",
+   "decision": 35,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1231,
+   "q2": 1181,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "s5i5",
+   "decision": 38,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1229,
+   "q2": 1171,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "s5i5",
+   "decision": 59,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1478,
+   "q2": 1454,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "s5i5",
+   "decision": 68,
+   "recent_frames": [
+    2,
+    1
+   ],
+   "q1": 1508,
+   "q2": 1477,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "s5i5",
+   "decision": 75,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1552,
+   "q2": 1499,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "s5i5",
+   "decision": 82,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1470,
+   "q2": 1425,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "s5i5",
+   "decision": 83,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1464,
+   "q2": 1422,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "s5i5",
+   "decision": 88,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1472,
+   "q2": 1427,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "s5i5",
+   "decision": 90,
+   "recent_frames": [
+    2,
+    2
+   ],
+   "q1": 1458,
+   "q2": 1440,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "s5i5",
+   "decision": 91,
+   "recent_frames": [
+    2,
+    2
+   ],
+   "q1": 1519,
+   "q2": 1501,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "s5i5",
+   "decision": 94,
+   "recent_frames": [
+    2,
+    1
+   ],
+   "q1": 1494,
+   "q2": 1463,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "s5i5",
+   "decision": 97,
+   "recent_frames": [
+    2,
+    2
+   ],
+   "q1": 1474,
+   "q2": 1456,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sb26",
+   "decision": 3,
+   "recent_frames": [
+    7,
+    1
+   ],
+   "q1": 1023,
+   "q2": 976,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sb26",
+   "decision": 9,
+   "recent_frames": [
+    7,
+    118
+   ],
+   "q1": 4734,
+   "q2": 4067,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sb26",
+   "decision": 13,
+   "recent_frames": [
+    1,
+    7
+   ],
+   "q1": 1246,
+   "q2": 1185,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sb26",
+   "decision": 15,
+   "recent_frames": [
+    1,
+    7
+   ],
+   "q1": 1304,
+   "q2": 1240,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sb26",
+   "decision": 18,
+   "recent_frames": [
+    7,
+    1
+   ],
+   "q1": 1338,
+   "q2": 1286,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sb26",
+   "decision": 36,
+   "recent_frames": [
+    7,
+    1
+   ],
+   "q1": 1390,
+   "q2": 1337,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sb26",
+   "decision": 37,
+   "recent_frames": [
+    1,
+    7
+   ],
+   "q1": 1264,
+   "q2": 1200,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sb26",
+   "decision": 48,
+   "recent_frames": [
+    1,
+    7
+   ],
+   "q1": 1246,
+   "q2": 1183,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sb26",
+   "decision": 49,
+   "recent_frames": [
+    7,
+    1
+   ],
+   "q1": 1295,
+   "q2": 1247,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sb26",
+   "decision": 58,
+   "recent_frames": [
+    7,
+    1
+   ],
+   "q1": 1262,
+   "q2": 1215,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sb26",
+   "decision": 59,
+   "recent_frames": [
+    1,
+    7
+   ],
+   "q1": 1376,
+   "q2": 1224,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sb26",
+   "decision": 69,
+   "recent_frames": [
+    1,
+    7
+   ],
+   "q1": 1246,
+   "q2": 1186,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sb26",
+   "decision": 80,
+   "recent_frames": [
+    1,
+    7
+   ],
+   "q1": 1435,
+   "q2": 1370,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sb26",
+   "decision": 81,
+   "recent_frames": [
+    7,
+    1
+   ],
+   "q1": 1475,
+   "q2": 1423,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sb26",
+   "decision": 83,
+   "recent_frames": [
+    7,
+    1
+   ],
+   "q1": 1465,
+   "q2": 1415,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sb26",
+   "decision": 85,
+   "recent_frames": [
+    7,
+    1
+   ],
+   "q1": 1447,
+   "q2": 1401,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sb26",
+   "decision": 90,
+   "recent_frames": [
+    1,
+    7
+   ],
+   "q1": 1545,
+   "q2": 1392,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sb26",
+   "decision": 91,
+   "recent_frames": [
+    7,
+    328
+   ],
+   "q1": 12530,
+   "q2": 11659,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sb26",
+   "decision": 93,
+   "recent_frames": [
+    1,
+    7
+   ],
+   "q1": 1349,
+   "q2": 1292,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sb26",
+   "decision": 94,
+   "recent_frames": [
+    7,
+    1
+   ],
+   "q1": 1376,
+   "q2": 1329,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sc25",
+   "decision": 3,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 894,
+   "q2": 860,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sc25",
+   "decision": 4,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 890,
+   "q2": 856,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sc25",
+   "decision": 5,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 885,
+   "q2": 852,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sc25",
+   "decision": 14,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 887,
+   "q2": 861,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sc25",
+   "decision": 21,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 871,
+   "q2": 839,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sc25",
+   "decision": 26,
+   "recent_frames": [
+    14,
+    1
+   ],
+   "q1": 1380,
+   "q2": 1273,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sc25",
+   "decision": 29,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1041,
+   "q2": 1016,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sc25",
+   "decision": 34,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1073,
+   "q2": 1040,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sc25",
+   "decision": 37,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1078,
+   "q2": 1043,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sc25",
+   "decision": 42,
+   "recent_frames": [
+    1,
+    12
+   ],
+   "q1": 1256,
+   "q2": 1218,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sc25",
+   "decision": 50,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1040,
+   "q2": 1005,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sc25",
+   "decision": 51,
+   "recent_frames": [
+    1,
+    13
+   ],
+   "q1": 1168,
+   "q2": 1142,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sc25",
+   "decision": 54,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1027,
+   "q2": 1001,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sc25",
+   "decision": 56,
+   "recent_frames": [
+    14,
+    1
+   ],
+   "q1": 1385,
+   "q2": 1343,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sc25",
+   "decision": 57,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1027,
+   "q2": 991,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sc25",
+   "decision": 68,
+   "recent_frames": [
+    15,
+    1
+   ],
+   "q1": 1353,
+   "q2": 1318,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sc25",
+   "decision": 69,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1046,
+   "q2": 1011,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sc25",
+   "decision": 80,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1064,
+   "q2": 1017,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sc25",
+   "decision": 84,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1002,
+   "q2": 969,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sc25",
+   "decision": 86,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 993,
+   "q2": 961,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sk48",
+   "decision": 5,
+   "recent_frames": [
+    2,
+    3
+   ],
+   "q1": 1110,
+   "q2": 1008,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sk48",
+   "decision": 6,
+   "recent_frames": [
+    3,
+    2
+   ],
+   "q1": 1183,
+   "q2": 1119,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sk48",
+   "decision": 8,
+   "recent_frames": [
+    2,
+    3
+   ],
+   "q1": 1950,
+   "q2": 1426,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sk48",
+   "decision": 25,
+   "recent_frames": [
+    2,
+    2
+   ],
+   "q1": 1888,
+   "q2": 1488,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sk48",
+   "decision": 26,
+   "recent_frames": [
+    2,
+    2
+   ],
+   "q1": 1524,
+   "q2": 1204,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sk48",
+   "decision": 41,
+   "recent_frames": [
+    2,
+    2
+   ],
+   "q1": 2083,
+   "q2": 1670,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sk48",
+   "decision": 42,
+   "recent_frames": [
+    2,
+    2
+   ],
+   "q1": 2534,
+   "q2": 1891,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sk48",
+   "decision": 43,
+   "recent_frames": [
+    2,
+    2
+   ],
+   "q1": 1979,
+   "q2": 1472,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sk48",
+   "decision": 57,
+   "recent_frames": [
+    3,
+    2
+   ],
+   "q1": 1566,
+   "q2": 1459,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sk48",
+   "decision": 58,
+   "recent_frames": [
+    2,
+    2
+   ],
+   "q1": 1672,
+   "q2": 1598,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sk48",
+   "decision": 63,
+   "recent_frames": [
+    2,
+    2
+   ],
+   "q1": 1752,
+   "q2": 1533,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sk48",
+   "decision": 64,
+   "recent_frames": [
+    2,
+    2
+   ],
+   "q1": 1792,
+   "q2": 1582,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sk48",
+   "decision": 66,
+   "recent_frames": [
+    39,
+    2
+   ],
+   "q1": 2698,
+   "q2": 2291,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sk48",
+   "decision": 67,
+   "recent_frames": [
+    2,
+    2
+   ],
+   "q1": 2149,
+   "q2": 1753,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sk48",
+   "decision": 69,
+   "recent_frames": [
+    2,
+    2
+   ],
+   "q1": 1747,
+   "q2": 1427,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sk48",
+   "decision": 72,
+   "recent_frames": [
+    3,
+    2
+   ],
+   "q1": 1393,
+   "q2": 1307,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sk48",
+   "decision": 73,
+   "recent_frames": [
+    2,
+    2
+   ],
+   "q1": 1340,
+   "q2": 1277,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sk48",
+   "decision": 75,
+   "recent_frames": [
+    2,
+    3
+   ],
+   "q1": 1311,
+   "q2": 1262,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sk48",
+   "decision": 91,
+   "recent_frames": [
+    2,
+    2
+   ],
+   "q1": 3173,
+   "q2": 2432,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sk48",
+   "decision": 95,
+   "recent_frames": [
+    2,
+    2
+   ],
+   "q1": 2972,
+   "q2": 2236,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sp80",
+   "decision": 7,
+   "recent_frames": [
+    20,
+    1
+   ],
+   "q1": 1059,
+   "q2": 916,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sp80",
+   "decision": 12,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 464,
+   "q2": 435,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sp80",
+   "decision": 20,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 495,
+   "q2": 467,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sp80",
+   "decision": 25,
+   "recent_frames": [
+    25,
+    1
+   ],
+   "q1": 1701,
+   "q2": 1372,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sp80",
+   "decision": 27,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 605,
+   "q2": 577,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sp80",
+   "decision": 28,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 602,
+   "q2": 574,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sp80",
+   "decision": 30,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 590,
+   "q2": 562,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sp80",
+   "decision": 33,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 591,
+   "q2": 564,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sp80",
+   "decision": 45,
+   "recent_frames": [
+    36,
+    1
+   ],
+   "q1": 1594,
+   "q2": 1559,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sp80",
+   "decision": 46,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 615,
+   "q2": 583,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sp80",
+   "decision": 52,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 615,
+   "q2": 588,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sp80",
+   "decision": 54,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 593,
+   "q2": 565,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sp80",
+   "decision": 58,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 587,
+   "q2": 561,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sp80",
+   "decision": 65,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 595,
+   "q2": 568,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sp80",
+   "decision": 67,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 595,
+   "q2": 568,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sp80",
+   "decision": 69,
+   "recent_frames": [
+    1,
+    30
+   ],
+   "q1": 2257,
+   "q2": 1911,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sp80",
+   "decision": 72,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 596,
+   "q2": 568,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sp80",
+   "decision": 83,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 594,
+   "q2": 565,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sp80",
+   "decision": 86,
+   "recent_frames": [
+    27,
+    27
+   ],
+   "q1": 1918,
+   "q2": 1889,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "sp80",
+   "decision": 97,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 575,
+   "q2": 547,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "su15",
+   "decision": 11,
+   "recent_frames": [
+    5,
+    5
+   ],
+   "q1": 1035,
+   "q2": 959,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "su15",
+   "decision": 18,
+   "recent_frames": [
+    5,
+    5
+   ],
+   "q1": 1104,
+   "q2": 985,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "su15",
+   "decision": 22,
+   "recent_frames": [
+    5,
+    5
+   ],
+   "q1": 969,
+   "q2": 878,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "su15",
+   "decision": 25,
+   "recent_frames": [
+    5,
+    5
+   ],
+   "q1": 971,
+   "q2": 852,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "su15",
+   "decision": 26,
+   "recent_frames": [
+    5,
+    1
+   ],
+   "q1": 660,
+   "q2": 564,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "su15",
+   "decision": 31,
+   "recent_frames": [
+    14,
+    5
+   ],
+   "q1": 1202,
+   "q2": 1018,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "su15",
+   "decision": 35,
+   "recent_frames": [
+    5,
+    5
+   ],
+   "q1": 1192,
+   "q2": 1091,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "su15",
+   "decision": 41,
+   "recent_frames": [
+    5,
+    5
+   ],
+   "q1": 1046,
+   "q2": 939,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "su15",
+   "decision": 42,
+   "recent_frames": [
+    5,
+    5
+   ],
+   "q1": 984,
+   "q2": 900,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "su15",
+   "decision": 44,
+   "recent_frames": [
+    5,
+    5
+   ],
+   "q1": 1033,
+   "q2": 935,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "su15",
+   "decision": 45,
+   "recent_frames": [
+    5,
+    5
+   ],
+   "q1": 1035,
+   "q2": 941,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "su15",
+   "decision": 47,
+   "recent_frames": [
+    5,
+    21
+   ],
+   "q1": 1236,
+   "q2": 1171,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "su15",
+   "decision": 51,
+   "recent_frames": [
+    21,
+    5
+   ],
+   "q1": 1272,
+   "q2": 1196,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "su15",
+   "decision": 61,
+   "recent_frames": [
+    5,
+    5
+   ],
+   "q1": 1035,
+   "q2": 926,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "su15",
+   "decision": 70,
+   "recent_frames": [
+    5,
+    5
+   ],
+   "q1": 1094,
+   "q2": 1017,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "su15",
+   "decision": 72,
+   "recent_frames": [
+    5,
+    5
+   ],
+   "q1": 1194,
+   "q2": 1087,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "su15",
+   "decision": 78,
+   "recent_frames": [
+    5,
+    5
+   ],
+   "q1": 1092,
+   "q2": 938,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "su15",
+   "decision": 88,
+   "recent_frames": [
+    21,
+    5
+   ],
+   "q1": 1260,
+   "q2": 1193,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "su15",
+   "decision": 90,
+   "recent_frames": [
+    21,
+    5
+   ],
+   "q1": 1261,
+   "q2": 1169,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "su15",
+   "decision": 91,
+   "recent_frames": [
+    5,
+    21
+   ],
+   "q1": 1291,
+   "q2": 1203,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tn36",
+   "decision": 5,
+   "recent_frames": [
+    7,
+    1
+   ],
+   "q1": 1243,
+   "q2": 1224,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tn36",
+   "decision": 11,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 857,
+   "q2": 837,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tn36",
+   "decision": 13,
+   "recent_frames": [
+    7,
+    1
+   ],
+   "q1": 1250,
+   "q2": 1230,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tn36",
+   "decision": 19,
+   "recent_frames": [
+    1,
+    7
+   ],
+   "q1": 1216,
+   "q2": 1180,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tn36",
+   "decision": 20,
+   "recent_frames": [
+    7,
+    1
+   ],
+   "q1": 1223,
+   "q2": 1204,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tn36",
+   "decision": 21,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 856,
+   "q2": 836,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tn36",
+   "decision": 22,
+   "recent_frames": [
+    1,
+    7
+   ],
+   "q1": 1214,
+   "q2": 1177,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tn36",
+   "decision": 24,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 849,
+   "q2": 829,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tn36",
+   "decision": 33,
+   "recent_frames": [
+    1,
+    7
+   ],
+   "q1": 1233,
+   "q2": 1196,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tn36",
+   "decision": 35,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 861,
+   "q2": 842,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tn36",
+   "decision": 45,
+   "recent_frames": [
+    1,
+    7
+   ],
+   "q1": 1133,
+   "q2": 1097,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tn36",
+   "decision": 46,
+   "recent_frames": [
+    7,
+    1
+   ],
+   "q1": 1140,
+   "q2": 1120,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tn36",
+   "decision": 50,
+   "recent_frames": [
+    1,
+    7
+   ],
+   "q1": 1241,
+   "q2": 1205,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tn36",
+   "decision": 65,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 865,
+   "q2": 845,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tn36",
+   "decision": 68,
+   "recent_frames": [
+    7,
+    1
+   ],
+   "q1": 1135,
+   "q2": 1116,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tn36",
+   "decision": 69,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 862,
+   "q2": 842,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tn36",
+   "decision": 71,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 859,
+   "q2": 839,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tn36",
+   "decision": 78,
+   "recent_frames": [
+    7,
+    1
+   ],
+   "q1": 1231,
+   "q2": 1212,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tn36",
+   "decision": 79,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 857,
+   "q2": 837,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tn36",
+   "decision": 89,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 859,
+   "q2": 840,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tr87",
+   "decision": 24,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2204,
+   "q2": 2153,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tr87",
+   "decision": 26,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2154,
+   "q2": 2115,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tr87",
+   "decision": 32,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2156,
+   "q2": 2107,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tr87",
+   "decision": 34,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2188,
+   "q2": 2137,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tr87",
+   "decision": 42,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2163,
+   "q2": 2117,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tr87",
+   "decision": 47,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2142,
+   "q2": 2095,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tr87",
+   "decision": 55,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2155,
+   "q2": 2104,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tr87",
+   "decision": 58,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2138,
+   "q2": 2094,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tr87",
+   "decision": 62,
+   "recent_frames": [
+    37,
+    1
+   ],
+   "q1": 9157,
+   "q2": 7010,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tr87",
+   "decision": 63,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2501,
+   "q2": 2445,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tr87",
+   "decision": 65,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2489,
+   "q2": 2444,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tr87",
+   "decision": 66,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2480,
+   "q2": 2436,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tr87",
+   "decision": 68,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2466,
+   "q2": 2423,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tr87",
+   "decision": 73,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2543,
+   "q2": 2488,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tr87",
+   "decision": 82,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2462,
+   "q2": 2412,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tr87",
+   "decision": 85,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2450,
+   "q2": 2414,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tr87",
+   "decision": 86,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2506,
+   "q2": 2458,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tr87",
+   "decision": 94,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2445,
+   "q2": 2407,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tr87",
+   "decision": 97,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2496,
+   "q2": 2450,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tr87",
+   "decision": 99,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 2519,
+   "q2": 2468,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tu93",
+   "decision": 6,
+   "recent_frames": [
+    8,
+    8
+   ],
+   "q1": 1108,
+   "q2": 996,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tu93",
+   "decision": 8,
+   "recent_frames": [
+    8,
+    8
+   ],
+   "q1": 1044,
+   "q2": 935,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tu93",
+   "decision": 11,
+   "recent_frames": [
+    8,
+    8
+   ],
+   "q1": 1082,
+   "q2": 965,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tu93",
+   "decision": 15,
+   "recent_frames": [
+    8,
+    8
+   ],
+   "q1": 1121,
+   "q2": 1007,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tu93",
+   "decision": 18,
+   "recent_frames": [
+    8,
+    9
+   ],
+   "q1": 1990,
+   "q2": 1432,
+   "lossless": true,
+   "uses_shift": true
+  },
+  {
+   "game": "tu93",
+   "decision": 20,
+   "recent_frames": [
+    8,
+    8
+   ],
+   "q1": 951,
+   "q2": 837,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tu93",
+   "decision": 27,
+   "recent_frames": [
+    8,
+    8
+   ],
+   "q1": 968,
+   "q2": 850,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tu93",
+   "decision": 35,
+   "recent_frames": [
+    8,
+    8
+   ],
+   "q1": 1168,
+   "q2": 1049,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tu93",
+   "decision": 37,
+   "recent_frames": [
+    8,
+    8
+   ],
+   "q1": 1133,
+   "q2": 1010,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tu93",
+   "decision": 50,
+   "recent_frames": [
+    10,
+    8
+   ],
+   "q1": 1181,
+   "q2": 1068,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tu93",
+   "decision": 54,
+   "recent_frames": [
+    13,
+    13
+   ],
+   "q1": 1518,
+   "q2": 1339,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tu93",
+   "decision": 55,
+   "recent_frames": [
+    13,
+    13
+   ],
+   "q1": 1519,
+   "q2": 1337,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tu93",
+   "decision": 59,
+   "recent_frames": [
+    13,
+    13
+   ],
+   "q1": 1447,
+   "q2": 1273,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tu93",
+   "decision": 63,
+   "recent_frames": [
+    13,
+    13
+   ],
+   "q1": 1486,
+   "q2": 1308,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tu93",
+   "decision": 66,
+   "recent_frames": [
+    13,
+    13
+   ],
+   "q1": 1467,
+   "q2": 1292,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tu93",
+   "decision": 71,
+   "recent_frames": [
+    13,
+    13
+   ],
+   "q1": 2795,
+   "q2": 2423,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tu93",
+   "decision": 80,
+   "recent_frames": [
+    13,
+    13
+   ],
+   "q1": 2740,
+   "q2": 2395,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tu93",
+   "decision": 82,
+   "recent_frames": [
+    13,
+    13
+   ],
+   "q1": 2829,
+   "q2": 2440,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tu93",
+   "decision": 92,
+   "recent_frames": [
+    13,
+    13
+   ],
+   "q1": 2889,
+   "q2": 2457,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "tu93",
+   "decision": 99,
+   "recent_frames": [
+    14,
+    13
+   ],
+   "q1": 3669,
+   "q2": 2918,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "vc33",
+   "decision": 5,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 331,
+   "q2": 316,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "vc33",
+   "decision": 6,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 335,
+   "q2": 318,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "vc33",
+   "decision": 11,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 596,
+   "q2": 517,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "vc33",
+   "decision": 16,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 591,
+   "q2": 513,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "vc33",
+   "decision": 17,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 628,
+   "q2": 551,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "vc33",
+   "decision": 32,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 957,
+   "q2": 874,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "vc33",
+   "decision": 42,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 850,
+   "q2": 787,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "vc33",
+   "decision": 43,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 886,
+   "q2": 844,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "vc33",
+   "decision": 52,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 902,
+   "q2": 831,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "vc33",
+   "decision": 59,
+   "recent_frames": [
+    1,
+    43
+   ],
+   "q1": 1888,
+   "q2": 1816,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "vc33",
+   "decision": 61,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 993,
+   "q2": 889,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "vc33",
+   "decision": 64,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 736,
+   "q2": 691,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "vc33",
+   "decision": 66,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 681,
+   "q2": 635,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "vc33",
+   "decision": 71,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 757,
+   "q2": 713,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "vc33",
+   "decision": 74,
+   "recent_frames": [
+    2,
+    1
+   ],
+   "q1": 1147,
+   "q2": 868,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "vc33",
+   "decision": 76,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 691,
+   "q2": 621,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "vc33",
+   "decision": 84,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 651,
+   "q2": 582,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "vc33",
+   "decision": 85,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 727,
+   "q2": 653,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "vc33",
+   "decision": 87,
+   "recent_frames": [
+    44,
+    1
+   ],
+   "q1": 1805,
+   "q2": 1650,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "vc33",
+   "decision": 92,
+   "recent_frames": [
+    1,
+    46
+   ],
+   "q1": 1948,
+   "q2": 1818,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "wa30",
+   "decision": 11,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 474,
+   "q2": 431,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "wa30",
+   "decision": 24,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 475,
+   "q2": 423,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "wa30",
+   "decision": 27,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 402,
+   "q2": 374,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "wa30",
+   "decision": 28,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 402,
+   "q2": 371,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "wa30",
+   "decision": 29,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 394,
+   "q2": 368,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "wa30",
+   "decision": 35,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 516,
+   "q2": 442,
+   "lossless": true,
+   "uses_shift": true
+  },
+  {
+   "game": "wa30",
+   "decision": 41,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 707,
+   "q2": 662,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "wa30",
+   "decision": 50,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 755,
+   "q2": 687,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "wa30",
+   "decision": 51,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 757,
+   "q2": 689,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "wa30",
+   "decision": 54,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 709,
+   "q2": 636,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "wa30",
+   "decision": 57,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 817,
+   "q2": 722,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "wa30",
+   "decision": 63,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 733,
+   "q2": 657,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "wa30",
+   "decision": 66,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 704,
+   "q2": 616,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "wa30",
+   "decision": 68,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 712,
+   "q2": 630,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "wa30",
+   "decision": 70,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 674,
+   "q2": 600,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "wa30",
+   "decision": 71,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 684,
+   "q2": 612,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "wa30",
+   "decision": 75,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 881,
+   "q2": 757,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "wa30",
+   "decision": 77,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 572,
+   "q2": 512,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "wa30",
+   "decision": 92,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 610,
+   "q2": 549,
+   "lossless": true,
+   "uses_shift": false
+  },
+  {
+   "game": "wa30",
+   "decision": 99,
+   "recent_frames": [
+    1,
+    1
+   ],
+   "q1": 1687,
+   "q2": 1605,
+   "lossless": true,
+   "uses_shift": false
+  }
+ ]
+}
