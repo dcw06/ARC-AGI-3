@@ -1,0 +1,108 @@
+{
+ "tag": "useful_1",
+ "outcome": "response",
+ "stop_reason": "end_turn",
+ "usage": {
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 0,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "cache_creation_input_tokens": 0,
+  "cache_read_input_tokens": 0,
+  "inference_geo": "global",
+  "input_tokens": 3930,
+  "output_tokens": 1787,
+  "output_tokens_details": {
+   "thinking_tokens": 1503
+  },
+  "server_tool_use": null,
+  "service_tier": "standard",
+  "speed": "standard"
+ },
+ "cost_usd": 0.0515,
+ "answers": {
+  "changed_regions": [
+   {
+    "x_first": 44,
+    "x_last": 44,
+    "y_first": 0,
+    "y_last": 0,
+    "colour_after": "4"
+   },
+   {
+    "x_first": 18,
+    "x_last": 23,
+    "y_first": 56,
+    "y_last": 57,
+    "colour_after": "0"
+   },
+   {
+    "x_first": 30,
+    "x_last": 33,
+    "y_first": 56,
+    "y_last": 57,
+    "colour_after": "3"
+   }
+  ],
+  "any_change_outside_row_0": true,
+  "level_completed": false,
+  "confidence": "high",
+  "basis": "In t42 and in the older record, clicking x=24 y=56 moved fluid from the right container (x28-35) into the left container's bottom (x18-23, rows 56-57). The right container now holds only its x30-33 bottom, exactly as in the older record, and each click also shortens the row-0 run of 7s by one cell."
+ },
+ "text": "{\"changed_regions\": [{\"x_first\": 44, \"x_last\": 44, \"y_first\": 0, \"y_last\": 0, \"colour_after\": \"4\"}, {\"x_first\": 18, \"x_last\": 23, \"y_first\": 56, \"y_last\": 57, \"colour_after\": \"0\"}, {\"x_first\": 30, \"x_last\": 33, \"y_first\": 56, \"y_last\": 57, \"colour_after\": \"3\"}], \"any_change_outside_row_0\": true, \"level_completed\": false, \"confidence\": \"high\", \"basis\": \"In t42 and in the older record, clicking x=24 y=56 moved fluid from the right container (x28-35) into the left container's bottom (x18-23, rows 56-57). The right container now holds only its x30-33 bottom, exactly as in the older record, and each click also shortens the row-0 run of 7s by one cell.\"}",
+ "response": {
+  "id": "msg_011Ch3ScPnuyzxbyykeENjun",
+  "container": null,
+  "content": [
+   {
+    "signature": "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",
+    "thinking": "",
+    "type": "thinking"
+   },
+   {
+    "citations": null,
+    "text": "{\"changed_regions\": [{\"x_first\": 44, \"x_last\": 44, \"y_first\": 0, \"y_last\": 0, \"colour_after\": \"4\"}, {\"x_first\": 18, \"x_last\": 23, \"y_first\": 56, \"y_last\": 57, \"colour_after\": \"0\"}, {\"x_first\": 30, \"x_last\": 33, \"y_first\": 56, \"y_last\": 57, \"colour_after\": \"3\"}], \"any_change_outside_row_0\": true, \"level_completed\": false, \"confidence\": \"high\", \"basis\": \"In t42 and in the older record, clicking x=24 y=56 moved fluid from the right container (x28-35) into the left container's bottom (x18-23, rows 56-57). The right container now holds only its x30-33 bottom, exactly as in the older record, and each click also shortens the row-0 run of 7s by one cell.\"}",
+    "type": "text"
+   }
+  ],
+  "diagnostics": null,
+  "model": "claude-opus-5-5",
+  "role": "assistant",
+  "stop_details": null,
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "type": "message",
+  "usage": {
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 0,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "inference_geo": "global",
+   "input_tokens": 3930,
+   "output_tokens": 1787,
+   "output_tokens_details": {
+    "thinking_tokens": 1503
+   },
+   "server_tool_use": null,
+   "service_tier": "standard",
+   "speed": "standard"
+  }
+ },
+ "elapsed_seconds": 17.4,
+ "condition": "useful",
+ "repeat": 1,
+ "position_in_order": 6,
+ "sent_at": "2026-11-14T12:21:39-0800",
+ "request_settings": {
+  "model": "claude-opus-5-5",
+  "max_tokens": 8000,
+  "thinking": {
+   "type": "adaptive"
+  },
+  "output_config": {
+   "effort": "high"
+  }
+ }
+}

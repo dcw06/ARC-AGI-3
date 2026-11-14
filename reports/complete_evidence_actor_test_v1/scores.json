@@ -1,0 +1,193 @@
+{
+ "requests": [
+  {
+   "request": "irrelevant_1",
+   "condition": "irrelevant",
+   "outcome": "response",
+   "score": {
+    "valid": true,
+    "play_area": {
+     "tp": 20,
+     "predicted": 20,
+     "actual": 20,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": true
+    },
+    "all_rows": {
+     "tp": 21,
+     "predicted": 21,
+     "actual": 21,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": true
+    },
+    "level_completed_correct": true,
+    "any_change_outside_row_0_correct": true,
+    "confidence": "low",
+    "basis": "In t42 the same click at x=24 moved one 2-row unit of 0 out of the x28-35 column and into the x18-23 column, which t43 then emptied again. I assume it repeats, draining the last unit at x30-33 rows 56-57, while the row-0 counter drops at x=44."
+   }
+  },
+  {
+   "request": "irrelevant_2",
+   "condition": "irrelevant",
+   "outcome": "response",
+   "score": {
+    "valid": true,
+    "play_area": {
+     "tp": 20,
+     "predicted": 20,
+     "actual": 20,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": true
+    },
+    "all_rows": {
+     "tp": 21,
+     "predicted": 21,
+     "actual": 21,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": true
+    },
+    "level_completed_correct": true,
+    "any_change_outside_row_0_correct": true,
+    "confidence": "low",
+    "basis": "In t42 the same click at x=24, y=56 moved two rows of 0 out of the container at x=28-35 and into rows 56-57 at x=18-23, and each action turns one more row-0 counter cell from 7 to 4. I assumed the transfer repeats and empties rows 56-57 at x=30-33, but that may be a floor that cannot drain."
+   }
+  },
+  {
+   "request": "none_1",
+   "condition": "none",
+   "outcome": "response",
+   "score": {
+    "valid": true,
+    "play_area": {
+     "tp": 20,
+     "predicted": 20,
+     "actual": 20,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": true
+    },
+    "all_rows": {
+     "tp": 21,
+     "predicted": 21,
+     "actual": 21,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": true
+    },
+    "level_completed_correct": true,
+    "any_change_outside_row_0_correct": true,
+    "confidence": "low",
+    "basis": "Row 0's bar of 7s shrinks by one cell per action, so x=44 should turn to 4. In t42 the same click moved the top 2-row layer of water from the x=28-35 container into the x=18-23 bottom strip; the only water left there is rows 56-57 at x=30-33, so I expect that to drain and refill x=18-23."
+   }
+  },
+  {
+   "request": "none_2",
+   "condition": "none",
+   "outcome": "response",
+   "score": {
+    "valid": true,
+    "play_area": {
+     "tp": 20,
+     "predicted": 20,
+     "actual": 20,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": true
+    },
+    "all_rows": {
+     "tp": 21,
+     "predicted": 21,
+     "actual": 21,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": true
+    },
+    "level_completed_correct": true,
+    "any_change_outside_row_0_correct": true,
+    "confidence": "low",
+    "basis": "Row 0 is a 7-to-4 countdown that loses one cell per action. In t42 the same click at x=24 moved one 2-row unit of water left from the right-hand container into the bottom pipe at x18-23, so I assume it moves C's last bottom unit (x30-33, rows 56-57) into that pipe again."
+   }
+  },
+  {
+   "request": "useful_1",
+   "condition": "useful",
+   "outcome": "response",
+   "score": {
+    "valid": true,
+    "play_area": {
+     "tp": 20,
+     "predicted": 20,
+     "actual": 20,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": true
+    },
+    "all_rows": {
+     "tp": 21,
+     "predicted": 21,
+     "actual": 21,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": true
+    },
+    "level_completed_correct": true,
+    "any_change_outside_row_0_correct": true,
+    "confidence": "high",
+    "basis": "In t42 and in the older record, clicking x=24 y=56 moved fluid from the right container (x28-35) into the left container's bottom (x18-23, rows 56-57). The right container now holds only its x30-33 bottom, exactly as in the older record, and each click also shortens the row-0 run of 7s by one cell."
+   }
+  },
+  {
+   "request": "useful_2",
+   "condition": "useful",
+   "outcome": "response",
+   "score": {
+    "valid": true,
+    "play_area": {
+     "tp": 20,
+     "predicted": 20,
+     "actual": 20,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": true
+    },
+    "all_rows": {
+     "tp": 21,
+     "predicted": 21,
+     "actual": 21,
+     "precision": 1.0,
+     "recall": 1.0,
+     "f1": 1.0,
+     "exact": true
+    },
+    "level_completed_correct": true,
+    "any_change_outside_row_0_correct": true,
+    "confidence": "high",
+    "basis": "The stored record e38 shows the same click with the region x16-35 in the same state as now: rows 56-57 x18-23 became 0 and x30-33 became 3, and each action turns the last 7 in the row-0 timer to 4, which is now x=44."
+   }
+  }
+ ],
+ "mean_play_area_f1": {
+  "irrelevant": 1.0,
+  "none": 1.0,
+  "useful": 1.0
+ },
+ "useful_minus_none": 0.0,
+ "useful_minus_irrelevant": 0.0,
+ "largest_spread_within_a_condition": 0.0,
+ "reading": "no benefit observed on this case"
+}

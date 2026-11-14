@@ -1,0 +1,70 @@
+{
+ "sent": "2026-11-15",
+ "authorised_by_user": true,
+ "requests": 6,
+ "total_cost_usd_list_price": 0.3525,
+ "usage": {
+  "irrelevant_1": {
+   "input_tokens": 3978,
+   "output_tokens": 2466,
+   "thinking_tokens": 2206,
+   "elapsed_seconds": 23.9,
+   "cost_usd": 0.0652,
+   "position": 2,
+   "stop_reason": "end_turn"
+  },
+  "irrelevant_2": {
+   "input_tokens": 3978,
+   "output_tokens": 2466,
+   "thinking_tokens": 2162,
+   "elapsed_seconds": 23.8,
+   "cost_usd": 0.0652,
+   "position": 3,
+   "stop_reason": "end_turn"
+  },
+  "none_1": {
+   "input_tokens": 3179,
+   "output_tokens": 1936,
+   "thinking_tokens": 1659,
+   "elapsed_seconds": 19.9,
+   "cost_usd": 0.0514,
+   "position": 5,
+   "stop_reason": "end_turn"
+  },
+  "none_2": {
+   "input_tokens": 3179,
+   "output_tokens": 2856,
+   "thinking_tokens": 2563,
+   "elapsed_seconds": 29.1,
+   "cost_usd": 0.0698,
+   "position": 1,
+   "stop_reason": "end_turn"
+  },
+  "useful_1": {
+   "input_tokens": 3930,
+   "output_tokens": 1787,
+   "thinking_tokens": 1503,
+   "elapsed_seconds": 17.4,
+   "cost_usd": 0.0515,
+   "position": 6,
+   "stop_reason": "end_turn"
+  },
+  "useful_2": {
+   "input_tokens": 3930,
+   "output_tokens": 1686,
+   "thinking_tokens": 1425,
+   "elapsed_seconds": 16.1,
+   "cost_usd": 0.0494,
+   "position": 4,
+   "stop_reason": "end_turn"
+  }
+ },
+ "response_sha256": {
+  "irrelevant_1.json": "b31e77029fcb7f99a1a42442c251becb8243c1ddd0f63dd697f018e472f4682b",
+  "irrelevant_2.json": "652650d14320913dd4e36b83d643b44daeb5bb5f4be23ca56906bc288f4c7195",
+  "none_1.json": "7113a401552fed614b20bbf1d3716bcd843b4c426e3688aafae63b1a32e4a247",
+  "none_2.json": "dff7214fc3089d6d05d3d5da5d742aaa92ba09dad568d524651cfe7ca5632a56",
+  "useful_1.json": "7e5367d5995c9154011db04c5cf0c160e7d88b30aad6a6025b4d0ec7af9b3c25",
+  "useful_2.json": "e88f3c33376a22420af6bbf6f1b4c8a66dfd79819c23aeec21dba895b2b62a1a"
+ }
+}

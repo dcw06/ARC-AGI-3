@@ -1,0 +1,69 @@
+{
+ "question": "Does supplying one useful older record improve the prediction of the next action's result?",
+ "case": {
+  "game": "vc33",
+  "development_case": "D10",
+  "decision_after_actions": 43,
+  "action_to_predict": "ACTION6 x=24 y=56",
+  "why": "it is the action the saved agent actually took next, so its recorded result is the answer",
+  "uncertainty_from_agent_review": "U3"
+ },
+ "conditions": {
+  "none": "decision-time input only",
+  "useful": "plus B version 2 pack with action(s) [38]",
+  "irrelevant": "plus B version 2 pack with action 41, chosen by rule"
+ },
+ "irrelevant_rule": "older than the two recent actions, same level and attempt, one frame, changes something in the play area, touches none of the cells the useful record changes, is not the action to predict, was not cited for this uncertainty by the history reviewer; among those, the pack closest in tokens to the useful pack",
+ "irrelevant_candidates_considered": 12,
+ "eligibility_checked_without_the_answer": {
+  "rows_50_58_columns_10_40_identical_before_useful_action_and_now": true,
+  "cells_where_board_before_useful_action_differs_from_current": 91,
+  "useful_action_equals_action_to_predict": true
+ },
+ "model_settings": {
+  "model": "claude-opus-5-5",
+  "max_tokens": 8000,
+  "thinking": {
+   "type": "adaptive"
+  },
+  "output_config": {
+   "effort": "high"
+  }
+ },
+ "requests_planned": {
+  "none": 2,
+  "useful": 2,
+  "irrelevant": 2
+ },
+ "older_memory_allowance": 2048,
+ "token_counts_estimates": {
+  "none": {
+   "older_memory_section_tokens": 0,
+   "full_request_input_tokens": 3179
+  },
+  "useful": {
+   "older_memory_section_tokens": 758,
+   "full_request_input_tokens": 3930
+  },
+  "irrelevant": {
+   "older_memory_section_tokens": 806,
+   "full_request_input_tokens": 3978
+  }
+ },
+ "useful_pack_tokens": 758,
+ "irrelevant_pack_tokens": 806,
+ "primary_outcome": "F1 of predicted against actual changed cells of the last returned frame, rows 1-63, right new colour required",
+ "reading_rule": {
+  "benefit observed on this case": "mean F1 of useful exceeds mean F1 of none and of irrelevant by at least 0.10 each",
+  "no benefit observed on this case": "either difference is below 0.10",
+  "unresolved": "the two requests of any condition differ by more than 0.5 in F1"
+ },
+ "scoring_rule_sha256": "03db93e8fdf48bd392796754fac2485ca2ed38e15181f42af29afb13e0f3e4de",
+ "frozen_sha256": {
+  "input_irrelevant.txt": "d56a4db3b015e18d31270b2c1b70d0cd656300475e0f691a731778470185b9a4",
+  "input_none.txt": "ba4176c460cd3503412f08f634bdd303263d26f371ca0e7d9b964d8046a0c824",
+  "input_useful.txt": "cce1b9d08475e4c4aa97137e20b3410c5eb830edb74cd6a3a14efc2a8e48c937",
+  "requests.json": "a39b2572b69fdbe9dac2aaf3749e20dc25bcc45279aeb5ff2f7f61a9f6f5e493",
+  "source_frames.npz": "46df03e3b9894fc78bff70ca096fe3dbe6f57df93474f9bd39ae28976b3a72cf"
+ }
+}
