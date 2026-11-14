@@ -1,0 +1,109 @@
+{
+ "model": "claude-opus-5-5",
+ "sample_records": 200,
+ "per_game": 8,
+ "seed": 20261113,
+ "one_character_message_tokens": 9,
+ "reading_note_tokens": 112,
+ "formats": {
+  "m_rle_F-all": {
+   "counted": 200,
+   "errors": 0,
+   "min": 1251,
+   "median": 3993.5,
+   "p90": 16745.199999999993,
+   "max": 84886,
+   "share_le_512": 0.0,
+   "share_le_1024": 0.0,
+   "share_le_2048": 0.105
+  },
+  "m_rle_F-all_r": {
+   "counted": 200,
+   "errors": 0,
+   "min": 431,
+   "median": 2528.5,
+   "p90": 9267.399999999992,
+   "max": 78434,
+   "share_le_512": 0.01,
+   "share_le_1024": 0.18,
+   "share_le_2048": 0.41
+  },
+  "m_rle_F-end": {
+   "counted": 200,
+   "errors": 0,
+   "min": 1251,
+   "median": 3237.0,
+   "p90": 5293.0,
+   "max": 7833,
+   "share_le_512": 0.0,
+   "share_le_1024": 0.0,
+   "share_le_2048": 0.15
+  },
+  "m_rle_F-end_r": {
+   "counted": 200,
+   "errors": 0,
+   "min": 431,
+   "median": 2039.0,
+   "p90": 4074.799999999999,
+   "max": 7105,
+   "share_le_512": 0.015,
+   "share_le_1024": 0.23,
+   "share_le_2048": 0.53
+  },
+  "m_diff_F-all": {
+   "counted": 200,
+   "errors": 0,
+   "min": 110,
+   "median": 601.0,
+   "p90": 2224.5,
+   "max": 86992,
+   "share_le_512": 0.415,
+   "share_le_1024": 0.7,
+   "share_le_2048": 0.865
+  },
+  "m_diff_F-end": {
+   "counted": 200,
+   "errors": 0,
+   "min": 110,
+   "median": 494.0,
+   "p90": 1936.0,
+   "max": 22871,
+   "share_le_512": 0.525,
+   "share_le_1024": 0.805,
+   "share_le_2048": 0.91
+  },
+  "board_rle": {
+   "counted": 200,
+   "errors": 0,
+   "min": 587,
+   "median": 1563.0,
+   "p90": 2602.9999999999995,
+   "max": 3867,
+   "share_le_512": 0.0,
+   "share_le_1024": 0.195,
+   "share_le_2048": 0.73
+  },
+  "board_rle_r": {
+   "counted": 200,
+   "errors": 0,
+   "min": 165,
+   "median": 969.0,
+   "p90": 1959.3999999999987,
+   "max": 3503,
+   "share_le_512": 0.255,
+   "share_le_1024": 0.555,
+   "share_le_2048": 0.9
+  },
+  "board_hex": {
+   "counted": 200,
+   "errors": 0,
+   "min": 1479,
+   "median": 1573.0,
+   "p90": 3182.1,
+   "max": 4095,
+   "share_le_512": 0.0,
+   "share_le_1024": 0.0,
+   "share_le_2048": 0.725
+  }
+ }
+}

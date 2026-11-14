@@ -1,0 +1,40 @@
+Boards are text. A board line "y:c*n,..." gives row y as runs: colour c (one hex digit) repeated n times, left to right; "a-b:" means rows a to b are identical. A change line "y:x1-x2=c" sets columns x1 to x2 of row y to colour c ("x=c" for one cell); "a-b:" applies it to rows a to b. Row 0 is the top, column 0 the left; ACTION6 clicks (x=column, y=row). Frames are the boards returned by one action, in order; each is given as its changes from the previous frame or from the board before the action, as stated. "net before>last" restates the total change from the board before the action to the last frame.
+
+M-key-v1 record=ka59:opus55-competition-20261106T054112Z:e0036 event=36 reset=0 level=1 frames=1
+action=ACTION4
+before 64x64
+0-7:1*21,2*3,F*39,2*1
+8:1*8,4*5,1*8,2*3,F*39,2*1
+9-14:1*8,4*1,1*3,4*1,1*8,2*3,F*39,2*1
+15:1*8,4*5,1*8,2*3,F*39,2*1
+16-23:1*21,2*3,F*39,2*1
+24-26:F*63,2*1
+27-29:F*30,2*34
+30-32:1*21,F*9,1*33,2*1
+33:1*21,F*9,1*9,E*6,1*18,2*1
+34:1*21,F*9,1*9,E*2,5*2,E*2,1*18,2*1
+35:1*21,F*9,1*9,E*6,1*18,2*1
+36-37:1*21,F*9,1*33,2*1
+38:1*21,F*9,1*23,4*8,1*2,2*1
+39-40:1*21,F*9,1*23,4*1,1*6,4*1,1*2,2*1
+41:1*5,4*8,1*8,F*9,1*23,4*1,1*6,4*1,1*2,2*1
+42:1*5,4*1,1*6,4*1,1*8,F*9,1*3,E*3,1*17,4*8,1*2,2*1
+43:1*5,4*1,1*6,4*1,1*8,F*9,1*3,E*3,1*27,2*1
+44:1*5,4*1,1*6,4*1,1*8,F*9,1*3,E*1,5*1,E*1,1*27,2*1
+45:1*5,4*1,1*6,4*1,1*8,F*9,1*3,E*1,5*1,E*1,1*6,E*6,1*15,2*1
+46:1*5,4*1,1*6,4*1,1*8,F*9,1*3,E*3,1*6,E*6,1*15,2*1
+47:1*5,4*1,1*6,4*1,1*8,F*9,1*3,E*3,1*6,E*2,5*2,E*2,1*15,2*1
+48:1*5,4*8,1*8,F*9,1*12,E*2,5*2,E*2,1*15,2*1
+49:1*21,F*9,1*12,E*6,1*15,2*1
+50:1*21,F*9,1*12,E*6,1*2,4*5,1*8,2*1
+51:1*21,F*9,1*18,E*3,1*3,4*1,1*8,2*1
+52:1*21,F*9,1*18,E*1,0*1,E*1,1*3,4*1,1*8,2*1
+53:1*21,F*9,1*18,E*3,1*3,4*1,1*8,2*1
+54:1*21,F*9,1*20,4*5,1*8,2*1
+55-62:1*21,F*9,1*33,2*1
+63:4*61,0*3
+frame 1/1 vs before: 18 cells
+51:48-49=1,50=4,51-53=E
+52:48-49=1,50=4,51=E,52=0,53=E
+53:48-49=1,50=4,51-53=E
+result state=NOT_FINISHED level=1 legal=1,2,3,4,6

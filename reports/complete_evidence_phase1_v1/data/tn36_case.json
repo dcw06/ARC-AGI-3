@@ -1,0 +1,915 @@
+{
+ "summary": {
+  "actions_in_game": 99,
+  "runs": 26,
+  "runs_repeating_an_earlier_board": 10,
+  "repeats_with_identical_frames": 10,
+  "repeats_whose_latest_earlier_run_was_still_shown": 1,
+  "repeats_in_same_attempt_not_shown": 6,
+  "repeats_across_the_reset_not_shown": 3,
+  "repeats_not_shown_with_a_note_citing_an_earlier_same_board_run": 1,
+  "actions_spent_on_repeats_not_shown": 45,
+  "any_run_changed_level": false
+ },
+ "runs": [
+  {
+   "event": 2,
+   "reset": 0,
+   "actions_spent_since_previous_run": 2,
+   "earlier_same_board_runs": [],
+   "level_change": false
+  },
+  {
+   "event": 4,
+   "reset": 0,
+   "actions_spent_since_previous_run": 2,
+   "earlier_same_board_runs": [],
+   "level_change": false
+  },
+  {
+   "event": 6,
+   "reset": 0,
+   "actions_spent_since_previous_run": 2,
+   "earlier_same_board_runs": [],
+   "level_change": false
+  },
+  {
+   "event": 7,
+   "reset": 0,
+   "actions_spent_since_previous_run": 1,
+   "earlier_same_board_runs": [
+    6
+   ],
+   "level_change": false,
+   "same_frames_as_latest": true,
+   "latest_in_same_attempt": true,
+   "latest_still_shown": true,
+   "notes_citing_an_earlier_same_board_run": [],
+   "notes_given": [
+    {
+     "id": "h1",
+     "status": "supported_locally",
+     "statement": "The editable bits at y44-46 (x21,26,31,36,41) toggle between 5 and 1. All five are now 1.",
+     "evidence_ids": [
+      "t1",
+      "t3",
+      "o4"
+     ]
+    },
+    {
+     "id": "h2",
+     "status": "supported_locally",
+     "statement": "Row 1 counts actions: each action turns one 9 at the right end into 3.",
+     "evidence_ids": [
+      "t1",
+      "t2",
+      "t3",
+      "t4",
+      "t5"
+     ]
+    },
+    {
+     "id": "h3",
+     "status": "supported_locally",
+     "statement": "Clicking (37,55) runs an animation of about 6 frames. Two runs with different bit settings both ended with no net change on the board.",
+     "evidence_ids": [
+      "t2",
+      "t4"
+     ]
+    },
+    {
+     "id": "h4",
+     "status": "tentative",
+     "statement": "Goal: turn the lower b shape (x29-34, y33-37) into the upper b shape (x30-33, y13-16).",
+     "evidence_ids": [
+      "o4"
+     ]
+    },
+    {
+     "id": "h6",
+     "status": "supported_locally",
+     "statement": "The row-42 segments (x20-22, 25-27, 30-32, 35-37, 40-42) are clickable and toggle between 5 and 1, separately from the y44-46 bits. Row 42 now reads 1,1,5,1,1.",
+     "evidence_ids": [
+      "t5"
+     ]
+    },
+    {
+     "id": "h7",
+     "status": "tentative",
+     "statement": "Rows 42 and 44-46 together encode operations, possibly one opcode per column. Running with the new row-42 setting may change the lower b shape.",
+     "evidence_ids": [
+      "t5"
+     ]
+    }
+   ],
+   "oldest_evidence_cited_in_notes": 1
+  },
+  {
+   "event": 9,
+   "reset": 0,
+   "actions_spent_since_previous_run": 2,
+   "earlier_same_board_runs": [],
+   "level_change": false
+  },
+  {
+   "event": 12,
+   "reset": 0,
+   "actions_spent_since_previous_run": 3,
+   "earlier_same_board_runs": [],
+   "level_change": false
+  },
+  {
+   "event": 19,
+   "reset": 0,
+   "actions_spent_since_previous_run": 7,
+   "earlier_same_board_runs": [],
+   "level_change": false
+  },
+  {
+   "event": 22,
+   "reset": 0,
+   "actions_spent_since_previous_run": 3,
+   "earlier_same_board_runs": [],
+   "level_change": false
+  },
+  {
+   "event": 25,
+   "reset": 0,
+   "actions_spent_since_previous_run": 3,
+   "earlier_same_board_runs": [],
+   "level_change": false
+  },
+  {
+   "event": 30,
+   "reset": 0,
+   "actions_spent_since_previous_run": 5,
+   "earlier_same_board_runs": [
+    9
+   ],
+   "level_change": false,
+   "same_frames_as_latest": true,
+   "latest_in_same_attempt": true,
+   "latest_still_shown": false,
+   "notes_citing_an_earlier_same_board_run": [],
+   "notes_given": [
+    {
+     "id": "h1",
+     "status": "supported_locally",
+     "statement": "Clicking a slot's stem in rows 44-46 (x21, 26, 31, 36, 41), or the cell beside it, switches that stem between 5 and 1.",
+     "evidence_ids": [
+      "t21",
+      "t24"
+     ]
+    },
+    {
+     "id": "h2",
+     "status": "supported_locally",
+     "statement": "Row 1 is an action counter: each action turns the rightmost remaining 9 into a 3. About 33 actions remain.",
+     "evidence_ids": [
+      "t26",
+      "t27",
+      "t28"
+     ]
+    },
+    {
+     "id": "h4",
+     "status": "tentative",
+     "statement": "The upper piece (x30-33, y13-16) fits into the lower cup (x30-33, y33-36) with no rotation. To fit, it must move 20 rows down.",
+     "evidence_ids": [
+      "o28"
+     ]
+    },
+    {
+     "id": "h6",
+     "status": "supported_locally",
+     "statement": "Clicking a top bar in row 42 switches it between 5 and 1. The top bars of slots 1-4 are now 1. Slot 5's top bar (x40-42) is still 5.",
+     "evidence_ids": [
+      "t26",
+      "t27",
+      "t28"
+     ]
+    },
+    {
+     "id": "h9",
+     "status": "supported_locally",
+     "statement": "Clicking (37,55) runs the program as an animation. Runs so far have left no lasting change.",
+     "evidence_ids": [
+      "t19",
+      "t22",
+      "t25"
+     ]
+    },
+    {
+     "id": "h13",
+     "status": "tentative",
+     "statement": "Test: set every slot to top bar plus stem and run, then compare the result with the all-stem run. This click switches slot 5's top bar (x40-42, y42) to 1, which completes the setup.",
+     "evidence_ids": [
+      "o28"
+     ]
+    },
+    {
+     "id": "h10",
+     "status": "supported_locally",
+     "statement": "Row 47 holds no toggleable segment.",
+     "evidence_ids": [
+      "t23"
+     ]
+    }
+   ],
+   "oldest_evidence_cited_in_notes": 19
+  },
+  {
+   "event": 33,
+   "reset": 0,
+   "actions_spent_since_previous_run": 3,
+   "earlier_same_board_runs": [],
+   "level_change": false
+  },
+  {
+   "event": 39,
+   "reset": 0,
+   "actions_spent_since_previous_run": 6,
+   "earlier_same_board_runs": [
+    19
+   ],
+   "level_change": false,
+   "same_frames_as_latest": true,
+   "latest_in_same_attempt": true,
+   "latest_still_shown": false,
+   "notes_citing_an_earlier_same_board_run": [],
+   "notes_given": [
+    {
+     "id": "h1",
+     "status": "supported_locally",
+     "statement": "Clicking a slot's stem in rows 44-46, or a cell near it (including x19 for slot 1), switches that stem between 5 and 1.",
+     "evidence_ids": [
+      "t21",
+      "t24",
+      "t32",
+      "t34"
+     ]
+    },
+    {
+     "id": "h2",
+     "status": "supported_locally",
+     "statement": "Row 1 is an action counter: each action turns the rightmost remaining 9 into a 3. About 24 actions remain (9s at x1-24).",
+     "evidence_ids": [
+      "t35",
+      "t36",
+      "t37"
+     ]
+    },
+    {
+     "id": "h4",
+     "status": "tentative",
+     "statement": "The upper piece (x30-33, y13-16, notched) fits the lower cup interior (x30-33, y33-36, with a bump) with no rotation. It needs to move 5 tiles down.",
+     "evidence_ids": [
+      "o37"
+     ]
+    },
+    {
+     "id": "h6",
+     "status": "supported_locally",
+     "statement": "Clicking a top bar in row 42 switches that bar between 5 and 1. Bars are at x20-22, 25-27, 30-32, 35-37, 40-42.",
+     "evidence_ids": [
+      "t31",
+      "t35",
+      "t36",
+      "t37"
+     ]
+    },
+    {
+     "id": "h9",
+     "status": "supported_locally",
+     "statement": "Clicking (37,55) runs the program. No run so far has left a lasting change.",
+     "evidence_ids": [
+      "t30",
+      "t33"
+     ]
+    },
+    {
+     "id": "h17",
+     "status": "tentative",
+     "statement": "A stem-only slot may encode 'down'. Slots 1-4 are stem-only in o37. Plan: turn off the slot 5 bar at (41,42), then run at (37,55).",
+     "evidence_ids": [
+      "t37",
+      "o37"
+     ]
+    }
+   ],
+   "oldest_evidence_cited_in_notes": 21
+  },
+  {
+   "event": 45,
+   "reset": 0,
+   "actions_spent_since_previous_run": 6,
+   "earlier_same_board_runs": [
+    9,
+    30
+   ],
+   "level_change": false,
+   "same_frames_as_latest": true,
+   "latest_in_same_attempt": true,
+   "latest_still_shown": false,
+   "notes_citing_an_earlier_same_board_run": [
+    {
+     "id": "h9",
+     "status": "supported_locally",
+     "statement": "Clicking (37,55) runs the program. No run so far has left a lasting change.",
+     "evidence_ids": [
+      "t30",
+      "t33",
+      "t39"
+     ]
+    }
+   ],
+   "notes_given": [
+    {
+     "id": "h1",
+     "status": "supported_locally",
+     "statement": "Clicking a slot's stem in rows 44-46, or a cell near it, switches that stem between 5 and 1. All five stems are on (1) at x21, 26, 31, 36 and 41.",
+     "evidence_ids": [
+      "t21",
+      "t24",
+      "t32",
+      "t34",
+      "o40"
+     ]
+    },
+    {
+     "id": "h2",
+     "status": "supported_locally",
+     "statement": "Row 1 is an action counter: each action turns the rightmost remaining 9 into a 3. 18 nines remain in o43.",
+     "evidence_ids": [
+      "t41",
+      "t42",
+      "t43"
+     ]
+    },
+    {
+     "id": "h4",
+     "status": "tentative",
+     "statement": "The upper piece (x30-33, y13-16, notch at the bottom middle) fits the lower cup interior (x30-33, y33-36) without rotation. It must move 20 cells (5 tiles) down.",
+     "evidence_ids": [
+      "o43"
+     ]
+    },
+    {
+     "id": "h6",
+     "status": "supported_locally",
+     "statement": "Clicking a top bar in row 42 switches that bar between 5 and 1. The bars for slots 1-4 are now on. Slot 5 (x40-42) is off.",
+     "evidence_ids": [
+      "t40",
+      "t41",
+      "t42",
+      "t43"
+     ]
+    },
+    {
+     "id": "h9",
+     "status": "supported_locally",
+     "statement": "Clicking (37,55) runs the program. No run so far has left a lasting change.",
+     "evidence_ids": [
+      "t30",
+      "t33",
+      "t39"
+     ]
+    },
+    {
+     "id": "h17",
+     "status": "supported_locally",
+     "statement": "Five stem-only slots do not move the piece into the cup.",
+     "evidence_ids": [
+      "t39"
+     ]
+    },
+    {
+     "id": "h18",
+     "status": "tentative",
+     "statement": "A full T slot (bar plus stem) may encode a move down. Test: turn on bar 5, then run at (37,55).",
+     "evidence_ids": [
+      "t39",
+      "t43"
+     ]
+    }
+   ],
+   "oldest_evidence_cited_in_notes": 21
+  },
+  {
+   "event": 47,
+   "reset": 0,
+   "actions_spent_since_previous_run": 2,
+   "earlier_same_board_runs": [
+    12
+   ],
+   "level_change": false,
+   "same_frames_as_latest": true,
+   "latest_in_same_attempt": true,
+   "latest_still_shown": false,
+   "notes_citing_an_earlier_same_board_run": [],
+   "notes_given": [
+    {
+     "id": "h1",
+     "status": "supported_locally",
+     "statement": "Clicking a slot's stem in rows 44-46, or a cell near it, switches that stem between 5 and 1. All five stems are on at x21, 26, 31, 36 and 41.",
+     "evidence_ids": [
+      "t21",
+      "t24",
+      "t32",
+      "t34",
+      "o44"
+     ]
+    },
+    {
+     "id": "h2",
+     "status": "supported_locally",
+     "statement": "Row 1 is an action counter: each action turns the rightmost remaining 9 into a 3. 16 nines remain in o45.",
+     "evidence_ids": [
+      "t43",
+      "t44",
+      "t45"
+     ]
+    },
+    {
+     "id": "h4",
+     "status": "tentative",
+     "statement": "The upper piece (x30-33, y13-16, notch at the bottom middle) fits the lower cup interior (x30-33, y33-36). It needs to move 5 tiles down.",
+     "evidence_ids": [
+      "o45"
+     ]
+    },
+    {
+     "id": "h6",
+     "status": "supported_locally",
+     "statement": "Clicking a top bar in row 42 switches that bar between 5 and 1. All five bars are on.",
+     "evidence_ids": [
+      "t40",
+      "t41",
+      "t42",
+      "t43",
+      "t44"
+     ]
+    },
+    {
+     "id": "h9",
+     "status": "supported_locally",
+     "statement": "Clicking (37,55) runs the program. No run so far has left a lasting change.",
+     "evidence_ids": [
+      "t30",
+      "t33",
+      "t39",
+      "t45"
+     ]
+    },
+    {
+     "id": "h18",
+     "status": "contradicted",
+     "statement": "Five full T slots (bar plus stem) move the piece 5 tiles down into the cup.",
+     "evidence_ids": [
+      "t45"
+     ]
+    },
+    {
+     "id": "h19",
+     "status": "tentative",
+     "statement": "Bar-only slots, or mixes of slot types, encode a different move. Test: turn stems off one at a time and run.",
+     "evidence_ids": [
+      "t39",
+      "t45"
+     ]
+    }
+   ],
+   "oldest_evidence_cited_in_notes": 21
+  },
+  {
+   "event": 50,
+   "reset": 0,
+   "actions_spent_since_previous_run": 3,
+   "earlier_same_board_runs": [],
+   "level_change": false
+  },
+  {
+   "event": 55,
+   "reset": 0,
+   "actions_spent_since_previous_run": 5,
+   "earlier_same_board_runs": [
+    19,
+    39
+   ],
+   "level_change": false,
+   "same_frames_as_latest": true,
+   "latest_in_same_attempt": true,
+   "latest_still_shown": false,
+   "notes_citing_an_earlier_same_board_run": [],
+   "notes_given": [
+    {
+     "id": "h1",
+     "status": "supported_locally",
+     "statement": "Each slot's stem (rows 44-46) works as one toggle button. Clicking anywhere in it switches the whole stem between 5 and 1.",
+     "evidence_ids": [
+      "t46",
+      "t48"
+     ]
+    },
+    {
+     "id": "h2",
+     "status": "supported_locally",
+     "statement": "Row 1 is an action budget: each action turns the rightmost remaining 9 into a 3. 8 nines (x1-8) remain in o53.",
+     "evidence_ids": [
+      "t52",
+      "t53"
+     ]
+    },
+    {
+     "id": "h6",
+     "status": "supported_locally",
+     "statement": "Each slot's bar (row 42, x20-22, 25-27, 30-32, 35-37, 40-42) toggles between 5 and 1 when clicked. In o53 only slot 5's bar (x40-42) is still 1.",
+     "evidence_ids": [
+      "t49",
+      "t51",
+      "t52",
+      "t53"
+     ]
+    },
+    {
+     "id": "h9",
+     "status": "supported_locally",
+     "statement": "Clicking (37,55) runs the program as an animation. Afterwards the board returns to its earlier state when the level is not solved.",
+     "evidence_ids": [
+      "t47",
+      "t50"
+     ]
+    },
+    {
+     "id": "h4",
+     "status": "tentative",
+     "statement": "The upper piece (x30-33, y13-16) must move 20 rows down to fit the lower cup (y33-36), one move per slot.",
+     "evidence_ids": [
+      "o53"
+     ]
+    },
+    {
+     "id": "h21",
+     "status": "tentative",
+     "statement": "Every slot stem-only (all bars off), then run, may move the piece down. Only slot 5's bar remains to turn off after o53.",
+     "evidence_ids": [
+      "t50",
+      "o53"
+     ]
+    }
+   ],
+   "oldest_evidence_cited_in_notes": 46
+  },
+  {
+   "event": 57,
+   "reset": 0,
+   "actions_spent_since_previous_run": 2,
+   "earlier_same_board_runs": [],
+   "level_change": false
+  },
+  {
+   "event": 60,
+   "reset": 0,
+   "actions_spent_since_previous_run": 3,
+   "earlier_same_board_runs": [],
+   "level_change": false
+  },
+  {
+   "event": 67,
+   "reset": 1,
+   "actions_spent_since_previous_run": 7,
+   "earlier_same_board_runs": [
+    9,
+    30,
+    45
+   ],
+   "level_change": false,
+   "same_frames_as_latest": true,
+   "latest_in_same_attempt": false,
+   "latest_still_shown": false,
+   "notes_citing_an_earlier_same_board_run": [],
+   "notes_given": [
+    {
+     "id": "h1",
+     "status": "supported_locally",
+     "statement": "Each slot's stem (rows 44-46) works as one toggle button. Clicking anywhere in it switches the whole stem between 5 and 1.",
+     "evidence_ids": [
+      "t58",
+      "t59",
+      "t65"
+     ]
+    },
+    {
+     "id": "h2",
+     "status": "supported_locally",
+     "statement": "Row 1 is an action budget: each action uses one 9 cell. When it runs out the game is over and the controller resets.",
+     "evidence_ids": [
+      "t60",
+      "t61",
+      "t62"
+     ]
+    },
+    {
+     "id": "h6",
+     "status": "supported_locally",
+     "statement": "Each slot's bar (row 42) toggles between 5 and 1 when clicked.",
+     "evidence_ids": [
+      "t63",
+      "t64"
+     ]
+    },
+    {
+     "id": "h9",
+     "status": "supported_locally",
+     "statement": "Clicking (37,55) runs the program as an animation. Afterwards the board returns to its earlier state when the level is not solved.",
+     "evidence_ids": [
+      "t57",
+      "t60"
+     ]
+    },
+    {
+     "id": "h26",
+     "status": "tentative",
+     "statement": "Goal: move the upper b piece down 20 rows into the b cup. Each slot may need to be a full T (bar on and stem on), meaning 'move down 4'. All bars are on, and the stems for slots 1, 2, 4 and 5 are on. Only the slot 3 stem (x31) is still off. Next: turn it on, then run with (37,55).",
+     "evidence_ids": [
+      "o65",
+      "t65"
+     ]
+    },
+    {
+     "id": "h23",
+     "status": "contradicted",
+     "statement": "The stems alone encode a binary number that solves the level.",
+     "evidence_ids": [
+      "t60"
+     ]
+    }
+   ],
+   "oldest_evidence_cited_in_notes": 57
+  },
+  {
+   "event": 74,
+   "reset": 1,
+   "actions_spent_since_previous_run": 7,
+   "earlier_same_board_runs": [],
+   "level_change": false
+  },
+  {
+   "event": 77,
+   "reset": 1,
+   "actions_spent_since_previous_run": 3,
+   "earlier_same_board_runs": [],
+   "level_change": false
+  },
+  {
+   "event": 81,
+   "reset": 1,
+   "actions_spent_since_previous_run": 4,
+   "earlier_same_board_runs": [],
+   "level_change": false
+  },
+  {
+   "event": 87,
+   "reset": 1,
+   "actions_spent_since_previous_run": 6,
+   "earlier_same_board_runs": [
+    9,
+    30,
+    45,
+    67
+   ],
+   "level_change": false,
+   "same_frames_as_latest": true,
+   "latest_in_same_attempt": true,
+   "latest_still_shown": false,
+   "notes_citing_an_earlier_same_board_run": [],
+   "notes_given": [
+    {
+     "id": "h1",
+     "status": "supported_locally",
+     "statement": "Each slot's stem (rows 44-46) works as one toggle button. Clicking anywhere in it switches the whole stem between 5 and 1.",
+     "evidence_ids": [
+      "t82",
+      "t83",
+      "t84",
+      "t85"
+     ]
+    },
+    {
+     "id": "h2",
+     "status": "supported_locally",
+     "statement": "Row 1 is an action budget: each action turns one 9 into 3. About 38 cells of budget are left.",
+     "evidence_ids": [
+      "t83",
+      "t84",
+      "t85"
+     ]
+    },
+    {
+     "id": "h6",
+     "status": "supported_locally",
+     "statement": "Each slot's bar (row 42) toggles between 5 and 1 when clicked. All five bars are now 1.",
+     "evidence_ids": [
+      "t78",
+      "t79",
+      "t80"
+     ]
+    },
+    {
+     "id": "h9",
+     "status": "supported_locally",
+     "statement": "Clicking (37,55) runs the program as an animation. If the level is not solved, the board then returns to its earlier state.",
+     "evidence_ids": [
+      "t81"
+     ]
+    },
+    {
+     "id": "h29",
+     "status": "contradicted",
+     "statement": "Running with all bars at 1 and all stems at 5 solves the level.",
+     "evidence_ids": [
+      "t81"
+     ]
+    },
+    {
+     "id": "h30",
+     "status": "tentative",
+     "statement": "The target outline matches the piece moved down 20 rows (5 tiles). Testing encoding bar=1, stem=1 for all slots: set the last stem (x=41) to 1, then run at (37,55).",
+     "evidence_ids": [
+      "o81",
+      "t85"
+     ]
+    }
+   ],
+   "oldest_evidence_cited_in_notes": 78
+  },
+  {
+   "event": 93,
+   "reset": 1,
+   "actions_spent_since_previous_run": 6,
+   "earlier_same_board_runs": [
+    19,
+    39,
+    55
+   ],
+   "level_change": false,
+   "same_frames_as_latest": true,
+   "latest_in_same_attempt": false,
+   "latest_still_shown": false,
+   "notes_citing_an_earlier_same_board_run": [],
+   "notes_given": [
+    {
+     "id": "h1",
+     "status": "supported_locally",
+     "statement": "Each slot's stem (rows 44-46) works as one toggle button. Clicking anywhere in it switches the whole stem between 5 and 1.",
+     "evidence_ids": [
+      "t84",
+      "t85",
+      "t86"
+     ]
+    },
+    {
+     "id": "h2",
+     "status": "supported_locally",
+     "statement": "Row 1 is an action budget: each action turns one 9 into 3. About 32 actions are left.",
+     "evidence_ids": [
+      "t89",
+      "t90",
+      "t91"
+     ]
+    },
+    {
+     "id": "h33",
+     "status": "supported_locally",
+     "statement": "Each slot's bar (row 42, x20-22, 25-27, 30-32, 35-37, 40-42) is one toggle button switching between 1 and 5. Clicking (41,42) will switch bar 5 to 5.",
+     "evidence_ids": [
+      "t88",
+      "t89",
+      "t90",
+      "t91"
+     ]
+    },
+    {
+     "id": "h9",
+     "status": "supported_locally",
+     "statement": "Clicking (37,55) runs the program as an animation. If the level is not solved, the board then returns to its earlier state.",
+     "evidence_ids": [
+      "t87"
+     ]
+    },
+    {
+     "id": "h32",
+     "status": "tentative",
+     "statement": "The goal is to move the b piece (x30-33, rows 13-16) down into the matching outline at rows 33-37. Each of the 5 slots encodes one step.",
+     "evidence_ids": [
+      "o91"
+     ]
+    },
+    {
+     "id": "h34",
+     "status": "tentative",
+     "statement": "With all stems on and all bars off, a run will move the piece downward toward the outline.",
+     "evidence_ids": [
+      "t87",
+      "o91"
+     ]
+    }
+   ],
+   "oldest_evidence_cited_in_notes": 84
+  },
+  {
+   "event": 96,
+   "reset": 1,
+   "actions_spent_since_previous_run": 3,
+   "earlier_same_board_runs": [],
+   "level_change": false
+  },
+  {
+   "event": 98,
+   "reset": 1,
+   "actions_spent_since_previous_run": 2,
+   "earlier_same_board_runs": [
+    60
+   ],
+   "level_change": false,
+   "same_frames_as_latest": true,
+   "latest_in_same_attempt": false,
+   "latest_still_shown": false,
+   "notes_citing_an_earlier_same_board_run": [],
+   "notes_given": [
+    {
+     "id": "h1",
+     "status": "supported_locally",
+     "statement": "Each slot's stem (rows 44-46) works as one toggle button. Clicking anywhere in it switches the whole stem between 1 and 5.",
+     "evidence_ids": [
+      "t84",
+      "t85",
+      "t86",
+      "t94",
+      "t95"
+     ]
+    },
+    {
+     "id": "h2",
+     "status": "supported_locally",
+     "statement": "Row 1 is an action budget: each action turns one 9 into 3. About 27 actions are left.",
+     "evidence_ids": [
+      "t93",
+      "t94",
+      "t95",
+      "t96"
+     ]
+    },
+    {
+     "id": "h33",
+     "status": "supported_locally",
+     "statement": "Each slot's bar (row 42) is one toggle button switching between 1 and 5. All bars are now 5 (off).",
+     "evidence_ids": [
+      "t88",
+      "t89",
+      "t90",
+      "t91",
+      "t92"
+     ]
+    },
+    {
+     "id": "h9",
+     "status": "supported_locally",
+     "statement": "Clicking (37,55) runs the program. If the level is not solved, the board then returns to its earlier state.",
+     "evidence_ids": [
+      "t87",
+      "t93",
+      "t96"
+     ]
+    },
+    {
+     "id": "h32",
+     "status": "tentative",
+     "statement": "The goal is to move the b piece (x30-33, rows 13-16) down 20 rows into the cup at rows 33-36. The piece's bottom row (b44b) is the complement of the cup's inner row 36 (5bb5).",
+     "evidence_ids": [
+      "o96"
+     ]
+    },
+    {
+     "id": "h35",
+     "status": "contradicted",
+     "statement": "With stems 1,0,1,0,1 and all bars off, a run solves the level.",
+     "evidence_ids": [
+      "t96"
+     ]
+    },
+    {
+     "id": "h36",
+     "status": "tentative",
+     "statement": "The stems are a binary drop distance in rows, with the most significant bit on the left (16,8,4,2,1). Setting the stems to 1,0,1,0,0 (20) and then running should seat the piece in the cup.",
+     "evidence_ids": [
+      "t93",
+      "t96",
+      "o96"
+     ]
+    }
+   ],
+   "oldest_evidence_cited_in_notes": 84
+  }
+ ]
+}

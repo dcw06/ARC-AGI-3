@@ -1,0 +1,182 @@
+{
+ "scorer": "BAAI/bge-reranker-v2-m3",
+ "scorer_revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+ "events": ".cache/claude_arc_runs/opus55-competition-20261106T054112Z/events.jsonl",
+ "games": 25,
+ "records": 2475,
+ "decisions": 2500,
+ "reconstruction_mismatches": 0,
+ "frames_per_response": {
+  "n": 2475,
+  "min": 1,
+  "median": 1.0,
+  "p90": 8.0,
+  "max": 328
+ },
+ "share_multi_frame": 0.3341,
+ "description_tokens": {
+  "board_rle": {
+   "n": 2500,
+   "min": 364,
+   "median": 1262.0,
+   "p90": 2044.0,
+   "max": 2957,
+   "share_le_768": 0.1412
+  },
+  "board_rle_r": {
+   "n": 2500,
+   "min": 104,
+   "median": 717.0,
+   "p90": 1504.0,
+   "max": 2673,
+   "share_le_768": 0.5468
+  },
+  "q_F-all": {
+   "n": 2500,
+   "min": 478,
+   "median": 3662.0,
+   "p90": 22800.6,
+   "max": 568136,
+   "share_le_768": 0.0028
+  },
+  "q_F-all_r": {
+   "n": 2500,
+   "min": 150,
+   "median": 2305.5,
+   "p90": 13713.2,
+   "max": 323273,
+   "share_le_768": 0.1376
+  },
+  "q_F-end": {
+   "n": 2500,
+   "min": 478,
+   "median": 2597.0,
+   "p90": 4176.299999999999,
+   "max": 6004,
+   "share_le_768": 0.0032
+  },
+  "q_F-end_r": {
+   "n": 2500,
+   "min": 150,
+   "median": 1516.0,
+   "p90": 3023.5999999999976,
+   "max": 5437,
+   "share_le_768": 0.2008
+  }
+ },
+ "memory_tokens": {
+  "m_rle_F-all": {
+   "n": 2475,
+   "min": 819,
+   "median": 3007.0,
+   "p90": 12641.799999999992,
+   "max": 557362,
+   "share_le_1276": 0.0416,
+   "share_le_2044": 0.1915
+  },
+  "m_rle_F-all_r": {
+   "n": 2475,
+   "min": 296,
+   "median": 1896.0,
+   "p90": 7447.799999999999,
+   "max": 317347,
+   "share_le_1276": 0.2444,
+   "share_le_2044": 0.5329
+  },
+  "m_diff_F-all": {
+   "n": 2475,
+   "min": 67,
+   "median": 490.0,
+   "p90": 1743.6,
+   "max": 129021,
+   "share_le_1276": 0.798,
+   "share_le_2044": 0.9115
+  },
+  "m_rle_F-end": {
+   "n": 2475,
+   "min": 819,
+   "median": 2606.0,
+   "p90": 4172.2,
+   "max": 5995,
+   "share_le_1276": 0.0792,
+   "share_le_2044": 0.2707
+  },
+  "m_rle_F-end_r": {
+   "n": 2475,
+   "min": 296,
+   "median": 1517.0,
+   "p90": 3069.9999999999995,
+   "max": 5428,
+   "share_le_1276": 0.341,
+   "share_le_2044": 0.7063
+  },
+  "m_diff_F-end": {
+   "n": 2475,
+   "min": 67,
+   "median": 388.0,
+   "p90": 1115.1999999999998,
+   "max": 26516,
+   "share_le_1276": 0.9164,
+   "share_le_2044": 0.9483
+  }
+ },
+ "pairs_fit_without_cutting": {
+  "q_F-all + m_rle_F-all": {
+   "pairs": 124050,
+   "fit": 3,
+   "share": 0.0
+  },
+  "q_F-end + m_rle_F-end": {
+   "pairs": 124050,
+   "fit": 4,
+   "share": 0.0
+  },
+  "q_F-all_r + m_rle_F-all_r": {
+   "pairs": 124050,
+   "fit": 13851,
+   "share": 0.1117
+  },
+  "q_F-end_r + m_rle_F-end_r": {
+   "pairs": 124050,
+   "fit": 22360,
+   "share": 0.1802
+  },
+  "q_F-end_r + m_diff_F-all": {
+   "pairs": 124050,
+   "fit": 17397,
+   "share": 0.1402
+  },
+  "board_rle_r + m_diff_F-all": {
+   "pairs": 124050,
+   "fit": 54425,
+   "share": 0.4387
+  }
+ },
+ "per_game_board_rle_r_median": {
+  "ar25": 817.0,
+  "bp35": 2259.0,
+  "cd82": 864.0,
+  "cn04": 247.0,
+  "dc22": 611.0,
+  "ft09": 668.0,
+  "g50t": 680.0,
+  "ka59": 687.0,
+  "lf52": 1218.0,
+  "lp85": 958.0,
+  "ls20": 990.0,
+  "m0r0": 1313.0,
+  "r11l": 1335.0,
+  "re86": 893.0,
+  "s5i5": 1182.0,
+  "sb26": 781.0,
+  "sc25": 755.0,
+  "sk48": 853.0,
+  "sp80": 335.0,
+  "su15": 205.0,
+  "tn36": 626.0,
+  "tr87": 1841.0,
+  "tu93": 426.0,
+  "vc33": 370.0,
+  "wa30": 244.0
+ }
+}

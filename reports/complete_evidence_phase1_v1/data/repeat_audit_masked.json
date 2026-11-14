@@ -1,0 +1,277 @@
+{
+ "window": 8,
+ "tick": 2,
+ "extend": true,
+ "events": ".cache/claude_arc_runs/opus55-competition-20261106T054112Z/events.jsonl",
+ "coverage": {
+  "records": 2475,
+  "eligible_actions_chosen_by_the_model": 2467,
+  "games_with_a_counter_estimate": 15,
+  "actions_in_those_games": 1493,
+  "games_without_a_counter_estimate": [
+   "ar25",
+   "ft09",
+   "lp85",
+   "ls20",
+   "sb26",
+   "sc25",
+   "sk48",
+   "tr87",
+   "tu93",
+   "wa30"
+  ],
+  "actions_in_games_without_a_counter_estimate": 974,
+  "games_with_any_assessable_action": [
+   "cd82",
+   "ka59",
+   "lf52",
+   "tn36",
+   "vc33"
+  ],
+  "assessable_actions": 59,
+  "detected_same_attempt_repeats_out_of_view": 27
+ },
+ "total": {
+  "actions": 2467,
+  "controller_resets_excluded": 8,
+  "at_board_acted_from_before_out_of_view": 59,
+  "did_nothing": 204,
+  "repeat_visible": 16,
+  "repeat_visible_did_nothing": 10,
+  "repeat_older": 61,
+  "repeat_older_did_nothing": 13,
+  "repeat_older_same_attempt": 27,
+  "repeat_older_same_attempt_did_nothing": 10
+ },
+ "games": [
+  {
+   "actions": 100,
+   "did_nothing": 1,
+   "game": "ar25",
+   "masked_cells": 0,
+   "levels_completed": 3
+  },
+  {
+   "actions": 97,
+   "did_nothing": 5,
+   "controller_resets_excluded": 3,
+   "repeat_visible": 2,
+   "repeat_visible_did_nothing": 0,
+   "repeat_visible_same_attempt": 0,
+   "repeat_visible_same_attempt_did_nothing": 0,
+   "repeat_older": 21,
+   "repeat_older_did_nothing": 0,
+   "repeat_older_same_attempt": 0,
+   "repeat_older_same_attempt_did_nothing": 0,
+   "game": "bp35",
+   "masked_cells": 22,
+   "levels_completed": 1
+  },
+  {
+   "actions": 100,
+   "did_nothing": 19,
+   "at_board_acted_from_before_out_of_view": 5,
+   "repeat_older": 3,
+   "repeat_older_did_nothing": 1,
+   "repeat_older_same_attempt": 3,
+   "repeat_older_same_attempt_did_nothing": 1,
+   "game": "cd82",
+   "masked_cells": 41,
+   "levels_completed": 2
+  },
+  {
+   "actions": 100,
+   "did_nothing": 5,
+   "game": "cn04",
+   "masked_cells": 3,
+   "levels_completed": 2
+  },
+  {
+   "actions": 100,
+   "did_nothing": 7,
+   "game": "dc22",
+   "masked_cells": 3,
+   "levels_completed": 1
+  },
+  {
+   "actions": 75,
+   "did_nothing": 0,
+   "game": "ft09",
+   "masked_cells": 0,
+   "levels_completed": 6
+  },
+  {
+   "actions": 100,
+   "did_nothing": 6,
+   "game": "g50t",
+   "masked_cells": 2,
+   "levels_completed": 1
+  },
+  {
+   "actions": 100,
+   "did_nothing": 20,
+   "repeat_visible": 1,
+   "repeat_visible_did_nothing": 1,
+   "repeat_visible_same_attempt": 1,
+   "repeat_visible_same_attempt_did_nothing": 1,
+   "at_board_acted_from_before_out_of_view": 4,
+   "repeat_older": 3,
+   "repeat_older_did_nothing": 3,
+   "repeat_older_same_attempt": 3,
+   "repeat_older_same_attempt_did_nothing": 3,
+   "game": "ka59",
+   "masked_cells": 31,
+   "levels_completed": 1
+  },
+  {
+   "actions": 100,
+   "did_nothing": 30,
+   "repeat_visible": 9,
+   "repeat_visible_did_nothing": 8,
+   "repeat_visible_same_attempt": 9,
+   "repeat_visible_same_attempt_did_nothing": 8,
+   "at_board_acted_from_before_out_of_view": 22,
+   "repeat_older": 1,
+   "repeat_older_did_nothing": 0,
+   "repeat_older_same_attempt": 1,
+   "repeat_older_same_attempt_did_nothing": 0,
+   "game": "lf52",
+   "masked_cells": 53,
+   "levels_completed": 1
+  },
+  {
+   "actions": 100,
+   "did_nothing": 1,
+   "game": "lp85",
+   "masked_cells": 0,
+   "levels_completed": 7
+  },
+  {
+   "actions": 100,
+   "did_nothing": 1,
+   "game": "ls20",
+   "masked_cells": 0,
+   "levels_completed": 2
+  },
+  {
+   "actions": 100,
+   "did_nothing": 3,
+   "game": "m0r0",
+   "masked_cells": 2,
+   "levels_completed": 2
+  },
+  {
+   "actions": 100,
+   "did_nothing": 8,
+   "game": "r11l",
+   "masked_cells": 20,
+   "levels_completed": 5
+  },
+  {
+   "actions": 100,
+   "did_nothing": 2,
+   "game": "re86",
+   "masked_cells": 4,
+   "levels_completed": 2
+  },
+  {
+   "actions": 100,
+   "did_nothing": 20,
+   "game": "s5i5",
+   "masked_cells": 17,
+   "levels_completed": 2
+  },
+  {
+   "actions": 100,
+   "did_nothing": 1,
+   "game": "sb26",
+   "masked_cells": 0,
+   "levels_completed": 6
+  },
+  {
+   "actions": 100,
+   "did_nothing": 4,
+   "game": "sc25",
+   "masked_cells": 0,
+   "levels_completed": 3
+  },
+  {
+   "actions": 100,
+   "did_nothing": 3,
+   "game": "sk48",
+   "masked_cells": 0,
+   "levels_completed": 2
+  },
+  {
+   "actions": 99,
+   "did_nothing": 3,
+   "controller_resets_excluded": 1,
+   "game": "sp80",
+   "masked_cells": 1,
+   "levels_completed": 4
+  },
+  {
+   "actions": 98,
+   "did_nothing": 21,
+   "controller_resets_excluded": 2,
+   "repeat_older": 5,
+   "repeat_older_did_nothing": 0,
+   "repeat_older_same_attempt": 0,
+   "repeat_older_same_attempt_did_nothing": 0,
+   "game": "su15",
+   "masked_cells": 57,
+   "levels_completed": 2
+  },
+  {
+   "actions": 99,
+   "did_nothing": 29,
+   "repeat_visible": 1,
+   "repeat_visible_did_nothing": 1,
+   "repeat_visible_same_attempt": 1,
+   "repeat_visible_same_attempt_did_nothing": 1,
+   "at_board_acted_from_before_out_of_view": 27,
+   "repeat_older": 28,
+   "repeat_older_did_nothing": 9,
+   "repeat_older_same_attempt": 20,
+   "repeat_older_same_attempt_did_nothing": 6,
+   "controller_resets_excluded": 1,
+   "game": "tn36",
+   "masked_cells": 60,
+   "levels_completed": 0
+  },
+  {
+   "actions": 100,
+   "did_nothing": 0,
+   "game": "tr87",
+   "masked_cells": 0,
+   "levels_completed": 1
+  },
+  {
+   "actions": 99,
+   "did_nothing": 0,
+   "controller_resets_excluded": 1,
+   "repeat_visible": 3,
+   "repeat_visible_did_nothing": 0,
+   "repeat_visible_same_attempt": 0,
+   "repeat_visible_same_attempt_did_nothing": 0,
+   "game": "tu93",
+   "masked_cells": 0,
+   "levels_completed": 5
+  },
+  {
+   "actions": 100,
+   "did_nothing": 14,
+   "at_board_acted_from_before_out_of_view": 1,
+   "game": "vc33",
+   "masked_cells": 32,
+   "levels_completed": 4
+  },
+  {
+   "actions": 100,
+   "did_nothing": 1,
+   "game": "wa30",
+   "masked_cells": 0,
+   "levels_completed": 2
+  }
+ ]
+}

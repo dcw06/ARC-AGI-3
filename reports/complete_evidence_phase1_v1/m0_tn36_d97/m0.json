@@ -1,0 +1,3887 @@
+{
+ "game": "tn36",
+ "decision": 97,
+ "next_event": 98,
+ "action_actually_taken": {
+  "id": "ACTION6",
+  "x": 37,
+  "y": 55
+ },
+ "older_candidates": 95,
+ "recent_window": 2,
+ "reviewer_guess_needed_events": [
+  60
+ ],
+ "opus_response": "saved-input-only (no request made)",
+ "scorer": "BAAI/bge-reranker-v2-m3",
+ "scorer_revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+ "variants": {
+  "A starting spec (Q-exec-rle-v1 F-all + M-rle-v1 F-all, 768/2048)": {
+   "description_tokens": 11891,
+   "description_limit": 768,
+   "pair_limit": 2048,
+   "description_fits": false,
+   "pairs": 95,
+   "pairs_accepted": 0,
+   "pair_tokens_min_median_max": [
+    14850,
+    14900.0,
+    23960
+   ],
+   "rows": [
+    {
+     "event": 1,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 14881,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 2,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23871,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 3,
+     "action": "ACTION6 x=31 y=45",
+     "frames": 1,
+     "pair_tokens": 14891,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 4,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23919,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 5,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 14899,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 6,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23936,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 7,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23936,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 8,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 14904,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 9,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23945,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 10,
+     "action": "ACTION6 x=31 y=37",
+     "frames": 1,
+     "pair_tokens": 14907,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 11,
+     "action": "ACTION6 x=20 y=45",
+     "frames": 1,
+     "pair_tokens": 14908,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 12,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23954,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 13,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 14908,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 14,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 14906,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 15,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 14902,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 16,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 14898,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 17,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 14894,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 18,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 14890,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 19,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23859,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 20,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 14888,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 21,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 14892,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 22,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23889,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 23,
+     "action": "ACTION6 x=21 y=47",
+     "frames": 1,
+     "pair_tokens": 14891,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 24,
+     "action": "ACTION6 x=20 y=45",
+     "frames": 1,
+     "pair_tokens": 14891,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 25,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23896,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 26,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 14894,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 27,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 14898,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 28,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 14902,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 29,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 14905,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 30,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23959,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 31,
+     "action": "ACTION6 x=21 y=43",
+     "frames": 1,
+     "pair_tokens": 14906,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 32,
+     "action": "ACTION6 x=19 y=45",
+     "frames": 1,
+     "pair_tokens": 14904,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 33,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23938,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 34,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 14904,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 35,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 14902,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 36,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 14898,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 37,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 14894,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 38,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 14890,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 39,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23859,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 40,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 14889,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 41,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 14894,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 42,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 14898,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 43,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 14902,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 44,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 14906,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 45,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23960,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 46,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 14908,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 47,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23954,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 48,
+     "action": "ACTION6 x=20 y=45",
+     "frames": 1,
+     "pair_tokens": 14907,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 49,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 14906,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 50,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23944,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 51,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 14902,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 52,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 14898,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 53,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 14894,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 54,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 14890,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 55,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23866,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 56,
+     "action": "ACTION6 x=41 y=45",
+     "frames": 1,
+     "pair_tokens": 14882,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 57,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23832,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 58,
+     "action": "ACTION6 x=26 y=45",
+     "frames": 1,
+     "pair_tokens": 14870,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 59,
+     "action": "ACTION6 x=36 y=45",
+     "frames": 1,
+     "pair_tokens": 14856,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 60,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23734,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 61,
+     "action": "ACTION6 x=32 y=14",
+     "frames": 2,
+     "pair_tokens": 16291,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 62,
+     "action": "RESET",
+     "frames": 1,
+     "pair_tokens": 14857,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 63,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 14885,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 64,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 14892,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 65,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 14894,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 66,
+     "action": "ACTION6 x=31 y=45",
+     "frames": 1,
+     "pair_tokens": 14900,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 67,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23952,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 68,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 14904,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 69,
+     "action": "ACTION6 x=26 y=45",
+     "frames": 1,
+     "pair_tokens": 14896,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 70,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 14888,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 71,
+     "action": "ACTION6 x=36 y=45",
+     "frames": 1,
+     "pair_tokens": 14879,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 72,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 14873,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 73,
+     "action": "ACTION6 x=41 y=45",
+     "frames": 1,
+     "pair_tokens": 14867,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 74,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23768,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 75,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 14860,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 76,
+     "action": "ACTION6 x=31 y=45",
+     "frames": 1,
+     "pair_tokens": 14854,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 77,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23714,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 78,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 14850,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 79,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 14854,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 80,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 14858,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 81,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23739,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 82,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 14859,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 83,
+     "action": "ACTION6 x=26 y=45",
+     "frames": 1,
+     "pair_tokens": 14866,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 84,
+     "action": "ACTION6 x=31 y=45",
+     "frames": 1,
+     "pair_tokens": 14878,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 85,
+     "action": "ACTION6 x=36 y=45",
+     "frames": 1,
+     "pair_tokens": 14890,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 86,
+     "action": "ACTION6 x=41 y=45",
+     "frames": 1,
+     "pair_tokens": 14902,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 87,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23960,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 88,
+     "action": "ACTION6 x=21 y=43",
+     "frames": 1,
+     "pair_tokens": 14906,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 89,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 14902,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 90,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 14898,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 91,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 14893,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 92,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 14889,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 93,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 23866,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 94,
+     "action": "ACTION6 x=26 y=45",
+     "frames": 1,
+     "pair_tokens": 14882,
+     "accepted": false,
+     "score": null
+    },
+    {
+     "event": 95,
+     "action": "ACTION6 x=36 y=45",
+     "frames": 1,
+     "pair_tokens": 14870,
+     "accepted": false,
+     "score": null
+    }
+   ]
+  },
+  "B merged rows, last frame only (F-end), 4096/8192": {
+   "description_tokens": 1323,
+   "description_limit": 4096,
+   "pair_limit": 8192,
+   "description_fits": true,
+   "pairs": 95,
+   "pairs_accepted": 95,
+   "pair_tokens_min_median_max": [
+    2636,
+    2659.0,
+    2672
+   ],
+   "score_min_median_max": [
+    0.349,
+    0.519,
+    0.713
+   ],
+   "top10_events": [
+    31,
+    10,
+    49,
+    48,
+    14,
+    33,
+    13,
+    67,
+    46,
+    88
+   ],
+   "needed_event_ranks": {
+    "60": 91
+   },
+   "opus_tokens_per_record_min_median_max": [
+    2021,
+    2039.0,
+    2039
+   ],
+   "selection": {
+    "512": {
+     "selected_events": [],
+     "opus_tokens_used": 0,
+     "needed_events_included": [],
+     "records_too_big_for_limit": 95
+    },
+    "1024": {
+     "selected_events": [],
+     "opus_tokens_used": 0,
+     "needed_events_included": [],
+     "records_too_big_for_limit": 95
+    },
+    "2048": {
+     "selected_events": [
+      31
+     ],
+     "opus_tokens_used": 2039,
+     "needed_events_included": [],
+     "records_too_big_for_limit": 0
+    }
+   },
+   "rows": [
+    {
+     "event": 1,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 2652,
+     "accepted": true,
+     "score": 0.6499046087265015,
+     "rank": 16,
+     "opus_tokens": 2035
+    },
+    {
+     "event": 2,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2657,
+     "accepted": true,
+     "score": 0.5052965879440308,
+     "rank": 59,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 3,
+     "action": "ACTION6 x=31 y=45",
+     "frames": 1,
+     "pair_tokens": 2658,
+     "accepted": true,
+     "score": 0.4415339529514313,
+     "rank": 81,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 4,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2661,
+     "accepted": true,
+     "score": 0.4900905191898346,
+     "rank": 64,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 5,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 2662,
+     "accepted": true,
+     "score": 0.4810348153114319,
+     "rank": 69,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 6,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2666,
+     "accepted": true,
+     "score": 0.41953393816947937,
+     "rank": 85,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 7,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2666,
+     "accepted": true,
+     "score": 0.3939414620399475,
+     "rank": 93,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 8,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 2667,
+     "accepted": true,
+     "score": 0.4102540910243988,
+     "rank": 88,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 9,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2669,
+     "accepted": true,
+     "score": 0.5066108703613281,
+     "rank": 57,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 10,
+     "action": "ACTION6 x=31 y=37",
+     "frames": 1,
+     "pair_tokens": 2670,
+     "accepted": true,
+     "score": 0.705114483833313,
+     "rank": 2,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 11,
+     "action": "ACTION6 x=20 y=45",
+     "frames": 1,
+     "pair_tokens": 2671,
+     "accepted": true,
+     "score": 0.6782271265983582,
+     "rank": 11,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 12,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2672,
+     "accepted": true,
+     "score": 0.5217733383178711,
+     "rank": 45,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 13,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 2671,
+     "accepted": true,
+     "score": 0.6954654455184937,
+     "rank": 7,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 14,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 2669,
+     "accepted": true,
+     "score": 0.7014620304107666,
+     "rank": 5,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 15,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 2665,
+     "accepted": true,
+     "score": 0.49710461497306824,
+     "rank": 61,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 16,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 2661,
+     "accepted": true,
+     "score": 0.40616941452026367,
+     "rank": 90,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 17,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 2657,
+     "accepted": true,
+     "score": 0.5864402651786804,
+     "rank": 23,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 18,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 2653,
+     "accepted": true,
+     "score": 0.5157886147499084,
+     "rank": 50,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 19,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2651,
+     "accepted": true,
+     "score": 0.5784664154052734,
+     "rank": 28,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 20,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 2651,
+     "accepted": true,
+     "score": 0.5767338871955872,
+     "rank": 29,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 21,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 2655,
+     "accepted": true,
+     "score": 0.6195975542068481,
+     "rank": 18,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 22,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2655,
+     "accepted": true,
+     "score": 0.5271464586257935,
+     "rank": 40,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 23,
+     "action": "ACTION6 x=21 y=47",
+     "frames": 1,
+     "pair_tokens": 2654,
+     "accepted": true,
+     "score": 0.5185502767562866,
+     "rank": 48,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 24,
+     "action": "ACTION6 x=20 y=45",
+     "frames": 1,
+     "pair_tokens": 2654,
+     "accepted": true,
+     "score": 0.4115380048751831,
+     "rank": 87,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 25,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2656,
+     "accepted": true,
+     "score": 0.559066116809845,
+     "rank": 33,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 26,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 2657,
+     "accepted": true,
+     "score": 0.6132128238677979,
+     "rank": 20,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 27,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 2661,
+     "accepted": true,
+     "score": 0.5075909495353699,
+     "rank": 54,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 28,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 2665,
+     "accepted": true,
+     "score": 0.4203202426433563,
+     "rank": 84,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 29,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 2668,
+     "accepted": true,
+     "score": 0.47674760222435,
+     "rank": 73,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 30,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2671,
+     "accepted": true,
+     "score": 0.6754741668701172,
+     "rank": 12,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 31,
+     "action": "ACTION6 x=21 y=43",
+     "frames": 1,
+     "pair_tokens": 2669,
+     "accepted": true,
+     "score": 0.7132935523986816,
+     "rank": 1,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 32,
+     "action": "ACTION6 x=19 y=45",
+     "frames": 1,
+     "pair_tokens": 2667,
+     "accepted": true,
+     "score": 0.5306974649429321,
+     "rank": 39,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 33,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2668,
+     "accepted": true,
+     "score": 0.6992886662483215,
+     "rank": 6,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 34,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 2667,
+     "accepted": true,
+     "score": 0.5069296360015869,
+     "rank": 56,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 35,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 2665,
+     "accepted": true,
+     "score": 0.5208327770233154,
+     "rank": 47,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 36,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 2661,
+     "accepted": true,
+     "score": 0.42208603024482727,
+     "rank": 83,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 37,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 2657,
+     "accepted": true,
+     "score": 0.5217572450637817,
+     "rank": 46,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 38,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 2653,
+     "accepted": true,
+     "score": 0.4888302981853485,
+     "rank": 66,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 39,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2651,
+     "accepted": true,
+     "score": 0.5761961340904236,
+     "rank": 30,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 40,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 2652,
+     "accepted": true,
+     "score": 0.5568122267723083,
+     "rank": 34,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 41,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 2657,
+     "accepted": true,
+     "score": 0.6657043099403381,
+     "rank": 13,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 42,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 2661,
+     "accepted": true,
+     "score": 0.5795965194702148,
+     "rank": 26,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 43,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 2665,
+     "accepted": true,
+     "score": 0.4546334743499756,
+     "rank": 78,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 44,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 2669,
+     "accepted": true,
+     "score": 0.5262759327888489,
+     "rank": 42,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 45,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2672,
+     "accepted": true,
+     "score": 0.47972291707992554,
+     "rank": 70,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 46,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 2671,
+     "accepted": true,
+     "score": 0.688440203666687,
+     "rank": 9,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 47,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2672,
+     "accepted": true,
+     "score": 0.4935758411884308,
+     "rank": 63,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 48,
+     "action": "ACTION6 x=20 y=45",
+     "frames": 1,
+     "pair_tokens": 2670,
+     "accepted": true,
+     "score": 0.701879620552063,
+     "rank": 4,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 49,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 2669,
+     "accepted": true,
+     "score": 0.7028111219406128,
+     "rank": 3,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 50,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2668,
+     "accepted": true,
+     "score": 0.6574651002883911,
+     "rank": 15,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 51,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 2665,
+     "accepted": true,
+     "score": 0.5448320508003235,
+     "rank": 35,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 52,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 2661,
+     "accepted": true,
+     "score": 0.41761714220046997,
+     "rank": 86,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 53,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 2657,
+     "accepted": true,
+     "score": 0.6417645812034607,
+     "rank": 17,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 54,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 2653,
+     "accepted": true,
+     "score": 0.5075591802597046,
+     "rank": 55,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 55,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2652,
+     "accepted": true,
+     "score": 0.40245282649993896,
+     "rank": 92,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 56,
+     "action": "ACTION6 x=41 y=45",
+     "frames": 1,
+     "pair_tokens": 2649,
+     "accepted": true,
+     "score": 0.6188821196556091,
+     "rank": 19,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 57,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2648,
+     "accepted": true,
+     "score": 0.5347269773483276,
+     "rank": 38,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 58,
+     "action": "ACTION6 x=26 y=45",
+     "frames": 1,
+     "pair_tokens": 2645,
+     "accepted": true,
+     "score": 0.660786509513855,
+     "rank": 14,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 59,
+     "action": "ACTION6 x=36 y=45",
+     "frames": 1,
+     "pair_tokens": 2639,
+     "accepted": true,
+     "score": 0.4873334765434265,
+     "rank": 67,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 60,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2638,
+     "accepted": true,
+     "score": 0.40390223264694214,
+     "rank": 91,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 61,
+     "action": "ACTION6 x=32 y=14",
+     "frames": 2,
+     "pair_tokens": 2636,
+     "accepted": true,
+     "score": 0.4770781993865967,
+     "rank": 72,
+     "opus_tokens": 2033
+    },
+    {
+     "event": 62,
+     "action": "RESET",
+     "frames": 1,
+     "pair_tokens": 2636,
+     "accepted": true,
+     "score": 0.49501746892929077,
+     "rank": 62,
+     "opus_tokens": 2021
+    },
+    {
+     "event": 63,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 2656,
+     "accepted": true,
+     "score": 0.5220332145690918,
+     "rank": 44,
+     "opus_tokens": 2035
+    },
+    {
+     "event": 64,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 2663,
+     "accepted": true,
+     "score": 0.5416916608810425,
+     "rank": 36,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 65,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 2665,
+     "accepted": true,
+     "score": 0.4491904377937317,
+     "rank": 79,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 66,
+     "action": "ACTION6 x=31 y=45",
+     "frames": 1,
+     "pair_tokens": 2667,
+     "accepted": true,
+     "score": 0.4485066831111908,
+     "rank": 80,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 67,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2670,
+     "accepted": true,
+     "score": 0.693339467048645,
+     "rank": 8,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 68,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 2667,
+     "accepted": true,
+     "score": 0.4698604345321655,
+     "rank": 75,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 69,
+     "action": "ACTION6 x=26 y=45",
+     "frames": 1,
+     "pair_tokens": 2663,
+     "accepted": true,
+     "score": 0.47639498114585876,
+     "rank": 74,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 70,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 2659,
+     "accepted": true,
+     "score": 0.5123801827430725,
+     "rank": 52,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 71,
+     "action": "ACTION6 x=36 y=45",
+     "frames": 1,
+     "pair_tokens": 2654,
+     "accepted": true,
+     "score": 0.47887325286865234,
+     "rank": 71,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 72,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 2652,
+     "accepted": true,
+     "score": 0.34929609298706055,
+     "rank": 95,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 73,
+     "action": "ACTION6 x=41 y=45",
+     "frames": 1,
+     "pair_tokens": 2650,
+     "accepted": true,
+     "score": 0.5173444747924805,
+     "rank": 49,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 74,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2648,
+     "accepted": true,
+     "score": 0.48120182752609253,
+     "rank": 68,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 75,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 2647,
+     "accepted": true,
+     "score": 0.5791189670562744,
+     "rank": 27,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 76,
+     "action": "ACTION6 x=31 y=45",
+     "frames": 1,
+     "pair_tokens": 2645,
+     "accepted": true,
+     "score": 0.5672874450683594,
+     "rank": 32,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 77,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2644,
+     "accepted": true,
+     "score": 0.40758249163627625,
+     "rank": 89,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 78,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 2645,
+     "accepted": true,
+     "score": 0.506600558757782,
+     "rank": 58,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 79,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 2649,
+     "accepted": true,
+     "score": 0.5108287334442139,
+     "rank": 53,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 80,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 2653,
+     "accepted": true,
+     "score": 0.5387997627258301,
+     "rank": 37,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 81,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2655,
+     "accepted": true,
+     "score": 0.514875054359436,
+     "rank": 51,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 82,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 2654,
+     "accepted": true,
+     "score": 0.5268908143043518,
+     "rank": 41,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 83,
+     "action": "ACTION6 x=26 y=45",
+     "frames": 1,
+     "pair_tokens": 2657,
+     "accepted": true,
+     "score": 0.58099365234375,
+     "rank": 25,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 84,
+     "action": "ACTION6 x=31 y=45",
+     "frames": 1,
+     "pair_tokens": 2661,
+     "accepted": true,
+     "score": 0.5860836505889893,
+     "rank": 24,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 85,
+     "action": "ACTION6 x=36 y=45",
+     "frames": 1,
+     "pair_tokens": 2665,
+     "accepted": true,
+     "score": 0.436418354511261,
+     "rank": 82,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 86,
+     "action": "ACTION6 x=41 y=45",
+     "frames": 1,
+     "pair_tokens": 2669,
+     "accepted": true,
+     "score": 0.523240327835083,
+     "rank": 43,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 87,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2672,
+     "accepted": true,
+     "score": 0.45874452590942383,
+     "rank": 76,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 88,
+     "action": "ACTION6 x=21 y=43",
+     "frames": 1,
+     "pair_tokens": 2669,
+     "accepted": true,
+     "score": 0.6839733719825745,
+     "rank": 10,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 89,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 2665,
+     "accepted": true,
+     "score": 0.48911792039871216,
+     "rank": 65,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 90,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 2661,
+     "accepted": true,
+     "score": 0.3729400336742401,
+     "rank": 94,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 91,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 2656,
+     "accepted": true,
+     "score": 0.5723598599433899,
+     "rank": 31,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 92,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 2652,
+     "accepted": true,
+     "score": 0.5012580156326294,
+     "rank": 60,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 93,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 2652,
+     "accepted": true,
+     "score": 0.4553343653678894,
+     "rank": 77,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 94,
+     "action": "ACTION6 x=26 y=45",
+     "frames": 1,
+     "pair_tokens": 2649,
+     "accepted": true,
+     "score": 0.6001454591751099,
+     "rank": 21,
+     "opus_tokens": 2039
+    },
+    {
+     "event": 95,
+     "action": "ACTION6 x=36 y=45",
+     "frames": 1,
+     "pair_tokens": 2645,
+     "accepted": true,
+     "score": 0.5926064848899841,
+     "rank": 22,
+     "opus_tokens": 2039
+    }
+   ]
+  },
+  "C merged-row description + M-diff-v1 F-all, 4096/8192": {
+   "description_tokens": 1323,
+   "description_limit": 4096,
+   "pair_limit": 8192,
+   "description_fits": true,
+   "pairs": 95,
+   "pairs_accepted": 95,
+   "pair_tokens_min_median_max": [
+    1406,
+    1427.0,
+    5424
+   ],
+   "score_min_median_max": [
+    -3.132,
+    -2.678,
+    -1.501
+   ],
+   "top10_events": [
+    25,
+    60,
+    77,
+    81,
+    55,
+    93,
+    39,
+    19,
+    6,
+    7
+   ],
+   "needed_event_ranks": {
+    "60": 2
+   },
+   "opus_tokens_per_record_min_median_max": [
+    118,
+    142.0,
+    4958
+   ],
+   "selection": {
+    "512": {
+     "selected_events": [
+      61,
+      23,
+      10,
+      1
+     ],
+     "opus_tokens_used": 506,
+     "needed_events_included": [],
+     "records_too_big_for_limit": 25
+    },
+    "1024": {
+     "selected_events": [
+      61,
+      62
+     ],
+     "opus_tokens_used": 908,
+     "needed_events_included": [],
+     "records_too_big_for_limit": 24
+    },
+    "2048": {
+     "selected_events": [
+      61,
+      62,
+      23,
+      10,
+      1,
+      53,
+      54,
+      11,
+      36,
+      59
+     ],
+     "opus_tokens_used": 1996,
+     "needed_events_included": [],
+     "records_too_big_for_limit": 24
+    }
+   },
+   "rows": [
+    {
+     "event": 1,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.523435592651367,
+     "rank": 19,
+     "opus_tokens": 142
+    },
+    {
+     "event": 2,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 4852,
+     "accepted": true,
+     "score": -2.8574187755584717,
+     "rank": 89,
+     "opus_tokens": 4286
+    },
+    {
+     "event": 3,
+     "action": "ACTION6 x=31 y=45",
+     "frames": 1,
+     "pair_tokens": 1427,
+     "accepted": true,
+     "score": -2.6434123516082764,
+     "rank": 35,
+     "opus_tokens": 142
+    },
+    {
+     "event": 4,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 4859,
+     "accepted": true,
+     "score": -2.8495640754699707,
+     "rank": 88,
+     "opus_tokens": 4286
+    },
+    {
+     "event": 5,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 1427,
+     "accepted": true,
+     "score": -2.7645041942596436,
+     "rank": 79,
+     "opus_tokens": 142
+    },
+    {
+     "event": 6,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 4672,
+     "accepted": true,
+     "score": -2.0307505130767822,
+     "rank": 9,
+     "opus_tokens": 4062
+    },
+    {
+     "event": 7,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 4672,
+     "accepted": true,
+     "score": -2.073983669281006,
+     "rank": 10,
+     "opus_tokens": 4062
+    },
+    {
+     "event": 8,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.652019500732422,
+     "rank": 37,
+     "opus_tokens": 142
+    },
+    {
+     "event": 9,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 4296,
+     "accepted": true,
+     "score": -3.056640148162842,
+     "rank": 92,
+     "opus_tokens": 3614
+    },
+    {
+     "event": 10,
+     "action": "ACTION6 x=31 y=37",
+     "frames": 1,
+     "pair_tokens": 1407,
+     "accepted": true,
+     "score": -2.4392874240875244,
+     "rank": 17,
+     "opus_tokens": 118
+    },
+    {
+     "event": 11,
+     "action": "ACTION6 x=20 y=45",
+     "frames": 1,
+     "pair_tokens": 1423,
+     "accepted": true,
+     "score": -2.6066102981567383,
+     "rank": 25,
+     "opus_tokens": 142
+    },
+    {
+     "event": 12,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 4673,
+     "accepted": true,
+     "score": -2.4997658729553223,
+     "rank": 18,
+     "opus_tokens": 4062
+    },
+    {
+     "event": 13,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.657181739807129,
+     "rank": 38,
+     "opus_tokens": 142
+    },
+    {
+     "event": 14,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.681786060333252,
+     "rank": 50,
+     "opus_tokens": 142
+    },
+    {
+     "event": 15,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.7631428241729736,
+     "rank": 77,
+     "opus_tokens": 142
+    },
+    {
+     "event": 16,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.6631956100463867,
+     "rank": 41,
+     "opus_tokens": 142
+    },
+    {
+     "event": 17,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 1426,
+     "accepted": true,
+     "score": -2.692045211791992,
+     "rank": 54,
+     "opus_tokens": 142
+    },
+    {
+     "event": 18,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.678008794784546,
+     "rank": 48,
+     "opus_tokens": 142
+    },
+    {
+     "event": 19,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 5236,
+     "accepted": true,
+     "score": -2.003528356552124,
+     "rank": 8,
+     "opus_tokens": 4734
+    },
+    {
+     "event": 20,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 1427,
+     "accepted": true,
+     "score": -2.737870216369629,
+     "rank": 73,
+     "opus_tokens": 142
+    },
+    {
+     "event": 21,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 1424,
+     "accepted": true,
+     "score": -2.6273412704467773,
+     "rank": 32,
+     "opus_tokens": 142
+    },
+    {
+     "event": 22,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 5424,
+     "accepted": true,
+     "score": -2.1130623817443848,
+     "rank": 11,
+     "opus_tokens": 4958
+    },
+    {
+     "event": 23,
+     "action": "ACTION6 x=21 y=47",
+     "frames": 1,
+     "pair_tokens": 1406,
+     "accepted": true,
+     "score": -2.4379079341888428,
+     "rank": 16,
+     "opus_tokens": 118
+    },
+    {
+     "event": 24,
+     "action": "ACTION6 x=20 y=45",
+     "frames": 1,
+     "pair_tokens": 1427,
+     "accepted": true,
+     "score": -2.723614454269409,
+     "rank": 67,
+     "opus_tokens": 142
+    },
+    {
+     "event": 25,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 5236,
+     "accepted": true,
+     "score": -1.5010849237442017,
+     "rank": 1,
+     "opus_tokens": 4734
+    },
+    {
+     "event": 26,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.7215147018432617,
+     "rank": 64,
+     "opus_tokens": 142
+    },
+    {
+     "event": 27,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.670109510421753,
+     "rank": 44,
+     "opus_tokens": 142
+    },
+    {
+     "event": 28,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.6086318492889404,
+     "rank": 27,
+     "opus_tokens": 142
+    },
+    {
+     "event": 29,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.676734685897827,
+     "rank": 46,
+     "opus_tokens": 142
+    },
+    {
+     "event": 30,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 4296,
+     "accepted": true,
+     "score": -3.0605263710021973,
+     "rank": 93,
+     "opus_tokens": 3614
+    },
+    {
+     "event": 31,
+     "action": "ACTION6 x=21 y=43",
+     "frames": 1,
+     "pair_tokens": 1424,
+     "accepted": true,
+     "score": -2.63297176361084,
+     "rank": 33,
+     "opus_tokens": 142
+    },
+    {
+     "event": 32,
+     "action": "ACTION6 x=19 y=45",
+     "frames": 1,
+     "pair_tokens": 1426,
+     "accepted": true,
+     "score": -2.6911773681640625,
+     "rank": 53,
+     "opus_tokens": 142
+    },
+    {
+     "event": 33,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 4665,
+     "accepted": true,
+     "score": -2.275622844696045,
+     "rank": 14,
+     "opus_tokens": 4062
+    },
+    {
+     "event": 34,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.623453378677368,
+     "rank": 30,
+     "opus_tokens": 142
+    },
+    {
+     "event": 35,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.717068672180176,
+     "rank": 63,
+     "opus_tokens": 142
+    },
+    {
+     "event": 36,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.60693097114563,
+     "rank": 26,
+     "opus_tokens": 142
+    },
+    {
+     "event": 37,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 1426,
+     "accepted": true,
+     "score": -2.594614267349243,
+     "rank": 23,
+     "opus_tokens": 142
+    },
+    {
+     "event": 38,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.658449172973633,
+     "rank": 39,
+     "opus_tokens": 142
+    },
+    {
+     "event": 39,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 5236,
+     "accepted": true,
+     "score": -2.0029075145721436,
+     "rank": 7,
+     "opus_tokens": 4734
+    },
+    {
+     "event": 40,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.734837055206299,
+     "rank": 72,
+     "opus_tokens": 142
+    },
+    {
+     "event": 41,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 1427,
+     "accepted": true,
+     "score": -2.7048957347869873,
+     "rank": 60,
+     "opus_tokens": 142
+    },
+    {
+     "event": 42,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 1429,
+     "accepted": true,
+     "score": -2.6647214889526367,
+     "rank": 43,
+     "opus_tokens": 142
+    },
+    {
+     "event": 43,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 1429,
+     "accepted": true,
+     "score": -2.612234592437744,
+     "rank": 28,
+     "opus_tokens": 142
+    },
+    {
+     "event": 44,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 1429,
+     "accepted": true,
+     "score": -2.6713876724243164,
+     "rank": 45,
+     "opus_tokens": 142
+    },
+    {
+     "event": 45,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 4297,
+     "accepted": true,
+     "score": -2.880782127380371,
+     "rank": 91,
+     "opus_tokens": 3614
+    },
+    {
+     "event": 46,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 1426,
+     "accepted": true,
+     "score": -2.704357147216797,
+     "rank": 59,
+     "opus_tokens": 142
+    },
+    {
+     "event": 47,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 4673,
+     "accepted": true,
+     "score": -2.5362191200256348,
+     "rank": 20,
+     "opus_tokens": 4062
+    },
+    {
+     "event": 48,
+     "action": "ACTION6 x=20 y=45",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.679812431335449,
+     "rank": 49,
+     "opus_tokens": 142
+    },
+    {
+     "event": 49,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 1426,
+     "accepted": true,
+     "score": -2.772481918334961,
+     "rank": 81,
+     "opus_tokens": 142
+    },
+    {
+     "event": 50,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 4673,
+     "accepted": true,
+     "score": -2.537609100341797,
+     "rank": 21,
+     "opus_tokens": 4062
+    },
+    {
+     "event": 51,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 1424,
+     "accepted": true,
+     "score": -2.624366283416748,
+     "rank": 31,
+     "opus_tokens": 142
+    },
+    {
+     "event": 52,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 1426,
+     "accepted": true,
+     "score": -2.7312350273132324,
+     "rank": 70,
+     "opus_tokens": 142
+    },
+    {
+     "event": 53,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 1424,
+     "accepted": true,
+     "score": -2.5682132244110107,
+     "rank": 22,
+     "opus_tokens": 142
+    },
+    {
+     "event": 54,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 1424,
+     "accepted": true,
+     "score": -2.5960030555725098,
+     "rank": 24,
+     "opus_tokens": 142
+    },
+    {
+     "event": 55,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 5235,
+     "accepted": true,
+     "score": -1.851501226425171,
+     "rank": 5,
+     "opus_tokens": 4734
+    },
+    {
+     "event": 56,
+     "action": "ACTION6 x=41 y=45",
+     "frames": 1,
+     "pair_tokens": 1424,
+     "accepted": true,
+     "score": -2.6512491703033447,
+     "rank": 36,
+     "opus_tokens": 142
+    },
+    {
+     "event": 57,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 5415,
+     "accepted": true,
+     "score": -2.2496585845947266,
+     "rank": 13,
+     "opus_tokens": 4958
+    },
+    {
+     "event": 58,
+     "action": "ACTION6 x=26 y=45",
+     "frames": 1,
+     "pair_tokens": 1424,
+     "accepted": true,
+     "score": -2.6974921226501465,
+     "rank": 57,
+     "opus_tokens": 142
+    },
+    {
+     "event": 59,
+     "action": "ACTION6 x=36 y=45",
+     "frames": 1,
+     "pair_tokens": 1424,
+     "accepted": true,
+     "score": -2.6197712421417236,
+     "rank": 29,
+     "opus_tokens": 142
+    },
+    {
+     "event": 60,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 5379,
+     "accepted": true,
+     "score": -1.5247925519943237,
+     "rank": 2,
+     "opus_tokens": 4958
+    },
+    {
+     "event": 61,
+     "action": "ACTION6 x=32 y=14",
+     "frames": 2,
+     "pair_tokens": 1409,
+     "accepted": true,
+     "score": -2.2310171127319336,
+     "rank": 12,
+     "opus_tokens": 128
+    },
+    {
+     "event": 62,
+     "action": "RESET",
+     "frames": 1,
+     "pair_tokens": 1925,
+     "accepted": true,
+     "score": -2.4326012134552,
+     "rank": 15,
+     "opus_tokens": 780
+    },
+    {
+     "event": 63,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 1427,
+     "accepted": true,
+     "score": -2.7716493606567383,
+     "rank": 80,
+     "opus_tokens": 142
+    },
+    {
+     "event": 64,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 1429,
+     "accepted": true,
+     "score": -2.7028446197509766,
+     "rank": 58,
+     "opus_tokens": 142
+    },
+    {
+     "event": 65,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.705500602722168,
+     "rank": 61,
+     "opus_tokens": 142
+    },
+    {
+     "event": 66,
+     "action": "ACTION6 x=31 y=45",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.7217366695404053,
+     "rank": 65,
+     "opus_tokens": 142
+    },
+    {
+     "event": 67,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 4296,
+     "accepted": true,
+     "score": -3.1316795349121094,
+     "rank": 95,
+     "opus_tokens": 3614
+    },
+    {
+     "event": 68,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.8395776748657227,
+     "rank": 86,
+     "opus_tokens": 142
+    },
+    {
+     "event": 69,
+     "action": "ACTION6 x=26 y=45",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.8316361904144287,
+     "rank": 85,
+     "opus_tokens": 142
+    },
+    {
+     "event": 70,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.6866722106933594,
+     "rank": 51,
+     "opus_tokens": 142
+    },
+    {
+     "event": 71,
+     "action": "ACTION6 x=36 y=45",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.663872718811035,
+     "rank": 42,
+     "opus_tokens": 142
+    },
+    {
+     "event": 72,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.8665127754211426,
+     "rank": 90,
+     "opus_tokens": 142
+    },
+    {
+     "event": 73,
+     "action": "ACTION6 x=41 y=45",
+     "frames": 1,
+     "pair_tokens": 1424,
+     "accepted": true,
+     "score": -2.6907238960266113,
+     "rank": 52,
+     "opus_tokens": 142
+    },
+    {
+     "event": 74,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 5013,
+     "accepted": true,
+     "score": -2.676792621612549,
+     "rank": 47,
+     "opus_tokens": 4510
+    },
+    {
+     "event": 75,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.7524170875549316,
+     "rank": 74,
+     "opus_tokens": 142
+    },
+    {
+     "event": 76,
+     "action": "ACTION6 x=31 y=45",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.6953186988830566,
+     "rank": 56,
+     "opus_tokens": 142
+    },
+    {
+     "event": 77,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 5380,
+     "accepted": true,
+     "score": -1.6187176704406738,
+     "rank": 3,
+     "opus_tokens": 4958
+    },
+    {
+     "event": 78,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.7567148208618164,
+     "rank": 75,
+     "opus_tokens": 142
+    },
+    {
+     "event": 79,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 1429,
+     "accepted": true,
+     "score": -2.7100753784179688,
+     "rank": 62,
+     "opus_tokens": 142
+    },
+    {
+     "event": 80,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.7761943340301514,
+     "rank": 83,
+     "opus_tokens": 142
+    },
+    {
+     "event": 81,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 5236,
+     "accepted": true,
+     "score": -1.8255314826965332,
+     "rank": 4,
+     "opus_tokens": 4734
+    },
+    {
+     "event": 82,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.7273683547973633,
+     "rank": 68,
+     "opus_tokens": 142
+    },
+    {
+     "event": 83,
+     "action": "ACTION6 x=26 y=45",
+     "frames": 1,
+     "pair_tokens": 1427,
+     "accepted": true,
+     "score": -2.8201661109924316,
+     "rank": 84,
+     "opus_tokens": 142
+    },
+    {
+     "event": 84,
+     "action": "ACTION6 x=31 y=45",
+     "frames": 1,
+     "pair_tokens": 1429,
+     "accepted": true,
+     "score": -2.722198486328125,
+     "rank": 66,
+     "opus_tokens": 142
+    },
+    {
+     "event": 85,
+     "action": "ACTION6 x=36 y=45",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.659062385559082,
+     "rank": 40,
+     "opus_tokens": 142
+    },
+    {
+     "event": 86,
+     "action": "ACTION6 x=41 y=45",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.7293918132781982,
+     "rank": 69,
+     "opus_tokens": 142
+    },
+    {
+     "event": 87,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 4296,
+     "accepted": true,
+     "score": -3.131577491760254,
+     "rank": 94,
+     "opus_tokens": 3614
+    },
+    {
+     "event": 88,
+     "action": "ACTION6 x=21 y=43",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.6937060356140137,
+     "rank": 55,
+     "opus_tokens": 142
+    },
+    {
+     "event": 89,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.7745962142944336,
+     "rank": 82,
+     "opus_tokens": 142
+    },
+    {
+     "event": 90,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.763558864593506,
+     "rank": 78,
+     "opus_tokens": 142
+    },
+    {
+     "event": 91,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.6388936042785645,
+     "rank": 34,
+     "opus_tokens": 142
+    },
+    {
+     "event": 92,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.7586216926574707,
+     "rank": 76,
+     "opus_tokens": 142
+    },
+    {
+     "event": 93,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 5235,
+     "accepted": true,
+     "score": -1.8944069147109985,
+     "rank": 6,
+     "opus_tokens": 4734
+    },
+    {
+     "event": 94,
+     "action": "ACTION6 x=26 y=45",
+     "frames": 1,
+     "pair_tokens": 1426,
+     "accepted": true,
+     "score": -2.8444619178771973,
+     "rank": 87,
+     "opus_tokens": 142
+    },
+    {
+     "event": 95,
+     "action": "ACTION6 x=36 y=45",
+     "frames": 1,
+     "pair_tokens": 1426,
+     "accepted": true,
+     "score": -2.731816291809082,
+     "rank": 71,
+     "opus_tokens": 142
+    }
+   ]
+  },
+  "D merged-row description + M-diff-v1 F-end, 4096/8192": {
+   "description_tokens": 1323,
+   "description_limit": 4096,
+   "pair_limit": 8192,
+   "description_fits": true,
+   "pairs": 95,
+   "pairs_accepted": 95,
+   "pair_tokens_min_median_max": [
+    1405,
+    1425.0,
+    1925
+   ],
+   "score_min_median_max": [
+    -2.871,
+    -2.67,
+    -2.341
+   ],
+   "top10_events": [
+    61,
+    62,
+    93,
+    23,
+    10,
+    4,
+    39,
+    6,
+    19,
+    55
+   ],
+   "needed_event_ranks": {
+    "60": 21
+   },
+   "opus_tokens_per_record_min_median_max": [
+    116,
+    142.0,
+    780
+   ],
+   "selection": {
+    "512": {
+     "selected_events": [
+      61,
+      93,
+      23,
+      10
+     ],
+     "opus_tokens_used": 470,
+     "needed_events_included": [],
+     "records_too_big_for_limit": 1
+    },
+    "1024": {
+     "selected_events": [
+      61,
+      62,
+      93
+     ],
+     "opus_tokens_used": 1014,
+     "needed_events_included": [],
+     "records_too_big_for_limit": 0
+    },
+    "2048": {
+     "selected_events": [
+      61,
+      62,
+      93,
+      23,
+      10,
+      1,
+      4,
+      39,
+      6,
+      19,
+      55
+     ],
+     "opus_tokens_used": 1982,
+     "needed_events_included": [],
+     "records_too_big_for_limit": 0
+    }
+   },
+   "rows": [
+    {
+     "event": 1,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.525178909301758,
+     "rank": 17,
+     "opus_tokens": 142
+    },
+    {
+     "event": 2,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1408,
+     "accepted": true,
+     "score": -2.5530738830566406,
+     "rank": 23,
+     "opus_tokens": 118
+    },
+    {
+     "event": 3,
+     "action": "ACTION6 x=31 y=45",
+     "frames": 1,
+     "pair_tokens": 1427,
+     "accepted": true,
+     "score": -2.6661648750305176,
+     "rank": 45,
+     "opus_tokens": 142
+    },
+    {
+     "event": 4,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1407,
+     "accepted": true,
+     "score": -2.4793179035186768,
+     "rank": 6,
+     "opus_tokens": 118
+    },
+    {
+     "event": 5,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 1427,
+     "accepted": true,
+     "score": -2.7836577892303467,
+     "rank": 89,
+     "opus_tokens": 142
+    },
+    {
+     "event": 6,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1408,
+     "accepted": true,
+     "score": -2.4881536960601807,
+     "rank": 8,
+     "opus_tokens": 118
+    },
+    {
+     "event": 7,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1408,
+     "accepted": true,
+     "score": -2.5155389308929443,
+     "rank": 15,
+     "opus_tokens": 118
+    },
+    {
+     "event": 8,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.6558151245117188,
+     "rank": 43,
+     "opus_tokens": 142
+    },
+    {
+     "event": 9,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1408,
+     "accepted": true,
+     "score": -2.534245491027832,
+     "rank": 19,
+     "opus_tokens": 118
+    },
+    {
+     "event": 10,
+     "action": "ACTION6 x=31 y=37",
+     "frames": 1,
+     "pair_tokens": 1407,
+     "accepted": true,
+     "score": -2.4603891372680664,
+     "rank": 5,
+     "opus_tokens": 118
+    },
+    {
+     "event": 11,
+     "action": "ACTION6 x=20 y=45",
+     "frames": 1,
+     "pair_tokens": 1423,
+     "accepted": true,
+     "score": -2.6119914054870605,
+     "rank": 31,
+     "opus_tokens": 142
+    },
+    {
+     "event": 12,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1409,
+     "accepted": true,
+     "score": -2.6009714603424072,
+     "rank": 29,
+     "opus_tokens": 118
+    },
+    {
+     "event": 13,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.6700520515441895,
+     "rank": 48,
+     "opus_tokens": 142
+    },
+    {
+     "event": 14,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.6807444095611572,
+     "rank": 52,
+     "opus_tokens": 142
+    },
+    {
+     "event": 15,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.775362491607666,
+     "rank": 86,
+     "opus_tokens": 142
+    },
+    {
+     "event": 16,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.667482614517212,
+     "rank": 46,
+     "opus_tokens": 142
+    },
+    {
+     "event": 17,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 1426,
+     "accepted": true,
+     "score": -2.6994709968566895,
+     "rank": 62,
+     "opus_tokens": 142
+    },
+    {
+     "event": 18,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.686568260192871,
+     "rank": 57,
+     "opus_tokens": 142
+    },
+    {
+     "event": 19,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1408,
+     "accepted": true,
+     "score": -2.4896798133850098,
+     "rank": 9,
+     "opus_tokens": 118
+    },
+    {
+     "event": 20,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 1427,
+     "accepted": true,
+     "score": -2.760190010070801,
+     "rank": 80,
+     "opus_tokens": 142
+    },
+    {
+     "event": 21,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 1424,
+     "accepted": true,
+     "score": -2.628089427947998,
+     "rank": 37,
+     "opus_tokens": 142
+    },
+    {
+     "event": 22,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1408,
+     "accepted": true,
+     "score": -2.568788766860962,
+     "rank": 25,
+     "opus_tokens": 118
+    },
+    {
+     "event": 23,
+     "action": "ACTION6 x=21 y=47",
+     "frames": 1,
+     "pair_tokens": 1406,
+     "accepted": true,
+     "score": -2.460324764251709,
+     "rank": 4,
+     "opus_tokens": 118
+    },
+    {
+     "event": 24,
+     "action": "ACTION6 x=20 y=45",
+     "frames": 1,
+     "pair_tokens": 1427,
+     "accepted": true,
+     "score": -2.7204318046569824,
+     "rank": 69,
+     "opus_tokens": 142
+    },
+    {
+     "event": 25,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1408,
+     "accepted": true,
+     "score": -2.5191550254821777,
+     "rank": 16,
+     "opus_tokens": 118
+    },
+    {
+     "event": 26,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.7218072414398193,
+     "rank": 70,
+     "opus_tokens": 142
+    },
+    {
+     "event": 27,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.682910442352295,
+     "rank": 54,
+     "opus_tokens": 142
+    },
+    {
+     "event": 28,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.6115431785583496,
+     "rank": 30,
+     "opus_tokens": 142
+    },
+    {
+     "event": 29,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.681790590286255,
+     "rank": 53,
+     "opus_tokens": 142
+    },
+    {
+     "event": 30,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1408,
+     "accepted": true,
+     "score": -2.5096797943115234,
+     "rank": 13,
+     "opus_tokens": 118
+    },
+    {
+     "event": 31,
+     "action": "ACTION6 x=21 y=43",
+     "frames": 1,
+     "pair_tokens": 1424,
+     "accepted": true,
+     "score": -2.644009590148926,
+     "rank": 41,
+     "opus_tokens": 142
+    },
+    {
+     "event": 32,
+     "action": "ACTION6 x=19 y=45",
+     "frames": 1,
+     "pair_tokens": 1426,
+     "accepted": true,
+     "score": -2.6950385570526123,
+     "rank": 61,
+     "opus_tokens": 142
+    },
+    {
+     "event": 33,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1409,
+     "accepted": true,
+     "score": -2.5095877647399902,
+     "rank": 12,
+     "opus_tokens": 118
+    },
+    {
+     "event": 34,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.6292178630828857,
+     "rank": 38,
+     "opus_tokens": 142
+    },
+    {
+     "event": 35,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.7233834266662598,
+     "rank": 73,
+     "opus_tokens": 142
+    },
+    {
+     "event": 36,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.6170554161071777,
+     "rank": 34,
+     "opus_tokens": 142
+    },
+    {
+     "event": 37,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 1426,
+     "accepted": true,
+     "score": -2.627201557159424,
+     "rank": 36,
+     "opus_tokens": 142
+    },
+    {
+     "event": 38,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.6702728271484375,
+     "rank": 49,
+     "opus_tokens": 142
+    },
+    {
+     "event": 39,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1408,
+     "accepted": true,
+     "score": -2.4819343090057373,
+     "rank": 7,
+     "opus_tokens": 118
+    },
+    {
+     "event": 40,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.732046127319336,
+     "rank": 75,
+     "opus_tokens": 142
+    },
+    {
+     "event": 41,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 1427,
+     "accepted": true,
+     "score": -2.7232489585876465,
+     "rank": 72,
+     "opus_tokens": 142
+    },
+    {
+     "event": 42,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 1429,
+     "accepted": true,
+     "score": -2.667581081390381,
+     "rank": 47,
+     "opus_tokens": 142
+    },
+    {
+     "event": 43,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 1429,
+     "accepted": true,
+     "score": -2.6213438510894775,
+     "rank": 35,
+     "opus_tokens": 142
+    },
+    {
+     "event": 44,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 1429,
+     "accepted": true,
+     "score": -2.6784234046936035,
+     "rank": 51,
+     "opus_tokens": 142
+    },
+    {
+     "event": 45,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1409,
+     "accepted": true,
+     "score": -2.5566909313201904,
+     "rank": 24,
+     "opus_tokens": 118
+    },
+    {
+     "event": 46,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 1426,
+     "accepted": true,
+     "score": -2.716740369796753,
+     "rank": 66,
+     "opus_tokens": 142
+    },
+    {
+     "event": 47,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1409,
+     "accepted": true,
+     "score": -2.549715995788574,
+     "rank": 22,
+     "opus_tokens": 118
+    },
+    {
+     "event": 48,
+     "action": "ACTION6 x=20 y=45",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.6933133602142334,
+     "rank": 59,
+     "opus_tokens": 142
+    },
+    {
+     "event": 49,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 1426,
+     "accepted": true,
+     "score": -2.7806506156921387,
+     "rank": 88,
+     "opus_tokens": 142
+    },
+    {
+     "event": 50,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1409,
+     "accepted": true,
+     "score": -2.585453987121582,
+     "rank": 28,
+     "opus_tokens": 118
+    },
+    {
+     "event": 51,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 1424,
+     "accepted": true,
+     "score": -2.6402201652526855,
+     "rank": 40,
+     "opus_tokens": 142
+    },
+    {
+     "event": 52,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 1426,
+     "accepted": true,
+     "score": -2.7392008304595947,
+     "rank": 79,
+     "opus_tokens": 142
+    },
+    {
+     "event": 53,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 1424,
+     "accepted": true,
+     "score": -2.5834529399871826,
+     "rank": 27,
+     "opus_tokens": 142
+    },
+    {
+     "event": 54,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 1424,
+     "accepted": true,
+     "score": -2.612880229949951,
+     "rank": 32,
+     "opus_tokens": 142
+    },
+    {
+     "event": 55,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1407,
+     "accepted": true,
+     "score": -2.5037131309509277,
+     "rank": 10,
+     "opus_tokens": 118
+    },
+    {
+     "event": 56,
+     "action": "ACTION6 x=41 y=45",
+     "frames": 1,
+     "pair_tokens": 1424,
+     "accepted": true,
+     "score": -2.6564440727233887,
+     "rank": 44,
+     "opus_tokens": 142
+    },
+    {
+     "event": 57,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1407,
+     "accepted": true,
+     "score": -2.536428689956665,
+     "rank": 20,
+     "opus_tokens": 118
+    },
+    {
+     "event": 58,
+     "action": "ACTION6 x=26 y=45",
+     "frames": 1,
+     "pair_tokens": 1424,
+     "accepted": true,
+     "score": -2.705599546432495,
+     "rank": 64,
+     "opus_tokens": 142
+    },
+    {
+     "event": 59,
+     "action": "ACTION6 x=36 y=45",
+     "frames": 1,
+     "pair_tokens": 1424,
+     "accepted": true,
+     "score": -2.630401849746704,
+     "rank": 39,
+     "opus_tokens": 142
+    },
+    {
+     "event": 60,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1407,
+     "accepted": true,
+     "score": -2.5424702167510986,
+     "rank": 21,
+     "opus_tokens": 118
+    },
+    {
+     "event": 61,
+     "action": "ACTION6 x=32 y=14",
+     "frames": 2,
+     "pair_tokens": 1405,
+     "accepted": true,
+     "score": -2.3409361839294434,
+     "rank": 1,
+     "opus_tokens": 116
+    },
+    {
+     "event": 62,
+     "action": "RESET",
+     "frames": 1,
+     "pair_tokens": 1925,
+     "accepted": true,
+     "score": -2.4192376136779785,
+     "rank": 2,
+     "opus_tokens": 780
+    },
+    {
+     "event": 63,
+     "action": "ACTION6 x=21 y=42",
+     "frames": 1,
+     "pair_tokens": 1427,
+     "accepted": true,
+     "score": -2.785306215286255,
+     "rank": 90,
+     "opus_tokens": 142
+    },
+    {
+     "event": 64,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 1429,
+     "accepted": true,
+     "score": -2.716829538345337,
+     "rank": 67,
+     "opus_tokens": 142
+    },
+    {
+     "event": 65,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.711437225341797,
+     "rank": 65,
+     "opus_tokens": 142
+    },
+    {
+     "event": 66,
+     "action": "ACTION6 x=31 y=45",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.7224295139312744,
+     "rank": 71,
+     "opus_tokens": 142
+    },
+    {
+     "event": 67,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1408,
+     "accepted": true,
+     "score": -2.5690042972564697,
+     "rank": 26,
+     "opus_tokens": 118
+    },
+    {
+     "event": 68,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.840989589691162,
+     "rank": 93,
+     "opus_tokens": 142
+    },
+    {
+     "event": 69,
+     "action": "ACTION6 x=26 y=45",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.834402322769165,
+     "rank": 91,
+     "opus_tokens": 142
+    },
+    {
+     "event": 70,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.686558246612549,
+     "rank": 56,
+     "opus_tokens": 142
+    },
+    {
+     "event": 71,
+     "action": "ACTION6 x=36 y=45",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.6833739280700684,
+     "rank": 55,
+     "opus_tokens": 142
+    },
+    {
+     "event": 72,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.8712475299835205,
+     "rank": 95,
+     "opus_tokens": 142
+    },
+    {
+     "event": 73,
+     "action": "ACTION6 x=41 y=45",
+     "frames": 1,
+     "pair_tokens": 1424,
+     "accepted": true,
+     "score": -2.694139003753662,
+     "rank": 60,
+     "opus_tokens": 142
+    },
+    {
+     "event": 74,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1409,
+     "accepted": true,
+     "score": -2.6162326335906982,
+     "rank": 33,
+     "opus_tokens": 118
+    },
+    {
+     "event": 75,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.761277198791504,
+     "rank": 81,
+     "opus_tokens": 142
+    },
+    {
+     "event": 76,
+     "action": "ACTION6 x=31 y=45",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.702507257461548,
+     "rank": 63,
+     "opus_tokens": 142
+    },
+    {
+     "event": 77,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1408,
+     "accepted": true,
+     "score": -2.525881290435791,
+     "rank": 18,
+     "opus_tokens": 118
+    },
+    {
+     "event": 78,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.76285457611084,
+     "rank": 82,
+     "opus_tokens": 142
+    },
+    {
+     "event": 79,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 1429,
+     "accepted": true,
+     "score": -2.7172322273254395,
+     "rank": 68,
+     "opus_tokens": 142
+    },
+    {
+     "event": 80,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.7772183418273926,
+     "rank": 87,
+     "opus_tokens": 142
+    },
+    {
+     "event": 81,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1408,
+     "accepted": true,
+     "score": -2.505366563796997,
+     "rank": 11,
+     "opus_tokens": 118
+    },
+    {
+     "event": 82,
+     "action": "ACTION6 x=21 y=45",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.7322897911071777,
+     "rank": 76,
+     "opus_tokens": 142
+    },
+    {
+     "event": 83,
+     "action": "ACTION6 x=26 y=45",
+     "frames": 1,
+     "pair_tokens": 1427,
+     "accepted": true,
+     "score": -2.8362088203430176,
+     "rank": 92,
+     "opus_tokens": 142
+    },
+    {
+     "event": 84,
+     "action": "ACTION6 x=31 y=45",
+     "frames": 1,
+     "pair_tokens": 1429,
+     "accepted": true,
+     "score": -2.7266690731048584,
+     "rank": 74,
+     "opus_tokens": 142
+    },
+    {
+     "event": 85,
+     "action": "ACTION6 x=36 y=45",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.6722679138183594,
+     "rank": 50,
+     "opus_tokens": 142
+    },
+    {
+     "event": 86,
+     "action": "ACTION6 x=41 y=45",
+     "frames": 1,
+     "pair_tokens": 1428,
+     "accepted": true,
+     "score": -2.7340216636657715,
+     "rank": 77,
+     "opus_tokens": 142
+    },
+    {
+     "event": 87,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1408,
+     "accepted": true,
+     "score": -2.5114123821258545,
+     "rank": 14,
+     "opus_tokens": 118
+    },
+    {
+     "event": 88,
+     "action": "ACTION6 x=21 y=43",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.6895270347595215,
+     "rank": 58,
+     "opus_tokens": 142
+    },
+    {
+     "event": 89,
+     "action": "ACTION6 x=26 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.765875816345215,
+     "rank": 85,
+     "opus_tokens": 142
+    },
+    {
+     "event": 90,
+     "action": "ACTION6 x=31 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.763218402862549,
+     "rank": 83,
+     "opus_tokens": 142
+    },
+    {
+     "event": 91,
+     "action": "ACTION6 x=36 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.6534271240234375,
+     "rank": 42,
+     "opus_tokens": 142
+    },
+    {
+     "event": 92,
+     "action": "ACTION6 x=41 y=42",
+     "frames": 1,
+     "pair_tokens": 1425,
+     "accepted": true,
+     "score": -2.7647671699523926,
+     "rank": 84,
+     "opus_tokens": 142
+    },
+    {
+     "event": 93,
+     "action": "ACTION6 x=37 y=55",
+     "frames": 7,
+     "pair_tokens": 1407,
+     "accepted": true,
+     "score": -2.4470114707946777,
+     "rank": 3,
+     "opus_tokens": 118
+    },
+    {
+     "event": 94,
+     "action": "ACTION6 x=26 y=45",
+     "frames": 1,
+     "pair_tokens": 1426,
+     "accepted": true,
+     "score": -2.8463573455810547,
+     "rank": 94,
+     "opus_tokens": 142
+    },
+    {
+     "event": 95,
+     "action": "ACTION6 x=36 y=45",
+     "frames": 1,
+     "pair_tokens": 1426,
+     "accepted": true,
+     "score": -2.7388248443603516,
+     "rank": 78,
+     "opus_tokens": 142
+    }
+   ]
+  }
+ },
+ "hardware": {
+  "machine": "arm64",
+  "device": "mps",
+  "torch": "2.15.0",
+  "max_position_embeddings": 8194
+ },
+ "timing": {
+  "load_model_s": 4.2,
+  "A_format_s": 0.1,
+  "A_score_s": 0.8,
+  "B_format_s": 0.05,
+  "B_score_s": 103.1,
+  "B_opus_count_s": 13.3,
+  "C_format_s": 0.01,
+  "C_score_s": 357.2,
+  "C_opus_count_s": 13.6,
+  "D_format_s": 0.0,
+  "D_score_s": 44.9,
+  "D_opus_count_s": 13.4
+ }
+}

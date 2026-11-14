@@ -1,0 +1,256 @@
+{
+ "scorer": "BAAI/bge-reranker-v2-m3",
+ "scorer_revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+ "opus_model": "claude-opus-5-5",
+ "seed": 20261113,
+ "scorer_m_key_all_records": {
+  "n": 2475,
+  "min": 199,
+  "median": 935.0,
+  "p90": 1941.0,
+  "max": 35822,
+  "share_le_1276": 0.6949,
+  "share_le_2044": 0.9212
+ },
+ "scorer_description_q_key": {
+  "n": 500,
+  "min": 331,
+  "median": 1305.5,
+  "p90": 2835.0000000000014,
+  "max": 48315,
+  "share_le_768": 0.174,
+  "share_le_2048": 0.762,
+  "share_le_4096": 0.958
+ },
+ "scorer_pairs": {
+  "pairs": 4813,
+  "decisions": 500,
+  "M-key-v1": {
+   "n": 4813,
+   "min": 199,
+   "median": 819.0,
+   "p90": 1940.0,
+   "max": 35822,
+   "pairs_fit_768_2048": 0.1648,
+   "pairs_fit_2048_4096": 0.7503,
+   "pairs_fit_4096_8192": 0.9518
+  },
+  "M-ref-v1": {
+   "n": 4813,
+   "min": 86,
+   "median": 515.0,
+   "p90": 1440.0,
+   "max": 34607,
+   "pairs_fit_768_2048": 0.165,
+   "pairs_fit_2048_4096": 0.7528,
+   "pairs_fit_4096_8192": 0.9522
+  },
+  "M-region-v1": {
+   "n": 4813,
+   "min": 116,
+   "median": 521.0,
+   "p90": 1415.8000000000002,
+   "max": 36088,
+   "pairs_fit_768_2048": 0.1718,
+   "pairs_fit_2048_4096": 0.753,
+   "pairs_fit_4096_8192": 0.9518
+  },
+  "M-ref-v1 F-end": {
+   "n": 4813,
+   "min": 86,
+   "median": 422.0,
+   "p90": 1229.0,
+   "max": 4055,
+   "pairs_fit_768_2048": 0.1652,
+   "pairs_fit_2048_4096": 0.7577,
+   "pairs_fit_4096_8192": 0.9587
+  }
+ },
+ "earlier_counts_reproduced": true,
+ "opus_sample": {
+  "records": 200,
+  "note_tokens": {
+   "M-key-v1": 227,
+   "M-ref-v1": 260,
+   "M-region-v1": 289
+  },
+  "M-key-v1": {
+   "n": 200,
+   "min": 358,
+   "median": 1246.5,
+   "p90": 2536.2999999999997,
+   "max": 23230,
+   "share_le_512": 0.075,
+   "share_le_1024": 0.335,
+   "share_le_2048": 0.805
+  },
+  "M-ref-v1": {
+   "n": 200,
+   "min": 150,
+   "median": 601.5,
+   "p90": 1950.4999999999998,
+   "max": 21447,
+   "share_le_512": 0.4,
+   "share_le_1024": 0.725,
+   "share_le_2048": 0.915
+  },
+  "M-region-v1": {
+   "n": 200,
+   "min": 225,
+   "median": 830.5,
+   "p90": 2163.9,
+   "max": 23987,
+   "share_le_512": 0.155,
+   "share_le_1024": 0.58,
+   "share_le_2048": 0.885,
+   "cells_given_median": 0.2085
+  },
+  "M-key-v1 F-end": {
+   "n": 200,
+   "min": 358,
+   "median": 1134.0,
+   "p90": 2432.6,
+   "max": 4925,
+   "share_le_512": 0.105,
+   "share_le_1024": 0.37,
+   "share_le_2048": 0.865
+  },
+  "M-ref-v1 F-end": {
+   "n": 200,
+   "min": 150,
+   "median": 490.5,
+   "p90": 1519.1,
+   "max": 3823,
+   "share_le_512": 0.505,
+   "share_le_1024": 0.8,
+   "share_le_2048": 0.92
+  }
+ },
+ "opus_m_ref_by_game": {
+  "ar25": {
+   "median": 876.5,
+   "fit_1024": 5,
+   "of": 8
+  },
+  "bp35": {
+   "median": 9962.5,
+   "fit_1024": 0,
+   "of": 8
+  },
+  "cd82": {
+   "median": 572.0,
+   "fit_1024": 7,
+   "of": 8
+  },
+  "cn04": {
+   "median": 464.5,
+   "fit_1024": 8,
+   "of": 8
+  },
+  "dc22": {
+   "median": 242.0,
+   "fit_1024": 8,
+   "of": 8
+  },
+  "ft09": {
+   "median": 600.0,
+   "fit_1024": 5,
+   "of": 8
+  },
+  "g50t": {
+   "median": 815.0,
+   "fit_1024": 7,
+   "of": 8
+  },
+  "ka59": {
+   "median": 500.5,
+   "fit_1024": 8,
+   "of": 8
+  },
+  "lf52": {
+   "median": 405.0,
+   "fit_1024": 7,
+   "of": 8
+  },
+  "lp85": {
+   "median": 1105.0,
+   "fit_1024": 1,
+   "of": 8
+  },
+  "ls20": {
+   "median": 305.0,
+   "fit_1024": 6,
+   "of": 8
+  },
+  "m0r0": {
+   "median": 332.5,
+   "fit_1024": 6,
+   "of": 8
+  },
+  "r11l": {
+   "median": 1360.5,
+   "fit_1024": 3,
+   "of": 8
+  },
+  "re86": {
+   "median": 903.0,
+   "fit_1024": 6,
+   "of": 8
+  },
+  "s5i5": {
+   "median": 294.0,
+   "fit_1024": 6,
+   "of": 8
+  },
+  "sb26": {
+   "median": 778.0,
+   "fit_1024": 5,
+   "of": 8
+  },
+  "sc25": {
+   "median": 485.0,
+   "fit_1024": 8,
+   "of": 8
+  },
+  "sk48": {
+   "median": 1285.5,
+   "fit_1024": 3,
+   "of": 8
+  },
+  "sp80": {
+   "median": 305.5,
+   "fit_1024": 8,
+   "of": 8
+  },
+  "su15": {
+   "median": 716.0,
+   "fit_1024": 7,
+   "of": 8
+  },
+  "tn36": {
+   "median": 168.0,
+   "fit_1024": 8,
+   "of": 8
+  },
+  "tr87": {
+   "median": 320.0,
+   "fit_1024": 6,
+   "of": 8
+  },
+  "tu93": {
+   "median": 1298.5,
+   "fit_1024": 2,
+   "of": 8
+  },
+  "vc33": {
+   "median": 534.0,
+   "fit_1024": 7,
+   "of": 8
+  },
+  "wa30": {
+   "median": 390.5,
+   "fit_1024": 8,
+   "of": 8
+  }
+ }
+}

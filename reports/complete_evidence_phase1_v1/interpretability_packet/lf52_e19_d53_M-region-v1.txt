@@ -1,0 +1,47 @@
+Boards are text. A board line "y:c*n,..." gives row y as runs: colour c (one hex digit) repeated n times, left to right; "a-b:" means rows a to b are identical. A change line "y:x1-x2=c" sets columns x1 to x2 of row y to colour c ("x=c" for one cell); "a-b:" applies it to rows a to b. Row 0 is the top, column 0 the left; ACTION6 clicks (x=column, y=row). Frames are the boards returned by one action, in order; each is given as its changes from the previous frame or from the board before the action, as stated. "net before>last" restates the total change from the board before the action to the last frame. This record is partial: "state cells" are the cells that have changed at some point in that level, with their colours before the action; "window" blocks give every cell of a small area. Cells not listed were not recorded here.
+
+M-region-v1 record=lf52:opus55-competition-20261106T054112Z:e0019 event=19 reset=0 level=1 frames=2 partial=yes
+action=ACTION2
+window x=8-12 y=0-2 (runs start at x=8)
+0:1*2,0*3
+1-2:A*5
+state cells before: 1382 cells
+0:0-9=1,10-44=0
+12:20-21=1,32-33=1,38-39=1
+13:16-43=0,53-60=A
+14:13-46=0,53-61=A
+15:12=0,13-16=1,17-18=0,19-22=1,23-24=0,25-28=1,29-30=0,31=1,32-33=2,34=1,35-36=0,37-40=1,41-42=0,43-46=1,47=0,53-61=A
+16:12=0,13-16=1,17-18=0,19-22=1,23-24=0,25-28=1,29-30=0,31-34=2,35-36=0,37-40=1,41-42=0,43-46=1,47=0,54-57=5,58-61=A
+17:12=0,13-16=1,17=0,19-22=1,24=0,25-28=1,29-30=0,31-34=2,35-36=0,37-40=1,42=0,43-46=1,47=0,54-57=5,58-61=A
+18:12=0,13-16=1,17=0,20-21=1,24=0,25-28=1,29=0,31=1,32-33=2,34=1,35=0,38-39=1,42=0,43-46=1,47=0,53-55=A,56-57=5,58-61=A
+19:13-46=0,53-55=A,56-57=5,58-61=A
+20-30:53-55=A,56-57=5,58-61=A
+31:11-28=A,29-36=5,37-55=A,56-57=5,58-61=A
+32:11-28=A,29=5,30-35=B,36=5,37=9,38-55=A,56-57=5,58-61=A
+33:11-28=A,29=5,30=B,31-34=C,35=B,36=5,37=9,38-55=A,56-57=5,58-61=A
+34-35:11-13=A,14-29=5,30=B,31-34=C,35=B,36-57=5,58-61=A
+36:11-13=A,14-15=5,16-28=A,29=5,30=B,31-34=C,35=B,36=5,37=9,38-61=A
+37:11-13=A,14-15=5,16-28=A,29=5,30-35=B,36=5,37=9,38-61=A
+38:11-13=A,14-15=5,16-28=A,29-36=5,37=9,38-61=A
+39:11-13=A,14-15=5,16-29=A,30-37=9,38-61=A
+40-48:11-13=A,14-15=5,16-19=A
+49:11-13=A,14-15=5,16-40=A
+50:11-13=A,14-15=5,16-40=A,41=5
+51:3-10=5,11-13=A,14-15=5,16-40=A,41=5,43=1,44-45=2,46=1,47=0
+52:2-3=5,4-9=F,10-11=5,12-13=A,14-41=5,42=0,43-46=2,47-48=0
+53:2=5,3-10=F,11=5,12=9,13=A,14-41=5,42=0,43-46=2,47-48=0
+54:2=5,3-4=F,5-8=5,9-10=F,11=5,12=9,13-40=A,41=5,43=1,44-45=2,46=1,47=0
+55:2=5,3-4=F,5=5,6-7=0,8=5,9-10=F,11=5,12=9,13-40=A,41=5
+56:2=5,3-4=F,5=5,6-7=0,8=5,9-10=F,11=5,12=9,13-40=A
+57:2=5,3-4=F,5-8=5,9-10=F,11=5,12=9,13-41=A
+58:2=5,3-10=F,11=5,12=9
+59:2-3=5,4-9=F,10-11=5,12=9
+60:2=A,3-5=5,6-7=F,8-10=5,11-12=9
+61:2-4=A,5=5,6-7=F,8=5,9-11=9,12=A
+62-63:2-4=A,5=5,6-7=F,8=5,9=9,10-12=A
+frame 1/2 vs before: 1 cells
+0:10=1
+frame 2/2: same as previous
+net before>last: 1 cells
+0:10=1
+result state=NOT_FINISHED level=1 legal=1,2,3,4,6,7

@@ -1,0 +1,31 @@
+Boards are text. A board line "y:c*n,..." gives row y as runs: colour c (one hex digit) repeated n times, left to right; "a-b:" means rows a to b are identical. A change line "y:x1-x2=c" sets columns x1 to x2 of row y to colour c ("x=c" for one cell); "a-b:" applies it to rows a to b. Row 0 is the top, column 0 the left; ACTION6 clicks (x=column, y=row). Frames are the boards returned by one action, in order; each is given as its changes from the previous frame or from the board before the action, as stated. "net before>last" restates the total change from the board before the action to the last frame. "before vs current" lists where the board before that action differed from the current board; every other cell was the same as it is now.
+
+M-ref-v1 record=vc33:opus55-competition-20261106T054112Z:e0088 event=88 reset=0 level=4 frames=1
+action=ACTION6 x=62 y=30
+before vs current: 583 cells
+0:56-59=7
+1-4:28-36=0
+5-6:24-25=4,26-27=E,28-36=0
+7-8:22-25=4,26-27=E,28-36=0
+9-10:24-25=4,26-27=E,28-36=0
+11-13:28-36=0
+17-20:46-57=3
+21-22:42-57=3
+23-24:40-57=3
+25-26:42-57=3
+27-31:46-57=3
+35-38:40-48=0
+39-40:36-37=4,38-39=B,40-48=0
+41-42:34-37=4,38-39=B,40-48=0
+43-44:36-37=4,38-39=B,40-48=0
+45-48:40-48=0
+52-63:31-36=3
+frame 1/1 vs before: 114 cells
+0:59=4
+17-31:55-57=0
+35-38:40-42=3
+39-40:36-38=3,39-40=4,41-42=B
+41-42:34-36=3,38-40=4,41-42=B
+43-44:36-38=3,39-40=4,41-42=B
+45-48:40-42=3
+result state=NOT_FINISHED level=4 legal=6
