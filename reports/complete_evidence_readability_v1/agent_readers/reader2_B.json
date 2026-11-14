@@ -1,0 +1,20 @@
+{
+ "reviewer": "reader 2",
+ "input_read": "B",
+ "read_order": "first",
+ "minutes_taken": null,
+ "opened_anything_else": false,
+ "answers": {
+  "q1_bars_left_to_right": ["1", "1", "1", "1", "1"],
+  "q1_stems_left_to_right": ["5", "1", "1", "1", "1"],
+  "q2_frames_returned": 7,
+  "q2_piece_columns_in_frame_3": [34, 37],
+  "q2_piece_rows_in_frame_3": [13, 16],
+  "q2_cells_different_in_last_frame": 1,
+  "q2_level_completed": false,
+  "q3_same_configuration": true,
+  "q3_switches_that_differ": [],
+  "q2_what_the_frames_show": "Frame 1: the round colour-9 button that was clicked (rows 51-59, columns 32-40) turns colour a, and the row-1 counter loses one cell (column 50 goes 9 to 3). Frames 2-6: a colour-9 outline steps left to right over the five switch positions, one per frame (columns 19-23, 24-28, 29-33, 34-38, 39-43; rows 41-47), while the piece is shown shifted 4 columns right at columns 34-37, rows 13-16, with its old place refilled with colour 4. Frame 7: everything is back as before the action (piece again at columns 30-33, button colour 9, no outline) except the one counter cell at row 1 column 50, so the net effect is one counter step and no level completed."
+ },
+ "what_was_hard_or_missing": "Nothing blocked an answer, but these points needed care. (1) Q1 and Q3 rest entirely on the line 'before vs current: 35 cells / 1:16-50=9': the board before the action is not printed, so the switch colours had to be read off the current board (bars row 42 all 1; stems rows 44-46: column 21 is 5, columns 26, 31, 36, 41 are 1) and carried back, since only row 1 columns 16-50 differed. I checked this is consistent: 35 cells = columns 16..50, and the row-1 counter loses one cell per action (49 nines after action 12, 15 nines after action 46, matching the current row 1 and t45/t46). (2) The change line '16:30-33=4' in frames 2-6 names four cells, but columns 31-32 of row 16 are already 4 on the before-board; the stated total of 58 cells only adds up if those two are not counted (1 + 24 + 4 + 29 = 58). So a change run can include cells that do not actually change, which the legend does not say. (3) The piece is not a solid 4x4 block: its bottom row (row 16) has colour b only at the two end columns; the two middle cells show the background (4 at the home position, 5 at columns 35-36 in frames 2-6). I gave the bounding box, columns 34-37 and rows 13-16, as the piece's position in frame 3. (4) All frames are stated 'vs before', not vs the previous frame, so the piece position in frame 3 is read directly; it is the same in frames 2 to 6 and only the colour-9 outline moves. (5) Colours are written in upper case (A, B) in the older memory and lower case (b) in the board; the context says case does not matter. (6) 'level=0' in the record header and result line is not explained; I took it, together with state=NOT_FINISHED and an unchanged level value, to mean no level was completed. (7) The text does not say what the row-1 bar or the round button mean; 'counter' and 'button' are my descriptions of what the cells do, not stated facts. (8) Outside knowledge: I used none. I recognise 'tn36' only as a game identifier and know nothing about this example beyond input.txt. My session context had an automatically attached memory index of three one-line titles (not opened by me, none about this game or example); I did not use it."
+}

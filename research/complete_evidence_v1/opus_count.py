@@ -50,3 +50,18 @@ class OpusCounter:
                 handle.write(json.dumps(entry) + '\n')
             self.seen[digest] = tokens
         return tokens
+
+    def count_request(self, request, label=''):
+        """Tokens for a whole request (`model`, `system`, `messages`), logged like `count`."""
+        payload = {k: request[k] for k in ('model', 'system', 'messages') if k in request}
+        digest = hashlib.sha256(json.dumps(payload, sort_keys=True).encode()).hexdigest()
+        if digest in self.seen:
+            return self.seen[digest]
+        tokens = self.client.messages.count_tokens(**payload).input_tokens
+        entry = {'time': time.strftime('%Y-%m-%dT%H:%M:%S%z'), 'endpoint': 'POST /v1/messages/count_tokens',
+                 'label': label, 'content_sha256': digest, 'request': payload, 'input_tokens': tokens}
+        with self.lock:
+            with gzip.open(self.log_path, 'at') as handle:
+                handle.write(json.dumps(entry) + '\n')
+            self.seen[digest] = tokens
+        return tokens

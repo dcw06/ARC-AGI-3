@@ -1,0 +1,84 @@
+{
+ "readers": "two AI agents started fresh for this check (the session default subagent model; not people, not Opus)",
+ "free_text_rubric": "q2_what_the_frames_show states nothing that contradicts the frames",
+ "checks_of_statements_against_source_frames": {
+  "frame 1: colour-a cells all inside rows 51-59, columns 32-40": true,
+  "frame 1: row 1 column 50 goes 9 to 3": true,
+  "frames 2-6: no colour-a cells (button back to 9)": true,
+  "frames 2-6: columns 30-33 of rows 13-16 are colour 4": true,
+  "frames 2-6: piece cells (colour b) lie in columns 34-37, rows 13-16": true,
+  "frames 2-6: colour-9 outline at columns 19-23, 24-28, 29-33, 34-38, 39-43 in rows 41-47": [
+   [
+    19,
+    23,
+    41,
+    47
+   ],
+   [
+    24,
+    28,
+    41,
+    47
+   ],
+   [
+    29,
+    33,
+    41,
+    47
+   ],
+   [
+    34,
+    38,
+    41,
+    47
+   ],
+   [
+    39,
+    43,
+    41,
+    47
+   ]
+  ],
+  "frame 7: differs from the board before in exactly one cell, row 1 column 50": true,
+  "row 1 colour-9 cells before action 12 and on the current board (reader 2 note: 49 and 15)": [
+   50,
+   15
+  ],
+  "row 16 columns 31-32 already colour 4 before (both readers: change run includes unchanged cells)": true
+ },
+ "judgement": {
+  "agent_readers/reader1_A.json": {
+   "structured": {
+    "bars": "correct",
+    "stems": "correct",
+    "frames": "correct",
+    "piece_columns": "correct",
+    "piece_rows": "correct",
+    "last_frame": "correct",
+    "level": "correct",
+    "match": "correct"
+   },
+   "free_text": "not contradicted",
+   "contradictory_statements": []
+  },
+  "agent_readers/reader2_B.json": {
+   "structured": {
+    "bars": "correct",
+    "stems": "correct",
+    "frames": "correct",
+    "piece_columns": "correct",
+    "piece_rows": "correct",
+    "last_frame": "correct",
+    "level": "correct",
+    "match": "correct"
+   },
+   "free_text": "not contradicted",
+   "contradictory_statements": []
+  }
+ },
+ "submission_sha256": {
+  "reader1_A.json": "68c0046cbc7c25e32eab4fc87fe9d4763f4afba8a7adff1c7df632217f8648be",
+  "reader2_B.json": "1b5faab369d3b1091da2d24ba9a169fba3659971aca3c24fa8fb736b281355a8"
+ },
+ "judged_by": "Claude (session agent), 2026-11-14, after both submissions were saved"
+}

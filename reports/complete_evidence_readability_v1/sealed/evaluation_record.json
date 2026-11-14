@@ -1,0 +1,327 @@
+{
+ "warning": "Correct answers. Not part of any input. Reviewers must not open this before submitting.",
+ "example": {
+  "game": "tn36",
+  "run": "opus55-competition-20261106T054112Z",
+  "decision_after_actions": 46,
+  "earlier_record_action": 12,
+  "action_actually_taken_next": {
+   "id": "ACTION6",
+   "x": 37,
+   "y": 55
+  },
+  "why_this_example": "only tn36 repeat that is in the same attempt, out of view, with a mixed setting"
+ },
+ "identities": {
+  "current_board": {
+   "observation": "o46",
+   "cells_sha256": "25a34f0fca8800b4a8134f934fd5635b2f3c081e4029cf4cb98c2f18f7ba9f5d",
+   "event_log": {
+    "after_observation_sha256": "6d90033ff3f3420cf865cdf577aa9c201533f3230d38c4b442c13382867e1deb",
+    "before_observation_sha256": "c897c7c23febdaa0384e37d0ec4b44099f5bb2b68a5f8bbf5dcfbeb1410fe21c"
+   }
+  },
+  "reference_board_for_input_B": {
+   "observation": "o46",
+   "cells_sha256": "25a34f0fca8800b4a8134f934fd5635b2f3c081e4029cf4cb98c2f18f7ba9f5d"
+  },
+  "earlier_before_board": {
+   "cells_sha256": "8b1a5dcda5eaf8f9f31b0fd179f10ecf249d01ba937444994bb4f2ab984e698a",
+   "event_log": {
+    "after_observation_sha256": "451681da961be4a66a177f5ac8da70146c37b5454e92de1d0a46ca6d662c83e3",
+    "before_observation_sha256": "c594fb0f55be5e347d1a317eb67f2d21a204bf52196ed4895d4a8448c5fa6a8e"
+   }
+  },
+  "earlier_frames_cells_sha256": [
+   "d44256c9cb60fff393256921a6890dba9f9ef2e8e2753d9823e8f5dff848d0d0",
+   "7001789bde539dbaf01548ddd49f465e83d22b0e29851e509263af8903bc6d66",
+   "ca47b47203126aaf5e7c2346446aa41d13753dc08173150a102d3bf3019c18df",
+   "1c3718c4f7e3db2630ad469ba656e2b8a35411ef085e83ef0be26519acb78203",
+   "b131173ba87adeb097c284b5677a1aee10005a5463a3aa70b9663263d4ec3d2d",
+   "c04a9e1bf957de6a8b2f162815a0cb3cfacbbc663717bb9ef6bb6dc0fe772028",
+   "c7d80d6a63adf40420b65d28090c95d7a817fdc91f29577f14c33052427c528e"
+  ],
+  "recent_history_transitions": [
+   "t45",
+   "t46"
+  ]
+ },
+ "answer_key": {
+  "q1_bars_left_to_right": [
+   "1",
+   "1",
+   "1",
+   "1",
+   "1"
+  ],
+  "q1_stems_left_to_right": [
+   "5",
+   "1",
+   "1",
+   "1",
+   "1"
+  ],
+  "q2_frames_returned": 7,
+  "q2_piece_columns_in_frame_3": [
+   34,
+   37
+  ],
+  "q2_piece_rows_in_frame_3": [
+   13,
+   16
+  ],
+  "q2_cells_different_in_last_frame": 1,
+  "q2_level_completed": false,
+  "q3_same_configuration": true,
+  "q3_switches_that_differ": []
+ },
+ "supporting_facts_from_frames": {
+  "current_board_bars": [
+   "1",
+   "1",
+   "1",
+   "1",
+   "1"
+  ],
+  "current_board_stems": [
+   "5",
+   "1",
+   "1",
+   "1",
+   "1"
+  ],
+  "cells_where_earlier_before_board_differs_from_current": 35,
+  "rows_of_those_cells": [
+   1
+  ],
+  "last_frame_differing_cells_xy_before_after": [
+   [
+    50,
+    1,
+    "9",
+    "3"
+   ]
+  ],
+  "state_after": "NOT_FINISHED",
+  "level_before_and_after": [
+   0,
+   0
+  ],
+  "per_frame": [
+   {
+    "frame": 1,
+    "cells_different_from_before": 70,
+    "rows_changed": [
+     1,
+     51,
+     52,
+     53,
+     54,
+     55,
+     56,
+     57,
+     58,
+     59
+    ],
+    "piece_columns": [
+     30,
+     33
+    ],
+    "piece_rows": [
+     13,
+     16
+    ],
+    "colour_a_cells_in_rows_51_59": 69,
+    "colour_9_columns_in_rows_41_47": null
+   },
+   {
+    "frame": 2,
+    "cells_different_from_before": 58,
+    "rows_changed": [
+     1,
+     13,
+     14,
+     15,
+     16,
+     41,
+     42,
+     43,
+     44,
+     45,
+     46,
+     47
+    ],
+    "piece_columns": [
+     34,
+     37
+    ],
+    "piece_rows": [
+     13,
+     16
+    ],
+    "colour_a_cells_in_rows_51_59": 0,
+    "colour_9_columns_in_rows_41_47": [
+     19,
+     23
+    ]
+   },
+   {
+    "frame": 3,
+    "cells_different_from_before": 58,
+    "rows_changed": [
+     1,
+     13,
+     14,
+     15,
+     16,
+     41,
+     42,
+     43,
+     44,
+     45,
+     46,
+     47
+    ],
+    "piece_columns": [
+     34,
+     37
+    ],
+    "piece_rows": [
+     13,
+     16
+    ],
+    "colour_a_cells_in_rows_51_59": 0,
+    "colour_9_columns_in_rows_41_47": [
+     24,
+     28
+    ]
+   },
+   {
+    "frame": 4,
+    "cells_different_from_before": 58,
+    "rows_changed": [
+     1,
+     13,
+     14,
+     15,
+     16,
+     41,
+     42,
+     43,
+     44,
+     45,
+     46,
+     47
+    ],
+    "piece_columns": [
+     34,
+     37
+    ],
+    "piece_rows": [
+     13,
+     16
+    ],
+    "colour_a_cells_in_rows_51_59": 0,
+    "colour_9_columns_in_rows_41_47": [
+     29,
+     33
+    ]
+   },
+   {
+    "frame": 5,
+    "cells_different_from_before": 58,
+    "rows_changed": [
+     1,
+     13,
+     14,
+     15,
+     16,
+     41,
+     42,
+     43,
+     44,
+     45,
+     46,
+     47
+    ],
+    "piece_columns": [
+     34,
+     37
+    ],
+    "piece_rows": [
+     13,
+     16
+    ],
+    "colour_a_cells_in_rows_51_59": 0,
+    "colour_9_columns_in_rows_41_47": [
+     34,
+     38
+    ]
+   },
+   {
+    "frame": 6,
+    "cells_different_from_before": 58,
+    "rows_changed": [
+     1,
+     13,
+     14,
+     15,
+     16,
+     41,
+     42,
+     43,
+     44,
+     45,
+     46,
+     47
+    ],
+    "piece_columns": [
+     34,
+     37
+    ],
+    "piece_rows": [
+     13,
+     16
+    ],
+    "colour_a_cells_in_rows_51_59": 0,
+    "colour_9_columns_in_rows_41_47": [
+     39,
+     43
+    ]
+   },
+   {
+    "frame": 7,
+    "cells_different_from_before": 1,
+    "rows_changed": [
+     1
+    ],
+    "piece_columns": [
+     30,
+     33
+    ],
+    "piece_rows": [
+     13,
+     16
+    ],
+    "colour_a_cells_in_rows_51_59": 0,
+    "colour_9_columns_in_rows_41_47": null
+   }
+  ]
+ },
+ "rubric_fixed_before_any_response": {
+  "structured_items": {
+   "bars": "q1_bars_left_to_right equals the key exactly",
+   "stems": "q1_stems_left_to_right equals the key exactly",
+   "frames": "q2_frames_returned equals the key",
+   "piece_columns": "q2_piece_columns_in_frame_3 equals the key",
+   "piece_rows": "q2_piece_rows_in_frame_3 equals the key",
+   "last_frame": "q2_cells_different_in_last_frame equals the key",
+   "level": "q2_level_completed equals the key",
+   "match": "q3_same_configuration and q3_switches_that_differ both equal the key"
+  },
+  "free_text_item": "q2_what_the_frames_show states nothing that contradicts supporting_facts_from_frames, judged by hand and recorded with the reason",
+  "a_reader_recovers_the_facts": "all eight structured items correct and the free-text item not contradicted",
+  "colours": "compared as hexadecimal digits, ignoring case",
+  "cannot_determine": "counts as not recovered and is reported separately from a wrong answer"
+ }
+}

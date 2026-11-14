@@ -1,0 +1,36 @@
+[
+ {
+  "source": "agent_readers/reader1_A.json",
+  "input": "A",
+  "note": "first",
+  "items": {
+   "bars": "correct",
+   "stems": "correct",
+   "frames": "correct",
+   "piece_columns": "correct",
+   "piece_rows": "correct",
+   "last_frame": "correct",
+   "level": "correct",
+   "match": "correct"
+  },
+  "all_structured_correct": true,
+  "free_text_to_judge_by_hand": "Frame 1: the colour-9 round block at rows 51-59, columns 32-40 (the clicked cell 37,55 is inside it) turns colour a, and row 1 column 50 turns from 9 to 3. Frames 2-6: that block is back to colour 9, the piece sits one tile to the right (columns 34-37, rows 13-16, with columns 30-33 restored to colour 4), and a colour-9 outline (5 columns wide, rows 41-47) steps across the five switch positions one per frame, left to right (columns 19-23, 24-28, 29-33, 34-38, 39-43). Frame 7: the outline is gone and the piece is back at columns 30-33, so the only lasting change is the single cell at row 1, column 50 (9 to 3); the level was not completed."
+ },
+ {
+  "source": "agent_readers/reader2_B.json",
+  "input": "B",
+  "note": "first",
+  "items": {
+   "bars": "correct",
+   "stems": "correct",
+   "frames": "correct",
+   "piece_columns": "correct",
+   "piece_rows": "correct",
+   "last_frame": "correct",
+   "level": "correct",
+   "match": "correct"
+  },
+  "all_structured_correct": true,
+  "free_text_to_judge_by_hand": "Frame 1: the round colour-9 button that was clicked (rows 51-59, columns 32-40) turns colour a, and the row-1 counter loses one cell (column 50 goes 9 to 3). Frames 2-6: a colour-9 outline steps left to right over the five switch positions, one per frame (columns 19-23, 24-28, 29-33, 34-38, 39-43; rows 41-47), while the piece is shown shifted 4 columns right at columns 34-37, rows 13-16, with its old place refilled with colour 4. Frame 7: everything is back as before the action (piece again at columns 30-33, button colour 9, no outline) except the one counter cell at row 1 column 50, so the net effect is one counter step and no level completed."
+ }
+]

@@ -1,0 +1,20 @@
+{
+ "reviewer": "reader 1",
+ "input_read": "A",
+ "read_order": "first",
+ "minutes_taken": null,
+ "opened_anything_else": false,
+ "answers": {
+  "q1_bars_left_to_right": ["1", "1", "1", "1", "1"],
+  "q1_stems_left_to_right": ["5", "1", "1", "1", "1"],
+  "q2_frames_returned": 7,
+  "q2_piece_columns_in_frame_3": [34, 37],
+  "q2_piece_rows_in_frame_3": [13, 16],
+  "q2_cells_different_in_last_frame": 1,
+  "q2_level_completed": false,
+  "q3_same_configuration": true,
+  "q3_switches_that_differ": [],
+  "q2_what_the_frames_show": "Frame 1: the colour-9 round block at rows 51-59, columns 32-40 (the clicked cell 37,55 is inside it) turns colour a, and row 1 column 50 turns from 9 to 3. Frames 2-6: that block is back to colour 9, the piece sits one tile to the right (columns 34-37, rows 13-16, with columns 30-33 restored to colour 4), and a colour-9 outline (5 columns wide, rows 41-47) steps across the five switch positions one per frame, left to right (columns 19-23, 24-28, 29-33, 34-38, 39-43). Frame 7: the outline is gone and the piece is back at columns 30-33, so the only lasting change is the single cell at row 1, column 50 (9 to 3); the level was not completed."
+ },
+ "what_was_hard_or_missing": "1) The legend describes a 'net before>last' line, but the record has none; I took the net change from 'frame 7/7 vs before: 1 cells' (row 1, column 50 = 3). 2) The change lines are 'set' ranges that can include cells that already had that colour (row 16: '30-33=4' where columns 31-32 were already 4), so the listed ranges do not add up to the header count unless you check the before board; counting by hand I confirmed 70 cells for frame 1 and 58 for frames 2-6. 3) The record never names the piece; its frame-3 position has to be inferred from the b-coloured cells written at columns 34-37. The piece is not a full 4x4 block: its bottom row has b only at the two outer columns (row 16, columns 34 and 37 in frame 3; columns 35-36 keep the background colour 5), so my columns/rows answer is its bounding box. The piece is at the same place (34-37) in every one of frames 2-6, so frame 3 is not special. 4) Stem 1 has colour 5, the same as the general background colour, which is easy to misread as 'missing'; I confirmed it by counting runs in rows 44-46 (column 21 = 5) and by reading character 5 of group 2 on the current board. 5) Q3 has a trap-like feature: recent history t46 shows stem 1 going from 1 to 5, which suggests the configuration only just became this one; the older record (action 12) already had stem 1 = 5 before its action, so the two configurations are equal (bars 1,1,1,1,1; stems 5,1,1,1,1), but the text does not show what happened to stem 1 between action 12 and action 45. 6) The text does not say what the outline, the colour-a flash or the row-1 strip mean, or why the piece moved and returned; my description states only the observed cell changes, and any causal reading (e.g. that the switches are a program being stepped through) cannot be determined from the text. 7) I used no knowledge of this game from any source other than input.txt. The session automatically showed me a git status and a one-line-per-item memory index (titles only); I did not open any of those files and nothing in them was used."
+}
