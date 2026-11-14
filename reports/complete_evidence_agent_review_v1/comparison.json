@@ -1,0 +1,5110 @@
+{
+ "D01": {
+  "game": "ls20",
+  "type": "level/reset",
+  "decision": 82,
+  "pack_records": [
+   10
+  ],
+  "pack_opus_tokens": 1274,
+  "pack_fits_2048": true,
+  "level_completing_actions_in_history": [
+   15,
+   60
+  ],
+  "role2_checks": "13/13",
+  "role2_wrong": [],
+  "role2_cannot_determine": [],
+  "uncertainties": [
+   {
+    "id": "U1",
+    "uncertainty": "What event completes a level. In particular: is the 3-bordered box at x52-60, y48-56 (colour-5 interior holding a 3x3 colour-9 figure at x55-57, y51-53) the place the 5x5 player block (now x49-53, y10-14) has to reach, and does the colour-c figure in the bottom-left panel (x3-8, y55-60) have to agree with that colour-9 figure in shape, in colour, or in both at that moment? What was on the board and what did the player do on the two actions where levels_completed went up?",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     8,
+     15,
+     40,
+     60
+    ],
+    "sufficient_groups": [
+     [
+      15,
+      60
+     ],
+     [
+      8,
+      15
+     ],
+     [
+      40,
+      60
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": true,
+    "cited_actions_that_completed_a_level": [
+     15,
+     60
+    ],
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       15,
+       60
+      ],
+      "older_records": [
+       15,
+       60
+      ],
+      "pack_tokens": 4068,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       8,
+       15
+      ],
+      "older_records": [
+       8,
+       15
+      ],
+      "pack_tokens": 3073,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       40,
+       60
+      ],
+      "older_records": [
+       40,
+       60
+      ],
+      "pack_tokens": 3384,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "Older evidence (before the two recent actions): a level was completed twice, each time by moving the block into the box while the bottom-left panel figure was identical (shape and colour 9) to the figure inside the box; in each level the player first changed the panel figure until it matched and then walked to the box. This identifies the box at x52-60, y48-56 as the destination and makes 'panel figure equals box figure' the working condition. The decision input alone only showed the current mismatch (panel c.c / ..c / ccc in colour c versus box 9.9 / 9.. / 999 in colour 9).",
+    "limits": "The groups settle what completed the two earlier levels, not whether a mismatch blocks completion or is punished: there is no record of entering a box with a different shape or a different colour. The colour question is entirely open because level 2 is the first level in which the panel figure's colour (c) differs from the box figure's colour (9). The meaning of the colour-0 rings in action 8 is also unclear: they appeared when the figures first matched in level 0 but not when they first matched in level 1 (action 40)."
+   },
+   {
+    "id": "U2",
+    "uncertainty": "What exactly the small 3x3 object of colours 0 and 1 that sat at x50-52, y11-13 (0 at (51,11), 1 at (50,12), 0 at (51,12), 0 at (52,12), 1 at (51,13)) does to the bottom-left panel figure, and whether it can be used again. Is its effect a quarter turn, a top-bottom flip, or something else? Is it still there underneath the player block, or was it used up? Would moving off and back onto x49-53, y10-14 trigger it again, or would simply staying/pressing against a wall there do so?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     8,
+     9,
+     32,
+     38,
+     39,
+     40
+    ],
+    "sufficient_groups": [
+     [
+      32,
+      38,
+      39,
+      40
+     ],
+     [
+      8,
+      9,
+      32,
+      38,
+      40
+     ],
+     [
+      38,
+      39,
+      40
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       32,
+       38,
+       39,
+       40
+      ],
+      "older_records": [
+       32,
+       38,
+       39,
+       40
+      ],
+      "pack_tokens": 4576,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       8,
+       9,
+       32,
+       38,
+       40
+      ],
+      "older_records": [
+       8,
+       9,
+       32,
+       38,
+       40
+      ],
+      "pack_tokens": 5481,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       38,
+       39,
+       40
+      ],
+      "older_records": [
+       38,
+       39,
+       40
+      ],
+      "pack_tokens": 3479,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "Older evidence settles both halves. (1) Kind of effect: each entry onto a 0/1 object turns the panel figure a quarter turn clockwise; in particular the one earlier time the panel had the present shape (before action 38) the next entry produced 9.9 / 9.. / 999, which is the shape of the level-2 box figure. (2) Reuse: the object is not consumed; it reappears when the block leaves (actions 9, 33, 39, 41) and works again on re-entry (actions 38 and 40). The decision input by itself showed only one change (action 82) and could not distinguish a turn from a flip or show whether the object survives.",
+    "limits": "All earlier uses were with a colour-9 figure; the level-2 figure is colour c and only one use (the recent action 82) is recorded for it. The level-2 object at x50-52, y11-13 has never yet been left, so its reappearance is inferred from the level 0 and level 1 objects of identical appearance. Nothing shows whether staying on the cell or pushing against a wall while on it triggers the effect: every recorded action moved the block a full 5 cells, so only leave-and-return is evidenced. The record does not show the object changing the figure's colour."
+   },
+   {
+    "id": "U3",
+    "uncertainty": "What happens when the colour-b part of the bar on rows y61-62 is used up, and whether every action always costs two columns of it. Does the game end, does the level restart, does the player lose one of the three colour-8 pairs at x56-57, x59-60, x62-63 (and what do those pairs count)? Does a move that is blocked by a colour-4 wall also consume bar?",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     1,
+     8,
+     16,
+     34,
+     61,
+     68,
+     82
+    ],
+    "sufficient_groups": [],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "Older evidence settles the cost side only: two columns per action in levels 1 and 2 (one in level 0), a 42-column bar that is reset to full at each new level, and so about 11 actions left now. Groups that settle that part alone would be [72, 73, 74] (refill to full, then two columns per step) or any run such as [61, 62, 63]. The decision input already showed the two-column rate for the last two actions.",
+    "limits": "The main question is untouched: the bar never emptied, so what happens at zero (end of game, restart, loss of an 8-pair, nothing) is not in the record, and the 8-pairs never changed. No action in the record was blocked by a wall (every action moved the block), so whether a blocked move costs bar is also unrecorded. Action 8 shows the cost is not strictly universal, without showing why."
+   },
+   {
+    "id": "U4",
+    "uncertainty": "What the multi-coloured 3x3 object at x30-32, y46-48 (row y46: 9 e e; row y47: 9 0 8; row y48: c c 8) does when the player block moves onto its cell (x29-33, y45-49). Does it change the panel figure at x3-8, y55-60 (its colour, its shape), change the player block, or something else, and is it needed for this level?",
+    "older_evidence_found_by_role1": "no",
+    "cited_actions": [
+     60,
+     61
+    ],
+    "sufficient_groups": [],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "Nothing in the record shows what this object does: it has existed for 22 actions and has never been touched. The only general precedent is that the two other kinds of 3x3 object (0/1 object, b ring) act when the block moves onto their cell.",
+    "limits": "No direct evidence at all. The co-occurrence with the colour-c panel figure is suggestive but not an observation of its effect; whether it changes colour, shape, the block, or something else, and whether it survives use, are all unrecorded."
+   },
+   {
+    "id": "U5",
+    "uncertainty": "What the colour-b ring at x20-22, y31-33 (b on all eight outer cells, 3 in the centre at (21,32)) does when the player block moves onto its cell (x19-23, y30-34). Does it affect the colour-b bar on rows y61-62, and if so by how much, and does it disappear after one use?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     35,
+     36,
+     55,
+     72
+    ],
+    "sufficient_groups": [
+     [
+      72,
+      73
+     ],
+     [
+      35,
+      36
+     ],
+     [
+      55,
+      56
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       72,
+       73
+      ],
+      "older_records": [
+       72,
+       73
+      ],
+      "pack_tokens": 1110,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       35,
+       36
+      ],
+      "older_records": [
+       35,
+       36
+      ],
+      "pack_tokens": 2548,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       55,
+       56
+      ],
+      "older_records": [
+       55,
+       56
+      ],
+      "pack_tokens": 2308,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      72,
+      73
+     ],
+     "older_records": [
+      72,
+      73
+     ],
+     "pack_tokens": 1110,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "Older evidence settles this: a b ring refills the bar to full when the block moves onto its cell, the entering move is not charged, and the ring disappears afterwards. The decision input showed neither a refill nor the earlier ring in this level.",
+    "limits": "The specific ring at x20-22, y31-33 has not been touched; the conclusion is by identity of appearance with three used rings. Nothing shows a ring affecting the colour-8 pairs or the panel figure. It is the last ring visible in level 2, and it is about 12 moves from the block against about 11 actions of bar, which the record cannot resolve (see U3: running out has never been seen)."
+   }
+  ],
+  "pack_relevant_to": [],
+  "pack_complete_for": [],
+  "role1_coverage": {
+   "history_index_read_fully": true,
+   "history_changes": "read fully",
+   "images_opened": [
+    "a008",
+    "a015",
+    "a032",
+    "a035",
+    "a038",
+    "a040",
+    "a060",
+    "a068",
+    "a072",
+    "a082"
+   ],
+   "board_files_opened": [
+    "a001",
+    "a008",
+    "a015",
+    "a032",
+    "a040",
+    "a060"
+   ]
+  },
+  "role1_needs_no_record_can_meet": "(1) What happens when the block enters a box while the panel figure differs from the box figure in shape or in colour: never tried. (2) Whether colour has to match at all: levels 0 and 1 never had a colour difference. (3) What the multi-coloured object at x30-32, y46-48 does: never touched. (4) What happens when the bar reaches zero and what the three colour-8 pairs count: the bar never emptied and the pairs never changed. (5) Whether a move into a colour-4 wall is possible, harmless, or costs bar: no blocked move is recorded. (6) Whether the horizontal colour-1 line at y4 pushes downward and whether a push can carry the block into the box.",
+  "action_actually_taken_next": "ACTION4"
+ },
+ "D02": {
+  "game": "ka59",
+  "type": "level/reset",
+  "decision": 33,
+  "pack_records": [
+   5
+  ],
+  "pack_opus_tokens": 954,
+  "pack_fits_2048": true,
+  "level_completing_actions_in_history": [
+   30
+  ],
+  "role2_checks": "13/13",
+  "role2_wrong": [],
+  "role2_cannot_determine": [],
+  "uncertainties": [
+   {
+    "id": "U1",
+    "uncertainty": "What board event made levels_completed go from 0 to 1 earlier in the game: which cells or shapes changed in the step that completed level 1, and how the e-coloured shapes and the 4-outlined hollow frames stood relative to each other at that moment.",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     5,
+     24,
+     30
+    ],
+    "sufficient_groups": [
+     [
+      30
+     ],
+     [
+      5,
+      24,
+      30
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": true,
+    "cited_actions_that_completed_a_level": [
+     30
+    ],
+    "pack_records_cited": [
+     5
+    ],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [
+     5
+    ],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       30
+      ],
+      "older_records": [
+       30
+      ],
+      "pack_tokens": 1971,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       5,
+       24,
+       30
+      ],
+      "older_records": [
+       5,
+       24,
+       30
+      ],
+      "pack_tokens": 3157,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      30
+     ],
+     "older_records": [
+      30
+     ],
+     "pack_tokens": 1971,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "The level-0 completion coincided with the last e shape being moved into the interior of a 4 frame while the other e shape was already in the other frame. a030 with its before-board shows the event itself; a005 and a024 add that one shape in a frame was not enough.",
+    "limits": "One completion only. Level 0 had two identical 3x3 shapes and two identical 3x3 frame interiors, so the record does not show whether a shape must go into a particular frame, whether sizes must match (the present board has 3x3, 6x3, 3x6 and 6x6 shapes and interiors), or whether anything else (for example the centre colour of the shapes) is part of the condition."
+   },
+   {
+    "id": "U2",
+    "uncertainty": "Why, at t33, the top row of the moved 3x3 shape (cells x42-44, y51) was drawn in colour 0 instead of colour e, when after t32 the same shape one step to the left (x39-41, y51-53) had an all-e top row. Has this recolouring been seen before, under what circumstances, and what followed it.",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     19,
+     20,
+     21,
+     29
+    ],
+    "sufficient_groups": [
+     [
+      20,
+      21
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       20,
+       21
+      ],
+      "older_records": [
+       20,
+       21
+      ],
+      "pack_tokens": 1917,
+      "fits_2048": true
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      20,
+      21
+     ],
+     "older_records": [
+      20,
+      21
+     ],
+     "pack_tokens": 1917,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "The 0 edge has a precedent: it appeared when the selected shape came to rest against another e shape, it did not appear next to frame walls or in open space, and it was not a penalty: nothing was lost and the game continued. The row-63 change at t33 has an independent explanation (see added item A5), so the two t33 changes need not be linked.",
+    "limits": "One older instance. There the 0 edge was on the leading side of the move (moving right, neighbour on the right); at t33 the shape moved right and the 0 edge is on top, so only the decision input shows the edge following the neighbour's side rather than the direction of travel. The neighbour then was a 3x3 shape with centre 4; now it is the 6x6 shape with 5 centres. The record does not show what ACTION1 would do now, nor what ACTION4, ACTION2 or ACTION3 do while a 0 edge is present on a different side."
+   },
+   {
+    "id": "U3",
+    "uncertainty": "What happens when a step of the moved shape would put it onto cells that are not colour 1: the 4 frame wall at x50,y51-53, another e shape, the f band at x21-29, or the 2 column at x63. Does it stop, pass through, get refused, or cause some other change.",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     4,
+     8,
+     13,
+     16,
+     17,
+     21
+    ],
+    "sufficient_groups": [
+     [
+      8,
+      13,
+      16,
+      17,
+      20,
+      21
+     ],
+     [
+      4,
+      5,
+      11,
+      13,
+      20,
+      21
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [
+     5
+    ],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       8,
+       13,
+       16,
+       17,
+       20,
+       21
+      ],
+      "older_records": [
+       8,
+       13,
+       16,
+       17,
+       20,
+       21
+      ],
+      "pack_tokens": 4271,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       4,
+       5,
+       11,
+       13,
+       20,
+       21
+      ],
+      "older_records": [
+       4,
+       5,
+       11,
+       13,
+       20,
+       21
+      ],
+      "pack_tokens": 4217,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "For the route in question (x42-44 to x45-47 to x48-50 to x51-53 on y51-53), a016 and a017 alone show that a step landing partly on a frame wall is carried out and the wall is restored, and a023/a024 show the following step into the interior. The f and 2 refusals and the push across f bear on the other three frames, two of which lie beyond the f band at x21-29.",
+    "limits": "All on level 0 and all with 3x3 shapes. No step in the record was attempted from a position where a 0 edge was showing on another side, as now. What stopped the launched shape at x42-44 in a021 is not shown (it had already overlapped the wall cell (44,30)). No shape was ever moved against the board edge or against the row y63."
+   },
+   {
+    "id": "U4",
+    "uncertainty": "What ACTION1, ACTION2 and ACTION3 each do to the board: which cells change, in which direction and by how many cells, and whether they act on the same 3x3 shape that ACTION4 moves.",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     1,
+     2,
+     4,
+     14,
+     31
+    ],
+    "sufficient_groups": [
+     [
+      1,
+      2,
+      4
+     ],
+     [
+      3,
+      5,
+      31
+     ],
+     [
+      14,
+      18,
+      30
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [
+     5
+    ],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       1,
+       2,
+       4
+      ],
+      "older_records": [
+       1,
+       2,
+       4
+      ],
+      "pack_tokens": 2226,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       3,
+       5,
+       31
+      ],
+      "older_records": [
+       3,
+       5,
+       31
+      ],
+      "pack_tokens": 1951,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       14,
+       18,
+       30
+      ],
+      "older_records": [
+       14,
+       18,
+       30
+      ],
+      "pack_tokens": 3219,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      3,
+      5,
+      31
+     ],
+     "older_records": [
+      3,
+      5,
+      31
+     ],
+     "pack_tokens": 1951,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "ACTION1 up, ACTION2 down, ACTION3 left, ACTION4 right, each by 3 cells, applied to the shape whose centre is 0, with the vacated cells restored. ACTION1 is confirmed on the present level by a031.",
+    "limits": "ACTION2 and ACTION3 have not been used on level 1. Every recorded move is of a 3x3 shape, so a 3-cell step equals the shape's own width; the record cannot say what the step is for the 6x3, 3x6 or 6x6 shapes. A blocked move returns no movement (a008, a011, a013), so an action can also do nothing."
+   },
+   {
+    "id": "U5",
+    "uncertainty": "What ACTION6 does when a given cell is clicked, and in particular what distinguishes the 3x3 shape with a 0 centre at (43,52) from the three e shapes whose centres are colour 5 at (41-42,34), (34,44-45) and (44-45,47-48): can a click on one of those shapes, or on a frame, change which shape the movement actions control.",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     6,
+     7,
+     9,
+     15,
+     25
+    ],
+    "sufficient_groups": [
+     [
+      6,
+      7
+     ],
+     [
+      15,
+      16
+     ],
+     [
+      22,
+      23
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       6,
+       7
+      ],
+      "older_records": [
+       6,
+       7
+      ],
+      "pack_tokens": 1608,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       15,
+       16
+      ],
+      "older_records": [
+       15,
+       16
+      ],
+      "pack_tokens": 1608,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       22,
+       23
+      ],
+      "older_records": [
+       22,
+       23
+      ],
+      "pack_tokens": 1492,
+      "fits_2048": true
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      22,
+      23
+     ],
+     "older_records": [
+      22,
+      23
+     ],
+     "pack_tokens": 1492,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "A click on the centre cell of another e shape transfers control to it, at the cost of one action and with no movement. Clicks on f, on a frame wall and on an empty frame interior did nothing useful.",
+    "limits": "All four switching clicks were on the single centre cell of a 3x3 shape. No click on a non-centre e cell is recorded, and the present 5-centred shapes have two or four 5 cells, so which cell must be clicked is not shown. No click has been made on level 1. The meaning of 5 against 4 rests on two shapes only."
+   }
+  ],
+  "pack_relevant_to": [
+   "U1"
+  ],
+  "pack_complete_for": [],
+  "role1_coverage": {
+   "history_index_read_fully": true,
+   "history_changes": "read fully",
+   "images_opened": [
+    "a006",
+    "a008",
+    "a013",
+    "a020",
+    "a021",
+    "a030"
+   ],
+   "board_files_opened": [
+    "a001",
+    "a021",
+    "a030"
+   ]
+  },
+  "role1_needs_no_record_can_meet": "Nothing in the record shows: what any action does while a 0 edge is on a side other than the one being pushed (the exact present situation, with the 0 edge on top and ACTION4 pointing right); how shapes larger than 3x3 are selected, moved or launched; whether shape size must match frame size; where and why a launched shape stops; what a click on a non-centre cell of a shape does; what happens when the row-63 bar is empty; and whether level 1 is completed by the same condition as level 0.",
+  "action_actually_taken_next": "ACTION4"
+ },
+ "D04": {
+  "game": "tn36",
+  "type": "level/reset",
+  "decision": 76,
+  "pack_records": [
+   29
+  ],
+  "pack_opus_tokens": 674,
+  "pack_fits_2048": true,
+  "level_completing_actions_in_history": [],
+  "role2_checks": "13/13",
+  "role2_wrong": [],
+  "role2_cannot_determine": [],
+  "uncertainties": [
+   {
+    "id": "U1",
+    "uncertainty": "What, if anything, makes the colour-b piece at x=30-33, y=13-16 (solid on rows 13-15, with a two-cell gap at (31,16),(32,16)) move or change, and by how much and in which direction per action? Has that piece, or the colour-b open-topped outline at x=29-34, y=33-37 (with the two b cells at (31,36),(32,36)), been at any other position or had any other shape earlier in the game, and which action came just before each such change?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     0,
+     2,
+     9,
+     10,
+     12,
+     19,
+     60,
+     74
+    ],
+    "sufficient_groups": [
+     [
+      2,
+      12
+     ],
+     [
+      22,
+      60
+     ],
+     [
+      60,
+      74
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       2,
+       12
+      ],
+      "older_records": [
+       2,
+       12
+      ],
+      "pack_tokens": 2042,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       22,
+       60
+      ],
+      "older_records": [
+       22,
+       60
+      ],
+      "pack_tokens": 1970,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       60,
+       74
+      ],
+      "older_records": [
+       60,
+       74
+      ],
+      "pack_tokens": 1946,
+      "fits_2048": true
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      60,
+      74
+     ],
+     "older_records": [
+      60,
+      74
+     ],
+     "pack_tokens": 1946,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "Older than the two recent actions: the piece is moved only by clicking the disc. A disc click steps a 9-coloured outline across the five controls, left to right, and at each step the piece moves one block (4 cells) left, right or down, or stays, depending on that control (see U2). At the end of every run seen so far the piece returned to x=30-33, y=13-16. The outline at x=29-34, y=33-37 has never moved or changed. The piece has never been lower than y=25-28, so it has never been next to or inside the outline.",
+    "limits": "No upward move has ever been recorded. Nothing shows what happens if the piece reaches y=29-32 or y=33-36 in columns x=30-33, or whether a run that ends there also snaps back. The disappearance after a fifth left move (a019, a039, a055) is seen but not explained. Only attempt-level resets and the return in frame 7 are recorded; no run has ended with any lasting change."
+   },
+   {
+    "id": "U2",
+    "uncertainty": "What do the five controls in the colour-0 strip (y=41-47) do? Each has a horizontal 3-cell segment on row 42 (x=20-22, 25-27, 30-32, 35-37, 40-42) and a vertical 3-cell segment on rows 44-46 (x=21, 26, 31, 36, 41). What do colours 1 and 5 on these segments stand for, is clicking a segment a toggle (does a second click return it to 1), do the row-42 segments respond to clicks separately from the vertical ones, and does any setting of them have an effect outside the strip, immediately or later?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     0,
+     1,
+     2,
+     4,
+     5,
+     9,
+     12,
+     19,
+     23,
+     33
+    ],
+    "sufficient_groups": [
+     [
+      1,
+      2,
+      5,
+      11,
+      12,
+      14,
+      33
+     ],
+     [
+      22,
+      24,
+      25,
+      30,
+      31,
+      32,
+      33
+     ],
+     [
+      57,
+      60,
+      67,
+      74
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       1,
+       2,
+       5,
+       11,
+       12,
+       14,
+       33
+      ],
+      "older_records": [
+       1,
+       2,
+       5,
+       11,
+       12,
+       14,
+       33
+      ],
+      "pack_tokens": 3610,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       22,
+       24,
+       25,
+       30,
+       31,
+       32,
+       33
+      ],
+      "older_records": [
+       22,
+       24,
+       25,
+       30,
+       31,
+       32,
+       33
+      ],
+      "pack_tokens": 3918,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       57,
+       60,
+       67,
+       74
+      ],
+      "older_records": [
+       57,
+       60,
+       67,
+       74
+      ],
+      "pack_tokens": 3330,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "Older evidence: each of the ten segments is an independent two-state toggle (5 and 1), clicking costs one bar cell, and the pair of colours on a control decides what the piece does at that control's step of a disc run, by the table above, with no counterexample in 20 runs. Applied to the board in the decision input (horizontal 1,5,1,5,5; vertical all 5 after the two recent clicks), the table would read right, down, right, down, down; that exact setting has never been run.",
+    "limits": "The table is inferred from outcomes, not shown by the game. 'Right' has been seen only at control 1 (a012, a022, a047), never at controls 2-5. No colour pair has produced an upward move, and with two colours per segment there are only the four pairs above. The third group shows down, left and no-move but not right."
+   },
+   {
+    "id": "U3",
+    "uncertainty": "What happens when the colour-9 disc at x=32-40, y=51-59 is clicked? It is joined to the control strip by a colour-0 line running (36,50), (36-48,49), (48,48). Has it been clicked before, and if so what changed on the board, and did the result depend on the colours of the five controls at that moment?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     0,
+     2,
+     4,
+     9,
+     74
+    ],
+    "sufficient_groups": [
+     [
+      2,
+      4
+     ],
+     [
+      9,
+      12
+     ],
+     [
+      67,
+      74
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       2,
+       4
+      ],
+      "older_records": [
+       2,
+       4
+      ],
+      "pack_tokens": 2058,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       9,
+       12
+      ],
+      "older_records": [
+       9,
+       12
+      ],
+      "pack_tokens": 1880,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       67,
+       74
+      ],
+      "older_records": [
+       67,
+       74
+      ],
+      "pack_tokens": 1812,
+      "fits_2048": true
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      67,
+      74
+     ],
+     "older_records": [
+      67,
+      74
+     ],
+     "pack_tokens": 1812,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "The disc is a run button: it plays the five controls in order, left to right, moving the piece one block per control according to that control's colours, then puts the piece back. It has been clicked 20 times before the decision and always behaved this way.",
+    "limits": "Every run so far ended away from the outline, so the record does not show what a disc run does when the piece ends at (or passes through) x=30-33, y=33-36. Whether the snap-back in frame 7 is unconditional is unknown."
+   },
+   {
+    "id": "U4",
+    "uncertainty": "What is the row-1 bar (x=1-61) counting, and what happens when its colour-9 part (now x=1-47) is used up? Does every click turn one more cell from 9 to 3, including clicks that change nothing else? The board is at 76 actions but only 14 cells (x=48-61) are colour 3: was the bar refilled or the board reset earlier, and if so what triggered it and what did the board look like afterwards?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     0,
+     1,
+     2,
+     10,
+     61,
+     62
+    ],
+    "sufficient_groups": [
+     [
+      1,
+      10,
+      61,
+      62
+     ],
+     [
+      23,
+      61,
+      62
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       1,
+       10,
+       61,
+       62
+      ],
+      "older_records": [
+       1,
+       10,
+       61,
+       62
+      ],
+      "pack_tokens": 1279,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       23,
+       61,
+       62
+      ],
+      "older_records": [
+       23,
+       61,
+       62
+      ],
+      "pack_tokens": 1063,
+      "fits_2048": true
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      23,
+      61,
+      62
+     ],
+     "older_records": [
+      23,
+      61,
+      62
+     ],
+     "pack_tokens": 1063,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "The bar is an action allowance of 61 per attempt: every action of any kind uses one cell, from the right. Using the last cell ended attempt 1 in GAME_OVER (a061). The RESET that followed refilled the bar and put the controls back to their starting colours. With 47 cells of 9 now, 47 actions remain in this attempt.",
+    "limits": "One game-over and one reset only. The record does not show whether GAME_OVER is caused purely by the bar reaching zero or also by what a061 clicked (the piece itself), though no other cause is visible. It does not show whether completing a level refills the bar."
+   },
+   {
+    "id": "U5",
+    "uncertainty": "Do clicks on cells inside the bordered panel do anything: on the b piece itself (x=30-33, y=13-16), on the b outline (x=29-34, y=33-37), or on plain colour-4 / colour-5 4x4 checkerboard blocks? And which click targets and control settings has the player already tried in the 74 actions before t75, with what result?",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     0,
+     10,
+     23,
+     61
+    ],
+    "sufficient_groups": [
+     [
+      10,
+      61
+     ],
+     [
+      2,
+      4,
+      6,
+      9,
+      12,
+      19,
+      22,
+      25,
+      33,
+      50,
+      57,
+      60,
+      74
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       10,
+       61
+      ],
+      "older_records": [
+       10,
+       61
+      ],
+      "pack_tokens": 873,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       2,
+       4,
+       6,
+       9,
+       12,
+       19,
+       22,
+       25,
+       33,
+       50,
+       57,
+       60,
+       74
+      ],
+      "older_records": [
+       2,
+       4,
+       6,
+       9,
+       12,
+       19,
+       22,
+       25,
+       33,
+       50,
+       57,
+       60,
+       74
+      ],
+      "pack_tokens": null,
+      "note": "more than 8 records, not rendered"
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      10,
+      61
+     ],
+     "older_records": [
+      10,
+      61
+     ],
+     "pack_tokens": 873,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "Direct clicks on the piece and on the outline did nothing visible, and each cost a bar cell. Everything that has moved the piece came from the strip plus the disc. The settings already run are listed above; the setting on the board at the decision has not been run, and no run has taken the piece below y=25-28.",
+    "limits": "Each panel target was clicked once only, and the click on the piece coincided with the bar running out. Plain checkerboard cells were never clicked, so that part of the question has no evidence. The first group covers panel clicks only; the second covers what has been tried."
+   }
+  ],
+  "pack_relevant_to": [],
+  "pack_complete_for": [],
+  "role1_coverage": {
+   "history_index_read_fully": true,
+   "history_changes": "read fully",
+   "images_opened": [
+    "a002",
+    "a009",
+    "a010",
+    "a012",
+    "a019",
+    "a033",
+    "a057",
+    "a060",
+    "a061",
+    "a062",
+    "a074"
+   ],
+   "board_files_opened": [
+    "a001"
+   ]
+  },
+  "role1_needs_no_record_can_meet": "No record shows the piece reaching or entering the b outline, a level being completed, or any run ending with a lasting change, so what the goal is and what a successful run looks like cannot be confirmed from history. No record shows the horizontal-1 / vertical-5 pair at controls 2-5, any upward move, or a click on a plain checkerboard block. Whether completing a level refills the row-1 bar is also not recorded.",
+  "action_actually_taken_next": "ACTION6 x=37 y=55"
+ },
+ "D05": {
+  "game": "lf52",
+  "type": "delayed",
+  "decision": 85,
+  "pack_records": [
+   46
+  ],
+  "pack_opus_tokens": 1614,
+  "pack_fits_2048": true,
+  "level_completing_actions_in_history": [
+   8
+  ],
+  "role2_checks": "15/15",
+  "role2_wrong": [],
+  "role2_cannot_determine": [],
+  "uncertainties": [
+   {
+    "id": "U1",
+    "uncertainty": "What board condition ended level 1 (levels_completed is already 1)? In particular, what relation between the small 2x2 panel of 4x4 blocks (blocks at x=43-46 and x=49-52, y=45-48 and y=51-54), the large 7x3 panel of 4x4 blocks (columns starting x=7,13,19,25,31,37,43; rows y=9-12, 15-18, 21-24), the colour-2 marks inside them, and the movable b/c square was in place at the moment the level counter went from 0 to 1?",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     1,
+     2,
+     8,
+     15
+    ],
+    "sufficient_groups": [
+     [
+      8,
+      15
+     ],
+     [
+      1,
+      2,
+      8,
+      15
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": true,
+    "cited_actions_that_completed_a_level": [
+     8
+    ],
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       8,
+       15
+      ],
+      "older_records": [
+       8,
+       15
+      ],
+      "pack_tokens": 7515,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       1,
+       2,
+       8,
+       15
+      ],
+      "older_records": [
+       1,
+       2,
+       8,
+       15
+      ],
+      "pack_tokens": 11515,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "Older than the two recent actions: the first level ended on the action that reduced the pieces on its only panel to one (action 8). That it ended BECAUSE one piece remained is a supported limited conclusion from a single instance. In the present level, reducing the large panel to one piece while a second piece still sat in the small panel was not enough (action 15), and the two leftover pieces turned colour 2 at that moment. The decision input alone showed none of this.",
+    "limits": "Only one level completion exists in the record, on a board without a small panel, track or b/c square, so the history does not show what relation between the two panels and the square ends a level of the present kind. It cannot distinguish 'one piece left in total' from 'last piece on a particular block'. What the colour-2 state and the f ring mean is not shown."
+   },
+   {
+    "id": "U2",
+    "uncertainty": "What do ACTION1, ACTION2 and ACTION3 do to the b/c square (b border x=36-41, y=50-55; c interior x=37-40, y=51-54), and what happens to it when it is pushed against or past the end of the colour-5 track or into a panel? Specifically: does another ACTION4 from here move the c interior onto the block at x=43-46, y=51-54, get blocked, or do something else; and can the square travel back along the colour-5 track (rows 52-53 from x=14, column x=14-15 up to y=34, row 34-35 to x=57, column x=56-57 up to y=16, row 16-17 into the right edge of the large panel at x=48)?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     17,
+     20,
+     23,
+     29,
+     30,
+     35,
+     37,
+     41,
+     54,
+     55
+    ],
+    "sufficient_groups": [
+     [
+      30
+     ],
+     [
+      80
+     ],
+     [
+      20,
+      23,
+      29,
+      30,
+      41,
+      54,
+      55
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       30
+      ],
+      "older_records": [
+       30
+      ],
+      "pack_tokens": 665,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       80
+      ],
+      "older_records": [
+       80
+      ],
+      "pack_tokens": 659,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       20,
+       23,
+       29,
+       30,
+       41,
+       54,
+       55
+      ],
+      "older_records": [
+       20,
+       23,
+       29,
+       30,
+       41,
+       54,
+       55
+      ],
+      "pack_tokens": 5632,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      80
+     ],
+     "older_records": [
+      80
+     ],
+     "pack_tokens": 659,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "Older than the two recent actions: ACTION1 = up, ACTION2 = down, ACTION3 = left, ACTION4 = right, each moving the b/c square 6 cells and only along the colour-5 track; a move with no track ahead does nothing except advance the row-0 strip. The square has been at both ends of the track: it stops against the small panel's left frame (the current position) and against the large panel's right frame, and does not go further at either end. ACTION4 and ACTION1 from the exact current position were already tried (30, 80, 35) and changed nothing; ACTION3 from here moves it back left. Action 30 or 80 alone settles the 'another ACTION4 from here' part; the long group settles the rest. The decision input showed only one rightward move (t84).",
+    "limits": "ACTION2 from the exact current position was never tried; that it would be blocked is an inference from actions 17, 19 and 35 (no vertical move on a horizontal stretch). Every square move in the record happened after action 15, when both pieces were already colour 2, so the record does not show whether the square behaves differently at a panel edge while pieces are still green (colour e)."
+   },
+   {
+    "id": "U3",
+    "uncertainty": "What does ACTION6 (click a cell) do, and on which cells does a click have a visible effect? For example, has a click on a 4x4 colour-1 block, on a block carrying the colour-2 mark (x=31-34, y=15-18 or x=43-46, y=51-54), on the f-coloured ring at x=3-10, y=52-63, or on the colour-5 track ever changed the board?",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     9,
+     14,
+     15,
+     16,
+     31,
+     32,
+     33
+    ],
+    "sufficient_groups": [
+     [
+      14,
+      15,
+      16,
+      31,
+      32,
+      33
+     ],
+     [
+      9,
+      14,
+      15,
+      56,
+      59,
+      81,
+      82
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       14,
+       15,
+       16,
+       31,
+       32,
+       33
+      ],
+      "older_records": [
+       14,
+       15,
+       16,
+       31,
+       32,
+       33
+      ],
+      "pack_tokens": 5298,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       9,
+       14,
+       15,
+       56,
+       59,
+       81,
+       82
+      ],
+      "older_records": [
+       9,
+       14,
+       15,
+       56,
+       59,
+       81,
+       82
+      ],
+      "pack_tokens": 6110,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "Older than the two recent actions: while pieces were green, a click on a piece that could jump selected it and marked the landing block, and a click on the marked block made the jump; a click on a piece with no jump made it shake. Since action 15, every click tried has been without lasting effect: on either colour-2 piece (shake only), on the square's interior (five earlier tries, three of them the same cell as the recent t85 click), on empty blocks and on the track. The recent t85 click therefore repeated a test already made at actions 32, 34 and 81.",
+    "limits": "No click was ever made on the f-coloured ring (x=3-10, y=52-59, hole at x=6-7, y=55-56) or its stem, which appeared in action 15; nor on the frames, the background or the row-0 strip. So the record shows which targets are dead in the present state but not whether any untried target is live."
+   },
+   {
+    "id": "U4",
+    "uncertainty": "How did the two colour-2 marks come to be where they are: were the mark at x=31-34, y=15-18 in the large panel and the mark at x=43-46, y=51-54 in the small panel both present when this level started, or did one of the player's actions since then create, move or remove a mark, and if so which action and where was the b/c square at the time?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     9,
+     11,
+     15,
+     16
+    ],
+    "sufficient_groups": [
+     [
+      15
+     ],
+     [
+      9,
+      15
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       15
+      ],
+      "older_records": [
+       15
+      ],
+      "pack_tokens": 3435,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       9,
+       15
+      ],
+      "older_records": [
+       9,
+       15
+      ],
+      "pack_tokens": 4091,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "Older than the two recent actions: the two colour-2 marks are not original features of the level. Both are former green pieces: the small-panel one was there, green, from the level's first frame; the large-panel one is the last survivor of the player's three jumps. Both were recoloured to 2 together in frame 16 of action 15, with the square at its start position, and the f ring appeared in the same action. Nothing in the 70 actions since has changed them.",
+    "limits": "The record shows when and after what the recolouring happened, not what it means (for example a dead end versus a normal intermediate stage) or whether it can be reversed."
+   },
+   {
+    "id": "U5",
+    "uncertainty": "What is the row-0 strip (cells x=0-12 are colour 2, x=13-63 are colour 1) counting, and what happens when the colour-2 run reaches x=63: did it ever fill or reset earlier in the game, and with what consequence (level restart, game over, nothing)? Related: has ACTION7 ever been used, and what did it do to the board and to this strip?",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     8,
+     17,
+     36,
+     72,
+     73
+    ],
+    "sufficient_groups": [
+     [
+      36,
+      72,
+      73
+     ],
+     [
+      58,
+      72,
+      73
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       36,
+       72,
+       73
+      ],
+      "older_records": [
+       36,
+       72,
+       73
+      ],
+      "pack_tokens": 2553,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       58,
+       72,
+       73
+      ],
+      "older_records": [
+       58,
+       72,
+       73
+      ],
+      "pack_tokens": 2741,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "Older than the two recent actions: the strip counts actions taken in the current level, one cell per action whatever the action does, and is cleared when a level is completed. Filling it once (64 actions) had no consequence; it simply began overwriting in colour 2. ACTION7 was used twice in the present colour-2 state and changed nothing visible. The decision input showed only two strip steps and no ACTION7.",
+    "limits": "What happens when the second, colour-2 pass reaches x=63 (51 actions from now) is not in the record; that it would again be harmless is an unresolved hypothesis. Both ACTION7 uses came straight after an action that itself changed nothing (35 and 57) and after the pieces had turned colour 2, so the record does not show what ACTION7 does after a jump or a square move, or while pieces are green."
+   }
+  ],
+  "pack_relevant_to": [],
+  "pack_complete_for": [],
+  "role1_coverage": {
+   "history_index_read_fully": true,
+   "history_changes": "read fully",
+   "images_opened": [
+    "a001",
+    "a002",
+    "a008",
+    "a009",
+    "a014",
+    "a015",
+    "a016",
+    "a017",
+    "a020",
+    "a029",
+    "a030",
+    "a036",
+    "a054",
+    "a055",
+    "a056",
+    "a058",
+    "a073"
+   ],
+   "board_files_opened": [
+    "a008",
+    "a009",
+    "a015",
+    "a055 (first 30 lines)",
+    "a073 (row 0 of both boards only)"
+   ]
+  },
+  "role1_needs_no_record_can_meet": "1) The effect of clicking the f ring: never clicked. 2) What ends a level that has two panels, a track and a square: the only completion on record (action 8) is on a one-panel board. 3) Whether the colour-2 state reached in action 15 is recoverable, and how a fresh attempt is obtained: no reset or restart appears anywhere in the record. 4) Any behaviour of the square, of ACTION7 or of clicks near the docked square while pieces are still green: all such actions came after action 15. 5) What happens when the second pass of the row-0 strip reaches x=63. 6) ACTION2 from the exact current square position (only inferred to be blocked).",
+  "action_actually_taken_next": "ACTION6 x=44 y=52"
+ },
+ "D06": {
+  "game": "bp35",
+  "type": "delayed",
+  "decision": 75,
+  "pack_records": [
+   60
+  ],
+  "pack_opus_tokens": 2332,
+  "pack_fits_2048": false,
+  "level_completing_actions_in_history": [
+   17
+  ],
+  "role2_checks": "18/18",
+  "role2_wrong": [],
+  "role2_cannot_determine": [],
+  "uncertainties": [
+   {
+    "id": "U1",
+    "uncertainty": "What did ACTION6 at x=21 y=33 (the centre of the colour-e tile at x19-23, y31-35) actually change at t74? The input says 1276 cells changed over 10 frames but does not list them, so the player cannot tell from this input which parts of the present board were produced by that click: the large colour-a region (x13-41 y7-11, x31-53 y12-29, x13-53 y25-29, the column x19-23 y42-54, the band x13-53 y61-62), the position of the 9/b shape at x20-22 y37-40, or the placement of the e tiles and the f/b0b shapes.",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     7,
+     67,
+     71,
+     72,
+     73,
+     74
+    ],
+    "sufficient_groups": [
+     [
+      74
+     ],
+     [
+      73
+     ],
+     [
+      72
+     ],
+     [
+      7,
+      71
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       74
+      ],
+      "older_records": [],
+      "pack_tokens": null,
+      "note": "only recent actions"
+     },
+     {
+      "group": [
+       73
+      ],
+      "older_records": [
+       73
+      ],
+      "pack_tokens": 8819,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       72
+      ],
+      "older_records": [
+       72
+      ],
+      "pack_tokens": 8641,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       7,
+       71
+      ],
+      "older_records": [
+       7,
+       71
+      ],
+      "pack_tokens": 43428,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "A click on the e tile directly above the 9/b shape turns that tile into a; the shape then rises on its own until the tile above it is not a; the view then re-centres so the shape is back at y37-41. The large 'change' at t74 was a 6-row shift of an already existing map, not new shapes. The e tile now at x19-23 y31-35 is a different tile from the one clicked (it was at y25-29 before a074).",
+    "limits": "a074's own frames settle U1 directly; a072 and a073 settle it only by close analogy. Other 10-frame clicks in the index (a021, a027, a028) look like the same pattern from their sizes but I did not open them. What the next such click would do from the present position is a separate question (see N1)."
+   },
+   {
+    "id": "U2",
+    "uncertainty": "What do ACTION3, ACTION4 and ACTION7 do on this board? In particular, does any of them move or change the 9/b shape (9 at x21 y37, b at x20 y38-39, 9 at x21-22 y38-39, 9 at x21 y40), and if so in which direction and by how many cells?",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     1,
+     2,
+     3,
+     6,
+     17,
+     32,
+     48
+    ],
+    "sufficient_groups": [
+     [
+      1,
+      2,
+      3
+     ],
+     [
+      1,
+      2,
+      3,
+      6,
+      32
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       1,
+       2,
+       3
+      ],
+      "older_records": [
+       1,
+       2,
+       3
+      ],
+      "pack_tokens": 3690,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       1,
+       2,
+       3,
+       6,
+       32
+      ],
+      "older_records": [
+       1,
+       2,
+       3,
+       6,
+       32
+      ],
+      "pack_tokens": 22287,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "ACTION3 = move the shape one tile left, ACTION4 = one tile right, each followed by an automatic rise if the tile above is a. ACTION7 restores the board from before the immediately preceding action (one step) but still costs a bar cell. After a no-effect action, ACTION7 changed nothing (a031-a032), which is the same situation as now (a075 was a no-effect click).",
+    "limits": "Every recorded ACTION3/ACTION4 moved into a cells (each changed 47 cells or more). None was made with background 5 or an e tile as the neighbour, which is the present case (x13-17 and x25-29 at y37-41 are background 5). ACTION7 was used only twice, never twice in a row, and never after a tile removal, a rise or a view shift, so whether it can take back a074 is not shown."
+   },
+   {
+    "id": "U3",
+    "uncertainty": "What does the row y=63 bar measure, and what happens when its colour-f run reaches x=63? It currently has f at x0-25 and 0 at x26-63, although 75 actions have been taken. Does it advance by one cell on every action of every type, did it reset at some point (for example when level 1 was completed), and does filling it end the game or the level attempt?",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     1,
+     18,
+     23,
+     31,
+     48,
+     49
+    ],
+    "sufficient_groups": [
+     [
+      1,
+      2,
+      7,
+      18,
+      31,
+      49
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": true,
+    "cited_actions_that_completed_a_level": [],
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       1,
+       2,
+       7,
+       18,
+       31,
+       49
+      ],
+      "older_records": [
+       1,
+       2,
+       7,
+       18,
+       31,
+       49
+      ],
+      "pack_tokens": 31751,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "The bar counts actions in the current attempt of the current level: one cell per action of any type, including undo and no-effect clicks; it empties when a level is completed and on RESET. The present 26 filled cells equal the 26 actions of attempt 3 (a050-a075); 38 cells remain.",
+    "limits": "The bar has never been fuller than it is now (26 of 64), so nothing in the record shows what happens when it reaches x63. The listed group settles the counting and reset parts only."
+   },
+   {
+    "id": "U4",
+    "uncertainty": "What board condition caused levels_completed to go from 0 to 1, and which action triggered it? In other words, what was the arrangement of the 9/b shape, the colour-a region, the e tiles and the f/b0b shapes (f at y19-22 with b0b at y23 at x14-16, x20-22, x26-28; f at y55-58 with b0b at y59 at x14-16, x26-28, x32-34, x38-40, x44-46, x50-52) at the moment the first level ended?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     15,
+     17
+    ],
+    "sufficient_groups": [
+     [
+      17
+     ],
+     [
+      15,
+      17
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": true,
+    "cited_actions_that_completed_a_level": [
+     17
+    ],
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       17
+      ],
+      "older_records": [
+       17
+      ],
+      "pack_tokens": 4058,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       15,
+       17
+      ],
+      "older_records": [
+       15,
+       17
+      ],
+      "pack_tokens": 20642,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "Level 0 ended when the 9/b shape was moved onto the colour-7 plus, which sat at the top of that level's map. The a region, e tiles and f/b0b shapes were not part of the ending condition there (level 0 had no f/b0b shapes in the frames I opened).",
+    "limits": "One completion only. That level 1 also ends at a colour-7 plus is an unresolved hypothesis: no colour-7 cell appears in any level-1 frame I opened, and the present top row (seven e tiles at y1-5, new at a074) is the highest part of level 1 shown so far in those frames."
+   },
+   {
+    "id": "U5",
+    "uncertainty": "Which cells respond to ACTION6, and does the response depend on where the 9/b shape is? Specifically: do clicks on a colour-a cell (for example the column x19-23 y42-54, or the single a cells at x19 y41 and x23 y41), on an f/b0b shape (for example x14-16 y19-23), on the 9/b shape itself, or on an e tile that is not adjacent to the 9/b shape have any effect, or only clicks on certain e tiles?",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     8,
+     29,
+     31,
+     42,
+     43,
+     74
+    ],
+    "sufficient_groups": [
+     [
+      8,
+      31,
+      42,
+      43
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       8,
+       31,
+       42,
+       43
+      ],
+      "older_records": [
+       8,
+       31,
+       42,
+       43
+      ],
+      "pack_tokens": 7188,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "Older evidence: any e tile responds to a click wherever the shape is, and turns into a; the shape moves only if that opens a cells above it. A click on an a cell does nothing. From the decision input: a click on background 5 does nothing. Every click costs one bar cell. No click has ever created an e tile or any other block.",
+    "limits": "By the index, every ACTION6 in the record was on an e tile except a031 (an a cell) and a075 (background). No click was ever made on an f/b0b shape, on the 9/b shape, or on the level-0 colour-7 plus, so those are untested. The a-cell and background results rest on one click each."
+   }
+  ],
+  "pack_relevant_to": [],
+  "pack_complete_for": [],
+  "role1_coverage": {
+   "history_index_read_fully": true,
+   "history_changes": "searched (no Grep tool was available to me; I read these line ranges with Read: a001-a011, a016-a017, a023-a024, a029, a031-a032, a042-a043, a074-a075)",
+   "images_opened": [
+    "a002",
+    "a015",
+    "a017",
+    "a022",
+    "a023",
+    "a030",
+    "a046",
+    "a048",
+    "a049",
+    "a054",
+    "a063",
+    "a067",
+    "a068",
+    "a071",
+    "a072",
+    "a073",
+    "a074"
+   ],
+   "board_files_opened": [
+    "a023",
+    "a031",
+    "a048",
+    "a071",
+    "a074"
+   ]
+  },
+  "role1_needs_no_record_can_meet": "What happens when the y=63 bar reaches x63 (never fuller than 26 cells). What ACTION3/ACTION4 do against background 5 or an e tile. Whether ACTION7 works more than one step back or after a rise and view shift. What a click on an f/b0b shape or on the 9/b shape does. What lies above the present y1-5 row in level 1 and what ends this level. Whether anything can move the shape downward or stop a rise other than an e tile or background.",
+  "action_actually_taken_next": "ACTION6 x=21 y=27"
+ },
+ "D07": {
+  "game": "vc33",
+  "type": "delayed",
+  "decision": 97,
+  "pack_records": [
+   86
+  ],
+  "pack_opus_tokens": 2705,
+  "pack_fits_2048": false,
+  "level_completing_actions_in_history": [
+   13,
+   21,
+   45,
+   73
+  ],
+  "role2_checks": "18/18",
+  "role2_wrong": [],
+  "role2_cannot_determine": [],
+  "uncertainties": [
+   {
+    "id": "U1",
+    "uncertainty": "What board configuration makes a level complete? In particular, is there a required relation between the two small shapes at x=34-39 (upper one at y=4-9 with a colour-b column at x=38-39, lower one at y=21-26 with a colour-e column at x=38-39) and the same-coloured markers on the horizontal bars (colour b at x=20-21,y=14-16; colour e at x=14-15,y=49-51), or does completion depend on something else (for example where the colour-c / colour-1 segments sit on the three bars)? What did the board look like at the moments levels_completed went up in the four earlier levels?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     13,
+     21,
+     45,
+     73,
+     74,
+     77
+    ],
+    "sufficient_groups": [
+     [
+      45,
+      73
+     ],
+     [
+      13,
+      21,
+      45
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": true,
+    "cited_actions_that_completed_a_level": [
+     13,
+     21,
+     45,
+     73
+    ],
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       45,
+       73
+      ],
+      "older_records": [
+       45,
+       73
+      ],
+      "pack_tokens": 2874,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       13,
+       21,
+       45
+      ],
+      "older_records": [
+       13,
+       21,
+       45
+      ],
+      "pack_tokens": 3715,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "In all four earlier levels the level ended on the click that brought the last shape's coloured edge level with the same-coloured marker on a bar bordering the shape's chamber; with three shapes (a045) all three had to be lined up. Carried over to this level (an extrapolation, not yet seen here): the b shape's b column would need to be at x=20-21 next to the bar at y=14-16, and the e shape's e column at x=14-15 next to the bar at y=49-51. The exchange of the two shapes in the most recent action put the b shape in the chamber above the b-marked bar.",
+    "limits": "No completion has been seen in this level. History does not fix which side of the marked bar counts (level 2 had shapes on either side of their bars; levels 0 and 1 only below). That both shapes must be lined up at once is by analogy with a045 only. Nothing shows that both target positions can be reached together here."
+   },
+   {
+    "id": "U2",
+    "uncertainty": "What does clicking one of the six colour-9 blocks at x=61-63 do (blocks at y=11-13, 17-19, 29-31, 35-37, 46-48, 52-54)? Specifically, which 186 cells changed after t96 (ACTION6 x=62 y=18, the block just below the bar at y=14-16), and do the block above a bar and the block below a bar have different or opposite effects?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     66,
+     74,
+     75,
+     77,
+     79,
+     87,
+     93,
+     96
+    ],
+    "sufficient_groups": [
+     [
+      74,
+      75,
+      77,
+      79,
+      87
+     ],
+     [
+      74,
+      78,
+      85,
+      87,
+      93
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       74,
+       75,
+       77,
+       79,
+       87
+      ],
+      "older_records": [
+       74,
+       75,
+       77,
+       79,
+       87
+      ],
+      "pack_tokens": 2936,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       74,
+       78,
+       85,
+       87,
+       93
+      ],
+      "older_records": [
+       74,
+       78,
+       85,
+       87,
+       93
+      ],
+      "pack_tokens": 3034,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "Each colour-9 block click moves the two 3/0 edges on either side of the adjacent bar by 3 columns in opposite directions: the chamber containing the clicked block gains 3 columns of colour 0 (its edge moves left) and the chamber on the other side of that bar loses 3. Blocks above and below the same bar are opposites (a087 against a079). A shape sitting at an edge moves with it. A click can be refused (a074). The 186 cells of t96 are two edge steps, two shape shifts and the bar segment changing to colour c with its two 0 lines.",
+    "limits": "The block at y=46-48 (above the bar at y=49-51) was never clicked in this level, and the block at y=11-13 only once, when it was refused; their effects here are by symmetry. Why a074 was refused is not shown; the furthest right an edge was seen is x=61 (a081, a083, a085). Several repeats (a076, a082, a084, a088-a091, a094, a095) were checked by cell counts in the index only, not by opening them."
+   },
+   {
+    "id": "U3",
+    "uncertainty": "What exactly did clicking the colour-c segment at x=33,y=15 do during the 62 frames of t97, and what would clicking it again do? Did the two shapes physically travel and exchange places, or did only their colours change? Is the effect reversed by a second click, repeated, or does it do nothing? And do the colour-1 segments on the other bars (x=40-51,y=32-34 and x=25-36,y=49-51) respond to clicks in the same way?",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     59,
+     61,
+     68,
+     69,
+     86,
+     92,
+     97
+    ],
+    "sufficient_groups": [
+     [
+      69,
+      86
+     ],
+     [
+      69,
+      92
+     ],
+     [
+      59,
+      69
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [
+     86
+    ],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [
+     86
+    ],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       69,
+       86
+      ],
+      "older_records": [
+       69,
+       86
+      ],
+      "pack_tokens": 3398,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       69,
+       92
+      ],
+      "older_records": [
+       69,
+       92
+      ],
+      "pack_tokens": 3456,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       59,
+       69
+      ],
+      "older_records": [
+       59,
+       69
+      ],
+      "pack_tokens": 3569,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "A click on a colour-c segment opens it, lets the shape resting at that position cross to the other side of the bar, and closes it again, leaving edges, segment colour and lines as they were. With a shape on each side (t97 only) both cross. A colour-1 segment did nothing when clicked, so the segments at x=40-51,y=32-34 and x=25-36,y=49-51 would be expected to do nothing in their present state. The groups listed settle these parts only.",
+    "limits": "Whether a second click at (33,15) sends the two shapes back is not shown anywhere: it would be an inference from the segment still being colour c. A crossing with shapes on both sides was seen only once, in t97 itself. The colour-1 result comes from one click in level 3, none in this level."
+   },
+   {
+    "id": "U4",
+    "uncertainty": "What is the strip in row 0 (colour 7 at x=0-55, colour 4 at x=56-63)? Does every click turn one more cell from 7 to 4, including clicks that change nothing else, did t96 also consume one, and what happens when the colour-4 part reaches x=0 (level reset, game over, nothing)?",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     1,
+     66,
+     73,
+     81,
+     97
+    ],
+    "sufficient_groups": [
+     [
+      66,
+      73,
+      79,
+      80,
+      81
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       66,
+       73,
+       79,
+       80,
+       81
+      ],
+      "older_records": [
+       66,
+       73,
+       79,
+       80,
+       81
+      ],
+      "pack_tokens": 3476,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "Row 0 is a per-level click counter: it starts full of colour 7, every click counts whether or not it changes anything, and cells turn to 4 from the right at a fixed rate for the level. In this level one cell is about three clicks, so t96 counted even though no cell turned.",
+    "limits": "The strip has never run out: every level in the index is attempt 1 and the most used was 36 of 64 cells (a073). What happens at x=0 is not in the history. The 200-click figure is a fit to 24 clicks, not something displayed."
+   },
+   {
+    "id": "U5",
+    "uncertainty": "What do the two colour-0 lines at x=30-37 on y=12 and y=18 mean, and why is the segment on the bar at y=14-16 colour c while the segments on the other two bars are colour 1? Is this a selected or active state that an earlier click created (and that a click elsewhere would move), or a fixed part of this level's layout?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     58,
+     77,
+     78,
+     79,
+     85,
+     86,
+     96
+    ],
+    "sufficient_groups": [
+     [
+      85,
+      86,
+      87
+     ],
+     [
+      78,
+      79
+     ],
+     [
+      58,
+      59,
+      61
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [
+     86
+    ],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [
+     86
+    ],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       85,
+       86,
+       87
+      ],
+      "older_records": [
+       85,
+       86,
+       87
+      ],
+      "pack_tokens": 3739,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       78,
+       79
+      ],
+      "older_records": [
+       78,
+       79
+      ],
+      "pack_tokens": 1514,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       58,
+       59,
+       61
+      ],
+      "older_records": [
+       58,
+       59,
+       61
+      ],
+      "pack_tokens": 4617,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      78,
+      79
+     ],
+     "older_records": [
+      78,
+      79
+     ],
+     "pack_tokens": 1514,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "Colour c plus the two 0 lines is a state that block clicks switch on and off, not a selection made by clicking the bar and not fixed layout. It appears when the 3/0 edges on both sides of a bar stand at the same position just past the end of that bar's segment, and it goes away as soon as either edge moves. In that state, and only then, a click on the segment has had an effect. Bar y=14-16's segment was colour 1 until t96.",
+    "limits": "Every time the state appeared the two edges were both exactly at the segment's end, so the history does not separate 'edges equal' from 'edges both at the segment end'. All of this is from two levels (3 and 4)."
+   }
+  ],
+  "pack_relevant_to": [
+   "U3",
+   "U5"
+  ],
+  "pack_complete_for": [],
+  "role1_coverage": {
+   "history_index_read_fully": true,
+   "history_changes": "read fully",
+   "images_opened": [
+    "a013",
+    "a021",
+    "a045",
+    "a051",
+    "a061",
+    "a066",
+    "a069",
+    "a073",
+    "a075",
+    "a077",
+    "a078",
+    "a087",
+    "a093",
+    "a096"
+   ],
+   "board_files_opened": [
+    "a045",
+    "a073",
+    "a074",
+    "a077",
+    "a096"
+   ]
+  },
+  "role1_needs_no_record_can_meet": "1. What a second click on the still colour-c segment at (33,15) does (no colour-c segment was ever clicked twice in a row). 2. What happens when the row 0 strip is used up (never happened; every level so far was finished on its first attempt). 3. Whether this level needs both shapes lined up with their markers and on which side of the marked bars (no completion of this level exists yet). 4. The travel limits of the edges in this level and the reason a074 was refused. 5. The effect of the never-clicked block at y=46-48 and of the y=11-13 block away from its limit.",
+  "action_actually_taken_next": "ACTION6 x=62 y=36"
+ },
+ "D10": {
+  "game": "vc33",
+  "type": "conflicting",
+  "decision": 43,
+  "pack_records": [
+   25,
+   32
+  ],
+  "pack_opus_tokens": 1292,
+  "pack_fits_2048": true,
+  "level_completing_actions_in_history": [
+   13,
+   21
+  ],
+  "role2_checks": "22/22",
+  "role2_wrong": [],
+  "role2_cannot_determine": [],
+  "uncertainties": [
+   {
+    "id": "U1",
+    "uncertainty": "What board condition completed levels 1 and 2? In particular, does it have to do with the row of a floating shape's coloured base (e at x=8..10, y=43; f at x=41..43, y=39; b at x=52..54, y=47) relative to the same-coloured two-cell mark on the neighbouring colour-5 column (e at x=14..15, y=41; f at x=36..37, y=39; b at x=48..49, y=47), or with something else (for example the amount of colour 0 in each compartment)?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     9,
+     13,
+     21,
+     22,
+     31,
+     41
+    ],
+    "sufficient_groups": [
+     [
+      13
+     ],
+     [
+      21
+     ],
+     [
+      13,
+      21,
+      31,
+      41
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": true,
+    "cited_actions_that_completed_a_level": [
+     13,
+     21
+    ],
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       13
+      ],
+      "older_records": [
+       13
+      ],
+      "pack_tokens": 1005,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       21
+      ],
+      "older_records": [
+       21
+      ],
+      "pack_tokens": 1659,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       13,
+       21,
+       31,
+       41
+      ],
+      "older_records": [
+       13,
+       21,
+       31,
+       41
+      ],
+      "pack_tokens": 3163,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      13
+     ],
+     "older_records": [
+      13
+     ],
+     "pack_tokens": 1005,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "Older evidence, both earlier levels: each ended on the very action whose first frame brought the shape's coloured edge level with the same-coloured mark on the bar, and not before (a009-a012 moved the shape without completing). In the current level, older actions a031 and a041 show that one or two shapes being level is not enough. The row arithmetic fits a target in which all three bases sit at their marks' rows and the left compartment receives exactly the two rows that remain at x=30..33, y=56..57.",
+    "limits": "Levels 0 and 1 each had one shape and one mark, so the three-shape condition (all at once) is an extension, not observed. Alignment and completion coincided twice; no record isolates alignment from other things true at the same moment (for example the amounts in each area). Whether this level completes when the e base reaches y=41 has not been observed."
+   },
+   {
+    "id": "U2",
+    "uncertainty": "What does a click on each of the colour-9 blocks in rows 56-57 that has not been clicked in the last two actions do: the blocks on the right side of each colour-5 column (x=16..17, x=28..29, x=38..39, x=50..51) and the left-side blocks at x=34..35 and x=46..47? Which compartment loses colour 0, which gains it, and how many rows?",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     9,
+     10,
+     15,
+     22,
+     25,
+     32,
+     33
+    ],
+    "sufficient_groups": [
+     [
+      22,
+      25
+     ],
+     [
+      22,
+      25,
+      32
+     ],
+     [
+      9,
+      10
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [
+     25,
+     32
+    ],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [
+     25,
+     32
+    ],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       22,
+       25
+      ],
+      "older_records": [
+       22,
+       25
+      ],
+      "pack_tokens": 1552,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       22,
+       25,
+       32
+      ],
+      "older_records": [
+       22,
+       25,
+       32
+      ],
+      "pack_tokens": 1832,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       9,
+       10
+      ],
+      "older_records": [
+       9,
+       10
+      ],
+      "pack_tokens": 1172,
+      "fits_2048": true
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      9,
+      10
+     ],
+     "older_records": [
+      9,
+      10
+     ],
+     "pack_tokens": 1172,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "Older evidence settles the left-side blocks at x=46..47 and x=34..35 in this level: each moves two rows of colour 0 from the right of its column to the left (the block's own side), lowering a shape on the losing side and raising one on the gaining side. All four left-side blocks therefore act alike. For the right-side blocks there is only an analogy: in level 0 both blocks flanking a bar were clicked and each pulled colour 0 to its own side (a009 versus a010), and every block clicked in levels 1 and 2 did the same. a032 shows a click can do nothing; the receiving side being filled to the top of the shorter column is the visible circumstance.",
+    "limits": "No right-side block (x=16..17, 28..29, 38..39, 50..51) has ever been clicked in this level; all 22 clicks here were on left-side blocks. The level-0 analogy is from a horizontal layout with one bar. The a032 reading (receiving side full) rests on one event."
+   },
+   {
+    "id": "U3",
+    "uncertainty": "What happens when a 9 block is clicked while the compartment it would draw from holds little or no colour 0? Specifically: would clicking (24,56) again move the remaining colour 0 at x=30..33, y=56..57 out of the compartment between the columns at x=26..27 and x=36..37, and would clicking (12,56) now, with x=18..23, y=56..57 back to colour 3, do nothing, cost an action, or do something else?",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     32,
+     35,
+     38,
+     39,
+     40
+    ],
+    "sufficient_groups": [
+     [
+      38
+     ],
+     [
+      38,
+      39
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [
+     32
+    ],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       38
+      ],
+      "older_records": [
+       38
+      ],
+      "pack_tokens": 758,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       38,
+       39
+      ],
+      "older_records": [
+       38,
+       39
+      ],
+      "pack_tokens": 1072,
+      "fits_2048": true
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      38
+     ],
+     "older_records": [
+      38
+     ],
+     "pack_tokens": 758,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "First half is settled by older evidence: a click on (24,56) does move the patch x=30..33, y=56..57 into x=18..23, y=56..57 (a038), and (12,56) then moves it into the left compartment as two full rows, raising the e shape by two (a039; also a035, a037 before the recent a043).",
+    "limits": "Second half is not addressed: no 9 block was ever clicked while its source side was completely empty, in any level. a032 shows a no-effect click exists but in a different circumstance, so what (12,56) would do right now is unresolved."
+   },
+   {
+    "id": "U4",
+    "uncertainty": "What is the strip of colour 7 in row 0 (now x=0..44, 45 cells), and what happens when it runs out? Does it refill when a level is completed, and how long was it at the start of this level?",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     1,
+     2,
+     13,
+     25,
+     39
+    ],
+    "sufficient_groups": [
+     [
+      13,
+      22
+     ],
+     [
+      22,
+      25,
+      32,
+      39
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": true,
+    "cited_actions_that_completed_a_level": [
+     13
+    ],
+    "pack_records_cited": [
+     25
+    ],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [
+     25,
+     32
+    ],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       13,
+       22
+      ],
+      "older_records": [
+       13,
+       22
+      ],
+      "pack_tokens": 1674,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       22,
+       25,
+       32,
+       39
+      ],
+      "older_records": [
+       22,
+       25,
+       32,
+       39
+      ],
+      "pack_tokens": 2142,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      13,
+      22
+     ],
+     "older_records": [
+      13,
+      22
+     ],
+     "pack_tokens": 1674,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "Older evidence shows the strip is full at the start of every level, shrinks from the right as actions are taken whether or not they do anything useful, and shrinks at a rate that differs by level and is not one cell per action. With 45 cells left the remaining allowance looks like roughly 50 actions in this level.",
+    "limits": "The strip has never run out, so what happens at zero is unresolved; that it is an action limit is a hypothesis. The rate is fitted to 22 actions. Whether a032 counted toward the strip cannot be separated from the regular 7-action spacing."
+   },
+   {
+    "id": "U5",
+    "uncertainty": "Is a transfer always exactly two rows per click whatever the widths of the two compartments, and do clicks on cells other than the 9 blocks (the 4/e, 4/f, 4/b shapes, the e/f/b marks, the colour-5 columns, the colour-0 areas, plain colour-3 cells) change anything or just use up an action?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     1,
+     9,
+     22,
+     25,
+     33,
+     34
+    ],
+    "sufficient_groups": [
+     [
+      22,
+      25,
+      33,
+      34,
+      35,
+      38,
+      40
+     ],
+     [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [
+     25
+    ],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [
+     25
+    ],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       22,
+       25,
+       33,
+       34,
+       35,
+       38,
+       40
+      ],
+      "older_records": [
+       22,
+       25,
+       33,
+       34,
+       35,
+       38,
+       40
+      ],
+      "pack_tokens": 3120,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8
+      ],
+      "older_records": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8
+      ],
+      "pack_tokens": 2706,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "Older evidence: every effective click in this level (20 before the two recent ones) moved exactly two rows out of one compartment and two rows into the next, regardless of widths, and every click on (12,56) raised the e shape by exactly two rows. In level 0, clicks on a mark, on a shape, on colour 0 and on colour 3 had no effect on the board apart from shortening the row-0 strip.",
+    "limits": "Non-9 cells were tested only in level 0, never in this level; the colour-5 bar body and the outer colour-4 frame were never clicked. The one exception to 'two rows' is a032, which moved nothing."
+   }
+  ],
+  "pack_relevant_to": [
+   "U2",
+   "U3",
+   "U4",
+   "U5"
+  ],
+  "pack_complete_for": [],
+  "role1_coverage": {
+   "history_index_read_fully": true,
+   "history_changes": "read fully",
+   "images_opened": [
+    "a013",
+    "a021",
+    "a032",
+    "a038"
+   ],
+   "board_files_opened": [
+    "a001 (board before only)",
+    "a009",
+    "a013",
+    "a022 (board before only)",
+    "a032 (rows 23-63 of board before)"
+   ]
+  },
+  "role1_needs_no_record_can_meet": "What happens when the row-0 strip runs out (never happened). What any right-side 9 block does in this level's layout (never clicked here). What a 9 block does when its source compartment is completely empty (never tried). Whether this level ends when the e base reaches y=41 with f at y=39 and b at y=47 (three shapes level at once has never occurred).",
+  "action_actually_taken_next": "ACTION6 x=24 y=56"
+ },
+ "D11": {
+  "game": "cd82",
+  "type": "conflicting",
+  "decision": 92,
+  "pack_records": [
+   53,
+   68
+  ],
+  "pack_opus_tokens": 2038,
+  "pack_fits_2048": true,
+  "level_completing_actions_in_history": [
+   28,
+   35
+  ],
+  "role2_checks": "24/24",
+  "role2_wrong": [],
+  "role2_cannot_determine": [],
+  "uncertainties": [
+   {
+    "id": "U1",
+    "uncertainty": "What ACTION1, ACTION2, ACTION3 and ACTION4 each do to the board: which cells change, in which direction and by how many cells, and whether the thing that changes is the colour-8 diamond with the colour-2 edge (rows 40-56, x14-30), the 10x10 block at x27-36,y34-43, or something else.",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     13,
+     38,
+     39,
+     40,
+     44,
+     47,
+     48,
+     50,
+     83,
+     87,
+     91
+    ],
+    "sufficient_groups": [
+     [
+      38,
+      40,
+      44,
+      47,
+      87,
+      91
+     ],
+     [
+      47,
+      48,
+      50,
+      83,
+      87,
+      91
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       38,
+       40,
+       44,
+       47,
+       87,
+       91
+      ],
+      "older_records": [
+       38,
+       40,
+       44,
+       47,
+       87
+      ],
+      "pack_tokens": 4788,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       47,
+       48,
+       50,
+       83,
+       87,
+       91
+      ],
+      "older_records": [
+       47,
+       48,
+       50,
+       83,
+       87
+      ],
+      "pack_tokens": 4972,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "Older evidence: ACTION1-4 never change the 10x10 block at x27-36,y34-43. They move the one colour-2-edged shape between eight fixed places around the block (above, below, left, right and the four corners), one place per action: ACTION1 up, ACTION2 down, ACTION3 left, ACTION4 right. The shape is a rectangle with a small extra piece at the four side places and a diamond at the four corner places. If there is no place in that direction the shape stays put, although the action still counts. So the 229 cells at t91 were the shape leaving the place below the block and appearing at lower-left.",
+    "limits": "No action has ever been taken while the shape is at lower-left, at any level, so what ACTION1-4 do from the current place is by analogy with the other three corners (ACTION4 back to below, ACTION1 to the left side, ACTION2 and ACTION3 no move), not observed. The no-move cases and the level-0 moves were read from the index, not from pictures."
+   },
+   {
+    "id": "U2",
+    "uncertainty": "What board condition completed levels 1 and 2, and in particular how the 10x10 picture in the top-left panel (x3-12,y3-12: colour f with a colour-c block at x6-9,y3-5, a colour-e region on the right, and a colour-8 region at lower left x4-7,y9-12) related to the main board at the moments those levels were completed.",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     28,
+     35,
+     57
+    ],
+    "sufficient_groups": [
+     [
+      28
+     ],
+     [
+      35
+     ],
+     [
+      28,
+      35,
+      57
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": true,
+    "cited_actions_that_completed_a_level": [
+     28,
+     35
+    ],
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       28
+      ],
+      "older_records": [
+       28
+      ],
+      "pack_tokens": 2513,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       35
+      ],
+      "older_records": [
+       35
+      ],
+      "pack_tokens": 5313,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       28,
+       35,
+       57
+      ],
+      "older_records": [
+       28,
+       35,
+       57
+      ],
+      "pack_tokens": 11110,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "Older evidence: both earlier levels ended on an ACTION5 that left the 10x10 block at x27-36,y34-43 looking the same as the top-left picture at x3-12,y3-12. In level 2 the block was once only 12 cells away from the picture (the colour-c block at x30-33,y34-36 was missing) and that was not enough. The top-left picture is the target for the block.",
+    "limits": "Two completions only. The match at a028 and a035 was checked from the pictures, not cell by cell; only the a057 near-match was checked in text. Whether the check happens only after ACTION5 is not separable, because ACTION5 is the only action seen to change the block."
+   },
+   {
+    "id": "U3",
+    "uncertainty": "Which object the actions currently apply to, what the colour-2 cells along three sides of the diamond (for example x20,y40; x14-15,y46; x24,y56; x29-30,y50) signify, and what ACTION6 does when the clicked cell is on the main board (for example a cell inside the block at x27-36,y34-43) rather than on a swatch in the top strip.",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     36,
+     38,
+     44,
+     92
+    ],
+    "sufficient_groups": [
+     [
+      36,
+      38
+     ],
+     [
+      38,
+      44
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       36,
+       38
+      ],
+      "older_records": [
+       36,
+       38
+      ],
+      "pack_tokens": 2361,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       38,
+       44
+      ],
+      "older_records": [
+       38,
+       44
+      ],
+      "pack_tokens": 2124,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "Older evidence: there is only ever one colour-2-edged object, and every move, every swatch click and every ACTION5 in the record acts on it. The colour-2 cells are part of that object's outline at every place and level, not a mark that comes and goes. A swatch click sets the object's colour (including the small piece) and moves the row-7 bar; it never changes the block. The diamond at x14-30,y40-56 is that object in its lower-left place.",
+    "limits": "ACTION6 on a main-board cell has never been tried: all 19 ACTION6 actions in the record are at y=4 on swatches (a006, a008, a016, a019, a024, a030, a037, a042, a052, a058, a062, a064, a067, a075, a077, a079, a084, a088, a092). So that part of U3 has no evidence. Nothing shows a way to act on the small piece separately."
+   },
+   {
+    "id": "U4",
+    "uncertainty": "What ACTION5 does.",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     36,
+     41,
+     57,
+     85,
+     89
+    ],
+    "sufficient_groups": [
+     [
+      36
+     ],
+     [
+      41
+     ],
+     [
+      85
+     ],
+     [
+      89
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       36
+      ],
+      "older_records": [
+       36
+      ],
+      "pack_tokens": 1611,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       41
+      ],
+      "older_records": [
+       41
+      ],
+      "pack_tokens": 1853,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       85
+      ],
+      "older_records": [
+       85
+      ],
+      "pack_tokens": 3997,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       89
+      ],
+      "older_records": [
+       89
+      ],
+      "pack_tokens": 1733,
+      "fits_2048": true
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      36
+     ],
+     "older_records": [
+      36
+     ],
+     "pack_tokens": 1611,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "Older evidence: ACTION5 pushes the colour-2-edged shape 7 cells towards the block and back, and the block cells it covered take the shape's colour. From a side place that is the nearest half of the block (5 rows or 5 columns); from a corner place it is the triangle on that corner including the diagonal (55 cells). The shape ends where it started. It is the only action that changes the block, and both level completions came on it.",
+    "limits": "ACTION5 has never been used from the lower-left place, the current one, at any level; a lower-left triangle is expected by analogy with the upper-left (a057), upper-right (a081, index only) and lower-right (a085) cases. ACTION5 has always painted with the large part; the small piece has never painted anything."
+   },
+   {
+    "id": "U5",
+    "uncertainty": "Whether the colour-c area at x27-36,y39-43 is a separate object lying over the lower half of the f/e block, or a part of that block, and when shapes overlap (the diamond, this colour-c area, the colour-e region, the colour-f block) which one is drawn on top.",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     61,
+     85,
+     89
+    ],
+    "sufficient_groups": [
+     [
+      89
+     ],
+     [
+      85,
+      89
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       89
+      ],
+      "older_records": [
+       89
+      ],
+      "pack_tokens": 1733,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       85,
+       89
+      ],
+      "older_records": [
+       85,
+       89
+      ],
+      "pack_tokens": 5250,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      89
+     ],
+     "older_records": [
+      89
+     ],
+     "pack_tokens": 1733,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "Older evidence: the colour-c area at x27-36,y39-43 is not a separate object. It is the block's own cells, painted by the ACTION5 at a089. The block is a 10x10 canvas with no layers: each ACTION5 overwrites the cells it covers, so the most recent paint wins. While sliding, the edged shape is drawn over the block. The colour-e cells that stop at y38 are what is left of the a085 triangle after a089 painted over its lower rows.",
+    "limits": "None seen for the question as asked. It does not say which order of paints produces the target; that has to be worked out from the shapes of the eight paints."
+   }
+  ],
+  "pack_relevant_to": [],
+  "pack_complete_for": [],
+  "role1_coverage": {
+   "history_index_read_fully": true,
+   "history_changes": "searched (read only the first 60 lines, a001 to part of a010; I had no Grep tool, so the rest was not opened)",
+   "images_opened": [
+    "a028",
+    "a035",
+    "a036",
+    "a038",
+    "a040",
+    "a041",
+    "a044",
+    "a047",
+    "a048",
+    "a050",
+    "a061",
+    "a083",
+    "a085",
+    "a087",
+    "a089",
+    "a091"
+   ],
+   "board_files_opened": [
+    "a036 (whole file)",
+    "a058 (first 46 lines: board before the action, rows 0-44)"
+   ]
+  },
+  "role1_needs_no_record_can_meet": "What ACTION6 does on a main-board cell, and how (or whether) the small 4 by 3 piece can be made to paint: never tried. What ACTION5 paints from lower-left and what ACTION1-4 do from lower-left: never tried. What happens when the row-63 bar is used up: never reached.",
+  "action_actually_taken_next": "ACTION5"
+ },
+ "D12": {
+  "game": "ka59",
+  "type": "conflicting",
+  "decision": 95,
+  "pack_records": [
+   73,
+   86
+  ],
+  "pack_opus_tokens": 1000,
+  "pack_fits_2048": true,
+  "level_completing_actions_in_history": [
+   30
+  ],
+  "role2_checks": "22/22",
+  "role2_wrong": [],
+  "role2_cannot_determine": [],
+  "uncertainties": [
+   {
+    "id": "U1",
+    "uncertainty": "What does each of ACTION1, ACTION2, ACTION3 and ACTION4 change on the board, and which object does it act on? In particular: do they act on the object whose centre is currently colour 0 (the unframed colour-e block at x=30-32, y=33-38 with centre cells (31,35),(31,36)), and if so in which direction and by how many cells per action?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     1,
+     57,
+     68,
+     72,
+     74,
+     76,
+     87
+    ],
+    "sufficient_groups": [
+     [
+      57,
+      58,
+      68,
+      72
+     ],
+     [
+      57,
+      68,
+      72,
+      74,
+      87
+     ],
+     [
+      1,
+      3,
+      4,
+      7
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       57,
+       58,
+       68,
+       72
+      ],
+      "older_records": [
+       57,
+       58,
+       68,
+       72
+      ],
+      "pack_tokens": 1622,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       57,
+       68,
+       72,
+       74,
+       87
+      ],
+      "older_records": [
+       57,
+       68,
+       72,
+       74,
+       87
+      ],
+      "pack_tokens": 1788,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       1,
+       3,
+       4,
+       7
+      ],
+      "older_records": [
+       1,
+       3,
+       4,
+       7
+      ],
+      "pack_tokens": 2846,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      57,
+      58,
+      68,
+      72
+     ],
+     "older_records": [
+      57,
+      58,
+      68,
+      72
+     ],
+     "pack_tokens": 1622,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "Older than the two recent actions: ACTION1 = up, ACTION2 = down, ACTION3 = left, ACTION4 = right, each moving only the e block whose centre is 0, by 3 cells per action, in both levels and for all four block sizes. For the block selected now (x=30-32, y=33-38) the record directly shows ACTION2 moving it down to this spot (a087) and ACTION3 doing nothing in this column (a074, a086). The decision input itself showed no use of actions 1-4.",
+    "limits": "The block has never been at exactly x=30-32, y=33-38 when ACTION1, ACTION3 or ACTION4 was pressed; what they do from here is inferred from the same block one step away. A move can also start a slide of a neighbouring block (see U4), so 'moves 3 cells' is not the only possible result of actions 1-4."
+   },
+   {
+    "id": "U2",
+    "uncertainty": "What does the centre colour (0 versus 4) of an e block mean, and which cells respond to an ACTION6 click? At t94 the click on (31,35) turned (31,35),(31,36) from 4 to 0 and at the same time turned (8-9,44) and (8-9,45), the centre of the framed block at x=5-12, y=41-48, from 0 to 4; at t95 the click on (10,11), inside the empty colour-4 frame at x=8-12, y=8-15, changed no cell in the play area. What did the block at x=5-12, y=41-48 do under actions 1-4 while its centre was 0, and what do clicks on other kinds of cell (a colour-4 border, a non-centre e cell, a colour-1, colour-f or colour-2 cell) do?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     6,
+     15,
+     37,
+     75,
+     77,
+     78
+    ],
+    "sufficient_groups": [
+     [
+      6,
+      7
+     ],
+     [
+      37,
+      38,
+      77
+     ],
+     [
+      75,
+      78,
+      79
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       6,
+       7
+      ],
+      "older_records": [
+       6,
+       7
+      ],
+      "pack_tokens": 1608,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       37,
+       38,
+       77
+      ],
+      "older_records": [
+       37,
+       38,
+       77
+      ],
+      "pack_tokens": 1478,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       75,
+       78,
+       79
+      ],
+      "older_records": [
+       75,
+       78,
+       79
+      ],
+      "pack_tokens": 1152,
+      "fits_2048": true
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      75,
+      78,
+      79
+     ],
+     "older_records": [
+      75,
+      78,
+      79
+     ],
+     "pack_tokens": 1152,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "Older evidence: exactly one e block has a 0 centre at any time and it is the one actions 1-4 move. ACTION6 on any e cell of another block (centre or not, inside a frame or not) transfers the 0 centre to it; the block that loses it gets a 4 centre. Every recorded click on a cell that is not part of an e block (empty-frame interior, frame border, colour 1, colour f) left the play area unchanged. The decision input had shown one transfer (t94) and one dead click (t95) but not what the 0 centre does.",
+    "limits": "No click was ever made on a colour-2 cell, on the border of a frame that holds a block, or on the block that already has the 0 centre. All 13 effective clicks were on e cells; 9 dead clicks cover the other cell types."
+   },
+   {
+    "id": "U3",
+    "uncertainty": "What board change coincided with levels_completed going from 0 to 1, and what does that imply this level needs? Specifically: were the three framed e blocks (x=5-12,y=41-48; x=53-60,y=38-42; x=50-54,y=50-54) already inside their colour-4 frames when this level started, or did earlier actions put them there, and is the empty colour-4 frame at x=8-12, y=8-15 (colour-1 interior x=9-11, y=9-14, 3 wide by 6 tall) related to the unframed e block at x=30-32, y=33-38 (also 3 wide by 6 tall)?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     5,
+     30,
+     31,
+     36
+    ],
+    "sufficient_groups": [
+     [
+      5,
+      24,
+      30
+     ],
+     [
+      30,
+      31,
+      36,
+      44,
+      66
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": true,
+    "cited_actions_that_completed_a_level": [
+     30
+    ],
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       5,
+       24,
+       30
+      ],
+      "older_records": [
+       5,
+       24,
+       30
+      ],
+      "pack_tokens": 3157,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       30,
+       31,
+       36,
+       44,
+       66
+      ],
+      "older_records": [
+       30,
+       31,
+       36,
+       44,
+       66
+      ],
+      "pack_tokens": 3714,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "Older evidence: level 1 was completed at the moment the last empty frame received a block (a030); filling one frame of two did not complete it (a005, a024). In this level the player itself placed the three framed blocks, each in the frame whose interior has the block's size, and the level is still open with the 3x6 frame at x=8-12, y=8-15 empty and the 3x6 block loose. This supports, as a limited conclusion, that the level needs the loose 3x6 block inside the interior x=9-11, y=9-14.",
+    "limits": "Only one level completion exists in the record. In the first level both blocks and both frames had the same size, so it is not shown whether a block must match its frame's size, or whether a particular block belongs to a particular frame. No block has ever been in the upper-left panel of this level."
+   },
+   {
+    "id": "U4",
+    "uncertainty": "What happens when a shape is moved against or into cells of colour f (the bands at x=21-29, y=30-62 and y=24-29, x=0-29, and the large area x=24-62, y=0-26), colour 2 (x=21-23, y=0-23; x=30-63, y=27-29; column x=63) or the edge of a colour-1 panel? Has any e block or frame ever been seen crossing from one colour-1 panel to another (for example from the panel x=30-62, y=30-62 to the panel x=0-20, y=0-23), or stopping at a panel edge?",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     20,
+     21,
+     51,
+     53,
+     62,
+     64,
+     83
+    ],
+    "sufficient_groups": [
+     [
+      62,
+      74
+     ],
+     [
+      51,
+      53,
+      62,
+      76,
+      83
+     ],
+     [
+      8,
+      21
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       62,
+       74
+      ],
+      "older_records": [
+       62,
+       74
+      ],
+      "pack_tokens": 1413,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       51,
+       53,
+       62,
+       76,
+       83
+      ],
+      "older_records": [
+       51,
+       53,
+       62,
+       76,
+       83
+      ],
+      "pack_tokens": 2558,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       8,
+       21
+      ],
+      "older_records": [
+       8,
+       21
+      ],
+      "pack_tokens": 1909,
+      "fits_2048": true
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      62,
+      74
+     ],
+     "older_records": [
+      62,
+      74
+     ],
+     "pack_tokens": 1413,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "Older evidence: a block moved directly with actions 1-4 never entered colour f or colour 2 (7 attempts, all without movement). A block has crossed an f band only by being struck: when the selected block is side by side with another block and is moved toward it, the other block slides 3 cells per frame, 5 frames in the two cases with free room (a021, a062) and 4 frames where a colour-2 strip was reached (a053). Both crossings from one colour-1 panel to another were horizontal. The decision input showed only the static layout.",
+    "limits": "No block has ever crossed the f rows y=24-29 or been inside the upper-left panel, so the vertical crossing needed to reach the empty frame is not shown. The 5-frame slide length rests on two cases; it is not shown what happens if a sliding block would stop partly on f, meet another block, or reach colour 2 after crossing f. The 4-frame stop under the colour-2 strip is a single case."
+   },
+   {
+    "id": "U5",
+    "uncertainty": "What makes the row y=63 bar change, and what happens when its colour-4 part (now x=0-30, 31 cells) is used up? At t95 cell (31,63) went from 4 to 0, but at t94 no cell in row 63 changed. Does the bar lose a cell on every action of some kinds, only on actions that have no other effect, or on some other schedule, and did it refill when level 1 was completed?",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     30,
+     31,
+     52,
+     95
+    ],
+    "sufficient_groups": [
+     [
+      51,
+      52,
+      53,
+      54,
+      55,
+      56
+     ],
+     [
+      30,
+      31
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": true,
+    "cited_actions_that_completed_a_level": [
+     30
+    ],
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       51,
+       52,
+       53,
+       54,
+       55,
+       56
+      ],
+      "older_records": [
+       51,
+       52,
+       53,
+       54,
+       55,
+       56
+      ],
+      "pack_tokens": 2591,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       30,
+       31
+      ],
+      "older_records": [
+       30,
+       31
+      ],
+      "pack_tokens": 2542,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "Older evidence: in this level the bar loses one colour-4 cell on every second action whatever the action does, which explains why t95 cost a cell and t94 did not. It was refilled when the first level was completed. If the alternation continues, the next action should cost no cell and the 31 remaining cells last about 62 more actions.",
+    "limits": "What happens when the last colour-4 cell is gone has never been observed, so the bar being a hard limit is an unresolved hypothesis. The rate was different in the first level, so the rate is a per-level regularity, not a fixed rule."
+   }
+  ],
+  "pack_relevant_to": [],
+  "pack_complete_for": [],
+  "role1_coverage": {
+   "history_index_read_fully": true,
+   "history_changes": "read fully",
+   "images_opened": [
+    "a005",
+    "a008",
+    "a013",
+    "a020",
+    "a021",
+    "a030",
+    "a037",
+    "a050",
+    "a051",
+    "a053",
+    "a062",
+    "a066",
+    "a074",
+    "a076",
+    "a078",
+    "a083",
+    "a087",
+    "a094"
+   ],
+   "board_files_opened": [
+    "a001",
+    "a030",
+    "a031"
+   ]
+  },
+  "role1_needs_no_record_can_meet": "What happens when the row y=63 bar runs out. Whether a block can be sent upward across the f rows y=24-29 into the upper-left panel, and where it stops there. Whether the colour-2 strip x=21-23, y=0-23 affects a block inside the upper-left panel. Whether a block must be in a frame of its own size for the level to count. What a slide does on meeting another block. What a click on a colour-2 cell, on a filled frame's border or on the already selected block does.",
+  "action_actually_taken_next": "ACTION1"
+ },
+ "D14": {
+  "game": "cd82",
+  "type": "spatial",
+  "decision": 25,
+  "pack_records": [
+   15
+  ],
+  "pack_opus_tokens": 1272,
+  "pack_fits_2048": true,
+  "level_completing_actions_in_history": [],
+  "role2_checks": "13/13",
+  "role2_wrong": [],
+  "role2_cannot_determine": [],
+  "uncertainties": [
+   {
+    "id": "U1",
+    "uncertainty": "What board condition completes the level, and in particular whether the framed box at the top left (x3-12, y3-12: rows y3-7 colour 0, rows y8-12 colour f) is a picture of what some part of the play area (for example the 10x10 colour-f square at x27-36, y34-43) has to look like.",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     0,
+     1,
+     4,
+     18,
+     23
+    ],
+    "sufficient_groups": [],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": true,
+    "cited_actions_that_completed_a_level": [],
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "The square is the thing the actions modify and the top-left box is a fixed picture. The record supports treating the box as a plausible target for the square, and shows that a near-match (ten cells off, a018) does not complete the level.",
+    "limits": "No action in the 25 completed a level, so no set of past actions settles what the completion condition is. The a018 near-miss is consistent with an exact match being required but does not prove that an exact match would complete it. I confirmed the top-left box is unchanged only in the a001 board, the 15 pictures I opened and the current board."
+   },
+   {
+    "id": "U2",
+    "uncertainty": "What each of ACTION2, ACTION3, ACTION4 and ACTION5 does to the board, and whether ACTION1 pressed again would repeat the same change it made at t25.",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     0,
+     3,
+     4,
+     5,
+     7,
+     11,
+     13,
+     14,
+     22
+    ],
+    "sufficient_groups": [
+     [
+      4,
+      5,
+      22
+     ],
+     [
+      5,
+      21,
+      22
+     ],
+     [
+      5,
+      7
+     ],
+     [
+      5,
+      18
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       4,
+       5,
+       22
+      ],
+      "older_records": [
+       4,
+       5,
+       22
+      ],
+      "pack_tokens": 4675,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       5,
+       21,
+       22
+      ],
+      "older_records": [
+       5,
+       21,
+       22
+      ],
+      "pack_tokens": 4586,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       5,
+       7
+      ],
+      "older_records": [
+       5,
+       7
+      ],
+      "pack_tokens": 2232,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       5,
+       18
+      ],
+      "older_records": [
+       5,
+       18
+      ],
+      "pack_tokens": 2287,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "From the current position (tilted upper-left), the record shows what ACTION2, ACTION4 and ACTION5 do: ACTION2 returns the shape to the left of the square, ACTION4 puts it above the square, ACTION5 slides it diagonally into the square and paints a triangle (x27-36 at y34 down to x27 at y43). From above the square, ACTION5 paints rows y34-38 only. The group [5, 7] or [5, 18] is what a player needs to see that ACTION4 then ACTION5 would paint exactly rows y34-38.",
+    "limits": "ACTION1 and ACTION3 were never pressed while the shape was in the upper-left position, so whether ACTION1 again does anything is not shown; the only hint is that the matching presses at the upper-right position (a011, a012) did nothing. ACTION5 from the upper-left position was only seen with interior colour f, never with colour 0 as it is now; that it would paint the same triangle with 0 is an inference from a007/a018 (colour 0 painted from above). ACTION2 from the left or right position was never tried, so positions below the square are unknown."
+   },
+   {
+    "id": "U3",
+    "uncertainty": "Where the colour-0 triangle inside the f square came from: the cells (36,35), (35-36,36), (34-36,37), (33-36,38). Was it there from the first board, or did an earlier action produce it (for example by the bordered shape overlapping or marking the f square)?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     1,
+     18,
+     21
+    ],
+    "sufficient_groups": [
+     [
+      21
+     ],
+     [
+      18,
+      21
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       21
+      ],
+      "older_records": [
+       21
+      ],
+      "pack_tokens": 3610,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       18,
+       21
+      ],
+      "older_records": [
+       18,
+       21
+      ],
+      "pack_tokens": 4873,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "The triangle is not a separate object. It is the part of the earlier colour-0 fill of rows y34-38 (a018) that the diagonal f stamp at a021 did not cover. Paint left by ACTION5 persists until another ACTION5 paints over it.",
+    "limits": "None for where it came from. It says nothing about whether the triangle matters for completing the level."
+   },
+   {
+    "id": "U4",
+    "uncertainty": "What ACTION6 does when the clicked cell is not inside the left small box: for instance inside the right small box (interior x42-44, y3-5, colour f), on the bordered shape itself, on the f square, or on the top-left box.",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     0,
+     6,
+     8
+    ],
+    "sufficient_groups": [
+     [
+      6,
+      8
+     ],
+     [
+      16,
+      19
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       6,
+       8
+      ],
+      "older_records": [
+       6,
+       8
+      ],
+      "pack_tokens": 1458,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       16,
+       19
+      ],
+      "older_records": [
+       16,
+       19
+      ],
+      "pack_tokens": 1656,
+      "fits_2048": true
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      6,
+      8
+     ],
+     "older_records": [
+      6,
+      8
+     ],
+     "pack_tokens": 1458,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "It settles the right small box: clicking it switches the shape's interior back to f. Together with the recent a024 this gives a complete picture of the two small boxes.",
+    "limits": "All five clicks in the record were at (36,4), (37,4) or (43,4). No click was ever made on the shape, on the square, on the top-left box or on empty background, so what those do is not addressed at all."
+   },
+   {
+    "id": "U5",
+    "uncertainty": "What the colour-4 strip on the bottom row (y63, now x0-47) measures, which actions shorten it, and what happens when it has no colour-4 cells left.",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     0,
+     1,
+     2,
+     6
+    ],
+    "sufficient_groups": [
+     [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [
+     15
+    ],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8,
+       9,
+       10,
+       11,
+       12,
+       13,
+       14,
+       15,
+       16,
+       17,
+       18,
+       19,
+       20,
+       21,
+       22,
+       23,
+       24,
+       25
+      ],
+      "older_records": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8,
+       9,
+       10,
+       11,
+       12,
+       13,
+       14,
+       15,
+       16,
+       17,
+       18,
+       19,
+       20,
+       21,
+       22,
+       23
+      ],
+      "pack_tokens": null,
+      "note": "more than 8 records, not rendered"
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "The strip is a count of actions taken, not of any particular action type: every action, including clicks and presses that do nothing, advances it at about 0.64 cells per action. No action is free.",
+    "limits": "The 100-action figure is a fit to 25 points, not something shown. The strip has never been empty, so what happens then is not in the record. The listed group covers only which actions shorten it; no group settles the consequence of running out."
+   }
+  ],
+  "pack_relevant_to": [],
+  "pack_complete_for": [],
+  "role1_coverage": {
+   "history_index_read_fully": true,
+   "history_changes": "read fully",
+   "images_opened": [
+    "a003",
+    "a004",
+    "a005",
+    "a007",
+    "a009",
+    "a011",
+    "a013",
+    "a015",
+    "a017",
+    "a018",
+    "a020",
+    "a021",
+    "a022",
+    "a023",
+    "a025"
+   ],
+   "board_files_opened": [
+    "a001"
+   ]
+  },
+  "role1_needs_no_record_can_meet": "What completes the level (no level was completed in 25 actions). What happens when the row-y63 strip has no colour-4 cells left. What ACTION6 does on any cell other than the two small boxes. What ACTION1 and ACTION3 do from the upper-left position, and whether any position exists below the square.",
+  "action_actually_taken_next": "ACTION1"
+ },
+ "D15": {
+  "game": "vc33",
+  "type": "spatial",
+  "decision": 66,
+  "pack_records": [
+   54
+  ],
+  "pack_opus_tokens": 770,
+  "pack_fits_2048": true,
+  "level_completing_actions_in_history": [
+   13,
+   21,
+   45
+  ],
+  "role2_checks": "13/13",
+  "role2_wrong": [],
+  "role2_cannot_determine": [],
+  "uncertainties": [
+   {
+    "id": "U1",
+    "uncertainty": "What board condition completes a level? In particular: does the 4/b shape (colour 4 at x=35-36 y=31-32 and x=33-38 y=33-34, colour b at x=33-38 y=35-36) have to reach some particular height or position, and do the colour-b cells on the 5-column at x=42-44 y=29-30 and the colour-1 segments (x=12-14 y=43-54; x=27-29 y=34-45) play any part in that condition? What did the board look like at the moments levels 1, 2 and 3 were completed?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     13,
+     21,
+     32,
+     45,
+     59
+    ],
+    "sufficient_groups": [
+     [
+      45
+     ],
+     [
+      13,
+      21,
+      45
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": true,
+    "cited_actions_that_completed_a_level": [
+     13,
+     21,
+     45
+    ],
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       45
+      ],
+      "older_records": [
+       45
+      ],
+      "pack_tokens": 1843,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       13,
+       21,
+       45
+      ],
+      "older_records": [
+       13,
+       21,
+       45
+      ],
+      "pack_tokens": 3715,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      45
+     ],
+     "older_records": [
+      45
+     ],
+     "pack_tokens": 1843,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "Older evidence supports that a level completes when every shape's coloured part is level with the same-coloured mark on the neighbouring column. For the current board that points to bringing the shape's b rows (now y=35-36) to y=29-30, i.e. 6 rows higher. The colour-1 segments were not involved in any completion; the history shows them acting as gates (see U4).",
+    "limits": "Alignment completing level 3 has not been observed; it is an extension from levels 0-2. In level 2 marks and coloured rows were 1 row thick; here both are 2 rows thick, and whether both rows must coincide is untested. Levels 0 and 1 were read from pictures only. It is not shown whether anything besides alignment is required."
+   },
+   {
+    "id": "U2",
+    "uncertainty": "What does ACTION6 on each of the four untested colour-9 blocks at y=61-63 do: x=9-11 (left of the x=12-14 column), x=45-47 (right of the x=42-44 column), x=51-53 (left of the x=54-56 column) and x=57-59 (right of the x=54-56 column)? Which colour-0 area does each one raise or lower, by how many rows, and does a right-side block act in the opposite direction to the left-side block of the same column?",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     22,
+     46,
+     47,
+     54,
+     55
+    ],
+    "sufficient_groups": [
+     [
+      46,
+      47,
+      55
+     ],
+     [
+      46,
+      47,
+      54,
+      55
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [
+     54
+    ],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [
+     54
+    ],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       46,
+       47,
+       55
+      ],
+      "older_records": [
+       46,
+       47,
+       55
+      ],
+      "pack_tokens": 1582,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       46,
+       47,
+       54,
+       55
+      ],
+      "older_records": [
+       46,
+       47,
+       54,
+       55
+      ],
+      "pack_tokens": 1868,
+      "fits_2048": true
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      46,
+      47,
+      55
+     ],
+     "older_records": [
+      46,
+      47,
+      55
+     ],
+     "pack_tokens": 1582,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "Two of the four blocks I listed as untested were in fact used earlier: x=9-11 (a046) and x=51-53 (a055, a057, a060, a062, a064). Their effects are directly recorded. The blocks at x=45-47 and x=57-59 have never been clicked; their effect is only inferred by symmetry with x=15-17.",
+    "limits": "No click on x=45-47 or x=57-59 exists anywhere in the history. The symmetry rule rests on one column (x=12-14) where both sides were tried. Row counts moved are equal (3 rows) even though the areas have different widths, so it is a level step, not a cell count."
+   },
+   {
+    "id": "U3",
+    "uncertainty": "Would another ACTION6 at x=40 y=62 again raise the colour-0 area in x=30-41 (and the 4/b shape) by 3 rows, now that the area x=45-53 has no colour 0 left above y=61 (only x=48-50 y=61-63 remains)? More generally, what limits a 9-block click: does it need colour 0 available on the other side of its column, and is that why the click at x=16 y=62 had no board effect (there is no colour 0 anywhere in x=0-11)?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     32,
+     46,
+     53,
+     64
+    ],
+    "sufficient_groups": [
+     [
+      53
+     ],
+     [
+      46,
+      53
+     ],
+     [
+      32,
+      33,
+      40
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       53
+      ],
+      "older_records": [
+       53
+      ],
+      "pack_tokens": 856,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       46,
+       53
+      ],
+      "older_records": [
+       46,
+       53
+      ],
+      "pack_tokens": 1256,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       32,
+       33,
+       40
+      ],
+      "older_records": [
+       32,
+       33,
+       40
+      ],
+      "pack_tokens": 3342,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      53
+     ],
+     "older_records": [
+      53
+     ],
+     "pack_tokens": 856,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "Older evidence indicates one more click at x=40 y=62 should still work, taking the bottom strip x=48-50 y=61-63 and lifting the shape's b rows to y=32-33; after that the x=45-53 area would be empty and the click would fail like a066 did. One further step exists right of x=54-56 (x=60-63 y=61-63), which x=52 y=62 could by the same pattern bring into x=45-53.",
+    "limits": "Draining a bottom strip was seen for the x=12-14 column only, not yet for the x=42-44 or x=54-56 columns. Whether the strip x=48-50 y=61-63 refills when it is the receiving end has not been seen in level 3 (level 2 a038/a044 show a strip between 9 blocks receiving). The 'receiving area full' limit is from one level-2 event and its cause is inferred."
+   },
+   {
+    "id": "U4",
+    "uncertainty": "What are the colour-1 segments on the 5-columns (x=12-14 y=43-54 and x=27-29 y=34-45) and the colour-b band at x=42-44 y=29-30? Are they fixed markers, do they move or change colour when 9 blocks are clicked or when the colour-0 level beside them changes, and does clicking them (or any other non-9 cell such as the 4/b shape or a 5-column) do anything?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     1,
+     46,
+     49,
+     50,
+     51,
+     58,
+     59
+    ],
+    "sufficient_groups": [
+     [
+      49,
+      50
+     ],
+     [
+      58,
+      59
+     ],
+     [
+      49,
+      50,
+      51
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       49,
+       50
+      ],
+      "older_records": [
+       49,
+       50
+      ],
+      "pack_tokens": 3225,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       58,
+       59
+      ],
+      "older_records": [
+       58,
+       59
+      ],
+      "pack_tokens": 2879,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       49,
+       50,
+       51
+      ],
+      "older_records": [
+       49,
+       50,
+       51
+      ],
+      "pack_tokens": 3799,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "The 1 segments are gates, not targets; they have done their job for this shape. The b band is a fixed mark (see U1 for its likely role). The x=42-44 and x=54-56 columns have no such segment.",
+    "limits": "The activation condition (equal levels plus shape in front) is inferred from two cases; which part is necessary was not separated. Clicking a gate while colour 1, or any other non-9 cell in level 3, was never tried, so 'does nothing' is not shown for this level."
+   },
+   {
+    "id": "U5",
+    "uncertainty": "What is the row-0 bar (colour 7 at x=0-36, colour 4 at x=37-63) counting, what happens when the remaining 37 colour-7 cells are used up, and why did t65 convert two cells (x=38-39) while t66 converted one (x=37)?",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     25,
+     45,
+     47,
+     66
+    ],
+    "sufficient_groups": [
+     [
+      45,
+      46,
+      47,
+      48
+     ],
+     [
+      25,
+      32,
+      47,
+      54
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [
+     54
+    ],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       45,
+       46,
+       47,
+       48
+      ],
+      "older_records": [
+       45,
+       46,
+       47,
+       48
+      ],
+      "pack_tokens": 3256,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       25,
+       32,
+       47,
+       54
+      ],
+      "older_records": [
+       25,
+       32,
+       47,
+       54
+      ],
+      "pack_tokens": 3317,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "The bar is a per-level action allowance; the two-cell step in a065 is rounding, not a penalty for effective clicks. About 28 actions remain at the level-3 rate.",
+    "limits": "What happens when the bar empties is not in the history at all. The per-action rate is an estimate from 21 actions; the exact allowance is not shown."
+   }
+  ],
+  "pack_relevant_to": [
+   "U2"
+  ],
+  "pack_complete_for": [],
+  "role1_coverage": {
+   "history_index_read_fully": true,
+   "history_changes": "read fully",
+   "images_opened": [
+    "a013",
+    "a021",
+    "a032",
+    "a045",
+    "a051",
+    "a058",
+    "a061"
+   ],
+   "board_files_opened": [
+    "a032 (board before only)",
+    "a045",
+    "a049"
+   ]
+  },
+  "role1_needs_no_record_can_meet": "What clicking the 9 blocks at x=45-47 and x=57-59 actually does (never clicked). What happens when the row-0 bar runs out (never happened). Whether bringing the 2-row b part level with the 2-row b band at y=29-30 completes level 3 (not yet reached). Whether clicking a colour-1 segment, a plain 5-column, the shape or the b band does anything in this level (never tried).",
+  "action_actually_taken_next": "ACTION6 x=10 y=62"
+ },
+ "D16": {
+  "game": "ka59",
+  "type": "spatial",
+  "decision": 81,
+  "pack_records": [
+   56
+  ],
+  "pack_opus_tokens": 784,
+  "pack_fits_2048": true,
+  "level_completing_actions_in_history": [
+   30
+  ],
+  "role2_checks": "13/13",
+  "role2_wrong": [],
+  "role2_cannot_determine": [],
+  "uncertainties": [
+   {
+    "id": "U1",
+    "uncertainty": "What board condition made levels_completed go from 0 to 1 earlier in the game? In particular, where was the moving piece (the colour-e block with a colour-0 centre) relative to any colour-4 outlined frame at the moment the level ended, and did the piece or a frame change appearance just before that?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     5,
+     24,
+     30,
+     36
+    ],
+    "sufficient_groups": [
+     [
+      5,
+      30
+     ],
+     [
+      24,
+      30
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": true,
+    "cited_actions_that_completed_a_level": [
+     30
+    ],
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       5,
+       30
+      ],
+      "older_records": [
+       5,
+       30
+      ],
+      "pack_tokens": 2531,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       24,
+       30
+      ],
+      "older_records": [
+       24,
+       30
+      ],
+      "pack_tokens": 2601,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": null,
+    "what_the_evidence_supports": "Level 0 ended when both e pieces were inside their frames at the same time; one piece framed alone was not enough (a005, a024). In level 1 each frame interior matches one piece (3x3, 6x3, 6x6, 3x6) and three frames were filled without the level ending. This points to: all four pieces must be in their matching frames together, which means the 3x6 piece now at x30-32,y30-35 has to reach the frame at x8-12,y8-15, and the 6x6 piece the player has just moved out of the frame x5-12,y41-48 (a079 onward) would have to be back inside it.",
+    "limits": "Only one level completion exists, with two equal 3x3 pieces. That the same rule holds in level 1 with four pieces of different sizes is an extension, not observed. It is not shown whether a piece must sit in the frame of its own size, whether the centre colour (0 for the selected piece, 4 for a deselected one) matters, or whether the order of placement matters."
+   },
+   {
+    "id": "U2",
+    "uncertainty": "What do ACTION2, ACTION3 and ACTION4 do to the e block at x6-11, y33-38: which direction does each move it, by how many cells, and does any of them change its size or shape instead of moving it?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     2,
+     4,
+     7,
+     51,
+     53,
+     79
+    ],
+    "sufficient_groups": [
+     [
+      2,
+      4,
+      7
+     ],
+     [
+      40,
+      46,
+      47
+     ],
+     [
+      51,
+      53,
+      62
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       2,
+       4,
+       7
+      ],
+      "older_records": [
+       2,
+       4,
+       7
+      ],
+      "pack_tokens": 2290,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       40,
+       46,
+       47
+      ],
+      "older_records": [
+       40,
+       46,
+       47
+      ],
+      "pack_tokens": 1578,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       51,
+       53,
+       62
+      ],
+      "older_records": [
+       51,
+       53,
+       62
+      ],
+      "pack_tokens": 2148,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      40,
+      46,
+      47
+     ],
+     "older_records": [
+      40,
+      46,
+      47
+     ],
+     "pack_tokens": 1578,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "For the block at x6-11,y33-38: ACTION2 = down 3, ACTION3 = left 3, ACTION4 = right 3, ACTION1 = up 3, no reshaping. A selected piece does not enter colour-f or colour-2 cells (the action is spent with no move), so one more ACTION1 (to y30-35) is possible but the one after would meet f at y27-29. Moving into a touching piece sends that piece sliding instead, and a sliding piece does cross f.",
+    "limits": "ACTION4 with the 6x6 piece itself is not recorded (inferred from other pieces). ACTION3 from x6-11 would put the piece at x3-8; movement toward the board edge x0 or over other frames was not tested for this piece. All blocked moves seen were against f or 2; blocking in the top-left room and by the 2 strip x21-23 is not recorded."
+   },
+   {
+    "id": "U3",
+    "uncertainty": "Were the three e shapes with colour-4 centres (the 3x6 one at x30-32, y30-35 with 4 at x31, y32-33; the 6x3 one inside the frame at x53-60, y38-42; the 3x3 one inside the frame at x50-54, y50-54) already on the board when this level started, or did any of them appear, move or change as a result of earlier actions in this level?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     15,
+     31,
+     36,
+     44,
+     73
+    ],
+    "sufficient_groups": [
+     [
+      31
+     ],
+     [
+      36,
+      37,
+      44,
+      45,
+      73,
+      78
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       31
+      ],
+      "older_records": [
+       31
+      ],
+      "pack_tokens": 924,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       36,
+       37,
+       44,
+       45,
+       73,
+       78
+      ],
+      "older_records": [
+       36,
+       37,
+       44,
+       45,
+       73,
+       78
+      ],
+      "pack_tokens": 2638,
+      "fits_2048": false
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      31
+     ],
+     "older_records": [
+      31
+     ],
+     "pack_tokens": 924,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "None of the three shapes was fixed scenery. All are movable pieces the player relocated in this level: the two framed ones were placed in their frames by the player (a036, a044), and the 3x6 at x30-32,y30-35 is the one piece not yet in a frame. A colour-4 centre marks a deselected piece, not a correctly placed one.",
+    "limits": "The meaning of centre colours rests on about ten clicks and is a reading of a pattern, not something the game states. Nothing shows whether the two placed pieces are now locked or could still be selected and moved (the 6x6 piece could be: a078, a079)."
+   },
+   {
+    "id": "U4",
+    "uncertainty": "What does ACTION6 (click a cell x,y) do, and which cells respond to a click: the e block at x6-11, y33-38, the unframed e shape at x30-32, y30-35, the 4 frames, or plain background cells of colour 1, f or 2?",
+    "older_evidence_found_by_role1": "yes",
+    "cited_actions": [
+     6,
+     37,
+     75
+    ],
+    "sufficient_groups": [
+     [
+      6,
+      7
+     ],
+     [
+      37,
+      38,
+      75
+     ],
+     [
+      77,
+      78,
+      79
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       6,
+       7
+      ],
+      "older_records": [
+       6,
+       7
+      ],
+      "pack_tokens": 1608,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       37,
+       38,
+       75
+      ],
+      "older_records": [
+       37,
+       38,
+       75
+      ],
+      "pack_tokens": 1498,
+      "fits_2048": true
+     },
+     {
+      "group": [
+       77,
+       78,
+       79
+      ],
+      "older_records": [
+       77,
+       78,
+       79
+      ],
+      "pack_tokens": 1196,
+      "fits_2048": true
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      77,
+      78,
+      79
+     ],
+     "older_records": [
+      77,
+      78,
+      79
+     ],
+     "pack_tokens": 1196,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "ACTION6 only chooses which piece ACTION1-4 move. Clicking any cell of the 3x6 piece at x30-32,y30-35 would select it again; clicking frames or background wastes an action. It does not move or change pieces or frames.",
+    "limits": "Clicks on colour-1 floor and on colour-2 cells were not tried in level 1; a click on the currently selected piece was never tried."
+   },
+   {
+    "id": "U5",
+    "uncertainty": "What governs the bar on row 63 (colour 4 at x0-37, colour 0 at x38-63): what makes a cell turn from 4 to 0, how many actions the remaining 38 cells of 4 allow, and what happened when it ran out or when the level changed?",
+    "older_evidence_found_by_role1": "partly",
+    "cited_actions": [
+     1,
+     31,
+     51
+    ],
+    "sufficient_groups": [
+     [
+      30,
+      31
+     ],
+     [
+      74,
+      75,
+      76,
+      77,
+      78,
+      79
+     ]
+    ],
+    "cited_actions_out_of_range": [],
+    "about_level_completion": false,
+    "cited_actions_that_completed_a_level": null,
+    "pack_records_cited": [],
+    "pack_holds_a_whole_sufficient_group": false,
+    "pack_records_in_some_group": [],
+    "groups_rendered_as_B2": [
+     {
+      "group": [
+       30,
+       31
+      ],
+      "older_records": [
+       30,
+       31
+      ],
+      "pack_tokens": 2540,
+      "fits_2048": false
+     },
+     {
+      "group": [
+       74,
+       75,
+       76,
+       77,
+       78,
+       79
+      ],
+      "older_records": [
+       74,
+       75,
+       76,
+       77,
+       78,
+       79
+      ],
+      "pack_tokens": 1822,
+      "fits_2048": true
+     }
+    ],
+    "smallest_fitting_group": {
+     "group": [
+      74,
+      75,
+      76,
+      77,
+      78,
+      79
+     ],
+     "older_records": [
+      74,
+      75,
+      76,
+      77,
+      78,
+      79
+     ],
+     "pack_tokens": 1822,
+     "fits_2048": true
+    },
+    "what_the_evidence_supports": "The bar is an action counter for the level: it refills when a level starts and loses a cell every second action in level 1, whether or not the action does anything. With 38 cells of colour 4 left after 51 level-1 actions, about 76 more actions remain before it is empty. Wasted actions (blocked moves, clicks on nothing) cost the same as useful ones.",
+    "limits": "The bar has never reached zero in this game, so what happens then is not recorded anywhere. The 100 and 128 totals are fitted from the pattern, not shown."
+   }
+  ],
+  "pack_relevant_to": [],
+  "pack_complete_for": [],
+  "role1_coverage": {
+   "history_index_read_fully": true,
+   "history_changes": "read fully",
+   "images_opened": [
+    "a005",
+    "a006",
+    "a021",
+    "a025",
+    "a030",
+    "a036",
+    "a044",
+    "a051",
+    "a053",
+    "a062",
+    "a066",
+    "a074",
+    "a076",
+    "a078",
+    "a081"
+   ],
+   "board_files_opened": [
+    "a030",
+    "a031"
+   ]
+  },
+  "role1_needs_no_record_can_meet": "What happens when the row-63 bar runs out. Whether level 1 ends on the same condition as level 0 (inferred by analogy only). The stopping rule of a slide and whether a slide can go upward through f y24-29 or through colour 2 into the top-left room (N1, N2). Whether a slide is stopped by another piece (N3). ACTION4 with the 6x6 piece selected, and any move of a selected piece toward the board edge or inside the top-left room.",
+  "action_actually_taken_next": "ACTION1"
+ }
+}

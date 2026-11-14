@@ -1,0 +1,508 @@
+{
+ "D01": {
+  "records": [
+   {
+    "action_number": 10,
+    "action": "ACTION1",
+    "level": 0,
+    "attempt": 1,
+    "frames_returned": 1,
+    "cells_differing_from_board_before_per_frame": [
+     52
+    ],
+    "cells_of_last_frame_differing_from_board_before": 52,
+    "level_completed": false,
+    "state_after": "NOT_FINISHED",
+    "cells_where_board_before_differs_from_current": 1751,
+    "probe_answers": {
+     "P1": "c",
+     "P2": "3",
+     "P3": "3",
+     "P4": "c",
+     "P5": "4",
+     "P6": "4",
+     "P7": "4"
+    }
+   }
+  ],
+  "game": "ls20",
+  "decision": 82,
+  "type": "level/reset",
+  "pack_opus_tokens": 1274,
+  "pack_fits_2048": true,
+  "pack_sha256": "9ba25a7dbeac2c6c6ce9b324724ded37457cf875064fb794b37df68e0c1f342a"
+ },
+ "D02": {
+  "records": [
+   {
+    "action_number": 5,
+    "action": "ACTION2",
+    "level": 0,
+    "attempt": 1,
+    "frames_returned": 1,
+    "cells_differing_from_board_before_per_frame": [
+     18
+    ],
+    "cells_of_last_frame_differing_from_board_before": 18,
+    "level_completed": false,
+    "state_after": "NOT_FINISHED",
+    "cells_where_board_before_differs_from_current": 3519,
+    "probe_answers": {
+     "P1": "e",
+     "P2": "1",
+     "P3": "1",
+     "P4": "e",
+     "P5": "f",
+     "P6": "1",
+     "P7": "2"
+    }
+   }
+  ],
+  "game": "ka59",
+  "decision": 33,
+  "type": "level/reset",
+  "pack_opus_tokens": 954,
+  "pack_fits_2048": true,
+  "pack_sha256": "59c06d4e920dc06bf4f5e31959c8e5d78440688d1f06aa032a16ab58f46eef14"
+ },
+ "D04": {
+  "records": [
+   {
+    "action_number": 29,
+    "action": "ACTION6 x=41 y=42",
+    "level": 0,
+    "attempt": 1,
+    "frames_returned": 1,
+    "cells_differing_from_board_before_per_frame": [
+     4
+    ],
+    "cells_of_last_frame_differing_from_board_before": 4,
+    "level_completed": false,
+    "state_after": "NOT_FINISHED",
+    "cells_where_board_before_differs_from_current": 35,
+    "probe_answers": {
+     "P1": "9",
+     "P2": "3",
+     "P3": "5",
+     "P4": "1",
+     "P5": "1",
+     "P6": "3",
+     "P7": "0"
+    }
+   }
+  ],
+  "game": "tn36",
+  "decision": 76,
+  "type": "level/reset",
+  "pack_opus_tokens": 674,
+  "pack_fits_2048": true,
+  "pack_sha256": "ed8751e38211ff29555d60370550e6a1b786454308a824a114a99e092bddf907"
+ },
+ "D05": {
+  "records": [
+   {
+    "action_number": 46,
+    "action": "ACTION4",
+    "level": 1,
+    "attempt": 1,
+    "frames_returned": 3,
+    "cells_differing_from_board_before_per_frame": [
+     76,
+     104,
+     122
+    ],
+    "cells_of_last_frame_differing_from_board_before": 122,
+    "level_completed": false,
+    "state_after": "NOT_FINISHED",
+    "cells_where_board_before_differs_from_current": 171,
+    "probe_answers": {
+     "P1": "9",
+     "P2": "a",
+     "P3": "5",
+     "P4": "c",
+     "P5": "0",
+     "P6": "a",
+     "P7": "0"
+    }
+   }
+  ],
+  "game": "lf52",
+  "decision": 85,
+  "type": "delayed",
+  "pack_opus_tokens": 1614,
+  "pack_fits_2048": true,
+  "pack_sha256": "06e32b46e4fe876d07e2c7036d532cad979364ea7b275766eb0da9633796fe20"
+ },
+ "D06": {
+  "records": [
+   {
+    "action_number": 60,
+    "action": "ACTION3",
+    "level": 1,
+    "attempt": 3,
+    "frames_returned": 5,
+    "cells_differing_from_board_before_per_frame": [
+     35,
+     39,
+     47,
+     47,
+     47
+    ],
+    "cells_of_last_frame_differing_from_board_before": 47,
+    "level_completed": false,
+    "state_after": "NOT_FINISHED",
+    "cells_where_board_before_differs_from_current": 1424,
+    "probe_answers": {
+     "P1": "a",
+     "P2": "9",
+     "P3": "5",
+     "P4": "a",
+     "P5": "5",
+     "P6": "5",
+     "P7": "5",
+     "P8": "5"
+    }
+   }
+  ],
+  "game": "bp35",
+  "decision": 75,
+  "type": "delayed",
+  "pack_opus_tokens": 2332,
+  "pack_fits_2048": false,
+  "pack_sha256": "9d071052474de1156bd695414ea79a22baf4b63521a692634a1d20e4a8092d60"
+ },
+ "D07": {
+  "records": [
+   {
+    "action_number": 86,
+    "action": "ACTION6 x=30 y=50",
+    "level": 4,
+    "attempt": 1,
+    "frames_returned": 44,
+    "cells_differing_from_board_before_per_frame": [
+     16,
+     22,
+     28,
+     34,
+     40,
+     46,
+     52,
+     58,
+     64,
+     70,
+     76,
+     82,
+     88,
+     88,
+     100,
+     110,
+     118,
+     120,
+     124,
+     128,
+     126,
+     126,
+     128,
+     132,
+     136,
+     142,
+     142,
+     144,
+     144,
+     144,
+     144,
+     138,
+     132,
+     126,
+     120,
+     114,
+     108,
+     102,
+     96,
+     90,
+     84,
+     78,
+     72,
+     56
+    ],
+    "cells_of_last_frame_differing_from_board_before": 56,
+    "level_completed": false,
+    "state_after": "NOT_FINISHED",
+    "cells_where_board_before_differs_from_current": 893,
+    "probe_answers": {
+     "P1": "3",
+     "P2": "4",
+     "P3": "b",
+     "P4": "3",
+     "P5": "3",
+     "P6": "3",
+     "P7": "3",
+     "P8": "3"
+    }
+   }
+  ],
+  "game": "vc33",
+  "decision": 97,
+  "type": "delayed",
+  "pack_opus_tokens": 2705,
+  "pack_fits_2048": false,
+  "pack_sha256": "6d0927a3fc70b088f0761bbefc97bd53a337081aa8069e7bc980ce747d9c7c63"
+ },
+ "D10": {
+  "records": [
+   {
+    "action_number": 25,
+    "action": "ACTION6 x=34 y=56",
+    "level": 2,
+    "attempt": 1,
+    "frames_returned": 1,
+    "cells_differing_from_board_before_per_frame": [
+     43
+    ],
+    "cells_of_last_frame_differing_from_board_before": 43,
+    "level_completed": false,
+    "state_after": "NOT_FINISHED",
+    "cells_where_board_before_differs_from_current": 301,
+    "probe_answers": {
+     "P1": "0",
+     "P2": "f",
+     "P3": "0",
+     "P4": "4",
+     "P5": "0",
+     "P6": "3",
+     "P7": "4"
+    }
+   },
+   {
+    "action_number": 32,
+    "action": "ACTION6 x=34 y=56",
+    "level": 2,
+    "attempt": 1,
+    "frames_returned": 1,
+    "cells_differing_from_board_before_per_frame": [
+     0
+    ],
+    "cells_of_last_frame_differing_from_board_before": 0,
+    "level_completed": false,
+    "state_after": "NOT_FINISHED",
+    "cells_where_board_before_differs_from_current": 188,
+    "probe_answers": {
+     "P8": "0",
+     "P9": "3",
+     "P10": "3"
+    }
+   }
+  ],
+  "game": "vc33",
+  "decision": 43,
+  "type": "conflicting",
+  "pack_opus_tokens": 1292,
+  "pack_fits_2048": true,
+  "pack_sha256": "ecde202145c53ea4801f12fcc04b256ea4f4a838496e6e0f100b43c8c5dbf577"
+ },
+ "D11": {
+  "records": [
+   {
+    "action_number": 53,
+    "action": "ACTION1",
+    "level": 2,
+    "attempt": 1,
+    "frames_returned": 1,
+    "cells_differing_from_board_before_per_frame": [
+     229
+    ],
+    "cells_of_last_frame_differing_from_board_before": 229,
+    "level_completed": false,
+    "state_after": "NOT_FINISHED",
+    "cells_where_board_before_differs_from_current": 390,
+    "probe_answers": {
+     "P1": "f",
+     "P2": "5",
+     "P3": "5",
+     "P4": "2",
+     "P5": "8",
+     "P6": "5",
+     "P7": "5"
+    }
+   },
+   {
+    "action_number": 68,
+    "action": "ACTION1",
+    "level": 2,
+    "attempt": 1,
+    "frames_returned": 1,
+    "cells_differing_from_board_before_per_frame": [
+     1
+    ],
+    "cells_of_last_frame_differing_from_board_before": 1,
+    "level_completed": false,
+    "state_after": "NOT_FINISHED",
+    "cells_where_board_before_differs_from_current": 337,
+    "probe_answers": {
+     "P8": "4",
+     "P9": "5",
+     "P10": "5",
+     "P11": "2",
+     "P12": "5"
+    }
+   }
+  ],
+  "game": "cd82",
+  "decision": 92,
+  "type": "conflicting",
+  "pack_opus_tokens": 2038,
+  "pack_fits_2048": true,
+  "pack_sha256": "79da9ce47ae1e1a12eb786759068da3b9d19a65b69b8064531a6880ca44e69be"
+ },
+ "D12": {
+  "records": [
+   {
+    "action_number": 73,
+    "action": "ACTION3",
+    "level": 1,
+    "attempt": 1,
+    "frames_returned": 1,
+    "cells_differing_from_board_before_per_frame": [
+     37
+    ],
+    "cells_of_last_frame_differing_from_board_before": 37,
+    "level_completed": false,
+    "state_after": "NOT_FINISHED",
+    "cells_where_board_before_differs_from_current": 48,
+    "probe_answers": {
+     "P1": "1",
+     "P2": "e",
+     "P3": "e",
+     "P4": "1",
+     "P5": "4",
+     "P6": "1",
+     "P7": "1"
+    }
+   },
+   {
+    "action_number": 86,
+    "action": "ACTION3",
+    "level": 1,
+    "attempt": 1,
+    "frames_returned": 1,
+    "cells_differing_from_board_before_per_frame": [
+     0
+    ],
+    "cells_of_last_frame_differing_from_board_before": 0,
+    "level_completed": false,
+    "state_after": "NOT_FINISHED",
+    "cells_where_board_before_differs_from_current": 97,
+    "probe_answers": {
+     "P8": "1",
+     "P9": "1",
+     "P10": "f"
+    }
+   }
+  ],
+  "game": "ka59",
+  "decision": 95,
+  "type": "conflicting",
+  "pack_opus_tokens": 1000,
+  "pack_fits_2048": true,
+  "pack_sha256": "2939f52e283dcfc1900e75accd197acd28646ce90c9d12cc8d154eba275b58a8"
+ },
+ "D14": {
+  "records": [
+   {
+    "action_number": 15,
+    "action": "ACTION1",
+    "level": 0,
+    "attempt": 1,
+    "frames_returned": 1,
+    "cells_differing_from_board_before_per_frame": [
+     201
+    ],
+    "cells_of_last_frame_differing_from_board_before": 201,
+    "level_completed": false,
+    "state_after": "NOT_FINISHED",
+    "cells_where_board_before_differs_from_current": 289,
+    "probe_answers": {
+     "P1": "5",
+     "P2": "2",
+     "P3": "5",
+     "P4": "2",
+     "P5": "5",
+     "P6": "5",
+     "P7": "5"
+    }
+   }
+  ],
+  "game": "cd82",
+  "decision": 25,
+  "type": "spatial",
+  "pack_opus_tokens": 1272,
+  "pack_fits_2048": true,
+  "pack_sha256": "e7c167b8e06883ea0528a2f7c47b88c39695e2d50becf22d444be1e1327a9a84"
+ },
+ "D15": {
+  "records": [
+   {
+    "action_number": 54,
+    "action": "ACTION6 x=40 y=62",
+    "level": 3,
+    "attempt": 1,
+    "frames_returned": 1,
+    "cells_differing_from_board_before_per_frame": [
+     65
+    ],
+    "cells_of_last_frame_differing_from_board_before": 65,
+    "level_completed": false,
+    "state_after": "NOT_FINISHED",
+    "cells_where_board_before_differs_from_current": 421,
+    "probe_answers": {
+     "P1": "3",
+     "P2": "0",
+     "P3": "3",
+     "P4": "0",
+     "P5": "3",
+     "P6": "0",
+     "P7": "3"
+    }
+   }
+  ],
+  "game": "vc33",
+  "decision": 66,
+  "type": "spatial",
+  "pack_opus_tokens": 770,
+  "pack_fits_2048": true,
+  "pack_sha256": "c0f714f3514f2960ef7a1196a22445c5ef06429c4c8374668694b72c048aaec3"
+ },
+ "D16": {
+  "records": [
+   {
+    "action_number": 56,
+    "action": "ACTION6 x=34 y=32",
+    "level": 1,
+    "attempt": 1,
+    "frames_returned": 1,
+    "cells_differing_from_board_before_per_frame": [
+     6
+    ],
+    "cells_of_last_frame_differing_from_board_before": 6,
+    "level_completed": false,
+    "state_after": "NOT_FINISHED",
+    "cells_where_board_before_differs_from_current": 121,
+    "probe_answers": {
+     "P1": "5",
+     "P2": "0",
+     "P3": "0",
+     "P4": "4",
+     "P5": "e",
+     "P6": "4",
+     "P7": "1"
+    }
+   }
+  ],
+  "game": "ka59",
+  "decision": 81,
+  "type": "spatial",
+  "pack_opus_tokens": 784,
+  "pack_fits_2048": true,
+  "pack_sha256": "673c83fbb4d010f1dd2b712b60b13ba3c3537c47ffca891522281067265ad585"
+ }
+}

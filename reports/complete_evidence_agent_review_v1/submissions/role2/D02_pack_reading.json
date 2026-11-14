@@ -1,0 +1,41 @@
+{
+ "role": "pack reader",
+ "case": "D02",
+ "records": [
+  {
+   "action_number": 5,
+   "action": "ACTION2",
+   "level_and_attempt": "level=0, reset=0 (header: \"event=5 reset=0 level=0 frames=1\"). I read this as level index 0 (no level completed yet) on attempt/reset count 0; the pack does not define 'reset' or 'level' in words, so that reading is an interpretation.",
+   "start_board_mode": "full",
+   "frames_returned": 1,
+   "board_before_the_action": "Printed in full under \"before 64x64\" (\"start board: full\"), so it does not depend on the current board. Rows 0-20 and 42-62 are all colour 2 (\"0-20:2*64\", \"42-62:2*64\"); row 63 is 4 at x0-60 then 0 at x61-63 (\"63:4*61,0*3\"). The playing band is rows 21-41. Its plain rows are: 2 at x0-8, a left room of 1 at x9-23, 2 at x24-32, a column of F at x33-38, a right room of 1 at x39-53, 2 at x54-63 (\"21-25:2*9,1*15,2*9,F*6,1*15,2*10\", same for \"37-41\"). On rows 30-32 the left room continues as a corridor of 1 through x24-32 up to the F column (\"30:2*9,1*3,E*3,1*12,E*3,1*3,F*6,...\"). Right room: an outlined box of 4 at x44-48, rows 26-30, interior of 1 at x45-47, rows 27-29 (\"26:...F*6,1*5,4*5,1*5,2*10\", \"27-29:...1*5,4*1,1*3,4*1,1*5,2*10\", row 30 \"...F*6,1*5,4*5,1*5,2*10\"). Left room: a 3x3 piece of E with 0 at its centre at x12-14, rows 30-32, centre (13,31) (\"30:2*9,1*3,E*3,...\", \"31:2*9,1*3,E*1,0*1,E*1,...\", \"32:2*9,1*2,4*1,E*3,4*1,...\"). A second 3x3 piece of E with 5 at its centre at x27-29, rows 30-32, centre (28,31), in the corridor (\"31:...1*12,E*1,5*1,E*1,1*3,F*6...\", \"32:...1*11,E*3,1*3,F*6...\"). An outlined box of 4 at x11-15, rows 32-36, interior of 1 at x12-14, rows 33-35; its top edge on row 32 shows only at x11 and x15 because the first E piece covers x12-14 (\"32:2*9,1*2,4*1,E*3,4*1,1*11,...\", \"33-35:2*9,1*2,4*1,1*3,4*1,1*8,2*9,F*6,1*15,2*10\", \"36:2*9,1*2,4*5,1*8,2*9,F*6,1*15,2*10\").",
+   "frames": [
+    {
+     "frame": 1,
+     "cells_differing_from_board_before": 18,
+     "what_happens": "Header \"frame 1/1 vs before: 18 cells\". The 3x3 E piece with the 0 centre moves down by 3 rows, from x12-14 rows 30-32 to x12-14 rows 33-35, i.e. into the interior of the 4-outlined box: \"33:12-14=E\", \"34:12=E,13=0,14=E\", \"35:12-14=E\". Where it was, rows 30-31 become room colour 1 (\"30-31:12-14=1\") and row 32 becomes 4 (\"32:12-14=4\"), so the box's top edge is now complete at x11-15. My own tally agrees with the header: 6 + 3 + 3 + 3 + 3 = 18, every covered cell really changes. Nothing else changes (the second E piece with the 5 centre, the right-hand box, the F column and row 63 stay as before)."
+    }
+   ],
+   "final_result": "\"result state=NOT_FINISHED level=0 legal=1,2,3,4,6\": game not finished, still level 0, legal actions 1,2,3,4,6. Board after the action = frame 1 (E/0 piece sitting inside the left box at x12-14, rows 33-35).",
+   "cells_of_last_frame_differing_from_board_before": 18,
+   "level_completed": false,
+   "cannot_determine": [
+    "What ACTION2 means as a control (e.g. 'down') is not stated; only its effect in this one record (piece moved down 3 rows) is visible.",
+    "Exact meaning of 'reset=0' and 'level=0' is not defined in the reading instructions; taken as attempt count 0 and level index 0.",
+    "Whether placing the piece inside the 4-outlined box is a goal, and what the 0 cells at the end of row 63 represent, are not stated.",
+    "How this old board relates to the current board (o33, levels_completed=1) cannot be established from the text beyond it being an earlier action (action 5) of the same game and run; the layouts differ."
+   ]
+  }
+ ],
+ "relation_between_the_records": "Not applicable: the pack holds one record (\"One record, selected by rule\").",
+ "probe_answers": [
+  {"id": "P1", "colour": "e"},
+  {"id": "P2", "colour": "1"},
+  {"id": "P3", "colour": "1"},
+  {"id": "P4", "colour": "e"},
+  {"id": "P5", "colour": "f"},
+  {"id": "P6", "colour": "1"},
+  {"id": "P7", "colour": "2"}
+ ],
+ "what_was_hard_or_missing": "Nothing blocked the reading. Minor points: (1) the pack writes hex letters in upper case (E, F) while the decision input writes them in lower case (e, f); I treated them as the same colour and answered in lower case. (2) Locating a cell means adding run lengths by hand; I checked that every board row sums to 64 and that the change lines account for exactly the 18 cells in the header. (3) Row 32 needs care: the box's top edge is hidden under the piece before the action, which is only apparent by comparing row 32 with row 36 and with the change line \"32:12-14=4\". (4) 'reset' and 'level' in the record header are not explained. Probe working: P1 row 30 \"1*3,E*3\" puts E at x12-14; P2 \"30-31:12-14=1\"; P3 row 34 in \"33-35:2*9,1*2,4*1,1*3,...\" puts 1 at x12-14; P4 \"34:12=E\"; P5 row 27 \"2*9,1*15,2*9,F*6\" puts F at x33-38; P6 row 25 puts 1 at x9-23; P7 \"42-62:2*64\". Outside knowledge: I recognise 'ka59' only as an identifier in the same naming style as publicly known grid games; I have no usable knowledge of it and used nothing beyond the pack text and the decision input. I did not open current_board.png for this case."
+}

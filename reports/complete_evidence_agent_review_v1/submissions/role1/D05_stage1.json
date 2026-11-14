@@ -1,0 +1,38 @@
+{
+ "role": "evidence needed",
+ "case": "D05",
+ "stage": 1,
+ "uncertainties": [
+  {
+   "id": "U1",
+   "uncertainty": "What board condition ended level 1 (levels_completed is already 1)? In particular, what relation between the small 2x2 panel of 4x4 blocks (blocks at x=43-46 and x=49-52, y=45-48 and y=51-54), the large 7x3 panel of 4x4 blocks (columns starting x=7,13,19,25,31,37,43; rows y=9-12, 15-18, 21-24), the colour-2 marks inside them, and the movable b/c square was in place at the moment the level counter went from 0 to 1?",
+   "why_it_matters_for_the_next_action": "Every candidate action (moving the b/c square with ACTION1-4, clicking a cell with ACTION6, or ACTION7) is only useful if it moves the board toward whatever finishes a level. Without knowing what finished level 1 the player cannot tell whether to keep pushing the b/c square right into the small panel, take it elsewhere, or click something.",
+   "what_the_decision_time_input_already_tells": "Only that one level has been completed and the state is NOT_FINISHED. The current board shows one colour-2 mark (rows 1221/2222/2222/1221) in the small panel's lower-left block (x=43-46, y=51-54) and one identical mark in the large panel's block at x=31-34, y=15-18; all other blocks are plain colour 1. It does not show what the board looked like when level 1 ended."
+  },
+  {
+   "id": "U2",
+   "uncertainty": "What do ACTION1, ACTION2 and ACTION3 do to the b/c square (b border x=36-41, y=50-55; c interior x=37-40, y=51-54), and what happens to it when it is pushed against or past the end of the colour-5 track or into a panel? Specifically: does another ACTION4 from here move the c interior onto the block at x=43-46, y=51-54, get blocked, or do something else; and can the square travel back along the colour-5 track (rows 52-53 from x=14, column x=14-15 up to y=34, row 34-35 to x=57, column x=56-57 up to y=16, row 16-17 into the right edge of the large panel at x=48)?",
+   "why_it_matters_for_the_next_action": "Four of the six legal actions are presumably movement-type actions. The player needs to know which one moves the square in which direction, by how many cells, and whether a move can be wasted (blocked) or irreversible, before choosing between continuing right into the small panel and heading for the large panel.",
+   "what_the_decision_time_input_already_tells": "Only t84: ACTION4 shifted the whole square (b border, c interior, colour-5 rim, colour-9 shadow) 6 cells to the right in 3 returned frames, from b border x=30-35 to x=36-41, so its right edge now replaces the small panel's left frame cells at x=41, y=50-55. Nothing in the input shows ACTION1, ACTION2 or ACTION3, or any move that was blocked."
+  },
+  {
+   "id": "U3",
+   "uncertainty": "What does ACTION6 (click a cell) do, and on which cells does a click have a visible effect? For example, has a click on a 4x4 colour-1 block, on a block carrying the colour-2 mark (x=31-34, y=15-18 or x=43-46, y=51-54), on the f-coloured ring at x=3-10, y=52-63, or on the colour-5 track ever changed the board?",
+   "why_it_matters_for_the_next_action": "ACTION6 is legal and takes any of 4096 cells as target. The last click was spent with no visible result, so the player needs to know which targets, if any, are worth a click before spending another action on one.",
+   "what_the_decision_time_input_already_tells": "Only t85: clicking x=38, y=52 (inside the c interior of the movable square) returned 2 frames and the only difference between the board before and the last frame was the row-0 cell x=12 turning from 1 to 2. Whether the first of the two frames showed something temporary is not visible, and no other click target is shown."
+  },
+  {
+   "id": "U4",
+   "uncertainty": "How did the two colour-2 marks come to be where they are: were the mark at x=31-34, y=15-18 in the large panel and the mark at x=43-46, y=51-54 in the small panel both present when this level started, or did one of the player's actions since then create, move or remove a mark, and if so which action and where was the b/c square at the time?",
+   "why_it_matters_for_the_next_action": "If the marks are fixed parts of the puzzle they act as a clue or target; if the player's own actions paint them, then the choice of next action (which block to move the square onto, or which cell to click) directly determines where the next mark appears, and a wrong one may need undoing.",
+   "what_the_decision_time_input_already_tells": "The current positions and shapes of the two marks, and that neither changed during t84 or t85. Nothing about the previous 83 actions or the board at the start of this level."
+  },
+  {
+   "id": "U5",
+   "uncertainty": "What is the row-0 strip (cells x=0-12 are colour 2, x=13-63 are colour 1) counting, and what happens when the colour-2 run reaches x=63: did it ever fill or reset earlier in the game, and with what consequence (level restart, game over, nothing)? Related: has ACTION7 ever been used, and what did it do to the board and to this strip?",
+   "why_it_matters_for_the_next_action": "If the strip is a limited action budget, 51 cells remain and exploratory or no-effect actions (like the click in t85) are costly, which changes whether the player should test an unknown action such as ACTION7 or an untried click, or commit to the move it trusts most.",
+   "what_the_decision_time_input_already_tells": "Each of the last two actions turned exactly one more row-0 cell from 1 to 2 (x=11 in t84, x=12 in t85), including the click that changed nothing else. With 85 actions taken and only 13 cells filled, the strip evidently does not count all actions since the game began, but the input does not show when it last started from 0 or what happens at the end. ACTION7 is listed as legal but never appears in the input."
+  }
+ ],
+ "notes": "I have no knowledge of this game from any other source; everything above comes from decision_input.txt alone. Readings of the board that are my own interpretation rather than stated facts: I treat colour a as background, colour 5 as frame/track, colour 9 as a drop shadow, and the row-0 strip as some kind of counter. Lesser open point not given its own entry: the f-coloured ring with a colour-0 hole at x=6-7, y=55-56 and a stem down to y=63 (lower left) is not visibly connected to the colour-5 track (x=12-13 on rows 52-53 are 9/a), and the input does not show whether it has ever changed or what it is for."
+}

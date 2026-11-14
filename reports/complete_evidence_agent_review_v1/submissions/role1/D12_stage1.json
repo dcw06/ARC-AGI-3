@@ -1,0 +1,38 @@
+{
+ "role": "evidence needed",
+ "case": "D12",
+ "stage": 1,
+ "uncertainties": [
+  {
+   "id": "U1",
+   "uncertainty": "What does each of ACTION1, ACTION2, ACTION3 and ACTION4 change on the board, and which object does it act on? In particular: do they act on the object whose centre is currently colour 0 (the unframed colour-e block at x=30-32, y=33-38 with centre cells (31,35),(31,36)), and if so in which direction and by how many cells per action?",
+   "why_it_matters_for_the_next_action": "Four of the five legal actions are 1-4 and the input shows no example of any of them. Without knowing what each one changes (and on which object) the player cannot choose between them or predict the result of the next action.",
+   "what_the_decision_time_input_already_tells": "Only that actions 1,2,3,4 are legal now. Both actions in the recent history are ACTION6 clicks, so there is no observed effect of 1-4. The board shows one object whose centre is 0 (the e block at x=30-32, y=33-38) while the three framed e blocks have colour-4 centres."
+  },
+  {
+   "id": "U2",
+   "uncertainty": "What does the centre colour (0 versus 4) of an e block mean, and which cells respond to an ACTION6 click? At t94 the click on (31,35) turned (31,35),(31,36) from 4 to 0 and at the same time turned (8-9,44) and (8-9,45), the centre of the framed block at x=5-12, y=41-48, from 0 to 4; at t95 the click on (10,11), inside the empty colour-4 frame at x=8-12, y=8-15, changed no cell in the play area. What did the block at x=5-12, y=41-48 do under actions 1-4 while its centre was 0, and what do clicks on other kinds of cell (a colour-4 border, a non-centre e cell, a colour-1, colour-f or colour-2 cell) do?",
+   "why_it_matters_for_the_next_action": "The player has to decide whether the board is now in the state it wants before using actions 1-4 (the 0 centre has just moved to the unframed block), or whether another click is needed first, and where a click would have any effect at all. A wasted click appears to cost something (see U5).",
+   "what_the_decision_time_input_already_tells": "One click (t94) swapped which e block has a 0 centre: the unframed block at x=30-32, y=33-38 gained it, the framed block at x=5-12, y=41-48 lost it. One click on a colour-1 cell inside the empty frame (t95) changed only (31,63). The input does not show what a 0 centre lets the player do, nor any click on a border, a non-centre e cell or the centres at (56-57,40) and (52,52)."
+  },
+  {
+   "id": "U3",
+   "uncertainty": "What board change coincided with levels_completed going from 0 to 1, and what does that imply this level needs? Specifically: were the three framed e blocks (x=5-12,y=41-48; x=53-60,y=38-42; x=50-54,y=50-54) already inside their colour-4 frames when this level started, or did earlier actions put them there, and is the empty colour-4 frame at x=8-12, y=8-15 (colour-1 interior x=9-11, y=9-14, 3 wide by 6 tall) related to the unframed e block at x=30-32, y=33-38 (also 3 wide by 6 tall)?",
+   "why_it_matters_for_the_next_action": "The player does not know the goal. Whether to work on the unframed e block, on the empty frame, or on one of the already framed blocks depends on what a finished level looked like and on how the framed blocks came to be framed.",
+   "what_the_decision_time_input_already_tells": "levels_completed=1 and state=NOT_FINISHED, so one level was completed earlier, but nothing about how. The board shows one empty frame whose interior has the same width and height as the one unframed e block, and three frames that each contain an e block with a colour-4 centre. It does not show the level's starting board or any earlier position of these shapes."
+  },
+  {
+   "id": "U4",
+   "uncertainty": "What happens when a shape is moved against or into cells of colour f (the bands at x=21-29, y=30-62 and y=24-29, x=0-29, and the large area x=24-62, y=0-26), colour 2 (x=21-23, y=0-23; x=30-63, y=27-29; column x=63) or the edge of a colour-1 panel? Has any e block or frame ever been seen crossing from one colour-1 panel to another (for example from the panel x=30-62, y=30-62 to the panel x=0-20, y=0-23), or stopping at a panel edge?",
+   "why_it_matters_for_the_next_action": "The unframed e block sits at the left edge of the lower-right colour-1 panel (its column x=30 touches the f band at x=29), and the empty frame is in a different panel (upper-left) separated from it by f and 2 cells. Whether an action that pushes the block toward x=29 or toward y=29 does nothing, moves it across, or has some other effect decides which of actions 1-4 is worth trying.",
+   "what_the_decision_time_input_already_tells": "Only the static layout: three colour-1 panels (upper-left x=0-20,y=0-23; lower-left x=0-20,y=30-62; lower-right x=30-62,y=30-62) separated by colour-f bands, with colour-2 strips at x=21-23,y=0-23, at x=30-63,y=27-29 and along x=63. No movement of any shape is shown in the two history entries."
+  },
+  {
+   "id": "U5",
+   "uncertainty": "What makes the row y=63 bar change, and what happens when its colour-4 part (now x=0-30, 31 cells) is used up? At t95 cell (31,63) went from 4 to 0, but at t94 no cell in row 63 changed. Does the bar lose a cell on every action of some kinds, only on actions that have no other effect, or on some other schedule, and did it refill when level 1 was completed?",
+   "why_it_matters_for_the_next_action": "If the bar is a limited budget and running out ends or resets the level, the player has to know how many actions it can still spend and whether exploratory actions (such as another test click) are affordable or should be avoided.",
+   "what_the_decision_time_input_already_tells": "Row 63 is colour 4 at x=0-30 and colour 0 at x=31-63. The click at t95, which changed nothing else, removed one colour-4 cell; the click at t94, which changed two block centres, removed none. state is NOT_FINISHED after 95 actions. The input does not show the bar's length at the start of this level or any moment when it ran out."
+  }
+ ],
+ "notes": "Opened only decision_input.txt and form.json in the stage1 folder; used only Read and Write. I do not recognise this game and used no knowledge from any other source; every item is based only on the board and the two history entries in decision_input.txt. Coordinates were read from the board text: x from the left starting at 0, y from the top starting at 0. Words such as 'frame', 'block', 'panel', 'band' and 'bar' are my descriptions of shapes, not known game terms. U1 and U2 are related (which object is acted on, and how that object is chosen) but are kept separate because one concerns actions 1-4 and the other ACTION6."
+}

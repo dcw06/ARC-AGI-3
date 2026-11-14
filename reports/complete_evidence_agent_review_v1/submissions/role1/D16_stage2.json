@@ -1,0 +1,232 @@
+{
+ "role": "evidence needed",
+ "case": "D16",
+ "stage": 2,
+ "per_uncertainty": [
+  {
+   "id": "U1",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 30,
+     "frames": "board before, frame 1 and frame 2",
+     "what_it_shows": "Older evidence. Level 0 had two 3x3 e pieces and two 5x5 colour-4 frames (x11-15,y32-36 and x44-48,y26-30). Before a030 one piece (centre 4) already sat inside the right frame at x45-47,y27-29 and the active piece (centre 0) was at x12-14,y30-32, covering the top edge of the left frame. ACTION2 moved it down 3 to x12-14,y33-35, i.e. exactly inside the left frame (frame 1). Frame 2 is a completely different board (3540 cells) and levels completed went 0 to 1.",
+     "status": "observed event"
+    },
+    {
+     "action": 5,
+     "frames": "1",
+     "what_it_shows": "Older evidence. The same piece was moved into the same place (x12-14,y33-35, inside the left frame) while the other piece was still at x27-29,y30-32 outside any frame. The level did not end. a006 (click on the other piece) also did not end it.",
+     "status": "observed event"
+    },
+    {
+     "action": 24,
+     "frames": "1",
+     "what_it_shows": "Older evidence. The second piece was moved into the right frame (x45-47,y27-29) while the first piece was at x24-26,y30-32 outside its frame. The level did not end, also not after the click a025.",
+     "status": "observed event"
+    },
+    {
+     "action": 36,
+     "frames": "1",
+     "what_it_shows": "Older evidence, level 1. The 3x3 piece entered the 5x5 frame x50-54,y50-54 (piece at x51-53,y51-53). No level change. Likewise a044 (6x3 piece into frame x53-60,y38-42) and a066 (6x6 piece into frame x5-12,y41-48): after a066 three of the four frames were filled and the 3x6 piece was outside the fourth frame (x8-12,y8-15); the level stayed NOT_FINISHED through a067-a078.",
+     "status": "observed event"
+    },
+    {
+     "action": 30,
+     "frames": "with a005, a024, a036, a044, a066",
+     "what_it_shows": "Taken together: the only level end seen happened at the first moment every e piece was inside a colour-4 frame whose interior has the piece's size; having some but not all pieces framed never ended a level.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[5, 30], [24, 30]],
+   "what_the_evidence_supports": "Level 0 ended when both e pieces were inside their frames at the same time; one piece framed alone was not enough (a005, a024). In level 1 each frame interior matches one piece (3x3, 6x3, 6x6, 3x6) and three frames were filled without the level ending. This points to: all four pieces must be in their matching frames together, which means the 3x6 piece now at x30-32,y30-35 has to reach the frame at x8-12,y8-15, and the 6x6 piece the player has just moved out of the frame x5-12,y41-48 (a079 onward) would have to be back inside it.",
+   "limits": "Only one level completion exists, with two equal 3x3 pieces. That the same rule holds in level 1 with four pieces of different sizes is an extension, not observed. It is not shown whether a piece must sit in the frame of its own size, whether the centre colour (0 for the selected piece, 4 for a deselected one) matters, or whether the order of placement matters."
+  },
+  {
+   "id": "U2",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 4,
+     "frames": "1",
+     "what_it_shows": "Older evidence. ACTION2 moved the selected 3x3 piece down 3 rows (y27-29 to y30-32), no sideways shift. Same step for other sizes: a038, a039 (6x3 piece), a047 (the 6x6 piece, y45-50 to y48-53), a058-a061 (3x6 piece).",
+     "status": "observed event"
+    },
+    {
+     "action": 2,
+     "frames": "1",
+     "what_it_shows": "Older evidence. ACTION3 moved the selected piece left 3 columns (x18-20 to x15-17). Same for the 6x6 piece in a046, a048, a049, a050 and a064-a066, and for the 3x6 piece in a072, a073.",
+     "status": "observed event"
+    },
+    {
+     "action": 7,
+     "frames": "1",
+     "what_it_shows": "Older evidence. ACTION4 moved the selected piece right 3 columns (x27-29 to x30-32). Same in a016, a017, a019, a020, a032-a036 (3x3), a040-a044 (6x3), a057 (3x6). ACTION4 was never used while the 6x6 piece was selected.",
+     "status": "observed event"
+    },
+    {
+     "action": 79,
+     "frames": "1",
+     "what_it_shows": "Older evidence (one step before the two recent actions). ACTION1 moved the 6x6 piece up 3 from inside its frame (y42-47) to y39-44, crossing the frame's top edge at y41. Earlier ACTION1 moves up 3: a001, a018, a023, a031, a054, a055, a068-a071.",
+     "status": "observed event"
+    },
+    {
+     "action": 51,
+     "frames": "1",
+     "what_it_shows": "Older evidence. ACTION3 with the 6x6 piece at x30-35 (colour f directly to its left at x21-29) changed nothing except one bar cell. The same refusal to enter f: a008 and a011 (ACTION4, level 0, f at x33-38) and a074 (ACTION3, 3x6 piece at x30-32). a076 (ACTION1, 3x6 piece at y30-35 under the colour-2 band y27-29) and a013 (ACTION1 under colour 2 in level 0) also did not move.",
+     "status": "observed event"
+    },
+    {
+     "action": 53,
+     "frames": "1-6",
+     "what_it_shows": "Older evidence. When the selected piece was moved toward another piece touching it, the selected piece stayed and the other piece travelled away in 3-cell steps: a053 (ACTION1, 6x6 at x30-35,y48-53 sent the 3x6 piece from y42-47 up to y30-35, 4 steps, ending under the colour-2 band), a021 (ACTION4, 3x3 sent the other 3x3 from x27-29 to x42-44, 5 steps, crossing f at x33-38), a062 (ACTION3, 3x6 at x36-38 sent the 6x6 from x30-35 to x15-20, 5 steps, crossing f at x21-29).",
+     "status": "observed event"
+    },
+    {
+     "action": 2,
+     "frames": "with a004, a007, a046, a047 and the others listed",
+     "what_it_shows": "Across all 60-odd moves, ACTION1/2/3/4 are up/down/left/right by 3 cells for the selected piece whatever its size; no action ever changed a piece's size or shape.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[2, 4, 7], [46, 47, 40], [51, 53, 62]],
+   "what_the_evidence_supports": "For the block at x6-11,y33-38: ACTION2 = down 3, ACTION3 = left 3, ACTION4 = right 3, ACTION1 = up 3, no reshaping. A selected piece does not enter colour-f or colour-2 cells (the action is spent with no move), so one more ACTION1 (to y30-35) is possible but the one after would meet f at y27-29. Moving into a touching piece sends that piece sliding instead, and a sliding piece does cross f.",
+   "limits": "ACTION4 with the 6x6 piece itself is not recorded (inferred from other pieces). ACTION3 from x6-11 would put the piece at x3-8; movement toward the board edge x0 or over other frames was not tested for this piece. All blocked moves seen were against f or 2; blocking in the top-left room and by the 2 strip x21-23 is not recorded."
+  },
+  {
+   "id": "U3",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 31,
+     "frames": "board before (level 1 start, also frame 2 of a030)",
+     "what_it_shows": "Older evidence. At the start of level 1 all four colour-4 frames were empty (x8-12,y8-15; x5-12,y41-48; x53-60,y38-42; x50-54,y50-54). The four e pieces were elsewhere: 6x3 at x39-44,y33-35 (centre 5), 3x6 at x33-35,y42-47 (centre 5), 6x6 at x42-47,y45-50 (centre 5), 3x3 at x36-38,y54-56 (centre 0, the selected one).",
+     "status": "observed event"
+    },
+    {
+     "action": 36,
+     "frames": "1",
+     "what_it_shows": "Older evidence. The player's ACTION4 moves a032-a036 carried the 3x3 piece into the frame x50-54,y50-54; its centre turned 0 to 4 when another piece was selected at a037.",
+     "status": "observed event"
+    },
+    {
+     "action": 44,
+     "frames": "1",
+     "what_it_shows": "Older evidence. After selection at a037, a038-a044 carried the 6x3 piece down and right into the frame x53-60,y38-42; its centre turned 0 to 4 at the click a045.",
+     "status": "observed event"
+    },
+    {
+     "action": 73,
+     "frames": "1",
+     "what_it_shows": "Older evidence. The 3x6 piece was sent up by a053, selected at a056, moved by a057-a061 and a068-a073, and ended at x30-32,y30-35. Its centre turned 0 to 4 at a078 when the 6x6 piece was selected. It has never been inside a frame.",
+     "status": "observed event"
+    },
+    {
+     "action": 15,
+     "frames": "1",
+     "what_it_shows": "Older evidence. In level 0 a piece standing in the corridor at x27-29,y30-32, outside any frame, had its centre go 0 to 4 when the other piece was clicked. Centre 5 was only ever seen on pieces not yet selected; 0 on the selected piece; 4 on a piece that had been selected and then deselected.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[31], [36, 37, 44, 45, 73, 78]],
+   "what_the_evidence_supports": "None of the three shapes was fixed scenery. All are movable pieces the player relocated in this level: the two framed ones were placed in their frames by the player (a036, a044), and the 3x6 at x30-32,y30-35 is the one piece not yet in a frame. A colour-4 centre marks a deselected piece, not a correctly placed one.",
+   "limits": "The meaning of centre colours rests on about ten clicks and is a reading of a pattern, not something the game states. Nothing shows whether the two placed pieces are now locked or could still be selected and moved (the 6x6 piece could be: a078, a079)."
+  },
+  {
+   "id": "U4",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 6,
+     "frames": "1",
+     "what_it_shows": "Older evidence. Click at (28,31), the centre of the unselected 3x3 piece: its centre went 5 to 0 and the previously selected piece's centre at (13,34) went 0 to 4. From a007 the movement actions moved the clicked piece instead. Same switch in a015, a022, a025.",
+     "status": "observed event"
+    },
+    {
+     "action": 37,
+     "frames": "1",
+     "what_it_shows": "Older evidence. Click at (40,34), an e cell of the 6x3 piece and not its centre (centre x41-42,y34): that piece became selected. Other off-centre or centre clicks that selected a piece: a045 (45,47), a056 (34,32), a063 (17,44), a067 (37,44), a078 (7,43, an e cell of the 6x6 piece inside its frame).",
+     "status": "observed event"
+    },
+    {
+     "action": 75,
+     "frames": "1",
+     "what_it_shows": "Older evidence. Click at (10,11), inside the empty frame x8-12,y8-15: nothing changed except one bar cell. a077 (8,11), on that frame's colour-4 edge: same. a052 (5,44), on the edge of frame x5-12,y41-48: no change at all. Level 0: a009 (35,31) on colour f, a010 (46,28) inside an empty frame, a012 (44,28) on a frame edge: no board change beyond the bar.",
+     "status": "observed event"
+    },
+    {
+     "action": 6,
+     "frames": "with a015, a022, a025, a037, a045, a056, a063, a067, a078 and the six no-effect clicks",
+     "what_it_shows": "ACTION6 selects the e piece that contains the clicked cell; clicks on frames, empty frame interiors or background do nothing useful and still count as an action.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[6, 7], [37, 38, 75], [78, 79, 77]],
+   "what_the_evidence_supports": "ACTION6 only chooses which piece ACTION1-4 move. Clicking any cell of the 3x6 piece at x30-32,y30-35 would select it again; clicking frames or background wastes an action. It does not move or change pieces or frames.",
+   "limits": "Clicks on colour-1 floor and on colour-2 cells were not tried in level 1; a click on the currently selected piece was never tried."
+  },
+  {
+   "id": "U5",
+   "older_evidence_found": "partly",
+   "observations": [
+    {
+     "action": 31,
+     "frames": "board before and frame 1",
+     "what_it_shows": "Older evidence. Row 63 was all colour 4 (x0-63) at the start of level 1 although it had been 4 only at x0-44 at the end of level 0 (board before a030), so the bar refilled with the new level. a031 turned (63,63) to 0.",
+     "status": "observed event"
+    },
+    {
+     "action": 51,
+     "frames": "1",
+     "what_it_shows": "Older evidence. A refused move (ACTION3 into f) still turned one bar cell to 0. No-effect clicks a075 and a077 also each turned one cell. Effective actions a056 and a078 (selecting a piece) and many successful moves (a032, a034, ... a080) turned none.",
+     "status": "observed event"
+    },
+    {
+     "action": 31,
+     "frames": "a031 to a079, all single-frame bar changes",
+     "what_it_shows": "In level 1 the bar lost exactly one cell on the 1st, 3rd, 5th ... action of the level and none on the 2nd, 4th ..., regardless of the action type or whether anything moved (a052, a074, a076 fall on even counts and changed nothing). 25 cells by a079; a081 in the decision input is the 26th.",
+     "status": "supported limited conclusion"
+    },
+    {
+     "action": 1,
+     "frames": "a001 to a029",
+     "what_it_shows": "In level 0 the rate was different: 19 cells over 29 actions (lost on a001, a003, a004, a006, a008, a009, a011, a012, a014, a015, a017, a018, a020, a022, a023, a025, a026, a028, a029), which fits the number of 0 cells being 64 x actions / 100 rounded. Level 1 fits 64 x actions / 128 rounded up.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[30, 31], [74, 75, 76, 77, 78, 79]],
+   "what_the_evidence_supports": "The bar is an action counter for the level: it refills when a level starts and loses a cell every second action in level 1, whether or not the action does anything. With 38 cells of colour 4 left after 51 level-1 actions, about 76 more actions remain before it is empty. Wasted actions (blocked moves, clicks on nothing) cost the same as useful ones.",
+   "limits": "The bar has never reached zero in this game, so what happens then is not recorded anywhere. The 100 and 128 totals are fitted from the pattern, not shown."
+  }
+ ],
+ "uncertainties_added_after_seeing_history": [
+  {
+   "id": "N1",
+   "uncertainty": "What stops a piece that has been sent sliding? The three slides seen went 5 steps (a021, 15 cells, ending on the corner cell (44,30) of a frame in open floor), 5 steps (a062, ending at x15-20, 3 cells short of the frame edge x12) and 4 steps (a053, ending against the colour-2 band). A 5-step limit and stopping at a frame both fit; the record cannot separate them.",
+   "why_it_matters": "The 3x6 piece at x30-32,y30-35 can only cross f by being sent sliding, and where it stops decides where the pusher has to stand."
+  },
+  {
+   "id": "N2",
+   "uncertainty": "Can a piece be sent sliding upward across the f rows y24-29 into the top-left room, and does a sliding piece cross colour-2 cells (strip x21-23,y0-23)? Slides were only seen crossing f sideways (a021, a062) and stopping below colour 2 (a053).",
+   "why_it_matters": "The only empty frame (x8-12,y8-15) is in the top-left room, which no selected piece can walk into."
+  },
+  {
+   "id": "N3",
+   "uncertainty": "Does a sliding piece stop against another piece standing in its path (for example the 6x6 block used as a stopper), or pass or push it? No slide in the record met another piece.",
+   "why_it_matters": "The player has taken the 6x6 block out of its frame; whether it is useful as a pusher only, or also as a stopper, is unknown."
+  },
+  {
+   "id": "N4",
+   "uncertainty": "The side of the selected piece that touches another piece is drawn in colour 0 (a020 right column x26; a033, a034, a049, a050 top row; a060, a061 left column x36), and each recorded slide started from such a state. Whether a push needs full alignment or works with any overlap is shown only for a wider pusher under a narrower piece (a053) and equal heights (a021, a062).",
+   "why_it_matters": "Tells the player when a push is armed and how to line up the 6x6 block with the 3x6 piece."
+  }
+ ],
+ "needs_no_past_record_can_meet": "What happens when the row-63 bar runs out. Whether level 1 ends on the same condition as level 0 (inferred by analogy only). The stopping rule of a slide and whether a slide can go upward through f y24-29 or through colour 2 into the top-left room (N1, N2). Whether a slide is stopped by another piece (N3). ACTION4 with the 6x6 piece selected, and any move of a selected piece toward the board edge or inside the top-left room.",
+ "coverage": {
+  "history_index_read_fully": true,
+  "history_changes": "read fully",
+  "images_opened": ["a005", "a006", "a021", "a025", "a030", "a036", "a044", "a051", "a053", "a062", "a066", "a074", "a076", "a078", "a081"],
+  "board_files_opened": ["a030", "a031"]
+ },
+ "notes": "Evidence older than the two recent actions is marked 'Older evidence' in each observation; a080 and a081 are the two actions already in the decision input and are cited only for the bar count. Coordinates for actions whose pictures I did not open come from history_changes.txt, which I read in full. In the pictures colour 0 is drawn white, 5 black and 4 dark grey, which I checked against boards/a030.txt and boards/a031.txt. The stage-1 note about whether the block can enter f or 2 cells is answered under U2 (a051, a074, a076, a008, a011, a013). I have no knowledge of this game from any outside source and used only the files in the case folder; the stage-1 file was not changed."
+}

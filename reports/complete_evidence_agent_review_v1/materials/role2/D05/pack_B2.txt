@@ -1,0 +1,64 @@
+== OLDER MEMORY ==
+Source: game lf52, saved run opus55-competition-20261106T054112Z, action 46 (transition t46). One record, selected by rule.
+In this pack "current" means the current board given above, observation o85.
+Boards are text. A board line "y:c*n,..." gives row y as runs: colour c (one hex digit) repeated n times, left to right; "a-b:" means rows a to b are identical. A change line "y:x1-x2=c" sets every cell in columns x1 to x2 of row y to colour c ("x=c" for one cell); "a-b:" applies it to rows a to b. A range may include cells that already had that colour. Row 0 is the top, column 0 the left; ACTION6 clicks (x=column, y=row). Frames are the boards returned by one action, in order. A frame header names its reference ("vs before": the board before the action; "vs previous": the previous frame) and counts the cells whose colour differs from that reference, which can be fewer than the cells the lines cover. A "net before>last" block is optional: it appears only when the last frame is "vs previous", and restates the change from the board before the action to the last frame. A record marked "start board: from current" does not print its board before the action. Its "before vs current: N cells" lines give that board relative to the current board named in the pack header: take the current board and apply the lines. N counts the cells that differ; every cell the lines do not set had the same colour as on the current board. "before: same as current" means no cell differs.
+
+M-ref-v2 record=lf52:opus55-competition-20261106T054112Z:e0046 event=46 reset=0 level=1 frames=3
+action=ACTION4
+start board: from current
+before vs current: 171 cells
+0:0-12=1,37-63=0
+31:23-30=5
+32:23=5,24-29=B,30=5,31=9
+33:23=5,24=B,25-28=C,29=B,30=5,31=9
+34-35:24=B,25-28=C,29=B
+36:23=5,24=B,25-28=C,29=B,30=5,31=9
+37:23=5,24-29=B,30=5,31=9
+38:23-30=5,31=9
+39:24-31=9
+49:35-40=A
+50-51:35-40=A,41=5
+52-53:36-41=5
+54-55:35-40=A,41=5
+56:35-40=A
+57:36-41=A
+frame 1/3 vs before: 76 cells
+0:37=1
+31:23-25=A,31-33=5
+32:23-25=A,26=5,30-32=B,33=5,34=9
+33:23-25=A,26=5,27=B,29-31=C,32=B,33=5,34=9
+34-35:24-26=5,27=B,29-31=C,32=B
+36:23-25=A,26=5,27=B,29-31=C,32=B,33=5,34=9
+37:23-25=A,26=5,30-32=B,33=5,34=9
+38:23-25=A,31-33=5,34=9
+39:24-26=A,32-34=9
+frame 2/3 vs before: 104 cells
+0:37=1
+31:23-27=A,31-35=5
+32:23-27=A,28=5,30-34=B,35=5,36=9
+33:23-27=A,28=5,30-33=C,34=B,35=5,36=9
+34-35:24-28=5,30-33=C,34=B
+36:23-27=A,28=5,30-33=C,34=B,35=5,36=9
+37:23-27=A,28=5,30-34=B,35=5,36=9
+38:23-27=A,31-35=5,36=9
+39:24-28=A,32-36=9
+frame 3/3 vs previous: 39 cells
+31:28=A,36=5
+32:28=A,29=5,35=B,36=5,37=9
+33:28=A,29=5,30=B,34=C,35=B,36=5,37=9
+34-35:29=5,30=B,34=C,35=B
+36:28=A,29=5,30=B,34=C,35=B,36=5,37=9
+37:28=A,29=5,35=B,36=5,37=9
+38:28=A,36=5,37=9
+39:29=A,37=9
+net before>last: 122 cells
+0:37=1
+31:23-28=A,31-36=5
+32:23-28=A,29=5,30-35=B,36=5,37=9
+33:23-28=A,29=5,30=B,31-34=C,35=B,36=5,37=9
+34-35:24-29=5,30=B,31-34=C,35=B
+36:23-28=A,29=5,30=B,31-34=C,35=B,36=5,37=9
+37:23-28=A,29=5,30-35=B,36=5,37=9
+38:23-28=A,31-36=5,37=9
+39:24-29=A,32-37=9
+result state=NOT_FINISHED level=1 legal=1,2,3,4,6,7

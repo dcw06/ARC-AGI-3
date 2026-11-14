@@ -1,0 +1,65 @@
+{
+ "role": "pack reader",
+ "case": "D10",
+ "records": [
+  {
+   "action_number": 25,
+   "action": "ACTION6 x=34 y=56 (click on column 34, row 56). Pack: \"event=25\", \"action=ACTION6 x=34 y=56\".",
+   "level_and_attempt": "level=2, reset=0, as printed in the record header (\"event=25 reset=0 level=2 frames=1\"). The pack does not explain \"reset\"; I read it as attempt/reset count 0. Whether \"level=2\" means two levels completed or level number 2 is not stated.",
+   "start_board_mode": "from current",
+   "frames_returned": 1,
+   "board_before_the_action": "Built by taking the current board o43 and applying the 20 lines under \"before vs current: 301 cells\" (I re-counted the covered cells by hand and they total 301, all differing from current). Result: row 0 had colour 7 in columns 0-60 and 4 in columns 61-63 (\"0:45-60=7\"; current has 7 only in columns 0-44). Everything not set is as on the current board: border of 4, a field of 3 in columns 6-57 rows 6-57, pillars of 5 at columns 14-15 (rows 38-57, e at row 41), 26-27 (rows 52-57), 36-37 (rows 36-57, f at row 39), 48-49 (rows 30-57, b at row 47), and pairs of 9 in rows 56-57 at columns 12-13, 16-17, 24-25, 28-29, 34-35, 38-39, 46-47, 50-51. The black (0) areas were different from now: columns 6-13 had 0 only in rows 54-55 (plus columns 6-11 of rows 56-57), because \"44-50:6-13=3\"-type lines (\"44:6-13=3\", \"46-47:6-13=3\", \"48-50:6-13=3\", rows 51-53) turn rows 44-53 there to 3; columns 18-23 of rows 56-57 were 0 (\"56-57:18-23=0\"); columns 28-35 had 0 in rows 54-55 (\"54-55:28-35=0\") plus columns 30-33 of rows 56-57; columns 38-47 had 0 only in rows 46-55 (rows 40-45 set to 3 by \"40:38-47=3\" ... \"45:38-40=3,41-43=F,44-47=3\") plus columns 40-45 of rows 56-57; columns 50-57 had 0 in rows 36-55 (\"36:50-57=0\" ... \"46-47:6-13=3,50-57=0\") plus columns 52-57 of rows 56-57. Three small shapes (one 4, a row of three 4s, a row of three of a letter colour) sat on top of the 0 areas: e-shape at 4 (9,51), 4 (8-10,52), e (8-10,53) (\"51:6-8=3,9=4,10-13=3\", \"52:6-7=3,8-10=4,11-13=3\", \"53:6-7=3,8-10=E,11-13=3\"; its current position rows 41-43 is erased by \"41:9=3\", \"42:8-10=3\", \"43:8-10=3\"); f-shape at 4 (42,43), 4 (41-43,44), f (41-43,45) (\"43:...42=4\", \"44:...41-43=4\", \"45:...41-43=F\"; current position rows 37-39 erased by \"37:42=3\", \"38-39:41-43=3\"); b-shape at 4 (53,33), 4 (52-54,34), b (52-54,35) (\"33:53=4\", \"34:52-54=4\", \"35:52-54=B\"; its current position rows 45-47 is overwritten by the 0 block).",
+   "frames": [
+    {
+     "frame": 1,
+     "cells_differing_from_board_before": 43,
+     "what_happens": "\"frame 1/1 vs before: 43 cells\". The f-shape and the top of the 0 block in columns 38-47 move down two rows: the old shape cells become 3 (\"43:42=3\", \"44:41-43=3\", \"45:41=3,42=4,43=3\"), and rows 46-47 of columns 38-47, which were 0, become 3 with the shape redrawn in them (\"46:38-40=3,41-43=4,44-47=3\", \"47:38-40=3,41-43=F,44-47=3\"); so the shape is now 4 at (42,45), 4 at (41-43,46), f at (41-43,47) and the 0 block starts at row 48. At the same time the 0 block in columns 28-35 grows upward by two rows (\"52-53:28-35=0\", those cells were 3). Row 0 is not listed, so the bar of 7s did not change. All 43 covered cells really change (1+3+3+10+10+16)."
+    }
+   ],
+   "final_result": "\"result state=NOT_FINISHED level=2 legal=6\": game not finished, level value still 2, the only legal action is 6.",
+   "cells_of_last_frame_differing_from_board_before": 43,
+   "level_completed": false,
+   "cannot_determine": [
+    "Whether \"level=2\" is the count of completed levels or a level index (header and result both say 2, so no level was completed by this action either way).",
+    "What \"reset=0\" means exactly; not explained in the reading instructions.",
+    "Why row 0 (the bar of 7s) did not shorten on this action although it shortened on both recent actions t42 and t43."
+   ]
+  },
+  {
+   "action_number": 32,
+   "action": "ACTION6 x=34 y=56 (same click as record 25). Pack: \"event=32\", \"action=ACTION6 x=34 y=56\".",
+   "level_and_attempt": "level=2, reset=0 (\"event=32 reset=0 level=2 frames=1\"); same caveats as for record 25.",
+   "start_board_mode": "from current",
+   "frames_returned": 1,
+   "board_before_the_action": "Current board o43 with the 13 lines under \"before vs current: 188 cells\" applied (my hand count of covered cells is 188, all differing). Row 0 had 7 in columns 0-54, 4 in 55-63 (\"0:45-54=7\"). The 0 block in columns 38-47 was taller: rows 36-55 (\"36-39:38-47=0\" added to the current rows 40-55), with the f-shape on top at 4 (42,33), 4 (41-43,34), f (41-43,35) (\"33:42=4\", \"34:41-43=4\", \"35:41-43=F\"); the shape's current cells in rows 37-39 are covered by the 0s. Columns 28-35 had 0 in rows 52-55 (\"52:...28-35=0\", \"53:...28-35=0\", \"54-55:28-35=0\"). Columns 18-23 of rows 56-57 were 0 (\"56-57:18-23=0\"). Columns 6-13 had 0 only in rows 54-55 (and columns 6-11 of rows 56-57): rows 44-53 were 3 (\"44-50:6-13=3\") with the e-shape at 4 (9,51), 4 (8-10,52), e (8-10,53) (\"51:6-8=3,9=4,10-13=3\", \"52:6-7=3,8-10=4,11-13=3\", \"53:6-7=3,8-10=E,11-13=3\") and its current position erased (\"41:9=3\", \"42-43:8-10=3\"). Columns 50-57 are not mentioned, so they were as now: 0 in rows 48-55, b-shape at rows 45-47. Everything else as on the current board.",
+   "frames": [
+    {
+     "frame": 1,
+     "cells_differing_from_board_before": 0,
+     "what_happens": "\"frame 1/1: same as before\": the click changed nothing; the returned board is identical to the board before the action."
+    }
+   ],
+   "final_result": "\"result state=NOT_FINISHED level=2 legal=6\": not finished, level value 2, legal action 6.",
+   "cells_of_last_frame_differing_from_board_before": 0,
+   "level_completed": false,
+   "cannot_determine": [
+    "Why this click had no effect when the identical click in record 25 moved things; the pack shows only that nothing changed.",
+    "Meaning of \"level=2\" (completed count or index) and of \"reset=0\"."
+   ]
+  }
+ ],
+ "relation_between_the_records": "Same game, same level value (2), same attempt (reset=0), and the identical action ACTION6 x=34 y=56, seven actions apart (25 and 32). In record 25 the click lowered the 0 block and f-shape in columns 38-47 by two rows and raised the 0 block in columns 28-35 by two rows (43 cells). In record 32 the same click did nothing. Between them the board changed: row 0's bar of 7s went from columns 0-60 to 0-54; the columns 28-35 block was at rows 52-55 before record 32, which is exactly where record 25 left it; the columns 38-47 block had grown from top row 48 (after record 25) to top row 36, and the columns 50-57 block had shrunk from top row 36 to top row 48, the b-shape moving down with it. The e-shape and columns 6-13 and 18-23 were the same before both records.",
+ "probe_answers": [
+  {"id": "P1", "colour": "0"},
+  {"id": "P2", "colour": "f"},
+  {"id": "P3", "colour": "0"},
+  {"id": "P4", "colour": "4"},
+  {"id": "P5", "colour": "0"},
+  {"id": "P6", "colour": "3"},
+  {"id": "P7", "colour": "4"},
+  {"id": "P8", "colour": "0"},
+  {"id": "P9", "colour": "3"},
+  {"id": "P10", "colour": "3"}
+ ],
+ "what_was_hard_or_missing": "Nothing blocked the reading. The \"from current\" mode means every before-board cell not named in the lines has to be looked up on the 64-wide current board by counting within groups of 8, which is slow and error-prone by hand (probes P1, P3, P7, P10 depend on it). The pack writes letter colours in upper case (B, E, F) while the decision input uses lower case (b, e, f); I treated them as the same digit. \"reset\" and \"level\" in the record header are not defined in the reading instructions. The pack gives no reason for the no-op in record 32 or for row 0 not changing in record 25. I did not open current_board.png. I used no knowledge of this game from any other source; everything is from the pack and decision input."
+}

@@ -1,0 +1,190 @@
+{
+ "D01": {
+  "submitted": true,
+  "checks": 13,
+  "correct": 13,
+  "wrong": [],
+  "cannot_determine": [],
+  "probes": 7,
+  "probes_correct": 7,
+  "reader_flags": [
+   "What ACTION1 means as a control (e.g. 'up') is not stated; only its effect in this one record (block moved up 5 rows) is visible.",
+   "Exact meaning of 'reset=0' and 'level=0' is not defined in the reading instructions; taken as attempt count 0 and level index 0.",
+   "What the B bar on rows 61-62 represents (it shortens by one cell) is not stated.",
+   "How this old board relates to the current board (o82, levels_completed=2) cannot be established from the text beyond it being an earlier action (action 10) of the same game and run; the layouts differ."
+  ],
+  "hard_or_missing": "Nothing blocked the reading. Minor points: (1) the pack writes hex letters in upper case (C, B) while the decision input writes them in lower case (c, b); I treated them as the same colour and answered in lower case. (2) Finding a cell's colour means adding up run lengths by hand (e.g. row 30: 4+10+10 puts x24-28 in the C run), which is slow and error-prone but was done and cross-checked: every row sums to 64 and the frame's change lines sum to the stated 52 cells. (3) 'reset' and 'level' in the record header are not explained in the reading instructions. (4) Probe working: P1 row 30 \"3*10,C*5\" -> x28 is C; P2 \"30-34:24-28=3\"; P3 row 26 in \"25-29:5*4,4*10,3*40,4*10\" -> 3; P4 \"25-26:24-28=C\"; P5 row 49 in \"45-49:5*4,4*15,3*35,4*10\" -> x12 is 4; P6 \"52:4*64\"; P7 \"0-7:5*4,4*60\" -> x6 is 4. Outside knowledge: I recognise 'ls20' as the identifier of a publicly known grid game, but I used nothing beyond the pack text and the decision input. I did not open current_board.png for this case."
+ },
+ "D02": {
+  "submitted": true,
+  "checks": 13,
+  "correct": 13,
+  "wrong": [],
+  "cannot_determine": [],
+  "probes": 7,
+  "probes_correct": 7,
+  "reader_flags": [
+   "What ACTION2 means as a control (e.g. 'down') is not stated; only its effect in this one record (piece moved down 3 rows) is visible.",
+   "Exact meaning of 'reset=0' and 'level=0' is not defined in the reading instructions; taken as attempt count 0 and level index 0.",
+   "Whether placing the piece inside the 4-outlined box is a goal, and what the 0 cells at the end of row 63 represent, are not stated.",
+   "How this old board relates to the current board (o33, levels_completed=1) cannot be established from the text beyond it being an earlier action (action 5) of the same game and run; the layouts differ."
+  ],
+  "hard_or_missing": "Nothing blocked the reading. Minor points: (1) the pack writes hex letters in upper case (E, F) while the decision input writes them in lower case (e, f); I treated them as the same colour and answered in lower case. (2) Locating a cell means adding run lengths by hand; I checked that every board row sums to 64 and that the change lines account for exactly the 18 cells in the header. (3) Row 32 needs care: the box's top edge is hidden under the piece before the action, which is only apparent by comparing row 32 with row 36 and with the change line \"32:12-14=4\". (4) 'reset' and 'level' in the record header are not explained. Probe working: P1 row 30 \"1*3,E*3\" puts E at x12-14; P2 \"30-31:12-14=1\"; P3 row 34 in \"33-35:2*9,1*2,4*1,1*3,...\" puts 1 at x12-14; P4 \"34:12=E\"; P5 row 27 \"2*9,1*15,2*9,F*6\" puts F at x33-38; P6 row 25 puts 1 at x9-23; P7 \"42-62:2*64\". Outside knowledge: I recognise 'ka59' only as an identifier in the same naming style as publicly known grid games; I have no usable knowledge of it and used nothing beyond the pack text and the decision input. I did not open current_board.png for this case."
+ },
+ "D04": {
+  "submitted": true,
+  "checks": 13,
+  "correct": 13,
+  "wrong": [],
+  "cannot_determine": [],
+  "probes": 7,
+  "probes_correct": 7,
+  "reader_flags": [
+   "What the click is meant to do in game terms (toggle, select, etc.) is not stated; only that the clicked 3-wide segment went from 5 to 1.",
+   "What the row-1 bar represents is not stated; it only shows that one more cell turned from 9 to 3.",
+   "Exact meaning of 'reset=0' and 'level=0' is not defined in the reading instructions; taken as attempt count 0 and level index 0.",
+   "What happened in the actions between this record (action 29) and the two recent actions (75, 76) is not in the text; only the net difference between this record's start board and the current board (35 cells) is given."
+  ],
+  "hard_or_missing": "Nothing blocked the reading, but this case needs two steps for every 'before' cell: find the cell on the current board by counting along the grouped row, then check whether a \"before vs current\" line overrides it. The boundary cells need care: (33,1) is just outside the range \"1:34-47=3\", so it keeps the current colour 9 before the action and only becomes 3 in frame 1 (\"1:33=3\"). Probe working: P1 current row 1 has 9 at x1-47 and x33 is not set by the before lines -> 9; P2 \"1:33=3\" -> 3; P3 current row 42 has 5 at x40-42, not set by the before lines -> 5; P4 \"42:40-42=1\" -> 1; P5 \"44-46:...31=1\" -> 1; P6 \"1:34-47=3\" covers x40 -> 3; P7 current row 41 is 0 at x13-50 and is not touched by any line -> 0. I checked the counts: 14 + 6 + 15 = 35 for the before block and 1 + 3 = 4 for the frame. 'reset' and 'level' in the record header are not explained. Outside knowledge: I have no usable knowledge of a game called 'tn36' and used nothing beyond the pack text and the decision input. I did not open current_board.png for this case."
+ },
+ "D05": {
+  "submitted": true,
+  "checks": 15,
+  "correct": 15,
+  "wrong": [],
+  "cannot_determine": [],
+  "probes": 7,
+  "probes_correct": 7,
+  "reader_flags": [
+   "Whether \"level=1\" means the level being played or the number of levels completed: the pack instructions do not define it. It is the same value (1) in the record header and in the result line, which is why I answer that no level was completed by this action.",
+   "What \"reset=0\" means exactly (attempt number): not defined in the pack instructions.",
+   "Why the block stopped after 6 columns, and what row 0 measures (it gains one cell of colour 1): the text shows the changes but not the rule."
+  ],
+  "hard_or_missing": "Probe working: P1 from \"39:24-31=9\"; P2 from net \"39:24-29=A\" (also frame 2 \"39:24-28=A\", not touched in frame 3); P3 not set by the before lines, so current row 35 column 32 = 5; P4 from net \"34-35:...31-34=C\"; P5 from \"0:...37-63=0\"; P6 from \"50-51:35-40=A\"; P7 not set by any before line, so current row 17 column 11 = 0. Things that cost effort: (a) the before board has to be assembled by overlaying nine row lines on a 64-wide current board whose rows are printed in groups of 8, so every column lookup is a hand count; (b) the pack writes letter colours in upper case (A, B, C) while the decision input writes them in lower case (a, b, c) - I took them as the same hex digits and answer in lower case; (c) frame lines list only changed columns, so cells of the block that keep their colour while it slides (for example column 28 on row 33 in frame 1) are absent and the shape must be inferred by combining the frame lines with the before board; (d) \"level\" and \"reset\" in the record header are not explained. All stated cell counts I recounted (171, 76, 122) agreed with the lines; I did not recount 104 or 39 cell by cell. I did not open current_board.png. I have no outside knowledge of this game and used none."
+ },
+ "D06": {
+  "submitted": true,
+  "checks": 18,
+  "correct": 18,
+  "wrong": [],
+  "cannot_determine": [],
+  "probes": 8,
+  "probes_correct": 8,
+  "reader_flags": [
+   "Whether \"level=1\" means the level being played or the number of levels completed: not defined in the pack. It is 1 in both the header and the result, which is why I answer that no level was completed by this action.",
+   "What \"reset=2\" means exactly: not defined in the pack instructions.",
+   "Frame 2's count against the board before is not printed (the frame is given \"vs previous\"); 39 is my own hand count, not a pack figure.",
+   "Why the figure stopped at columns 25-29 and what the f run on row 63 measures: the text shows the changes but not the rule."
+  ],
+  "hard_or_missing": "Probe working: P1 from \"38-39:13-30=A\"; P2 from net \"38-39:...27-28=9\" (also frame 3 \"27-28=9\", frames 4-5 same as previous); P3 from \"41:...34=5\"; P4 from net \"41:26-28=5,32-34=A\"; P5: before a (\"41:13-31=A\"), frame 1 \"41:29-31=5\", frame 2 does not touch column 29, so 5; P6 from \"4:13=3,14-17=5\"; P7 from \"49:19=5\"; P8 not set by the row 7 line (it stops at column 53), so current row 7 column 57 = 5. Hard parts: (a) the board before differs from the current board in 1424 cells over 39 rows, so rebuilding it means overlaying long run lists on 64-character rows printed in groups of 8 - slow and error-prone by hand, although every line was unambiguous and the total came out exact; the cells a line does not mention (for example columns 31, 34, 35 of row 37, which complete the figure) must be fetched from the current board, which is easy to overlook; (b) the pack writes letter colours in upper case (A, B, E, F) and the decision input in lower case - I treated them as the same digits and answer in lower case; (c) frames 2 and 3 are given against the previous frame, so a frame-2 probe needs before + frame 1 + frame 2 chained, and no frame-2-vs-before count is printed; (d) \"level\" and \"reset\" are not explained. I did not open current_board.png. I have no outside knowledge of this game and used none."
+ },
+ "D07": {
+  "submitted": true,
+  "checks": 18,
+  "correct": 18,
+  "wrong": [],
+  "cannot_determine": [],
+  "probes": 8,
+  "probes_correct": 8,
+  "reader_flags": [
+   "Whether \"level=4\" means the level being played or the number of levels completed: not defined in the pack. It is 4 in both the header and the result, which is why I answer that no level was completed by this action.",
+   "What \"reset=0\" means exactly: not defined in the pack instructions.",
+   "Counts against the board before for frames 2-43 are not printed (those frames are \"vs previous\" or \"same as previous\"); the values I give are my own hand counts, and I did not work them out for frames 16-29.",
+   "Why the marker travels exactly 16 rows and stops at rows 39-44, and what the marker, the gaps and the 3/0 areas mean: the text shows the changes but not the rule."
+  ],
+  "hard_or_missing": "Probe working: P1 - the rows 35-46 line sets only columns 37-51, so current row 42 column 31 = 3; P2 from net \"41-42:31-34=4\"; P3 from \"57-58:31-34=4,35-36=B\"; P4 from net \"57-58:31-36=3\"; P5 - before c (\"49-51:25-36=C\"), turned to 3 at frame 11 (\"49-51:15=C,27=3\"), frames 12-22 never touch column 27 (the marker frames only cover columns 31-36), and it turns back to c only at frame 34 (\"49-51:15=E,27=C\"), so 3 at frame 22; P6 and P7 from \"25-26:36-60=3\"; P8 not set by any before line, so current row 39 column 17 = 3. Hard parts: (a) a mid-sequence probe such as frame 22 means walking a chain of 21 \"vs previous\" frames and checking that none touches the cell - possible but tedious, and there is no stated count against the board before for any frame between 1 and 44; (b) the before board differs from the current one in 893 cells, so it has to be rebuilt by overlaying 25 lines on 64-character rows printed in groups of 8; cells a line leaves out (for example columns 31-34 of row 53, already 0) must be taken from the current board; (c) the pack writes letter colours in upper case (B, C, E) and the decision input in lower case - I treated them as the same digits and answer in lower case; (d) \"level\" and \"reset\" are not explained. All stated counts I checked (893, 16, the 6s and 12s I sampled, 56) agreed with the lines. I did not open current_board.png. I have no outside knowledge of this game and used none."
+ },
+ "D10": {
+  "submitted": true,
+  "checks": 22,
+  "correct": 22,
+  "wrong": [],
+  "cannot_determine": [],
+  "probes": 10,
+  "probes_correct": 10,
+  "reader_flags": [
+   "Whether \"level=2\" is the count of completed levels or a level index (header and result both say 2, so no level was completed by this action either way).",
+   "What \"reset=0\" means exactly; not explained in the reading instructions.",
+   "Why row 0 (the bar of 7s) did not shorten on this action although it shortened on both recent actions t42 and t43.",
+   "Why this click had no effect when the identical click in record 25 moved things; the pack shows only that nothing changed.",
+   "Meaning of \"level=2\" (completed count or index) and of \"reset=0\"."
+  ],
+  "hard_or_missing": "Nothing blocked the reading. The \"from current\" mode means every before-board cell not named in the lines has to be looked up on the 64-wide current board by counting within groups of 8, which is slow and error-prone by hand (probes P1, P3, P7, P10 depend on it). The pack writes letter colours in upper case (B, E, F) while the decision input uses lower case (b, e, f); I treated them as the same digit. \"reset\" and \"level\" in the record header are not defined in the reading instructions. The pack gives no reason for the no-op in record 32 or for row 0 not changing in record 25. I did not open current_board.png. I used no knowledge of this game from any other source; everything is from the pack and decision input."
+ },
+ "D11": {
+  "submitted": true,
+  "checks": 24,
+  "correct": 24,
+  "wrong": [],
+  "cannot_determine": [],
+  "probes": 12,
+  "probes_correct": 12,
+  "reader_flags": [
+   "What ACTION1 means as a command (e.g. a direction); the pack shows only its effect.",
+   "Whether \"level=2\" is a completed-level count or a level index, and what \"reset=0\" means exactly.",
+   "Whether the small piece with 0 cells was removed or merged; the frame only shows its cells becoming 5.",
+   "Why ACTION1 moved nothing here except the bottom bar, when in record 53 it relocated the large shape.",
+   "Whether \"level=2\" is a completed-level count or a level index, and what \"reset=0\" means exactly."
+  ],
+  "hard_or_missing": "Nothing was undeterminable for the boards or probes. The work is heavy by hand: in \"from current\" mode each before-row is the current 64-cell row with several ranges overwritten, and in frame 1 of record 53 the lines are relative to that already-reconstructed before board, so cells kept from the old rectangle (e.g. row 33 columns 40-46) are easy to miss; the frame can only be pictured after two layers of patching. The frame lines also cover cells that do not change (column 47 in rows 36-41), which the instructions warn about. Upper-case letter colours in the pack (C, E, F) versus lower case in the decision input were treated as the same digits. \"reset\" and \"level\" in the record header are not defined. The pack does not say what ACTION1 means. I did not open current_board.png. I used no knowledge of this game from any other source."
+ },
+ "D12": {
+  "submitted": true,
+  "checks": 22,
+  "correct": 22,
+  "wrong": [],
+  "cannot_determine": [],
+  "probes": 10,
+  "probes_correct": 10,
+  "reader_flags": [
+   "Whether \"level=1\" is a completed-level count or a level index, and what \"reset=0\" means exactly.",
+   "The general meaning of ACTION3; the record shows only that here it moved the block with the 0 cells three columns left.",
+   "Why ACTION3 had no effect here. The block with the 0 cells was at columns 30-32, directly beside the f band that ends at column 29, but the pack does not state that this is the cause.",
+   "Whether \"level=1\" is a completed-level count or a level index, and what \"reset=0\" means exactly."
+  ],
+  "hard_or_missing": "Nothing was undeterminable for the boards or probes; this was the easiest of the three because the patches are small. The main care points: a line such as \"33:6-7=E,8-9=4,10-11=E,31=0\" sets only one cell of the 3-wide block, so the rest of that row of the block has to be read off the current board (columns 30 and 32 are e there), and row 34 of the block is not mentioned at all in record 86; a reader who expects every block row to be listed could think it missing. Probes on untouched cells (P1, P7, P10) need column counting on the 64-wide current rows. Upper-case E in the pack versus lower-case e in the decision input was treated as the same digit. \"reset\" and \"level\" in the record header are not defined, and the meaning of ACTION3 is not given. I did not open current_board.png. I used no knowledge of this game from any other source."
+ },
+ "D14": {
+  "submitted": true,
+  "checks": 13,
+  "correct": 13,
+  "wrong": [],
+  "cannot_determine": [],
+  "probes": 7,
+  "probes_correct": 7,
+  "reader_flags": [
+   "What 'reset=0' means exactly (attempt number vs. count of resets) is not defined in the reading instructions.",
+   "Why ACTION1 produces this change (the rule/meaning of ACTION1) is not stated; only the before and after boards are given."
+  ],
+  "hard_or_missing": "The board before the action is not printed; it has to be rebuilt by hand by overlaying 27 change lines on the 64x64 current board, which needs careful column counting in the 8-cell groups (easy to slip by one). Probes P1, P3 and P7 fall on cells that no 'before vs current' line touches, so they rest on reading the current board plus the rule \"every cell the lines do not set had the same colour as on the current board\". The pack writes colour F in upper case while the decision input writes f in lower case; I treated them as the same colour. 'reset' is not explained. The change lines give positions only, so the shape (diamond with 2 edge and F fill) had to be pictured from the runs. I checked both stated counts (289 and 201) by adding up the runs by hand and both agreed. I have no outside knowledge of this game and used none; only the pack text and the decision input were used (the picture was not needed)."
+ },
+ "D15": {
+  "submitted": true,
+  "checks": 13,
+  "correct": 13,
+  "wrong": [],
+  "cannot_determine": [],
+  "probes": 7,
+  "probes_correct": 7,
+  "reader_flags": [
+   "What 'reset=0' means exactly (attempt number vs. count of resets) is not defined in the reading instructions.",
+   "The game rule behind the click (why rows 52-54 fill with 0 and rows 58-60 of cols 45-53 empty) is not stated; the 'transfer' reading is my inference from the cells only."
+  ],
+  "hard_or_missing": "The board before the action is not printed and has to be rebuilt by overlaying ten grouped change lines on the 64x64 current board; this record's lines are compact (row ranges), so it was manageable, but column counting inside the 8-cell groups still needs care. One thing that could mislead: in 'before', rows 58-60 of cols 45-53 are 0 and the frame turns them to 3, which is also what they are on the current board, and the recent history (t65) shows the same cells going 0 to 3 again, so those cells must have been refilled with 0 at some point between action 54 and action 65 that the text does not show. P7 falls on a cell no line touches, so it rests on the current board plus the rule \"every cell the lines do not set had the same colour as on the current board\". The pack writes colour B in upper case and the decision input b in lower case; I treated them as the same. 'reset' is not explained. Both stated counts (421 and 65) agreed with my hand count. I have no outside knowledge of this game and used none; only the pack text and the decision input were used (the picture was not needed)."
+ },
+ "D16": {
+  "submitted": true,
+  "checks": 13,
+  "correct": 13,
+  "wrong": [],
+  "cannot_determine": [],
+  "probes": 7,
+  "probes_correct": 7,
+  "reader_flags": [
+   "What 'reset=0' means exactly (attempt number vs. count of resets) is not defined in the reading instructions.",
+   "The meaning of the centre colours (0 vs 4 vs 5) is not stated; that 0 marks the selected/active block is my inference. Why the narrow block's centre was 5 before the click while the big block's centre becomes 4 (not 5) after it cannot be determined from the text.",
+   "Whether the blocks of this record are the same objects as the blocks now at cols 30-32 and cols 6-11 on the current board (i.e. that they were moved there by later actions) is not stated; the pack only gives the two boards."
+  ],
+  "hard_or_missing": "The board before the action is not printed and has to be rebuilt by overlaying nine change lines on the 64x64 current board; the lines are short, so this was the easiest of my three cases, but locating columns 30-35 means counting across the boundary between the 4th and 5th 8-cell groups, where a one-column slip is easy (the narrow block is at 30-32 now but was at 33-35 then). The pack writes colour E in upper case and the decision input e in lower case; I treated them as the same and answered P5 in lower case. P7 falls on a cell no line touches, so it rests on the current board plus the rule \"every cell the lines do not set had the same colour as on the current board\". 'reset' is not explained, and nothing says what the centre colours 0/4/5 mean. Both stated counts (121 and 6) agreed with my hand count. I have no outside knowledge of this game and used none; only the pack text and the decision input were used (the picture was not needed)."
+ }
+}

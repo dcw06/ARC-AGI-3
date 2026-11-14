@@ -1,0 +1,281 @@
+{
+ "role": "evidence needed",
+ "case": "D04",
+ "stage": 2,
+ "per_uncertainty": [
+  {
+   "id": "U1",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 2,
+     "frames": "2, 4, 7",
+     "what_it_shows": "Click on the colour-9 disc (37,55). Frame 2: the b piece moves one block left, from x=30-33 to x=26-29 (y=13-16), while a colour-9 outline appears round the first control (x=19-23, y=41-47). Frame 4: with the outline round the third control (x=29-33) the piece moves one block down, to x=26-29, y=17-20. Frame 7: the outline is gone and the piece is back at x=30-33, y=13-16. Net change of the whole action: one bar cell only.",
+     "status": "observed event"
+    },
+    {
+     "action": 12,
+     "frames": "2, 7",
+     "what_it_shows": "Disc click. Frame 2: the piece moves one block right, to x=34-37, y=13-16. Frame 7: back at x=30-33, y=13-16.",
+     "status": "observed event"
+    },
+    {
+     "action": 60,
+     "frames": "2-7",
+     "what_it_shows": "Disc click. The piece moves once per frame as the outline steps over the five controls: left (x=26-29,y=13-16), down (y=17-20), left (x=22-25), down (y=21-24), down (y=25-28). Frame 7: back at the start.",
+     "status": "observed event"
+    },
+    {
+     "action": 74,
+     "frames": "3, 5, 6, 7",
+     "what_it_shows": "Disc click in attempt 2. The piece stays in columns x=30-33 and moves down on the second, fourth and fifth control steps: y=17-20, y=21-24, y=25-28. That is the lowest row it has ever reached, two blocks above the outline's interior (x=30-33, y=33-36). Frame 7: back at y=13-16.",
+     "status": "observed event"
+    },
+    {
+     "action": 19,
+     "frames": "2-7",
+     "what_it_shows": "Disc click. Four left moves take the piece to x=14-17, y=13-16 (frame 5). In frame 6 (fifth control) its cells turn back to checkerboard colour 4 and no b piece is drawn anywhere. Frame 7: it reappears at the start. The same thing is recorded at a039 and a055.",
+     "status": "observed event"
+    },
+    {
+     "action": 9,
+     "frames": "all",
+     "what_it_shows": "Disc click in which the outline steps over all five controls and the piece does not move at all (same at a030, a045, a067).",
+     "status": "observed event"
+    },
+    {
+     "action": 10,
+     "frames": "1",
+     "what_it_shows": "Direct click on the outline's bottom edge (31,37): only bar cell (52,1) changes. A direct click on the piece at (32,14) in a061 likewise changes only a bar cell.",
+     "status": "observed event"
+    },
+    {
+     "action": 0,
+     "frames": "all actions a001-a074",
+     "what_it_shows": "Across the whole change record no run ever touches the b outline (x=29-34, y=33-37, including (31,36),(32,36)). The board before a001 shows the piece and outline exactly where they are now. The piece only ever leaves x=30-33, y=13-16 inside the frames of a disc click and is back there in the last frame of every one of the 20 disc clicks. Its shape (three full rows, gap in the bottom middle) is the same in every frame.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[2, 12], [22, 60], [60, 74]],
+   "what_the_evidence_supports": "Older than the two recent actions: the piece is moved only by clicking the disc. A disc click steps a 9-coloured outline across the five controls, left to right, and at each step the piece moves one block (4 cells) left, right or down, or stays, depending on that control (see U2). At the end of every run seen so far the piece returned to x=30-33, y=13-16. The outline at x=29-34, y=33-37 has never moved or changed. The piece has never been lower than y=25-28, so it has never been next to or inside the outline.",
+   "limits": "No upward move has ever been recorded. Nothing shows what happens if the piece reaches y=29-32 or y=33-36 in columns x=30-33, or whether a run that ends there also snaps back. The disappearance after a fifth left move (a019, a039, a055) is seen but not explained. Only attempt-level resets and the return in frame 7 are recorded; no run has ended with any lasting change."
+  },
+  {
+   "id": "U2",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 1,
+     "frames": "1",
+     "what_it_shows": "Click (21,45) turns the first vertical segment (21,44-46) from 5 to 1. a011 (click 20,45) turns it from 1 back to 5, and a013 turns it to 1 again: a toggle. Clicks one or two cells to the side still hit it (a011 and a024 at x=20, a032 at x=19).",
+     "status": "observed event"
+    },
+    {
+     "action": 5,
+     "frames": "1",
+     "what_it_shows": "Click (21,42) turns the first horizontal segment (20-22,42) from 5 to 1, without touching the vertical segment below it. a014 turns it from 1 back to 5. a031, a click on (21,43), also toggles this horizontal segment. So the row-42 segments and the vertical segments are separate toggles. a015-a018 and a026-a029 show the same for the other four horizontal segments; a056, a058, a059 for vertical segments at x=41, 26, 36.",
+     "status": "observed event"
+    },
+    {
+     "action": 23,
+     "frames": "1",
+     "what_it_shows": "Click (21,47), the bottom row of the strip: nothing changes except a bar cell.",
+     "status": "observed event"
+    },
+    {
+     "action": 2,
+     "frames": "2-6",
+     "what_it_shows": "Board before: horizontal segments 5,1,5,1,1 and vertical segments 1,1,5,1,1 (controls 1 to 5). Run: control 1 (horizontal 5, vertical 1) piece moves left; control 3 (horizontal 5, vertical 5) piece moves down; controls 2, 4, 5 (both 1) no move.",
+     "status": "observed event"
+    },
+    {
+     "action": 4,
+     "frames": "2, 4",
+     "what_it_shows": "After a003 turned the third vertical segment to 1, the same run gives left at control 1 and now left (not down) at control 3: changing only that segment's colour changed that step's direction.",
+     "status": "observed event"
+    },
+    {
+     "action": 12,
+     "frames": "2",
+     "what_it_shows": "Control 1 with horizontal 1 and vertical 5: piece moves right. Repeated at a022 frame 2 and a047 frame 2. This combination has only ever been run at control 1.",
+     "status": "observed event"
+    },
+    {
+     "action": 33,
+     "frames": "2",
+     "what_it_shows": "Control 1 with horizontal 5 and vertical 5: piece moves down (x=30-33, y=17-20). Same combination moves down at control 5 in a057 frame 6, at controls 2, 4, 5 in a060 and in a074.",
+     "status": "observed event"
+    },
+    {
+     "action": 9,
+     "frames": "all",
+     "what_it_shows": "All ten segments colour 1: the run steps over all five controls and the piece never moves. Same at a030, a045, a067. Single controls with both segments 1 also give no move at a006, a007, a025 (control 1) and a074 (controls 1 and 3, the latter with the piece at y=17-20).",
+     "status": "observed event"
+    },
+    {
+     "action": 19,
+     "frames": "2-6",
+     "what_it_shows": "All five controls with horizontal 5 and vertical 1: five left steps in a row (also a039, a055).",
+     "status": "observed event"
+    },
+    {
+     "action": 0,
+     "frames": "a001-a074 taken together",
+     "what_it_shows": "Tracking every toggle from the starting board (horizontal 5,1,5,1,1; vertical 5,1,5,1,1) reproduces every recorded before/after colour and every move in all 20 disc runs with one table: horizontal 5 + vertical 5 = down; horizontal 5 + vertical 1 = left; horizontal 1 + vertical 5 = right; both 1 = no move. Toggling a segment never changes anything outside the strip at the moment of the click; the effect shows only in the next disc run.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[1, 2, 5, 11, 12, 14, 33], [22, 24, 25, 30, 31, 32, 33], [57, 60, 67, 74]],
+   "what_the_evidence_supports": "Older evidence: each of the ten segments is an independent two-state toggle (5 and 1), clicking costs one bar cell, and the pair of colours on a control decides what the piece does at that control's step of a disc run, by the table above, with no counterexample in 20 runs. Applied to the board in the decision input (horizontal 1,5,1,5,5; vertical all 5 after the two recent clicks), the table would read right, down, right, down, down; that exact setting has never been run.",
+   "limits": "The table is inferred from outcomes, not shown by the game. 'Right' has been seen only at control 1 (a012, a022, a047), never at controls 2-5. No colour pair has produced an upward move, and with two colours per segment there are only the four pairs above. The third group shows down, left and no-move but not right."
+  },
+  {
+   "id": "U3",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 2,
+     "frames": "1-7",
+     "what_it_shows": "Click (37,55) on the disc returns 7 frames. Frame 1: the disc turns from 9 to a. Frame 2: disc back to 9, a 9-coloured outline appears round control 1 and the piece makes that control's move. Frames 3-6: the outline steps to controls 2, 3, 4, 5, one per frame, the piece moving or not at each. Frame 7: outline removed, piece back at x=30-33, y=13-16. Last frame differs from the board before by one bar cell.",
+     "status": "observed event"
+    },
+    {
+     "action": 4,
+     "frames": "2-7",
+     "what_it_shows": "Same click after one segment was changed (a003): the third step is now left instead of down. The disc's result depends on the control colours at the time.",
+     "status": "observed event"
+    },
+    {
+     "action": 9,
+     "frames": "1-7",
+     "what_it_shows": "Disc click with every segment colour 1: the outline still steps over all five controls, the piece never moves.",
+     "status": "observed event"
+    },
+    {
+     "action": 74,
+     "frames": "1-7",
+     "what_it_shows": "The most recent disc click before the decision (attempt 2): no move, down, no move, down, down, then back to the start. The player's two recent clicks came after this run, so the present setting has not been run.",
+     "status": "observed event"
+    },
+    {
+     "action": 0,
+     "frames": "all 20 disc clicks: a002, a004, a006, a007, a009, a012, a019, a022, a025, a030, a033, a039, a045, a047, a050, a055, a057, a060, a067, a074",
+     "what_it_shows": "Every disc click has the same 7-frame form, costs exactly one bar cell, and ends with the piece at the start, state NOT_FINISHED, levels completed 0.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[2, 4], [9, 12], [67, 74]],
+   "what_the_evidence_supports": "The disc is a run button: it plays the five controls in order, left to right, moving the piece one block per control according to that control's colours, then puts the piece back. It has been clicked 20 times before the decision and always behaved this way.",
+   "limits": "Every run so far ended away from the outline, so the record does not show what a disc run does when the piece ends at (or passes through) x=30-33, y=33-36. Whether the snap-back in frame 7 is unconditional is unknown."
+  },
+  {
+   "id": "U4",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 1,
+     "frames": "1",
+     "what_it_shows": "Board before a001: the row-1 bar is colour 9 on all of x=1-61 (61 cells). a001 turns (61,1) to 3.",
+     "status": "observed event"
+    },
+    {
+     "action": 10,
+     "frames": "1",
+     "what_it_shows": "A click with no other effect (31,37) still turns one bar cell, (52,1), from 9 to 3. Same for a023 (click 21,47) at (39,1).",
+     "status": "observed event"
+    },
+    {
+     "action": 2,
+     "frames": "1",
+     "what_it_shows": "A 7-frame disc run costs one bar cell (60,1), the same as a single toggle.",
+     "status": "observed event"
+    },
+    {
+     "action": 61,
+     "frames": "1, 2",
+     "what_it_shows": "The 61st action (click 32,14) turns the last 9 cell, (1,1), to 3. The state after this action is GAME_OVER, levels completed 0. No other cell changes.",
+     "status": "observed event"
+    },
+    {
+     "action": 62,
+     "frames": "1",
+     "what_it_shows": "RESET: the bar x=1-61 returns from 3 to 9, and the ten control segments return to the colours of the board before a001 (horizontal 5,1,5,1,1; vertical 5,1,5,1,1). The index marks everything after it as level 0 attempt 2. The piece and outline are where they were.",
+     "status": "observed event"
+    },
+    {
+     "action": 0,
+     "frames": "a063-a076",
+     "what_it_shows": "The 14 actions of attempt 2 each turned one bar cell, x=61 down to x=48, which is why 14 cells are colour 3 at 76 actions. (The last two of these, x=49 and x=48, are the ones the decision input already showed.)",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[1, 10, 61, 62], [23, 61, 62]],
+   "what_the_evidence_supports": "The bar is an action allowance of 61 per attempt: every action of any kind uses one cell, from the right. Using the last cell ended attempt 1 in GAME_OVER (a061). The RESET that followed refilled the bar and put the controls back to their starting colours. With 47 cells of 9 now, 47 actions remain in this attempt.",
+   "limits": "One game-over and one reset only. The record does not show whether GAME_OVER is caused purely by the bar reaching zero or also by what a061 clicked (the piece itself), though no other cause is visible. It does not show whether completing a level refills the bar."
+  },
+  {
+   "id": "U5",
+   "older_evidence_found": "partly",
+   "observations": [
+    {
+     "action": 10,
+     "frames": "1",
+     "what_it_shows": "Click on the b outline's bottom edge (31,37): no cell changes except one bar cell.",
+     "status": "observed event"
+    },
+    {
+     "action": 61,
+     "frames": "1, 2",
+     "what_it_shows": "Click on the b piece (32,14): no cell changes except the last bar cell (and the game ended on that same action).",
+     "status": "observed event"
+    },
+    {
+     "action": 23,
+     "frames": "1",
+     "what_it_shows": "Click on the strip's bottom row (21,47), below a vertical segment: no effect except a bar cell.",
+     "status": "observed event"
+    },
+    {
+     "action": 0,
+     "frames": "disc runs a002, a004, a006, a007, a009, a012, a019, a022, a025, a030, a033, a039, a045, a047, a050, a055, a057, a060, a067, a074",
+     "what_it_shows": "Step sequences already run (controls 1-5; L left, R right, D down, - no move): a002 L,-,D,-,-; a004 L,-,L,-,-; a006 and a007 -,-,L,-,-; a009, a030, a045, a067 no move at all; a012 and a047 R,-,-,-,-; a019, a039, a055 L,L,L,L,L (piece vanishes on the fifth); a022 R,L,L,L,L; a025 -,L,L,L,L; a033 D,-,-,-,-; a050 L,-,-,-,-; a057 L,L,L,L,D; a060 L,D,L,D,D; a074 -,D,-,D,D. No run has had more than three down steps, and none has had five.",
+     "status": "supported limited conclusion"
+    },
+    {
+     "action": 0,
+     "frames": "a001-a076, click targets",
+     "what_it_shows": "Every other click in the game was on a control segment (rows 42-46 of the strip) or on the disc. No click on a plain colour-4 or colour-5 checkerboard block is recorded.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[10, 61], [2, 4, 6, 9, 12, 19, 22, 25, 33, 50, 57, 60, 74]],
+   "what_the_evidence_supports": "Direct clicks on the piece and on the outline did nothing visible, and each cost a bar cell. Everything that has moved the piece came from the strip plus the disc. The settings already run are listed above; the setting on the board at the decision has not been run, and no run has taken the piece below y=25-28.",
+   "limits": "Each panel target was clicked once only, and the click on the piece coincided with the bar running out. Plain checkerboard cells were never clicked, so that part of the question has no evidence. The first group covers panel clicks only; the second covers what has been tried."
+  }
+ ],
+ "uncertainties_added_after_seeing_history": [
+  {
+   "id": "N1",
+   "uncertainty": "What happens when a disc run brings the b piece to x=30-33, y=33-36, inside the b outline (the piece's gap at the bottom middle lines up with the outline's two cells at (31,36),(32,36))? Does the piece stay, does the level count change, and must it arrive there on the last of the five steps?",
+   "why_it_matters": "The piece starts five blocks above that position and a run has five steps, but the lowest point ever reached is y=25-28 (a060, a074). No past record shows the piece at y=29-32 or y=33-36."
+  },
+  {
+   "id": "N2",
+   "uncertainty": "Does a control with horizontal segment 1 and vertical segment 5 move the piece right at controls 2-5 as it did at control 1 (a012, a022, a047)?",
+   "why_it_matters": "After the two recent clicks, controls 1 and 3 both have that colour pair; the pair has never been run at control 3."
+  },
+  {
+   "id": "N3",
+   "uncertainty": "What does it mean that the piece is not drawn after a fifth left step from x=14-17 (a019, a039, a055 frame 6)? Is leaving the panel allowed, and is there any penalty beyond the normal return to the start?",
+   "why_it_matters": "It bears on whether sideways steps near the panel edges are safe; all three cases ended with the usual return and one bar cell spent."
+  }
+ ],
+ "needs_no_past_record_can_meet": "No record shows the piece reaching or entering the b outline, a level being completed, or any run ending with a lasting change, so what the goal is and what a successful run looks like cannot be confirmed from history. No record shows the horizontal-1 / vertical-5 pair at controls 2-5, any upward move, or a click on a plain checkerboard block. Whether completing a level refills the row-1 bar is also not recorded.",
+ "coverage": {
+  "history_index_read_fully": true,
+  "history_changes": "read fully",
+  "images_opened": ["a002", "a009", "a010", "a012", "a019", "a033", "a057", "a060", "a061", "a062", "a074"],
+  "board_files_opened": ["a001"]
+ },
+ "notes": "Tools used: Read and Write only (no Grep, Glob, Bash or code). Opened only files in the D04 stage1 and stage2 folders. history_changes.txt was read in full in three passes; conclusions about all 76 actions rest on that text, with 11 pictures and one board file used as spot checks, all of which agreed with it. 'Action 0' in an observation means a conclusion drawn across many actions, which are named in its frames field. Frame numbering for disc clicks: frame 1 is the disc flash, frames 2-6 are controls 1-5, frame 7 is the return. The control settings before each disc run were worked out by hand by applying every recorded toggle from the starting board; the before/after colours in the change record matched at every step, and the result matches the decision-time board. Evidence from a075 and a076 is the same as in the decision input and is not counted as older evidence. The stage-1 file was not changed. I used no knowledge of this game from outside the case folder."
+}

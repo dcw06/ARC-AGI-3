@@ -1,0 +1,256 @@
+{
+ "role": "evidence needed",
+ "case": "D12",
+ "stage": 2,
+ "per_uncertainty": [
+  {
+   "id": "U1",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 87,
+     "frames": "all",
+     "what_it_shows": "ACTION2 while the 3x6 e block (centre 0) was at x=30-32, y=30-35: the whole block moved down 3 cells to x=30-32, y=33-38, its present position. Nothing else moved. This is the same block that is selected now.",
+     "status": "observed event"
+    },
+    {
+     "action": 57,
+     "frames": "all",
+     "what_it_shows": "ACTION4 with the 3x6 block selected (centre 0) at x=33-35, y=30-35: block moved right 3 cells to x=36-38.",
+     "status": "observed event"
+    },
+    {
+     "action": 68,
+     "frames": "all",
+     "what_it_shows": "ACTION1 with the 3x6 block selected at x=36-38, y=42-47: block moved up 3 cells to y=39-44 (a069, a070, a071 repeat this, 3 cells up each time).",
+     "status": "observed event"
+    },
+    {
+     "action": 72,
+     "frames": "all",
+     "what_it_shows": "ACTION3 with the 3x6 block selected at x=36-38, y=30-35: block moved left 3 cells to x=33-35 (a073 repeats it, to x=30-32).",
+     "status": "observed event"
+    },
+    {
+     "action": 74,
+     "frames": "all",
+     "what_it_shows": "ACTION3 with the selected 3x6 block at x=30-32, y=30-35 (colour f at x=29): no cell changed. a086 repeats this with the same block in the same column: no cell changed.",
+     "status": "observed event"
+    },
+    {
+     "action": 76,
+     "frames": "all",
+     "what_it_shows": "ACTION1 with the selected 3x6 block at x=30-32, y=30-35 (colour 2 at y=29): no cell changed.",
+     "status": "observed event"
+    },
+    {
+     "action": 1,
+     "frames": "all",
+     "what_it_shows": "First action of the game: ACTION1 moved the 3x3 e block whose centre was 0 from y=30-32 to y=27-29; the other block (centre 5) did not move. a002/a003 (ACTION3, left 3), a004/a005 (ACTION2, down 3), a007 (ACTION4, right 3) show the same mapping in the first level; every one of the 60-odd later uses of actions 1-4 moved only the block with the 0 centre, always by 3 cells.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[57, 58, 68, 72], [87, 57, 68, 72, 74], [1, 3, 4, 7]],
+   "what_the_evidence_supports": "Older than the two recent actions: ACTION1 = up, ACTION2 = down, ACTION3 = left, ACTION4 = right, each moving only the e block whose centre is 0, by 3 cells per action, in both levels and for all four block sizes. For the block selected now (x=30-32, y=33-38) the record directly shows ACTION2 moving it down to this spot (a087) and ACTION3 doing nothing in this column (a074, a086). The decision input itself showed no use of actions 1-4.",
+   "limits": "The block has never been at exactly x=30-32, y=33-38 when ACTION1, ACTION3 or ACTION4 was pressed; what they do from here is inferred from the same block one step away. A move can also start a slide of a neighbouring block (see U4), so 'moves 3 cells' is not the only possible result of actions 1-4."
+  },
+  {
+   "id": "U2",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 6,
+     "frames": "all",
+     "what_it_shows": "ACTION6 on (28,31), the centre (colour 5) of a 3x3 e block: that centre became 0 and the centre of the previously moving block at (13,34) became 4. The next action (a007, ACTION4) moved the newly 0-centred block and not the other one.",
+     "status": "observed event"
+    },
+    {
+     "action": 37,
+     "frames": "all",
+     "what_it_shows": "ACTION6 on (40,34), an e cell that is not the centre of the 6x3 block at x=39-44, y=33-35: its centre (41-42,34) went 5 to 0 and the old 0 centre (52,52) went to 4. So a click on any e cell of a block is enough. a078, click on (7,43), a non-centre e cell of the 6x6 block lying inside the frame at x=5-12, y=41-48, also took the 0 centre, and a079-a082 then moved that block out of its frame.",
+     "status": "observed event"
+    },
+    {
+     "action": 15,
+     "frames": "all",
+     "what_it_shows": "ACTION6 on (13,34), the centre (colour 4) of a block that had been selected before and was sitting in a frame: its centre went back to 0, the other block's centre went 0 to 4, and a016 moved it out of the frame. So a 4 centre marks a block that was selected earlier and can be selected again; a 5 centre is seen only on blocks never yet selected.",
+     "status": "supported limited conclusion"
+    },
+    {
+     "action": 75,
+     "frames": "all",
+     "what_it_shows": "ACTION6 on (10,11), the same cell inside the empty frame that was clicked at the most recent action: only the bar cell (41,63) changed. The click at t95 was therefore a repeat of an earlier click with the same lack of effect.",
+     "status": "observed event"
+    },
+    {
+     "action": 77,
+     "frames": "all",
+     "what_it_shows": "ACTION6 on (8,11), a colour-4 border cell of the empty frame: only a bar cell changed. Other clicks off any block also changed nothing in the play area: a009 (35,31) on colour f, a010 (46,28) inside an empty frame, a012 (44,28) and a052 (5,44) on empty-frame borders, a084 (15,26) on colour f, a088 (48,40) on colour 1.",
+     "status": "observed event"
+    },
+    {
+     "action": 78,
+     "frames": "all",
+     "what_it_shows": "With the 6x6 block's centre 0 (after the click), a079-a082 ACTION1 moved the 6x6 block up 3 cells each time while the 3x6 block (centre 4) stayed still; after a089 re-selected the 6x6 block, a090-a093 ACTION2 moved it back down into its frame. This is what the block at x=5-12, y=41-48 did while its centre was 0.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[6, 7], [37, 38, 77], [78, 79, 75]],
+   "what_the_evidence_supports": "Older evidence: exactly one e block has a 0 centre at any time and it is the one actions 1-4 move. ACTION6 on any e cell of another block (centre or not, inside a frame or not) transfers the 0 centre to it; the block that loses it gets a 4 centre. Every recorded click on a cell that is not part of an e block (empty-frame interior, frame border, colour 1, colour f) left the play area unchanged. The decision input had shown one transfer (t94) and one dead click (t95) but not what the 0 centre does.",
+   "limits": "No click was ever made on a colour-2 cell, on the border of a frame that holds a block, or on the block that already has the 0 centre. All 13 effective clicks were on e cells; 9 dead clicks cover the other cell types."
+  },
+  {
+   "id": "U3",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 30,
+     "frames": "1 and 2",
+     "what_it_shows": "First level, two 5x5 colour-4 frames and two 3x3 e blocks. Before a030 one block already sat in the frame at x=44-48, y=26-30. Frame 1: ACTION2 moved the other block into the interior x=12-14, y=33-35 of the frame at x=11-15, y=32-36. Frame 2: the whole board was replaced by the present layout and levels_completed went from 0 to 1.",
+     "status": "observed event"
+    },
+    {
+     "action": 5,
+     "frames": "all",
+     "what_it_shows": "ACTION2 put a block into the same frame interior x=12-14, y=33-35 while the other frame was still empty: no level change. a024 put the other block into the frame at x=44-48, y=26-30 while the first block was outside its frame: no level change.",
+     "status": "observed event"
+    },
+    {
+     "action": 31,
+     "frames": "board before the action",
+     "what_it_shows": "Start of the present level: four empty colour-4 frames with interiors 3x6 (x=9-11, y=9-14), 6x6 (x=6-11, y=42-47), 6x3 (x=54-59, y=39-41) and 3x3 (x=51-53, y=51-53), and four loose e blocks of sizes 6x3, 3x6, 6x6 and 3x3, all inside the lower-right panel. So the three framed blocks seen now were not framed at the start.",
+     "status": "observed event"
+    },
+    {
+     "action": 36,
+     "frames": "all",
+     "what_it_shows": "The player moved the 3x3 block into the 3x3 frame interior (a036), the 6x3 block into the 6x3 interior (a044) and the 6x6 block into the 6x6 interior (a066, after it was sent across the f band at a062). None of these changed levels_completed. The 6x6 block was later taken out (a079-a082) and put back (a090-a093), again with no level change.",
+     "status": "observed event"
+    },
+    {
+     "action": 30,
+     "frames": "all",
+     "what_it_shows": "Taken together with a005 and a024: the level ended on the action after which every frame held a block, and not when only one of two frames was filled. In the present level three of four frames are filled; the empty one has a 3x6 interior and the only block outside a frame is 3x6.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[5, 24, 30], [30, 31, 36, 44, 66]],
+   "what_the_evidence_supports": "Older evidence: level 1 was completed at the moment the last empty frame received a block (a030); filling one frame of two did not complete it (a005, a024). In this level the player itself placed the three framed blocks, each in the frame whose interior has the block's size, and the level is still open with the 3x6 frame at x=8-12, y=8-15 empty and the 3x6 block loose. This supports, as a limited conclusion, that the level needs the loose 3x6 block inside the interior x=9-11, y=9-14.",
+   "limits": "Only one level completion exists in the record. In the first level both blocks and both frames had the same size, so it is not shown whether a block must match its frame's size, or whether a particular block belongs to a particular frame. No block has ever been in the upper-left panel of this level."
+  },
+  {
+   "id": "U4",
+   "older_evidence_found": "partly",
+   "observations": [
+    {
+     "action": 51,
+     "frames": "all",
+     "what_it_shows": "ACTION3 with the selected 6x6 block at x=30-35 (colour f at x=29): the block did not move; only a bar cell changed. Same result for the selected 3x6 block at x=30-32 (a074, a086), and in the first level for ACTION4 against the f band at x=33-38 (a008, a011).",
+     "status": "observed event"
+    },
+    {
+     "action": 83,
+     "frames": "all",
+     "what_it_shows": "ACTION1 with the selected 6x6 block at x=6-11, y=30-35 in the lower-left panel (colour f at y=29): the block did not move. a076: ACTION1 with the selected 3x6 block at y=30-35 under the colour-2 strip at y=27-29: no move. a013 (first level): ACTION1 under colour 2: no move.",
+     "status": "observed event"
+    },
+    {
+     "action": 62,
+     "frames": "1 to 7",
+     "what_it_shows": "The selected 3x6 block stood at x=36-38, y=42-47, directly right of the unselected 6x6 block at x=30-35, y=42-47. ACTION3: the 3x6 block stayed where it was and the 6x6 block travelled left 3 cells per frame for 5 frames, over the f band x=21-29, ending at x=15-20 in the lower-left panel. The f cells it passed over were restored behind it.",
+     "status": "observed event"
+    },
+    {
+     "action": 21,
+     "frames": "1 to 7",
+     "what_it_shows": "First level: the selected 3x3 block at x=24-26 stood directly left of the unselected block at x=27-29. ACTION4: the selected block stayed and the other block travelled right 3 cells per frame for 5 frames, across the f band x=33-38, ending at x=42-44 in the other panel.",
+     "status": "observed event"
+    },
+    {
+     "action": 53,
+     "frames": "1 to 6",
+     "what_it_shows": "The selected 6x6 block at x=30-35, y=48-53 stood directly below the unselected 3x6 block at x=33-35, y=42-47 (only partly overlapping columns). ACTION1: the 6x6 block stayed and the 3x6 block travelled up 3 cells per frame for 4 frames, stopping at y=30-35 just under the colour-2 strip y=27-29.",
+     "status": "observed event"
+    },
+    {
+     "action": 20,
+     "frames": "all",
+     "what_it_shows": "When the selected block arrived next to another block, the side of the selected block facing the neighbour was drawn in colour 0 (a020 column x=26; a049 and a050 row y=48; a060 and a061 column x=36). In all three cases the next action in that direction (a021, a053, a062) produced the slide.",
+     "status": "supported limited conclusion"
+    },
+    {
+     "action": 64,
+     "frames": "all",
+     "what_it_shows": "Colour-4 frame borders do not stop a block: the selected 6x6 block moved over the border column x=12 (a064-a066), over the border row y=41 (a079-a081), and a slid block ended on a border cell (a021 frame 6, x=44); the border was redrawn when the block left.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[74, 62], [51, 83, 76, 62, 53], [8, 21]],
+   "what_the_evidence_supports": "Older evidence: a block moved directly with actions 1-4 never entered colour f or colour 2 (7 attempts, all without movement). A block has crossed an f band only by being struck: when the selected block is side by side with another block and is moved toward it, the other block slides 3 cells per frame, 5 frames in the two cases with free room (a021, a062) and 4 frames where a colour-2 strip was reached (a053). Both crossings from one colour-1 panel to another were horizontal. The decision input showed only the static layout.",
+   "limits": "No block has ever crossed the f rows y=24-29 or been inside the upper-left panel, so the vertical crossing needed to reach the empty frame is not shown. The 5-frame slide length rests on two cases; it is not shown what happens if a sliding block would stop partly on f, meet another block, or reach colour 2 after crossing f. The 4-frame stop under the colour-2 strip is a single case."
+  },
+  {
+   "id": "U5",
+   "older_evidence_found": "partly",
+   "observations": [
+    {
+     "action": 31,
+     "frames": "all",
+     "what_it_shows": "First action of this level: bar cell (63,63) went 4 to 0. From a031 to a095 a bar cell is lost on a031, a033, a035 ... a095 (every odd-numbered action) and on no even-numbered action, 33 cells in 65 actions.",
+     "status": "observed event"
+    },
+    {
+     "action": 52,
+     "frames": "all",
+     "what_it_shows": "The alternation does not depend on the action or its effect: no cell lost on a052, a084, a088 (clicks with no effect), a074, a076, a086 (moves with no effect), a056, a078 (effective clicks) and a054 (effective move); a cell lost on a051, a083 (moves with no effect), a075, a077 (clicks with no effect) and a053, a087 (effective moves).",
+     "status": "supported limited conclusion"
+    },
+    {
+     "action": 30,
+     "frames": "2",
+     "what_it_shows": "Before a030 the bar was colour 4 at x=0-44 (19 cells lost in 29 actions of the first level, a less regular pattern of roughly two cells per three actions). In the frame that brought the new level the whole row y=63 was colour 4 again.",
+     "status": "observed event"
+    },
+    {
+     "action": 95,
+     "frames": "all",
+     "what_it_shows": "No action in the record shows the bar empty, a state other than NOT_FINISHED, or a level restart; every line of the index says level attempt 1.",
+     "status": "unresolved hypothesis"
+    }
+   ],
+   "sufficient_groups": [[51, 52, 53, 54, 55, 56], [30, 31]],
+   "what_the_evidence_supports": "Older evidence: in this level the bar loses one colour-4 cell on every second action whatever the action does, which explains why t95 cost a cell and t94 did not. It was refilled when the first level was completed. If the alternation continues, the next action should cost no cell and the 31 remaining cells last about 62 more actions.",
+   "limits": "What happens when the last colour-4 cell is gone has never been observed, so the bar being a hard limit is an unresolved hypothesis. The rate was different in the first level, so the rate is a per-level regularity, not a fixed rule."
+  }
+ ],
+ "uncertainties_added_after_seeing_history": [
+  {
+   "id": "N1",
+   "uncertainty": "Can a struck block slide upward over the colour-f rows y=24-29 (x=0-29) from the lower-left panel into the upper-left panel, and where would it stop? Both recorded f crossings (a021, a062) were horizontal; the only upward slide (a053) ended under a colour-2 strip.",
+   "history_evidence": "none directly; a021 and a062 by analogy only"
+  },
+  {
+   "id": "N2",
+   "uncertainty": "Is the slide length always 5 steps of 3 cells when nothing is in the way (a021: x=27 to x=42; a062: x=30 to x=15)? For the 3x6 block struck leftward from x=30-32 this would put it at x=15-17, but no slide has started from this position or with this block going left.",
+   "history_evidence": "a021, a062 (5 frames each), a053 (4 frames, stopped below colour 2)"
+  },
+  {
+   "id": "N3",
+   "uncertainty": "Which block can serve as the striker for the 3x6 block, and must striker and struck block share rows fully? The three blocks able to stand right of x=30-32 in the lower-right panel are the 6x3 block (now in the frame at x=53-60, y=38-42) and the 3x3 block (now in the frame at x=50-54, y=50-54); using either means taking it out of its frame. a053 shows a strike with only partial overlap (striker x=30-35, struck x=33-35); a062 shows full row overlap.",
+   "history_evidence": "a053, a062; taking a framed block out and putting it back without penalty is shown by a078-a082 and a089-a093"
+  },
+  {
+   "id": "N4",
+   "uncertainty": "What happens when a sliding block meets another block or would come to rest partly on colour f? Never observed.",
+   "history_evidence": "none"
+  }
+ ],
+ "needs_no_past_record_can_meet": "What happens when the row y=63 bar runs out. Whether a block can be sent upward across the f rows y=24-29 into the upper-left panel, and where it stops there. Whether the colour-2 strip x=21-23, y=0-23 affects a block inside the upper-left panel. Whether a block must be in a frame of its own size for the level to count. What a slide does on meeting another block. What a click on a colour-2 cell, on a filled frame's border or on the already selected block does.",
+ "coverage": {
+  "history_index_read_fully": true,
+  "history_changes": "read fully",
+  "images_opened": ["a005", "a008", "a013", "a020", "a021", "a030", "a037", "a050", "a051", "a053", "a062", "a066", "a074", "a076", "a078", "a083", "a087", "a094"],
+  "board_files_opened": ["a001", "a030", "a031"]
+ },
+ "notes": "Stage-1 file left unchanged. Opened only files inside the case folder: stage2/history_index.txt, stage2/form.json, stage2/history_changes.txt, 18 pictures and 3 board files; tools used were Read and Write only (no Grep was needed because history_changes.txt was read in full). Cell-level statements come from history_changes.txt and the three board files; the pictures were used to confirm the multi-frame slides (a021, a053, a062), the blocked moves, the level change at a030 and the placements. Actions not listed individually (for example a038-a044, a046-a050, a064-a066, a079-a082, a090-a093) were checked in history_changes.txt and all fit the 3-cells-per-action movement described under U1. Evidence from a094 and a095 is the same as the two recent actions in the decision input and is cited only where needed to connect it to older actions (a075 repeats the a095 click; the bar alternation explains the t94/t95 difference). Words such as block, frame, panel, band, strike and slide are my descriptions. I do not recognise this game and used no outside knowledge."
+}

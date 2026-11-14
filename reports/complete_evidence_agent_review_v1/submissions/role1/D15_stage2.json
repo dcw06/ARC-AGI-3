@@ -1,0 +1,260 @@
+{
+ "role": "evidence needed",
+ "case": "D15",
+ "stage": 2,
+ "per_uncertainty": [
+  {
+   "id": "U1",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 45,
+     "frames": "board before, frame 1, frame 2",
+     "what_it_shows": "Level 2 (older than the two recent actions). Before a045 there were three 4-bodied shapes with a coloured bottom row and three same-coloured marks on 5-columns: f row of a shape at x=41-43 y=39 beside an ff mark at x=36-37 y=39; b row of a shape at x=52-54 y=47 beside a bb mark at x=48-49 y=47; e row of a shape at x=8-10 y=43 with the ee mark at x=14-15 y=41. Frame 1 of a045 (click x=12 y=56) lifted the e shape 2 rows so its e row sat at y=41, level with the ee mark. Frame 2 is the next level's board with levels completed going 2 to 3.",
+     "status": "observed event"
+    },
+    {
+     "action": 32,
+     "frames": "board before",
+     "what_it_shows": "Level 2, earlier: the b shape was already level with its bb mark (y=47) but the f shape row was at y=35 against the ff mark at y=39 and the e shape row at y=53 against the ee mark at y=41; the level was not complete. So one aligned shape was not enough while the others were not aligned.",
+     "status": "observed event"
+    },
+    {
+     "action": 13,
+     "frames": "1 and 2 (picture only)",
+     "what_it_shows": "Level 0: in frame 1 the yellow edge of the single shape comes into line with the yellow mark on the black bar; frame 2 is the next level (levels completed 0 to 1). Read from the picture, so coordinates not taken.",
+     "status": "observed event"
+    },
+    {
+     "action": 21,
+     "frames": "1 and 2 (picture only)",
+     "what_it_shows": "Level 1: in frame 1 the green edge of the shape comes into line with the green mark on the lower black bar; frame 2 is the next level (levels completed 1 to 2).",
+     "status": "observed event"
+    },
+    {
+     "action": 59,
+     "frames": "last frame vs before",
+     "what_it_shows": "Level 3: the 4/b shape was carried from x=18-23 to x=33-38, into the area next to the x=42-44 column that carries the b band at y=29-30. Since then (a061, a063, and the recent a065) its b rows went y=44-45, 41-42, 38-39, 35-36 without the level completing; they have never been at y=29-30.",
+     "status": "observed event"
+    },
+    {
+     "action": 45,
+     "frames": "with a013 and a021",
+     "what_it_shows": "In all three completed levels the level ended on the very action that brought the last shape's coloured part level with the same-coloured mark on an adjacent black/5 bar. By that pattern the level-3 target would be the shape's b rows level with the b band at x=42-44 y=29-30.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[45], [13, 21, 45]],
+   "what_the_evidence_supports": "Older evidence supports that a level completes when every shape's coloured part is level with the same-coloured mark on the neighbouring column. For the current board that points to bringing the shape's b rows (now y=35-36) to y=29-30, i.e. 6 rows higher. The colour-1 segments were not involved in any completion; the history shows them acting as gates (see U4).",
+   "limits": "Alignment completing level 3 has not been observed; it is an extension from levels 0-2. In level 2 marks and coloured rows were 1 row thick; here both are 2 rows thick, and whether both rows must coincide is untested. Levels 0 and 1 were read from pictures only. It is not shown whether anything besides alignment is required."
+  },
+  {
+   "id": "U2",
+   "older_evidence_found": "partly",
+   "observations": [
+    {
+     "action": 46,
+     "frames": "1",
+     "what_it_shows": "Click x=10 y=62 (9 block left of the x=12-14 column): area left of the column gained 0 at x=0-11 y=46-48 and the shape there rose 3 rows; the area right of the column lost its 0 at x=18-26 y=61-63.",
+     "status": "observed event"
+    },
+    {
+     "action": 47,
+     "frames": "1 (same pattern in a048, a052, a053)",
+     "what_it_shows": "Click x=16 y=62 (9 block right of the same column): exact reverse of a046. Left area lost 3 rows of 0 and the shape dropped 3 rows; right area gained 3 rows. So the right-side block acts in the opposite direction to the left-side block of the same column.",
+     "status": "observed event"
+    },
+    {
+     "action": 55,
+     "frames": "1 (same in a057, a060, a062, a064)",
+     "what_it_shows": "Click x=52 y=62 (9 block left of the x=54-56 column): x=45-53 y=58-60 turned 3 to 0 (area left of that column up 3 rows) and the area right of it lost 3 rows of 0 at x=57-63 (y=46-48 in a055, then 49-51, 52-54, 55-57, 58-60).",
+     "status": "observed event"
+    },
+    {
+     "action": 54,
+     "frames": "1 (same in a056, a058, a061, a063, and the recent a065)",
+     "what_it_shows": "Click x=40 y=62: x=30-41 gained 3 rows of 0 each time (y=52-54, 49-51, 46-48, ...) and x=45-53 y=58-60 went 0 to 3.",
+     "status": "observed event"
+    },
+    {
+     "action": 22,
+     "frames": "1 (level 2; also a025, a033, a034)",
+     "what_it_shows": "Level 2 had the same kind of 9 blocks at y=56-57. Every click was on a left-side block (x=46, 34, 24, 12) and each raised the area on its own side by 2 rows and lowered the area across its column by 2 rows.",
+     "status": "observed event"
+    },
+    {
+     "action": 47,
+     "frames": "with a046, a054, a055",
+     "what_it_shows": "General rule consistent with every 9-block click in levels 2 and 3: a block raises the 0 area on its own side of its column by one step (3 rows in level 3) and lowers the area on the other side by one step. Applied to the two never-clicked blocks: x=45-47 would raise x=45-53 and lower x=30-41 (dropping the shape); x=57-59 would raise x=57-63 and lower x=45-53.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[46, 47, 55], [46, 47, 54, 55]],
+   "what_the_evidence_supports": "Two of the four blocks I listed as untested were in fact used earlier: x=9-11 (a046) and x=51-53 (a055, a057, a060, a062, a064). Their effects are directly recorded. The blocks at x=45-47 and x=57-59 have never been clicked; their effect is only inferred by symmetry with x=15-17.",
+   "limits": "No click on x=45-47 or x=57-59 exists anywhere in the history. The symmetry rule rests on one column (x=12-14) where both sides were tried. Row counts moved are equal (3 rows) even though the areas have different widths, so it is a level step, not a cell count."
+  },
+  {
+   "id": "U3",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 53,
+     "frames": "1",
+     "what_it_shows": "Click x=16 y=62: the left area's last 0 cells, x=0-8 y=61-63 (the strip beside the 9 block), turned to 3 while the right area and the shape still rose 3 rows. So a bottom strip level with the 9 blocks counts as a full step of supply. After this action there was no 0 anywhere left of the x=12-14 column.",
+     "status": "observed event"
+    },
+    {
+     "action": 46,
+     "frames": "1",
+     "what_it_shows": "Click x=10 y=62 drained a bottom strip (x=18-26 y=61-63) as the only 0 in that area and the raise on the other side still happened.",
+     "status": "observed event"
+    },
+    {
+     "action": 64,
+     "frames": "1",
+     "what_it_shows": "Click x=52 y=62 took x=57-63 y=58-60; the area right of the x=54-56 column is left with only x=60-63 y=61-63. The recent a065 then took x=45-53 y=58-60, leaving x=48-50 y=61-63.",
+     "status": "observed event"
+    },
+    {
+     "action": 32,
+     "frames": "1 and board before",
+     "what_it_shows": "Level 2: click x=34 y=56 changed nothing at all. The area it would have raised (x=28-35) was already filled with 0 up to y=52, the top of the short 5-column at x=26-27, while the supplying area x=38-47 still held plenty of 0. After a033 moved one step out of x=28-35, the same click worked again (a040, a041).",
+     "status": "observed event"
+    },
+    {
+     "action": 53,
+     "frames": "with the recent a066",
+     "what_it_shows": "The no-effect click at x=16 y=62 (a066, in the decision input) came when the area it draws from (left of x=12-14) had held no 0 since a053. A click fails when its supplying side is empty.",
+     "status": "supported limited conclusion"
+    },
+    {
+     "action": 32,
+     "frames": "with a033, a040",
+     "what_it_shows": "A click also fails when the receiving area is already as high as its lowest bounding column.",
+     "status": "unresolved hypothesis"
+    }
+   ],
+   "sufficient_groups": [[53], [46, 53], [32, 33, 40]],
+   "what_the_evidence_supports": "Older evidence indicates one more click at x=40 y=62 should still work, taking the bottom strip x=48-50 y=61-63 and lifting the shape's b rows to y=32-33; after that the x=45-53 area would be empty and the click would fail like a066 did. One further step exists right of x=54-56 (x=60-63 y=61-63), which x=52 y=62 could by the same pattern bring into x=45-53.",
+   "limits": "Draining a bottom strip was seen for the x=12-14 column only, not yet for the x=42-44 or x=54-56 columns. Whether the strip x=48-50 y=61-63 refills when it is the receiving end has not been seen in level 3 (level 2 a038/a044 show a strip between 9 blocks receiving). The 'receiving area full' limit is from one level-2 event and its cause is inferred."
+  },
+  {
+   "id": "U4",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 49,
+     "frames": "1 and both boards",
+     "what_it_shows": "Click x=16 y=62 brought the 0 level to y=55 on both sides of the x=12-14 column, with the shape at y=49-54 beside it. In the same frame the segment x=12-14 y=43-54 turned 1 to c and thin 0 marks appeared at x=10 and x=16, y=45-52.",
+     "status": "observed event"
+    },
+    {
+     "action": 50,
+     "frames": "1-43",
+     "what_it_shows": "Click on the c segment (x=13 y=48): frames 2-13 slide the c segment up 12 rows to y=31-42, frames 15-29 slide the 4/b shape right one column per frame from x=3-8 to x=18-23, frames 31-42 slide the segment back to y=43-54. The shape ends on the other side of the column at the same height.",
+     "status": "observed event"
+    },
+    {
+     "action": 51,
+     "frames": "1 (picture)",
+     "what_it_shows": "The next raise on the right side made the levels unequal; the segment went back from c to 1 and the side marks disappeared.",
+     "status": "observed event"
+    },
+    {
+     "action": 58,
+     "frames": "1",
+     "what_it_shows": "Click x=40 y=62 brought x=30-41 up to y=46, equal to the level in x=15-26; the segment x=27-29 y=34-45 turned 1 to c and marks appeared at x=25 and x=31, y=36-43.",
+     "status": "observed event"
+    },
+    {
+     "action": 59,
+     "frames": "1-43",
+     "what_it_shows": "Click on that c segment (x=28 y=40): same 43-frame sequence; the shape moved from x=18-23 to x=33-38, where it is now. a061 (picture) then shows the segment back to colour 1.",
+     "status": "observed event"
+    },
+    {
+     "action": 49,
+     "frames": "with a050, a058, a059",
+     "what_it_shows": "The colour-1 segments are gates in the columns. They become clickable (colour c) when the 0 levels on both sides are equal and the shape is in front of the gate; clicking one then passes the shape through. Both gates have already been used and both are colour 1 again.",
+     "status": "supported limited conclusion"
+    },
+    {
+     "action": 46,
+     "frames": "all level-3 actions a046-a066",
+     "what_it_shows": "The b band at x=42-44 y=29-30 never changed in any level-3 action. No level-3 click was made on a colour-1 segment while it was colour 1, on a plain 5-column, on the shape, or on the b band.",
+     "status": "observed event"
+    },
+    {
+     "action": 1,
+     "frames": "1 (a001-a008)",
+     "what_it_shows": "Level 0: eight clicks on various cells changed nothing but the row-0 bar.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[49, 50], [58, 59], [49, 50, 51]],
+   "what_the_evidence_supports": "The 1 segments are gates, not targets; they have done their job for this shape. The b band is a fixed mark (see U1 for its likely role). The x=42-44 and x=54-56 columns have no such segment.",
+   "limits": "The activation condition (equal levels plus shape in front) is inferred from two cases; which part is necessary was not separated. Clicking a gate while colour 1, or any other non-9 cell in level 3, was never tried, so 'does nothing' is not shown for this level."
+  },
+  {
+   "id": "U5",
+   "older_evidence_found": "partly",
+   "observations": [
+    {
+     "action": 45,
+     "frames": "2",
+     "what_it_shows": "When level 2 completed, row 0 went back to all colour 7 (it was 7 at x=0-43 before). The pictures for a013 and a021 show the same refill at the earlier level changes. So the bar is counted per level.",
+     "status": "observed event"
+    },
+    {
+     "action": 47,
+     "frames": "1 (level 3: a046-a064)",
+     "what_it_shows": "Cells converted per action in level 3: a046 1, a047 2, a048 1, a049 1, a050 1, a052 1, a053 1, a054 2, a055 1, a056 1, a057 1, a058 2, a059 1, a060 1, a062 2, a063 1, a064 1 (a051 and a061 not listed, 2 and 1 by difference). Then the recent a065 2 and a066 1. The same click (x=16 y=62) cost 2 in a047 and 1 in a048; the 43-frame gate actions cost 1.",
+     "status": "observed event"
+    },
+    {
+     "action": 25,
+     "frames": "1 (level 2: also a032, a039, a045)",
+     "what_it_shows": "In level 2 most actions cost 1 cell, but a025, a039 and a045 frame 1 changed the board without any row-0 change, and the no-effect a032 cost nothing either. Level 2 used 20 cells in its first 23 actions.",
+     "status": "observed event"
+    },
+    {
+     "action": 47,
+     "frames": "with a025, a054, a058, a062",
+     "what_it_shows": "The 1-or-2 (level 3) and 0-or-1 (level 2) costs come at near-regular spacing regardless of what the click did, so the bar is an action counter scaled to 64 cells with a per-level allowance: about 1.29 cells per action in level 3 (27 cells in 21 actions). The 37 remaining cells are then roughly 28-29 more actions.",
+     "status": "supported limited conclusion"
+    },
+    {
+     "action": 66,
+     "frames": "whole history",
+     "what_it_shows": "The bar has never reached zero in the 66 recorded actions; every level is attempt 1.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[45, 46, 47, 48], [25, 32, 47, 54]],
+   "what_the_evidence_supports": "The bar is a per-level action allowance; the two-cell step in a065 is rounding, not a penalty for effective clicks. About 28 actions remain at the level-3 rate.",
+   "limits": "What happens when the bar empties is not in the history at all. The per-action rate is an estimate from 21 actions; the exact allowance is not shown."
+  }
+ ],
+ "uncertainties_added_after_seeing_history": [
+  {
+   "id": "N1",
+   "uncertainty": "Is there enough colour 0 left on the right to lift the shape's b rows from y=35-36 to y=29-30 (two more 3-row steps)? Only two steps of supply remain there: x=48-50 y=61-63 and x=60-63 y=61-63. The 0 in x=15-26 (y=46-63) is cut off because the x=27-29 column has no 9 blocks.",
+   "evidence_in_history": "Counting from the level-3 start board (a045 frame 2) and every transfer since, the total is conserved at 17 steps and exactly two remain right of x=42-44. That they can both be delivered rests on the bottom-strip transfers seen in a046 and a053.",
+   "status": "supported limited conclusion"
+  },
+  {
+   "id": "N2",
+   "uncertainty": "If a click is wasted on x=45-47 or x=57-59, can the lost height be recovered, given the supply is exactly enough?",
+   "evidence_in_history": "a046 followed by a047 shows a transfer being exactly undone by the opposite block of the same column, at the cost of bar cells.",
+   "status": "supported limited conclusion"
+  }
+ ],
+ "needs_no_past_record_can_meet": "What clicking the 9 blocks at x=45-47 and x=57-59 actually does (never clicked). What happens when the row-0 bar runs out (never happened). Whether bringing the 2-row b part level with the 2-row b band at y=29-30 completes level 3 (not yet reached). Whether clicking a colour-1 segment, a plain 5-column, the shape or the b band does anything in this level (never tried).",
+ "coverage": {
+  "history_index_read_fully": true,
+  "history_changes": "read fully",
+  "images_opened": ["a013", "a021", "a032", "a045", "a051", "a058", "a061"],
+  "board_files_opened": ["a032 (board before only)", "a045", "a049"]
+ },
+ "notes": "Evidence older than the two recent actions is a001-a064; where a065 or a066 is mentioned it is labelled as recent/decision input. Actions a051 and a061 had no run list, so their board effects were read from the pictures and their bar cost from the neighbouring actions. Levels 0 and 1 were checked only through the a013 and a021 pictures. In stage 1 I listed the blocks at x=9-11 and x=51-53 as untested; the history shows both were used earlier (stage-1 file left unchanged). No outside knowledge of this game was used. Only Read and Write were used; Grep was not needed."
+}

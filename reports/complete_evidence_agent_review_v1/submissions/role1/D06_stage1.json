@@ -1,0 +1,38 @@
+{
+ "role": "evidence needed",
+ "case": "D06",
+ "stage": 1,
+ "uncertainties": [
+  {
+   "id": "U1",
+   "uncertainty": "What did ACTION6 at x=21 y=33 (the centre of the colour-e tile at x19-23, y31-35) actually change at t74? The input says 1276 cells changed over 10 frames but does not list them, so the player cannot tell from this input which parts of the present board were produced by that click: the large colour-a region (x13-41 y7-11, x31-53 y12-29, x13-53 y25-29, the column x19-23 y42-54, the band x13-53 y61-62), the position of the 9/b shape at x20-22 y37-40, or the placement of the e tiles and the f/b0b shapes.",
+   "why_it_matters_for_the_next_action": "It is the only recent action with a large effect. Knowing what a click on an e tile does (and whether the clicked tile itself changed and changed back, since it is still e now) decides whether the next action should be another ACTION6 on an e tile, and on which one (for example the 7 tiles at y1-5, the tiles at x43-53 y7-11, x49-53 y31-41, or the 5 tiles at x25-53 y43-47).",
+   "what_the_decision_time_input_already_tells": "Only the totals: 10 frames returned, 1276 changed cells in 602 runs, not listed; state stayed NOT_FINISHED and levels_completed stayed 1. The clicked tile x19-23 y31-35 is colour e with colour-3 corners in the current board, and the 9/b shape sits directly below it."
+  },
+  {
+   "id": "U2",
+   "uncertainty": "What do ACTION3, ACTION4 and ACTION7 do on this board? In particular, does any of them move or change the 9/b shape (9 at x21 y37, b at x20 y38-39, 9 at x21-22 y38-39, 9 at x21 y40), and if so in which direction and by how many cells?",
+   "why_it_matters_for_the_next_action": "Three of the four legal actions are these, and neither of the two recent actions used them. Without knowing their effects the player cannot compare them with a click, and cannot tell whether one of them is wasteful or irreversible.",
+   "what_the_decision_time_input_already_tells": "Only that 3, 4, 6 and 7 are legal now (1, 2 and 5 are not offered). Nothing in the two recent transitions shows an effect of 3, 4 or 7."
+  },
+  {
+   "id": "U3",
+   "uncertainty": "What does the row y=63 bar measure, and what happens when its colour-f run reaches x=63? It currently has f at x0-25 and 0 at x26-63, although 75 actions have been taken. Does it advance by one cell on every action of every type, did it reset at some point (for example when level 1 was completed), and does filling it end the game or the level attempt?",
+   "why_it_matters_for_the_next_action": "If the bar is a move budget, 38 cells remain and exploratory actions such as the no-effect click at t75 are costly; that changes whether the next action should be a test or a committed move.",
+   "what_the_decision_time_input_already_tells": "t75 (ACTION6 x=27 y=39) changed exactly one cell: x25 y63 from 0 to f. So at least that click advanced the bar by one cell. The input does not show whether t74 advanced it too, or what the bar looked like earlier."
+  },
+  {
+   "id": "U4",
+   "uncertainty": "What board condition caused levels_completed to go from 0 to 1, and which action triggered it? In other words, what was the arrangement of the 9/b shape, the colour-a region, the e tiles and the f/b0b shapes (f at y19-22 with b0b at y23 at x14-16, x20-22, x26-28; f at y55-58 with b0b at y59 at x14-16, x26-28, x32-34, x38-40, x44-46, x50-52) at the moment the first level ended?",
+   "why_it_matters_for_the_next_action": "The player does not know the goal. The condition that ended level 1 is the best available indication of what to aim for now, for example whether to work on the a region, on the e tiles, or on the 9/b shape, and where.",
+   "what_the_decision_time_input_already_tells": "Only that one level has been completed and the game is NOT_FINISHED. The current board shows the shapes of the present level but not the earlier level or its ending."
+  },
+  {
+   "id": "U5",
+   "uncertainty": "Which cells respond to ACTION6, and does the response depend on where the 9/b shape is? Specifically: do clicks on a colour-a cell (for example the column x19-23 y42-54, or the single a cells at x19 y41 and x23 y41), on an f/b0b shape (for example x14-16 y19-23), on the 9/b shape itself, or on an e tile that is not adjacent to the 9/b shape have any effect, or only clicks on certain e tiles?",
+   "why_it_matters_for_the_next_action": "ACTION6 needs a target cell. The last click, on plain background colour 5 at x27 y39 (the tile position immediately right of the 9/b shape), did nothing except advance the bar, so the player needs to know which targets are worth a move.",
+   "what_the_decision_time_input_already_tells": "Two data points: the click on the e tile at x21 y33, directly above the 9/b shape, changed 1276 cells; the click on background at x27 y39 changed only x25 y63. It does not show any click on an a cell, an f/b0b shape, the 9/b shape, or a distant e tile."
+  }
+ ],
+ "notes": "Used only decision_input.txt and form.json. I do not recognise this specific game or know its rules or goal from any other source, and I used no outside knowledge. Coordinates were read by hand from the board text; tiles appear to sit on a 6-cell pitch (5x5 tiles at x=13+6k, y=1+6j), which is my reading of the layout, not a stated rule."
+}

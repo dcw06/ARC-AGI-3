@@ -1,0 +1,38 @@
+{
+ "role": "evidence needed",
+ "case": "D11",
+ "stage": 1,
+ "uncertainties": [
+  {
+   "id": "U1",
+   "uncertainty": "What ACTION1, ACTION2, ACTION3 and ACTION4 each do to the board: which cells change, in which direction and by how many cells, and whether the thing that changes is the colour-8 diamond with the colour-2 edge (rows 40-56, x14-30), the 10x10 block at x27-36,y34-43, or something else.",
+   "why_it_matters_for_the_next_action": "Four of the six legal actions are these. Without knowing what each one changes and by how much, the player cannot pick one on purpose or predict where a shape will end up.",
+   "what_the_decision_time_input_already_tells": "Only that ACTION3 at t91 changed 229 cells in 73 runs, returned one frame and left state and levels_completed unchanged. The changed cells are not listed, so the direction, distance and affected shape are not shown. Nothing is shown for ACTION1, ACTION2 or ACTION4."
+  },
+  {
+   "id": "U2",
+   "uncertainty": "What board condition completed levels 1 and 2, and in particular how the 10x10 picture in the top-left panel (x3-12,y3-12: colour f with a colour-c block at x6-9,y3-5, a colour-e region on the right, and a colour-8 region at lower left x4-7,y9-12) related to the main board at the moments those levels were completed.",
+   "why_it_matters_for_the_next_action": "The player needs a target to steer towards. If the top-left picture is a target for the 10x10 block at x27-36,y34-43, the next action should reduce the differences between them; if completion depended on something else, a different action is called for.",
+   "what_the_decision_time_input_already_tells": "levels_completed=2 and state=NOT_FINISHED. The top-left picture and the main-board block at x27-36,y34-43 are the same size and share colours f, e and c, but differ: the block has colour c across all of rows 39-43, no colour 8, no colour-c block at the top, and its colour-e cells start one row higher. Nothing in the input says what ended the earlier levels."
+  },
+  {
+   "id": "U3",
+   "uncertainty": "Which object the actions currently apply to, what the colour-2 cells along three sides of the diamond (for example x20,y40; x14-15,y46; x24,y56; x29-30,y50) signify, and what ACTION6 does when the clicked cell is on the main board (for example a cell inside the block at x27-36,y34-43) rather than on a swatch in the top strip.",
+   "why_it_matters_for_the_next_action": "If the colour-2 edge marks the object being controlled, moves and swatch clicks will hit the diamond; if the player needs to act on the block at x27-36,y34-43 or on the colour-c part of it, it must first know how to switch to it, and whether a board click does that.",
+   "what_the_decision_time_input_already_tells": "At t92, ACTION6 at x=53,y=4 (the colour-8 swatch at x52-54,y3-5) moved the colour-0 bar on row 7 from x33-37 (under the colour-c swatch) to x51-55 (under the colour-8 swatch) and turned the diamond's interior from c to 8. No other shape changed colour. The input shows no click on a main-board cell."
+  },
+  {
+   "id": "U4",
+   "uncertainty": "What ACTION5 does.",
+   "why_it_matters_for_the_next_action": "It is a legal action that the two recent transitions do not show. It could be needed to progress, or it could undo or reset work, so the player cannot judge whether pressing it now is useful or costly.",
+   "what_the_decision_time_input_already_tells": "Only that ACTION5 is in the legal list. Neither of the two recent actions is ACTION5."
+  },
+  {
+   "id": "U5",
+   "uncertainty": "Whether the colour-c area at x27-36,y39-43 is a separate object lying over the lower half of the f/e block, or a part of that block, and when shapes overlap (the diamond, this colour-c area, the colour-e region, the colour-f block) which one is drawn on top.",
+   "why_it_matters_for_the_next_action": "The top-left picture has colour e down to its bottom row and colour 8 at lower left where the board block shows colour c. Whether the player should move, recolour or cover the colour-c area, and whether moving the diamond onto the block would show or hide it, depends on what that area is and on the drawing order.",
+   "what_the_decision_time_input_already_tells": "The colour-c area is exactly 10 wide and 5 tall, filling rows 39-43 of the block; the colour-e cells above it widen by one per row from x36,y34 to x32-36,y38 and then stop. At t92 the diamond changed from c to 8 while this area stayed c. The diamond and the block do not overlap in the current board, so no drawing order is visible."
+  }
+ ],
+ "notes": "I have no knowledge of this game from any other source and used only decision_input.txt. A sixth, lower-priority unknown that did not fit in five: the colour-4 run on row 63 (x0-27, the rest of the row colour 5) may be a counter; the input does not show whether it grows or shrinks per action or what happens when it reaches an end. Readings of the board such as 'diamond', 'swatch' and 'edge' are my descriptions of cell patterns, not rules shown by the input."
+}

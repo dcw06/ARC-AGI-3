@@ -1,0 +1,40 @@
+{
+ "role": "pack reader",
+ "case": "D16",
+ "records": [
+  {
+   "action_number": 56,
+   "action": "ACTION6 click at x=34 (column), y=32 (row) (pack: \"action=ACTION6 x=34 y=32\"; header \"event=56\", \"action 56 (transition t56)\")",
+   "level_and_attempt": "level=1, reset=0 (pack header: \"event=56 reset=0 level=1 frames=1\"). I read reset=0 as 'no reset so far / first attempt', but the reading instructions do not define the word 'reset'.",
+   "start_board_mode": "from current",
+   "frames_returned": 1,
+   "board_before_the_action": "Not printed; rebuilt from the current board o81 plus the \"before vs current: 121 cells\" lines (adding up the cells the lines cover gives exactly 121, so every listed cell differs from current). Differences from current: (a) The narrow e block that now sits at cols 30-32, rows 30-35 (with a 4 centre at col 31, rows 32-33) was three columns to the right: \"30-31:30-32=1,33-35=E\", \"32:30-32=1,33=E,34=5,35=E\", \"33:...30-32=1,33=E,34=5,35=E\", \"34-35:...30-32=1,33-35=E\". So cols 30-32 of rows 30-35 were background 1, and a 3-wide, 6-tall e block stood at cols 33-35, rows 30-35 with its centre cells (34,32) and (34,33) colour 5. (b) The 6x6 e block that is now at cols 6-11, rows 33-38 (0 centre at cols 8-9, rows 35-36) was not there: \"33:6-11=1\", \"34-35:6-11=1\", \"36-38:6-11=1\" make that area background 1. (c) Instead a 6x6 e block stood at cols 30-35, rows 42-47 with a 0 centre at cols 32-33, rows 44-45: \"42-43:30-35=E\", \"44-45:30-31=E,32-33=0,34-35=E\", \"46-47:30-35=E\" (current has 1 there). (d) Bottom row: \"63:38-50=4\" so row 63 was 4 in cols 0-50 and 0 in cols 51-63 (current: 4 only to col 37). Everything else equals current: rows 0-23 are 1 in cols 0-20, 2 in cols 21-23, f in cols 24-62, 2 in col 63, with an empty 4 frame at cols 8-12, rows 8-15; rows 24-26 f with col 63 = 2; rows 27-29 f in cols 0-29 and 2 in cols 30-63; rows 30-62 are 1 with an f band in cols 21-29 and col 63 = 2; the empty 4 frame at cols 5-12, rows 41-48 (interior cols 6-11, rows 42-47 = 1); the 4 frame at cols 53-60, rows 38-42 holding e (cols 54-59, rows 39-41) with 4 at cols 56-57 row 40; the 4 frame at cols 50-54, rows 50-54 holding e (cols 51-53, rows 51-53) with 4 at (52,52). The clicked cell (34,32) was colour 5, the upper centre cell of the narrow e block.",
+   "frames": [
+    {
+     "frame": 1,
+     "cells_differing_from_board_before": 6,
+     "what_happens": "\"frame 1/1 vs before: 6 cells\" (my count: 2 + 4 = 6, all real changes). \"32-33:34=0\": the two centre cells of the narrow e block at cols 33-35 (the clicked cell (34,32) and the one below it) turn from 5 to 0. \"44-45:32-33=4\": the four centre cells of the 6x6 e block at cols 30-35, rows 42-47 turn from 0 to 4. No block moves and nothing else changes (the bottom bar in row 63 is unchanged). It looks as if the 0 centre mark passed from the big block to the clicked narrow block, i.e. the click switched which block is marked/selected."
+    }
+   ],
+   "final_result": "state=NOT_FINISHED, level=1, legal actions 1,2,3,4,6 (pack: \"result state=NOT_FINISHED level=1 legal=1,2,3,4,6\"). Game continues on the same level.",
+   "cells_of_last_frame_differing_from_board_before": 6,
+   "level_completed": false,
+   "cannot_determine": [
+    "What 'reset=0' means exactly (attempt number vs. count of resets) is not defined in the reading instructions.",
+    "The meaning of the centre colours (0 vs 4 vs 5) is not stated; that 0 marks the selected/active block is my inference. Why the narrow block's centre was 5 before the click while the big block's centre becomes 4 (not 5) after it cannot be determined from the text.",
+    "Whether the blocks of this record are the same objects as the blocks now at cols 30-32 and cols 6-11 on the current board (i.e. that they were moved there by later actions) is not stated; the pack only gives the two boards."
+   ]
+  }
+ ],
+ "relation_between_the_records": "Pack holds one record only (\"One record, selected by rule.\").",
+ "probe_answers": [
+  {"id": "P1", "colour": "5"},
+  {"id": "P2", "colour": "0"},
+  {"id": "P3", "colour": "0"},
+  {"id": "P4", "colour": "4"},
+  {"id": "P5", "colour": "e"},
+  {"id": "P6", "colour": "4"},
+  {"id": "P7", "colour": "1"}
+ ],
+ "what_was_hard_or_missing": "The board before the action is not printed and has to be rebuilt by overlaying nine change lines on the 64x64 current board; the lines are short, so this was the easiest of my three cases, but locating columns 30-35 means counting across the boundary between the 4th and 5th 8-cell groups, where a one-column slip is easy (the narrow block is at 30-32 now but was at 33-35 then). The pack writes colour E in upper case and the decision input e in lower case; I treated them as the same and answered P5 in lower case. P7 falls on a cell no line touches, so it rests on the current board plus the rule \"every cell the lines do not set had the same colour as on the current board\". 'reset' is not explained, and nothing says what the centre colours 0/4/5 mean. Both stated counts (121 and 6) agreed with my hand count. I have no outside knowledge of this game and used none; only the pack text and the decision input were used (the picture was not needed)."
+}

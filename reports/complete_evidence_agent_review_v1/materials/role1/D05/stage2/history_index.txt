@@ -1,0 +1,87 @@
+One line per past action, oldest first. "last frame vs before" compares the last returned frame with the board before that action. Pictures: images/aNNN.png shows the board before, then every returned frame, left to right and top to bottom. boards/aNNN.txt has the board before and the last frame as text.
+
+a001 | ACTION6 x=18 y=19 | level 0 attempt 1 | 2 frames | last frame vs before: 29 cells changed, box x0-32 y0-22 | largest change in any frame: 29 cells | after: NOT_FINISHED, levels completed 0
+a002 | ACTION6 x=30 y=19 | level 0 attempt 1 | 10 frames | last frame vs before: 57 cells changed, box x1-32 y0-22 | largest change in any frame: 65 cells | after: NOT_FINISHED, levels completed 0
+a003 | ACTION6 x=30 y=19 | level 0 attempt 1 | 2 frames | last frame vs before: 29 cells changed, box x2-44 y0-22 | largest change in any frame: 29 cells | after: NOT_FINISHED, levels completed 0
+a004 | ACTION6 x=42 y=19 | level 0 attempt 1 | 10 frames | last frame vs before: 57 cells changed, box x3-44 y0-22 | largest change in any frame: 65 cells | after: NOT_FINISHED, levels completed 0
+a005 | ACTION6 x=42 y=19 | level 0 attempt 1 | 2 frames | last frame vs before: 29 cells changed, box x4-45 y0-33 | largest change in any frame: 29 cells | after: NOT_FINISHED, levels completed 0
+a006 | ACTION6 x=42 y=31 | level 0 attempt 1 | 10 frames | last frame vs before: 57 cells changed, box x5-45 y0-33 | largest change in any frame: 70 cells | after: NOT_FINISHED, levels completed 0
+a007 | ACTION6 x=42 y=31 | level 0 attempt 1 | 2 frames | last frame vs before: 29 cells changed, box x6-45 y0-45 | largest change in any frame: 29 cells | after: NOT_FINISHED, levels completed 0
+a008 | ACTION6 x=42 y=43 | level 0 attempt 1 | 27 frames | last frame vs before: 1679 cells changed, box x0-57 y0-57 | largest change in any frame: 1679 cells | after: NOT_FINISHED, levels completed 1
+a009 | ACTION6 x=44 y=16 | level 1 attempt 1 | 3 frames | last frame vs before: 1 cells changed, box x0-0 y0-0 | largest change in any frame: 9 cells | after: NOT_FINISHED, levels completed 1
+a010 | ACTION6 x=14 y=16 | level 1 attempt 1 | 2 frames | last frame vs before: 29 cells changed, box x1-28 y0-19 | largest change in any frame: 29 cells | after: NOT_FINISHED, levels completed 1
+a011 | ACTION6 x=26 y=16 | level 1 attempt 1 | 10 frames | last frame vs before: 57 cells changed, box x2-28 y0-19 | largest change in any frame: 65 cells | after: NOT_FINISHED, levels completed 1
+a012 | ACTION6 x=26 y=16 | level 1 attempt 1 | 2 frames | last frame vs before: 29 cells changed, box x3-40 y0-19 | largest change in any frame: 29 cells | after: NOT_FINISHED, levels completed 1
+a013 | ACTION6 x=38 y=16 | level 1 attempt 1 | 10 frames | last frame vs before: 57 cells changed, box x4-40 y0-19 | largest change in any frame: 65 cells | after: NOT_FINISHED, levels completed 1
+a014 | ACTION6 x=44 y=16 | level 1 attempt 1 | 2 frames | last frame vs before: 29 cells changed, box x5-47 y0-19 | largest change in any frame: 29 cells | after: NOT_FINISHED, levels completed 1
+a015 | ACTION6 x=32 y=16 | level 1 attempt 1 | 27 frames | last frame vs before: 183 cells changed, box x2-47 y0-63 | largest change in any frame: 183 cells | after: NOT_FINISHED, levels completed 1
+a016 | ACTION6 x=32 y=16 | level 1 attempt 1 | 3 frames | last frame vs before: 1 cells changed, box x7-7 y0-0 | largest change in any frame: 9 cells | after: NOT_FINISHED, levels completed 1
+a017 | ACTION1 | level 1 attempt 1 | 2 frames | last frame vs before: 1 cells changed, box x8-8 y0-0 | largest change in any frame: 1 cells | after: NOT_FINISHED, levels completed 1
+a018 | ACTION6 x=40 y=34 | level 1 attempt 1 | 2 frames | last frame vs before: 1 cells changed, box x9-9 y0-0 | largest change in any frame: 1 cells | after: NOT_FINISHED, levels completed 1
+a019 | ACTION2 | level 1 attempt 1 | 2 frames | last frame vs before: 1 cells changed, box x10-10 y0-0 | largest change in any frame: 1 cells | after: NOT_FINISHED, levels completed 1
+a020 | ACTION3 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x11-37 y0-39 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a021 | ACTION3 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x12-31 y0-39 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a022 | ACTION3 | level 1 attempt 1 | 3 frames | last frame vs before: 120 cells changed, box x11-25 y0-39 | largest change in any frame: 120 cells | after: NOT_FINISHED, levels completed 1
+a023 | ACTION2 | level 1 attempt 1 | 3 frames | last frame vs before: 120 cells changed, box x11-19 y0-45 | largest change in any frame: 120 cells | after: NOT_FINISHED, levels completed 1
+a024 | ACTION2 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x11-19 y0-51 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a025 | ACTION2 | level 1 attempt 1 | 3 frames | last frame vs before: 112 cells changed, box x11-19 y0-57 | largest change in any frame: 112 cells | after: NOT_FINISHED, levels completed 1
+a026 | ACTION4 | level 1 attempt 1 | 3 frames | last frame vs before: 112 cells changed, box x11-25 y0-57 | largest change in any frame: 112 cells | after: NOT_FINISHED, levels completed 1
+a027 | ACTION4 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x17-31 y0-57 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a028 | ACTION4 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x19-37 y0-57 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a029 | ACTION4 | level 1 attempt 1 | 3 frames | last frame vs before: 107 cells changed, box x20-41 y0-57 | largest change in any frame: 107 cells | after: NOT_FINISHED, levels completed 1
+a030 | ACTION4 | level 1 attempt 1 | 2 frames | last frame vs before: 1 cells changed, box x21-21 y0-0 | largest change in any frame: 1 cells | after: NOT_FINISHED, levels completed 1
+a031 | ACTION6 x=44 y=52 | level 1 attempt 1 | 3 frames | last frame vs before: 1 cells changed, box x22-22 y0-0 | largest change in any frame: 9 cells | after: NOT_FINISHED, levels completed 1
+a032 | ACTION6 x=38 y=52 | level 1 attempt 1 | 2 frames | last frame vs before: 1 cells changed, box x23-23 y0-0 | largest change in any frame: 1 cells | after: NOT_FINISHED, levels completed 1
+a033 | ACTION6 x=50 y=52 | level 1 attempt 1 | 2 frames | last frame vs before: 1 cells changed, box x24-24 y0-0 | largest change in any frame: 1 cells | after: NOT_FINISHED, levels completed 1
+a034 | ACTION6 x=38 y=52 | level 1 attempt 1 | 2 frames | last frame vs before: 1 cells changed, box x25-25 y0-0 | largest change in any frame: 1 cells | after: NOT_FINISHED, levels completed 1
+a035 | ACTION1 | level 1 attempt 1 | 2 frames | last frame vs before: 1 cells changed, box x26-26 y0-0 | largest change in any frame: 1 cells | after: NOT_FINISHED, levels completed 1
+a036 | ACTION7 | level 1 attempt 1 | 2 frames | last frame vs before: 1 cells changed, box x27-27 y0-0 | largest change in any frame: 1 cells | after: NOT_FINISHED, levels completed 1
+a037 | ACTION3 | level 1 attempt 1 | 3 frames | last frame vs before: 107 cells changed, box x28-41 y0-57 | largest change in any frame: 107 cells | after: NOT_FINISHED, levels completed 1
+a038 | ACTION3 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x23-37 y0-57 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a039 | ACTION3 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x17-31 y0-57 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a040 | ACTION3 | level 1 attempt 1 | 3 frames | last frame vs before: 112 cells changed, box x11-31 y0-57 | largest change in any frame: 112 cells | after: NOT_FINISHED, levels completed 1
+a041 | ACTION1 | level 1 attempt 1 | 3 frames | last frame vs before: 112 cells changed, box x11-32 y0-57 | largest change in any frame: 112 cells | after: NOT_FINISHED, levels completed 1
+a042 | ACTION1 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x11-33 y0-51 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a043 | ACTION1 | level 1 attempt 1 | 3 frames | last frame vs before: 120 cells changed, box x11-34 y0-45 | largest change in any frame: 120 cells | after: NOT_FINISHED, levels completed 1
+a044 | ACTION4 | level 1 attempt 1 | 3 frames | last frame vs before: 120 cells changed, box x11-35 y0-39 | largest change in any frame: 120 cells | after: NOT_FINISHED, levels completed 1
+a045 | ACTION4 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x17-36 y0-39 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a046 | ACTION4 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x23-37 y0-39 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a047 | ACTION4 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x29-43 y0-39 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a048 | ACTION4 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x35-49 y0-39 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a049 | ACTION4 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x40-55 y0-39 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a050 | ACTION4 | level 1 attempt 1 | 3 frames | last frame vs before: 124 cells changed, box x41-61 y0-39 | largest change in any frame: 124 cells | after: NOT_FINISHED, levels completed 1
+a051 | ACTION1 | level 1 attempt 1 | 3 frames | last frame vs before: 124 cells changed, box x42-61 y0-39 | largest change in any frame: 124 cells | after: NOT_FINISHED, levels completed 1
+a052 | ACTION1 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x43-61 y0-33 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a053 | ACTION1 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x44-61 y0-27 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a054 | ACTION3 | level 1 attempt 1 | 3 frames | last frame vs before: 112 cells changed, box x45-61 y0-21 | largest change in any frame: 112 cells | after: NOT_FINISHED, levels completed 1
+a055 | ACTION3 | level 1 attempt 1 | 2 frames | last frame vs before: 1 cells changed, box x46-46 y0-0 | largest change in any frame: 1 cells | after: NOT_FINISHED, levels completed 1
+a056 | ACTION6 x=32 y=16 | level 1 attempt 1 | 3 frames | last frame vs before: 1 cells changed, box x47-47 y0-0 | largest change in any frame: 9 cells | after: NOT_FINISHED, levels completed 1
+a057 | ACTION6 x=50 y=16 | level 1 attempt 1 | 2 frames | last frame vs before: 1 cells changed, box x48-48 y0-0 | largest change in any frame: 1 cells | after: NOT_FINISHED, levels completed 1
+a058 | ACTION7 | level 1 attempt 1 | 2 frames | last frame vs before: 1 cells changed, box x49-49 y0-0 | largest change in any frame: 1 cells | after: NOT_FINISHED, levels completed 1
+a059 | ACTION6 x=44 y=16 | level 1 attempt 1 | 2 frames | last frame vs before: 1 cells changed, box x50-50 y0-0 | largest change in any frame: 1 cells | after: NOT_FINISHED, levels completed 1
+a060 | ACTION6 x=38 y=16 | level 1 attempt 1 | 2 frames | last frame vs before: 1 cells changed, box x51-51 y0-0 | largest change in any frame: 1 cells | after: NOT_FINISHED, levels completed 1
+a061 | ACTION6 x=50 y=16 | level 1 attempt 1 | 2 frames | last frame vs before: 1 cells changed, box x52-52 y0-0 | largest change in any frame: 1 cells | after: NOT_FINISHED, levels completed 1
+a062 | ACTION4 | level 1 attempt 1 | 3 frames | last frame vs before: 112 cells changed, box x48-61 y0-21 | largest change in any frame: 112 cells | after: NOT_FINISHED, levels completed 1
+a063 | ACTION2 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x53-61 y0-27 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a064 | ACTION2 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x53-61 y0-33 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a065 | ACTION2 | level 1 attempt 1 | 3 frames | last frame vs before: 124 cells changed, box x53-61 y0-39 | largest change in any frame: 124 cells | after: NOT_FINISHED, levels completed 1
+a066 | ACTION3 | level 1 attempt 1 | 3 frames | last frame vs before: 124 cells changed, box x47-61 y0-39 | largest change in any frame: 124 cells | after: NOT_FINISHED, levels completed 1
+a067 | ACTION3 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x41-58 y0-39 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a068 | ACTION3 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x35-59 y0-39 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a069 | ACTION3 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x29-60 y0-39 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a070 | ACTION3 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x23-61 y0-39 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a071 | ACTION3 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x17-62 y0-39 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a072 | ACTION3 | level 1 attempt 1 | 3 frames | last frame vs before: 120 cells changed, box x11-63 y0-39 | largest change in any frame: 120 cells | after: NOT_FINISHED, levels completed 1
+a073 | ACTION2 | level 1 attempt 1 | 3 frames | last frame vs before: 120 cells changed, box x0-19 y0-45 | largest change in any frame: 120 cells | after: NOT_FINISHED, levels completed 1
+a074 | ACTION2 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x1-19 y0-51 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a075 | ACTION2 | level 1 attempt 1 | 3 frames | last frame vs before: 112 cells changed, box x2-19 y0-57 | largest change in any frame: 112 cells | after: NOT_FINISHED, levels completed 1
+a076 | ACTION4 | level 1 attempt 1 | 3 frames | last frame vs before: 112 cells changed, box x3-25 y0-57 | largest change in any frame: 112 cells | after: NOT_FINISHED, levels completed 1
+a077 | ACTION4 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x4-31 y0-57 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a078 | ACTION4 | level 1 attempt 1 | 3 frames | last frame vs before: 122 cells changed, box x5-37 y0-57 | largest change in any frame: 122 cells | after: NOT_FINISHED, levels completed 1
+a079 | ACTION4 | level 1 attempt 1 | 3 frames | last frame vs before: 107 cells changed, box x6-41 y0-57 | largest change in any frame: 107 cells | after: NOT_FINISHED, levels completed 1
+a080 | ACTION4 | level 1 attempt 1 | 2 frames | last frame vs before: 1 cells changed, box x7-7 y0-0 | largest change in any frame: 1 cells | after: NOT_FINISHED, levels completed 1
+a081 | ACTION6 x=38 y=52 | level 1 attempt 1 | 2 frames | last frame vs before: 1 cells changed, box x8-8 y0-0 | largest change in any frame: 1 cells | after: NOT_FINISHED, levels completed 1
+a082 | ACTION6 x=44 y=52 | level 1 attempt 1 | 3 frames | last frame vs before: 1 cells changed, box x9-9 y0-0 | largest change in any frame: 9 cells | after: NOT_FINISHED, levels completed 1
+a083 | ACTION3 | level 1 attempt 1 | 3 frames | last frame vs before: 107 cells changed, box x10-41 y0-57 | largest change in any frame: 107 cells | after: NOT_FINISHED, levels completed 1
+a084 | ACTION4 | level 1 attempt 1 | 3 frames | last frame vs before: 107 cells changed, box x11-41 y0-57 | largest change in any frame: 107 cells | after: NOT_FINISHED, levels completed 1
+a085 | ACTION6 x=38 y=52 | level 1 attempt 1 | 2 frames | last frame vs before: 1 cells changed, box x12-12 y0-0 | largest change in any frame: 1 cells | after: NOT_FINISHED, levels completed 1

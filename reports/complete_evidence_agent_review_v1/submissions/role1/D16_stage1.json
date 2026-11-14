@@ -1,0 +1,38 @@
+{
+ "role": "evidence needed",
+ "case": "D16",
+ "stage": 1,
+ "uncertainties": [
+  {
+   "id": "U1",
+   "uncertainty": "What board condition made levels_completed go from 0 to 1 earlier in the game? In particular, where was the moving piece (the colour-e block with a colour-0 centre) relative to any colour-4 outlined frame at the moment the level ended, and did the piece or a frame change appearance just before that?",
+   "why_it_matters_for_the_next_action": "The player is moving the 6x6 e block (x6-11, y33-38, 0 centre at x8-9, y35-36) upward and away from the empty 4 frame at x5-12, y41-48, whose 6x6 interior is exactly the block's size. Whether to keep going up with ACTION1 (toward the empty 4 frame at x8-12, y8-15, interior 3x6) or to turn back or go elsewhere depends on what the goal is, and the only evidence of a goal is how level 1 ended.",
+   "what_the_decision_time_input_already_tells": "Only that levels_completed=1 and state=NOT_FINISHED. The board shows two empty 4 frames (x8-12, y8-15 and x5-12, y41-48), two 4 frames filled with e and a 4 centre (x53-60, y38-42 and x50-54, y50-54), and one unframed e shape with a 4 centre (x30-32, y30-35). It does not say which arrangement counts as success."
+  },
+  {
+   "id": "U2",
+   "uncertainty": "What do ACTION2, ACTION3 and ACTION4 do to the e block at x6-11, y33-38: which direction does each move it, by how many cells, and does any of them change its size or shape instead of moving it?",
+   "why_it_matters_for_the_next_action": "Four of the five legal actions are untested in the visible history. The block is 6 wide and sits at x6-11, while the empty frame above (interior x9-11, y9-14) is only 3 wide and offset to the right, so the player needs to know whether a sideways move or a reshaping action exists and how large each step is before spending more moves on ACTION1.",
+   "what_the_decision_time_input_already_tells": "ACTION1 twice moved the whole e block with its 0 centre up by exactly 3 rows with no sideways shift (y39-44 to y36-41 at t80, then to y33-38 at t81), each in a single frame. Nothing is shown for ACTION2, ACTION3 or ACTION4."
+  },
+  {
+   "id": "U3",
+   "uncertainty": "Were the three e shapes with colour-4 centres (the 3x6 one at x30-32, y30-35 with 4 at x31, y32-33; the 6x3 one inside the frame at x53-60, y38-42; the 3x3 one inside the frame at x50-54, y50-54) already on the board when this level started, or did any of them appear, move or change as a result of earlier actions in this level?",
+   "why_it_matters_for_the_next_action": "If these shapes were produced by the player's earlier actions they show what a finished placement looks like and how many remain; if they were there from the start they may be fixed examples, obstacles or other pieces to be handled. The unframed 3x6 shape at x30-32 has the same dimensions as the interior of the empty frame at x8-12, y8-15, so its status changes which object the player should be acting on next.",
+   "what_the_decision_time_input_already_tells": "Their current positions, sizes and colours only. In the last two actions none of them changed; only the e block with the 0 centre and one cell of row 63 changed."
+  },
+  {
+   "id": "U4",
+   "uncertainty": "What does ACTION6 (click a cell x,y) do, and which cells respond to a click: the e block at x6-11, y33-38, the unframed e shape at x30-32, y30-35, the 4 frames, or plain background cells of colour 1, f or 2?",
+   "why_it_matters_for_the_next_action": "ACTION6 is legal now and is the only action that takes a target. If clicking selects which piece the movement actions control, or changes a piece or frame, it could be the necessary next step (for example to act on the shape at x30-32) rather than another ACTION1.",
+   "what_the_decision_time_input_already_tells": "Only that ACTION6 is legal and takes one cell x,y. The two most recent actions were both ACTION1, so no click or its effect is shown."
+  },
+  {
+   "id": "U5",
+   "uncertainty": "What governs the bar on row 63 (colour 4 at x0-37, colour 0 at x38-63): what makes a cell turn from 4 to 0, how many actions the remaining 38 cells of 4 allow, and what happened when it ran out or when the level changed?",
+   "why_it_matters_for_the_next_action": "If the bar is a budget, the player has to decide whether exploratory actions (trying ACTION2-4 or a click) are affordable or whether every action must go toward the goal. The rate is unclear from two actions alone.",
+   "what_the_decision_time_input_already_tells": "At t81 cell (38,63) changed from 4 to 0; at t80 no cell on row 63 changed although the block moved the same way. After 81 actions in total, 26 cells of row 63 are 0 and 38 are 4. Nothing shows the bar's state at the start of this level or what follows when no 4 cells remain."
+  }
+ ],
+ "notes": "I have no knowledge of this game from any other source and used only decision_input.txt. One further open point that did not fit in five: whether the e block can enter or cross cells that are not colour 1. One more ACTION1 would keep it inside colour 1 (y30-35), but the move after that would overlap the colour-f band at y24-29, and the block is also bounded by the f band at x21-29. The t80/t81 changes show the block overlapped the top edge of the 4 frame at y41 (cells x6-11, y41 went e to 4 when it left), so 4 frame cells did not stop it there, but nothing shows its behaviour against f or 2 cells. Readings of the board: regions of colour 1 at x0-20, y0-23; x0-20, y30-62; x30-62, y30-62; colour f at x24-62, y0-26, x0-62 y24-26, x0-29 y27-29 and x21-29, y30-62; colour 2 at x21-23, y0-23, x30-63, y27-29 and column x63."
+}

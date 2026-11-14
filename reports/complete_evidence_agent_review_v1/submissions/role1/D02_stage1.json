@@ -1,0 +1,38 @@
+{
+ "role": "evidence needed",
+ "case": "D02",
+ "stage": 1,
+ "uncertainties": [
+  {
+   "id": "U1",
+   "uncertainty": "What board event made levels_completed go from 0 to 1 earlier in the game: which cells or shapes changed in the step that completed level 1, and how the e-coloured shapes and the 4-outlined hollow frames stood relative to each other at that moment.",
+   "why_it_matters_for_the_next_action": "The player does not know the goal. Whether to keep sending the 3x3 e shape at x42-44,y51-53 to the right with ACTION4, towards the hollow 4 frame at x50-54,y50-54, or to do something else entirely, depends on what actually counted as completing a level before.",
+   "what_the_decision_time_input_already_tells": "Only that levels_completed=1 and state=NOT_FINISHED. The board shows four hollow 4 frames with interiors x9-11,y9-14 (3x6), x6-11,y42-47 (6x6), x54-59,y39-41 (6x3) and x51-53,y51-53 (3x3), and four e shapes of sizes 6x3 (x39-44,y33-35), 3x6 (x33-35,y42-47), 6x6 (x42-47,y45-50) and 3x3 (x42-44,y51-53). The sizes correspond one to one, but nothing in the input shows that this correspondence is what the game rewards."
+  },
+  {
+   "id": "U2",
+   "uncertainty": "Why, at t33, the top row of the moved 3x3 shape (cells x42-44, y51) was drawn in colour 0 instead of colour e, when after t32 the same shape one step to the left (x39-41, y51-53) had an all-e top row. Has this recolouring been seen before, under what circumstances, and what followed it.",
+   "why_it_matters_for_the_next_action": "It is the only thing that differed between two otherwise identical ACTION4 steps. If it signals a bad or special state (contact, blocking, damage, a mode change), the player may want to move away or reverse rather than press ACTION4 again; if it is harmless, continuing right is reasonable.",
+   "what_the_decision_time_input_already_tells": "t32: shape moved from x36-38 to x39-41 as eee / e0e / eee. t33: shape moved from x39-41 to x42-44 as 000 / e0e / eee. In its new position the shape's top row y51 lies directly below the bottom row y50 of the 6x6 e shape at x42-47,y45-50. In the same step cell (62,63) changed from 4 to 0. The input does not show whether these facts are connected."
+  },
+  {
+   "id": "U3",
+   "uncertainty": "What happens when a step of the moved shape would put it onto cells that are not colour 1: the 4 frame wall at x50,y51-53, another e shape, the f band at x21-29, or the 2 column at x63. Does it stop, pass through, get refused, or cause some other change.",
+   "why_it_matters_for_the_next_action": "ACTION4 moves the shape 3 columns at a time. From x42-44 the next step lands on x45-47 (all colour 1), but the step after would cover x48-50 and so overlap the frame wall at x50, and a third would be x51-53, the frame interior. Whether pressing ACTION4 now is the start of a workable route into that frame depends on whether the wall can be crossed or whether another approach is needed.",
+   "what_the_decision_time_input_already_tells": "Both recorded moves went through colour-1 cells only, 3 columns right each time, with the vacated cells restored to 1. No recorded step touches a 4, f, 2 or e cell, so the input shows no collision behaviour at all."
+  },
+  {
+   "id": "U4",
+   "uncertainty": "What ACTION1, ACTION2 and ACTION3 each do to the board: which cells change, in which direction and by how many cells, and whether they act on the same 3x3 shape that ACTION4 moves.",
+   "why_it_matters_for_the_next_action": "Four of the five legal actions are untested in this input. If the player needs to move the shape up, down or left (for example to leave the position under the 6x6 e shape, or to line up with a frame), it has to know which action ID does that and the step size.",
+   "what_the_decision_time_input_already_tells": "Only ACTION4 appears in the history: twice, each time shifting the 3x3 shape 3 columns to the right along y51-53. Legal actions are 1,2,3,4,6. Nothing is shown for 1, 2 or 3."
+  },
+  {
+   "id": "U5",
+   "uncertainty": "What ACTION6 does when a given cell is clicked, and in particular what distinguishes the 3x3 shape with a 0 centre at (43,52) from the three e shapes whose centres are colour 5 at (41-42,34), (34,44-45) and (44-45,47-48): can a click on one of those shapes, or on a frame, change which shape the movement actions control.",
+   "why_it_matters_for_the_next_action": "If clicking can switch the controlled shape or act on a shape or frame directly, ACTION6 with a specific x,y may be a better next action than another ACTION4, and the player needs to know which coordinates are worth clicking.",
+   "what_the_decision_time_input_already_tells": "ACTION6 is legal and takes one cell x,y. The only shape seen to move is the one with the 0 centre; the three shapes with 5 centres did not change in t32 or t33. The input contains no click and no change of a centre colour between 5 and 0."
+  }
+ ],
+ "notes": "I used only decision_input.txt and form.json. I do not recognise this game from any other source and used no outside knowledge. A sixth uncertainty that did not fit in the five: what makes cells of the bottom row y63 turn from 4 to 0. Cell (62,63) changed 4 to 0 at t33, nothing in y63 changed at t32, and (63,63) is already 0 after 33 actions, so the input does not show whether this is a per-action counter, a counter that ticks on some other schedule, or a response to a specific event (possibly the same event as U2), nor what happens when the row runs out. Coordinates were read by hand from the grid text; x is counted from 0 at the left, y from 0 at the top."
+}

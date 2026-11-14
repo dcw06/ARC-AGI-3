@@ -1,0 +1,67 @@
+{
+ "role": "pack reader",
+ "case": "D11",
+ "records": [
+  {
+   "action_number": 53,
+   "action": "ACTION1 (no coordinates). Pack: \"event=53\", \"action=ACTION1\".",
+   "level_and_attempt": "level=2, reset=0, as printed (\"event=53 reset=0 level=2 frames=1\"). \"reset\" is not explained in the pack; I read it as attempt/reset count 0. Whether \"level=2\" is a completed-level count or a level index is not stated.",
+   "start_board_mode": "from current",
+   "frames_returned": 1,
+   "board_before_the_action": "Current board o92 with the 27 lines under \"before vs current: 390 cells\" applied (my hand count of differing cells is 390). Unchanged from current: the 5 background, the framed 10x10 picture in the top-left (columns 3-12, rows 3-12), the 4 strips (columns 16-17 rows 0-17, rows 16-17 columns 0-17), and the colour-3 band at the top right with seven boxes in rows 2-6 (0 at columns 21-25, f at 27-31, c at 33-37, b at 39-43, e at 45-49, 8 at 51-55, 9 at 57-61). Differences: (1) the 0 marker in row 7 sat under the f box, not the 8 box: \"7:27-31=0,51-55=3\". (2) The 10x10 block at columns 27-36, rows 34-43 was 8 in its left half and e in its right half in every row: \"34:27-31=8,32-35=E\" ... \"38:27-31=8\" (right part already e on current), \"39:27-31=8,32-36=E\" through \"43:...27-31=8,32-36=E\". (3) The large 2-edged diamond of 8 now at the lower left (rows 40-56, columns 14-30) did not exist; all of it was 5: \"40:20=5\", \"41:19-20=5\" ... \"46:14-25=5\" ... \"50:18-30=5\" ... \"56:24=5\". (4) Instead there was an upright rectangle of f just right of the block: f in columns 39-45, rows 33-44, with 2 along the top (\"32:38-46=2\"), bottom (\"45:15-24=5,38-46=2\") and right side (\"33:39-45=F,46=2\" and the same \"39-45=F,46=2\" in rows 34-44); column 38 in rows 33-44 is not set, so it was 5. (5) A small piece to its right in columns 48-52, rows 36-41: \"36:...48-51=2\", \"37:...48-50=F,51-52=2\", \"38:...48-50=F,51=0,52=2\", \"39:...48-50=F,51=0,52=2\", \"40:...48-50=F,51-52=2\", \"41:...48-51=2\" (a 3x4 block of f edged with 2, with two 0 cells at column 51). (6) The bottom row had 4 in columns 0-52: \"63:28-52=4\" (current has 4 only in columns 0-27).",
+   "frames": [
+    {
+     "frame": 1,
+     "cells_differing_from_board_before": 229,
+     "what_happens": "\"frame 1/1 vs before: 229 cells\" (my hand count of cells that really change is also 229; a few covered cells, e.g. column 47 in rows 36-41, were already 5). The f rectangle and the small piece at its right are wiped to 5 (\"38-40:39-52=5\", \"41:39-51=5\", \"42-44:39-46=5\", \"45:38-46=5\", and the left parts of rows 32-37 such as \"34:39-40=5\", \"36:39-42=5,...,45-51=5\"). In their place an f diamond (a square standing on its corner) appears up and to the right of the block, spanning rows 21-37, columns 33-49: apex \"21:39=2\", widening \"22:38-40=2\", \"23:37-38=2,39=F,40-41=2\" ... \"27:33-34=2,35-43=F,44-45=2\", then sliding right with a 2 edge only on the right: \"28:35-44=F,45-46=2\" ... \"31:38-47=F,48-49=2\", \"32:38=5,39-46=F,47-48=2\", narrowing to \"36:...43-44=2\" and \"37:...43=2\". Some f cells of the old rectangle in rows 33-35 (e.g. columns 40-45 of row 33) are simply kept as part of the diamond. The small piece with the two 0 cells is gone. The bottom-row bar of 4 shortens by one: \"63:52=5\". The 10x10 block at columns 27-36 and the row-7 marker are not touched."
+    }
+   ],
+   "final_result": "\"result state=NOT_FINISHED level=2 legal=1,2,3,4,5,6\": not finished, level value 2, all six actions legal.",
+   "cells_of_last_frame_differing_from_board_before": 229,
+   "level_completed": false,
+   "cannot_determine": [
+    "What ACTION1 means as a command (e.g. a direction); the pack shows only its effect.",
+    "Whether \"level=2\" is a completed-level count or a level index, and what \"reset=0\" means exactly.",
+    "Whether the small piece with 0 cells was removed or merged; the frame only shows its cells becoming 5."
+   ]
+  },
+  {
+   "action_number": 68,
+   "action": "ACTION1 (no coordinates). Pack: \"event=68\", \"action=ACTION1\".",
+   "level_and_attempt": "level=2, reset=0 (\"event=68 reset=0 level=2 frames=1\"); same caveats as record 53.",
+   "start_board_mode": "from current",
+   "frames_returned": 1,
+   "board_before_the_action": "Current board o92 with the 37 lines under \"before vs current: 337 cells\" applied (hand count of differing cells: 337). Differences from current: (1) the row-7 0 marker was under the c box: \"7:33-37=0,51-55=3\". (2) The lower-left 8 diamond (rows 40-56) was absent, all 5: \"40:20=5\", \"41:19-20=5\", \"44:16-23=5\" ... \"56:24=5\". (3) A diamond of c edged with 2 stood up and to the left of the block, rows 21-37, columns 14-30: \"21:24=2\", \"22:23-25=2\", \"23:22-23=2,24=C,25-26=2\" ... \"27:18-19=2,20-28=C,29-30=2\", then with a 2 edge only on the left: \"28:17-18=2,19-28=C\" ... \"31:14-15=2,16-25=C\", narrowing \"32:15-16=2,17-24=C\" ... \"35:18-19=2,20-21=C\", \"36:19-20=2\", \"37:20=2\". (4) The 10x10 block at columns 27-36, rows 34-43 was different: in rows 34-38 the f/e diagonal was one cell further right than now (\"34:...36=F\", \"35:...35=F\", \"36:...34=F\", \"37:...33=F\", \"38:32=F\"), so row 34 was all f and row 38 was f in 27-32, e in 33-36; rows 39-43 were not c but f/8/e: \"39:27-31=F,32-36=E\", \"40:20=5,27-30=F,31=8,32-36=E\", \"41:...27-29=F,30-31=8,32-36=E\", \"42:...27-28=F,29-31=8,32-36=E\", \"43:...27=F,28-31=8,32-36=E\". (5) Bottom row had 4 in columns 0-43: \"63:28-43=4\". No rectangle at the right of the block (those cells are not set, so they are 5 as on current). Everything else as on the current board.",
+   "frames": [
+    {
+     "frame": 1,
+     "cells_differing_from_board_before": 1,
+     "what_happens": "\"frame 1/1 vs before: 1 cells\" with the single line \"63:43=5\": only the right-hand end cell of the bottom-row bar of 4 turns to 5 (bar now columns 0-42). The c diamond, the 10x10 block and the marker do not change."
+    }
+   ],
+   "final_result": "\"result state=NOT_FINISHED level=2 legal=1,2,3,4,5,6\": not finished, level value 2, all six actions legal.",
+   "cells_of_last_frame_differing_from_board_before": 1,
+   "level_completed": false,
+   "cannot_determine": [
+    "Why ACTION1 moved nothing here except the bottom bar, when in record 53 it relocated the large shape.",
+    "Whether \"level=2\" is a completed-level count or a level index, and what \"reset=0\" means exactly."
+   ]
+  }
+ ],
+ "relation_between_the_records": "Same game, same level value (2) and attempt (reset=0), same action ACTION1, 15 actions apart (53 and 68). Record 53: ACTION1 replaced an f rectangle on the right of the 10x10 block by an f diamond at its upper right (229 cells) and shortened the bottom bar by one. Record 68: the large shape was by then a c diamond at the upper left of the block, and ACTION1 changed only the bottom bar (1 cell). Between them the row-7 marker moved from the f box to the c box (matching the large shape's colour in each record), the 10x10 block changed from 8|e halves to an f/8/e pattern, and the bottom bar of 4 went from columns 0-52 to columns 0-43 (nine cells in 15 actions, so not every action shortens it).",
+ "probe_answers": [
+  {"id": "P1", "colour": "f"},
+  {"id": "P2", "colour": "5"},
+  {"id": "P3", "colour": "5"},
+  {"id": "P4", "colour": "2"},
+  {"id": "P5", "colour": "8"},
+  {"id": "P6", "colour": "5"},
+  {"id": "P7", "colour": "5"},
+  {"id": "P8", "colour": "4"},
+  {"id": "P9", "colour": "5"},
+  {"id": "P10", "colour": "5"},
+  {"id": "P11", "colour": "2"},
+  {"id": "P12", "colour": "5"}
+ ],
+ "what_was_hard_or_missing": "Nothing was undeterminable for the boards or probes. The work is heavy by hand: in \"from current\" mode each before-row is the current 64-cell row with several ranges overwritten, and in frame 1 of record 53 the lines are relative to that already-reconstructed before board, so cells kept from the old rectangle (e.g. row 33 columns 40-46) are easy to miss; the frame can only be pictured after two layers of patching. The frame lines also cover cells that do not change (column 47 in rows 36-41), which the instructions warn about. Upper-case letter colours in the pack (C, E, F) versus lower case in the decision input were treated as the same digits. \"reset\" and \"level\" in the record header are not defined. The pack does not say what ACTION1 means. I did not open current_board.png. I used no knowledge of this game from any other source."
+}

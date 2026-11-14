@@ -1,0 +1,233 @@
+{
+ "role": "evidence needed",
+ "case": "D11",
+ "stage": 2,
+ "per_uncertainty": [
+  {
+   "id": "U1",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 38,
+     "frames": "1",
+     "what_it_shows": "ACTION3 with the colour-2-edged shape above the 10x10 block (rectangle x25-38,y24-32 plus a small piece at x29-34,y18-22): the shape reappears as a diamond at the upper-left of the block. The block itself does not change.",
+     "status": "observed event"
+    },
+    {
+     "action": 40,
+     "frames": "1",
+     "what_it_shows": "ACTION2 with the diamond at upper-left: it becomes an upright rectangle directly left of the block, with a small piece on its outer (left) side. Block unchanged.",
+     "status": "observed event"
+    },
+    {
+     "action": 44,
+     "frames": "1",
+     "what_it_shows": "ACTION1 with the rectangle at left: it goes back to the upper-left diamond. Block unchanged.",
+     "status": "observed event"
+    },
+    {
+     "action": 47,
+     "frames": "1",
+     "what_it_shows": "ACTION4 with the diamond at upper-left: it becomes the rectangle above the block (with the small piece above it).",
+     "status": "observed event"
+    },
+    {
+     "action": 48,
+     "frames": "1",
+     "what_it_shows": "ACTION4 from above the block: the shape becomes a diamond at the upper-right.",
+     "status": "observed event"
+    },
+    {
+     "action": 50,
+     "frames": "1",
+     "what_it_shows": "ACTION2 from upper-right: the shape becomes an upright rectangle directly right of the block, small piece on its right.",
+     "status": "observed event"
+    },
+    {
+     "action": 83,
+     "frames": "1",
+     "what_it_shows": "ACTION2 from the right of the block: the shape becomes a diamond at the lower-right.",
+     "status": "observed event"
+    },
+    {
+     "action": 87,
+     "frames": "1",
+     "what_it_shows": "ACTION3 from lower-right: the shape becomes a rectangle directly below the block, small piece below it.",
+     "status": "observed event"
+    },
+    {
+     "action": 91,
+     "frames": "1",
+     "what_it_shows": "This is the recent ACTION3 from the decision input; its picture (not available in the decision input) shows the shape going from below the block to the lower-left diamond at x14-30,y40-56, where it is now. The block does not change.",
+     "status": "observed event"
+    },
+    {
+     "action": 39,
+     "frames": "1",
+     "what_it_shows": "Index only, not opened: ACTION3 at upper-left changes one cell, on row 63 (x61), and nothing else. Same pattern at a043 (ACTION4 at left, towards the block), a046 (ACTION3 at upper-left), a049 (ACTION4 at upper-right), a086 (ACTION4 at lower-right); a045, a054, a059 (ACTION1 at a top corner) and a090 (ACTION1 from below, towards the block) change 0 cells.",
+     "status": "supported limited conclusion"
+    },
+    {
+     "action": 13,
+     "frames": "1",
+     "what_it_shows": "Index only, not opened: in level 0 the change boxes of a003, a005, a009, a013, a015, a017, a020, a022, a025, a027 fit the same pattern (ACTION3 top to upper-left, ACTION4 upper-left to top and top to upper-right, ACTION2 upper-right to right and upper-left to left, ACTION1 back up).",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[38, 40, 44, 47, 87, 91], [47, 48, 50, 83, 87, 91]],
+   "what_the_evidence_supports": "Older evidence: ACTION1-4 never change the 10x10 block at x27-36,y34-43. They move the one colour-2-edged shape between eight fixed places around the block (above, below, left, right and the four corners), one place per action: ACTION1 up, ACTION2 down, ACTION3 left, ACTION4 right. The shape is a rectangle with a small extra piece at the four side places and a diamond at the four corner places. If there is no place in that direction the shape stays put, although the action still counts. So the 229 cells at t91 were the shape leaving the place below the block and appearing at lower-left.",
+   "limits": "No action has ever been taken while the shape is at lower-left, at any level, so what ACTION1-4 do from the current place is by analogy with the other three corners (ACTION4 back to below, ACTION1 to the left side, ACTION2 and ACTION3 no move), not observed. The no-move cases and the level-0 moves were read from the index, not from pictures."
+  },
+  {
+   "id": "U2",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 28,
+     "frames": "15 and 16",
+     "what_it_shows": "ACTION5 in level 0: by frame 15 the 10x10 block shows colour 0 in its top half and colour f in its bottom half, the same as the top-left picture; frame 16 is a new board with a new top-left picture, a third swatch, and levels completed 1.",
+     "status": "observed event"
+    },
+    {
+     "action": 35,
+     "frames": "15 and 16",
+     "what_it_shows": "ACTION5 in level 1: the lower-right triangle of the block is painted colour c; frame 15 looks the same as the top-left picture (f above, a small 0 triangle at left, c at lower right); frame 16 is the level-2 board with seven swatches and levels completed 2.",
+     "status": "observed event"
+    },
+    {
+     "action": 57,
+     "frames": "last frame (read as the board before a058)",
+     "what_it_shows": "After a041 (colour 8 on the left half), a051 (colour e on the right half) and a057 (colour f on the upper-left triangle), the block rows y34-43 equal the top-left picture rows y3-12 cell for cell, except for 12 cells: the picture has colour c at x6-9,y3-5 and the block has f at the matching cells x30-33,y34-36. The level did not complete.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[28], [35], [28, 35, 57]],
+   "what_the_evidence_supports": "Older evidence: both earlier levels ended on an ACTION5 that left the 10x10 block at x27-36,y34-43 looking the same as the top-left picture at x3-12,y3-12. In level 2 the block was once only 12 cells away from the picture (the colour-c block at x30-33,y34-36 was missing) and that was not enough. The top-left picture is the target for the block.",
+   "limits": "Two completions only. The match at a028 and a035 was checked from the pictures, not cell by cell; only the a057 near-match was checked in text. Whether the check happens only after ACTION5 is not separable, because ACTION5 is the only action seen to change the block."
+  },
+  {
+   "id": "U3",
+   "older_evidence_found": "partly",
+   "observations": [
+    {
+     "action": 36,
+     "frames": "before",
+     "what_it_shows": "At the start of level 2 there is exactly one colour-2-edged object: a rectangle above the block (edge x25-38,y24-32, inside x26-37,y25-31, colour f) plus a small piece above it (edge x29-34,y18-22, inside x30-33,y20-22 colour f, two colour-0 cells at x31-32,y19). The colour-2 edge is on the sides away from the block.",
+     "status": "observed event"
+    },
+    {
+     "action": 38,
+     "frames": "before and 1",
+     "what_it_shows": "The picture before a038 shows the result of the older swatch click a037 (x=53,y=4): the rectangle and the small piece are both colour 8 and the row-7 bar is under the colour-8 swatch; the block is unchanged. Then ACTION3 moves that same object.",
+     "status": "observed event"
+    },
+    {
+     "action": 44,
+     "frames": "before",
+     "what_it_shows": "After the older swatch click a042 (x=47,y=4) the object and its small piece are colour e; the block is unchanged.",
+     "status": "observed event"
+    },
+    {
+     "action": 92,
+     "frames": "1",
+     "what_it_shows": "The recent click from the decision input (c to 8 on the diamond) follows the same pattern as the older clicks.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[36, 38], [38, 44]],
+   "what_the_evidence_supports": "Older evidence: there is only ever one colour-2-edged object, and every move, every swatch click and every ACTION5 in the record acts on it. The colour-2 cells are part of that object's outline at every place and level, not a mark that comes and goes. A swatch click sets the object's colour (including the small piece) and moves the row-7 bar; it never changes the block. The diamond at x14-30,y40-56 is that object in its lower-left place.",
+   "limits": "ACTION6 on a main-board cell has never been tried: all 19 ACTION6 actions in the record are at y=4 on swatches (a006, a008, a016, a019, a024, a030, a037, a042, a052, a058, a062, a064, a067, a075, a077, a079, a084, a088, a092). So that part of U3 has no evidence. Nothing shows a way to act on the small piece separately."
+  },
+  {
+   "id": "U4",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 36,
+     "frames": "all 15",
+     "what_it_shows": "ACTION5 with the colour-f rectangle above the block: the rectangle slides down over the block for 7 frames, then slides back to where it was. Afterwards block rows y34-38 (x27-36) are colour f and rows y39-43 are unchanged. The small piece at x29-34,y18-22 does not move.",
+     "status": "observed event"
+    },
+    {
+     "action": 41,
+     "frames": "all 15",
+     "what_it_shows": "ACTION5 with the colour-8 rectangle at left: it slides right over the block and back; the left half of the block is then colour 8. The small piece stays where it is.",
+     "status": "observed event"
+    },
+    {
+     "action": 57,
+     "frames": "last frame (read as the board before a058)",
+     "what_it_shows": "ACTION5 with the colour-f diamond at upper-left: the block cells with x+y<=70 (10 cells in row 34 down to 1 cell in row 43) are colour f afterwards. The same triangle was painted in level 0 at a004, where the changes are listed.",
+     "status": "observed event"
+    },
+    {
+     "action": 85,
+     "frames": "all 15",
+     "what_it_shows": "ACTION5 with the colour-e diamond at lower-right: it slides up-left over the block and back; the lower-right triangle of the block is then colour e, covering the colour-8 and f cells that were there.",
+     "status": "observed event"
+    },
+    {
+     "action": 89,
+     "frames": "all 15",
+     "what_it_shows": "ACTION5 with the colour-c rectangle below the block: it slides up and back; block rows y39-43 are then colour c. The small piece below does not move.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[36], [41], [85], [89]],
+   "what_the_evidence_supports": "Older evidence: ACTION5 pushes the colour-2-edged shape 7 cells towards the block and back, and the block cells it covered take the shape's colour. From a side place that is the nearest half of the block (5 rows or 5 columns); from a corner place it is the triangle on that corner including the diagonal (55 cells). The shape ends where it started. It is the only action that changes the block, and both level completions came on it.",
+   "limits": "ACTION5 has never been used from the lower-left place, the current one, at any level; a lower-left triangle is expected by analogy with the upper-left (a057), upper-right (a081, index only) and lower-right (a085) cases. ACTION5 has always painted with the large part; the small piece has never painted anything."
+  },
+  {
+   "id": "U5",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 89,
+     "frames": "before and 15",
+     "what_it_shows": "Before a089 the block was f at upper left and e at lower right across all ten rows. ACTION5 from below with colour c turned rows y39-43 (x27-36) colour c. That is the colour-c area in the current board.",
+     "status": "observed event"
+    },
+    {
+     "action": 85,
+     "frames": "before and 15",
+     "what_it_shows": "A later stamp replaces whatever colours were under it: the colour-e lower-right triangle replaced f, 8 and e cells alike.",
+     "status": "observed event"
+    },
+    {
+     "action": 61,
+     "frames": "before and 15",
+     "what_it_shows": "ACTION5 from above with colour c replaced the whole top half of a block that had f, e and 8 regions with colour c.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[89], [85, 89]],
+   "what_the_evidence_supports": "Older evidence: the colour-c area at x27-36,y39-43 is not a separate object. It is the block's own cells, painted by the ACTION5 at a089. The block is a 10x10 canvas with no layers: each ACTION5 overwrites the cells it covers, so the most recent paint wins. While sliding, the edged shape is drawn over the block. The colour-e cells that stop at y38 are what is left of the a085 triangle after a089 painted over its lower rows.",
+   "limits": "None seen for the question as asked. It does not say which order of paints produces the target; that has to be worked out from the shapes of the eight paints."
+  }
+ ],
+ "uncertainties_added_after_seeing_history": [
+  {
+   "id": "N1",
+   "uncertainty": "How to make the small piece paint. At the four side places the shape carries a small piece whose inside is 4 by 3 cells (above the block: x30-33,y20-22). The only part of the target the large shape could not produce at a057 is a 4 by 3 colour-c block at exactly those columns (block x30-33,y34-36). No action in the record makes the small piece move or paint: ACTION5 from above (a036, a061), from the left (a041) and from below (a089) leaves it in place, and no ACTION6 was ever aimed at it.",
+   "status": "unresolved hypothesis"
+  },
+  {
+   "id": "N2",
+   "uncertainty": "Which block cells ACTION5 paints from the lower-left place where the shape is now. No level has an ACTION5 from lower-left.",
+   "status": "unresolved hypothesis"
+  },
+  {
+   "id": "N3",
+   "uncertainty": "What happens when the colour-4 bar on row 63 runs out. The listed changes for a001-a008 and the index fit a bar of round(64 x (1 - n/100)) cells after n actions in a level, every action counting (including ones that change nothing else), refilled at each new level. Level 2 has used 57 actions (a036-a092) and 28 cells remain, which on that reading leaves about 43 actions. The bar has never reached zero in the record.",
+   "status": "supported limited conclusion"
+  }
+ ],
+ "needs_no_past_record_can_meet": "What ACTION6 does on a main-board cell, and how (or whether) the small 4 by 3 piece can be made to paint: never tried. What ACTION5 paints from lower-left and what ACTION1-4 do from lower-left: never tried. What happens when the row-63 bar is used up: never reached.",
+ "coverage": {
+  "history_index_read_fully": true,
+  "history_changes": "searched (read only the first 60 lines, a001 to part of a010; I had no Grep tool, so the rest was not opened)",
+  "images_opened": ["a028", "a035", "a036", "a038", "a040", "a041", "a044", "a047", "a048", "a050", "a061", "a083", "a085", "a087", "a089", "a091"],
+  "board_files_opened": ["a036 (whole file)", "a058 (first 46 lines: board before the action, rows 0-44)"]
+ },
+ "notes": "I used only files in the stage1 and stage2 folders and no outside knowledge of this game. Not opened, so stated from the index alone: every no-move action, all level-0 and level-1 moves, a051 (right half), a081 (upper-right triangle), and the ACTION5 actions a063, a066, a074, a076, a078. The pictures use display colours; I mapped them to digits with board files a036 and a058 (0 white, f purple, c orange, e green, 8 red, 2 the grey edge). The history shows the player reached the target minus the colour-c block at a057 and then painted over it from a061 onward."
+}

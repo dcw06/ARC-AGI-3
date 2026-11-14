@@ -1,0 +1,67 @@
+{
+ "role": "pack reader",
+ "case": "D07",
+ "records": [
+  {
+   "action_number": 86,
+   "action": "ACTION6 x=30 y=50, a click on column 30, row 50 (pack: \"event=86\", \"action=ACTION6 x=30 y=50\", source line \"action 86 (transition t86)\"). On the board before, that cell is colour c: it lies in the c segment of the bar on rows 49-51 (\"49-51:25-36=C\").",
+   "level_and_attempt": "level=4, reset=0 (pack header: \"event=86 reset=0 level=4 frames=44\"). The pack does not define \"reset\" or say whether \"level=4\" is a level index or a count of completed levels; I read reset=0 as no reset / first attempt.",
+   "start_board_mode": "from current",
+   "frames_returned": 44,
+   "board_before_the_action": "Given as the current board o97 with the \"before vs current: 893 cells\" lines applied (\"start board: from current\"). I applied every line by hand and my count agrees: row 0 4; rows 1-13 176; rows 14-16 36; rows 17-31 351; rows 35-48 218; rows 49-51 36; rows 52-63 72; total 893. Rows 32-34 are untouched (as current). Resulting board: Row 0: colour 7 in columns 0-59, colour 4 in 60-63 (\"0:56-59=7\"). Rows 1-13: colour 3 only in columns 0-27, colour 0 from column 28 on (\"1-4:28-39=0\", \"11-13:28-39=0\"; the 9s at columns 61-63 of rows 11-13 as current), with a small marker against that edge on rows 5-10: colour 4 at columns 24-25 on rows 5-10 and also columns 22-23 on rows 7-8, colour e at columns 26-27 on rows 5-10 (\"5-6:24-25=4,26-27=E,28-39=0\", \"7-8:22-25=4,26-27=E,28-39=0\", \"9-10:24-25=4,26-27=E,28-39=0\"). Rows 14-16: the bar's coloured segment at columns 28-39 was colour 1, not c (\"14-16:28-39=1\"); rest of the bar as current. Rows 17-31: colour 3 all the way to column 60, with no markers and no gap on row 18 (\"17:40-60=3\", \"18:30-60=3\", \"21-22:36-60=3\", \"23-24:34-60=3\", \"27-31:40-60=3\"); columns 61-63 as current. Rows 35-48: colour 3 only in columns 0-36, colour 0 from column 37 (\"35-46:37-51=0\", \"48:37-51=0\"), and row 47 had a gap of colour 0 at columns 27-34 (\"47:27-34=0,37-51=0\"). Rows 49-51: the bar had a colour-c segment at columns 25-36 where the current board has colour 1 at 25-36 (\"49-51:25-36=C\"); so the row read 3 in 0-9, 5 in 10-13, e in 14-15, 5 in 16-24, c in 25-36, 5 in 37-63. Rows 52-63: colour 3 in columns 0-36, colour 0 from column 37 (\"52:31-36=3\", \"54:31-36=3\", \"61-63:31-36=3\"); row 53 had a gap of colour 0 at columns 27-34 (\"53:27-30=0,35-36=3\", columns 31-34 already 0 on the current board); and a marker on rows 55-60: colour 4 at columns 33-34 on rows 55-60 and also columns 31-32 on rows 57-58, colour b at columns 35-36 on rows 55-60 (\"55-56:31-32=3,33-34=4,35-36=B\", \"57-58:31-34=4,35-36=B\", \"59-60:31-32=3,33-34=4,35-36=B\").",
+   "frames": [
+    {
+     "frame": 1,
+     "cells_differing_from_board_before": 16,
+     "what_happens": "\"frame 1/44 vs before: 16 cells\": the two colour-0 gaps just above and below the clicked bar close - \"47:27-34=3\" and \"53:27-34=3\" turn columns 27-34 of rows 47 and 53 from 0 to 3. Nothing else changes."
+    },
+    {
+     "frame": 2,
+     "cells_differing_from_board_before": 22,
+     "what_happens": "\"frame 2/44 vs previous: 6 cells\", \"49-51:24=C,36=3\": the c segment of the bar on rows 49-51 shifts one column left (now columns 24-35); the cell it leaves at column 36 becomes colour 3, not bar colour 5. 22 against the board before is my own count (16 from frame 1 plus these 6 new cells); the pack prints only the vs-previous figure."
+    },
+    {
+     "frame": 3,
+     "cells_differing_from_board_before": 28,
+     "what_happens": "\"frame 3/44 vs previous: 6 cells\", \"49-51:23=C,35=3\": the c segment shifts one more column left (now columns 23-34); columns 35-36 of rows 49-51 are colour 3. 28 against the board before is my own count (16 + 12)."
+    },
+    {
+     "frame": "4-42 (summary)",
+     "cells_differing_from_board_before": "varies; my own counts: frame 4 = 34 rising by 6 per frame to 88 at frame 13; frame 14 = 88; frame 15 = 100; frames 16-29 not counted individually; frames 30 and 31 = 144; frame 32 = 138 falling by 6 per frame to 78 at frame 42. The pack prints only vs-previous counts for these frames.",
+     "what_happens": "Three phases. (a) Frames 4-13, each \"vs previous: 6 cells\": the c segment keeps sliding one column left per frame (\"49-51:22=C,34=3\" ... \"49-51:13=C,25=3\"), passing over the e cells at columns 14-15; by frame 13 it sits at columns 13-24 and columns 25-36 of rows 49-51 are colour 3, so the bar is open where the segment used to be. \"frame 14/44: same as previous\". (b) Frames 15-30, each \"vs previous: 12 cells\": the 4/b marker climbs one row per frame, keeping its shape and columns 31-36 (first \"54:33-34=4,35-36=B / 56:31-32=4 / 58:31-32=3 / 60:33-36=3\", last \"39:33-34=4,35-36=B / 41:31-32=4 / 43:31-32=3 / 45:33-36=3\"). It goes from rows 55-60 up through row 53, the opened bar rows 49-51 and row 47 to rows 39-44, leaving colour 3 behind it. \"frame 31/44: same as previous\". (c) Frames 32-42, each \"vs previous: 6 cells\": the c segment slides back right one column per frame (\"49-51:13=5,25=C\", \"49-51:14=E,26=C\", \"49-51:15=E,27=C\", ... \"49-51:23=5,35=C\"); the cells it uncovers return to their original 5 or e. After frame 42 the segment is at columns 24-35."
+    },
+    {
+     "frame": 43,
+     "cells_differing_from_board_before": 72,
+     "what_happens": "\"frame 43/44 vs previous: 6 cells\", \"49-51:24=5,36=C\": the c segment takes its last step right and is back at columns 25-36, so rows 49-51 equal the board before. Still different from before: the two closed gaps (16 cells) and the moved marker (56 cells); 72 is my own count."
+    },
+    {
+     "frame": 44,
+     "cells_differing_from_board_before": 56,
+     "what_happens": "\"frame 44/44 vs previous: 16 cells\": the gaps reopen - \"47:27-34=0\", \"53:27-34=0\". What remains is the \"net before>last: 56 cells\" block (recounted: 56): the marker now stands on rows 39-44 (\"39-40:33-34=4,35-36=B\", \"41-42:31-34=4,35-36=B\", \"43-44:33-34=4,35-36=B\") and its old place on rows 55-60 is colour 3 (\"55-56:33-36=3\", \"57-58:31-36=3\", \"59-60:33-36=3\")."
+    }
+   ],
+   "final_result": "\"result state=NOT_FINISHED level=4 legal=6\". Net effect of clicking the c segment of the rows 49-51 bar at (30,50): the 4/b marker that was below that bar (rows 55-60, columns 31-36) ends above it (rows 39-44, same columns), a move of 16 rows up; the bar segment and the two gaps on rows 47 and 53 moved out of the way and then returned exactly to their starting state. Row 0 and everything else is unchanged. Game not finished, only ACTION6 legal, level value 4 in both header and result.",
+   "cells_of_last_frame_differing_from_board_before": 56,
+   "level_completed": false,
+   "cannot_determine": [
+    "Whether \"level=4\" means the level being played or the number of levels completed: not defined in the pack. It is 4 in both the header and the result, which is why I answer that no level was completed by this action.",
+    "What \"reset=0\" means exactly: not defined in the pack instructions.",
+    "Counts against the board before for frames 2-43 are not printed (those frames are \"vs previous\" or \"same as previous\"); the values I give are my own hand counts, and I did not work them out for frames 16-29.",
+    "Why the marker travels exactly 16 rows and stops at rows 39-44, and what the marker, the gaps and the 3/0 areas mean: the text shows the changes but not the rule."
+   ]
+  }
+ ],
+ "relation_between_the_records": "Not applicable: the pack holds one record (\"One record, selected by rule\").",
+ "probe_answers": [
+  {"id": "P1", "colour": "3"},
+  {"id": "P2", "colour": "4"},
+  {"id": "P3", "colour": "b"},
+  {"id": "P4", "colour": "3"},
+  {"id": "P5", "colour": "3"},
+  {"id": "P6", "colour": "3"},
+  {"id": "P7", "colour": "3"},
+  {"id": "P8", "colour": "3"}
+ ],
+ "what_was_hard_or_missing": "Probe working: P1 - the rows 35-46 line sets only columns 37-51, so current row 42 column 31 = 3; P2 from net \"41-42:31-34=4\"; P3 from \"57-58:31-34=4,35-36=B\"; P4 from net \"57-58:31-36=3\"; P5 - before c (\"49-51:25-36=C\"), turned to 3 at frame 11 (\"49-51:15=C,27=3\"), frames 12-22 never touch column 27 (the marker frames only cover columns 31-36), and it turns back to c only at frame 34 (\"49-51:15=E,27=C\"), so 3 at frame 22; P6 and P7 from \"25-26:36-60=3\"; P8 not set by any before line, so current row 39 column 17 = 3. Hard parts: (a) a mid-sequence probe such as frame 22 means walking a chain of 21 \"vs previous\" frames and checking that none touches the cell - possible but tedious, and there is no stated count against the board before for any frame between 1 and 44; (b) the before board differs from the current one in 893 cells, so it has to be rebuilt by overlaying 25 lines on 64-character rows printed in groups of 8; cells a line leaves out (for example columns 31-34 of row 53, already 0) must be taken from the current board; (c) the pack writes letter colours in upper case (B, C, E) and the decision input in lower case - I treated them as the same digits and answer in lower case; (d) \"level\" and \"reset\" are not explained. All stated counts I checked (893, 16, the 6s and 12s I sampled, 56) agreed with the lines. I did not open current_board.png. I have no outside knowledge of this game and used none."
+}

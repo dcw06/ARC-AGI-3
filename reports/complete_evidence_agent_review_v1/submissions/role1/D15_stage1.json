@@ -1,0 +1,38 @@
+{
+ "role": "evidence needed",
+ "case": "D15",
+ "stage": 1,
+ "uncertainties": [
+  {
+   "id": "U1",
+   "uncertainty": "What board condition completes a level? In particular: does the 4/b shape (colour 4 at x=35-36 y=31-32 and x=33-38 y=33-34, colour b at x=33-38 y=35-36) have to reach some particular height or position, and do the colour-b cells on the 5-column at x=42-44 y=29-30 and the colour-1 segments (x=12-14 y=43-54; x=27-29 y=34-45) play any part in that condition? What did the board look like at the moments levels 1, 2 and 3 were completed?",
+   "why_it_matters_for_the_next_action": "Every click costs cells from the row-0 bar, and the only known effective click moves the 4/b shape and the colour-0 areas. Without knowing the target state the player cannot tell whether to keep raising the shape, lower it, stop, or work on a different area.",
+   "what_the_decision_time_input_already_tells": "levels_completed=3 and state=NOT_FINISHED, so three levels were finished earlier but this one is not. The board shows the 4/b shape between the 5-columns at x=27-29 and x=42-44, a 2-row colour-b band on the x=42-44 column at y=29-30, and the shape's own b rows currently at y=35-36. It does not show any earlier level or any completion moment."
+  },
+  {
+   "id": "U2",
+   "uncertainty": "What does ACTION6 on each of the four untested colour-9 blocks at y=61-63 do: x=9-11 (left of the x=12-14 column), x=45-47 (right of the x=42-44 column), x=51-53 (left of the x=54-56 column) and x=57-59 (right of the x=54-56 column)? Which colour-0 area does each one raise or lower, by how many rows, and does a right-side block act in the opposite direction to the left-side block of the same column?",
+   "why_it_matters_for_the_next_action": "The next action must be a click on one cell. The 9 blocks are the only cells shown to produce an effect, and the player needs to know which of them moves the 4/b shape or the 0 areas in the wanted direction rather than spending a click to find out.",
+   "what_the_decision_time_input_already_tells": "t65 (click x=40 y=62, the 9 block left of the x=42-44 column) turned x=30-41 y=37-39 into colour 0, moved the 4/b shape up 3 rows, and turned x=45-53 y=58-60 from 0 to 3. t66 (click x=16 y=62, the 9 block right of the x=12-14 column) changed nothing except one row-0 cell. No click on the other four 9 blocks appears in the two-step history."
+  },
+  {
+   "id": "U3",
+   "uncertainty": "Would another ACTION6 at x=40 y=62 again raise the colour-0 area in x=30-41 (and the 4/b shape) by 3 rows, now that the area x=45-53 has no colour 0 left above y=61 (only x=48-50 y=61-63 remains)? More generally, what limits a 9-block click: does it need colour 0 available on the other side of its column, and is that why the click at x=16 y=62 had no board effect (there is no colour 0 anywhere in x=0-11)?",
+   "why_it_matters_for_the_next_action": "Repeating the last effective click is the most obvious next move. If the source area is now exhausted the click would only burn a row-0 cell, as t66 did, and the player would need a different block to supply or move colour 0 first.",
+   "what_the_decision_time_input_already_tells": "The t65 click raised x=30-41 by 3 rows (36 cells became 0) while x=45-53 lost 3 rows (27 cells became 3), so the two areas changed together. After it, x=45-53 holds colour 0 only at x=48-50 y=61-63. The t66 click on a different block had no effect on the board. The input does not show a second click on x=40 y=62 or any earlier no-effect click that would reveal the limiting condition."
+  },
+  {
+   "id": "U4",
+   "uncertainty": "What are the colour-1 segments on the 5-columns (x=12-14 y=43-54 and x=27-29 y=34-45) and the colour-b band at x=42-44 y=29-30? Are they fixed markers, do they move or change colour when 9 blocks are clicked or when the colour-0 level beside them changes, and does clicking them (or any other non-9 cell such as the 4/b shape or a 5-column) do anything?",
+   "why_it_matters_for_the_next_action": "These are the only cells that break the plain 5-columns, so they are candidate targets, gates or clickable controls. Knowing whether they react would tell the player whether the next click should be on a 9 block at all, and what height the colour-0 areas at x=15-26 (top at y=46) and x=30-41 (top at y=37) should be brought to.",
+   "what_the_decision_time_input_already_tells": "The two colour-1 segments are both 12 rows tall at different heights; the colour-0 area x=15-26 starts at y=46, exactly where the 1 segment of the x=27-29 column ends, while the area x=30-41 now reaches up to y=37 alongside that 1 segment. Neither the 1 segments nor the b band at x=42-44 changed in t65 or t66. Both recorded clicks were on 9 cells, so nothing is shown about clicking other cells."
+  },
+  {
+   "id": "U5",
+   "uncertainty": "What is the row-0 bar (colour 7 at x=0-36, colour 4 at x=37-63) counting, what happens when the remaining 37 colour-7 cells are used up, and why did t65 convert two cells (x=38-39) while t66 converted one (x=37)?",
+   "why_it_matters_for_the_next_action": "If the bar is a limited budget, the player must decide whether it can afford an exploratory click on an untested 9 block or must only make clicks it expects to progress the level, and whether effective clicks cost more than ineffective ones.",
+   "what_the_decision_time_input_already_tells": "Row 0 has 37 cells of colour 7 followed by 27 cells of colour 4. The click that changed the board (t65) turned two cells from 7 to 4; the click that did not (t66) turned one. 66 actions have been taken in total but only 27 cells are colour 4, so the bar has not advanced one cell per action over the whole game. The input does not show the bar ever running out or being refilled."
+  }
+ ],
+ "notes": "Based only on decision_input.txt and form.json. I do not recognise this game from any outside source and used no outside knowledge. Descriptions such as 'raise' and 'lower' refer only to the cell changes listed in t65; I have not assumed any rule beyond those recorded changes. Coordinates were read by hand from the board text."
+}

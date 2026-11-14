@@ -1,0 +1,257 @@
+{
+ "role": "evidence needed",
+ "case": "D10",
+ "stage": 2,
+ "per_uncertainty": [
+  {
+   "id": "U1",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 13,
+     "frames": "1 and 2",
+     "what_it_shows": "Level 0 (horizontal layout: one colour-5 bar at y=28..31 with a b mark at x=38..39, one 4-shape with a b edge floating at the left edge of the colour-0 area below the bar). Before a013 the shape's b edge was at x=42..43. Frame 1 of a013 moved it 4 columns left to x=38..39, the same columns as the b mark; frame 2 is a new board with row 0 all colour 7 and levels completed went 0 to 1.",
+     "status": "observed event"
+    },
+    {
+     "action": 9,
+     "frames": "1",
+     "what_it_shows": "Level 0: the b edge moved from x=50..51 to x=54..55, away from the b mark; no completion. a010, a011, a012 then moved it 4 columns left each time (54, 50, 46, 42) with no completion until it reached the mark's columns in a013.",
+     "status": "observed event"
+    },
+    {
+     "action": 21,
+     "frames": "1 and 2",
+     "what_it_shows": "Level 1 (two bars; only the lower bar, y=40..43, carries a mark: e at x=28..29; one 4-shape with an e edge below it). Before a021 the e edge was at x=24..25. Frame 1 moved it to x=28..29, level with the e mark; frame 2 is the level-2 board and levels completed went 1 to 2.",
+     "status": "observed event"
+    },
+    {
+     "action": 22,
+     "frames": "board before",
+     "what_it_shows": "Start of the current level: marks e at (14..15,41), f at (36..37,39), b at (48..49,47) were already in those places; shape bases were e y=53, f y=51, b y=29. The marks have not moved since (same cells in the board before a032 and in the decision input).",
+     "status": "observed event"
+    },
+    {
+     "action": 31,
+     "frames": "1",
+     "what_it_shows": "The b base reached y=47 (the b mark's row) while f was at y=35 and e at y=53: no completion.",
+     "status": "observed event"
+    },
+    {
+     "action": 41,
+     "frames": "1",
+     "what_it_shows": "The f base reached y=39 (the f mark's row) with b still at y=47 and e at y=45: no completion. So two of three shapes level with their marks has not ended this level.",
+     "status": "observed event"
+    },
+    {
+     "action": 22,
+     "frames": "board before, compared with the decision input",
+     "what_it_shows": "Row count of colour 0 per compartment at level start: 4 (x=6..13), 2 (x=16..25), 4 (x=28..35), 6 (x=38..47), 28 (x=50..57) = 44. Now: 14, 0, 2, 18, 10 = 44. Putting e, f, b bases at rows 41, 39, 47 needs 16 + 18 + 10 = 44 rows, with nothing left in the two shapeless compartments.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[13], [21], [13, 21, 31, 41]],
+   "what_the_evidence_supports": "Older evidence, both earlier levels: each ended on the very action whose first frame brought the shape's coloured edge level with the same-coloured mark on the bar, and not before (a009-a012 moved the shape without completing). In the current level, older actions a031 and a041 show that one or two shapes being level is not enough. The row arithmetic fits a target in which all three bases sit at their marks' rows and the left compartment receives exactly the two rows that remain at x=30..33, y=56..57.",
+   "limits": "Levels 0 and 1 each had one shape and one mark, so the three-shape condition (all at once) is an extension, not observed. Alignment and completion coincided twice; no record isolates alignment from other things true at the same moment (for example the amounts in each area). Whether this level completes when the e base reaches y=41 has not been observed."
+  },
+  {
+   "id": "U2",
+   "older_evidence_found": "partly",
+   "observations": [
+    {
+     "action": 22,
+     "frames": "1",
+     "what_it_shows": "Click (46,56), the 9 block left of the column at x=48..49: rows 30-31 of x=50..57 changed 0 to 3 and the b shape dropped two rows; rows 50-51 of x=38..47 became 0 and the f shape rose two rows. Same pattern, two rows each time, in a023, a024, a026, a027, a028, a029, a030, a031.",
+     "status": "observed event"
+    },
+    {
+     "action": 25,
+     "frames": "1",
+     "what_it_shows": "Click (34,56), the 9 block left of the column at x=36..37: rows 46-47 of x=38..47 changed 0 to 3 and the f shape dropped two rows; rows 52-53 of x=28..35 became 0. Repeated in a040 (gain went to x=30..33, y=56..57) and a041 (gain at x=28..35, y=54..55).",
+     "status": "observed event"
+    },
+    {
+     "action": 32,
+     "frames": "1",
+     "what_it_shows": "Click (34,56) returned a frame with 0 changed cells. At that moment x=28..35 held colour 0 from y=52 down, and y=52 is the top row of the short column at x=26..27; the source side x=38..47 held plenty (y=36..57).",
+     "status": "observed event"
+    },
+    {
+     "action": 33,
+     "frames": "1",
+     "what_it_shows": "Click (24,56): rows 52-53 of x=28..35 changed 0 to 3, rows 54-55 of x=16..25 became 0. With a034-a039 this shows the blocks at x=24..25 and x=12..13 behaving the same way before the two recent actions.",
+     "status": "observed event"
+    },
+    {
+     "action": 9,
+     "frames": "1",
+     "what_it_shows": "Level 0, different layout: click (61,25) on the 9 block above the bar: the colour-0 area above the bar grew by 4 columns (left edge x=32 to x=28) and the area below shrank by 4 columns (x=52 to x=56).",
+     "status": "observed event"
+    },
+    {
+     "action": 10,
+     "frames": "1",
+     "what_it_shows": "Level 0: click (61,33) on the 9 block below the same bar did the opposite: the area below grew by 4 columns. Same in a011, a012, a013. So in level 0 the two blocks flanking one bar each pulled colour 0 to their own side.",
+     "status": "observed event"
+    },
+    {
+     "action": 15,
+     "frames": "1",
+     "what_it_shows": "Level 1: click (1,25), the 9 block just below the upper bar: x=48..51, y=1..19 (above the bar) changed 0 to 3 and x=8..11, y=24..39 (below it, the block's side) became 0. Same in a018, a020. Clicks at (1,45) (a014, a016, a017, a019, a021) pulled colour 0 from between the bars to below the lower bar, again the clicked block's side.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[22, 25], [22, 25, 32], [9, 10]],
+   "what_the_evidence_supports": "Older evidence settles the left-side blocks at x=46..47 and x=34..35 in this level: each moves two rows of colour 0 from the right of its column to the left (the block's own side), lowering a shape on the losing side and raising one on the gaining side. All four left-side blocks therefore act alike. For the right-side blocks there is only an analogy: in level 0 both blocks flanking a bar were clicked and each pulled colour 0 to its own side (a009 versus a010), and every block clicked in levels 1 and 2 did the same. a032 shows a click can do nothing; the receiving side being filled to the top of the shorter column is the visible circumstance.",
+   "limits": "No right-side block (x=16..17, 28..29, 38..39, 50..51) has ever been clicked in this level; all 22 clicks here were on left-side blocks. The level-0 analogy is from a horizontal layout with one bar. The a032 reading (receiving side full) rests on one event."
+  },
+  {
+   "id": "U3",
+   "older_evidence_found": "partly",
+   "observations": [
+    {
+     "action": 38,
+     "frames": "1",
+     "what_it_shows": "Click (24,56) when x=28..35 held colour 0 only at x=30..33, y=56..57 (rows 54-55 had been removed by a036): that patch changed 0 to 3 and x=18..23, y=56..57 changed 3 to 0. This is the same board situation as now in those two compartments.",
+     "status": "observed event"
+    },
+    {
+     "action": 39,
+     "frames": "1",
+     "what_it_shows": "Click (12,56) straight after: x=18..23, y=56..57 changed 0 to 3, rows 46-47 of x=6..13 became 0 and the e base rose from y=47 to y=45. The pair a038, a039 is a complete relay of the small patch into the left compartment.",
+     "status": "observed event"
+    },
+    {
+     "action": 40,
+     "frames": "1",
+     "what_it_shows": "Click (34,56) with x=28..35 completely empty: the first two rows arrived as the 4-wide patch x=30..33, y=56..57. The patch there now was put there by this action and has not been touched since (a041 added rows 54-55 above it, the recent a042 removed them).",
+     "status": "observed event"
+    },
+    {
+     "action": 35,
+     "frames": "1",
+     "what_it_shows": "Click (12,56) when x=16..25 held only x=18..23, y=56..57: that patch moved into x=6..13 (rows 50-51), e base from y=51 to y=49. Same in a037.",
+     "status": "observed event"
+    },
+    {
+     "action": 32,
+     "frames": "1",
+     "what_it_shows": "The only click in the record that moved nothing: (34,56), 0 cells changed, not even row 0. Here the source side was not empty; the receiving side was filled to y=52.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[38], [38, 39]],
+   "what_the_evidence_supports": "First half is settled by older evidence: a click on (24,56) does move the patch x=30..33, y=56..57 into x=18..23, y=56..57 (a038), and (12,56) then moves it into the left compartment as two full rows, raising the e shape by two (a039; also a035, a037 before the recent a043).",
+   "limits": "Second half is not addressed: no 9 block was ever clicked while its source side was completely empty, in any level. a032 shows a no-effect click exists but in a different circumstance, so what (12,56) would do right now is unresolved."
+  },
+  {
+   "id": "U4",
+   "older_evidence_found": "partly",
+   "observations": [
+    {
+     "action": 13,
+     "frames": "2",
+     "what_it_shows": "Row 0 had colour 7 only at x=0..48 before a013; the new-level frame has row 0 all colour 7 (x=0..63). Same at the next level change (board before a022: all 64 cells colour 7).",
+     "status": "observed event"
+    },
+    {
+     "action": 2,
+     "frames": "1",
+     "what_it_shows": "The strip does not lose exactly one cell per action. Level 0: a002, a006 and a009 each removed 2 cells, the others 1 (15 cells in the first 12 actions). Level 1: a015 removed 2 (x=61..62).",
+     "status": "observed event"
+    },
+    {
+     "action": 25,
+     "frames": "1",
+     "what_it_shows": "Current level: a025 moved colour 0 but row 0 did not change. Same for a039. a032 (no board change at all) also left row 0 alone. Every other action from a022 to a041 removed one cell, so 19 cells went in 22 actions, with the three no-loss actions spaced 7 apart (4th, 11th, 18th action of the level).",
+     "status": "observed event"
+    },
+    {
+     "action": 1,
+     "frames": "1",
+     "what_it_shows": "Clicks that did nothing else still shortened the strip: a001-a008 in level 0 changed only row 0.",
+     "status": "observed event"
+    },
+    {
+     "action": 39,
+     "frames": "1",
+     "what_it_shows": "Reading of the above: the strip tracks actions used at a level-specific rate, about 1.28 cells per action in levels 0 and 1 and about 6 cells per 7 actions in this level, which would put this level's total near 75 actions with 22 used.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[13, 22], [22, 25, 32, 39]],
+   "what_the_evidence_supports": "Older evidence shows the strip is full at the start of every level, shrinks from the right as actions are taken whether or not they do anything useful, and shrinks at a rate that differs by level and is not one cell per action. With 45 cells left the remaining allowance looks like roughly 50 actions in this level.",
+   "limits": "The strip has never run out, so what happens at zero is unresolved; that it is an action limit is a hypothesis. The rate is fitted to 22 actions. Whether a032 counted toward the strip cannot be separated from the regular 7-action spacing."
+  },
+  {
+   "id": "U5",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 22,
+     "frames": "1",
+     "what_it_shows": "Two rows left the 8-wide compartment x=50..57 and two rows arrived in the 10-wide compartment x=38..47. Same two-for-two in a023, a024, a026-a031.",
+     "status": "observed event"
+    },
+    {
+     "action": 25,
+     "frames": "1",
+     "what_it_shows": "Two rows left the 10-wide x=38..47 and two rows arrived in the 8-wide x=28..35 (also a041). In a040 the two rows arrived as the 4-wide patch x=30..33, y=56..57.",
+     "status": "observed event"
+    },
+    {
+     "action": 33,
+     "frames": "1",
+     "what_it_shows": "Two rows left the 8-wide x=28..35 and two rows arrived at full 10-cell width x=16..25, y=54..55; in a036 they arrived as the 6-wide patch x=18..23, y=56..57; in a038 the 4-wide patch became the 6-wide patch.",
+     "status": "observed event"
+    },
+    {
+     "action": 34,
+     "frames": "1",
+     "what_it_shows": "Click (12,56): two rows into x=6..13 and the e base up by exactly two rows (53 to 51). Same step in a035 (51 to 49), a037 (49 to 47), a039 (47 to 45), whether the source was a 10-wide pair of rows or the 6-wide bottom patch.",
+     "status": "observed event"
+    },
+    {
+     "action": 1,
+     "frames": "1",
+     "what_it_shows": "Level 0 clicks on cells that are not 9 blocks changed nothing but row 0: a001 (38,29) on the b mark of the bar; a002 (50,46) and a003 (51,46) on the shape's b edge; a004 (48,46) and a005 (46,46) on the shape's colour-4 body; a006 (56,50) and a008 (56,46) on colour 0; a007 (16,14) on colour 3.",
+     "status": "observed event"
+    },
+    {
+     "action": 9,
+     "frames": "1",
+     "what_it_shows": "In levels 0 and 1 the step was 4 columns per click (a009-a021), so the step size is fixed within a level but is not the same number in every level.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[22, 25, 33, 34, 35, 38, 40], [1, 2, 3, 4, 5, 6, 7, 8]],
+   "what_the_evidence_supports": "Older evidence: every effective click in this level (20 before the two recent ones) moved exactly two rows out of one compartment and two rows into the next, regardless of widths, and every click on (12,56) raised the e shape by exactly two rows. In level 0, clicks on a mark, on a shape, on colour 0 and on colour 3 had no effect on the board apart from shortening the row-0 strip.",
+   "limits": "Non-9 cells were tested only in level 0, never in this level; the colour-5 bar body and the outer colour-4 frame were never clicked. The one exception to 'two rows' is a032, which moved nothing."
+  }
+ ],
+ "uncertainties_added_after_seeing_history": [
+  {
+   "id": "N1",
+   "uncertainty": "In this level, must all three shapes (e, f, b) be level with their marks at the same moment for the level to end? Levels 0 and 1 had only one shape and one mark each.",
+   "evidence_in_history": "a031 and a041: one, then two, shapes level with their marks and no completion. Nothing shows three at once."
+  },
+  {
+   "id": "N2",
+   "uncertainty": "Why did the click at (34,56) in a032 change nothing: because the receiving compartment x=28..35 was filled to y=52, the top of the short column at x=26..27, or for another reason? Is there a general cap on how high a compartment can be filled?",
+   "evidence_in_history": "a032 only. The left compartment's bounding column (x=14..15) has its top at y=38, above the row the e shape needs, so the cap, if real, would not obviously block the next transfer."
+  },
+  {
+   "id": "N3",
+   "uncertainty": "The row-0 strip skipped a step on a025, a032 and a039 and took double steps in earlier levels. How many actions does the remaining 45 cells actually represent?",
+   "evidence_in_history": "a022-a041 give 19 cells for 22 actions; no record of the strip reaching zero."
+  }
+ ],
+ "needs_no_past_record_can_meet": "What happens when the row-0 strip runs out (never happened). What any right-side 9 block does in this level's layout (never clicked here). What a 9 block does when its source compartment is completely empty (never tried). Whether this level ends when the e base reaches y=41 with f at y=39 and b at y=47 (three shapes level at once has never occurred).",
+ "coverage": {
+  "history_index_read_fully": true,
+  "history_changes": "read fully",
+  "images_opened": ["a013", "a021", "a032", "a038"],
+  "board_files_opened": ["a001 (board before only)", "a009", "a013", "a022 (board before only)", "a032 (rows 23-63 of board before)"]
+ },
+ "notes": "Evidence older than the two recent actions is a001-a041; a042 and a043 are the two actions already in the decision input and are mentioned only where a comparison needs them. For a010-a012, a014, a016, a017 and a019 the change lists were not itemised and I did not open their pictures; what I say about them comes from the boards before a013 and a022, the a021 picture and the index cell counts. Row and column positions were read by hand from the text. I used no outside knowledge of this game. The task message allowed Grep/Glob but only Read and Write were used. Stage-1 file was not changed."
+}

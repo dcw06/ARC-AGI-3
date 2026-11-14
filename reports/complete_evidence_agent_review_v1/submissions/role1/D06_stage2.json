@@ -1,0 +1,254 @@
+{
+ "role": "evidence needed",
+ "case": "D06",
+ "stage": 2,
+ "per_uncertainty": [
+  {
+   "id": "U1",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 74,
+     "frames": "1-10 (this is one of the two recent actions; the decision input gave only totals, the history gives the frames)",
+     "what_it_shows": "Frames 1-4: the clicked e tile x19-23 y31-35 dissolves inward and becomes colour a (x19 and x23 at y36 also turn a); bar cell x24 y63 turns f. Frames 5-7: the 9/b shape moves straight up 6 rows, from y37-40 to y31-34, into the opened tile, and stops because the next tile up (then x19-23 y25-29) is still e. Frames 8-10: the whole picture shifts down 6 rows so the shape is again at y37-40; a new row of seven e tiles enters at y1-5 and the old bottom rows leave. Board before a074 (boards/a074.txt) already had the large a region, the three f/b0b shapes and the e tiles, each 6 rows higher than now. So the 1276 changed cells are almost all the 6-row shift; the only real map change is one e tile turned to a, and the shape is one tile higher in the map.",
+     "status": "observed event"
+    },
+    {
+     "action": 73,
+     "frames": "1-10",
+     "what_it_shows": "Older, same click (x=21 y=33) from the same kind of position: tile directly above the shape dissolves (f1-4), shape rises one tile (f5-7), view shifts down 6 rows (f8-10). 1307 cells changed.",
+     "status": "observed event"
+    },
+    {
+     "action": 72,
+     "frames": "1-10",
+     "what_it_shows": "Older, same click again: identical three-part sequence. Here the shape started in the gap of a row of f/b0b shapes (f/b0b on its left and right neighbours) and rose out of it; having f/b0b shapes beside it did nothing.",
+     "status": "observed event"
+    },
+    {
+     "action": 71,
+     "frames": "1-22",
+     "what_it_shows": "Older, same click when the opened tile led into open a cells: the tile at x19-23 y31-35 dissolved, the shape rose through the a row y25-29 and on up through the a gap x18-24 y19-24 between two f/b0b shapes, and stopped only when the tile above it was an e tile (x19-23 y13-17 in that view). Then the view shifted down 18 rows. The shape keeps rising as long as the tile above is a.",
+     "status": "observed event"
+    },
+    {
+     "action": 7,
+     "frames": "1-28 (text record frames 1-16)",
+     "what_it_shows": "Older, level 0: click on the e tile directly above the shape (x43-47 y31-35): tile dissolves in frames 1-4, shape rises from y37 to y13 in frames 5-16 through open a cells, then the view shifts.",
+     "status": "observed event"
+    },
+    {
+     "action": 67,
+     "frames": "1-10",
+     "what_it_shows": "Older: click x=33 y=33 on the e tile above the shape, with another e tile above that: one-tile rise then 6-row shift, the same 10-frame pattern as a072-a074.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[74], [73], [72], [7, 71]],
+   "what_the_evidence_supports": "A click on the e tile directly above the 9/b shape turns that tile into a; the shape then rises on its own until the tile above it is not a; the view then re-centres so the shape is back at y37-41. The large 'change' at t74 was a 6-row shift of an already existing map, not new shapes. The e tile now at x19-23 y31-35 is a different tile from the one clicked (it was at y25-29 before a074).",
+   "limits": "a074's own frames settle U1 directly; a072 and a073 settle it only by close analogy. Other 10-frame clicks in the index (a021, a027, a028) look like the same pattern from their sizes but I did not open them. What the next such click would do from the present position is a separate question (see N1)."
+  },
+  {
+   "id": "U2",
+   "older_evidence_found": "partly",
+   "observations": [
+    {
+     "action": 1,
+     "frames": "1-3",
+     "what_it_shows": "ACTION3: the 9/b shape slides left by one tile (6 cells), from x19-23 to x13-17 at y37-41, inside an a region; afterwards the b cells are on its left side (x14 y38-39). Bar x0 turns f.",
+     "status": "observed event"
+    },
+    {
+     "action": 3,
+     "frames": "1-5",
+     "what_it_shows": "ACTION4: the shape slides right by one tile, from x19-23 to x25-29, inside an a region; b cells end on its right side (x28 y38-39). Bar x2 turns f. a004 and a005 repeat this.",
+     "status": "observed event"
+    },
+    {
+     "action": 2,
+     "frames": "1",
+     "what_it_shows": "ACTION7 directly after a001: in one frame the board returns exactly to what it was before a001 (shape back at x19-23, b back on the right side), except that the bar still advances (x1 turns f).",
+     "status": "observed event"
+    },
+    {
+     "action": 32,
+     "frames": "1-2",
+     "what_it_shows": "ACTION7 directly after a031, a click that had changed nothing: only bar cell x7 changes. It did not take back a030, the large move before a031.",
+     "status": "observed event"
+    },
+    {
+     "action": 6,
+     "frames": "1-25 (text record frames 1-14)",
+     "what_it_shows": "ACTION4 into a column with a cells above: after the one-tile slide right (to x43-47) the shape rises by itself from y37 to y19, then the view shifts. a030, a046 and a054 (pictures opened) show the same: slide one tile, then rise until the tile above is e or background 5.",
+     "status": "observed event"
+    },
+    {
+     "action": 48,
+     "frames": "1-18, then 24-32",
+     "what_it_shows": "ACTION3 from x31-35 to x25-29 at y37-41, under an open channel x25-29 y30-36: the shape rises into the a row y25-29, directly beneath the f/b0b shape at x25-29 y19-23, shrinks and vanishes; state becomes GAME_OVER.",
+     "status": "observed event"
+    },
+    {
+     "action": 17,
+     "frames": "1-5, 12",
+     "what_it_shows": "ACTION3 onto a colour-7 plus: level completed (see U4).",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[1, 2, 3], [1, 2, 3, 6, 32]],
+   "what_the_evidence_supports": "ACTION3 = move the shape one tile left, ACTION4 = one tile right, each followed by an automatic rise if the tile above is a. ACTION7 restores the board from before the immediately preceding action (one step) but still costs a bar cell. After a no-effect action, ACTION7 changed nothing (a031-a032), which is the same situation as now (a075 was a no-effect click).",
+   "limits": "Every recorded ACTION3/ACTION4 moved into a cells (each changed 47 cells or more). None was made with background 5 or an e tile as the neighbour, which is the present case (x13-17 and x25-29 at y37-41 are background 5). ACTION7 was used only twice, never twice in a row, and never after a tile removal, a rise or a view shift, so whether it can take back a074 is not shown."
+  },
+  {
+   "id": "U3",
+   "older_evidence_found": "partly",
+   "observations": [
+    {
+     "action": 1,
+     "frames": "1 (also a002-a005, a007, a008 frame 1)",
+     "what_it_shows": "Each action turns the next y=63 cell from 0 to f in its first frame: a001 x0, a002 (ACTION7) x1, a003 x2, a004 x3, a005 x4, a006 x5, a007 (ACTION6) x6, a008 x7. One cell per action for ACTION3, 4, 6 and 7.",
+     "status": "observed event"
+    },
+    {
+     "action": 31,
+     "frames": "1",
+     "what_it_shows": "A click with no other effect still advances the bar (x6); so does the ACTION7 after it (a032, x7).",
+     "status": "observed event"
+    },
+    {
+     "action": 18,
+     "frames": "index line",
+     "what_it_shows": "First action after level 1 began: its change box starts at x0, so the bar had been emptied when the level changed at a017 (a017 itself had filled x16).",
+     "status": "supported limited conclusion"
+    },
+    {
+     "action": 49,
+     "frames": "1 (picture), with a050 index line",
+     "what_it_shows": "RESET after GAME_OVER: the board returns to the level-1 start and the bar is empty; a050 then fills x0. Same after the first RESET (a024, then a025 at x0).",
+     "status": "observed event"
+    },
+    {
+     "action": 23,
+     "frames": "1, 16-18",
+     "what_it_shows": "GAME_OVER happened with only 6 bar cells filled (x0-5).",
+     "status": "observed event"
+    },
+    {
+     "action": 48,
+     "frames": "board before, 15-18",
+     "what_it_shows": "GAME_OVER happened with 24 bar cells filled (x0-23). Both game overs came with the shape vanishing under an f/b0b shape, not with a full bar.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[1, 2, 7, 31, 18, 49]],
+   "what_the_evidence_supports": "The bar counts actions in the current attempt of the current level: one cell per action of any type, including undo and no-effect clicks; it empties when a level is completed and on RESET. The present 26 filled cells equal the 26 actions of attempt 3 (a050-a075); 38 cells remain.",
+   "limits": "The bar has never been fuller than it is now (26 of 64), so nothing in the record shows what happens when it reaches x63. The listed group settles the counting and reset parts only."
+  },
+  {
+   "id": "U4",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 17,
+     "frames": "1-5, 6-11, 12",
+     "what_it_shows": "ACTION3 moved the shape left from x25-29 to x19-23 at y37-41. That tile held a colour-7 plus (cells x21 y37, x20-22 y38, x21 y39), which the shape covered in frames 2-3. Frames 6-11 show no change; frame 12 is a completely new board (1278 cells) and levels completed goes 0 to 1.",
+     "status": "observed event"
+    },
+    {
+     "action": 15,
+     "frames": "before, 5-13, 22",
+     "what_it_shows": "Where the 7 plus was in level 0: in the uppermost a region, with only background above it. The click x=33 y=33 opened the e tile above the shape and the shape rose into that region, two tiles to the right of the plus. a016 and a017 then walked left to it.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[17], [15, 17]],
+   "what_the_evidence_supports": "Level 0 ended when the 9/b shape was moved onto the colour-7 plus, which sat at the top of that level's map. The a region, e tiles and f/b0b shapes were not part of the ending condition there (level 0 had no f/b0b shapes in the frames I opened).",
+   "limits": "One completion only. That level 1 also ends at a colour-7 plus is an unresolved hypothesis: no colour-7 cell appears in any level-1 frame I opened, and the present top row (seven e tiles at y1-5, new at a074) is the highest part of level 1 shown so far in those frames."
+  },
+  {
+   "id": "U5",
+   "older_evidence_found": "partly",
+   "observations": [
+    {
+     "action": 31,
+     "frames": "1-2",
+     "what_it_shows": "Click on an a cell (x39 y21, inside the open a region x13-53 y19-29, three tiles above the shape at x37-41 y37-41): nothing changed except bar x6.",
+     "status": "observed event"
+    },
+    {
+     "action": 8,
+     "frames": "1-4",
+     "what_it_shows": "Click on an e tile that is not next to the shape (tile x25-29 y37-41, while the shape was at x43-47 y37-41): the tile dissolved to a (and the 5 strip x30 y37-41 beside an a region became a). The shape did not move.",
+     "status": "observed event"
+    },
+    {
+     "action": 42,
+     "frames": "1-4",
+     "what_it_shows": "Click on e tile x31-35 y31-35, one row above the shape's row and three columns to its right (shape at x13-17): tile dissolved to a, shape did not move.",
+     "status": "observed event"
+    },
+    {
+     "action": 43,
+     "frames": "1-4",
+     "what_it_shows": "Click on e tile x31-35 y25-29, two rows above the shape's row: tile dissolved to a (36 cells with the strips y24 and y30), shape did not move.",
+     "status": "observed event"
+    },
+    {
+     "action": 29,
+     "frames": "1-4",
+     "what_it_shows": "Click on e tile x37-41 y37-41: dissolved to a together with the strips x36 y37-41 and x37-41 y36.",
+     "status": "observed event"
+    },
+    {
+     "action": 74,
+     "frames": "1-7 (recent action, detail from the history)",
+     "what_it_shows": "Click on the e tile directly above the shape: tile dissolves and the shape rises into it.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[8, 31, 42, 43]],
+   "what_the_evidence_supports": "Older evidence: any e tile responds to a click wherever the shape is, and turns into a; the shape moves only if that opens a cells above it. A click on an a cell does nothing. From the decision input: a click on background 5 does nothing. Every click costs one bar cell. No click has ever created an e tile or any other block.",
+   "limits": "By the index, every ACTION6 in the record was on an e tile except a031 (an a cell) and a075 (background). No click was ever made on an f/b0b shape, on the 9/b shape, or on the level-0 colour-7 plus, so those are untested. The a-cell and background results rest on one click each."
+  }
+ ],
+ "uncertainties_added_after_seeing_history": [
+  {
+   "id": "N1",
+   "uncertainty": "If the e tile now at x19-23 y31-35 is clicked, does the shape rise through it and the a row y25-29 and end directly beneath the f/b0b shape at x20-22 y19-23, and does that end the game?",
+   "evidence": "a023 frames 5-18: after a click on the e tile above it, the shape rose from y37-41 to the a tile x37-41 y19-23 directly beneath an f/b0b shape at x38-40 y13-17 (b0b row y17), then shrank and vanished; GAME_OVER. a048 frames 1-18: the shape rose into x25-29 y25-29 directly beneath the f/b0b shape at x26-28 y19-23 and vanished; GAME_OVER. a071 shows the rise does not stop while the tile above is a. The present column has the same layout: e tile, then a row y25-29, then f/b0b at y19-23 with b0b on y23.",
+   "status": "supported limited conclusion (two recorded cases with the same geometry; not yet observed at this place)"
+  },
+  {
+   "id": "N2",
+   "uncertainty": "What do ACTION3 and ACTION4 do when the neighbouring tile is background 5, as at x13-17 y37-41 and x25-29 y37-41 now: nothing, or something else, and do they still cost a bar cell?",
+   "evidence": "none: all recorded ACTION3/ACTION4 moved into a cells",
+   "status": "unresolved hypothesis"
+  },
+  {
+   "id": "N3",
+   "uncertainty": "Can ACTION7 still take back a074 (the one-tile rise that left the row of five e tiles x25-53 at y43-47 one row below the shape)? After the no-effect a075, does one ACTION7 only take back a075, and does a second ACTION7 go one step further back or redo?",
+   "evidence": "a002 (one-step restore of a simple move) and a031-a032 (ACTION7 after a no-effect click changed only the bar and did not take back a030). No ACTION7 after a tile removal, rise or view shift; no two ACTION7 in a row.",
+   "status": "unresolved hypothesis"
+  },
+  {
+   "id": "N4",
+   "uncertainty": "Where is the thing that ends level 1 (a colour-7 plus, if this level has one), and which column leads to it without passing beneath an f/b0b shape? In the present board the columns x31-41 above the a row y25-29 are a up to y7-11, while x13-29 have f/b0b shapes at y19-23.",
+   "evidence": "a017 and a015 for level 0 only; nothing for level 1 above the present y1-5 row.",
+   "status": "unresolved hypothesis"
+  },
+  {
+   "id": "N5",
+   "uncertainty": "Is the only harmful contact with an f/b0b shape the one from directly below (its b0b edge)? Being beside one was harmless.",
+   "evidence": "a071 frames 13-22 and a072 before-frame: the shape sat in the gap x19-23 of an f/b0b row with f/b0b shapes on both neighbouring tiles and nothing happened. a023 and a048: vanished when directly beneath. No record of the shape above an f/b0b shape.",
+   "status": "supported limited conclusion"
+  }
+ ],
+ "needs_no_past_record_can_meet": "What happens when the y=63 bar reaches x63 (never fuller than 26 cells). What ACTION3/ACTION4 do against background 5 or an e tile. Whether ACTION7 works more than one step back or after a rise and view shift. What a click on an f/b0b shape or on the 9/b shape does. What lies above the present y1-5 row in level 1 and what ends this level. Whether anything can move the shape downward or stop a rise other than an e tile or background.",
+ "coverage": {
+  "history_index_read_fully": true,
+  "history_changes": "searched (no Grep tool was available to me; I read these line ranges with Read: a001-a011, a016-a017, a023-a024, a029, a031-a032, a042-a043, a074-a075)",
+  "images_opened": ["a002", "a015", "a017", "a022", "a023", "a030", "a046", "a048", "a049", "a054", "a063", "a067", "a068", "a071", "a072", "a073", "a074"],
+  "board_files_opened": ["a023", "a031", "a048", "a071", "a074"]
+ },
+ "notes": "Stage-1 file left unchanged. Opened only files in stage1 and stage2 of this case; tools used were Read and Write. I used no knowledge of this game from outside these files. Statements about actions I did not open (for example that all ACTION6 targets other than a031 and a075 were e tiles, and that all ACTION3/ACTION4 moved into a cells) are inferred from the change sizes in history_index.txt, not checked frame by frame. Words such as 'rise', 'dissolve' and 'view shift' are my descriptions of the recorded cell changes."
+}

@@ -1,0 +1,64 @@
+{
+ "role": "pack reader",
+ "case": "D12",
+ "records": [
+  {
+   "action_number": 73,
+   "action": "ACTION3 (no coordinates). Pack: \"event=73\", \"action=ACTION3\".",
+   "level_and_attempt": "level=1, reset=0, as printed (\"event=73 reset=0 level=1 frames=1\"). \"reset\" is not explained in the pack; I read it as attempt/reset count 0. Whether \"level=1\" is a completed-level count or a level index is not stated.",
+   "start_board_mode": "from current",
+   "frames_returned": 1,
+   "board_before_the_action": "Current board o95 with the six lines under \"before vs current: 48 cells\" applied (my hand count of differing cells is 48). The 3-wide, 6-tall e block that is now at columns 30-32, rows 33-38 was instead at columns 33-35, rows 30-35, with its two 0 cells at column 34, rows 32-33: \"30-31:33-35=E\", \"32:33=E,34=0,35=E\", \"33:30-32=1,33=E,34=0,35=E\", \"34-35:30-32=1,33-35=E\"; the block's current cells were background 1: \"33:30-32=1\", \"34-35:30-32=1\", \"36-38:30-32=1\". Columns 30-32 of rows 30-32 are not set, so they were 1 as now. The bottom row had 4 in columns 0-42 and 0 in 43-63: \"63:31-42=4\" (current has 4 in 0-30). Everything else as on current: areas of 1 separated by f bands (columns 21-29 below row 30, columns 24-62 above row 24, rows 24-29) and 2 strips; an empty 4 outline at columns 8-12, rows 8-15; the 4-framed e block with a 4 centre at columns 5-12, rows 41-48; the 4-framed e block with 4 centre at columns 53-60, rows 38-42; the small 4-framed e piece at columns 50-54, rows 50-54.",
+   "frames": [
+    {
+     "frame": 1,
+     "cells_differing_from_board_before": 37,
+     "what_happens": "\"frame 1/1 vs before: 37 cells\". The e block shifts three columns to the left, staying in rows 30-35: its old cells in columns 33-35 become 1 and columns 30-32 take the block, with the 0 cells now at column 31, rows 32-33: \"30-31:30-32=E,33-35=1\", \"32-33:30=E,31=0,32=E,33-35=1\", \"34-35:30-32=E,33-35=1\" (36 cells, all changing). The bar of 4 in the bottom row loses its last cell: \"63:42=0\" (1 cell), leaving 4 in columns 0-41."
+    }
+   ],
+   "final_result": "\"result state=NOT_FINISHED level=1 legal=1,2,3,4,6\": not finished, level value 1, legal actions 1,2,3,4,6.",
+   "cells_of_last_frame_differing_from_board_before": 37,
+   "level_completed": false,
+   "cannot_determine": [
+    "Whether \"level=1\" is a completed-level count or a level index, and what \"reset=0\" means exactly.",
+    "The general meaning of ACTION3; the record shows only that here it moved the block with the 0 cells three columns left."
+   ]
+  },
+  {
+   "action_number": 86,
+   "action": "ACTION3 (no coordinates). Pack: \"event=86\", \"action=ACTION3\".",
+   "level_and_attempt": "level=1, reset=0 (\"event=86 reset=0 level=1 frames=1\"); same caveats as record 73.",
+   "start_board_mode": "from current",
+   "frames_returned": 1,
+   "board_before_the_action": "Current board o95 with the eight lines under \"before vs current: 97 cells\" applied (hand count of differing cells: 97). (1) The 3x6 e block was at columns 30-32, rows 30-35, with 0 at column 31, rows 32-33: \"30-31:...30-32=E\", \"32:...30=E,31=0,32=E\", \"33:...31=0\" (columns 30 and 32 of row 33 are already e on current), row 34 columns 30-32 unchanged (e), \"35:...31=E\" (current has 0 there), and rows 36-38 cleared: \"36-38:30-32=1\". This is exactly where frame 1 of record 73 left it. (2) The 6x6 e block with a 2x2 centre of 4 was not inside its 4 frame but higher up, at columns 6-11, rows 30-35: \"30-31:6-11=E\", \"32:6-7=E,8-9=4,10-11=E\", \"33:6-7=E,8-9=4,10-11=E\", \"34:6-11=E\", \"35:6-11=E\"; the inside of the frame was empty background: \"42-47:6-11=1\". The 4 frame itself (columns 5-12, rows 41-48) is not set, so it was where it is now. (3) Bottom row had 4 in columns 0-35: \"63:31-35=4\". Everything else as on the current board.",
+   "frames": [
+    {
+     "frame": 1,
+     "cells_differing_from_board_before": 0,
+     "what_happens": "\"frame 1/1: same as before\": the action changed nothing at all, not even the bottom-row bar."
+    }
+   ],
+   "final_result": "\"result state=NOT_FINISHED level=1 legal=1,2,3,4,6\": not finished, level value 1, legal actions 1,2,3,4,6.",
+   "cells_of_last_frame_differing_from_board_before": 0,
+   "level_completed": false,
+   "cannot_determine": [
+    "Why ACTION3 had no effect here. The block with the 0 cells was at columns 30-32, directly beside the f band that ends at column 29, but the pack does not state that this is the cause.",
+    "Whether \"level=1\" is a completed-level count or a level index, and what \"reset=0\" means exactly."
+   ]
+  }
+ ],
+ "relation_between_the_records": "Same game, same level value (1) and attempt (reset=0), same action ACTION3, 13 actions apart (73 and 86). In record 73 ACTION3 moved the 3x6 e block (the one with 0 cells) three columns left, from columns 33-35 to 30-32 in rows 30-35, and shortened the bottom bar by one. In record 86 the block stood in that same resulting position and ACTION3 did nothing (0 cells, bar unchanged). Other differences between the two before-boards: the 6x6 e block with the 4 centre was inside its frame (rows 42-47) before record 73 but up at rows 30-35 before record 86, and the bottom bar of 4 went from columns 0-42 to 0-35.",
+ "probe_answers": [
+  {"id": "P1", "colour": "1"},
+  {"id": "P2", "colour": "e"},
+  {"id": "P3", "colour": "e"},
+  {"id": "P4", "colour": "1"},
+  {"id": "P5", "colour": "4"},
+  {"id": "P6", "colour": "1"},
+  {"id": "P7", "colour": "1"},
+  {"id": "P8", "colour": "1"},
+  {"id": "P9", "colour": "1"},
+  {"id": "P10", "colour": "f"}
+ ],
+ "what_was_hard_or_missing": "Nothing was undeterminable for the boards or probes; this was the easiest of the three because the patches are small. The main care points: a line such as \"33:6-7=E,8-9=4,10-11=E,31=0\" sets only one cell of the 3-wide block, so the rest of that row of the block has to be read off the current board (columns 30 and 32 are e there), and row 34 of the block is not mentioned at all in record 86; a reader who expects every block row to be listed could think it missing. Probes on untouched cells (P1, P7, P10) need column counting on the 64-wide current rows. Upper-case E in the pack versus lower-case e in the decision input was treated as the same digit. \"reset\" and \"level\" in the record header are not defined, and the meaning of ACTION3 is not given. I did not open current_board.png. I used no knowledge of this game from any other source."
+}

@@ -1,0 +1,248 @@
+{
+ "role": "evidence needed",
+ "case": "D01",
+ "stage": 2,
+ "per_uncertainty": [
+  {
+   "id": "U1",
+   "older_evidence_found": "partly",
+   "observations": [
+    {
+     "action": 15,
+     "frames": "1 and 2 (plus the board before the action)",
+     "what_it_shows": "Level 0 ended here. Before the action the panel figure at x3-8, y55-60 read 999 / ..9 / 9.9 (colour 9) and the box figure at x35-37, y11-13 (box interior x33-39, y9-15, 3-coloured border x32-40, y8-16) read the same 999 / ..9 / 9.9 in colour 9. ACTION1 moved the player block from x34-38, y15-19 up to x34-38, y10-14, i.e. into the box interior and over the box figure (frame 1). Frame 2 is a completely new layout and levels_completed went 0 to 1.",
+     "status": "observed event"
+    },
+    {
+     "action": 60,
+     "frames": "1 and 2 (plus the board before the action)",
+     "what_it_shows": "Level 1 ended the same way. Before the action the panel figure read 999 / 9.. / 9.9 (colour 9) and the box figure at x15-17, y41-43 (box interior x13-19, y39-45) read the same 999 / 9.. / 9.9 in colour 9. ACTION2 moved the block from x14-18, y35-39 down to x14-18, y40-44, into the box and over its figure (frame 1). Frame 2 is the present level-2 layout and levels_completed went 1 to 2.",
+     "status": "observed event"
+    },
+    {
+     "action": 8,
+     "frames": "all 6",
+     "what_it_shows": "Level 0: at the level start (board before action 1) the panel figure was 999 / 9.. / 9.9 and did not equal the box figure. Action 8 (stepping on the 0/1 object) changed the panel to 999 / ..9 / 9.9, equal to the box figure. In frames 1-5 the outer ring of the box interior (x33-39, y9-15) and the outer ring of the panel (x1-10, y53-62) were drawn in colour 0, returning to 5 in frame 6. The player then walked straight to the box (actions 9-15).",
+     "status": "observed event"
+    },
+    {
+     "action": 40,
+     "frames": "1",
+     "what_it_shows": "Level 1: the third change of the panel figure (after actions 32 and 38) produced 999 / 9.. / 9.9, equal to that level's box figure; only after that did the player walk to the box (actions 41-60). No colour-0 rings appeared this time (single frame).",
+     "status": "observed event"
+    },
+    {
+     "action": 60,
+     "frames": "2",
+     "what_it_shows": "The level-2 layout starts with the panel figure in colour c (ccc / ..c / c.c) while the box figure at x55-57, y51-53 is colour 9 (9.9 / 9.. / 999). In levels 0 and 1 the panel figure was always colour 9, the same colour as the box figure (boards before actions 1, 8, 15, 32, 40, 60). A panel/box colour difference therefore has no precedent in the record.",
+     "status": "observed event"
+    },
+    {
+     "action": 15,
+     "frames": "all (with action 60)",
+     "what_it_shows": "Taken together: both level completions happened on the single action that moved the block into the 3-bordered, 5-filled box, and both times the panel figure was identical to the box figure in shape and in colour. So the box at x52-60, y48-56 is, by precedent, the place to reach in level 2, entered along the x54-58 corridor (block ending at x54-58, y50-54).",
+     "status": "supported limited conclusion"
+    },
+    {
+     "action": 60,
+     "frames": "none in the record",
+     "what_it_shows": "That a matching figure is required (rather than merely present both times), and that the colour has to match as well as the shape, is not shown anywhere: the player never entered a box with a non-matching figure.",
+     "status": "unresolved hypothesis"
+    }
+   ],
+   "sufficient_groups": [[15, 60], [8, 15], [40, 60]],
+   "what_the_evidence_supports": "Older evidence (before the two recent actions): a level was completed twice, each time by moving the block into the box while the bottom-left panel figure was identical (shape and colour 9) to the figure inside the box; in each level the player first changed the panel figure until it matched and then walked to the box. This identifies the box at x52-60, y48-56 as the destination and makes 'panel figure equals box figure' the working condition. The decision input alone only showed the current mismatch (panel c.c / ..c / ccc in colour c versus box 9.9 / 9.. / 999 in colour 9).",
+   "limits": "The groups settle what completed the two earlier levels, not whether a mismatch blocks completion or is punished: there is no record of entering a box with a different shape or a different colour. The colour question is entirely open because level 2 is the first level in which the panel figure's colour (c) differs from the box figure's colour (9). The meaning of the colour-0 rings in action 8 is also unclear: they appeared when the figures first matched in level 0 but not when they first matched in level 1 (action 40)."
+  },
+  {
+   "id": "U2",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 8,
+     "frames": "1-6",
+     "what_it_shows": "Level 0, block moved down (ACTION2) onto an identical 0/1 object at x20-22, y31-33. Panel figure went 999 / 9.. / 9.9 to 999 / ..9 / 9.9 (cells (3-4, 57-58) 9 to 5, (7-8, 57-58) 5 to 9). This is a left-right change, not a top-bottom one. The bar did not shrink on this action.",
+     "status": "observed event"
+    },
+    {
+     "action": 32,
+     "frames": "1",
+     "what_it_shows": "Level 1, block moved down (ACTION2) onto the 0/1 object at x50-52, y46-48. Panel went 999 / ..9 / 9.9 to 9.9 / ..9 / 999 (cells (5-6, 55-56) 9 to 5, (5-6, 59-60) 5 to 9). This is the same cell change as the recent action 82 showed, from the same starting shape.",
+     "status": "observed event"
+    },
+    {
+     "action": 38,
+     "frames": "1",
+     "what_it_shows": "Level 1, block came back onto the same object from below (ACTION1). Panel went 9.9 / ..9 / 999 to 9.9 / 9.. / 999 (cells (3-4, 57-58) 5 to 9, (7-8, 57-58) 9 to 5). The starting shape here is exactly the shape the panel has at the decision (apart from colour), and the result is exactly the shape of the level-2 box figure.",
+     "status": "observed event"
+    },
+    {
+     "action": 40,
+     "frames": "1",
+     "what_it_shows": "Level 1, after stepping down off the object (action 39) the block stepped up onto it again. Panel went 9.9 / 9.. / 999 to 999 / 9.. / 9.9 (cells (5-6, 55-56) 5 to 9, (5-6, 59-60) 9 to 5). A second visit therefore changes the figure again and does not simply undo the previous change.",
+     "status": "observed event"
+    },
+    {
+     "action": 9,
+     "frames": "1",
+     "what_it_shows": "When the block moved off the object's cell, the cells (21,31), (20,32), (21-22,32), (21,33) returned from the block's colours to 0, 1, 0, 0, 1: the object was still there. The same restoration is seen in actions 33, 39 and 41 in level 1.",
+     "status": "observed event"
+    },
+    {
+     "action": 39,
+     "frames": "1",
+     "what_it_shows": "Leaving the object (ACTION2 down to x49-53, y50-54) restored its 0/1 cells and did not change the panel; the next action (40) re-entered and changed the panel. Leaving and re-entering costs two actions and two bar steps.",
+     "status": "observed event"
+    },
+    {
+     "action": 38,
+     "frames": "all (with 8, 32, 40 and the recent 82)",
+     "what_it_shows": "The five recorded changes are, in order of shape: 999/9../9.9 to 999/..9/9.9 (a8), 999/..9/9.9 to 9.9/..9/999 (a32 and recent a82), 9.9/..9/999 to 9.9/9../999 (a38), 9.9/9../999 to 999/9../9.9 (a40). Every one is a quarter turn clockwise of the 3x3 figure, the four together form a closed cycle of four shapes, and the effect did not depend on the direction of entry (from above in a8 and a32, from below in a38 and a40, from the right in a82). A top-bottom flip is ruled out by a8 and a38.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[32, 38, 39, 40], [8, 9, 32, 38, 40], [38, 39, 40]],
+   "what_the_evidence_supports": "Older evidence settles both halves. (1) Kind of effect: each entry onto a 0/1 object turns the panel figure a quarter turn clockwise; in particular the one earlier time the panel had the present shape (before action 38) the next entry produced 9.9 / 9.. / 999, which is the shape of the level-2 box figure. (2) Reuse: the object is not consumed; it reappears when the block leaves (actions 9, 33, 39, 41) and works again on re-entry (actions 38 and 40). The decision input by itself showed only one change (action 82) and could not distinguish a turn from a flip or show whether the object survives.",
+   "limits": "All earlier uses were with a colour-9 figure; the level-2 figure is colour c and only one use (the recent action 82) is recorded for it. The level-2 object at x50-52, y11-13 has never yet been left, so its reappearance is inferred from the level 0 and level 1 objects of identical appearance. Nothing shows whether staying on the cell or pushing against a wall while on it triggers the effect: every recorded action moved the block a full 5 cells, so only leave-and-return is evidenced. The record does not show the object changing the figure's colour."
+  },
+  {
+   "id": "U3",
+   "older_evidence_found": "partly",
+   "observations": [
+    {
+     "action": 1,
+     "frames": "1 (and the board before it)",
+     "what_it_shows": "At the very start the bar was b from x13 to x54 on rows y61-62 (42 columns) and the three colour-8 pairs at x56-57, x59-60, x62-63 were already present. In level 0 each move removed one column from the left (actions 1-7, 9-15).",
+     "status": "observed event"
+    },
+    {
+     "action": 16,
+     "frames": "1",
+     "what_it_shows": "From level 1 onwards every move removed two columns (x13-14 here, then x15-16, and so on through actions 16-34, 36-54, 56-60 and all of level 2, actions 61-82). The bar was full again (x13-54) at the start of level 1 (frame 2 of action 15) and of level 2 (frame 2 of action 60).",
+     "status": "observed event"
+    },
+    {
+     "action": 34,
+     "frames": "1",
+     "what_it_shows": "The lowest the bar ever got: after action 34 (and again after action 54) only x51-54 remained b, i.e. 4 columns or two more level-1 moves. Each time the very next action (35, 55) was a refill. The bar therefore never reached zero in this record.",
+     "status": "observed event"
+    },
+    {
+     "action": 8,
+     "frames": "1-6",
+     "what_it_shows": "The only action that did not shrink the bar although the block moved: the 6-frame action with the colour-0 rings. Bar was b from x20 before and after. The other entries onto a 0/1 object (32, 38, 40, recent 82) cost the normal two columns.",
+     "status": "observed event"
+    },
+    {
+     "action": 68,
+     "frames": "1-17",
+     "what_it_shows": "A 17-frame action in which the block was carried 25 cells along the top corridor still cost only the normal two columns (x27-28, in frame 1).",
+     "status": "observed event"
+    },
+    {
+     "action": 82,
+     "frames": "all boards and pictures opened",
+     "what_it_shows": "The three colour-8 pairs are identical in every board and picture opened from action 1 to action 82; nothing in the record ever changed them, so their meaning is not shown.",
+     "status": "unresolved hypothesis"
+    },
+    {
+     "action": 61,
+     "frames": "all (actions 61-82)",
+     "what_it_shows": "At two columns per action and 42 columns in total a full bar is 21 actions in level 2; the 22 columns left at the decision (x33-54) are 11 actions if the rate holds.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [],
+   "what_the_evidence_supports": "Older evidence settles the cost side only: two columns per action in levels 1 and 2 (one in level 0), a 42-column bar that is reset to full at each new level, and so about 11 actions left now. Groups that settle that part alone would be [72, 73, 74] (refill to full, then two columns per step) or any run such as [61, 62, 63]. The decision input already showed the two-column rate for the last two actions.",
+   "limits": "The main question is untouched: the bar never emptied, so what happens at zero (end of game, restart, loss of an 8-pair, nothing) is not in the record, and the 8-pairs never changed. No action in the record was blocked by a wall (every action moved the block), so whether a blocked move costs bar is also unrecorded. Action 8 shows the cost is not strictly universal, without showing why."
+  },
+  {
+   "id": "U4",
+   "older_evidence_found": "no",
+   "observations": [
+    {
+     "action": 60,
+     "frames": "2",
+     "what_it_shows": "The multi-coloured object at x30-32, y46-48 (9 e e / 9 0 8 / c c 8) appears for the first time when the level-2 layout is drawn. No such object exists in the level-0 boards (before actions 1, 8, 15) or the level-1 boards (before actions 32, 40, 60). In the same frame the panel figure appears in colour c for the first time, while the box figure stays colour 9.",
+     "status": "observed event"
+    },
+    {
+     "action": 61,
+     "frames": "all (actions 61-82)",
+     "what_it_shows": "In level 2 the block went up the x9-13 corridor, across the top, down x29-33 to y15-19, right, down x34-38 to y25-29, right to x54-58 and up; it never stood on x29-33, y45-49. No change list from action 61 to 82 touches x30-32, y46-48.",
+     "status": "observed event"
+    },
+    {
+     "action": 60,
+     "frames": "2",
+     "what_it_shows": "That this object has to do with the colour difference between panel and box figures (it is new in the same level in which that difference is new, and it contains both c and 9) is a guess from co-occurrence only.",
+     "status": "unresolved hypothesis"
+    }
+   ],
+   "sufficient_groups": [],
+   "what_the_evidence_supports": "Nothing in the record shows what this object does: it has existed for 22 actions and has never been touched. The only general precedent is that the two other kinds of 3x3 object (0/1 object, b ring) act when the block moves onto their cell.",
+   "limits": "No direct evidence at all. The co-occurrence with the colour-c panel figure is suggestive but not an observation of its effect; whether it changes colour, shape, the block, or something else, and whether it survives use, are all unrecorded."
+  },
+  {
+   "id": "U5",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 35,
+     "frames": "1",
+     "what_it_shows": "Level 1: ACTION3 moved the block onto the b ring at x40-42, y51-53. In the same frame bar cells x13-50 on rows y61-62 went 3 to b; with x51-54 still b the bar was completely full (x13-54). The entering action itself left no deduction.",
+     "status": "observed event"
+    },
+    {
+     "action": 36,
+     "frames": "1",
+     "what_it_shows": "Stepping off that cell left plain colour 3 at x39-43, y50-54: the ring was gone. The bar resumed shrinking from x13-14.",
+     "status": "observed event"
+    },
+    {
+     "action": 55,
+     "frames": "1",
+     "what_it_shows": "Level 1: ACTION2 moved the block onto the second ring at x15-17, y16-18; bar cells x13-50 went 3 to b (full again). Action 56 left plain 3 behind and took x13-14. The board before action 60 shows both level-1 rings absent.",
+     "status": "observed event"
+    },
+    {
+     "action": 72,
+     "frames": "1",
+     "what_it_shows": "Level 2, same layout as the decision: ACTION4 moved the block onto the ring at x35-37, y16-18; bar cells x13-34 went 3 to b (full). Action 73 left plain 3 behind (that ring is absent from the decision board) and took x13-14.",
+     "status": "observed event"
+    },
+    {
+     "action": 72,
+     "frames": "all (with 35 and 55)",
+     "what_it_shows": "Three rings entered, three identical outcomes: bar restored to all 42 columns, ring used up. The remaining ring at x20-22, y31-33 looks the same and so is expected to give a full bar (21 actions at the level-2 rate) once, on the action that enters x19-23, y30-34.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[72, 73], [35, 36], [55, 56]],
+   "what_the_evidence_supports": "Older evidence settles this: a b ring refills the bar to full when the block moves onto its cell, the entering move is not charged, and the ring disappears afterwards. The decision input showed neither a refill nor the earlier ring in this level.",
+   "limits": "The specific ring at x20-22, y31-33 has not been touched; the conclusion is by identity of appearance with three used rings. Nothing shows a ring affecting the colour-8 pairs or the panel figure. It is the last ring visible in level 2, and it is about 12 moves from the block against about 11 actions of bar, which the record cannot resolve (see U3: running out has never been seen)."
+  }
+ ],
+ "uncertainties_added_after_seeing_history": [
+  {
+   "id": "N1",
+   "uncertainty": "What the colour-1 line at x54-58, y4 does if the block moves onto the cell directly below it (x54-58, y5-9), which is two moves from the block's present position. Would the block be carried down the x54-58 corridor, where would it stop (at y43-47 above the box, or inside the box at y50-54), and what happens if it is carried into the box while the panel figure does not match?",
+   "evidence_in_history": "Action 68 (17 frames) is the only record of a colour-1 line: when the block stepped up onto x9-13, y5-9, next to the vertical line at x8, y5-9, the line moved right and carried the block in frames 3-8 from x9-13 to x34-38 (stopping next to the colour-4 cells at x39), then went back to x8 in frames 12-15; the action cost the normal two bar columns. The line at y4 was never triggered: the block came up x54-58 only as far as y10-14 (action 81).",
+   "status": "unresolved hypothesis for the y4 line; observed event for the x8 line"
+  },
+  {
+   "id": "N2",
+   "uncertainty": "What the colour-0 rings around the box interior and around the panel in frames 1-5 of action 8 signify, and why that action alone did not shrink the bar. They appeared when the panel figure first equalled the box figure in level 0 but did not appear when the same happened in level 1 (action 40).",
+   "evidence_in_history": "Action 8 frames 1-6 versus action 40 (single frame, normal bar cost).",
+   "status": "unresolved hypothesis"
+  }
+ ],
+ "needs_no_past_record_can_meet": "(1) What happens when the block enters a box while the panel figure differs from the box figure in shape or in colour: never tried. (2) Whether colour has to match at all: levels 0 and 1 never had a colour difference. (3) What the multi-coloured object at x30-32, y46-48 does: never touched. (4) What happens when the bar reaches zero and what the three colour-8 pairs count: the bar never emptied and the pairs never changed. (5) Whether a move into a colour-4 wall is possible, harmless, or costs bar: no blocked move is recorded. (6) Whether the horizontal colour-1 line at y4 pushes downward and whether a push can carry the block into the box.",
+ "coverage": {
+  "history_index_read_fully": true,
+  "history_changes": "read fully",
+  "images_opened": ["a008", "a015", "a032", "a035", "a038", "a040", "a060", "a068", "a072", "a082"],
+  "board_files_opened": ["a001", "a008", "a015", "a032", "a040", "a060"]
+ },
+ "notes": "Only the Read and Write tools were used (no Grep/Glob was needed or used), and only files inside the D01 stage1 and stage2 folders were opened. Panel figures are written as three rows of three, reading the 2x2 blocks at columns x3-4, x5-6, x7-8 and rows y55-56, y57-58, y59-60. Statements about actions 81 and 82 repeat what the decision input already showed; everything attributed to actions 1-80 is older evidence. Pictures were used to confirm the multi-frame actions (8, 68), the two level changes (15, 60), the refills (35, 72) and the panel changes (32, 38, 40, 82); the remaining single-frame moves were checked from history_changes.txt only, which lists each as a plain 5-cell move plus the bar step. Disclosure as in stage 1: the layout resembles a publicly previewed ARC-AGI-3 game I have general awareness of; I did not use that knowledge, and every statement here is tied to a recorded action."
+}

@@ -1,0 +1,38 @@
+{
+ "role": "evidence needed",
+ "case": "D01",
+ "stage": 1,
+ "uncertainties": [
+  {
+   "id": "U1",
+   "uncertainty": "What event completes a level. In particular: is the 3-bordered box at x52-60, y48-56 (colour-5 interior holding a 3x3 colour-9 figure at x55-57, y51-53) the place the 5x5 player block (now x49-53, y10-14) has to reach, and does the colour-c figure in the bottom-left panel (x3-8, y55-60) have to agree with that colour-9 figure in shape, in colour, or in both at that moment? What was on the board and what did the player do on the two actions where levels_completed went up?",
+   "why_it_matters_for_the_next_action": "It decides whether the next action should start the walk toward the box (via the x54-58 corridor running down from y20 to y47) or should first do something else to the panel figure. If the box needs a matching figure, walking there now could waste most of the remaining bar; if it needs nothing, any detour is waste.",
+   "what_the_decision_time_input_already_tells": "levels_completed=2, so two levels have been finished, but not how. The box figure reads 9.9 / 9.. / 999 (rows y51, y52, y53). The panel figure, drawn at double size, currently reads c.c / ..c / ccc, which is the left-right mirror image of the box figure and a different colour. The player block itself is c on its top two rows and 9 on its bottom three rows. Nothing in the input shows the player ever touching the box."
+  },
+  {
+   "id": "U2",
+   "uncertainty": "What exactly the small 3x3 object of colours 0 and 1 that sat at x50-52, y11-13 (0 at (51,11), 1 at (50,12), 0 at (51,12), 0 at (52,12), 1 at (51,13)) does to the bottom-left panel figure, and whether it can be used again. Is its effect a quarter turn, a top-bottom flip, or something else? Is it still there underneath the player block, or was it used up? Would moving off and back onto x49-53, y10-14 trigger it again, or would simply staying/pressing against a wall there do so?",
+   "why_it_matters_for_the_next_action": "The player is standing on that cell right now. If the panel figure still needs changing, the cheapest next action might be to step off and back on; but that only helps if the object persists and if its effect is the kind that brings the panel figure closer to the box figure rather than back to where it was.",
+   "what_the_decision_time_input_already_tells": "In t82 the player moved left onto that cell and, in the same step, panel cells (5-6, 55-56) went c to 5 and (5-6, 59-60) went 5 to c, so the figure went from ccc / ..c / c.c to c.c / ..c / ccc. That single change is consistent with more than one transformation. t81 (a move up onto an empty cell) changed nothing in the panel. The object's cells are now covered by the player block, so the input cannot show whether it still exists."
+  },
+  {
+   "id": "U3",
+   "uncertainty": "What happens when the colour-b part of the bar on rows y61-62 is used up, and whether every action always costs two columns of it. Does the game end, does the level restart, does the player lose one of the three colour-8 pairs at x56-57, x59-60, x62-63 (and what do those pairs count)? Does a move that is blocked by a colour-4 wall also consume bar?",
+   "why_it_matters_for_the_next_action": "The b segment now spans x33-54, i.e. 22 columns, and the last two actions each removed 2 columns, which would leave about 11 actions. Assuming 5-cell steps, the box at x52-60, y48-56 is about 9 steps away, while the other two unvisited objects are about 12 and 13 steps away. Whether the player can afford even one exploratory or corrective step depends on how costly running out is.",
+   "what_the_decision_time_input_already_tells": "t81 turned (29-30, 61-62) from b to 3 and t82 turned (31-32, 61-62) from b to 3, so the bar shrinks from the left by 2 columns per action in both observed cases. The bar track starts at x13, so 20 columns have already gone. Three 8-coloured pairs sit to the right of the bar. Nothing shows the bar ever reaching zero or ever growing."
+  },
+  {
+   "id": "U4",
+   "uncertainty": "What the multi-coloured 3x3 object at x30-32, y46-48 (row y46: 9 e e; row y47: 9 0 8; row y48: c c 8) does when the player block moves onto its cell (x29-33, y45-49). Does it change the panel figure at x3-8, y55-60 (its colour, its shape), change the player block, or something else, and is it needed for this level?",
+   "why_it_matters_for_the_next_action": "It lies in the opposite direction from the box (down the x29-33 corridor from the wide band y25-34) and about 13 steps away, more than the bar appears to allow. If it is required (for example to fix the c-versus-9 colour difference between panel and box figures), the route and the first step change completely; if it is irrelevant or harmful, the player should avoid it.",
+   "what_the_decision_time_input_already_tells": "Only its position and colours. It contains 9 and c, the two colours of the player block and of the box and panel figures, plus e, 0 and 8. The recent history shows no interaction with it."
+  },
+  {
+   "id": "U5",
+   "uncertainty": "What the colour-b ring at x20-22, y31-33 (b on all eight outer cells, 3 in the centre at (21,32)) does when the player block moves onto its cell (x19-23, y30-34). Does it affect the colour-b bar on rows y61-62, and if so by how much, and does it disappear after one use?",
+   "why_it_matters_for_the_next_action": "If it restores the bar, a detour to it could make the far object at x30-32, y46-48 and repeat visits to the 0/1 cell affordable; but it is about 12 steps from the player, slightly more than the roughly 11 actions the bar appears to hold, so heading for it is only sensible if its effect and the true action budget are known.",
+   "what_the_decision_time_input_already_tells": "Only its position, shape and that it shares colour b with the bar. The recent history shows no interaction with it and no case of the bar increasing."
+  }
+ ],
+ "notes": "Based only on decision_input.txt. Things I treated as observed rather than uncertain: ACTION1 moved the 5x5 player block up 5 cells (t81) and ACTION3 moved it left 5 cells (t82). Lesser unknowns not listed above: what ACTION2 and ACTION4 do (not shown in the two recent actions; ACTION6 is described as a click but is not in the legal list); whether colour-4 cells always block movement; what the two colour-1 lines mean (x8, y5-9 at the left end of the top corridor, and x54-58, y4 just above the upper-right room); and what the colour-5 strip at x0-3, y0-51 is. Step counts quoted assume 5-cell moves along colour-3 cells only. Disclosure: the layout (movable block, panel figure, target box, shrinking bar) resembles a publicly previewed ARC-AGI-3 game I have some general awareness of. I did not use that knowledge; every statement above is derived from the board and the two history records, and the questions are left open rather than answered from memory."
+}

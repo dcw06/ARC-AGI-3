@@ -1,0 +1,41 @@
+{
+ "role": "pack reader",
+ "case": "D04",
+ "records": [
+  {
+   "action_number": 29,
+   "action": "ACTION6 x=41 y=42 (a click on the cell at column 41, row 42)",
+   "level_and_attempt": "level=0, reset=0 (header: \"event=29 reset=0 level=0 frames=1\"). I read this as level index 0 (no level completed yet, matching levels_completed=0 on the current board) on attempt/reset count 0; the pack does not define 'reset' or 'level' in words, so that reading is an interpretation.",
+   "start_board_mode": "from current",
+   "frames_returned": 1,
+   "board_before_the_action": "Not printed; built from the current board o76 plus the lines under \"before vs current: 35 cells\" (rule: \"take the current board and apply the lines\"; \"every cell the lines do not set had the same colour as on the current board\"). Three differences from the current board: (a) Row 1, the bar at the top: \"1:34-47=3\". Current row 1 is 5 at x0, 9 at x1-47, 3 at x48-61, 5 at x62-63; so before the action it was 9 at x1-33 and 3 at x34-61 (14 cells differ). (b) Row 42, the row of 3-wide segments: \"42:25-27=1,35-37=1\". Current row 42 has 1 at x20-22, 5 at x25-27, 1 at x30-32, 5 at x35-37, 5 at x40-42 (rest 0 between x13 and x50); so before the action the segments were 1, 1, 1, 1, 5 from left to right, i.e. only x40-42 was 5 (6 cells differ). (c) Rows 44-46, the five 1-wide, 3-tall marks under the segments: \"44-46:21=1,26=1,31=1,36=1,41=1\". On the current board all five (x21, x26, x31, x36, x41) are 5; before the action all five were 1 (15 cells differ). 14 + 6 + 15 = 35, matching the header. Everything else is as on the current board: background 5; a panel bordered by 0 at x13-50, rows 8-41, filled with a 4x4 chequer of 4 and 5 and some B shapes (around x30-33 rows 13-16 and x27-34 rows 33-37); the 0 strip rows 41-47 holding the segments and marks; a 0 line on row 49 (x36-48) with stubs at (48,48) and (36,50); a rounded 9 shape at x32-40, rows 51-59.",
+   "frames": [
+    {
+     "frame": 1,
+     "cells_differing_from_board_before": 4,
+     "what_happens": "Header \"frame 1/1 vs before: 4 cells\". The clicked segment changes colour: \"42:40-42=1\", so the rightmost 3-wide segment on row 42 (x40-42, which contains the clicked cell x=41) goes from 5 to 1; all five segments on row 42 are now 1. The top bar moves one step: \"1:33=3\", so the cell at (33,1) goes from 9 to 3; the 9 part is now x1-32 and the 3 part x33-61. Tally 3 + 1 = 4, matching the header. Nothing else changes (the marks on rows 44-46 stay 1)."
+    }
+   ],
+   "final_result": "\"result state=NOT_FINISHED level=0 legal=6\": game not finished, still level 0, the only legal action is 6 (click). Board after the action = frame 1.",
+   "cells_of_last_frame_differing_from_board_before": 4,
+   "level_completed": false,
+   "cannot_determine": [
+    "What the click is meant to do in game terms (toggle, select, etc.) is not stated; only that the clicked 3-wide segment went from 5 to 1.",
+    "What the row-1 bar represents is not stated; it only shows that one more cell turned from 9 to 3.",
+    "Exact meaning of 'reset=0' and 'level=0' is not defined in the reading instructions; taken as attempt count 0 and level index 0.",
+    "What happened in the actions between this record (action 29) and the two recent actions (75, 76) is not in the text; only the net difference between this record's start board and the current board (35 cells) is given."
+   ]
+  }
+ ],
+ "relation_between_the_records": "Not applicable: the pack holds one record (\"One record, selected by rule\").",
+ "probe_answers": [
+  {"id": "P1", "colour": "9"},
+  {"id": "P2", "colour": "3"},
+  {"id": "P3", "colour": "5"},
+  {"id": "P4", "colour": "1"},
+  {"id": "P5", "colour": "1"},
+  {"id": "P6", "colour": "3"},
+  {"id": "P7", "colour": "0"}
+ ],
+ "what_was_hard_or_missing": "Nothing blocked the reading, but this case needs two steps for every 'before' cell: find the cell on the current board by counting along the grouped row, then check whether a \"before vs current\" line overrides it. The boundary cells need care: (33,1) is just outside the range \"1:34-47=3\", so it keeps the current colour 9 before the action and only becomes 3 in frame 1 (\"1:33=3\"). Probe working: P1 current row 1 has 9 at x1-47 and x33 is not set by the before lines -> 9; P2 \"1:33=3\" -> 3; P3 current row 42 has 5 at x40-42, not set by the before lines -> 5; P4 \"42:40-42=1\" -> 1; P5 \"44-46:...31=1\" -> 1; P6 \"1:34-47=3\" covers x40 -> 3; P7 current row 41 is 0 at x13-50 and is not touched by any line -> 0. I checked the counts: 14 + 6 + 15 = 35 for the before block and 1 + 3 = 4 for the frame. 'reset' and 'level' in the record header are not explained. Outside knowledge: I have no usable knowledge of a game called 'tn36' and used nothing beyond the pack text and the decision input. I did not open current_board.png for this case."
+}

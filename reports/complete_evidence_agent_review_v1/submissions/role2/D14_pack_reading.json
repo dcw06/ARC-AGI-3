@@ -1,0 +1,39 @@
+{
+ "role": "pack reader",
+ "case": "D14",
+ "records": [
+  {
+   "action_number": 15,
+   "action": "ACTION1 (pack: \"action=ACTION1\"; header \"event=15\", \"action 15 (transition t15)\")",
+   "level_and_attempt": "level=0, reset=0 (pack header: \"event=15 reset=0 level=0 frames=1\"). I read reset=0 as 'no reset so far / first attempt', but the reading instructions do not define the word 'reset'.",
+   "start_board_mode": "from current",
+   "frames_returned": 1,
+   "board_before_the_action": "Not printed; rebuilt from the current board o25 plus the \"before vs current: 289 cells\" lines (I added up the cells the lines cover and got exactly 289, so every listed cell differs from current). Result, row by row (unlisted rows are identical to current): rows 0-6 and 8-17 same as current (top-left panel: cols 3-12 are 0 in rows 3-7 and F in rows 8-12, framed by 5; cols 16-17 colour 4; top-right area colour 3 with two swatch boxes, a 0 box at cols 36-38 rows 3-5 and an F box at cols 42-44 rows 3-5, each ringed by 4). Row 7 differs: \"7:35-39=3,41-45=0\" so the short 0 bar sat under the F swatch (cols 41-45), not under the 0 swatch as now. Rows 18-31: entirely colour 5: the red(2)/0 diamond that the current board has at cols 14-30, rows 21-37 did not exist (\"21:24=5\" ... \"31:14-25=5\", \"32:15-24=5\" ... \"37:20=5\"). An open-box shape stood at cols 38-46, rows 32-45: row 32 cols 38-46 = 2 (\"32:15-24=5,38-46=2\"), rows 33-44 cols 39-45 = F with col 46 = 2 (\"33:16-23=5,39-45=F,46=2\", \"39:39-45=F,46=2\", \"44:39-45=F,46=2\"), row 45 cols 38-46 = 2 (\"45:38-46=2\"); col 38 in rows 33-44 stays 5 as on current. The 10x10 block at cols 27-36, rows 34-43 was F with two triangles of 0 on its LEFT side instead of the current single 0 triangle on the right: \"35:18-21=5,27=0,36=F\", \"36:...27-28=0,35-36=F\", \"37:...27-29=0,34-36=F\", \"38:27-30=0,33-36=F\" (0 at cols 27..27+k in rows 35-38, and the current 0 cells at cols 33-36 were F), and \"40:31=0\", \"41:30-31=0\", \"42:29-31=0\", \"43:28-31=0\" (0 growing leftward from col 31 in rows 40-43); row 34 and row 39 of the block all F. Rows 46-62 all 5. Row 63: cols 0-54 = 4, cols 55-63 = 5 (\"63:48-54=4\"; current has 4 only to col 47).",
+   "frames": [
+    {
+     "frame": 1,
+     "cells_differing_from_board_before": 201,
+     "what_happens": "\"frame 1/1 vs before: 201 cells\" (my own count of the listed cells that really change is also 201). The open-box shape at cols 38-46, rows 32-45 is replaced by a diamond/arrow-head shape pointing up, drawn higher: a peak of 2 at (39,21) (\"21:39=2\"), widening each row with a 2-cell-thick edge of colour 2 on both sides and F inside (\"22:38-40=2\", \"23:37-38=2,39=F,40-41=2\", ... \"27:33-34=2,35-43=F,44-45=2\"); from row 28 the left edge is gone and the F fill slides right one column per row (\"28:35-44=F,45-46=2\" ... \"31:38-47=F,48-49=2\"); then it narrows back: \"32:38=5,39-46=F,47-48=2\", \"33:39=5,47=2\" (so row 33 is 5 at 39, F at 40-45, 2 at 46-47), \"34:39-40=5,45=2\", \"35:39-41=5,44-45=2,46=5\", \"36:39-42=5,43-44=2,45-46=5\", \"37:39-42=5,43=2,44-46=5\". The rest of the old box is erased to 5: \"38-44:39-46=5\", \"45:38-46=5\". The bottom bar shortens by one cell: \"63:54=5\" (4 now runs cols 0-53). Nothing else changes (the F/0 block at cols 27-36, the top panels and the row-7 bar stay as before)."
+    }
+   ],
+   "final_result": "state=NOT_FINISHED, level=0, legal actions 1,2,3,4,5,6 (pack: \"result state=NOT_FINISHED level=0 legal=1,2,3,4,5,6\"). Game continues on the same level.",
+   "cells_of_last_frame_differing_from_board_before": 201,
+   "level_completed": false,
+   "cannot_determine": [
+    "What 'reset=0' means exactly (attempt number vs. count of resets) is not defined in the reading instructions.",
+    "Why ACTION1 produces this change (the rule/meaning of ACTION1) is not stated; only the before and after boards are given."
+   ]
+  }
+ ],
+ "relation_between_the_records": "Pack holds one record only (\"One record, selected by rule.\").",
+ "probe_answers": [
+  {"id": "P1", "colour": "5"},
+  {"id": "P2", "colour": "2"},
+  {"id": "P3", "colour": "5"},
+  {"id": "P4", "colour": "2"},
+  {"id": "P5", "colour": "5"},
+  {"id": "P6", "colour": "5"},
+  {"id": "P7", "colour": "5"}
+ ],
+ "what_was_hard_or_missing": "The board before the action is not printed; it has to be rebuilt by hand by overlaying 27 change lines on the 64x64 current board, which needs careful column counting in the 8-cell groups (easy to slip by one). Probes P1, P3 and P7 fall on cells that no 'before vs current' line touches, so they rest on reading the current board plus the rule \"every cell the lines do not set had the same colour as on the current board\". The pack writes colour F in upper case while the decision input writes f in lower case; I treated them as the same colour. 'reset' is not explained. The change lines give positions only, so the shape (diamond with 2 edge and F fill) had to be pictured from the runs. I checked both stated counts (289 and 201) by adding up the runs by hand and both agreed. I have no outside knowledge of this game and used none; only the pack text and the decision input were used (the picture was not needed)."
+}

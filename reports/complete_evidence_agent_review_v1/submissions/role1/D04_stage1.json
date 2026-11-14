@@ -1,0 +1,38 @@
+{
+ "role": "evidence needed",
+ "case": "D04",
+ "stage": 1,
+ "uncertainties": [
+  {
+   "id": "U1",
+   "uncertainty": "What, if anything, makes the colour-b piece at x=30-33, y=13-16 (solid on rows 13-15, with a two-cell gap at (31,16),(32,16)) move or change, and by how much and in which direction per action? Has that piece, or the colour-b open-topped outline at x=29-34, y=33-37 (with the two b cells at (31,36),(32,36)), been at any other position or had any other shape earlier in the game, and which action came just before each such change?",
+   "why_it_matters_for_the_next_action": "These are the only non-checkerboard objects inside the bordered panel (x=14-49, y=9-40), so the next click should probably be one that affects them. The two most recent clicks changed nothing in that panel, so the input gives no example of an action that does.",
+   "what_the_decision_time_input_already_tells": "Current positions and shapes of both b objects; they share the same columns (x=30-33 for the piece, interior x=30-33 for the outline) and are 20 rows apart. t75 (click 21,45) and t76 (click 31,45) left every cell in y=8-41 unchanged."
+  },
+  {
+   "id": "U2",
+   "uncertainty": "What do the five controls in the colour-0 strip (y=41-47) do? Each has a horizontal 3-cell segment on row 42 (x=20-22, 25-27, 30-32, 35-37, 40-42) and a vertical 3-cell segment on rows 44-46 (x=21, 26, 31, 36, 41). What do colours 1 and 5 on these segments stand for, is clicking a segment a toggle (does a second click return it to 1), do the row-42 segments respond to clicks separately from the vertical ones, and does any setting of them have an effect outside the strip, immediately or later?",
+   "why_it_matters_for_the_next_action": "The player has just turned the vertical segments at x=21 and x=31 from 1 to 5. Whether to click another segment, re-click one of these, or click a row-42 segment depends on what a segment's colour controls and on whether the change just made is progress or a step backwards.",
+   "what_the_decision_time_input_already_tells": "Clicking (21,45) changed (21,44-46) from 1 to 5; clicking (31,45) changed (31,44-46) from 1 to 5; no other cell changed except one cell of the row-1 bar each time. Now all five vertical segments are 5; the row-42 segments at x=20-22 and x=30-32 are still 1, the other three are 5. It does not show the segments' original colours or any earlier clicks on them."
+  },
+  {
+   "id": "U3",
+   "uncertainty": "What happens when the colour-9 disc at x=32-40, y=51-59 is clicked? It is joined to the control strip by a colour-0 line running (36,50), (36-48,49), (48,48). Has it been clicked before, and if so what changed on the board, and did the result depend on the colours of the five controls at that moment?",
+   "why_it_matters_for_the_next_action": "With ACTION6 the only legal action, the disc is the one other obvious click target besides the controls. If its effect depends on the control settings, the player needs to know that before deciding whether to click it now (all vertical segments 5) or change the controls first.",
+   "what_the_decision_time_input_already_tells": "Only the disc's shape, colour and the connecting line. Neither of the two recent actions touched it, so its effect is not shown."
+  },
+  {
+   "id": "U4",
+   "uncertainty": "What is the row-1 bar (x=1-61) counting, and what happens when its colour-9 part (now x=1-47) is used up? Does every click turn one more cell from 9 to 3, including clicks that change nothing else? The board is at 76 actions but only 14 cells (x=48-61) are colour 3: was the bar refilled or the board reset earlier, and if so what triggered it and what did the board look like afterwards?",
+   "why_it_matters_for_the_next_action": "If the bar is a limit on actions and running out resets or ends the attempt, exploratory clicks have a cost and the player has about 47 left; that changes whether the next click should test something or be the most promising move. An earlier reset would also show what the starting configuration of the controls and b objects is.",
+   "what_the_decision_time_input_already_tells": "t75 turned (49,1) from 9 to 3 and t76 turned (48,1) from 9 to 3, i.e. one cell per click, moving leftwards. Current bar: 47 cells of 9, 14 cells of 3. levels_completed=0 and state=NOT_FINISHED after 76 actions."
+  },
+  {
+   "id": "U5",
+   "uncertainty": "Do clicks on cells inside the bordered panel do anything: on the b piece itself (x=30-33, y=13-16), on the b outline (x=29-34, y=33-37), or on plain colour-4 / colour-5 4x4 checkerboard blocks? And which click targets and control settings has the player already tried in the 74 actions before t75, with what result?",
+   "why_it_matters_for_the_next_action": "The player has not completed a level in 76 clicks. Knowing which targets were already tried without effect (or with an effect) avoids spending the next click on a repeat and tells the player whether the panel is directly clickable or only driven from the strip below it.",
+   "what_the_decision_time_input_already_tells": "Nothing about panel clicks: both recent actions were clicks in the strip at y=45. The only legal action type is ACTION6 with a free x,y, so any cell can be clicked."
+  }
+ ],
+ "notes": "Opened only decision_input.txt and form.json in the stage1 folder; used only Read and Write. I do not recognise this game from any other source and used no outside knowledge of it; everything above comes from the board and the two history records. Coordinates were read by hand from the grid rows (8-cell groups), so the b piece, the b outline, the five controls, the 9 disc and the row-1 bar positions are stated as I counted them. Descriptions such as 'controls', 'piece' and 'outline' are my labels for shapes, not rules shown by the input."
+}

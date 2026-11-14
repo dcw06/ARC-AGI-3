@@ -1,0 +1,38 @@
+{
+ "role": "evidence needed",
+ "case": "D07",
+ "stage": 1,
+ "uncertainties": [
+  {
+   "id": "U1",
+   "uncertainty": "What board configuration makes a level complete? In particular, is there a required relation between the two small shapes at x=34-39 (upper one at y=4-9 with a colour-b column at x=38-39, lower one at y=21-26 with a colour-e column at x=38-39) and the same-coloured markers on the horizontal bars (colour b at x=20-21,y=14-16; colour e at x=14-15,y=49-51), or does completion depend on something else (for example where the colour-c / colour-1 segments sit on the three bars)? What did the board look like at the moments levels_completed went up in the four earlier levels?",
+   "why_it_matters_for_the_next_action": "Without knowing the target arrangement the player cannot tell whether the last click (which exchanged colours b and e between the two shapes) moved towards or away from finishing, and so cannot tell whether the next click should continue, undo it, or work on a different bar.",
+   "what_the_decision_time_input_already_tells": "levels_completed=4 and state=NOT_FINISHED, so four levels were finished earlier and the current arrangement is not a finished one. The board shows two coloured shapes (b and e) and two same-coloured markers on bars at y=14-16 and y=49-51; the bar at y=32-34 shows no marker. The input does not state any goal."
+  },
+  {
+   "id": "U2",
+   "uncertainty": "What does clicking one of the six colour-9 blocks at x=61-63 do (blocks at y=11-13, 17-19, 29-31, 35-37, 46-48, 52-54)? Specifically, which 186 cells changed after t96 (ACTION6 x=62 y=18, the block just below the bar at y=14-16), and do the block above a bar and the block below a bar have different or opposite effects?",
+   "why_it_matters_for_the_next_action": "The 9 blocks are the most obvious other click targets and one was clicked just before. If they move or reshape something (a bar, a segment, the 3/0 boundary, a shape), the player needs to know what and in which direction before deciding whether to click one again or a different one.",
+   "what_the_decision_time_input_already_tells": "t96 clicked x=62,y=18 and changed 186 cells in 77 runs in a single frame, with no level change, but the cells are not listed (listed=false). The blocks come in pairs directly above and below each of the three bars. The input does not show the board before t96."
+  },
+  {
+   "id": "U3",
+   "uncertainty": "What exactly did clicking the colour-c segment at x=33,y=15 do during the 62 frames of t97, and what would clicking it again do? Did the two shapes physically travel and exchange places, or did only their colours change? Is the effect reversed by a second click, repeated, or does it do nothing? And do the colour-1 segments on the other bars (x=40-51,y=32-34 and x=25-36,y=49-51) respond to clicks in the same way?",
+   "why_it_matters_for_the_next_action": "The bar segments are the only element whose click effect is partly visible. Whether a repeat click undoes the swap, shifts the upper shape another row, or acts on different shapes decides whether (33,15) or one of the colour-1 segments is a sensible next click.",
+   "what_the_decision_time_input_already_tells": "Net effect of t97: the upper shape went from y=5-10 with a colour-e column to y=4-9 with a colour-b column (one row higher), the lower shape at y=21-26 changed its column from b to e without moving, and one cell of row 0 changed. The colour-c segment itself (x=28-39,y=14-16) and the 0 lines at y=12 and y=18 did not change. Only first-versus-last frame differences are given, not the 61 intermediate frames."
+  },
+  {
+   "id": "U4",
+   "uncertainty": "What is the strip in row 0 (colour 7 at x=0-55, colour 4 at x=56-63)? Does every click turn one more cell from 7 to 4, including clicks that change nothing else, did t96 also consume one, and what happens when the colour-4 part reaches x=0 (level reset, game over, nothing)?",
+   "why_it_matters_for_the_next_action": "If the strip is a limited budget, the player has to weigh an exploratory click against a click it expects to make progress, and needs to know how many clicks are left and how costly running out is.",
+   "what_the_decision_time_input_already_tells": "t97 changed x=56,y=0 from 7 to 4, and 8 cells (x=56-63) are now colour 4 with 56 cells still colour 7. The game is at 97 actions and level 5, so the strip is not a plain count of all actions. Whether t96 changed row 0 is not shown, and nothing shows what happens at the end of the strip."
+  },
+  {
+   "id": "U5",
+   "uncertainty": "What do the two colour-0 lines at x=30-37 on y=12 and y=18 mean, and why is the segment on the bar at y=14-16 colour c while the segments on the other two bars are colour 1? Is this a selected or active state that an earlier click created (and that a click elsewhere would move), or a fixed part of this level's layout?",
+   "why_it_matters_for_the_next_action": "If bar y=14-16 is currently 'selected', the next click may act on that bar rather than on the cell clicked, and clicking another segment might only change the selection. That changes which click the player should make and what it should expect to see.",
+   "what_the_decision_time_input_already_tells": "The 0 lines sit directly above and below the colour-c segment, inside the colour-3 area, and no other bar has such lines. Neither the lines nor the c segment changed in t97, so they existed before that click. The input does not show when they appeared or whether the segment was colour 1 earlier."
+  }
+ ],
+ "notes": "Opened only decision_input.txt and form.json in the stage1 folder; used only Read and Write. I do not recognise this specific game and have no knowledge of its rules or goal from any other source, so nothing outside the input was used. All coordinates were read off the board by counting the groups of 8; the descriptions of shapes, bars and markers are my own reading of the grid, not given by the input. The description of t97's net effect (upper shape one row higher, b and e exchanged) is derived from the listed changed_cells."
+}

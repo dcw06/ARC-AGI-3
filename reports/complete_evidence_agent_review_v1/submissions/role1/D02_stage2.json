@@ -1,0 +1,243 @@
+{
+ "role": "evidence needed",
+ "case": "D02",
+ "stage": 2,
+ "per_uncertainty": [
+  {
+   "id": "U1",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 30,
+     "frames": "1 and 2, plus the board before",
+     "what_it_shows": "Older evidence. Board before a030: one 3x3 e shape (centre 4) already sits exactly in the interior x45-47,y27-29 of the 4 frame x44-48,y26-30; the selected 3x3 e shape (centre 0) is at x12-14,y30-32, one step above the interior of the other 4 frame x11-15,y32-36. Frame 1: ACTION2 moves the selected shape down into that interior, x12-14,y33-35, so both shapes are now inside both frames. Frame 2: the whole board is replaced by the present level-1 layout and levels completed goes 0 to 1.",
+     "status": "observed event"
+    },
+    {
+     "action": 5,
+     "frames": "1",
+     "what_it_shows": "Older evidence, negative control. The same selected shape entered the same interior x12-14,y33-35 while the other e shape (centre 5) was still at x27-29,y30-32, outside any frame. One frame returned, no level change.",
+     "status": "observed event"
+    },
+    {
+     "action": 24,
+     "frames": "1",
+     "what_it_shows": "Older evidence, negative control. The second shape entered the interior x45-47,y27-29 of the right frame while the first shape was at x24-26,y30-32, outside any frame. One frame returned, no level change.",
+     "status": "observed event"
+    },
+    {
+     "action": 30,
+     "frames": "all, read together with a005 and a024",
+     "what_it_shows": "Level 0 ended at the first moment every e shape on the board lay inside the interior of a 4 frame; having only one of the two shapes inside a frame (a005, a024) did not end it.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[30], [5, 24, 30]],
+   "what_the_evidence_supports": "The level-0 completion coincided with the last e shape being moved into the interior of a 4 frame while the other e shape was already in the other frame. a030 with its before-board shows the event itself; a005 and a024 add that one shape in a frame was not enough.",
+   "limits": "One completion only. Level 0 had two identical 3x3 shapes and two identical 3x3 frame interiors, so the record does not show whether a shape must go into a particular frame, whether sizes must match (the present board has 3x3, 6x3, 3x6 and 6x6 shapes and interiors), or whether anything else (for example the centre colour of the shapes) is part of the condition."
+  },
+  {
+   "id": "U2",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 20,
+     "frames": "1",
+     "what_it_shows": "Older evidence. ACTION4 moved the selected 3x3 shape from x21-23 to x24-26 on y30-32. On arrival its right column (26,30),(26,31),(26,32) was drawn 0 instead of e. In that position the column touches the other e shape at x27-29,y30-32 (centre 4). This is the only earlier case of an edge of the selected shape being drawn 0.",
+     "status": "observed event"
+    },
+    {
+     "action": 19,
+     "frames": "1",
+     "what_it_shows": "Older evidence, control. The same ACTION4 one step earlier (x18-20 to x21-23), with no e shape next to the destination, drew the shape as plain eee / e0e / eee. Same in a007, a016, a017, a024.",
+     "status": "observed event"
+    },
+    {
+     "action": 21,
+     "frames": "1 to 7",
+     "what_it_shows": "Older evidence: what followed when the action pointing at the 0 edge (ACTION4, right) was pressed next. Frame 1: column x26 returns to e. Frame 2: the neighbouring shape, not the selected one, moves from x27-29 to x30-32 and column x27 is drawn 0. Frames 3-6: the neighbour keeps moving right in 3-cell steps with no further input, x33-35 and x36-38 (both on f cells, restored to f behind it), x39-41, then x42-44, where it stops, overlapping the frame corner (44,30). Frame 7: column x27 returns to 1. The selected shape stays at x24-26.",
+     "status": "observed event"
+    },
+    {
+     "action": 29,
+     "frames": "1",
+     "what_it_shows": "Older evidence, control. The selected shape standing on and next to 4 frame cells (x12-14,y30-32, row y32 being the frame's top wall) showed no 0 edge; same in a004, a016, a023. The 0 edge was not produced by frame walls.",
+     "status": "observed event"
+    },
+    {
+     "action": 21,
+     "frames": "all, read together with a020 and the decision input",
+     "what_it_shows": "In both cases (a020 older; t33 in the decision input) the side of the selected shape drawn 0 is the side that touches another e shape, and in the one older case pressing the action towards that side launched the neighbour instead of moving the selected shape.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[20, 21]],
+   "what_the_evidence_supports": "The 0 edge has a precedent: it appeared when the selected shape came to rest against another e shape, it did not appear next to frame walls or in open space, and it was not a penalty: nothing was lost and the game continued. The row-63 change at t33 has an independent explanation (see added item A5), so the two t33 changes need not be linked.",
+   "limits": "One older instance. There the 0 edge was on the leading side of the move (moving right, neighbour on the right); at t33 the shape moved right and the 0 edge is on top, so only the decision input shows the edge following the neighbour's side rather than the direction of travel. The neighbour then was a 3x3 shape with centre 4; now it is the 6x6 shape with 5 centres. The record does not show what ACTION1 would do now, nor what ACTION4, ACTION2 or ACTION3 do while a 0 edge is present on a different side."
+  },
+  {
+   "id": "U3",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 16,
+     "frames": "1",
+     "what_it_shows": "Older evidence, closest match to the wall at x50. ACTION4 moved the selected 3x3 shape from the frame interior x12-14,y33-35 to x15-17, so its left column lay on the frame's right wall (15,33),(15,34),(15,35): those cells changed 4 to e. The move was not refused.",
+     "status": "observed event"
+    },
+    {
+     "action": 17,
+     "frames": "1",
+     "what_it_shows": "Older evidence. The next ACTION4 moved the shape on to x18-20 and the wall cells (15,33..35) changed back from e to 4. The wall is restored after the shape leaves.",
+     "status": "observed event"
+    },
+    {
+     "action": 4,
+     "frames": "1 (with a005 frame 1)",
+     "what_it_shows": "Older evidence. ACTION2 put the whole bottom row of the shape on the frame's top wall (12-14,32), 4 to e; a005 then moved it into the interior and the wall returned to 4. The same pass over a wall into an interior is recorded for the other frame in a023 and a024 (wall column x44) and again in a028 to a030.",
+     "status": "observed event"
+    },
+    {
+     "action": 8,
+     "frames": "1",
+     "what_it_shows": "Older evidence. Selected shape at x30-32,y30-32 with f cells at x33-38: ACTION4 moved nothing; the only changed cell was (59,63) in the bottom row. Repeated at a011 with the same result (only (57,63) changed).",
+     "status": "observed event"
+    },
+    {
+     "action": 13,
+     "frames": "1",
+     "what_it_shows": "Older evidence. Same shape at x30-32,y30-32 with colour-2 cells directly above (y29): ACTION1 changed zero cells.",
+     "status": "observed event"
+    },
+    {
+     "action": 21,
+     "frames": "2 to 6",
+     "what_it_shows": "Older evidence. A shape that was pushed by the selected shape did cross the f cells x33-38 (frames 3 and 4 show it drawn on f, f restored behind it) and came to rest on the far side at x42-44. The selected shape did not enter the neighbour's cells in a020 or a021.",
+     "status": "observed event"
+    },
+    {
+     "action": 17,
+     "frames": "all, read together with a004, a005, a008, a011, a013, a016, a020, a021, a023, a024",
+     "what_it_shows": "A selected 3x3 shape steps over 4 frame walls freely and the wall is redrawn; its step is refused by f and by 2; it does not overlap another e shape but can launch it, and a launched shape can cross f.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[8, 13, 16, 17, 20, 21], [4, 5, 11, 13, 20, 21]],
+   "what_the_evidence_supports": "For the route in question (x42-44 to x45-47 to x48-50 to x51-53 on y51-53), a016 and a017 alone show that a step landing partly on a frame wall is carried out and the wall is restored, and a023/a024 show the following step into the interior. The f and 2 refusals and the push across f bear on the other three frames, two of which lie beyond the f band at x21-29.",
+   "limits": "All on level 0 and all with 3x3 shapes. No step in the record was attempted from a position where a 0 edge was showing on another side, as now. What stopped the launched shape at x42-44 in a021 is not shown (it had already overlapped the wall cell (44,30)). No shape was ever moved against the board edge or against the row y63."
+  },
+  {
+   "id": "U4",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 31,
+     "frames": "1",
+     "what_it_shows": "Older evidence, on the present level and the present shape. ACTION1 moved the 3x3 shape with the 0 centre up 3 rows, from x36-38,y54-56 to x36-38,y51-53.",
+     "status": "observed event"
+    },
+    {
+     "action": 1,
+     "frames": "1",
+     "what_it_shows": "Older evidence. ACTION1 moved the selected shape up 3 rows (x18-20, y30-32 to y27-29). Also a018 and a023.",
+     "status": "observed event"
+    },
+    {
+     "action": 4,
+     "frames": "1",
+     "what_it_shows": "Older evidence. ACTION2 moved the selected shape down 3 rows (x12-14, y27-29 to y30-32). Also a005 and a030 frame 1.",
+     "status": "observed event"
+    },
+    {
+     "action": 2,
+     "frames": "1",
+     "what_it_shows": "Older evidence. ACTION3 moved the selected shape left 3 columns (x18-20 to x15-17 on y27-29). Also a003, a014, a026, a027, a028, a029.",
+     "status": "observed event"
+    },
+    {
+     "action": 14,
+     "frames": "1",
+     "what_it_shows": "Older evidence. After the selection was switched at a006, ACTION3 moved the newly selected shape (x30-32 to x27-29) and not the first one: the movement actions act on whichever shape has the 0 centre.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[1, 2, 4], [31, 3, 5], [18, 14, 30]],
+   "what_the_evidence_supports": "ACTION1 up, ACTION2 down, ACTION3 left, ACTION4 right, each by 3 cells, applied to the shape whose centre is 0, with the vacated cells restored. ACTION1 is confirmed on the present level by a031.",
+   "limits": "ACTION2 and ACTION3 have not been used on level 1. Every recorded move is of a 3x3 shape, so a 3-cell step equals the shape's own width; the record cannot say what the step is for the 6x3, 3x6 or 6x6 shapes. A blocked move returns no movement (a008, a011, a013), so an action can also do nothing."
+  },
+  {
+   "id": "U5",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 6,
+     "frames": "1",
+     "what_it_shows": "Older evidence. ACTION6 on (28,31), the 5 centre of the other 3x3 shape: (28,31) changed 5 to 0 and the previously controlled shape's centre (13,34) changed 0 to 4. Nothing moved.",
+     "status": "observed event"
+    },
+    {
+     "action": 7,
+     "frames": "1",
+     "what_it_shows": "Older evidence. The next ACTION4 moved the shape just clicked (x27-29 to x30-32), not the earlier one.",
+     "status": "observed event"
+    },
+    {
+     "action": 15,
+     "frames": "1",
+     "what_it_shows": "Older evidence. ACTION6 on (13,34), a centre now coloured 4: (13,34) 4 to 0 and (28,31) 0 to 4; a016 then moved that shape. The shape deselected here was standing outside any frame and still got a 4 centre, not 5. Same switch pattern at a022 (click (43,31)) and a025 (click (25,31)).",
+     "status": "observed event"
+    },
+    {
+     "action": 9,
+     "frames": "1",
+     "what_it_shows": "Older evidence. Clicks that did not hit a shape changed nothing on the playfield: a009 on an f cell (35,31) and a012 on a frame wall cell (44,28) changed only one row-63 cell each; a010 on an empty frame interior cell (46,28) changed zero cells.",
+     "status": "observed event"
+    },
+    {
+     "action": 25,
+     "frames": "all, read together with a006, a015, a022",
+     "what_it_shows": "Centre 0 marks the one shape the movement actions control; 5 was seen only on a shape that had not yet been selected; a shape that has been selected and then deselected shows 4, whether or not it is inside a frame.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[6, 7], [15, 16], [22, 23]],
+   "what_the_evidence_supports": "A click on the centre cell of another e shape transfers control to it, at the cost of one action and with no movement. Clicks on f, on a frame wall and on an empty frame interior did nothing useful.",
+   "limits": "All four switching clicks were on the single centre cell of a 3x3 shape. No click on a non-centre e cell is recorded, and the present 5-centred shapes have two or four 5 cells, so which cell must be clicked is not shown. No click has been made on level 1. The meaning of 5 against 4 rests on two shapes only."
+  }
+ ],
+ "uncertainties_added_after_seeing_history": [
+  {
+   "id": "A1",
+   "uncertainty": "What the top-row 0 at (42-44,51) implies for ACTION1 specifically: whether pressing ACTION1 now would launch the 6x6 shape at x42-47,y45-50 upward as a021 launched the 3x3 neighbour, and where it would stop.",
+   "note": "Only one launch is recorded (a021): a 3x3 shape pushed right travelled 5 steps and stopped at x42-44. Nothing shows a launch of a larger shape, a launch in another direction, or the stopping rule."
+  },
+  {
+   "id": "A2",
+   "uncertainty": "How the 6x3, 3x6 and 6x6 shapes move when selected (step size per action) and whether they can be selected at all.",
+   "note": "Every move and every selection in the record involves a 3x3 shape."
+  },
+  {
+   "id": "A3",
+   "uncertainty": "Whether each shape has to end in the frame whose interior has its own size, or whether any frame will do.",
+   "note": "Level 0 had two 3x3 shapes and two 3x3 interiors, so the record cannot separate these."
+  },
+  {
+   "id": "A4",
+   "uncertainty": "How a shape can reach the two frames on the far side of the f band (x5-12,y41-48 and x8-12,y8-15).",
+   "note": "A selected shape's step onto f was refused twice (a008, a011); the only crossing of f in the record is the launched shape in a021 frames 3 to 5."
+  },
+  {
+   "id": "A5",
+   "uncertainty": "The row-63 bar (mentioned in the stage-1 notes, not one of the five): what happens when it runs out.",
+   "note": "Supported limited conclusion from history_changes: on level 0 the number of cells turned 0 after k actions equals 0.64 times k rounded to the nearest whole number for every k from 1 to 30 (cells changed at a001, a003, a004, a006, a008, a009, a011, a012, a014, a015, a017, a018, a020, a022, a023, a025, a026, a028, a029; none at a002, a005, a007, a010, a013, a016, a019, a021, a024, a027, a030). Actions that did nothing else (a008 to a013) are counted. a030 frame 2 shows the row back to all 4, and a031, a032, a033 follow the same schedule from 1. That fits a count of actions per level with the 64 cells standing for about 100 actions. The record never reaches an empty bar, so its consequence is unobserved."
+  }
+ ],
+ "needs_no_past_record_can_meet": "Nothing in the record shows: what any action does while a 0 edge is on a side other than the one being pushed (the exact present situation, with the 0 edge on top and ACTION4 pointing right); how shapes larger than 3x3 are selected, moved or launched; whether shape size must match frame size; where and why a launched shape stops; what a click on a non-centre cell of a shape does; what happens when the row-63 bar is empty; and whether level 1 is completed by the same condition as level 0.",
+ "coverage": {
+  "history_index_read_fully": true,
+  "history_changes": "read fully",
+  "images_opened": ["a006", "a008", "a013", "a020", "a021", "a030"],
+  "board_files_opened": ["a001", "a021", "a030"]
+ },
+ "notes": "Only Read and Write were used; Grep was not available to me in this session, so history_changes.txt was read whole instead of searched. Files opened in stage2: history_index.txt, form.json, history_changes.txt, three board files and six pictures. Positions of blocked moves at a008, a011 and a013 were established from the change runs of a007 and a014 together with the level-0 layout in boards/a001.txt (f at x33-38, colour 2 above y30 at x24-32), and checked against pictures a008 and a013. Coordinates were read by hand from the text boards. I do not recognise this game from any other source and used no outside knowledge. The stage-1 file was not changed."
+}

@@ -1,0 +1,39 @@
+{
+ "role": "pack reader",
+ "case": "D15",
+ "records": [
+  {
+   "action_number": 54,
+   "action": "ACTION6 click at x=40 (column), y=62 (row) (pack: \"action=ACTION6 x=40 y=62\"; header \"event=54\", \"action 54 (transition t54)\")",
+   "level_and_attempt": "level=3, reset=0 (pack header: \"event=54 reset=0 level=3 frames=1\"). I read reset=0 as 'no reset so far / first attempt', but the reading instructions do not define the word 'reset'.",
+   "start_board_mode": "from current",
+   "frames_returned": 1,
+   "board_before_the_action": "Not printed; rebuilt from the current board o66 plus the \"before vs current: 421 cells\" lines (adding up the cells the lines cover gives exactly 421, so every listed cell differs from current). Differences from current: (a) row 0: \"0:37-53=7\" so the top bar was 7 in cols 0-53 and 4 only in cols 54-63 (current: 7 in 0-36, 4 from 37). (b) The 4/b object that now sits at cols 33-38, rows 31-36 was not there: \"31-32:35-36=3\", \"33-36:33-38=3\" make that area background 3. Instead the same shape sat further left and lower: \"40-41:20-21=4\", \"42-43:18-23=4\", \"44-45:18-23=B\" (a 2-wide 4 knob on rows 40-41, a 6-wide 4 body on rows 42-43, a 6-wide b base on rows 44-45), resting on the 0 area of cols 15-26 that starts at row 46. (c) The 0 area in cols 30-41 was much lower: \"37-39:30-41=3\", \"40-41:...30-41=3\", \"42-43:...30-41=3\", \"44-45:...30-41=3\", \"46-54:30-41=3\" make cols 30-41 colour 3 in rows 37-54; rows 55-63 of those columns are not listed, so 0 there started at row 55 (rows 55-60 cols 30-41 = 0; rows 61-63 cols 30-38 = 0 and 39-41 = 9, as on current). (d) Right-hand strip cols 57-63 was 0 in rows 46-60 (\"46-54:30-41=3,57-63=0\", \"55-57:57-63=0\", \"58-60:45-53=0,57-63=0\"); current has 3 there. (e) Cols 45-53 were 0 in rows 58-60 (\"58-60:45-53=0\"); rows 55-57 of those columns were 3 as on current. Everything else equals current: rows 1-30 all 3 except the 5 pillars (cols 27-29 from row 22, cols 42-44 from row 25 with b at rows 29-30); pillar cols 12-14 is 5 in rows 31-42, 1 in rows 43-54, 5 in rows 55-63; pillar cols 27-29 is 5 in rows 22-33, 1 in rows 34-45, 5 in rows 46-63; pillar cols 54-56 is 5 from row 34; cols 15-26 are 0 from row 46; rows 61-63 read 3 (0-8), 9 (9-11), 5 (12-14), 9 (15-17), 0 (18-26), 5 (27-29), 0 (30-38), 9 (39-41), 5 (42-44), 9 (45-47), 0 (48-50), 9 (51-53), 5 (54-56), 9 (57-59), 0 (60-63). The clicked cell (40,62) was colour 9 (part of the 9 block at cols 39-41, rows 61-63), same as on current since no line touches rows 61-63.",
+   "frames": [
+    {
+     "frame": 1,
+     "cells_differing_from_board_before": 65,
+     "what_happens": "\"frame 1/1 vs before: 65 cells\" (my count of the listed cells: 2 + 36 + 27 = 65, all real changes). Three things: \"0:52-53=4\" - the top bar loses two cells of 7 (7 now cols 0-51, 4 from col 52); \"52-54:30-41=0\" - the 0 area in cols 30-41 grows upward by three rows (its top moves from row 55 to row 52); \"58-60:45-53=3\" - the 0 area in cols 45-53 loses its top three rows, which become background 3. So 0-area appears to be transferred from the column right of the clicked 9 block to the column left of it, 3 rows each. Nothing else changes; the 4/b object at cols 18-23, rows 40-45 stays where it was."
+    }
+   ],
+   "final_result": "state=NOT_FINISHED, level=3, legal action 6 only (pack: \"result state=NOT_FINISHED level=3 legal=6\"). Game continues on the same level.",
+   "cells_of_last_frame_differing_from_board_before": 65,
+   "level_completed": false,
+   "cannot_determine": [
+    "What 'reset=0' means exactly (attempt number vs. count of resets) is not defined in the reading instructions.",
+    "The game rule behind the click (why rows 52-54 fill with 0 and rows 58-60 of cols 45-53 empty) is not stated; the 'transfer' reading is my inference from the cells only."
+   ]
+  }
+ ],
+ "relation_between_the_records": "Pack holds one record only (\"One record, selected by rule.\"). Side note from the decision input, not from a second record: the most recent history shows the same click (t65, \"ACTION6 x=40 y=62\") again raising the 0 area of cols 30-41 by three rows and turning rows 58-60 of cols 45-53 from 0 to 3.",
+ "probe_answers": [
+  {"id": "P1", "colour": "3"},
+  {"id": "P2", "colour": "0"},
+  {"id": "P3", "colour": "3"},
+  {"id": "P4", "colour": "0"},
+  {"id": "P5", "colour": "3"},
+  {"id": "P6", "colour": "0"},
+  {"id": "P7", "colour": "3"}
+ ],
+ "what_was_hard_or_missing": "The board before the action is not printed and has to be rebuilt by overlaying ten grouped change lines on the 64x64 current board; this record's lines are compact (row ranges), so it was manageable, but column counting inside the 8-cell groups still needs care. One thing that could mislead: in 'before', rows 58-60 of cols 45-53 are 0 and the frame turns them to 3, which is also what they are on the current board, and the recent history (t65) shows the same cells going 0 to 3 again, so those cells must have been refilled with 0 at some point between action 54 and action 65 that the text does not show. P7 falls on a cell no line touches, so it rests on the current board plus the rule \"every cell the lines do not set had the same colour as on the current board\". The pack writes colour B in upper case and the decision input b in lower case; I treated them as the same. 'reset' is not explained. Both stated counts (421 and 65) agreed with my hand count. I have no outside knowledge of this game and used none; only the pack text and the decision input were used (the picture was not needed)."
+}

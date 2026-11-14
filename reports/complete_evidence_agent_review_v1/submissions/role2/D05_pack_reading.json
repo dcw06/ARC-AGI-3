@@ -1,0 +1,50 @@
+{
+ "role": "pack reader",
+ "case": "D05",
+ "records": [
+  {
+   "action_number": 46,
+   "action": "ACTION4 (pack: \"event=46\", \"action=ACTION4\", source line \"action 46 (transition t46)\")",
+   "level_and_attempt": "level=1, reset=0 (pack header: \"event=46 reset=0 level=1 frames=3\"). The pack does not define \"reset\" or say whether \"level=1\" is a level index or a count of completed levels; I read reset=0 as no reset / first attempt.",
+   "start_board_mode": "from current",
+   "frames_returned": 3,
+   "board_before_the_action": "Given as the current board o85 with the \"before vs current: 171 cells\" lines applied (\"start board: from current\"). I checked the count by hand: row 0 gives 40, rows 31-39 give 73, rows 49-57 give 58, total 171. Three differences from the current board. (1) Top row: \"0:0-12=1,37-63=0\" - row 0 was colour 1 in columns 0-36 and colour 0 in columns 37-63 (current row 0 is 2 in columns 0-12 and 1 elsewhere). (2) A boxed block stood on the horizontal colour-5 band of rows 34-35, at columns 23-31, rows 31-39: \"31:23-30=5\" top edge; \"32:23=5,24-29=B,30=5,31=9\" and \"37:23=5,24-29=B,30=5,31=9\" the top and bottom of a B ring; \"33:23=5,24=B,25-28=C,29=B,30=5,31=9\" (same for row 36) and \"34-35:24=B,25-28=C,29=B\" a 4x4 C centre (columns 25-28, rows 33-36) inside the B ring (columns 24-29, rows 32-37); colour-5 edge at columns 23 and 30 (on rows 34-35 those cells are the band's own 5, unchanged from current); \"38:23-30=5,31=9\" bottom edge; \"39:24-31=9\" a colour-9 strip below, with colour 9 also down column 31 on rows 32, 33, 36, 37, 38. (3) The same-shaped block that the current board shows at columns 36-41, rows 50-55 was not there: \"49:35-40=A\", \"50-51:35-40=A,41=5\", \"52-53:36-41=5\", \"54-55:35-40=A,41=5\", \"56:35-40=A\", \"57:36-41=A\" - that area was background a, with the colour-5 band of rows 52-53 running unbroken to column 41 and column 41 being colour 5 on rows 49-56 (the left edge of the lower-right panel). Every other cell equals the current board (\"every cell the lines do not set had the same colour as on the current board\").",
+   "frames": [
+    {
+     "frame": 1,
+     "cells_differing_from_board_before": 76,
+     "what_happens": "\"frame 1/3 vs before: 76 cells\". The block has moved 3 columns to the right, same rows 31-39: its colour-5 edge now spans columns 26-33, B ring columns 27-32, C centre columns 28-31, colour-9 strip at column 34 and on row 39 columns 27-34. Lines: \"31:23-25=A,31-33=5\"; \"32:23-25=A,26=5,30-32=B,33=5,34=9\"; \"33:23-25=A,26=5,27=B,29-31=C,32=B,33=5,34=9\"; \"34-35:24-26=5,27=B,29-31=C,32=B\" (the band's colour 5 returns behind the block); \"38:23-25=A,31-33=5,34=9\"; \"39:24-26=A,32-34=9\". Vacated cells off the band become background a. Also \"0:37=1\": row 0 column 37 turns from 0 to 1, so the colour-1 run on the top row is one cell longer. I recounted the lines by hand and got 76."
+    },
+    {
+     "frame": 2,
+     "cells_differing_from_board_before": 104,
+     "what_happens": "\"frame 2/3 vs before: 104 cells\". The block is now 5 columns right of its starting place: colour-5 edge columns 28-35, B ring columns 29-34, C centre columns 30-33, colour-9 strip at column 36 and row 39 columns 29-36. Lines: \"31:23-27=A,31-35=5\"; \"32:23-27=A,28=5,30-34=B,35=5,36=9\"; \"33:23-27=A,28=5,30-33=C,34=B,35=5,36=9\"; \"34-35:24-28=5,30-33=C,34=B\"; \"38:23-27=A,31-35=5,36=9\"; \"39:24-28=A,32-36=9\". Row 0 column 37 is still 1 (\"0:37=1\")."
+    },
+    {
+     "frame": 3,
+     "cells_differing_from_board_before": 122,
+     "what_happens": "\"frame 3/3 vs previous: 39 cells\": the block moves one more column right (\"31:28=A,36=5\"; \"32:28=A,29=5,35=B,36=5,37=9\"; \"34-35:29=5,30=B,34=C,35=B\"; \"39:29=A,37=9\"). Relative to the board before, from \"net before>last: 122 cells\" (recounted by hand: 122): the block ends 6 columns right of where it started - colour-5 edge columns 29-36 on rows 31-38, B ring columns 30-35 on rows 32-37, C centre columns 31-34 on rows 33-36, colour 9 at column 37 on rows 32, 33, 36, 37, 38 and on row 39 columns 30-37 (\"32:23-28=A,29=5,30-35=B,36=5,37=9\"; \"34-35:24-29=5,30=B,31-34=C,35=B\"; \"39:24-29=A,32-37=9\"). Cells it left are background a, or band colour 5 on rows 34-35. Row 0 column 37 is 1."
+    }
+   ],
+   "final_result": "\"result state=NOT_FINISHED level=1 legal=1,2,3,4,6,7\". Net effect of ACTION4: the boxed B/C block slid 6 columns to the right along the rows 34-35 band (from columns 23-31 to columns 29-37 including its colour-9 strip), in steps of 3, 2 and 1 columns over the three frames, and the top-row run of colour 1 grew by one cell (column 37). The game is not finished; the level value is 1 both in the record header and in the result.",
+   "cells_of_last_frame_differing_from_board_before": 122,
+   "level_completed": false,
+   "cannot_determine": [
+    "Whether \"level=1\" means the level being played or the number of levels completed: the pack instructions do not define it. It is the same value (1) in the record header and in the result line, which is why I answer that no level was completed by this action.",
+    "What \"reset=0\" means exactly (attempt number): not defined in the pack instructions.",
+    "Why the block stopped after 6 columns, and what row 0 measures (it gains one cell of colour 1): the text shows the changes but not the rule."
+   ]
+  }
+ ],
+ "relation_between_the_records": "Not applicable: the pack holds one record (\"One record, selected by rule\").",
+ "probe_answers": [
+  {"id": "P1", "colour": "9"},
+  {"id": "P2", "colour": "a"},
+  {"id": "P3", "colour": "5"},
+  {"id": "P4", "colour": "c"},
+  {"id": "P5", "colour": "0"},
+  {"id": "P6", "colour": "a"},
+  {"id": "P7", "colour": "0"}
+ ],
+ "what_was_hard_or_missing": "Probe working: P1 from \"39:24-31=9\"; P2 from net \"39:24-29=A\" (also frame 2 \"39:24-28=A\", not touched in frame 3); P3 not set by the before lines, so current row 35 column 32 = 5; P4 from net \"34-35:...31-34=C\"; P5 from \"0:...37-63=0\"; P6 from \"50-51:35-40=A\"; P7 not set by any before line, so current row 17 column 11 = 0. Things that cost effort: (a) the before board has to be assembled by overlaying nine row lines on a 64-wide current board whose rows are printed in groups of 8, so every column lookup is a hand count; (b) the pack writes letter colours in upper case (A, B, C) while the decision input writes them in lower case (a, b, c) - I took them as the same hex digits and answer in lower case; (c) frame lines list only changed columns, so cells of the block that keep their colour while it slides (for example column 28 on row 33 in frame 1) are absent and the shape must be inferred by combining the frame lines with the before board; (d) \"level\" and \"reset\" in the record header are not explained. All stated cell counts I recounted (171, 76, 122) agreed with the lines; I did not recount 104 or 39 cell by cell. I did not open current_board.png. I have no outside knowledge of this game and used none."
+}

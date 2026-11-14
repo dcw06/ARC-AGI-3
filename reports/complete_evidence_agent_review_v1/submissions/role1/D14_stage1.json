@@ -1,0 +1,38 @@
+{
+ "role": "evidence needed",
+ "case": "D14",
+ "stage": 1,
+ "uncertainties": [
+  {
+   "id": "U1",
+   "uncertainty": "What board condition completes the level, and in particular whether the framed box at the top left (x3-12, y3-12: rows y3-7 colour 0, rows y8-12 colour f) is a picture of what some part of the play area (for example the 10x10 colour-f square at x27-36, y34-43) has to look like.",
+   "why_it_matters_for_the_next_action": "Without knowing the target, the player cannot tell whether the next action should keep turning the colour-2-bordered shape, move it towards the f square, recolour it, or do something else entirely. Every choice among actions 1-6 depends on what the end state is supposed to be.",
+   "what_the_decision_time_input_already_tells": "levels_completed=0 after 25 actions and state=NOT_FINISHED. The top-left box and the f square are both 10 cells wide and 10 tall, and the box uses the same two colours (0 and f) that appear in the play area. The input does not say that the box is a target, nor which object it would refer to."
+  },
+  {
+   "id": "U2",
+   "uncertainty": "What each of ACTION2, ACTION3, ACTION4 and ACTION5 does to the board, and whether ACTION1 pressed again would repeat the same change it made at t25.",
+   "why_it_matters_for_the_next_action": "Five of the six legal actions are key presses. Only ACTION1 has a visible result in this input, so the player cannot compare it with the other four, and cannot tell which of them (if any) would undo t25 or shift the shape sideways or downwards.",
+   "what_the_decision_time_input_already_tells": "At t25 ACTION1 changed the colour-2-bordered shape from an upright rectangle (colour-2 border along x17-25 at y32, x17 at y32-45 and x17-25 at y45; colour-0 interior x18-24, y33-44) into a tilted shape spanning x14-30, y21-37, with corners near (24,21), (30,27), (14,31) and (20,37). The shape ended up higher on the board as well as turned. Nothing is shown for ACTION2-5."
+  },
+  {
+   "id": "U3",
+   "uncertainty": "Where the colour-0 triangle inside the f square came from: the cells (36,35), (35-36,36), (34-36,37), (33-36,38). Was it there from the first board, or did an earlier action produce it (for example by the bordered shape overlapping or marking the f square)?",
+   "why_it_matters_for_the_next_action": "If an earlier action made this triangle, it shows how the bordered shape and the f square interact, and whether such a mark is permanent. That tells the player whether the next move risks or helps changing the f square further.",
+   "what_the_decision_time_input_already_tells": "The triangle is present in the current board and neither t24 nor t25 changed any cell in x27-36, y34-43, so it predates both. The tilted shape currently reaches no further right than x30 and no lower than y37 at x20, so it does not touch the f square now."
+  },
+  {
+   "id": "U4",
+   "uncertainty": "What ACTION6 does when the clicked cell is not inside the left small box: for instance inside the right small box (interior x42-44, y3-5, colour f), on the bordered shape itself, on the f square, or on the top-left box.",
+   "why_it_matters_for_the_next_action": "ACTION6 can target any of 4096 cells. The player needs to know which cells respond and how before spending a click, and whether a click selects an object, recolours it, or does nothing.",
+   "what_the_decision_time_input_already_tells": "At t24 a click at (37,4), inside the left small box (border colour 4 at x35-39, y2-6; interior colour 0), moved a colour-0 bar on row y7 from x41-45 to x35-39 and turned the cells x18-24, y33-44 from f to 0. So before t24 the bar sat under the right box and the shape interior was f. No other click target appears in the input."
+  },
+  {
+   "id": "U5",
+   "uncertainty": "What the colour-4 strip on the bottom row (y63, now x0-47) measures, which actions shorten it, and what happens when it has no colour-4 cells left.",
+   "why_it_matters_for_the_next_action": "If the strip is a limited budget, the player has to weigh exploratory presses against the remaining length, and would prefer actions that do not shorten it.",
+   "what_the_decision_time_input_already_tells": "ACTION1 at t25 turned (48,63) from 4 to 5. The ACTION6 click at t24 changed no cell on row y63. 48 colour-4 cells remain after 25 actions, so not every earlier action removed one cell, or the strip did not start at full width."
+  }
+ ],
+ "notes": "I used only decision_input.txt and form.json. I do not recognise this game from any other source and used no outside knowledge. Coordinates were read by hand from the printed rows, so single-cell edges of the tilted shape may be off by one. The description of t25 as a turn of the shape is my reading of the changed cells, not something the input states."
+}

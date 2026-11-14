@@ -1,0 +1,257 @@
+{
+ "role": "evidence needed",
+ "case": "D05",
+ "stage": 2,
+ "per_uncertainty": [
+  {
+   "id": "U1",
+   "older_evidence_found": "partly",
+   "observations": [
+    {
+     "action": 1,
+     "frames": "all (1-2)",
+     "what_it_shows": "First level (index level 0): a single L-shaped panel of 4x4 blocks with five green (colour e) pieces, no small panel, no track, no b/c square. Clicking the piece at x=18,y=19 put a colour-3 ring round its block and a hollow colour-2 ring on the block two places to the right (x=29-32, y=18-21).",
+     "status": "observed event"
+    },
+    {
+     "action": 2,
+     "frames": "1-10",
+     "what_it_shows": "Clicking the ringed block (x=30,y=19) made the selected piece jump there over its neighbour; the neighbour's cells went from e back to 1 (piece removed). Five pieces became four. Actions 3-4 and 5-6 repeat the same select-then-jump pair (changes file).",
+     "status": "observed event"
+    },
+    {
+     "action": 8,
+     "frames": "1-10 the jump, 11-26 the last piece bouncing, 27 new board",
+     "what_it_shows": "Board before had two pieces left (x=41-44,y=30-33 selected, and x=41-44,y=36-39) and a ring on x=41-44,y=42-45. The click on x=42,y=43 made the last jump, leaving exactly one piece on the panel; that piece stayed colour e and bounced, then frame 27 replaced the whole board (1680 cells) with the present layout and levels_completed went from 0 to 1. The row-0 strip was reset to all 0.",
+     "status": "observed event"
+    },
+    {
+     "action": 15,
+     "frames": "3-10 the jump, 16 colour change, 17-20 shake, 21-27 new object",
+     "what_it_shows": "Contrast in the present level: the same kind of last jump left exactly one piece in the large panel (x=31-34,y=15-18), but the level did not end. Instead, in frame 16 that piece and the piece in the small panel (x=43-46,y=51-54) both turned from e to colour 2, both shook, and the f-coloured ring rose into view at lower left. levels_completed stayed 1.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[8, 15], [1, 2, 8, 15]],
+   "what_the_evidence_supports": "Older than the two recent actions: the first level ended on the action that reduced the pieces on its only panel to one (action 8). That it ended BECAUSE one piece remained is a supported limited conclusion from a single instance. In the present level, reducing the large panel to one piece while a second piece still sat in the small panel was not enough (action 15), and the two leftover pieces turned colour 2 at that moment. The decision input alone showed none of this.",
+   "limits": "Only one level completion exists in the record, on a board without a small panel, track or b/c square, so the history does not show what relation between the two panels and the square ends a level of the present kind. It cannot distinguish 'one piece left in total' from 'last piece on a particular block'. What the colour-2 state and the f ring mean is not shown."
+  },
+  {
+   "id": "U2",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 17,
+     "frames": "all (1-2)",
+     "what_it_shows": "ACTION1 with the square at its starting place (b border x=30-35, y=32-37, on the horizontal track rows 34-35): nothing moved, only the row-0 strip advanced. Action 19 (ACTION2, same place) gave the same null result.",
+     "status": "observed event"
+    },
+    {
+     "action": 20,
+     "frames": "1-2 (3 unchanged)",
+     "what_it_shows": "ACTION3 moved the whole square 6 cells left along the track (to x=24-29). Actions 21-22 repeat it to x=12-17; actions 37-40, 54, 66-72 and 83 are further ACTION3 moves, always 6 cells left.",
+     "status": "observed event"
+    },
+    {
+     "action": 23,
+     "frames": "1-3",
+     "what_it_shows": "ACTION2 moved the square 6 cells down the left vertical track (y=32-37 to y=38-43). Actions 24-25, 63-65 and 73-75 repeat it; always 6 cells down.",
+     "status": "observed event"
+    },
+    {
+     "action": 41,
+     "frames": "1-2",
+     "what_it_shows": "ACTION1 moved the square 6 cells up the left vertical track (y=50-55 to y=44-49). Actions 42-43 and 51-53 repeat it; always 6 cells up.",
+     "status": "observed event"
+    },
+    {
+     "action": 29,
+     "frames": "1-3",
+     "what_it_shows": "ACTION4 (right, 6 cells, as in actions 26-28) brought the square to b border x=36-41, y=50-55, its right edge on the small panel's left frame at x=41: exactly the position on the current board. The small panel's contents did not change. Action 79 is the same arrival.",
+     "status": "observed event"
+    },
+    {
+     "action": 30,
+     "frames": "all (1-2)",
+     "what_it_shows": "ACTION4 from exactly the current position: 2 frames, the only changed cell is one row-0 strip cell. The square did not enter the small panel and nothing else happened. Action 80 repeated this with the same result.",
+     "status": "observed event"
+    },
+    {
+     "action": 35,
+     "frames": "all (1-2)",
+     "what_it_shows": "ACTION1 from exactly the current position: nothing but the strip cell.",
+     "status": "observed event"
+    },
+    {
+     "action": 37,
+     "frames": "1-2",
+     "what_it_shows": "ACTION3 from exactly the current position moved the square 6 cells left to x=30-35 and restored the panel's left frame (same as recent action 83 seen in reverse by t84).",
+     "status": "observed event"
+    },
+    {
+     "action": 54,
+     "frames": "1-2",
+     "what_it_shows": "After travelling the whole track (right along rows 34-35 in actions 44-50, up the right column in 51-53), ACTION3 brought the square to b border x=48-53, y=14-19 against the large panel's right frame, level with block row y=15-18. The large panel's contents did not change.",
+     "status": "observed event"
+    },
+    {
+     "action": 55,
+     "frames": "all (1-2)",
+     "what_it_shows": "ACTION3 from that position against the large panel: only the strip cell changed; the square did not enter the large panel.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[30], [80], [20, 23, 41, 29, 30, 54, 55]],
+   "what_the_evidence_supports": "Older than the two recent actions: ACTION1 = up, ACTION2 = down, ACTION3 = left, ACTION4 = right, each moving the b/c square 6 cells and only along the colour-5 track; a move with no track ahead does nothing except advance the row-0 strip. The square has been at both ends of the track: it stops against the small panel's left frame (the current position) and against the large panel's right frame, and does not go further at either end. ACTION4 and ACTION1 from the exact current position were already tried (30, 80, 35) and changed nothing; ACTION3 from here moves it back left. Action 30 or 80 alone settles the 'another ACTION4 from here' part; the long group settles the rest. The decision input showed only one rightward move (t84).",
+   "limits": "ACTION2 from the exact current position was never tried; that it would be blocked is an inference from actions 17, 19 and 35 (no vertical move on a horizontal stretch). Every square move in the record happened after action 15, when both pieces were already colour 2, so the record does not show whether the square behaves differently at a panel edge while pieces are still green (colour e)."
+  },
+  {
+   "id": "U3",
+   "older_evidence_found": "partly",
+   "observations": [
+    {
+     "action": 14,
+     "frames": "all (1-2)",
+     "what_it_shows": "Present level, pieces still green: clicking the green piece at x=44,y=16, which had a neighbour to jump over, put a colour-3 ring round it and a hollow colour-2 ring on the landing block x=31-34,y=15-18. (Same behaviour as actions 1, 3, 5, 7, 10, 12.)",
+     "status": "observed event"
+    },
+    {
+     "action": 15,
+     "frames": "1-10",
+     "what_it_shows": "Clicking the ringed landing block (x=32,y=16) performed the jump and removed the jumped piece. (Same as actions 2, 4, 6, 8, 11, 13.)",
+     "status": "observed event"
+    },
+    {
+     "action": 9,
+     "frames": "1-3",
+     "what_it_shows": "Clicking a green piece that had no jump available (x=44,y=16 at the start of this level) only made it shake for 3 frames; last frame equals the board before apart from the strip.",
+     "status": "observed event"
+    },
+    {
+     "action": 16,
+     "frames": "1-3",
+     "what_it_shows": "After the pieces turned colour 2: clicking the colour-2 piece in the large panel (x=32,y=16) only made it shake. Action 56 repeated this with the square against the large panel: same shake, no selection.",
+     "status": "observed event"
+    },
+    {
+     "action": 31,
+     "frames": "1-3",
+     "what_it_shows": "Clicking the colour-2 piece in the small panel (x=44,y=52) with the square in the current position: shake only. Action 82 repeated it with the same result.",
+     "status": "observed event"
+    },
+    {
+     "action": 32,
+     "frames": "all (1-2)",
+     "what_it_shows": "Clicking x=38,y=52, inside the c interior of the square in the current position: nothing but the strip cell. Actions 34 and 81 are the identical click with the identical null result; actions 57 and 61 clicked the c interior (x=50,y=16) while the square was against the large panel, also nothing.",
+     "status": "observed event"
+    },
+    {
+     "action": 33,
+     "frames": "all (1-2)",
+     "what_it_shows": "Clicking an empty colour-1 block (x=50,y=52, small panel lower right): nothing but the strip cell. Actions 59 and 60 clicked empty blocks of the large panel (x=44,y=16 and x=38,y=16) with the square docked beside them: nothing. Action 18 clicked the track at x=40,y=34: nothing.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[14, 15, 16, 31, 32, 33], [9, 14, 15, 56, 82, 81, 59]],
+   "what_the_evidence_supports": "Older than the two recent actions: while pieces were green, a click on a piece that could jump selected it and marked the landing block, and a click on the marked block made the jump; a click on a piece with no jump made it shake. Since action 15, every click tried has been without lasting effect: on either colour-2 piece (shake only), on the square's interior (five earlier tries, three of them the same cell as the recent t85 click), on empty blocks and on the track. The recent t85 click therefore repeated a test already made at actions 32, 34 and 81.",
+   "limits": "No click was ever made on the f-coloured ring (x=3-10, y=52-59, hole at x=6-7, y=55-56) or its stem, which appeared in action 15; nor on the frames, the background or the row-0 strip. So the record shows which targets are dead in the present state but not whether any untried target is live."
+  },
+  {
+   "id": "U4",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 9,
+     "frames": "board before",
+     "what_it_shows": "At the start of this level there were no colour-2 marks. The large panel held four green (colour e) pieces in block row y=15-18 at x=13-16, 19-22, 31-34 and 43-46; the small panel held one green piece at x=43-46, y=51-54. The b/c square stood at x=30-35, y=32-37 and the f ring did not exist.",
+     "status": "observed event"
+    },
+    {
+     "action": 11,
+     "frames": "1-10",
+     "what_it_shows": "First jump of this level (13-16 over 19-22 to 25-28); action 13 the second (25-28 over 31-34 to 37-40). Each removed one large-panel piece. The small-panel piece was untouched.",
+     "status": "observed event"
+    },
+    {
+     "action": 15,
+     "frames": "3-10, 16, 17-20, 21-27",
+     "what_it_shows": "Third jump (43-46 over 37-40 to 31-34) left one green piece at x=31-34, y=15-18. After five unchanged frames, frame 16 turned that piece and the small-panel piece at x=43-46, y=51-54 from e to colour 2 in the same frame; frames 17-20 shook both; frames 21-27 raised the f ring into the lower left. The b/c square was still at its starting place x=30-35, y=32-37 and had never been moved.",
+     "status": "observed event"
+    },
+    {
+     "action": 16,
+     "frames": "1-3",
+     "what_it_shows": "The marks have not changed since: clicks on them (16, 31, 56, 82) only shake them and the last frame is identical to the board before; no square move (20-84) altered either panel.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[15], [9, 15]],
+   "what_the_evidence_supports": "Older than the two recent actions: the two colour-2 marks are not original features of the level. Both are former green pieces: the small-panel one was there, green, from the level's first frame; the large-panel one is the last survivor of the player's three jumps. Both were recoloured to 2 together in frame 16 of action 15, with the square at its start position, and the f ring appeared in the same action. Nothing in the 70 actions since has changed them.",
+   "limits": "The record shows when and after what the recolouring happened, not what it means (for example a dead end versus a normal intermediate stage) or whether it can be reversed."
+  },
+  {
+   "id": "U5",
+   "older_evidence_found": "partly",
+   "observations": [
+    {
+     "action": 8,
+     "frames": "1 and 27",
+     "what_it_shows": "In the first level the strip gained one colour-1 cell per action (x=0 at action 1 to x=7 at action 8) and was all 0 again on the new level's first board.",
+     "status": "observed event"
+    },
+    {
+     "action": 17,
+     "frames": "all (1-2)",
+     "what_it_shows": "A blocked move still advanced the strip by one cell (x=8, 0 to 1); so did no-effect clicks (18, 32-34) and ACTION7 (36, 58).",
+     "status": "observed event"
+    },
+    {
+     "action": 72,
+     "frames": "1",
+     "what_it_shows": "The 64th action of this level turned the last strip cell x=63 from 0 to 1; the board before action 73 has row 0 entirely colour 1. Nothing else happened: the ACTION3 move went through as usual, state NOT_FINISHED, levels_completed 1.",
+     "status": "observed event"
+    },
+    {
+     "action": 73,
+     "frames": "1",
+     "what_it_shows": "The next action started a second pass: x=0 went from 1 to 2 and the ACTION2 move went through as usual. No reset, no level restart, no game over when the first pass filled. The colour-2 run on the current board (x=0-12) is this second pass, 13 actions long.",
+     "status": "observed event"
+    },
+    {
+     "action": 36,
+     "frames": "all (1-2)",
+     "what_it_shows": "ACTION7 with the square in the current position and both pieces colour 2: 2 frames, only the strip cell changed. Action 58, ACTION7 with the square against the large panel: same.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[72, 73, 36], [72, 73, 58]],
+   "what_the_evidence_supports": "Older than the two recent actions: the strip counts actions taken in the current level, one cell per action whatever the action does, and is cleared when a level is completed. Filling it once (64 actions) had no consequence; it simply began overwriting in colour 2. ACTION7 was used twice in the present colour-2 state and changed nothing visible. The decision input showed only two strip steps and no ACTION7.",
+   "limits": "What happens when the second, colour-2 pass reaches x=63 (51 actions from now) is not in the record; that it would again be harmless is an unresolved hypothesis. Both ACTION7 uses came straight after an action that itself changed nothing (35 and 57) and after the pieces had turned colour 2, so the record does not show what ACTION7 does after a jump or a square move, or while pieces are green."
+  }
+ ],
+ "uncertainties_added_after_seeing_history": [
+  {
+   "id": "N1",
+   "uncertainty": "What does a click on the f-coloured ring (x=3-10, y=52-59, colour-0 hole at x=6-7, y=55-56, stem x=6-7 down to y=63) do? It appeared in frames 21-27 of action 15, immediately after the two remaining pieces turned colour 2, and is the only object on the board the player has never clicked.",
+   "older_evidence_found": "no"
+  },
+  {
+   "id": "N2",
+   "uncertainty": "Can the two colour-2 pieces (x=31-34, y=15-18 and x=43-46, y=51-54) be made selectable again, or is this attempt of the level stuck? Since action 15 every one of 70 actions (all four moves, both ends of the track, clicks on pieces, square and empty blocks, ACTION7 twice) has left both panels exactly as they were.",
+   "older_evidence_found": "no"
+  },
+  {
+   "id": "N3",
+   "uncertainty": "While pieces are still green, does the b/c square placed against a panel edge (x=36-41, y=50-55 beside the small panel's block x=43-46; or x=48-53, y=14-19 beside the large panel's block x=43-46, y=15-18) offer an extra landing place or a link between the two panels? The square was first moved at action 20, after the pieces had already turned colour 2, so this was never tried.",
+   "older_evidence_found": "no"
+  }
+ ],
+ "needs_no_past_record_can_meet": "1) The effect of clicking the f ring: never clicked. 2) What ends a level that has two panels, a track and a square: the only completion on record (action 8) is on a one-panel board. 3) Whether the colour-2 state reached in action 15 is recoverable, and how a fresh attempt is obtained: no reset or restart appears anywhere in the record. 4) Any behaviour of the square, of ACTION7 or of clicks near the docked square while pieces are still green: all such actions came after action 15. 5) What happens when the second pass of the row-0 strip reaches x=63. 6) ACTION2 from the exact current square position (only inferred to be blocked).",
+ "coverage": {
+  "history_index_read_fully": true,
+  "history_changes": "read fully",
+  "images_opened": ["a001", "a002", "a008", "a009", "a014", "a015", "a016", "a017", "a020", "a029", "a030", "a036", "a054", "a055", "a056", "a058", "a073"],
+  "board_files_opened": ["a008", "a009", "a015", "a055 (first 30 lines)", "a073 (row 0 of both boards only)"]
+ },
+ "notes": "No Grep or Glob was needed or used; only Read and Write, only files inside the D05 stage1 and stage2 folders. I have no knowledge of this game from any other source. Colour readings from the pictures: e is drawn green, 2 grey, f purple, b/c yellow/orange, 5 black. For actions I did not open as pictures (for example 3-7, 10-13, 21-28, 31-35, 37-53, 57, 59-72, 74-84) my statements rest on the index line and the per-frame runs in history_changes.txt; where the changes file said 'too many runs to list' for a square move I relied on the last-frame bounding box in the index plus the neighbouring listed frames, which fit a constant 6-cell step. Pattern worth stating plainly: actions 17-85 keep returning to states already tested (square against the small panel at 29-36, 79-82, 84-85; against the large panel at 54-61), and the recent t85 click at x=38,y=52 is the fourth identical null click there. Stage-1 file was not changed."
+}

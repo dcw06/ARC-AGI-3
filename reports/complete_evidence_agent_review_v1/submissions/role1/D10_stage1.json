@@ -1,0 +1,38 @@
+{
+ "role": "evidence needed",
+ "case": "D10",
+ "stage": 1,
+ "uncertainties": [
+  {
+   "id": "U1",
+   "uncertainty": "What board condition completed levels 1 and 2? In particular, does it have to do with the row of a floating shape's coloured base (e at x=8..10, y=43; f at x=41..43, y=39; b at x=52..54, y=47) relative to the same-coloured two-cell mark on the neighbouring colour-5 column (e at x=14..15, y=41; f at x=36..37, y=39; b at x=48..49, y=47), or with something else (for example the amount of colour 0 in each compartment)?",
+   "why_it_matters_for_the_next_action": "The next click should move the board toward whatever ends the level. If the target is the e base reaching the e mark's row, the player wants two more rows of colour 0 under the left shape and must not disturb the f and b compartments; if the target is something else, a different click is called for.",
+   "what_the_decision_time_input_already_tells": "levels_completed=2, but nothing about how they were completed. On the current board the f base and f mark share row y=39 and the b base and b mark share row y=47, while the e base (y=43) is two rows below the e mark (y=41). t43 shows the left shape rising two rows (base from y=45 to y=43) when two rows of colour 0 were added beneath it."
+  },
+  {
+   "id": "U2",
+   "uncertainty": "What does a click on each of the colour-9 blocks in rows 56-57 that has not been clicked in the last two actions do: the blocks on the right side of each colour-5 column (x=16..17, x=28..29, x=38..39, x=50..51) and the left-side blocks at x=34..35 and x=46..47? Which compartment loses colour 0, which gains it, and how many rows?",
+   "why_it_matters_for_the_next_action": "ACTION6 can click any cell, and the 9 blocks look like the controls. Choosing the next click requires knowing the direction and size of the transfer each block causes, including whether any block would lower the f or b shapes away from their marks.",
+   "what_the_decision_time_input_already_tells": "Only two blocks are observed. t42, click (24,56), the 9 block left of the column at x=26..27: rows 54-55 of x=28..35 changed 0 to 3 and rows 56-57 of x=18..23 changed 3 to 0. t43, click (12,56), the 9 block left of the column at x=14..15: rows 56-57 of x=18..23 changed 0 to 3 and rows 44-45 of x=6..13 became 0, with the 4/e shape shifting up two rows. Both moved two rows of colour 0 from the right of the clicked column to its left. No click on a right-side block is shown."
+  },
+  {
+   "id": "U3",
+   "uncertainty": "What happens when a 9 block is clicked while the compartment it would draw from holds little or no colour 0? Specifically: would clicking (24,56) again move the remaining colour 0 at x=30..33, y=56..57 out of the compartment between the columns at x=26..27 and x=36..37, and would clicking (12,56) now, with x=18..23, y=56..57 back to colour 3, do nothing, cost an action, or do something else?",
+   "why_it_matters_for_the_next_action": "The only colour 0 not sitting under a shape is the 4-wide, 2-row patch at x=30..33, y=56..57. Whether it can be relayed left (via (24,56) then (12,56)) decides whether the left compartment can be raised without taking colour 0 from the f compartment (x=38..47) or the b compartment (x=50..57).",
+   "what_the_decision_time_input_already_tells": "The compartment x=16..25 is now entirely colour 3 above its 9 blocks and at x=18..23, y=56..57. The compartment x=28..35 has colour 0 only at x=30..33, y=56..57. t43 shows that colour 0 lying in rows 56-57 between two 9 blocks (x=18..23) was moved by a click. No click with an empty source side is shown."
+  },
+  {
+   "id": "U4",
+   "uncertainty": "What is the strip of colour 7 in row 0 (now x=0..44, 45 cells), and what happens when it runs out? Does it refill when a level is completed, and how long was it at the start of this level?",
+   "why_it_matters_for_the_next_action": "If it is a limit on actions, the player needs to know how many clicks it can still spend on testing unknown blocks versus going straight for the most likely finishing sequence.",
+   "what_the_decision_time_input_already_tells": "Each of the last two actions turned one cell of row 0 from 7 to 4, moving leftward: x=46 at t42 and x=45 at t43. 45 cells of colour 7 remain after 43 actions in total. The input does not show the strip's starting length or any event at zero."
+  },
+  {
+   "id": "U5",
+   "uncertainty": "Is a transfer always exactly two rows per click whatever the widths of the two compartments, and do clicks on cells other than the 9 blocks (the 4/e, 4/f, 4/b shapes, the e/f/b marks, the colour-5 columns, the colour-0 areas, plain colour-3 cells) change anything or just use up an action?",
+   "why_it_matters_for_the_next_action": "The e base is two rows below the e mark, so whether one more transfer into x=6..13 gives exactly two rows decides whether a single relay is enough or would overshoot or undershoot. Knowing whether non-9 cells respond tells the player whether there is any other control worth trying.",
+   "what_the_decision_time_input_already_tells": "In t42 an 8-wide compartment (x=28..35) lost two rows and a 6-wide gap (x=18..23) gained two rows; in t43 that 6-wide gap lost two rows and the 8-wide compartment x=6..13 gained two rows. So row count, not cell count, was preserved in these two cases. Both recent clicks were on 9 blocks; no click on any other kind of cell is shown."
+  }
+ ],
+ "notes": "I recognise nothing about this game from any outside source and used only decision_input.txt. Coordinates were read by hand from the board text (groups of 8 cells per row). Words such as 'compartment', 'shape' and 'mark' are my descriptive labels for regions of the board, not rules shown by the input."
+}

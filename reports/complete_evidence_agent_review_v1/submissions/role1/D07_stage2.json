@@ -1,0 +1,278 @@
+{
+ "role": "evidence needed",
+ "case": "D07",
+ "stage": 2,
+ "per_uncertainty": [
+  {
+   "id": "U1",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 13,
+     "frames": "1 and 2 (picture)",
+     "what_it_shows": "Level 0. One shape with a colour-b edge sits under a bar that carries a colour-b marker. Frame 1 (last of four clicks on the same colour-9 block) brings the shape's b column directly under the b marker. Frame 2 is a new board and levels_completed goes 0 to 1.",
+     "status": "observed event"
+    },
+    {
+     "action": 21,
+     "frames": "1 and 2 (picture)",
+     "what_it_shows": "Level 1. Same pattern with a colour-e shape and a colour-e marker on the bar above it: frame 1 lines the e column up with the e marker, frame 2 is the next level, levels_completed 1 to 2.",
+     "status": "observed event"
+    },
+    {
+     "action": 45,
+     "frames": "board before, frame 1 (listed), frame 2 (picture)",
+     "what_it_shows": "Level 2, three shapes (e, f, b) and three markers on vertical bars. Before a045 the f shape (f at x=41-43,y=39) was already level with the f marker (x=36-37,y=39) and the b shape (b at x=52-54,y=47) with the b marker (x=48-49,y=47), and the level was not finished. Frame 1 lifts the e shape 2 rows so its e row is y=41, the row of the e marker at x=14-15. Frame 2 is the next level, levels_completed 2 to 3. The e shape is left of its marker bar, the f and b shapes right of theirs.",
+     "status": "observed event"
+    },
+    {
+     "action": 73,
+     "frames": "board before, frame 1 (listed), frame 2 (picture)",
+     "what_it_shows": "Level 3, one b shape at x=33-38 with b at y=32-33; the b marker is at x=42-44,y=29-30 on the bar bordering that column. Frame 1 lifts the shape 3 rows so b is at y=29-30. Frame 2 is the current level's start board, levels_completed 3 to 4. This shape had first been moved across two bars (a050, a059) to reach the column next to the marked bar.",
+     "status": "observed event"
+    },
+    {
+     "action": 74,
+     "frames": "board before",
+     "what_it_shows": "Start of the current level: the e shape is above the bar at y=14-16, which carries the b marker (x=20-21); the b shape is below the bar at y=49-51, which carries the e marker (x=14-15). Each shape starts next to the other colour's marker.",
+     "status": "observed event"
+    },
+    {
+     "action": 77,
+     "frames": "board before (= result of a076)",
+     "what_it_shows": "After a076 the e shape's e column was at x=20-21,y=5-10, directly above the b marker at x=20-21,y=14-16, and the state stayed NOT_FINISHED. A shape lined up with the other colour's marker did not complete the level (the b shape was also unplaced at that time, so this does not isolate the reason).",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[45, 73], [13, 21, 45]],
+   "what_the_evidence_supports": "In all four earlier levels the level ended on the click that brought the last shape's coloured edge level with the same-coloured marker on a bar bordering the shape's chamber; with three shapes (a045) all three had to be lined up. Carried over to this level (an extrapolation, not yet seen here): the b shape's b column would need to be at x=20-21 next to the bar at y=14-16, and the e shape's e column at x=14-15 next to the bar at y=49-51. The exchange of the two shapes in the most recent action put the b shape in the chamber above the b-marked bar.",
+   "limits": "No completion has been seen in this level. History does not fix which side of the marked bar counts (level 2 had shapes on either side of their bars; levels 0 and 1 only below). That both shapes must be lined up at once is by analogy with a045 only. Nothing shows that both target positions can be reached together here."
+  },
+  {
+   "id": "U2",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 74,
+     "frames": "1 (listed, board)",
+     "what_it_shows": "ACTION6 x=62 y=12 (block above the bar at y=14-16), first click of this level: 0 cells changed. At that moment the 3/0 edge in rows 1-13 was at x=16, the left end of that bar. This is the only click on that block in the level.",
+     "status": "observed event"
+    },
+    {
+     "action": 75,
+     "frames": "1 (picture)",
+     "what_it_shows": "ACTION6 x=62 y=18 (block below the bar at y=14-16): the 3/0 edge in rows 1-13 moves 3 columns right and the edge in rows 17-31 moves 3 columns left; the e shape, which sits at the rows 1-13 edge, moves right with it. a076, a082, a084, a094, a095 are the same click with matching cell counts in the index (not opened).",
+     "status": "observed event"
+    },
+    {
+     "action": 79,
+     "frames": "1 (listed)",
+     "what_it_shows": "ACTION6 x=62 y=36 (block below the bar at y=32-34): rows 17-31 change 0 to 3 at x=52-54 (edge 3 right) and rows 35-48 change 3 to 0 at x=49-51 (edge 3 left). a080, a081, a083, a085 are listed and show the same 3-column step each time.",
+     "status": "observed event"
+    },
+    {
+     "action": 87,
+     "frames": "1 (picture)",
+     "what_it_shows": "ACTION6 x=62 y=30 (block above the bar at y=32-34): the opposite of a079: the rows 17-31 edge moves 3 left, the rows 35-48 edge moves 3 right, and the b shape then in rows 35-48 moves right with its edge. a088 and a089 repeat it (index counts only).",
+     "status": "observed event"
+    },
+    {
+     "action": 77,
+     "frames": "1 (picture)",
+     "what_it_shows": "ACTION6 x=62 y=53 (block below the bar at y=49-51): the rows 35-48 edge moves 3 right, the rows 52-63 edge moves 3 left, and the b shape then in rows 52-63 moves left with it. a078 (picture) repeats it; a090, a091 by index counts.",
+     "status": "observed event"
+    },
+    {
+     "action": 93,
+     "frames": "1 (picture)",
+     "what_it_shows": "Older click with the same count as t96 (186 cells), same block x=62 y=18: both edges step 3 columns, both shapes (e in rows 1-13, b in rows 17-31) shift 3 columns, and the segment of the bar at y=32-34 goes from colour c back to colour 1 with its two 0 lines removed.",
+     "status": "observed event"
+    },
+    {
+     "action": 96,
+     "frames": "1 (board before, picture) - this is one of the two recent actions; the decision input gave only its cell count",
+     "what_it_shows": "The record of t96 itself: rows 1-13 edge goes from x=37 to x=40 (x=37-39 turn 0 to 3) and the e shape moves 3 right to x=34-39; rows 17-31 edge goes from x=43 to x=40 (x=40-42 turn 3 to 0) and the b shape moves 3 left to x=34-39; the segment x=28-39,y=14-16 turns 1 to c and the 0 lines appear at x=30-37 on y=12 and y=18. Row 0 does not change.",
+     "status": "observed event"
+    },
+    {
+     "action": 66,
+     "frames": "1 (listed, picture)",
+     "what_it_shows": "Level 3 analogue: a block click whose giving column had no colour 0 left changed only the row 0 strip; the opposite block (a067) then worked.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[74, 75, 77, 79, 87], [74, 93, 78, 85, 87]],
+   "what_the_evidence_supports": "Each colour-9 block click moves the two 3/0 edges on either side of the adjacent bar by 3 columns in opposite directions: the chamber containing the clicked block gains 3 columns of colour 0 (its edge moves left) and the chamber on the other side of that bar loses 3. Blocks above and below the same bar are opposites (a087 against a079). A shape sitting at an edge moves with it. A click can be refused (a074). The 186 cells of t96 are two edge steps, two shape shifts and the bar segment changing to colour c with its two 0 lines.",
+   "limits": "The block at y=46-48 (above the bar at y=49-51) was never clicked in this level, and the block at y=11-13 only once, when it was refused; their effects here are by symmetry. Why a074 was refused is not shown; the furthest right an edge was seen is x=61 (a081, a083, a085). Several repeats (a076, a082, a084, a088-a091, a094, a095) were checked by cell counts in the index only, not by opening them."
+  },
+  {
+   "id": "U3",
+   "older_evidence_found": "partly",
+   "observations": [
+    {
+     "action": 86,
+     "frames": "1-44 (listed)",
+     "what_it_shows": "Click on the colour-c segment of the bar at y=49-51 (x=30,y=50). Frame 1: the 0 lines at y=47 and y=53 vanish. Frames 2-13: the c segment slides 12 columns left, leaving colour 3 at x=25-36. Frames 15-30: the b shape rises one row per frame from y=55-60 to y=39-44 through that opening. Frames 32-43: the segment slides back. Frame 44: the 0 lines return. The edges do not move and the segment is still colour c at the end.",
+     "status": "observed event"
+    },
+    {
+     "action": 92,
+     "frames": "1-46 (listed)",
+     "what_it_shows": "Same sequence at the bar at y=32-34 (click x=45,y=33): the b shape goes from y=39-44 to y=21-26 through the opened segment; segment and lines restored at the end.",
+     "status": "observed event"
+    },
+    {
+     "action": 59,
+     "frames": "1-43 (listed)",
+     "what_it_shows": "Level 3 version on a vertical bar (click x=28,y=40 on a colour-c segment): lines vanish, segment slides away, the b shape crosses from x=18-23 to x=33-38, segment and lines return. a050 is the same on another bar.",
+     "status": "observed event"
+    },
+    {
+     "action": 97,
+     "frames": "1-62 (listed) - this is the most recent action; the decision input gave only its net change",
+     "what_it_shows": "The intermediate frames of t97: frames 2-13 the c segment slides left to x=16-27; frames 15-30 the e shape descends from y=5-10 through the opening to y=21-26, where the b shape was; frames 32-48 the b shape rises from there to y=4-9; frames 50-61 the segment slides back to x=28-39; frame 62 the 0 lines return. The two shapes physically crossed the bar in opposite directions.",
+     "status": "observed event"
+    },
+    {
+     "action": 69,
+     "frames": "1 (listed, picture)",
+     "what_it_shows": "Level 3: click on a colour-1 segment (x=28,y=40, the same bar segment that had been colour c at a059): nothing changed except the row 0 strip.",
+     "status": "observed event"
+    },
+    {
+     "action": 68,
+     "frames": "1 (listed)",
+     "what_it_shows": "Level 3: clicks on the b marker of a bar (a068, x=43,y=30) and on the shape's own b cells (a070, x=35,y=35) changed only the row 0 strip.",
+     "status": "observed event"
+    },
+    {
+     "action": 61,
+     "frames": "before (picture)",
+     "what_it_shows": "After the crossing at a059 the segment was still colour c with its lines two actions later, but the player never clicked it a second time; the same holds after a050, a086 and a092 (the next action was always a block click). No action in the history clicks a colour-c segment twice in a row.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[86, 69], [92, 69], [59, 69]],
+   "what_the_evidence_supports": "A click on a colour-c segment opens it, lets the shape resting at that position cross to the other side of the bar, and closes it again, leaving edges, segment colour and lines as they were. With a shape on each side (t97 only) both cross. A colour-1 segment did nothing when clicked, so the segments at x=40-51,y=32-34 and x=25-36,y=49-51 would be expected to do nothing in their present state. The groups listed settle these parts only.",
+   "limits": "Whether a second click at (33,15) sends the two shapes back is not shown anywhere: it would be an inference from the segment still being colour c. A crossing with shapes on both sides was seen only once, in t97 itself. The colour-1 result comes from one click in level 3, none in this level."
+  },
+  {
+   "id": "U4",
+   "older_evidence_found": "partly",
+   "observations": [
+    {
+     "action": 1,
+     "frames": "1 (listed)",
+     "what_it_shows": "a001-a008 (level 0): eight clicks that changed nothing else each turned 1 or 2 cells of row 0 from 7 to 4, moving right to left (10 cells in 8 clicks).",
+     "status": "observed event"
+    },
+    {
+     "action": 66,
+     "frames": "1 (listed)",
+     "what_it_shows": "Level 3: a066, a068, a069, a070 changed only row 0 (1 or 2 cells each). Clicks with no other effect still advance the strip.",
+     "status": "observed event"
+    },
+    {
+     "action": 73,
+     "frames": "board before, frame 2",
+     "what_it_shows": "Before a073 the strip had 35 cells of colour 4 (x=29-63) after 27 clicks in level 3; the first board of the new level (board before a074) has row 0 entirely colour 7. The strip refills at each new level (also visible at a013, a021, a045).",
+     "status": "observed event"
+    },
+    {
+     "action": 81,
+     "frames": "1 (listed)",
+     "what_it_shows": "Current level: a079 and a080 list no row 0 change, a081 lists x=61. a074 changed 0 cells; a083, a085, a086, a092 list no row 0 change; the index boxes reach y=0 only for a075, a078, a084, a088, a091, a094, and a097 turned x=56. The board before a096 has 7 cells of colour 4 (x=57-63) and a096's change box does not reach row 0, so t96 did not turn a cell.",
+     "status": "observed event"
+    },
+    {
+     "action": 97,
+     "frames": "summary across a001-a097",
+     "what_it_shows": "The strip advances with the number of clicks at a rate that differs by level: about 1.28 cells per click in levels 0, 1 and 3 (fits 64 cells for 50 clicks), about 0.85 in level 2 (20 cells after 23 clicks; fits 75), and one cell per 3 clicks here (8 cells after 24 clicks; the pattern fits 64 cells for 200 clicks with the no-change click a074 counted). That leaves roughly 175 clicks for the remaining 56 cells.",
+     "status": "supported limited conclusion"
+    }
+   ],
+   "sufficient_groups": [[66, 73, 79, 80, 81]],
+   "what_the_evidence_supports": "Row 0 is a per-level click counter: it starts full of colour 7, every click counts whether or not it changes anything, and cells turn to 4 from the right at a fixed rate for the level. In this level one cell is about three clicks, so t96 counted even though no cell turned.",
+   "limits": "The strip has never run out: every level in the index is attempt 1 and the most used was 36 of 64 cells (a073). What happens at x=0 is not in the history. The 200-click figure is a fit to 24 clicks, not something displayed."
+  },
+  {
+   "id": "U5",
+   "older_evidence_found": "yes",
+   "observations": [
+    {
+     "action": 85,
+     "frames": "1 (listed)",
+     "what_it_shows": "A block click (x=62,y=36) moved the rows 35-48 edge to x=37, the same as the rows 52-63 edge and just right of the segment x=25-36 on the bar at y=49-51. In that same frame the segment changed 1 to c and 0 lines appeared at x=27-34 on y=47 and y=53.",
+     "status": "observed event"
+    },
+    {
+     "action": 78,
+     "frames": "1 (picture)",
+     "what_it_shows": "Same for the bar at y=32-34: when the rows 35-48 edge reached x=52, where the rows 17-31 edge already was (just right of the segment x=40-51), the segment turned colour c and two 0 lines appeared above and below it.",
+     "status": "observed event"
+    },
+    {
+     "action": 79,
+     "frames": "1 (listed)",
+     "what_it_shows": "The next block click moved those two edges apart: segment x=40-51,y=32-34 changed c to 1 and the 0 lines at x=42-49 on y=30 and y=36 were removed. a087 and a093 (pictures) show the same loss of colour c and lines when an edge moves.",
+     "status": "observed event"
+    },
+    {
+     "action": 77,
+     "frames": "board before",
+     "what_it_shows": "After a076 the rows 17-31 edge was at x=52 (just right of the segment x=40-51) while the rows 35-48 edge was at x=46; the segment was still colour 1 with no lines. One edge in place is not enough.",
+     "status": "observed event"
+    },
+    {
+     "action": 58,
+     "frames": "1 (listed)",
+     "what_it_shows": "Level 3: when the colour-0 columns on both sides of the bar at x=27-29 both reached y=46, just past the segment at y=34-45, the segment changed 1 to c and 0 lines appeared at x=25 and x=31 on y=36-43. The picture before a061 shows it still c after the crossing at a059, and plain colour 1 after a061 moved one column.",
+     "status": "observed event"
+    },
+    {
+     "action": 86,
+     "frames": "all",
+     "what_it_shows": "Only clicks on a colour-c segment ever moved a shape (a050, a059, a086, a092, and the recent a097); the one click on a colour-1 segment (a069) did nothing. After each crossing the segment stays c and the lines come back in the last frame, because the edges did not move.",
+     "status": "supported limited conclusion"
+    },
+    {
+     "action": 96,
+     "frames": "1 (board before, picture) - one of the two recent actions",
+     "what_it_shows": "The segment x=28-39,y=14-16 was colour 1 with no lines before t96 and became colour c with the lines at y=12 and y=18 in t96, when both edges reached x=40.",
+     "status": "observed event"
+    }
+   ],
+   "sufficient_groups": [[85, 86, 87], [78, 79], [58, 59, 61]],
+   "what_the_evidence_supports": "Colour c plus the two 0 lines is a state that block clicks switch on and off, not a selection made by clicking the bar and not fixed layout. It appears when the 3/0 edges on both sides of a bar stand at the same position just past the end of that bar's segment, and it goes away as soon as either edge moves. In that state, and only then, a click on the segment has had an effect. Bar y=14-16's segment was colour 1 until t96.",
+   "limits": "Every time the state appeared the two edges were both exactly at the segment's end, so the history does not separate 'edges equal' from 'edges both at the segment end'. All of this is from two levels (3 and 4)."
+  }
+ ],
+ "uncertainties_added_after_seeing_history": [
+  {
+   "id": "A1",
+   "uncertainty": "How far can each 3/0 edge travel? The click on x=62,y=12 (a074) was refused when the rows 1-13 edge stood at x=16, the left end of the bar at y=14-16, and no edge has been seen further right than x=61. Can an edge go left of the left end of a bar that borders its chamber (bars start at x=16, x=25 and x=10), and can a chamber be emptied of colour 0 completely (edge at x=64)?",
+   "why_it_matters_for_the_next_action": "If completion needs the e column at x=14-15 beside the bar at y=49-51, the e shape's edge must reach x=16, which is left of the left end of the bar at y=32-34 (x=25). Whether that is allowed in rows 35-48 or only in rows 52-63 decides which way the e shape has to be routed and so which block or segment to click next.",
+   "what_history_shows": "Only a074 (refusal at x=16) and, in level 3, a066 (refusal when the giving column was empty) and a072 (a column emptied of colour 0 entirely). Unresolved for this level."
+  },
+  {
+   "id": "A2",
+   "uncertainty": "The four edge positions always add up to the same total, because every block click moves two edges by 3 in opposite directions and crossings do not move edges (16+58+46+43 at a074, 40+40+52+31 now, both 163). If the b shape must stand with its edge at x=22 and the e shape with its edge at x=16, the other two chambers would need edges totalling 125 (for example 61 and 64). Is such an arrangement reachable, and in which chambers must the two shapes end up?",
+   "why_it_matters_for_the_next_action": "It constrains the plan from here: the next click either starts moving the b shape left in rows 1-13 or keeps the bar y=14-16 segment usable for another crossing, and these two aims pull the same edges in different directions.",
+   "what_history_shows": "The fixed total follows from the listed changes of a079-a085 and the boards before a074, a077 and a096 (supported limited conclusion). Reachability is not shown."
+  },
+  {
+   "id": "A3",
+   "uncertainty": "What does the block at x=61-63,y=46-48 (above the bar at y=49-51) do in this level, and what does the block at x=61-63,y=11-13 do when it is not refused?",
+   "why_it_matters_for_the_next_action": "By symmetry with a087 they would move 0 into the chamber they sit in, but neither has been seen working here, and the y=11-13 block is the one that would move the b shape left towards x=20-21.",
+   "what_history_shows": "No click on y=46-48 in this level; one refused click on y=11-13 (a074)."
+  }
+ ],
+ "needs_no_past_record_can_meet": "1. What a second click on the still colour-c segment at (33,15) does (no colour-c segment was ever clicked twice in a row). 2. What happens when the row 0 strip is used up (never happened; every level so far was finished on its first attempt). 3. Whether this level needs both shapes lined up with their markers and on which side of the marked bars (no completion of this level exists yet). 4. The travel limits of the edges in this level and the reason a074 was refused. 5. The effect of the never-clicked block at y=46-48 and of the y=11-13 block away from its limit.",
+ "coverage": {
+  "history_index_read_fully": true,
+  "history_changes": "read fully",
+  "images_opened": ["a013", "a021", "a045", "a051", "a061", "a066", "a069", "a073", "a075", "a077", "a078", "a087", "a093", "a096"],
+  "board_files_opened": ["a045", "a073", "a074", "a077", "a096"]
+ },
+ "notes": "Used only Read and Write, only on files inside the D07 stage1 and stage2 folders; no Grep was needed. No knowledge of this game from any other source was used. For a045, a073, a077 and a096 I read only the 'board before' half of the board file. Actions not opened individually (a076, a082, a084, a088-a091, a094, a095 and levels 0-1 block clicks) are described from the index cell counts, which match the 3-column step seen in the opened ones; this is stated where it applies. Words such as edge, chamber, segment and crossing are my own labels for what the frames show. Evidence from a096 and a097 is marked as coming from the two recent actions; everything else is older. The click-budget figures in U4 and the fixed-total arithmetic in A2 are my own fits, not values the game displays."
+}
