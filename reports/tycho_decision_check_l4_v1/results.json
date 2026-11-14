@@ -1,0 +1,1465 @@
+{
+ "start": "action-100 checkpoint of opus55-matched-20261109 (levels 1-3 done in 98 actions, 2 actions into level 4, $9.2752 carried)",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "runs": [
+  {
+   "run": "l4x-base-1",
+   "arm": "base",
+   "stop_reason": "level_target_reached",
+   "levels_completed": 4,
+   "level4_actions": 19,
+   "deaths": 0,
+   "resets": 0,
+   "cost_usd": 1.8462,
+   "model_calls": 29,
+   "output_tokens": 5550,
+   "input_tokens_fresh": 344792,
+   "cache_read_tokens": 316469,
+   "actions": [
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 33,
+     "y": 3
+    },
+    {
+     "a": "ACTION6",
+     "x": 21,
+     "y": 35
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 21,
+     "y": 41
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 33,
+     "y": 57
+    },
+    {
+     "a": "ACTION6",
+     "x": 45,
+     "y": 35
+    },
+    {
+     "a": "ACTION6",
+     "x": 45,
+     "y": 35
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION6",
+     "x": 27,
+     "y": 41
+    }
+   ],
+   "decision_check_stats": null,
+   "plans": [],
+   "run_spec_fingerprint": "016750201f48dc71cc6aba94d5d1b0140a5a7ab1371ac32acafee3913fd0d2ef"
+  },
+  {
+   "run": "l4x-base-2",
+   "arm": "base",
+   "stop_reason": "level_target_reached",
+   "levels_completed": 4,
+   "level4_actions": 19,
+   "deaths": 0,
+   "resets": 0,
+   "cost_usd": 1.6496,
+   "model_calls": 30,
+   "output_tokens": 6286,
+   "input_tokens_fresh": 293244,
+   "cache_read_tokens": 388348,
+   "actions": [
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 33,
+     "y": 3
+    },
+    {
+     "a": "ACTION6",
+     "x": 21,
+     "y": 35
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 21,
+     "y": 41
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 33,
+     "y": 57
+    },
+    {
+     "a": "ACTION6",
+     "x": 45,
+     "y": 35
+    },
+    {
+     "a": "ACTION6",
+     "x": 45,
+     "y": 35
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION6",
+     "x": 27,
+     "y": 41
+    }
+   ],
+   "decision_check_stats": null,
+   "plans": [],
+   "run_spec_fingerprint": "016750201f48dc71cc6aba94d5d1b0140a5a7ab1371ac32acafee3913fd0d2ef"
+  },
+  {
+   "run": "l4x-base-3",
+   "arm": "base",
+   "stop_reason": "level_target_reached",
+   "levels_completed": 4,
+   "level4_actions": 23,
+   "deaths": 0,
+   "resets": 0,
+   "cost_usd": 2.1779,
+   "model_calls": 35,
+   "output_tokens": 9157,
+   "input_tokens_fresh": 387237,
+   "cache_read_tokens": 642369,
+   "actions": [
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 33,
+     "y": 27
+    },
+    {
+     "a": "ACTION6",
+     "x": 21,
+     "y": 35
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 33,
+     "y": 41
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 21,
+     "y": 57
+    },
+    {
+     "a": "ACTION6",
+     "x": 45,
+     "y": 35
+    },
+    {
+     "a": "ACTION6",
+     "x": 45,
+     "y": 35
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION6",
+     "x": 27,
+     "y": 41
+    }
+   ],
+   "decision_check_stats": null,
+   "plans": [],
+   "run_spec_fingerprint": "016750201f48dc71cc6aba94d5d1b0140a5a7ab1371ac32acafee3913fd0d2ef"
+  },
+  {
+   "run": "l4x-base-4",
+   "arm": "base",
+   "stop_reason": "level_target_reached",
+   "levels_completed": 4,
+   "level4_actions": 23,
+   "deaths": 0,
+   "resets": 0,
+   "cost_usd": 1.8584,
+   "model_calls": 33,
+   "output_tokens": 8164,
+   "input_tokens_fresh": 316757,
+   "cache_read_tokens": 451841,
+   "actions": [
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 33,
+     "y": 27
+    },
+    {
+     "a": "ACTION6",
+     "x": 21,
+     "y": 35
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 21,
+     "y": 41
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 45,
+     "y": 57
+    },
+    {
+     "a": "ACTION6",
+     "x": 45,
+     "y": 62
+    },
+    {
+     "a": "ACTION6",
+     "x": 33,
+     "y": 57
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION6",
+     "x": 27,
+     "y": 41
+    }
+   ],
+   "decision_check_stats": null,
+   "plans": [],
+   "run_spec_fingerprint": "016750201f48dc71cc6aba94d5d1b0140a5a7ab1371ac32acafee3913fd0d2ef"
+  },
+  {
+   "run": "l4x-dc-1",
+   "arm": "dc",
+   "stop_reason": "level_target_reached",
+   "levels_completed": 4,
+   "level4_actions": 19,
+   "deaths": 0,
+   "resets": 0,
+   "cost_usd": 1.9541,
+   "model_calls": 29,
+   "output_tokens": 8221,
+   "input_tokens_fresh": 342458,
+   "cache_read_tokens": 385148,
+   "actions": [
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 33,
+     "y": 3
+    },
+    {
+     "a": "ACTION6",
+     "x": 21,
+     "y": 35
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 33,
+     "y": 41
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 21,
+     "y": 57
+    },
+    {
+     "a": "ACTION6",
+     "x": 45,
+     "y": 35
+    },
+    {
+     "a": "ACTION6",
+     "x": 45,
+     "y": 35
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION6",
+     "x": 27,
+     "y": 41
+    }
+   ],
+   "decision_check_stats": {
+    "by_reason": {
+     "no plan on file": 1,
+     "your plan's actions are used up": 5
+    },
+    "decision_points": 6,
+    "plan_steps": 11,
+    "plans_filed": 7,
+    "rejected_actions": 0
+   },
+   "plans": [
+    {
+     "at_action": 101,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION6",
+        "col": 33,
+        "row": 3
+       }
+      ],
+      "consequences": "Click could do nothing (1 action wasted) or something irreversible; undo available.",
+      "fewest_steps": "Unknown goal; red at top is the only novel object. Probe costs 1 action. Unseen: what lies beyond walls / goal location.",
+      "options": "Probe red block by clicking (unknown type); alternatively go up the stairs right (2 moves) to top room first."
+     },
+     "result": "Plan filed: 1 action(s). Next planned action: ACTION6(row=3, col=33)."
+    },
+    {
+     "at_action": 102,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION6",
+        "col": 21,
+        "row": 35
+       },
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION3"
+       }
+      ],
+      "consequences": "Might land in bottom-left pit with no way to shaft at cols 43-53; recovery via undo several actions or reset (~4-8 actions).",
+      "fewest_steps": "4 actions to drop and reveal lower area. Unseen: below row 62, any other red/goal.",
+      "options": "Remove green (33,19) and walk left 3 to drop down col 19 into lower area (explore below). Alternative: undo gravity flip (ACTION7) \u2014 upper area appeared dead-ended."
+     },
+     "result": "Plan filed: 4 action(s). Next planned action: ACTION6(row=35, col=21)."
+    },
+    {
+     "at_action": 106,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION4"
+       },
+       {
+        "action": "ACTION4"
+       },
+       {
+        "action": "ACTION6",
+        "col": 33,
+        "row": 41
+       }
+      ],
+      "consequences": "If red clicks don't flip gravity the same way, player may rise elsewhere; undo costs 1-2.",
+      "fewest_steps": "~6 actions to reach shaft at col 43. Unseen: area below row 62 and goal.",
+      "options": "Move right 2 to col 31, click red to flip gravity up (rise to band under greens), walk right to col 43, flip gravity down to fall through right shaft onto 2x2 greens. Alternative: flip now at col 19 (would rise back to top - bad)."
+     },
+     "result": "Plan filed: 3 action(s). Next planned action: ACTION4."
+    },
+    {
+     "at_action": 109,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION4"
+       },
+       {
+        "action": "ACTION4"
+       },
+       {
+        "action": "ACTION6",
+        "col": 21,
+        "row": 57
+       }
+      ],
+      "consequences": "If red doesn't flip down, wasted 1 action; undo possible.",
+      "fewest_steps": "3 actions, then clear 2 greens (2) to drop to bottom room. Unseen: below bottom room.",
+      "options": "Right x2 to col 43, click remaining red (57,21) to flip gravity down, fall onto greens. Alternative: col 49 instead of 43 (same)."
+     },
+     "result": "Plan filed: 3 action(s). Next planned action: ACTION4."
+    },
+    {
+     "at_action": 112,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION6",
+        "col": 45,
+        "row": 35
+       },
+       {
+        "action": "ACTION6",
+        "col": 45,
+        "row": 41
+       }
+      ],
+      "consequences": "Falling may pass below pink band; would need to see floor. ~1-3 extra actions.",
+      "fewest_steps": "2 clicks + ~3 lefts = 5. Unseen: floor below row 62.",
+      "options": "Remove greens (35,45) and (41,45) to drop down col 43 into pink room, then walk left to pink at col 25. Alternative: col 49 greens (same cost)."
+     },
+     "result": "Plan filed: 2 action(s). Next planned action: ACTION6(row=35, col=45)."
+    },
+    {
+     "at_action": 113,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION6",
+        "col": 45,
+        "row": 35
+       }
+      ],
+      "consequences": "Low risk; 1 action.",
+      "fewest_steps": "1 click + ~3 lefts. Unseen floor below row 62.",
+      "options": "Click green (35,45) (screen moved) to drop down. Then see floor and walk left to pink."
+     },
+     "result": "Plan filed: 1 action(s). Next planned action: ACTION6(row=35, col=45)."
+    },
+    {
+     "at_action": 114,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION6",
+        "col": 27,
+        "row": 41
+       }
+      ],
+      "consequences": "If click on red scrolls first, coordinates shift - but red is static on screen until click. Low risk.",
+      "fewest_steps": "4 actions. All relevant area seen.",
+      "options": "Left x3 to col 25 under pink, then click red (41,27) to flip gravity up and rise into pink. Alternative: none cheaper."
+     },
+     "result": "Plan filed: 4 action(s). Next planned action: ACTION3."
+    }
+   ],
+   "run_spec_fingerprint": "88693771489d74f9386828ab3e6b30eb3f941d1782248e0fadcb2539abd55c67"
+  },
+  {
+   "run": "l4x-dc-2",
+   "arm": "dc",
+   "stop_reason": "level_target_reached",
+   "levels_completed": 4,
+   "level4_actions": 19,
+   "deaths": 0,
+   "resets": 0,
+   "cost_usd": 1.8451,
+   "model_calls": 30,
+   "output_tokens": 9941,
+   "input_tokens_fresh": 319172,
+   "cache_read_tokens": 455865,
+   "actions": [
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 33,
+     "y": 3
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION6",
+     "x": 21,
+     "y": 35
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 21,
+     "y": 41
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 33,
+     "y": 57
+    },
+    {
+     "a": "ACTION6",
+     "x": 45,
+     "y": 35
+    },
+    {
+     "a": "ACTION6",
+     "x": 45,
+     "y": 35
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION6",
+     "x": 27,
+     "y": 41
+    }
+   ],
+   "decision_check_stats": {
+    "by_reason": {
+     "no plan on file": 1,
+     "your plan's actions are used up": 8
+    },
+    "decision_points": 9,
+    "plan_steps": 8,
+    "plans_filed": 9,
+    "rejected_actions": 0
+   },
+   "plans": [
+    {
+     "at_action": 101,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION6",
+        "col": 33,
+        "row": 3
+       }
+      ],
+      "consequences": "Click red might do nothing (1 wasted action) or something like gravity flip; worst ~3 actions to undo.",
+      "fewest_steps": "Climb: 2 rights to top room, then ~3 lefts to col 31. Unknown: what red does, what's above it, where goal is.",
+      "options": "Probe red block by clicking (cheap info), or climb the staircase right x2 into top room first. Red is new type; probing tells what it does."
+     },
+     "result": "Plan filed: 1 action(s). Next planned action: ACTION6(row=3, col=33)."
+    },
+    {
+     "at_action": 102,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION3"
+       }
+      ],
+      "checks": [
+       {
+        "after_step": 3,
+        "col": 21,
+        "color": 9,
+        "row": 28
+       }
+      ],
+      "consequences": "Falling to bottom-left of lower room may trap me (wall col 37), costing reset ~4-8 actions.",
+      "fewest_steps": "4 actions to reach lower room via col 19. Unseen: everything below row 63, where cyan shaft at cols 43-53 continues; goal not seen yet.",
+      "options": "Gravity now down (red consumed). Route: left 3 to col 19, click floor green (35,21) to fall into lower room and reveal below. Alt: col 13 green (4 moves+click)."
+     },
+     "result": "Plan filed: 3 action(s). Next planned action: ACTION3."
+    },
+    {
+     "at_action": 105,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION6",
+        "col": 21,
+        "row": 35
+       }
+      ],
+      "consequences": "May land trapped at bottom-left; reset costs ~7.",
+      "fewest_steps": "1 action; reveals lower area. Unseen: below row 63.",
+      "options": "Click green below (35,21) to fall into lower room; only route down. Alt col 13 equivalent."
+     },
+     "result": "Plan filed: 1 action(s). Next planned action: ACTION6(row=35, col=21)."
+    },
+    {
+     "at_action": 106,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION4"
+       },
+       {
+        "action": "ACTION4"
+       }
+      ],
+      "checks": [
+       {
+        "after_step": 2,
+        "col": 33,
+        "color": 9,
+        "row": 28
+       }
+      ],
+      "consequences": "If red flips with player at col 19 it rises under purple = death; so move first. Moves are low risk.",
+      "fewest_steps": "~2+1+2+1+2 = 8 actions. Unseen: below row 63 and goal.",
+      "options": "Move right 2 to col 31 (gravity down, stays row 27), click red to flip gravity up -> rise to under green row, walk right to col 43, flip gravity again with other red, clear 2 greens, fall to bottom room."
+     },
+     "result": "Plan filed: 2 action(s). Next planned action: ACTION4."
+    },
+    {
+     "at_action": 108,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION6",
+        "col": 21,
+        "row": 41
+       }
+      ],
+      "consequences": "If red does something else (e.g. not flip), 1 wasted action.",
+      "fewest_steps": "1 action now, then 2 rights, red, 2 greens.",
+      "options": "Click red (41,21) to flip gravity up; player rises in col 31 to row 21 under green. Alternative: click other red (41,33) \u2014 keep it for later."
+     },
+     "result": "Plan filed: 1 action(s). Next planned action: ACTION6(row=41, col=21)."
+    },
+    {
+     "at_action": 109,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION4"
+       },
+       {
+        "action": "ACTION4"
+       },
+       {
+        "action": "ACTION6",
+        "col": 33,
+        "row": 57
+       }
+      ],
+      "checks": [
+       {
+        "after_step": 2,
+        "col": 45,
+        "color": 9,
+        "row": 38
+       }
+      ],
+      "consequences": "Low risk moves.",
+      "fewest_steps": "2 moves + 1 red + 2 greens. Unseen: below the purple room, goal.",
+      "options": "Right x2 to col 43, click red (57,33) to flip gravity down, then clear greens below col 43 and fall."
+     },
+     "result": "Plan filed: 3 action(s). Next planned action: ACTION4."
+    },
+    {
+     "at_action": 112,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION6",
+        "col": 45,
+        "row": 35
+       }
+      ],
+      "consequences": "Low risk; scroll changes coords, so re-read after click.",
+      "fewest_steps": "~2 clicks + 3 lefts = 5. All seen now.",
+      "options": "Click green (35,45), then the next green below, fall into pink room, walk left 3 to pink."
+     },
+     "result": "Plan filed: 1 action(s). Next planned action: ACTION6(row=35, col=45)."
+    },
+    {
+     "at_action": 113,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION6",
+        "col": 45,
+        "row": 35
+       }
+      ],
+      "consequences": "Low risk.",
+      "fewest_steps": "1 click then few moves. Unseen: room floor below row 62.",
+      "options": "Click green (35,45) to fall into pink room; then figure out reaching pink (row 51 floating)."
+     },
+     "result": "Plan filed: 1 action(s). Next planned action: ACTION6(row=35, col=45)."
+    },
+    {
+     "at_action": 114,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION6",
+        "col": 27,
+        "row": 41
+       }
+      ],
+      "checks": [
+       {
+        "after_step": 3,
+        "col": 27,
+        "color": 9,
+        "row": 28
+       }
+      ],
+      "consequences": "If rising passes pink without winning, end at top of col 25 shaft (no purple above), then need more; ~few actions.",
+      "fewest_steps": "4 actions. All seen.",
+      "options": "Left 3 to col 25 under pink, click red (41,27) to flip gravity up and rise through pink. Alt: flip first and walk at different height (doesn't align)."
+     },
+     "result": "Plan filed: 4 action(s). Next planned action: ACTION3."
+    }
+   ],
+   "run_spec_fingerprint": "88693771489d74f9386828ab3e6b30eb3f941d1782248e0fadcb2539abd55c67"
+  },
+  {
+   "run": "l4x-dc-3",
+   "arm": "dc",
+   "stop_reason": "level_target_reached",
+   "levels_completed": 4,
+   "level4_actions": 23,
+   "deaths": 0,
+   "resets": 0,
+   "cost_usd": 1.8482,
+   "model_calls": 31,
+   "output_tokens": 7282,
+   "input_tokens_fresh": 296925,
+   "cache_read_tokens": 426006,
+   "actions": [
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 33,
+     "y": 27
+    },
+    {
+     "a": "ACTION6",
+     "x": 21,
+     "y": 35
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION6",
+     "x": 45,
+     "y": 41
+    },
+    {
+     "a": "ACTION6",
+     "x": 45,
+     "y": 47
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 21,
+     "y": 41
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 33,
+     "y": 57
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION6",
+     "x": 27,
+     "y": 41
+    }
+   ],
+   "decision_check_stats": {
+    "by_reason": {
+     "no plan on file": 1,
+     "your plan's actions are used up": 5
+    },
+    "decision_points": 6,
+    "plan_steps": 15,
+    "plans_filed": 7,
+    "rejected_actions": 0
+   },
+   "plans": [
+    {
+     "at_action": 101,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION4"
+       },
+       {
+        "action": "ACTION4"
+       }
+      ],
+      "consequences": "Moves are safe (no purple in cols 43/49 path). Worst: wasted 2 actions.",
+      "fewest_steps": "2 moves to reach top room; then probe red (unseen: what red does, what's beyond top wall, any goal).",
+      "options": "Move right twice to climb staircase into top room; or click red block now to probe. Greens below lead to a lower area (but player floats up)."
+     },
+     "result": "Plan filed: 2 action(s). Next planned action: ACTION4."
+    },
+    {
+     "at_action": 103,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION6",
+        "col": 33,
+        "row": 27
+       }
+      ],
+      "consequences": "Red click could be harmful (unknown); worst ~5 actions replay.",
+      "fewest_steps": "1 click probe. Unseen: red's function, anything above, goal location.",
+      "options": "Probe red block by clicking it; alternatives: walk left in corridor (no visible targets), go back down to green blocks."
+     },
+     "result": "Plan filed: 1 action(s). Next planned action: ACTION6(row=27, col=33)."
+    },
+    {
+     "at_action": 104,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION6",
+        "col": 21,
+        "row": 35
+       },
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION3"
+       }
+      ],
+      "checks": [
+       {
+        "after_step": 1,
+        "col": 21,
+        "color": 10,
+        "row": 35
+       }
+      ],
+      "consequences": "Purple hazards are 2 tiles above walking row; risk low. Worst replay ~11.",
+      "fewest_steps": "1 click + 5 left = 6. Unseen: what lies below lower room, goal location.",
+      "options": "Red click flipped gravity (player falls). Open green at col 19 below floor and walk left 5 to fall into lower room; alternative col 13 (6 moves)."
+     },
+     "result": "Plan filed: 6 action(s). Next planned action: ACTION6(row=35, col=21)."
+    },
+    {
+     "at_action": 110,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION6",
+        "col": 45,
+        "row": 41
+       },
+       {
+        "action": "ACTION6",
+        "col": 45,
+        "row": 47
+       },
+       {
+        "action": "ACTION4"
+       },
+       {
+        "action": "ACTION4"
+       },
+       {
+        "action": "ACTION4"
+       },
+       {
+        "action": "ACTION4"
+       }
+      ],
+      "checks": [
+       {
+        "after_step": 1,
+        "col": 45,
+        "color": 10,
+        "row": 41
+       },
+       {
+        "after_step": 2,
+        "col": 45,
+        "color": 10,
+        "row": 47
+       }
+      ],
+      "consequences": "Falling into lower room near purple hazards at col 37 adjacent; worst death replay ~17.",
+      "fewest_steps": "2 clicks + 4 moves = 6. Unseen: below lower room, goal.",
+      "options": "Clear greens at col 43 (rows 39-43, 45-49) then walk right 4 to fall down shaft into lower room. Alternative col 49 same cost."
+     },
+     "result": "Plan filed: 6 action(s). Next planned action: ACTION6(row=41, col=45)."
+    },
+    {
+     "at_action": 112,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION4"
+       },
+       {
+        "action": "ACTION4"
+       },
+       {
+        "action": "ACTION6",
+        "col": 21,
+        "row": 41
+       }
+      ],
+      "consequences": "If red is global toggle as assumed, fine; if gravity flip behaves differently, a few wasted actions (~3).",
+      "fewest_steps": "2+1+2+1 = 6. Unseen: whether reds are single-use, below lower room.",
+      "options": "Wall block at col 37 rows 26-37 blocks floor path. Route: move right to col 31, click red (gravity up) rise to rows 21-25, move right 2 to col 43, click other red (gravity down) fall down shaft."
+     },
+     "result": "Plan filed: 3 action(s). Next planned action: ACTION4."
+    },
+    {
+     "at_action": 115,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION4"
+       },
+       {
+        "action": "ACTION4"
+       },
+       {
+        "action": "ACTION6",
+        "col": 33,
+        "row": 57
+       }
+      ],
+      "consequences": "If last red consumed and gravity stuck, may need reset (~17). Low risk.",
+      "fewest_steps": "2 moves + 1 click = 3. Unseen: lower room bottom, goal.",
+      "options": "Move right 2 to col 43 (under greens), click remaining red (57,33) to flip gravity down, fall down col 43 shaft. Alt: col 49."
+     },
+     "result": "Plan filed: 3 action(s). Next planned action: ACTION4."
+    },
+    {
+     "at_action": 118,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION6",
+        "col": 27,
+        "row": 41
+       }
+      ],
+      "consequences": "Col 25 has no purple overhead; worst case overshoot to top, ~2 extra actions.",
+      "fewest_steps": "3 moves + 1 click = 4. Unseen: whether rising passes pink without win.",
+      "options": "Walk left 3 to col 25 (below pink), click red (41,27) to flip gravity up and rise into pink. Alt: flip first then walk at ceiling height (purple risk)."
+     },
+     "result": "Plan filed: 4 action(s). Next planned action: ACTION3."
+    }
+   ],
+   "run_spec_fingerprint": "88693771489d74f9386828ab3e6b30eb3f941d1782248e0fadcb2539abd55c67"
+  },
+  {
+   "run": "l4x-dc-4",
+   "arm": "dc",
+   "stop_reason": "level_target_reached",
+   "levels_completed": 4,
+   "level4_actions": 19,
+   "deaths": 0,
+   "resets": 0,
+   "cost_usd": 1.7202,
+   "model_calls": 27,
+   "output_tokens": 7421,
+   "input_tokens_fresh": 305838,
+   "cache_read_tokens": 321547,
+   "actions": [
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 33,
+     "y": 3
+    },
+    {
+     "a": "ACTION6",
+     "x": 21,
+     "y": 35
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION6",
+     "x": 45,
+     "y": 41
+    },
+    {
+     "a": "ACTION6",
+     "x": 45,
+     "y": 47
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 21,
+     "y": 41
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION4"
+    },
+    {
+     "a": "ACTION6",
+     "x": 33,
+     "y": 57
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION3"
+    },
+    {
+     "a": "ACTION6",
+     "x": 27,
+     "y": 41
+    }
+   ],
+   "decision_check_stats": {
+    "by_reason": {
+     "no plan on file": 1,
+     "your plan's actions are used up": 5
+    },
+    "decision_points": 6,
+    "plan_steps": 11,
+    "plans_filed": 6,
+    "rejected_actions": 0
+   },
+   "plans": [
+    {
+     "at_action": 101,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION6",
+        "col": 33,
+        "row": 3
+       }
+      ],
+      "consequences": "Clicking red might do nothing (1 wasted action) or trigger something; unlikely death since player not moving.",
+      "fewest_steps": "Unknown goal; red is only new object. Probe costs 1 action. Climbing right takes 2 actions to reach the top room.",
+      "options": "Probe: click new red block (row 3,col 33) to learn its effect; alternatively continue climbing right (ACTION4 x2) to reach top room first."
+     },
+     "result": "Plan filed: 1 action(s). Next planned action: ACTION6(row=3, col=33)."
+    },
+    {
+     "at_action": 102,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION6",
+        "col": 21,
+        "row": 35
+       },
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION3"
+       }
+      ],
+      "consequences": "Falling to lower-left room may strand behind nub at col 37; would then need gravity flip (red off-screen). Worst: reset, ~4+4 actions.",
+      "fewest_steps": "A: 4 actions, reveals lower area. Unseen: everything below row 62 and any goal (pink).",
+      "options": "Gravity now down. Route A: click green (34,21), walk left 3 to col 19 and fall to the lower-left room, revealing below. Route B: probe clicking a non-red cell to test if any click flips gravity."
+     },
+     "result": "Plan filed: 4 action(s). Next planned action: ACTION6(row=35, col=21)."
+    },
+    {
+     "at_action": 106,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION6",
+        "col": 45,
+        "row": 41
+       },
+       {
+        "action": "ACTION6",
+        "col": 45,
+        "row": 47
+       },
+       {
+        "action": "ACTION4"
+       },
+       {
+        "action": "ACTION4"
+       }
+      ],
+      "consequences": "If red click does not flip as expected, waste 1-2 actions; worst reset ~8 actions.",
+      "fewest_steps": "~8 actions. Unseen: below row 62, goal location.",
+      "options": "Path: clear greens at col 43 (rows 41,47), move right 2 to col 31, flip gravity via red (rise to row 21-25 tile), move right 2 to col 43, flip again to fall through cleared column into lower room. Alt: clear col 49 greens instead."
+     },
+     "result": "Plan filed: 4 action(s). Next planned action: ACTION6(row=41, col=45)."
+    },
+    {
+     "at_action": 110,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION6",
+        "col": 21,
+        "row": 41
+       }
+      ],
+      "consequences": "If player rises further than expected (unlikely, wall above), 1-2 actions lost.",
+      "fewest_steps": "4 more actions to fall through col 43. Unseen: below row 62.",
+      "options": "Click red (41,21) to flip gravity up; expect rise to rows 21-25 at col 31. Then right x2 and flip again."
+     },
+     "result": "Plan filed: 1 action(s). Next planned action: ACTION6(row=41, col=21)."
+    },
+    {
+     "at_action": 111,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION4"
+       },
+       {
+        "action": "ACTION4"
+       },
+       {
+        "action": "ACTION6",
+        "col": 33,
+        "row": 57
+       }
+      ],
+      "consequences": "Falling may land somewhere unknown; worst reset ~13 actions.",
+      "fewest_steps": "3 actions. Unseen: below the purple room.",
+      "options": "Right x2 to col 43, then click remaining red (57,33) to flip gravity down, falling through cleared col 43 into purple room below. Alt: fall via the opened col 19 hole (but purples at col 19 below)."
+     },
+     "result": "Plan filed: 3 action(s). Next planned action: ACTION4."
+    },
+    {
+     "at_action": 114,
+     "args": {
+      "actions": [
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION3"
+       },
+       {
+        "action": "ACTION6",
+        "col": 27,
+        "row": 41
+       }
+      ],
+      "consequences": "If gravity flip does not happen, 1 wasted action; col 25 above pink is open cyan so no hazard.",
+      "fewest_steps": "4 actions. Everything needed is visible.",
+      "options": "Walk left 3 tiles to col 25 under pink, then click red (41,27) to flip gravity up and rise into pink. Alt: flip first then walk \u2014 would rise at col 43 into upper shaft, bad."
+     },
+     "result": "Plan filed: 4 action(s). Next planned action: ACTION3."
+    }
+   ],
+   "run_spec_fingerprint": "88693771489d74f9386828ab3e6b30eb3f941d1782248e0fadcb2539abd55c67"
+  }
+ ]
+}

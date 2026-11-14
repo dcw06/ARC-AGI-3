@@ -63,19 +63,33 @@ with `scorecard.json`, `summary.txt` and one folder per game (`logs.txt`, `logs_
 
 ## Run log
 
-### opus5-bp35-a (in progress when this was written, 2026-11-09 18:31 PST)
+### opus5-bp35-a (2026-11-09, 17:26 to 19:02 PST): ended early, 5 of 9 levels
 
 bp35, Opus 5, high effort, hint-free prompt, up to 1,000 actions, on the subscription.
 Scorecard: <https://arcprize.org/scorecards/90586038-8b64-49ca-8845-73537a6b5eb3>
+Official totals: 5 levels, 185 actions, score 33.33 (the maximum for five bp35 levels).
 
-| Level | This run | Tycho + Opus 5 | Strands + Opus 5 | Human baseline |
+The run did not finish. One request to the ARC API was dropped on action 186; the harness
+treated it as fatal and closed the scorecard, which ends the game. The agent had not failed.
+
+Actions per level, every action counted (resets included), from the harness log:
+
+| Level | This run | Strands + Opus 5 | Tycho + Opus 5 | Human baseline |
 |---|---|---|---|---|
-| 1 | 26 | 17 | 24 | 21 |
-| 2 | 48 (one death) | 47 | 52 | 48 |
-| 3 | 34 | 35 | 42 | 44 |
+| 1 | 26 | 24 | 17 | 21 |
+| 2 | 47 (one death) | 52 | 47 | 48 |
+| 3 | 34 | 42 | 35 | 44 |
+| 4 | 42 (one restart) | 26 | 31 | 38 |
+| 5 | 30 | 32 | 32 | 33 |
+| Levels 1-5 | 179 | 176 | 162 | 184 |
 
-Snapshot: 113 actions, 30 agent turns, 65 minutes, on level 4. Level 3 was cleared in one
-attempt at the proven minimum of 34 actions. Final numbers are not in yet.
+Level 6 had 6 actions played when the run ended. 46 agent turns, 97 minutes, about $45 of
+notional usage, no context compaction.
+
+Fix applied locally afterwards: the retry wrapper in `prolong_agent/environment/runner.py` now
+also retries the error raised for a dropped connection (it only retried a different exception
+type before). Tested with a simulated failure. A retried action could be applied twice if the
+first request did reach the server; the board logged afterwards is still the true one.
 
 ## Notes from setting it up
 

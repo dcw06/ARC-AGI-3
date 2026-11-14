@@ -1,0 +1,879 @@
+diff -ruN -x .venv -x .git -x __pycache__ -x results -x *.egg-info -x .pytest_cache -x environment_files -x artifacts -x .cache a/tests/agent/test_decision_check.py b/tests/agent/test_decision_check.py
+--- a/tests/agent/test_decision_check.py	1969-12-31 16:00:00
++++ b/tests/agent/test_decision_check.py	2026-11-09 20:33:10
+@@ -0,0 +1,161 @@
++"""Decision check (TYCHO_DECISION_CHECK): decision points vs plan steps."""
++from __future__ import annotations
++
++import os
++from tempfile import TemporaryDirectory
++from types import SimpleNamespace
++
++from arcengine import GameAction
++
++from tycho.agent.decision_check import DecisionCheck
++
++A = [GameAction.ACTION1, GameAction.ACTION2, GameAction.ACTION6, GameAction.RESET]
++PLAN = {"options": "go right, or go up", "fewest_steps": "right is 3, up is 5; top unseen",
++        "consequences": "worst case a wasted move"}
++
++
++def _grid(v=0, cell00=None):
++    g = [[v] * 64 for _ in range(64)]
++    if cell00 is not None:
++        g[0][0] = cell00
++    return g
++
++
++# ---------------------------------------------------------------- pure logic
++
++def test_boundary_events_in_order():
++    dc = DecisionCheck()
++    line = dc.observe(_grid(0), turn_in_level=0, new_level=False, new_attempt=False)
++    assert "DECISION POINT (no plan on file)" in line and dc.gate({"action": "ACTION1"}).startswith("Action NOT committed")
++    assert dc.file_plan({**PLAN, "actions": [{"action": "ACTION1"}, {"action": "ACTION6", "row": 3, "col": 4}],
++                         "checks": [{"after_step": 1, "row": 0, "col": 0, "color": 5}]}).startswith("Plan filed: 2")
++    assert dc.gate({"action": "ACTION2"}).startswith("Action NOT committed: it departs")       # departure
++    assert dc.gate({"action": "ACTION1"}) == ""
++    dc.after_action({"action": "ACTION1", "row": None, "col": None})
++    line = dc.observe(_grid(1, cell00=5), turn_in_level=1, new_level=False, new_attempt=False)  # check holds
++    assert line.startswith("Decision check: plan step 2 of 2. Next planned action: ACTION6(row=3, col=4)")
++    assert dc.gate({"action": "ACTION6", "row": 3, "col": 5}) != "" and dc.gate({"action": "ACTION6", "row": 3, "col": 4}) == ""
++    dc.after_action({"action": "ACTION6", "row": 3, "col": 4})
++    line = dc.observe(_grid(2), turn_in_level=2, new_level=False, new_attempt=False)
++    assert "your plan's actions are used up" in line and "used 2 action(s)" in line             # exhausted
++    assert dc.stats["decision_points"] == 2 and dc.stats["plan_steps"] == 1 and dc.stats["rejected_actions"] == 3
++
++
++def test_surprises_and_starts():
++    dc = DecisionCheck()
++    dc.observe(_grid(0), turn_in_level=0, new_level=False, new_attempt=False)
++    dc.file_plan({**PLAN, "actions": ["ACTION1", "ACTION1", "ACTION1"],
++                  "checks": [{"after_step": 2, "row": 0, "col": 0, "color": 7}]})
++    dc.after_action({"action": "ACTION1"})
++    assert "changed nothing on screen" in dc.observe(_grid(0), turn_in_level=1, new_level=False, new_attempt=False)
++    dc.file_plan({**PLAN, "actions": ["ACTION1", "ACTION1"], "checks": [{"after_step": 1, "row": 0, "col": 0, "color": 7}]})
++    dc.after_action({"action": "ACTION1"})
++    assert "your check failed" in dc.observe(_grid(3, cell00=6), turn_in_level=2, new_level=False, new_attempt=False)
++    dc.file_plan({**PLAN, "actions": ["ACTION1", "ACTION1"]})
++    dc.after_action({"action": "RESET"})                                         # taken outside the gate
++    line = dc.observe(_grid(4), turn_in_level=4, new_level=False, new_attempt=True)
++    assert "start of a new attempt" in line and "used 0 action(s)" in line
++    dc.file_plan({**PLAN, "actions": ["ACTION1", "ACTION1"]})
++    dc.after_action({"action": "ACTION1"})
++    assert "start of a new level" in dc.observe(_grid(5), turn_in_level=0, new_level=True, new_attempt=False)
++    assert dc.plan is None
++
++
++def test_invalid_plans_are_refused():
++    dc = DecisionCheck()
++    assert "answer consequences" in dc.file_plan({"options": "a", "fewest_steps": "b", "actions": ["ACTION1"]})
++    assert "non-empty" in dc.file_plan({**PLAN, "actions": []})
++    assert "not one of" in dc.file_plan({**PLAN, "actions": ["JUMP"]})
++    assert "needs integer row and col" in dc.file_plan({**PLAN, "actions": [{"action": "ACTION6", "row": 70, "col": 1}]})
++    assert "check out of range" in dc.file_plan({**PLAN, "actions": ["ACTION1"],
++                                                 "checks": [{"after_step": 2, "row": 0, "col": 0, "color": 1}]})
++    assert dc.plan is None
++
++
++# ---------------------------------------------------------------- wired into the actor
++
++def _env(on: bool) -> dict:
++    old = dict(os.environ)
++    os.environ.update({"LLM_MODEL": "dummy", "LLM_BACKEND": "openai", "LLM_BASE_URL": "http://127.0.0.1:9",
++                       "LLM_API_KEY": "dummy", "MPLCONFIGDIR": "/private/tmp", "TYCHO_MODE": "single",
++                       "TYCHO_VISION": "0", "TYCHO_TEXT_GRID": "full", "TYCHO_SANDBOX_RUNTIME": "host"})
++    os.environ.pop("TYCHO_DECISION_CHECK", None)
++    if on:
++        os.environ["TYCHO_DECISION_CHECK"] = "1"
++    return old
++
++
++def _frame(grid):
++    return SimpleNamespace(frame=[grid], levels_completed=0, state="NOT_FINISHED")
++
++
++def _take(i, action, **kw):
++    return {"id": f"a{i}", "name": "take_action", "input": {"action": action, **kw}}
++
++
++def _stub(script):
++    from tycho.agent.agent import TychoAgent
++
++    class Stub(TychoAgent):
++        def __init__(self):
++            super().__init__()
++            self.script = list(script)
++
++        def _chat(self, call_type, max_tokens=None):
++            return {"text": "", "tool_calls": self.script.pop(0)}
++    return Stub()
++
++
++def _tool_outputs(agent):
++    return [r.get("output", "") for m in agent.history if m.get("role") == "tool" for r in m.get("results", [])]
++
++
++def _user_texts(agent):
++    return [p.get("text", "") for m in agent.history if m.get("role") == "user" and isinstance(m.get("content"), list)
++            for p in m["content"] if isinstance(p, dict)]
++
++
++def test_actor_requires_plan_then_follows_it():
++    old = _env(on=True)
++    try:
++        plan = {"id": "p1", "name": "commit_plan", "input": {**PLAN, "actions": [
++            {"action": "ACTION1"}, {"action": "ACTION2"}]}}
++        agent = _stub([
++            [_take(1, "ACTION1")],                       # no plan yet -> refused
++            [plan, _take(2, "ACTION1")],                 # plan + first step in one response -> committed
++            [_take(3, "ACTION1")],                       # departure from the plan -> refused
++            [_take(4, "ACTION2")],                       # next planned action -> committed
++        ])
++        assert "Decision check (active in this run)" in agent._sys
++        names = [t["name"] for t in agent._tools_spec]
++        assert names.index("commit_plan") == names.index("take_action") - 1
++        with TemporaryDirectory() as td:
++            agent.reset("dc_game", A, ws_root=td)
++            c1 = agent.choose_action([], _frame(_grid(0)), A)
++            assert c1.action.name == "ACTION1" and c1.reasoning["decision_check"]["decision_point"] is True
++            c2 = agent.choose_action([], _frame(_grid(1)), A)
++            assert c2.action.name == "ACTION2" and c2.reasoning["decision_check"]["plan_step"] == 2
++            outs, texts = _tool_outputs(agent), _user_texts(agent)
++            assert sum(o.startswith("Action NOT committed: this is a decision point") for o in outs) == 1
++            assert sum(o.startswith("Action NOT committed: it departs from your plan") for o in outs) == 1
++            assert sum(o.startswith("Plan filed: 2 action(s)") for o in outs) == 1
++            assert any(t.startswith("Decision check: DECISION POINT (no plan on file)") for t in texts)
++            assert any(t.startswith("Decision check: plan step 2 of 2. Next planned action: ACTION2") for t in texts)
++            assert c2.reasoning["decision_check"]["stats"]["rejected_actions"] == 2
++    finally:
++        os.environ.clear(); os.environ.update(old)
++
++
++def test_off_by_default_changes_nothing():
++    old = _env(on=False)
++    try:
++        agent = _stub([[_take(1, "ACTION1")]])
++        assert "Decision check" not in agent._sys
++        assert "commit_plan" not in [t["name"] for t in agent._tools_spec]
++        with TemporaryDirectory() as td:
++            agent.reset("dc_game_off", A, ws_root=td)
++            c = agent.choose_action([], _frame(_grid(0)), A)
++            assert c.action.name == "ACTION1" and "decision_check" not in c.reasoning
++            assert not any("Decision check" in t for t in _user_texts(agent))
++    finally:
++        os.environ.clear(); os.environ.update(old)
+diff -ruN -x .venv -x .git -x __pycache__ -x results -x *.egg-info -x .pytest_cache -x environment_files -x artifacts -x .cache a/tests/agent/test_restart_challenge.py b/tests/agent/test_restart_challenge.py
+--- a/tests/agent/test_restart_challenge.py	1969-12-31 16:00:00
++++ b/tests/agent/test_restart_challenge.py	2026-11-09 23:18:33
+@@ -0,0 +1,160 @@
++"""Restart challenge (TYCHO_RESTART_CHALLENGE) and the level prefix guard (TYCHO_LEVEL_PREFIX_GUARD)."""
++from __future__ import annotations
++
++import os
++from tempfile import TemporaryDirectory
++from types import SimpleNamespace
++
++import pytest
++from arcengine import GameAction, GameState
++
++from tycho.harness.agent import ActionChoice
++from tycho.harness.harness import run_env
++
++A = [GameAction.ACTION1, GameAction.ACTION2, GameAction.RESET]
++
++
++def _env(on: bool) -> dict:
++    old = dict(os.environ)
++    os.environ.update({"LLM_MODEL": "dummy", "LLM_BACKEND": "openai", "LLM_BASE_URL": "http://127.0.0.1:9",
++                       "LLM_API_KEY": "dummy", "MPLCONFIGDIR": "/private/tmp", "TYCHO_MODE": "single",
++                       "TYCHO_VISION": "0", "TYCHO_TEXT_GRID": "full", "TYCHO_SANDBOX_RUNTIME": "host"})
++    for k in ("TYCHO_RESTART_CHALLENGE", "TYCHO_DECISION_CHECK"):
++        os.environ.pop(k, None)
++    if on:
++        os.environ["TYCHO_RESTART_CHALLENGE"] = "1"
++    return old
++
++
++def _frame(v):
++    return SimpleNamespace(frame=[[[v] * 64 for _ in range(64)]], levels_completed=0, state="NOT_FINISHED")
++
++
++def _take(i, action):
++    return {"id": f"a{i}", "name": "take_action", "input": {"action": action}}
++
++
++def _stub(script):
++    from tycho.agent.agent import TychoAgent
++
++    class Stub(TychoAgent):
++        def __init__(self):
++            super().__init__()
++            self.script = list(script)
++
++        def _chat(self, call_type, max_tokens=None):
++            return {"text": "", "tool_calls": self.script.pop(0)}
++    return Stub()
++
++
++def _outputs(agent):
++    return [r.get("output", "") for m in agent.history if m.get("role") == "tool" for r in m.get("results", [])]
++
++
++def test_first_chosen_reset_is_challenged_once_then_committed():
++    old = _env(on=True)
++    try:
++        agent = _stub([[_take(1, "ACTION1")], [_take(2, "RESET")], [_take(3, "RESET")]])
++        with TemporaryDirectory() as td:
++            agent.reset("rc_game", A, ws_root=td)
++            assert agent.choose_action([], _frame(0), A).action.name == "ACTION1"
++            c = agent.choose_action([], _frame(1), A)
++            assert c.action.name == "RESET" and c.reasoning["restart_challenges"] == 1
++            outs = _outputs(agent)
++            assert sum(o.startswith("RESET not committed yet (restart check). This attempt has used 1 action(s)") for o in outs) == 1
++            assert outs[-1].startswith("Action committed")
++    finally:
++        os.environ.clear(); os.environ.update(old)
++
++
++def test_challenge_can_be_answered_by_playing_on():
++    old = _env(on=True)
++    try:
++        agent = _stub([[_take(1, "RESET")], [_take(2, "ACTION2")]])
++        with TemporaryDirectory() as td:
++            agent.reset("rc_game2", A, ws_root=td)
++            assert agent.choose_action([], _frame(0), A).action.name == "ACTION2"
++    finally:
++        os.environ.clear(); os.environ.update(old)
++
++
++def test_reset_is_untouched_when_off():
++    old = _env(on=False)
++    try:
++        agent = _stub([[_take(1, "ACTION1")], [_take(2, "RESET")]])
++        with TemporaryDirectory() as td:
++            agent.reset("rc_game3", A, ws_root=td)
++            agent.choose_action([], _frame(0), A)
++            c = agent.choose_action([], _frame(1), A)
++            assert c.action.name == "RESET" and "restart_challenges" not in c.reasoning
++            assert not any("restart check" in o for o in _outputs(agent))
++    finally:
++        os.environ.clear(); os.environ.update(old)
++
++
++# ---------------------------------------------------------------- prefix guard (harness)
++
++class _Env:
++    def __init__(self):
++        self.n = 0
++
++    def _frame(self):
++        return SimpleNamespace(frame=[[[self.n]]], levels_completed=self.n // 3, state=GameState.NOT_FINISHED,
++                               available_actions=[1, 2, 6])
++
++    def reset(self):
++        return self._frame()
++
++    def step(self, action, data=None, reasoning=None):
++        self.n += 1
++        return self._frame()
++
++
++class _Arcade:
++    def __init__(self):
++        self.env = _Env()
++
++    def make(self, game_id, seed=0, scorecard_id=None):
++        return self.env
++
++
++class _Scripted:
++    calls = 0
++    max_calls = 10_000
++    builder = None
++
++    def __init__(self, script):
++        self.script = list(script)
++
++    def reset(self, game_id, available_actions):
++        pass
++
++    def is_done(self, frames, latest_frame):
++        return False
++
++    def choose_action(self, frames, latest_frame, available_actions):
++        return self.script.pop(0)
++
++
++LEVEL1 = [ActionChoice(GameAction.ACTION1)] * 3      # level 1 completes after three actions
++
++
++@pytest.mark.parametrize("second, expect_stop, expect_actions", [
++    (ActionChoice(GameAction.ACTION6, x=11, y=21), "prefix_reached", 5),      # click within 2 cells
++    (ActionChoice(GameAction.ACTION6, x=20, y=20), "prefix_deviation", 5),
++    (ActionChoice(GameAction.ACTION1), "prefix_deviation", 5),
++])
++def test_prefix_guard_stops_on_match_or_deviation(monkeypatch, second, expect_stop, expect_actions):
++    monkeypatch.setenv("TYCHO_LEVEL_PREFIX_GUARD", "2:ACTION2,ACTION6@20@10")
++    arc = _Arcade()
++    agent = _Scripted(LEVEL1 + [ActionChoice(GameAction.ACTION2), second] + [ActionChoice(GameAction.ACTION1)] * 5)
++    rec = run_env(agent, arc, "guard-game", [10, 10, 10, 10], keep_trace=True)
++    assert rec.stop_reason == expect_stop and arc.env.n == expect_actions
++
++
++def test_prefix_guard_off_by_default(monkeypatch):
++    monkeypatch.delenv("TYCHO_LEVEL_PREFIX_GUARD", raising=False)
++    monkeypatch.setenv("TYCHO_MAX_GAME_ACTIONS", "7")
++    arc = _Arcade()
++    rec = run_env(_Scripted([ActionChoice(GameAction.ACTION1)] * 9), arc, "guard-game", [10, 10, 10, 10], keep_trace=True)
++    assert rec.stop_reason == "game_action_limit" and arc.env.n == 7
+diff -ruN -x .venv -x .git -x __pycache__ -x results -x *.egg-info -x .pytest_cache -x environment_files -x artifacts -x .cache a/tests/test_local_stop_after_levels.py b/tests/test_local_stop_after_levels.py
+--- a/tests/test_local_stop_after_levels.py	1969-12-31 16:00:00
++++ b/tests/test_local_stop_after_levels.py	2026-11-09 20:11:25
+@@ -0,0 +1,71 @@
++"""Test for the local TYCHO_STOP_AFTER_LEVELS experiment switch."""
++from __future__ import annotations
++
++from types import SimpleNamespace
++
++import pytest
++from arcengine import GameAction, GameState
++
++from tycho.harness.agent import ActionChoice
++from tycho.harness.harness import run_env
++
++
++class _Env:
++    """Completes one level every 3 actions; four levels in total."""
++
++    def __init__(self):
++        self.actions = []
++
++    def _frame(self):
++        done = len(self.actions) // 3
++        state = GameState.WIN if done >= 4 else GameState.NOT_FINISHED
++        return SimpleNamespace(frame=[[[len(self.actions)]]], levels_completed=min(done, 4), state=state,
++                               available_actions=[1])
++
++    def reset(self):
++        return self._frame()
++
++    def step(self, action, data=None, reasoning=None):
++        self.actions.append(action)
++        return self._frame()
++
++
++class _Arcade:
++    def __init__(self):
++        self.env = _Env()
++
++    def make(self, game_id, seed=0, scorecard_id=None):
++        return self.env
++
++
++class _Agent:
++    calls = 0
++    max_calls = 10_000
++    builder = None
++
++    def reset(self, game_id, available_actions):
++        pass
++
++    def is_done(self, frames, latest_frame):
++        return False
++
++    def choose_action(self, frames, latest_frame, available_actions):
++        return ActionChoice(GameAction.ACTION1)
++
++
++@pytest.mark.parametrize("target", [1, 2, 3])
++def test_stops_exactly_when_target_levels_completed(monkeypatch, target):
++    monkeypatch.setenv("TYCHO_STOP_AFTER_LEVELS", str(target))
++    arc = _Arcade()
++    rec = run_env(_Agent(), arc, "lvl-game", [10, 10, 10, 10], keep_trace=True)
++    assert len(arc.env.actions) == 3 * target       # no action is sent after the target level
++    assert rec.stop_reason == "level_target_reached"
++    assert rec.levels_completed == target
++    assert [r["actions_taken"] for r in rec.level_results] == [3] * target
++
++
++def test_off_by_default_plays_to_win(monkeypatch):
++    monkeypatch.delenv("TYCHO_STOP_AFTER_LEVELS", raising=False)
++    arc = _Arcade()
++    rec = run_env(_Agent(), arc, "lvl-game", [10, 10, 10, 10], keep_trace=True)
++    assert rec.stop_reason == "win" and len(arc.env.actions) == 12
+diff -ruN -x .venv -x .git -x __pycache__ -x results -x *.egg-info -x .pytest_cache -x environment_files -x artifacts -x .cache a/tycho/agent/agent.py b/tycho/agent/agent.py
+--- a/tycho/agent/agent.py	2026-11-08 21:10:02
++++ b/tycho/agent/agent.py	2026-11-09 23:18:49
+@@ -232,6 +232,24 @@
+             "actor.system", colormap=_COLORMAP, wm_variant=self._mode_spec.wm_variant,
+             vision=self.vision, show_grid=self.show_grid, show_diff=self.show_diff,
+             lossless_cells=_img_lossless, meta_reflect=self.settings.meta_reflect)
++        # Local experiment (TYCHO_DECISION_CHECK=1): decision points vs plan steps. Off by default,
++        # in which case the prompt and tool set are exactly the upstream ones.
++        self._dc_enabled = os.environ.get("TYCHO_DECISION_CHECK", "").strip().lower() in ("1", "on", "true", "yes")
++        # Local experiment (TYCHO_RESTART_CHALLENGE=1): the first RESET the agent chooses in an attempt
++        # is not committed; it gets one message asking what is still unseen or untried. A second RESET
++        # is committed. Nothing else changes, and nothing changes at all unless the agent picks RESET.
++        self._rc_enabled = os.environ.get("TYCHO_RESTART_CHALLENGE", "").strip().lower() in ("1", "on", "true", "yes")
++        self._rc_challenged = False
++        self._rc_attempt_start_turn = 0
++        self._rc_count = 0
++        self._dc = None
++        if self._dc_enabled:
++            from tycho.agent.decision_check import SYSTEM_TEXT as _DC_SYSTEM, TOOL_SPEC as _DC_TOOL
++            self._sys = self._sys + "\n\n" + _DC_SYSTEM
++            specs = [copy.deepcopy(t) for t in self._tools_spec]
++            at = next((i for i, t in enumerate(specs) if canonical(t.get("name", "")) == "take_action"), len(specs))
++            specs.insert(at, copy.deepcopy(_DC_TOOL))
++            self._tools_spec = specs
+         self.animation_summary_enabled = self.settings.animation_summary and self.vision
+         self.animation_summary_video_enabled = (
+             self.settings.animation_summary_video and _supports_animation_video(self.cfg)
+@@ -292,6 +310,9 @@
+                                 seed_world_model=wm_enabled)
+         self.exec = ToolExecutor(self.ws, wm_feedback_enabled=wm_enabled)
+         self.history: list[dict] = []     # the one growing conversation
++        if self._dc_enabled:
++            from tycho.agent.decision_check import DecisionCheck
++            self._dc = DecisionCheck()
+         self.calls = 0
+         self.token_stats = {"tokens_in": 0, "tokens_out": 0, "cache_read": 0, "cache_write": 0,
+                             "latency_ms": 0, "length_stops": 0, "max_tokens_out": 0,
+@@ -550,6 +571,14 @@
+             ))
+         frame_boundary = getattr(self, "_pending_frame_boundary", None)
+         content.append({"text": self._frame_message(grid, state, avail, frame_boundary)})
++        if self._rc_enabled and (level_just_completed or frame_boundary == "attempt_restart"
++                                 or had_game_over_event):
++            self._rc_challenged = False
++            self._rc_attempt_start_turn = 0 if level_just_completed else self.turn_in_level
++        if self._dc is not None:
++            content.append({"text": self._dc.observe(
++                grid, turn_in_level=self.turn_in_level, new_level=level_just_completed,
++                new_attempt=(frame_boundary == "attempt_restart" or had_game_over_event))})
+         self._pending_frame_boundary = None
+         png = self.ws.current_png(self.level, self.turn_in_level) if self.vision else None
+         if png is not None:
+@@ -598,6 +627,11 @@
+             self._dispatch(Event.LEVEL_START, {"level": self.level, "at_level_start": True})
+         choice, trace = self._run_until_action(available_actions)
+         self._last_tool_trace = trace
++        _dc_record = None
++        if self._dc is not None:
++            self._dc.after_action({"action": choice.action.name,
++                                   "row": getattr(choice, "y", None), "col": getattr(choice, "x", None)})
++            _dc_record = {**self._dc.turn, "stats": copy.deepcopy(self._dc.stats)}
+         token_delta = {
+             k: int(self.token_stats.get(k, 0)) - int(_token_stats_before.get(k, 0))
+             for k in self.token_stats
+@@ -613,6 +647,10 @@
+         if self._log_io:
+             from tycho.serving.llm_client import take_recording
+             choice.reasoning["llm_calls"] = take_recording()
++        if _dc_record is not None:
++            choice.reasoning["decision_check"] = _dc_record
++        if self._rc_enabled:
++            choice.reasoning["restart_challenges"] = self._rc_count
+         self._last_action = choice.action.name
+         self._last_committed_control = choice.action.name
+         # (Trigger-mode builder now fires at the START of the turn — see above — so the actor's
+@@ -1846,10 +1884,23 @@
+             action_choice = None
+             action_trace_args = None
+             invalid_action_msg = ""
++            # Decision check: plans in this batch are filed first, so a plan and its first action
++            # may arrive in one response.
++            dc_outputs = {}
++            if self._dc is not None:
++                for c in calls:
++                    if canonical(c["name"]) == "commit_plan":
++                        dc_outputs[c["id"]] = self._dc.file_plan(c.get("input", {}))
++                        trace.append({"tool": "commit_plan", "args": c.get("input", {}),
++                                      "result": dc_outputs[c["id"]]})
+             if act_call is not None:
+                 action_choice, action_trace_args, invalid_action_msg = self._prepare_take_action(
+                     act_call.get("input", {}), available_actions
+                 )
++                if self._dc is not None and not invalid_action_msg:
++                    invalid_action_msg = self._dc.gate(action_trace_args)
++                    if invalid_action_msg:
++                        action_choice = None
+             defer_action = (
+                 act_call is not None
+                 and not invalid_action_msg
+@@ -1875,6 +1926,8 @@
+                                          if defer_action else
+                                          "Action committed. The resulting frame is shown next.")
+                                     )})
++                elif cn == "commit_plan" and c["id"] in dc_outputs:
++                    results.append({"id": c["id"], "name": c["name"], "output": dc_outputs[c["id"]]})
+                 elif cn == "set_verbosity":
+                     # agent-steered context control: it picks full/diff/none for the frame text
+                     results.append({"id": c["id"], "name": c["name"], "output": self._set_verbosity(c["input"])})
+@@ -1999,6 +2052,20 @@
+                 "control was RESET, so the current frame is already the fresh start of this same "
+                 "level/attempt. A second immediate RESET is redundant. No action was committed; "
+                 "inspect the reset frame if needed, then choose a non-RESET available action."
++            )
++        if requested == "RESET" and getattr(self, "_rc_enabled", False) and not self._rc_challenged:
++            self._rc_challenged = True
++            self._rc_count += 1
++            spent = max(0, self.turn_in_level - self._rc_attempt_start_turn)
++            return None, None, (
++                f"RESET not committed yet (restart check). This attempt has used {spent} action(s) on this "
++                "level; a restart forfeits them and costs 1 more. A judgment that a position cannot be won "
++                "is only as good as what you have seen and tried. Before restarting, check from the "
++                "current position: (1) is any part of the level still unseen that you could reach or "
++                "reveal from here? (2) is there any object or action you have not tried in this state? "
++                "If either can be checked in fewer actions than the restart would cost, do that first. "
++                "If you have checked both and still judge a restart cheaper, call take_action RESET "
++                "again and it will be committed."
+             )
+         if requested == "ACTION6":
+             row, col = args.get("row"), args.get("col")
+diff -ruN -x .venv -x .git -x __pycache__ -x results -x *.egg-info -x .pytest_cache -x environment_files -x artifacts -x .cache a/tycho/agent/decision_check.py b/tycho/agent/decision_check.py
+--- a/tycho/agent/decision_check.py	1969-12-31 16:00:00
++++ b/tycho/agent/decision_check.py	2026-11-09 20:33:10
+@@ -0,0 +1,229 @@
++"""Decision check (local experiment, TYCHO_DECISION_CHECK=1).
++
++Splits the actor's turns into DECISION POINTS and PLAN STEPS, using only what any game exposes through
++the API (level counter, game-over/reset, the frame, and the agent's own filed plan):
++
++  A turn is a decision point when the next action is not already fixed by a plan that is still valid.
++  A plan stops being valid at the first of:
++    start      - new game, new level, or new attempt (after GAME_OVER or RESET)
++    exhausted  - its last action has been taken
++    departure  - the agent submits something other than the next planned action
++    surprise   - the last action changed nothing on screen, or a check the agent attached fails
++
++At a decision point the actor must file `commit_plan` (a free tool call) answering three questions:
++what it could do, which route takes the fewest actions, and what the consequences of the first
++uncertain step are. On every other turn it simply takes the next planned action.
++
++No screen-change-size trigger is used: across the 25 public games an action changing more than 25% of
++the screen occurs in only three games, so such a rule would mostly encode one game.
++
++The module holds no game knowledge and never chooses an action. Its state is deliberately kept out of
++the actor snapshot: after an exact resume there is simply no plan on file, which is a decision point.
++"""
++from __future__ import annotations
++
++VALID_ACTIONS = ("ACTION1", "ACTION2", "ACTION3", "ACTION4", "ACTION5", "ACTION6", "ACTION7", "RESET")
++MAX_PLAN_ACTIONS = 40
++ANSWER_SOFT_CHARS = 900          # the three answers together; longer answers get a reminder, not a refusal
++
++SYSTEM_TEXT = (
++    "Decision check (active in this run). Your turns are split into decision points and plan steps.\n"
++    "- A decision point is any turn where no valid plan fixes your next action: the start of a level "
++    "or of a new attempt, when your plan's actions are used up, when you want to do anything other "
++    "than the next planned action (including RESET), or when the last result was a surprise (the action "
++    "changed nothing on screen, or one of your own checks failed). Each turn's message ends with a "
++    "'Decision check' line telling you which case applies.\n"
++    "- At a decision point, call commit_plan before take_action. It is free for scoring. Answer three "
++    "questions briefly (about 40 words each): options - what you could do from here, including at "
++    "least one alternative route when one exists; fewest_steps - the action count of each route, the "
++    "one you choose, and what part of the level you have not seen yet; consequences - the worst "
++    "outcome of the first uncertain step, priced in actions (the Decision check line shows what "
++    "restarting would cost right now). Then list the actions you commit to, in order. End the plan "
++    "where you expect to learn something new; a one-action plan is fine for a probe. You may attach "
++    "checks (after plan step k, the cell at row/col shows a given colour) so a wrong prediction ends "
++    "the plan early.\n"
++    "- On every other turn, take the next planned action; no explanation is needed. take_action is "
++    "accepted only when it is the next planned action. You may send commit_plan and the plan's first "
++    "take_action in the same response."
++)
++
++TOOL_SPEC = {
++    "name": "commit_plan",
++    "description": (
++        "File your plan at a decision point (free for scoring; does not end the turn). Give three "
++        "brief answers and the ordered actions you commit to. take_action is then accepted only for "
++        "the next planned action; to change course, file a new plan first."
++    ),
++    "schema": {
++        "type": "object",
++        "properties": {
++            "options": {"type": "string",
++                        "description": "What you could do from here, incl. at least one alternative route when one exists (~40 words)."},
++            "fewest_steps": {"type": "string",
++                             "description": "Action count of each route, the one you choose, and what you have not seen yet (~40 words)."},
++            "consequences": {"type": "string",
++                             "description": "Worst outcome of the first uncertain step, priced in actions (~40 words)."},
++            "actions": {
++                "type": "array", "minItems": 1,
++                "items": {"type": "object", "properties": {
++                    "action": {"type": "string"},
++                    "row": {"type": "integer"}, "col": {"type": "integer"}},
++                    "required": ["action"]},
++                "description": "Ordered actions you commit to. ACTION6 needs row and col (0-63).",
++            },
++            "checks": {
++                "type": "array",
++                "items": {"type": "object", "properties": {
++                    "after_step": {"type": "integer"}, "row": {"type": "integer"},
++                    "col": {"type": "integer"}, "color": {"type": "integer"}},
++                    "required": ["after_step", "row", "col", "color"]},
++                "description": "Optional. After plan step k (1-based) the cell at row/col must show this colour (0-15).",
++            },
++        },
++        "required": ["options", "fewest_steps", "consequences", "actions"],
++    },
++}
++
++
++def _label(step: dict) -> str:
++    if step["action"] == "ACTION6":
++        return f"ACTION6(row={step['row']}, col={step['col']})"
++    return step["action"]
++
++
++def _is_int(v) -> bool:
++    return type(v) is int
++
++
++class DecisionCheck:
++    def __init__(self) -> None:
++        self.plan: dict | None = None
++        self.pending_reason: str | None = None     # why there is no plan, when a turn left it that way
++        self.attempt_start_turn = 0
++        self.prev_grid: tuple | None = None
++        self.seen_first_turn = False
++        self.turn: dict = {}                       # record of the current turn, for the trace
++        self.stats = {"decision_points": 0, "plan_steps": 0, "plans_filed": 0, "rejected_actions": 0,
++                      "by_reason": {}}
++
++    # ---- start of a turn -------------------------------------------------------------------
++    def observe(self, grid, *, turn_in_level: int, new_level: bool, new_attempt: bool) -> str:
++        """Update plan validity from the frame that just arrived; return the turn's status line."""
++        key = tuple(tuple(int(v) for v in row) for row in grid)
++        reason = None
++        if new_level:
++            reason, self.attempt_start_turn = "start of a new level", 0
++        elif new_attempt:
++            reason, self.attempt_start_turn = "start of a new attempt", turn_in_level
++        elif not self.seen_first_turn:
++            reason = "no plan on file"
++        elif self.plan is None:
++            reason = self.pending_reason or "no plan on file"
++        else:
++            idx, steps = self.plan["idx"], self.plan["actions"]
++            failed = [c for c in self.plan["checks"] if c["after_step"] == idx
++                      and c["row"] < len(key) and c["col"] < len(key[c["row"]])
++                      and int(key[c["row"]][c["col"]]) != c["color"]]
++            if idx > 0 and self.prev_grid is not None and key == self.prev_grid:
++                reason = f"surprise - the last action ({_label(steps[idx - 1])}) changed nothing on screen"
++            elif failed:
++                c = failed[0]
++                reason = (f"surprise - your check failed: cell (row={c['row']}, col={c['col']}) shows "
++                          f"{int(key[c['row']][c['col']])}, you expected {c['color']}")
++            elif idx >= len(steps):
++                reason = "your plan's actions are used up"
++        self.seen_first_turn = True
++        self.prev_grid = key
++        self.pending_reason = None
++        spent = max(0, turn_in_level - self.attempt_start_turn)
++        if reason:
++            self.plan = None
++            self.stats["decision_points"] += 1
++            short = reason.split(" - ")[0].split(":")[0]
++            self.stats["by_reason"][short] = self.stats["by_reason"].get(short, 0) + 1
++            self.turn = {"decision_point": True, "reason": reason, "attempt_actions": spent}
++            return (f"Decision check: DECISION POINT ({reason}). File commit_plan, then act. This attempt "
++                    f"has used {spent} action(s) on this level; restarting from here (GAME_OVER or RESET) "
++                    f"would mean replaying them, plus 1 for the reset.")
++        idx, steps = self.plan["idx"], self.plan["actions"]
++        self.stats["plan_steps"] += 1
++        self.turn = {"decision_point": False, "plan_step": idx + 1, "plan_len": len(steps),
++                     "attempt_actions": spent}
++        return (f"Decision check: plan step {idx + 1} of {len(steps)}. Next planned action: "
++                f"{_label(steps[idx])}. To do anything else, file a new commit_plan first. "
++                f"Attempt so far: {spent} action(s).")
++
++    # ---- commit_plan -----------------------------------------------------------------------
++    def file_plan(self, args: dict) -> str:
++        args = args if isinstance(args, dict) else {}
++        answers = {k: str(args.get(k) or "").strip() for k in ("options", "fewest_steps", "consequences")}
++        missing = [k for k, v in answers.items() if not v]
++        if missing:
++            return f"Plan NOT filed: answer {', '.join(missing)} (a sentence or two each)."
++        raw = args.get("actions")
++        if not isinstance(raw, list) or not raw:
++            return "Plan NOT filed: 'actions' must be a non-empty ordered list."
++        if len(raw) > MAX_PLAN_ACTIONS:
++            return f"Plan NOT filed: at most {MAX_PLAN_ACTIONS} actions per plan; plan up to where you expect new information."
++        steps = []
++        for i, a in enumerate(raw, 1):
++            name = str((a or {}).get("action", "") if isinstance(a, dict) else a).upper()
++            if name not in VALID_ACTIONS:
++                return f"Plan NOT filed: action {i} ({name or 'missing'}) is not one of {', '.join(VALID_ACTIONS)}."
++            step = {"action": name}
++            if name == "ACTION6":
++                row, col = a.get("row"), a.get("col")
++                if not (_is_int(row) and _is_int(col) and 0 <= row <= 63 and 0 <= col <= 63):
++                    return f"Plan NOT filed: action {i} (ACTION6) needs integer row and col in 0-63."
++                step.update(row=row, col=col)
++            steps.append(step)
++        checks = []
++        for c in args.get("checks") or []:
++            if not isinstance(c, dict):
++                return "Plan NOT filed: each check needs after_step, row, col, color."
++            vals = [c.get(k) for k in ("after_step", "row", "col", "color")]
++            if not all(_is_int(v) for v in vals):
++                return "Plan NOT filed: each check needs integer after_step, row, col, color."
++            k, row, col, color = vals
++            if not (1 <= k <= len(steps) and 0 <= row <= 63 and 0 <= col <= 63 and 0 <= color <= 15):
++                return (f"Plan NOT filed: check out of range (after_step 1-{len(steps)}, row/col 0-63, "
++                        f"color 0-15).")
++            checks.append({"after_step": k, "row": row, "col": col, "color": color})
++        self.plan = {"actions": steps, "idx": 0, "checks": checks, "answers": answers}
++        self.stats["plans_filed"] += 1
++        n_chars = sum(len(v) for v in answers.values())
++        self.turn.setdefault("plans", []).append(
++            {"n_actions": len(steps), "n_checks": len(checks), "answer_chars": n_chars})
++        note = (" Keep the three answers shorter next time (about 40 words each)."
++                if n_chars > ANSWER_SOFT_CHARS else "")
++        return f"Plan filed: {len(steps)} action(s). Next planned action: {_label(steps[0])}.{note}"
++
++    # ---- take_action -----------------------------------------------------------------------
++    def gate(self, requested: dict) -> str:
++        """Return '' if the action may be committed, else the message explaining why it was not."""
++        if self.plan is None:
++            self.stats["rejected_actions"] += 1
++            return ("Action NOT committed: this is a decision point and no plan is on file. Call "
++                    "commit_plan (options, fewest_steps, consequences, actions) and then take_action.")
++        nxt = self.plan["actions"][self.plan["idx"]] if self.plan["idx"] < len(self.plan["actions"]) else None
++        if nxt is None or not self._same(requested, nxt):
++            self.stats["rejected_actions"] += 1
++            want = _label(nxt) if nxt else "(none - the plan is used up)"
++            return (f"Action NOT committed: it departs from your plan (next planned action: {want}). "
++                    "Changing course is a decision point: file a new commit_plan first, or take the "
++                    "planned action.")
++        return ""
++
++    def after_action(self, taken: dict) -> None:
++        """Advance the plan after an action was committed (also for actions committed outside the gate)."""
++        if self.plan is not None and self.plan["idx"] < len(self.plan["actions"]) \
++                and self._same(taken, self.plan["actions"][self.plan["idx"]]):
++            self.plan["idx"] += 1
++        else:
++            self.plan, self.pending_reason = None, "an action was taken outside your plan"
++
++    @staticmethod
++    def _same(a: dict, b: dict) -> bool:
++        if str(a.get("action", "")).upper() != b["action"]:
++            return False
++        return b["action"] != "ACTION6" or (a.get("row") == b["row"] and a.get("col") == b["col"])
+diff -ruN -x .venv -x .git -x __pycache__ -x results -x *.egg-info -x .pytest_cache -x environment_files -x artifacts -x .cache a/tycho/config/run_config.py b/tycho/config/run_config.py
+--- a/tycho/config/run_config.py	2026-11-08 21:08:24
++++ b/tycho/config/run_config.py	2026-11-09 23:18:33
+@@ -67,6 +67,8 @@
+     ConfigKey("TYCHO_MAX_INFERENCE_COST_PER_GAME", "reasoning", "0", "public-list USD-equivalent inference budget per game (0 = off)"),
+     ConfigKey("TYCHO_MAX_INFERENCE_COST_PER_LEVEL", "reasoning", "0", "public-list USD-equivalent inference budget per level (0 = off)"),
+     ConfigKey("TYCHO_MAX_GAME_ACTIONS", "reasoning", "0", "whole-game cap on scored actions incl. in-play RESETs (0 = off)"),
++    ConfigKey("TYCHO_STOP_AFTER_LEVELS", "reasoning", "0", "end the play once this many levels are completed (0 = off)"),
++    ConfigKey("TYCHO_LEVEL_PREFIX_GUARD", "reasoning", "", "local experiment: stop when a level's live actions complete or leave a given prefix"),
+     ConfigKey("TYCHO_MAX_TOOL_STEPS", "reasoning", "25", "cognitive tool calls/turn before forced action"),
+     ConfigKey("TYCHO_WALLCLOCK_BUDGET_SECONDS", "runtime", "0", "whole-run wall-clock guard"),
+     ConfigKey("TYCHO_PER_GAME_WALLCLOCK_BUDGET_SECONDS", "runtime", "0", "per-game wall-clock guard"),
+@@ -110,6 +112,8 @@
+     ConfigKey("TYCHO_CONTEXT_EMERGENCY_TOOL_RESULTS", "context", "4", "deprecated; context rescue now preserves a contiguous suffix instead of scattered tool snippets"),
+     # ---- dev / misc ----
+     ConfigKey("TYCHO_META_REFLECT", "dev", "", "solicit harness/prompt feedback (dev only)"),
++    ConfigKey("TYCHO_DECISION_CHECK", "dev", "", "local experiment: require a filed plan at decision points (1 = on)"),
++    ConfigKey("TYCHO_RESTART_CHALLENGE", "dev", "", "local experiment: ask once before committing a RESET the agent chose (1 = on)"),
+     ConfigKey("RUN_HARDWARE", "dev", "", "operator-local runtime label"),
+     ConfigKey("LLM_LOG", "dev", "", "capture per-call I/O (set by --viz)"),
+ ]
+diff -ruN -x .venv -x .git -x __pycache__ -x results -x *.egg-info -x .pytest_cache -x environment_files -x artifacts -x .cache a/tycho/harness/harness.py b/tycho/harness/harness.py
+--- a/tycho/harness/harness.py	2026-11-08 21:08:20
++++ b/tycho/harness/harness.py	2026-11-09 23:18:33
+@@ -50,6 +50,47 @@
+         raise ValueError(f"TYCHO_MAX_GAME_ACTIONS must be >= 0, got {n}")
+     return n
+ 
++def _stop_after_levels() -> int:
++    """TYCHO_STOP_AFTER_LEVELS: end the play as soon as this many levels are completed.
++
++    Local experiment switch (single-level replicates from a checkpoint). It never changes what the
++    agent sees or which actions it takes; it only ends the run early. Unset or 0 disables it.
++    """
++    raw = os.environ.get("TYCHO_STOP_AFTER_LEVELS", "").strip()
++    n = int(raw) if raw else 0
++    if n < 0:
++        raise ValueError(f"TYCHO_STOP_AFTER_LEVELS must be >= 0, got {n}")
++    return n
++
++def _level_prefix_guard():
++    """TYCHO_LEVEL_PREFIX_GUARD: "<level>:<a1>,<a2>,..." with clicks written ACTION6@row@col.
++
++    Local experiment switch for saving a specific position. While the given level (1-based) is being
++    played live, the run stops with "prefix_reached" as soon as the listed actions have all been
++    taken, or with "prefix_deviation" as soon as one differs (clicks match within 2 cells). It never
++    changes what the agent sees or does. Unset disables it.
++    """
++    raw = os.environ.get("TYCHO_LEVEL_PREFIX_GUARD", "").strip()
++    if not raw:
++        return None
++    level, _, body = raw.partition(":")
++    steps = []
++    for tok in body.split(","):
++        parts = tok.strip().split("@")
++        steps.append((parts[0], int(parts[1]), int(parts[2])) if len(parts) == 3 else (parts[0], None, None))
++    if int(level) < 1 or not steps:
++        raise ValueError(f"bad TYCHO_LEVEL_PREFIX_GUARD: {raw!r}")
++    return int(level) - 1, steps
++
++
++def _prefix_step_matches(choice, want) -> bool:
++    if choice.action.name != want[0]:
++        return False
++    if want[1] is None:
++        return True
++    row, col = getattr(choice, "y", None), getattr(choice, "x", None)
++    return row is not None and col is not None and abs(row - want[1]) <= 2 and abs(col - want[2]) <= 2
++
+ log = logging.getLogger("tycho.harness")
+ 
+ 
+@@ -274,6 +315,10 @@
+     keep_trace = keep_trace or keep_frames
+     n_levels = len(baselines)
+     max_game_actions = _max_game_actions()
++    stop_after_levels = _stop_after_levels()
++    prefix_guard = _level_prefix_guard()
++    prefix_seen = 0                    # live actions of the guarded level that matched so far
++    prefix_stop: Optional[str] = None
+     env = arc.make(game_id, seed=seed, scorecard_id=scorecard_id)
+     t0 = time.time()
+ 
+@@ -383,6 +428,14 @@
+         if max_game_actions and turn >= max_game_actions:
+             stop_reason = "game_action_limit"
+             break
++        # Local experiment switch: stop once the target number of levels is complete (checked after
++        # _finish_replay, like the cap above, so the record carries the restored inference budget).
++        if stop_after_levels and not in_replay and completed_so_far >= stop_after_levels:
++            stop_reason = "level_target_reached"
++            break
++        if prefix_stop:
++            stop_reason = prefix_stop
++            break
+ 
+         # A mid-game exception (for example a provider outage or an agent bug)
+         # must NOT discard the trace collected so far — break with a partial record
+@@ -436,6 +489,13 @@
+         # Official scorecard accounting charges every in-play environment control, including RESET.
+         # The initialization reset is outside this loop and therefore remains uncharged.
+         actions_this_level += 1
++        if prefix_guard and not in_replay and cur_level == prefix_guard[0] and not prefix_stop:
++            if prefix_seen < len(prefix_guard[1]) and _prefix_step_matches(choice, prefix_guard[1][prefix_seen]):
++                prefix_seen += 1
++                if prefix_seen == len(prefix_guard[1]):
++                    prefix_stop = "prefix_reached"
++            else:
++                prefix_stop = "prefix_deviation"
+ 
+         if next_frame is None:
+             log.warning("%s: engine returned None at turn %d", game_id, turn)
