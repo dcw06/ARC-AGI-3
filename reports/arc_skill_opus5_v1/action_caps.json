@@ -1,0 +1,489 @@
+{
+ "rule": "cap = max(2 x baseline, baseline + 150), rounded up to 10; counts every action including RESET",
+ "baseline": "arc-skill + Claude Opus 5, ARC scorecard 24ddb219",
+ "games": [
+  {
+   "game": "ar25",
+   "levels": 8,
+   "baseline_actions": 260,
+   "baseline_resets": 0,
+   "tycho_opus5": 259,
+   "strands_opus5": 274,
+   "human_reference": 748,
+   "proposed_cap": 520,
+   "baseline_level_actions": [
+    17,
+    16,
+    40,
+    22,
+    28,
+    53,
+    37,
+    47
+   ]
+  },
+  {
+   "game": "bp35",
+   "levels": 9,
+   "baseline_actions": 482,
+   "baseline_resets": 4,
+   "tycho_opus5": 467,
+   "strands_opus5": 530,
+   "human_reference": 651,
+   "proposed_cap": 970,
+   "baseline_level_actions": [
+    18,
+    54,
+    36,
+    28,
+    31,
+    73,
+    54,
+    106,
+    82
+   ]
+  },
+  {
+   "game": "cd82",
+   "levels": 6,
+   "baseline_actions": 92,
+   "baseline_resets": 0,
+   "tycho_opus5": 95,
+   "strands_opus5": 147,
+   "human_reference": 171,
+   "proposed_cap": 250,
+   "baseline_level_actions": [
+    23,
+    6,
+    18,
+    14,
+    15,
+    16
+   ]
+  },
+  {
+   "game": "cn04",
+   "levels": 6,
+   "baseline_actions": 227,
+   "baseline_resets": 0,
+   "tycho_opus5": 195,
+   "strands_opus5": 332,
+   "human_reference": 789,
+   "proposed_cap": 460,
+   "baseline_level_actions": [
+    16,
+    33,
+    27,
+    38,
+    72,
+    41
+   ]
+  },
+  {
+   "game": "dc22",
+   "levels": 6,
+   "baseline_actions": 520,
+   "baseline_resets": 0,
+   "tycho_opus5": 479,
+   "strands_opus5": 591,
+   "human_reference": 1228,
+   "proposed_cap": 1040,
+   "baseline_level_actions": [
+    26,
+    56,
+    47,
+    64,
+    154,
+    173
+   ]
+  },
+  {
+   "game": "ft09",
+   "levels": 6,
+   "baseline_actions": 75,
+   "baseline_resets": 0,
+   "tycho_opus5": 75,
+   "strands_opus5": 81,
+   "human_reference": 208,
+   "proposed_cap": 230,
+   "baseline_level_actions": [
+    4,
+    7,
+    14,
+    16,
+    21,
+    13
+   ]
+  },
+  {
+   "game": "g50t",
+   "levels": 7,
+   "baseline_actions": 482,
+   "baseline_resets": 3,
+   "tycho_opus5": 315,
+   "strands_opus5": 482,
+   "human_reference": 879,
+   "proposed_cap": 970,
+   "baseline_level_actions": [
+    60,
+    63,
+    92,
+    95,
+    54,
+    75,
+    43
+   ]
+  },
+  {
+   "game": "ka59",
+   "levels": 7,
+   "baseline_actions": 335,
+   "baseline_resets": 0,
+   "tycho_opus5": 300,
+   "strands_opus5": 379,
+   "human_reference": 730,
+   "proposed_cap": 670,
+   "baseline_level_actions": [
+    26,
+    49,
+    33,
+    45,
+    27,
+    53,
+    102
+   ]
+  },
+  {
+   "game": "lf52",
+   "levels": 10,
+   "baseline_actions": 787,
+   "baseline_resets": 1,
+   "tycho_opus5": 714,
+   "strands_opus5": 847,
+   "human_reference": 1339,
+   "proposed_cap": 1580,
+   "baseline_level_actions": [
+    12,
+    49,
+    48,
+    54,
+    91,
+    109,
+    147,
+    69,
+    163,
+    45
+   ]
+  },
+  {
+   "game": "lp85",
+   "levels": 8,
+   "baseline_actions": 93,
+   "baseline_resets": 0,
+   "tycho_opus5": 96,
+   "strands_opus5": 115,
+   "human_reference": 388,
+   "proposed_cap": 250,
+   "baseline_level_actions": [
+    7,
+    8,
+    16,
+    16,
+    10,
+    20,
+    7,
+    9
+   ]
+  },
+  {
+   "game": "ls20",
+   "levels": 7,
+   "baseline_actions": 481,
+   "baseline_resets": 3,
+   "tycho_opus5": 415,
+   "strands_opus5": 454,
+   "human_reference": 776,
+   "proposed_cap": 970,
+   "baseline_level_actions": [
+    15,
+    119,
+    69,
+    51,
+    66,
+    78,
+    83
+   ]
+  },
+  {
+   "game": "m0r0",
+   "levels": 6,
+   "baseline_actions": 224,
+   "baseline_resets": 0,
+   "tycho_opus5": 208,
+   "strands_opus5": 307,
+   "human_reference": 1107,
+   "proposed_cap": 450,
+   "baseline_level_actions": [
+    15,
+    35,
+    61,
+    11,
+    57,
+    45
+   ]
+  },
+  {
+   "game": "r11l",
+   "levels": 6,
+   "baseline_actions": 83,
+   "baseline_resets": 0,
+   "tycho_opus5": 70,
+   "strands_opus5": 79,
+   "human_reference": 233,
+   "proposed_cap": 240,
+   "baseline_level_actions": [
+    7,
+    10,
+    11,
+    13,
+    18,
+    24
+   ]
+  },
+  {
+   "game": "re86",
+   "levels": 8,
+   "baseline_actions": 601,
+   "baseline_resets": 0,
+   "tycho_opus5": 567,
+   "strands_opus5": 696,
+   "human_reference": 1255,
+   "proposed_cap": 1210,
+   "baseline_level_actions": [
+    21,
+    36,
+    47,
+    59,
+    63,
+    66,
+    111,
+    198
+   ]
+  },
+  {
+   "game": "s5i5",
+   "levels": 8,
+   "baseline_actions": 281,
+   "baseline_resets": 0,
+   "tycho_opus5": 331,
+   "strands_opus5": 327,
+   "human_reference": 638,
+   "proposed_cap": 570,
+   "baseline_level_actions": [
+    13,
+    26,
+    40,
+    31,
+    29,
+    31,
+    72,
+    39
+   ]
+  },
+  {
+   "game": "sb26",
+   "levels": 8,
+   "baseline_actions": 124,
+   "baseline_resets": 0,
+   "tycho_opus5": 124,
+   "strands_opus5": 125,
+   "human_reference": 213,
+   "proposed_cap": 280,
+   "baseline_level_actions": [
+    9,
+    15,
+    15,
+    15,
+    17,
+    19,
+    17,
+    17
+   ]
+  },
+  {
+   "game": "sc25",
+   "levels": 6,
+   "baseline_actions": 166,
+   "baseline_resets": 0,
+   "tycho_opus5": 163,
+   "strands_opus5": 207,
+   "human_reference": 350,
+   "proposed_cap": 340,
+   "baseline_level_actions": [
+    19,
+    7,
+    25,
+    25,
+    53,
+    37
+   ]
+  },
+  {
+   "game": "sk48",
+   "levels": 8,
+   "baseline_actions": 491,
+   "baseline_resets": 0,
+   "tycho_opus5": 302,
+   "strands_opus5": 438,
+   "human_reference": 1070,
+   "proposed_cap": 990,
+   "baseline_level_actions": [
+    25,
+    76,
+    35,
+    77,
+    73,
+    91,
+    45,
+    69
+   ]
+  },
+  {
+   "game": "sp80",
+   "levels": 6,
+   "baseline_actions": 211,
+   "baseline_resets": 1,
+   "tycho_opus5": 153,
+   "strands_opus5": 202,
+   "human_reference": 518,
+   "proposed_cap": 430,
+   "baseline_level_actions": [
+    15,
+    8,
+    11,
+    24,
+    121,
+    32
+   ]
+  },
+  {
+   "game": "su15",
+   "levels": 9,
+   "baseline_actions": 117,
+   "baseline_resets": 2,
+   "tycho_opus5": 113,
+   "strands_opus5": 207,
+   "human_reference": 361,
+   "proposed_cap": 270,
+   "baseline_level_actions": [
+    13,
+    15,
+    18,
+    18,
+    7,
+    11,
+    6,
+    9,
+    20
+   ]
+  },
+  {
+   "game": "tn36",
+   "levels": 7,
+   "baseline_actions": 160,
+   "baseline_resets": 0,
+   "tycho_opus5": 131,
+   "strands_opus5": 180,
+   "human_reference": 317,
+   "proposed_cap": 320,
+   "baseline_level_actions": [
+    13,
+    34,
+    9,
+    14,
+    21,
+    27,
+    42
+   ]
+  },
+  {
+   "game": "tr87",
+   "levels": 6,
+   "baseline_actions": 153,
+   "baseline_resets": 0,
+   "tycho_opus5": 141,
+   "strands_opus5": 158,
+   "human_reference": 414,
+   "proposed_cap": 310,
+   "baseline_level_actions": [
+    26,
+    30,
+    26,
+    23,
+    24,
+    24
+   ]
+  },
+  {
+   "game": "tu93",
+   "levels": 9,
+   "baseline_actions": 205,
+   "baseline_resets": 3,
+   "tycho_opus5": 191,
+   "strands_opus5": 224,
+   "human_reference": 462,
+   "proposed_cap": 410,
+   "baseline_level_actions": [
+    18,
+    15,
+    19,
+    30,
+    29,
+    28,
+    16,
+    21,
+    29
+   ]
+  },
+  {
+   "game": "vc33",
+   "levels": 7,
+   "baseline_actions": 193,
+   "baseline_resets": 0,
+   "tycho_opus5": 177,
+   "strands_opus5": 249,
+   "human_reference": 447,
+   "proposed_cap": 390,
+   "baseline_level_actions": [
+    6,
+    8,
+    24,
+    37,
+    49,
+    20,
+    49
+   ]
+  },
+  {
+   "game": "wa30",
+   "levels": 9,
+   "baseline_actions": 802,
+   "baseline_resets": 1,
+   "tycho_opus5": 560,
+   "strands_opus5": 1210,
+   "human_reference": 1843,
+   "proposed_cap": 1610,
+   "baseline_level_actions": [
+    27,
+    57,
+    97,
+    96,
+    110,
+    59,
+    80,
+    145,
+    131
+   ]
+  }
+ ]
+}
