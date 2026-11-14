@@ -1,0 +1,39 @@
+== OLDER MEMORY ==
+Source: game ka59, saved run opus55-competition-20261106T054112Z, action 56 (transition t56). One record, selected by rule.
+Boards are text. A board line "y:c*n,..." gives row y as runs: colour c (one hex digit) repeated n times, left to right; "a-b:" means rows a to b are identical. A change line "y:x1-x2=c" sets every cell in columns x1 to x2 of row y to colour c ("x=c" for one cell); "a-b:" applies it to rows a to b. A range may include cells that already had that colour. Row 0 is the top, column 0 the left; ACTION6 clicks (x=column, y=row). Frames are the boards returned by one action, in order. A frame header names its reference ("vs before": the board before the action; "vs previous": the previous frame) and counts the cells whose colour differs from that reference, which can be fewer than the cells the lines cover. A "net before>last" block is optional: it appears only when the last frame is "vs previous", and restates the change from the board before the action to the last frame.
+
+M-key-v1 record=ka59:opus55-competition-20261106T054112Z:e0056 event=56 reset=0 level=1 frames=1
+action=ACTION6 x=34 y=32
+before 64x64
+0-7:1*21,2*3,F*39,2*1
+8:1*8,4*5,1*8,2*3,F*39,2*1
+9-14:1*8,4*1,1*3,4*1,1*8,2*3,F*39,2*1
+15:1*8,4*5,1*8,2*3,F*39,2*1
+16-23:1*21,2*3,F*39,2*1
+24-26:F*63,2*1
+27-29:F*30,2*34
+30-31:1*21,F*9,1*3,E*3,1*27,2*1
+32-33:1*21,F*9,1*3,E*1,5*1,E*1,1*27,2*1
+34-35:1*21,F*9,1*3,E*3,1*27,2*1
+36-37:1*21,F*9,1*33,2*1
+38:1*21,F*9,1*23,4*8,1*2,2*1
+39:1*21,F*9,1*23,4*1,E*6,4*1,1*2,2*1
+40:1*21,F*9,1*23,4*1,E*2,4*2,E*2,4*1,1*2,2*1
+41:1*5,4*8,1*8,F*9,1*23,4*1,E*6,4*1,1*2,2*1
+42:1*5,4*1,1*6,4*1,1*8,F*9,E*6,1*17,4*8,1*2,2*1
+43:1*5,4*1,1*6,4*1,1*8,F*9,E*6,1*27,2*1
+44-45:1*5,4*1,1*6,4*1,1*8,F*9,E*2,0*2,E*2,1*27,2*1
+46-47:1*5,4*1,1*6,4*1,1*8,F*9,E*6,1*27,2*1
+48:1*5,4*8,1*8,F*9,1*33,2*1
+49:1*21,F*9,1*33,2*1
+50:1*21,F*9,1*20,4*5,1*8,2*1
+51:1*21,F*9,1*20,4*1,E*3,4*1,1*8,2*1
+52:1*21,F*9,1*20,4*1,E*1,4*1,E*1,4*1,1*8,2*1
+53:1*21,F*9,1*20,4*1,E*3,4*1,1*8,2*1
+54:1*21,F*9,1*20,4*5,1*8,2*1
+55-62:1*21,F*9,1*33,2*1
+63:4*51,0*13
+frame 1/1 vs before: 6 cells
+32-33:34=0
+44-45:32-33=4
+result state=NOT_FINISHED level=1 legal=1,2,3,4,6

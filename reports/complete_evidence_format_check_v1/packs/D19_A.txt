@@ -1,0 +1,54 @@
+== OLDER MEMORY ==
+Source: game cd82, saved run opus55-competition-20261106T054112Z, action 48 (transition t48). One record, selected by rule.
+Boards are text. A board line "y:c*n,..." gives row y as runs: colour c (one hex digit) repeated n times, left to right; "a-b:" means rows a to b are identical. A change line "y:x1-x2=c" sets every cell in columns x1 to x2 of row y to colour c ("x=c" for one cell); "a-b:" applies it to rows a to b. A range may include cells that already had that colour. Row 0 is the top, column 0 the left; ACTION6 clicks (x=column, y=row). Frames are the boards returned by one action, in order. A frame header names its reference ("vs before": the board before the action; "vs previous": the previous frame) and counts the cells whose colour differs from that reference, which can be fewer than the cells the lines cover. A "net before>last" block is optional: it appears only when the last frame is "vs previous", and restates the change from the board before the action to the last frame.
+
+M-key-v1 record=cd82:opus55-competition-20261106T054112Z:e0048 event=48 reset=0 level=2 frames=1
+action=ACTION4
+before 64x64
+0-1:5*16,4*2,3*46
+2:5*16,4*2,3*3,4*5,3*1,4*5,3*1,4*5,3*1,4*5,3*1,4*5,3*1,4*5,3*1,4*5,3*2
+3:5*3,F*3,C*4,F*3,5*3,4*2,3*3,4*1,0*3,4*1,3*1,4*1,F*3,4*1,3*1,4*1,C*3,4*1,3*1,4*1,B*3,4*1,3*1,4*1,E*3,4*1,3*1,4*1,8*3,4*1,3*1,4*1,9*3,4*1,3*2
+4:5*3,F*3,C*4,F*2,E*1,5*3,4*2,3*3,4*1,0*3,4*1,3*1,4*1,F*3,4*1,3*1,4*1,C*3,4*1,3*1,4*1,B*3,4*1,3*1,4*1,E*3,4*1,3*1,4*1,8*3,4*1,3*1,4*1,9*3,4*1,3*2
+5:5*3,F*3,C*4,F*1,E*2,5*3,4*2,3*3,4*1,0*3,4*1,3*1,4*1,F*3,4*1,3*1,4*1,C*3,4*1,3*1,4*1,B*3,4*1,3*1,4*1,E*3,4*1,3*1,4*1,8*3,4*1,3*1,4*1,9*3,4*1,3*2
+6:5*3,F*7,E*3,5*3,4*2,3*3,4*5,3*1,4*5,3*1,4*5,3*1,4*5,3*1,4*5,3*1,4*5,3*1,4*5,3*2
+7:5*3,F*6,E*4,5*3,4*2,3*27,0*5,3*14
+8:5*3,F*5,E*5,5*3,4*2,3*46
+9:5*3,F*4,8*1,E*5,5*3,4*2,5*46
+10:5*3,F*3,8*2,E*5,5*3,4*2,5*46
+11:5*3,F*2,8*3,E*5,5*3,4*2,5*46
+12:5*3,F*1,8*4,E*5,5*3,4*2,5*46
+13-15:5*16,4*2,5*46
+16-17:4*18,5*46
+18:5*30,2*4,5*30
+19:5*29,2*2,0*2,2*2,5*29
+20-22:5*29,2*1,E*4,2*1,5*29
+23:5*64
+24:5*25,2*14,5*25
+25-31:5*25,2*1,E*12,2*1,5*25
+32:5*25,2*1,5*12,2*1,5*25
+33:5*64
+34-38:5*27,8*5,F*5,5*27
+39-43:5*27,8*5,0*5,5*27
+44-62:5*64
+63:4*56,5*8
+frame 1/1 vs before: 228 cells
+18:30-33=5
+19-20:29-34=5
+21:29-34=5,39=2
+22:29-34=5,38-40=2
+23:37-38=2,39=E,40-41=2
+24:25-35=5,38-40=E,41-42=2
+25:25-34=5,35-36=2,38-41=E,42-43=2
+26:25-33=5,34-35=2,38-42=E,43-44=2
+27:25-32=5,33-34=2,38-43=E,44-45=2
+28:25-34=5,38-44=E,45-46=2
+29:25-35=5,38-45=E,46-47=2
+30:25-36=5,38-46=E,47-48=2
+31:25-37=5,38-47=E,48-49=2
+32:25-38=5,39-46=E,47-48=2
+33:40-45=E,46-47=2
+34:41-44=E,45-46=2
+35:42-43=E,44-45=2
+36:43-44=2
+37:43=2
+result state=NOT_FINISHED level=2 legal=1,2,3,4,5,6

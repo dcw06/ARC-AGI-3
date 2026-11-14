@@ -1,7 +1,8 @@
 """Send the four readability requests (A twice, B twice). Does nothing without --send.
 
-Usage: readability_run.py <report_dir>            # dry run: prints the plan and limits
-       readability_run.py <report_dir> --send     # only after the user has explicitly authorised it
+Usage: readability_run.py <report_dir> [--version N]          # dry run: prints the plan and limits
+       readability_run.py <report_dir> [--version N] --send   # only after the user has explicitly authorised it
+Version 1 reads frozen/ and writes responses/. Version N reads frozen_vN/ and writes responses_vN/.
 Limits: exactly 4 requests, no retries, 8,000 output tokens each (thinking included), 300 s per request,
 and a spending stop at $0.80 worked out from reported usage at list price. Each request is a fresh,
 stateless Messages call with identical settings. No fallback model is configured: a refusal or an error
@@ -30,10 +31,13 @@ def cost(usage):
             + usage['output_tokens'] * USD_PER_MTOK['output']) / 1e6
 
 
-def main(report_dir, send):
+def main(report_dir, send, version=1):
     report_dir = Path(report_dir)
-    requests = json.loads((report_dir / 'frozen/requests.json').read_text())
-    counts = json.loads((report_dir / 'frozen/token_counts.json').read_text())
+    suffix = '' if version == 1 else '_v%d' % version
+    frozen, out = report_dir / ('frozen' + suffix), report_dir / ('responses' + suffix)
+    out.mkdir(exist_ok=True)
+    requests = json.loads((frozen / 'requests.json').read_text())
+    counts = json.loads((frozen / 'token_counts.json').read_text())
     order = [(name, PLAN[:i].count(name) + 1) for i, name in enumerate(PLAN)]
     random.Random(SEED).shuffle(order)
     worst = {n: (counts['inputs'][n]['full_request_input_tokens'] * USD_PER_MTOK['input']
@@ -44,7 +48,7 @@ def main(report_dir, send):
     if not send:
         print('dry run: nothing sent')
         return
-    existing = list((report_dir / 'responses').glob('*.json'))
+    existing = list(out.glob('*.json'))
     if existing:
         raise SystemExit('responses already exist; refusing to send again: %s' % [p.name for p in existing])
     client = anthropic.Anthropic(api_key=api_key(), max_retries=0, timeout=TIMEOUT_S)
@@ -71,9 +75,11 @@ def main(report_dir, send):
             result['elapsed_seconds'] = round(time.time() - start, 1)
         result.update(input=name, repeat=repeat, sent_at=time.strftime('%Y-%m-%dT%H:%M:%S%z'),
                       request_settings={k: v for k, v in requests[name].items() if k not in ('system', 'messages')})
-        (report_dir / 'responses' / ('%s.json' % tag)).write_text(json.dumps(result, indent=1))
+        result['inputs_version'] = version
+        (out / ('%s.json' % tag)).write_text(json.dumps(result, indent=1))
         print(tag, result['outcome'], result.get('stop_reason'), result.get('usage'), 'spent $%.3f' % spent)
 
 
 if __name__ == '__main__':
-    main(sys.argv[1], '--send' in sys.argv[2:])
+    main(sys.argv[1], '--send' in sys.argv[2:],
+         int(sys.argv[sys.argv.index('--version') + 1]) if '--version' in sys.argv else 1)

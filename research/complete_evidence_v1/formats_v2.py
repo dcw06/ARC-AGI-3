@@ -35,6 +35,25 @@ NOTE_REGION = (' This record is partial: "state cells" are the cells that have c
                'Cells not listed were not recorded here.')
 READING_NOTES = {'M-key-v1': NOTE_COMMON, 'M-ref-v1': NOTE_COMMON + NOTE_REF,
                  'M-region-v1': NOTE_COMMON + NOTE_REGION}
+# Reading instructions, version 2 (2026-11-14). The record formats are unchanged. Version 1 above is kept as
+# it was so that earlier inputs can be rebuilt exactly. Changes: a range may cover cells that do not change;
+# the cell count is defined; the "net before>last" block is optional; M-ref says how the earlier board is
+# rebuilt from the current board. A longer first wording put input A at 2,085 tokens, over the 2,048
+# allowance (kept in frozen_v2_draft1_over_limit/); this wording is shorter and says the same things.
+NOTE_COMMON_V2 = (
+    'Boards are text. A board line "y:c*n,..." gives row y as runs: colour c (one hex digit) repeated n times, '
+    'left to right; "a-b:" means rows a to b are identical. A change line "y:x1-x2=c" sets every cell in '
+    'columns x1 to x2 of row y to colour c ("x=c" for one cell); "a-b:" applies it to rows a to b. A range may '
+    'include cells that already had that colour. Row 0 is the top, column 0 the left; ACTION6 clicks '
+    '(x=column, y=row). Frames are the boards returned by one action, in order. A frame header names its '
+    'reference ("vs before": the board before the action; "vs previous": the previous frame) and counts the '
+    'cells whose colour differs from that reference, which can be fewer than the cells the lines cover. '
+    'A "net before>last" block is optional: it appears only when the last frame is "vs previous", and restates '
+    'the change from the board before the action to the last frame.')
+NOTE_REF_V2 = (' The board before the action is not printed. "before vs current: N cells" gives it relative to '
+               'the current board: take the current board and apply the lines. N counts the cells that differ; '
+               'every cell the lines do not set had the same colour as on the current board.')
+READING_NOTES_V2 = {'M-key-v1': NOTE_COMMON_V2, 'M-ref-v1': NOTE_COMMON_V2 + NOTE_REF_V2}
 CLICK_RADIUS, BOX_PAD, BOX_MAX_CELLS = 4, 2, 1024
 
 

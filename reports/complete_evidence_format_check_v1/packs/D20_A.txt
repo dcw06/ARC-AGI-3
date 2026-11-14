@@ -1,0 +1,30 @@
+== OLDER MEMORY ==
+Source: game vc33, saved run opus55-competition-20261106T054112Z, action 63 (transition t63). One record, selected by rule.
+Boards are text. A board line "y:c*n,..." gives row y as runs: colour c (one hex digit) repeated n times, left to right; "a-b:" means rows a to b are identical. A change line "y:x1-x2=c" sets every cell in columns x1 to x2 of row y to colour c ("x=c" for one cell); "a-b:" applies it to rows a to b. A range may include cells that already had that colour. Row 0 is the top, column 0 the left; ACTION6 clicks (x=column, y=row). Frames are the boards returned by one action, in order. A frame header names its reference ("vs before": the board before the action; "vs previous": the previous frame) and counts the cells whose colour differs from that reference, which can be fewer than the cells the lines cover. A "net before>last" block is optional: it appears only when the last frame is "vs previous", and restates the change from the board before the action to the last frame.
+
+M-key-v1 record=vc33:opus55-competition-20261106T054112Z:e0063 event=63 reset=0 level=3 frames=1
+action=ACTION6 x=40 y=62
+before 64x64
+0:7*42,4*22
+1-21:3*64
+22-24:3*27,5*3,3*34
+25-28:3*27,5*3,3*12,5*3,3*19
+29-30:3*27,5*3,3*12,B*3,3*19
+31-33:3*12,5*3,3*12,5*3,3*12,5*3,3*19
+34-36:3*12,5*3,3*12,1*3,3*12,5*3,3*9,5*3,3*7
+37-38:3*12,5*3,3*12,1*3,3*5,4*2,3*5,5*3,3*9,5*3,3*7
+39-40:3*12,5*3,3*12,1*3,3*3,4*6,3*3,5*3,3*9,5*3,3*7
+41-42:3*12,5*3,3*12,1*3,3*3,B*6,3*3,5*3,3*9,5*3,3*7
+43-45:3*12,1*3,3*12,1*3,0*12,5*3,3*9,5*3,3*7
+46-54:3*12,1*3,0*12,5*3,0*12,5*3,3*9,5*3,3*7
+55-57:3*12,5*3,0*12,5*3,0*12,5*3,3*9,5*3,3*7
+58-60:3*12,5*3,0*12,5*3,0*12,5*3,0*9,5*3,0*7
+61-63:3*9,9*3,5*3,9*3,0*9,5*3,0*9,9*3,5*3,9*3,0*3,9*3,5*3,9*3,0*4
+frame 1/1 vs before: 90 cells
+0:41=4
+34-35:35-36=4
+36-37:33-38=4
+38-39:33-38=B
+40-42:30-41=0
+58-60:45-53=3
+result state=NOT_FINISHED level=3 legal=6

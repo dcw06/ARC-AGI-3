@@ -1,0 +1,115 @@
+{
+ "archived": "2026-11-14",
+ "result_stated_narrowly": "Opus recovered the specified facts from both formats on one coordinate-assisted tn36 example. Automatic retrieval, gameplay benefit and R1 remain untested.",
+ "inputs_version": 2,
+ "model": "claude-opus-5-5",
+ "requests_sent": 4,
+ "total_cost_usd_list_price": 0.2258,
+ "usage": {
+  "A1": {
+   "input_tokens": 5388,
+   "output_tokens": 1929,
+   "thinking_tokens": 1545
+  },
+  "A2": {
+   "input_tokens": 5388,
+   "output_tokens": 2045,
+   "thinking_tokens": 1668
+  },
+  "B1": {
+   "input_tokens": 4545,
+   "output_tokens": 1770,
+   "thinking_tokens": 1389
+  },
+  "B2": {
+   "input_tokens": 4545,
+   "output_tokens": 1569,
+   "thinking_tokens": 1178
+  }
+ },
+ "item_level_scores": {
+  "A1": {
+   "bars": "correct",
+   "stems": "correct",
+   "frames": "correct",
+   "piece_columns": "correct",
+   "piece_rows": "correct",
+   "last_frame": "correct",
+   "level": "correct",
+   "match": "correct"
+  },
+  "A2": {
+   "bars": "correct",
+   "stems": "correct",
+   "frames": "correct",
+   "piece_columns": "correct",
+   "piece_rows": "correct",
+   "last_frame": "correct",
+   "level": "correct",
+   "match": "correct"
+  },
+  "B1": {
+   "bars": "correct",
+   "stems": "correct",
+   "frames": "correct",
+   "piece_columns": "correct",
+   "piece_rows": "correct",
+   "last_frame": "correct",
+   "level": "correct",
+   "match": "correct"
+  },
+  "B2": {
+   "bars": "correct",
+   "stems": "correct",
+   "frames": "correct",
+   "piece_columns": "correct",
+   "piece_rows": "correct",
+   "last_frame": "correct",
+   "level": "correct",
+   "match": "correct"
+  }
+ },
+ "rubric": "sealed/evaluation_record.json, field rubric_fixed_before_any_response",
+ "sha256": {
+  "agent_readers/instructions_given.md": "3003a5294e85273aaf015e3ee8653c894234c5d865f292f2f67793bb64943a84",
+  "agent_readers/judgement.json": "642a07219a0e69b2d8182ad95087adc41a24b3a725b3a9773f93daebd24312d0",
+  "agent_readers/reader1_A.json": "68c0046cbc7c25e32eab4fc87fe9d4763f4afba8a7adff1c7df632217f8648be",
+  "agent_readers/reader2_B.json": "1b5faab369d3b1091da2d24ba9a169fba3659971aca3c24fa8fb736b281355a8",
+  "frozen/common_context.txt": "06a00b5ceeb0457fe4e87edd5cb4b5d20f50304a83b4423a0ab79d3ebc94ab99",
+  "frozen/input_A.txt": "15175a81854649a73ea82e11d85b08b37be8953354a5102c0605d74e357e7e21",
+  "frozen/input_B.txt": "be8230d272bbb6beeb93b220f4819d31d0d336a207b75cee79ab2e20811a1b5a",
+  "frozen/older_memory_A.txt": "f750518d34ee9350b2ba372a1bc8db6278f9f7e14f28a29e6b2700347d74daa4",
+  "frozen/older_memory_B.txt": "2c3c4609118cc240dae8e2dc364fac683705998c8fefc5ce83179e5269596a0a",
+  "frozen/questions.txt": "c9e74c560bec1b9d10bec70341fcfe13c1d90d19826abcc24e0bd9cfd951c32b",
+  "frozen/requests.json": "3d084f543da25af6e237fc1514d5f0de1a0c7c7f0c7948546c1b724555952884",
+  "frozen/source_frames.npz": "e3b0a5b0fa74b2e319da2281d305c220addfb8d72888d9eebac86fe320e72bf1",
+  "frozen/token_counts.json": "c19f8664b9a9acd63d0a9c901b3bc5fbb94252ef4ec05a5b96caf4f27f756352",
+  "frozen_v2/common_context.txt": "06a00b5ceeb0457fe4e87edd5cb4b5d20f50304a83b4423a0ab79d3ebc94ab99",
+  "frozen_v2/input_A.txt": "050670528c5a058268504429b1c9b3ddc8a39edad2325669377d401e5ccdc42e",
+  "frozen_v2/input_B.txt": "4d47d31e20d7f7e8cd0532f0a78fab691840f73b4ea8dd22c1130ea75d06efe2",
+  "frozen_v2/manifest.json": "093458b6ec779362388cd113a4c1cde216d61a1857f06d6fd1a8fa83eb665469",
+  "frozen_v2/older_memory_A.txt": "9c3be2c930658c1283ba5096787ea923469cfee20af12cbfc502b4c978b389c0",
+  "frozen_v2/older_memory_B.txt": "aaeefd24d09a224bf408e6a5e5c8b92ef97befbe3b07a1b025f562ed78473e04",
+  "frozen_v2/questions.txt": "c9e74c560bec1b9d10bec70341fcfe13c1d90d19826abcc24e0bd9cfd951c32b",
+  "frozen_v2/requests.json": "8934ce9f5771b11b9cc3ddf16faeee23fde3271f63e54bbc286ee391054a499d",
+  "frozen_v2/source_frames.npz": "e3b0a5b0fa74b2e319da2281d305c220addfb8d72888d9eebac86fe320e72bf1",
+  "frozen_v2/token_counts.json": "e095595357cac0860a5e0ce7704ebea2eb1c8efee33ff6944c9285ec49528e9c",
+  "frozen_v2_draft1_over_limit/common_context.txt": "06a00b5ceeb0457fe4e87edd5cb4b5d20f50304a83b4423a0ab79d3ebc94ab99",
+  "frozen_v2_draft1_over_limit/input_A.txt": "44a083e081942da5402d7889a32b6e203f076b716ce166afb8064261f9ca43a2",
+  "frozen_v2_draft1_over_limit/input_B.txt": "18809eb5a376dcb048b77af1b101c9b50724fa32f04f47451caffbb04dc3d3b9",
+  "frozen_v2_draft1_over_limit/manifest.json": "aa8e0356117b5bb151bd2576a258c4752c8ee152c420196907447217c33caf47",
+  "frozen_v2_draft1_over_limit/older_memory_A.txt": "ca97211851e781777b2730707a96be8b845fbc88e1955612bb99c11e6d3a57cb",
+  "frozen_v2_draft1_over_limit/older_memory_B.txt": "6f4c6750450d5b8c139fcf7dbb1bb03c180081639fb2089101079da483134e54",
+  "frozen_v2_draft1_over_limit/questions.txt": "c9e74c560bec1b9d10bec70341fcfe13c1d90d19826abcc24e0bd9cfd951c32b",
+  "frozen_v2_draft1_over_limit/requests.json": "e15f5b363ac634bd28acf0f2a0d074dd9dee23b469fa90ff0c838502d6442494",
+  "frozen_v2_draft1_over_limit/source_frames.npz": "e3b0a5b0fa74b2e319da2281d305c220addfb8d72888d9eebac86fe320e72bf1",
+  "frozen_v2_draft1_over_limit/token_counts.json": "ea3306f29af0fc62575367241ae71b702e4191c2460bb0adfd748a6b02349b51",
+  "responses_v2/A1.json": "05627492f423e50b89b29afaec9a60d451192b0326a8c5aeba4d84dbea315656",
+  "responses_v2/A2.json": "4d5f807abb1ec31b2ad99b7cdb29bd620ab9c717b0b43d8cc869093f0ab5956a",
+  "responses_v2/B1.json": "42e103ed2f23cf061a0e29edb1655e5fb7592953f3463218ca62e5906ff88bd9",
+  "responses_v2/B2.json": "5932acd4ce2599770bbbe4f7d2ccbe52c79bcffc529f3d68c535e39ddc2b10b8",
+  "sealed/evaluation_record.json": "cf26a83900b0089a5ff55333b1921a5d511cb96c2557e5837cf4d7c471cb3741",
+  "scores.json": "f0733b9922386abb21dbfd555e983609ad5d4ebe7f5dd4881571dadf9d951b17",
+  "judgement_opus_v2.json": "3726d783e4472aee571347a8d1723834bcc07e43076050ac096e55f9c5602632"
+ }
+}

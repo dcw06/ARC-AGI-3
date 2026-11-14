@@ -1,0 +1,26 @@
+== OLDER MEMORY ==
+Source: game ka59, saved run opus55-competition-20261106T054112Z, action 5 (transition t5). One record, selected by rule.
+Boards are text. A board line "y:c*n,..." gives row y as runs: colour c (one hex digit) repeated n times, left to right; "a-b:" means rows a to b are identical. A change line "y:x1-x2=c" sets every cell in columns x1 to x2 of row y to colour c ("x=c" for one cell); "a-b:" applies it to rows a to b. A range may include cells that already had that colour. Row 0 is the top, column 0 the left; ACTION6 clicks (x=column, y=row). Frames are the boards returned by one action, in order. A frame header names its reference ("vs before": the board before the action; "vs previous": the previous frame) and counts the cells whose colour differs from that reference, which can be fewer than the cells the lines cover. A "net before>last" block is optional: it appears only when the last frame is "vs previous", and restates the change from the board before the action to the last frame.
+
+M-key-v1 record=ka59:opus55-competition-20261106T054112Z:e0005 event=5 reset=0 level=0 frames=1
+action=ACTION2
+before 64x64
+0-20:2*64
+21-25:2*9,1*15,2*9,F*6,1*15,2*10
+26:2*9,1*15,2*9,F*6,1*5,4*5,1*5,2*10
+27-29:2*9,1*15,2*9,F*6,1*5,4*1,1*3,4*1,1*5,2*10
+30:2*9,1*3,E*3,1*12,E*3,1*3,F*6,1*5,4*5,1*5,2*10
+31:2*9,1*3,E*1,0*1,E*1,1*12,E*1,5*1,E*1,1*3,F*6,1*15,2*10
+32:2*9,1*2,4*1,E*3,4*1,1*11,E*3,1*3,F*6,1*15,2*10
+33-35:2*9,1*2,4*1,1*3,4*1,1*8,2*9,F*6,1*15,2*10
+36:2*9,1*2,4*5,1*8,2*9,F*6,1*15,2*10
+37-41:2*9,1*15,2*9,F*6,1*15,2*10
+42-62:2*64
+63:4*61,0*3
+frame 1/1 vs before: 18 cells
+30-31:12-14=1
+32:12-14=4
+33:12-14=E
+34:12=E,13=0,14=E
+35:12-14=E
+result state=NOT_FINISHED level=0 legal=1,2,3,4,6

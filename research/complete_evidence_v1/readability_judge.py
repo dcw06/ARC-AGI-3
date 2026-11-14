@@ -39,9 +39,10 @@ def main(report_dir):
         for path in sorted((report_dir / folder).glob(pattern)):
             form = json.loads(path.read_text())
             rows.append(('%s/%s' % (folder, path.name), form.get('input_read'), form.get('read_order'), form['answers']))
-    for path in sorted((report_dir / 'responses').glob('*.json')):
-        result = json.loads(path.read_text())
-        rows.append((path.name, result['input'], result['outcome'], result.get('answers') or {}))
+    for folder in sorted(p for p in report_dir.glob('responses*') if p.is_dir()):
+        for path in sorted(folder.glob('*.json')):
+            result = json.loads(path.read_text())
+            rows.append(('%s/%s' % (folder.name, path.name), result['input'], result['outcome'], result.get('answers') or {}))
     out = []
     for name, which, note, answers in rows:
         marks = score(answers, key)

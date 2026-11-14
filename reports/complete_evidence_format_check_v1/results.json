@@ -1,0 +1,1870 @@
+{
+ "opus_model": "claude-opus-5-5",
+ "scorer": "BAAI/bge-reranker-v2-m3",
+ "scorer_revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+ "budgets": [
+  512,
+  1024,
+  2048
+ ],
+ "scorer_limits_description_pair": {
+  "proposed": [
+   768,
+   2048
+  ],
+  "tested": [
+   4096,
+   8192
+  ]
+ },
+ "reading_instructions_version": 2,
+ "cases_file_sha256": "ed7da7392f356ca6a2e4db62fd6bc63940913e22956b3b218d8d18eba5b06247",
+ "counts_are_estimates": true,
+ "opus_requests_sent": 0,
+ "cases": [
+  {
+   "case": "D01",
+   "type": "level/reset",
+   "game": "ls20",
+   "decision_after_actions": 82,
+   "reference_board": {
+    "observation": "o82",
+    "cells_sha256": "4edbe4b0c82b79f21de6bc558ea2c064d60ba76de662e49f84d861ef29052817"
+   },
+   "description_scorer_tokens": 1301,
+   "description_fits": {
+    "proposed": false,
+    "tested": true
+   },
+   "records": [
+    {
+     "event": 10,
+     "frames": 1,
+     "share_of_board_differing_from_current": 0.427,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 870,
+      "scorer_record_tokens": 653,
+      "scorer_pair_tokens": 1958,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 871,
+      "scorer_record_tokens": 653,
+      "scorer_pair_tokens": 1958,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "full board (fallback)"
+    }
+   ],
+   "formats": {
+    "A": {
+     "pack_opus_tokens": 1229,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": true
+     },
+     "records_opus_tokens": 870,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "efbbf5c91e9f1a5ab4894a0455e18889042622cbd116be0297e959a372890b3e"
+    },
+    "B": {
+     "pack_opus_tokens": 1335,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": true
+     },
+     "records_opus_tokens": 871,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "668130118612b73f2dfca7db76c113cc31a938435eb375e14a7cf7e1a3220f0f"
+    }
+   }
+  },
+  {
+   "case": "D02",
+   "type": "level/reset",
+   "game": "ka59",
+   "decision_after_actions": 33,
+   "reference_board": {
+    "observation": "o33",
+    "cells_sha256": "de1e1f10c47278ee928c3e840779d7443e23bcf3c9c04cab51eb5420a78556d5"
+   },
+   "description_scorer_tokens": 1215,
+   "description_fits": {
+    "proposed": false,
+    "tested": true
+   },
+   "records": [
+    {
+     "event": 5,
+     "frames": 1,
+     "share_of_board_differing_from_current": 0.859,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 550,
+      "scorer_record_tokens": 461,
+      "scorer_pair_tokens": 1680,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 551,
+      "scorer_record_tokens": 461,
+      "scorer_pair_tokens": 1680,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "full board (fallback)"
+    }
+   ],
+   "formats": {
+    "A": {
+     "pack_opus_tokens": 909,
+     "pack_fits": {
+      "512": false,
+      "1024": true,
+      "2048": true
+     },
+     "records_opus_tokens": 550,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "14154ceb58ad1c01b8bbb9ede88b86105abb7cbfadcfcda6d464468351d52c13"
+    },
+    "B": {
+     "pack_opus_tokens": 1015,
+     "pack_fits": {
+      "512": false,
+      "1024": true,
+      "2048": true
+     },
+     "records_opus_tokens": 551,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "419a4638e67685b940a0fb228e0d404c5c06a824b39a113d42929c3d00e5f8c6"
+    }
+   }
+  },
+  {
+   "case": "D03",
+   "type": "level/reset",
+   "game": "tn36",
+   "decision_after_actions": 92,
+   "reference_board": {
+    "observation": "o92",
+    "cells_sha256": "43b710a4c43faefd781541123b33f25d282351f3bfc637166cf67a4463b550f6"
+   },
+   "description_scorer_tokens": 855,
+   "description_fits": {
+    "proposed": false,
+    "tested": true
+   },
+   "records": [
+    {
+     "event": 59,
+     "frames": 1,
+     "share_of_board_differing_from_current": 0.008,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 1094,
+      "scorer_record_tokens": 705,
+      "scorer_pair_tokens": 1564,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": false,
+       "2048": true
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 158,
+      "scorer_record_tokens": 102,
+      "scorer_pair_tokens": 961,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": true,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    }
+   ],
+   "formats": {
+    "A": {
+     "pack_opus_tokens": 1453,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": true
+     },
+     "records_opus_tokens": 1094,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "f4947e2805f1a551d78db17fd534d0bf8a0b3885121687af0e7513763fb8f028"
+    },
+    "B": {
+     "pack_opus_tokens": 622,
+     "pack_fits": {
+      "512": false,
+      "1024": true,
+      "2048": true
+     },
+     "records_opus_tokens": 158,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "89daac18a8c660f978267c13a648b4615299790fea34e1f6e7a9af5ba03fe0ae"
+    }
+   }
+  },
+  {
+   "case": "D04",
+   "type": "level/reset",
+   "game": "tn36",
+   "decision_after_actions": 76,
+   "reference_board": {
+    "observation": "o76",
+    "cells_sha256": "d5bc9cb0e317b234a580c2a3232400119c0e416d387bd6d451de621019c91401"
+   },
+   "description_scorer_tokens": 853,
+   "description_fits": {
+    "proposed": false,
+    "tested": true
+   },
+   "records": [
+    {
+     "event": 29,
+     "frames": 1,
+     "share_of_board_differing_from_current": 0.009,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 1094,
+      "scorer_record_tokens": 716,
+      "scorer_pair_tokens": 1573,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": false,
+       "2048": true
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 184,
+      "scorer_record_tokens": 119,
+      "scorer_pair_tokens": 976,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": true,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    }
+   ],
+   "formats": {
+    "A": {
+     "pack_opus_tokens": 1453,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": true
+     },
+     "records_opus_tokens": 1094,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "e5ea60da55414fa316eb738c782a82226b8d8b095ee8ff3a29f90b2acb93f0d4"
+    },
+    "B": {
+     "pack_opus_tokens": 648,
+     "pack_fits": {
+      "512": false,
+      "1024": true,
+      "2048": true
+     },
+     "records_opus_tokens": 184,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "487f18309a30bfaa3f588508e1b32dccb01b9736a3f20da5cdae46a879b8cf2f"
+    }
+   }
+  },
+  {
+   "case": "D05",
+   "type": "delayed",
+   "game": "lf52",
+   "decision_after_actions": 85,
+   "reference_board": {
+    "observation": "o85",
+    "cells_sha256": "87292e5cccfcac76fc289d8596d9cda303a8e3d7201b5890990e04691e285b30"
+   },
+   "description_scorer_tokens": 2079,
+   "description_fits": {
+    "proposed": false,
+    "tested": true
+   },
+   "records": [
+    {
+     "event": 46,
+     "frames": 3,
+     "share_of_board_differing_from_current": 0.042,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 2532,
+      "scorer_record_tokens": 1959,
+      "scorer_pair_tokens": 4042,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": false,
+       "2048": false
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 1124,
+      "scorer_record_tokens": 827,
+      "scorer_pair_tokens": 2910,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": false,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    }
+   ],
+   "formats": {
+    "A": {
+     "pack_opus_tokens": 2891,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": false
+     },
+     "records_opus_tokens": 2532,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "187027066707a9aeccc58785de12ef87b211380a4ac9a1048a2a91bbd818180a"
+    },
+    "B": {
+     "pack_opus_tokens": 1588,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": true
+     },
+     "records_opus_tokens": 1124,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "272b21abbb0b8d2d2b004300d3c278b8db0859b9d6237877b70bc62fbcdbeeb8"
+    }
+   }
+  },
+  {
+   "case": "D06",
+   "type": "delayed",
+   "game": "bp35",
+   "decision_after_actions": 75,
+   "reference_board": {
+    "observation": "o75",
+    "cells_sha256": "1997f8d49fe16319e6ab74364a2d0f5eb1878b0072eb287f28aad7fa7ce0685f"
+   },
+   "description_scorer_tokens": 8839,
+   "description_fits": {
+    "proposed": false,
+    "tested": false
+   },
+   "records": [
+    {
+     "event": 60,
+     "frames": 5,
+     "share_of_board_differing_from_current": 0.348,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 3505,
+      "scorer_record_tokens": 2643,
+      "scorer_pair_tokens": 11486,
+      "pair_fits": {
+       "proposed": false,
+       "tested": false
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": false,
+       "2048": false
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 1842,
+      "scorer_record_tokens": 1343,
+      "scorer_pair_tokens": 10186,
+      "pair_fits": {
+       "proposed": false,
+       "tested": false
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": false,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    }
+   ],
+   "formats": {
+    "A": {
+     "pack_opus_tokens": 3864,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": false
+     },
+     "records_opus_tokens": 3505,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": false
+     },
+     "pack_sha256": "52fb5e78748dd6f24627f950a425749bc0bf548be70946eabbdde8c1b2f40b94"
+    },
+    "B": {
+     "pack_opus_tokens": 2306,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": false
+     },
+     "records_opus_tokens": 1842,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": false
+     },
+     "pack_sha256": "0efac83f9607804b10c3341a29dc797d2de39e79abeb30a42b49214876ed5186"
+    }
+   }
+  },
+  {
+   "case": "D07",
+   "type": "delayed",
+   "game": "vc33",
+   "decision_after_actions": 97,
+   "reference_board": {
+    "observation": "o97",
+    "cells_sha256": "bb1776778cca5749bc88d4516deed842a48d0a71e21200a564841e70890def06"
+   },
+   "description_scorer_tokens": 2517,
+   "description_fits": {
+    "proposed": false,
+    "tested": true
+   },
+   "records": [
+    {
+     "event": 86,
+     "frames": 44,
+     "share_of_board_differing_from_current": 0.218,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 2307,
+      "scorer_record_tokens": 1458,
+      "scorer_pair_tokens": 3979,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": false,
+       "2048": false
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 2215,
+      "scorer_record_tokens": 1322,
+      "scorer_pair_tokens": 3843,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": false,
+       "2048": false
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    }
+   ],
+   "formats": {
+    "A": {
+     "pack_opus_tokens": 2666,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": false
+     },
+     "records_opus_tokens": 2307,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "eac60b317c825a05648ddf9d7cf71e989c283527357378514b9f51e152b7bd30"
+    },
+    "B": {
+     "pack_opus_tokens": 2679,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": false
+     },
+     "records_opus_tokens": 2215,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "195df49b62d3b4d0bb513782e81ba43e3a432e1bd8a70ce079a2f9c1270e586b"
+    }
+   }
+  },
+  {
+   "case": "D08",
+   "type": "delayed",
+   "game": "cd82",
+   "decision_after_actions": 27,
+   "reference_board": {
+    "observation": "o27",
+    "cells_sha256": "9bfb1685bb8fe2dfe4d4b65a75e456abd295d7e78e2351ff7e55d98ca8733a46"
+   },
+   "description_scorer_tokens": 1025,
+   "description_fits": {
+    "proposed": false,
+    "tested": true
+   },
+   "records": [
+    {
+     "event": 18,
+     "frames": 15,
+     "share_of_board_differing_from_current": 0.009,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 1443,
+      "scorer_record_tokens": 928,
+      "scorer_pair_tokens": 1957,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": false,
+       "2048": true
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 1015,
+      "scorer_record_tokens": 579,
+      "scorer_pair_tokens": 1608,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    }
+   ],
+   "formats": {
+    "A": {
+     "pack_opus_tokens": 1802,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": true
+     },
+     "records_opus_tokens": 1443,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "34a65701f0a60d3831da75428f7bf45434ad65049cac2cbabea9a676d9e6ff89"
+    },
+    "B": {
+     "pack_opus_tokens": 1479,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": true
+     },
+     "records_opus_tokens": 1015,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "3143b92ac52efb636bbb0bc745ed218ac1915122fa1aa373db0e53a65bbbf26c"
+    }
+   }
+  },
+  {
+   "case": "D09",
+   "type": "conflicting",
+   "game": "ka59",
+   "decision_after_actions": 97,
+   "reference_board": {
+    "observation": "o97",
+    "cells_sha256": "ee2eaee3b6994e06e5dbfb0bcaaf0ba3c5d23c57d1b3039b01de2c28fdcd2371"
+   },
+   "description_scorer_tokens": 954,
+   "description_fits": {
+    "proposed": false,
+    "tested": true
+   },
+   "records": [
+    {
+     "event": 82,
+     "frames": 1,
+     "share_of_board_differing_from_current": 0.02,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 1012,
+      "scorer_record_tokens": 847,
+      "scorer_pair_tokens": 1805,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 256,
+      "scorer_record_tokens": 168,
+      "scorer_pair_tokens": 1126,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": true,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    },
+    {
+     "event": 83,
+     "frames": 1,
+     "share_of_board_differing_from_current": 0.02,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 866,
+      "scorer_record_tokens": 724,
+      "scorer_pair_tokens": 1682,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 194,
+      "scorer_record_tokens": 125,
+      "scorer_pair_tokens": 1083,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": true,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    }
+   ],
+   "formats": {
+    "A": {
+     "pack_opus_tokens": 2241,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": false
+     },
+     "records_opus_tokens": 1878,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "b77b64483418cdd0006dd5f22745640268a413f1fc1f7c9da13c17c66b6e83b8"
+    },
+    "B": {
+     "pack_opus_tokens": 918,
+     "pack_fits": {
+      "512": false,
+      "1024": true,
+      "2048": true
+     },
+     "records_opus_tokens": 450,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "7e4f36976310a77d7da451fada65c7a6f8739e1832d3d43a775a87b1f56c9efd"
+    }
+   }
+  },
+  {
+   "case": "D10",
+   "type": "conflicting",
+   "game": "vc33",
+   "decision_after_actions": 43,
+   "reference_board": {
+    "observation": "o43",
+    "cells_sha256": "75d514cec2179bf352cda4c0e1683e9c36ad9fcf4e8033b214491dcaeb243acc"
+   },
+   "description_scorer_tokens": 886,
+   "description_fits": {
+    "proposed": false,
+    "tested": true
+   },
+   "records": [
+    {
+     "event": 25,
+     "frames": 1,
+     "share_of_board_differing_from_current": 0.073,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 1110,
+      "scorer_record_tokens": 803,
+      "scorer_pair_tokens": 1693,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": false,
+       "2048": true
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 518,
+      "scorer_record_tokens": 344,
+      "scorer_pair_tokens": 1234,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    },
+    {
+     "event": 32,
+     "frames": 1,
+     "share_of_board_differing_from_current": 0.046,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 952,
+      "scorer_record_tokens": 704,
+      "scorer_pair_tokens": 1594,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 274,
+      "scorer_record_tokens": 177,
+      "scorer_pair_tokens": 1067,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": true,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    }
+   ],
+   "formats": {
+    "A": {
+     "pack_opus_tokens": 2425,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": false
+     },
+     "records_opus_tokens": 2062,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "1fa750fe0329a6a204c1e922c0009281cbe3c90106eb6b0a1c8ce7f945d84f7f"
+    },
+    "B": {
+     "pack_opus_tokens": 1260,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": true
+     },
+     "records_opus_tokens": 792,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "696c94fc4ddc88f3cb937bef23f74b0505dea5af9f0661417ad003d6e6d9ce7d"
+    }
+   }
+  },
+  {
+   "case": "D11",
+   "type": "conflicting",
+   "game": "cd82",
+   "decision_after_actions": 92,
+   "reference_board": {
+    "observation": "o92",
+    "cells_sha256": "db20552f80a6564de8811b993ddf31a2ebcf64500a85e571394983a7d0bd9388"
+   },
+   "description_scorer_tokens": 1734,
+   "description_fits": {
+    "proposed": false,
+    "tested": true
+   },
+   "records": [
+    {
+     "event": 53,
+     "frames": 1,
+     "share_of_board_differing_from_current": 0.095,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 1598,
+      "scorer_record_tokens": 1152,
+      "scorer_pair_tokens": 2890,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": false,
+       "2048": true
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 910,
+      "scorer_record_tokens": 615,
+      "scorer_pair_tokens": 2353,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    },
+    {
+     "event": 68,
+     "frames": 1,
+     "share_of_board_differing_from_current": 0.082,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 1440,
+      "scorer_record_tokens": 1086,
+      "scorer_pair_tokens": 2824,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": false,
+       "2048": true
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 628,
+      "scorer_record_tokens": 401,
+      "scorer_pair_tokens": 2139,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    }
+   ],
+   "formats": {
+    "A": {
+     "pack_opus_tokens": 3401,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": false
+     },
+     "records_opus_tokens": 3038,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "c048c052411b982dbc45530d4934cf0120a096d745781941f828e0649c59c0ef"
+    },
+    "B": {
+     "pack_opus_tokens": 2006,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": true
+     },
+     "records_opus_tokens": 1538,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "09a523bad103c61c00dfbe910f8ecb37693c3133d5c01af23aa5b357520db43c"
+    }
+   }
+  },
+  {
+   "case": "D12",
+   "type": "conflicting",
+   "game": "ka59",
+   "decision_after_actions": 95,
+   "reference_board": {
+    "observation": "o95",
+    "cells_sha256": "94635d9584ba3be819b1ea73ea0bdf221c4b7194edc8270b241ae900ba606b24"
+   },
+   "description_scorer_tokens": 922,
+   "description_fits": {
+    "proposed": false,
+    "tested": true
+   },
+   "records": [
+    {
+     "event": 73,
+     "frames": 1,
+     "share_of_board_differing_from_current": 0.012,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 978,
+      "scorer_record_tokens": 815,
+      "scorer_pair_tokens": 1741,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 262,
+      "scorer_record_tokens": 172,
+      "scorer_pair_tokens": 1098,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": true,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    },
+    {
+     "event": 86,
+     "frames": 1,
+     "share_of_board_differing_from_current": 0.024,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 854,
+      "scorer_record_tokens": 721,
+      "scorer_pair_tokens": 1647,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 238,
+      "scorer_record_tokens": 162,
+      "scorer_pair_tokens": 1088,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": true,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    }
+   ],
+   "formats": {
+    "A": {
+     "pack_opus_tokens": 2195,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": false
+     },
+     "records_opus_tokens": 1832,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "c47f9d1c146369adb516a34a9923751586240e5c9f58a9360654e0fec4d4e655"
+    },
+    "B": {
+     "pack_opus_tokens": 968,
+     "pack_fits": {
+      "512": false,
+      "1024": true,
+      "2048": true
+     },
+     "records_opus_tokens": 500,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "3d75dda1e8a6fd8605a1c07f38ee712ac656a6f21c12578380f91d0c40463b09"
+    }
+   }
+  },
+  {
+   "case": "D13",
+   "type": "spatial",
+   "game": "ls20",
+   "decision_after_actions": 59,
+   "reference_board": {
+    "observation": "o59",
+    "cells_sha256": "359278bf3d42c31c8b85ebdb17290b92d5948673b4420083db8075004a1c62f6"
+   },
+   "description_scorer_tokens": 1084,
+   "description_fits": {
+    "proposed": false,
+    "tested": true
+   },
+   "records": [
+    {
+     "event": 43,
+     "frames": 1,
+     "share_of_board_differing_from_current": 0.017,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 1284,
+      "scorer_record_tokens": 1035,
+      "scorer_pair_tokens": 2123,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": false,
+       "2048": true
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 244,
+      "scorer_record_tokens": 160,
+      "scorer_pair_tokens": 1248,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": true,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    }
+   ],
+   "formats": {
+    "A": {
+     "pack_opus_tokens": 1643,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": true
+     },
+     "records_opus_tokens": 1284,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "b29e0492102ba6c0101dadf6056e93f5a96dc6eb52cec04b888891ac1b3f850b"
+    },
+    "B": {
+     "pack_opus_tokens": 708,
+     "pack_fits": {
+      "512": false,
+      "1024": true,
+      "2048": true
+     },
+     "records_opus_tokens": 244,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "ac48854b006ddb62574d50647e80fa4388709e5e336081947e0800999eafd714"
+    }
+   }
+  },
+  {
+   "case": "D14",
+   "type": "spatial",
+   "game": "cd82",
+   "decision_after_actions": 25,
+   "reference_board": {
+    "observation": "o25",
+    "cells_sha256": "0d699ae6757069387397871f7cc78f2ed168a98738f2c25173019eb210effcf1"
+   },
+   "description_scorer_tokens": 1050,
+   "description_fits": {
+    "proposed": false,
+    "tested": true
+   },
+   "records": [
+    {
+     "event": 15,
+     "frames": 1,
+     "share_of_board_differing_from_current": 0.071,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 1050,
+      "scorer_record_tokens": 779,
+      "scorer_pair_tokens": 1833,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": false,
+       "2048": true
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 782,
+      "scorer_record_tokens": 514,
+      "scorer_pair_tokens": 1568,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    }
+   ],
+   "formats": {
+    "A": {
+     "pack_opus_tokens": 1409,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": true
+     },
+     "records_opus_tokens": 1050,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "0d692ae8c22f31b5c2524b5337a26698a9b560e1052878f38074e4c0c25f19a3"
+    },
+    "B": {
+     "pack_opus_tokens": 1246,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": true
+     },
+     "records_opus_tokens": 782,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "c44e53b481d1ac9e1d8b84a0f7745c8a6d4fa2566abe00681e639b641b99d008"
+    }
+   }
+  },
+  {
+   "case": "D15",
+   "type": "spatial",
+   "game": "vc33",
+   "decision_after_actions": 66,
+   "reference_board": {
+    "observation": "o66",
+    "cells_sha256": "3dfe5ee2c0d9feee164c59685c857dc947bfedbf7b6dab0c4533a3ab82dfe9a0"
+   },
+   "description_scorer_tokens": 681,
+   "description_fits": {
+    "proposed": true,
+    "tested": true
+   },
+   "records": [
+    {
+     "event": 54,
+     "frames": 1,
+     "share_of_board_differing_from_current": 0.103,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 672,
+      "scorer_record_tokens": 507,
+      "scorer_pair_tokens": 1192,
+      "pair_fits": {
+       "proposed": true,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 280,
+      "scorer_record_tokens": 188,
+      "scorer_pair_tokens": 873,
+      "pair_fits": {
+       "proposed": true,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": true,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    }
+   ],
+   "formats": {
+    "A": {
+     "pack_opus_tokens": 1031,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": true
+     },
+     "records_opus_tokens": 672,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": true,
+      "tested": true
+     },
+     "pack_sha256": "d4edc32035ebb5a2b14b0ec3889ff22305b7e157b151364741346aab0b0a601c"
+    },
+    "B": {
+     "pack_opus_tokens": 744,
+     "pack_fits": {
+      "512": false,
+      "1024": true,
+      "2048": true
+     },
+     "records_opus_tokens": 280,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": true,
+      "tested": true
+     },
+     "pack_sha256": "9db9423bd56d78f598a257190d8f9bcfd492dc47afb8399cc257aef198464a23"
+    }
+   }
+  },
+  {
+   "case": "D16",
+   "type": "spatial",
+   "game": "ka59",
+   "decision_after_actions": 81,
+   "reference_board": {
+    "observation": "o81",
+    "cells_sha256": "e07644b74cf8cd6e7b47c63942c6383ebdf92aaad9948ebfa2fbcbf078b7c404"
+   },
+   "description_scorer_tokens": 1091,
+   "description_fits": {
+    "proposed": false,
+    "tested": true
+   },
+   "records": [
+    {
+     "event": 56,
+     "frames": 1,
+     "share_of_board_differing_from_current": 0.03,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 960,
+      "scorer_record_tokens": 801,
+      "scorer_pair_tokens": 1896,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 294,
+      "scorer_record_tokens": 195,
+      "scorer_pair_tokens": 1290,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": true,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    }
+   ],
+   "formats": {
+    "A": {
+     "pack_opus_tokens": 1319,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": true
+     },
+     "records_opus_tokens": 960,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "0dafc3de0b011a0c79fe08de11f429b876b4ca3154b7c4cf7b6f860565868664"
+    },
+    "B": {
+     "pack_opus_tokens": 758,
+     "pack_fits": {
+      "512": false,
+      "1024": true,
+      "2048": true
+     },
+     "records_opus_tokens": 294,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "9c7347184e89151f105e48fcb8bed289a3a570449b5d97a9f4cf1b4d5e86f987"
+    }
+   }
+  },
+  {
+   "case": "D17",
+   "type": "ordinary",
+   "game": "tn36",
+   "decision_after_actions": 96,
+   "reference_board": {
+    "observation": "o96",
+    "cells_sha256": "def743761e8d3aeeca4c5fad710f68d30f7e3ed130f753ef5cf02c00c2220425"
+   },
+   "description_scorer_tokens": 1223,
+   "description_fits": {
+    "proposed": false,
+    "tested": true
+   },
+   "records": [
+    {
+     "event": 86,
+     "frames": 1,
+     "share_of_board_differing_from_current": 0.009,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 1094,
+      "scorer_record_tokens": 717,
+      "scorer_pair_tokens": 1944,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": false,
+       "2048": true
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 194,
+      "scorer_record_tokens": 127,
+      "scorer_pair_tokens": 1354,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": true,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    }
+   ],
+   "formats": {
+    "A": {
+     "pack_opus_tokens": 1453,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": true
+     },
+     "records_opus_tokens": 1094,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "83afeff72c3b1b04c400edb44ed7ecef7667bfa7c888e3b81083921696019467"
+    },
+    "B": {
+     "pack_opus_tokens": 658,
+     "pack_fits": {
+      "512": false,
+      "1024": true,
+      "2048": true
+     },
+     "records_opus_tokens": 194,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "ee9d2c19d8ce484c95fd612f4b77646647d774286bbc24743472c2c2d07015e6"
+    }
+   }
+  },
+  {
+   "case": "D18",
+   "type": "ordinary",
+   "game": "ls20",
+   "decision_after_actions": 49,
+   "reference_board": {
+    "observation": "o49",
+    "cells_sha256": "9f7ba26dbdad417efcc4dd2c3062e60753015092351bc6103d93987622bc5931"
+   },
+   "description_scorer_tokens": 1237,
+   "description_fits": {
+    "proposed": false,
+    "tested": true
+   },
+   "records": [
+    {
+     "event": 35,
+     "frames": 1,
+     "share_of_board_differing_from_current": 0.023,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 1348,
+      "scorer_record_tokens": 1096,
+      "scorer_pair_tokens": 2337,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": false,
+       "2048": true
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 280,
+      "scorer_record_tokens": 191,
+      "scorer_pair_tokens": 1432,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": true,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    }
+   ],
+   "formats": {
+    "A": {
+     "pack_opus_tokens": 1707,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": true
+     },
+     "records_opus_tokens": 1348,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "2b5b6faaee60e9da970757332861ed7470c082dbf40b67e4a4235acd19f3c153"
+    },
+    "B": {
+     "pack_opus_tokens": 744,
+     "pack_fits": {
+      "512": false,
+      "1024": true,
+      "2048": true
+     },
+     "records_opus_tokens": 280,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "ffcea98a14d1f464477a0dbd5aa6227c16a4e125f9f5d782bb9072a6bdf39e30"
+    }
+   }
+  },
+  {
+   "case": "D19",
+   "type": "ordinary",
+   "game": "cd82",
+   "decision_after_actions": 85,
+   "reference_board": {
+    "observation": "o85",
+    "cells_sha256": "c1e46c22e400f04d7cd4d24b63cbff72fc22877c9ee8a916f2422d0166c34d2c"
+   },
+   "description_scorer_tokens": 3409,
+   "description_fits": {
+    "proposed": false,
+    "tested": true
+   },
+   "records": [
+    {
+     "event": 48,
+     "frames": 1,
+     "share_of_board_differing_from_current": 0.094,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 1436,
+      "scorer_record_tokens": 1028,
+      "scorer_pair_tokens": 4441,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": false,
+       "2048": true
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 794,
+      "scorer_record_tokens": 518,
+      "scorer_pair_tokens": 3931,
+      "pair_fits": {
+       "proposed": false,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    }
+   ],
+   "formats": {
+    "A": {
+     "pack_opus_tokens": 1795,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": true
+     },
+     "records_opus_tokens": 1436,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "0ecef527fa4ad8ed1a7082b9cd88a7c8404035c2611e71d2b7b3267da861765c"
+    },
+    "B": {
+     "pack_opus_tokens": 1258,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": true
+     },
+     "records_opus_tokens": 794,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": false,
+      "tested": true
+     },
+     "pack_sha256": "69946055161fdfd3d75a6c526f27e6bf84f01324a45d8f38eadae9373c4f6cd1"
+    }
+   }
+  },
+  {
+   "case": "D20",
+   "type": "ordinary",
+   "game": "vc33",
+   "decision_after_actions": 72,
+   "reference_board": {
+    "observation": "o72",
+    "cells_sha256": "215c9fe4b43000c79001064714669f844865a8c3749eb795710e0188517b9cec"
+   },
+   "description_scorer_tokens": 715,
+   "description_fits": {
+    "proposed": true,
+    "tested": true
+   },
+   "records": [
+    {
+     "event": 63,
+     "frames": 1,
+     "share_of_board_differing_from_current": 0.066,
+     "A": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 696,
+      "scorer_record_tokens": 514,
+      "scorer_pair_tokens": 1233,
+      "pair_fits": {
+       "proposed": true,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": false,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B": {
+      "reconstructs_all_frames": true,
+      "opus_tokens": 326,
+      "scorer_record_tokens": 213,
+      "scorer_pair_tokens": 932,
+      "pair_fits": {
+       "proposed": true,
+       "tested": true
+      },
+      "fits_alone": {
+       "512": true,
+       "1024": true,
+       "2048": true
+      }
+     },
+     "B_earlier_board_given_as": "differences from current"
+    }
+   ],
+   "formats": {
+    "A": {
+     "pack_opus_tokens": 1055,
+     "pack_fits": {
+      "512": false,
+      "1024": false,
+      "2048": true
+     },
+     "records_opus_tokens": 696,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": true,
+      "tested": true
+     },
+     "pack_sha256": "6dce915733d41c411451aad2322688d065e4abdb6fc8cf280552848bb77b3d94"
+    },
+    "B": {
+     "pack_opus_tokens": 790,
+     "pack_fits": {
+      "512": false,
+      "1024": true,
+      "2048": true
+     },
+     "records_opus_tokens": 326,
+     "all_records_reconstruct": true,
+     "all_pairs_fit": {
+      "proposed": true,
+      "tested": true
+     },
+     "pack_sha256": "6e03a2b0996d58cfb66d806507d9557febbdd7bc3ff4c91c0e35bc66ec7adca9"
+    }
+   }
+  }
+ ]
+}

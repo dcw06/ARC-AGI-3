@@ -1,0 +1,670 @@
+{
+ "protocol": "revision 11, Appendix D",
+ "frozen_before_any_format_output": true,
+ "seed": 20261114,
+ "source_run": "opus55-competition-20261106T054112Z",
+ "games": [
+  "bp35",
+  "lf52",
+  "ls20",
+  "tn36",
+  "cd82",
+  "ka59",
+  "vc33"
+ ],
+ "minimum_gap_actions": 9,
+ "types_assigned_by_rule_not_yet_reviewed": true,
+ "candidate_counts": {
+  "bp35": {
+   "records": 100,
+   "counter_cells_estimated": 22,
+   "candidates": {
+    "level/reset": 0,
+    "delayed": 51,
+    "conflicting": 0,
+    "spatial": 0,
+    "ordinary": 0
+   }
+  },
+  "lf52": {
+   "records": 100,
+   "counter_cells_estimated": 53,
+   "candidates": {
+    "level/reset": 0,
+    "delayed": 58,
+    "conflicting": 0,
+    "spatial": 0,
+    "ordinary": 0
+   }
+  },
+  "ls20": {
+   "records": 100,
+   "counter_cells_estimated": 0,
+   "candidates": {
+    "level/reset": 57,
+    "delayed": 1,
+    "conflicting": 0,
+    "spatial": 68,
+    "ordinary": 2
+   }
+  },
+  "tn36": {
+   "records": 100,
+   "counter_cells_estimated": 60,
+   "candidates": {
+    "level/reset": 40,
+    "delayed": 19,
+    "conflicting": 0,
+    "spatial": 0,
+    "ordinary": 61
+   }
+  },
+  "cd82": {
+   "records": 100,
+   "counter_cells_estimated": 41,
+   "candidates": {
+    "level/reset": 19,
+    "delayed": 18,
+    "conflicting": 12,
+    "spatial": 6,
+    "ordinary": 50
+   }
+  },
+  "ka59": {
+   "records": 100,
+   "counter_cells_estimated": 31,
+   "candidates": {
+    "level/reset": 22,
+    "delayed": 2,
+    "conflicting": 8,
+    "spatial": 55,
+    "ordinary": 24
+   }
+  },
+  "vc33": {
+   "records": 100,
+   "counter_cells_estimated": 32,
+   "candidates": {
+    "level/reset": 54,
+    "delayed": 3,
+    "conflicting": 1,
+    "spatial": 18,
+    "ordinary": 32
+   }
+  }
+ },
+ "cases": [
+  {
+   "type": "level/reset",
+   "game": "ls20",
+   "decision_after_actions": 82,
+   "current_level": 2,
+   "current_reset": 0,
+   "current_board_observation": "o82",
+   "current_board_cells_sha256": "4edbe4b0c82b79f21de6bc558ea2c064d60ba76de662e49f84d861ef29052817",
+   "earlier_records": [
+    {
+     "event": 10,
+     "action": {
+      "id": "ACTION1",
+      "x": null,
+      "y": null
+     },
+     "frames_returned": 1,
+     "level": 0,
+     "reset": 0,
+     "cells_differing_from_current_board": 1751,
+     "share_of_board_differing": 0.427
+    }
+   ],
+   "rule_note": "earlier level",
+   "case": "D01"
+  },
+  {
+   "type": "level/reset",
+   "game": "ka59",
+   "decision_after_actions": 33,
+   "current_level": 1,
+   "current_reset": 0,
+   "current_board_observation": "o33",
+   "current_board_cells_sha256": "de1e1f10c47278ee928c3e840779d7443e23bcf3c9c04cab51eb5420a78556d5",
+   "earlier_records": [
+    {
+     "event": 5,
+     "action": {
+      "id": "ACTION2",
+      "x": null,
+      "y": null
+     },
+     "frames_returned": 1,
+     "level": 0,
+     "reset": 0,
+     "cells_differing_from_current_board": 3519,
+     "share_of_board_differing": 0.859
+    }
+   ],
+   "rule_note": "earlier level",
+   "case": "D02"
+  },
+  {
+   "type": "level/reset",
+   "game": "tn36",
+   "decision_after_actions": 92,
+   "current_level": 0,
+   "current_reset": 1,
+   "current_board_observation": "o92",
+   "current_board_cells_sha256": "43b710a4c43faefd781541123b33f25d282351f3bfc637166cf67a4463b550f6",
+   "earlier_records": [
+    {
+     "event": 59,
+     "action": {
+      "id": "ACTION6",
+      "x": 36,
+      "y": 45
+     },
+     "frames_returned": 1,
+     "level": 0,
+     "reset": 0,
+     "cells_differing_from_current_board": 34,
+     "share_of_board_differing": 0.008
+    }
+   ],
+   "rule_note": "earlier attempt",
+   "case": "D03"
+  },
+  {
+   "type": "level/reset",
+   "game": "tn36",
+   "decision_after_actions": 76,
+   "current_level": 0,
+   "current_reset": 1,
+   "current_board_observation": "o76",
+   "current_board_cells_sha256": "d5bc9cb0e317b234a580c2a3232400119c0e416d387bd6d451de621019c91401",
+   "earlier_records": [
+    {
+     "event": 29,
+     "action": {
+      "id": "ACTION6",
+      "x": 41,
+      "y": 42
+     },
+     "frames_returned": 1,
+     "level": 0,
+     "reset": 0,
+     "cells_differing_from_current_board": 35,
+     "share_of_board_differing": 0.009
+    }
+   ],
+   "rule_note": "earlier attempt",
+   "case": "D04"
+  },
+  {
+   "type": "delayed",
+   "game": "lf52",
+   "decision_after_actions": 85,
+   "current_level": 1,
+   "current_reset": 0,
+   "current_board_observation": "o85",
+   "current_board_cells_sha256": "87292e5cccfcac76fc289d8596d9cda303a8e3d7201b5890990e04691e285b30",
+   "earlier_records": [
+    {
+     "event": 46,
+     "action": {
+      "id": "ACTION4",
+      "x": null,
+      "y": null
+     },
+     "frames_returned": 3,
+     "level": 1,
+     "reset": 0,
+     "cells_differing_from_current_board": 171,
+     "share_of_board_differing": 0.042
+    }
+   ],
+   "rule_note": "3 frames with a transient state",
+   "case": "D05"
+  },
+  {
+   "type": "delayed",
+   "game": "bp35",
+   "decision_after_actions": 75,
+   "current_level": 1,
+   "current_reset": 2,
+   "current_board_observation": "o75",
+   "current_board_cells_sha256": "1997f8d49fe16319e6ab74364a2d0f5eb1878b0072eb287f28aad7fa7ce0685f",
+   "earlier_records": [
+    {
+     "event": 60,
+     "action": {
+      "id": "ACTION3",
+      "x": null,
+      "y": null
+     },
+     "frames_returned": 5,
+     "level": 1,
+     "reset": 2,
+     "cells_differing_from_current_board": 1424,
+     "share_of_board_differing": 0.348
+    }
+   ],
+   "rule_note": "5 frames with a transient state",
+   "case": "D06"
+  },
+  {
+   "type": "delayed",
+   "game": "vc33",
+   "decision_after_actions": 97,
+   "current_level": 4,
+   "current_reset": 0,
+   "current_board_observation": "o97",
+   "current_board_cells_sha256": "bb1776778cca5749bc88d4516deed842a48d0a71e21200a564841e70890def06",
+   "earlier_records": [
+    {
+     "event": 86,
+     "action": {
+      "id": "ACTION6",
+      "x": 30,
+      "y": 50
+     },
+     "frames_returned": 44,
+     "level": 4,
+     "reset": 0,
+     "cells_differing_from_current_board": 893,
+     "share_of_board_differing": 0.218
+    }
+   ],
+   "rule_note": "44 frames with a transient state",
+   "case": "D07"
+  },
+  {
+   "type": "delayed",
+   "game": "cd82",
+   "decision_after_actions": 27,
+   "current_level": 0,
+   "current_reset": 0,
+   "current_board_observation": "o27",
+   "current_board_cells_sha256": "9bfb1685bb8fe2dfe4d4b65a75e456abd295d7e78e2351ff7e55d98ca8733a46",
+   "earlier_records": [
+    {
+     "event": 18,
+     "action": {
+      "id": "ACTION5",
+      "x": null,
+      "y": null
+     },
+     "frames_returned": 15,
+     "level": 0,
+     "reset": 0,
+     "cells_differing_from_current_board": 36,
+     "share_of_board_differing": 0.009
+    }
+   ],
+   "rule_note": "15 frames with a transient state",
+   "case": "D08"
+  },
+  {
+   "type": "conflicting",
+   "game": "ka59",
+   "decision_after_actions": 97,
+   "current_level": 1,
+   "current_reset": 0,
+   "current_board_observation": "o97",
+   "current_board_cells_sha256": "ee2eaee3b6994e06e5dbfb0bcaaf0ba3c5d23c57d1b3039b01de2c28fdcd2371",
+   "earlier_records": [
+    {
+     "event": 82,
+     "action": {
+      "id": "ACTION1",
+      "x": null,
+      "y": null
+     },
+     "frames_returned": 1,
+     "level": 1,
+     "reset": 0,
+     "cells_differing_from_current_board": 82,
+     "share_of_board_differing": 0.02
+    },
+    {
+     "event": 83,
+     "action": {
+      "id": "ACTION1",
+      "x": null,
+      "y": null
+     },
+     "frames_returned": 1,
+     "level": 1,
+     "reset": 0,
+     "cells_differing_from_current_board": 82,
+     "share_of_board_differing": 0.02
+    }
+   ],
+   "rule_note": "same action: changed, then did nothing",
+   "case": "D09"
+  },
+  {
+   "type": "conflicting",
+   "game": "vc33",
+   "decision_after_actions": 43,
+   "current_level": 2,
+   "current_reset": 0,
+   "current_board_observation": "o43",
+   "current_board_cells_sha256": "75d514cec2179bf352cda4c0e1683e9c36ad9fcf4e8033b214491dcaeb243acc",
+   "earlier_records": [
+    {
+     "event": 25,
+     "action": {
+      "id": "ACTION6",
+      "x": 34,
+      "y": 56
+     },
+     "frames_returned": 1,
+     "level": 2,
+     "reset": 0,
+     "cells_differing_from_current_board": 301,
+     "share_of_board_differing": 0.073
+    },
+    {
+     "event": 32,
+     "action": {
+      "id": "ACTION6",
+      "x": 34,
+      "y": 56
+     },
+     "frames_returned": 1,
+     "level": 2,
+     "reset": 0,
+     "cells_differing_from_current_board": 188,
+     "share_of_board_differing": 0.046
+    }
+   ],
+   "rule_note": "same action: changed, then did nothing",
+   "case": "D10"
+  },
+  {
+   "type": "conflicting",
+   "game": "cd82",
+   "decision_after_actions": 92,
+   "current_level": 2,
+   "current_reset": 0,
+   "current_board_observation": "o92",
+   "current_board_cells_sha256": "db20552f80a6564de8811b993ddf31a2ebcf64500a85e571394983a7d0bd9388",
+   "earlier_records": [
+    {
+     "event": 53,
+     "action": {
+      "id": "ACTION1",
+      "x": null,
+      "y": null
+     },
+     "frames_returned": 1,
+     "level": 2,
+     "reset": 0,
+     "cells_differing_from_current_board": 390,
+     "share_of_board_differing": 0.095
+    },
+    {
+     "event": 68,
+     "action": {
+      "id": "ACTION1",
+      "x": null,
+      "y": null
+     },
+     "frames_returned": 1,
+     "level": 2,
+     "reset": 0,
+     "cells_differing_from_current_board": 337,
+     "share_of_board_differing": 0.082
+    }
+   ],
+   "rule_note": "same action: changed, then did nothing",
+   "case": "D11"
+  },
+  {
+   "type": "conflicting",
+   "game": "ka59",
+   "decision_after_actions": 95,
+   "current_level": 1,
+   "current_reset": 0,
+   "current_board_observation": "o95",
+   "current_board_cells_sha256": "94635d9584ba3be819b1ea73ea0bdf221c4b7194edc8270b241ae900ba606b24",
+   "earlier_records": [
+    {
+     "event": 73,
+     "action": {
+      "id": "ACTION3",
+      "x": null,
+      "y": null
+     },
+     "frames_returned": 1,
+     "level": 1,
+     "reset": 0,
+     "cells_differing_from_current_board": 48,
+     "share_of_board_differing": 0.012
+    },
+    {
+     "event": 86,
+     "action": {
+      "id": "ACTION3",
+      "x": null,
+      "y": null
+     },
+     "frames_returned": 1,
+     "level": 1,
+     "reset": 0,
+     "cells_differing_from_current_board": 97,
+     "share_of_board_differing": 0.024
+    }
+   ],
+   "rule_note": "same action: changed, then did nothing",
+   "case": "D12"
+  },
+  {
+   "type": "spatial",
+   "game": "ls20",
+   "decision_after_actions": 59,
+   "current_level": 1,
+   "current_reset": 0,
+   "current_board_observation": "o59",
+   "current_board_cells_sha256": "359278bf3d42c31c8b85ebdb17290b92d5948673b4420083db8075004a1c62f6",
+   "earlier_records": [
+    {
+     "event": 43,
+     "action": {
+      "id": "ACTION1",
+      "x": null,
+      "y": null
+     },
+     "frames_returned": 1,
+     "level": 1,
+     "reset": 0,
+     "cells_differing_from_current_board": 70,
+     "share_of_board_differing": 0.017
+    }
+   ],
+   "rule_note": "moved share 0.46",
+   "case": "D13"
+  },
+  {
+   "type": "spatial",
+   "game": "cd82",
+   "decision_after_actions": 25,
+   "current_level": 0,
+   "current_reset": 0,
+   "current_board_observation": "o25",
+   "current_board_cells_sha256": "0d699ae6757069387397871f7cc78f2ed168a98738f2c25173019eb210effcf1",
+   "earlier_records": [
+    {
+     "event": 15,
+     "action": {
+      "id": "ACTION1",
+      "x": null,
+      "y": null
+     },
+     "frames_returned": 1,
+     "level": 0,
+     "reset": 0,
+     "cells_differing_from_current_board": 289,
+     "share_of_board_differing": 0.071
+    }
+   ],
+   "rule_note": "moved share 0.30",
+   "case": "D14"
+  },
+  {
+   "type": "spatial",
+   "game": "vc33",
+   "decision_after_actions": 66,
+   "current_level": 3,
+   "current_reset": 0,
+   "current_board_observation": "o66",
+   "current_board_cells_sha256": "3dfe5ee2c0d9feee164c59685c857dc947bfedbf7b6dab0c4533a3ab82dfe9a0",
+   "earlier_records": [
+    {
+     "event": 54,
+     "action": {
+      "id": "ACTION6",
+      "x": 40,
+      "y": 62
+     },
+     "frames_returned": 1,
+     "level": 3,
+     "reset": 0,
+     "cells_differing_from_current_board": 421,
+     "share_of_board_differing": 0.103
+    }
+   ],
+   "rule_note": "moved share 0.43",
+   "case": "D15"
+  },
+  {
+   "type": "spatial",
+   "game": "ka59",
+   "decision_after_actions": 81,
+   "current_level": 1,
+   "current_reset": 0,
+   "current_board_observation": "o81",
+   "current_board_cells_sha256": "e07644b74cf8cd6e7b47c63942c6383ebdf92aaad9948ebfa2fbcbf078b7c404",
+   "earlier_records": [
+    {
+     "event": 56,
+     "action": {
+      "id": "ACTION6",
+      "x": 34,
+      "y": 32
+     },
+     "frames_returned": 1,
+     "level": 1,
+     "reset": 0,
+     "cells_differing_from_current_board": 121,
+     "share_of_board_differing": 0.03
+    }
+   ],
+   "rule_note": "moved share 0.33",
+   "case": "D16"
+  },
+  {
+   "type": "ordinary",
+   "game": "tn36",
+   "decision_after_actions": 96,
+   "current_level": 0,
+   "current_reset": 1,
+   "current_board_observation": "o96",
+   "current_board_cells_sha256": "def743761e8d3aeeca4c5fad710f68d30f7e3ed130f753ef5cf02c00c2220425",
+   "earlier_records": [
+    {
+     "event": 86,
+     "action": {
+      "id": "ACTION6",
+      "x": 41,
+      "y": 45
+     },
+     "frames_returned": 1,
+     "level": 0,
+     "reset": 1,
+     "cells_differing_from_current_board": 35,
+     "share_of_board_differing": 0.009
+    }
+   ],
+   "rule_note": "changed",
+   "case": "D17"
+  },
+  {
+   "type": "ordinary",
+   "game": "ls20",
+   "decision_after_actions": 49,
+   "current_level": 1,
+   "current_reset": 0,
+   "current_board_observation": "o49",
+   "current_board_cells_sha256": "9f7ba26dbdad417efcc4dd2c3062e60753015092351bc6103d93987622bc5931",
+   "earlier_records": [
+    {
+     "event": 35,
+     "action": {
+      "id": "ACTION3",
+      "x": null,
+      "y": null
+     },
+     "frames_returned": 1,
+     "level": 1,
+     "reset": 0,
+     "cells_differing_from_current_board": 94,
+     "share_of_board_differing": 0.023
+    }
+   ],
+   "rule_note": "changed",
+   "case": "D18"
+  },
+  {
+   "type": "ordinary",
+   "game": "cd82",
+   "decision_after_actions": 85,
+   "current_level": 2,
+   "current_reset": 0,
+   "current_board_observation": "o85",
+   "current_board_cells_sha256": "c1e46c22e400f04d7cd4d24b63cbff72fc22877c9ee8a916f2422d0166c34d2c",
+   "earlier_records": [
+    {
+     "event": 48,
+     "action": {
+      "id": "ACTION4",
+      "x": null,
+      "y": null
+     },
+     "frames_returned": 1,
+     "level": 2,
+     "reset": 0,
+     "cells_differing_from_current_board": 384,
+     "share_of_board_differing": 0.094
+    }
+   ],
+   "rule_note": "changed",
+   "case": "D19"
+  },
+  {
+   "type": "ordinary",
+   "game": "vc33",
+   "decision_after_actions": 72,
+   "current_level": 3,
+   "current_reset": 0,
+   "current_board_observation": "o72",
+   "current_board_cells_sha256": "215c9fe4b43000c79001064714669f844865a8c3749eb795710e0188517b9cec",
+   "earlier_records": [
+    {
+     "event": 63,
+     "action": {
+      "id": "ACTION6",
+      "x": 40,
+      "y": 62
+     },
+     "frames_returned": 1,
+     "level": 3,
+     "reset": 0,
+     "cells_differing_from_current_board": 272,
+     "share_of_board_differing": 0.066
+    }
+   ],
+   "rule_note": "changed",
+   "case": "D20"
+  }
+ ]
+}

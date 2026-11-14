@@ -9,7 +9,10 @@ allowance that includes the reading instructions, headers and provenance.
 
 Writes the frozen inputs, token counts and the reviewer forms, and a sealed evaluation record holding the
 correct answers (taken from the original frames). No Opus request is made here.
-Usage: readability_case.py <events.jsonl> <out_dir>
+Usage: readability_case.py <events.jsonl> <out_dir> [version=1]
+Version 1 writes frozen/ and the sealed record. Version 2 uses the corrected reading instructions and
+writes only frozen_v2/: the record, context, questions, sealed answers and rubric must be identical to
+version 1, and the script stops if they are not.
 """
 import hashlib
 import json
@@ -103,10 +106,13 @@ def piece_box(frame):
     return [int(xs.min()), int(xs.max())], [int(ys.min()) + PIECE_ROWS[0] - 4, int(ys.max()) + PIECE_ROWS[0] - 4]
 
 
-def main(events_path, out_dir):
+def main(events_path, out_dir, version=1):
     out = Path(out_dir)
-    for sub in ('frozen', 'sealed', 'human', 'responses'):
-        (out / sub).mkdir(parents=True, exist_ok=True)
+    frozen = out / ('frozen' if version == 1 else 'frozen_v%d' % version)
+    notes = F.READING_NOTES if version == 1 else F.READING_NOTES_V2
+    tag = '' if version == 1 else ' v%d' % version
+    for path in ((frozen, out / 'sealed', out / 'human', out / 'responses') if version == 1 else (frozen,)):
+        path.mkdir(parents=True, exist_ok=True)
     recs = next(v for k, v in records.load_run(events_path).items() if k.startswith(GAME))['records']
     done = recs[:DECISION]
     current = done[-1]['response_frames'][-1]
@@ -140,14 +146,17 @@ def main(events_path, out_dir):
     # ---- the two older-memory sections
     provenance = 'Source: game %s, saved run %s, action %d (transition t%d). One record, selected by hand.' % (
         GAME, record['trajectory_id'], EARLIER, EARLIER)
+    reference = ('In this record "current" means the current board given above, observation o%d.' % DECISION
+                 if version == 1 else
+                 'In this record "current" means the current board given above, observation o%d: the board before '
+                 'this action is rebuilt from o%d.' % (DECISION, DECISION))
     sections = {
-        'A': '\n'.join(['== OLDER MEMORY ==', provenance, F.READING_NOTES['M-key-v1'], '', F.m_key(record)]),
-        'B': '\n'.join(['== OLDER MEMORY ==', provenance,
-                        'In this record "current" means the current board given above, observation o%d.' % DECISION,
-                        F.READING_NOTES['M-ref-v1'], '', F.m_ref(record, current)])}
+        'A': '\n'.join(['== OLDER MEMORY ==', provenance, notes['M-key-v1'], '', F.m_key(record)]),
+        'B': '\n'.join(['== OLDER MEMORY ==', provenance, reference, notes['M-ref-v1'], '', F.m_ref(record, current)])}
     question_block = '== QUESTIONS ==\n' + QUESTIONS
     counter = OpusCounter()
     counts = {'model': MODEL, 'allowance': ALLOWANCE, 'counts_are_estimates': True,
+              'reading_instructions_version': version,
               'system': counter.count(SYSTEM, 'readability system'),
               'common_context': counter.count(context, 'readability common context'),
               'questions': counter.count(question_block, 'readability questions'), 'inputs': {}}
@@ -159,23 +168,23 @@ def main(events_path, out_dir):
                    'messages': [{'role': 'user', 'content': user}]}
         requests[name] = request
         record_text = section.split('\n\n', 1)[1]
-        memory_tokens = counter.count(section, 'readability older-memory section %s' % name)
+        memory_tokens = counter.count(section, 'readability%s older-memory section %s' % (tag, name))
         counts['inputs'][name] = {
             'format': 'M-key-v1' if name == 'A' else 'M-ref-v1',
             'older_memory_section_tokens': memory_tokens, 'within_allowance': memory_tokens <= ALLOWANCE,
             'record_alone_tokens': counter.count(record_text, 'readability record %s' % name),
-            'full_request_input_tokens': counter.count_request(request, 'readability full request %s' % name),
+            'record_sha256': hashlib.sha256(record_text.encode()).hexdigest(),
+            'full_request_input_tokens': counter.count_request(request, 'readability%s full request %s' % (tag, name)),
             'older_memory_characters': len(section)}
-        (out / 'frozen' / ('older_memory_%s.txt' % name)).write_text(section + '\n')
-        (out / 'frozen' / ('input_%s.txt' % name)).write_text(
+        (frozen / ('older_memory_%s.txt' % name)).write_text(section + '\n')
+        (frozen / ('input_%s.txt' % name)).write_text(
             '[system]\n' + SYSTEM + '\n\n[user]\n' + user + '\n')
-        assert memory_tokens <= ALLOWANCE, 'older memory exceeds the allowance'
-    (out / 'frozen' / 'requests.json').write_text(json.dumps(requests, indent=1))
-    (out / 'frozen' / 'common_context.txt').write_text(context + '\n')
-    (out / 'frozen' / 'questions.txt').write_text(question_block + '\n')
-    (out / 'frozen' / 'token_counts.json').write_text(json.dumps(counts, indent=1))
+    (frozen / 'requests.json').write_text(json.dumps(requests, indent=1))
+    (frozen / 'common_context.txt').write_text(context + '\n')
+    (frozen / 'questions.txt').write_text(question_block + '\n')
+    (frozen / 'token_counts.json').write_text(json.dumps(counts, indent=1))
     np.savez_compressed(
-        out / 'frozen' / 'source_frames.npz', current_board=current, earlier_before=record['before_frame'],
+        frozen / 'source_frames.npz', current_board=current, earlier_before=record['before_frame'],
         earlier_frames=np.stack(record['response_frames']),
         **{'recent_%s_before' % r['source_transition_ids'][0]: r['before_frame'] for r in recent},
         **{'recent_%s_frames' % r['source_transition_ids'][0]: np.stack(r['response_frames']) for r in recent})
@@ -245,6 +254,23 @@ def main(events_path, out_dir):
             'a_reader_recovers_the_facts': 'all eight structured items correct and the free-text item not contradicted',
             'colours': 'compared as hexadecimal digits, ignoring case',
             'cannot_determine': 'counts as not recovered and is reported separately from a wrong answer'}}
+    over = [n for n, v in counts['inputs'].items() if not v['within_allowance']]
+    if version != 1:
+        existing = json.loads((out / 'sealed' / 'evaluation_record.json').read_text())
+        same_key = existing['answer_key'] == key and existing['rubric_fixed_before_any_response'] == sealed['rubric_fixed_before_any_response']
+        files = sorted(p for p in frozen.iterdir() if p.name != 'manifest.json')
+        manifest = {'reading_instructions_version': version, 'over_allowance': over,
+                    'answer_key_and_rubric_equal_sealed_record': same_key,
+                    'reconstruction': 'both records decode to the original board and all %d frames' % len(frames),
+                    'sha256': {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in files}}
+        (frozen / 'manifest.json').write_text(json.dumps(manifest, indent=1))
+        print(json.dumps(counts, indent=1))
+        print(json.dumps({k: v for k, v in manifest.items() if k != 'sha256'}, indent=1))
+        assert same_key, 'answer key or rubric differs from the sealed record'
+        if over:
+            raise SystemExit('older memory exceeds the allowance for: %s' % over)
+        return
+    assert not over, 'older memory exceeds the allowance'
     (out / 'sealed' / 'evaluation_record.json').write_text(json.dumps(sealed, indent=1))
 
     form = {'reviewer': '', 'input_read': 'A or B', 'read_order': 'first or second', 'minutes_taken': None,
@@ -256,4 +282,4 @@ def main(events_path, out_dir):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2])
+    main(sys.argv[1], sys.argv[2], int(sys.argv[3]) if len(sys.argv) > 3 else 1)

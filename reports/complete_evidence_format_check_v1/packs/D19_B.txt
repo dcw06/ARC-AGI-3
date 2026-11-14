@@ -1,0 +1,59 @@
+== OLDER MEMORY ==
+Source: game cd82, saved run opus55-competition-20261106T054112Z, action 48 (transition t48). One record, selected by rule.
+In this record "current" means the current board given above, observation o85: the board before this action is rebuilt from o85.
+Boards are text. A board line "y:c*n,..." gives row y as runs: colour c (one hex digit) repeated n times, left to right; "a-b:" means rows a to b are identical. A change line "y:x1-x2=c" sets every cell in columns x1 to x2 of row y to colour c ("x=c" for one cell); "a-b:" applies it to rows a to b. A range may include cells that already had that colour. Row 0 is the top, column 0 the left; ACTION6 clicks (x=column, y=row). Frames are the boards returned by one action, in order. A frame header names its reference ("vs before": the board before the action; "vs previous": the previous frame) and counts the cells whose colour differs from that reference, which can be fewer than the cells the lines cover. A "net before>last" block is optional: it appears only when the last frame is "vs previous", and restates the change from the board before the action to the last frame. The board before the action is not printed. "before vs current: N cells" gives it relative to the current board: take the current board and apply the lines. N counts the cells that differ; every cell the lines do not set had the same colour as on the current board.
+
+M-ref-v1 record=cd82:opus55-competition-20261106T054112Z:e0048 event=48 reset=0 level=2 frames=1
+action=ACTION4
+before vs current: 384 cells
+18:30-33=2
+19:29-30=2,31-32=0,33-34=2
+20-22:29=2,30-33=E,34=2
+24:25-38=2
+25-31:25=2,26-37=E,38=2
+32:25=2,38=2
+34:27-31=8,36=F
+35:27-31=8,35-36=F
+36:27-31=8,34-36=F
+37:27-31=8,33-36=F
+38:27-31=8,32-36=F
+39:27-31=8,32-36=0
+40:27-31=8,32-36=0,43=5
+41:27-31=8,32-36=0,43-44=5
+42:27-31=8,32-36=0,42-45=5
+43:27-31=8,32-36=0,41-46=5
+44:40-47=5
+45:39-48=5
+46:38-49=5
+47:37-48=5
+48:36-47=5
+49:35-46=5
+50:33-45=5
+51:34-44=5
+52:35-43=5
+53:36-42=5
+54:37-41=5
+55:38-40=5
+56:39=5
+63:32-55=4
+frame 1/1 vs before: 228 cells
+18:30-33=5
+19-20:29-34=5
+21:29-34=5,39=2
+22:29-34=5,38-40=2
+23:37-38=2,39=E,40-41=2
+24:25-35=5,38-40=E,41-42=2
+25:25-34=5,35-36=2,38-41=E,42-43=2
+26:25-33=5,34-35=2,38-42=E,43-44=2
+27:25-32=5,33-34=2,38-43=E,44-45=2
+28:25-34=5,38-44=E,45-46=2
+29:25-35=5,38-45=E,46-47=2
+30:25-36=5,38-46=E,47-48=2
+31:25-37=5,38-47=E,48-49=2
+32:25-38=5,39-46=E,47-48=2
+33:40-45=E,46-47=2
+34:41-44=E,45-46=2
+35:42-43=E,44-45=2
+36:43-44=2
+37:43=2
+result state=NOT_FINISHED level=2 legal=1,2,3,4,5,6

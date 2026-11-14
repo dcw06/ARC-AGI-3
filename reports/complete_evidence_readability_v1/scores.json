@@ -32,5 +32,73 @@
   },
   "all_structured_correct": true,
   "free_text_to_judge_by_hand": "Frame 1: the round colour-9 button that was clicked (rows 51-59, columns 32-40) turns colour a, and the row-1 counter loses one cell (column 50 goes 9 to 3). Frames 2-6: a colour-9 outline steps left to right over the five switch positions, one per frame (columns 19-23, 24-28, 29-33, 34-38, 39-43; rows 41-47), while the piece is shown shifted 4 columns right at columns 34-37, rows 13-16, with its old place refilled with colour 4. Frame 7: everything is back as before the action (piece again at columns 30-33, button colour 9, no outline) except the one counter cell at row 1 column 50, so the net effect is one counter step and no level completed."
+ },
+ {
+  "source": "responses_v2/A1.json",
+  "input": "A",
+  "note": "response",
+  "items": {
+   "bars": "correct",
+   "stems": "correct",
+   "frames": "correct",
+   "piece_columns": "correct",
+   "piece_rows": "correct",
+   "last_frame": "correct",
+   "level": "correct",
+   "match": "correct"
+  },
+  "all_structured_correct": true,
+  "free_text_to_judge_by_hand": "Frame 1 turns the colour-9 shape at the bottom (rows 51-59, the clicked area) to colour a; frames 2-6 move the piece four columns right (to columns 34-37) while a colour-9 outline (rows 41-47) steps left to right across the five switch positions, columns 19-23, then 24-28, 29-33, 34-38 and 39-43. In frame 7 everything is back as before except cell (50,1), which changes from 9 to 3, so no switch or piece position changes in the end."
+ },
+ {
+  "source": "responses_v2/A2.json",
+  "input": "A",
+  "note": "response",
+  "items": {
+   "bars": "correct",
+   "stems": "correct",
+   "frames": "correct",
+   "piece_columns": "correct",
+   "piece_rows": "correct",
+   "last_frame": "correct",
+   "level": "correct",
+   "match": "correct"
+  },
+  "all_structured_correct": true,
+  "free_text_to_judge_by_hand": "Frame 1 turns the colour-9 blob at the bottom from 9 to a. Frames 2-6 show the piece shifted 4 columns right (columns 34-37, rows 13-16) while an outline of colour 9 steps across the five switch columns from left to right (columns 19-23, 24-28, 29-33, 34-38, 39-43; rows 41-47). Frame 7 returns to the original board except for one top-row cell (x=50, y=1) changing from 9 to 3."
+ },
+ {
+  "source": "responses_v2/B1.json",
+  "input": "B",
+  "note": "response",
+  "items": {
+   "bars": "correct",
+   "stems": "correct",
+   "frames": "correct",
+   "piece_columns": "correct",
+   "piece_rows": "correct",
+   "last_frame": "correct",
+   "level": "correct",
+   "match": "correct"
+  },
+  "all_structured_correct": true,
+  "free_text_to_judge_by_hand": "Frame 1 recolours the clicked 9-shape (rows 51-59, columns 32-40) to colour A. Frames 2-6 show the piece moved 4 columns right (columns 34-37) while a 9-coloured outline steps left to right over the five switch columns (19-23, 24-28, 29-33, 34-38, 39-43). Frame 7 reverts all of that, leaving only row 1 column 50 changed from 9 to 3, so the row-1 bar shrinks by one cell."
+ },
+ {
+  "source": "responses_v2/B2.json",
+  "input": "B",
+  "note": "response",
+  "items": {
+   "bars": "correct",
+   "stems": "correct",
+   "frames": "correct",
+   "piece_columns": "correct",
+   "piece_rows": "correct",
+   "last_frame": "correct",
+   "level": "correct",
+   "match": "correct"
+  },
+  "all_structured_correct": true,
+  "free_text_to_judge_by_hand": "Frame 1 recolours the colour-9 blob at rows 51-59 to A. Frames 2-6 show the piece moved 4 columns right (to columns 34-37) and paint colour 9 around switch groups 1 to 5 in turn (columns 19-23, 24-28, 29-33, 34-38, 39-43), apparently checking each switch. Frame 7 returns to the original board except row 1 column 50, which changes from 9 to 3 in every frame; it looks like a progress or timer bar ticking down by one cell."
  }
 ]

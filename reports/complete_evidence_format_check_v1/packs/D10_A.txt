@@ -1,0 +1,69 @@
+== OLDER MEMORY ==
+Source: game vc33, saved run opus55-competition-20261106T054112Z, actions 25 and 32 (transitions t25, t32). 2 records, selected by rule.
+Boards are text. A board line "y:c*n,..." gives row y as runs: colour c (one hex digit) repeated n times, left to right; "a-b:" means rows a to b are identical. A change line "y:x1-x2=c" sets every cell in columns x1 to x2 of row y to colour c ("x=c" for one cell); "a-b:" applies it to rows a to b. A range may include cells that already had that colour. Row 0 is the top, column 0 the left; ACTION6 clicks (x=column, y=row). Frames are the boards returned by one action, in order. A frame header names its reference ("vs before": the board before the action; "vs previous": the previous frame) and counts the cells whose colour differs from that reference, which can be fewer than the cells the lines cover. A "net before>last" block is optional: it appears only when the last frame is "vs previous", and restates the change from the board before the action to the last frame.
+
+M-key-v1 record=vc33:opus55-competition-20261106T054112Z:e0025 event=25 reset=0 level=2 frames=1
+action=ACTION6 x=34 y=56
+before 64x64
+0:7*61,4*3
+1-5:4*64
+6-29:4*6,3*52,4*6
+30-32:4*6,3*42,5*2,3*8,4*6
+33:4*6,3*42,5*2,3*3,4*1,3*4,4*6
+34:4*6,3*42,5*2,3*2,4*3,3*3,4*6
+35:4*6,3*42,5*2,3*2,B*3,3*3,4*6
+36-37:4*6,3*30,5*2,3*10,5*2,0*8,4*6
+38:4*6,3*8,5*2,3*20,5*2,3*10,5*2,0*8,4*6
+39:4*6,3*8,5*2,3*20,F*2,3*10,5*2,0*8,4*6
+40:4*6,3*8,5*2,3*20,5*2,3*10,5*2,0*8,4*6
+41:4*6,3*8,E*2,3*20,5*2,3*10,5*2,0*8,4*6
+42:4*6,3*8,5*2,3*20,5*2,3*10,5*2,0*8,4*6
+43:4*6,3*8,5*2,3*20,5*2,3*4,4*1,3*5,5*2,0*8,4*6
+44:4*6,3*8,5*2,3*20,5*2,3*3,4*3,3*4,5*2,0*8,4*6
+45:4*6,3*8,5*2,3*20,5*2,3*3,F*3,3*4,5*2,0*8,4*6
+46:4*6,3*8,5*2,3*20,5*2,0*10,5*2,0*8,4*6
+47:4*6,3*8,5*2,3*20,5*2,0*10,B*2,0*8,4*6
+48-50:4*6,3*8,5*2,3*20,5*2,0*10,5*2,0*8,4*6
+51:4*6,3*3,4*1,3*4,5*2,3*20,5*2,0*10,5*2,0*8,4*6
+52:4*6,3*2,4*3,3*3,5*2,3*10,5*2,3*8,5*2,0*10,5*2,0*8,4*6
+53:4*6,3*2,E*3,3*3,5*2,3*10,5*2,3*8,5*2,0*10,5*2,0*8,4*6
+54-55:4*6,0*8,5*2,3*10,5*2,0*8,5*2,0*10,5*2,0*8,4*6
+56-57:4*6,0*6,9*2,5*2,9*2,0*6,9*2,5*2,9*2,0*4,9*2,5*2,9*2,0*6,9*2,5*2,9*2,0*6,4*6
+58-63:4*64
+frame 1/1 vs before: 43 cells
+43:42=3
+44:41-43=3
+45:41=3,42=4,43=3
+46:38-40=3,41-43=4,44-47=3
+47:38-40=3,41-43=F,44-47=3
+52-53:28-35=0
+result state=NOT_FINISHED level=2 legal=6
+
+M-key-v1 record=vc33:opus55-competition-20261106T054112Z:e0032 event=32 reset=0 level=2 frames=1
+action=ACTION6 x=34 y=56
+before 64x64
+0:7*55,4*9
+1-5:4*64
+6-29:4*6,3*52,4*6
+30-32:4*6,3*42,5*2,3*8,4*6
+33:4*6,3*36,4*1,3*5,5*2,3*8,4*6
+34:4*6,3*35,4*3,3*4,5*2,3*8,4*6
+35:4*6,3*35,F*3,3*4,5*2,3*8,4*6
+36-37:4*6,3*30,5*2,0*10,5*2,3*8,4*6
+38:4*6,3*8,5*2,3*20,5*2,0*10,5*2,3*8,4*6
+39:4*6,3*8,5*2,3*20,F*2,0*10,5*2,3*8,4*6
+40:4*6,3*8,5*2,3*20,5*2,0*10,5*2,3*8,4*6
+41:4*6,3*8,E*2,3*20,5*2,0*10,5*2,3*8,4*6
+42-44:4*6,3*8,5*2,3*20,5*2,0*10,5*2,3*8,4*6
+45:4*6,3*8,5*2,3*20,5*2,0*10,5*2,3*3,4*1,3*4,4*6
+46:4*6,3*8,5*2,3*20,5*2,0*10,5*2,3*2,4*3,3*3,4*6
+47:4*6,3*8,5*2,3*20,5*2,0*10,B*2,3*2,B*3,3*3,4*6
+48-50:4*6,3*8,5*2,3*20,5*2,0*10,5*2,0*8,4*6
+51:4*6,3*3,4*1,3*4,5*2,3*20,5*2,0*10,5*2,0*8,4*6
+52:4*6,3*2,4*3,3*3,5*2,3*10,5*2,0*8,5*2,0*10,5*2,0*8,4*6
+53:4*6,3*2,E*3,3*3,5*2,3*10,5*2,0*8,5*2,0*10,5*2,0*8,4*6
+54-55:4*6,0*8,5*2,3*10,5*2,0*8,5*2,0*10,5*2,0*8,4*6
+56-57:4*6,0*6,9*2,5*2,9*2,0*6,9*2,5*2,9*2,0*4,9*2,5*2,9*2,0*6,9*2,5*2,9*2,0*6,4*6
+58-63:4*64
+frame 1/1: same as before
+result state=NOT_FINISHED level=2 legal=6

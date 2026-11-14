@@ -1,0 +1,34 @@
+== OLDER MEMORY ==
+Source: game ka59, saved run opus55-competition-20261106T054112Z, actions 82 and 83 (transitions t82, t83). 2 records, selected by rule.
+In these records "current" means the current board given above, observation o97: the board before each action is rebuilt from o97.
+Boards are text. A board line "y:c*n,..." gives row y as runs: colour c (one hex digit) repeated n times, left to right; "a-b:" means rows a to b are identical. A change line "y:x1-x2=c" sets every cell in columns x1 to x2 of row y to colour c ("x=c" for one cell); "a-b:" applies it to rows a to b. A range may include cells that already had that colour. Row 0 is the top, column 0 the left; ACTION6 clicks (x=column, y=row). Frames are the boards returned by one action, in order. A frame header names its reference ("vs before": the board before the action; "vs previous": the previous frame) and counts the cells whose colour differs from that reference, which can be fewer than the cells the lines cover. A "net before>last" block is optional: it appears only when the last frame is "vs previous", and restates the change from the board before the action to the last frame. The board before the action is not printed. "before vs current: N cells" gives it relative to the current board: take the current board and apply the lines. N counts the cells that differ; every cell the lines do not set had the same colour as on the current board.
+
+M-ref-v1 record=ka59:opus55-competition-20261106T054112Z:e0082 event=82 reset=0 level=1 frames=1
+action=ACTION1
+before vs current: 82 cells
+32:31=4
+33:6-11=E,31=4
+34:6-11=E
+35-36:6-7=E,8-9=0,10-11=E
+37-38:6-11=E
+42-47:6-11=1
+63:30-37=4
+frame 1/1 vs before: 40 cells
+30-31:6-11=E
+32:6-7=E,8-9=0,10-11=E
+33:8-9=0
+35:8-9=E
+36-38:6-11=1
+result state=NOT_FINISHED level=1 legal=1,2,3,4,6
+
+M-ref-v1 record=ka59:opus55-competition-20261106T054112Z:e0083 event=83 reset=0 level=1 frames=1
+action=ACTION1
+before vs current: 82 cells
+30-31:6-11=E
+32-33:6-7=E,8-9=0,10-11=E,31=4
+34-35:6-11=E
+42-47:6-11=1
+63:30-37=4
+frame 1/1 vs before: 1 cells
+63:37=0
+result state=NOT_FINISHED level=1 legal=1,2,3,4,6

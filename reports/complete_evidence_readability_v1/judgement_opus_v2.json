@@ -1,0 +1,123 @@
+{
+ "judged_by": "Claude (session agent), 2026-11-14, by the rubric in sealed/evaluation_record.json",
+ "inputs_version": 2,
+ "responses": {
+  "A1": {
+   "input": "A",
+   "outcome": "response",
+   "stop_reason": "end_turn",
+   "model": "claude-opus-5-5",
+   "structured_items": {
+    "bars": "correct",
+    "stems": "correct",
+    "frames": "correct",
+    "piece_columns": "correct",
+    "piece_rows": "correct",
+    "last_frame": "correct",
+    "level": "correct",
+    "match": "correct"
+   },
+   "all_eight_correct": true,
+   "free_text": "not contradicted",
+   "contradictory_statements": [],
+   "remarks": "none",
+   "usage": {
+    "input_tokens": 5388,
+    "output_tokens": 1929,
+    "thinking_tokens": 1545
+   },
+   "cost_usd_list_price": 0.0601,
+   "elapsed_seconds": 17.7,
+   "file_sha256": "05627492f423e50b89b29afaec9a60d451192b0326a8c5aeba4d84dbea315656"
+  },
+  "A2": {
+   "input": "A",
+   "outcome": "response",
+   "stop_reason": "end_turn",
+   "model": "claude-opus-5-5",
+   "structured_items": {
+    "bars": "correct",
+    "stems": "correct",
+    "frames": "correct",
+    "piece_columns": "correct",
+    "piece_rows": "correct",
+    "last_frame": "correct",
+    "level": "correct",
+    "match": "correct"
+   },
+   "all_eight_correct": true,
+   "free_text": "not contradicted",
+   "contradictory_statements": [],
+   "remarks": "calls the changed cell a \"top-row cell\" while giving its position correctly as x=50, y=1 (row 1 is the second row); loose wording, coordinates right",
+   "usage": {
+    "input_tokens": 5388,
+    "output_tokens": 2045,
+    "thinking_tokens": 1668
+   },
+   "cost_usd_list_price": 0.0625,
+   "elapsed_seconds": 18.0,
+   "file_sha256": "4d5f807abb1ec31b2ad99b7cdb29bd620ab9c717b0b43d8cc869093f0ab5956a"
+  },
+  "B1": {
+   "input": "B",
+   "outcome": "response",
+   "stop_reason": "end_turn",
+   "model": "claude-opus-5-5",
+   "structured_items": {
+    "bars": "correct",
+    "stems": "correct",
+    "frames": "correct",
+    "piece_columns": "correct",
+    "piece_rows": "correct",
+    "last_frame": "correct",
+    "level": "correct",
+    "match": "correct"
+   },
+   "all_eight_correct": true,
+   "free_text": "not contradicted",
+   "contradictory_statements": [],
+   "remarks": "none; \"the row-1 bar shrinks by one cell\" is an interpretation consistent with the frames",
+   "usage": {
+    "input_tokens": 4545,
+    "output_tokens": 1770,
+    "thinking_tokens": 1389
+   },
+   "cost_usd_list_price": 0.0536,
+   "elapsed_seconds": 16.4,
+   "file_sha256": "42e103ed2f23cf061a0e29edb1655e5fb7592953f3463218ca62e5906ff88bd9"
+  },
+  "B2": {
+   "input": "B",
+   "outcome": "response",
+   "stop_reason": "end_turn",
+   "model": "claude-opus-5-5",
+   "structured_items": {
+    "bars": "correct",
+    "stems": "correct",
+    "frames": "correct",
+    "piece_columns": "correct",
+    "piece_rows": "correct",
+    "last_frame": "correct",
+    "level": "correct",
+    "match": "correct"
+   },
+   "all_eight_correct": true,
+   "free_text": "not contradicted",
+   "contradictory_statements": [],
+   "remarks": "none; \"apparently checking each switch\" and \"looks like a progress or timer bar\" are hedged interpretations, not claims about cells",
+   "usage": {
+    "input_tokens": 4545,
+    "output_tokens": 1569,
+    "thinking_tokens": 1178
+   },
+   "cost_usd_list_price": 0.0496,
+   "elapsed_seconds": 15.2,
+   "file_sha256": "5932acd4ce2599770bbbe4f7d2ccbe52c79bcffc529f3d68c535e39ddc2b10b8"
+  }
+ },
+ "total_cost_usd_list_price": 0.2258,
+ "result": {
+  "A": "pass (2 of 2 requests)",
+  "B": "pass (2 of 2 requests)"
+ }
+}

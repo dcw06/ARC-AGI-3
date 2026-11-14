@@ -1,0 +1,29 @@
+{
+ "model": "claude-opus-5-5",
+ "allowance": 2048,
+ "counts_are_estimates": true,
+ "reading_instructions_version": 2,
+ "system": 85,
+ "common_context": 2703,
+ "questions": 586,
+ "inputs": {
+  "A": {
+   "format": "M-key-v1",
+   "older_memory_section_tokens": 2035,
+   "within_allowance": true,
+   "record_alone_tokens": 1676,
+   "record_sha256": "568d844787c89e8bc27f17652accc3cd6372df4e1bfbeee79ea84c1735c28b96",
+   "full_request_input_tokens": 5388,
+   "older_memory_characters": 3127
+  },
+  "B": {
+   "format": "M-ref-v1",
+   "older_memory_section_tokens": 1192,
+   "within_allowance": true,
+   "record_alone_tokens": 728,
+   "record_sha256": "a8f07fa2ff93c6c9a1fc43b19c06ef54344972930e3553eac0f9cd04d7073a69",
+   "full_request_input_tokens": 4545,
+   "older_memory_characters": 2490
+  }
+ }
+}

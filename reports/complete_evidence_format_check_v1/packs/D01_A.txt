@@ -1,0 +1,40 @@
+== OLDER MEMORY ==
+Source: game ls20, saved run opus55-competition-20261106T054112Z, action 10 (transition t10). One record, selected by rule.
+Boards are text. A board line "y:c*n,..." gives row y as runs: colour c (one hex digit) repeated n times, left to right; "a-b:" means rows a to b are identical. A change line "y:x1-x2=c" sets every cell in columns x1 to x2 of row y to colour c ("x=c" for one cell); "a-b:" applies it to rows a to b. A range may include cells that already had that colour. Row 0 is the top, column 0 the left; ACTION6 clicks (x=column, y=row). Frames are the boards returned by one action, in order. A frame header names its reference ("vs before": the board before the action; "vs previous": the previous frame) and counts the cells whose colour differs from that reference, which can be fewer than the cells the lines cover. A "net before>last" block is optional: it appears only when the last frame is "vs previous", and restates the change from the board before the action to the last frame.
+
+M-key-v1 record=ls20:opus55-competition-20261106T054112Z:e0010 event=10 reset=0 level=0 frames=1
+action=ACTION1
+before 64x64
+0-7:5*4,4*60
+8:5*4,4*28,3*9,4*23
+9-10:5*4,4*28,3*1,5*7,3*1,4*23
+11:5*4,4*28,3*1,5*2,9*3,5*2,3*1,4*23
+12:5*4,4*28,3*1,5*4,9*1,5*2,3*1,4*23
+13:5*4,4*28,3*1,5*2,9*1,5*1,9*1,5*2,3*1,4*23
+14-15:5*4,4*28,3*1,5*7,3*1,4*23
+16:5*4,4*28,3*9,4*23
+17-24:5*4,4*30,3*5,4*25
+25-29:5*4,4*10,3*40,4*10
+30:5*4,4*10,3*10,C*5,4*5,3*20,4*10
+31:5*4,4*10,3*7,0*1,3*2,C*5,4*5,3*20,4*10
+32:5*4,4*10,3*6,1*1,0*2,3*1,9*5,4*5,3*20,4*10
+33:5*4,4*10,3*7,1*1,3*2,9*5,4*5,3*20,4*10
+34:5*4,4*10,3*10,9*5,4*5,3*20,4*10
+35-39:5*4,4*10,3*15,4*5,3*20,4*10
+40-44:5*4,4*15,3*5,4*10,3*20,4*10
+45-49:5*4,4*15,3*35,4*10
+50-51:5*4,4*60
+52:4*64
+53-54:4*1,5*10,4*53
+55-56:4*1,5*2,9*6,5*2,4*53
+57-58:4*1,5*6,9*2,5*2,4*53
+59:4*1,5*2,9*2,5*2,9*2,5*2,4*53
+60:4*1,5*2,9*2,5*2,9*2,5*2,4*1,5*52
+61-62:4*1,5*10,4*1,5*1,3*8,B*34,5*1,8*2,5*1,8*2,5*1,8*2
+63:4*12,5*52
+frame 1/1 vs before: 52 cells
+25-26:24-28=C
+27-29:24-28=9
+30-34:24-28=3
+61-62:21=3
+result state=NOT_FINISHED level=0 legal=1,2,3,4

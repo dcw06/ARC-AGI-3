@@ -1,0 +1,20 @@
+== QUESTIONS ==
+The board has ten switches. Five "bars": row 42, columns 20-22, 25-27, 30-32, 35-37 and 40-42. Five "stems": rows 44-46, columns 21, 26, 31, 36 and 41. Every cell of one switch has the same colour. The board also has a "piece": the block of colour b that occupies rows 13-16, columns 30-33 on the current board.
+
+The older memory holds one earlier action record. Answer these about it.
+
+Q1. Immediately before the action in that record, what colour was each bar (left to right) and each stem (left to right)?
+Q2. What happened when the action ran? State how many frames it returned; which columns and rows the piece occupied in frame 3; how many cells of the last returned frame differ from the board before the action; whether the level was completed; and describe in one or two sentences what the frames show.
+Q3. Is the switch configuration immediately before that earlier action the same as the switch configuration on the current board? List any switches that differ.
+
+Reply with this JSON object:
+{"q1_bars_left_to_right": ["colour", "colour", "colour", "colour", "colour"],
+ "q1_stems_left_to_right": ["colour", "colour", "colour", "colour", "colour"],
+ "q2_frames_returned": number,
+ "q2_piece_columns_in_frame_3": [first, last],
+ "q2_piece_rows_in_frame_3": [first, last],
+ "q2_cells_different_in_last_frame": number,
+ "q2_level_completed": true or false,
+ "q2_what_the_frames_show": "text",
+ "q3_same_configuration": true or false,
+ "q3_switches_that_differ": ["bar 1" ... "stem 5", or empty]}
