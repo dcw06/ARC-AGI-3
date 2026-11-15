@@ -1,0 +1,14 @@
+[
+ {
+  "after": "t23",
+  "level": 2,
+  "rule": "The player piece rises automatically through open a tiles until a solid tile stops it. If its column leads into an f object with b0 along its bottom edge (a spike-like hazard), the piece is destroyed and the game ends.",
+  "applies_when": "Before you clear an e tile above the piece or move it sideways into a new column, trace that column upward. If you would pass only through a tiles (or tiles about to be cleared) before reaching an f/b0 object, with no e tile or other blocker in between, the action is fatal."
+ },
+ {
+  "after": "t48",
+  "level": 2,
+  "rule": "An f tile with a b0b bottom edge is a lethal spike. If the rising piece comes to rest anywhere directly beneath one, the piece is destroyed, even if a thin 5 gap row lies between them. Only a full solid tile (an intact e tile or a wide 5 background block) in between keeps it safe.",
+  "applies_when": "Before you clear an e tile or move the piece sideways, find where the piece would rise to in that column. If nothing solid except the 1-row 5 gap stands between that resting spot and an f/b0 tile above, the action is fatal."
+ }
+]

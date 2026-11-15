@@ -1,0 +1,18 @@
+{
+ "written_before_sending": "2026-11-15T00:49:33Z",
+ "requests_sha256": "fcefeb2a8fb08f7bf972ec3bdeebe9c63ba73e8c1704b2ec4503f63b549970fa",
+ "requests": 10,
+ "repeats": 8,
+ "model_calls": 80,
+ "retries": 0,
+ "rule": {
+  "outcome": "share of valid replies whose action ends in GAME_OVER when played on the local game, by input, over both positions",
+  "works_if": "the share with an added memory is at least 0.30 below the share with none and at least 0.30 below the share with irrelevant",
+  "no_headroom_if": "the share with none is below 0.30",
+  "unresolved_if": "more than 8 replies are invalid",
+  "valid_reply": "one the controller would accept (its own parse), so its action could have been sent",
+  "min_difference": 0.3,
+  "min_none": 0.3,
+  "max_invalid": 8
+ }
+}

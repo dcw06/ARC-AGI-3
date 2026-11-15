@@ -1,0 +1,161 @@
+{
+ "replies": 80,
+ "invalid": 0,
+ "by_input": {
+  "none": {
+   "valid": 16,
+   "game_over": 12,
+   "share": 0.75
+  },
+  "irrelevant": {
+   "valid": 16,
+   "game_over": 12,
+   "share": 0.75
+  },
+  "evidence": {
+   "valid": 16,
+   "game_over": 4,
+   "share": 0.25
+  },
+  "lesson": {
+   "valid": 16,
+   "game_over": 6,
+   "share": 0.375
+  },
+  "lesson_check": {
+   "valid": 16,
+   "game_over": 5,
+   "share": 0.312
+  }
+ },
+ "reading": {
+  "evidence": "works at these positions",
+  "lesson": "works at these positions",
+  "lesson_check": "works at these positions"
+ },
+ "by_request": {
+  "turn47-none": {
+   "turn": 47,
+   "arm": "none",
+   "valid": 8,
+   "game_over": 8,
+   "invalid": 0,
+   "actions": {
+    "{\"action_data\": {}, \"action_id\": 3} -> GAME_OVER": 8
+   }
+  },
+  "turn47-irrelevant": {
+   "turn": 47,
+   "arm": "irrelevant",
+   "valid": 8,
+   "game_over": 8,
+   "invalid": 0,
+   "actions": {
+    "{\"action_data\": {}, \"action_id\": 3} -> GAME_OVER": 8
+   }
+  },
+  "turn47-evidence": {
+   "turn": 47,
+   "arm": "evidence",
+   "valid": 8,
+   "game_over": 4,
+   "invalid": 0,
+   "actions": {
+    "{\"action_data\": {}, \"action_id\": 3} -> GAME_OVER": 4,
+    "{\"action_data\": {}, \"action_id\": 7} -> NOT_FINISHED": 2,
+    "{\"action_data\": {\"x\": 27, \"y\": 33}, \"action_id\": 6} -> NOT_FINISHED": 2
+   }
+  },
+  "turn47-lesson": {
+   "turn": 47,
+   "arm": "lesson",
+   "valid": 8,
+   "game_over": 6,
+   "invalid": 0,
+   "actions": {
+    "{\"action_data\": {}, \"action_id\": 3} -> GAME_OVER": 6,
+    "{\"action_data\": {\"x\": 27, \"y\": 33}, \"action_id\": 6} -> NOT_FINISHED": 2
+   }
+  },
+  "turn47-lesson_check": {
+   "turn": 47,
+   "arm": "lesson_check",
+   "valid": 8,
+   "game_over": 5,
+   "invalid": 0,
+   "actions": {
+    "{\"action_data\": {}, \"action_id\": 3} -> GAME_OVER": 5,
+    "{\"action_data\": {}, \"action_id\": 7} -> NOT_FINISHED": 3
+   }
+  },
+  "turn77-none": {
+   "turn": 77,
+   "arm": "none",
+   "valid": 8,
+   "game_over": 4,
+   "invalid": 0,
+   "actions": {
+    "{\"action_data\": {\"x\": 21, \"y\": 33}, \"action_id\": 6} -> GAME_OVER": 4,
+    "{\"action_data\": {\"x\": 21, \"y\": 20}, \"action_id\": 6} -> NOT_FINISHED": 1,
+    "{\"action_data\": {\"x\": 27, \"y\": 45}, \"action_id\": 6} -> NOT_FINISHED": 1,
+    "{\"action_data\": {\"x\": 51, \"y\": 39}, \"action_id\": 6} -> NOT_FINISHED": 1,
+    "{\"action_data\": {\"x\": 21, \"y\": 21}, \"action_id\": 6} -> NOT_FINISHED": 1
+   }
+  },
+  "turn77-irrelevant": {
+   "turn": 77,
+   "arm": "irrelevant",
+   "valid": 8,
+   "game_over": 4,
+   "invalid": 0,
+   "actions": {
+    "{\"action_data\": {\"x\": 21, \"y\": 33}, \"action_id\": 6} -> GAME_OVER": 4,
+    "{\"action_data\": {\"x\": 51, \"y\": 33}, \"action_id\": 6} -> NOT_FINISHED": 1,
+    "{\"action_data\": {\"x\": 21, \"y\": 21}, \"action_id\": 6} -> NOT_FINISHED": 2,
+    "{\"action_data\": {\"x\": 21, \"y\": 27}, \"action_id\": 6} -> NOT_FINISHED": 1
+   }
+  },
+  "turn77-evidence": {
+   "turn": 77,
+   "arm": "evidence",
+   "valid": 8,
+   "game_over": 0,
+   "invalid": 0,
+   "actions": {
+    "{\"action_data\": {}, \"action_id\": 7} -> NOT_FINISHED": 3,
+    "{\"action_data\": {\"x\": 21, \"y\": 39}, \"action_id\": 6} -> NOT_FINISHED": 4,
+    "{\"action_data\": {\"x\": 27, \"y\": 45}, \"action_id\": 6} -> NOT_FINISHED": 1
+   }
+  },
+  "turn77-lesson": {
+   "turn": 77,
+   "arm": "lesson",
+   "valid": 8,
+   "game_over": 0,
+   "invalid": 0,
+   "actions": {
+    "{\"action_data\": {}, \"action_id\": 7} -> NOT_FINISHED": 1,
+    "{\"action_data\": {\"x\": 52, \"y\": 39}, \"action_id\": 6} -> NOT_FINISHED": 1,
+    "{\"action_data\": {\"x\": 21, \"y\": 21}, \"action_id\": 6} -> NOT_FINISHED": 2,
+    "{\"action_data\": {\"x\": 27, \"y\": 45}, \"action_id\": 6} -> NOT_FINISHED": 1,
+    "{\"action_data\": {\"x\": 21, \"y\": 38}, \"action_id\": 6} -> NOT_FINISHED": 1,
+    "{\"action_data\": {\"x\": 51, \"y\": 39}, \"action_id\": 6} -> NOT_FINISHED": 1,
+    "{\"action_data\": {\"x\": 21, \"y\": 39}, \"action_id\": 6} -> NOT_FINISHED": 1
+   }
+  },
+  "turn77-lesson_check": {
+   "turn": 77,
+   "arm": "lesson_check",
+   "valid": 8,
+   "game_over": 0,
+   "invalid": 0,
+   "actions": {
+    "{\"action_data\": {\"x\": 21, \"y\": 39}, \"action_id\": 6} -> NOT_FINISHED": 4,
+    "{\"action_data\": {\"x\": 21, \"y\": 38}, \"action_id\": 6} -> NOT_FINISHED": 1,
+    "{\"action_data\": {}, \"action_id\": 7} -> NOT_FINISHED": 1,
+    "{\"action_data\": {\"x\": 21, \"y\": 21}, \"action_id\": 6} -> NOT_FINISHED": 1,
+    "{\"action_data\": {\"x\": 51, \"y\": 39}, \"action_id\": 6} -> NOT_FINISHED": 1
+   }
+  }
+ }
+}

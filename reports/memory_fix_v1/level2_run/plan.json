@@ -1,0 +1,34 @@
+{
+ "written_before_the_first_call": "2026-11-15T01:48:00Z",
+ "question": "Starting at the first board of bp35 level 2 with the saved notes, does the agent with game-over lessons and the lesson check solve level 2, and in how many actions, compared with the unchanged agent from the same start?",
+ "start": "the 17 saved level-1 actions of the 6 November run are repeated on the local game with no model call; every observation must hash to the saved one",
+ "arms": {
+  "control": "the 6 November harness unchanged",
+  "lessons_check": "game_over_lessons and lesson_check on"
+ },
+ "runs_per_arm": 2,
+ "new_actions_per_run": 100,
+ "stop": "level 2 solved, or 100 new actions",
+ "model": "claude-opus-5-5, effort high, subscription path, as on 6 November",
+ "game": "local copy of bp35-0a0ad940; no ARC service, no scorecard",
+ "order": "one run of each arm at the same time, then the second pair",
+ "primary": [
+  "level 2 solved within the 100 new actions (yes or no)",
+  "actions on level 2 when solved, counting every action and every reset on the level"
+ ],
+ "secondary": [
+  "game overs on level 2",
+  "whether a later game over has the same cause as an earlier one (my reading of the frames; a judgement)",
+  "model calls and replies the controller sent back",
+  "the lessons written"
+ ],
+ "reading": "two runs per arm cannot separate the arms from chance; the numbers are reported as they are, with no claim of an effect unless both runs of one arm solve the level and neither run of the other does, and even that is two runs",
+ "no_rerun": "a run that fails for a technical reason is reported as failed and may be repeated once under a new name; a run is never repeated because of its result",
+ "code_sha256": {
+  "research/memory_fix_v1/continue_bp35.py": "e0e211695867f25c04ad52d2d08e05696aa51fe0b4c1f49080a27dd42bcd4724",
+  "research/memory_fix_v1/local_arc.py": "cdb4819d903aca211731e8b63fc09602413644647c37da352172d36fc901aae4",
+  "research/claude_arc_v1/policy.py": "fb2cc498aa91c44f37ae3d777113595e56b129d774632f2be9045cd82ea25f50",
+  "research/claude_arc_v1/run.py": "993cbbff7504ef939a3e0565c43e3a337d9e72bc4c9d1c62060a16587d214b36",
+  "research/claude_arc_v1/config.py": "6687641be7e0c583a41af82b0b457a42adf959596a638184cc1ac8338f1c6cb4"
+ }
+}
