@@ -6,6 +6,8 @@ plays with its own choices until level 2 is solved or 100 new actions are used. 
 
     control         the 6 November harness, unchanged
     lessons_check   plus game_over_lessons and lesson_check
+    objective       plus state_objective: the benchmark's scoring rule in the system prompt
+                    (research/action_waste_v1); memory unchanged
 
     continue_bp35.py <arm> <run name> --send      one run: up to 100 model calls on the Claude subscription
     continue_bp35.py control <run name> --dry-run feeds the saved replies instead of calling a model; the run
@@ -32,7 +34,8 @@ SAVED = '.cache/claude_arc_runs/opus55-competition-20261106T054112Z/events.jsonl
 RUNS = ROOT / '.cache/claude_arc_runs'
 LEVEL_ONE = 17        # the saved run completed level 1 with its 17th action
 NEW_ACTIONS = 100
-ARMS = {'control': {}, 'lessons_check': {'game_over_lessons': True, 'lesson_check': True}}
+ARMS = {'control': {}, 'lessons_check': {'game_over_lessons': True, 'lesson_check': True},
+        'objective': {'state_objective': True}}
 
 
 def settings(arm):
@@ -103,6 +106,7 @@ def summary(folder):
     final = next(e['summary'] for e in events if e['kind'] == 'summary')
     return {'run': folder.name,
             'memory': 'lessons and check' if config.get('game_over_lessons') else 'unchanged',
+            'scoring_rule_shown': bool(config.get('state_objective')),
             'level_2_solved': solved, 'actions_on_level_2': len(level_two),
             'game_overs_on_level_2': len(deaths), 'at_level_2_action': deaths,
             'lessons_written': sum(l is not None for l in lessons),

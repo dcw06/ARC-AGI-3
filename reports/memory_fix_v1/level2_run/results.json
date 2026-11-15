@@ -1,0 +1,5019 @@
+{
+ "runs": [
+  {
+   "run": "bp35-l2-control-1-20261115T014800Z",
+   "memory": "unchanged",
+   "level_2_solved": true,
+   "actions_on_level_2": 44,
+   "game_overs_on_level_2": 1,
+   "at_level_2_action": [
+    3
+   ],
+   "lessons_written": 0,
+   "model_calls": 43,
+   "replies_sent_back": 0,
+   "stop_reason": "level_target",
+   "problems": [],
+   "audit": "passes",
+   "input_tokens": 655707,
+   "output_tokens": 75135,
+   "output_per_call_median": 1237,
+   "before_the_first_game_over": {
+    "turns": 3,
+    "turns_one_action_from_a_game_over": 1,
+    "of_those_the_agent_took_the_fatal_action": 1
+   },
+   "after_the_first_game_over": {
+    "turns": 40,
+    "turns_one_action_from_a_game_over": 4,
+    "of_those_the_agent_took_the_fatal_action": 0
+   },
+   "deaths": [
+    {
+     "level_2_action": 3,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 15,
+       "y": 33
+      }
+     },
+     "danger_note_when_choosing": "tentative",
+     "notes_when_choosing": [
+      {
+       "id": "H1",
+       "statement": "The 9/b piece is controlled by the player. ACTION3 moves it left one tile (6 cells) and ACTION4 moves it right one tile.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t11",
+        "t14",
+        "t16",
+        "t18"
+       ]
+      },
+      {
+       "id": "H2",
+       "statement": "Clicking an e tile with ACTION6 removes it, which lets the piece rise through that space. After t19 the piece rose one tile and the camera scrolled 6 rows. Another e tile now sits directly above at x13-17, y31-35.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t12",
+        "t15",
+        "t19"
+       ]
+      },
+      {
+       "id": "H4",
+       "statement": "ACTION7 is undo.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t2"
+       ]
+      },
+      {
+       "id": "H5",
+       "statement": "Row 63 is an action counter or budget bar that fills one cell per action.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t16",
+        "o17",
+        "t18",
+        "o19"
+       ]
+      },
+      {
+       "id": "H6",
+       "statement": "The piece rises upward through a-space until a non-a cell blocks it, and the camera follows.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t12",
+        "t13",
+        "t15",
+        "t19"
+       ]
+      },
+      {
+       "id": "H7",
+       "statement": "The f/b0b structures at y13-17 (x14-16, x20-22, x26-28) are either the goal or a hazard. Rising into the a-region at y19-29 will test which.",
+       "status": "tentative",
+       "evidence_ids": [
+        "o19"
+       ]
+      },
+      {
+       "id": "H8",
+       "statement": "The right a-column at x37-53 runs upward past the top of the view and may lead toward the goal.",
+       "status": "tentative",
+       "evidence_ids": [
+        "o19"
+       ]
+      }
+     ],
+     "notes_on_the_next_turn": [
+      {
+       "id": "H1",
+       "statement": "The 9/b piece is controlled by the player. ACTION3 moves it left one tile (6 cells) and ACTION4 moves it right one tile. The b cell shows which way it faces.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t14",
+        "t16",
+        "t18"
+       ]
+      },
+      {
+       "id": "H2",
+       "statement": "Clicking the e tile directly above the piece with ACTION6 removes it, and the piece then rises; the camera scrolls to follow.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t15",
+        "t19"
+       ]
+      },
+      {
+       "id": "H6",
+       "statement": "The piece rises upward through a-space until a non-a cell blocks it.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t15",
+        "t19"
+       ]
+      },
+      {
+       "id": "H7",
+       "statement": "The f/b0b structures above the left a-region (columns x13-29) are downward-pointing spikes. In t20, removing the next e tile above at x13-17 made the piece rise into them, which caused GAME_OVER.",
+       "status": "tentative",
+       "evidence_ids": [
+        "t20",
+        "o20",
+        "o19"
+       ]
+      },
+      {
+       "id": "H8",
+       "statement": "The right a-column (x37-53) has no spikes and runs upward past the top of the view. Moving the piece to x37-41 and then clearing the e tiles above it should let it rise safely toward the goal.",
+       "status": "tentative",
+       "evidence_ids": [
+        "o21"
+       ]
+      },
+      {
+       "id": "H5",
+       "statement": "Row 63 is an action counter or budget bar that fills one cell per action. It reset to empty after the RESET.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t18",
+        "o19",
+        "o21"
+       ]
+      },
+      {
+       "id": "H4",
+       "statement": "ACTION7 is undo.",
+       "status": "tentative",
+       "evidence_ids": [
+        "t2"
+       ]
+      }
+     ],
+     "lesson_written": null
+    }
+   ],
+   "turns": [
+    {
+     "level_2_action": 1,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 2,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 15,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 3,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 15,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": true,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 5,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 6,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 7,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 8,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 9,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 10,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 11,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 12,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 27,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 13,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 14,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 15,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 16,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 15,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 17,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 18,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 15,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 19,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 20,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 21,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 22,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 23,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 24,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 25,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 26,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 27,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 28,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 29,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 27,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 30,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 31,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 32,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 33,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 34,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 35,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 45,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 36,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 37,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 51,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 38,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 39,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 51,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 40,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 51,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 41,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 42,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 43,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 44,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    }
+   ]
+  },
+  {
+   "run": "bp35-l2-control-2-20261115T014800Z",
+   "memory": "unchanged",
+   "level_2_solved": true,
+   "actions_on_level_2": 87,
+   "game_overs_on_level_2": 3,
+   "at_level_2_action": [
+    6,
+    13,
+    46
+   ],
+   "lessons_written": 0,
+   "model_calls": 84,
+   "replies_sent_back": 0,
+   "stop_reason": "level_target",
+   "problems": [],
+   "audit": "passes",
+   "input_tokens": 1293862,
+   "output_tokens": 173284,
+   "output_per_call_median": 1466,
+   "before_the_first_game_over": {
+    "turns": 6,
+    "turns_one_action_from_a_game_over": 1,
+    "of_those_the_agent_took_the_fatal_action": 1
+   },
+   "after_the_first_game_over": {
+    "turns": 78,
+    "turns_one_action_from_a_game_over": 16,
+    "of_those_the_agent_took_the_fatal_action": 2
+   },
+   "deaths": [
+    {
+     "level_2_action": 6,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "danger_note_when_choosing": "tentative",
+     "notes_when_choosing": [
+      {
+       "id": "H1",
+       "statement": "The 9/b piece is controlled by the player. ACTION3 moves it left one tile (6 cells) and ACTION4 moves it right one tile.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t16",
+        "t18",
+        "t19",
+        "t20"
+       ]
+      },
+      {
+       "id": "H2",
+       "statement": "Clicking an e tile turns it into a, which lets the piece rise through it.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t15",
+        "t21",
+        "t22"
+       ]
+      },
+      {
+       "id": "H6",
+       "statement": "The piece rises through a-space until a non-a cell blocks it. The camera follows it.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t21",
+        "t22"
+       ]
+      },
+      {
+       "id": "H5",
+       "statement": "Row 63 is an action counter or budget bar.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t18",
+        "t19",
+        "t20",
+        "t22"
+       ]
+      },
+      {
+       "id": "H11",
+       "statement": "Background 5/3 cells are solid walls. The piece can only occupy a cells, and e tiles can be cleared by clicking.",
+       "status": "tentative",
+       "evidence_ids": [
+        "o22"
+       ]
+      },
+      {
+       "id": "H12",
+       "statement": "If I click (39,33), the piece should rise to rows 19-23 at x37-41 and stop under the background row 18 beneath the f/b0 shape. After that, moving left to x31-35 should let it rise toward the column of e tiles at x31-35, rows 1-11.",
+       "status": "tentative",
+       "evidence_ids": [
+        "o22"
+       ]
+      },
+      {
+       "id": "H13",
+       "statement": "The f/b0 shapes at rows 13-17 may be hazards (they look like spikes) or collectibles. Their effect is unknown.",
+       "status": "tentative",
+       "evidence_ids": [
+        "o22"
+       ]
+      },
+      {
+       "id": "H4",
+       "statement": "ACTION7 is undo.",
+       "status": "tentative",
+       "evidence_ids": [
+        "t2"
+       ]
+      }
+     ],
+     "notes_on_the_next_turn": [
+      {
+       "id": "H1",
+       "statement": "The 9/b piece is controlled by the player. ACTION3 moves it left one tile (6 cells) and ACTION4 moves it right one tile.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t16",
+        "t18",
+        "t19",
+        "t20"
+       ]
+      },
+      {
+       "id": "H2",
+       "statement": "Clicking an e tile turns it into a, which lets the piece rise through it.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t15",
+        "t21",
+        "t22"
+       ]
+      },
+      {
+       "id": "H6",
+       "statement": "The piece rises through a-space until a non-a cell blocks it. The camera follows it, and the world is taller than one screen.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t21",
+        "t22",
+        "o22"
+       ]
+      },
+      {
+       "id": "H13",
+       "statement": "The f/b0 spike shapes are deadly. In t23 the piece rose into the a region under the spikes at x37-53 and the game ended, with no budget exhaustion visible on row 63.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t23",
+        "o23"
+       ]
+      },
+      {
+       "id": "H14",
+       "statement": "Plan: move right 3 times to x37-41 and click (39,33) twice to reach the o22 state. Then do not clear the tile above the piece. Instead clear the e tiles to its left in rows 37-41, move left to x13-17, and clear the e above there, so the piece rises at x13-35 where there are no spikes. Then move right to x31-35 and clear the e column above.",
+       "status": "tentative",
+       "evidence_ids": [
+        "o22",
+        "o23"
+       ]
+      },
+      {
+       "id": "H5",
+       "statement": "Row 63 is an action counter or budget bar.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t18",
+        "t19",
+        "t20",
+        "t22"
+       ]
+      },
+      {
+       "id": "H4",
+       "statement": "ACTION7 is undo.",
+       "status": "tentative",
+       "evidence_ids": [
+        "t2"
+       ]
+      }
+     ],
+     "lesson_written": null
+    },
+    {
+     "level_2_action": 13,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "danger_note_when_choosing": null,
+     "notes_when_choosing": [
+      {
+       "id": "H1",
+       "statement": "The 9/b piece is controlled by the player. ACTION3 moves it left one tile (6 cells) and ACTION4 moves it right one tile, through a-space.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t16",
+        "t18",
+        "t19",
+        "t20",
+        "t25",
+        "t26"
+       ]
+      },
+      {
+       "id": "H2",
+       "statement": "Clicking an e tile turns it into a, which opens a path for the piece.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t15",
+        "t21",
+        "t22",
+        "t27",
+        "t28",
+        "t29"
+       ]
+      },
+      {
+       "id": "H6",
+       "statement": "The piece rises through a-space until a non-a cell blocks it. The camera follows it, and the world is taller than one screen.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t21",
+        "t22",
+        "t27",
+        "t28"
+       ]
+      },
+      {
+       "id": "H16",
+       "statement": "Clicking (27,39) opened the left tile at x25-29, rows 36-41. ACTION3 should now move the piece into it, and the piece should rise through the pocket at x13-29 to row 25. The 5 cells at x25-29 in row 24 should stop it there.",
+       "status": "tentative",
+       "evidence_ids": [
+        "t29",
+        "o29"
+       ]
+      },
+      {
+       "id": "H13",
+       "statement": "Rising at x37-41 ended the game, possibly because the open a-column runs off the top of the map.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t23",
+        "o23"
+       ]
+      },
+      {
+       "id": "H5",
+       "statement": "Row 63 counts actions, like a budget bar, and it resets on RESET.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t25",
+        "t26",
+        "t27",
+        "t28",
+        "t29",
+        "o24"
+       ]
+      },
+      {
+       "id": "H4",
+       "statement": "ACTION7 is undo, or possibly flips gravity.",
+       "status": "tentative",
+       "evidence_ids": [
+        "t2"
+       ]
+      }
+     ],
+     "notes_on_the_next_turn": [
+      {
+       "id": "H1",
+       "statement": "The 9/b piece is controlled by the player. ACTION3 moves it left one tile (6 cells) and ACTION4 moves it right one tile, through a-space.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t25",
+        "t26"
+       ]
+      },
+      {
+       "id": "H2",
+       "statement": "Clicking an e tile turns it into a, which opens a path for the piece.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t27",
+        "t28",
+        "t29"
+       ]
+      },
+      {
+       "id": "H6",
+       "statement": "The piece rises through a-space until a non-a cell blocks it. The camera follows it vertically.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t27",
+        "t28"
+       ]
+      },
+      {
+       "id": "H17",
+       "statement": "The f cells with b0 tips at rows 7-11 above the x13-29 pocket in o31 are spikes, and a piece that rises into them dies. This explains the GAME_OVER at t30 after ACTION3 moved the piece into the opened column at x25-29.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t29",
+        "t30",
+        "o29",
+        "o30"
+       ]
+      },
+      {
+       "id": "H13",
+       "statement": "Rising at x37-41 ended the game, possibly because there are spikes above, off-screen.",
+       "status": "tentative",
+       "evidence_ids": [
+        "t23"
+       ]
+      },
+      {
+       "id": "H5",
+       "statement": "Row 63 counts actions, like a budget bar, and it resets on RESET.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t25",
+        "t26",
+        "t29",
+        "o31"
+       ]
+      },
+      {
+       "id": "H4",
+       "statement": "ACTION7 flips gravity, which would make the piece fall down through the open area at rows 37-62. Alternatively it is undo. This step tests it.",
+       "status": "tentative",
+       "evidence_ids": [
+        "t2"
+       ]
+      }
+     ],
+     "lesson_written": null
+    },
+    {
+     "level_2_action": 46,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "danger_note_when_choosing": "tentative",
+     "notes_when_choosing": [
+      {
+       "id": "H1",
+       "statement": "The 9/b piece is controlled by the player. ACTION3 moves it left 6 cells and ACTION4 moves it right 6 cells.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t52",
+        "t53",
+        "t54",
+        "t57",
+        "t58"
+       ]
+      },
+      {
+       "id": "H2",
+       "statement": "Clicking an e tile removes it. The piece rises (upward gravity) into the cleared slot and stops under the next solid cell. The camera then keeps the piece at y37-41.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t59",
+        "t60",
+        "t61",
+        "t62"
+       ]
+      },
+      {
+       "id": "H31",
+       "statement": "In o62 there is one more e tile above the piece (x19-23, y31-35), then the open a-row at y25-29, then a spike tile at y19-23. Clicking the e tile should lift the piece into the a-row, where it stops under the spike. It may not die there, because the spike is separated by a 5 border row.",
+       "status": "tentative",
+       "evidence_ids": [
+        "o62"
+       ]
+      },
+      {
+       "id": "H32",
+       "statement": "Once the piece is in the a-row, moving right twice to x31-35 puts it under the open a column that runs upward. It should then rise toward the top area at y7-11, which may be the route to the goal.",
+       "status": "tentative",
+       "evidence_ids": [
+        "o62"
+       ]
+      },
+      {
+       "id": "H5",
+       "statement": "Row 63 is an action counter or budget: each action turns one more cell to f.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t57",
+        "t58",
+        "o62"
+       ]
+      }
+     ],
+     "notes_on_the_next_turn": [
+      {
+       "id": "H1",
+       "statement": "The 9/b piece is controlled by the player. ACTION3 moves it left 6 cells and ACTION4 moves it right 6 cells.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t52",
+        "t53",
+        "t54",
+        "t57",
+        "t58"
+       ]
+      },
+      {
+       "id": "H2",
+       "statement": "Clicking an e tile removes it. The piece then rises (upward gravity) through open a cells until it stops below the next solid cell.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t59",
+        "t60",
+        "t61",
+        "t62"
+       ]
+      },
+      {
+       "id": "H3",
+       "statement": "If the piece rises until it stops under a spike tile (f with b0 tips), it dies and the game ends. In t63 the piece rose into the x19-23 column under the spikes and was lost.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t63",
+        "o63"
+       ]
+      },
+      {
+       "id": "H4",
+       "statement": "The 7 plus seen at the top in o63 (around x32-34, y1-3, inside tile x31-35) is the goal. The piece has to rise into it through a column that has no spikes above it.",
+       "status": "tentative",
+       "evidence_ids": [
+        "o63"
+       ]
+      },
+      {
+       "id": "H5",
+       "statement": "In o64 the column x37-53 above the e rows is open with no spikes, from y0 to y23. Plan: move right twice to x37-41, then click the e tiles above at y31-35 and y25-29 so the piece can rise safely.",
+       "status": "tentative",
+       "evidence_ids": [
+        "o64"
+       ]
+      },
+      {
+       "id": "H6",
+       "statement": "Row 63 works as an action budget: each action turns one more cell to f.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t57",
+        "t58",
+        "o62",
+        "o63"
+       ]
+      }
+     ],
+     "lesson_written": null
+    }
+   ],
+   "turns": [
+    {
+     "level_2_action": 1,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 2,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 3,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 4,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 5,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 6,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": true,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 8,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 9,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 10,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 11,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 12,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 27,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 13,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [
+      3
+     ],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": true,
+     "earlier_game_overs": 1,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 15,
+     "action": {
+      "action_id": 7,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 16,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 45,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 17,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 18,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 19,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 20,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 21,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 45,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 22,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 45,
+       "y": 21
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 23,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 45,
+       "y": 15
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 24,
+     "action": {
+      "action_id": 7,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 25,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 26,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 27,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 27,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 28,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 29,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 15,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 30,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 31,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 32,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 33,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 34,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 15,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 35,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 36,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 37,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 38,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 39,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 40,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 41,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 42,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 43,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 44,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 45,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 2,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 46,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": true,
+     "earlier_game_overs": 2,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 48,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 49,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 50,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 51,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 52,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 53,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 54,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 55,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 27,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 56,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 57,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 15,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 58,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 59,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 60,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 61,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 15,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 62,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 63,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 64,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 65,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 66,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 67,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 68,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 69,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 70,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 71,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 72,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 27,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 73,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 74,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 75,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 76,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 45,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 77,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 51,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 78,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 79,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 80,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 81,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 82,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 51,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 83,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 51,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 84,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 85,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 86,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 87,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 3,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    }
+   ]
+  },
+  {
+   "run": "bp35-l2-lessons-1-20261115T014800Z",
+   "memory": "lessons and check",
+   "level_2_solved": true,
+   "actions_on_level_2": 57,
+   "game_overs_on_level_2": 1,
+   "at_level_2_action": [
+    10
+   ],
+   "lessons_written": 1,
+   "model_calls": 56,
+   "replies_sent_back": 0,
+   "stop_reason": "level_target",
+   "problems": [],
+   "audit": "passes",
+   "input_tokens": 873063,
+   "output_tokens": 146936,
+   "output_per_call_median": 1768,
+   "before_the_first_game_over": {
+    "turns": 10,
+    "turns_one_action_from_a_game_over": 4,
+    "of_those_the_agent_took_the_fatal_action": 1
+   },
+   "after_the_first_game_over": {
+    "turns": 46,
+    "turns_one_action_from_a_game_over": 4,
+    "of_those_the_agent_took_the_fatal_action": 0
+   },
+   "deaths": [
+    {
+     "level_2_action": 10,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "danger_note_when_choosing": "tentative",
+     "notes_when_choosing": [
+      {
+       "id": "H1",
+       "statement": "The 9/b piece is controlled by the player. ACTION3 moves it left one tile (6 cells) and ACTION4 moves it right one tile. The b marks which way it faces.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t19",
+        "t20",
+        "t25"
+       ]
+      },
+      {
+       "id": "H2",
+       "statement": "Clicking an e tile (ACTION6) turns it into a, which opens a path.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t24"
+       ]
+      },
+      {
+       "id": "H5",
+       "statement": "Row 63 is an action counter or budget bar: one cell turns f per action.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t23",
+        "t24",
+        "t25",
+        "t26"
+       ]
+      },
+      {
+       "id": "H15",
+       "statement": "ACTION7 is undo. It reversed the left move from t25, putting the piece back at x37-41, but did not undo the t24 tile opening or the counter.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t25",
+        "t26"
+       ]
+      },
+      {
+       "id": "H16",
+       "statement": "Gravity points upward: the piece rests against the e tile above it (x37-41, y31-35). Removing that tile will make the piece rise through the opening, which would explain the large multi-frame changes at t21/t22.",
+       "status": "tentative",
+       "evidence_ids": [
+        "t21",
+        "t22",
+        "o26"
+       ]
+      },
+      {
+       "id": "H11",
+       "statement": "The f/b0 striped tiles are not clickable and are probably downward-pointing spikes.",
+       "status": "tentative",
+       "evidence_ids": [
+        "t23"
+       ]
+      }
+     ],
+     "notes_on_the_next_turn": [
+      {
+       "id": "H1",
+       "statement": "The 9/b piece is controlled by the player. ACTION3 moves it left one tile (6 cells) and ACTION4 moves it right one tile. The b marks which way it faces.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t19",
+        "t20",
+        "t25"
+       ]
+      },
+      {
+       "id": "H2",
+       "statement": "Clicking an e tile (ACTION6) turns it into a.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t24"
+       ]
+      },
+      {
+       "id": "H5",
+       "statement": "Row 63 is an action budget bar: one cell turns f per action. The level reset clears it.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t25",
+        "t26",
+        "o28"
+       ]
+      },
+      {
+       "id": "H16",
+       "statement": "Gravity points up. Once the tile above the piece is opened, the piece rises through a tiles until a solid tile (e or dotted-5 wall) stops it. The camera scrolls so the piece stays at screen y37.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t22",
+        "o26",
+        "t27",
+        "o27"
+       ]
+      },
+      {
+       "id": "H11",
+       "statement": "The f/b0 striped tiles are downward spikes. If the piece rises into them, the game is over. They cannot be clicked.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t23",
+        "t27",
+        "o27"
+       ]
+      },
+      {
+       "id": "H17",
+       "statement": "Matching o26/o27 against o28 gives world y = o28 y + 48. Column x37 leads up to a resting row at W37 (open x31-53). Columns x37-53 above that hit spikes at W13. Column x13 rises to W13 and is safe, and from there x31 leads up to W-11. The goal is probably at the top.",
+       "status": "tentative",
+       "evidence_ids": [
+        "o26",
+        "o27",
+        "o28"
+       ]
+      },
+      {
+       "id": "H15",
+       "statement": "ACTION7 undoes the last move, but not tile openings or the budget counter.",
+       "status": "tentative",
+       "evidence_ids": [
+        "t25",
+        "t26"
+       ]
+      }
+     ],
+     "lesson_written": {
+      "rule": "The piece falls upward. When the tile above it is opened (e clicked into a), it rises through every open a tile until a solid tile (e block or dotted wall) stops it. If the first non-open tile it reaches in that column is an f/b0 spike tile, the game ends.",
+      "applies_when": "Before clicking an e tile directly above the piece, or moving the piece under an open column, look upward in that column (scroll the board if needed). If spikes come before any e or wall tile, that action will end the game. Clear a different column, or move sideways first."
+     }
+    }
+   ],
+   "turns": [
+    {
+     "level_2_action": 1,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 2,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 3,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 4,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 5,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 6,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 15
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 7,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 8,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 9,
+     "action": {
+      "action_id": 7,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 10,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": true,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 12,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "Moving right keeps the piece under the e ceiling at y31, which spans x13-53, so it cannot rise and cannot reach spikes.",
+     "game_over_lesson": {
+      "rule": "The piece falls upward. When the tile above it is opened (e clicked into a), it rises through every open a tile until a solid tile (e block or dotted wall) stops it. If the first non-open tile it reaches in that column is an f/b0 spike tile, the game ends.",
+      "applies_when": "Before clicking an e tile directly above the piece, or moving the piece under an open column, look upward in that column (scroll the board if needed). If spikes come before any e or wall tile, that action will end the game. Clear a different column, or move sideways first."
+     }
+    },
+    {
+     "level_2_action": 13,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The t27 lesson applies to opening columns or moving under them. This move puts the piece at x31-35, where the e tiles at rows 31-35 are still solid. The piece cannot rise there, so it cannot reach a spike tile.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 14,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The t27 lesson applies. This click opens the e tile at x31-35, y31-35, directly above the piece. The e tile at y25-29 still sits above it, and above that the column hits a dotted wall at y0-23, not spikes. So the piece either stays put or stops under a solid tile, and this action shouldn't end the game.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 15,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The t27 lesson applies because I am clicking the e tile directly above the piece. In o31, column x31-35 above that tile is a dotted wall (5/3) at rows 19-29, not spikes (the f cells are at x26-28), so the piece should stop under the wall.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 16,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 3
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The t27 lesson is about opening a tile above the piece. Here I'm clicking an already-open tile at x37-41, rows 1-5, which is not above the piece: the piece is at x31-35, and the dotted wall is directly above it. The piece can't move or rise from this click, so it can't run into spikes.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 17,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The t27 lesson (rising into spikes) applies to clicks above the piece. Here the wall at x31-35 rows 31-35 is directly above the piece. If that wall disappears, rows 25-29 above it are still dotted wall, with no a tile or spike in between, so the piece can rise at most one tile and then stops safely.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 18,
+     "action": {
+      "action_id": 7,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies only if the piece rises into an open column. ACTION7 opens no e tile and does not move the piece under the open x37-41 or x25-29 columns. The tile above the piece (x31-35, rows 31-35) is solid wall, so a plain upward rise cannot reach spikes. The only risk is that ACTION7 flips gravity downward, and nothing visible below shows spikes.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 19,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 45
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "This could relate to the t27 spike lesson. But I'm opening the tile at x37-41, rows 43-47, which is not in the piece's column (x31-35), and the tile above it (rows 37-41) stays solid. So the piece cannot move or rise into spikes.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 20,
+     "action": {
+      "action_id": 7,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The lesson about the piece rising into spikes covers moves that open a column above the piece or shift it under one. ACTION7 does neither. In t35 it did not move the piece, and the tile directly above the piece is still the wall at rows 25-36, so the piece cannot rise into spikes.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 21,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The lesson from t27 covers opening a tile directly above the piece. The tile at x37-41, rows 37-41 is beside the piece, not above it: the piece is at x32-34 under the solid wall on row 36, so opening this tile shouldn't make it rise into spikes.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 22,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The t27 spike lesson applies, because moving right puts the piece under an open column. On the visible board, x37-41 is open all the way from row 41 up to row 1 with no f/b0 spike tiles, but the top of the column is off-screen, so there is some risk. If it does end the game, ACTION7 or a different column can be tried next time.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 23,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": "The spike-rise lesson applies to opening tiles near the piece. I'm clicking e at x31-35 rows 37-41, beside the piece, not above it. The tile above the piece (x37-41 rows 31-35) stays solid e, so the piece can't rise into the spikes at rows 13-17.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 24,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": "The upward-spike lesson applies to sideways moves. ACTION3 moves the piece to x31-35. Directly above it, rows 31-35 at x31-35 are a dotted wall (3 dots on 5), with no open path to spikes, so the piece should stay at rows 37-41.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 25,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 27,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": null,
+     "lesson_check": "The spike lesson applies only when opening the tile directly above the piece, or when moving the piece under an open column. This click opens x25-29 rows 37-41, which is beside the piece, not above it. The tile above that spot (x25-29 rows 31-35) is a dotted wall, so even moving there later won't send the piece rising into spikes.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 26,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": null,
+     "lesson_check": "The spike lesson could apply because the piece might rise after moving. Above x25-29 in rows 31-35 there is a dotted 5 wall and row 36 is still 5, so the piece will stay in rows 37-41 and can't rise into spikes.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 27,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": "The spike lesson applies to opening tiles above the piece. This click opens the tile to the left of the piece (x19-23), not above it. The tile above that block (rows 31-35) is a dotted wall, so nothing can rise into spikes.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 28,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": null,
+     "lesson_check": "The spike lesson could apply because the piece moves under a new column. The tile above x19-23 at rows 31-35 is a dotted 5 wall, so the piece will stop at rows 37-41 instead of rising toward the f/b0 spikes.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 29,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 15,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": null,
+     "lesson_check": "The spike lesson applies to opening columns the piece will rise through. This click opens the tile at x13-17, which is beside the piece, not above it. Even after the piece moves there, rows 31-35 above are still a solid e block. Further up, the column is open from row 13 to row 29 and capped by a dotted wall at rows 7-11, with no f/b0 spikes, so this click should not end the game.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 30,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": null,
+     "lesson_check": "The upward-spike lesson applies to any move under a column. After moving left, the piece will sit at x13-17. Directly above it, rows 31-35 at x13-17 are still a solid e block, so it cannot rise and won't reach any spikes.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 31,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 15,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": "The upward-fall/spike lesson applies, because I am opening the tile directly above the piece. Looking up column x13-17 from row 35: rows 13-29 are open (a) and the dotted wall at rows 7-11 comes next. The f/b0 spikes are at x37-55 rows 13-17, outside this column, so the piece should stop at the wall and not reach any spikes.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 32,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": "Spike lesson: ACTION4 moves the piece to x19-23, which is open. Looking up that column from the piece: row 36 is a separator and rows 31-35 are a dotted wall, so the piece cannot rise into anything. The nearest spikes in the piece's row start at x37, far from this move.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 33,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": "The spike lesson applies to sideways moves. If the piece moves to x25-29, the tiles above it at rows 31-35 are dotted 5 wall, not open, so it cannot rise into spikes. The spikes at x38-40 stay to the right of the piece.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 34,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": "The spike lesson could apply. This move only shifts the piece sideways into x31-35. Directly above that column is a solid e block at rows 31-35, so the piece cannot rise yet, and x37 is a wall that keeps it away from the spikes at x38 and beyond.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 35,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": "The spike lesson applies, because this click opens the tile directly above the piece. On o51, columns x31-35 above the piece hold the e block at rows 25-29, open a tiles at rows 13-23, and then the dotted wall at rows 7-11. The f spikes are at x38-40, x44-46, x50-52 and x13-17 rows, none in x31-35, so rising here should not hit spikes.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 36,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": "The spike lesson applies here. Above the e block at x31-35, the open column runs through rows 19-29. The first solid tile after that is the dotted wall at rows 12-17, with no f/b0 spikes before it (the only spikes nearby are at x53-55), so the piece should stop at the wall without ending the game.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 37,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": "The spike lesson applies to moving the piece under an open column. The target column, x25-29, has a solid e block right above the piece at rows 31-35, so the piece cannot rise into the spike at rows 19-23 and should stay where it is.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 38,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": "The spike lesson applies to vertical moves. This sideways move only takes the piece under the e block at x19-23, rows 31-35, which is still closed, so the piece won't rise. The x19-23 column above it has open tiles and then a solid e block at rows 13-17, with no spikes in between.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 39,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": "The rising-into-spikes lesson applies to this click. Above the piece, columns x19-23 are open at rows 19-29, and the e block at rows 13-17 comes before any spike. The f/b0 spikes are only at x13-17 and x25-29, so the piece should stop under the e block.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 40,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": "The spike lesson applies. Opening x19-23 at rows 31-35 leaves the next tile up (rows 25-29) as a solid e block, so the piece rises one tile and stops there. It never reaches the spikes at rows 1-5 in this column.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 41,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": "The rising-piece and spike lesson applies here. After I open x19-23 at rows 31-35, the next tile above it (rows 25-29, x19-23) is still a solid e tile, so the piece stops there and doesn't reach the spikes at x20-22, rows 7-11.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 42,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 27,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": null,
+     "lesson_check": "Lesson checked: spikes in the column above the piece. This click opens the tile beside the piece, not above it. The tile above x25-29 (rows 31-35) is a dotted wall, so the piece cannot rise into spikes. The spikes at rows 43-47 are below the piece, and it only rises.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 43,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": null,
+     "lesson_check": "The spike lesson could apply, since moving right puts the piece under a new column. In o59 the first tile above x25-29 (rows 31-35) is a dotted wall, not spikes, so the piece should stay put and not rise into a spike tile.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 44,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": null,
+     "lesson_check": "The spike lesson only applies when a tile directly above the piece is opened. This click opens the tile beside the piece at x31-35, not one above it. Rows 31-35 above both x25-29 and x31-35 are dotted walls, so there will be no rise into the spikes.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 45,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": "The spike lesson applies whenever the piece moves under a column. Moving right puts the piece at x31-35, and the tiles directly above it in rows 31-35 are dotted wall, not spikes. So it should not rise into anything dangerous.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 46,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": "The spike lesson only applies when a tile directly above the piece gets opened. This click opens the e tile at x37-41, which is to the right of the piece (x31-35), not above it. The tile above the piece at rows 31-35 is a dotted wall, so the piece will not rise.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 47,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": null,
+     "lesson_check": "The spike lesson could apply when the piece moves under a new column. The tile above x37-41 (rows 31-35) is a dotted 5 wall, so the piece won't rise into spikes after this move.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 48,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 45,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": null,
+     "lesson_check": "The spike lesson could apply, but it shouldn't here. The tile I'm opening (x43-47, rows 37-41) is beside the piece, not above it. Above both x37-41 and x43-47, rows 31-35 are dotted wall tiles, so even if the piece moves under this column later, it can't rise into the spikes.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 49,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": null,
+     "lesson_check": "The spike lesson could apply because this move puts the piece under a new column. That is safe here: in o65 the tile directly above x43-47 (rows 31-35) is a dotted 5 wall, not spikes, so the piece should not rise.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 50,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 51,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": "The spike lesson applies only to opening a tile directly above the piece. This click opens the tile to the piece's right (x49-53, rows 37-41), and the tile above the piece (x43-47, rows 31-35) is a dotted wall, so the piece cannot rise. Also, the x49-53 column has no f/b0 spike cells anywhere above it.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 51,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": "The spike lesson could apply, but this move won't trigger it. In the target column (x49-53), the tile right above the piece (rows 31-35) is solid e, so the piece won't rise. Even if that column opened later, rows 7-23 are open and lead to the row-6 wall, with no f or b0 spike tiles on the way.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 52,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 51,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": "The spike lesson applies, because this click opens the tile directly above the piece. In column x49-53 the next non-open tile above the opened one is the e block at rows 25-29. There are no f/b0 spikes in that column anywhere up to the row-6 wall, so the piece will stop safely.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 53,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 51,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": "The upward-fall spike lesson applies, because this click opens the tile directly above the piece. In column x48-53, rows 13-29 are open a tiles and row 12 is a dotted 5 wall. The f/b0 spikes in rows 19-23 sit only in x14-40, so the piece should stop under the wall without touching spikes.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 54,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": null,
+     "lesson_check": "The spike lesson applies to moving under open columns. At x43-47, an e tile sits directly above the piece, and at x37-41 the piece can rise only into the open tile at rows 31-35 before the e at rows 25-29 stops it. The spikes at rows 13-17 are past those e tiles, so this move should not end the game.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 55,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": null,
+     "lesson_check": "The spike lesson could apply because the piece may rise in column x37-41. Rows 31-35 in that column are open, but rows 25-29 above are a solid e block, not f/b0 spikes, so the piece should stop under the e and the game should not end.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 56,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "tentative",
+     "lesson_check": "The spike lesson applies whenever the piece moves under a column. Moving left puts the piece at x31-35, and the tile right above it (rows 31-35) is a solid e tile, so the piece cannot rise and cannot reach a spike. I am also avoiding clicking the e above x37-41, because spikes sit at the top of that column.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 57,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": null,
+     "lesson_check": "The spike lesson applies, because this click opens the tile directly above the piece. In o73, column x31-35 has open a at rows 25-29, then the 7-plus goal tile at rows 19-23, then a dotted wall at rows 13-17. The f/b0 spikes start at x37 and further right. So the first non-open tile the piece reaches is the goal or the wall, not spikes.",
+     "game_over_lesson": null
+    }
+   ]
+  },
+  {
+   "run": "bp35-l2-lessons-2-20261115T014800Z",
+   "memory": "lessons and check",
+   "level_2_solved": true,
+   "actions_on_level_2": 61,
+   "game_overs_on_level_2": 1,
+   "at_level_2_action": [
+    6
+   ],
+   "lessons_written": 1,
+   "model_calls": 60,
+   "replies_sent_back": 0,
+   "stop_reason": "level_target",
+   "problems": [],
+   "audit": "passes",
+   "input_tokens": 918578,
+   "output_tokens": 174697,
+   "output_per_call_median": 2141,
+   "before_the_first_game_over": {
+    "turns": 6,
+    "turns_one_action_from_a_game_over": 1,
+    "of_those_the_agent_took_the_fatal_action": 1
+   },
+   "after_the_first_game_over": {
+    "turns": 54,
+    "turns_one_action_from_a_game_over": 5,
+    "of_those_the_agent_took_the_fatal_action": 0
+   },
+   "deaths": [
+    {
+     "level_2_action": 6,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "danger_note_when_choosing": "tentative",
+     "notes_when_choosing": [
+      {
+       "id": "H1",
+       "statement": "ACTION3 moves the 9/b piece left one tile (6 cells), and ACTION4 moves it right one tile.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t16",
+        "t18",
+        "t19",
+        "t20"
+       ]
+      },
+      {
+       "id": "H2",
+       "statement": "Clicking an e tile with ACTION6 turns it into an a tile, which lets the piece rise through it.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t15",
+        "t21"
+       ]
+      },
+      {
+       "id": "H6",
+       "statement": "The piece rises through a-space until a non-a tile stops it, and the camera follows it.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t21",
+        "t22"
+       ]
+      },
+      {
+       "id": "H12",
+       "statement": "In o22 the piece sits at x37-41, y37-41, with an e tile directly above it at x37-41, y31-35. Clearing that tile should let the piece rise through the a region (y19-29) and stop under the 5 row at y18, without touching the f blocks.",
+       "status": "tentative",
+       "evidence_ids": [
+        "o22"
+       ]
+      },
+      {
+       "id": "H11",
+       "statement": "The f blocks with b0b bottoms (x38-40, x44-46, x50-52, y13-17) may be hazards.",
+       "status": "tentative",
+       "evidence_ids": [
+        "o17",
+        "o22"
+       ]
+      },
+      {
+       "id": "H5",
+       "statement": "Row 63 counts actions: one more cell turns f with each action, and it resets each level.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t16",
+        "t18",
+        "t19",
+        "t20"
+       ]
+      }
+     ],
+     "notes_on_the_next_turn": [
+      {
+       "id": "H1",
+       "statement": "ACTION3 moves the 9/b piece left one tile (6 cells), and ACTION4 moves it right one tile.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t18",
+        "t19",
+        "t20"
+       ]
+      },
+      {
+       "id": "H2",
+       "statement": "Clicking an e tile with ACTION6 removes it, which lets the piece rise into that spot.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t21",
+        "t22"
+       ]
+      },
+      {
+       "id": "H6",
+       "statement": "The piece rises through open space (a or 5) until an e tile stops it, and the camera follows it.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t21",
+        "t22"
+       ]
+      },
+      {
+       "id": "H13",
+       "statement": "The f blocks with b0b undersides are spikes pointing down. If the piece rises into one, it is destroyed and the game ends.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "o22",
+        "t23",
+        "o23"
+       ]
+      },
+      {
+       "id": "H14",
+       "statement": "A safe rise needs an e tile somewhere between the piece and any f block in its 5-wide column, so the piece stops before reaching the spike.",
+       "status": "tentative",
+       "evidence_ids": [
+        "o22",
+        "o23"
+       ]
+      },
+      {
+       "id": "H5",
+       "statement": "Row 63 counts actions: one more cell turns f with each action.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t18",
+        "t19",
+        "t20"
+       ]
+      }
+     ],
+     "lesson_written": {
+      "rule": "The piece rises through open space until it is blocked. If the first thing above it in its 5-wide column is an f block with a b0b underside (a downward spike), the piece runs into it and the game ends. Removing the last e tile between the piece and a spike is fatal.",
+      "applies_when": "Before clicking an e tile, or before moving the piece sideways under open space, scan the piece's column straight up. If there are no e tiles left between the piece and an f/b0b block after the action, the action will end the game."
+     }
+    }
+   ],
+   "turns": [
+    {
+     "level_2_action": 1,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 2,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 3,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 4,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 5,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 6,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": true,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 8,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "Here the column above the piece (x19-23) has e tiles at y25-35 and an f spike at x20-22, y7-11. Clearing both e tiles would be fatal, so I'm moving sideways instead of clicking.",
+     "game_over_lesson": {
+      "rule": "The piece rises through open space until it is blocked. If the first thing above it in its 5-wide column is an f block with a b0b underside (a downward spike), the piece runs into it and the game ends. Removing the last e tile between the piece and a spike is fatal.",
+      "applies_when": "Before clicking an e tile, or before moving the piece sideways under open space, scan the piece's column straight up. If there are no e tiles left between the piece and an f/b0b block after the action, the action will end the game."
+     }
+    },
+    {
+     "level_2_action": 9,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies to sideways moves under open space. After ACTION4 the piece will be at columns 31-35, and o25 shows two e tiles (rows 25-29 and 31-35) straight above it, so it can't rise into anything. No tile is removed, so this move shouldn't end the game.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 10,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The t23 spike lesson applies. This click removes only the e tile at rows 31-35 in columns 31-35. The e tile at rows 25-29 in that column stays, so there is still a blocking tile between the piece and anything above it.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 11,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The t23 spike lesson applies because this click opens the piece's column. In o27, columns 31-35 from row 6 to row 30 contain only 5/3, with no f/b0b cells, and an e tile at rows 1-5 still blocks the column. So the piece should stop below that tile without touching a spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 12,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson could apply. In o28 there are no f/b0b spikes in columns 31-35 above the piece: the spikes sit at columns 14-16, 20-22 and 26-28. There are also e tiles at rows 7-11 and 1-5 in the piece's column. Even if this click lets the piece rise, it will stop under the e tile and cannot hit a spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 13,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 9
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson could apply. The piece's column x=31-35 has no f/b0b blocks: the spikes are at x=14-16, 20-22 and 26-28. Another e tile remains at rows 1-5 (x=32-34) above the tile at (33,9), so the piece cannot reach a spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 14,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson could apply, but this click only clears the tile to the right of the piece. The piece itself has wall straight above it (row 36 at x=31-35), so it can't rise here. Even if it ends up in column x=37-41, the column above is all a up to the row-0 wall, with no f/b0b spike, so this shouldn't repeat the t23 death.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 15,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson could apply. I checked the column at x=37-41 from row 36 up to row 1 on o31: every cell is a or wall, and there is no f/b0b block. So if the piece moves right and rises, it should not hit a spike. The only f blocks are at x=14-30.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 16,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies. I'm clicking (33,39), the e tile at x=31-35, rows 37-41, which is beside the piece, not above it. That clears nothing from the piece's own column (x=37-41), and the e tile at rows 31-35 still shields it from the spike at x=38-40. The opened tile has wall directly above it at rows 31-35, so nothing new can rise.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 17,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson could apply. In o33, the column straight up from x=31-35, rows 37-41 has the solid wall of the 5 gutter and tile at rows 30-36, not open space leading to an f/b0b block. So moving left there should not make the piece rise into a spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 18,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 27,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies. Clicking the e tile at x=25-29, rows 37-41 only opens space to the left of the piece. Above x=25-29, rows 30-36 are solid 5/3 wall with no f/b0b above them, so neither this click nor a later move left can let the piece rise into a spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 19,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies whenever the piece moves sideways. After this move the piece sits at x=25-29, and rows 30-36 above it are solid wall, so it cannot rise. There is no f/b0b spike above it in that column at all, so this move cannot end the game.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 20,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "Spike lesson: clicking the tile at (21,39) leaves the piece in its column at x=25-29, where the wall at rows 30-36 holds it, so it cannot rise into a spike. The rows above the opened tile (31-35 at x=19-23) are also 5 wall.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 21,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "Spike lesson: after moving left the piece sits at x=19-23. Directly above it, row 36 and rows 31-35 at x=19-23 are solid 5 cells, not open a cells, so it can't rise toward any f/b0b spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 22,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 15,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson could apply here. I'm clicking the e tile at x=13-17 in rows 37-41, which is next to the piece and not above it. Directly above the piece at x=19-23, rows 30-36 are 5 background, so nothing opens over it. Above x=13-17, the a region reaches up to row 13, with 5 at row 12 and no f/b0b spike, so even a later rise there is safe.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 23,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies to sideways moves. After moving left, the piece sits at x=13-17, and the e tile at rows 31-35 in that column is still directly above it. It cannot rise far, and that column has no f/b0b spike anyway, so this move should not end the game.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 24,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 15,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies. In columns x=13-17 above the piece there is only the e tile at rows 31-35, the a region at rows 13-29, and a row-12 gutter of 5s. The f/b0b spikes are at x=38-58, outside this column, so a rise here should not hit a spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 25,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies to sideways moves. Moving right puts the piece at x=19-23, rows 37-41, and the tile above it (rows 31-35) is a solid 5/3 wall, so it can't rise. The nearest spikes in rows 37-41 start at x=37, beyond the target, so this move can't hit a spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 26,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies. After this move the piece will be at x=25-29. Directly above it, rows 31-35 are a solid 5/3 wall tile, so it cannot rise. No f/b0b spike is in that column or at x=25-29 in rows 37-41, so this move cannot end the game the same way.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 27,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies to sideways moves under open space. The target column x=31-35 has an e tile directly above the piece at rows 31-35, and no f/b0b block above it. The nearest spikes are at x>=37. So moving right cannot cause a rise into a spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 28,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies whenever I remove an e tile. Above x=31-35 the column has e at rows 25-29, open a at rows 13-23, then a solid 5 wall at rows 7-11, with no f/b0b block anywhere in it. So clicking (33,33) cannot send the piece into a spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 29,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson from t23 applies. Going straight up column x=31-35 after this click, the first thing above the piece is 5 wall at rows 12-18, not an f/b0b spike. The fff spikes are at x=50-52 and x=37-55, nowhere in this column, so the piece should stop under the wall without ending the game.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 30,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies. After ACTION3 the piece would be at x=25-29. The e tile at rows 31-35 (x=26-28 e) is still directly above it, so it cannot rise into the spike at rows 19-23. I won't click that tile. The plan is to keep moving left to x=19-23, where no spike is visible above.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 31,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson could apply when moving sideways. After ACTION3 the piece will be at x=19-23. The first thing above it there is the e tile at rows 31-35, and that column has no f/b0b block anywhere above, so the piece cannot rise into a spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 32,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies. Scanning up from the piece at x=19-23 in o48, there are no f/b0b spikes: rows 19-23 there are open a cells, and e tiles remain at rows 13-17, 7-11 and 1-5. Removing the e tile at rows 31-35 should therefore stop the piece under another e tile instead of running it into a spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 33,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies. Clicking the e tile at rows 31-35 still leaves e tiles at rows 25-29, 19-23 and 13-17 between the piece and the spike at rows 1-5. The piece should stop under the e tile at rows 25-29 and not reach the spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 34,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies. Clicking (21,33) removes only the e tile directly above the piece. The e tile at rows 25-29 and the one at rows 19-23 still sit between the piece and the spike at rows 7-11, so the piece stops after one tile and does not reach the spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 35,
+     "action": {
+      "action_id": 7,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies to moving sideways or clicking e tiles. ACTION7 does neither: it doesn't remove the e tile above the piece (still at rows 31-35, x=19-23) and doesn't move it under the spikes at x=14-28, so it shouldn't trigger that failure. Its actual effect is unknown.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 36,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies to sideways moves under open space. Column x=25-29 has an e tile at rows 31-35, directly above where the piece will sit at rows 37-41. That tile blocks any rise, so this move cannot run the piece into the spike at x=26-28.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 37,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies. If ACTION4 moves the piece to x=25-29, the e tile at rows 31-35 is directly above it in o53, so it can't rise into the spike at rows 7-11. If ACTION4 only turns the piece again, it stays under the three e tiles at x=19-23.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 38,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson could apply if the piece moved sideways. The piece faces right (b at x=22), so ACTION3 should only turn it left, as ACTION4 only turned it in t53. Even if it did move left to x=13-17, the a block at rows 13-17 sits below the spike at rows 7-11, and the e tile above the current column stays in place.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 39,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies. Above the piece in columns 19-23 are e tiles at rows 31-35, 25-29 and 19-23. Removing the lowest one still leaves two e tiles between the piece and the spike at rows 7-11, so the piece should stop under the e tile at rows 25-29.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 40,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies. ACTION4 should only turn the piece, which faces left now, and it removes no e tiles. In o56 there are still two e tiles (rows 31-35 and 25-29) between the piece and the spike at rows 13-17, so this action cannot make it rise into the spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 41,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson could apply if the piece moves right to x=25-29. But there is still an e tile above that spot at rows 31-35, between the piece and the spike at rows 13-17, so the piece cannot rise into it. In the current column, ACTION4 removes no e tile.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 42,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 27,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies. This click hits an empty 5 cell at x=27, y=33, not in the piece's column (x=19-23), so it cannot remove the e tiles at rows 31-35 and 25-29 above the piece. The piece should stay blocked below the spike at x=20-22.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 43,
+     "action": {
+      "action_id": 7,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The rising-into-spike lesson is about removing e tiles or moving sideways. ACTION7 does neither. The two e tiles above the piece at x=19-23 (rows 31-35 and 25-29) stay in place, and the earlier ACTION7 (t52) did not end the game.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 44,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 15
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies. Two e tiles are still above the piece at x=19-23 (rows 25-29 and 31-35), and this click does not touch either one, so the piece cannot rise into the spike. The click targets the spike itself and does not move the piece sideways.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 45,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 27,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson could apply, but this click targets the e tile to the side, not the column above the piece (x=19-23). Even if that tile goes, the e tiles at rows 31-35 and 25-29 still sit between the piece and the spike at rows 13-17, so the piece can't rise into it.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 46,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson could apply because this moves the piece sideways. Above the new spot (x=25-29) the cells at rows 31-36 are solid 5 wall with no f/b0b spike, so the piece cannot rise into a spike there.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 47,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies only if the piece ends up with open space above it. This click removes the e tile at x=31-35, rows 37-41, next to the piece, not anything above it. The piece stays at x=25-29, and row 36 above it is solid 5 wall with no f/b0b spike directly overhead, so this click should not end the game.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 48,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson (t23) could apply. At x=31-35, row 36 is solid 5, so nothing opens upward when the piece moves there. The rows 25-35 directly above are also 5, so the piece cannot rise into an f/b0b spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 49,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson (t23) could apply to this click. It turns the e tile at x=37-41, rows 37-41, into a. Row 36 above that tile is solid 5 and stays that way, and there are no f/b0b blocks above x=37-41 before the corridor. So the piece has nowhere to rise into a spike, and this action shouldn't end the game.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 50,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson from t23 could apply, since this action moves the piece sideways. At x=37-41, row 36 above the new spot is solid 5, and rows 31-35 above that are also 5. So the piece cannot rise into the f/b0b spikes in row 17 and above, and this move should not end the game.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 51,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 45,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson (t23) could apply, but this click only clears the e tile at x=43-47 beside the piece, which stays at x=37-41. Row 36 is solid 5 above both the piece and this tile, and no f/b0b spike is in either column above row 36, so the piece cannot rise into a spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 52,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson could apply. After this move the piece will be at x=43-47. Row 36 directly above it is solid 5, and there is no open path up to an f/b0b spike, so the piece cannot rise into one.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 53,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 51,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The only game-over lesson is about rising into a spike. Here row 36 above the piece and above x=48-53 is solid 5, so the piece cannot rise now. Also, the column x=49-53 has no f/b0b block anywhere above (rows 13-17 there are a), so clearing this tile can't expose a spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 54,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson could apply because this moves the piece sideways under a new column. On the current board, column x=49-53 has solid 5 at row 36 and e tiles at rows 31-35, 25-29 and 1-5, with no f/b0b block anywhere above. So moving right cannot send the piece up into a spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 55,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 51,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies. Looking straight up the piece's column (x=49-53) from rows 31-35: there is still an e tile at rows 25-29, then open space, then another e tile at rows 1-5. None of rows 1-35 in that column has an f/b0b spike, so removing this tile shouldn't end the game.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 56,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 51,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies. Scanning x=49-53 upward from the piece: e at rows 31-35, open a at rows 13-29, then e at rows 7-11 and again at rows 1-5. There is no f/b0b block in this column, so the piece will stop under the rows 7-11 e tile and should not hit a spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 57,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies to sideways moves. The target column x=43-47 has an e tile at rows 31-35 right above the piece's rows 37-41, and that e tile stays put. So the piece can't rise into the f/b0b spike at rows 13-17, and this move should be safe.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 58,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 45,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson applies. After clearing the e tile at rows 31-35 in column x=43-47, the e tile at rows 25-29 is still between the piece and the f/b0b spike at rows 13-17. The piece should stop at rows 31-35 and not reach the spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 59,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson could apply to a sideways move under open space. Moving left to x=37-41 is safe because the e tile at rows 31-35 in that column stays in place, so the piece can't rise toward the spike above x=37-41.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 60,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson could apply to a sideways move. In o76 the target column x=31-35 has the unbroken e row at rows 31-35 directly above the piece, and there is no f/b0b block above it at all. So moving left cannot let the piece rise into a spike.",
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 61,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": "The spike lesson from t23 applies, because this click clears the last e tile above the piece. In o77, column x=31-35 above row 30 holds only open a cells (rows 23-29) and the 5/7 socket (rows 19-22). There is no f/b0b block in that column, since the spikes start at x=37.",
+     "game_over_lesson": null
+    }
+   ]
+  }
+ ]
+}

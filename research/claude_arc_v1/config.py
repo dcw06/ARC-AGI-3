@@ -101,6 +101,10 @@ class Config:
     resume_actions: int = 0
     # End a game once this many of its levels are completed; 0 plays on as before.
     stop_after_levels: int = 0
+    # Action economy (research/action_waste_v1): tell the model the benchmark's scoring rule, so it knows
+    # that every action costs, including one that changes nothing. Off: the prompt is the control's, which
+    # never mentions cost. The human number itself is not shown.
+    state_objective: bool = False
 
     @property
     def recovery_on(self):
@@ -114,6 +118,8 @@ class Config:
             raise ValueError('game_over_lessons and lesson_check must be boolean')
         if self.lesson_check and not self.game_over_lessons:
             raise ValueError('lesson_check needs game_over_lessons')
+        if type(self.state_objective) is not bool:
+            raise ValueError('state_objective must be boolean')
         if any(type(getattr(self, name)) is not bool for name in
                ('model_may_reset', 'stall_same_notes', 'recovery_pricing', 'replay_after_reset')):
             raise ValueError('recovery switches must be boolean')

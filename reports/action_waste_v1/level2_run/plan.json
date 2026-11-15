@@ -1,0 +1,66 @@
+{
+ "written_before_the_first_call": "2026-11-15T03:28:16Z",
+ "asked_by_the_user": "let the agent do bp35 level 2 again",
+ "question": "Starting at the first board of bp35 level 2 with the saved notes, how does the agent play when its system prompt also states the scoring rule (state_objective)? Does it solve level 2, in how many actions, and how many of those change nothing?",
+ "start": "the 17 saved level-1 actions of the 6 November run are repeated on the local game with no model call; every observation must hash to the saved one",
+ "arm": {
+  "objective": "the 6 November harness with state_objective on; memory unchanged (no lessons, no check)"
+ },
+ "runs": 2,
+ "new_actions_per_run": 100,
+ "stop": "level 2 solved, or 100 new actions",
+ "model": "claude-opus-5-5, effort high, subscription path, as on 6 November",
+ "game": "local copy of bp35-0a0ad940; no ARC service, no scorecard",
+ "order": "both runs at the same time",
+ "primary": [
+  "level 2 solved within the 100 new actions (yes or no)",
+  "actions on level 2 when solved, counting every action and every reset on the level",
+  "actions on level 2 chosen by the agent that changed nothing (board after equals board before, step-counter cells ignored)"
+ ],
+ "secondary": [
+  "actions inside a loop back to an earlier board of the attempt",
+  "game overs on level 2",
+  "share of turns whose tentative notes announce a test (keyword count)",
+  "model calls, output tokens"
+ ],
+ "reference_runs": {
+  "note": "the four runs of 2026-11-15T01:48Z from the same start, about two hours earlier and not run alongside; a difference from them can be the hour, the sampling or the rule",
+  "unchanged": [
+   {
+    "actions_on_level_2": 44,
+    "game_overs": 1,
+    "changed_nothing": 0,
+    "in_a_loop": 0
+   },
+   {
+    "actions_on_level_2": 87,
+    "game_overs": 3,
+    "changed_nothing": 4,
+    "in_a_loop": 6
+   }
+  ],
+  "lessons_and_check": [
+   {
+    "actions_on_level_2": 57,
+    "game_overs": 1,
+    "changed_nothing": 4,
+    "in_a_loop": 4
+   },
+   {
+    "actions_on_level_2": 61,
+    "game_overs": 1,
+    "changed_nothing": 6,
+    "in_a_loop": 12
+   }
+  ]
+ },
+ "reading": "two runs cannot separate the rule from chance, and one level of one game says nothing about other games; the numbers are reported as they are with no claim of an effect",
+ "no_rerun": "a run that fails for a technical reason is reported as failed and may be repeated once under a new name; a run is never repeated because of its result",
+ "code_sha256": {
+  "research/memory_fix_v1/continue_bp35.py": "47af4a7e031f9a578c8f060e57c534596f7176a213ebfab618a318f940ed06ca",
+  "research/memory_fix_v1/local_arc.py": "cdb4819d903aca211731e8b63fc09602413644647c37da352172d36fc901aae4",
+  "research/claude_arc_v1/policy.py": "4aa392c26bd1c0b5999a76fd40647d7ef1a2b526d201cf3963802587593f7b0e",
+  "research/claude_arc_v1/run.py": "993cbbff7504ef939a3e0565c43e3a337d9e72bc4c9d1c62060a16587d214b36",
+  "research/claude_arc_v1/config.py": "cdc7341f5ac189afd4c68eb3e4ca026827b9412c505aff3db0a9696be8cce151"
+ }
+}

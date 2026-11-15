@@ -1,0 +1,111 @@
+{
+ "runs": [
+  {
+   "run": "bp35-l2-control-1-20261115T014800Z",
+   "set_up": "unchanged",
+   "level_2_solved": true,
+   "actions_on_level_2": 44,
+   "game_overs": 1,
+   "changed_nothing": 0,
+   "changed_nothing_at": [],
+   "in_a_loop": 0,
+   "turns": 43,
+   "turns_announcing_a_test": 1,
+   "model_calls": 43,
+   "output_tokens": 75135,
+   "output_per_call_median": 1237
+  },
+  {
+   "run": "bp35-l2-control-2-20261115T014800Z",
+   "set_up": "unchanged",
+   "level_2_solved": true,
+   "actions_on_level_2": 87,
+   "game_overs": 3,
+   "changed_nothing": 4,
+   "changed_nothing_at": [
+    15,
+    22,
+    23,
+    24
+   ],
+   "in_a_loop": 4,
+   "turns": 84,
+   "turns_announcing_a_test": 7,
+   "model_calls": 84,
+   "output_tokens": 173284,
+   "output_per_call_median": 1466
+  },
+  {
+   "run": "bp35-l2-lessons-1-20261115T014800Z",
+   "set_up": "lessons and check",
+   "level_2_solved": true,
+   "actions_on_level_2": 57,
+   "game_overs": 1,
+   "changed_nothing": 4,
+   "changed_nothing_at": [
+    6,
+    16,
+    17,
+    18
+   ],
+   "in_a_loop": 4,
+   "turns": 56,
+   "turns_announcing_a_test": 6,
+   "model_calls": 56,
+   "output_tokens": 146936,
+   "output_per_call_median": 1768
+  },
+  {
+   "run": "bp35-l2-lessons-2-20261115T014800Z",
+   "set_up": "lessons and check",
+   "level_2_solved": true,
+   "actions_on_level_2": 61,
+   "game_overs": 1,
+   "changed_nothing": 6,
+   "changed_nothing_at": [
+    12,
+    37,
+    41,
+    42,
+    43,
+    44
+   ],
+   "in_a_loop": 10,
+   "turns": 60,
+   "turns_announcing_a_test": 3,
+   "model_calls": 60,
+   "output_tokens": 174697,
+   "output_per_call_median": 2141
+  },
+  {
+   "run": "bp35-l2-objective-1-20261115T032820Z",
+   "set_up": "scoring rule",
+   "level_2_solved": true,
+   "actions_on_level_2": 68,
+   "game_overs": 1,
+   "changed_nothing": 0,
+   "changed_nothing_at": [],
+   "in_a_loop": 0,
+   "turns": 67,
+   "turns_announcing_a_test": 1,
+   "model_calls": 67,
+   "output_tokens": 121895,
+   "output_per_call_median": 1304
+  },
+  {
+   "run": "bp35-l2-objective-2-20261115T032820Z",
+   "set_up": "scoring rule",
+   "level_2_solved": true,
+   "actions_on_level_2": 40,
+   "game_overs": 0,
+   "changed_nothing": 0,
+   "changed_nothing_at": [],
+   "in_a_loop": 0,
+   "turns": 40,
+   "turns_announcing_a_test": 1,
+   "model_calls": 40,
+   "output_tokens": 70614,
+   "output_per_call_median": 1272
+  }
+ ]
+}

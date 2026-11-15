@@ -1,0 +1,1992 @@
+{
+ "runs": [
+  {
+   "run": "bp35-l2-objective-1-20261115T032820Z",
+   "memory": "unchanged",
+   "scoring_rule_shown": true,
+   "level_2_solved": true,
+   "actions_on_level_2": 68,
+   "game_overs_on_level_2": 1,
+   "at_level_2_action": [
+    27
+   ],
+   "lessons_written": 0,
+   "model_calls": 67,
+   "replies_sent_back": 0,
+   "stop_reason": "level_target",
+   "problems": [],
+   "audit": "passes",
+   "input_tokens": 1052778,
+   "output_tokens": 121895,
+   "output_per_call_median": 1304,
+   "before_the_first_game_over": {
+    "turns": 27,
+    "turns_one_action_from_a_game_over": 5,
+    "of_those_the_agent_took_the_fatal_action": 1
+   },
+   "after_the_first_game_over": {
+    "turns": 40,
+    "turns_one_action_from_a_game_over": 4,
+    "of_those_the_agent_took_the_fatal_action": 0
+   },
+   "deaths": [
+    {
+     "level_2_action": 27,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "danger_note_when_choosing": "tentative",
+     "notes_when_choosing": [
+      {
+       "id": "H1",
+       "statement": "ACTION3 moves the 9/b piece left one tile (6 cells) and ACTION4 moves it right one tile, but only into an open a tile. Moving also turns the piece to face the direction it moved.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t25",
+        "t27",
+        "t29",
+        "t31",
+        "t35",
+        "t36",
+        "t42"
+       ]
+      },
+      {
+       "id": "H2",
+       "statement": "Clicking an e tile turns it into an open a tile.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t24",
+        "t26",
+        "t28",
+        "t30",
+        "t38",
+        "t39",
+        "t40",
+        "t41"
+       ]
+      },
+      {
+       "id": "H6",
+       "statement": "When the piece is under open a tiles, it rises until something blocks it, and the camera follows. After t43 the piece rose up x19-23 and is now at rows 37-41, with an e tile directly above it at rows 31-35.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t21",
+        "t22",
+        "t32",
+        "t37",
+        "t43"
+       ]
+      },
+      {
+       "id": "H17",
+       "statement": "Clicking the e tile at (21,33) should let the piece rise to rows 25-29, where it would stop under the fff/b0b tile at rows 19-23. From there, moving right twice to x31-35 should let it rise to rows 7-11.",
+       "status": "tentative",
+       "evidence_ids": [
+        "o43"
+       ]
+      },
+      {
+       "id": "H15",
+       "statement": "The fff/b0b tiles may be hazards. This is untested.",
+       "status": "tentative",
+       "evidence_ids": [
+        "o43"
+       ]
+      },
+      {
+       "id": "H12",
+       "statement": "The f cells filling row 63 count every action taken in this level.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t38",
+        "t39",
+        "t40",
+        "t41",
+        "t42"
+       ]
+      }
+     ],
+     "notes_on_the_next_turn": [
+      {
+       "id": "H1",
+       "statement": "ACTION3 moves the 9/b piece left one tile (6 cells) and ACTION4 moves it right one tile, but only into an open a tile. Moving also turns the piece to face the direction it moved.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t25",
+        "t27",
+        "t29",
+        "t31",
+        "t35",
+        "t36",
+        "t42"
+       ]
+      },
+      {
+       "id": "H2",
+       "statement": "Clicking an e tile turns it into an open a tile, along with the gridline cells next to it.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t38",
+        "t39",
+        "t40",
+        "t41"
+       ]
+      },
+      {
+       "id": "H6",
+       "statement": "When the piece is under open a tiles, it rises until something blocks it, and the camera follows.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t43"
+       ]
+      },
+      {
+       "id": "H15",
+       "statement": "The fff/b0b tiles are deadly. If the piece rises into one, it is destroyed and the game ends (GAME_OVER).",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t44",
+        "o44"
+       ]
+      },
+      {
+       "id": "H18",
+       "statement": "The 7 plus tile seen near the top of o44 may be the goal.",
+       "status": "tentative",
+       "evidence_ids": [
+        "o44"
+       ]
+      },
+      {
+       "id": "H19",
+       "statement": "In o45, column x37-41 has no fff tile above it in view. Moving right twice and then clicking the e tiles at (39,33) and (39,27) should let the piece rise safely.",
+       "status": "tentative",
+       "evidence_ids": [
+        "o45"
+       ]
+      },
+      {
+       "id": "H12",
+       "statement": "The f cells filling row 63 count every action taken in this level. The counter resets when the level restarts.",
+       "status": "supported_locally",
+       "evidence_ids": [
+        "t38",
+        "t42",
+        "o45"
+       ]
+      }
+     ],
+     "lesson_written": null
+    }
+   ],
+   "turns": [
+    {
+     "level_2_action": 1,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 2,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 3,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 4,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 5,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 6,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 21
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 7,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 8,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 9,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 27,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 10,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 11,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 12,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 13,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 15,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 14,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 15,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 15,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 16,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 17,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 27
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 18,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 19,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 20,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 21,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 22,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 15
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 23,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 9
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 24,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 3
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 25,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 26,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 27,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": true,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 29,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 30,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 31,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 32,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 33,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 34,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 35,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 36,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 27,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 37,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 38,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 39,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 40,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 15,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 41,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 42,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 15,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 43,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 44,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 45,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 46,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 47,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 48,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 49,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 50,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 51,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 52,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 53,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 27,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 54,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 55,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 56,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 57,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 58,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 59,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 45,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 60,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 61,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 51,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 62,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 63,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 51,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 64,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 51,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 65,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 27
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 66,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 67,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 68,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 1,
+     "danger_note": "supported",
+     "lesson_check": null,
+     "game_over_lesson": null
+    }
+   ]
+  },
+  {
+   "run": "bp35-l2-objective-2-20261115T032820Z",
+   "memory": "unchanged",
+   "scoring_rule_shown": true,
+   "level_2_solved": true,
+   "actions_on_level_2": 40,
+   "game_overs_on_level_2": 0,
+   "at_level_2_action": [],
+   "lessons_written": 0,
+   "model_calls": 40,
+   "replies_sent_back": 0,
+   "stop_reason": "level_target",
+   "problems": [],
+   "audit": "passes",
+   "input_tokens": 610877,
+   "output_tokens": 70614,
+   "output_per_call_median": 1272,
+   "before_the_first_game_over": {
+    "turns": 40,
+    "turns_one_action_from_a_game_over": 4,
+    "of_those_the_agent_took_the_fatal_action": 0
+   },
+   "after_the_first_game_over": {
+    "turns": 0,
+    "turns_one_action_from_a_game_over": 0,
+    "of_those_the_agent_took_the_fatal_action": 0
+   },
+   "deaths": [],
+   "turns": [
+    {
+     "level_2_action": 1,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 2,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 3,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 4,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 5,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 6,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 7,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 8,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 27,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 9,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 10,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 11,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 12,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 15,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 13,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 14,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 15,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 15,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 16,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 17,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 18,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 19,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 20,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 21,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 22,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 23,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 24,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 21,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 25,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 27,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 26,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 27,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 28,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 29,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 39,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 30,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 31,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 45,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 32,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 33,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 51,
+       "y": 39
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 34,
+     "action": {
+      "action_id": 4,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 35,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 51,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 36,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 51,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": null,
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 37,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 38,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 39,
+     "action": {
+      "action_id": 3,
+      "action_data": {}
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 4,
+     "a_game_over_was_one_action_away": true,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    },
+    {
+     "level_2_action": 40,
+     "action": {
+      "action_id": 6,
+      "action_data": {
+       "x": 33,
+       "y": 33
+      }
+     },
+     "fatal_moves": [],
+     "fatal_click_cells": 0,
+     "a_game_over_was_one_action_away": false,
+     "ended_the_game": false,
+     "earlier_game_overs": 0,
+     "danger_note": "tentative",
+     "lesson_check": null,
+     "game_over_lesson": null
+    }
+   ]
+  }
+ ]
+}

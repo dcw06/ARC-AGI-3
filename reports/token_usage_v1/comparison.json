@@ -1,0 +1,866 @@
+{
+ "names": {
+  "astra-standard-high": "GPT-6 Astra, official standard harness, high",
+  "astra-adapter-high": "GPT-6 Astra, provider adapter harness, high",
+  "opus5-standard-high": "Claude Opus 5, official standard harness, high",
+  "opus55-ours": "Claude Opus 5.5, our harness (6 Nov, 100-action cap), high"
+ },
+ "runs": {
+  "astra-standard-high": {
+   "games": 25,
+   "games_won": 11,
+   "levels_completed": 132,
+   "actions": 14141,
+   "model_calls": 14034,
+   "input_total": 2015523108,
+   "input_cached": 352117601,
+   "input_not_cached": 1663405507,
+   "output_total": 5203161,
+   "reasoning_total": 4237166,
+   "input_per_call_median": 161403,
+   "input_per_call_mean": 143617,
+   "input_per_call_max": 323876,
+   "output_per_call_median": 226,
+   "output_per_call_mean": 371,
+   "input_per_action": 142530,
+   "output_per_action": 368,
+   "input_per_level": 15269114,
+   "not_cached_per_level": 12601557,
+   "output_per_level": 39418,
+   "steps_without_usage": 107
+  },
+  "astra-adapter-high": {
+   "games": 25,
+   "games_won": 25,
+   "levels_completed": 183,
+   "actions": 7085,
+   "model_calls": 7078,
+   "input_total": 901138267,
+   "input_cached": 447253876,
+   "input_not_cached": 453884391,
+   "output_total": 831782,
+   "reasoning_total": 772857,
+   "input_per_call_median": 125567,
+   "input_per_call_mean": 127315,
+   "input_per_call_max": 285456,
+   "output_per_call_median": 17,
+   "output_per_call_mean": 118,
+   "input_per_action": 127190,
+   "output_per_action": 117,
+   "input_per_level": 4924253,
+   "not_cached_per_level": 2480243,
+   "output_per_level": 4545,
+   "steps_without_usage": 7
+  },
+  "opus5-standard-high": {
+   "games": 25,
+   "games_won": 6,
+   "levels_completed": 95,
+   "actions": 10557,
+   "model_calls": 10500,
+   "input_total": 1475036219,
+   "input_cached": 0,
+   "input_not_cached": 1475036219,
+   "output_total": 41248121,
+   "reasoning_total": 0,
+   "input_per_call_median": 153385,
+   "input_per_call_mean": 140480,
+   "input_per_call_max": 169272,
+   "output_per_call_median": 1407,
+   "output_per_call_mean": 3928,
+   "input_per_action": 139721,
+   "output_per_action": 3907,
+   "input_per_level": 15526697,
+   "not_cached_per_level": 15526697,
+   "output_per_level": 434191,
+   "steps_without_usage": 57
+  },
+  "opus55-ours": {
+   "games": 25,
+   "games_won": 1,
+   "levels_completed": 67,
+   "actions": 2475,
+   "model_calls": 2467,
+   "input_total": 31903282,
+   "input_cached": 0,
+   "input_not_cached": 31903282,
+   "output_total": 4895703,
+   "reasoning_total": 3246465,
+   "input_per_call_median": 12692,
+   "input_per_call_mean": 12932,
+   "input_per_call_max": 34070,
+   "output_per_call_median": 1313,
+   "output_per_call_mean": 1984,
+   "input_per_action": 12890,
+   "output_per_action": 1978,
+   "input_per_level": 476168,
+   "not_cached_per_level": 476168,
+   "output_per_level": 73070
+  },
+  "opus55-tycho-bp35": {
+   "total_actions": 427,
+   "levels_completed": 8,
+   "cumulative_usage": {
+    "cache_read": 38636914,
+    "cache_write": 1555058,
+    "tokens_in": 18387768,
+    "tokens_out": 552107
+   },
+   "llm_calls_by_type_in_record": {
+    "animation_summary": 31,
+    "freeform": 591,
+    "level_summary": 11,
+    "builder": 41
+   },
+   "cumulative_cost_usd_list_price": 100.1
+  }
+ },
+ "by_game": {
+  "astra-standard-high": {
+   "ar25": {
+    "actions": 270,
+    "levels": 8,
+    "input": 41282727,
+    "cached": 3204103,
+    "output": 76231
+   },
+   "bp35": {
+    "actions": 256,
+    "levels": 1,
+    "input": 21855312,
+    "cached": 7460944,
+    "output": 70165
+   },
+   "cd82": {
+    "actions": 113,
+    "levels": 6,
+    "input": 16170749,
+    "cached": 5321341,
+    "output": 24185
+   },
+   "cn04": {
+    "actions": 357,
+    "levels": 6,
+    "input": 50261047,
+    "cached": 2492081,
+    "output": 148915
+   },
+   "dc22": {
+    "actions": 842,
+    "levels": 6,
+    "input": 132659080,
+    "cached": 11199804,
+    "output": 196609
+   },
+   "ft09": {
+    "actions": 75,
+    "levels": 6,
+    "input": 10855499,
+    "cached": 1480696,
+    "output": 11293
+   },
+   "g50t": {
+    "actions": 390,
+    "levels": 0,
+    "input": 33607820,
+    "cached": 4626175,
+    "output": 94533
+   },
+   "ka59": {
+    "actions": 1573,
+    "levels": 6,
+    "input": 240472078,
+    "cached": 52346041,
+    "output": 582270
+   },
+   "lf52": {
+    "actions": 485,
+    "levels": 3,
+    "input": 53283905,
+    "cached": 13649584,
+    "output": 218799
+   },
+   "lp85": {
+    "actions": 106,
+    "levels": 8,
+    "input": 16151882,
+    "cached": 1594228,
+    "output": 23269
+   },
+   "ls20": {
+    "actions": 808,
+    "levels": 4,
+    "input": 114786490,
+    "cached": 30722507,
+    "output": 208266
+   },
+   "m0r0": {
+    "actions": 1376,
+    "levels": 5,
+    "input": 212718736,
+    "cached": 17770595,
+    "output": 401789
+   },
+   "r11l": {
+    "actions": 100,
+    "levels": 6,
+    "input": 13723153,
+    "cached": 4548531,
+    "output": 47393
+   },
+   "re86": {
+    "actions": 1624,
+    "levels": 7,
+    "input": 205250089,
+    "cached": 64915106,
+    "output": 808655
+   },
+   "s5i5": {
+    "actions": 258,
+    "levels": 8,
+    "input": 40299589,
+    "cached": 2452556,
+    "output": 61272
+   },
+   "sb26": {
+    "actions": 135,
+    "levels": 8,
+    "input": 14269219,
+    "cached": 5979997,
+    "output": 16949
+   },
+   "sc25": {
+    "actions": 824,
+    "levels": 4,
+    "input": 117629986,
+    "cached": 39875400,
+    "output": 199986
+   },
+   "sk48": {
+    "actions": 1490,
+    "levels": 4,
+    "input": 231983030,
+    "cached": 31450972,
+    "output": 694862
+   },
+   "sp80": {
+    "actions": 177,
+    "levels": 6,
+    "input": 21149172,
+    "cached": 3469796,
+    "output": 66294
+   },
+   "su15": {
+    "actions": 246,
+    "levels": 6,
+    "input": 33422191,
+    "cached": 5793193,
+    "output": 117575
+   },
+   "tn36": {
+    "actions": 425,
+    "levels": 5,
+    "input": 55927810,
+    "cached": 15307626,
+    "output": 273203
+   },
+   "tr87": {
+    "actions": 199,
+    "levels": 6,
+    "input": 28619757,
+    "cached": 4094673,
+    "output": 90703
+   },
+   "tu93": {
+    "actions": 98,
+    "levels": 1,
+    "input": 7620663,
+    "cached": 3859183,
+    "output": 24269
+   },
+   "vc33": {
+    "actions": 1099,
+    "levels": 6,
+    "input": 170580822,
+    "cached": 16785471,
+    "output": 590835
+   },
+   "wa30": {
+    "actions": 815,
+    "levels": 6,
+    "input": 130942302,
+    "cached": 1716998,
+    "output": 154841
+   }
+  },
+  "astra-adapter-high": {
+   "ar25": {
+    "actions": 257,
+    "levels": 8,
+    "input": 32262987,
+    "cached": 22883956,
+    "output": 15530
+   },
+   "bp35": {
+    "actions": 488,
+    "levels": 9,
+    "input": 73577084,
+    "cached": 7117120,
+    "output": 72289
+   },
+   "cd82": {
+    "actions": 83,
+    "levels": 6,
+    "input": 9379806,
+    "cached": 4794466,
+    "output": 21572
+   },
+   "cn04": {
+    "actions": 215,
+    "levels": 6,
+    "input": 26444901,
+    "cached": 18777140,
+    "output": 16375
+   },
+   "dc22": {
+    "actions": 442,
+    "levels": 6,
+    "input": 54468094,
+    "cached": 37437132,
+    "output": 21188
+   },
+   "ft09": {
+    "actions": 75,
+    "levels": 6,
+    "input": 9250524,
+    "cached": 6783530,
+    "output": 12259
+   },
+   "g50t": {
+    "actions": 296,
+    "levels": 7,
+    "input": 48089458,
+    "cached": 7090138,
+    "output": 23609
+   },
+   "ka59": {
+    "actions": 339,
+    "levels": 7,
+    "input": 38796076,
+    "cached": 22342668,
+    "output": 13346
+   },
+   "lf52": {
+    "actions": 770,
+    "levels": 10,
+    "input": 102124204,
+    "cached": 28596842,
+    "output": 317920
+   },
+   "lp85": {
+    "actions": 94,
+    "levels": 8,
+    "input": 11452171,
+    "cached": 7766544,
+    "output": 10811
+   },
+   "ls20": {
+    "actions": 468,
+    "levels": 7,
+    "input": 54685296,
+    "cached": 36927086,
+    "output": 24731
+   },
+   "m0r0": {
+    "actions": 228,
+    "levels": 6,
+    "input": 28381127,
+    "cached": 19415790,
+    "output": 13223
+   },
+   "r11l": {
+    "actions": 79,
+    "levels": 6,
+    "input": 9083414,
+    "cached": 3650030,
+    "output": 7490
+   },
+   "re86": {
+    "actions": 616,
+    "levels": 8,
+    "input": 73790323,
+    "cached": 50579648,
+    "output": 20463
+   },
+   "s5i5": {
+    "actions": 247,
+    "levels": 8,
+    "input": 30957988,
+    "cached": 21873636,
+    "output": 17596
+   },
+   "sb26": {
+    "actions": 124,
+    "levels": 8,
+    "input": 13346244,
+    "cached": 3352006,
+    "output": 21306
+   },
+   "sc25": {
+    "actions": 140,
+    "levels": 6,
+    "input": 16286153,
+    "cached": 8886194,
+    "output": 8654
+   },
+   "sk48": {
+    "actions": 433,
+    "levels": 8,
+    "input": 57242029,
+    "cached": 27949428,
+    "output": 36601
+   },
+   "sp80": {
+    "actions": 144,
+    "levels": 6,
+    "input": 15851187,
+    "cached": 10574404,
+    "output": 8269
+   },
+   "su15": {
+    "actions": 104,
+    "levels": 9,
+    "input": 15934396,
+    "cached": 1144622,
+    "output": 17531
+   },
+   "tn36": {
+    "actions": 311,
+    "levels": 7,
+    "input": 36457598,
+    "cached": 18443168,
+    "output": 58190
+   },
+   "tr87": {
+    "actions": 148,
+    "levels": 6,
+    "input": 16251580,
+    "cached": 11163774,
+    "output": 7627
+   },
+   "tu93": {
+    "actions": 218,
+    "levels": 9,
+    "input": 35194673,
+    "cached": 5376014,
+    "output": 22579
+   },
+   "vc33": {
+    "actions": 182,
+    "levels": 7,
+    "input": 18153867,
+    "cached": 11726496,
+    "output": 11390
+   },
+   "wa30": {
+    "actions": 584,
+    "levels": 9,
+    "input": 73677087,
+    "cached": 52602044,
+    "output": 31233
+   }
+  },
+  "opus5-standard-high": {
+   "ar25": {
+    "actions": 294,
+    "levels": 8,
+    "input": 45228808,
+    "cached": 0,
+    "output": 869137
+   },
+   "bp35": {
+    "actions": 105,
+    "levels": 0,
+    "input": 11531263,
+    "cached": 0,
+    "output": 289220
+   },
+   "cd82": {
+    "actions": 196,
+    "levels": 1,
+    "input": 25792476,
+    "cached": 0,
+    "output": 770363
+   },
+   "cn04": {
+    "actions": 653,
+    "levels": 4,
+    "input": 79727814,
+    "cached": 0,
+    "output": 3242437
+   },
+   "dc22": {
+    "actions": 563,
+    "levels": 4,
+    "input": 83620326,
+    "cached": 0,
+    "output": 3239552
+   },
+   "ft09": {
+    "actions": 84,
+    "levels": 6,
+    "input": 12335881,
+    "cached": 0,
+    "output": 262148
+   },
+   "g50t": {
+    "actions": 390,
+    "levels": 0,
+    "input": 37145181,
+    "cached": 0,
+    "output": 2227799
+   },
+   "ka59": {
+    "actions": 601,
+    "levels": 3,
+    "input": 87903119,
+    "cached": 0,
+    "output": 1936881
+   },
+   "lf52": {
+    "actions": 419,
+    "levels": 1,
+    "input": 50175227,
+    "cached": 0,
+    "output": 1655465
+   },
+   "lp85": {
+    "actions": 108,
+    "levels": 8,
+    "input": 16031721,
+    "cached": 0,
+    "output": 389603
+   },
+   "ls20": {
+    "actions": 594,
+    "levels": 2,
+    "input": 88986486,
+    "cached": 0,
+    "output": 1585607
+   },
+   "m0r0": {
+    "actions": 270,
+    "levels": 3,
+    "input": 35564822,
+    "cached": 0,
+    "output": 1310827
+   },
+   "r11l": {
+    "actions": 117,
+    "levels": 6,
+    "input": 15703796,
+    "cached": 0,
+    "output": 1453728
+   },
+   "re86": {
+    "actions": 1112,
+    "levels": 6,
+    "input": 167981676,
+    "cached": 0,
+    "output": 3059707
+   },
+   "s5i5": {
+    "actions": 388,
+    "levels": 8,
+    "input": 59281799,
+    "cached": 0,
+    "output": 2377726
+   },
+   "sb26": {
+    "actions": 200,
+    "levels": 7,
+    "input": 21954105,
+    "cached": 0,
+    "output": 480975
+   },
+   "sc25": {
+    "actions": 180,
+    "levels": 0,
+    "input": 24732797,
+    "cached": 0,
+    "output": 246192
+   },
+   "sk48": {
+    "actions": 684,
+    "levels": 2,
+    "input": 105274271,
+    "cached": 0,
+    "output": 2174662
+   },
+   "sp80": {
+    "actions": 669,
+    "levels": 5,
+    "input": 78550599,
+    "cached": 0,
+    "output": 3100447
+   },
+   "su15": {
+    "actions": 657,
+    "levels": 3,
+    "input": 95775222,
+    "cached": 0,
+    "output": 1536195
+   },
+   "tn36": {
+    "actions": 283,
+    "levels": 2,
+    "input": 40457114,
+    "cached": 0,
+    "output": 1922217
+   },
+   "tr87": {
+    "actions": 488,
+    "levels": 4,
+    "input": 74099716,
+    "cached": 0,
+    "output": 2211460
+   },
+   "tu93": {
+    "actions": 217,
+    "levels": 2,
+    "input": 17254810,
+    "cached": 0,
+    "output": 1254970
+   },
+   "vc33": {
+    "actions": 408,
+    "levels": 7,
+    "input": 62196638,
+    "cached": 0,
+    "output": 1960100
+   },
+   "wa30": {
+    "actions": 877,
+    "levels": 3,
+    "input": 137730552,
+    "cached": 0,
+    "output": 1690703
+   }
+  },
+  "opus55-ours": {
+   "sk48": {
+    "input": 1212739,
+    "cached": 0,
+    "output": 206237,
+    "actions": 100,
+    "levels": 2
+   },
+   "su15": {
+    "input": 1117651,
+    "cached": 0,
+    "output": 131364,
+    "actions": 100,
+    "levels": 2
+   },
+   "sp80": {
+    "input": 1317312,
+    "cached": 0,
+    "output": 217752,
+    "actions": 100,
+    "levels": 4
+   },
+   "g50t": {
+    "input": 1239277,
+    "cached": 0,
+    "output": 143806,
+    "actions": 100,
+    "levels": 1
+   },
+   "dc22": {
+    "input": 1146469,
+    "cached": 0,
+    "output": 116196,
+    "actions": 100,
+    "levels": 1
+   },
+   "m0r0": {
+    "input": 1329900,
+    "cached": 0,
+    "output": 197671,
+    "actions": 100,
+    "levels": 2
+   },
+   "re86": {
+    "input": 1210009,
+    "cached": 0,
+    "output": 130389,
+    "actions": 100,
+    "levels": 2
+   },
+   "cd82": {
+    "input": 1238950,
+    "cached": 0,
+    "output": 199785,
+    "actions": 100,
+    "levels": 2
+   },
+   "cn04": {
+    "input": 1664471,
+    "cached": 0,
+    "output": 178232,
+    "actions": 100,
+    "levels": 2
+   },
+   "lf52": {
+    "input": 1690260,
+    "cached": 0,
+    "output": 152809,
+    "actions": 100,
+    "levels": 1
+   },
+   "ar25": {
+    "input": 1425507,
+    "cached": 0,
+    "output": 129454,
+    "actions": 100,
+    "levels": 3
+   },
+   "tn36": {
+    "input": 1089789,
+    "cached": 0,
+    "output": 163112,
+    "actions": 100,
+    "levels": 0
+   },
+   "s5i5": {
+    "input": 1209797,
+    "cached": 0,
+    "output": 297898,
+    "actions": 100,
+    "levels": 2
+   },
+   "ls20": {
+    "input": 1205941,
+    "cached": 0,
+    "output": 138636,
+    "actions": 100,
+    "levels": 2
+   },
+   "ft09": {
+    "input": 902477,
+    "cached": 0,
+    "output": 135520,
+    "actions": 75,
+    "levels": 6
+   },
+   "lp85": {
+    "input": 1378110,
+    "cached": 0,
+    "output": 218243,
+    "actions": 100,
+    "levels": 7
+   },
+   "wa30": {
+    "input": 1307237,
+    "cached": 0,
+    "output": 135983,
+    "actions": 100,
+    "levels": 2
+   },
+   "sb26": {
+    "input": 1270773,
+    "cached": 0,
+    "output": 105352,
+    "actions": 100,
+    "levels": 6
+   },
+   "bp35": {
+    "input": 1445794,
+    "cached": 0,
+    "output": 201123,
+    "actions": 100,
+    "levels": 1
+   },
+   "r11l": {
+    "input": 1281232,
+    "cached": 0,
+    "output": 284417,
+    "actions": 100,
+    "levels": 5
+   },
+   "ka59": {
+    "input": 1239278,
+    "cached": 0,
+    "output": 151037,
+    "actions": 100,
+    "levels": 1
+   },
+   "sc25": {
+    "input": 1175583,
+    "cached": 0,
+    "output": 140342,
+    "actions": 100,
+    "levels": 3
+   },
+   "tr87": {
+    "input": 1264495,
+    "cached": 0,
+    "output": 700543,
+    "actions": 100,
+    "levels": 1
+   },
+   "vc33": {
+    "input": 1274046,
+    "cached": 0,
+    "output": 208007,
+    "actions": 100,
+    "levels": 4
+   },
+   "tu93": {
+    "input": 1266185,
+    "cached": 0,
+    "output": 211795,
+    "actions": 100,
+    "levels": 5
+   }
+  }
+ },
+ "first_100_actions_per_game": {
+  "astra-standard-high": {
+   "actions": 2473,
+   "calls": 2435,
+   "levels_in_first_100": 76,
+   "input": 327531772,
+   "cached": 58144919,
+   "output": 553916,
+   "input_per_action": 132443,
+   "output_per_action": 224,
+   "first_call_input_median": 12448,
+   "input_at_action_100_median": 149657
+  },
+  "astra-adapter-high": {
+   "actions": 2431,
+   "calls": 2431,
+   "levels_in_first_100": 99,
+   "input": 305025452,
+   "cached": 155684036,
+   "output": 227389,
+   "input_per_action": 125473,
+   "output_per_action": 94,
+   "first_call_input_median": 12427,
+   "input_at_action_100_median": 137400
+  },
+  "opus5-standard-high": {
+   "actions": 2484,
+   "calls": 2467,
+   "levels_in_first_100": 58,
+   "input": 329074577,
+   "cached": 0,
+   "output": 9585843,
+   "input_per_action": 132478,
+   "output_per_action": 3859,
+   "first_call_input_median": 12550,
+   "input_at_action_100_median": 153048
+  }
+ }
+}

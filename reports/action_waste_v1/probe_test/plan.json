@@ -1,0 +1,22 @@
+{
+ "written_before_sending": "2026-11-15T04:35:59Z",
+ "requests_sha256": "b497a5f20e4335959fd7feee00c728060444d2ccea4c5eb76b188727de7f173d",
+ "model_calls": 200,
+ "retries": 0,
+ "seed": 20261115,
+ "positions_per_game_and_kind": 3,
+ "rule": {
+  "outcome": "at wasted positions, the share of valid replies that choose the saved no-effect action again (the same action; for a click, any cell of the same connected single-colour region), by arm",
+  "changes_the_decision_if": "the share with the scoring rule is at least 0.20 below the share without it",
+  "no_headroom_if": "the share without it is below 0.30",
+  "guard": "at useful positions, the share choosing the saved action again; a drop of more than 0.20 with the rule means it changes play in general, not only wasted actions",
+  "unresolved_if": "more than 10 replies are invalid",
+  "valid_reply": "JSON with a legal action for that board",
+  "secondary": "share of replies whose tentative notes announce a test; per-game counts",
+  "cannot_show": "fewer actions overall or more levels completed: a reply that avoids the known no-effect action may pick another action whose effect is not known here",
+  "min_difference": 0.2,
+  "min_control": 0.3,
+  "max_guard_drop": 0.2,
+  "max_invalid": 10
+ }
+}

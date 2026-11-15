@@ -31,6 +31,10 @@ LESSON_ASK = ('Your last attempt ended in GAME_OVER at %s. In game_over_lesson, 
 CHECK_NOTE = ('In lesson_check, test the action you chose against every game_over_lesson: name any lesson that could '
               'apply and say what on the current board shows this action will not end the same way.')
 LESSON_LIMIT = 6
+# The benchmark's own rule (ARC-AGI-3 scoring methodology), with nothing about how to play.
+OBJECTIVE = (' Scoring: only completed levels score. A completed level scores (H / A) squared, capped at 1.15, '
+             'where A is the number of actions you used on that level and H is the number a person needed when '
+             'playing it for the first time. Every action you send counts in A, including one that changes nothing.')
 GAME_OVER_NOTE = ('evidence.game_overs keeps every earlier action on this level that ended in GAME_OVER, with the '
                   'board before it and the board it produced. It stays available as evidence however long ago it '
                   'happened: cite its transition_id.')
@@ -40,7 +44,8 @@ def system_prompt(config):
     base = SYSTEM.replace('Never reset (action 0). ', RESET_ALLOWED) if config.model_may_reset else SYSTEM
     return (base + (HEX_NOTE if config.grid_encoding == 'hex_rows' else '')
             + (RESET_NOTE if config.resets_per_game else '')
-            + (REPLAY_NOTE if config.replay_after_reset else ''))
+            + (REPLAY_NOTE if config.replay_after_reset else '')
+            + (OBJECTIVE if config.state_objective else ''))
 
 
 def hex_rows(frame):

@@ -185,6 +185,20 @@ class Switches(Base):
             for schema in (policy.response_schema(stage), policy.response_schema(stage, replace(c, stage=stage))):
                 self.assertEqual(hashlib.sha256(json.dumps(schema, sort_keys=True).encode()).hexdigest(), wanted, stage)
 
+    def test_objective_is_appended_to_the_control_prompt_and_changes_nothing_else(self):
+        control = config.Config(**json.loads((ROOT / 'config/claude_arc_v1.opus55_competition.json').read_text()))
+        told = replace(control, state_objective=True)
+        self.assertEqual(policy.system_prompt(told), policy.system_prompt(control) + policy.OBJECTIVE)
+        self.assertIn('including one that changes nothing', policy.OBJECTIVE)
+        for stage in CONTROL_SCHEMAS:
+            self.assertEqual(policy.response_schema(stage, replace(told, stage=stage)), policy.response_schema(stage))
+        with self.assertRaises(ValueError):
+            settings(state_objective=1)
+        plain, _, plain_backend, _, _ = self.play(settings(), [1, 1])
+        _, _, backend, _, folder = self.play(settings(state_objective=True), [1, 1])
+        self.assertEqual(payload(backend.requests[0]), payload(plain_backend.requests[0]))
+        audit.audit(folder)
+
     def test_defaults_add_no_row_fields_events_or_evidence(self):
         result, arc_, backend, events, folder = self.play(settings(), [1, 1])
         self.assertNotIn('model_resets', result['games'][0])
