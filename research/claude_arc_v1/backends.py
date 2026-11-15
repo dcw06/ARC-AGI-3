@@ -183,7 +183,7 @@ class ClaudeCodeBackend:
             raise ValueError('Claude Code %s is too old for %s; need %s or newer (run: brew upgrade claude-code)' % (
                 '.'.join(map(str, self.version)), config.model, '.'.join(map(str, MIN_CLAUDE_CLI))))
         from .policy import response_schema
-        self.schema = json.dumps(response_schema(config.stage), separators=(',', ':'))
+        self.schema = json.dumps(response_schema(config.stage, config), separators=(',', ':'))
         self.last_record = None
         self.cli_changes = 0
         self.identity = self.file_identity()

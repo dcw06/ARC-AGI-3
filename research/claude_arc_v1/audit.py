@@ -30,6 +30,7 @@ def audit(folder):
     pending, card, closed, calls, responses = None, None, False, 0, 0
     config = recorded_summary = None
     attempted, selected, last_dispatch, resets = set(), None, {}, {}
+    since_restart = {}   # actions on the current attempt: a model reset is legal only when this is positive
     for line in (root / 'events.jsonl').read_text(encoding='utf-8').splitlines():
         row = strict_json(line)
         actual = row.pop('sha256')
@@ -79,7 +80,12 @@ def audit(folder):
                 raise ValueError('dispatch after unresolved outcome')
             action = row['action']
             data = action['action_data']
-            if action['action_id'] == 0 and type(action['action_id']) is int:
+            if (action['action_id'] == 0 and type(action['action_id']) is int
+                    and current[game]['state'] != 'GAME_OVER' and config.get('model_may_reset')):
+                # Recovery study: a reset from a live position, never before the attempt's first action.
+                if data or not since_restart.get(game):
+                    raise ValueError('illegal model reset')
+            elif action['action_id'] == 0 and type(action['action_id']) is int:
                 # Controller level reset: only from GAME_OVER, without arguments, within the configured count.
                 resets[game] = resets.get(game, 0) + 1
                 if (current[game]['state'] != 'GAME_OVER' or data
@@ -119,6 +125,13 @@ def audit(folder):
                 expected = None if check['predicted'] is None or facts[predicate] is None else check['predicted'] == facts[predicate]
                 if check['correct'] != expected:
                     raise ValueError('prediction score mismatch')
+            if (row['action']['action_id'] == 0 and row['before']['state'] != 'GAME_OVER'
+                    and row['after']['levels_completed'] != row['before']['levels_completed']):
+                # Recorded so the log stays complete, but such a run must not pass.
+                raise ValueError('a model reset changed the number of completed levels')
+            restarted = (row['action']['action_id'] == 0
+                         or row['after']['levels_completed'] != row['before']['levels_completed'])
+            since_restart[game] = 0 if restarted else since_restart.get(game, 0) + 1
             current[game], pending = row['after'], None
             acknowledged[game] = acknowledged.get(game, 0) + 1
             last_dispatch[game] = 'acknowledged'

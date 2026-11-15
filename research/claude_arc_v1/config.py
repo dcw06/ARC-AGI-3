@@ -1,5 +1,5 @@
 """Credential-free settings. Reading settings never creates a client or a game."""
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 import json
 import math
 from urllib.parse import urlsplit
@@ -67,8 +67,80 @@ class Config:
     # hex_rows history: only the N newest entries carry a full board (older ones keep action, changes and effects).
     # 0 keeps every shown board. Boards dominate prompt size, and so subscription usage.
     history_board_limit: int = 0
+    # Memory fix (research/memory_fix_v1): keep this many of the current level's most recent actions that
+    # ended in GAME_OVER in every later request, each with the board before it and the board it produced.
+    # They otherwise leave the input after history_limit actions. 0 is off: requests are the control's.
+    pin_game_overs: int = 0
+    # On the turn after a GAME_OVER the model must write a lesson: the general rule that explains the game
+    # over and how to recognise the same danger elsewhere. Lessons are kept by the controller, outside the
+    # eight rewritable notes, and shown in every later request of the game.
+    game_over_lessons: bool = False
+    # While lessons exist, every reply must check its chosen action against them.
+    lesson_check: bool = False
+    # Recovery study (research/recovery_v1). Everything below is off by default: requests and control flow
+    # are then exactly those of the November 6 control.
+    # The model may send RESET (action 0) from a live position, after at least one action on the attempt.
+    model_may_reset: bool = False
+    # Recovery check after this many consecutive model actions with no new board on the attempt; 0 is off.
+    stall_window: int = 0
+    # ... and only if the notes kept the same claims and statuses over those actions.
+    stall_same_notes: bool = False
+    # Recovery check when actions on the level reach this multiple of its human baseline; 0 is off.
+    stall_level_ratio: float = 0
+    # ... but never before this many actions on the level, so a level with a tiny baseline is not flagged at once.
+    stall_level_floor: int = 0
+    # Public per-level human baselines by game prefix, e.g. {"bp35": [21, 48, ...]}; used by stall_level_ratio.
+    level_baselines: dict = field(default_factory=dict)
+    # Refuse a reset that leaves too few actions for a new attempt (recovery.can_pay_back), and say in a
+    # recovery check what a reset gives up. The action budget itself is never shown.
+    recovery_pricing: bool = False
+    # On the turn after a reset, offer to repeat the first N actions of the ended attempt, each one checked.
+    replay_after_reset: bool = False
+    # Start each game by repeating the first resume_actions actions of a saved run (no model calls), then play on.
+    resume_events: str = ''
+    resume_actions: int = 0
+    # End a game once this many of its levels are completed; 0 plays on as before.
+    stop_after_levels: int = 0
+
+    @property
+    def recovery_on(self):
+        return bool(self.model_may_reset or self.stall_window or self.stall_level_ratio
+                    or self.recovery_pricing or self.replay_after_reset)
 
     def __post_init__(self):
+        if type(self.pin_game_overs) is not int or not 0 <= self.pin_game_overs <= 5:
+            raise ValueError('pin_game_overs must be an integer from 0 to 5')
+        if type(self.game_over_lessons) is not bool or type(self.lesson_check) is not bool:
+            raise ValueError('game_over_lessons and lesson_check must be boolean')
+        if self.lesson_check and not self.game_over_lessons:
+            raise ValueError('lesson_check needs game_over_lessons')
+        if any(type(getattr(self, name)) is not bool for name in
+               ('model_may_reset', 'stall_same_notes', 'recovery_pricing', 'replay_after_reset')):
+            raise ValueError('recovery switches must be boolean')
+        if type(self.stall_window) is not int or not 0 <= self.stall_window <= 1000:
+            raise ValueError('stall_window must be an integer from 0 to 1000')
+        if type(self.stall_level_ratio) not in (int, float) or not 0 <= self.stall_level_ratio <= 5:
+            raise ValueError('stall_level_ratio must be a number from 0 to 5')
+        if type(self.stall_level_floor) is not int or not 0 <= self.stall_level_floor <= 1000:
+            raise ValueError('stall_level_floor must be an integer from 0 to 1000')
+        if self.stall_level_floor and not self.stall_level_ratio:
+            raise ValueError('stall_level_floor needs stall_level_ratio')
+        if (not isinstance(self.level_baselines, dict) or any(
+                not isinstance(k, str) or not isinstance(v, (list, tuple)) or not v
+                or any(type(n) is not int or n < 1 for n in v) for k, v in self.level_baselines.items())):
+            raise ValueError('level_baselines must map a game prefix to positive integers')
+        if (self.stall_window or self.stall_level_ratio or self.recovery_pricing) and not self.model_may_reset:
+            raise ValueError('recovery checks and pricing need model_may_reset')
+        if self.stall_same_notes and not self.stall_window:
+            raise ValueError('stall_same_notes needs stall_window')
+        if self.stall_level_ratio and not self.level_baselines:
+            raise ValueError('stall_level_ratio needs level_baselines')
+        if type(self.resume_actions) is not int or self.resume_actions < 0 or not isinstance(self.resume_events, str):
+            raise ValueError('resume_actions must be a nonnegative integer and resume_events a path')
+        if bool(self.resume_actions) != bool(self.resume_events):
+            raise ValueError('resume_events and resume_actions go together')
+        if type(self.stop_after_levels) is not int or not 0 <= self.stop_after_levels <= 100:
+            raise ValueError('stop_after_levels must be an integer from 0 to 100')
         if any(type(getattr(self, name)) is not bool for name in
                ('live_enabled', 'clear_hypotheses_on_level', 'observation_evidence_ids')):
             raise ValueError('live_enabled, clear_hypotheses_on_level and observation_evidence_ids must be boolean')

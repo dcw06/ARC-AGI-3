@@ -1,0 +1,34 @@
+{
+ "written_before_sending": "2026-11-14T23:50:14Z",
+ "requests_sha256": "10434e6a158110f294c6e94b2b858e8026f2a94cba2eaeca1585544a1762f37c",
+ "requests": 20,
+ "repeats": 5,
+ "model_calls": 100,
+ "retries": 0,
+ "groups": {
+  "continue_is_right": [
+   "lp85-L4",
+   "ka59-L1",
+   "sc25-L3",
+   "tr87-L1",
+   "vc33-L1",
+   "bp35-L2"
+  ],
+  "unverified": [
+   "su15-L3",
+   "cd82-L3",
+   "lf52-L2",
+   "tn36-L1"
+  ]
+ },
+ "rule": {
+  "outcome": "share of valid replies in the asked arm that choose reset (action 0), by group",
+  "discriminates_if": "reset share where continue is right is at most 0.20, and the unverified share is at least 0.30 higher",
+  "otherwise": "the check does not discriminate at these positions",
+  "unresolved_if": "more than 10 of the 100 replies are invalid (error, or a reply the controller would reject)",
+  "max_reset_where_continue_is_right": 0.2,
+  "min_difference": 0.3,
+  "max_invalid": 10,
+  "secondary": "the same shares in the not_asked arm; reasons given; per-position counts"
+ }
+}

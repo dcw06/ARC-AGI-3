@@ -11,6 +11,7 @@ from agent.framework_adapter import PreDispatchFailure
 from .backends import BudgetExceeded
 from .transport import TransportFailure
 from .policy import Policy, observation_value
+from . import recovery, resume
 
 
 @contextmanager
@@ -75,6 +76,12 @@ def evaluate(config, backend, adapter, evidence, *, now=time.monotonic, started_
             raise TimeoutError('study deadline before scorecard creation')
         evidence.write('inventory', games=list(inventory), selected=selected,
                        scoring_scope='all_available_environments' if config.mode == 'competition' else 'development')
+        resumed = {}
+        if config.resume_actions:
+            # Read before any scorecard exists: a saved run that cannot be repeated must not open one.
+            resumed = resume.load(config.resume_events, selected, config.resume_actions, config)
+            evidence.write('resume_source', events_sha256=resume.file_sha256(config.resume_events),
+                           actions_per_game=config.resume_actions)
         evidence.write('scorecard_open_entered')
         card = adapter.open_scorecard(tags=['claude-arc-v1', config.stage, config.mode])
         evidence.write('scorecard_open_acknowledged', card_id=card)
@@ -112,6 +119,15 @@ def evaluate(config, backend, adapter, evidence, *, now=time.monotonic, started_
                 resets_used = 0
                 if config.resets_per_game:
                     row['level_resets'] = 0
+                # Recovery study state; all of it stays empty in the control.
+                tracker = recovery.Tracker(client.observation.latest_frame) if config.recovery_on else None
+                saved, replay = [], []
+                if game in resumed:
+                    if client.observation.canonical_hash != resumed[game]['initial_sha256']:
+                        raise resume.Diverged('the first board differs from the saved run')
+                    saved = list(resumed[game]['actions'])
+                if tracker is not None or saved:
+                    row.update(model_resets=0, recovery_checks=0, replayed_actions=0, resumed_actions=0)
                 for index in range(config.max_actions_per_game):
                     state = client.observation.state.name
                     if state == 'WIN' or (state == 'GAME_OVER' and resets_used >= config.resets_per_game):
@@ -120,16 +136,51 @@ def evaluate(config, backend, adapter, evidence, *, now=time.monotonic, started_
                     if remaining() <= 0:
                         row['stop_reason'] = 'study_deadline'
                         break
+                    if config.stop_after_levels and row['levels_completed'] >= config.stop_after_levels:
+                        row['stop_reason'] = 'level_target'
+                        break
                     before = client.observation
-                    if state == 'GAME_OVER':
+                    expected = context = None   # saved observation hash to check; recovery facts for this turn
+                    chosen_by_model = True
+                    if saved:
+                        # Repeat a saved action: no model call; the saved reply rebuilds the notes.
+                        item = saved.pop(0)
+                        decision = ActionDecision(item['action']['action_id'], dict(item['action']['action_data']),
+                                                  source='controller_resume')
+                        chosen_by_model = item['answer'] is not None
+                        answer = item['answer'] or {'action': item['action'], 'hypotheses': list(policy.hypotheses)}
+                        expected = item['after_sha256']
+                        if decision.action_id == 0 and state == 'GAME_OVER':
+                            resets_used += 1
+                            row['level_resets'] = resets_used
+                        row['resumed_actions'] += 1
+                    elif state == 'GAME_OVER':
                         # Controller-issued level reset: no model call; the model's notes are carried forward.
                         resets_used += 1
                         row['level_resets'] = resets_used
                         decision = ActionDecision(0, {}, source='controller_level_reset')
                         answer = {'action': {'action_id': 0, 'action_data': {}}, 'hypotheses': list(policy.hypotheses)}
+                        chosen_by_model = False
+                    elif replay:
+                        # Repeat the next action of the ended attempt: no model call.
+                        action, expected = replay.pop(0)
+                        decision = ActionDecision(action['action_id'], dict(action['action_data']),
+                                                  source='controller_replay')
+                        answer = {'action': action, 'hypotheses': list(policy.hypotheses)}
+                        chosen_by_model = False
+                        row['replayed_actions'] += 1
                     else:
                         decision, answer = None, None
-                    request = policy.request(before) if decision is None else None
+                        if tracker is not None:
+                            left = config.max_actions_per_game - index   # actions that can still be sent, this one included
+                            baseline = recovery.baseline_for(config, game, tracker.level)
+                            reasons = tracker.due(config, baseline)
+                            context = {'check': recovery.check_block(tracker, reasons, config) if reasons else None,
+                                       'offer': tracker.offer(left - 1 if config.recovery_pricing else None)
+                                       if config.replay_after_reset else None,
+                                       'may_reset': bool(tracker.attempt), 'baseline': baseline,
+                                       'reset_pays_back': recovery.can_pay_back(left, baseline)}
+                    request = policy.request(before, recovery=context) if decision is None else None
                     model_stage = decision is None
                     for attempt in range(1 + config.model_retries_per_action if model_stage else 0):
                         if attempt and remaining() <= 0:
@@ -143,7 +194,7 @@ def evaluate(config, backend, adapter, evidence, *, now=time.monotonic, started_
                             evidence.write('model_returned', game_id=game, content=result.content,
                                            metadata=backend.last_record, elapsed_seconds=result.elapsed_seconds)
                             replied = True
-                            decision, answer = policy.parse(result.content, before)
+                            decision, answer = policy.parse(result.content, before, recovery=context)
                             break
                         except Exception as exc:
                             # No game action has been sent for this request, so another request is safe.
@@ -157,8 +208,31 @@ def evaluate(config, backend, adapter, evidence, *, now=time.monotonic, started_
                                 sleep(max(0, min(config.model_retry_backoff_seconds, remaining())))
                             elif replied:
                                 # A received but rejected reply: tell the model why, so the retry can correct it.
-                                request = policy.request(before, rejection='%s: %s' % (type(exc).__name__, exc))
+                                request = policy.request(before, rejection='%s: %s' % (type(exc).__name__, exc),
+                                                         recovery=context)
                     model_stage = False
+                    if context is not None:
+                        if context['check']:
+                            tracker.checked(context['check']['why'], answer['recovery'], context['baseline'])
+                            row['recovery_checks'] += 1
+                            evidence.write('recovery_check', game_id=game, action_index=index,
+                                           facts=context['check'], answer=answer['recovery'])
+                        if answer.get('replay'):
+                            # The controller repeats the ended attempt's opening; the model's own action is not sent.
+                            queue = [(item['action'], item['after_sha256'])
+                                     for item in tracker.ended_attempt[:answer['replay']]]
+                            evidence.write('replay_entered', game_id=game, action_index=index, actions=len(queue),
+                                           model_action_not_sent=answer['action'])
+                            (action, expected), replay = queue[0], queue[1:]
+                            decision = ActionDecision(action['action_id'], dict(action['action_data']),
+                                                      source='controller_replay')
+                            chosen_by_model = False
+                            # The model's prediction was about its own action, which is not sent.
+                            answer = {k: v for k, v in answer.items() if k != 'prediction'}
+                            row['replayed_actions'] += 1
+                        if decision.action_id == 0 and not tracker.attempt:
+                            # Never reachable through the policy; a second lock on the whole-game restart.
+                            raise ValueError('reset before the first action of an attempt')
                     if remaining() <= 0:
                         raise TimeoutError('no action after study cutoff')
                     dispatch_pending = True
@@ -189,6 +263,22 @@ def evaluate(config, backend, adapter, evidence, *, now=time.monotonic, started_
                                 row['prediction_scored'] += 1
                                 row['prediction_correct'] += check['correct']
                         dispatch_pending = False
+                    if tracker is not None:
+                        facts = tracker.record(transition['transition_id'], decision, before, after,
+                                               by_model=chosen_by_model,
+                                               notes=policy.hypotheses if policy.rank >= 2 else None)
+                        evidence.write('recovery_state', game_id=game, action_index=index, source=decision.source, **facts)
+                        if decision.action_id == 0 and decision.source == 'api_evaluation':
+                            row['model_resets'] += 1
+                        if decision.action_id == 0 and after.levels_completed != before.levels_completed:
+                            # A reset must restart the level only. Do not play on in a restarted game.
+                            raise recovery.WholeGameReset('a reset changed the number of completed levels')
+                    if expected is not None and after.canonical_hash != expected:
+                        if decision.source == 'controller_resume':
+                            # The matched start is the point of a resume: do not play on from a different position.
+                            raise resume.Diverged('resume differed from the saved run at action %d' % (index + 1))
+                        evidence.write('replay_diverged', game_id=game, action_index=index, actions_dropped=len(replay))
+                        replay = []
                     if row['levels_completed'] < 0:
                         raise ValueError('level counter decreased')
                     # A terminal result on the final permitted action still takes precedence over action_cap.
@@ -210,6 +300,8 @@ def evaluate(config, backend, adapter, evidence, *, now=time.monotonic, started_
                 # With next_game, only an unusable reply ends just this game. An infrastructure failure
                 # (TransportFailure: usage limit, login, network, CLI) would fail every later game too, so it stops
                 # the attempt instead of initializing and discarding the remaining environments.
+                if isinstance(exc, (resume.Diverged, recovery.WholeGameReset)) and not dispatch_pending:
+                    continue   # this game cannot be used; the others are unaffected
                 if (config.on_model_failure == 'next_game' and model_stage and not dispatch_pending
                         and isinstance(exc, Exception)
                         and not isinstance(exc, (BudgetExceeded, PermissionError, TimeoutError, TransportFailure))):

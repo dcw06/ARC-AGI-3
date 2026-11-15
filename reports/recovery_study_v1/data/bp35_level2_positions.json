@@ -1,0 +1,98 @@
+{
+ "level": 2,
+ "shortest_solution": 40,
+ "attempts": [
+  {
+   "attempt": 1,
+   "actions_in_saved_run": 6,
+   "ended_in_saved_run": "game_over",
+   "actions_simulated": 6,
+   "first_undo_at_action": null,
+   "simulated_end": "lose",
+   "positions": [
+    {
+     "after_actions_of_this_attempt": 5,
+     "after_actions_of_the_game": 22,
+     "fewest_actions_to_win": 35,
+     "states_searched": 1017118
+    }
+   ]
+  },
+  {
+   "attempt": 2,
+   "actions_in_saved_run": 24,
+   "ended_in_saved_run": "game_over",
+   "actions_simulated": 7,
+   "first_undo_at_action": 8,
+   "simulated_end": "still alive",
+   "positions": [
+    {
+     "after_actions_of_this_attempt": 7,
+     "after_actions_of_the_game": 31,
+     "fewest_actions_to_win": 35,
+     "states_searched": 1017118
+    }
+   ]
+  },
+  {
+   "attempt": 3,
+   "actions_in_saved_run": 29,
+   "ended_in_saved_run": "game_over",
+   "actions_simulated": 27,
+   "first_undo_at_action": 28,
+   "simulated_end": "still alive",
+   "lost_by_action_of_this_attempt": 25,
+   "actions_from_then_to_its_end": 5,
+   "positions": [
+    {
+     "after_actions_of_this_attempt": 16,
+     "after_actions_of_the_game": 65,
+     "fewest_actions_to_win": 24,
+     "states_searched": 635637
+    },
+    {
+     "after_actions_of_this_attempt": 21,
+     "after_actions_of_the_game": 70,
+     "fewest_actions_to_win": 19,
+     "states_searched": 526134
+    },
+    {
+     "after_actions_of_this_attempt": 24,
+     "after_actions_of_the_game": 73,
+     "fewest_actions_to_win": 16,
+     "states_searched": 94646
+    },
+    {
+     "after_actions_of_this_attempt": 25,
+     "after_actions_of_the_game": 74,
+     "fewest_actions_to_win": null,
+     "note": "no win within the action bar",
+     "states_searched": 81920
+    },
+    {
+     "after_actions_of_this_attempt": 27,
+     "after_actions_of_the_game": 76,
+     "fewest_actions_to_win": null,
+     "note": "no win within the action bar",
+     "states_searched": 77824
+    }
+   ]
+  },
+  {
+   "attempt": 4,
+   "actions_in_saved_run": 21,
+   "ended_in_saved_run": "open",
+   "actions_simulated": 21,
+   "first_undo_at_action": null,
+   "simulated_end": "still alive",
+   "positions": [
+    {
+     "after_actions_of_this_attempt": 21,
+     "after_actions_of_the_game": 100,
+     "fewest_actions_to_win": 19,
+     "states_searched": 526134
+    }
+   ]
+  }
+ ]
+}

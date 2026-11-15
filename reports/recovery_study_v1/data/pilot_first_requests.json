@@ -1,0 +1,1003 @@
+{
+ "live_check": {
+  "su15": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 70,
+     "actions_on_this_attempt": 3,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 2,
+     "resets_on_this_level": 2,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0."
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 23789
+  },
+  "cd82": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 65,
+     "actions_on_this_attempt": 65,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 0,
+     "resets_on_this_level": 0,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0."
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 24467
+  },
+  "lf52": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 92,
+     "actions_on_this_attempt": 92,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 0,
+     "resets_on_this_level": 0,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0."
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 27177
+  },
+  "tn36": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 100,
+     "actions_on_this_attempt": 38,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 1,
+     "resets_on_this_level": 1,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0."
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 23505
+  },
+  "bp35": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 83,
+     "actions_on_this_attempt": 21,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 3,
+     "resets_on_this_level": 3,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0."
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 25969
+  }
+ },
+ "r0_control": {
+  "su15": {
+   "system_prompt_same_as_control": true,
+   "evidence_added": {},
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {},
+   "procedure_added": [],
+   "request_characters": 22582
+  },
+  "cd82": {
+   "system_prompt_same_as_control": true,
+   "evidence_added": {},
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {},
+   "procedure_added": [],
+   "request_characters": 23259
+  },
+  "lf52": {
+   "system_prompt_same_as_control": true,
+   "evidence_added": {},
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {},
+   "procedure_added": [],
+   "request_characters": 25969
+  },
+  "tn36": {
+   "system_prompt_same_as_control": true,
+   "evidence_added": {},
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {},
+   "procedure_added": [],
+   "request_characters": 22296
+  },
+  "bp35": {
+   "system_prompt_same_as_control": true,
+   "evidence_added": {},
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {},
+   "procedure_added": [],
+   "request_characters": 24761
+  }
+ },
+ "r0m_reset_allowed": {
+  "su15": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {},
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    }
+   },
+   "procedure_added": [],
+   "request_characters": 22784
+  },
+  "cd82": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {},
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    }
+   },
+   "procedure_added": [],
+   "request_characters": 23461
+  },
+  "lf52": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {},
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    }
+   },
+   "procedure_added": [],
+   "request_characters": 26171
+  },
+  "tn36": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {},
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    }
+   },
+   "procedure_added": [],
+   "request_characters": 22498
+  },
+  "bp35": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {},
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    }
+   },
+   "procedure_added": [],
+   "request_characters": 24963
+  }
+ },
+ "r1_board": {
+  "su15": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {},
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    }
+   },
+   "procedure_added": [],
+   "request_characters": 22784
+  },
+  "cd82": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {},
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    }
+   },
+   "procedure_added": [],
+   "request_characters": 23461
+  },
+  "lf52": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {},
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    }
+   },
+   "procedure_added": [],
+   "request_characters": 26171
+  },
+  "tn36": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {},
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    }
+   },
+   "procedure_added": [],
+   "request_characters": 22498
+  },
+  "bp35": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {},
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    }
+   },
+   "procedure_added": [],
+   "request_characters": 24963
+  }
+ },
+ "r1_level": {
+  "su15": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 70,
+     "actions_on_this_attempt": 3,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 2,
+     "resets_on_this_level": 2,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0."
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 23343
+  },
+  "cd82": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 65,
+     "actions_on_this_attempt": 65,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 0,
+     "resets_on_this_level": 0,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0."
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 24021
+  },
+  "lf52": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 92,
+     "actions_on_this_attempt": 92,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 0,
+     "resets_on_this_level": 0,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0."
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 26731
+  },
+  "tn36": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 100,
+     "actions_on_this_attempt": 38,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 1,
+     "resets_on_this_level": 1,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0."
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 23059
+  },
+  "bp35": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 83,
+     "actions_on_this_attempt": 21,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 3,
+     "resets_on_this_level": 3,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0."
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 25523
+  }
+ },
+ "r2_payback_replay": {
+  "su15": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 70,
+     "actions_on_this_attempt": 3,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 2,
+     "resets_on_this_level": 2,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0.",
+     "a_reset_would_cost": {
+      "the_reset": 1,
+      "actions_on_this_attempt_given_up": 3
+     }
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 23863
+  },
+  "cd82": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 65,
+     "actions_on_this_attempt": 65,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 0,
+     "resets_on_this_level": 0,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0.",
+     "a_reset_would_cost": {
+      "the_reset": 1,
+      "actions_on_this_attempt_given_up": 65
+     }
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 24542
+  },
+  "lf52": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 92,
+     "actions_on_this_attempt": 92,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 0,
+     "resets_on_this_level": 0,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0.",
+     "a_reset_would_cost": {
+      "the_reset": 1,
+      "actions_on_this_attempt_given_up": 92
+     }
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 27252
+  },
+  "tn36": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 100,
+     "actions_on_this_attempt": 38,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 1,
+     "resets_on_this_level": 1,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0.",
+     "a_reset_would_cost": {
+      "the_reset": 1,
+      "actions_on_this_attempt_given_up": 38
+     }
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 23580
+  },
+  "bp35": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 83,
+     "actions_on_this_attempt": 21,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 3,
+     "resets_on_this_level": 3,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0.",
+     "a_reset_would_cost": {
+      "the_reset": 1,
+      "actions_on_this_attempt_given_up": 21
+     }
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 26044
+  }
+ },
+ "r2a_replay": {
+  "su15": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 70,
+     "actions_on_this_attempt": 3,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 2,
+     "resets_on_this_level": 2,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0."
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 23789
+  },
+  "cd82": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 65,
+     "actions_on_this_attempt": 65,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 0,
+     "resets_on_this_level": 0,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0."
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 24467
+  },
+  "lf52": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 92,
+     "actions_on_this_attempt": 92,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 0,
+     "resets_on_this_level": 0,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0."
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 27177
+  },
+  "tn36": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 100,
+     "actions_on_this_attempt": 38,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 1,
+     "resets_on_this_level": 1,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0."
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 23505
+  },
+  "bp35": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 83,
+     "actions_on_this_attempt": 21,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 3,
+     "resets_on_this_level": 3,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0."
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 25969
+  }
+ },
+ "r2b_payback": {
+  "su15": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 70,
+     "actions_on_this_attempt": 3,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 2,
+     "resets_on_this_level": 2,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0.",
+     "a_reset_would_cost": {
+      "the_reset": 1,
+      "actions_on_this_attempt_given_up": 3
+     }
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 23417
+  },
+  "cd82": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 65,
+     "actions_on_this_attempt": 65,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 0,
+     "resets_on_this_level": 0,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0.",
+     "a_reset_would_cost": {
+      "the_reset": 1,
+      "actions_on_this_attempt_given_up": 65
+     }
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 24096
+  },
+  "lf52": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 92,
+     "actions_on_this_attempt": 92,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 0,
+     "resets_on_this_level": 0,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0.",
+     "a_reset_would_cost": {
+      "the_reset": 1,
+      "actions_on_this_attempt_given_up": 92
+     }
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 26806
+  },
+  "tn36": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 100,
+     "actions_on_this_attempt": 38,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 1,
+     "resets_on_this_level": 1,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0.",
+     "a_reset_would_cost": {
+      "the_reset": 1,
+      "actions_on_this_attempt_given_up": 38
+     }
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 23134
+  },
+  "bp35": {
+   "system_prompt_same_as_control": false,
+   "evidence_added": {
+    "recovery_check": {
+     "why": [
+      "level_actions"
+     ],
+     "actions_on_this_level": 83,
+     "actions_on_this_attempt": 21,
+     "your_actions_in_a_row_without_a_new_board": 0,
+     "game_overs_on_this_level": 3,
+     "resets_on_this_level": 3,
+     "ask": "Decide whether this attempt can still complete the level. Answer in recovery: choice \"continue\" or \"reset\", and in reason the observation that decides it. To reset, also choose action 0.",
+     "a_reset_would_cost": {
+      "the_reset": 1,
+      "actions_on_this_attempt_given_up": 21
+     }
+    }
+   },
+   "evidence_shared_parts_identical": true,
+   "contract_changed": {
+    "action": {
+     "action_id": "one legal integer from 1 to 7, or 0 to reset the level",
+     "action_data": "x,y for ACTION6; otherwise {}"
+    },
+    "recovery": {
+     "choice": "continue|reset",
+     "reason": "the observation that decides it"
+    }
+   },
+   "procedure_added": [
+    "A recovery check is due: read evidence.recovery_check and answer in recovery."
+   ],
+   "request_characters": 25598
+  }
+ }
+}
