@@ -116,7 +116,14 @@ this run; they act from outside the session and do not change the prompt.
 
 ## Action caps for a 25-game run
 
-`action_caps.json` lists, per game, the baseline count, the Tycho and Strands Opus 5 counts, the human
+**Caps chosen by the user (2026-11-14): `action_caps_astra.json`.** Each cap is the GPT-6 Astra count
+for that game (provider adapter harness, effort high) rounded up to the next 50. In the 8 games where
+the arc-skill + Opus 5 baseline exceeded that cap (dc22, g50t, s5i5, sc25, sk48, sp80, tr87, wa30), the
+cap is the arc-skill baseline rounded up to the next 50 instead. Total 8,450, against 7,085 for Astra
+and 7,645 for the arc-skill baseline. Every cap is now at or above both reference counts, by 6 to 48
+actions over the higher one.
+
+**Earlier proposal, not in force:** `action_caps.json` lists, per game, the baseline count, the Tycho and Strands Opus 5 counts, the human
 reference and a proposed cap for `ARC_SKILL_MAX_ACTIONS`.
 
 - Rule: cap = the larger of 2 x baseline and baseline + 150, rounded up to 10. Caps total 15,730

@@ -1,0 +1,184 @@
+{
+ "source": "given by the user on 2026-11-14; 8 games raised the same day at the user's request",
+ "reference": "GPT-6 Astra, ARC Prize provider adapter harness, effort high (per-level counts in reports/token_usage_v1/astra_adapter_high_level_actions.json)",
+ "note": "each cap is the Astra count rounded up to the next multiple of 50, except where the arc-skill + Opus 5 baseline exceeds that cap: there the cap is the arc-skill baseline rounded up to the next multiple of 50 (cap_basis says which); a cap counts every action including RESET",
+ "total_reference_actions": 7085,
+ "total_cap": 8450,
+ "games": [
+  {
+   "game": "ar25",
+   "astra_actions": 257,
+   "action_cap": 300,
+   "arc_skill_opus5_actions": 260,
+   "cap_basis": "astra"
+  },
+  {
+   "game": "bp35",
+   "astra_actions": 488,
+   "action_cap": 500,
+   "arc_skill_opus5_actions": 482,
+   "cap_basis": "astra"
+  },
+  {
+   "game": "cd82",
+   "astra_actions": 83,
+   "action_cap": 100,
+   "arc_skill_opus5_actions": 92,
+   "cap_basis": "astra"
+  },
+  {
+   "game": "cn04",
+   "astra_actions": 215,
+   "action_cap": 250,
+   "arc_skill_opus5_actions": 227,
+   "cap_basis": "astra"
+  },
+  {
+   "game": "dc22",
+   "astra_actions": 442,
+   "action_cap": 550,
+   "arc_skill_opus5_actions": 520,
+   "cap_basis": "arc_skill_opus5"
+  },
+  {
+   "game": "ft09",
+   "astra_actions": 75,
+   "action_cap": 100,
+   "arc_skill_opus5_actions": 75,
+   "cap_basis": "astra"
+  },
+  {
+   "game": "g50t",
+   "astra_actions": 296,
+   "action_cap": 500,
+   "arc_skill_opus5_actions": 482,
+   "cap_basis": "arc_skill_opus5"
+  },
+  {
+   "game": "ka59",
+   "astra_actions": 339,
+   "action_cap": 350,
+   "arc_skill_opus5_actions": 335,
+   "cap_basis": "astra"
+  },
+  {
+   "game": "lf52",
+   "astra_actions": 770,
+   "action_cap": 800,
+   "arc_skill_opus5_actions": 787,
+   "cap_basis": "astra"
+  },
+  {
+   "game": "lp85",
+   "astra_actions": 94,
+   "action_cap": 100,
+   "arc_skill_opus5_actions": 93,
+   "cap_basis": "astra"
+  },
+  {
+   "game": "ls20",
+   "astra_actions": 468,
+   "action_cap": 500,
+   "arc_skill_opus5_actions": 481,
+   "cap_basis": "astra"
+  },
+  {
+   "game": "m0r0",
+   "astra_actions": 228,
+   "action_cap": 250,
+   "arc_skill_opus5_actions": 224,
+   "cap_basis": "astra"
+  },
+  {
+   "game": "r11l",
+   "astra_actions": 79,
+   "action_cap": 100,
+   "arc_skill_opus5_actions": 83,
+   "cap_basis": "astra"
+  },
+  {
+   "game": "re86",
+   "astra_actions": 616,
+   "action_cap": 650,
+   "arc_skill_opus5_actions": 601,
+   "cap_basis": "astra"
+  },
+  {
+   "game": "s5i5",
+   "astra_actions": 247,
+   "action_cap": 300,
+   "arc_skill_opus5_actions": 281,
+   "cap_basis": "arc_skill_opus5"
+  },
+  {
+   "game": "sb26",
+   "astra_actions": 124,
+   "action_cap": 150,
+   "arc_skill_opus5_actions": 124,
+   "cap_basis": "astra"
+  },
+  {
+   "game": "sc25",
+   "astra_actions": 140,
+   "action_cap": 200,
+   "arc_skill_opus5_actions": 166,
+   "cap_basis": "arc_skill_opus5"
+  },
+  {
+   "game": "sk48",
+   "astra_actions": 433,
+   "action_cap": 500,
+   "arc_skill_opus5_actions": 491,
+   "cap_basis": "arc_skill_opus5"
+  },
+  {
+   "game": "sp80",
+   "astra_actions": 144,
+   "action_cap": 250,
+   "arc_skill_opus5_actions": 211,
+   "cap_basis": "arc_skill_opus5"
+  },
+  {
+   "game": "su15",
+   "astra_actions": 104,
+   "action_cap": 150,
+   "arc_skill_opus5_actions": 117,
+   "cap_basis": "astra"
+  },
+  {
+   "game": "tn36",
+   "astra_actions": 311,
+   "action_cap": 350,
+   "arc_skill_opus5_actions": 160,
+   "cap_basis": "astra"
+  },
+  {
+   "game": "tr87",
+   "astra_actions": 148,
+   "action_cap": 200,
+   "arc_skill_opus5_actions": 153,
+   "cap_basis": "arc_skill_opus5"
+  },
+  {
+   "game": "tu93",
+   "astra_actions": 218,
+   "action_cap": 250,
+   "arc_skill_opus5_actions": 205,
+   "cap_basis": "astra"
+  },
+  {
+   "game": "vc33",
+   "astra_actions": 182,
+   "action_cap": 200,
+   "arc_skill_opus5_actions": 193,
+   "cap_basis": "astra"
+  },
+  {
+   "game": "wa30",
+   "astra_actions": 584,
+   "action_cap": 850,
+   "arc_skill_opus5_actions": 802,
+   "cap_basis": "arc_skill_opus5"
+  }
+ ]
+}
