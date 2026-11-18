@@ -1,0 +1,1822 @@
+{
+ "runs": [
+  {
+   "run": "ledger-ls20-control-1-20261116T062655Z",
+   "game": "ls20",
+   "set_up": "unchanged",
+   "started_after_action": 60,
+   "level_at_start": 3,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 0,
+   "actions_per_completed_level": [],
+   "actions_on_the_open_level": 100,
+   "changed_nothing": 1,
+   "changed_nothing_at": [
+    139
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 1,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 1,
+   "cases_opened": 0,
+   "lessons_kept": 0,
+   "further_actions_combined": [],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [],
+   "game_over_lessons": [],
+   "checks_written": 0,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 155751,
+   "output_per_call_median": 1150,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes",
+   "thing_notes": [],
+   "thing_checks_written": 0,
+   "things_by_level": [
+    {
+     "level": 3,
+     "solved": false,
+     "things": 8,
+     "untouched": 4,
+     "kinds_wholly_untouched": 3,
+     "twins_ignored": 1
+    }
+   ],
+   "open_level_things": 8,
+   "open_level_untouched": 4,
+   "open_level_twins_ignored": 1
+  },
+  {
+   "run": "ledger-ls20-control-2-20261116T062655Z",
+   "game": "ls20",
+   "set_up": "unchanged",
+   "started_after_action": 60,
+   "level_at_start": 3,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 0,
+   "actions_per_completed_level": [],
+   "actions_on_the_open_level": 100,
+   "changed_nothing": 3,
+   "changed_nothing_at": [
+    93,
+    94,
+    129
+   ],
+   "repeats_of_a_known_no_effect_action": 1,
+   "in_a_loop": 3,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 1,
+   "cases_opened": 0,
+   "lessons_kept": 0,
+   "further_actions_combined": [],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [],
+   "game_over_lessons": [],
+   "checks_written": 0,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 139820,
+   "output_per_call_median": 1074,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes",
+   "thing_notes": [],
+   "thing_checks_written": 0,
+   "things_by_level": [
+    {
+     "level": 3,
+     "solved": false,
+     "things": 8,
+     "untouched": 3,
+     "kinds_wholly_untouched": 2,
+     "twins_ignored": 1
+    }
+   ],
+   "open_level_things": 8,
+   "open_level_untouched": 3,
+   "open_level_twins_ignored": 1
+  },
+  {
+   "run": "ledger-ls20-ledger-1-20261116T062655Z",
+   "game": "ls20",
+   "set_up": "memory layers and object ledger",
+   "started_after_action": 60,
+   "level_at_start": 3,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 0,
+   "actions_per_completed_level": [],
+   "actions_on_the_open_level": 100,
+   "changed_nothing": 2,
+   "changed_nothing_at": [
+    93,
+    124
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 2,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 1,
+   "cases_opened": 2,
+   "lessons_kept": 2,
+   "further_actions_combined": [
+    1,
+    1
+   ],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [
+    {
+     "at_action": 95,
+     "explains": "t93",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "A lock block (an outlined 3x3 pattern, like F) refuses the player when the key shown in the panel does not fully match it. Shape, rotation and probably colour must all match. On refusal the player stays where it is, the key panel briefly flashes 0, and no move budget is spent.",
+     "applies_when": "The player is next to a lock-pattern block and is about to move into it, while the key panel's pattern differs from the lock's in shape, rotation or colour (for example, key in c and lock in 9).",
+     "replaces": 0
+    },
+    {
+     "at_action": 126,
+     "explains": "t124",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "A lock block (an outlined 3x3 pattern, like F) refuses the player unless the key in the panel matches it in shape, rotation AND colour. On refusal the player stays where it is, the key panel briefly flashes 0 in the intermediate frames, and no move budget is spent.",
+     "applies_when": "The player is next to a lock-pattern block and is about to move into it, while the key panel's pattern differs from the lock's in shape, rotation or colour (for example, key in c and lock in 9, even with the same shape).",
+     "replaces": 1
+    }
+   ],
+   "game_over_lessons": [],
+   "checks_written": 66,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 163759,
+   "output_per_call_median": 1202,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes",
+   "thing_notes": [
+    {
+     "at_action": 9,
+     "look": "A",
+     "does": "A vertical 1-coloured bar. Moving the player into its row seems to launch it sideways in a slide until it hits a wall (seen at t68). Not confirmed."
+    },
+    {
+     "at_action": 13,
+     "look": "C",
+     "does": "A b ring. Moving the player onto it refills the move budget bar on rows 61-62, and the ring disappears."
+    },
+    {
+     "at_action": 23,
+     "look": "G",
+     "does": "Key display panel. Its 3x3 pattern rotated 90 degrees clockwise when the player stepped onto the 01 marker B."
+    },
+    {
+     "at_action": 25,
+     "look": "G",
+     "does": "Key display panel. Its 3x3 pattern rotates 90 degrees clockwise each time the player steps onto the 01 marker B."
+    },
+    {
+     "at_action": 44,
+     "look": "A",
+     "does": "A vertical 1-coloured bar. When the player enters the bar's row range next to it, the player slides away along that row until it hits a wall. This costs one budget step (seen at t103)."
+    },
+    {
+     "at_action": 48,
+     "look": "C",
+     "does": "A b ring. Moving the player onto it refills the move budget bar on rows 61-62 to full, and the ring disappears."
+    },
+    {
+     "at_action": 79,
+     "look": "A",
+     "does": "A vertical 1-coloured bar. When the player enters the bar's row range next to it, the player slides along that row until it hits a wall. This costs one budget step (seen at t103 and t138)."
+    },
+    {
+     "at_action": 83,
+     "look": "C",
+     "does": "A b ring. Moving the player onto it refills the move budget bar on rows 61-62 to full, and the ring disappears (confirmed again at t142)."
+    },
+    {
+     "at_action": 90,
+     "look": "D",
+     "does": "D is the player itself (c on top, 9 below). Stepping onto the E cell at x30-32 y46-48 recoloured the key panel from c to 9."
+    },
+    {
+     "at_action": 95,
+     "look": "D",
+     "does": "D is the player (c on top, 9 below). Moving onto the 3x3 b-outlined ring (C) at x19-23 y30-34 refilled the move budget bar completely."
+    }
+   ],
+   "thing_checks_written": 100,
+   "things_by_level": [
+    {
+     "level": 3,
+     "solved": false,
+     "things": 8,
+     "untouched": 3,
+     "kinds_wholly_untouched": 2,
+     "twins_ignored": 1
+    }
+   ],
+   "open_level_things": 8,
+   "open_level_untouched": 3,
+   "open_level_twins_ignored": 1
+  },
+  {
+   "run": "ledger-ls20-ledger-2-20261116T062655Z",
+   "game": "ls20",
+   "set_up": "memory layers and object ledger",
+   "started_after_action": 60,
+   "level_at_start": 3,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 2,
+   "actions_per_completed_level": [
+    41,
+    46
+   ],
+   "actions_on_the_open_level": 13,
+   "changed_nothing": 0,
+   "changed_nothing_at": [],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 0,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 0,
+   "cases_opened": 0,
+   "lessons_kept": 0,
+   "further_actions_combined": [],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [],
+   "game_over_lessons": [],
+   "checks_written": 0,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 194101,
+   "output_per_call_median": 1246,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes",
+   "thing_notes": [
+    {
+     "at_action": 9,
+     "look": "A",
+     "does": "Possibly a launcher: moving into the 1-column at the corridor's left end sent the player sliding to the corridor's far end in one action (seen once)."
+    },
+    {
+     "at_action": 13,
+     "look": "C",
+     "does": "Stepping onto it (player covering it) refilled the move-budget bar on rows 61-62 to full (seen once, t72). It did not change indicator G."
+    },
+    {
+     "at_action": 20,
+     "look": "V",
+     "does": "Indicator of the player's current key. Covering E changed its colour from c to 9 and left its shape the same. It shows a 3x3 pattern at 2x scale, to compare with target F."
+    },
+    {
+     "at_action": 25,
+     "look": "D",
+     "does": "A refill spot. When the player covers it, the move-budget bar refills to full. The marker is hidden while the player is on it."
+    },
+    {
+     "at_action": 37,
+     "look": "V",
+     "does": "Shows the player's current key pattern (3x3 at 2x scale). Covering E changes its colour. Entering the B marker rotates it 90\u00b0 clockwise. It must match target F."
+    },
+    {
+     "at_action": 39,
+     "look": "D",
+     "does": "This is just the player block covering the rotator marker B (the 0/1 pattern at x50-52, y11-13). Each time the player enters it, V rotates 90\u00b0 clockwise. It does not refill the move budget."
+    },
+    {
+     "at_action": 41,
+     "look": "A",
+     "does": "Launcher. Moving the player into a 1-coloured bar slides it along the corridor to the far end in one action. Seen twice."
+    },
+    {
+     "at_action": 49,
+     "look": "A",
+     "does": "Launcher on the edge of a wall cell. When the player enters the open cell next to the bar, it slides away from the bar to the end of the corridor in one action. In t108, entering (34,20) beside the x33 bar slid it right to (54,20)."
+    },
+    {
+     "at_action": 54,
+     "look": "A",
+     "does": "A launcher on the edge of a wall cell. When the player enters the open cell next to the bar, it slides away from the bar to the end of the corridor in one action. Seen right in t108 and left in t113."
+    },
+    {
+     "at_action": 55,
+     "look": "D",
+     "does": "This is the player block. When it entered the cell holding E (the 9/e/0/8 mini-pattern at x35-37, y31-33), indicator V's colour changed from e to 8."
+    },
+    {
+     "at_action": 56,
+     "look": "E",
+     "does": "Colour changer. Moving the player into its cell changes indicator V's colour to the next one (e\u21928 seen in t114). The wheel shows colours 9, e, 0, 8 and c, which may be the cycle order."
+    },
+    {
+     "at_action": 61,
+     "look": "A",
+     "does": "A launcher on the edge of a wall cell. When the player enters the open cell next to the bar, it slides away from the bar to the end of the corridor in one action. Seen right in t108 and t120, and left in t113."
+    },
+    {
+     "at_action": 67,
+     "look": "A",
+     "does": "A launcher on the edge of a wall cell. When the player enters the open cell next to the bar, it slides away from the bar until the next wall, all in one action. Seen right in t108 and t120, and left in t113 and t126."
+    },
+    {
+     "at_action": 71,
+     "look": "A",
+     "does": "A launcher on the edge of a wall cell. When the player enters the open cell beside the bar, it slides away from the bar to the next wall, all in one action. Seen right in t108 and t120, and left in t113, t126 and t130."
+    },
+    {
+     "at_action": 72,
+     "look": "A",
+     "does": "A launcher on the edge of a wall cell. When the player enters the open cell beside the bar, it slides away from the bar to the next wall in one action. Seen right in t108, t120 and t131, and left in t113, t126 and t130."
+    },
+    {
+     "at_action": 73,
+     "look": "V",
+     "does": "Shows the player's current key pattern (3x3 at 2x scale). Covering E changes its colour. Entering AD's cell (the 0 pattern) changes its shape. It must match target F in shape and colour."
+    },
+    {
+     "at_action": 82,
+     "look": "C",
+     "does": "Stepping onto it refills the move-budget bar on rows 61-62 to full (seen in t72 and t141). It does not change indicator V. It is used up after one visit."
+    },
+    {
+     "at_action": 94,
+     "look": "C",
+     "does": "Stepping onto it refills the move-budget bar on rows 61-62 to full (t72, t141, t153). It does not change V. It is used up after one visit."
+    },
+    {
+     "at_action": 97,
+     "look": "D",
+     "does": "This is the player block. Each time it enters the cell holding E (the small 9/e/0/8 pattern at k5,j4), V's colour advances one step (seen e->8 earlier and c->9 at t156)."
+    }
+   ],
+   "thing_checks_written": 100,
+   "things_by_level": [
+    {
+     "level": 3,
+     "solved": true,
+     "things": 7,
+     "untouched": 1,
+     "kinds_wholly_untouched": 1,
+     "twins_ignored": 0
+    },
+    {
+     "level": 4,
+     "solved": true,
+     "things": 14,
+     "untouched": 3,
+     "kinds_wholly_untouched": 3,
+     "twins_ignored": 0
+    },
+    {
+     "level": 5,
+     "solved": false,
+     "things": 16,
+     "untouched": 7,
+     "kinds_wholly_untouched": 3,
+     "twins_ignored": 1
+    }
+   ],
+   "open_level_things": 16,
+   "open_level_untouched": 7,
+   "open_level_twins_ignored": 1
+  },
+  {
+   "run": "ledger-tr87-control-1-20261116T062655Z",
+   "game": "tr87",
+   "set_up": "unchanged",
+   "started_after_action": 61,
+   "level_at_start": 2,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 1,
+   "actions_per_completed_level": [
+    64
+   ],
+   "actions_on_the_open_level": 36,
+   "changed_nothing": 0,
+   "changed_nothing_at": [],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 0,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 3,
+   "cases_opened": 0,
+   "lessons_kept": 0,
+   "further_actions_combined": [],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [],
+   "game_over_lessons": [],
+   "checks_written": 0,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 741053,
+   "output_per_call_median": 3253,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes",
+   "thing_notes": [],
+   "thing_checks_written": 0,
+   "things_by_level": [
+    {
+     "level": 2,
+     "solved": true,
+     "things": 59,
+     "untouched": 7,
+     "kinds_wholly_untouched": 5,
+     "twins_ignored": 1
+    },
+    {
+     "level": 3,
+     "solved": false,
+     "things": 48,
+     "untouched": 41,
+     "kinds_wholly_untouched": 13,
+     "twins_ignored": 3
+    }
+   ],
+   "open_level_things": 48,
+   "open_level_untouched": 41,
+   "open_level_twins_ignored": 3
+  },
+  {
+   "run": "ledger-tr87-control-2-20261116T062655Z",
+   "game": "tr87",
+   "set_up": "unchanged",
+   "started_after_action": 61,
+   "level_at_start": 2,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 1,
+   "actions_per_completed_level": [
+    91
+   ],
+   "actions_on_the_open_level": 9,
+   "changed_nothing": 0,
+   "changed_nothing_at": [],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 0,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 6,
+   "cases_opened": 0,
+   "lessons_kept": 0,
+   "further_actions_combined": [],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [],
+   "game_over_lessons": [],
+   "checks_written": 0,
+   "model_calls": 100,
+   "replies_sent_back": 1,
+   "output_tokens": 727549,
+   "output_per_call_median": 2808,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes",
+   "thing_notes": [],
+   "thing_checks_written": 0,
+   "things_by_level": [
+    {
+     "level": 2,
+     "solved": true,
+     "things": 53,
+     "untouched": 9,
+     "kinds_wholly_untouched": 7,
+     "twins_ignored": 1
+    },
+    {
+     "level": 3,
+     "solved": false,
+     "things": 48,
+     "untouched": 43,
+     "kinds_wholly_untouched": 16,
+     "twins_ignored": 1
+    }
+   ],
+   "open_level_things": 48,
+   "open_level_untouched": 43,
+   "open_level_twins_ignored": 1
+  },
+  {
+   "run": "ledger-tr87-ledger-1-20261116T062655Z",
+   "game": "tr87",
+   "set_up": "memory layers and object ledger",
+   "started_after_action": 61,
+   "level_at_start": 2,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 1,
+   "actions_per_completed_level": [
+    75
+   ],
+   "actions_on_the_open_level": 25,
+   "changed_nothing": 0,
+   "changed_nothing_at": [],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 0,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 3,
+   "cases_opened": 0,
+   "lessons_kept": 0,
+   "further_actions_combined": [],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [],
+   "game_over_lessons": [],
+   "checks_written": 3,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 665321,
+   "output_per_call_median": 3619,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes",
+   "thing_notes": [
+    {
+     "at_action": 2,
+     "look": "Q",
+     "does": "ACTION1 cycles this answer-slot glyph to the next of a fixed set of patterns while the 0-marker selector is over it."
+    },
+    {
+     "at_action": 4,
+     "look": "T",
+     "does": "This is the pattern currently shown in answer slot 0. ACTION1 changes slot 0 to the next pattern in its cycle."
+    },
+    {
+     "at_action": 5,
+     "look": "T",
+     "does": "This is the pattern currently shown in answer slot 0. ACTION1 moves slot 0 forward through a fixed cycle of patterns."
+    },
+    {
+     "at_action": 7,
+     "look": "W",
+     "does": "When the 0-marker selector is on its slot, ACTION1 changes it to the next 5x5 pattern in a fixed cycle."
+    },
+    {
+     "at_action": 9,
+     "look": "Z",
+     "does": "An answer slot. ACTION1 moves the selected slot forward through a fixed cycle of 7 glyphs (f0\u2192f3\u2192f2\u2192\u2026). The glyphs are example outputs, some of them turned."
+    },
+    {
+     "at_action": 10,
+     "look": "R",
+     "does": "This is the selected answer slot. ACTION1 steps it forward through 7 glyphs in the order f6\u2192f0\u2192f1\u2192f2\u2192f3\u2192f4\u2192f5."
+    },
+    {
+     "at_action": 13,
+     "look": "H",
+     "does": "Black bracket selector above and below one answer slot. ACTION4 moves it one slot right (5 cells wide plus a 2-cell gap). ACTION1 cycles the glyph in the selected slot."
+    },
+    {
+     "at_action": 21,
+     "look": "R",
+     "does": "This is the selected answer slot. ACTION1 cycles it through 7 glyphs: 55555/5...5/..5.. -> .5.5. -> 5...5 -> 5..55 -> 55555/5..../5.5.5 -> .55.5 -> 5.555 -> back to the start."
+    },
+    {
+     "at_action": 26,
+     "look": "H",
+     "does": "Black bracket selector above and below one answer slot. ACTION4 moves it one slot to the right, a 7-cell step. ACTION1 cycles the glyph in the selected slot through a fixed sequence."
+    },
+    {
+     "at_action": 33,
+     "look": "W",
+     "does": "When the black selector is on this slot, ACTION1 moves it to the next of 7 patterns in a fixed cycle. The cycle holds example output glyphs, some with a symmetry transform applied."
+    },
+    {
+     "at_action": 36,
+     "look": "R",
+     "does": "Selected answer slot. ACTION1 cycles it through 7 glyphs, several of which are example output glyphs (some transformed). Stop when it shows the target for that position."
+    },
+    {
+     "at_action": 37,
+     "look": "M",
+     "does": "Answer slot 3. ACTION1 cycles it through the 7 output-glyph classes while the selector is on it."
+    },
+    {
+     "at_action": 41,
+     "look": "W",
+     "does": "When the black selector is on an answer slot, ACTION1 moves its glyph to the next one in a cycle. The cycles seem to differ by slot, so the order seen on one slot may not hold for another."
+    },
+    {
+     "at_action": 47,
+     "look": "R",
+     "does": "This is the answer slot glyph. In slot 4, ACTION1 cycles through 7 glyphs with period 7: E2, B1, A-out, C2, E3, F-out turned 180\u00b0, B3 turned 180\u00b0. The target D1 is not among them, so another action may be needed to turn the glyph."
+    },
+    {
+     "at_action": 48,
+     "look": "H",
+     "does": "Black bracket selector around one answer slot. ACTION4 moves it one slot right (7 cells). ACTION1 moves the selected slot's glyph forward through its fixed cycle and ACTION2 moves it backward."
+    },
+    {
+     "at_action": 54,
+     "look": "W",
+     "does": "ACTION1 steps the answer slot under the selector to its next glyph. Each slot's cycle mixes rule outputs with flipped or turned copies of them as distractors, so the exact orientation matters."
+    },
+    {
+     "at_action": 57,
+     "look": "H",
+     "does": "Black bracket selector around one answer slot. ACTION4 moves it right 7 cells. ACTION1/ACTION2 step the selected slot's glyph forward/backward through its 7-glyph cycle."
+    },
+    {
+     "at_action": 61,
+     "look": "H",
+     "does": "Black bracket selector around one answer slot. ACTION4 moves it right 7 cells (one slot). ACTION1/ACTION2 step the selected slot's glyph forward/backward through its 7-glyph cycle."
+    },
+    {
+     "at_action": 65,
+     "look": "R",
+     "does": "This is the answer slot glyph. ACTION1/ACTION2 step it through a 7-glyph cycle. The cycle mixes exact rule outputs with flipped or turned copies, so the copies are distractors. Slot 4's cycle contains E3 exactly."
+    },
+    {
+     "at_action": 66,
+     "look": "H",
+     "does": "Black bracket selector around one answer slot. ACTION4 moves it right one slot (7 cells) and ACTION3 moves it left one slot. ACTION1/ACTION2 step the selected slot's glyph forward/backward through its cycle."
+    },
+    {
+     "at_action": 77,
+     "look": "BY",
+     "does": "An answer-slot glyph. ACTION1 steps it through a fixed cycle of glyph shapes while the selector is on its slot."
+    },
+    {
+     "at_action": 79,
+     "look": "BZ",
+     "does": "This is an answer-slot glyph. When the selector is on it, ACTION1 steps it through a fixed cycle of glyphs, which includes the rule right-side glyphs (Q, A1, ...)."
+    },
+    {
+     "at_action": 84,
+     "look": "BT",
+     "does": "Answer slot glyph. When the bracket selects it, ACTION1 steps it through a fixed cycle of 5x5 glyphs."
+    },
+    {
+     "at_action": 91,
+     "look": "BT",
+     "does": "Answer slot glyph. When the bracket selects it, ACTION1 steps it through a fixed cycle of 7 glyphs, which then repeats (period 7)."
+    }
+   ],
+   "thing_checks_written": 100,
+   "things_by_level": [
+    {
+     "level": 2,
+     "solved": true,
+     "things": 55,
+     "untouched": 10,
+     "kinds_wholly_untouched": 5,
+     "twins_ignored": 2
+    },
+    {
+     "level": 3,
+     "solved": false,
+     "things": 48,
+     "untouched": 42,
+     "kinds_wholly_untouched": 15,
+     "twins_ignored": 2
+    }
+   ],
+   "open_level_things": 48,
+   "open_level_untouched": 42,
+   "open_level_twins_ignored": 2
+  },
+  {
+   "run": "ledger-tr87-ledger-2-20261116T062655Z",
+   "game": "tr87",
+   "set_up": "memory layers and object ledger",
+   "started_after_action": 61,
+   "level_at_start": 2,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 1,
+   "actions_per_completed_level": [
+    89
+   ],
+   "actions_on_the_open_level": 11,
+   "changed_nothing": 0,
+   "changed_nothing_at": [],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 0,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 2,
+   "cases_opened": 0,
+   "lessons_kept": 0,
+   "further_actions_combined": [],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [],
+   "game_over_lessons": [],
+   "checks_written": 3,
+   "model_calls": 100,
+   "replies_sent_back": 1,
+   "output_tokens": 645235,
+   "output_per_call_median": 3708,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes",
+   "thing_notes": [
+    {
+     "at_action": 1,
+     "look": "H",
+     "does": "Selector markers above and below the current answer slot. ACTION3 and ACTION4 move them by one slot, and ACTION1 cycles the glyph in that slot."
+    },
+    {
+     "at_action": 9,
+     "look": "H",
+     "does": "Selector markers above and below the current answer slot. ACTION3/ACTION4 move them by one slot. ACTION1 steps the slot's glyph forward through its option cycle and ACTION2 steps it backward."
+    },
+    {
+     "at_action": 18,
+     "look": "G",
+     "does": "Query row: 4 glyphs, each a rule input (possibly mirrored or rotated). The answer row should list the matching rule outputs."
+    },
+    {
+     "at_action": 20,
+     "look": "R",
+     "does": "An answer-slot glyph. ACTION1/ACTION2 cycle it forward/backward through 7 fixed glyphs, one orientation each."
+    },
+    {
+     "at_action": 29,
+     "look": "G",
+     "does": "Query row of 4 glyphs: mirror(A input), E input, mirror(D input), F input. The answer row should contain the matching outputs in order: A(1), E(3), D(2), F(1), 7 glyphs in all."
+    },
+    {
+     "at_action": 31,
+     "look": "H",
+     "does": "Selector markers around the current answer slot. ACTION3 moves them left and ACTION4 moves them right. ACTION1/ACTION2 cycle the slot through 7 glyphs, which appear to be rule outputs rotated 90 degrees clockwise."
+    },
+    {
+     "at_action": 32,
+     "look": "H",
+     "does": "Selector markers above and below the current answer slot. ACTION4 moves them right one slot and ACTION3 moves them left. ACTION1/ACTION2 cycle the selected slot through 7 glyphs."
+    },
+    {
+     "at_action": 39,
+     "look": "H",
+     "does": "Selector markers above/below the current answer slot. ACTION4 moves right one slot, ACTION3 left. ACTION1 steps the selected slot through a 7-glyph cycle: the 7 output shapes, some shown turned."
+    },
+    {
+     "at_action": 40,
+     "look": "H",
+     "does": "Selector markers above and below the current answer slot. ACTION4 moves them right one slot, ACTION3 left. ACTION1 steps the selected slot's glyph through a cycle of 7 shapes."
+    },
+    {
+     "at_action": 48,
+     "look": "H",
+     "does": "Selector markers above and below the current answer slot. ACTION4 moves them right one slot and ACTION3 moves them left. ACTION1 steps the selected slot's glyph through a fixed cycle of 7 shapes."
+    },
+    {
+     "at_action": 49,
+     "look": "H",
+     "does": "Selector markers above and below the current answer slot. ACTION4/ACTION3 move them right/left one slot. ACTION1 steps the selected glyph forward through a 7-shape cycle, and ACTION2 steps it backward."
+    },
+    {
+     "at_action": 53,
+     "look": "H",
+     "does": "Selector markers above and below the current answer slot. ACTION4/ACTION3 move them right/left one slot. ACTION1 steps the selected glyph forward through a 7-shape cycle, and ACTION2 steps it backward. Shapes in the cycle are transformed copies of example outputs."
+    },
+    {
+     "at_action": 62,
+     "look": "H",
+     "does": "Selector markers above and below the current answer slot. ACTION4/ACTION3 move them right/left one slot. ACTION1 steps the selected glyph forward through a 7-shape cycle (confirmed: it returned to S0 after 7 presses), and ACTION2 steps it backward."
+    },
+    {
+     "at_action": 91,
+     "look": "CG",
+     "does": "An answer-slot glyph. ACTION1 swaps the selected slot's glyph for the next one in its cycle."
+    },
+    {
+     "at_action": 93,
+     "look": "CH",
+     "does": "Answer-slot glyph. ACTION1 cycles its shape through a fixed list of glyphs while the selector is on it."
+    }
+   ],
+   "thing_checks_written": 100,
+   "things_by_level": [
+    {
+     "level": 2,
+     "solved": true,
+     "things": 65,
+     "untouched": 4,
+     "kinds_wholly_untouched": 3,
+     "twins_ignored": 1
+    },
+    {
+     "level": 3,
+     "solved": false,
+     "things": 48,
+     "untouched": 43,
+     "kinds_wholly_untouched": 16,
+     "twins_ignored": 1
+    }
+   ],
+   "open_level_things": 48,
+   "open_level_untouched": 43,
+   "open_level_twins_ignored": 1
+  },
+  {
+   "run": "ledger-cd82-control-1-20261116T062655Z",
+   "game": "cd82",
+   "set_up": "unchanged",
+   "started_after_action": 35,
+   "level_at_start": 3,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 0,
+   "actions_per_completed_level": [],
+   "actions_on_the_open_level": 100,
+   "changed_nothing": 18,
+   "changed_nothing_at": [
+    38,
+    46,
+    49,
+    52,
+    55,
+    56,
+    69,
+    73,
+    77,
+    79,
+    96,
+    104,
+    105,
+    113,
+    123,
+    128,
+    129,
+    130
+   ],
+   "repeats_of_a_known_no_effect_action": 2,
+   "in_a_loop": 58,
+   "game_overs": 1,
+   "turns": 100,
+   "turns_announcing_a_test": 9,
+   "cases_opened": 0,
+   "lessons_kept": 0,
+   "further_actions_combined": [],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [],
+   "game_over_lessons": [],
+   "checks_written": 0,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 263638,
+   "output_per_call_median": 2415,
+   "stop_reason": "game_over",
+   "problems": [],
+   "audit": "passes",
+   "thing_notes": [],
+   "thing_checks_written": 0,
+   "things_by_level": [
+    {
+     "level": 3,
+     "solved": false,
+     "things": 13,
+     "untouched": 4,
+     "kinds_wholly_untouched": 4,
+     "twins_ignored": 0
+    }
+   ],
+   "open_level_things": 13,
+   "open_level_untouched": 4,
+   "open_level_twins_ignored": 0
+  },
+  {
+   "run": "ledger-cd82-control-2-20261116T062655Z",
+   "game": "cd82",
+   "set_up": "unchanged",
+   "started_after_action": 35,
+   "level_at_start": 3,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 0,
+   "actions_per_completed_level": [],
+   "actions_on_the_open_level": 100,
+   "changed_nothing": 17,
+   "changed_nothing_at": [
+    40,
+    49,
+    54,
+    58,
+    60,
+    61,
+    62,
+    63,
+    69,
+    70,
+    74,
+    85,
+    89,
+    90,
+    95,
+    107,
+    125
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 35,
+   "game_overs": 1,
+   "turns": 100,
+   "turns_announcing_a_test": 13,
+   "cases_opened": 0,
+   "lessons_kept": 0,
+   "further_actions_combined": [],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [],
+   "game_over_lessons": [],
+   "checks_written": 0,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 263688,
+   "output_per_call_median": 2558,
+   "stop_reason": "game_over",
+   "problems": [],
+   "audit": "passes",
+   "thing_notes": [],
+   "thing_checks_written": 0,
+   "things_by_level": [
+    {
+     "level": 3,
+     "solved": false,
+     "things": 12,
+     "untouched": 4,
+     "kinds_wholly_untouched": 4,
+     "twins_ignored": 0
+    }
+   ],
+   "open_level_things": 12,
+   "open_level_untouched": 4,
+   "open_level_twins_ignored": 0
+  },
+  {
+   "run": "ledger-cd82-ledger-1-20261116T062655Z",
+   "game": "cd82",
+   "set_up": "memory layers and object ledger",
+   "started_after_action": 35,
+   "level_at_start": 3,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 2,
+   "actions_per_completed_level": [
+    32,
+    27
+   ],
+   "actions_on_the_open_level": 41,
+   "changed_nothing": 14,
+   "changed_nothing_at": [
+    47,
+    58,
+    66,
+    72,
+    76,
+    85,
+    88,
+    105,
+    110,
+    111,
+    114,
+    115,
+    118,
+    125
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 22,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 8,
+   "cases_opened": 12,
+   "lessons_kept": 12,
+   "further_actions_combined": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [
+    {
+     "at_action": 49,
+     "explains": "t47",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "The bucket moves around the canvas in fixed steps, and each rotation key has a limit. Once the bucket reaches the end of its range for that key, pressing the key again changes nothing but the step counter. Other rotation keys (such as action 1) can still move it to new places.",
+     "applies_when": "The rotation key (3 or 4) you are about to press just moved the bucket to a new place, and that place looks like an end of the bucket's range in that direction, such as the diagonal next to a side. Pressing the same key again there will probably do nothing.",
+     "replaces": 0
+    },
+    {
+     "at_action": 60,
+     "explains": "t58",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "Pressing a rotation/move key does nothing (only the step counter changes) when the bucket is already at the end of its range for that key. In t58, action 2 at the top position did not move the bucket; at the top, action 2 seems to point at an edge or blocked direction.",
+     "applies_when": "The bucket is at an end of its ring range and you press the movement key that would push it further that way. Example: action 2 while the bucket sits at the top position, or the same rotation key pressed again after it reached a diagonal next to a side.",
+     "replaces": 1
+    },
+    {
+     "at_action": 68,
+     "explains": "t66",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "Actions 1 and 2 do not rotate the bucket. When the bucket is at the top position, they change nothing except the step counter. Rotation comes only from actions 3 and 4, and painting comes from action 5 or from clicking the spout.",
+     "applies_when": "Before pressing action 1 or 2, check whether the bucket is at the top position (spout at y18-22 above the body at y24-32). If it is, expect no change apart from the step bar.",
+     "replaces": 1
+    },
+    {
+     "at_action": 74,
+     "explains": "t72",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "The bucket's tilt has limits. Action 3 tilts it toward upper-left and action 4 tilts it the other way. Once the bucket is at its extreme tilt in a given direction, pressing that direction's action again changes nothing except the step counter.",
+     "applies_when": "Look at the bucket's orientation before pressing 3 or 4. If it is already fully tilted upper-left (spout pointing to the upper-left, body slanted), action 3 will do nothing; the same applies to action 4 at its own extreme.",
+     "replaces": 0
+    },
+    {
+     "at_action": 78,
+     "explains": "t76",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "Actions 3 and 4 tilt the bucket only up to a fixed limit in their direction. Once it is at that limit, pressing the same action again changes only the step counter. Beyond the tilt limit, actions 1 and 2 can turn the bucket further (t77: action 2 turned the right-tilted bucket sideways). At the top position, actions 1 and 2 did nothing.",
+     "applies_when": "Before pressing 3 or 4, check whether the bucket is already at its extreme tilt in that direction, i.e. whether the last press of the same action changed nothing. If it is, the action will be a no-op, so use 1 or 2 or paint instead.",
+     "replaces": 2
+    },
+    {
+     "at_action": 87,
+     "explains": "t85",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "Actions 1 and 2 turn the bucket only within a limited range. Action 2 stops at the orientation where the mouth faces upper-left, i.e. the diagonal pose. Pressing it at that limit changes only the step bar. Action 1 turns the bucket back the other way (t86 returned it to mouth-left).",
+     "applies_when": "Before pressing 1 or 2, check whether the bucket is already at the extreme orientation for that action. For action 2, that is the diagonal pose with the mouth facing upper-left, or any pose where the last press of the same action changed nothing. If so, expect only the step bar to change.",
+     "replaces": 0
+    },
+    {
+     "at_action": 90,
+     "explains": "t88",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "The bucket's orientation moves along a fixed path: top \u2192 tilted \u2192 sideways \u2192 diagonal. Actions 3 and 4 tilt it to and from the top, and actions 1 and 2 turn it further only inside a limited range. At either end of that range, pressing the same action again changes only the step bar. In t88, action 1 was already at its limit (mouth lower-left, upper right of the canvas).",
+     "applies_when": "Before pressing 1, 2, 3 or 4, check whether the bucket is already at the end of the path in that action's direction. That includes the case where the last press of the same action changed nothing. If so, expect no change except the step bar; use the opposite or a different action instead.",
+     "replaces": 3
+    },
+    {
+     "at_action": 107,
+     "explains": "t105",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "The bucket's orientation moves along a fixed path. Actions 1 and 2 move it in opposite directions along that path. At an end of the path, pressing the action that would go further changes only the step bar (t105: action 1 at the diagonal end). The opposite action then turns it back (t106: action 2 returned it to sideways).",
+     "applies_when": "Before pressing 1 or 2, check whether the bucket is already at the end of the path in that direction, e.g. whether the last press of the same action changed only the step bar. If so, use the opposite action, a tilt action or a paint action instead.",
+     "replaces": 3
+    },
+    {
+     "at_action": 112,
+     "explains": "t110",
+     "also_covers": [
+      "t111"
+     ],
+     "further_actions_combined": 1,
+     "rule": "The bucket's orientation moves along a fixed path. Actions 1 and 2 move it in opposite directions along that path, and actions 3 and 4 tilt it up to a fixed limit. At an end of the path or at a tilt limit, the action that would go further changes only the step bar (t105: 1 at the diagonal-A end; t110: 2 at the diagonal-B end; t111: 3 also did nothing in diagonal B). From such an end, only the opposite or a different action turns the bucket.",
+     "applies_when": "Before pressing 1, 2, 3 or 4, check whether the last press of the same action in the current bucket orientation changed only the step bar. If it did, pressing it again does nothing, so use a different rotate or tilt action, or a paint action.",
+     "replaces": 3
+    },
+    {
+     "at_action": 116,
+     "explains": "t114",
+     "also_covers": [
+      "t115"
+     ],
+     "further_actions_combined": 1,
+     "rule": "The bucket's orientation is limited in each direction. Actions 3 and 4 tilt it only up to a limit, and actions 1 and 2 turn it only up to the ends of a path. Once an action has reached its limit, pressing it again changes only the step bar, and that limit depends on the current orientation (t110: 2 at diagonal B; t114: 4 at mouth-NW; t115: 2 at mouth-NW). Only a different action moves the bucket from there.",
+     "applies_when": "Before pressing 1, 2, 3 or 4, check whether the last press of that same action, in the bucket's current orientation, changed only the step bar. If it did, it will be a no-op again, so choose a different rotate or tilt action, or pour.",
+     "replaces": 3
+    },
+    {
+     "at_action": 120,
+     "explains": "t118",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "The bucket's orientation follows a limited path, and each of actions 1-4 moves it only up to an end of that path, which depends on the current orientation. Seen so far: 4 turns the mouth toward NW and stops there; 1 turns it NW, then W, then SW, and stops at SW (t118); 3 from SW returns it upright; 1 and 2 do nothing while upright. Pressing an action already at its end changes only the step bar.",
+     "applies_when": "Before pressing 1, 2, 3 or 4, check whether the bucket is already at that action's end for its current orientation, e.g. whether the last press of the same action in this orientation changed only the step bar. If so, expect no change.",
+     "replaces": 3
+    },
+    {
+     "at_action": 127,
+     "explains": "t125",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "The bucket's orientation moves along a fixed path, and each of actions 1-4 moves it in one direction along that path only until it reaches an end. Which actions can move it depends on the current orientation. Seen: upright, 1 and 2 do nothing. 4 tilts to the diagonal and stops. From the action-4 diagonal, 1 does nothing (t125) and 2 turns the bucket sideways (t126). From the action-3/SW side, 3 returns it upright. An action already at its end changes only the step bar.",
+     "applies_when": "Before pressing 1, 2, 3 or 4, identify the bucket's current orientation (upright, diagonal or sideways) and recall whether that action already failed in this orientation, e.g. 1 at the action-4 diagonal, or 1 and 2 when upright. If it did, expect only the step bar to change.",
+     "replaces": 3
+    }
+   ],
+   "game_over_lessons": [],
+   "checks_written": 86,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 264779,
+   "output_per_call_median": 2466,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes",
+   "thing_notes": [
+    {
+     "at_action": 2,
+     "look": "C",
+     "does": "A colour selector icon. Clicking it selects its colour: the marker in row 7 moves under it and the bucket interior recolours."
+    },
+    {
+     "at_action": 7,
+     "look": "F",
+     "does": "A palette icon. Clicking it selects its colour for the bucket and moves the row-7 marker Q under it."
+    },
+    {
+     "at_action": 8,
+     "look": "G",
+     "does": "A palette icon for colour 8. Clicking it selects 8 for the bucket and moves the row-7 marker under it."
+    },
+    {
+     "at_action": 14,
+     "look": "S",
+     "does": "The paint bucket next to the canvas. Its position (moved with actions 1-4) sets which region gets filled when you pour with action 5, using the selected palette colour."
+    },
+    {
+     "at_action": 16,
+     "look": "P",
+     "does": "A palette icon for colour f. Clicking it selects f for the bucket, moves the row-7 marker Q under it and turns preview K to f."
+    },
+    {
+     "at_action": 21,
+     "look": "D",
+     "does": "A palette icon for colour c. Clicking it selects c, moves the row-7 marker Q under it and recolours the bucket to c."
+    },
+    {
+     "at_action": 23,
+     "look": "AQ",
+     "does": "The bucket, holding the selected colour. Action 5 pours it and paints a fixed region of canvas AR that depends on its ring position. From the top it painted the whole top band (10x5, y34-38)."
+    },
+    {
+     "at_action": 41,
+     "look": "AJ",
+     "does": "The paint bucket. Actions 3 and 4 tilt it. Action 5 paints the triangle of canvas BC on the spout's side in the selected colour: the upper-left tilt paints col+row<=9 and the right tilt paints col>=row."
+    },
+    {
+     "at_action": 46,
+     "look": "AQ",
+     "does": "The bucket, holding the selected colour. Action 5 pours it onto a canvas region set by its ring position (top: top band; upper-left: col+row<=9; right tilt: col>=row; sideways: right half cols 5-9). Action 2 turns it further once it is past the tilt limit."
+    },
+    {
+     "at_action": 50,
+     "look": "H",
+     "does": "A palette icon for colour 9. Clicking it selects 9, moves the row-7 marker Q under it and recolours the bucket to 9."
+    },
+    {
+     "at_action": 59,
+     "look": "E",
+     "does": "A palette icon for colour b. Clicking it selects b, moves the row-7 marker Q under it and recolours the bucket body and spout to b."
+    },
+    {
+     "at_action": 70,
+     "look": "H",
+     "does": "A palette icon for colour 9. Clicking it selects 9, moves the row-7 marker Q under it and recolours the bucket to 9 without changing the bucket's orientation."
+    },
+    {
+     "at_action": 86,
+     "look": "D",
+     "does": "A palette icon for colour c. Clicking it selects c, moves the row-7 marker Q under it and recolours the bucket to c without changing the bucket's orientation."
+    },
+    {
+     "at_action": 94,
+     "look": "S",
+     "does": "The paint bucket. Its position around the canvas sets which region a pour (action 5) fills with the selected colour. At the upper-right diagonal it fills the triangle col>=row, and on the right side it fills the right half."
+    }
+   ],
+   "thing_checks_written": 100,
+   "things_by_level": [
+    {
+     "level": 3,
+     "solved": true,
+     "things": 14,
+     "untouched": 4,
+     "kinds_wholly_untouched": 4,
+     "twins_ignored": 0
+    },
+    {
+     "level": 4,
+     "solved": true,
+     "things": 14,
+     "untouched": 4,
+     "kinds_wholly_untouched": 4,
+     "twins_ignored": 0
+    },
+    {
+     "level": 5,
+     "solved": false,
+     "things": 13,
+     "untouched": 7,
+     "kinds_wholly_untouched": 7,
+     "twins_ignored": 0
+    }
+   ],
+   "open_level_things": 13,
+   "open_level_untouched": 7,
+   "open_level_twins_ignored": 0
+  },
+  {
+   "run": "ledger-cd82-ledger-2-20261116T062655Z",
+   "game": "cd82",
+   "set_up": "memory layers and object ledger",
+   "started_after_action": 35,
+   "level_at_start": 3,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 3,
+   "actions_per_completed_level": [
+    30,
+    17,
+    51
+   ],
+   "actions_on_the_open_level": 2,
+   "changed_nothing": 7,
+   "changed_nothing_at": [
+    38,
+    54,
+    55,
+    62,
+    64,
+    117,
+    122
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 35,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 2,
+   "cases_opened": 6,
+   "lessons_kept": 6,
+   "further_actions_combined": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [
+    {
+     "at_action": 40,
+     "explains": "t38",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "The bucket can only move between neighbouring positions on the ring around the canvas: sides and diagonal corners. A direction action that points into the canvas or off the ring, with no ring position that way (e.g. down from the top-middle, right from the upper-right corner), does not move the bucket. It only uses up one step of the counter in row 63.",
+     "applies_when": "The bucket sits at a ring position and the chosen direction points into the canvas or outward, away from any neighbouring ring position. For example: down or up while at a top or bottom side, left or right while at a side, or outward from a corner.",
+     "replaces": 0
+    },
+    {
+     "at_action": 56,
+     "explains": "t54",
+     "also_covers": [
+      "t55"
+     ],
+     "further_actions_combined": 1,
+     "rule": "Clicking a cell on the canvas painting does nothing except possibly use a step. Painting only happens through the bucket: pouring with action 5, or perhaps clicking the bucket itself, which makes it drop and stamp. A stamp or pour that puts down the colour already there leaves the board unchanged.",
+     "applies_when": "An ACTION6 click lands on a canvas cell that is not the bucket or a colour selector. Also when a bucket action would paint cells that already have the bucket's current colour.",
+     "replaces": 0
+    },
+    {
+     "at_action": 64,
+     "explains": "t62",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "Clicking the bucket assembly, or any canvas cell that is not a colour selector, does not paint or move anything. Painting happens only when action 5 pours from the bucket's current ring position. Colour is chosen only by clicking the selectors in rows 2-6.",
+     "applies_when": "An ACTION6 click lands anywhere other than a colour selector box in the top palette (rows 2-6, cols 21-61). That includes the bucket/cup shapes and the canvas.",
+     "replaces": 2
+    },
+    {
+     "at_action": 66,
+     "explains": "t64",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "The bucket moves only between neighbouring positions on the ring around the canvas (sides and diagonal corners). A direction action pointing into the canvas or off the ring does not move the bucket. Up at the top side, down from the top side, outward from a corner and similar cases only use up one counter step in row 63.",
+     "applies_when": "The bucket is at a ring position and the chosen direction (1=up, 2=down, 3=left, 4=right) has no neighbouring ring position that way. For example: up or down while at the top or bottom side, or left or right while at a left or right side.",
+     "replaces": 1
+    },
+    {
+     "at_action": 119,
+     "explains": "t117",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "Clicking a canvas cell or the bucket/cup body never paints or moves anything. Only selector boxes in the top palette (rows 2-6) respond to clicks, and painting happens only through action 5 pours from the bucket's ring position.",
+     "applies_when": "An ACTION6 click targets any cell outside the palette selector boxes (rows 2-6, cols 21-61). That includes the canvas, the cups, the target picture and the background.",
+     "replaces": 2
+    },
+    {
+     "at_action": 124,
+     "explains": "t122",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "Clicking the small cup of the bucket makes it drop onto the canvas below and stamp its current colour onto its footprint, a 4x3 block under the cup's inner area. The cup then returns. If the canvas cells there already have the cup's colour, the final board looks unchanged. Clicks on plain canvas or background cells do nothing.",
+     "applies_when": "An ACTION6 click on the small cup when the canvas region it would stamp (directly below, same columns, first rows of the canvas) already has the cup's colour. It also applies to any click on a plain canvas or background cell that is neither a selector box nor a cup.",
+     "replaces": 2
+    }
+   ],
+   "game_over_lessons": [],
+   "checks_written": 96,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 215016,
+   "output_per_call_median": 1676,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes",
+   "thing_notes": [
+    {
+     "at_action": 2,
+     "look": "F",
+     "does": "Colour selector: clicking it selects that colour for the bucket, and the underline moves under it."
+    },
+    {
+     "at_action": 3,
+     "look": "F",
+     "does": "Colour selector: clicking it selects that colour for the bucket, which recolours to match, and the underline moves under it."
+    },
+    {
+     "at_action": 14,
+     "look": "G",
+     "does": "Colour selector for 8: clicking it selects 8 for the bucket, and the underline moves beneath it."
+    },
+    {
+     "at_action": 24,
+     "look": "P",
+     "does": "Colour selector for f: clicking it selects f for the bucket, and the underline moves beneath it."
+    },
+    {
+     "at_action": 25,
+     "look": "P",
+     "does": "Colour selector for f: clicking it recolours the bucket to f and moves the underline beneath P."
+    },
+    {
+     "at_action": 41,
+     "look": "H",
+     "does": "Colour selector for 9: clicking it should set the bucket to 9 and move the underline beneath it."
+    },
+    {
+     "at_action": 42,
+     "look": "H",
+     "does": "Colour selector for 9: clicking it makes the bucket 9 and moves the underline beneath H."
+    },
+    {
+     "at_action": 76,
+     "look": "G",
+     "does": "Colour selector for 8: clicking it selects 8 for the bucket, which recolours to 8, and the underline in row 7 moves beneath G."
+    },
+    {
+     "at_action": 80,
+     "look": "Y",
+     "does": "Big cup that is part of the bucket at the top side. Pouring (action 5) there filled the whole top half of the canvas (10x5 rectangle) with the selected colour."
+    },
+    {
+     "at_action": 84,
+     "look": "B",
+     "does": "Colour selector for 0: clicking it fills the bucket cups with 0 and moves the underline beneath B. What 0 does when poured is still unknown."
+    },
+    {
+     "at_action": 89,
+     "look": "Z",
+     "does": "Small cup of the bucket. Clicking it drops it onto the canvas below, where it stamps its colour on a 4x3 block (cols 30-33, rows 34-36 when the bucket is at the top), then it returns."
+    },
+    {
+     "at_action": 93,
+     "look": "S",
+     "does": "The big bucket body. It moves around the ring of sides and diagonal corners around the canvas when actions 1-4 are used, and pours its colour onto the canvas with action 5."
+    },
+    {
+     "at_action": 95,
+     "look": "D",
+     "does": "Colour selector for c: clicking it should make the bucket c and move the underline beneath D."
+    },
+    {
+     "at_action": 96,
+     "look": "D",
+     "does": "Colour selector for c: clicking it recolours the bucket to c and moves the underline beneath D (confirmed at t130)."
+    }
+   ],
+   "thing_checks_written": 100,
+   "things_by_level": [
+    {
+     "level": 3,
+     "solved": true,
+     "things": 14,
+     "untouched": 4,
+     "kinds_wholly_untouched": 4,
+     "twins_ignored": 0
+    },
+    {
+     "level": 4,
+     "solved": true,
+     "things": 14,
+     "untouched": 4,
+     "kinds_wholly_untouched": 4,
+     "twins_ignored": 0
+    },
+    {
+     "level": 5,
+     "solved": true,
+     "things": 13,
+     "untouched": 2,
+     "kinds_wholly_untouched": 2,
+     "twins_ignored": 0
+    },
+    {
+     "level": 6,
+     "solved": false,
+     "things": 13,
+     "untouched": 10,
+     "kinds_wholly_untouched": 10,
+     "twins_ignored": 0
+    }
+   ],
+   "open_level_things": 13,
+   "open_level_untouched": 10,
+   "open_level_twins_ignored": 0
+  },
+  {
+   "run": "ledger-g50t-control-1-20261116T062655Z",
+   "game": "g50t",
+   "set_up": "unchanged",
+   "started_after_action": 39,
+   "level_at_start": 2,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 1,
+   "actions_per_completed_level": [
+    46
+   ],
+   "actions_on_the_open_level": 54,
+   "changed_nothing": 2,
+   "changed_nothing_at": [
+    78,
+    100
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 2,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 8,
+   "cases_opened": 0,
+   "lessons_kept": 0,
+   "further_actions_combined": [],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [],
+   "game_over_lessons": [],
+   "checks_written": 0,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 207327,
+   "output_per_call_median": 1436,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes",
+   "thing_notes": [],
+   "thing_checks_written": 0,
+   "things_by_level": [
+    {
+     "level": 2,
+     "solved": true,
+     "things": 10,
+     "untouched": 3,
+     "kinds_wholly_untouched": 3,
+     "twins_ignored": 0
+    },
+    {
+     "level": 3,
+     "solved": false,
+     "things": 14,
+     "untouched": 4,
+     "kinds_wholly_untouched": 3,
+     "twins_ignored": 1
+    }
+   ],
+   "open_level_things": 14,
+   "open_level_untouched": 4,
+   "open_level_twins_ignored": 1
+  },
+  {
+   "run": "ledger-g50t-control-2-20261116T062655Z",
+   "game": "g50t",
+   "set_up": "unchanged",
+   "started_after_action": 39,
+   "level_at_start": 2,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 1,
+   "actions_per_completed_level": [
+    31
+   ],
+   "actions_on_the_open_level": 69,
+   "changed_nothing": 3,
+   "changed_nothing_at": [
+    82,
+    92,
+    112
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 47,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 5,
+   "cases_opened": 0,
+   "lessons_kept": 0,
+   "further_actions_combined": [],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [],
+   "game_over_lessons": [],
+   "checks_written": 0,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 143187,
+   "output_per_call_median": 984,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes",
+   "thing_notes": [],
+   "thing_checks_written": 0,
+   "things_by_level": [
+    {
+     "level": 2,
+     "solved": true,
+     "things": 10,
+     "untouched": 4,
+     "kinds_wholly_untouched": 4,
+     "twins_ignored": 0
+    },
+    {
+     "level": 3,
+     "solved": false,
+     "things": 13,
+     "untouched": 6,
+     "kinds_wholly_untouched": 5,
+     "twins_ignored": 1
+    }
+   ],
+   "open_level_things": 13,
+   "open_level_untouched": 6,
+   "open_level_twins_ignored": 1
+  },
+  {
+   "run": "ledger-g50t-ledger-1-20261116T062655Z",
+   "game": "g50t",
+   "set_up": "memory layers and object ledger",
+   "started_after_action": 39,
+   "level_at_start": 2,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 1,
+   "actions_per_completed_level": [
+    31
+   ],
+   "actions_on_the_open_level": 69,
+   "changed_nothing": 2,
+   "changed_nothing_at": [
+    82,
+    96
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 50,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 8,
+   "cases_opened": 1,
+   "lessons_kept": 1,
+   "further_actions_combined": [
+    1
+   ],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [
+    {
+     "at_action": 98,
+     "explains": "t96",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "A move action only shifts the player 5x5 block by one maze cell (6 px) if the neighbouring cell in that direction is grey floor (5) or an open passage. If the neighbour is background (0) wall or a closed gate, the player stays where it is and only the bottom budget bar ticks.",
+     "applies_when": "Before moving, look one cell (6 px) away from the player's block in the move direction. If that cell is 0 background or a closed 5x5 gate block, the action will leave the board as it is apart from the bottom bar.",
+     "replaces": 0
+    }
+   ],
+   "game_over_lessons": [],
+   "checks_written": 41,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 268149,
+   "output_per_call_median": 1384,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes",
+   "thing_notes": [
+    {
+     "at_action": 1,
+     "look": "E",
+     "does": "A 9 ring with a centre dot is the goal. Moving the player into it completes the level."
+    },
+    {
+     "at_action": 3,
+     "look": "M",
+     "does": "A 3x3 8 switch joined by a line to a 5x5 gate. Standing on the switch slides the gate one cell along the line, which opens the cell where the gate stood."
+    },
+    {
+     "at_action": 16,
+     "look": "Z",
+     "does": "A switch and gate pair. Standing on the switch (the 8 square) moves the 8 gate out of its corridor cell, which opens a path. Probably the gate only stays open while the switch is occupied."
+    },
+    {
+     "at_action": 29,
+     "look": "AG",
+     "does": "A gate (8 bars, 2 switch). While a player or clone stands on its 2 switch pad, the 8 gate block moves out of the corridor and opens it."
+    },
+    {
+     "at_action": 40,
+     "look": "AM",
+     "does": "A b gate joined by a line to a switch cell. While the switch is occupied, the gate slides one cell into a side niche and opens its corridor."
+    },
+    {
+     "at_action": 43,
+     "look": "Z",
+     "does": "A switch and gate pair. Standing on the small 8 square switch moves the big 8 gate along its line into a niche, which opens the gate's corridor cell. It probably closes again when the switch is left."
+    },
+    {
+     "at_action": 44,
+     "look": "AN",
+     "does": "A b switch at x32,y20 with a rod to a gate. Stepping on the switch slides the gate from x50,y20 to x44, which opens column x50. The gate stayed open after the player left the switch."
+    },
+    {
+     "at_action": 45,
+     "look": "F",
+     "does": "An 8 switch plus a rod to an 8 gate. While a player stands on the switch, the gate slides along its rod and opens the corridor. When the switch is left, the gate returns and closes it."
+    },
+    {
+     "at_action": 55,
+     "look": "AM",
+     "does": "A b 3x3 switch (x32,y20) joined by a line to a 5x5 b gate (x50,y20). While the switch is occupied, the gate slides one cell toward the switch into a niche and opens the x50 corridor."
+    },
+    {
+     "at_action": 56,
+     "look": "AN",
+     "does": "A b switch with a rod to a b gate. Stepping on the switch slides the gate along its rod into a niche, which opens the corridor the gate blocked. It stayed open after the player stepped off (it may latch)."
+    },
+    {
+     "at_action": 61,
+     "look": "R",
+     "does": "A colour-2 ghost of an earlier run. It seems to replay that run's moves one step each time the player actually moves."
+    },
+    {
+     "at_action": 69,
+     "look": "AG",
+     "does": "A gate: 8 block on a rod, with a 2 switch pad. While a player or ghost stands on the pad, the 8 block slides along its rod into a niche and opens the corridor it was blocking."
+    },
+    {
+     "at_action": 70,
+     "look": "F",
+     "does": "An 8 switch plus a rod to an 8 gate. While a player or ghost stands on the switch, the gate slides along its rod and opens the corridor. When the switch is left, the gate returns and closes it."
+    },
+    {
+     "at_action": 81,
+     "look": "Z",
+     "does": "A switch and gate pair. Standing on the small 8 square switch slides the big 8 gate along its rod into a niche and opens the gate's corridor cell. The rod itself is not walkable, so a ghost has to hold the switch while the player goes through."
+    },
+    {
+     "at_action": 90,
+     "look": "AM",
+     "does": "The b 3x3 switch is joined by a line to a 5x5 b gate. While a player or ghost stands on the switch, the gate slides toward it into a niche and opens the corridor the gate was blocking."
+    },
+    {
+     "at_action": 96,
+     "look": "AK",
+     "does": "A b plate with a rod to a b gate. Stepping on the plate slides the gate along the rod into its pocket, and it stays open (latched) after the plate is left, until the run is reset with action 5."
+    }
+   ],
+   "thing_checks_written": 100,
+   "things_by_level": [
+    {
+     "level": 2,
+     "solved": true,
+     "things": 10,
+     "untouched": 4,
+     "kinds_wholly_untouched": 4,
+     "twins_ignored": 0
+    },
+    {
+     "level": 3,
+     "solved": false,
+     "things": 16,
+     "untouched": 3,
+     "kinds_wholly_untouched": 3,
+     "twins_ignored": 0
+    }
+   ],
+   "open_level_things": 16,
+   "open_level_untouched": 3,
+   "open_level_twins_ignored": 0
+  },
+  {
+   "run": "ledger-g50t-ledger-2-20261116T062655Z",
+   "game": "g50t",
+   "set_up": "memory layers and object ledger",
+   "started_after_action": 39,
+   "level_at_start": 2,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 0,
+   "actions_per_completed_level": [],
+   "actions_on_the_open_level": 100,
+   "changed_nothing": 1,
+   "changed_nothing_at": [
+    52
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 1,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 4,
+   "cases_opened": 1,
+   "lessons_kept": 1,
+   "further_actions_combined": [
+    1
+   ],
+   "lessons_offered_too_early_and_dropped": 1,
+   "lessons": [
+    {
+     "at_action": 54,
+     "explains": "t52",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "The player cannot move into a corridor cell that an 8 comb head occupies. The comb acts as a solid wall, so the move does nothing.",
+     "applies_when": "An 8 comb shape fills the 5x5 maze cell right next to the player in the direction you would move.",
+     "replaces": 0
+    }
+   ],
+   "game_over_lessons": [],
+   "checks_written": 86,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 205870,
+   "output_per_call_median": 1458,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes",
+   "thing_notes": [
+    {
+     "at_action": 1,
+     "look": "E",
+     "does": "Goal bracket ring with a centre dot. Moving the player into it completes the level."
+    },
+    {
+     "at_action": 14,
+     "look": "F",
+     "does": "An 8 comb shape linked by a stem to a 3x3 end piece. The comb head blocks player movement into its cell. It may be a gate controlled through its end piece (untested)."
+    },
+    {
+     "at_action": 24,
+     "look": "X",
+     "does": "Comb with a stem and a 3x3 end piece. When the player steps onto the end piece, the comb slides one cell along the stem toward it, which unblocks the corridor cell it had been filling."
+    },
+    {
+     "at_action": 25,
+     "look": "I",
+     "does": "An 8 comb with a stem and a 3x3 end piece. Standing on the end piece slides the comb one cell toward it and opens the corridor it was blocking. The comb goes back when the player steps off, so it works like a pressure plate."
+    },
+    {
+     "at_action": 49,
+     "look": "AO",
+     "does": "A comb gate. While something (the ghost) stands on its 3x3 end piece, the comb head slides away and opens the corridor it was blocking."
+    },
+    {
+     "at_action": 59,
+     "look": "AU",
+     "does": "A comb gate like AO. When the player stands on its 3x3 end piece, the comb head slides one cell toward the end piece and opens the corridor it was blocking."
+    },
+    {
+     "at_action": 78,
+     "look": "X",
+     "does": "A comb with a stem and a 3x3 end piece (plate). While the player stands on the plate, the comb slides one cell along the stem toward it, which unblocks the corridor cell it had been filling."
+    },
+    {
+     "at_action": 91,
+     "look": "AU",
+     "does": "A comb gate. When the player stands on its 3x3 end piece, the comb head slides one maze cell toward the end piece (6 px) and opens the corridor cell it was blocking."
+    },
+    {
+     "at_action": 92,
+     "look": "F",
+     "does": "A comb gate. While something stands on its 3x3 end piece, the comb head slides away and opens the corridor. When the piece is vacated, the head slides back and blocks again."
+    }
+   ],
+   "thing_checks_written": 100,
+   "things_by_level": [
+    {
+     "level": 2,
+     "solved": false,
+     "things": 13,
+     "untouched": 3,
+     "kinds_wholly_untouched": 3,
+     "twins_ignored": 0
+    }
+   ],
+   "open_level_things": 13,
+   "open_level_untouched": 3,
+   "open_level_twins_ignored": 0
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "written_before_the_first_call": "2026-11-16T06:26:55Z",
+ "batch": "20261116T062655Z",
+ "asked_by_the_user": "a layer so the agent uses what it learned about one object on others of the same kind, and seeks contact with objects it has not touched; run the test as long as overfitting is avoided",
+ "question": "From the start of the level the 6 November run stopped on, does the agent with the memory layers and the object ledger complete more levels in 100 new actions than the unchanged agent?",
+ "games": {
+  "designed_on": {
+   "ls20": "level 3, after 60 saved actions"
+  },
+  "held_out": {
+   "tr87": "level 2, after 61 saved actions",
+   "cd82": "level 3, after 35 saved actions",
+   "g50t": "level 2, after 39 saved actions"
+  },
+  "how_the_held_out_games_were_chosen": "among the games with a local file, not used in the earlier tests, the three whose unsolved level had the most kinds of thing wholly untouched on 6 November. None of their boards, notes or logs were looked at while the layer was built."
+ },
+ "arms": {
+  "control": "the 6 November harness unchanged",
+  "ledger": "game_over_lessons, no_effect_lessons with no_effect_wait 4, lesson_check, object_ledger"
+ },
+ "runs_per_arm_and_game": 2,
+ "new_actions_per_run": 100,
+ "model": "claude-opus-5-5, effort high, subscription path (second subscription, by token file)",
+ "games_played_on": "local game files, checked today to reproduce the saved run; no ARC service, no scorecard",
+ "order": "the four games at the same time; within a game one run after another, arms alternating, and which arm goes first alternates between games",
+ "against_overfitting": [
+  "the reading below uses the three held-out games only; ls20 is reported separately, as the game the layer was built on",
+  "the object finder, its thresholds and the wording shown to the agent are frozen for this batch (hashes below); nothing is changed between runs",
+  "if anything is changed after these results are seen, it is tested on games not in this batch",
+  "unchanged runs are played alongside from the same start, so a difference is not a difference from 6 November"
+ ],
+ "primary": "levels completed within the 100 new actions, summed over the runs of the held-out games (6 runs per arm)",
+ "reading": {
+  "helps_if": "the ledger runs complete at least 2 more levels in total than the control runs, and in no held-out game do both ledger runs complete fewer levels than both control runs",
+  "harms_if": "the control runs complete at least 2 more levels in total than the ledger runs",
+  "otherwise": "no clear difference",
+  "caveat": "six runs per arm; g50t level 2 has a human baseline of 175 actions, above the 100 played, so it may complete no level in either arm"
+ },
+ "secondary": [
+  "share of things on the open level never touched at the end of the run, and looks with a twin ignored (the controller inventory run over both arms the same way)",
+  "notes written about what a look does, and whether a second instance of a noted look is then used",
+  "actions that changed nothing, game overs, actions per completed level",
+  "model calls, replies sent back, output tokens"
+ ],
+ "no_rerun": "a run that fails for a technical reason is reported as failed and may be repeated once under a new name; a run is never repeated because of its result. A game stops at its first run that ends with a problem.",
+ "known_limits": [
+  "the object finder is a heuristic and was tuned while looking at ls20 only",
+  "the object ledger has never been run with a model before this batch"
+ ],
+ "code_sha256": {
+  "research/object_ledger_v1/held_out_runs.py": "2a9caa835b11984cef70acc07cd266d14f9d1f34cad15ded0417ea39b9af7e85",
+  "research/action_waste_v1/level_runs.py": "ac3d0747235873b701dade14eb6d0202f56d85b6d9d8986be20fce0fc137a96a",
+  "research/action_waste_v1/local_game.py": "e337672c4c3ee2e46d493114997cad7a7b661d5ae673c10461f5d98473dd47b3",
+  "research/claude_arc_v1/things.py": "aefa5cb688044ffacfcd5b60e9b9550fc0fbab52b72dd3a54811e5b6c7228657",
+  "research/claude_arc_v1/policy.py": "25ab2dcdbf5a6020470755d95536961ebb92f09010b974eb8b71ed3bb94e7466",
+  "research/claude_arc_v1/run.py": "993cbbff7504ef939a3e0565c43e3a337d9e72bc4c9d1c62060a16587d214b36",
+  "research/claude_arc_v1/config.py": "5eee0dbed031678d1ca1aeeba52c9d7d5cfbd3a42cf7c6b8e62f3b49218630c9",
+  "research/claude_arc_v1/recovery.py": "31324b9a6b709b55bc3c25060933456cb8e602b416855f954cf26b6899986964",
+  "research/claude_arc_v1/backends.py": "1098ff68c7c8134e7eacd100768b9924905f05c9ca9e21a940935a78b6886c29"
+ }
+}
