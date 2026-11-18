@@ -1,0 +1,42 @@
+{
+ "written_before_the_first_call": "2026-11-15T21:23:58Z",
+ "batch": "20261115T212358Z",
+ "asked_by_the_user": "test the same thing on ls20 level 3, to see how well it performs with memory (the inference layer is not expected to help much here); 65 action cap",
+ "my_reading": "memory = every memory layer on: lessons after a game over, lessons after an action that changed nothing, and the check of each action against them. The cap is 65 new actions on level 3, and a run stops when level 3 is solved.",
+ "question": "Starting at the first board of ls20 level 3 with the saved notes, does the agent solve level 3 within 65 actions, and in how many, with and without the memory layers?",
+ "start": "the 60 saved actions of the 6 November run that solved levels 1 and 2 are repeated on the local game with no model call; every observation must hash to the saved one",
+ "arms": {
+  "control": "the 6 November harness unchanged",
+  "memory": "game_over_lessons, no_effect_lessons with no_effect_wait 4, lesson_check"
+ },
+ "runs_per_arm": 2,
+ "cap_of_new_actions": 65,
+ "stop": "level 3 solved, or 65 new actions",
+ "model": "claude-opus-5-5, effort high, subscription path, as on 6 November",
+ "game": "local game file of ls20-9607627b, checked today to reproduce the saved run; no ARC service, no scorecard",
+ "order": "one run at a time: control, memory, control, memory",
+ "primary": [
+  "level 3 solved within the 65 new actions (yes or no)",
+  "actions used on level 3, counting every action and every reset"
+ ],
+ "secondary": [
+  "actions that changed nothing",
+  "actions inside a loop",
+  "game overs",
+  "lessons written of each kind",
+  "checks written",
+  "model calls, replies sent back, output tokens"
+ ],
+ "reference": "on 6 November the agent spent 40 actions on level 3 without solving it before that run stopped at 100 actions, with one action that changed nothing and no game over; the human baseline for the level is 73 actions",
+ "reading": "two runs per arm cannot separate the arms from chance; the numbers are reported as they are, with no claim of an effect unless both runs of one arm solve the level and neither run of the other does, and even that is two runs",
+ "expectation_stated_by_the_user": "the no-effect layer should not help much here: ls20 has only moves and had one such action on 6 November",
+ "no_rerun": "a run that fails for a technical reason is reported as failed and may be repeated once under a new name; a run is never repeated because of its result",
+ "code_sha256": {
+  "research/action_waste_v1/ls20_level3.py": "24ea682fb1933aae9765395fbe7124c0e58ede61666cec6fbfde904c5f12515d",
+  "research/action_waste_v1/level_runs.py": "300c453fccaa1734b7afa59d9231771dc0d57efe4dae4846731ff7e6b1f744a7",
+  "research/action_waste_v1/local_game.py": "e337672c4c3ee2e46d493114997cad7a7b661d5ae673c10461f5d98473dd47b3",
+  "research/claude_arc_v1/policy.py": "15b1033d68460752de47566a7779d1e3582e0e6898d48710e9f3814efe05859c",
+  "research/claude_arc_v1/run.py": "993cbbff7504ef939a3e0565c43e3a337d9e72bc4c9d1c62060a16587d214b36",
+  "research/claude_arc_v1/config.py": "69832ffdee32c71df94949b11aa4f73e5705a4c0b4dbb914723faebf74410594"
+ }
+}

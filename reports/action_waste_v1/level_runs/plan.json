@@ -1,0 +1,53 @@
+{
+ "written_before_the_first_call": "2026-11-15T07:56:33Z",
+ "batch": "20261115T075633Z",
+ "asked_by_the_user": "a layer that lets the agent infer why an action produced no change, combining 1 to 4 further actions as it sees fit, so it does not repeat the error; run on vc33, s5i5 and su15, each from a level where the change should matter; one run at a time while the baseline batch is running",
+ "question": "From the same start, does the agent with no-effect lessons and the lesson check spend fewer actions that change nothing than the unchanged agent, and does it complete at least as many levels in 100 new actions?",
+ "games_and_starts": {
+  "vc33": "the start of the game: 8 of its 14 actions that changed nothing on 6 November were its first 8 actions",
+  "s5i5": "the start of level 3, after 41 saved actions: all 20 were on level 3, which it did not solve in 59 actions",
+  "su15": "the start of level 3, after 30 saved actions: 16 of 21 were on level 3, which it did not solve in 70 actions"
+ },
+ "start": "saved actions are repeated on the local game with no model call (every observation must hash to the saved one); the agent then has the saved board and notes. Repeated actions open no case.",
+ "arms": {
+  "control": "the 6 November harness unchanged",
+  "lessons": "no_effect_lessons on, no_effect_wait 4 (the agent may explain from one further action on and must after four), lesson_check on"
+ },
+ "runs_per_arm_and_game": 2,
+ "new_actions_per_run": 100,
+ "model": "claude-opus-5-5, effort high, subscription path, as on 6 November",
+ "games_played_on": "local game files, checked today to reproduce the saved run; no ARC service, no scorecard",
+ "order": "one run at a time; for each of two rounds, each game in turn, control then lessons",
+ "primary": [
+  "actions chosen by the agent among the 100 new ones that changed nothing (board after equals board before, step-counter cells ignored, judged afterwards from the whole run)",
+  "levels completed within the 100 new actions"
+ ],
+ "secondary": [
+  "repeats of an action already seen to change nothing from the same board",
+  "actions inside a loop",
+  "game overs",
+  "lessons written, and how many further actions each combined",
+  "checks written",
+  "model calls, replies sent back, output tokens"
+ ],
+ "reading": {
+  "helps_if": "in all three games both lessons runs have fewer actions that changed nothing than both control runs, and the lessons runs complete at least as many levels in total as the control runs",
+  "harms_if": "the lessons runs complete fewer levels in total than the control runs by 3 or more",
+  "otherwise": "no clear difference",
+  "chance": "with no effect, both lessons runs beat both control runs in one game 1 time in 6, in all three games about 1 time in 200",
+  "why_control_runs_alongside": "these games were chosen for having many such actions on 6 November, so any rerun would tend to show fewer"
+ },
+ "no_rerun": "a run that fails for a technical reason is reported as failed and may be repeated once under a new name; a run is never repeated because of its result. The batch stops at the first run that ends with a problem.",
+ "known_limits": [
+  "the controller notices such an action during play with its live step-counter estimate, which on the saved run caught 169 of 188 and wrongly flagged 3",
+  "the layer has never been run with a model before this batch"
+ ],
+ "code_sha256": {
+  "research/action_waste_v1/level_runs.py": "13eaecb2953df0fb899e600a14842401c87c535ccc7f61b2ce91d6ca108a0284",
+  "research/action_waste_v1/local_game.py": "e337672c4c3ee2e46d493114997cad7a7b661d5ae673c10461f5d98473dd47b3",
+  "research/claude_arc_v1/policy.py": "15b1033d68460752de47566a7779d1e3582e0e6898d48710e9f3814efe05859c",
+  "research/claude_arc_v1/run.py": "993cbbff7504ef939a3e0565c43e3a337d9e72bc4c9d1c62060a16587d214b36",
+  "research/claude_arc_v1/config.py": "69832ffdee32c71df94949b11aa4f73e5705a4c0b4dbb914723faebf74410594",
+  "research/claude_arc_v1/recovery.py": "31324b9a6b709b55bc3c25060933456cb8e602b416855f954cf26b6899986964"
+ }
+}

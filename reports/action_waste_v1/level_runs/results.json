@@ -1,0 +1,740 @@
+{
+ "runs": [
+  {
+   "run": "waste-vc33-control-1-20261115T075633Z",
+   "game": "vc33",
+   "set_up": "unchanged",
+   "started_after_action": 0,
+   "level_at_start": 1,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 4,
+   "actions_per_completed_level": [
+    8,
+    9,
+    26,
+    25
+   ],
+   "actions_on_the_open_level": 32,
+   "changed_nothing": 12,
+   "changed_nothing_at": [
+    1,
+    2,
+    3,
+    28,
+    52,
+    64,
+    65,
+    66,
+    78,
+    79,
+    80,
+    86
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 14,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 16,
+   "cases_opened": 0,
+   "lessons_kept": 0,
+   "further_actions_combined": [],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [],
+   "checks_written": 0,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 215470,
+   "output_per_call_median": 1818,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes"
+  },
+  {
+   "run": "waste-vc33-control-2-20261115T075633Z",
+   "game": "vc33",
+   "set_up": "unchanged",
+   "started_after_action": 0,
+   "level_at_start": 1,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 4,
+   "actions_per_completed_level": [
+    11,
+    8,
+    25,
+    23
+   ],
+   "actions_on_the_open_level": 33,
+   "changed_nothing": 11,
+   "changed_nothing_at": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    28,
+    30,
+    70,
+    71,
+    81
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 17,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 8,
+   "cases_opened": 0,
+   "lessons_kept": 0,
+   "further_actions_combined": [],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [],
+   "checks_written": 0,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 192928,
+   "output_per_call_median": 1708,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes"
+  },
+  {
+   "run": "waste-vc33-lessons-1-20261115T075633Z",
+   "game": "vc33",
+   "set_up": "no-effect lessons and check",
+   "started_after_action": 0,
+   "level_at_start": 1,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 4,
+   "actions_per_completed_level": [
+    10,
+    11,
+    24,
+    22
+   ],
+   "actions_on_the_open_level": 33,
+   "changed_nothing": 10,
+   "changed_nothing_at": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    32,
+    57,
+    76,
+    86,
+    87
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 20,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 4,
+   "cases_opened": 5,
+   "lessons_kept": 5,
+   "further_actions_combined": [
+    3,
+    1,
+    1,
+    1,
+    1
+   ],
+   "lessons_offered_too_early_and_dropped": 2,
+   "lessons": [
+    {
+     "at_action": 6,
+     "explains": "t2",
+     "also_covers": [
+      "t3",
+      "t4",
+      "t5"
+     ],
+     "further_actions_combined": 3,
+     "rule": "In this game only certain control objects react to clicks. So far, clicks on the 4/b shape, on the b marker of the 5 bar, and inside the big 3 and 0 regions changed nothing on the board. Each one only used up a cell of the top-row budget.",
+     "applies_when": "Before clicking, check whether the target is a cell of a type that has already been clicked with no result: the 4/b shape, the b marker on a bar, or the inside of a big uniform 3 or 0 region. If it is, expect no effect. Click object types that have not been tested yet instead.",
+     "replaces": 0
+    },
+    {
+     "at_action": 34,
+     "explains": "t32",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "A 9-button only works if the column it raises can still rise. A floor (top of a column's 0 region) cannot go higher than the top of the shorter 5 bar next to that column. If the column is already at that height, the click is refused: nothing changes and no budget is used.",
+     "applies_when": "Before clicking a 9-button, find the column it sits in and the tops of the 5 bars on each side of that column. If the column's floor is already level with the lower of those bar tops, expect no effect.",
+     "replaces": 0
+    },
+    {
+     "at_action": 59,
+     "explains": "t57",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "A 9-button moves 3 rows of floor from one column to another: its own column rises by 3 and the paired column (across the bar) drops by 3. If the paired column has no 0 cells left to give up, nothing moves. The click still uses one budget cell.",
+     "applies_when": "Before clicking a 9-button, look at the paired column it would lower. If that column has no 0 cells at all (not even in its bottom button area), expect no change on the board, only a lost budget cell. First refill that column with its own button.",
+     "replaces": 0
+    },
+    {
+     "at_action": 78,
+     "explains": "t76",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "A 9-button moves 3 columns of 0 floor out of the lane on the far side of the bar it sits next to and into its own lane. If that source lane has no 0 cells outside its own button areas, nothing moves and the board stays the same. The bottom button of lane B, pulling from an empty lane C, was refused this way.",
+     "applies_when": "Before clicking a 9-button, find the source lane: the lane across the bar next to that button. If the source lane's main area has no 0 cells (only 3s, apart from the 9-button blocks), expect no change. Refill the source lane first.",
+     "replaces": 3
+    },
+    {
+     "at_action": 88,
+     "explains": "t86",
+     "also_covers": [
+      "t87"
+     ],
+     "further_actions_combined": 1,
+     "rule": "Only the 9-button blocks (3x3 blocks of colour 9 at the right edge of the lanes) are controls. Clicking a 4/e/b shape, a marker on a bar, a 1 gate section of a bar, or the inside of a uniform 3 or 0 region changes nothing. This holds even when the lanes on both sides of a gate are aligned, and those clicks use no budget.",
+     "applies_when": "Before clicking, check whether the target cell is part of a 9 block. If it is a shape, bar (5, 1 or marker), 3 or 0 cell, expect no effect.",
+     "replaces": 1
+    }
+   ],
+   "checks_written": 97,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 210904,
+   "output_per_call_median": 1712,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes"
+  },
+  {
+   "run": "waste-vc33-lessons-2-20261115T075633Z",
+   "game": "vc33",
+   "set_up": "no-effect lessons and check",
+   "started_after_action": 0,
+   "level_at_start": 1,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 4,
+   "actions_per_completed_level": [
+    11,
+    10,
+    24,
+    25
+   ],
+   "actions_on_the_open_level": 30,
+   "changed_nothing": 7,
+   "changed_nothing_at": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    30
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 11,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 5,
+   "cases_opened": 3,
+   "lessons_kept": 3,
+   "further_actions_combined": [
+    3,
+    1,
+    1
+   ],
+   "lessons_offered_too_early_and_dropped": 1,
+   "lessons": [
+    {
+     "at_action": 6,
+     "explains": "t2",
+     "also_covers": [
+      "t3",
+      "t4",
+      "t5"
+     ],
+     "further_actions_combined": 3,
+     "rule": "In this game, clicking the 4/b arrow-shaped object, the b strip inside the 5 bar, or plain cells of the 5 bar does not change the board. Only the top-row step counter moves. These decorative or indicator parts are not click controls, at least while the board is in this layout.",
+     "applies_when": "Before clicking, check whether the target cell belongs to a 4/b arrow object or to the 5 bar, including its b strip. If it does, expect no board change and choose an untested region instead, such as the green or black areas or the 9 markers.",
+     "replaces": 0
+    },
+    {
+     "at_action": 8,
+     "explains": "t6",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "In this game only the 9-coloured marker blocks act as controls. Clicking one shifts the green/black boundaries of the bands by 4 cells and moves the arrow with them. Clicks on plain black or green cells, on the 5 bar and its b strip, or on the 4/b arrow only advance the top-row counter.",
+     "applies_when": "Before clicking, check whether the target cell is a 9-coloured marker. If it is any other colour (black, green, 5, b, or 4 of the arrow), expect no board change apart from the counter.",
+     "replaces": 1
+    },
+    {
+     "at_action": 32,
+     "explains": "t30",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "Clicking a 9 marker moves 2 rows of black from the region right of its bar into the region left of it. The move is refused, with only the counter advancing, when the receiving region's black top is already level with the top of its own left-hand 5 bar. Once black is moved out of that region again, the same marker works again.",
+     "applies_when": "Before clicking a 9 marker, find the region it feeds, i.e. the region to the left of the marker's bar. If that region's black top row already equals the top row of the 5 bar on its left, expect no change apart from the counter.",
+     "replaces": 0
+    }
+   ],
+   "checks_written": 95,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 195389,
+   "output_per_call_median": 1790,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes"
+  },
+  {
+   "run": "waste-s5i5-control-1-20261115T075633Z",
+   "game": "s5i5",
+   "set_up": "unchanged",
+   "started_after_action": 41,
+   "level_at_start": 3,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 1,
+   "actions_per_completed_level": [
+    39
+   ],
+   "actions_on_the_open_level": 61,
+   "changed_nothing": 7,
+   "changed_nothing_at": [
+    47,
+    91,
+    92,
+    100,
+    112,
+    136,
+    139
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 25,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 10,
+   "cases_opened": 0,
+   "lessons_kept": 0,
+   "further_actions_combined": [],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [],
+   "checks_written": 0,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 268353,
+   "output_per_call_median": 1967,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes"
+  },
+  {
+   "run": "waste-s5i5-control-2-20261115T075633Z",
+   "game": "s5i5",
+   "set_up": "unchanged",
+   "started_after_action": 41,
+   "level_at_start": 3,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 2,
+   "actions_per_completed_level": [
+    39,
+    31
+   ],
+   "actions_on_the_open_level": 30,
+   "changed_nothing": 6,
+   "changed_nothing_at": [
+    44,
+    47,
+    98,
+    120,
+    123,
+    124
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 12,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 9,
+   "cases_opened": 0,
+   "lessons_kept": 0,
+   "further_actions_combined": [],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [],
+   "checks_written": 0,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 234217,
+   "output_per_call_median": 1932,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes"
+  },
+  {
+   "run": "waste-s5i5-lessons-1-20261115T075633Z",
+   "game": "s5i5",
+   "set_up": "no-effect lessons and check",
+   "started_after_action": 41,
+   "level_at_start": 3,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 2,
+   "actions_per_completed_level": [
+    58,
+    32
+   ],
+   "actions_on_the_open_level": 10,
+   "changed_nothing": 5,
+   "changed_nothing_at": [
+    44,
+    45,
+    53,
+    118,
+    126
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 7,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 2,
+   "cases_opened": 4,
+   "lessons_kept": 4,
+   "further_actions_combined": [
+    1,
+    1,
+    1,
+    1
+   ],
+   "lessons_offered_too_early_and_dropped": 3,
+   "lessons": [
+    {
+     "at_action": 46,
+     "explains": "t44",
+     "also_covers": [
+      "t45"
+     ],
+     "further_actions_combined": 1,
+     "rule": "An action leaves the board unchanged in two cases. (1) The click lands on a background cell instead of inside a button panel. (2) The move it triggers would make a segment or an attached 1 bar overlap a fixed obstacle such as the f block. The game draws the move, then rolls it back, but the step meter can still advance.",
+     "applies_when": "Check whether the click is on background (5) outside the bordered 2/4 panels. Or check whether the segment's next 3-cell step, or the bar attached to it, would land on cells taken by a fixed block (f or another solid object) in the direction of the move.",
+     "replaces": 0
+    },
+    {
+     "at_action": 55,
+     "explains": "t53",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "Clicking the shrink side of a panel (left of its 3 divider) does nothing when that segment is already at its minimum length of 2 cells. Neither the segment, its anchor, nor anything attached moves, and the meter does not advance.",
+     "applies_when": "Before a shrink click, count the segment's coloured cells along its axis, excluding the 3 anchor. If only 2 remain (e.g. e at rows 24-25), the shrink will leave the board unchanged.",
+     "replaces": 0
+    },
+    {
+     "at_action": 120,
+     "explains": "t118",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "A move is drawn for one frame and then rolled back, leaving the board unchanged, when any segment or attached bar it moves would land on cells already taken. Those cells can belong to a fixed block (like f) or to another bar or column, including other b bars that grow in the same step. The step meter may still advance. Clicks on background (5) outside the bordered 2/4 panels also do nothing.",
+     "applies_when": "Before a grow or shift click, find each bar the panel affects and the 3 cells its tip will step into. If any of those cells is not background (5), for example another bar's body, the b/d column or a fixed block, expect no change. Also expect no change if the click is not inside a panel.",
+     "replaces": 1
+    },
+    {
+     "at_action": 128,
+     "explains": "t126",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "A panel click that moves a bar (a c-grow shifts its attached b bar up 3 rows) is drawn for one frame and then rolled back if the bar's new position overlaps any occupied cell. The b/d column counts as occupied: it stays fixed and is not carried along or pushed. Fixed blocks and other bars also count. A rolled-back move leaves the board unchanged.",
+     "applies_when": "Before a click that moves a bar sideways or vertically, shift the whole bar by 3 and check every destination cell. If any destination cell is not background 5, for example because it lies on the b/d column at x30-32 or on another bar or block, expect no change.",
+     "replaces": 1
+    }
+   ],
+   "checks_written": 99,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 264728,
+   "output_per_call_median": 1797,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes"
+  },
+  {
+   "run": "waste-s5i5-lessons-2-20261115T075633Z",
+   "game": "s5i5",
+   "set_up": "no-effect lessons and check",
+   "started_after_action": 41,
+   "level_at_start": 3,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 2,
+   "actions_per_completed_level": [
+    40,
+    38
+   ],
+   "actions_on_the_open_level": 22,
+   "changed_nothing": 5,
+   "changed_nothing_at": [
+    47,
+    66,
+    67,
+    108,
+    116
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 5,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 2,
+   "cases_opened": 4,
+   "lessons_kept": 4,
+   "further_actions_combined": [
+    1,
+    1,
+    1,
+    1
+   ],
+   "lessons_offered_too_early_and_dropped": 1,
+   "lessons": [
+    {
+     "at_action": 49,
+     "explains": "t47",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "Segments move in steps of 3 and drag whatever is attached to them. If any moved piece would land on a solid f block, the game shows that position for one frame and then reverts the whole move, so the board ends as it was. Cells marked d do not block.",
+     "applies_when": "Before clicking a button, work out where every piece in its chain would be after a 3-cell shift. If any of those cells is an f cell, the click will change nothing.",
+     "replaces": 0
+    },
+    {
+     "at_action": 68,
+     "explains": "t66",
+     "also_covers": [
+      "t67"
+     ],
+     "further_actions_combined": 1,
+     "rule": "A click moves a segment by 3 and carries everything attached to it, such as the 1 column hanging from c's end. If any moved cell would land on an f block or on another solid piece (a 1 structure or a different segment), the game shows that position for one frame and then reverts it. d marker cells never block. In t66, a's extension ran into the 1 column. In t67, shortening c dragged the column right into the f block.",
+     "applies_when": "Before clicking, shift the segment's moving end and every piece attached to it by 3 in the direction of travel. If any of those cells is currently f, 1 or a different segment's colour, the click will leave the board unchanged.",
+     "replaces": 1
+    },
+    {
+     "at_action": 110,
+     "explains": "t108",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "When a button grows or moves several segments at once, every moved cell is checked together. If even one segment (for example c's b-coloured bar growing sideways) would land on cells held by another segment or its 3 anchor, the whole action shows for one frame and then reverts. Cells of a segment sharing the same colour still count as occupied by a different piece.",
+     "applies_when": "Before clicking, advance by 3 the moving end of every segment the button affects, including bars attached to other columns. If any new cell overlaps an existing b, 3, 1, f or other-segment cell that isn't part of the same moving piece, expect no change. Move the blocking piece away first.",
+     "replaces": 1
+    },
+    {
+     "at_action": 118,
+     "explains": "t116",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "A button grows or shrinks its segment by 3, and anything sitting on the segment's tip (an attached bar or column) moves with it. All moved cells are checked together. If any of them would land on another piece's cells (b, coloured, its 3 anchor or base, or the d diamond) or go off the 64x64 grid, the move shows for one frame and then fully reverts.",
+     "applies_when": "Before clicking, shift by 3 the free end of every segment the button affects, plus every bar riding on those tips. If any new cell lands on a non-5 cell of a different piece, or past row 0/63 or column 0/63, expect no change.",
+     "replaces": 1
+    }
+   ],
+   "checks_written": 99,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 318264,
+   "output_per_call_median": 2242,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes"
+  },
+  {
+   "run": "waste-su15-control-1-20261115T075633Z",
+   "game": "su15",
+   "set_up": "unchanged",
+   "started_after_action": 30,
+   "level_at_start": 3,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 4,
+   "actions_per_completed_level": [
+    18,
+    15,
+    37,
+    23
+   ],
+   "actions_on_the_open_level": 7,
+   "changed_nothing": 6,
+   "changed_nothing_at": [
+    81,
+    82,
+    85,
+    99,
+    125,
+    127
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 8,
+   "game_overs": 1,
+   "turns": 99,
+   "turns_announcing_a_test": 9,
+   "cases_opened": 0,
+   "lessons_kept": 0,
+   "further_actions_combined": [],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [],
+   "checks_written": 0,
+   "model_calls": 99,
+   "replies_sent_back": 0,
+   "output_tokens": 181789,
+   "output_per_call_median": 1474,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes"
+  },
+  {
+   "run": "waste-su15-control-2-20261115T075633Z",
+   "game": "su15",
+   "set_up": "unchanged",
+   "started_after_action": 30,
+   "level_at_start": 3,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 2,
+   "actions_per_completed_level": [
+    21,
+    18
+   ],
+   "actions_on_the_open_level": 61,
+   "changed_nothing": 7,
+   "changed_nothing_at": [
+    82,
+    83,
+    86,
+    102,
+    103,
+    104,
+    105
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 27,
+   "game_overs": 2,
+   "turns": 98,
+   "turns_announcing_a_test": 17,
+   "cases_opened": 0,
+   "lessons_kept": 0,
+   "further_actions_combined": [],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [],
+   "checks_written": 0,
+   "model_calls": 98,
+   "replies_sent_back": 0,
+   "output_tokens": 220876,
+   "output_per_call_median": 1698,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes"
+  },
+  {
+   "run": "waste-su15-lessons-1-20261115T075633Z",
+   "game": "su15",
+   "set_up": "no-effect lessons and check",
+   "started_after_action": 30,
+   "level_at_start": 3,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 3,
+   "actions_per_completed_level": [
+    21,
+    15,
+    55
+   ],
+   "actions_on_the_open_level": 9,
+   "changed_nothing": 2,
+   "changed_nothing_at": [
+    36,
+    110
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 32,
+   "game_overs": 1,
+   "turns": 99,
+   "turns_announcing_a_test": 9,
+   "cases_opened": 2,
+   "lessons_kept": 2,
+   "further_actions_combined": [
+    1,
+    2
+   ],
+   "lessons_offered_too_early_and_dropped": 1,
+   "lessons": [
+    {
+     "at_action": 38,
+     "explains": "t36",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "A click only pulls pieces whose centres lie within a radius of about 8 cells of the clicked cell. The in-between frame shows this range as a ring of 0s. If no piece's centre is inside that circle, nothing moves and the only change is one budget cell used.",
+     "applies_when": "Before clicking, measure the Euclidean distance from the click to the centre of every movable piece (a, 6, f, b blocks). If all of them are more than about 8 away, the click will leave the board unchanged.",
+     "replaces": 0
+    },
+    {
+     "at_action": 114,
+     "explains": "t110",
+     "also_covers": [],
+     "further_actions_combined": 2,
+     "rule": "A click that pulls pieces of different types (for example an f and an a) onto the same point makes an overlap that cannot merge. The game undoes the whole move, so the board ends where it started and only budget is spent. If budget runs out, it ends in GAME_OVER instead. Pieces pulled together only combine if they are the same type (a+a, 6+6, f+f).",
+     "applies_when": "Before clicking, list every piece whose centre is within about 8 cells of the click. If that list has more than one type of piece, the click will be undone. If no piece is within about 8 cells, nothing moves at all.",
+     "replaces": 0
+    }
+   ],
+   "checks_written": 97,
+   "model_calls": 99,
+   "replies_sent_back": 0,
+   "output_tokens": 217447,
+   "output_per_call_median": 1737,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes"
+  },
+  {
+   "run": "waste-su15-lessons-2-20261115T075633Z",
+   "game": "su15",
+   "set_up": "no-effect lessons and check",
+   "started_after_action": 30,
+   "level_at_start": 3,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 2,
+   "actions_per_completed_level": [
+    21,
+    14
+   ],
+   "actions_on_the_open_level": 65,
+   "changed_nothing": 2,
+   "changed_nothing_at": [
+    36,
+    84
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 22,
+   "game_overs": 1,
+   "turns": 99,
+   "turns_announcing_a_test": 8,
+   "cases_opened": 2,
+   "lessons_kept": 2,
+   "further_actions_combined": [
+    1,
+    1
+   ],
+   "lessons_offered_too_early_and_dropped": 1,
+   "lessons": [
+    {
+     "at_action": 38,
+     "explains": "t36",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "A click pulls only the blocks whose centres lie within a radius of about 8 cells of the clicked point, moving them to that point. If no block centre is inside that radius, the click only plays a circle animation and uses budget, and the board stays the same.",
+     "applies_when": "Before clicking, measure the distance from the click point to every block centre. If all of them are more than about 8 away, the click will do nothing.",
+     "replaces": 0
+    },
+    {
+     "at_action": 86,
+     "explains": "t84",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "A click pulls every block whose centre is within about 8 cells of the click point. If no block centre is in range, nothing moves. If the blocks in range are of different types (for example f and 6), the pull is rejected: the animation plays, then the whole board, hazards included, reverts, and only budget is spent.",
+     "applies_when": "Before clicking, list every block centre within about 8 cells of the click point. If there are none, or if they are not all the same type, the board will end unchanged apart from the budget counter.",
+     "replaces": 1
+    }
+   ],
+   "checks_written": 99,
+   "model_calls": 99,
+   "replies_sent_back": 0,
+   "output_tokens": 287523,
+   "output_per_call_median": 1920,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes"
+  }
+ ]
+}

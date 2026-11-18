@@ -1,0 +1,162 @@
+{
+ "runs": [
+  {
+   "run": "waste-ls20-control-1-20261115T212358Z",
+   "game": "ls20",
+   "set_up": "unchanged",
+   "started_after_action": 60,
+   "level_at_start": 3,
+   "new_actions": 65,
+   "levels_completed_in_new_actions": 0,
+   "actions_per_completed_level": [],
+   "actions_on_the_open_level": 65,
+   "changed_nothing": 1,
+   "changed_nothing_at": [
+    93
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 1,
+   "game_overs": 0,
+   "turns": 65,
+   "turns_announcing_a_test": 0,
+   "cases_opened": 0,
+   "lessons_kept": 0,
+   "further_actions_combined": [],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [],
+   "game_over_lessons": [],
+   "checks_written": 0,
+   "model_calls": 65,
+   "replies_sent_back": 0,
+   "output_tokens": 92269,
+   "output_per_call_median": 1055,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes"
+  },
+  {
+   "run": "waste-ls20-control-2-20261115T212358Z",
+   "game": "ls20",
+   "set_up": "unchanged",
+   "started_after_action": 60,
+   "level_at_start": 3,
+   "new_actions": 65,
+   "levels_completed_in_new_actions": 0,
+   "actions_per_completed_level": [],
+   "actions_on_the_open_level": 65,
+   "changed_nothing": 0,
+   "changed_nothing_at": [],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 0,
+   "game_overs": 0,
+   "turns": 65,
+   "turns_announcing_a_test": 0,
+   "cases_opened": 0,
+   "lessons_kept": 0,
+   "further_actions_combined": [],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [],
+   "game_over_lessons": [],
+   "checks_written": 0,
+   "model_calls": 65,
+   "replies_sent_back": 0,
+   "output_tokens": 101344,
+   "output_per_call_median": 1244,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes"
+  },
+  {
+   "run": "waste-ls20-memory-1-20261115T212358Z",
+   "game": "ls20",
+   "set_up": "every memory layer",
+   "started_after_action": 60,
+   "level_at_start": 3,
+   "new_actions": 65,
+   "levels_completed_in_new_actions": 0,
+   "actions_per_completed_level": [],
+   "actions_on_the_open_level": 65,
+   "changed_nothing": 1,
+   "changed_nothing_at": [
+    93
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 1,
+   "game_overs": 0,
+   "turns": 65,
+   "turns_announcing_a_test": 0,
+   "cases_opened": 1,
+   "lessons_kept": 1,
+   "further_actions_combined": [
+    1
+   ],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [
+    {
+     "at_action": 95,
+     "explains": "t93",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "The player can't enter the goal box (the box holding a 9-coloured target shape) unless the piece in the bottom-left box matches that target in both shape and colour. If they don't match, the game refuses the move: the player stays put, no bar cells are used, and the piece box briefly flashes to colour 0.",
+     "applies_when": "The player is right next to the goal box and is about to step into it, but the piece in the bottom-left box is a different colour from the target (e.g. c vs 9) or has a different shape or rotation.",
+     "replaces": 0
+    }
+   ],
+   "game_over_lessons": [],
+   "checks_written": 30,
+   "model_calls": 65,
+   "replies_sent_back": 0,
+   "output_tokens": 111592,
+   "output_per_call_median": 1208,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes"
+  },
+  {
+   "run": "waste-ls20-memory-2-20261115T212358Z",
+   "game": "ls20",
+   "set_up": "every memory layer",
+   "started_after_action": 60,
+   "level_at_start": 3,
+   "new_actions": 65,
+   "levels_completed_in_new_actions": 0,
+   "actions_per_completed_level": [],
+   "actions_on_the_open_level": 65,
+   "changed_nothing": 1,
+   "changed_nothing_at": [
+    93
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 1,
+   "game_overs": 0,
+   "turns": 65,
+   "turns_announcing_a_test": 0,
+   "cases_opened": 1,
+   "lessons_kept": 1,
+   "further_actions_combined": [
+    1
+   ],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [
+    {
+     "at_action": 95,
+     "explains": "t93",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "The target box (a 3x3 pattern inside a 5-framed box) is solid to the player unless the bottom-left key indicator matches it in both shape and colour. A rejected entry briefly flashes the indicator frame with 0 and leaves the board unchanged, and it costs no budget.",
+     "applies_when": "The player is next to the target box and is about to move into it, while the bottom-left indicator differs from the target pattern in colour, shape or orientation (compare the indicator's scaled-up 3x3 against the target's 3x3 cells).",
+     "replaces": 0
+    }
+   ],
+   "game_over_lessons": [],
+   "checks_written": 30,
+   "model_calls": 65,
+   "replies_sent_back": 0,
+   "output_tokens": 105208,
+   "output_per_call_median": 1127,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes"
+  }
+ ]
+}
