@@ -2,6 +2,7 @@
 from decimal import Decimal
 import json
 import os
+from pathlib import Path
 import re
 import shutil
 import signal
@@ -17,6 +18,29 @@ MIN_CLAUDE_CLI = (2, 1, 280)
 # Only these variables reach the CLI. ANTHROPIC_API_KEY and friends are deliberately absent:
 # with them present the CLI bills the paid API instead of the signed-in subscription.
 CLI_ENVIRONMENT = ('PATH', 'HOME', 'USER', 'LOGNAME', 'LANG', 'LC_ALL', 'TMPDIR', 'SHELL', 'TERM')
+# A second Claude subscription, opt-in for one process. ARC_CLAUDE_TOKEN_FILE names a file holding a long-lived
+# token made by `claude setup-token` while signed in to that account. The token is given to the CLI as
+# CLAUDE_CODE_OAUTH_TOKEN and to nothing else, and is never written to a log. Unset (the default), the CLI
+# uses the subscription signed in on this machine, exactly as before.
+TOKEN_FILE_VARIABLE = 'ARC_CLAUDE_TOKEN_FILE'
+TOKEN_VARIABLE = 'CLAUDE_CODE_OAUTH_TOKEN'
+REPOSITORY = Path(__file__).resolve().parents[2]
+
+
+def subscription_token(environ=None):
+    """(token, name of its file) when ARC_CLAUDE_TOKEN_FILE is set, else (None, None)."""
+    name = (os.environ if environ is None else environ).get(TOKEN_FILE_VARIABLE)
+    if not name:
+        return None, None
+    path = Path(name).expanduser().resolve()
+    if REPOSITORY in path.parents:
+        raise ValueError('keep the token file outside the repository, so it cannot be committed')
+    if path.stat().st_mode & 0o077:
+        raise ValueError('the token file must be readable by you only: chmod 600 %s' % path)
+    token = path.read_text().strip()
+    if not token or any(ch.isspace() for ch in token):
+        raise ValueError('the token file must hold one token and nothing else')
+    return token, path.name
 
 
 class BudgetExceeded(RuntimeError):
@@ -187,6 +211,7 @@ class ClaudeCodeBackend:
         self.last_record = None
         self.cli_changes = 0
         self.identity = self.file_identity()
+        self.token, self.account = subscription_token()
 
     def file_identity(self):
         try:
@@ -215,6 +240,8 @@ class ClaudeCodeBackend:
         env['DISABLE_AUTOUPDATER'] = '1'
         # Each call is a fresh one-shot session with a unique prompt: cache writes are billed and never read back.
         env['DISABLE_PROMPT_CACHING'] = '1'
+        if self.token:
+            env[TOKEN_VARIABLE] = self.token
         return env
 
     def complete(self, request):
@@ -236,6 +263,8 @@ class ClaudeCodeBackend:
         begin = time.monotonic()
         self.last_record = {'outcome': 'entered', 'backend': c.backend, 'model': c.model,
                             'cli_version': '.'.join(map(str, self.version)), 'cli_changes': self.cli_changes}
+        if self.account:      # which subscription answered, by the token file's name; never the token
+            self.last_record['subscription_token_file'] = self.account
         argv = [self.executable, '-p', '--model', c.model, '--effort', c.effort, '--output-format', 'json',
                 '--tools', '', '--json-schema', self.schema, '--system-prompt', messages[0]['content'],
                 '--no-session-persistence', '--setting-sources', '', '--strict-mcp-config', '--disable-slash-commands']

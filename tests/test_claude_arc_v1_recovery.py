@@ -780,6 +780,281 @@ class GameOverLessons(Base):
         self.assertNotIn('lesson_check', half['properties'])
 
 
+class NoEffectLessons(Base):
+    """After an action that left the board as it was, the agent writes why, combining what its next actions
+    showed; the controller keeps the lesson, lets a later lesson replace it, and (with lesson_check) every
+    later action is checked against it.
+
+    In the toy, ACTION2 only ticks the counter. The controller recognises the counter at its third lone tick,
+    so t3 is the first action it knows to have changed nothing."""
+    FIRST = {'rule': 'ACTION2 never moves the piece.', 'applies_when': 'The chosen action is ACTION2.', 'replaces': 0}
+    BETTER = {'rule': 'ACTION2 only advances the counter, on any board.',
+              'applies_when': 'The chosen action is ACTION2, on any level.', 'replaces': 1}
+    DEATH = {'rule': 'ACTION3 ends the game wherever it is used.', 'applies_when': 'The chosen action is ACTION3.'}
+
+    @staticmethod
+    def kept(lesson, after, level=1, through=None, number=1):
+        return {'number': number, 'after': after, 'through': through or after, 'level': level,
+                'rule': lesson['rule'], 'applies_when': lesson['applies_when']}
+
+    def test_off_by_default(self):
+        c = settings(max_actions_per_game=5)
+        result, arc_, backend, events, folder = self.play(c, [2, 2, 2, 2, 2])
+        for request in backend.requests:
+            body = payload(request)
+            self.assertFalse({'no_effect_lessons', 'no_effect_case'} & set(body['evidence']))
+            self.assertNotIn('no_effect_lesson', body['output_contract'])
+        self.assertNotIn('no_effect_lesson', policy.response_schema('hypotheses', c)['properties'])
+        for bad in ({'no_effect_lessons': 1}, {'no_effect_wait': 2}, {'no_effect_lessons': True, 'no_effect_wait': 6}):
+            with self.assertRaises(ValueError):
+                settings(**bad)
+
+    def test_with_no_limit_it_is_asked_on_the_next_turn_then_kept_and_replaceable(self):
+        c = settings(no_effect_lessons=True, history_limit=1, max_actions_per_game=7)
+        answers = [2, 2, 2, act(2, no_effect_lesson=self.FIRST), act(1, no_effect_lesson=self.BETTER), 2,
+                   act(2, no_effect_lesson={**self.FIRST, 'replaces': 0})]
+        result, arc_, backend, events, folder = self.play(c, answers)
+        bodies = [payload(r) for r in backend.requests]
+        asked = ['no_effect_lesson' in b['output_contract'] for b in bodies]
+        self.assertEqual(asked, [False, False, False, True, True, False, True])    # t3, t4 and t6 changed nothing; t5 moved
+        self.assertIn(policy.IDLE_ASK % ('t3', ''), bodies[3]['procedure'])
+        self.assertIn(policy.IDLE_FORMAT, bodies[3]['procedure'])
+        self.assertEqual(bodies[3]['evidence']['no_effect_case']['board'], 'same as evidence.current.final_frame')
+        shown = [b['evidence'].get('no_effect_lessons') for b in bodies]
+        self.assertEqual(shown[:4], [None, None, None, None])
+        self.assertEqual(shown[4], [self.kept(self.FIRST, 't3')])
+        self.assertEqual(shown[5], [self.kept(self.BETTER, 't4')])                 # replaced in place, not added
+        self.assertEqual(shown[6], shown[5])                                        # still there after t4 left history
+        self.assertFalse(any('lesson_check' in b['output_contract'] for b in bodies))
+        self.assertEqual(len(arc_.actions), 7)
+        audit.audit(folder)
+
+    def test_with_a_limit_the_agent_decides_when_and_must_explain_at_the_limit(self):
+        c = settings(no_effect_lessons=True, no_effect_wait=2, history_limit=1, max_actions_per_game=7)
+        answers = [2, 2, 2, 1, 2, act(4, no_effect_lesson=self.FIRST), 2]
+        result, arc_, backend, events, folder = self.play(c, answers)
+        bodies = [payload(r) for r in backend.requests]
+        # t3 changed nothing. Next turn: too early. After one more action: allowed, and here declined by leaving
+        # the field out. After two: required.
+        self.assertEqual(['no_effect_lesson' in b['output_contract'] for b in bodies],
+                         [False, False, False, False, True, True, False])
+        self.assertEqual(['no_effect_case' in b['evidence'] for b in bodies],
+                         [False, False, False, True, True, True, False])            # in view from t3 until explained
+        self.assertIn(policy.IDLE_WAIT % ('t3', 2, 's'), bodies[3]['procedure'])
+        self.assertIn(policy.IDLE_MAY % ('t3', policy.IDLE_COMBINE % (1, '', 't4'), 1, ''), bodies[4]['procedure'])
+        case = bodies[5]['evidence']['no_effect_case']
+        self.assertEqual((case['transition_id'], case['actions_since'], case['of_those_also_changed_nothing']),
+                         ('t3', ['t4', 't5'], ['t5']))                              # t5 changed nothing too: one case
+        self.assertIsInstance(case['board'], list)                                  # the board of t3, long out of history
+        self.assertEqual(case['in_between'], {'t3': 'no frame in between differed from the board',
+                                              't5': 'no frame in between differed from the board'})
+        self.assertIn(policy.IDLE_ASK % ('t3', policy.IDLE_COMBINE % (2, 's', 't4, t5')), bodies[5]['procedure'])
+        self.assertIn(policy.IDLE_FORMAT, bodies[5]['procedure'])
+        self.assertEqual(bodies[6]['evidence']['no_effect_lessons'], [self.kept(self.FIRST, 't3', through='t5')])
+        self.assertEqual(len(arc_.actions), 7)
+        audit.audit(folder)
+
+    def test_the_agent_may_explain_after_one_further_action_but_not_before(self):
+        c = settings(no_effect_lessons=True, no_effect_wait=4, max_actions_per_game=6)
+        # the lesson offered on the turn right after t3 comes too early and is dropped; the one after t4 is kept
+        answers = [2, 2, 2, act(1, no_effect_lesson=self.FIRST), act(1, no_effect_lesson={**self.BETTER, 'replaces': 0}), 4]
+        result, arc_, backend, events, folder = self.play(c, answers)
+        bodies = [payload(r) for r in backend.requests]
+        self.assertNotIn('no_effect_lesson', bodies[3]['output_contract'])
+        self.assertIn('no_effect_case', bodies[4]['evidence'])                      # still open after the early offer
+        self.assertIn(policy.IDLE_MAY % ('t3', policy.IDLE_COMBINE % (1, '', 't4'), 3, 's'), bodies[4]['procedure'])
+        self.assertNotIn('no_effect_case', bodies[5]['evidence'])                   # closed once explained
+        self.assertEqual(bodies[5]['evidence']['no_effect_lessons'], [self.kept(self.BETTER, 't3', through='t4')])
+        self.assertEqual([a for a, _ in arc_.actions], [2, 2, 2, 1, 1, 4])
+        audit.audit(folder)
+
+    def test_at_the_limit_a_reply_without_the_lesson_is_sent_back(self):
+        c = settings(no_effect_lessons=True, no_effect_wait=1, max_actions_per_game=6)
+        answers = [2, 2, 2, 1, 4, act(1, no_effect_lesson=self.FIRST), 4]
+        result, arc_, backend, events, folder = self.play(c, answers)
+        self.assertIn('must be explained now', payload(backend.requests[5])['previous_reply_rejected'])
+        self.assertEqual([a for a, _ in arc_.actions], [2, 2, 2, 1, 1, 4])
+
+    def test_the_case_carries_what_the_action_showed_on_the_way(self):
+        # an action that moves something and brings it back ends on the same board; the frames before the last
+        # one are never shown to the model, so the case has to say what they showed
+        c = settings(no_effect_lessons=True, no_effect_wait=4)
+        agent = policy.Policy(c)
+        board, bounced = np.zeros((4, 12), dtype=np.uint8), np.zeros((4, 12), dtype=np.uint8)
+        board[0, 2] = 5
+        bounced[0, 3] = 5
+        see = lambda *frames: Observation('toy-test', frames, GameState.NOT_FINISHED, 0, 2, 'guid', (1, 2, 3, 4))
+        agent.observe(see(board), ActionDecision(1, {}, source='test'), see(bounced, board), {'hypotheses': []})
+        case = payload(agent.request(see(board)))['evidence']['no_effect_case']
+        self.assertEqual(case['transition_id'], 't1')
+        self.assertEqual(case['in_between']['t1'], {'frames_returned': 2, 'cells_that_differed': 2,
+                                                    'changes_in_that_frame': [[2, 2, 0, '5', '0'], [3, 3, 0, '0', '5']]})
+
+    def test_saved_actions_repeated_at_resume_open_no_case(self):
+        agent = policy.Policy(settings(no_effect_lessons=True, no_effect_wait=4))
+        board = np.zeros((4, 12), dtype=np.uint8)
+        see = lambda: Observation('toy-test', (board,), GameState.NOT_FINISHED, 0, 2, 'guid', (1, 2, 3, 4))
+        agent.observe(see(), ActionDecision(2, {}, source='controller_resume'), see(), {'hypotheses': []})
+        self.assertIsNone(agent.idle_case)
+        agent.observe(see(), ActionDecision(2, {}, source='api_evaluation'), see(), {'hypotheses': []})
+        self.assertEqual(agent.idle_case['transition_id'], 't2')
+
+    def test_with_no_limit_a_reply_without_the_lesson_is_sent_back(self):
+        c = settings(no_effect_lessons=True, max_actions_per_game=5)
+        result, arc_, backend, events, folder = self.play(c, [2, 2, 2, 2, act(1, no_effect_lesson=self.FIRST), 1])
+        self.assertIn('write no_effect_lesson', payload(backend.requests[4])['previous_reply_rejected'])
+        self.assertEqual([a for a, _ in arc_.actions], [2, 2, 2, 1, 1])
+
+    def test_a_lesson_cannot_replace_one_that_does_not_exist(self):
+        c = settings(no_effect_lessons=True, max_actions_per_game=5)
+        answers = [2, 2, 2, act(2, no_effect_lesson={**self.FIRST, 'replaces': 2}), act(1, no_effect_lesson=self.FIRST), 1]
+        result, arc_, backend, events, folder = self.play(c, answers)
+        self.assertIn('replaces must be 0', payload(backend.requests[4])['previous_reply_rejected'])
+        self.assertEqual([a for a, _ in arc_.actions], [2, 2, 2, 1, 1])
+
+    def test_with_the_check_every_later_reply_must_test_its_action_against_the_lessons(self):
+        c = settings(no_effect_lessons=True, lesson_check=True, max_actions_per_game=6)
+        answers = [2, 2, 2, act(1, no_effect_lesson=self.FIRST), act(1, lesson_check='ACTION1 moves the piece.'),
+                   act(4, lesson_check='ACTION4 moves the piece back.')]
+        result, arc_, backend, events, folder = self.play(c, answers)
+        bodies = [payload(r) for r in backend.requests]
+        self.assertEqual(['lesson_check' in b['output_contract'] for b in bodies], [False, False, False, False, True, True])
+        self.assertIn(policy.IDLE_CHECK_NOTE, bodies[4]['procedure'])
+        self.assertEqual(len(arc_.actions), 6)
+        audit.audit(folder)
+
+    def test_together_with_game_over_lessons_one_check_covers_both_kinds(self):
+        c = settings(no_effect_lessons=True, game_over_lessons=True, lesson_check=True, max_actions_per_game=7)
+        answers = [2, 2, 2, act(3, no_effect_lesson=self.FIRST),
+                   act(1, game_over_lesson=self.DEATH, lesson_check='ACTION1 moves the piece.'),
+                   act(1, lesson_check='ACTION1 moves the piece and is not ACTION3.')]
+        result, arc_, backend, events, folder = self.play(c, answers)
+        bodies = [payload(r) for r in backend.requests]
+        self.assertEqual([a for a, _ in arc_.actions], [2, 2, 2, 3, 0, 1, 1])
+        after_reset = bodies[4]
+        self.assertIn('game_over_lesson', after_reset['output_contract'])
+        self.assertNotIn('no_effect_lesson', after_reset['output_contract'])       # the fatal action is not "nothing"
+        self.assertIn(policy.IDLE_CHECK_NOTE, after_reset['procedure'])
+        self.assertIn(policy.BOTH_CHECK_NOTE, bodies[5]['procedure'])
+        self.assertNotIn(policy.CHECK_NOTE, bodies[5]['procedure'])
+        audit.audit(folder)
+
+    def test_lessons_survive_a_new_level_and_a_lesson_nobody_asked_for_is_dropped(self):
+        c = settings(no_effect_lessons=True, max_actions_per_game=7)
+        answers = [2, 2, 2, act(1, no_effect_lesson=self.FIRST), 1, act(1, no_effect_lesson=self.FIRST), 2]
+        result, arc_, backend, events, folder = self.play(c, answers)
+        last = payload(backend.requests[-1])
+        self.assertEqual(last['evidence']['current']['levels_completed'], 1)
+        self.assertEqual(last['evidence']['no_effect_lessons'], [self.kept(self.FIRST, 't3')])
+        self.assertEqual(len(arc_.actions), 7)
+
+    def test_schema_allows_the_new_fields_only_when_switched_on(self):
+        on = policy.response_schema('hypotheses', settings(no_effect_lessons=True, lesson_check=True))
+        self.assertEqual(on['required'], ['action', 'hypotheses'])
+        self.assertTrue({'no_effect_lesson', 'lesson_check'} <= set(on['properties']))
+        half = policy.response_schema('hypotheses', settings(no_effect_lessons=True))
+        self.assertNotIn('lesson_check', half['properties'])
+        both = policy.response_schema('hypotheses', settings(no_effect_lessons=True, game_over_lessons=True, lesson_check=True))
+        self.assertTrue({'no_effect_lesson', 'game_over_lesson', 'lesson_check'} <= set(both['properties']))
+        old = policy.response_schema('hypotheses', settings(game_over_lessons=True, lesson_check=True))
+        self.assertNotIn('no_effect_lesson', old['properties'])
+
+
+class ObjectLedger(Base):
+    """The controller lists the things on the board by look and what has happened at each; the agent may note
+    what a look does, and says each turn which thing its action is aimed at."""
+
+    @staticmethod
+    def grid(piece=(12, 9)):
+        grid = np.zeros((64, 64), dtype=np.uint8)       # colour 0 everywhere: ground
+        grid[5:10, 8] = 1                               # a bar, upright
+        grid[4, 54:59] = 1                              # the same bar lying down: one look
+        grid[46:49, 30:33] = 7                          # a tile
+        y, x = piece
+        grid[y:y + 3, x:x + 3] = 9                      # the piece that moves
+        return grid
+
+    @staticmethod
+    def see(grid, level=0):
+        return Observation('toy-test', (grid,), GameState.NOT_FINISHED, level, 2, 'guid', (1, 2, 3, 4, 6))
+
+    @staticmethod
+    def bars(body):
+        return next(look for look in body['evidence']['things']['looks'] if len(look['instances']) == 2)
+
+    def test_things_are_found_from_the_cells_and_twins_share_a_look(self):
+        from research.claude_arc_v1 import things
+        found = things.things(self.grid())
+        self.assertEqual(sorted(t['box'] for t in found), [(8, 5, 8, 9), (9, 12, 11, 14), (30, 46, 32, 48), (54, 4, 58, 4)])
+        looks = {t['box']: t['look'] for t in found}
+        self.assertEqual(looks[(8, 5, 8, 9)], looks[(54, 4, 58, 4)])            # turned, still the same look
+        self.assertEqual(len(set(looks.values())), 3)
+
+    def test_off_by_default(self):
+        c = settings()
+        body = payload(policy.Policy(c).request(self.see(self.grid())))
+        self.assertNotIn('things', body['evidence'])
+        self.assertFalse({'thing_check', 'thing_note'} & set(body['output_contract']))
+        self.assertFalse({'thing_check', 'thing_note'} & set(policy.response_schema('hypotheses', c)['properties']))
+        with self.assertRaises(ValueError):
+            settings(object_ledger=1)
+
+    def test_listing_check_note_and_what_happened_at_each_thing(self):
+        c = settings(object_ledger=True)
+        agent = policy.Policy(c)
+        before, after = self.see(self.grid()), self.see(self.grid(piece=(6, 9)))     # the piece moves up beside the left bar
+        body = payload(agent.request(before))
+        bars = self.bars(body)
+        self.assertEqual([i['at'] for i in bars['instances']], [[54, 4, 58, 4], [8, 5, 8, 9]])
+        self.assertTrue(all(i.get('untouched') for i in bars['instances']))
+        self.assertIn(policy.THING_CHECK_ASK, body['procedure'])
+        answer = lambda **extra: json.dumps({'action': {'action_id': 1, 'action_data': {}}, 'hypotheses': [], **extra})
+        with self.assertRaisesRegex(ValueError, 'thing_check is required'):
+            agent.parse(answer(), before)
+        with self.assertRaisesRegex(ValueError, 'must be the letter of a look'):
+            agent.parse(answer(thing_check='Going for the bar.', thing_note={'look': 'ZZ', 'does': 'x'}), before)
+        decision, value = agent.parse(answer(thing_check='Going for the left bar.'), before)
+        agent.observe(before, decision, after, value)
+        body = payload(agent.request(after))
+        bars = self.bars(body)
+        right, left = bars['instances']
+        self.assertTrue(right.get('untouched'))                                  # its twin: nothing has happened there
+        self.assertEqual(left.get('beside_change_at'), 't1')
+        self.assertNotIn('untouched', left)
+        note = {'look': bars['look'], 'does': 'pushes the piece along until a wall stops it'}
+        decision, value = agent.parse(answer(thing_check='Now the other bar.', thing_note=note), after)
+        self.assertEqual(len(self.bars(payload(agent.request(after)))['instances']), 2)   # the piece stands against
+        agent.observe(after, decision, self.see(self.grid(), level=1), value)               # the bar: still two bars
+        body = payload(agent.request(self.see(self.grid(), level=1)))                       # a new level has begun
+        bars = self.bars(body)
+        self.assertEqual(bars['does'], note['does'])                             # the note outlives the level
+        self.assertTrue(all(i.get('untouched') for i in bars['instances']))      # what happened where does not
+
+    def test_shapes_that_recur_in_another_colour_size_or_turn_are_listed(self):
+        grid = np.zeros((64, 64), dtype=np.uint8)
+        shape = np.array([[1, 0, 1], [1, 0, 0], [1, 1, 1]], dtype=np.uint8)
+        grid[10:17, 10:17] = 5                                   # a framed lock ...
+        grid[12:15, 12:15] = np.where(shape, 9, 5)               # ... holding the shape in colour 9
+        grid[40:50, 40:50] = 5                                   # a panel ...
+        big = np.kron(np.rot90(shape), np.ones((2, 2), dtype=np.uint8))
+        grid[42:48, 42:48] = np.where(big, 12, 5)                # ... showing it twice the size, turned, in colour c
+        with self.assertRaises(ValueError):
+            settings(pattern_relations=True)                     # needs the object ledger
+        plain = payload(policy.Policy(settings(object_ledger=True)).request(self.see(grid)))
+        self.assertNotIn('alike', plain['evidence']['things'])
+        body = payload(policy.Policy(settings(object_ledger=True, pattern_relations=True)).request(self.see(grid)))
+        (group,) = body['evidence']['things']['alike']
+        self.assertEqual(group['differ_in'], ['colour', 'size', 'turn'])
+        self.assertEqual([(c['colour'], c['size'], c['turned']) for c in group['copies']], [('9', 1, False), ('c', 2, True)])
+        self.assertEqual(group['copies'][0]['at'], [12, 12, 14, 14])
+        self.assertIn(policy.ALIKE_NOTE, body['procedure'])
+
+    def test_schema_has_the_fields_only_when_switched_on(self):
+        on = policy.response_schema('hypotheses', settings(object_ledger=True))
+        self.assertEqual(on['required'], ['action', 'hypotheses'])
+        self.assertTrue({'thing_check', 'thing_note'} <= set(on['properties']))
+
+
 class Resume(Base):
     def test_resume_rebuilds_the_position_and_the_next_request(self):
         c = settings(max_actions_per_game=5)

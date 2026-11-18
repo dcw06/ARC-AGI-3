@@ -101,6 +101,26 @@ class Config:
     resume_actions: int = 0
     # End a game once this many of its levels are completed; 0 plays on as before.
     stop_after_levels: int = 0
+    # No-effect lessons (research/action_waste_v1): after an action that left the board as it was
+    # (step-counter cells aside, by the controller's live estimate), the model must write why: a general
+    # rule and how to recognise the case before acting. It may replace an earlier lesson with a better one.
+    # The controller keeps the lessons outside the eight notes and shows them in every later request of the
+    # game. With lesson_check, every reply must test its action against them.
+    no_effect_lessons: bool = False
+    # The model decides when it has seen enough to write that lesson: from one further action of its own on,
+    # and after this many at the latest, so it can combine what they show. The action and its board stay in
+    # the request until then. 0 asks on the very next turn.
+    no_effect_wait: int = 0
+    # Object ledger (research/object_ledger_v1): every request lists the things on the board, found by the
+    # controller from the cells alone and grouped by look, with what has happened at each one on this level.
+    # The model may note what a look does (kept for the whole game, shown beside every thing of that look)
+    # and must say, each turn, which thing its action is aimed at and whether a twin of a known thing or an
+    # untouched thing would serve better.
+    object_ledger: bool = False
+    # With the object ledger: also list shapes that occur more than once on the board in another colour,
+    # size or turn (found from the cells alone), and say how the copies differ. For games where one thing
+    # has to be made to match another.
+    pattern_relations: bool = False
     # Action economy (research/action_waste_v1): tell the model the benchmark's scoring rule, so it knows
     # that every action costs, including one that changes nothing. Off: the prompt is the control's, which
     # never mentions cost. The human number itself is not shown.
@@ -116,8 +136,16 @@ class Config:
             raise ValueError('pin_game_overs must be an integer from 0 to 5')
         if type(self.game_over_lessons) is not bool or type(self.lesson_check) is not bool:
             raise ValueError('game_over_lessons and lesson_check must be boolean')
-        if self.lesson_check and not self.game_over_lessons:
-            raise ValueError('lesson_check needs game_over_lessons')
+        if type(self.no_effect_lessons) is not bool or type(self.object_ledger) is not bool:
+            raise ValueError('no_effect_lessons and object_ledger must be boolean')
+        if type(self.pattern_relations) is not bool or (self.pattern_relations and not self.object_ledger):
+            raise ValueError('pattern_relations must be boolean and needs object_ledger')
+        if type(self.no_effect_wait) is not int or not 0 <= self.no_effect_wait <= 5:
+            raise ValueError('no_effect_wait must be an integer from 0 to 5')
+        if self.no_effect_wait and not self.no_effect_lessons:
+            raise ValueError('no_effect_wait needs no_effect_lessons')
+        if self.lesson_check and not (self.game_over_lessons or self.no_effect_lessons):
+            raise ValueError('lesson_check needs game_over_lessons or no_effect_lessons')
         if type(self.state_objective) is not bool:
             raise ValueError('state_objective must be boolean')
         if any(type(getattr(self, name)) is not bool for name in

@@ -83,6 +83,40 @@ class Backend(unittest.TestCase):
         self.assertIn('--no-session-persistence', argv)
         self.assertEqual(backend.budget.calls, 1)
 
+    def test_a_second_subscription_is_used_only_when_its_token_file_is_named(self):
+        c = cli_settings()
+        request = policy.Policy(c).request(observation())
+        with tempfile.TemporaryDirectory() as folder:
+            token_file = Path(folder) / 'second-account'
+            token_file.write_text('token-of-the-second-account\n')
+            token_file.chmod(0o600)
+            with patch.dict('os.environ', {'PATH': '/usr/bin', 'HOME': '/tmp'}, clear=True):
+                plain_cli = ScriptedCLI(cli_result(ACTION))
+                plain = backend_for(c, plain_cli)
+                plain.complete(request)
+            self.assertNotIn('CLAUDE_CODE_OAUTH_TOKEN', plain_cli.calls[0]['env'])      # the default: unchanged
+            self.assertNotIn('subscription_token_file', plain.last_record)
+            with patch.dict('os.environ', {'PATH': '/usr/bin', 'HOME': '/tmp', 'ARC_CLAUDE_TOKEN_FILE': str(token_file),
+                                           'ANTHROPIC_API_KEY': 'must-not-leak'}, clear=True):
+                cli = ScriptedCLI(cli_result(ACTION))
+                second = backend_for(c, cli)
+                second.complete(request)
+                self.assertEqual(cli.calls[0]['env']['CLAUDE_CODE_OAUTH_TOKEN'], 'token-of-the-second-account')
+                self.assertNotIn('ANTHROPIC_API_KEY', cli.calls[0]['env'])
+                self.assertEqual(second.last_record['subscription_token_file'], 'second-account')
+                self.assertNotIn('token-of-the-second-account', json.dumps(second.last_record))
+                self.assertEqual(cli.calls[0]['argv'], plain_cli.calls[0]['argv'])      # the request itself is the same
+                token_file.chmod(0o644)
+                with self.assertRaises(ValueError):                                     # readable by others: refused
+                    backend_for(c, ScriptedCLI())
+                token_file.chmod(0o600)
+                token_file.write_text('two tokens')
+                with self.assertRaises(ValueError):
+                    backend_for(c, ScriptedCLI())
+        with patch.dict('os.environ', {'ARC_CLAUDE_TOKEN_FILE': str(Path(__file__).resolve())}):
+            with self.assertRaises(ValueError):                                         # inside the repository: refused
+                backend_for(c, ScriptedCLI())
+
     def test_old_cli_refuses_before_any_call(self):
         with self.assertRaisesRegex(ValueError, 'too old'):
             backend_for(cli_settings(), ScriptedCLI(), version=(2, 1, 196))
