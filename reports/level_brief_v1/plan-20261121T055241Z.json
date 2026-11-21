@@ -1,0 +1,217 @@
+{
+ "written": "2026-11-21T05:52:41Z",
+ "stamp": "20261121T055241Z",
+ "rule": "Decided on the seven held-out games only. Measure: levels completed in the 100 new actions, summed over the two runs of an arm. \"helps\": the brief arm completes more levels in total than the ledger arm, is ahead in at least two games and behind in none. \"hurts\": it completes fewer in total. Anything else: \"no detectable difference\". The runs on the three designed-on games decide nothing. No run is repeated because of its result; a run that ends with a problem (backend error, failed audit) is reported and repeated once, before its result is looked at. Reported beside the verdict, not part of it: actions on the first level completed, game overs, actions that changed nothing, replies sent back, output tokens, and every brief and rule written.",
+ "arms": {
+  "ledger": {
+   "no_effect_lessons": true,
+   "no_effect_wait": 4,
+   "lesson_check": true,
+   "game_over_lessons": true,
+   "object_ledger": true
+  },
+  "brief": {
+   "no_effect_lessons": true,
+   "no_effect_wait": 4,
+   "lesson_check": true,
+   "game_over_lessons": true,
+   "object_ledger": true,
+   "level_brief": true
+  }
+ },
+ "new_actions": 100,
+ "designed_on": {
+  "ls20-9607627b": {
+   "starts_after_action": 60,
+   "runs": [
+    [
+     "brief",
+     1
+    ]
+   ]
+  },
+  "tr87-cd924810": {
+   "starts_after_action": 61,
+   "runs": [
+    [
+     "brief",
+     1
+    ]
+   ]
+  },
+  "cd82-fb555c5d": {
+   "starts_after_action": 35,
+   "runs": [
+    [
+     "brief",
+     1
+    ]
+   ]
+  }
+ },
+ "held_out": {
+  "ar25-0c556536": {
+   "starts_after_action": 72,
+   "runs": [
+    [
+     "ledger",
+     1
+    ],
+    [
+     "brief",
+     1
+    ],
+    [
+     "ledger",
+     2
+    ],
+    [
+     "brief",
+     2
+    ]
+   ]
+  },
+  "ka59-38d34dbb": {
+   "starts_after_action": 30,
+   "runs": [
+    [
+     "brief",
+     1
+    ],
+    [
+     "ledger",
+     1
+    ],
+    [
+     "brief",
+     2
+    ],
+    [
+     "ledger",
+     2
+    ]
+   ]
+  },
+  "lf52-271a04aa": {
+   "starts_after_action": 8,
+   "runs": [
+    [
+     "ledger",
+     1
+    ],
+    [
+     "brief",
+     1
+    ],
+    [
+     "ledger",
+     2
+    ],
+    [
+     "brief",
+     2
+    ]
+   ]
+  },
+  "sc25-635fd71a": {
+   "starts_after_action": 64,
+   "runs": [
+    [
+     "brief",
+     1
+    ],
+    [
+     "ledger",
+     1
+    ],
+    [
+     "brief",
+     2
+    ],
+    [
+     "ledger",
+     2
+    ]
+   ]
+  },
+  "sk48-d8078629": {
+   "starts_after_action": 65,
+   "runs": [
+    [
+     "ledger",
+     1
+    ],
+    [
+     "brief",
+     1
+    ],
+    [
+     "ledger",
+     2
+    ],
+    [
+     "brief",
+     2
+    ]
+   ]
+  },
+  "sp80-589a99af": {
+   "starts_after_action": 69,
+   "runs": [
+    [
+     "brief",
+     1
+    ],
+    [
+     "ledger",
+     1
+    ],
+    [
+     "brief",
+     2
+    ],
+    [
+     "ledger",
+     2
+    ]
+   ]
+  },
+  "wa30-ee6fef47": {
+   "starts_after_action": 95,
+   "runs": [
+    [
+     "ledger",
+     1
+    ],
+    [
+     "brief",
+     1
+    ],
+    [
+     "ledger",
+     2
+    ],
+    [
+     "brief",
+     2
+    ]
+   ]
+  }
+ },
+ "wording": {
+  "RULES_NOTE": "evidence.rules are the rules of this game that you have recorded as confirmed, each with its number. The controller keeps them for the whole game, on later levels too; they are not part of your hypotheses list and are never dropped. rule_notes is optional unless asked for: add an item when an observation has just confirmed how something works (what an action does, what a kind of thing does, what completes a level) and evidence.rules does not say it yet, or says it wrongly. rule: the rule, said generally so that it holds on other boards and other levels, at most 300 characters. replaces: the number of the rule this one corrects or covers, or 0 to add it. A rule is confirmed only as far as what you have seen requires: when a looser rule fits everything seen as well as a stricter one, record the looser one. At most 12 rules are kept; once the list is full a new rule has to replace one.",
+  "brief_ask_with_the_completed_board": "This is your first turn on level 2. Before you choose an action, write level_brief and rule_notes. won_by: what made level 1 complete. evidence.completed_level shows its last board, the last frame the game returned before it showed this level, which you were not shown at the time, and how it differs from the board you took your last action on. Read the rule you were working with against it. State the least that is shown to be required. If a looser rule, one that more boards would satisfy, fits everything you have seen as well as the rule you were working with, the looser one is what the level confirmed, and the stricter one is still only a hypothesis. rule_notes: record what the levels so far have confirmed and evidence.rules does not yet say, or says more strictly than was shown (an empty list if nothing is missing). different: what differs here from the levels you have completed: things that were not there before, things that are as before except in some respect (such as colour, size, number or the way they are turned), and any part of what this level asks for that your rules cannot yet produce. why: what each difference is for. A level is made to be completed, and what it adds to the earlier ones is there because completing it depends on it. Tell two cases apart. A difference that nothing you can do would change cannot be one you are required to remove: take the two things as equal in that respect and go on. A new thing, or a difference that something on the board can change, is most likely what the part your rules cannot yet produce depends on, and what it does may change how the rest has to be done. first: the cheapest way to find out what such a thing does, which you will take before you spend actions on what the earlier levels already taught you; \"nothing new\" if the level differs in no such way.",
+  "brief_ask_without_it": "This is your first turn on level 2. Before you choose an action, write level_brief and rule_notes. won_by: what made level 1 complete. The game returned no frame of that level after your last action, so go by the boards you saw. State the least that is shown to be required. If a looser rule, one that more boards would satisfy, fits everything you have seen as well as the rule you were working with, the looser one is what the level confirmed, and the stricter one is still only a hypothesis. rule_notes: record what the levels so far have confirmed and evidence.rules does not yet say, or says more strictly than was shown (an empty list if nothing is missing). different: what differs here from the levels you have completed: things that were not there before, things that are as before except in some respect (such as colour, size, number or the way they are turned), and any part of what this level asks for that your rules cannot yet produce. why: what each difference is for. A level is made to be completed, and what it adds to the earlier ones is there because completing it depends on it. Tell two cases apart. A difference that nothing you can do would change cannot be one you are required to remove: take the two things as equal in that respect and go on. A new thing, or a difference that something on the board can change, is most likely what the part your rules cannot yet produce depends on, and what it does may change how the rest has to be done. first: the cheapest way to find out what such a thing does, which you will take before you spend actions on what the earlier levels already taught you; \"nothing new\" if the level differs in no such way.",
+  "BRIEF_NOTE": "evidence.level_brief is what you wrote on your first turn of this level; the controller keeps it for you. What it names under first comes before the routine of earlier levels. Act on the least that your rules and your brief require: do not pass up something that satisfies them for the sake of a stricter reading that nothing you have seen requires. If acting on the looser reading fails, that failure is the observation that requires more: tighten the rule then. When an observation settles what a difference is for, record it in rule_notes; when it shows the brief wrong, write level_brief again (won_by, different, why, first) to replace it. Otherwise leave level_brief out.",
+  "NEW_NOTE": "In evidence.things a look marked new was on no earlier level of this game. The controller compares looks from the cells alone: a known thing in another colour or shape is marked new as well, so the mark is a pointer, not a finding."
+ },
+ "rule_limit": 12,
+ "code_sha256": {
+  "research/claude_arc_v1/policy.py": "71b8083109581ea9efc851d0329cf9a82a1838efa32c4798e02815669758d5c3",
+  "research/claude_arc_v1/things.py": "dd259f05072b8bd9907420300ec74c1003f90785bac5ad629cb2cc3542b62fac",
+  "research/claude_arc_v1/config.py": "d1469671d674091447670bcd62249e8232c837e5b241fba643f31a99ae7120d6",
+  "research/claude_arc_v1/run.py": "993cbbff7504ef939a3e0565c43e3a337d9e72bc4c9d1c62060a16587d214b36",
+  "research/level_brief_v1/runs.py": "c7b3a3a0be898c52d49ebf783d229b65d8138786ce9d804cb38a93e4438ec531",
+  "research/action_waste_v1/level_runs.py": "ac3d0747235873b701dade14eb6d0202f56d85b6d9d8986be20fce0fc137a96a"
+ }
+}

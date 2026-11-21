@@ -124,9 +124,12 @@ def check():
             look.pop('new', None)
         (mine['evidence'].get('things') or {}).pop('new_looks_not_listed', None)
         rules = mine['evidence'].pop('rules', None)         # the brief arm's own list, empty before the first reply
+        won = mine['evidence'].pop('completed_level', {})   # and the last board of the level completed before
         print('   first request of the brief arm: system prompt equal to the ledger arm %s | evidence otherwise equal %s | '
-              'rules list present and empty %s | brief asked for %s | rule notes offered %s | level %d'
-              % (same_system, mine['evidence'] == theirs['evidence'], rules == [], 'level_brief' in mine['output_contract'],
+              'rules list present and empty %s | completed board shown %s (level %s, %s frames returned) | brief asked for %s | '
+              'rule notes offered %s | level %d'
+              % (same_system, mine['evidence'] == theirs['evidence'], rules == [], bool(won.get('board')), won.get('level'),
+                 won.get('frames_returned'), 'level_brief' in mine['output_contract'],
                  'rule_notes' in mine['output_contract'], mine['evidence']['current']['levels_completed'] + 1))
 
 
@@ -141,10 +144,12 @@ def plan(stamp):
              'arms': ARMS, 'new_actions': NEW_ACTIONS,
              'designed_on': {game: {'starts_after_action': start, 'runs': runs_of(game)} for game, start in DESIGNED_ON.items()},
              'held_out': {game: {'starts_after_action': start, 'runs': runs_of(game)} for game, start in HELD_OUT.items()},
-             'wording': {name: getattr(policy, name) for name in ('RULES_NOTE', 'BRIEF_ASK', 'BRIEF_NOTE', 'NEW_NOTE')},
+             'wording': {'RULES_NOTE': policy.RULES_NOTE, 'brief_ask_with_the_completed_board': policy.brief_ask(2, True),
+                         'brief_ask_without_it': policy.brief_ask(2, False), 'BRIEF_NOTE': policy.BRIEF_NOTE,
+                         'NEW_NOTE': policy.NEW_NOTE},
              'rule_limit': policy.RULE_LIMIT, 'code_sha256': code_hashes()}
     REPORT.mkdir(parents=True, exist_ok=True)
-    path = REPORT / 'plan.json'
+    path = REPORT / ('plan-%s.json' % stamp)
     if path.exists():
         raise SystemExit('%s exists: a plan is written once, before the first call' % path)
     path.write_text(json.dumps(value, indent=1) + '\n')
@@ -153,12 +158,10 @@ def plan(stamp):
 
 def planned(stamp):
     """Refuse to send anything unless the plan was written for this stamp and for the code as it is now."""
-    path = REPORT / 'plan.json'
+    path = REPORT / ('plan-%s.json' % stamp)
     if not path.exists():
-        raise SystemExit('write the plan first: runs.py plan <stamp>')
+        raise SystemExit('write the plan first: runs.py plan %s' % stamp)
     value = json.loads(path.read_text())
-    if value['stamp'] != stamp:
-        raise SystemExit('the plan was written for stamp %s, not %s' % (value['stamp'], stamp))
     changed = sorted(name for name, digest in code_hashes().items() if value['code_sha256'].get(name) != digest)
     if changed:
         raise SystemExit('the code changed after the plan was written: %s' % ', '.join(changed))
@@ -209,12 +212,12 @@ class StandIn:
             reply['no_effect_lesson'] = {'rule': text, 'applies_when': text, 'replaces': 0}
         have = len(body['evidence'].get('rules') or [])
         if 'level_brief' in contract:
-            reply['level_brief'] = {'different': text, 'why': text, 'first': text}
+            reply['level_brief'] = {name: text for name in policy.BRIEF_LIMITS}
             reply['rule_notes'] = [{'rule': 'written on the first turn of a level', 'replaces': have if have >= policy.RULE_LIMIT else 0}]
         elif 'rule_notes' in contract and self.turn % 7 == 0:
             reply['rule_notes'] = [{'rule': 'rule from turn %d' % self.turn, 'replaces': have if have >= policy.RULE_LIMIT else 0}]
         if 'level_brief' in body['evidence'] and self.turn % 23 == 0:
-            reply['level_brief'] = {'different': text, 'why': 'replaced at turn %d' % self.turn, 'first': text}
+            reply['level_brief'] = {**{name: text for name in policy.BRIEF_LIMITS}, 'why': 'replaced at turn %d' % self.turn}
         self.budget.settle(reserved, 10, 10)
         self.last_record = {'outcome': 'stand_in', 'usage': {'input_tokens': 10, 'output_tokens': 10}}
         return CompletionResult(json.dumps(reply), 10, 10, 0)
@@ -296,7 +299,7 @@ if __name__ == '__main__':
     elif command == 'rehearse' and len(sys.argv) == 4:
         rehearse(sys.argv[2], sys.argv[3])
     elif command == 'summary' and len(sys.argv) == 4:
-        stamp, rows, not_counted, problem_runs = sys.argv[3], [], [], []
+        stamp, rows, not_counted, designed_open, problem_runs = sys.argv[3], [], [], [], []
         for game in GAMES:
             for arm, n in sorted(runs_of(game)):
                 first, folder = L.RUNS / name_of(game, arm, n, stamp), counted(game, arm, n, stamp)
@@ -305,16 +308,19 @@ if __name__ == '__main__':
                 state = state_of(folder)
                 if state in ('clean', 'problem'):
                     rows.append(summary(folder))
-                if state != 'clean' or rows[-1]['audit'] != 'passes':
-                    not_counted.append('%s: %s' % (folder.name, state if state != 'clean' else rows[-1]['audit']))
-        result = {'runs': rows, 'runs_repeated_after_a_problem': problem_runs, 'runs_that_cannot_be_counted': not_counted,
+                reason = state if state != 'clean' else None if rows[-1]['audit'] == 'passes' else rows[-1]['audit']
+                if reason:
+                    (not_counted if game in HELD_OUT else designed_open).append('%s: %s' % (folder.name, reason))
+        result = {'runs': rows, 'runs_repeated_after_a_problem': problem_runs,
+                  'held_out_runs_that_cannot_be_counted': not_counted, 'designed_on_runs_not_finished': designed_open,
                   'rule': RULE, 'held_out': verdict(rows) if not not_counted else
-                  'not applied: every planned run must have ended without a problem and pass the audit'}
+                  'not applied: every held-out run must have ended without a problem and pass the audit'}
         Path(sys.argv[2]).write_text(json.dumps(result, indent=1) + '\n')
         for row in rows:
             print(json.dumps({k: v for k, v in row.items() if k not in (
                 'lessons', 'game_over_lessons', 'thing_notes', 'things_by_level', 'briefs', 'rule_notes')}))
-        print('repeated after a problem:', problem_runs or 'none', '| cannot be counted:', not_counted or 'none')
+        print('repeated after a problem:', problem_runs or 'none', '| designed-on runs not finished:', designed_open or 'none',
+              '| held-out runs that cannot be counted:', len(not_counted), not_counted[:3])
         print(json.dumps(result['held_out']))
     else:
         raise SystemExit(__doc__)

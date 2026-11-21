@@ -1,0 +1,462 @@
+{
+ "runs": [
+  {
+   "run": "brief-ls20-brief-1-20261121T011912Z",
+   "game": "ls20",
+   "set_up": "memory layers, object ledger and level brief",
+   "started_after_action": 60,
+   "level_at_start": 3,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 1,
+   "actions_per_completed_level": [
+    41
+   ],
+   "actions_on_the_open_level": 59,
+   "changed_nothing": 0,
+   "changed_nothing_at": [],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 0,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 0,
+   "cases_opened": 0,
+   "lessons_kept": 0,
+   "further_actions_combined": [],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [],
+   "game_over_lessons": [],
+   "checks_written": 0,
+   "model_calls": 100,
+   "replies_sent_back": 0,
+   "output_tokens": 171698,
+   "output_per_call_median": 1129,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes",
+   "arm": "brief",
+   "state": "clean",
+   "briefs": [
+    {
+     "at_action": 1,
+     "level": 3,
+     "asked_for": true,
+     "different": "E is new: a multicoloured 3x3 (9,e,0,8,c) at x30-32 y46-48. The indicator is now colour c (the target is 9), and its shape is the target turned 180 degrees. There are two refill rings. B (0/1 cross) sits far away in the top-right room. The target is at the bottom right.",
+     "why": "The indicator has to match the target in both colour and orientation. E most likely changes the indicator's colour. B most likely rotates it, perhaps 90 degrees per visit. The rings are there to fund the long route.",
+     "first": "Go to E first (up to y5, right to x29, down to y45, with a stop at ring C x34 y15) and watch how the indicator changes."
+    },
+    {
+     "at_action": 42,
+     "level": 4,
+     "asked_for": true,
+     "different": "There is a new tile AD made only of 0 (an L/zigzag of 4 cells), whereas the rotator was a 0/1 cross. The indicator is now colour e with shape .X./XX./.XX. The target F holds XXX/..X/X.X in 9. The shapes have different cell counts, so my rules cannot yet produce a match. There are more 1-strip pushers, including some under walls (AC).",
+     "why": "AD is probably a shape changer, needed because rotation cannot turn the indicator into the target shape. E is there to change the colour from e to 9. The pushers are needed to reach AD, which can only be reached from (24,35) by sliding right from (9,35).",
+     "first": "Go to AD by the route left, down, left to ring C, then to (9,30), slide down/right to (24,35), step up onto AD, and watch how the indicator changes."
+    }
+   ],
+   "rule_notes": [
+    {
+     "at_action": 1,
+     "rule": "Actions 1/2/3/4 move the player block 5 cells up/down/left/right. It cannot enter wall cells (colour 4).",
+     "replaces": 0
+    },
+    {
+     "at_action": 1,
+     "rule": "The bar at the bottom is a move budget that shrinks by 2 cells per move. Stepping onto a 3x3 b ring refills it, and the ring is used up when you do.",
+     "replaces": 0
+    },
+    {
+     "at_action": 1,
+     "rule": "A level is completed by moving the player into the framed target box while the bottom-left indicator pattern matches the box's inner pattern.",
+     "replaces": 0
+    },
+    {
+     "at_action": 20,
+     "rule": "Stepping the player onto a multicoloured 3x3 tile (E) changes the indicator's colour (seen: c to 9).",
+     "replaces": 0
+    },
+    {
+     "at_action": 37,
+     "rule": "Stepping the player onto a 0/1 cross tile rotates the bottom-left indicator pattern 90 degrees clockwise. To rotate it again, step off the tile and back on.",
+     "replaces": 0
+    },
+    {
+     "at_action": 39,
+     "rule": "Stepping the player onto a 0/1 cross tile rotates the bottom-left indicator pattern 90 degrees clockwise each time. Step off and back on to rotate again.",
+     "replaces": 5
+    },
+    {
+     "at_action": 41,
+     "rule": "A 1-coloured strip pushes: when the player moves into the cell lane next to it, the player slides straight away from the strip until something stops it. This costs only one move from the budget.",
+     "replaces": 0
+    },
+    {
+     "at_action": 58,
+     "rule": "Stepping onto a tile made only of 0 cells (a shape changer) changes the indicator's shape to a different pattern, which can match the target shape. The colour stays the same.",
+     "replaces": 0
+    },
+    {
+     "at_action": 60,
+     "rule": "The bottom bar is a move budget that loses 1 column per move (a slide counts as one move). Stepping onto a 3x3 b ring refills it, and the ring is used up when you do.",
+     "replaces": 2
+    },
+    {
+     "at_action": 60,
+     "rule": "A pusher strip only acts when the player ends a move in the lane next to it. Sliding past that lane does not set it off.",
+     "replaces": 6
+    },
+    {
+     "at_action": 86,
+     "rule": "Stepping onto the multicoloured 3x3 tile (E) moves the indicator's colour one step along a cycle (seen: c to 9, e to 8). To reach a wanted colour, step off and back on again.",
+     "replaces": 4
+    },
+    {
+     "at_action": 88,
+     "rule": "Stepping onto the multicoloured 3x3 tile (E) moves the indicator colour one step along a cycle (seen e\u21928\u2192c, and c\u21929 on an earlier level). Step off and back on to advance it again.",
+     "replaces": 4
+    },
+    {
+     "at_action": 90,
+     "rule": "The E colour cycle is e\u21928\u2192c\u21929: each step onto E moves the indicator colour one step along it.",
+     "replaces": 4
+    },
+    {
+     "at_action": 92,
+     "rule": "Pushers can be used on purpose to cover long distances. Stepping into a pusher's lane slides the player across the open area to the far wall for the cost of a single move.",
+     "replaces": 0
+    }
+   ]
+  },
+  {
+   "run": "brief-tr87-brief-1-20261121T011912Z",
+   "game": "tr87",
+   "set_up": "memory layers, object ledger and level brief",
+   "started_after_action": 61,
+   "level_at_start": 2,
+   "new_actions": 100,
+   "levels_completed_in_new_actions": 0,
+   "actions_per_completed_level": [],
+   "actions_on_the_open_level": 100,
+   "changed_nothing": 0,
+   "changed_nothing_at": [],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 0,
+   "game_overs": 0,
+   "turns": 100,
+   "turns_announcing_a_test": 2,
+   "cases_opened": 0,
+   "lessons_kept": 0,
+   "further_actions_combined": [],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [],
+   "game_over_lessons": [],
+   "checks_written": 1,
+   "model_calls": 101,
+   "replies_sent_back": 5,
+   "output_tokens": 679145,
+   "output_per_call_median": 3710,
+   "stop_reason": "action_cap",
+   "problems": [],
+   "audit": "passes",
+   "arm": "brief",
+   "state": "clean",
+   "briefs": [
+    {
+     "at_action": 1,
+     "level": 2,
+     "asked_for": true,
+     "different": "The colours are swapped: inputs are 7-framed and outputs b-framed. One input glyph can map to 1-3 output glyphs, so there are 4 query glyphs and 7 answer slots. Some query glyphs are transformed versions of the example inputs: Q1 is A mirrored, Q3 is D mirrored and Q4 is F transposed, while Q2 equals E.",
+     "why": "The slot count fixes how many output glyphs each query produces (1+3+2+1=7). The transforms probably mean the paired output must be transformed the same way, which my level-1 lookup rule cannot produce yet.",
+     "first": "Press ACTION1 on slot 1 and look at the cycle options to see whether mirrored versions (like mirror(A_out)) appear."
+    }
+   ],
+   "rule_notes": [
+    {
+     "at_action": 1,
+     "rule": "Example pairs sit at the top (input -> 333 arrow -> output). The bottom has a query row of glyphs and an answer row of 5x5 slots, with a 0-coloured selector bracket above and below the selected slot.",
+     "replaces": 0
+    },
+    {
+     "at_action": 1,
+     "rule": "ACTION1 cycles the selected answer slot through a fixed list of glyph patterns. ACTION3 moves the selector one slot left and ACTION4 one slot right.",
+     "replaces": 0
+    },
+    {
+     "at_action": 1,
+     "rule": "A level is completed when every answer slot shows the output that the examples give for its query glyph(s). This was confirmed on level 1 by setting the last slot (t61).",
+     "replaces": 0
+    },
+    {
+     "at_action": 9,
+     "rule": "ACTION2 cycles the selected answer slot backward through the same option list that ACTION1 steps forward through.",
+     "replaces": 0
+    },
+    {
+     "at_action": 10,
+     "rule": "Answer slots are 5x5 glyphs at a 7-column pitch (x8, 15, 22, ...). ACTION3/ACTION4 move the 0-bracket selector by one slot.",
+     "replaces": 0
+    },
+    {
+     "at_action": 18,
+     "rule": "The answer-slot option cycle mixes example outputs, some transformed (transposed, rotated) and some plain. The correct answer is usually T(output), where T maps the example input onto the query glyph.",
+     "replaces": 0
+    },
+    {
+     "at_action": 30,
+     "rule": "Each answer slot's ACTION1 option cycle has a fixed length (7 seen on level 2) and repeats exactly. You can work out every option from the changed_cells of one full cycle.",
+     "replaces": 0
+    },
+    {
+     "at_action": 50,
+     "rule": "An answer slot's option cycle can mix plain outputs of unrelated examples with transformed ones. If a slot's full cycle lacks the expected T(output), then the slot-to-query assignment is wrong, not the cycle.",
+     "replaces": 0
+    },
+    {
+     "at_action": 57,
+     "rule": "An answer slot's option cycle is length 7 and includes distractors: other examples' outputs and transformed outputs of the neighbouring query groups. Having an option in the cycle does not by itself show that it is correct.",
+     "replaces": 0
+    },
+    {
+     "at_action": 67,
+     "rule": "If an example's output glyph is unchanged by the transform T that turns its input into the query, the correct answer is that output unchanged. Check a glyph's symmetries before looking for a transformed option in the cycle.",
+     "replaces": 0
+    },
+    {
+     "at_action": 68,
+     "rule": "Read glyphs by exact hex index: a slot or glyph at x starts at character x%8 of group x//8. Answer slots on level 2 are at x=8,15,22,29,36,43,50, and example output glyphs sit at a 7-column pitch inside their b-frames.",
+     "replaces": 0
+    },
+    {
+     "at_action": 75,
+     "rule": "If an example input is symmetric (for example unchanged by rot180), the transform T that maps it onto the query is ambiguous. Use the cycle to settle it: the option that appears (e.g. rot180 of the output, with multi-glyph outputs in reversed order) is the intended T(output).",
+     "replaces": 10
+    },
+    {
+     "at_action": 76,
+     "rule": "When a multi-glyph query is symmetric and the matching answer is its outputs rotated 180\u00b0, the output glyphs fill the answer slots in reversed order, each rotated 180\u00b0.",
+     "replaces": 0
+    }
+   ]
+  },
+  {
+   "run": "brief-cd82-brief-1-20261121T011912Z",
+   "game": "cd82",
+   "set_up": "memory layers, object ledger and level brief",
+   "started_after_action": 35,
+   "level_at_start": 3,
+   "new_actions": 78,
+   "levels_completed_in_new_actions": 4,
+   "actions_per_completed_level": [
+    35,
+    14,
+    13,
+    16
+   ],
+   "actions_on_the_open_level": 0,
+   "changed_nothing": 4,
+   "changed_nothing_at": [
+    39,
+    43,
+    57,
+    68
+   ],
+   "repeats_of_a_known_no_effect_action": 0,
+   "in_a_loop": 16,
+   "game_overs": 0,
+   "turns": 78,
+   "turns_announcing_a_test": 3,
+   "cases_opened": 4,
+   "lessons_kept": 4,
+   "further_actions_combined": [
+    1,
+    1,
+    1,
+    1
+   ],
+   "lessons_offered_too_early_and_dropped": 0,
+   "lessons": [
+    {
+     "at_action": 41,
+     "explains": "t39",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "The bucket only moves between fixed ring positions around the block (sides and diagonals). A direction action that has no ring position in that direction from the bucket's current spot changes nothing except the step counter.",
+     "applies_when": "The bucket is already at the outermost ring position in the direction pressed, for example pressing left while it is at a left corner diagonal, or up while it is on the top row.",
+     "replaces": 0
+    },
+    {
+     "at_action": 45,
+     "explains": "t43",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "The bucket sits on a fixed ring of 8 positions around the block (4 sides and 4 diagonals). A direction action moves it to the next ring position in that screen direction only when one exists. Otherwise it would have to cross the block or leave the ring, so only the step counter changes.",
+     "applies_when": "The bucket is on a side position and the direction points toward the block (for example right from the left side), or the bucket is already at the outermost ring position in that direction.",
+     "replaces": 1
+    },
+    {
+     "at_action": 59,
+     "explains": "t57",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "Clicking the small cup stamps the currently selected colour into a fixed 4x3 area of the block (block cols 3-6, rows 0-2). It plays an animation, but if that area already has that colour the final board is unchanged; only the step counter drops.",
+     "applies_when": "Before clicking the cup, check whether the cells it covers (block cols 3-6, rows 0-2) are all already the selected colour. If they are, the click will not change the board.",
+     "replaces": 0
+    },
+    {
+     "at_action": 70,
+     "explains": "t68",
+     "also_covers": [],
+     "further_actions_combined": 1,
+     "rule": "Clicking the large bucket/pour preview does nothing. Only action 5 pours it. The clickable small-cup stamp exists only while the bucket is at the top position, so a click on the board area with no cup present has no effect.",
+     "applies_when": "An ACTION6 click lands on the outlined pour preview or on empty ground, and no small cup (a 0/c cup shape above the top preview) is drawn there.",
+     "replaces": 0
+    }
+   ],
+   "game_over_lessons": [],
+   "checks_written": 72,
+   "model_calls": 79,
+   "replies_sent_back": 1,
+   "output_tokens": 129125,
+   "output_per_call_median": 1417,
+   "stop_reason": "win",
+   "problems": [],
+   "audit": "passes",
+   "arm": "brief",
+   "state": "clean",
+   "briefs": [
+    {
+     "at_action": 1,
+     "level": 3,
+     "asked_for": true,
+     "different": "The palette now has 7 swatches (0,f,c,b,e,8,9), and f is selected. The target has a small c rectangle at the top centre, and its lower-right triangle is split between e and 8. The block starts all 0.",
+     "why": "The new colours are needed for the target. The rectangle and the split triangle are shapes my half/triangle pours may not make directly. They may depend on pour order or on regions that are clipped by earlier fills.",
+     "first": "Pour f from the current top position. This is useful anyway since f is the background, and it shows the region and amount filled on this level."
+    },
+    {
+     "at_action": 36,
+     "level": 4,
+     "asked_for": true,
+     "different": "The target needs a two-colour right half split along the anti-diagonal (c above, f on and below), a 9 left half, and a 3x4 b patch at cols 0-2, rows 3-6 on the left edge. The cup only showed at the top on the last level, and its stamp is 4 wide by 3 tall.",
+     "why": "The b patch fits a side cup stamp turned 90 degrees, so the cup most likely appears at the left side position too. The triangle split can be done with a c pour from top-left followed by an f pour from bottom-right.",
+     "first": "Select c, pour from top-left, then pass through the left side position on the way to bottom-right and check whether a cup appears there."
+    },
+    {
+     "at_action": 50,
+     "level": 5,
+     "asked_for": true,
+     "different": "Same palette, bucket ring and cup. The block is all 0 and the bucket starts at the top. The target needs 4 colours: a 9 top wedge with an 8 stamp in it, an e left triangle, and a c bottom-right triangle.",
+     "why": "Nothing is new. The target is just a combination of a top pour, a top cup stamp, and two diagonal pours, ordered so that the overwrites land correctly.",
+     "first": "nothing new"
+    },
+    {
+     "at_action": 63,
+     "level": 6,
+     "asked_for": true,
+     "different": "The target needs five colours (8, f, b, e and the original 0), with diagonal and half regions plus two cup stamps. The palette also has a 0 swatch (B). Otherwise it uses the same bucket ring, cups and palette as before.",
+     "why": "Every region matches a known operation: the right-half pour, the top-left triangle pour, the top cup stamp and the left cup stamp. Only the pour order matters, since later pours overwrite earlier ones. Leftover 0 cells need no action.",
+     "first": "Nothing new. Select e, move the bucket to the right side (4, 2), and pour."
+    }
+   ],
+   "rule_notes": [
+    {
+     "at_action": 1,
+     "rule": "Clicking a colour swatch in the top bar with ACTION6 selects that colour; a 0 underline appears beneath the selected swatch.",
+     "replaces": 0
+    },
+    {
+     "at_action": 1,
+     "rule": "Actions 1-4 move the bucket around a ring of positions (sides and diagonals) around the block; the outlined preview shows the region a pour would fill.",
+     "replaces": 0
+    },
+    {
+     "at_action": 1,
+     "rule": "Action 5 pours the selected colour into the block's half or triangle facing the bucket, overwriting it. The level completes when the block matches the top-left target panel.",
+     "replaces": 0
+    },
+    {
+     "at_action": 1,
+     "rule": "The bottom row of 4s is a step counter that loses one cell per action.",
+     "replaces": 0
+    },
+    {
+     "at_action": 6,
+     "rule": "A direction action (1-4) moves the bucket to the next ring position in that screen direction. If there is no such position, nothing happens except the step counter going down.",
+     "replaces": 0
+    },
+    {
+     "at_action": 20,
+     "rule": "Clicking any palette swatch selects its colour at once: the 0 underline moves under it and the bucket preview is recoloured to that colour. Clicking does not move the bucket.",
+     "replaces": 1
+    },
+    {
+     "at_action": 22,
+     "rule": "Action 5 from the top position overwrites the block's entire top half (all columns, upper 5 rows) with the selected colour, whatever was there before.",
+     "replaces": 0
+    },
+    {
+     "at_action": 24,
+     "rule": "Action 5 from a diagonal position fills that triangle with the anti-diagonal (or diagonal) included. For example, from the top-left it fills cells with col+row<=9.",
+     "replaces": 0
+    },
+    {
+     "at_action": 27,
+     "rule": "Action 5 from a side position (for example the right) fills that whole half of the block (5 columns or 5 rows) with the selected colour.",
+     "replaces": 0
+    },
+    {
+     "at_action": 28,
+     "rule": "Selecting a palette colour while the bucket is in place recolours the bucket preview (and the swatch underline) at once. It does not change the block itself until action 5 pours.",
+     "replaces": 0
+    },
+    {
+     "at_action": 36,
+     "rule": "Level completes as soon as the block equals the target panel; pours overwrite, so later pours must be ordered so the final overlaps match the target (diagonal pours include the anti-diagonal).",
+     "replaces": 0
+    },
+    {
+     "at_action": 48,
+     "rule": "Action 5 from the left side position fills the block's whole left half (cols 0-4) with the selected colour. A small cup also appears beside the bucket at side positions, not only at the top.",
+     "replaces": 0
+    },
+    {
+     "at_action": 50,
+     "rule": "Clicking the small cup beside the bucket stamps the selected colour into a fixed small sub-area of the block on that side: from the top it is block cols 3-6, rows 0-2; from the left it is block cols 0-2, rows 3-6.",
+     "replaces": 0
+    }
+   ]
+  }
+ ],
+ "runs_repeated_after_a_problem": [],
+ "held_out_runs_that_cannot_be_counted": [
+  "brief-ar25-brief-1-20261121T011912Z: absent",
+  "brief-ar25-brief-2-20261121T011912Z: absent",
+  "brief-ar25-ledger-1-20261121T011912Z: absent",
+  "brief-ar25-ledger-2-20261121T011912Z: absent",
+  "brief-ka59-brief-1-20261121T011912Z: absent",
+  "brief-ka59-brief-2-20261121T011912Z: absent",
+  "brief-ka59-ledger-1-20261121T011912Z: absent",
+  "brief-ka59-ledger-2-20261121T011912Z: absent",
+  "brief-lf52-brief-1-20261121T011912Z: absent",
+  "brief-lf52-brief-2-20261121T011912Z: absent",
+  "brief-lf52-ledger-1-20261121T011912Z: absent",
+  "brief-lf52-ledger-2-20261121T011912Z: absent",
+  "brief-sc25-brief-1-20261121T011912Z: absent",
+  "brief-sc25-brief-2-20261121T011912Z: absent",
+  "brief-sc25-ledger-1-20261121T011912Z: absent",
+  "brief-sc25-ledger-2-20261121T011912Z: absent",
+  "brief-sk48-brief-1-20261121T011912Z: absent",
+  "brief-sk48-brief-2-20261121T011912Z: absent",
+  "brief-sk48-ledger-1-20261121T011912Z: absent",
+  "brief-sk48-ledger-2-20261121T011912Z: absent",
+  "brief-sp80-brief-1-20261121T011912Z: absent",
+  "brief-sp80-brief-2-20261121T011912Z: absent",
+  "brief-sp80-ledger-1-20261121T011912Z: absent",
+  "brief-sp80-ledger-2-20261121T011912Z: absent",
+  "brief-wa30-brief-1-20261121T011912Z: absent",
+  "brief-wa30-brief-2-20261121T011912Z: absent",
+  "brief-wa30-ledger-1-20261121T011912Z: absent",
+  "brief-wa30-ledger-2-20261121T011912Z: absent"
+ ],
+ "designed_on_runs_not_finished": [],
+ "rule": "Decided on the seven held-out games only. Measure: levels completed in the 100 new actions, summed over the two runs of an arm. \"helps\": the brief arm completes more levels in total than the ledger arm, is ahead in at least two games and behind in none. \"hurts\": it completes fewer in total. Anything else: \"no detectable difference\". The runs on the three designed-on games decide nothing. No run is repeated because of its result; a run that ends with a problem (backend error, failed audit) is reported and repeated once, before its result is looked at. Reported beside the verdict, not part of it: actions on the first level completed, game overs, actions that changed nothing, replies sent back, output tokens, and every brief and rule written.",
+ "held_out": "not applied: every held-out run must have ended without a problem and pass the audit"
+}

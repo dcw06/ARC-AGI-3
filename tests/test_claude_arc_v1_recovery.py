@@ -1058,8 +1058,8 @@ class ObjectLedger(Base):
 class LevelBrief(Base):
     """Rules the agent records as confirmed are kept for the whole game; on its first turn on every level after
     the first it must write what differs there, why, and what it will do first; the brief stays in the request."""
-    BRIEF = {'different': 'A thing that was on no earlier level.', 'why': 'Completing the level probably depends on it.',
-             'first': 'Act on it once and see what changes.'}
+    BRIEF = {'won_by': 'Reaching the tile, whichever way the piece came.', 'different': 'A thing that was on no earlier level.',
+             'why': 'Completing the level probably depends on it.', 'first': 'Act on it once and see what changes.'}
 
     @staticmethod
     def see(level=0, extra=False):
@@ -1131,8 +1131,9 @@ class LevelBrief(Base):
         agent.observe(one, ActionDecision(1, {}, source='controller_resume'), two,      # a saved action, repeated
                       {'action': {'action_id': 1, 'action_data': {}}, 'hypotheses': []})
         body = payload(agent.request(two))
-        self.assertEqual(set(body['output_contract']['level_brief']), {'different', 'why', 'first'})
-        self.assertIn(policy.BRIEF_ASK % 2, body['procedure'])
+        self.assertEqual(list(body['output_contract']['level_brief']), ['won_by', 'different', 'why', 'first'])
+        self.assertIn(policy.brief_ask(2, False), body['procedure'])       # that saved action returned one frame only
+        self.assertEqual(body['evidence']['completed_level'], {'level': 1, 'completed_by': 't1', 'frames_returned': 1})
         self.assertNotIn('level_brief', body['evidence'])
         with self.assertRaisesRegex(ValueError, 'first turn on level 2: .*missing: level_brief, rule_notes$'):
             agent.parse(self.answer(), two)                                # both named in one message
@@ -1140,7 +1141,7 @@ class LevelBrief(Base):
             agent.parse(self.answer(rule_notes=[]), two)
         with self.assertRaisesRegex(ValueError, 'missing: rule_notes$'):
             agent.parse(self.answer(level_brief=self.BRIEF), two)
-        with self.assertRaisesRegex(ValueError, 'level_brief needs different and why'):
+        with self.assertRaisesRegex(ValueError, 'level_brief needs won_by .1 to 400 characters., different'):
             agent.parse(self.answer(level_brief={**self.BRIEF, 'first': ''}, rule_notes=[]), two)
         self.step(agent, two, two, level_brief=self.BRIEF, rule_notes=[])
         body = payload(agent.request(two))
@@ -1152,8 +1153,28 @@ class LevelBrief(Base):
         self.step(agent, two, three, level_brief=better)                   # it may be replaced; the level ends
         self.assertEqual(agent.brief['why'], better['why'])
         body = payload(agent.request(three))
-        self.assertIn(policy.BRIEF_ASK % 3, body['procedure'])             # a new level, a new brief
+        self.assertIn(policy.brief_ask(3, False), body['procedure'])       # a new level, a new brief
         self.assertNotIn('level_brief', body['evidence'])
+
+    def test_the_board_that_completed_a_level_is_shown_once_on_the_first_turn_of_the_next(self):
+        agent = policy.Policy(settings(level_brief=True))
+        one, won = self.see(), ObjectLedger.grid(piece=(46, 30))          # the piece on the tile: the level's last board
+        two = Observation('toy-test', (won, self.see(extra=True).latest_frame), GameState.NOT_FINISHED, 1, 4, 'guid',
+                          (1, 2, 3, 4, 6))                                 # the game returns that board, then the next level
+        self.step(agent, one, two)
+        body = payload(agent.request(two))
+        shown = body['evidence']['completed_level']
+        self.assertEqual((shown['level'], shown['completed_by'], shown['frames_returned']), (1, 't1', 2))
+        self.assertEqual(shown['board'], policy.hex_rows(won))             # not the board the request shows as current
+        self.assertNotEqual(shown['board'], policy.hex_rows(two.latest_frame))
+        self.assertEqual(shown['differs_from_board_before'], policy.changed_cells(one.latest_frame, won))
+        self.assertIn(policy.brief_ask(2, True), body['procedure'])
+        with self.assertRaisesRegex(ValueError, 'level_brief needs won_by'):
+            agent.parse(self.answer(level_brief={k: v for k, v in self.BRIEF.items() if k != 'won_by'}, rule_notes=[]), two)
+        self.step(agent, two, two, level_brief=self.BRIEF, rule_notes=[])
+        body = payload(agent.request(two))
+        self.assertNotIn('completed_level', body['evidence'])              # shown once; what it taught is in the brief
+        self.assertEqual(body['evidence']['level_brief']['won_by'], self.BRIEF['won_by'])
 
     def test_with_the_object_ledger_a_look_from_no_earlier_level_is_marked_new(self):
         on = policy.Policy(settings(level_brief=True, object_ledger=True))
@@ -1183,7 +1204,8 @@ class LevelBrief(Base):
         self.assertIn(look, inventory.earlier)                             # so it is not marked new on the next level
 
     def test_the_wording_names_no_game_and_no_particular_thing(self):
-        text = ' '.join((policy.RULES_NOTE, policy.BRIEF_ASK, policy.BRIEF_NOTE, policy.NEW_NOTE)).lower()
+        text = ' '.join((policy.RULES_NOTE, policy.brief_ask(2, True), policy.brief_ask(2, False), policy.BRIEF_NOTE,
+                         policy.NEW_NOTE)).lower()
         for word in ('cup', 'bucket', 'paint', 'pour', 'key', 'lock', 'glyph', 'slot', 'rotate', 'orange', 'blue',
                      'maze', 'palette', 'canvas', 'cycle'):
             self.assertNotRegex(text, r'\b%s' % word)

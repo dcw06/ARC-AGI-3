@@ -9,6 +9,8 @@ the lessons it wrote and its check of each action.
     ls20_level3   ls20 level 3:     unchanged | every memory layer            (ls20_level3.py)
     ledger_test   ls20, tr87, cd82, g50t: unchanged | memory layers and object ledger
                                                                       (object_ledger_v1/held_out_runs.py)
+    brief_step1   ls20, tr87, cd82: the two 16 November runs with memory layers and object ledger | one run with
+                  the level brief as well (level_brief_v1/runs.py); the stamp given is the brief batch's
     astra_compare tr87, cd82, g50t: GPT-6 Astra's public recording | unchanged | memory layers and object ledger,
                   the same runs as ledger_test, each from the level our runs started on
 
@@ -66,6 +68,26 @@ SETS = {
                'the arrow in the corner shows the direction by convention (ACTION1 up, 2 down, 3 left, 4 right); '
                'clicks are drawn where they landed.',
         'directional': True},
+    'brief_step1': {
+        'games': (('ls20-9607627b', 'from the start of level 3'), ('tr87-cd924810', 'from the start of level 2'),
+                  ('cd82-fb555c5d', 'from the start of level 3')),
+        # column -> (folder prefix, arm, run numbers, batch stamp or None for the stamp given)
+        'columns': {'plain': ('ledger', 'ledger', (1, 2), '20261116T062655Z'), 'layer': ('brief', 'brief', (1,), None)},
+        'title': 'Level Brief Runs', 'h1': 'Three games, with and without the level brief',
+        'first': ['Memory layers and object ledger (16 November)',
+                  'The two earlier runs with every memory layer and the object ledger, from the same start.'],
+        'first_short': 'earlier runs',
+        'second': ['With the level brief as well',
+                   'The same layers, plus rules the agent records as confirmed and a brief it must write on its '
+                   'first turn on a level: what is different here, why, and what it will do first.'],
+        'lede': 'One run with the level brief on each of the three games the layer was designed on, beside the two '
+                'earlier runs that had the other layers only. The earlier runs were played five days before, not '
+                'alongside, and these three games decide nothing about whether the layer helps on other games.',
+        'sub': 'Every run starts from the same board, after the saved 6 November actions, and plays 100 new actions or '
+               'until the game is won. Under each board is what the agent said it was aiming at; on the turns where it '
+               'wrote its brief or recorded a rule, that is shown too. For the four move actions the arrow in the corner '
+               'shows the direction by convention (ACTION1 up, 2 down, 3 left, 4 right); clicks are drawn where they landed.',
+        'directional': True},
     'astra_compare': {
         'games': (('tr87-cd924810', 'from the start of level 2'), ('cd82-fb555c5d', 'from the start of level 3'),
                   ('g50t-5849a774', 'from the start of level 2')),
@@ -106,7 +128,7 @@ def one_run(folder, frames, index):
         elif event['kind'] == 'model_returned':
             replies[at] = json.loads(event['content'])
 
-    steps, lessons, slots, deaths, notes = [], [], [], [], []
+    steps, lessons, slots, deaths, notes, briefs, rules = [], [], [], [], [], [], []
     board = np.asarray(transitions[start]['before']['frames'][-1], dtype=np.uint8)
     first = keep(board)
     for i in range(start, len(transitions)):
@@ -138,6 +160,13 @@ def one_run(folder, frames, index):
         if reply.get('thing_note') and 'thing_note' in contract:
             row['note'] = reply['thing_note']
             notes.append({'at': i - start + 1, **reply['thing_note']})
+        due = 'level_brief' in contract
+        if reply.get('level_brief') and (due or 'level_brief' in evidence):
+            row['brief'] = {'asked': due, 'level': t['before']['levels_completed'] + 1, **reply['level_brief']}
+            briefs.append({'at': i - start + 1, **row['brief']})
+        if reply.get('rule_notes') and 'rule_notes' in contract:
+            row['rules'] = reply['rule_notes']
+            rules.extend({'at': i - start + 1, **note} for note in reply['rule_notes'])
         if reply.get('no_effect_lesson') and row['may']:
             written = reply['no_effect_lesson']
             number = len(lessons)
@@ -154,7 +183,8 @@ def one_run(folder, frames, index):
         steps.append(row)
         board = np.asarray(t['after']['frames'][-1], dtype=np.uint8)
     summary = level_runs.summary(folder)
-    return {'layer': bool(config.get('no_effect_lessons')), 'start': start, 'first': first, 'steps': steps,
+    return {'layer': bool(config.get('no_effect_lessons')), 'has_layers': bool(config.get('no_effect_lessons')),
+            'start': start, 'first': first, 'steps': steps, 'briefs': briefs, 'rules': rules,
             'lessons': lessons, 'deaths': deaths, 'notes': notes, 'level_at_start': summary['level_at_start'],
             'stats': {k: summary[k] for k in ('changed_nothing', 'levels_completed_in_new_actions', 'game_overs',
                                               'lessons_kept', 'actions_per_completed_level')}}
@@ -207,13 +237,18 @@ def build(out_path, which, stamp):
         runs = []
         if game in spec.get('astra', {}):
             runs.append(astra_run(game, spec['astra'][game], spec['astra_levels'], frames, index))
-        for arm in spec['arms']:
+        for arm in spec.get('arms', ()):
             for n in range(1, level_runs.REPEATS + 1):
                 folder = level_runs.RUNS / ('%s-%s-%s-%d-%s' % (spec.get('prefix', 'waste'), game.split('-')[0], arm, n, stamp))
                 runs.append({'n': n, **one_run(folder, frames, index)})
+        for column, (prefix, arm, numbers, fixed) in spec.get('columns', {}).items():
+            for n in numbers:       # the column is chosen here, not by which layers the run had
+                folder = level_runs.RUNS / ('%s-%s-%s-%d-%s' % (prefix, game.split('-')[0], arm, n, fixed or stamp))
+                runs.append({'n': n, **one_run(folder, frames, index), 'layer': column == 'layer'})
         games.append({'g': game.split('-')[0], 'where': where, 'runs': runs})
     data = {'frames': frames, 'games': games,
-            'meta': {**{k: spec[k] for k in ('h1', 'second', 'sub', 'directional')}, 'astra': bool(spec.get('astra'))}}
+            'meta': {**{k: spec[k] for k in ('h1', 'second', 'sub', 'directional')}, 'astra': bool(spec.get('astra')),
+                     **{k: spec[k] for k in ('first', 'first_short', 'lede') if k in spec}}}
     page = PAGE.replace('__TITLE__', spec['title']).replace('__DATA__', json.dumps(data, separators=(',', ':')))
     Path(out_path).write_text(page)
     return data
@@ -438,6 +473,19 @@ function player(title, about, runs, id) {
       const said = el('div', 'said'); said.appendChild(el('div', 'cap', 'It noted what look ' + s.note.look + ' does'));
       said.appendChild(el('blockquote', 'lesson', s.note.does)); now.appendChild(said);
     }
+    if (s.brief) {
+      const said = el('div', 'said');
+      said.appendChild(el('div', 'cap', s.brief.asked ? 'Its brief for level ' + s.brief.level + ', written on its first turn there' : 'It replaced its brief for level ' + s.brief.level));
+      [['What completed the last level. ', s.brief.won_by], ['What is different. ', s.brief.different], ['Why. ', s.brief.why], ['First. ', s.brief.first]].filter(pair => pair[1]).forEach(([label, text]) => {
+        const q = el('blockquote', 'lesson'); q.appendChild(el('b', null, label)); q.appendChild(document.createTextNode(text)); said.appendChild(q);
+      });
+      now.appendChild(said);
+    }
+    if (s.rules) {
+      const said = el('div', 'said'); said.appendChild(el('div', 'cap', 'It recorded ' + plural(s.rules.length, 'rule') + ' as confirmed'));
+      s.rules.forEach(r => said.appendChild(el('blockquote', 'lesson', (r.replaces ? 'In place of rule ' + r.replaces + ': ' : '') + r.rule)));
+      now.appendChild(said);
+    }
     if (s.plan) {
       const said = el('div', 'said'); said.appendChild(el('div', 'cap', 'What its notes said when it chose this'));
       said.appendChild(el('blockquote', null, s.plan)); now.appendChild(said);
@@ -485,7 +533,7 @@ function player(title, about, runs, id) {
     strip.textContent = ''; cells = [];
     strip.setAttribute('aria-valuemin', 0); strip.setAttribute('aria-valuemax', r.steps.length);
     r.steps.forEach((s, i) => {
-      const c = el('span', [s.s, s.reset ? 'reset' : '', s.none ? 'none' : '', s.lesson != null || s.death != null ? 'lesson' : ''].filter(Boolean).join(' '));
+      const c = el('span', [s.s, s.reset ? 'reset' : '', s.none ? 'none' : '', s.lesson != null || s.death != null || s.brief ? 'lesson' : ''].filter(Boolean).join(' '));
       c.dataset.at = i + 1;
       c.title = 'Action ' + (i + 1) + ': ' + name(s) + (s.s === 'dead' ? ', game over' : s.s === 'level' ? ', level completed' : s.none ? ', changed nothing' : '');
       strip.appendChild(c); cells.push(c);
@@ -493,10 +541,11 @@ function player(title, about, runs, id) {
     const t = r.stats;
     stats.textContent = plural(t.changed_nothing, 'action') + ' changed nothing · ' + plural(t.levels_completed_in_new_actions, 'level') + ' completed'
       + (t.actions_per_completed_level.length ? ' (in ' + t.actions_per_completed_level.join(', ') + ' actions)' : '')
-      + ' · ' + plural(t.game_overs, 'game over') + (r.layer ? ' · ' + plural(r.lessons.length + r.deaths.length, 'lesson') + ' written' : '')
-      + (r.notes.length ? ' · ' + plural(r.notes.length, 'note') + ' on things' : '');
-    lessonbox.textContent = ''; rows = []; lessonbox.hidden = !r.layer;
-    if (r.layer) {
+      + ' · ' + plural(t.game_overs, 'game over') + ((r.has_layers ?? r.layer) ? ' · ' + plural(r.lessons.length + r.deaths.length, 'lesson') + ' written' : '')
+      + (r.notes.length ? ' · ' + plural(r.notes.length, 'note') + ' on things' : '')
+      + ((r.briefs || []).length ? ' · ' + plural(r.briefs.length, 'brief') + ' · ' + plural(r.rules.length, 'rule') + ' recorded' : '');
+    lessonbox.textContent = ''; rows = []; lessonbox.hidden = !(r.has_layers ?? r.layer);
+    if (r.has_layers ?? r.layer) {
       lessonbox.appendChild(el('div', 'cap', r.lessons.length + r.deaths.length ? 'The lessons of this run, in the order written. Faded ones come later than the action shown; grey ones have been replaced.' : 'No lesson was written in this run: no action changed nothing by the controller\u2019s check, and there was no game over.'));
       r.deaths.forEach(l => {
         const row = el('div', 'lessonrow');
@@ -505,6 +554,19 @@ function player(title, about, runs, id) {
         const b = el('div'); b.appendChild(el('b', null, 'Applies when. ')); b.appendChild(document.createTextNode(l.applies_when)); row.appendChild(b);
         lessonbox.appendChild(row); rows.push([row, {at: l.at, replaced_at: null}]);
       });
+      if ((r.briefs || []).length) {
+        const more = el('details'), list = el('div'); list.style.cssText = 'display:flex;flex-direction:column;gap:6px;margin-top:8px';
+        more.open = true;
+        more.appendChild(el('summary', 'cap', 'Its ' + plural(r.briefs.length, 'brief') + ' and the ' + plural(r.rules.length, 'rule') + ' it recorded'));
+        const say = (label, text) => { const line = el('div'); line.style.fontSize = '13.5px'; line.appendChild(el('b', null, label)); line.appendChild(document.createTextNode(text)); list.appendChild(line); };
+        r.briefs.forEach(b => {
+          if (b.won_by) say('Action ' + b.at + ', what completed the level before: ', b.won_by);
+          say('Action ' + b.at + ', brief for level ' + b.level + (b.asked ? '' : ' (replaced)') + '. Different: ', b.different);
+          say('Why: ', b.why); say('First: ', b.first);
+        });
+        r.rules.forEach(n => say('Action ' + n.at + ', rule' + (n.replaces ? ' in place of rule ' + n.replaces : '') + '. ', n.rule));
+        more.appendChild(list); lessonbox.appendChild(more);
+      }
       if (r.notes.length) {
         const more = el('details'), list = el('div'); list.style.cssText = 'display:flex;flex-direction:column;gap:6px;margin-top:8px';
         more.appendChild(el('summary', 'cap', 'Its ' + r.notes.length + ' notes on what kinds of thing do'));
@@ -549,7 +611,7 @@ const second = DATA.meta.second[0].charAt(0).toLowerCase() + DATA.meta.second[0]
 if (DATA.meta.astra) document.querySelector('.wrap').style.maxWidth = '1620px';
 const columns = DATA.meta.astra
   ? ['Game', 'Start', 'GPT-6 Astra, actions per level', 'Opus 5.5 unchanged, actions per completed level', 'Opus 5.5 with the layers, actions per completed level']
-  : ['Game', 'Start', 'Changed nothing, unchanged', 'Changed nothing, ' + second, 'Levels completed, unchanged', 'Levels completed, ' + second];
+  : ['Game', 'Start', 'Changed nothing, ' + (DATA.meta.first_short || 'unchanged'), 'Changed nothing, ' + second, 'Levels completed, ' + (DATA.meta.first_short || 'unchanged'), 'Levels completed, ' + second];
 const head = el('tr'); columns.forEach(t => head.appendChild(el('th', null, t)));
 table.appendChild(head);
 let wastedPlain = 0, wastedLayer = 0, levelsPlain = 0, levelsLayer = 0;
@@ -566,8 +628,8 @@ for (const game of DATA.games) {
   layer.forEach(r => { wastedLayer += r.stats.changed_nothing; levelsLayer += r.stats.levels_completed_in_new_actions; });
 }
 const total = DATA.games.reduce((n, game) => n + game.runs.filter(r => !r.astra).length, 0);
-document.getElementById('lede').textContent = (DATA.meta.astra ? 'GPT-6 Astra\u2019s recorded play beside ours. ' : '') + total + ' runs of ours on local copies of ' + plural(DATA.games.length, 'game') + ': for each game, two with the 6 November harness unchanged and two '
-  + second.replace('opus 5.5 ', '') + ', from the same start. Actions that changed nothing: ' + wastedPlain + ' in the unchanged runs, ' + wastedLayer + ' in the others. Levels completed: ' + levelsPlain + ' and ' + levelsLayer + '.';
+document.getElementById('lede').textContent = DATA.meta.lede || ((DATA.meta.astra ? 'GPT-6 Astra\u2019s recorded play beside ours. ' : '') + total + ' runs of ours on local copies of ' + plural(DATA.games.length, 'game') + ': for each game, two with the 6 November harness unchanged and two '
+  + second.replace('opus 5.5 ', '') + ', from the same start. Actions that changed nothing: ' + wastedPlain + ' in the unchanged runs, ' + wastedLayer + ' in the others. Levels completed: ' + levelsPlain + ' and ' + levelsLayer + '.');
 const gameBar = document.getElementById('games');
 function showGame(game, button) {
   stops.forEach(f => f()); repaints = []; stops = [];
@@ -575,7 +637,7 @@ function showGame(game, button) {
   document.getElementById('players').textContent = '';
   const recorded = game.runs.filter(r => r.astra);
   if (recorded.length) player('GPT-6 Astra, provider harness', 'The public recording of its run, from the same level. One board per action; its reasoning is not recorded.', recorded, 'astra');
-  player(DATA.meta.astra ? 'Opus 5.5 unchanged' : 'Unchanged', 'The harness as it ran on 6 November.', game.runs.filter(r => !r.layer && !r.astra), 'plain');
+  player(DATA.meta.first ? DATA.meta.first[0] : DATA.meta.astra ? 'Opus 5.5 unchanged' : 'Unchanged', DATA.meta.first ? DATA.meta.first[1] : 'The harness as it ran on 6 November.', game.runs.filter(r => !r.layer && !r.astra), 'plain');
   player(DATA.meta.second[0], DATA.meta.second[1], game.runs.filter(r => r.layer), 'layer');
 }
 DATA.games.forEach((game, i) => {

@@ -33,7 +33,8 @@ from research.memory_fix_v1 import death_test as D  # noqa: E402
 SAVED = ROOT / '.cache/claude_arc_runs/opus55-competition-20261106T054112Z/events.jsonl'
 LAYERS = {'game_over_lessons': True, 'no_effect_lessons': True, 'no_effect_wait': 4, 'lesson_check': True,
           'object_ledger': True}
-PLACEHOLDER = {'different': 'placeholder ' * 20, 'why': 'placeholder ' * 20, 'first': 'placeholder ' * 8}
+PLACEHOLDER = {'won_by': 'placeholder ' * 12, 'different': 'placeholder ' * 20, 'why': 'placeholder ' * 20,
+               'first': 'placeholder ' * 8}
 
 
 def saved_games():
@@ -61,7 +62,7 @@ def marks(listing):
 
 def part_a():
     base, games = json.loads(D.CONTROL.read_text()), saved_games()
-    built, brief_turns, extra, extra_at_brief, per_game = 0, 0, [], [], {}
+    built, brief_turns, extra, extra_at_brief, per_game, boards = 0, 0, [], [], {}, []
     for game in sorted(games):
         g, began, prefix = games[game], time.time(), game.split('-')[0]
         make = lambda **more: policy.Policy(C.Config(**{**base, 'mode': 'online', 'games': [prefix], **LAYERS, **more}))
@@ -80,7 +81,11 @@ def part_a():
                 if on.brief_state(before)[1]:
                     brief_turns += 1
                     extra_at_brief.append(grown)
+                    shown = with_it['evidence'].get('completed_level') or {}
+                    boards.append(bool(shown.get('board')))
                     starts.append({'level': before.levels_completed + 1, 'at_action': i + 1,
+                                   'completed_board_shown': bool(shown.get('board')),
+                                   'frames_the_completing_action_returned': shown.get('frames_returned'),
                                    **marks(with_it['evidence'].get('things') or {})})
                     answer['level_brief'] = PLACEHOLDER
                     answer['rule_notes'] = [{'rule': 'placeholder ' * 12, 'replaces': 0}]
@@ -90,7 +95,7 @@ def part_a():
             off.observe(before, decision, after, saved or {'action': action, 'hypotheses': list(off.hypotheses)})
             before = after
         per_game[prefix] = {'brief_turns': starts, 'seconds': round(time.time() - began, 1)}
-    return {'requests_built': built, 'brief_turns': brief_turns,
+    return {'requests_built': built, 'brief_turns': brief_turns, 'brief_turns_showing_the_completed_board': sum(boards),
             'extra_characters_on_a_brief_turn_median': round(statistics.median(extra_at_brief)) if extra_at_brief else None,
             'extra_characters_on_other_turns_median': round(statistics.median(extra)),
             'extra_characters_on_other_turns_max': max(extra), 'per_game': per_game}

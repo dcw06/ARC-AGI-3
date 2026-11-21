@@ -88,26 +88,49 @@ RULES_NOTE = ('evidence.rules are the rules of this game that you have recorded 
               'how something works (what an action does, what a kind of thing does, what completes a level) and '
               'evidence.rules does not say it yet, or says it wrongly. rule: the rule, said generally so that it holds '
               'on other boards and other levels, at most 300 characters. replaces: the number of the rule this one '
-              'corrects or covers, or 0 to add it. At most %d rules are kept; once the list is full a new rule has to '
-              'replace one.' % RULE_LIMIT)
+              'corrects or covers, or 0 to add it. A rule is confirmed only as far as what you have seen requires: when '
+              'a looser rule fits everything seen as well as a stricter one, record the looser one. At most %d rules '
+              'are kept; once the list is full a new rule has to replace one.' % RULE_LIMIT)
 # Nothing here names a game, a thing or a colour: the brief is about how a level differs from the ones before it.
-BRIEF_ASK = ('This is your first turn on level %d. Before you choose an action: in rule_notes, record what the levels so '
-             'far have confirmed and evidence.rules does not yet say (an empty list if nothing is missing). Then write '
-             'level_brief. different: what differs here from the levels you have completed: things that were not there '
-             'before, things that are as before except in some respect (such as colour, size, number or the way they '
-             'are turned), and any part of what this level asks for that your rules cannot yet produce. why: what each '
-             'difference is for. A level is '
-             'made to be completed, and what it adds to the earlier ones is there because completing it depends on it. '
-             'Tell two cases apart. A difference that nothing you can do would change cannot be one you are required to '
-             'remove: take the two things as equal in that respect and go on. A new thing, or a difference that '
-             'something on the board can change, is most likely what the part your rules cannot yet produce depends '
-             'on, and what it does may change how the rest has to be done. first: the cheapest way to find out what '
-             'such a thing does, which you will take before you spend actions on what the earlier levels already '
-             'taught you; "nothing new" if the level differs in no such way.')
+BRIEF_OPEN = 'This is your first turn on level %d. Before you choose an action, write level_brief and rule_notes. '
+# The board that completed a level is otherwise never shown: the last frame returned is already the next level.
+BRIEF_WON_SHOWN = ('won_by: what made level %d complete. evidence.completed_level shows its last board, the last frame '
+                   'the game returned before it showed this level, which you were not shown at the time, and how it '
+                   'differs from the board you took your last action on. Read the rule you were working with against it. ')
+BRIEF_WON_UNSEEN = ('won_by: what made level %d complete. The game returned no frame of that level after your last '
+                    'action, so go by the boards you saw. ')
+BRIEF_LEAST = ('State the least that is shown to be required. If a looser rule, one that more boards would satisfy, fits '
+               'everything you have seen as well as the rule you were working with, the looser one is what the level '
+               'confirmed, and the stricter one is still only a hypothesis. ')
+BRIEF_REST = ('rule_notes: record what the levels so far have confirmed and evidence.rules does not yet say, or says more '
+              'strictly than was shown (an empty list if nothing is missing). different: what differs here from the levels '
+              'you have completed: things that were not there '
+              'before, things that are as before except in some respect (such as colour, size, number or the way they '
+              'are turned), and any part of what this level asks for that your rules cannot yet produce. why: what each '
+              'difference is for. A level is '
+              'made to be completed, and what it adds to the earlier ones is there because completing it depends on it. '
+              'Tell two cases apart. A difference that nothing you can do would change cannot be one you are required to '
+              'remove: take the two things as equal in that respect and go on. A new thing, or a difference that '
+              'something on the board can change, is most likely what the part your rules cannot yet produce depends '
+              'on, and what it does may change how the rest has to be done. first: the cheapest way to find out what '
+              'such a thing does, which you will take before you spend actions on what the earlier levels already '
+              'taught you; "nothing new" if the level differs in no such way.')
 BRIEF_NOTE = ('evidence.level_brief is what you wrote on your first turn of this level; the controller keeps it for you. '
-              'What it names under first comes before the routine of earlier levels. When an observation settles what a '
+              'What it names under first comes before the routine of earlier levels. Act on the least that your rules '
+              'and your brief require: do not pass up something that satisfies them for the sake of a stricter reading '
+              'that nothing you have seen requires. If acting on the looser reading fails, that failure is the '
+              'observation that requires more: tighten the rule then. When an observation settles what a '
               'difference is for, record it in rule_notes; when it shows the brief wrong, write level_brief again '
-              '(different, why, first) to replace it. Otherwise leave level_brief out.')
+              '(won_by, different, why, first) to replace it. Otherwise leave level_brief out.')
+BRIEF_LIMITS = {'won_by': 400, 'different': 600, 'why': 600, 'first': 300}
+
+
+def brief_ask(level, board_shown):
+    """The request for a brief on the first turn of a level, with or without the board that completed the last one."""
+    return (BRIEF_OPEN % level + (BRIEF_WON_SHOWN if board_shown else BRIEF_WON_UNSEEN) % (level - 1)
+            + BRIEF_LEAST + BRIEF_REST)
+
+
 NEW_NOTE = ('In evidence.things a look marked new was on no earlier level of this game. The controller compares looks '
             'from the cells alone: a known thing in another colour or shape is marked new as well, so the mark is a '
             'pointer, not a finding.')
@@ -255,10 +278,10 @@ def response_schema(stage, config=None):
                                     'properties': {'look': {'type': 'string', 'minLength': 1, 'maxLength': 3},
                                                    'does': {'type': 'string', 'minLength': 1, 'maxLength': 300}}}
     if config is not None and config.level_brief:
-        long, short = ({'type': 'string', 'minLength': 1, 'maxLength': n} for n in (600, 300))
-        properties['level_brief'] = {'type': 'object', 'additionalProperties': False,
-                                     'required': ['different', 'why', 'first'],
-                                     'properties': {'different': long, 'why': long, 'first': short}}
+        short = {'type': 'string', 'minLength': 1, 'maxLength': 300}
+        properties['level_brief'] = {'type': 'object', 'additionalProperties': False, 'required': list(BRIEF_LIMITS),
+                                     'properties': {name: {'type': 'string', 'minLength': 1, 'maxLength': n}
+                                                    for name, n in BRIEF_LIMITS.items()}}
         properties['rule_notes'] = {'type': 'array', 'maxItems': RULE_LIMIT, 'items': {
             'type': 'object', 'additionalProperties': False, 'required': ['rule', 'replaces'],
             'properties': {'rule': short, 'replaces': {'type': 'integer', 'minimum': 0}}}}
@@ -286,6 +309,7 @@ class Policy:
         self.looks_shown = set()        # the look letters in the request now being answered
         self.rules = []                 # rules the agent recorded as confirmed, for the whole game (level_brief)
         self.brief = None               # the agent's brief for the level it was written on (level_brief)
+        self.won = None                 # the last board of the level completed last, as the game returned it (level_brief)
 
     @property
     def rank(self):
@@ -415,9 +439,11 @@ class Policy:
             instructions.append(RULES_NOTE)
             may, must = self.brief_state(observation)
             if must:
-                contract['level_brief'] = {'different': 'at most 600 characters', 'why': 'at most 600 characters',
-                                           'first': 'at most 300 characters'}
-                instructions.append(BRIEF_ASK % (observation.levels_completed + 1))
+                won = self.won if self.won and self.won['level'] == observation.levels_completed else None
+                if won:
+                    evidence['completed_level'] = {k: v for k, v in won.items() if v is not None}
+                contract['level_brief'] = {name: 'at most %d characters' % n for name, n in BRIEF_LIMITS.items()}
+                instructions.append(brief_ask(observation.levels_completed + 1, bool(won and won['board'])))
             elif may:
                 evidence['level_brief'] = self.brief
                 instructions.append(BRIEF_NOTE)
@@ -553,7 +579,7 @@ class Policy:
             if must_brief:
                 missing = [name for name in ('level_brief', 'rule_notes') if name not in value]
                 if missing:     # both named at once: every reply sent back uses up one of this turn's few retries
-                    raise ValueError('this is your first turn on level %d: write level_brief {different, why, first} '
+                    raise ValueError('this is your first turn on level %d: write level_brief {won_by, different, why, first} '
                                      'and rule_notes (an empty list if evidence.rules lacks nothing); missing: %s'
                                      % (observation.levels_completed + 1, ', '.join(missing)))
             else:
@@ -606,10 +632,10 @@ class Policy:
                 raise ValueError('thing_note.look must be the letter of a look in evidence.things: %s'
                                  % ', '.join(sorted(looks, key=lambda s: (len(s), s))))
         if briefing:
-            brief, limits = value['level_brief'], {'different': 600, 'why': 600, 'first': 300}
-            if (not isinstance(brief, dict) or set(brief) != set(limits)
-                    or any(not isinstance(brief[k], str) or not 1 <= len(brief[k]) <= n for k, n in limits.items())):
-                raise ValueError('level_brief needs different and why (1 to 600 characters each) and first (1 to 300)')
+            brief = value['level_brief']
+            if (not isinstance(brief, dict) or set(brief) != set(BRIEF_LIMITS)
+                    or any(not isinstance(brief[k], str) or not 1 <= len(brief[k]) <= n for k, n in BRIEF_LIMITS.items())):
+                raise ValueError('level_brief needs %s' % ', '.join('%s (1 to %d characters)' % item for item in BRIEF_LIMITS.items()))
         if ruling:
             notes, replaced = value['rule_notes'], set()
             if not isinstance(notes, list) or len(notes) > RULE_LIMIT:
@@ -788,6 +814,15 @@ class Policy:
                     self.rules.append(item)
             if 'level_brief' in answer:
                 self.brief = {'level': level, 'written_at': where, **answer['level_brief']}
+            if facts['level_increased']:
+                # The last frame before the game showed the next level. Kept until the next brief is written; it is
+                # also set while saved actions are repeated, so a resumed run starts with it.
+                earlier = [f for f in after.frames[:-1] if f.shape == before.latest_frame.shape]
+                last = np.asarray(earlier[-1]) if earlier else None
+                self.won = {'level': level, 'completed_by': transition['transition_id'],
+                            'frames_returned': len(after.frames),
+                            'board': None if last is None else hex_rows(last) or last.tolist(),
+                            'differs_from_board_before': None if last is None else changed_cells(before.latest_frame, last)}
         self.history.append(transition)
         if self.config.grid_encoding == 'hex_rows':
             self.compact.append(compact_transition(transition, before, after, self.config.observation_evidence_ids))
