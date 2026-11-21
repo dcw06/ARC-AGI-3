@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Local Play</title>
+<style>
+:root {
+  --bg: #f5f5f2; --panel: #ffffff; --ink: #1c1c1e; --muted: #68686e; --line: #dfdfdb;
+  --accent: #1e6fd9; --good: #1f8a4c; --hl: #fff4cc; --key: #efefeb;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #141416; --panel: #1e1e21; --ink: #ececee; --muted: #9a9aa2; --line: #343439;
+          --accent: #5b9dff; --good: #4cc27f; --hl: #3b3520; --key: #2a2a2e; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+main { max-width: 1180px; margin: 0 auto; padding: 20px 16px 48px; display: grid; gap: 20px; grid-template-columns: minmax(0, 540px) minmax(0, 1fr); align-items: start; }
+@media (max-width: 920px) { main { grid-template-columns: 1fr; } }
+h1 { font-size: 20px; margin: 0 0 2px; }
+h2 { font-size: 15px; margin: 0 0 8px; }
+.sub { color: var(--muted); margin: 0 0 12px; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+.panel + .panel { margin-top: 16px; }
+canvas { width: 100%; aspect-ratio: 1; image-rendering: pixelated; display: block; border-radius: 4px; background: #000; }
+canvas.click { cursor: crosshair; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
+.stat { border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; }
+.stat b { display: block; font-size: 22px; font-variant-numeric: tabular-nums; }
+.stat span { color: var(--muted); font-size: 12px; }
+.stat.main { border-color: var(--accent); }
+#msg { min-height: 42px; margin-top: 10px; font-weight: 600; }
+#msg.done { color: var(--good); }
+.controls { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-top: 4px; }
+.pad { display: grid; grid-template-columns: repeat(3, 46px); grid-template-rows: repeat(2, 40px); gap: 4px; }
+.pad button { padding: 0; font-size: 17px; }
+.pad small { display: block; font-size: 9px; color: var(--muted); line-height: 1; }
+#b1 { grid-column: 2; grid-row: 1; } #b3 { grid-column: 1; grid-row: 2; }
+#b2 { grid-column: 2; grid-row: 2; } #b4 { grid-column: 3; grid-row: 2; }
+.side { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+button, select { font: inherit; padding: 7px 12px; border-radius: 7px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer; }
+button:hover:not(:disabled) { border-color: var(--accent); }
+button:disabled { opacity: .4; cursor: default; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); }
+.row label { color: var(--muted); }
+.keys { color: var(--muted); font-size: 13px; margin: 12px 0 0; padding-left: 18px; }
+.keys li { margin: 3px 0; }
+kbd { border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; font-size: 12px; background: var(--key); }
+.scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+th, td { text-align: right; padding: 5px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; white-space: normal; min-width: 170px; }
+th { color: var(--muted); font-weight: 600; font-size: 12px; }
+.cur { background: var(--hl); }
+tr.you td { font-weight: 700; }
+tr.you td.has { color: var(--good); }
+.note { color: var(--muted); font-size: 12.5px; margin: 10px 0 0; }
+.empty { color: var(--muted); }
+#coord { color: var(--muted); font-variant-numeric: tabular-nums; margin-left: auto; }
+</style>
+</head>
+<body>
+<main>
+  <section>
+    <h1 id="title">Local play</h1>
+    <p class="sub" id="where"></p>
+    <div class="panel">
+      <canvas id="cv" width="64" height="64"></canvas>
+      <div class="stats">
+        <div class="stat"><b id="sLevel">–</b><span>level</span></div>
+        <div class="stat main"><b id="sTotal">0</b><span>actions on this level</span></div>
+        <div class="stat"><b id="sAttempt">0</b><span>since last restart</span></div>
+        <div class="stat"><b id="sRestarts">0</b><span>restarts</span></div>
+      </div>
+      <div id="msg"></div>
+      <div class="controls">
+        <div class="pad">
+          <button id="b1" title="ACTION1">↑<small>ACTION1</small></button>
+          <button id="b3" title="ACTION3">←<small>ACTION3</small></button>
+          <button id="b2" title="ACTION2">↓<small>ACTION2</small></button>
+          <button id="b4" title="ACTION4">→<small>ACTION4</small></button>
+        </div>
+        <div class="side">
+          <button id="b5">ACTION5 (space)</button>
+          <button id="b7">Undo (Z)</button>
+          <button id="b0">Restart level (R)</button>
+          <span id="coord"></span>
+        </div>
+      </div>
+      <div class="row">
+        <label for="sel">Start again with the count at 0:</label>
+        <select id="sel"></select>
+        <button id="bStart">Start</button>
+        <label style="margin-left:auto"><input type="checkbox" id="anim" checked> animate</label>
+      </div>
+      <ul class="keys">
+        <li><kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> or <kbd>W</kbd> <kbd>S</kbd> <kbd>A</kbd> <kbd>D</kbd> send ACTION1 to ACTION4. Only the actions this game has are enabled.</li>
+        <li>Every action counts, also one that changes nothing. <kbd>R</kbd> restarts the level and counts as one action.</li>
+        <li>"Start" begins a fresh try at the chosen level and does not carry the count over.</li>
+      </ul>
+    </div>
+  </section>
+  <section>
+    <div class="panel">
+      <h2>Actions per level</h2>
+      <div class="scroll"><table><thead id="th"></thead><tbody id="tb"></tbody></table></div>
+      <p class="note">The highlighted column is the level you are on. A star marks a level that was not completed: the number is what was spent on it. The human number is the benchmark's baseline from people playing for the first time. Two numbers in one cell are two runs.</p>
+    </div>
+    <div class="panel">
+      <h2>Levels you have completed</h2>
+      <div class="scroll"><table><thead><tr><th>When</th><th>Level</th><th>Actions</th><th>Last attempt</th><th>Restarts</th></tr></thead><tbody id="done"></tbody></table></div>
+      <p class="note" id="file"></p>
+    </div>
+  </section>
+</main>
+<script>
+const PALETTE = ['#FFFFFF','#CCCCCC','#999999','#666666','#333333','#000000','#E53AA3','#FF7BCC','#F93C31','#1E93FF','#88D8F1','#FFDC00','#FF851B','#921231','#4FCC30','#A356D6'];
+const RGB = PALETTE.map(h => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)]);
+const $ = id => document.getElementById(id);
+const cv = $('cv'), ctx = cv.getContext('2d');
+let state = null, playing = 0, queue = Promise.resolve();
+
+function draw(grid) {
+  const image = ctx.createImageData(64, 64);
+  for (let y = 0; y < 64; y++) for (let x = 0; x < 64; x++) {
+    const c = RGB[(grid[y] && grid[y][x]) ?? 5] || RGB[5], i = (y * 64 + x) * 4;
+    image.data[i] = c[0]; image.data[i + 1] = c[1]; image.data[i + 2] = c[2]; image.data[i + 3] = 255;
+  }
+  ctx.putImageData(image, 0, 0);
+}
+function play(frames) {
+  const token = ++playing;
+  if (!frames || !frames.length) return;
+  if (!$('anim').checked || frames.length === 1) { draw(frames[frames.length - 1]); return; }
+  const wait = Math.min(45, 1600 / frames.length);
+  let i = 0;
+  const step = () => { if (token !== playing) return; draw(frames[i]); if (++i < frames.length) setTimeout(step, wait); };
+  step();
+}
+const cell = v => v == null ? '<span class="empty">–</span>' : v;
+function render(s) {
+  const first = !state;
+  state = s;
+  play(s.frames);
+  const name = s.game.split('-')[0];
+  document.title = name + ' level ' + s.level;
+  $('title').textContent = name + ', level ' + (s.state === 'WIN' ? s.levels + ' (won)' : s.level);
+  $('where').textContent = 'ARC-AGI-3 ' + s.game + ', played on this computer from the game file. Nothing is sent anywhere.';
+  $('sLevel').textContent = s.state === 'WIN' ? 'won' : s.level + ' of ' + s.levels;
+  $('sTotal').textContent = s.level_total;
+  $('sAttempt').textContent = s.attempt;
+  $('sRestarts').textContent = s.restarts;
+  $('msg').textContent = s.message || '';
+  $('msg').className = /completed/.test(s.message || '') ? 'done' : '';
+  for (const a of [1, 2, 3, 4, 5, 7]) $('b' + a).disabled = !s.available.includes(a);
+  $('b5').hidden = !s.available.includes(5);
+  $('b7').hidden = !s.available.includes(7);
+  cv.className = s.available.includes(6) ? 'click' : '';
+  if (first) {
+    for (let i = 1; i <= s.levels; i++) $('sel').insertAdjacentHTML('beforeend', `<option value="${i}">Level ${i}</option>`);
+    $('sel').value = s.level;
+    $('file').textContent = 'Saved on this computer in .cache/local_play/' + s.game + '/records.json.';
+  }
+  const cur = s.state === 'WIN' ? 0 : s.level, mark = i => i + 1 === cur ? ' class="cur"' : '';
+  let head = '<tr><th>Who</th>';
+  for (let i = 0; i < s.levels; i++) head += `<th${mark(i)}>L${i + 1}</th>`;
+  $('th').innerHTML = head + '</tr>';
+  const line = (who, values, cls) => `<tr class="${cls || ''}"><td>${who}</td>` +
+    values.map((v, i) => `<td class="${(i + 1 === cur ? 'cur ' : '') + (v == null ? '' : 'has')}">${cell(v)}</td>`).join('') + '</tr>';
+  let rows = line('You, first time', s.first, 'you') + line('You, fewest', s.fewest, 'you');
+  rows += line('Human baseline', Array.from({length: s.levels}, (_, i) => s.human[i] ?? null));
+  for (const r of s.table) rows += line(r.who, r.levels);
+  $('tb').innerHTML = rows;
+  $('done').innerHTML = s.completions.length
+    ? s.completions.slice().reverse().map(c => `<tr><td>${c.time}</td><td>${c.level}</td><td><b>${c.level_actions}</b></td><td>${c.attempt_actions}</td><td>${c.restarts}</td></tr>`).join('')
+    : '<tr><td colspan="5" class="empty">Nothing yet. A level is recorded the moment you complete it.</td></tr>';
+}
+function post(path, body) {
+  queue = queue.then(() => fetch(path, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body || {})})
+    .then(r => r.json()).then(s => { if (s.error) $('msg').textContent = s.error; else render(s); })
+    .catch(() => { $('msg').textContent = 'The local server is not answering. It may have been stopped.'; }));
+  return queue;
+}
+const act = (action, x, y) => post('/api/act', action === 6 ? {action, x, y} : {action});
+const allowed = a => a === 0 || (state && state.available.includes(a));
+
+function at(ev) {
+  const r = cv.getBoundingClientRect();
+  return [Math.floor((ev.clientX - r.left) / r.width * 64), Math.floor((ev.clientY - r.top) / r.height * 64)];
+}
+cv.addEventListener('mousemove', ev => { const [x, y] = at(ev); $('coord').textContent = `x ${x}, y ${y}`; });
+cv.addEventListener('mouseleave', () => $('coord').textContent = '');
+cv.addEventListener('click', ev => {
+  const [x, y] = at(ev);
+  if (x >= 0 && x < 64 && y >= 0 && y < 64 && allowed(6)) act(6, x, y);
+});
+document.addEventListener('keydown', ev => {
+  if (ev.target.tagName === 'SELECT' || ev.metaKey || ev.ctrlKey || ev.altKey) return;
+  const keys = {arrowup: 1, w: 1, arrowdown: 2, s: 2, arrowleft: 3, a: 3, arrowright: 4, d: 4, ' ': 5, z: 7, r: 0};
+  const k = ev.key.toLowerCase();
+  if (!(k in keys)) return;
+  ev.preventDefault();
+  if (ev.repeat) return;            // a held key must not run the count up
+  if (allowed(keys[k])) act(keys[k]);
+});
+for (const a of [0, 1, 2, 3, 4, 5, 7]) $('b' + a).onclick = ev => { ev.currentTarget.blur(); act(a); };
+$('bStart').onclick = ev => {
+  ev.currentTarget.blur();
+  const busy = state && state.level_total > 0 && state.state !== 'WIN';
+  if (!busy || confirm('Start again? The ' + state.level_total + ' actions of the level in progress are dropped and not recorded.'))
+    post('/api/start', {level: +$('sel').value});
+};
+fetch('/api/state').then(r => r.json()).then(render);
+</script>
+</body>
+</html>
