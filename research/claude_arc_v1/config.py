@@ -121,6 +121,13 @@ class Config:
     # size or turn (found from the cells alone), and say how the copies differ. For games where one thing
     # has to be made to match another.
     pattern_relations: bool = False
+    # Level brief (research/level_brief_v1). Two things the controller keeps outside the eight notes. Rules:
+    # what the model has recorded as confirmed about the game, numbered, kept for the whole game, added to
+    # or corrected on any turn. Brief: on its first turn on every level after the first, the model must
+    # write what differs here from the levels it has completed, what each difference is for, and what it
+    # will do first to find out; the brief stays in every request of that level and may be replaced. With
+    # the object ledger, a look that was on no earlier level is marked new in the listing.
+    level_brief: bool = False
     # Action economy (research/action_waste_v1): tell the model the benchmark's scoring rule, so it knows
     # that every action costs, including one that changes nothing. Off: the prompt is the control's, which
     # never mentions cost. The human number itself is not shown.
@@ -140,6 +147,8 @@ class Config:
             raise ValueError('no_effect_lessons and object_ledger must be boolean')
         if type(self.pattern_relations) is not bool or (self.pattern_relations and not self.object_ledger):
             raise ValueError('pattern_relations must be boolean and needs object_ledger')
+        if type(self.level_brief) is not bool:
+            raise ValueError('level_brief must be boolean')
         if type(self.no_effect_wait) is not int or not 0 <= self.no_effect_wait <= 5:
             raise ValueError('no_effect_wait must be an integer from 0 to 5')
         if self.no_effect_wait and not self.no_effect_lessons:

@@ -23,7 +23,8 @@ MUST_MATCH = ('model', 'stage', 'effort', 'thinking', 'grid_encoding', 'history_
               'observation_evidence_ids', 'clear_hypotheses_on_level', 'max_output_tokens', 'resets_per_game')
 # A saved run that itself used these cannot be told apart action by action, so it is refused.
 MUST_BE_OFF = ('model_may_reset', 'stall_window', 'stall_level_ratio', 'recovery_pricing', 'replay_after_reset',
-               'resume_actions', 'pin_game_overs', 'game_over_lessons', 'state_objective', 'no_effect_lessons', 'object_ledger', 'pattern_relations')
+               'resume_actions', 'pin_game_overs', 'game_over_lessons', 'state_objective', 'no_effect_lessons', 'object_ledger', 'pattern_relations',
+               'level_brief')
 KINDS = ('configuration', 'initial_observation', 'model_returned', 'transition')
 
 

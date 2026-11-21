@@ -1055,6 +1055,145 @@ class ObjectLedger(Base):
         self.assertTrue({'thing_check', 'thing_note'} <= set(on['properties']))
 
 
+class LevelBrief(Base):
+    """Rules the agent records as confirmed are kept for the whole game; on its first turn on every level after
+    the first it must write what differs there, why, and what it will do first; the brief stays in the request."""
+    BRIEF = {'different': 'A thing that was on no earlier level.', 'why': 'Completing the level probably depends on it.',
+             'first': 'Act on it once and see what changes.'}
+
+    @staticmethod
+    def see(level=0, extra=False):
+        grid = ObjectLedger.grid()
+        if extra:
+            grid[40:42, 10:14] = 11                         # a thing the first level did not have
+        return Observation('toy-test', (grid,), GameState.NOT_FINISHED, level, 4, 'guid', (1, 2, 3, 4, 6))
+
+    @staticmethod
+    def answer(**extra):
+        return json.dumps({'action': {'action_id': 1, 'action_data': {}}, 'hypotheses': [], **extra})
+
+    def step(self, agent, before, after, **extra):
+        decision, value = agent.parse(self.answer(**extra), before)
+        agent.observe(before, decision, after, value)
+        return value
+
+    def test_off_by_default(self):
+        c = settings()
+        body = payload(policy.Policy(c).request(self.see(level=1)))
+        self.assertFalse({'rules', 'level_brief'} & set(body['evidence']))
+        self.assertFalse({'rule_notes', 'level_brief'} & set(body['output_contract']))
+        self.assertFalse({'rule_notes', 'level_brief'} & set(policy.response_schema('hypotheses', c)['properties']))
+        with self.assertRaises(ValueError):
+            settings(level_brief=1)
+        self.assertIn('level_brief', resume.MUST_BE_OFF)
+
+    def test_rules_are_kept_numbered_for_the_whole_game_and_can_be_corrected(self):
+        agent = policy.Policy(settings(level_brief=True))
+        first = self.see()
+        body = payload(agent.request(first))
+        self.assertIn('rule_notes', body['output_contract'])
+        self.assertNotIn('level_brief', body['output_contract'])          # nothing to compare the first level with
+        self.assertEqual(body['evidence']['rules'], [])                    # named in the instructions, so always there
+        self.assertIn(policy.RULES_NOTE, body['procedure'])
+        value = self.step(agent, first, first, level_brief=self.BRIEF,     # a brief nobody asked for is dropped
+                          rule_notes=[{'rule': 'ACTION1 moves the piece up.', 'replaces': 0}])
+        self.assertNotIn('level_brief', value)
+        self.assertIsNone(agent.brief)
+        self.step(agent, first, first, rule_notes=[])                      # an empty list records nothing
+        self.step(agent, first, first, rule_notes=[{'rule': 'ACTION1 moves the piece one cell up.', 'replaces': 1},
+                                                   {'rule': 'Reaching the tile completes the level.', 'replaces': 0}])
+        later = self.see(level=1)
+        self.step(agent, first, later)                                     # the level is completed
+        rules = payload(agent.request(later))['evidence']['rules']
+        self.assertEqual([(r['number'], r['rule'], r['level'], r['recorded_at']) for r in rules],
+                         [(1, 'ACTION1 moves the piece one cell up.', 1, 'o2'),
+                          (2, 'Reaching the tile completes the level.', 1, 'o2')])
+
+    def test_the_list_is_bounded_and_a_note_must_point_at_a_rule_that_exists(self):
+        agent = policy.Policy(settings(level_brief=True))
+        board = self.see()
+        with self.assertRaisesRegex(ValueError, 'of which there are 0'):
+            agent.parse(self.answer(rule_notes=[{'rule': 'x', 'replaces': 1}]), board)
+        with self.assertRaisesRegex(ValueError, 'needs rule'):
+            agent.parse(self.answer(rule_notes=[{'rule': '', 'replaces': 0}]), board)
+        self.step(agent, board, board, rule_notes=[{'rule': 'rule %d' % n, 'replaces': 0} for n in range(policy.RULE_LIMIT)])
+        with self.assertRaisesRegex(ValueError, 'has to replace one'):
+            agent.parse(self.answer(rule_notes=[{'rule': 'one too many', 'replaces': 0}]), board)
+        with self.assertRaisesRegex(ValueError, 'two rule_notes items replace rule 3'):
+            agent.parse(self.answer(rule_notes=[{'rule': 'a', 'replaces': 3}, {'rule': 'b', 'replaces': 3}]), board)
+        self.step(agent, board, board, rule_notes=[{'rule': 'better', 'replaces': policy.RULE_LIMIT}])
+        self.assertEqual(len(agent.rules), policy.RULE_LIMIT)
+        self.assertEqual(agent.rules[-1]['rule'], 'better')
+
+    def test_the_brief_is_due_on_the_first_turn_of_a_later_level_and_stays_in_the_request(self):
+        agent = policy.Policy(settings(level_brief=True))
+        one, two, three = self.see(), self.see(level=1), self.see(level=2)
+        agent.observe(one, ActionDecision(1, {}, source='controller_resume'), two,      # a saved action, repeated
+                      {'action': {'action_id': 1, 'action_data': {}}, 'hypotheses': []})
+        body = payload(agent.request(two))
+        self.assertEqual(set(body['output_contract']['level_brief']), {'different', 'why', 'first'})
+        self.assertIn(policy.BRIEF_ASK % 2, body['procedure'])
+        self.assertNotIn('level_brief', body['evidence'])
+        with self.assertRaisesRegex(ValueError, 'first turn on level 2: .*missing: level_brief, rule_notes$'):
+            agent.parse(self.answer(), two)                                # both named in one message
+        with self.assertRaisesRegex(ValueError, 'missing: level_brief$'):
+            agent.parse(self.answer(rule_notes=[]), two)
+        with self.assertRaisesRegex(ValueError, 'missing: rule_notes$'):
+            agent.parse(self.answer(level_brief=self.BRIEF), two)
+        with self.assertRaisesRegex(ValueError, 'level_brief needs different and why'):
+            agent.parse(self.answer(level_brief={**self.BRIEF, 'first': ''}, rule_notes=[]), two)
+        self.step(agent, two, two, level_brief=self.BRIEF, rule_notes=[])
+        body = payload(agent.request(two))
+        self.assertEqual(body['evidence']['level_brief'], {'level': 2, 'written_at': 'o1', **self.BRIEF})
+        self.assertIn(policy.BRIEF_NOTE, body['procedure'])
+        self.assertNotIn('level_brief', body['output_contract'])           # asked for once
+        self.step(agent, two, two)                                         # and not required again
+        better = {**self.BRIEF, 'why': 'It turned out to open the way.'}
+        self.step(agent, two, three, level_brief=better)                   # it may be replaced; the level ends
+        self.assertEqual(agent.brief['why'], better['why'])
+        body = payload(agent.request(three))
+        self.assertIn(policy.BRIEF_ASK % 3, body['procedure'])             # a new level, a new brief
+        self.assertNotIn('level_brief', body['evidence'])
+
+    def test_with_the_object_ledger_a_look_from_no_earlier_level_is_marked_new(self):
+        on = policy.Policy(settings(level_brief=True, object_ledger=True))
+        off = policy.Policy(settings(object_ledger=True))
+        one, two = self.see(), self.see(level=1, extra=True)
+        for agent in (on, off):
+            first = payload(agent.request(one))
+            self.assertFalse(any(look.get('new') for look in first['evidence']['things']['looks']))
+            self.step(agent, one, two, thing_check='Going for the tile.')
+        body = payload(on.request(two))
+        marked = [look for look in body['evidence']['things']['looks'] if look.get('new')]
+        self.assertEqual([look['instances'][0]['at'] for look in marked], [[10, 40, 13, 41]])
+        self.assertIn(policy.NEW_NOTE, body['procedure'])
+        plain = payload(off.request(two))
+        self.assertFalse(any(look.get('new') for look in plain['evidence']['things']['looks']))
+        self.assertNotIn(policy.NEW_NOTE, plain['procedure'])
+
+    def test_a_view_that_moved_during_repeated_saved_actions_still_counts_as_seen(self):
+        from research.claude_arc_v1 import things
+        inventory = things.Inventory()
+        here, moved = ObjectLedger.grid(), np.full((64, 64), 3, dtype=np.uint8)     # most of the board changes
+        moved[20:23, 20:26] = 12
+        inventory.observe(here, [moved], 't1')                             # no request is built: only observe runs
+        self.assertEqual(inventory.view_moved, 't1')
+        look = next(t['look'] for t in things.things(moved))
+        inventory.next_level()
+        self.assertIn(look, inventory.earlier)                             # so it is not marked new on the next level
+
+    def test_the_wording_names_no_game_and_no_particular_thing(self):
+        text = ' '.join((policy.RULES_NOTE, policy.BRIEF_ASK, policy.BRIEF_NOTE, policy.NEW_NOTE)).lower()
+        for word in ('cup', 'bucket', 'paint', 'pour', 'key', 'lock', 'glyph', 'slot', 'rotate', 'orange', 'blue',
+                     'maze', 'palette', 'canvas', 'cycle'):
+            self.assertNotRegex(text, r'\b%s' % word)
+
+    def test_schema_has_the_fields_only_when_switched_on(self):
+        on = policy.response_schema('hypotheses', settings(level_brief=True))
+        self.assertEqual(on['required'], ['action', 'hypotheses'])
+        self.assertTrue({'level_brief', 'rule_notes'} <= set(on['properties']))
+
+
 class Resume(Base):
     def test_resume_rebuilds_the_position_and_the_next_request(self):
         c = settings(max_actions_per_game=5)

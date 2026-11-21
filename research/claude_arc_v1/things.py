@@ -207,6 +207,9 @@ class Inventory:
         self.known = {}          # box -> patch of every thing seen on this level (see things)
         self.floor = None        # the colour each cell had when it was last ground on this level (see things)
         self.view_moved = None   # id of the last action that changed most of the board
+        self.earlier = set()     # looks seen on the levels already completed
+        self.here = set()        # looks seen on this level so far
+        self.levels_done = 0     # how many levels have been completed
 
     def new_level(self):
         self.changed.clear()
@@ -215,11 +218,20 @@ class Inventory:
         self.floor = None
         self.view_moved = None
 
+    def next_level(self):
+        """A level was completed: what was seen on it counts from now on as seen before."""
+        self.earlier |= self.here
+        self.here = set()
+        self.levels_done += 1
+        self.new_level()
+
     def find(self, board):
         board = np.asarray(board)
         if self.floor is None or self.floor.shape != board.shape:
             self.floor = np.full(board.shape, -1, dtype=np.int16)
-        return things(board, self.known, self.floor)
+        found = things(board, self.known, self.floor)
+        self.here.update(thing['look'] for thing in found)
+        return found
 
     def name(self, look):
         if look not in self.names:
@@ -241,6 +253,11 @@ class Inventory:
         if diff.mean() > VIEW_MOVED_SHARE:
             self.new_level()
             self.view_moved = tid
+            last = np.asarray(frames[-1])
+            if last.ndim == 2:
+                # What the new view shows has been seen on this level, also when no request is built on it
+                # (saved actions repeated at a resume). Nothing else is remembered about it here.
+                self.here.update(thing['look'] for thing in things(last))
             return
         if click is not None and 0 <= click[1] < base.shape[0] and 0 <= click[0] < base.shape[1]:
             diff[click[1], click[0]] = True          # acting on a thing counts as something happening at it
@@ -280,8 +297,10 @@ class Inventory:
         """Shapes on the board that recur in another colour, size or turn (see alike)."""
         return alike(self.rows(board), self.known)
 
-    def listing(self, board, notes=None):
-        """What the model is shown: looks with their instances, rarest looks first, within fixed limits."""
+    def listing(self, board, notes=None, mark_new=False):
+        """What the model is shown: looks with their instances, rarest looks first, within fixed limits.
+
+        mark_new: on a level after the first, mark every look that was on no earlier level."""
         groups = {}
         for row in self.rows(board):
             groups.setdefault(row['letter'], []).append(row)
@@ -306,10 +325,14 @@ class Inventory:
                 look['more_untouched'] = sum(not r['changed_at'] and not r['beside_change_at'] for r in rows[MAX_INSTANCES:])
             if notes and letter in notes:
                 look['does'] = notes[letter]
+            if mark_new and self.levels_done and rows[0]['look'] not in self.earlier:
+                look['new'] = True
             looks.append(look)
         value = {'looks': looks}
         if len(ordered) > MAX_LOOKS:
             value['looks_not_listed'] = len(ordered) - MAX_LOOKS
+            if mark_new and self.levels_done:
+                value['new_looks_not_listed'] = sum(rows[0]['look'] not in self.earlier for _, rows in ordered[MAX_LOOKS:])
         if self.view_moved:
             value['view_moved_at'] = self.view_moved
         return value

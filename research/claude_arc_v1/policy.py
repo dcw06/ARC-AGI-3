@@ -81,6 +81,36 @@ IDLE_CHECK_NOTE = ('In lesson_check, test the action you chose against every no_
 BOTH_CHECK_NOTE = ('In lesson_check, test the action you chose against every game_over_lesson and every '
                    'no_effect_lesson: name any lesson that could apply and say what on the current board shows this '
                    'action will change the board and will not end the game.')
+RULE_LIMIT = 12
+RULES_NOTE = ('evidence.rules are the rules of this game that you have recorded as confirmed, each with its number. '
+              'The controller keeps them for the whole game, on later levels too; they are not part of your hypotheses '
+              'list and are never dropped. rule_notes is optional unless asked for: add an item when an observation has just confirmed '
+              'how something works (what an action does, what a kind of thing does, what completes a level) and '
+              'evidence.rules does not say it yet, or says it wrongly. rule: the rule, said generally so that it holds '
+              'on other boards and other levels, at most 300 characters. replaces: the number of the rule this one '
+              'corrects or covers, or 0 to add it. At most %d rules are kept; once the list is full a new rule has to '
+              'replace one.' % RULE_LIMIT)
+# Nothing here names a game, a thing or a colour: the brief is about how a level differs from the ones before it.
+BRIEF_ASK = ('This is your first turn on level %d. Before you choose an action: in rule_notes, record what the levels so '
+             'far have confirmed and evidence.rules does not yet say (an empty list if nothing is missing). Then write '
+             'level_brief. different: what differs here from the levels you have completed: things that were not there '
+             'before, things that are as before except in some respect (such as colour, size, number or the way they '
+             'are turned), and any part of what this level asks for that your rules cannot yet produce. why: what each '
+             'difference is for. A level is '
+             'made to be completed, and what it adds to the earlier ones is there because completing it depends on it. '
+             'Tell two cases apart. A difference that nothing you can do would change cannot be one you are required to '
+             'remove: take the two things as equal in that respect and go on. A new thing, or a difference that '
+             'something on the board can change, is most likely what the part your rules cannot yet produce depends '
+             'on, and what it does may change how the rest has to be done. first: the cheapest way to find out what '
+             'such a thing does, which you will take before you spend actions on what the earlier levels already '
+             'taught you; "nothing new" if the level differs in no such way.')
+BRIEF_NOTE = ('evidence.level_brief is what you wrote on your first turn of this level; the controller keeps it for you. '
+              'What it names under first comes before the routine of earlier levels. When an observation settles what a '
+              'difference is for, record it in rule_notes; when it shows the brief wrong, write level_brief again '
+              '(different, why, first) to replace it. Otherwise leave level_brief out.')
+NEW_NOTE = ('In evidence.things a look marked new was on no earlier level of this game. The controller compares looks '
+            'from the cells alone: a known thing in another colour or shape is marked new as well, so the mark is a '
+            'pointer, not a finding.')
 # The benchmark's own rule (ARC-AGI-3 scoring methodology), with nothing about how to play.
 OBJECTIVE = (' Scoring: only completed levels score. A completed level scores (H / A) squared, capped at 1.15, '
              'where A is the number of actions you used on that level and H is the number a person needed when '
@@ -224,6 +254,14 @@ def response_schema(stage, config=None):
         properties['thing_note'] = {'type': 'object', 'additionalProperties': False, 'required': ['look', 'does'],
                                     'properties': {'look': {'type': 'string', 'minLength': 1, 'maxLength': 3},
                                                    'does': {'type': 'string', 'minLength': 1, 'maxLength': 300}}}
+    if config is not None and config.level_brief:
+        long, short = ({'type': 'string', 'minLength': 1, 'maxLength': n} for n in (600, 300))
+        properties['level_brief'] = {'type': 'object', 'additionalProperties': False,
+                                     'required': ['different', 'why', 'first'],
+                                     'properties': {'different': long, 'why': long, 'first': short}}
+        properties['rule_notes'] = {'type': 'array', 'maxItems': RULE_LIMIT, 'items': {
+            'type': 'object', 'additionalProperties': False, 'required': ['rule', 'replaces'],
+            'properties': {'rule': short, 'replaces': {'type': 'integer', 'minimum': 0}}}}
     return {'type': 'object', 'additionalProperties': False, 'required': required, 'properties': properties}
 
 
@@ -246,10 +284,21 @@ class Policy:
         self.inventory = Inventory()    # the things on the board and what has happened at each (object_ledger)
         self.thing_notes = {}           # look letter -> the agent's note of what that look does, for the whole game
         self.looks_shown = set()        # the look letters in the request now being answered
+        self.rules = []                 # rules the agent recorded as confirmed, for the whole game (level_brief)
+        self.brief = None               # the agent's brief for the level it was written on (level_brief)
 
     @property
     def rank(self):
         return STAGES.index(self.config.stage)
+
+    def brief_state(self, observation):
+        """(a brief may be written, one must be written) on this turn.
+
+        There is nothing to compare the first level with, so it has no brief. On every later level the brief
+        is due on the agent's first turn there and may be replaced on any later turn."""
+        if not self.config.level_brief or observation.levels_completed < 1:
+            return False, False
+        return True, self.brief is None or self.brief['level'] != observation.levels_completed + 1
 
     def idle_state(self):
         """(may explain now, must explain now) for the open no-effect case.
@@ -343,7 +392,7 @@ class Policy:
                 contract['lesson_check'] = 'one or two sentences, at most 600 characters'
                 instructions.append(BOTH_CHECK_NOTE if self.lessons else IDLE_CHECK_NOTE)
         if self.config.object_ledger:
-            listing = self.inventory.listing(observation.latest_frame, self.thing_notes)
+            listing = self.inventory.listing(observation.latest_frame, self.thing_notes, mark_new=self.config.level_brief)
             self.looks_shown = {look['look'] for look in listing['looks']}
             if self.looks_shown:
                 evidence['things'] = listing
@@ -356,6 +405,22 @@ class Policy:
                     if alike:
                         listing['alike'] = alike
                         instructions.append(ALIKE_NOTE)
+                if any(look.get('new') for look in listing['looks']) or listing.get('new_looks_not_listed'):
+                    instructions.append(NEW_NOTE)
+        if self.config.level_brief:
+            # always there, empty at first: the instructions refer to it by name
+            evidence['rules'] = [{'number': n, **item} for n, item in enumerate(self.rules, 1)]
+            contract['rule_notes'] = [{'rule': 'one confirmed rule, at most 300 characters',
+                                       'replaces': 'number of the rule it replaces, or 0 to add it'}]
+            instructions.append(RULES_NOTE)
+            may, must = self.brief_state(observation)
+            if must:
+                contract['level_brief'] = {'different': 'at most 600 characters', 'why': 'at most 600 characters',
+                                           'first': 'at most 300 characters'}
+                instructions.append(BRIEF_ASK % (observation.levels_completed + 1))
+            elif may:
+                evidence['level_brief'] = self.brief
+                instructions.append(BRIEF_NOTE)
         if self.config.pin_game_overs:
             pinned = self.game_overs(observation.levels_completed)
             if pinned:
@@ -483,6 +548,21 @@ class Policy:
             elif 'thing_check' not in value:
                 raise ValueError('thing_check is required: say which thing in evidence.things your action is aimed at')
         noting = isinstance(value, dict) and bool(looks) and 'thing_note' in value
+        may_brief, must_brief = self.brief_state(observation)
+        if isinstance(value, dict) and self.config.level_brief:
+            if must_brief:
+                missing = [name for name in ('level_brief', 'rule_notes') if name not in value]
+                if missing:     # both named at once: every reply sent back uses up one of this turn's few retries
+                    raise ValueError('this is your first turn on level %d: write level_brief {different, why, first} '
+                                     'and rule_notes (an empty list if evidence.rules lacks nothing); missing: %s'
+                                     % (observation.levels_completed + 1, ', '.join(missing)))
+            else:
+                if not may_brief or value.get('level_brief') is None:
+                    value.pop('level_brief', None)        # no earlier level to compare with, or nothing to replace
+                if not value.get('rule_notes'):
+                    value.pop('rule_notes', None)         # optional, and an empty list records nothing
+        briefing = isinstance(value, dict) and self.config.level_brief and 'level_brief' in value
+        ruling = isinstance(value, dict) and self.config.level_brief and 'rule_notes' in value
         if isinstance(value, dict):
             # One schema serves the whole run, so a reply may carry a recovery field nobody asked for this
             # turn. It is dropped, not rejected. In the control the schema has no such field.
@@ -501,6 +581,7 @@ class Policy:
         expected |= ({'game_over_lesson'} if due else set()) | ({'lesson_check'} if checking else set())
         expected |= {'no_effect_lesson'} if explaining else set()
         expected |= ({'thing_check'} if looks else set()) | ({'thing_note'} if noting else set())
+        expected |= ({'level_brief'} if briefing else set()) | ({'rule_notes'} if ruling else set())
         expected |= {'experiment'} if self.rank >= 3 else set()
         expected |= {'prediction'} if self.rank >= 4 else set()
         expected |= {'plan'} if self.rank >= 5 else set()
@@ -524,6 +605,27 @@ class Policy:
             if note['look'] not in looks:
                 raise ValueError('thing_note.look must be the letter of a look in evidence.things: %s'
                                  % ', '.join(sorted(looks, key=lambda s: (len(s), s))))
+        if briefing:
+            brief, limits = value['level_brief'], {'different': 600, 'why': 600, 'first': 300}
+            if (not isinstance(brief, dict) or set(brief) != set(limits)
+                    or any(not isinstance(brief[k], str) or not 1 <= len(brief[k]) <= n for k, n in limits.items())):
+                raise ValueError('level_brief needs different and why (1 to 600 characters each) and first (1 to 300)')
+        if ruling:
+            notes, replaced = value['rule_notes'], set()
+            if not isinstance(notes, list) or len(notes) > RULE_LIMIT:
+                raise ValueError('rule_notes must be a list of at most %d items' % RULE_LIMIT)
+            for note in notes:
+                if (not isinstance(note, dict) or set(note) != {'rule', 'replaces'} or not isinstance(note['rule'], str)
+                        or not 1 <= len(note['rule']) <= 300 or type(note['replaces']) is not int
+                        or not 0 <= note['replaces'] <= len(self.rules)):
+                    raise ValueError('each rule_notes item needs rule (1 to 300 characters) and replaces (0 to add it, or '
+                                     'the number of a rule in evidence.rules, of which there are %d)' % len(self.rules))
+                if note['replaces'] and note['replaces'] in replaced:
+                    raise ValueError('two rule_notes items replace rule %d' % note['replaces'])
+                replaced.add(note['replaces'])
+            if len(self.rules) + sum(not note['replaces'] for note in notes) > RULE_LIMIT:
+                raise ValueError('at most %d rules are kept and %d are recorded: a new rule has to replace one '
+                                 '(set replaces to its number)' % (RULE_LIMIT, len(self.rules)))
         if explaining:
             lesson = value['no_effect_lesson']
             if (not isinstance(lesson, dict) or set(lesson) != {'rule', 'applies_when', 'replaces'}
@@ -669,12 +771,23 @@ class Policy:
             if 'thing_note' in answer:
                 self.thing_notes[answer['thing_note']['look']] = answer['thing_note']['does']
             if facts['level_increased']:
-                self.inventory.new_level()            # a new board: nothing has happened at its things yet
+                self.inventory.next_level()           # a new board: nothing has happened at its things yet
             elif decision.action_id != 0:
                 data = decision.action_data
                 self.inventory.observe(before.latest_frame, after.frames, transition['transition_id'],
                                        click=(data['x'], data['y']) if decision.action_id == 6 else None,
                                        ignore=self.counter.mask)
+        if self.config.level_brief:
+            # Both were written on the board this action was chosen on, and are kept outside the eight notes.
+            level, where = before.levels_completed + 1, 'o%d' % len(self.history)
+            for note in answer.get('rule_notes', ()):
+                item = {'rule': note['rule'], 'level': level, 'recorded_at': where}
+                if note['replaces']:
+                    self.rules[note['replaces'] - 1] = item
+                else:
+                    self.rules.append(item)
+            if 'level_brief' in answer:
+                self.brief = {'level': level, 'written_at': where, **answer['level_brief']}
         self.history.append(transition)
         if self.config.grid_encoding == 'hex_rows':
             self.compact.append(compact_transition(transition, before, after, self.config.observation_evidence_ids))
