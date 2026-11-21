@@ -487,6 +487,60 @@ that add no action. Each start is the ordinary command; no request changes. Log
 `.cache/claude_arc_runs/baseline-continue-round2-h.log`; first batch file
 `.cache/claude_arc_runs/baseline-continue-20261121T010328Z.json`.
 
+Result of batch 8 (ended 2026-11-20 21:50 PST; 287 min on the clock, of which about 92 min the
+computer was asleep; 546 model calls, no retries, log passes the audit; all 546 live requests identical
+to the `38f41e9` code):
+
+| Game | Actions | Cap in this batch | Table cap | Stopped by | Levels completed | Before this batch | Actions per completed level | Open level when stopped |
+|---|---|---|---|---|---|---|---|---|
+| wa30 | 1,850 | 1,850 | 1,850 | action cap | 7 of 9 | 7 | 36, 59, 187, 462, 110, 70, 244 | level 8, 682 actions |
+
+- No new level. Level 8 is open after 682 actions and 4 game overs (human 442, arc-skill 145, Astra
+  108).
+- The lid was closed four times (17:59 for 30 s, 18:23 to 19:29, 19:37 for 40 s, 19:59 to 20:25). The
+  run paused each time and went on by itself on wake: one start, no timeout, `keep_going.py` never had
+  to restart it. The computer was on battery throughout.
+- **Round 2 is complete.** State: 16,560 actions over the 25 games (cap total 17,500), 125 of 183
+  levels, 7 games solved (ft09, sb26, ar25, lp85, r11l, s5i5, vc33); offline expected card score 46.20.
+  The second official scorecard below counts wa30 at 1,000 actions (game score 39.81, now 41.44), so it
+  shows 46.13.
+
+### Offline checks on the caps (2026-11-20, `cap_check.py`, no model call)
+
+Asked by the user: would the caps be better changed? A cut is a prefix of the saved play, so these
+numbers are exact for rules that stop a game earlier; they say nothing about play past the cap.
+
+| Every game cut at this share of its cap | Actions | Levels | Card score |
+|---|---|---|---|
+| 25% | 4,376 | 72 | 22.80 |
+| 50% | 8,674 | 98 | 35.36 |
+| 75% | 12,748 | 117 | 43.38 |
+| 100% | 16,560 | 125 | 46.20 |
+
+| Same caps, and a game ends when its open level has used k times the human count | Actions | Levels | Card score |
+|---|---|---|---|
+| k = 2 | 8,428 | 97 | 39.54 |
+| k = 3 | 10,359 | 99 | 40.29 |
+| k = 5 | 14,832 | 121 | 45.92 |
+| k = 8 | 15,626 | 121 | 45.92 |
+
+- The last quarter of the budget bought 2.8 points; the second quarter bought 12.6.
+- 7,940 of the 16,560 actions were spent on the level still open when a game stopped.
+- A limit of 3 times per level costs 6 points and 26 levels: slow levels still unlock later ones.
+  A limit of 5 times saves about 1,700 actions for 0.3 points.
+- Six games reached the cap soon after a new level began, with at most 1.6 times that level's human
+  count used on it: lf52 (0.2), tu93 (0.8), tr87 (0.9), bp35 (1.2), wa30 (1.5), tn36 (1.6). Their last
+  level was cut short, not failed. What more actions would gain there cannot be measured offline.
+- Not the same test as the official Opus 5 run (ARC Prize's standard harness, 40.67, 95 levels, 10,557
+  actions): another model (Opus 5), another harness (one growing conversation per game), another stop
+  rule. In that run 15 of 19 unsolved games ended at exactly 5 times the human count on the open level
+  (13 of 14 for GPT-6 Astra on the same harness), so the harness appears to end a game there and to
+  have no cap on the game total; this is inferred from the recordings, not read from ARC's code. Four
+  Opus 5 games (cn04, dc22, re86, sp80) ended earlier for a reason not known. Under that rule our score
+  would be at least 45.92, because the rule would let most of our unsolved games play past our cap.
+- Decision: caps unchanged. The rule was fixed before the results, and the baseline is for comparing
+  later harness changes under one budget.
+
 ### Second official scorecard by replay (2026-11-20 15:31 to 16:20 PST)
 
 At the user's request, made while batch 7 was playing. Scorecard:
