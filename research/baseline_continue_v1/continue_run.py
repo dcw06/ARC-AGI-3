@@ -21,8 +21,12 @@ No ARC service is called and there is no scorecard: the counts come from the run
 A game that an earlier continuation left unfinished can be picked up where it stopped:
 
     --extend <game>=<earlier run folder>   continue from the end of that run instead of from action 100
-    --resets <n>                           level resets allowed in the extended games (the harness's own
-                                           limit is 10 per game; this is the one rule an extension changes)
+    --resets <n>                           level resets allowed in every game of this command (the harness's
+                                           own limit is 10 per game; this is the one rule an extension changes)
+    --caps <file>                          another table of per-game caps (same layout as the default one)
+    --budget <n>                           most new actions this command may play in total: games run in the
+                                           order given, each up to its cap, until n new actions are used
+                                           (the game in play then stops short of its cap and can be extended)
 
 Usage (project environment), from anywhere: .venv/bin/python -m research.baseline_continue_v1.continue_run ...
 """
@@ -58,6 +62,7 @@ SAVED_RUN = '.cache/claude_arc_runs/opus55-competition-20261106T054112Z'
 SAVED = SAVED_RUN + '/events.jsonl'
 CAPS = ROOT / 'reports/arc_skill_opus5_v1/action_caps_astra.json'
 RUNS = ROOT / '.cache/claude_arc_runs'
+BUDGET = None         # --budget: most new actions one `run` command may play in total (None = no limit)
 DONE = 100            # actions each game had used when the 6 November run stopped it
 ENDED_NORMALLY = ('action_cap', 'win', 'game_over')
 KEPT = ('initial_observation', 'model_entered', 'model_returned', 'transition')
@@ -124,7 +129,7 @@ def sources(names, extend, resets):
             events, done = merged_log(ids[name], ROOT / extend[name])
             plan[name] = {'events': events, 'done': done, 'resets': resets, 'extends': extend[name]}
         else:
-            plan[name] = {'events': SAVED, 'done': DONE, 'resets': None}
+            plan[name] = {'events': SAVED, 'done': DONE, 'resets': resets}
     return plan
 
 
@@ -250,16 +255,21 @@ def per_level(folder):
 def play(names, plan, stamp):
     ids, limit = full_ids(), caps()
     batch = RUNS / ('baseline-continue-%s.json' % stamp)
-    state = {'started': time.strftime('%Y-%m-%dT%H:%M:%S%z'), 'games_planned': list(names), 'games': [], 'finished': False}
+    state = {'started': time.strftime('%Y-%m-%dT%H:%M:%S%z'), 'games_planned': list(names), 'games': [], 'finished': False,
+             'caps_file': str(CAPS.relative_to(ROOT)), 'budget_new_actions': BUDGET}
+    left = BUDGET
 
     def save():
         batch.write_text(json.dumps(state, indent=1) + '\n')
     save()
     for name in names:
-        game, cap, source = ids[name], limit[name], plan[name]
+        game, source = ids[name], plan[name]
+        cap = limit[name] if left is None else min(limit[name], source['done'] + left)
+        if cap <= source['done']:
+            break                                # the command's budget is used up
         config = settings(name, cap, source)
         folder = RUNS / ('baseline-continue-%s-%s' % (name, stamp))
-        entry = {'game': game, 'folder': str(folder.relative_to(ROOT)), 'cap': cap, 'status': 'running',
+        entry = {'game': game, 'folder': str(folder.relative_to(ROOT)), 'cap': cap, 'table_cap': limit[name], 'status': 'running',
                  'continues_from': source['events'], 'saved_actions': source['done'],
                  'resets_allowed': config.resets_per_game}
         state['games'].append(entry)
@@ -297,6 +307,8 @@ def play(names, plan, stamp):
             # A plan limit, login problem, timeout or interruption would end every later game the same way.
             state['stopped_early'] = 'after %s: %s' % (name, row.get('stop_reason'))
             break
+        if left is not None:
+            left -= (row.get('actions_acknowledged') or source['done']) - source['done']
     state['finished'] = True
     state['ended'] = time.strftime('%Y-%m-%dT%H:%M:%S%z')
     save()
@@ -336,10 +348,17 @@ def status():
 
 def arguments(values):
     """(names, {name: earlier run folder}, resets) from the command line after the command word."""
+    global CAPS, BUDGET
     names, extend, resets, values = [], {}, None, list(values)
     while values:
         value = values.pop(0)
-        if value == '--extend':
+        if value == '--caps':
+            CAPS = (ROOT / values.pop(0)).resolve()
+        elif value == '--budget':
+            BUDGET = int(values.pop(0))
+            if BUDGET < 1:
+                raise SystemExit('--budget needs a positive number of actions')
+        elif value == '--extend':
             name, folder = values.pop(0).split('=', 1)
             extend[name] = folder
         elif value == '--resets':

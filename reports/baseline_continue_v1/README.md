@@ -280,6 +280,254 @@ passes, all 37 live requests identical to the `38f41e9` code.
 Result: 250 of 250 actions, still 5 of 9 levels. Level 6 was not cleared in 152 actions and 13 game
 overs; 14 level resets used in all. Batch file `.cache/claude_arc_runs/baseline-continue-20261117T071722Z.json`.
 
+## Second round: caps at the human count (started 2026-11-19)
+
+On 2026-11-18 the user asked for a baseline that allows more actions, kept close to the human
+baseline. New caps, `action_caps_human.json`: the human reference count for the whole game (the sum of
+the per-level baseline actions the ARC scorecard reports), rounded up to the next 50. Total 17,500
+against 8,450; up to 9,050 new actions in 22 games. ft09 and sb26 are solved and unchanged; tn36 gets
+nothing more, since its 350 actions already exceed its human count of 317.
+
+Each game continues from where its last run stopped (`--extend`, a merged log of its whole earlier
+play; cd82, lp85 and r11l continue from the 6 November log). The level-reset allowance is 50 for every
+game in this round (`--resets 50`), so that no game stops short of its cap; it changes no request.
+`continue_run.py` gained `--caps <file>`, and `--resets` now applies to every game of a command.
+
+Batch 1 (ar25, bp35, cd82, cn04, dc22; 2,000 new actions), started 2026-11-19 00:00 PST on the
+signed-in subscription, batch file `.cache/claude_arc_runs/baseline-continue-20261119T080027Z.json`.
+Free check before launch: all five games' saved boards (300, 500, 100, 250, 550 actions) and every
+saved request reproduced exactly.
+
+Result of batch 1 (ended 2026-11-19 12:28 PST; 12 h 27 min, 1,631 model calls, 27 s per call, no
+retries, all five logs pass the audit; all 1,631 live requests identical to the `38f41e9` code):
+
+| Game | Actions | Cap | Stopped by | Levels completed | Before this round | Actions per completed level | Open level when stopped |
+|---|---|---|---|---|---|---|---|
+| ar25 | 393 | 750 | solved | 8 of 8 | 6 | 17, 14, 41, 41, 28, 115, 56, 81 | none |
+| bp35 | 700 | 700 | cap | 4 of 9 | 3 | 17, 203, 137, 305 | level 5, 38 actions |
+| cd82 | 200 | 200 | cap | 2 of 6 | 2 | 28, 7 | level 3, 165 actions |
+| cn04 | 800 | 800 | cap | 4 of 6 | 3 | 19, 33, 50, 203 | level 5, 495 actions |
+| dc22 | 1,250 | 1,250 | cap | 4 of 6 | 4 | 32, 125, 59, 123 | level 5, 911 actions |
+
+- ar25 is solved (393 actions; arc-skill + Opus 5 260, Astra 257, human 748). Third game solved after
+  ft09 and sb26.
+- 1,643 new actions gained 4 levels (ar25 two, bp35 one, cn04 one). cd82 and dc22 gained none: dc22
+  spent all 700 new actions on level 5, which has now taken 911 actions and 4 game overs (human 324,
+  arc-skill 154, Astra 119); cn04's level 5 has taken 495 (human 208, arc-skill 72, Astra 68); cd82's
+  level 3 has taken 165 (human 41, arc-skill 18, Astra 17).
+- bp35 level 4 took 305 actions and 9 game overs; 22 level resets used in all.
+
+Batch 2 (g50t, ka59, lf52, lp85, ls20; 1,950 new actions), started 2026-11-19 11:59 PST on the user's
+second Claude subscription (`ARC_CLAUDE_TOKEN_FILE`, at the user's request), alongside the end of
+batch 1; batch file `.cache/claude_arc_runs/baseline-continue-20261119T195939Z.json`. Free check before
+launch: all five games' saved boards (500, 350, 800, 100, 500 actions) and every saved request
+reproduced exactly. The log records the token file's name with every call. The account does not
+change any request; the model and CLI are the same. At about 15:23 to 15:28 PST the lid was closed and
+the Mac slept; the run paused and one model call (ka59) was retried.
+
+At about 19:47 PST the computer was shut down by accident while ls20 was in play (action 649 of 800).
+The process was killed, so that run has no summary and its batch entry was completed by hand from the
+event log (`stop_reason: computer_shut_down`; the file before the edit is kept beside it with the
+suffix `.before-shutdown-note`). The log ends cleanly after action 649: 147 of its 148 model calls were
+answered, the last was in flight and no action had been sent for it. ls20 was continued from that log
+at 20:15 PST, again on the second subscription (`--extend` on the interrupted folder; batch file
+`.cache/claude_arc_runs/baseline-continue-20261120T041553Z.json`). Free check before the relaunch: all
+649 saved boards and every saved request reproduced exactly, and the request the controller builds for
+action 650 equals the one that was in flight. macOS (26.6.2) and the CLI (2.1.318) are unchanged after
+the restart.
+
+Result of batch 2 (g50t, ka59, lf52, lp85: 11:59 to 19:14 PST, 1,368 model calls, one retry, all four
+logs pass the audit; ls20 up to the shutdown: 147 answered calls; every compared request of the five
+logs is identical to the `38f41e9` code):
+
+| Game | Actions | Cap | Stopped by | Levels completed | Before this round | Actions per completed level | Open level when stopped |
+|---|---|---|---|---|---|---|---|
+| g50t | 900 | 900 | cap | 2 of 7 | 2 | 39, 122 | level 3, 739 actions |
+| ka59 | 750 | 750 | cap | 3 of 7 | 3 | 30, 190, 77 | level 4, 453 actions |
+| lf52 | 1,350 | 1,350 | cap | 4 of 10 | 3 | 8, 710, 49, 537 | level 5, 46 actions |
+| lp85 | 124 | 400 | solved | 8 of 8 | 7 | 7, 10, 16, 17, 18, 24, 8, 24 | none |
+| ls20 | 800 | 800 | cap (in two runs, see above) | 2 of 7 | 2 | 15, 45 | level 3, 740 actions |
+
+- lp85 is solved (124 actions; arc-skill + Opus 5 93, Astra 94, human 388). Fourth game solved after
+  ft09, sb26 and ar25.
+- lf52 gained one level: level 4 took 537 actions (human 71, arc-skill 54, Astra 56).
+- g50t and ka59 gained none. g50t's level 3 has taken 739 actions and 5 game overs (human 179,
+  arc-skill 92, Astra 64); ka59's level 4 has taken 453 and 3 game overs (human 51, arc-skill 45,
+  Astra 41).
+- ls20's continuation after the shutdown ended at the cap at 20:49 PST (151 actions, 150 model calls,
+  33 min, no retries, log passes the audit, every request identical to the `38f41e9` code). ls20
+  gained no level: level 3 has taken 740 actions and 6 game overs (human 73, arc-skill 69, Astra 41).
+- Batch 2 in all: 1,674 new actions gained 2 levels (lf52 one, lp85 one).
+
+State of round 2 after batches 1 to 3 (2026-11-19 20:50 PST; 11 of the 22 games with new actions
+played, m0r0 only to 950 of 1,150): 12,419 actions over the 25 games, 108 of 183 levels, 4 games
+solved (ft09, sb26, ar25, lp85). 4,017 new actions in this round gained 6 levels. `replay_scorecard.py
+expect` (offline, ARC's scoring rule applied to the recorded actions) gives an expected card score of
+39.62, against the official 36.29 after round 1; no new scorecard has been sent.
+
+Batches 4 and 5 (all remaining games except wa30; 3,400 new actions, split evenly between the user's
+two subscriptions at the user's request), both started 2026-11-19 21:39 PST and running side by side:
+
+- Batch 4, signed-in subscription: m0r0 (200), r11l (150), re86 (650), sc25 (150), sp80 (300),
+  su15 (250); 1,700 new actions; batch file `.cache/claude_arc_runs/baseline-continue-20261120T053929Z.json`.
+- Batch 5, second subscription (`ARC_CLAUDE_TOKEN_FILE`): s5i5 (350), sk48 (600), tr87 (250),
+  tu93 (250), vc33 (250); 1,700 new actions; batch file
+  `.cache/claude_arc_runs/baseline-continue-20261120T053933Z.json`.
+
+The games are not in table order because no split in table order gives 1,700 each. Free check before
+launch: the saved boards and every saved request of all eleven games reproduced exactly (950, 100,
+650, 200, 250, 150 and 300, 500, 200, 250, 200 actions). wa30 (1,000 new actions) is left for later.
+
+Result of batch 4 (ended 2026-11-20 07:27 PST; 9 h 48 min, 1,586 model calls, no retries, all six logs
+pass the audit; all 1,586 live requests identical to the `38f41e9` code):
+
+| Game | Actions | Cap | Stopped by | Levels completed | Before this round | Actions per completed level | Open level when stopped |
+|---|---|---|---|---|---|---|---|
+| m0r0 | 1,150 | 1,150 | cap | 2 of 6 | 2 | 15, 56 | level 3, 1,079 actions |
+| r11l | 159 | 250 | solved | 6 of 6 | 5 | 4, 11, 17, 15, 30, 82 | none |
+| re86 | 1,300 | 1,300 | cap | 6 of 8 | 6 | 20, 36, 47, 42, 151, 77 | level 7, 927 actions |
+| sc25 | 350 | 350 | cap | 3 of 6 | 3 | 22, 5, 37 | level 4, 286 actions |
+| sp80 | 550 | 550 | cap | 4 of 6 | 4 | 6, 8, 10, 45 | level 5, 481 actions |
+| su15 | 400 | 400 | cap | 7 of 9 | 4 | 9, 21, 99, 14, 80, 12, 10 | level 8, 155 actions |
+
+- r11l is solved (159 actions, human 233). su15 gained three levels (5, 6 and 7 in 80, 12 and 10
+  actions). 1,609 new actions gained 4 levels.
+- m0r0, re86, sc25 and sp80 gained none; each spent all its new actions on one level (m0r0 level 3:
+  1,079 actions and 7 game overs; re86 level 7: 927 and 3; sc25 level 4: 286 and 6; sp80 level 5: 481
+  and 11).
+
+Batch 5 stopped early at 2026-11-20 07:07 PST: tr87's call for action 320 exceeded the harness's
+240-second deadline three times in a row (first try and both retries), which ends the game with
+`TransportFailure`; tu93 and vc33 had not started. It was not a usage limit: no call was refused, the
+two calls before it took 13 and 14 s, and the other subscription's batch ran on without an error.
+tr87's calls were slow throughout (median 28 s, mean 66 s, a dozen above 200 s; actions 261 and 273
+had also timed out and succeeded on a retry), while sk48 on the same account had a median of 25 s and
+no failure. The deadline and the retry count are the 6 November settings and were not changed.
+
+Result of batch 5 up to the stop (903 model calls answered, 5 retried; all three logs pass the audit;
+every compared request identical to the `38f41e9` code):
+
+| Game | Actions | Cap | Stopped by | Levels completed | Before this round | Actions per completed level | Open level when stopped |
+|---|---|---|---|---|---|---|---|
+| s5i5 | 486 | 650 | solved | 8 of 8 | 6 | 13, 28, 80, 31, 28, 36, 104, 166 | none |
+| sk48 | 1,100 | 1,100 | cap | 4 of 8 | 3 | 22, 43, 125, 361 | level 5, 549 actions |
+| tr87 | 319 | 450 | three timed-out calls | 2 of 6 | 1 | 61, 224 | level 3, 34 actions |
+
+The three unfinished games were relaunched at 07:10 PST on the second subscription, tr87 last so that
+a repeat of the timeout cannot hold up the other two: tu93 (250), vc33 (250), tr87 (131 left, from
+its interrupted log); batch file `.cache/claude_arc_runs/baseline-continue-20261120T151023Z.json`.
+Free check before the relaunch: saved boards and requests of all three reproduced exactly.
+
+Final result of batch 5, both parts (relaunch ended 2026-11-20 13:35 PST; one more tr87 call timed
+out and succeeded on its retry; all logs pass the audit; every compared request identical to the
+`38f41e9` code):
+
+| Game | Actions | Cap | Stopped by | Levels completed | Before this round | Actions per completed level | Open level when stopped |
+|---|---|---|---|---|---|---|---|
+| s5i5 | 486 | 650 | solved | 8 of 8 | 6 | 13, 28, 80, 31, 28, 36, 104, 166 | none |
+| sk48 | 1,100 | 1,100 | cap | 4 of 8 | 3 | 22, 43, 125, 361 | level 5, 549 actions |
+| tr87 | 450 | 450 | cap (in two runs) | 4 of 6 | 1 | 61, 224, 52, 52 | level 5, 61 actions |
+| tu93 | 500 | 500 | cap | 8 of 9 | 5 | 18, 15, 19, 17, 29, 268, 14, 36 | level 9, 84 actions |
+| vc33 | 446 | 450 | solved | 7 of 7 | 6 | 13, 8, 24, 28, 47, 72, 254 | none |
+
+- s5i5 (486 actions, human 638) and vc33 (446, human 447) are solved. 1,532 new actions gained 10
+  levels (s5i5 two, sk48 one, tr87 three, tu93 three, vc33 one).
+- tu93's level 6 took 268 actions and 19 game overs; 24 level resets used in all.
+
+State of round 2 after batches 1 to 5 (2026-11-20 13:36 PST; every game but wa30 is at its cap or
+solved): 15,560 actions over the 25 games, 122 of 183 levels, 7 games solved (ft09, sb26, ar25, lp85,
+r11l, s5i5, vc33). 7,158 new actions in this round gained 20 levels. `replay_scorecard.py expect`
+(offline) gives an expected card score of 45.12, against the official 36.29 after round 1; no new
+scorecard has been sent. wa30 (850 of 1,850 played) is the only game left.
+
+Batch 6 (wa30, limited to 150 new actions at the user's request: `--budget 150`, so it stops at action
+1,000 of 1,850 unless solved first), started 2026-11-20 14:30 PST on the signed-in subscription; batch
+file `.cache/claude_arc_runs/baseline-continue-20261120T223057Z.json`. Free check before launch: all
+850 saved boards and every saved request reproduced exactly.
+
+Result of batch 6 (ended 2026-11-20 15:08 PST; 38 min, 150 model calls, no retries, log passes the
+audit; all 150 live requests identical to the `38f41e9` code):
+
+| Game | Actions | Cap in this batch | Table cap | Stopped by | Levels completed | Before this round | Actions per completed level | Open level when stopped |
+|---|---|---|---|---|---|---|---|---|
+| wa30 | 1,000 | 1,000 | 1,850 | the 150-action limit | 6 of 9 | 4 | 36, 59, 187, 462, 110, 70 | level 7, 76 actions |
+
+- wa30 gained two levels: level 5 in 110 actions (human 368, arc-skill 110, Astra 111) and level 6 in
+  70 (human 68, arc-skill 59, Astra 46). No game over in the 150 actions. 850 actions are left under
+  its table cap.
+- State after batch 6: 15,710 actions over the 25 games, 124 of 183 levels, 7 games solved; offline
+  expected card score 46.13 (wa30's game score 14.45 to 39.81); no new scorecard has been sent.
+
+Batch 7 (wa30, 300 more new actions at the user's request: `--budget 300`, so it stops at action
+1,300 of 1,850 unless solved first), started 2026-11-20 15:13 PST on the signed-in subscription; batch
+file `.cache/claude_arc_runs/baseline-continue-20261120T231341Z.json`. Free check before launch: all
+1,000 saved boards and every saved request reproduced exactly.
+
+Result of batch 7 (ended 2026-11-20 16:43 PST; 89 min, 299 model calls, no retries, log passes the
+audit; all 299 live requests identical to the `38f41e9` code):
+
+| Game | Actions | Cap in this batch | Table cap | Stopped by | Levels completed | Before this batch | Actions per completed level | Open level when stopped |
+|---|---|---|---|---|---|---|---|---|
+| wa30 | 1,300 | 1,300 | 1,850 | the 300-action limit | 7 of 9 | 6 | 36, 59, 187, 462, 110, 70, 244 | level 8, 132 actions |
+
+- wa30 gained one level: level 7 in 244 actions and one game over (human 79, arc-skill 80, Astra 45).
+  Level 8 is open after 132 actions (human 442, arc-skill 145, Astra 108). 550 actions are left under
+  its table cap.
+- State after batch 7: 16,010 actions over the 25 games, 125 of 183 levels, 7 games solved; offline
+  expected card score 46.20 (wa30's game score 39.81 to 41.44). The second official scorecard below
+  does not include these 300 actions.
+
+Batch 8 (wa30, its last 550 actions, to the table cap of 1,850), started 2026-11-20 17:03 PST on the
+signed-in subscription. The user asked that a sleep of the computer should not interrupt it. A
+sleeping computer runs nothing, so the run pauses during a sleep and resumes on wake; what can end it
+is the call in flight timing out three times in a row (as tr87 did). `keep_going.py` (new) covers
+that: it starts `continue_run.py run wa30` and, if that stops short of the target, waits 5 minutes and
+starts it again from the last saved action after the free check; it gives up after 4 starts in a row
+that add no action. Each start is the ordinary command; no request changes. Log
+`.cache/claude_arc_runs/baseline-continue-round2-h.log`; first batch file
+`.cache/claude_arc_runs/baseline-continue-20261121T010328Z.json`.
+
+### Second official scorecard by replay (2026-11-20 15:31 to 16:20 PST)
+
+At the user's request, made while batch 7 was playing. Scorecard:
+https://arcprize.org/scorecards/82bd80c9-3b07-43e7-9c11-f7aff912dd35 (competition mode, same tags as
+the first replay). It covers the state after batch 6: wa30 is taken from its last finished run (1,000
+actions); the actions batch 7 was playing are not in it. `replay_scorecard.py` gained `--finished-only`
+for this (leaves out the log of a game still in play; without it `send` refuses while a continuation
+runs).
+
+- Before sending: `expect` 46.1330; `dry` matched all 15,710 recorded actions against the local game
+  copies; `inventory` found all 25 recorded game versions on offer.
+- All 15,710 recorded actions of the 25 games were sent, and every observation the service returned
+  hashed to the recorded one. No game stopped early, no transport error. 49 minutes.
+- Official score at close: **46.13** (46.1330), 124 of 183 levels, 15,710 actions, 7 games completed
+  (ft09, sb26, ar25, lp85, r11l, s5i5, vc33). First replay (round 1): 36.29, 102 levels, 8,402
+  actions, 2 games. 6 November: 23.16, 67 levels, 2,475 actions, 1 game.
+- All 25 official game scores equal the scores predicted offline.
+- Manifest: `.cache/claude_arc_runs/baseline-replay-send-20261120T233113Z/manifest.json`, copied to
+  `data/scorecard_replay_manifest_2.json`; `data/recorded_actions_2.json` holds the 15,710 actions
+  of this scorecard in the format of `data/recorded_actions.json`.
+
+Batch 3 (m0r0, r11l, re86, s5i5, sc25 in that order, limited to 700 new actions in total at the
+user's request: `--budget 700`), started 2026-11-19 15:35 PST on the signed-in subscription, alongside
+batch 2; batch file `.cache/claude_arc_runs/baseline-continue-20261119T233503Z.json`. m0r0 alone has
+900 new actions under its cap, so unless it is solved first it uses the whole limit and stops at
+action 950 of 1,150; the later games start only if actions are left. Free check before launch: all
+five games' saved boards (250, 100, 650, 300, 200 actions) and every saved request reproduced exactly.
+`continue_run.py` gained `--budget <n>`.
+
+Result of batch 3 (ended 2026-11-19 19:11 PST; 3 h 37 min, 696 model calls, no retries, log passes the
+audit; all 696 live requests identical to the `38f41e9` code):
+
+| Game | Actions | Cap in this batch | Table cap | Stopped by | Levels completed | Before this round | Actions per completed level | Open level when stopped |
+|---|---|---|---|---|---|---|---|---|
+| m0r0 | 950 | 950 | 1,150 | the 700-action limit | 2 of 6 | 2 | 15, 56 | level 3, 879 actions |
+
+- m0r0 gained no level: all 700 new actions went to level 3, which has now taken 879 actions and 5
+  level resets (human 203, arc-skill 61, Astra 82).
+- The limit was used up by m0r0, so r11l, re86, s5i5 and sc25 did not start. m0r0 has 200 actions left
+  under its table cap of 1,150.
+
 ## Official scorecard by replay (prepared 2026-11-16, to run when wa30 ends)
 
 The user asked for one scorecard covering all 25 games. `replay_scorecard.py` sends every recorded action

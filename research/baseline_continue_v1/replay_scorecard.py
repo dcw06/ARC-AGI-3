@@ -18,6 +18,10 @@ competition-mode scorecard, with no model call:
     replay_scorecard.py inventory  read-only call: does the service still offer the recorded game versions?
     replay_scorecard.py send --confirm-online-arc     the live replay
 
+  --finished-only   (expect, dry, send) leave out the log of a game that a continuation is playing right
+                    now; that game is taken from its last finished run. Without it, `send` refuses while a
+                    continuation is running.
+
 Usage (project environment), from anywhere: .venv/bin/python -m research.baseline_continue_v1.replay_scorecard ...
 """
 import json
@@ -39,15 +43,27 @@ def saved_summary():
     return json.loads((SAVED_RUN / 'summary.json').read_text())
 
 
-def recorded():
+def in_play():
+    """Run folders of games a continuation is playing right now (their batch has not recorded a result)."""
+    out = set()
+    for path in RUNS.glob('baseline-continue-2*.json'):
+        state = json.loads(path.read_text())
+        if not state['finished']:
+            out.update(entry['folder'] for entry in state['games'] if entry['status'] != 'ended')
+    return out
+
+
+def recorded(skip=()):
     """{game id: {'source', 'first', 'steps': [{'action', 'after', 'levels', 'state'}]}} for all 25 games, in
-    the 6 November order."""
+    the 6 November order. Run folders named in `skip` are left out."""
     order = saved_summary()['selected_games']
     out = {}
     for game in order:
         name = game.split('-', 1)[0]
         best = None
         for folder in sorted(RUNS.glob('baseline-continue-%s-2*' % name)):
+            if str(folder.relative_to(ROOT)) in skip:
+                continue
             first, steps = None, []
             with (folder / 'events.jsonl').open(encoding='utf-8') as handle:
                 for line in handle:
@@ -212,8 +228,11 @@ def table(rows):
 if __name__ == '__main__':
     os.chdir(ROOT)
     command = sys.argv[1] if len(sys.argv) > 1 else ''
+    left_out = sorted(in_play()) if '--finished-only' in sys.argv else []
+    if left_out:
+        print('left out, still in play:', ', '.join(left_out))
     if command == 'expect':
-        card, rows = expect()
+        card, rows = expect(recorded(left_out))
         table(rows)
         print('games %d | actions %d | levels %d of %d | expected card score %.4f' % (
             len(rows), sum(r['actions'] for r in rows), sum(r['levels_completed'] for r in rows),
@@ -228,7 +247,7 @@ if __name__ == '__main__':
             len(offered), not absent, ' | absent: ' + ', '.join(absent) if absent else ''))
         sys.exit(0 if not absent else 1)
     elif command in ('dry', 'send'):
-        plan = recorded()
+        plan = recorded(left_out)
         expected_card, rows = expect(plan)
         stamp = time.strftime('%Y%m%dT%H%M%SZ', time.gmtime())
         folder = RUNS / ('baseline-replay-%s-%s' % (command, stamp))
@@ -245,8 +264,9 @@ if __name__ == '__main__':
             if '--confirm-online-arc' not in sys.argv:
                 raise SystemExit('the live replay sends to the ARC service: pass --confirm-online-arc')
             running = [p.name for p in RUNS.glob('baseline-continue-2*.json') if not json.loads(p.read_text())['finished']]
-            if running:
-                raise SystemExit('a continuation is still running (%s); replay after it ends' % ', '.join(running))
+            if running and '--finished-only' not in sys.argv:
+                raise SystemExit('a continuation is still running (%s); replay after it ends, or pass '
+                                 '--finished-only' % ', '.join(running))
             adapter = live_adapter()
             pace = MIN_SECONDS_PER_ACTION
         card, closed, results = replay(adapter, plan, log, pace)
@@ -254,7 +274,8 @@ if __name__ == '__main__':
         manifest = {'command': command, 'card_id': card,
                     'scorecard_url': 'https://arcprize.org/scorecards/' + card if command == 'send' else None,
                     'every_action_matched': complete, 'expected_card_score': expected_card,
-                    'official_scorecard': closed, 'games': results, 'expected': rows, 'tags': TAGS}
+                    'official_scorecard': closed, 'games': results, 'expected': rows, 'tags': TAGS,
+                    'left_out_still_in_play': left_out}
         (folder / 'manifest.json').write_text(json.dumps(manifest, indent=1) + '\n')
         stream.close()
         print('every recorded action matched:', complete, '| actions sent', sum(r['sent'] for r in results),
